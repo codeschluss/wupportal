@@ -1,0 +1,119 @@
+<?php
+namespace App\Model\Table;
+
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
+use Cake\Validation\Validator;
+
+/**
+ * Activities Model
+ *
+ * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
+ * @property \App\Model\Table\ProvidersTable|\Cake\ORM\Association\BelongsTo $Providers
+ * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsToMany $Categories
+ * @property \App\Model\Table\TagsTable|\Cake\ORM\Association\BelongsToMany $Tags
+ * @property \App\Model\Table\TargetGroupsTable|\Cake\ORM\Association\BelongsToMany $TargetGroups
+ *
+ * @method \App\Model\Entity\Activity get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Activity newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Activity[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Activity|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Activity patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Activity[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Activity findOrCreate($search, callable $callback = null, $options = [])
+ */
+class ActivitiesTable extends Table
+{
+
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+
+        $this->setTable('activities');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
+
+        $this->belongsTo('Addresses', [
+            'foreignKey' => 'address_id'
+        ]);
+        $this->belongsTo('Providers', [
+            'foreignKey' => 'provider_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsToMany('Categories', [
+            'foreignKey' => 'activity_id',
+            'targetForeignKey' => 'category_id',
+            'joinTable' => 'activities_categories'
+        ]);
+        $this->belongsToMany('Tags', [
+            'foreignKey' => 'activity_id',
+            'targetForeignKey' => 'tag_id',
+            'joinTable' => 'activities_tags'
+        ]);
+        $this->belongsToMany('TargetGroups', [
+            'foreignKey' => 'activity_id',
+            'targetForeignKey' => 'target_group_id',
+            'joinTable' => 'activities_target_groups'
+        ]);
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->uuid('id')
+            ->allowEmpty('id', 'create');
+
+        $validator
+            ->scalar('name')
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
+
+        $validator
+            ->scalar('description')
+            ->allowEmpty('description');
+
+        $validator
+            ->scalar('schedule')
+            ->allowEmpty('schedule');
+
+        $validator
+            ->allowEmpty('minage');
+
+        $validator
+            ->allowEmpty('maxage');
+
+        $validator
+            ->boolean('show_user')
+            ->allowEmpty('show_user');
+
+        return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['address_id'], 'Addresses'));
+        $rules->add($rules->existsIn(['provider_id'], 'Providers'));
+
+        return $rules;
+    }
+}

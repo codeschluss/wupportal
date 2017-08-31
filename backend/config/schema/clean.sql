@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS `i18n`;
+DROP TABLE IF EXISTS `activities_target_groups`;
+DROP TABLE IF EXISTS `activities_tags`;
+DROP TABLE IF EXISTS `activities_categories`;
+DROP TABLE IF EXISTS `activities`;
+DROP TABLE IF EXISTS `providers`;
+DROP TABLE IF EXISTS `organisations`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `addresses`;
+DROP TABLE IF EXISTS `suburbs`;
+DROP TABLE IF EXISTS `target_groups`;
+DROP TABLE IF EXISTS `tags`;
+DROP TABLE IF EXISTS `categories`;
+DROP TABLE IF EXISTS `configitems`;

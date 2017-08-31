@@ -1,0 +1,8 @@
+backend/config/.env
+backend/config/app.php
+backend/logs
+backend/tmp
+backend/webroot/js/*.js
+
+frontend/*.log
+frontend/node_modules

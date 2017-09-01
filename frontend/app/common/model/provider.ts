@@ -8,6 +8,6 @@ export class Provider {
 		public admin: boolean,
 		public organisation: Organisation,
 		public user: User,
-	) {};
+	) {}
 
 }

@@ -11,6 +11,6 @@ export class Address {
 		public postalCode: string,
 		public place: string,
 		public suburb: Suburb,
-	) {};
+	) {}
 
 }

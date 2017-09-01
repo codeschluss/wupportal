@@ -21,6 +21,6 @@ export class Activity {
 		public tags: Tag[],
 		public targetGroups: TargetGroup[],
 		public translations: Translation[],
-	) {};
+	) {}
 
 }

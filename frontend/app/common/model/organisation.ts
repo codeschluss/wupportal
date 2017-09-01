@@ -11,6 +11,6 @@ export class Organisation {
 		public phone: string,
 		public image: any,
 		public address: Address,
-	) {};
+	) {}
 
 }

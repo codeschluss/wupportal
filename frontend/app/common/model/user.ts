@@ -10,6 +10,6 @@ export class User {
 		public fullname: string,
 		public phone: string,
 		public address: Address,
-	) {};
+	) {}
 
 }

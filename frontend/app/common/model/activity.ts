@@ -1,8 +1,9 @@
 import { Address } from './address';
 import { Category } from './category';
 import { Provider } from './provider';
-import { TargetGroup } from './target-group';
 import { Tag } from './tag';
+import { TargetGroup } from './target-group';
+import { Translation } from './translation';
 
 export class Activity {
 
@@ -19,6 +20,7 @@ export class Activity {
 		public category: Category,
 		public tags: Tag[],
 		public targetGroups: TargetGroup[],
+		public translations: Translation[],
 	) {};
 
 }

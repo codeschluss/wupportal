@@ -39,7 +39,7 @@ class ActivitiesController extends AppController
     public function view($id = null)
     {
         $activity = $this->Activities->get($id, [
-            'contain' => ['Addresses', 'Providers', 'Categories', 'Tags', 'TargetGroups']
+            'contain' => ['Addresses', 'Providers', 'Categories', 'Tags', 'TargetGroups', 'Translations']
         ]);
 
         $this->set('activity', $activity);
@@ -68,7 +68,8 @@ class ActivitiesController extends AppController
         $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
         $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
         $targetGroups = $this->Activities->TargetGroups->find('list', ['limit' => 200]);
-        $this->set(compact('activity', 'addresses', 'providers', 'categories', 'tags', 'targetGroups'));
+        $translations = $this->Activities->Translations->find('list', ['limit' => 200]);
+        $this->set(compact('activity', 'addresses', 'providers', 'categories', 'tags', 'targetGroups', 'translations'));
         $this->set('_serialize', ['activity']);
     }
 
@@ -82,7 +83,7 @@ class ActivitiesController extends AppController
     public function edit($id = null)
     {
         $activity = $this->Activities->get($id, [
-            'contain' => ['Categories', 'Tags', 'TargetGroups']
+            'contain' => ['Categories', 'Tags', 'TargetGroups', 'Translations']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());
@@ -98,7 +99,8 @@ class ActivitiesController extends AppController
         $categories = $this->Activities->Categories->find('list', ['limit' => 200]);
         $tags = $this->Activities->Tags->find('list', ['limit' => 200]);
         $targetGroups = $this->Activities->TargetGroups->find('list', ['limit' => 200]);
-        $this->set(compact('activity', 'addresses', 'providers', 'categories', 'tags', 'targetGroups'));
+        $translations = $this->Activities->Translations->find('list', ['limit' => 200]);
+        $this->set(compact('activity', 'addresses', 'providers', 'categories', 'tags', 'targetGroups', 'translations'));
         $this->set('_serialize', ['activity']);
     }
 

@@ -14,6 +14,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsToMany $Categories
  * @property \App\Model\Table\TagsTable|\Cake\ORM\Association\BelongsToMany $Tags
  * @property \App\Model\Table\TargetGroupsTable|\Cake\ORM\Association\BelongsToMany $TargetGroups
+ * @property |\Cake\ORM\Association\BelongsToMany $Translations
  *
  * @method \App\Model\Entity\Activity get($primaryKey, $options = [])
  * @method \App\Model\Entity\Activity newEntity($data = null, array $options = [])
@@ -61,6 +62,11 @@ class ActivitiesTable extends Table
             'foreignKey' => 'activity_id',
             'targetForeignKey' => 'target_group_id',
             'joinTable' => 'activities_target_groups'
+        ]);
+        $this->belongsToMany('Translations', [
+            'foreignKey' => 'activity_id',
+            'targetForeignKey' => 'translation_id',
+            'joinTable' => 'activities_translations'
         ]);
     }
 

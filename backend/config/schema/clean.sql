@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS `i18n`;
+DROP TABLE IF EXISTS `activities_translations`;
 DROP TABLE IF EXISTS `activities_target_groups`;
 DROP TABLE IF EXISTS `activities_tags`;
 DROP TABLE IF EXISTS `activities_categories`;
@@ -11,4 +12,5 @@ DROP TABLE IF EXISTS `suburbs`;
 DROP TABLE IF EXISTS `target_groups`;
 DROP TABLE IF EXISTS `tags`;
 DROP TABLE IF EXISTS `categories`;
+DROP TABLE IF EXISTS `translations`;
 DROP TABLE IF EXISTS `configitems`;

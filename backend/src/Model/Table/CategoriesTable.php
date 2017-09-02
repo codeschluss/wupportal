@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Categories Model
  *
- * @property \App\Model\Table\ActivitiesTable|\Cake\ORM\Association\BelongsToMany $Activities
+ * @property \App\Model\Table\ActivitiesTable|\Cake\ORM\Association\HasMany $Activities
  *
  * @method \App\Model\Entity\Category get($primaryKey, $options = [])
  * @method \App\Model\Entity\Category newEntity($data = null, array $options = [])
@@ -36,10 +36,8 @@ class CategoriesTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Activities', [
-            'foreignKey' => 'category_id',
-            'targetForeignKey' => 'activity_id',
-            'joinTable' => 'activities_categories'
+        $this->hasMany('Activities', [
+            'foreignKey' => 'category_id'
         ]);
     }
 
@@ -56,17 +54,14 @@ class CategoriesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('name')
             ->requirePresence('name', 'create')
             ->notEmpty('name')
             ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('description')
             ->allowEmpty('description');
 
         $validator
-            ->scalar('color')
             ->requirePresence('color', 'create')
             ->notEmpty('color')
             ->add('color', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);

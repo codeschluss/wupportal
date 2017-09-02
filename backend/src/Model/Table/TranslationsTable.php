@@ -56,13 +56,11 @@ class TranslationsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('locale')
             ->requirePresence('locale', 'create')
             ->notEmpty('locale')
             ->add('locale', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('name')
             ->requirePresence('name', 'create')
             ->notEmpty('name')
             ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);

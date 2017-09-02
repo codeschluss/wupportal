@@ -1,0 +1,9 @@
+<md-card *ngIf="activity">
+	<md-card-header>
+		<md-card-title>{{activity.name}}</md-card-title>
+		<md-card-subtitle>{{activity.category.name}}</md-card-subtitle>
+	</md-card-header>
+	<md-card-content>
+		{{activity.schedule}}
+	</md-card-content>
+</md-card>

@@ -1,0 +1,19 @@
+<div>
+	<h2>Login</h2>
+	<div id="login">
+		<form class="example-form">
+			<md-form-field class="example-full-width">
+				<input mdInput placeholder="eMail" [(ngModel)]="userNameInput" type="text" name="userName" required />
+			</md-form-field>
+			<md-form-field class="example-full-width">
+				<input mdInput placeholder="password" [(ngModel)]="passwordInput" type="password" name="password" required />
+			</md-form-field>
+			<div>
+				<button md-raised-button (click)="fakeLogin()">Login</button>
+				<nav>
+					<button md-raised-button (click)="cancel()">cancel</button>
+				</nav>
+			</div>
+		</form>
+	</div>
+</div>

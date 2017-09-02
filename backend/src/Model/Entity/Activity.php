@@ -10,17 +10,17 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $description
  * @property string $schedule
- * @property int $minage
- * @property int $maxage
  * @property bool $show_user
  * @property string $address_id
  * @property string $provider_id
+ * @property string $category_id
  *
  * @property \App\Model\Entity\Address $address
  * @property \App\Model\Entity\Provider $provider
- * @property \App\Model\Entity\Category[] $categories
+ * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\Tag[] $tags
  * @property \App\Model\Entity\TargetGroup[] $target_groups
+ * @property \App\Model\Entity\Translation[] $translations
  */
 class Activity extends Entity
 {

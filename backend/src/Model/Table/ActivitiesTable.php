@@ -11,10 +11,10 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
  * @property \App\Model\Table\ProvidersTable|\Cake\ORM\Association\BelongsTo $Providers
- * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsToMany $Categories
+ * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
  * @property \App\Model\Table\TagsTable|\Cake\ORM\Association\BelongsToMany $Tags
  * @property \App\Model\Table\TargetGroupsTable|\Cake\ORM\Association\BelongsToMany $TargetGroups
- * @property |\Cake\ORM\Association\BelongsToMany $Translations
+ * @property \App\Model\Table\TranslationsTable|\Cake\ORM\Association\BelongsToMany $Translations
  *
  * @method \App\Model\Entity\Activity get($primaryKey, $options = [])
  * @method \App\Model\Entity\Activity newEntity($data = null, array $options = [])
@@ -48,10 +48,9 @@ class ActivitiesTable extends Table
             'foreignKey' => 'provider_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsToMany('Categories', [
-            'foreignKey' => 'activity_id',
-            'targetForeignKey' => 'category_id',
-            'joinTable' => 'activities_categories'
+        $this->belongsTo('Categories', [
+            'foreignKey' => 'category_id',
+            'joinType' => 'INNER'
         ]);
         $this->belongsToMany('Tags', [
             'foreignKey' => 'activity_id',
@@ -83,23 +82,14 @@ class ActivitiesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('name')
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
         $validator
-            ->scalar('description')
             ->allowEmpty('description');
 
         $validator
-            ->scalar('schedule')
             ->allowEmpty('schedule');
-
-        $validator
-            ->allowEmpty('minage');
-
-        $validator
-            ->allowEmpty('maxage');
 
         $validator
             ->boolean('show_user')
@@ -119,6 +109,7 @@ class ActivitiesTable extends Table
     {
         $rules->add($rules->existsIn(['address_id'], 'Addresses'));
         $rules->add($rules->existsIn(['provider_id'], 'Providers'));
+        $rules->add($rules->existsIn(['category_id'], 'Categories'));
 
         return $rules;
     }

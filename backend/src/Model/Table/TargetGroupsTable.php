@@ -56,13 +56,11 @@ class TargetGroupsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('name')
             ->requirePresence('name', 'create')
             ->notEmpty('name')
             ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('description')
             ->allowEmpty('description');
 
         return $validator;

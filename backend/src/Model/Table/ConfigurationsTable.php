@@ -7,17 +7,17 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Configitems Model
+ * Configurations Model
  *
- * @method \App\Model\Entity\Configitem get($primaryKey, $options = [])
- * @method \App\Model\Entity\Configitem newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Configitem[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Configitem|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Configitem patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Configitem[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Configitem findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Configuration get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Configuration newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Configuration[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Configuration|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Configuration patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Configuration[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Configuration findOrCreate($search, callable $callback = null, $options = [])
  */
-class ConfigitemsTable extends Table
+class ConfigurationsTable extends Table
 {
 
     /**
@@ -30,7 +30,7 @@ class ConfigitemsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('configitems');
+        $this->setTable('configurations');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
     }
@@ -48,12 +48,10 @@ class ConfigitemsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('item')
             ->requirePresence('item', 'create')
             ->notEmpty('item');
 
         $validator
-            ->scalar('value')
             ->requirePresence('value', 'create')
             ->notEmpty('value');
 

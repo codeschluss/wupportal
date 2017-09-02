@@ -1,0 +1,47 @@
+aol-map {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+}
+
+md-sidenav-container {
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	background: none;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.enable-pointer {
+	pointer-events: all;
+}
+
+#activity-summary {
+	width: 400px;
+}
+
+.active-activity ::ng-deep md-card {
+	background-color: red;
+}
+
+aol-map ::ng-deep {
+	overflow: hidden;
+}
+
+.default-marker {
+	background-color: black;
+	width: 42px;
+	height: 42px;
+}
+
+.active-marker {
+	background-color: red;
+	width: 42px;
+	height: 42px;
+}

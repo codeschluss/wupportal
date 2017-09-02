@@ -1,4 +1,4 @@
-CREATE TABLE `configitems` (
+CREATE TABLE `configurations` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`item` VARCHAR(255) NOT NULL,
 	`value` VARCHAR(255) NOT NULL
@@ -55,12 +55,7 @@ CREATE TABLE `users` (
 	`username` VARCHAR(255) UNIQUE NOT NULL,
 	`password` VARCHAR(255) NOT NULL,
 	`fullname` VARCHAR(255),
-	`phone` VARCHAR(255),
-	`address_id` CHAR(36),
-
-	CONSTRAINT `fkey_user_address`
-		FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
-		ON UPDATE CASCADE
+	`phone` VARCHAR(255)
 );
 
 CREATE TABLE `organisations` (
@@ -98,11 +93,10 @@ CREATE TABLE `activities` (
 	`name` VARCHAR(255) NOT NULL,
 	`description` TEXT,
 	`schedule` TEXT,
-	`minage` TINYINT UNSIGNED,
-	`maxage` TINYINT UNSIGNED,
 	`show_user` BOOLEAN DEFAULT FALSE,
 	`address_id` CHAR(36),
 	`provider_id` CHAR(36) NOT NULL,
+	`category_id` CHAR(36) NOT NULL,
 
 	CONSTRAINT `fkey_activity_address`
 		FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
@@ -110,24 +104,11 @@ CREATE TABLE `activities` (
 
 	CONSTRAINT `fkey_activity_provider`
 		FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`)
-		ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE `activities_categories` (
-	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`activity_id` CHAR(36) NOT NULL,
-	`category_id` CHAR(36) NOT NULL,
-
-	CONSTRAINT `uniq_activity_category`
-		UNIQUE (`activity_id`),
-
-	CONSTRAINT `fkey_activity_category`
-		FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
 		ON UPDATE CASCADE ON DELETE CASCADE,
 
-	CONSTRAINT `fkey_category_activity`
-		FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
-		ON UPDATE CASCADE ON DELETE CASCADE
+	CONSTRAINT `fkey_activity_category`
+		FOREIGN KEY (`category_id`) REFERENCES `addresses` (`id`)
+		ON UPDATE CASCADE
 );
 
 CREATE TABLE `activities_tags` (

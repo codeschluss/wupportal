@@ -48,17 +48,19 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 		$routes->extensions(['json']);
 		$routes->resources('Activity');
-		$routes->resources('Activitytag');
-		$routes->resources('Activitytargetgroup');
+		$routes->resources('ActivitiesTag');
+		$routes->resources('ActivitiesTargetGroup');
+		$routes->resources('ActivitiesTranslation');
 		$routes->resources('Address');
 		$routes->resources('Category');
 		$routes->resources('Configuration');
 		$routes->resources('Organisation');
 		$routes->resources('Provider');
-		$routes->resources('Role');
+		$routes->resources('Suburb');
 		$routes->resources('Tag');
-		$routes->resources('Targetgroup');
+		$routes->resources('TargetGroup');
 		$routes->resources('User');
+		$routes->resources('Translation');
 
     /**
      * Connect catchall routes for all controllers.

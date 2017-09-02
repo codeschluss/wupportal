@@ -4,16 +4,13 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ActivitiesCategory Entity
+ * Configuration Entity
  *
  * @property string $id
- * @property string $activity_id
- * @property string $category_id
- *
- * @property \App\Model\Entity\Activity $activity
- * @property \App\Model\Entity\Category $category
+ * @property string $item
+ * @property string $value
  */
-class ActivitiesCategory extends Entity
+class Configuration extends Entity
 {
 
     /**

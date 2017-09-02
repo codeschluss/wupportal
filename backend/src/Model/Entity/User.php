@@ -12,9 +12,7 @@ use Cake\ORM\Entity;
  * @property string $password
  * @property string $fullname
  * @property string $phone
- * @property string $address_id
  *
- * @property \App\Model\Entity\Address $address
  * @property \App\Model\Entity\Provider[] $providers
  */
 class User extends Entity

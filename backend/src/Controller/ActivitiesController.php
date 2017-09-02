@@ -21,7 +21,7 @@ class ActivitiesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Addresses', 'Providers']
+            'contain' => ['Addresses', 'Providers', 'Categories']
         ];
         $activities = $this->paginate($this->Activities);
 
@@ -83,7 +83,7 @@ class ActivitiesController extends AppController
     public function edit($id = null)
     {
         $activity = $this->Activities->get($id, [
-            'contain' => ['Categories', 'Tags', 'TargetGroups', 'Translations']
+            'contain' => ['Tags', 'TargetGroups', 'Translations']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->getData());

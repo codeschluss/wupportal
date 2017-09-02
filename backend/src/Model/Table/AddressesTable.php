@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\SuburbsTable|\Cake\ORM\Association\BelongsTo $Suburbs
  * @property \App\Model\Table\ActivitiesTable|\Cake\ORM\Association\HasMany $Activities
  * @property \App\Model\Table\OrganisationsTable|\Cake\ORM\Association\HasMany $Organisations
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\HasMany $Users
  *
  * @method \App\Model\Entity\Address get($primaryKey, $options = [])
  * @method \App\Model\Entity\Address newEntity($data = null, array $options = [])
@@ -48,9 +47,6 @@ class AddressesTable extends Table
         $this->hasMany('Organisations', [
             'foreignKey' => 'address_id'
         ]);
-        $this->hasMany('Users', [
-            'foreignKey' => 'address_id'
-        ]);
     }
 
     /**
@@ -74,19 +70,15 @@ class AddressesTable extends Table
             ->allowEmpty('longitude');
 
         $validator
-            ->scalar('street')
             ->allowEmpty('street');
 
         $validator
-            ->scalar('house_number')
             ->allowEmpty('house_number');
 
         $validator
-            ->scalar('postal_code')
             ->allowEmpty('postal_code');
 
         $validator
-            ->scalar('place')
             ->allowEmpty('place');
 
         return $validator;

@@ -1,22 +1,20 @@
 {
 	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-	"project": { "name": "wupportal-client" },
-	"apps": [
-		{
-			"root": ".",
-			"index": "index.html",
-			"outDir": "dist",
-			"main": "app.ts",
-			"polyfills": "polyfills.ts",
-			"tsconfig": "tsconfig.json"
-		}
-	],
-	"lint": [
-		{
-			"files": "app/**/*.ts",
-			"project": "tsconfig.json"
-		}
-	],
+	"project": {
+		"name": "wupportal-client"
+	},
+	"apps": [{
+		"root": ".",
+		"index": "index.html",
+		"outDir": "dist",
+		"main": "app.ts",
+		"polyfills": "polyfills.ts",
+		"tsconfig": "tsconfig.json"
+	}],
+	"lint": [{
+		"files": "app/**/*.ts",
+		"project": "tsconfig.json"
+	}],
 	"defaults": {
 		"styleExt": "css"
 	}

@@ -9,7 +9,6 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
  * @property \App\Model\Table\ProvidersTable|\Cake\ORM\Association\HasMany $Providers
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
@@ -37,9 +36,6 @@ class UsersTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Addresses', [
-            'foreignKey' => 'address_id'
-        ]);
         $this->hasMany('Providers', [
             'foreignKey' => 'user_id'
         ]);
@@ -62,22 +58,18 @@ class UsersTable extends Table
             ->allowEmpty('admin');
 
         $validator
-            ->scalar('username')
             ->requirePresence('username', 'create')
             ->notEmpty('username')
             ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('password')
             ->requirePresence('password', 'create')
             ->notEmpty('password');
 
         $validator
-            ->scalar('fullname')
             ->allowEmpty('fullname');
 
         $validator
-            ->scalar('phone')
             ->allowEmpty('phone');
 
         return $validator;
@@ -93,7 +85,6 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['username']));
-        $rules->add($rules->existsIn(['address_id'], 'Addresses'));
 
         return $rules;
     }

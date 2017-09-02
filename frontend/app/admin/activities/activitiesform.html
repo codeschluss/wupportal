@@ -1,0 +1,103 @@
+<div>
+	<div class="table-container mat-elevation-z8">
+		<div class="tabel-header">
+			<md-form-field floatPlaceholder="never">
+				<input mdInput #filter placeholder="Filter users">
+			</md-form-field>
+		</div>
+
+		<md-table #table [dataSource]="dataSource">
+
+			<ng-container mdColumnDef="id">
+				<md-header-cell *mdHeaderCellDef> ID </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.id}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="name">
+				<md-header-cell *mdHeaderCellDef> name </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.name}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="description">
+				<md-header-cell *mdHeaderCellDef> description </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.description}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="date">
+				<md-header-cell *mdHeaderCellDef> date </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.date}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="street">
+				<md-header-cell *mdHeaderCellDef> street </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row?.addres?.street}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="housenumber">
+				<md-header-cell *mdHeaderCellDef> housenumber </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row?.addres?.housenumber}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="postalcode">
+				<md-header-cell *mdHeaderCellDef> postalcode </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row?.addres?.postalcode}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="place">
+				<md-header-cell *mdHeaderCellDef> place </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row?.addres?.place}} </md-cell>
+			</ng-container>
+
+			<md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+			<md-row *mdRowDef="let row; columns: displayedColumns;" (click)="selectActivity(row)"></md-row>
+		</md-table>
+		<md-paginator #paginator [length]="activitiesDatabase.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+		</md-paginator>
+	</div>
+	<button md-raised-button (click)="createActivity()">New Activity</button>
+	<button md-raised-button (click)="deselectActivity()">cancel</button>
+	<div *ngIf="selectedActivity">
+		<form (ngSubmit)="onSubmitActivity()" class="well">
+			<md-form-field class="form-control">
+				<input mdInput type=text placeholder="name" value={{selectedActivity.name}} id="actname_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<textarea mdInput placeholder="Description" value={{selectedActivity.description}} id="actdescription_field"></textarea>
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput type=datetime-local placeholder="date" value={{selectedActivity.date}} id="actdate_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="addres" value={{selectedActivity?.addres?.street}} id="actaddres_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="place" value={{selectedActivity?.addres?.place}} id="actaddres_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="postalcode" value={{selectedActivity?.addres?.postalcode}} id="actaddres_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<textarea mdInput placeholder="tags" value={{selectedActivity.tags}} id="actdescription_field"></textarea>
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="category" value={{selectedActivity?.category}} id="actcategory_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="showinstructor" value={{selectedActivity.showInstructor}} id="actshowinstructor_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="organisation" value={{selectedActivity?.provider?.organisation}} id="actorganisation_field">
+			</md-form-field>
+			<button md-raised-button type="submit">Submit</button>
+		</form>
+	</div>
+</div>

@@ -58,24 +58,19 @@ class OrganisationsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('name')
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
         $validator
-            ->scalar('description')
             ->allowEmpty('description');
 
         $validator
-            ->scalar('website')
             ->allowEmpty('website');
 
         $validator
-            ->scalar('mail')
             ->allowEmpty('mail');
 
         $validator
-            ->scalar('phone')
             ->allowEmpty('phone');
 
         $validator

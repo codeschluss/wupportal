@@ -1,9 +1,7 @@
 export class TargetGroup {
 
-	constructor(
-		public id: string,
-		public name: string,
-		public description: string,
-	) {}
+	public id: string;
+	public name: string;
+	public description: string;
 
 }

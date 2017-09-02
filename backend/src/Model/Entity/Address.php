@@ -18,7 +18,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Suburb $suburb
  * @property \App\Model\Entity\Activity[] $activities
  * @property \App\Model\Entity\Organisation[] $organisations
- * @property \App\Model\Entity\User[] $users
  */
 class Address extends Entity
 {

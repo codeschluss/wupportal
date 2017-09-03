@@ -6,7 +6,7 @@
 	"apps": [{
 		"root": ".",
 		"index": "index.html",
-		"outDir": "dist",
+		"outDir": "../backend/webroot/js",
 		"main": "app.ts",
 		"polyfills": "polyfills.ts",
 		"tsconfig": "tsconfig.json"

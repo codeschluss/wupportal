@@ -7,9 +7,9 @@ import { Service } from './service';
 export class OrgaService extends Service {
 
 	getOrgas(): Promise<Organisation[]> {
-		return this.http.get(this.basicURL + '/organisation', { headers: this.headers })
+		return this.http.get(this.baseURL + 'organisations/', { headers: this.headers })
 			.toPromise()
-			.then(response => response.json().organisation as Organisation[])
+			.then(response => response.json().organisations as Organisation[])
 			.catch(this.handleError);
 	}
 }

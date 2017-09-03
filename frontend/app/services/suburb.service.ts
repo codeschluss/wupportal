@@ -7,9 +7,9 @@ import { Service } from './service';
 export class SuburbService extends Service {
 
 	getAllSuburbs(): Promise<Suburb[]> {
-		return this.http.get(this.basicURL + '/suburb', { headers: this.headers })
+		return this.http.get(this.baseURL + 'suburbs/', { headers: this.headers })
 			.toPromise()
-			.then(response => response.json().suburb as Suburb[])
+			.then(response => response.json().suburbs as Suburb[])
 			.catch(this.handleError);
 	}
 }

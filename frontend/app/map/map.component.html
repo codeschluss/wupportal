@@ -10,7 +10,6 @@
 		<aol-source-vector>
 			<aol-overlay *ngFor="let activity of activities">
 				<aol-coordinate [x]="activity.address.longitude" [y]="activity.address.latitude" [srid]='configuration.mapProjection'>
-
 				</aol-coordinate>
 				<aol-content>
 					<div class="default-marker" [class.active-marker]="activity.id == selectedActivity.id" (click)="onSelect(activity)"></div>

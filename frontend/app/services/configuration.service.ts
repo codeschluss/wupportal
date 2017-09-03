@@ -6,10 +6,22 @@ import { Configuration } from '../common/model/configuration';
 @Injectable()
 export class ConfigurationService extends Service {
 
+	// TODO: Refactor type casting
 	getConfiguration(): Promise<Configuration> {
-		return this.http.get(this.basicURL + '/configuration', { headers: this.headers })
+		return this.http.get(this.baseURL + 'configurations/', { headers: this.headers })
 			.toPromise()
-			.then(response => response.json().configuration as Configuration)
+			.then(response => {
+				var configResp = response.json().configuration as Configuration;
+				var config = new Configuration();
+				config = configResp;
+				config.mapcenterLatitude = Number(configResp.mapcenterLatitude);
+				config.mapcenterLongitude = Number(configResp.mapcenterLongitude);
+				config.zoomfactor = Number(configResp.zoomfactor);
+				config.mapProjection = configResp.mapProjection;
+				config.portalName = configResp.portalName;
+				config.portalSubtitle = configResp.portalSubtitle;
+				return config;
+			})
 			.catch(this.handleError);
 	}
 

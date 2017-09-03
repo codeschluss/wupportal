@@ -41,7 +41,7 @@ INSERT INTO `providers` (`id`, `organisation_id`, `user_id`) VALUES
 INSERT INTO `activities` (`id`, `name`, `description`, `schedule`, `show_user`, `address_id`, `provider_id`, `category_id`) VALUES
 (1, 'Sprachkurs', 'Englisch Sprachkurs für Jung und Alt', '2017-08-31', 1, 1, 1, 2),
 (2, 'Sportaktivität', 'Sportaktivität für Jung und Alt', '2017-08-31', 1, 1, 2, 2),
-(3, 'Sprachkurs', 'Deutsch Sprachkurs für Alt und Jung', '2017-08-30', 2, 1, 1, 2);
+(3, 'Sprachkurs', 'Deutsch Sprachkurs für Alt und Jung', '2017-08-30', 1, 2, 1, 2);
 
 INSERT INTO `activities_tags` (`id`, `tag_id`, `activity_id`) VALUES
 (1, 1, 2),

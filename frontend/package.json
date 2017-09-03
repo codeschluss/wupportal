@@ -4,8 +4,7 @@
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"build": "ng build -oh=none --prod --extract-licenses=false && npm run deploy",
-		"deploy": "mv dist/*.js ../backend/webroot/js && rm -rf dist",
+		"build": "ng build -oh=none --prod --extract-licenses=false",
 		"lint": "ng lint",
 		"start": "ng build -oh=none --prod --extract-licenses=false --watch"
 	},

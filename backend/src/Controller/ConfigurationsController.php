@@ -20,13 +20,12 @@ class ConfigurationsController extends AppController
      */
     public function index()
     {
-				$configurations = $this->findAll($this->Configurations);
+				$configurations = $this->Configurations->find('all');
+
 				$configMapped = [];
-
-        foreach ($configurations as $key => &$config) {
-            $configMapped[$key] = $config;
+        foreach ($configurations as $config) {
+            $configMapped[$config->item] = $config->value;
 				}
-
         $configuration = (object) $configMapped;
 
         $this->set(compact('configuration'));

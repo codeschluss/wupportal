@@ -7,9 +7,9 @@ import { Service } from './service';
 export class UserService extends Service {
 
 	getUsers(): Promise<User[]> {
-		return this.http.get(this.basicURL + '/user', { headers: this.headers })
+		return this.http.get(this.baseURL + 'users/', { headers: this.headers })
 			.toPromise()
-			.then(response => response.json().user as User[])
+			.then(response => response.json().users as User[])
 			.catch(this.handleError);
 	}
 }

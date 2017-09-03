@@ -7,9 +7,9 @@ import { Category } from '../common/model/category';
 export class CategoryService extends Service {
 
 	getAllCategories(): Promise<Category[]> {
-		return this.http.get(this.basicURL + '/category/', { headers: this.headers })
+		return this.http.get(this.baseURL + 'categories/', { headers: this.headers })
 			.toPromise()
-			.then(response => response.json().category as Category[])
+			.then(response => response.json().categories as Category[])
 			.catch(this.handleError);
 	}
 

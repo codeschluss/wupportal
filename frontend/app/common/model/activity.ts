@@ -11,7 +11,7 @@ export class Activity {
 	public name: string;
 	public description: string;
 	public schedule: string;
-	public showUser: boolean;
+	public show_user: boolean;
 	public address: Address;
 	public provider: Provider;
 	public category: Category;

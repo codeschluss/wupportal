@@ -1,0 +1,3 @@
+/* TODO: import from local node_modules via webpack instead of url*/
+
+@import url('https://unpkg.com/@angular/material/prebuilt-themes/deeppurple-amber.css');

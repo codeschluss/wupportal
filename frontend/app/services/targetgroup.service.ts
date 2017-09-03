@@ -7,9 +7,9 @@ import { Service } from './service';
 export class TargetgroupService extends Service {
 
 	getAllTargetgroups(): Promise<TargetGroup[]> {
-		return this.http.get(this.basicURL + '/targetgroup', { headers: this.headers })
+		return this.http.get(this.baseURL + 'targetGroups/', { headers: this.headers })
 			.toPromise()
-			.then(response => response.json().targetgroup as TargetGroup[])
+			.then(response => response.json().targetGroups as TargetGroup[])
 			.catch(this.handleError);
 	}
 }

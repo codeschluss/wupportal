@@ -47,10 +47,6 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
 		$routes->extensions(['json']);
-		$routes->resources('Activity');
-		$routes->resources('ActivitiesTag');
-		$routes->resources('ActivitiesTargetGroup');
-		$routes->resources('ActivitiesTranslation');
 		$routes->resources('Address');
 		$routes->resources('Category');
 		$routes->resources('Configuration');
@@ -61,6 +57,10 @@ Router::scope('/', function (RouteBuilder $routes) {
 		$routes->resources('TargetGroup');
 		$routes->resources('User');
 		$routes->resources('Translation');
+		$routes->resources('Activity');
+		$routes->resources('ActivitiesTag');
+		$routes->resources('ActivitiesTargetGroup');
+		$routes->resources('ActivitiesTranslation');
 
     /**
      * Connect catchall routes for all controllers.

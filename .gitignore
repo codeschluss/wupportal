@@ -2,7 +2,8 @@ backend/config/.env
 backend/config/app.php
 backend/logs
 backend/tmp
-backend/webroot/js/*.js
+backend/webroot/js
 
 frontend/*.log
 frontend/node_modules
+frontend/dist

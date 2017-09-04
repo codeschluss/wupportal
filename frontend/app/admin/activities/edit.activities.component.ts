@@ -19,7 +19,7 @@ import { Headers, Http } from '@angular/http';
 @Component({
 	selector: 'editact',
 	styleUrls: ['../table-basic.css'],
-	templateUrl: 'activitiesform.html'
+	templateUrl: 'edit.activities.component.html'
 })
 
 export class ActivitiesComponent {
@@ -82,7 +82,7 @@ export class ActivitiesComponent {
 	// TODO: both methods should move to ActivityService
 	onSubmitActivity() {
 		if (this.selectedActivity.id) {
-			return this.http.put('http://localhost:8765' + '/activity/' +
+			return this.http.put('http://localhost:4200/activites/' +
 				this.selectedActivity.id,
 				JSON.stringify(this.selectedActivity)
 				, { headers: this.headers }
@@ -93,14 +93,14 @@ export class ActivitiesComponent {
 				results.forEach(geoDate => {
 					this.selectedActivity.address.latitude = geoDate['lat'];
 					this.selectedActivity.address.longitude = geoDate['lon'];
-					this.selectedActivity.address.housenumber = geoDate['addresss']['house_number'];
-					this.selectedActivity.address.postalcode = geoDate['addresss']['postcode'];
-					this.selectedActivity.address.place = geoDate['addresss']['city'];
-					this.selectedActivity.address.street = geoDate['addresss']['road'];
+					this.selectedActivity.address.housenumber = geoDate['address']['house_number'];
+					this.selectedActivity.address.postalcode = geoDate['address']['postcode'];
+					this.selectedActivity.address.place = geoDate['address']['city'];
+					this.selectedActivity.address.street = geoDate['address']['road'];
 				});
 			});
 
-			return this.http.post('http://localhost:8765' + '/activity/',
+			return this.http.post('http://localhost:4200/activites/',
 				JSON.stringify(this.selectedActivity)
 				, { headers: this.headers }
 			).subscribe(newActivity => this.selectedActivity = newActivity.json());

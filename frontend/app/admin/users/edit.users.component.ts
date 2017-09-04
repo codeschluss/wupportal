@@ -15,7 +15,7 @@ import { Headers, Http } from '@angular/http';
 @Component({
 	selector: 'editusers',
 	styleUrls: ['../table-basic.css'],
-	templateUrl: './usersform.html',
+	templateUrl: './edit.users.component.html',
 })
 export class UsersComponent {
 	protected headers = new Headers({ 'Accept': 'application/json', 'Access-Control-Allow-Origin': '*' });
@@ -52,14 +52,14 @@ export class UsersComponent {
 
 	onSubmitUser() {
 		if (this.selectedUser.id) {
-			return this.http.put('http://localhost:8765' + '/user/' +
+			return this.http.put('http://localhost:4200' + '/users/' +
 				this.selectedUser.id,
 				JSON.stringify(this.selectedUser)
 				, { headers: this.headers }
 			).subscribe(newUser => this.selectedUser = newUser.json());
 		}
 		else {
-			return this.http.post('http://localhost:8765' + '/user/',
+			return this.http.post('http://localhost:4200' + '/users/',
 				JSON.stringify(this.selectedUser)
 				, { headers: this.headers }
 			).subscribe(newUser => this.selectedUser = newUser.json());

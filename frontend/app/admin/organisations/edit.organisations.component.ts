@@ -16,7 +16,7 @@ import { Headers, Http } from '@angular/http';
 @Component({
 	selector: 'editorga',
 	styleUrls: ['../table-basic.css'],
-	templateUrl: './organisationsform.html',
+	templateUrl: './edit.organisations.component.html',
 })
 
 export class OrganisationsComponent {
@@ -56,7 +56,7 @@ export class OrganisationsComponent {
 
 	onSubmitOrganisation() {
 		if (this.selectedOrga.id) {
-			return this.http.put('http://localhost:8765' + '/organisation/' +
+			return this.http.put('http://localhost:4200' + '/organisations/' +
 				this.selectedOrga.id,
 				JSON.stringify(this.selectedOrga)
 				, { headers: this.headers }
@@ -74,7 +74,7 @@ export class OrganisationsComponent {
 				});
 			});
 
-			return this.http.post('http://localhost:8765' + '/organisation/',
+			return this.http.post('http://localhost:4200' + '/organisations/',
 				JSON.stringify(this.selectedOrga)
 				, { headers: this.headers }
 			).subscribe(newOrganisation => this.selectedOrga = newOrganisation.json());

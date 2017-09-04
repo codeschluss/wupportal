@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 
 @Component({
 	// TODO: If Admin show all, otherwise check if owner or other rights
-	templateUrl: './admin.html',
+	templateUrl: './admin.component.html',
 })
 
 export class AdminComponent {

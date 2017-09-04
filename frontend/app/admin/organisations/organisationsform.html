@@ -18,19 +18,19 @@
 				<md-cell *mdCellDef="let row"> {{row.name}} </md-cell>
 			</ng-container>
 
-			<ng-container mdColumnDef="info">
-				<md-header-cell *mdHeaderCellDef> info </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row.info}} </md-cell>
+			<ng-container mdColumnDef="description">
+				<md-header-cell *mdHeaderCellDef> description </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.description}} </md-cell>
 			</ng-container>
 
-			<ng-container mdColumnDef="eMail">
-				<md-header-cell *mdHeaderCellDef> eMail </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row.eMail}} </md-cell>
+			<ng-container mdColumnDef="mail">
+				<md-header-cell *mdHeaderCellDef> mail </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.mail}} </md-cell>
 			</ng-container>
 
-			<ng-container mdColumnDef="telephone">
-				<md-header-cell *mdHeaderCellDef> telephone </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row.telephone}} </md-cell>
+			<ng-container mdColumnDef="phone">
+				<md-header-cell *mdHeaderCellDef> phone </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.phone}} </md-cell>
 			</ng-container>
 
 			<ng-container mdColumnDef="website">
@@ -40,22 +40,27 @@
 
 			<ng-container mdColumnDef="street">
 				<md-header-cell *mdHeaderCellDef> street </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.street}} </md-cell>
+				<md-cell *mdCellDef="let row"> {{row?.address?.street}} </md-cell>
 			</ng-container>
 
 			<ng-container mdColumnDef="housenumber">
 				<md-header-cell *mdHeaderCellDef> housenumber </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.housenumber}} </md-cell>
+				<md-cell *mdCellDef="let row"> {{row?.address?.housenumber}} </md-cell>
 			</ng-container>
 
 			<ng-container mdColumnDef="postalcode">
 				<md-header-cell *mdHeaderCellDef> postalcode </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.postalcode}} </md-cell>
+				<md-cell *mdCellDef="let row"> {{row?.address?.postalcode}} </md-cell>
 			</ng-container>
 
 			<ng-container mdColumnDef="place">
 				<md-header-cell *mdHeaderCellDef> place </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.place}} </md-cell>
+				<md-cell *mdCellDef="let row"> {{row?.address?.place}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="image">
+				<md-header-cell *mdHeaderCellDef> image </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.image}} </md-cell>
 			</ng-container>
 
 			<md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
@@ -68,42 +73,54 @@
 	<button md-raised-button (click)="deselectOrganisation()">cancel</button>
 
 	<div *ngIf="selectedOrga">
-		<form (ngSubmit)="onSubmitOrga()" class="well">
+		<form (ngSubmit)="onSubmitOrganisation()" class="well">
 
 			<md-form-field class="form-control">
-				<input mdInput type=text placeholder="name" value={{selectedOrga.name}} id="organame_field">
+				<input mdInput type=text placeholder="name" name="name" value={{selectedOrga.name}} id="organame_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<textarea mdInput placeholder="info" value={{selectedOrga.info}} id="orgainfo_field"></textarea>
+				<textarea mdInput placeholder="description" name="description" value={{selectedOrga.description}} id="orgadescription_field"></textarea>
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<textarea mdInput placeholder="eMail" value={{selectedOrga.eMail}} id="orgaeMail_field"></textarea>
+				<input mdInput placeholder="mail" name="mail" value={{selectedOrga.mail}} id="orgamail_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="telephone" value={{selectedOrga.telephone}} id="orgatelephone_field">
+				<input mdInput placeholder="phone" name="phone" value={{selectedOrga.phone}} id="orgaphone_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput type=datetime-local placeholder="website" value={{selectedOrga.website}} id="orgawebsite_field">
+				<input mdInput placeholder="website" name="website" value={{selectedOrga.website}} id="orgawebsite_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="street" value={{selectedOrga?.addres?.street}} id="orgastreet_field">
+				<input mdInput placeholder="address" name="address" [(ngModel)]="addressOrgaInput" id="orgaaddress_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="housenumber" value={{selectedOrga?.addres?.housenumber}} id="orgahousenumber_field">
+				<input mdInput placeholder="street" [(ngModel)]="selectedOrga.address.street" name="street" value={{selectedOrga?.address?.street}}
+				 id="orgastreet_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="place" value={{selectedOrga?.addres?.place}} id="orgaplace_field">
+				<input mdInput placeholder="housenumber" [(ngModel)]="selectedOrga.address.housenumber" name="housenumber" value={{selectedOrga?.address?.housenumber}}
+				 id="orgahousenumber_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="postalcode" value={{selectedOrga?.addres?.postalcode}} id="orgapostalcode_field">
+				<input mdInput placeholder="place" [(ngModel)]="selectedOrga.address.place" name="place" value={{selectedOrga?.address?.place}}
+				 id="orgaplace_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="postalcode" [(ngModel)]="selectedOrga.address.postalcode" name="postalcode" value={{selectedOrga?.address?.postalcode}}
+				 id="orgapostalcode_field">
+			</md-form-field>
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="image" [(ngModel)]="selectedOrga.image" name="image" value={{selectedOrga.image}} id="orgaimage_field">
 			</md-form-field>
 
 			<button md-raised-button type="submit">Submit</button>

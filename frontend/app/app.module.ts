@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { AngularOpenlayersModule } from 'ngx-openlayers';
-import { MdCardModule, MdSidenavModule, MdButtonModule, MdCheckboxModule, MdTabsModule, MdInputModule, MdTableModule, MdPaginatorModule } from '@angular/material';
+import { MdCardModule, MdSidenavModule, MdButtonModule, MdCheckboxModule, MdTabsModule, MdInputModule, MdTableModule, MdPaginatorModule, MdAutocompleteModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { SuburbService } from './services/suburb.service';
 import { TargetgroupService } from './services/targetgroup.service';
 import { UserService } from './services/user.service';
 import { OrgaService } from './services/organisation.service';
+import { NominatimService } from './services/nominatim.service';
 
 import { AuthGuard } from './admin/login/auth.guard';
 
@@ -61,7 +62,9 @@ import { OrganisationsComponent } from './admin/organisations/organisations.comp
 		MdTabsModule,
 		MdInputModule,
 		MdTableModule,
-		MdPaginatorModule
+		MdPaginatorModule,
+		MdAutocompleteModule,
+		ReactiveFormsModule
 	],
 	providers: [
 		Service,
@@ -72,7 +75,8 @@ import { OrganisationsComponent } from './admin/organisations/organisations.comp
 		TargetgroupService,
 		AuthGuard,
 		UserService,
-		OrgaService
+		OrgaService,
+		NominatimService
 	],
 	bootstrap: [AppComponent]
 })

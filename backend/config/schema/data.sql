@@ -1,10 +1,10 @@
 INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
-(1, 'map_center_longitude', '7.1756'),
-(2, 'map_center_latitude', '51.2640'),
+(1, 'mapcenterLongitude', '7.1756'),
+(2, 'mapcenterLatitude', '51.2640'),
 (3, 'zoomfactor', '13.5'),
-(4, 'map_projection', 'EPSG:4326'),
-(5, 'portal_name', 'Wupportal'),
-(6, 'portal_subtitle', 'Integrationsportal');
+(4, 'mapProjection', 'EPSG:4326'),
+(5, 'portalName', 'Wupportal'),
+(6, 'portalSubtitle', 'Integrationsportal');
 
 INSERT INTO `tags` (`id`, `name`, `description`) VALUES
 (1, 'sport', 'Sportaktivität'),

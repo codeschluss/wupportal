@@ -23,29 +23,59 @@
 				<md-cell *mdCellDef="let row"> {{row.description}} </md-cell>
 			</ng-container>
 
-			<ng-container mdColumnDef="date">
-				<md-header-cell *mdHeaderCellDef> date </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row.date}} </md-cell>
+			<ng-container mdColumnDef="schedule">
+				<md-header-cell *mdHeaderCellDef> schedule </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.schedule}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="show_user">
+				<md-header-cell *mdHeaderCellDef> Contact is public </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.show_user}} </md-cell>
 			</ng-container>
 
 			<ng-container mdColumnDef="street">
 				<md-header-cell *mdHeaderCellDef> street </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.street}} </md-cell>
+				<md-cell *mdCellDef="let row"> {{row?.address?.street}} </md-cell>
 			</ng-container>
 
 			<ng-container mdColumnDef="housenumber">
 				<md-header-cell *mdHeaderCellDef> housenumber </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.housenumber}} </md-cell>
+				<md-cell *mdCellDef="let row"> {{row?.address?.housenumber}} </md-cell>
 			</ng-container>
 
 			<ng-container mdColumnDef="postalcode">
 				<md-header-cell *mdHeaderCellDef> postalcode </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.postalcode}} </md-cell>
+				<md-cell *mdCellDef="let row"> {{row?.address?.postalcode}} </md-cell>
 			</ng-container>
 
 			<ng-container mdColumnDef="place">
 				<md-header-cell *mdHeaderCellDef> place </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.place}} </md-cell>
+				<md-cell *mdCellDef="let row"> {{row?.address?.place}} </md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="tags">
+				<md-header-cell *mdHeaderCellDef> tags </md-header-cell>
+				<md-cell *mdCellDef="let row">
+					<div *ngFor="let tag of row?.tags">
+						{{tag.name}} <small>{{tag.description}}</small>
+					</div>
+				</md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="category">
+				<md-header-cell *mdHeaderCellDef> category </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row?.category?.name}}
+					<small>{{row?.category?.description}}</small>
+				</md-cell>
+			</ng-container>
+
+			<ng-container mdColumnDef="targetgroups">
+				<md-header-cell *mdHeaderCellDef> targetgroups </md-header-cell>
+				<md-cell *mdCellDef="let row">
+					<div *ngFor="let tag of row?.targetgroups">
+						{{targetgroups.name}} <small>{{targetgroups.description}}</small>
+					</div>
+				</md-cell>
 			</ng-container>
 
 			<md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
@@ -59,43 +89,61 @@
 	<div *ngIf="selectedActivity">
 		<form (ngSubmit)="onSubmitActivity()" class="well">
 			<md-form-field class="form-control">
-				<input mdInput type=text placeholder="name" value={{selectedActivity.name}} id="actname_field">
+				<input mdInput name="name" type=text placeholder="name" [(ngModel)]="selectedActivity.name" value={{selectedActivity.name}}
+				 id="actname_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<textarea mdInput placeholder="Description" value={{selectedActivity.description}} id="actdescription_field"></textarea>
+				<textarea mdInput name="description" placeholder="description" [(ngModel)]="selectedActivity.description" value={{selectedActivity.description}}
+				 id="actdescription_field"></textarea>
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput type=datetime-local placeholder="date" value={{selectedActivity.date}} id="actdate_field">
+				<input mdInput name="schedule" type=datetime-local placeholder="schedule" value={{selectedActivity.schedule}} id="actschedule_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="addres" value={{selectedActivity?.addres?.street}} id="actaddres_field">
+				<input mdInput name="address" placeholder="address" [(ngModel)]="addressInput" id="actaddress_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="place" value={{selectedActivity?.addres?.place}} id="actaddres_field">
+				<input mdInput name="street" placeholder="street" [(ngModel)]="selectedActivity.address.street" value={{selectedActivity?.address?.street}}
+				 id="actstreet_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="postalcode" value={{selectedActivity?.addres?.postalcode}} id="actaddres_field">
+				<input mdInput name="housenumber" placeholder="housenumber" [(ngModel)]="selectedActivity.address.housenumber" value={{selectedActivity?.address?.housenumber}}
+				 id="acthousenumber_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<textarea mdInput placeholder="tags" value={{selectedActivity.tags}} id="actdescription_field"></textarea>
+				<input mdInput name="place" placeholder="place" [(ngModel)]="selectedActivity.address.place" value={{selectedActivity?.addres?.place}}
+				 id="actaddres_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="category" value={{selectedActivity?.category}} id="actcategory_field">
+				<input mdInput name="postalcode" placeholder="postalcode" [(ngModel)]="selectedActivity.address.postalcode" value={{selectedActivity?.address?.postalcode}}
+				 id="actaddres_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="showinstructor" value={{selectedActivity.showInstructor}} id="actshowinstructor_field">
+				<input mdInput name="category" placeholder="category" [(ngModel)]="selectedActivity.category" value={{selectedActivity?.category?.name}}
+				 id="actcategory_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<input mdInput placeholder="organisation" value={{selectedActivity?.provider?.organisation}} id="actorganisation_field">
+				<input mdInput name="show_user" placeholder="contact is public" [(ngModel)]="selectedActivity.show_user" value={{selectedActivity.show_user}}
+				 id="actshowinstructor_field">
+			</md-form-field>
+
+			<md-form-field class="auto-completion-full-width">
+				<input mdInput name="organisation" placeholder="organisation" aria-label="organisation" [mdAutocomplete]="auto" [formControl]="orgaCtrl">
+				<md-autocomplete #auto="mdAutocomplete">
+					<md-option *ngFor="let orga of filteredOrgas | async" [value]="orga.name">
+						<span>{{orga.name}}</span> |
+						<small>{{orga?.website}}</small>
+					</md-option>
+				</md-autocomplete>
 			</md-form-field>
 			<button md-raised-button type="submit">Submit</button>
 		</form>

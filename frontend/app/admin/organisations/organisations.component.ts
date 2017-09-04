@@ -10,6 +10,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import { Organisation } from '../../common/model/organisation';
 import { OrgaService } from '../../services/organisation.service';
+import { NominatimService } from '../../services/nominatim.service';
 import { Headers, Http } from '@angular/http';
 
 @Component({
@@ -21,13 +22,15 @@ import { Headers, Http } from '@angular/http';
 export class OrganisationsComponent {
 	protected headers = new Headers({ 'Accept': 'application/json', 'Access-Control-Allow-Origin': '*' });
 	public selectedOrga: Organisation;
-	displayedColumns = ['id', 'name', 'info', 'eMail', 'telephone', 'website', 'street', 'housenumber', 'postalcode', 'place'];
+	displayedColumns = ['id', 'name', 'description', 'mail', 'phone', 'website', 'image', 'street', 'housenumber', 'postalcode', 'place'];
 	organisationsDatabase = new OrganisationsDatabase(this.organisationService);
 	dataSource: OrganisationsDataSource | null;
+	public addressOrgaInput: string;
 
 	constructor(
 		private organisationService: OrgaService,
-		private http: Http
+		public nominatimService: NominatimService,
+		private http: Http,
 	) { }
 
 	@ViewChild('filter') filter: ElementRef;
@@ -60,6 +63,17 @@ export class OrganisationsComponent {
 			).subscribe(newActivity => this.selectedOrga = newActivity.json());
 		}
 		else {
+			this.nominatimService.getGeoDates(this.addressOrgaInput).then(results => {
+				results.forEach(geoDate => {
+					this.selectedOrga.address.latitude = geoDate['lat'];
+					this.selectedOrga.address.longitude = geoDate['lon'];
+					this.selectedOrga.address.housenumber = geoDate['address']['house_number'];
+					this.selectedOrga.address.postalcode = geoDate['address']['postcode'];
+					this.selectedOrga.address.place = geoDate['address']['city'];
+					this.selectedOrga.address.street = geoDate['address']['road'];
+				});
+			});
+
 			return this.http.post('http://localhost:8765' + '/organisation/',
 				JSON.stringify(this.selectedOrga)
 				, { headers: this.headers }

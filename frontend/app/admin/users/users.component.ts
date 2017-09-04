@@ -15,12 +15,12 @@ import { Headers, Http } from '@angular/http';
 @Component({
 	selector: 'editusers',
 	styleUrls: ['../table-basic.css'],
-	templateUrl: './usersform.html'
+	templateUrl: './usersform.html',
 })
 export class UsersComponent {
 	protected headers = new Headers({ 'Accept': 'application/json', 'Access-Control-Allow-Origin': '*' });
 	public selectedUser: User;
-	displayedColumns = ['id', 'username', 'mail', 'telephone', 'role', 'street', 'housenumber', 'postalcode', 'place'];
+	displayedColumns = ['id', 'username', 'phone', 'admin', 'fullname'];
 	usersDatabase = new UsersDatabase(this.userService);
 	dataSource: UsersDataSource | null;
 

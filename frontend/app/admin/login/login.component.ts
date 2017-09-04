@@ -18,7 +18,7 @@ export class LoginComponent {
 
 	fakeLogin(): void {
 		if (this.userNameInput === 'john' && this.passwordInput === 'doe') {
-			this.router.navigate(['/admin']);
+			this.router.navigate(['/admin1']);
 			console.log('you are now logged in');
 		} else {
 			console.log('login rejected');

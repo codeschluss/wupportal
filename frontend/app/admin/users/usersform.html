@@ -13,44 +13,24 @@
 				<md-cell *mdCellDef="let row"> {{row.id}} </md-cell>
 			</ng-container>
 
-			<ng-container mdColumnDef="name">
-				<md-header-cell *mdHeaderCellDef> name </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row.name}} </md-cell>
+			<ng-container mdColumnDef="username">
+				<md-header-cell *mdHeaderCellDef> username </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.username}} </md-cell>
 			</ng-container>
 
-			<ng-container mdColumnDef="eMail">
-				<md-header-cell *mdHeaderCellDef> eMail </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row.eMail}} </md-cell>
+			<ng-container mdColumnDef="phone">
+				<md-header-cell *mdHeaderCellDef> phone </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.phone}} </md-cell>
 			</ng-container>
 
-			<ng-container mdColumnDef="telephone">
-				<md-header-cell *mdHeaderCellDef> telephone </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row.telephone}} </md-cell>
+			<ng-container mdColumnDef="admin">
+				<md-header-cell *mdHeaderCellDef> admin </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.admin}} </md-cell>
 			</ng-container>
 
-			<ng-container mdColumnDef="role">
-				<md-header-cell *mdHeaderCellDef> role </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.role?.typeName}} </md-cell>
-			</ng-container>
-
-			<ng-container mdColumnDef="street">
-				<md-header-cell *mdHeaderCellDef> street </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.street}} </md-cell>
-			</ng-container>
-
-			<ng-container mdColumnDef="housenumber">
-				<md-header-cell *mdHeaderCellDef> housenumber </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.housenumber}} </md-cell>
-			</ng-container>
-
-			<ng-container mdColumnDef="postalcode">
-				<md-header-cell *mdHeaderCellDef> postalcode </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.postalcode}} </md-cell>
-			</ng-container>
-
-			<ng-container mdColumnDef="place">
-				<md-header-cell *mdHeaderCellDef> place </md-header-cell>
-				<md-cell *mdCellDef="let row"> {{row?.addres?.place}} </md-cell>
+			<ng-container mdColumnDef="fullname">
+				<md-header-cell *mdHeaderCellDef> fullname </md-header-cell>
+				<md-cell *mdCellDef="let row"> {{row.fullname}} </md-cell>
 			</ng-container>
 
 			<md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
@@ -66,39 +46,16 @@
 		<form (ngSubmit)="onSubmitUser()" class="well">
 
 			<md-form-field class="form-control">
-				<input mdInput type=text placeholder="name" value={{selectedUser.name}} id="username_field">
+				<input mdInput type=text placeholder="username" value={{selectedUser.username}} id="username_field">
+			</md-form-field>
+
+
+			<md-form-field class="form-control">
+				<input mdInput placeholder="phone" value={{selectedUser.phone}} id="userphone_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
-				<textarea mdInput placeholder="info" value={{selectedUser.info}} id="userinfo_field"></textarea>
-			</md-form-field>
-
-			<md-form-field class="form-control">
-				<textarea mdInput placeholder="eMail" value={{selectedUser.eMail}} id="usereMail_field"></textarea>
-			</md-form-field>
-
-			<md-form-field class="form-control">
-				<input mdInput placeholder="telephone" value={{selectedUser.telephone}} id="usertelephone_field">
-			</md-form-field>
-
-			<md-form-field class="form-control">
-				<input mdInput type=datetime-local placeholder="website" value={{selectedUser.website}} id="userwebsite_field">
-			</md-form-field>
-
-			<md-form-field class="form-control">
-				<input mdInput placeholder="street" value={{selectedUser?.addres?.street}} id="userstreet_field">
-			</md-form-field>
-
-			<md-form-field class="form-control">
-				<input mdInput placeholder="housenumber" value={{selectedUser?.addres?.housenumber}} id="userhousenumber_field">
-			</md-form-field>
-
-			<md-form-field class="form-control">
-				<input mdInput placeholder="place" value={{selectedUser?.addres?.place}} id="userplace_field">
-			</md-form-field>
-
-			<md-form-field class="form-control">
-				<input mdInput placeholder="postalcode" value={{selectedUser?.addres?.postalcode}} id="userpostalcode_field">
+				<input mdInput placeholder="fullname" value={{selectedUser.fullname}} id="userfullname_field">
 			</md-form-field>
 
 			<button md-raised-button type="submit">Submit</button>

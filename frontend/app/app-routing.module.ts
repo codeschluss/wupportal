@@ -15,10 +15,8 @@ import { SelectivePreloadingStrategy } from './services/selective-preloading-str
 const appRoutes: Routes = [
 	{ path: '', component: MapComponent },
 	{ path: 'login', component: LoginComponent },
-	{ path: 'admin1', component: AdminComponent, canActivate: [AuthGuard] },
-	// { path: 'admin/activities', component: ActivitiesComponent, canActivate: [AuthGuard] },
-	// { path: 'admin/organisations', component: OrganisationsComponent, canActivate: [AuthGuard] },
-	// { path: 'admin/users', component: UsersComponent, canActivate: [AuthGuard] },
+	{ path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+	// redirects not mapped path to landingPage
 	{ path: '**', redirectTo: '' }
 ];
 

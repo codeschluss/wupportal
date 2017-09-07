@@ -12,52 +12,63 @@ import 'rxjs/add/observable/fromEvent';
 import { Activity } from '../../common/model/activity';
 import { ActivityService } from '../../services/activity.service';
 import { Organisation } from '../../common/model/organisation';
-import { OrgaService } from '../../services/organisation.service';
+import { OrgaService, OrganisationsDatabase } from '../../services/organisation.service';
 import { NominatimService } from '../../services/nominatim.service';
-import { Headers, Http } from '@angular/http';
+
 
 @Component({
-	selector: 'editact',
+	selector: 'edit-acts',
 	styleUrls: ['../table-basic.css'],
 	templateUrl: 'edit.activities.component.html'
 })
 
-export class ActivitiesComponent {
-	protected headers = new Headers({ 'Accept': 'application/json', 'Access-Control-Allow-Origin': '*' });
-	public selectedActivity: Activity;
-	displayedColumns = ['id', 'name', 'description', 'schedule', 'show_user', 'street', 'housenumber', 'postalcode', 'place', 'tags', 'category', 'targetgroups'];
-	activitiesDatabase = new ActivitiesDatabase(this.activityService);
-	dataSource: ActivityDataSource | null;
+export class ActivitiesComponent implements OnInit {
 
-	// autocompletion
+	@ViewChild('filter') filter: ElementRef;
+
+	public selectedActivity: Activity;
+	activitiesDatabase = this.activityService.getActivitiesDatabase();
+	public dataSource = this.activityService.getActivitiesDataSource();
+	dataChange: BehaviorSubject<Organisation[]> = new BehaviorSubject<Organisation[]>([]);
+	displayedColumns =
+	[
+		'id',
+		'name',
+		'description',
+		'schedule',
+		'show_user',
+		'street',
+		'housenumber',
+		'postalcode',
+		'place',
+		'tags',
+		'category',
+		'targetgroups'
+	];
+
+	// for autocompletion
 	filteredOrgas: Observable<Organisation[]>;
-	orgas: Organisation[];
+	organisationDataBase = this.organisationService.getOrganisationsDatabase();
+	orgas = this.organisationDataBase.data;
 	orgaCtrl: FormControl = new FormControl();
+
 	public addressInput: string;
 
 	constructor(
 		public activityService: ActivityService,
-		public organisationService: OrgaService,
 		public nominatimService: NominatimService,
-		private http: Http
+		public organisationService: OrgaService
 	) { }
 
 	filterOrgas(input: string): Organisation[] {
+		this.orgas = this.organisationDataBase.data;
+		this.dataChange = this.organisationDataBase.change;
 		return this.orgas.filter(orga =>
 			orga.name.toLowerCase().indexOf(input.toLowerCase()) === 0);
 	}
 
-	@ViewChild('filter') filter: ElementRef;
-
 	ngOnInit() {
-		this.orgas = new Array();
-		this.organisationService.getOrgas().then(orgas => {
-			orgas.forEach(orga => {
-				this.orgas.push(orga);
-			});
-		});
-
-		this.dataSource = new ActivityDataSource(this.activitiesDatabase);
+		this.dataSource = this.activityService.getActivitiesDataSource();
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.debounceTime(150)
 			.distinctUntilChanged()
@@ -65,10 +76,13 @@ export class ActivitiesComponent {
 				if (!this.dataSource) { return; }
 				this.dataSource.filter = this.filter.nativeElement.value;
 			});
-
 		this.filteredOrgas = this.orgaCtrl.valueChanges
 			.startWith(null)
 			.map(orga => orga ? this.filterOrgas(orga) : this.orgas.slice());
+	}
+
+	selectActivity(activity: Activity) {
+		this.selectedActivity = activity;
 	}
 
 	createActivity(): void {
@@ -79,82 +93,23 @@ export class ActivitiesComponent {
 		this.selectedActivity = null;
 	}
 
-	// TODO: both methods should move to ActivityService
 	onSubmitActivity() {
 		if (this.selectedActivity.id) {
-			return this.http.put('http://localhost:4200/activites/' +
-				this.selectedActivity.id,
-				JSON.stringify(this.selectedActivity)
-				, { headers: this.headers }
-			).subscribe(newActivity => this.selectedActivity = newActivity.json());
-		}
-		else {
-			this.nominatimService.getGeoDates(this.addressInput).then(results => {
-				results.forEach(geoDate => {
-					this.selectedActivity.address.latitude = geoDate['lat'];
-					this.selectedActivity.address.longitude = geoDate['lon'];
-					this.selectedActivity.address.housenumber = geoDate['address']['house_number'];
-					this.selectedActivity.address.postalcode = geoDate['address']['postcode'];
-					this.selectedActivity.address.place = geoDate['address']['city'];
-					this.selectedActivity.address.street = geoDate['address']['road'];
-				});
-			});
-
-			return this.http.post('http://localhost:4200/activites/',
-				JSON.stringify(this.selectedActivity)
-				, { headers: this.headers }
-			).subscribe(newActivity => this.selectedActivity = newActivity.json());
+			this.selectedActivity.address = this.nominatimService.getAddress(this.addressInput);
+			this.activityService.editActivity(this.selectedActivity);
+			this.deselectActivity();
+		} else {
+			this.selectedActivity.address = this.nominatimService.getAddress(this.addressInput);
+			this.activityService.postActivity(this.selectedActivity);
+			this.dataSource = this.activityService.getActivitiesDataSource();
+			this.deselectActivity();
 		}
 	}
 
-	selectActivity(activity: Activity) {
-		this.selectedActivity = activity;
+	deleteUser() {
+		this.activityService.deleteActivity(this.selectedActivity);
+		this.dataSource = this.activityService.getActivitiesDataSource();
+		this.deselectActivity();
 	}
-
-}
-
-export class ActivitiesDatabase {
-	public activities: Activity[];
-	dataChange: BehaviorSubject<Activity[]> = new BehaviorSubject<Activity[]>([]);
-
-	constructor(private activityService: ActivityService) {
-		this.activities = new Array();
-		this.activityService.getActivities().then(activities => {
-			activities.forEach(act => {
-				this.activities.push(act);
-				this.dataChange.next(this.activities);
-			});
-		});
-	}
-
-	get data(): Activity[] { return this.dataChange.value; }
-}
-
-
-export class ActivityDataSource extends DataSource<Activity> {
-	_filterChange = new BehaviorSubject('');
-	get filter(): string { return this._filterChange.value; }
-	set filter(filter: string) { this._filterChange.next(filter); }
-
-	constructor(private _activitiesDatabase: ActivitiesDatabase) {
-		super();
-	}
-
-	connect(): Observable<Activity[]> {
-		const displayDataChanges = [
-			this._activitiesDatabase.dataChange,
-			this._filterChange,
-		];
-		return Observable.merge(...displayDataChanges).map(() => {
-			return this._activitiesDatabase.data.slice().filter((item: Activity) => {
-				const searchStr = (item.name).toLowerCase();
-				return searchStr.indexOf(this.filter.toLowerCase()) != -1;
-			});
-		});
-	}
-
-	disconnect() { }
-
-
 
 }

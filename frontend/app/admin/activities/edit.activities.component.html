@@ -72,8 +72,8 @@
 			<ng-container mdColumnDef="targetgroups">
 				<md-header-cell *mdHeaderCellDef> targetgroups </md-header-cell>
 				<md-cell *mdCellDef="let row">
-					<div *ngFor="let tag of row?.targetgroups">
-						{{targetgroups.name}} <small>{{targetgroups.description}}</small>
+					<div *ngFor="let targetgroup of row?.targetgroups">
+						{{targetgroup.name}} <small>{{targetgroup.description}}</small>
 					</div>
 				</md-cell>
 			</ng-container>
@@ -137,7 +137,7 @@
 			</md-form-field>
 
 			<md-form-field class="auto-completion-full-width">
-				<input mdInput name="organisation" placeholder="organisation" aria-label="organisation" [mdAutocomplete]="auto" [formControl]="orgaCtrl">
+				<input mdInput name="organisation" placeholder="organisation" aria-label="organisation" [formControl]="orgaCtrl" [mdAutocomplete]="auto">
 				<md-autocomplete #auto="mdAutocomplete">
 					<md-option *ngFor="let orga of filteredOrgas | async" [value]="orga.name">
 						<span>{{orga.name}}</span> |

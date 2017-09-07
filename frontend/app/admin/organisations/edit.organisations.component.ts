@@ -2,41 +2,36 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import { Organisation } from '../../common/model/organisation';
 import { OrgaService } from '../../services/organisation.service';
 import { NominatimService } from '../../services/nominatim.service';
-import { Headers, Http } from '@angular/http';
 
 @Component({
-	selector: 'editorga',
+	selector: 'edit-orgas',
 	styleUrls: ['../table-basic.css'],
 	templateUrl: './edit.organisations.component.html',
 })
 
-export class OrganisationsComponent {
-	protected headers = new Headers({ 'Accept': 'application/json', 'Access-Control-Allow-Origin': '*' });
+export class OrganisationsComponent implements OnInit {
+	@ViewChild('filter') filter: ElementRef;
+
 	public selectedOrga: Organisation;
 	displayedColumns = ['id', 'name', 'description', 'mail', 'phone', 'website', 'image', 'street', 'housenumber', 'postalcode', 'place'];
-	organisationsDatabase = new OrganisationsDatabase(this.organisationService);
-	dataSource: OrganisationsDataSource | null;
+	organisationsDatabase = this.organisationService.getOrganisationsDatabase();
+	dataSource = this.organisationService.getOrganisationsDataSource();
 	public addressOrgaInput: string;
 
 	constructor(
 		private organisationService: OrgaService,
-		public nominatimService: NominatimService,
-		private http: Http,
+		public nominatimService: NominatimService
 	) { }
 
-	@ViewChild('filter') filter: ElementRef;
 
 	ngOnInit() {
-		this.dataSource = new OrganisationsDataSource(this.organisationsDatabase);
+		this.dataSource = this.organisationService.getOrganisationsDataSource();
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.debounceTime(150)
 			.distinctUntilChanged()
@@ -44,6 +39,10 @@ export class OrganisationsComponent {
 				if (!this.dataSource) { return; }
 				this.dataSource.filter = this.filter.nativeElement.value;
 			});
+	}
+
+	selectOrganisation(organisation: Organisation) {
+		this.selectedOrga = organisation;
 	}
 
 	createOrganisation(): void {
@@ -56,74 +55,19 @@ export class OrganisationsComponent {
 
 	onSubmitOrganisation() {
 		if (this.selectedOrga.id) {
-			return this.http.put('http://localhost:4200' + '/organisations/' +
-				this.selectedOrga.id,
-				JSON.stringify(this.selectedOrga)
-				, { headers: this.headers }
-			).subscribe(newActivity => this.selectedOrga = newActivity.json());
-		}
-		else {
-			this.nominatimService.getGeoDates(this.addressOrgaInput).then(results => {
-				results.forEach(geoDate => {
-					this.selectedOrga.address.latitude = geoDate['lat'];
-					this.selectedOrga.address.longitude = geoDate['lon'];
-					this.selectedOrga.address.housenumber = geoDate['address']['house_number'];
-					this.selectedOrga.address.postalcode = geoDate['address']['postcode'];
-					this.selectedOrga.address.place = geoDate['address']['city'];
-					this.selectedOrga.address.street = geoDate['address']['road'];
-				});
-			});
-
-			return this.http.post('http://localhost:4200' + '/organisations/',
-				JSON.stringify(this.selectedOrga)
-				, { headers: this.headers }
-			).subscribe(newOrganisation => this.selectedOrga = newOrganisation.json());
+			this.selectedOrga.address = this.nominatimService.getAddress(this.addressOrgaInput);
+			this.organisationService.editOrganisation(this.selectedOrga);
+			this.deselectOrganisation();
+		} else {
+			this.selectedOrga.address = this.nominatimService.getAddress(this.addressOrgaInput);
+			this.organisationService.postOrganisation(this.selectedOrga);
+			this.deselectOrganisation();
 		}
 	}
 
-	selectOrganisation(organisation: Organisation) {
-		this.selectedOrga = organisation;
+	deleteOrganisation() {
+		this.organisationService.deleteOrganisation(this.selectedOrga);
+		this.dataSource = this.organisationService.getOrganisationsDataSource();
+		this.deselectOrganisation();
 	}
-}
-
-export class OrganisationsDatabase {
-	public organisations: Organisation[];
-	dataChange: BehaviorSubject<Organisation[]> = new BehaviorSubject<Organisation[]>([]);
-
-	constructor(private organisationService: OrgaService) {
-		this.organisations = new Array();
-		this.organisationService.getOrgas().then(orgas => {
-			orgas.forEach(orga => {
-				this.organisations.push(orga);
-				this.dataChange.next(this.organisations);
-			});
-		});
-	}
-
-	get data(): Organisation[] { return this.dataChange.value; }
-}
-
-export class OrganisationsDataSource extends DataSource<any> {
-	_filterChange = new BehaviorSubject('');
-	get filter(): string { return this._filterChange.value; }
-	set filter(filter: string) { this._filterChange.next(filter); }
-
-	constructor(private _organisationsDatabase: OrganisationsDatabase) {
-		super();
-	}
-
-	connect(): Observable<Organisation[]> {
-		const displayDataChanges = [
-			this._organisationsDatabase.dataChange,
-			this._filterChange,
-		];
-		return Observable.merge(...displayDataChanges).map(() => {
-			return this._organisationsDatabase.data.slice().filter((item: Organisation) => {
-				const searchStr = (item.name).toLowerCase();
-				return searchStr.indexOf(this.filter.toLowerCase()) != -1;
-			});
-		});
-	}
-
-	disconnect() { }
 }

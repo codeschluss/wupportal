@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 export class Service {
 
 	protected baseURL = '/';
-	protected headers = new Headers({ 'Accept': 'application/json' });
+	protected headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
 
 	constructor(protected http: Http) { }
 

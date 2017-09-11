@@ -107,7 +107,7 @@ CREATE TABLE `activities` (
 		ON UPDATE CASCADE ON DELETE CASCADE,
 
 	CONSTRAINT `fkey_activity_category`
-		FOREIGN KEY (`category_id`) REFERENCES `addresses` (`id`)
+		FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 		ON UPDATE CASCADE
 );
 

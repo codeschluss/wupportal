@@ -32,7 +32,7 @@
 	</md-sidenav>
 	<a class="enable-pointer" routerLink='/login' routerLinkActive="login">LOGIN</a>
 	<div class="enable-pointer" id="search-area">
-		<input [(ngModel)]="freeSearch" placeholder="search" />
+		<input [(ngModel)]="freeSearch" placeholder="search">
 		<button md-raised-button (click)="onFreeSearch()">search</button>
 		<button md-raised-button (click)="sidenavSearch.toggle()">advanced search</button>
 	</div>

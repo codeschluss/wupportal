@@ -21,6 +21,11 @@ export class Activity {
 
 	constructor() {
 		this.address = new Address();
+		this.category = new Category();
+		this.provider = new Provider();
+		this.tags = new Array();
+		this.targetGroups = new Array();
+		this.translations = new Array();
 	}
 
 }

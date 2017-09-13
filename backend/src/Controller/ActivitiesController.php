@@ -21,7 +21,7 @@ class ActivitiesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Addresses', 'Providers', 'Categories']
+            'contain' => ['Addresses', 'Providers', 'Categories', 'TargetGroups', 'Tags']
         ];
         $activities = $this->paginate($this->Activities);
 

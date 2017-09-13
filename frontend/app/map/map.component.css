@@ -7,6 +7,13 @@ aol-map {
 	overflow: hidden;
 }
 
+input {
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	height: 32px;
+}
+
 md-sidenav-container {
 	left: 0;
 	top: 0;
@@ -18,6 +25,10 @@ md-sidenav-container {
 	overflow: hidden;
 }
 
+md-sidenav {
+	max-width: 400px;
+}
+
 .enable-pointer {
 	pointer-events: all;
 }
@@ -26,8 +37,12 @@ md-sidenav-container {
 	width: 400px;
 }
 
+#search-area {
+	width: 400px;
+}
+
 .active-activity ::ng-deep md-card {
-	background-color: red;
+	background-color: rgb(255, 191, 73);
 }
 
 aol-map ::ng-deep {
@@ -41,7 +56,7 @@ aol-map ::ng-deep {
 }
 
 .active-marker {
-	background-color: red;
+	background-color: rgb(255, 191, 73);
 	width: 42px;
 	height: 42px;
 }

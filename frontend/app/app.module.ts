@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AngularOpenlayersModule } from 'ngx-openlayers';
-import { MdCardModule, MdSidenavModule, MdButtonModule, MdCheckboxModule, MdTabsModule, MdInputModule, MdTableModule, MdPaginatorModule, MdAutocompleteModule } from '@angular/material';
+import { MdCardModule, MdSidenavModule, MdButtonModule, MdCheckboxModule, MdTabsModule, MdInputModule, MdTableModule, MdPaginatorModule, MdAutocompleteModule, MdChipsModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -64,6 +64,7 @@ import { OrganisationsComponent } from './admin/organisations/edit.organisations
 		MdTableModule,
 		MdPaginatorModule,
 		MdAutocompleteModule,
+		MdChipsModule,
 		ReactiveFormsModule
 	],
 	providers: [

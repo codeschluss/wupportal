@@ -11,8 +11,8 @@ export class ConfigurationService extends Service {
 		return this.http.get(this.baseURL + 'configurations/', { headers: this.headers })
 			.toPromise()
 			.then(response => {
-				var configResp = response.json().configuration as Configuration;
-				var config = new Configuration();
+				const configResp = response.json().configuration as Configuration;
+				let config = new Configuration();
 				config = configResp;
 				config.mapcenterLatitude = Number(configResp.mapcenterLatitude);
 				config.mapcenterLongitude = Number(configResp.mapcenterLongitude);

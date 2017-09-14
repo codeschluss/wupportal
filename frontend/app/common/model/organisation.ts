@@ -11,4 +11,8 @@ export class Organisation {
 	public image: any;
 	public address: Address;
 
+	constructor() {
+		this.address = new Address();
+	}
+
 }

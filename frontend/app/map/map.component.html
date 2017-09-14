@@ -37,7 +37,7 @@
 		<button md-raised-button (click)="sidenavSearch.toggle()">advanced search</button>
 	</div>
 	<div class="enable-pointer" id="activity-summary" *ngIf="activities">
-		<activity-summary *ngFor="let activity of activities" (click)="onSelect(activity)" [class.active-activity]="activity.id == selectedActivity.id"
+		<activity-summary (clicked)="onSelect($event)" *ngFor="let activity of activities" (click)="onSelect(activity)" [class.active-activity]="activity.id == selectedActivity.id"
 		  [activity]="activity"></activity-summary>
 	</div>
 </md-sidenav-container>

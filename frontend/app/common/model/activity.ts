@@ -16,7 +16,7 @@ export class Activity {
 	public provider: Provider;
 	public category: Category;
 	public tags: Tag[];
-	public targetGroups: TargetGroup[];
+	public target_groups: TargetGroup[];
 	public translations: Translation[];
 
 	constructor() {
@@ -24,7 +24,7 @@ export class Activity {
 		this.category = new Category();
 		this.provider = new Provider();
 		this.tags = new Array();
-		this.targetGroups = new Array();
+		this.target_groups = new Array();
 		this.translations = new Array();
 	}
 

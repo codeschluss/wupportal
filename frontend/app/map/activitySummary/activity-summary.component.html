@@ -5,18 +5,22 @@
 	</header>
 	<section>
 		<section class="summary-targetgroups">
-			<span>for target groups:</span>
-			<span *ngFor="let targetgroup of activity.targetGroups">
+			<span>Target Groups:</span>
+			<span *ngFor="let targetgroup of activity.target_groups">
 				{{targetgroup.name}}
 			</span>
 		</section>
-		<time>
-			{{activity.schedule}}
-		</time>
+		<section>
+			<span>Schedule:</span>
+			<time>{{activity.schedule}}</time>
+		</section>
 	</section>
 	<md-chip-list>
-		<md-chip color="accent" *ngFor="let tag of activity.tags">
+		<md-chip color="primary" *ngFor="let tag of activity.tags | slice:0:maxTags" (click)="onChipClick()">
 			{{tag.name}}
+		</md-chip>
+		<md-chip color="primary" *ngIf="activity.tags.length > maxTags" (click)="onChipClick()">
+			mehr...
 		</md-chip>
 	</md-chip-list>
 </md-card>

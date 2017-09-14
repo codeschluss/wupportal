@@ -42,7 +42,8 @@ md-sidenav {
 }
 
 .active-activity ::ng-deep md-card {
-	background-color: rgb(255, 191, 73);
+	background-color: rgb(105, 123, 179);
+	color: white;
 }
 
 aol-map ::ng-deep {
@@ -56,7 +57,7 @@ aol-map ::ng-deep {
 }
 
 .active-marker {
-	background-color: rgb(255, 191, 73);
+	background-color: rgb(105, 123, 179);
 	width: 42px;
 	height: 42px;
 }

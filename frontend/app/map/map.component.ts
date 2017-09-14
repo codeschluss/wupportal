@@ -62,14 +62,12 @@ export class MapComponent implements OnInit {
 			}
 		}
 	}
-
 	// TODO: just prototyping
 	onFreeSearch(): void {
 		this.activities = new Array();
 		this.activityService.getActivities().then(activities => {
 			activities.forEach(act => {
-				console.debug("activity: ", act);
-				if (act.name == this.freeSearch) {
+				if (act.name === this.freeSearch) {
 					this.activities.push(act);
 				}
 			});

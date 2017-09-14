@@ -8,4 +8,9 @@ export class Provider {
 	public organisation: Organisation;
 	public user: User;
 
+	constructor() {
+		this.organisation = new Organisation();
+		this.user = new User();
+	}
+
 }

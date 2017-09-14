@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { MdInputModule, MdFormFieldControl } from '@angular/material';
 
 @Component({
-	templateUrl: './login.html'
+	templateUrl: './login.component.html'
 })
 export class LoginComponent {
 	public userNameInput: string;

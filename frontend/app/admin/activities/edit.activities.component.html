@@ -90,12 +90,12 @@
 		<form (ngSubmit)="onSubmitActivity()" class="well">
 			<md-form-field class="form-control">
 				<input mdInput name="name" type=text placeholder="name" [(ngModel)]="selectedActivity.name" value={{selectedActivity.name}}
-				 id="actname_field">
+				  id="actname_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
 				<textarea mdInput name="description" placeholder="description" [(ngModel)]="selectedActivity.description" value={{selectedActivity.description}}
-				 id="actdescription_field"></textarea>
+				  id="actdescription_field"></textarea>
 			</md-form-field>
 
 			<md-form-field class="form-control">
@@ -108,36 +108,36 @@
 
 			<md-form-field class="form-control">
 				<input mdInput name="street" placeholder="street" [(ngModel)]="selectedActivity.address.street" value={{selectedActivity?.address?.street}}
-				 id="actstreet_field">
+				  id="actstreet_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
 				<input mdInput name="housenumber" placeholder="housenumber" [(ngModel)]="selectedActivity.address.housenumber" value={{selectedActivity?.address?.housenumber}}
-				 id="acthousenumber_field">
+				  id="acthousenumber_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
 				<input mdInput name="place" placeholder="place" [(ngModel)]="selectedActivity.address.place" value={{selectedActivity?.addres?.place}}
-				 id="actaddres_field">
+				  id="actaddres_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
 				<input mdInput name="postalcode" placeholder="postalcode" [(ngModel)]="selectedActivity.address.postalcode" value={{selectedActivity?.address?.postalcode}}
-				 id="actaddres_field">
+				  id="actaddres_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
 				<input mdInput name="category" placeholder="category" [(ngModel)]="selectedActivity.category" value={{selectedActivity?.category?.name}}
-				 id="actcategory_field">
+				  id="actcategory_field">
 			</md-form-field>
 
 			<md-form-field class="form-control">
 				<input mdInput name="show_user" placeholder="contact is public" [(ngModel)]="selectedActivity.show_user" value={{selectedActivity.show_user}}
-				 id="actshowinstructor_field">
+				  id="actshowinstructor_field">
 			</md-form-field>
 
 			<md-form-field class="auto-completion-full-width">
-				<input mdInput name="organisation" placeholder="organisation" aria-label="organisation" [formControl]="orgaCtrl" [mdAutocomplete]="auto">
+				<input mdInput name="organisation" placeholder="organisation" aria-label="organisation" [formControl]="orgaCtrl">
 				<md-autocomplete #auto="mdAutocomplete">
 					<md-option *ngFor="let orga of filteredOrgas | async" [value]="orga.name">
 						<span>{{orga.name}}</span> |

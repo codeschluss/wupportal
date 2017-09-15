@@ -10,9 +10,9 @@ import { Observable } from 'rxjs/Observable';
 @Component({
 	selector: 'edit-users',
 	styleUrls: ['../table-basic.css'],
-	templateUrl: './edit.users.component.html'
+	templateUrl: './user-edit.component.html'
 })
-export class UsersComponent implements OnInit {
+export class UserEditComponent implements OnInit {
 	@ViewChild('filter') filter: ElementRef;
 
 	public selectedUser: User;

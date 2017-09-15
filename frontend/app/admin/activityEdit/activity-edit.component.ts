@@ -19,10 +19,10 @@ import { NominatimService } from '../../services/nominatim.service';
 @Component({
 	selector: 'edit-acts',
 	styleUrls: ['../table-basic.css'],
-	templateUrl: 'edit.activities.component.html'
+	templateUrl: 'activity-edit.component.html'
 })
 
-export class ActivitiesComponent implements OnInit {
+export class ActivityEditComponent implements OnInit {
 
 	@ViewChild('filter') filter: ElementRef;
 

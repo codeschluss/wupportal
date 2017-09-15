@@ -12,10 +12,10 @@ import { NominatimService } from '../../services/nominatim.service';
 @Component({
 	selector: 'edit-orgas',
 	styleUrls: ['../table-basic.css'],
-	templateUrl: './edit.organisations.component.html',
+	templateUrl: './organisation-edit.component.html',
 })
 
-export class OrganisationsComponent implements OnInit {
+export class OrganisationEditComponent implements OnInit {
 	@ViewChild('filter') filter: ElementRef;
 
 	public selectedOrga: Organisation;

@@ -44,41 +44,27 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->setExtensions(['json']);
+	$routes->resources('Activities');
+	$routes->resources('ActivitiesTags');
+	$routes->resources('ActivitiesTargetGroups');
+	$routes->resources('ActivitiesTranslations');
+	$routes->resources('Addresses');
+	$routes->resources('Categories');
+	$routes->resources('Configurations');
+	$routes->resources('Organisations');
+	$routes->resources('Providers');
+	$routes->resources('Suburbs');
+	$routes->resources('Tags');
+	$routes->resources('TargetGroups');
+	$routes->resources('Translations');
+	$routes->resources('Users');
 
-		$routes->extensions(['json']);
-		$routes->resources('Address');
-		$routes->resources('Category');
-		$routes->resources('Configuration');
-		$routes->resources('Organisation');
-		$routes->resources('Provider');
-		$routes->resources('Suburb');
-		$routes->resources('Tag');
-		$routes->resources('TargetGroup');
-		$routes->resources('User');
-		$routes->resources('Translation');
-		$routes->resources('Activity');
-		$routes->resources('ActivitiesTag');
-		$routes->resources('ActivitiesTargetGroup');
-		$routes->resources('ActivitiesTranslation');
-
-    /**
-     * Connect catchall routes for all controllers.
-     *
-     * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for
-     *    `$routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'DashedRoute']);`
-     *    `$routes->connect('/:controller/:action/*', [], ['routeClass' => 'DashedRoute']);`
-     *
-     * Any route class can be used with this method, such as:
-     * - DashedRoute
-     * - InflectedRoute
-     * - Route
-     * - Or your own route class
-     *
-     * You can remove these routes once you've connected the
-     * routes you want in your application.
-     */
-    $routes->fallbacks(DashedRoute::class);
+	$routes->connect(
+		'/:path',
+		['controller' => 'Pages', 'action' => 'display', 'home'],
+		['path' => '.*']
+	);
 });
 
 /**

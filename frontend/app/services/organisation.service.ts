@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 
 
 @Injectable()
-export class OrgaService extends Service {
+export class OrganisationService extends Service {
 
 	getOrganisations(): Promise<Organisation[]> {
 		return this.http.get(this.baseURL + 'organisations/', { headers: this.headers })
@@ -42,6 +42,13 @@ export class OrgaService extends Service {
 		).subscribe();
 	}
 
+	getOrganisation(id: string): Promise<Organisation> {
+		return this.http.get(this.baseURL + 'organisations/view/' + id, { headers: this.headers })
+			.toPromise()
+			.then(response => response.json().organisation as Organisation)
+			.catch(this.handleError);
+	}
+
 	getOrganisationsDatabase(): OrganisationsDatabase {
 		return new OrganisationsDatabase(this);
 	}
@@ -55,7 +62,7 @@ export class OrganisationsDatabase {
 	public organisations: Organisation[];
 	dataChange: BehaviorSubject<Organisation[]> = new BehaviorSubject<Organisation[]>([]);
 
-	constructor(private organisationService: OrgaService) {
+	constructor(private organisationService: OrganisationService) {
 		this.organisations = new Array();
 		this.organisationService.getOrganisations().then(organisations => {
 			organisations.forEach(organisation => {

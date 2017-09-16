@@ -12,7 +12,7 @@ import 'rxjs/add/observable/fromEvent';
 import { Activity } from '../../common/model/activity';
 import { ActivityService } from '../../services/activity.service';
 import { Organisation } from '../../common/model/organisation';
-import { OrgaService, OrganisationsDatabase } from '../../services/organisation.service';
+import { OrganisationService, OrganisationsDatabase } from '../../services/organisation.service';
 import { NominatimService } from '../../services/nominatim.service';
 
 
@@ -57,7 +57,7 @@ export class ActivityEditComponent implements OnInit {
 	constructor(
 		public activityService: ActivityService,
 		public nominatimService: NominatimService,
-		public organisationService: OrgaService
+		public organisationService: OrganisationService
 	) { }
 
 	filterOrgas(input: string): Organisation[] {

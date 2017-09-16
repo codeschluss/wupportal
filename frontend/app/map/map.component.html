@@ -12,7 +12,7 @@
 				<aol-coordinate [x]="activity.address.longitude" [y]="activity.address.latitude" [srid]='configuration.mapProjection'>
 				</aol-coordinate>
 				<aol-content>
-					<div class="default-marker" [class.active-marker]="activity.id == selectedActivity.id" (click)="onSelect(activity)"></div>
+					<div class="default-marker" [class.active-marker]="activity.id == selectedActivity.id" (click)="onSelectActivity(activity)"></div>
 				</aol-content>
 			</aol-overlay>
 		</aol-source-vector>
@@ -27,8 +27,9 @@
 							search
 		</button>
 	</md-sidenav>
-	<md-sidenav #sidenavActivityDetail mode="side" align="end">
-		<activity-detail></activity-detail>
+	<md-sidenav #sidenavActivityDetail mode="side" align="end" [ngSwitch]="state">
+		<activity-detail *ngSwitchCase="detailState.ACTIVITY" (clickOrganisation)="onSelectOrganisation($event)"></activity-detail>
+		<organisation-detail #OrganisationDetailComponent *ngSwitchCase="detailState.ORGANISATION" (back)="onGoBack()"></organisation-detail>
 	</md-sidenav>
 	<a class="enable-pointer" routerLink='/login' routerLinkActive="login">LOGIN</a>
 	<div class="enable-pointer" id="search-area">
@@ -37,7 +38,7 @@
 		<button md-raised-button (click)="sidenavSearch.toggle()">advanced search</button>
 	</div>
 	<div class="enable-pointer" id="activity-summary" *ngIf="activities">
-		<activity-summary (clicked)="onSelect($event)" *ngFor="let activity of activities" (click)="onSelect(activity)" [class.active-activity]="activity.id == selectedActivity.id"
-		  [activity]="activity"></activity-summary>
+		<activity-summary (clicked)="onSelectActivity($event)" *ngFor="let activity of activities" (click)="onSelectActivity(activity)"
+		  [class.active-activity]="activity.id == selectedActivity.id" [activity]="activity"></activity-summary>
 	</div>
 </md-sidenav-container>

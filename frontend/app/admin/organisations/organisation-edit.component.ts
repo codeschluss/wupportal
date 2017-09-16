@@ -6,7 +6,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import { Organisation } from '../../common/model/organisation';
-import { OrgaService } from '../../services/organisation.service';
+import { OrganisationService } from '../../services/organisation.service';
 import { NominatimService } from '../../services/nominatim.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class OrganisationEditComponent implements OnInit {
 	public addressOrgaInput: string;
 
 	constructor(
-		private organisationService: OrgaService,
+		private organisationService: OrganisationService,
 		public nominatimService: NominatimService
 	) { }
 

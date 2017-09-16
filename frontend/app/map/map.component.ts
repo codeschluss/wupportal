@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { MapBrowserEvent, Feature, style, layer } from 'openlayers';
 import { MdSidenav } from '@angular/material';
 
 import { ActivityDetailComponent } from './activityDetail/activity-detail.component';
+import { OrganisationDetailComponent } from './organisationDetail/organisation-detail.component';
 
 import { Service } from '../services/service';
 import { ActivityService } from '../services/activity.service';
@@ -12,8 +13,10 @@ import { SuburbService } from '../services/suburb.service';
 import { TargetgroupService } from '../services/targetgroup.service';
 
 import { Activity } from '../common/model/activity';
+import { Organisation } from '../common/model/organisation';
 import { Configuration } from '../common/model/configuration';
 import { Selectable } from '../common/model/forms/selectable';
+import { DetailState } from './detail-state';
 
 @Component({
 	templateUrl: './map.component.html',
@@ -21,13 +24,21 @@ import { Selectable } from '../common/model/forms/selectable';
 	providers: [Service, ConfigurationService, ActivityService, CategoryService, SuburbService, TargetgroupService]
 })
 
+
 export class MapComponent implements OnInit {
 
 	@ViewChild(ActivityDetailComponent)
 	private activityDetailComponent: ActivityDetailComponent;
 
+	@ViewChildren('OrganisationDetailComponent')
+	private organisationDetailComponent: OrganisationDetailComponent;
+
 	@ViewChild('sidenavActivityDetail')
 	public sidenavActivityDetail: MdSidenav;
+
+	public selectedActivity = new Activity();
+	public state: DetailState;
+	public detailState = DetailState;
 
 	public activities: Activity[];
 	public freeSearch: string;
@@ -38,8 +49,6 @@ export class MapComponent implements OnInit {
 	public selectableSuburbs: Selectable[];
 	public selectableTargetgroups: Selectable[];
 
-	public selectedActivity = new Activity();
-
 	constructor(
 		private configurationService: ConfigurationService,
 		private activityService: ActivityService,
@@ -48,8 +57,10 @@ export class MapComponent implements OnInit {
 		private targetgroupService: TargetgroupService
 	) { }
 
-	onSelect(activity: Activity): void {
+	// TODO: refactoring -> full state handling with external service
+	onSelectActivity(activity: Activity): void {
 		this.activityDetailComponent.setActivity(activity);
+		this.state = DetailState.ACTIVITY;
 		if (!this.sidenavActivityDetail._isAnimating) {
 			if (this.selectedActivity.id === activity.id) {
 				this.selectedActivity = new Activity();
@@ -62,6 +73,16 @@ export class MapComponent implements OnInit {
 			}
 		}
 	}
+
+	onSelectOrganisation(organisation: Organisation) {
+		this.state = DetailState.ORGANISATION;
+		this.organisationDetailComponent.setOrganisation(organisation);
+	}
+
+	onGoBack() {
+		this.state = DetailState.ACTIVITY;
+	}
+
 	// TODO: just prototyping
 	onFreeSearch(): void {
 		this.activities = new Array();
@@ -94,6 +115,7 @@ export class MapComponent implements OnInit {
 	ngOnInit(): void {
 		this.initConfig();
 		this.initSelectables();
+		this.state = DetailState.ACTIVITY;
 	}
 
 	initConfig(): void {

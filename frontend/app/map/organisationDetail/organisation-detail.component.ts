@@ -1,6 +1,7 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { Location } from '@angular/common';
 
-import { Activity } from '../../common/model/activity';
+import { Organisation } from '../../common/model/organisation';
 
 @Component({
 	selector: 'organisation-detail',
@@ -9,9 +10,17 @@ import { Activity } from '../../common/model/activity';
 
 export class OrganisationDetailComponent {
 
-	public activity = new Activity();
+	public organisation = new Organisation();
 
-	setActivity(clickedActivity: Activity) {
-		this.activity = clickedActivity;
+	@Output()
+	public back: EventEmitter<any> = new EventEmitter();
+
+	public setOrganisation(clickedOrganisation: Organisation) {
+		this.organisation = clickedOrganisation;
 	}
+
+	goBack() {
+		this.back.emit();
+	}
+
 }

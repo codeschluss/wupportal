@@ -22,7 +22,7 @@ import { CategoryService } from './services/category.service';
 import { SuburbService } from './services/suburb.service';
 import { TargetgroupService } from './services/targetgroup.service';
 import { UserService } from './services/user.service';
-import { OrgaService } from './services/organisation.service';
+import { OrganisationService } from './services/organisation.service';
 import { NominatimService } from './services/nominatim.service';
 
 import { AuthGuard } from './admin/login/auth.guard';
@@ -81,7 +81,7 @@ import { CheckboxAreaComponent } from './common/components/checkboxArea/checkbox
 		TargetgroupService,
 		AuthGuard,
 		UserService,
-		OrgaService,
+		OrganisationService,
 		NominatimService
 	],
 	bootstrap: [AppComponent]

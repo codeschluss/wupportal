@@ -45,26 +45,26 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
-	$routes->resources('Activities');
-	$routes->resources('ActivitiesTags');
-	$routes->resources('ActivitiesTargetGroups');
-	$routes->resources('ActivitiesTranslations');
-	$routes->resources('Addresses');
-	$routes->resources('Categories');
-	$routes->resources('Configurations');
-	$routes->resources('Organisations');
-	$routes->resources('Providers');
-	$routes->resources('Suburbs');
-	$routes->resources('Tags');
-	$routes->resources('TargetGroups');
-	$routes->resources('Translations');
-	$routes->resources('Users');
+    $routes->resources('Activities');
+    $routes->resources('ActivitiesTags');
+    $routes->resources('ActivitiesTargetGroups');
+    $routes->resources('ActivitiesTranslations');
+    $routes->resources('Addresses');
+    $routes->resources('Categories');
+    $routes->resources('Configurations');
+    $routes->resources('Organisations');
+    $routes->resources('Providers');
+    $routes->resources('Suburbs');
+    $routes->resources('Tags');
+    $routes->resources('TargetGroups');
+    $routes->resources('Translations');
+    $routes->resources('Users');
 
-	$routes->connect(
-		'/:path',
-		['controller' => 'Pages', 'action' => 'display', 'home'],
-		['path' => '.*']
-	);
+    $routes->connect(
+        '/:path',
+        ['controller' => 'Pages', 'action' => 'display', 'home'],
+        ['path' => '.*']
+    );
 });
 
 /**

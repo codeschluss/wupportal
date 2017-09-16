@@ -70,15 +70,19 @@ class AddressesTable extends Table
             ->allowEmpty('longitude');
 
         $validator
+            ->scalar('street')
             ->allowEmpty('street');
 
         $validator
+            ->scalar('house_number')
             ->allowEmpty('house_number');
 
         $validator
+            ->scalar('postal_code')
             ->allowEmpty('postal_code');
 
         $validator
+            ->scalar('place')
             ->allowEmpty('place');
 
         return $validator;

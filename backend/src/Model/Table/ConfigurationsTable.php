@@ -48,10 +48,12 @@ class ConfigurationsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->scalar('item')
             ->requirePresence('item', 'create')
             ->notEmpty('item');
 
         $validator
+            ->scalar('value')
             ->requirePresence('value', 'create')
             ->notEmpty('value');
 

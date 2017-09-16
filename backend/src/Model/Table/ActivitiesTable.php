@@ -82,13 +82,16 @@ class ActivitiesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->scalar('name')
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
         $validator
+            ->scalar('description')
             ->allowEmpty('description');
 
         $validator
+            ->scalar('schedule')
             ->allowEmpty('schedule');
 
         $validator

@@ -54,14 +54,17 @@ class CategoriesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->scalar('name')
             ->requirePresence('name', 'create')
             ->notEmpty('name')
             ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
+            ->scalar('description')
             ->allowEmpty('description');
 
         $validator
+            ->scalar('color')
             ->requirePresence('color', 'create')
             ->notEmpty('color')
             ->add('color', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);

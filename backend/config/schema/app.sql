@@ -1,37 +1,55 @@
 CREATE TABLE `configurations` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`item` VARCHAR(255) NOT NULL,
-	`value` VARCHAR(255) NOT NULL
+	`value` VARCHAR(255) NOT NULL,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `translations` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`locale` VARCHAR(6) UNIQUE NOT NULL,
-	`name` VARCHAR(255) UNIQUE NOT NULL
+	`name` VARCHAR(255) UNIQUE NOT NULL,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `categories` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`name` VARCHAR(255) UNIQUE NOT NULL,
 	`description` TEXT,
-	`color` VARCHAR(16) UNIQUE NOT NULL
+	`color` VARCHAR(16) UNIQUE NOT NULL,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `tags` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`name` VARCHAR(255) UNIQUE NOT NULL,
-	`description` TEXT
+	`description` TEXT,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `target_groups` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`name` VARCHAR(255) UNIQUE NOT NULL,
-	`description` TEXT
+	`description` TEXT,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `suburbs` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`name` VARCHAR(255) UNIQUE NOT NULL
+	`name` VARCHAR(255) UNIQUE NOT NULL,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `addresses` (
@@ -44,6 +62,9 @@ CREATE TABLE `addresses` (
 	`place` VARCHAR(255),
 	`suburb_id` CHAR(36),
 
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW(),
+
 	CONSTRAINT `fkey_address_suburb`
 		FOREIGN KEY (`suburb_id`) REFERENCES `suburbs` (`id`)
 		ON UPDATE CASCADE
@@ -55,7 +76,10 @@ CREATE TABLE `users` (
 	`username` VARCHAR(255) UNIQUE NOT NULL,
 	`password` VARCHAR(255) NOT NULL,
 	`fullname` VARCHAR(255),
-	`phone` VARCHAR(255)
+	`phone` VARCHAR(255),
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE `organisations` (
@@ -68,6 +92,9 @@ CREATE TABLE `organisations` (
 	`image` MEDIUMBLOB,
 	`address_id` CHAR(36),
 
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW(),
+
 	CONSTRAINT `fkey_organisation_address`
 		FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
 		ON UPDATE CASCADE
@@ -78,6 +105,9 @@ CREATE TABLE `providers` (
 	`admin` BOOLEAN DEFAULT FALSE,
 	`organisation_id` CHAR(36),
 	`user_id` CHAR(36) NOT NULL,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW(),
 
 	CONSTRAINT `fkey_provider_organisation`
 		FOREIGN KEY (`organisation_id`) REFERENCES `organisations` (`id`)
@@ -97,6 +127,9 @@ CREATE TABLE `activities` (
 	`address_id` CHAR(36),
 	`provider_id` CHAR(36) NOT NULL,
 	`category_id` CHAR(36) NOT NULL,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW(),
 
 	CONSTRAINT `fkey_activity_address`
 		FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)

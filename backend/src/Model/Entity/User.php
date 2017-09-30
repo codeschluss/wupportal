@@ -12,6 +12,8 @@ use Cake\ORM\Entity;
  * @property string $password
  * @property string $fullname
  * @property string $phone
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Provider[] $providers
  */

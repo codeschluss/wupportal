@@ -10,6 +10,8 @@ use Cake\ORM\Entity;
  * @property bool $admin
  * @property string $organisation_id
  * @property string $user_id
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Organisation $organisation
  * @property \App\Model\Entity\User $user

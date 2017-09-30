@@ -19,6 +19,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Organisation patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Organisation[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Organisation findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class OrganisationsTable extends Table
 {
@@ -36,6 +38,8 @@ class OrganisationsTable extends Table
         $this->setTable('organisations');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Addresses', [
             'foreignKey' => 'address_id'

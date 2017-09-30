@@ -23,6 +23,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Activity patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Activity[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Activity findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class ActivitiesTable extends Table
 {
@@ -40,6 +42,8 @@ class ActivitiesTable extends Table
         $this->setTable('activities');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Addresses', [
             'foreignKey' => 'address_id'

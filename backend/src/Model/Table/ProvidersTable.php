@@ -20,6 +20,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Provider patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Provider[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Provider findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class ProvidersTable extends Table
 {
@@ -37,6 +39,8 @@ class ProvidersTable extends Table
         $this->setTable('providers');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Organisations', [
             'foreignKey' => 'organisation_id'

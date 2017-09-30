@@ -18,6 +18,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Suburb patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Suburb[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Suburb findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class SuburbsTable extends Table
 {
@@ -35,6 +37,8 @@ class SuburbsTable extends Table
         $this->setTable('suburbs');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
 
         $this->hasMany('Addresses', [
             'foreignKey' => 'suburb_id'

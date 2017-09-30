@@ -14,6 +14,8 @@ use Cake\ORM\Entity;
  * @property string $phone
  * @property string|resource $image
  * @property string $address_id
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Address $address
  * @property \App\Model\Entity\Provider[] $providers

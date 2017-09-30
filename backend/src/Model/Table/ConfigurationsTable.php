@@ -16,6 +16,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Configuration patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Configuration[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Configuration findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class ConfigurationsTable extends Table
 {
@@ -33,6 +35,8 @@ class ConfigurationsTable extends Table
         $this->setTable('configurations');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
     }
 
     /**

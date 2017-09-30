@@ -18,6 +18,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Tag patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Tag[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Tag findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class TagsTable extends Table
 {
@@ -35,6 +37,8 @@ class TagsTable extends Table
         $this->setTable('tags');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
 
         $this->belongsToMany('Activities', [
             'foreignKey' => 'tag_id',

@@ -9,6 +9,8 @@ use Cake\ORM\Entity;
  * @property string $id
  * @property string $item
  * @property string $value
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  */
 class Configuration extends Entity
 {

@@ -14,6 +14,8 @@ use Cake\ORM\Entity;
  * @property string $address_id
  * @property string $provider_id
  * @property string $category_id
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Address $address
  * @property \App\Model\Entity\Provider $provider

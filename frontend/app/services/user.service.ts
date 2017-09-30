@@ -1,34 +1,37 @@
-import { Injectable } from '@angular/core';
-
-import { User } from '../common/model/user';
-import { Service } from './service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+
+import { DataSource } from '@angular/cdk/collections';
+import { Injectable } from '@angular/core';
+
+import { Service } from 'app/services/service';
+import { User } from 'app/models/user';
 
 @Injectable()
-export class UserService extends Service {
+export class UserService extends Service<User> {
+
+	public repoURL: string = 'users/';
 
 	getUsers(): Promise<User[]> {
-		return this.http.get(this.baseURL + 'users/', { headers: this.headers })
+		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().users as User[])
 			.catch(this.handleError);
 	}
 
 	postUser(user: User) {
-		return this.http.post(this.baseURL + 'users/add/',
+		return this.http.post(this.baseURL + this.repoURL + 'add/',
 			JSON.stringify(user)
 			, { headers: this.headers }
 		).subscribe();
 	}
 
 	editUser(user: User) {
-		return this.http.put(this.baseURL + 'users/edit/' +
+		return this.http.put(this.baseURL + this.repoURL + 'edit/' +
 			user.id,
 			JSON.stringify(user)
 			, { headers: this.headers }
@@ -36,7 +39,7 @@ export class UserService extends Service {
 	}
 
 	deleteUser(user: User) {
-		return this.http.delete(this.baseURL + 'users/delete/' +
+		return this.http.delete(this.baseURL + this.repoURL + 'delete/' +
 			user.id
 			, { headers: this.headers }
 		).subscribe();

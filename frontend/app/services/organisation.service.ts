@@ -1,34 +1,37 @@
-import { Injectable } from '@angular/core';
-
-import { Organisation } from '../common/model/organisation';
-import { Service } from './service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+
+import { DataSource } from '@angular/cdk/collections';
+import { Injectable } from '@angular/core';
+
+import { Organisation } from 'app/models/organisation';
+import { Service } from 'app/services/service';
 
 @Injectable()
-export class OrganisationService extends Service {
+export class OrganisationService extends Service<Organisation> {
+
+	public repoURL: string = 'organisations/';
 
 	getOrganisations(): Promise<Organisation[]> {
-		return this.http.get(this.baseURL + 'organisations/', { headers: this.headers })
+		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().organisations as Organisation[])
 			.catch(this.handleError);
 	}
 
 	postOrganisation(orga: Organisation) {
-		return this.http.post(this.baseURL + 'organisations/add/',
+		return this.http.post(this.baseURL + this.repoURL + 'add/',
 			JSON.stringify(orga)
 			, { headers: this.headers }
 		).subscribe();
 	}
 
 	editOrganisation(organisation: Organisation) {
-		return this.http.put(this.baseURL + 'organisations/edit/' +
+		return this.http.put(this.baseURL + this.repoURL + 'edit/' +
 			organisation.id,
 			JSON.stringify(organisation)
 			, { headers: this.headers }
@@ -36,14 +39,14 @@ export class OrganisationService extends Service {
 	}
 
 	deleteOrganisation(organisation: Organisation) {
-		return this.http.delete(this.baseURL + 'organisations/delete/' +
+		return this.http.delete(this.baseURL + this.repoURL + 'delete/' +
 			organisation.id
 			, { headers: this.headers }
 		).subscribe();
 	}
 
 	getOrganisation(id: string): Promise<Organisation> {
-		return this.http.get(this.baseURL + 'organisations/view/' + id, { headers: this.headers })
+		return this.http.get(this.baseURL + this.repoURL + 'view/' + id, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().organisation as Organisation)
 			.catch(this.handleError);

@@ -1,34 +1,37 @@
-import { Injectable } from '@angular/core';
-
-import { Activity } from '../common/model/activity';
-import { Service } from './service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+
+import { DataSource } from '@angular/cdk/collections';
+import { Injectable } from '@angular/core';
+
+import { Activity } from 'app/models/activity';
+import { Service } from 'app/services/service';
 
 @Injectable()
-export class ActivityService extends Service {
+export class ActivityService extends Service<Activity> {
+
+	public repoURL: string = 'activities/';
 
 	getActivities(): Promise<Activity[]> {
-		return this.http.get(this.baseURL + 'activities/', { headers: this.headers })
+		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().activities as Activity[])
 			.catch(this.handleError);
 	}
 
 	postActivity(activity: Activity) {
-		return this.http.post(this.baseURL + 'activities/add/',
+		return this.http.post(this.baseURL + this.repoURL + 'add/',
 			JSON.stringify(activity)
 			, { headers: this.headers }
 		).subscribe();
 	}
 
 	editActivity(activity: Activity) {
-		return this.http.put(this.baseURL + 'activities/edit/' +
+		return this.http.put(this.baseURL + this.repoURL + 'edit/' +
 			activity.id,
 			JSON.stringify(activity)
 			, { headers: this.headers }
@@ -36,7 +39,7 @@ export class ActivityService extends Service {
 	}
 
 	deleteActivity(activity: Activity) {
-		return this.http.delete(this.baseURL + 'activities/edit/' +
+		return this.http.delete(this.baseURL + this.repoURL + 'edit/' +
 			activity.id
 			, { headers: this.headers }
 		).subscribe();

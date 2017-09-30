@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 
-import { Service } from './service';
-import { Configuration } from '../common/model/configuration';
+import { Configuration } from 'app/models/configuration';
+import { Service } from 'app/services/service';
 
 @Injectable()
-export class ConfigurationService extends Service {
+export class ConfigurationService extends Service<Configuration> {
+
+	public repoURL: string = 'configurations/';
 
 	// TODO: Refactor type casting
 	getConfiguration(): Promise<Configuration> {
-		return this.http.get(this.baseURL + 'configurations/', { headers: this.headers })
+		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
 			.toPromise()
 			.then(response => {
 				const configResp = response.json().configuration as Configuration;

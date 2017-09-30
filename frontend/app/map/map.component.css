@@ -33,12 +33,34 @@ md-sidenav {
 	pointer-events: all;
 }
 
+#login-link {
+	display: block;
+	float: right;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	background-color: #697bb3;
+	margin: 5px;
+}
+
+#login-link ::ng-deep img {
+	max-width: 100%;
+}
+
+
 #activity-summary {
 	width: 400px;
+	margin: 5px;
 }
 
 #search-area {
+	margin-top: 5px;
 	width: 400px;
+	text-align: center;
+}
+
+#search-area ::ng-deep input {
+	width: 150px;
 }
 
 .active-activity ::ng-deep md-card {
@@ -51,7 +73,12 @@ aol-map ::ng-deep {
 }
 
 .default-marker {
-	background-color: black;
+	background-image: url('/img/map-pin.svg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	border-radius: 50%;
+	margin-bottom: -40px;
+	margin-left: -21px;
 	width: 42px;
 	height: 42px;
 }

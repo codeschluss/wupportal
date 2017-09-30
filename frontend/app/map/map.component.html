@@ -31,11 +31,11 @@
 		<activity-detail *ngSwitchCase="detailState.ACTIVITY" (clickOrganisation)="onSelectOrganisation($event)"></activity-detail>
 		<organisation-detail #OrganisationDetailComponent *ngSwitchCase="detailState.ORGANISATION" (back)="onGoBack()"></organisation-detail>
 	</md-sidenav>
-	<a class="enable-pointer" routerLink='/login' routerLinkActive="login">LOGIN</a>
+	<a class="enable-pointer" routerLink='/login' routerLinkActive="login" id="login-link"><img src="/img/gear.svg"></a>
 	<div class="enable-pointer" id="search-area">
 		<input [(ngModel)]="freeSearch" placeholder="search">
 		<button md-raised-button (click)="onFreeSearch()">search</button>
-		<button md-raised-button (click)="sidenavSearch.toggle()">advanced search</button>
+		<button md-raised-button (click)="sidenavSearch.toggle()">more</button>
 	</div>
 	<div class="enable-pointer" id="activity-summary" *ngIf="activities">
 		<activity-summary (clicked)="onSelectActivity($event)" *ngFor="let activity of activities" (click)="onSelectActivity(activity)"

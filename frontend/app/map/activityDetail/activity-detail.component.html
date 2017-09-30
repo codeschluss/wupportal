@@ -1,18 +1,34 @@
 <div class="enable-pointer">
-	<span>{{activity.name}} details!</span>
-	<label>Category: </label> {{activity.category.name}}
-	<label>Description: </label> {{activity.description}}
-	<label>Schedule: </label> {{activity.schedule}}
-	<label>Provider: </label>
-	<div>
-		Hier kommt der Provider rein
-	</div>
-	<label>Address: </label>
-	<div>
-		Hier kommt die Adrdesse rein
-	</div>
-	<label>Provider: </label>
-	<div>
-		<button md-raised-button (click)="onSelectOrganisation()">{{activity.provider.organisation.name}}</button>
-	</div>
+	<header>
+		<figure>
+			<img src="/img/organisation.svg">
+			<figcaption>{{activity.provider.organisation.name}}</figcaption>
+		</figure>
+	</header>
+
+	<h1>{{activity.name}}</h1>
+
+	<dl>
+		<dt>Organisation</dt>
+		<dd>{{activity.provider.organisation.name}}</dd>
+
+		<dt>Provider</dt>
+		<dd>{{activity.provider.user?.fullname}}</dd>
+
+	  <dt>Category</dt>
+	  <dd>{{activity.category.name}}</dd>
+
+		<dt>Description</dt>
+		<dd>{{activity.description}}</dd>
+
+		<dt>Schedule</dt>
+		<dd>{{activity.schedule}}</dd>
+
+		<dt>Address</dt>
+		<dd>{{activity.address.street}} {{activity.address.houseNumber}}</dd>
+		<dd>{{activity.address.postalCode}} {{activity.address.place}}</dd>
+	  <dd>{{activity.address.suburb?.name}}</dd>
+	</dl>
+
+	<!-- <button md-raised-button (click)="onSelectOrganisation()">{{activity.provider.organisation.name}}</button> -->
 </div>

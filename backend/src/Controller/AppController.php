@@ -43,6 +43,7 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('Syncronize');
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -63,5 +64,10 @@ class AppController extends Controller
         if ($event->subject->name === 'Pages') return;
         $this->viewBuilder()->className('Json');
         $this->set('_serialize', true);
+    }
+
+    public function sync(int $since)
+    {
+        return $this->Syncronize->get($this->modelClass, $since);
     }
 }

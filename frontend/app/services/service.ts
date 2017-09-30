@@ -62,9 +62,9 @@ export class Service<T extends Model> extends DataSource<T> {
 		switch(this.collection.length) {
 			case 0: return 0;
 			case 1: return this.collection.pop().modified.getTime() / 1000;
-			default: return this.collection.reduce((i, j) => {
+			default: return this.collection.reduce((i, j) =>
 				i.modified.getTime() > j.modified.getTime() ? i : j
-			}).modified.getTime() / 1000;
+			).modified.getTime() / 1000;
 		}
 	}
 

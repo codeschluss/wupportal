@@ -20,7 +20,7 @@ import { ActivityService } from './services/activity.service';
 import { ConfigurationService } from './services/configuration.service';
 import { CategoryService } from './services/category.service';
 import { SuburbService } from './services/suburb.service';
-import { TargetgroupService } from './services/targetgroup.service';
+import { TargetGroupService } from './services/target-group.service';
 import { UserService } from './services/user.service';
 import { OrganisationService } from './services/organisation.service';
 import { NominatimService } from './services/nominatim.service';
@@ -78,7 +78,7 @@ import { CheckboxAreaComponent } from './common/components/checkboxArea/checkbox
 		ConfigurationService,
 		CategoryService,
 		SuburbService,
-		TargetgroupService,
+		TargetGroupService,
 		AuthGuard,
 		UserService,
 		OrganisationService,

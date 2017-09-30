@@ -10,7 +10,7 @@ import { ActivityService } from '../services/activity.service';
 import { ConfigurationService } from '../services/configuration.service';
 import { CategoryService } from '../services/category.service';
 import { SuburbService } from '../services/suburb.service';
-import { TargetgroupService } from '../services/targetgroup.service';
+import { TargetGroupService } from '../services/target-group.service';
 
 import { Activity } from '../models/activity';
 import { Organisation } from '../models/organisation';
@@ -21,7 +21,7 @@ import { DetailState } from './detail-state';
 @Component({
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.css'],
-	providers: [Service, ConfigurationService, ActivityService, CategoryService, SuburbService, TargetgroupService]
+	providers: [Service, ConfigurationService, ActivityService, CategoryService, SuburbService, TargetGroupService]
 })
 
 
@@ -54,7 +54,7 @@ export class MapComponent implements OnInit {
 		private activityService: ActivityService,
 		private categoryService: CategoryService,
 		private suburbService: SuburbService,
-		private targetgroupService: TargetgroupService
+		private targetgroupService: TargetGroupService
 	) { }
 
 	// TODO: refactoring -> full state handling with external service

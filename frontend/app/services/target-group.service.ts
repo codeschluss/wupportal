@@ -4,7 +4,7 @@ import { Service } from 'app/services/service';
 import { TargetGroup } from 'app/models/target-group';
 
 @Injectable()
-export class TargetgroupService extends Service<TargetGroup> {
+export class TargetGroupService extends Service<TargetGroup> {
 
 	public repoURL: string = 'target_groups/';
 

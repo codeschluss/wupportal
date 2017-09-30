@@ -5,8 +5,8 @@ import { ActivityService } from './services/activity.service';
 import { ConfigurationService } from './services/configuration.service';
 import { Service } from './services/service';
 
-import { Activity } from './common/model/activity';
-import { Configuration } from './common/model/configuration';
+import { Activity } from './models/activity';
+import { Configuration } from './models/configuration';
 
 @Component({
 	selector: 'app-root',

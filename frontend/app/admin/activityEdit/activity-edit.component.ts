@@ -9,9 +9,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
-import { Activity } from '../../common/model/activity';
+import { Activity } from '../../models/activity';
 import { ActivityService } from '../../services/activity.service';
-import { Organisation } from '../../common/model/organisation';
+import { Organisation } from '../../models/organisation';
 import { OrganisationService, OrganisationsDatabase } from '../../services/organisation.service';
 import { NominatimService } from '../../services/nominatim.service';
 

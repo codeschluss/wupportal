@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MdCardModule } from '@angular/material';
 
-import { Activity } from '../../common/model/activity';
+import { Activity } from '../../models/activity';
 
 @Component({
 	selector: 'activity-summary',

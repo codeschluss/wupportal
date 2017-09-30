@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
-import { Organisation } from '../../common/model/organisation';
+import { Organisation } from '../../models/organisation';
 import { OrganisationService } from '../../services/organisation.service';
 import { NominatimService } from '../../services/nominatim.service';
 

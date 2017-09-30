@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { Organisation } from '../../common/model/organisation';
+import { Organisation } from '../../models/organisation';
 
 @Component({
 	selector: 'organisation-detail',

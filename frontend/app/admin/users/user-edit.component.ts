@@ -3,7 +3,7 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
-import { User } from '../../common/model/user';
+import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs/Observable';
 

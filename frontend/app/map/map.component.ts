@@ -12,10 +12,10 @@ import { CategoryService } from '../services/category.service';
 import { SuburbService } from '../services/suburb.service';
 import { TargetgroupService } from '../services/targetgroup.service';
 
-import { Activity } from '../common/model/activity';
-import { Organisation } from '../common/model/organisation';
-import { Configuration } from '../common/model/configuration';
-import { Selectable } from '../common/model/forms/selectable';
+import { Activity } from '../models/activity';
+import { Organisation } from '../models/organisation';
+import { Configuration } from '../models/configuration';
+import { Selectable } from '../common/forms/selectable';
 import { DetailState } from './detail-state';
 
 @Component({

@@ -12,6 +12,4 @@ export class Organisation extends Model {
 
 	public address: Address = new Address();
 
-	public constructor() { super(); }
-
 }

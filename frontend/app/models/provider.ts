@@ -9,6 +9,4 @@ export class Provider extends Model {
 	public organisation: Organisation = new Organisation();
 	public user: User = new User();
 
-	public constructor() { super(); }
-
 }

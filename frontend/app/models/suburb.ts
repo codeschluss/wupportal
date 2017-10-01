@@ -4,6 +4,4 @@ export class Suburb extends Model {
 
 	public name: string = '';
 
-	public constructor() { super(); }
-
 }

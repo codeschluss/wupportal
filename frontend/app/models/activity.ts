@@ -21,6 +21,4 @@ export class Activity extends Model {
 	public targetGroups: TargetGroup[] = [];
 	public translations: Translation[] = [];
 
-	public constructor() { super(); }
-
 }

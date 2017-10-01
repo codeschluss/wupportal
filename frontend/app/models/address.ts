@@ -12,6 +12,4 @@ export class Address extends Model {
 
 	public suburb: Suburb = new Suburb();
 
-	public constructor() { super(); }
-
 }

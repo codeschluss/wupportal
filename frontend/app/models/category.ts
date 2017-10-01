@@ -6,6 +6,4 @@ export class Category extends Model {
 	public description: string = '';
 	public color: string = '';
 
-	public constructor() { super(); }
-
 }

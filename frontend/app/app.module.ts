@@ -15,7 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 
-import { Service } from './services/service';
 import { ActivityService } from './services/activity.service';
 import { ConfigurationService } from './services/configuration.service';
 import { CategoryService } from './services/category.service';
@@ -37,7 +36,6 @@ import { ActivityDetailComponent } from './map/activityDetail/activity-detail.co
 import { ActivitySummaryComponent } from './map/activitySummary/activity-summary.component';
 import { OrganisationDetailComponent } from './map/organisationDetail/organisation-detail.component';
 import { CheckboxAreaComponent } from './common/components/checkboxArea/checkbox-area.component';
-
 
 @NgModule({
 	declarations: [
@@ -73,7 +71,6 @@ import { CheckboxAreaComponent } from './common/components/checkboxArea/checkbox
 		ReactiveFormsModule
 	],
 	providers: [
-		Service,
 		ActivityService,
 		ConfigurationService,
 		CategoryService,

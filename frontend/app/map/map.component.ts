@@ -5,7 +5,6 @@ import { MdSidenav } from '@angular/material';
 import { ActivityDetailComponent } from './activityDetail/activity-detail.component';
 import { OrganisationDetailComponent } from './organisationDetail/organisation-detail.component';
 
-import { Service } from '../services/service';
 import { ActivityService } from '../services/activity.service';
 import { ConfigurationService } from '../services/configuration.service';
 import { CategoryService } from '../services/category.service';
@@ -21,7 +20,7 @@ import { DetailState } from './detail-state';
 @Component({
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.css'],
-	providers: [Service, ConfigurationService, ActivityService, CategoryService, SuburbService, TargetGroupService]
+	providers: [ConfigurationService, ActivityService, CategoryService, SuburbService, TargetGroupService]
 })
 
 
@@ -88,7 +87,12 @@ export class MapComponent implements OnInit {
 		this.activities = new Array();
 		this.activityService.getActivities().then(activities => {
 			activities.forEach(act => {
-				if (act.name === this.freeSearch) {
+				if (
+					act.name.toLowerCase().indexOf(this.freeSearch.toLowerCase()) !== -1 ||
+					act.description.toLowerCase().indexOf(this.freeSearch.toLowerCase()) !== -1 ||
+					act.address.street.toLowerCase().indexOf(this.freeSearch.toLowerCase()) !== -1 ||
+					act.provider.organisation.name.toLowerCase().indexOf(this.freeSearch.toLowerCase()) !== -1
+				) {
 					this.activities.push(act);
 				}
 			});

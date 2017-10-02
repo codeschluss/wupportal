@@ -9,29 +9,29 @@ import { DataSource } from '@angular/cdk/collections';
 import { Injectable } from '@angular/core';
 
 import { Activity } from 'app/models/activity';
-import { Service } from 'app/services/service';
+import { DataService } from 'app/services/data.service';
 
 @Injectable()
-export class ActivityService extends Service<Activity> {
+export class ActivityService extends DataService<Activity> {
 
-	public repoURL: string = 'activities/';
+	protected baseURL: string = '/activities/';
 
 	getActivities(): Promise<Activity[]> {
-		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
+		return this.http.get(this.baseURL, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().activities as Activity[])
 			.catch(this.handleError);
 	}
 
 	postActivity(activity: Activity) {
-		return this.http.post(this.baseURL + this.repoURL + 'add/',
+		return this.http.post(this.baseURL + 'add/',
 			JSON.stringify(activity)
 			, { headers: this.headers }
 		).subscribe();
 	}
 
 	editActivity(activity: Activity) {
-		return this.http.put(this.baseURL + this.repoURL + 'edit/' +
+		return this.http.put(this.baseURL + 'edit/' +
 			activity.id,
 			JSON.stringify(activity)
 			, { headers: this.headers }
@@ -39,7 +39,7 @@ export class ActivityService extends Service<Activity> {
 	}
 
 	deleteActivity(activity: Activity) {
-		return this.http.delete(this.baseURL + this.repoURL + 'edit/' +
+		return this.http.delete(this.baseURL + 'edit/' +
 			activity.id
 			, { headers: this.headers }
 		).subscribe();

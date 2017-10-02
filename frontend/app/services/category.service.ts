@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 
 import { Category } from 'app/models/category';
-import { Service } from 'app/services/service';
+import { DataService } from 'app/services/data.service';
 
 @Injectable()
-export class CategoryService extends Service<Category> {
+export class CategoryService extends DataService<Category> {
 
-	public repoURL: string = 'categories/'
+	protected baseURL: string = '/categories/'
 
 	getAllCategories(): Promise<Category[]> {
-		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
+		return this.http.get(this.baseURL, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().categories as Category[])
 			.catch(this.handleError);

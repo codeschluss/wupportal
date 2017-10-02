@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 
 import { Configuration } from 'app/models/configuration';
-import { Service } from 'app/services/service';
+import { DataService } from 'app/services/data.service';
 
 @Injectable()
-export class ConfigurationService extends Service<Configuration> {
+export class ConfigurationService extends DataService<Configuration> {
 
-	public repoURL: string = 'configurations/';
+	protected baseURL: string = '/configurations/'
 
-	// TODO: Refactor type casting
+	// TODO: Refactor type casting {
 	getConfiguration(): Promise<Configuration> {
-		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
+		return this.http.get(this.baseURL, { headers: this.headers })
 			.toPromise()
 			.then(response => {
 				const configResp = response.json().configuration as Configuration;
@@ -26,6 +26,6 @@ export class ConfigurationService extends Service<Configuration> {
 			})
 			.catch(this.handleError);
 	}
-
+	// }
 
 }

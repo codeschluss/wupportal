@@ -8,30 +8,30 @@ import { Observable } from 'rxjs/Observable';
 import { DataSource } from '@angular/cdk/collections';
 import { Injectable } from '@angular/core';
 
-import { Service } from 'app/services/service';
+import { DataService } from 'app/services/data.service';
 import { User } from 'app/models/user';
 
 @Injectable()
-export class UserService extends Service<User> {
+export class UserService extends DataService<User> {
 
-	public repoURL: string = 'users/';
+	protected baseURL: string = '/users/'
 
 	getUsers(): Promise<User[]> {
-		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
+		return this.http.get(this.baseURL, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().users as User[])
 			.catch(this.handleError);
 	}
 
 	postUser(user: User) {
-		return this.http.post(this.baseURL + this.repoURL + 'add/',
+		return this.http.post(this.baseURL + 'add/',
 			JSON.stringify(user)
 			, { headers: this.headers }
 		).subscribe();
 	}
 
 	editUser(user: User) {
-		return this.http.put(this.baseURL + this.repoURL + 'edit/' +
+		return this.http.put(this.baseURL + 'edit/' +
 			user.id,
 			JSON.stringify(user)
 			, { headers: this.headers }
@@ -39,7 +39,7 @@ export class UserService extends Service<User> {
 	}
 
 	deleteUser(user: User) {
-		return this.http.delete(this.baseURL + this.repoURL + 'delete/' +
+		return this.http.delete(this.baseURL + 'delete/' +
 			user.id
 			, { headers: this.headers }
 		).subscribe();

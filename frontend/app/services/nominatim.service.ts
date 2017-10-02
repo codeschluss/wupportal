@@ -1,10 +1,14 @@
+import { Observable } from 'rxjs/Observable';
+
 import { Injectable } from '@angular/core';
 
 import { Address } from 'app/models/address';
-import { Service } from 'app/services/service';
+import { DataService } from 'app/services/data.service';
 
 @Injectable()
-export class NominatimService extends Service<Address> {
+export class NominatimService extends DataService<Address> {
+
+	// TODO: Legacy {
 	currentAddress: Address;
 
 	getGeoDates(query: string): Promise<JSON[]> {
@@ -28,4 +32,25 @@ export class NominatimService extends Service<Address> {
 		});
 		return this.currentAddress;
 	}
+	// }
+
+	private format: string = '?format=json&addressdetails=1';
+
+	protected baseURL: string = '//nominatim.openstreetmap.org/search/';
+
+	public resolve(query: string): Observable<Address> {
+		return this.http.get(this.baseURL + query + this.format).map((response) => {
+			let address = response.json() as JSON[];
+
+			return {
+				latitude: address[0]['lat'],
+				longitude: address[0]['lon'],
+				houseNumber: address[0]['address']['house_number'],
+				postalCode: address[0]['address']['postcode'],
+				place: address[0]['address']['city'],
+				street: address[0]['address']['road']
+			} as Address;
+		});
+	}
+
 }

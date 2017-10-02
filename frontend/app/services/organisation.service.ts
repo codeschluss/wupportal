@@ -9,29 +9,29 @@ import { DataSource } from '@angular/cdk/collections';
 import { Injectable } from '@angular/core';
 
 import { Organisation } from 'app/models/organisation';
-import { Service } from 'app/services/service';
+import { DataService } from 'app/services/data.service';
 
 @Injectable()
-export class OrganisationService extends Service<Organisation> {
+export class OrganisationService extends DataService<Organisation> {
 
-	public repoURL: string = 'organisations/';
+	protected baseURL: string = '/organisations/'
 
 	getOrganisations(): Promise<Organisation[]> {
-		return this.http.get(this.baseURL + this.repoURL, { headers: this.headers })
+		return this.http.get(this.baseURL, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().organisations as Organisation[])
 			.catch(this.handleError);
 	}
 
 	postOrganisation(orga: Organisation) {
-		return this.http.post(this.baseURL + this.repoURL + 'add/',
+		return this.http.post(this.baseURL + 'add/',
 			JSON.stringify(orga)
 			, { headers: this.headers }
 		).subscribe();
 	}
 
 	editOrganisation(organisation: Organisation) {
-		return this.http.put(this.baseURL + this.repoURL + 'edit/' +
+		return this.http.put(this.baseURL + 'edit/' +
 			organisation.id,
 			JSON.stringify(organisation)
 			, { headers: this.headers }
@@ -39,14 +39,14 @@ export class OrganisationService extends Service<Organisation> {
 	}
 
 	deleteOrganisation(organisation: Organisation) {
-		return this.http.delete(this.baseURL + this.repoURL + 'delete/' +
+		return this.http.delete(this.baseURL + 'delete/' +
 			organisation.id
 			, { headers: this.headers }
 		).subscribe();
 	}
 
 	getOrganisation(id: string): Promise<Organisation> {
-		return this.http.get(this.baseURL + this.repoURL + 'view/' + id, { headers: this.headers })
+		return this.http.get(this.baseURL + 'view/' + id, { headers: this.headers })
 			.toPromise()
 			.then(response => response.json().organisation as Organisation)
 			.catch(this.handleError);

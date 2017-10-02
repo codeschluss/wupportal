@@ -1,4 +1,3 @@
-import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/toPromise';
 
@@ -45,50 +44,55 @@ export abstract class DataService<T extends Model> extends DataSource<T> {
 	}
 
 	public connect(): Observable<T[]> {
+		// TODO: remove hack {
+		this.timeout = window.setTimeout(() => { this.synchronise(); }, 500);
+		// }
+
 		let self = this.constructor.name;
 		let ids = JSON.parse(window.localStorage.getItem(self)) as string[];
+
 		if (ids && ids.length) ids.forEach((i) => {
 			this.items.value.push(JSON.parse(window.localStorage.getItem(i)) as T);
 		});
 
-		this.items.skip(1).subscribe((items) => {
-			let ids = items.map((i) => { return i.id; });
+		this.items.skip(1).subscribe((next) => {
+			let ids = JSON.stringify(next.map((i) => { return i.id; }));
+			window.localStorage.setItem(self, ids);
 
-			window.localStorage.setItem(self, JSON.stringify(ids));
-			items.forEach((i) => {
+			next.forEach((i) => {
 				window.localStorage.setItem(i.id, JSON.stringify(i));
 			});
 		});
-
-		// TODO: remove hack {
-		this.timeout = window.setTimeout(() => { this.synchronise(); }, 100);
-		// }
 
 		return this.items.asObservable();
 	}
 
 	public disconnect(): void  {
-		// TODO: remove hack {
 		window.clearTimeout(this.timeout);
-		// }
-
 		this.items.complete();
 	}
 
 	public remove(item: T): void {
-		this.items.next(this.items.value.splice(this.items.value.findIndex((i) => {
-			return item.id === i.id;
-		}), 1));
+		this.http.delete(this.baseURL + 'edit/' + item.id)
+			.toPromise().then(() => { this.items.next(
+				this.items.value.splice(this.items.value.findIndex(
+					(i) => { return item.id === i.id; }), 1)
+			); });
 	}
 
 	public save(item: T): void {
-		this.items.next(this.items.value.concat(item));
+		this.http.put(this.baseURL + 'edit/' + item.id, JSON.stringify(item))
+			.toPromise().then((res)  => {
+				this.items.next(this.items.value.concat(res.json() as T)
+			); });
 	}
 
 	public update(item: T): void {
-		this.items.next(this.items.value.splice(this.items.value.findIndex((i) => {
-			return item.id === i.id;
-		}), 1, item));
+		this.http.post(this.baseURL + 'add/', JSON.stringify(item))
+			.toPromise().then((res) => { this.items.next(
+				this.items.value.splice(this.items.value.findIndex(
+					(i) => { return item.id === i.id; }), 1, res.json() as T)
+			); });
 	}
 
 	protected modified(): number {
@@ -104,15 +108,12 @@ export abstract class DataService<T extends Model> extends DataSource<T> {
 	}
 
 	protected synchronise(): void {
-		let syncURL = this.baseURL + 'sync/' + this.modified();
-
-		// TODO: remove hack {
 		this.timeout = window.setTimeout(() => { this.synchronise(); }, 1000 * 180);
-		// }
 
-		this.http.get(syncURL).toPromise().then((response) => {
-			this.items.next(this.items.value.concat(response.json() as T[]));
-		});
+		this.http.get(this.baseURL + 'sync/' + this.modified())
+			.toPromise().then((res) => { this.items.next(
+				this.items.value.concat(res.json() as T[])
+			); });
 	}
 
 }

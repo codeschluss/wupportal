@@ -7,7 +7,7 @@
 		"root": ".",
 		"index": "index.html",
 		"outDir": "../backend/webroot/js",
-		"main": "app.ts",
+		"main": "main.ts",
 		"polyfills": "polyfills.ts",
 		"tsconfig": "tsconfig.json"
 	}],

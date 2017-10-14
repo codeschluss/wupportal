@@ -31,10 +31,6 @@ class AppController extends Controller
     /**
      * Initialization hook method.
      *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
      * @return void
      */
     public function initialize()
@@ -42,15 +38,12 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
-        $this->loadComponent('Flash');
-        $this->loadComponent('Syncronize');
-
-        /*
-         * Enable the following components for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+        $this->loadComponent('Auth', [
+            'authenticate' => ['Basic'],
+            'sessionKey' => false,
+            'storage' => 'Memory',
+            'unauthorizedRedirect' => false
+        ]);
     }
 
     /**
@@ -61,13 +54,37 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        if ($event->subject->name === 'Pages') return;
-        $this->viewBuilder()->className('Json');
-        $this->set('_serialize', true);
+        // $this->Auth->unauthorized();
+
+        if ($event->subject->name !== 'Pages') {
+            $this->viewBuilder()->className('Json');
+            $this->set('_serialize', true);
+        }
+
+        // var_dump($this->Auth);
+        // $this->Auth->allow();
+        // Note: These defaults are just to get started quickly with development
+        // and should not be used in production. You should instead set "_serialize"
+        // in each action as required.
+        // if (!array_key_exists('_serialize', $this->viewVars) &&
+        //     in_array($this->response->type(), ['application/json', 'application/xml'])
+        // ) {
+        //     $this->set('_serialize', true);
+        // }
     }
 
-    public function sync(int $since)
-    {
-        return $this->Syncronize->get($this->modelClass, $since);
-    }
+    /**
+     * Contain helper
+     *
+     * @return array
+     */
+    // protected function contain()
+    // {
+    //     $associations = $this->{$this->name}->associations();
+    //
+    //     return array_map(function($i) use ($associations) {
+    //         return $associations->get($i)->alias();
+    //     }, $associations->keys());
+    // }
+
 }

@@ -46,8 +46,7 @@ class ProvidersTable extends Table
             'foreignKey' => 'organisation_id'
         ]);
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'user_id'
         ]);
         $this->hasMany('Activities', [
             'foreignKey' => 'provider_id'

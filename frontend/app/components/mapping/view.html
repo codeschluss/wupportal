@@ -1,0 +1,9 @@
+<aol-map *ngIf="latitude && longitude && projection && zoom">
+	<aol-interaction-default></aol-interaction-default>
+	<aol-view [zoom]="zoom">
+		<aol-coordinate [x]="longitude" [y]="latitude" [srid]="projection"></aol-coordinate>
+	</aol-view>
+	<aol-layer-tile>
+		<aol-source-osm></aol-source-osm>
+	</aol-layer-tile>
+</aol-map>

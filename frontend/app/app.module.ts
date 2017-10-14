@@ -1,87 +1,77 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { Router } from '@angular/router';
-
-import { AppRoutingModule } from './app-routing.module';
-
 import { AngularOpenlayersModule } from 'ngx-openlayers';
-import {
-	MdCardModule, MdSidenavModule, MdButtonModule, MdCheckboxModule, MdTabsModule, MdInputModule, MdTableModule,
-	MdPaginatorModule, MdAutocompleteModule, MdChipsModule
-} from '@angular/material';
+
+import { NgModule } from '@angular/core';
+
+import { HttpModule } from '@angular/http';
+
+import { MatButtonModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material';
+import { MatIconModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from 'app/app.component';
+// import { AppRouterModule } from 'app/app-router.module';
 
-import { ActivityService } from './services/activity.service';
-import { ConfigurationService } from './services/configuration.service';
-import { CategoryService } from './services/category.service';
-import { SuburbService } from './services/suburb.service';
-import { TargetGroupService } from './services/target-group.service';
-import { UserService } from './services/user.service';
-import { OrganisationService } from './services/organisation.service';
-import { NominatimService } from './services/nominatim.service';
+import { AdminComponent } from 'app/components/admin';
+import { DetailsComponent } from 'app/components/details';
+import { FilterComponent } from 'app/components/filter';
+import { MappingComponent } from 'app/components/mapping';
 
-import { AuthGuard } from './admin/login/auth.guard';
-
-import { LoginComponent } from './admin/login/login.component';
-import { MapComponent } from './map/map.component';
-import { AdminComponent } from './admin/admin.component';
-import { ActivityEditComponent } from './admin/activityEdit/activity-edit.component';
-import { UserEditComponent } from './admin/users/user-edit.component';
-import { OrganisationEditComponent } from './admin/organisations/organisation-edit.component';
-import { ActivityDetailComponent } from './map/activityDetail/activity-detail.component';
-import { ActivitySummaryComponent } from './map/activitySummary/activity-summary.component';
-import { OrganisationDetailComponent } from './map/organisationDetail/organisation-detail.component';
-import { CheckboxAreaComponent } from './common/components/checkboxArea/checkbox-area.component';
+import { ActivityService } from 'app/services/activity';
+import { CategoryService } from 'app/services/category';
+import { ConfigurationService } from 'app/services/configuration';
+import { LocationService } from 'app/services/location';
+import { NominatimService } from 'app/services/nominatim';
+import { OrganisationService } from 'app/services/organisation';
+import { SuburbService } from 'app/services/suburb';
+import { TargetGroupService } from 'app/services/target-group';
+import { UserService } from 'app/services/user';
 
 @NgModule({
+	bootstrap: [
+		AppComponent
+	],
 	declarations: [
 		AppComponent,
-		MapComponent,
-		ActivityDetailComponent,
-		ActivitySummaryComponent,
-		CheckboxAreaComponent,
-		LoginComponent,
+
 		AdminComponent,
-		ActivityEditComponent,
-		OrganisationEditComponent,
-		OrganisationDetailComponent,
-		UserEditComponent
+		DetailsComponent,
+		FilterComponent,
+		MappingComponent
 	],
 	imports: [
-		BrowserModule,
-		FormsModule,
-		HttpModule,
-		BrowserAnimationsModule,
 		AngularOpenlayersModule,
-		AppRoutingModule,
-		MdCardModule,
-		MdSidenavModule,
-		MdButtonModule,
-		MdCheckboxModule,
-		MdTabsModule,
-		MdInputModule,
-		MdTableModule,
-		MdPaginatorModule,
-		MdAutocompleteModule,
-		MdChipsModule,
-		ReactiveFormsModule
+
+		HttpModule,
+
+		BrowserAnimationsModule,
+		BrowserModule,
+
+		MatButtonModule,
+		MatExpansionModule,
+		MatCardModule,
+		MatIconModule,
+		MatInputModule,
+		MatTabsModule
+
+		// AppRouterModule
 	],
 	providers: [
 		ActivityService,
-		ConfigurationService,
 		CategoryService,
+		ConfigurationService,
+		LocationService,
+		NominatimService,
+		OrganisationService,
 		SuburbService,
 		TargetGroupService,
-		AuthGuard,
-		UserService,
-		OrganisationService,
-		NominatimService
-	],
-	bootstrap: [AppComponent]
+		UserService
+	]
 })
 
 export class AppModule { }

@@ -14,16 +14,27 @@ class TagsController extends AppController
 {
 
     /**
+     * Initialization hook method.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->Auth->allow(['index', 'view']);
+    }
+
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
     public function index()
     {
-        $tags = $this->paginate($this->Tags);
+        $query = $this->Tags->find();
 
-        $this->set(compact('tags'));
-        $this->set('_serialize', ['tags']);
+        $this->set($query->toArray());
     }
 
     /**
@@ -35,12 +46,9 @@ class TagsController extends AppController
      */
     public function view($id = null)
     {
-        $tag = $this->Tags->get($id, [
-            'contain' => ['Activities']
-        ]);
+        $query = $this->Tags->get($id);
 
-        $this->set('tag', $tag);
-        $this->set('_serialize', ['tag']);
+        $this->set($query->toArray());
     }
 
     /**
@@ -48,22 +56,22 @@ class TagsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-        $tag = $this->Tags->newEntity();
-        if ($this->request->is('post')) {
-            $tag = $this->Tags->patchEntity($tag, $this->request->getData());
-            if ($this->Tags->save($tag)) {
-                $this->Flash->success(__('The tag has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The tag could not be saved. Please, try again.'));
-        }
-        $activities = $this->Tags->Activities->find('list', ['limit' => 200]);
-        $this->set(compact('tag', 'activities'));
-        $this->set('_serialize', ['tag']);
-    }
+    // public function add()
+    // {
+    //     $tag = $this->Tags->newEntity();
+    //     if ($this->request->is('post')) {
+    //         $tag = $this->Tags->patchEntity($tag, $this->request->getData());
+    //         if ($this->Tags->save($tag)) {
+    //             $this->Flash->success(__('The tag has been saved.'));
+    //
+    //             return $this->redirect(['action' => 'index']);
+    //         }
+    //         $this->Flash->error(__('The tag could not be saved. Please, try again.'));
+    //     }
+    //     $activities = $this->Tags->Activities->find('list', ['limit' => 200]);
+    //     $this->set(compact('tag', 'activities'));
+    //     $this->set('_serialize', ['tag']);
+    // }
 
     /**
      * Edit method
@@ -72,24 +80,24 @@ class TagsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $tag = $this->Tags->get($id, [
-            'contain' => ['Activities']
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $tag = $this->Tags->patchEntity($tag, $this->request->getData());
-            if ($this->Tags->save($tag)) {
-                $this->Flash->success(__('The tag has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The tag could not be saved. Please, try again.'));
-        }
-        $activities = $this->Tags->Activities->find('list', ['limit' => 200]);
-        $this->set(compact('tag', 'activities'));
-        $this->set('_serialize', ['tag']);
-    }
+    // public function edit($id = null)
+    // {
+    //     $tag = $this->Tags->get($id, [
+    //         'contain' => ['Activities']
+    //     ]);
+    //     if ($this->request->is(['patch', 'post', 'put'])) {
+    //         $tag = $this->Tags->patchEntity($tag, $this->request->getData());
+    //         if ($this->Tags->save($tag)) {
+    //             $this->Flash->success(__('The tag has been saved.'));
+    //
+    //             return $this->redirect(['action' => 'index']);
+    //         }
+    //         $this->Flash->error(__('The tag could not be saved. Please, try again.'));
+    //     }
+    //     $activities = $this->Tags->Activities->find('list', ['limit' => 200]);
+    //     $this->set(compact('tag', 'activities'));
+    //     $this->set('_serialize', ['tag']);
+    // }
 
     /**
      * Delete method
@@ -98,16 +106,16 @@ class TagsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $tag = $this->Tags->get($id);
-        if ($this->Tags->delete($tag)) {
-            $this->Flash->success(__('The tag has been deleted.'));
-        } else {
-            $this->Flash->error(__('The tag could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
+    // public function delete($id = null)
+    // {
+    //     $this->request->allowMethod(['post', 'delete']);
+    //     $tag = $this->Tags->get($id);
+    //     if ($this->Tags->delete($tag)) {
+    //         $this->Flash->success(__('The tag has been deleted.'));
+    //     } else {
+    //         $this->Flash->error(__('The tag could not be deleted. Please, try again.'));
+    //     }
+    //
+    //     return $this->redirect(['action' => 'index']);
+    // }
 }

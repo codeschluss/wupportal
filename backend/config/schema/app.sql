@@ -123,7 +123,7 @@ CREATE TABLE `activities` (
 	`name` VARCHAR(255) NOT NULL,
 	`description` TEXT,
 	`schedule` TEXT,
-	`show_user` BOOLEAN DEFAULT 0,
+	`show_user` BOOLEAN NOT NULL DEFAULT 0,
 	`address_id` CHAR(36),
 	`provider_id` CHAR(36) NOT NULL,
 	`category_id` CHAR(36) NOT NULL,

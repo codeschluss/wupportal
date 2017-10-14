@@ -1,3 +1,22 @@
-/* TODO: import from local node_modules via webpack instead of url*/
+@import url(
+	'https://unpkg.com/font-awesome/css/font-awesome.min.css'
+);
+@import url(
+	'https://unpkg.com/@angular/material/prebuilt-themes/deeppurple-amber.css'
+);
 
-@import url('https://unpkg.com/@angular/material/prebuilt-themes/deeppurple-amber.css');
+filter-component {
+	bottom: 0px;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	z-index: 5;
+}
+
+mapping-component {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}

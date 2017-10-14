@@ -1,0 +1,102 @@
+#query {
+	display: inline-block;
+	margin-bottom: 16px;
+	max-width: 100%;
+	padding: 0;
+	width: 400px;
+}
+
+#query mat-icon.fa {
+	font-size: 20px;
+}
+
+#query > table {
+	border-spacing: 0;
+	margin: -6px 0;
+	padding: 0 6px;
+	width: 100%;
+}
+
+#query > table td:not(:nth-child(2)) {
+	width: 1px;
+}
+
+#query > table td>mat-form-field {
+	width: 100%;
+}
+
+
+
+
+
+
+#query > mat-expansion-panel ::ng-deep .mat-expansion-panel-body {
+	margin: 0;
+}
+
+#query > mat-expansion-panel ::ng-deep .mat-tab-labels {
+	justify-content: center;
+}
+
+#query > mat-expansion-panel ::ng-deep .mat-tab-label {
+	height: 32px;
+	min-width: 0;
+	padding: 0 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*#selectables {
+
+}
+
+#selectables:empty {
+	height: 0;
+}*/
+
+/*#selectables mat-expansion-panel-header {
+	overflow: hidden;
+	transition: 200ms;
+}
+
+#selectables mat-expansion-panel-header > * {
+	max-height: 100%;
+	transition: 100ms;
+	transition-delay: 0;
+}*/
+
+#selectables ::ng-deep .mat-expansion-indicator::after {
+	transform: rotate(315deg);
+}
+
+#selectables > * {
+	max-width: 100%;
+	width: 400px;
+}
+
+@media (max-width: 1200px) {
+	/*#selectables .mat-expansion-panel-spacing {
+		margin: 0;
+	}
+
+	#selectables.mat-expanded > *:not(.mat-expanded)
+		mat-expansion-panel-header {
+		height: 0 !important;
+	}
+
+	#selectables.mat-expanded > *:not(.mat-expanded)
+		mat-expansion-panel-header > * {
+		max-height: 0%;
+		transition-delay: 100ms;
+	}*/
+}

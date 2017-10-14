@@ -44,29 +44,18 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
-    $map = [ 'sync/:id' => [
-        'action' => 'sync',
-        'method' => 'GET',
-        'id' => '[0-9]+'
-    ]];
+    $routes->resources('Activities', ['map' => ['filter' => [
+        'action' => 'filter',
+        'method' => 'GET'
+    ]]]);
+    $routes->resources('Categories');
+    $routes->resources('Configurations');
+    $routes->resources('Organisations');
+    $routes->resources('Suburbs');
+    $routes->resources('Tags');
+    $routes->resources('TargetGroups');
 
-    $routes->setExtensions(['json']);
-    $routes->resources('Activities', [ 'map' => $map ]);
-    $routes->resources('ActivitiesTags');
-    $routes->resources('ActivitiesTargetGroups');
-    $routes->resources('ActivitiesTranslations');
-    $routes->resources('Addresses', [ 'map' => $map ]);
-    $routes->resources('Categories', [ 'map' => $map ]);
-    $routes->resources('Configurations', [ 'map' => $map ]);
-    $routes->resources('Organisations', [ 'map' => $map ]);
-    $routes->resources('Providers', [ 'map' => $map ]);
-    $routes->resources('Suburbs', [ 'map' => $map ]);
-    $routes->resources('Tags', [ 'map' => $map ]);
-    $routes->resources('TargetGroups', [ 'map' => $map ]);
-    $routes->resources('Translations', [ 'map' => $map ]);
-    $routes->resources('Users', [ 'map' => $map ]);
-
-    $routes->connect(
+	$routes->connect(
         '/:path',
         ['controller' => 'Pages', 'action' => 'display', 'home'],
         ['path' => '.*']

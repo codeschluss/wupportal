@@ -57,9 +57,11 @@
 		"no-empty": false,
 		"no-empty-interface": true,
 		"no-eval": true,
-		"no-inferrable-types": [
+		"typedef": [
 			true,
-			"ignore-params"
+			"call-signature",
+			"parameter",
+			"member-variable-declaration"
 		],
 		"no-misused-new": true,
 		"no-non-null-assertion": true,

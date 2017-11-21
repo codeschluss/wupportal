@@ -9,23 +9,17 @@ import { Service } from 'app/services/service';
 @Injectable()
 export class ActivityService extends Service<Activity> {
 
-	protected baseURL: string = 'activities';
+	protected baseURL: string = '/activities/';
 
-	protected storable: boolean = true;
+	// public filter(query: string): Observable<Activity[]> {
+	// 	return this.items.asObservable();
+	// }
 
-	protected syncable: boolean = true;
-
-	protected synctime: number = 1000 * 120;
-
-	public filter(query: string): Observable<Activity[]> {
-		return this.items.asObservable();
-	}
-
-	public near(address: Address): Observable<Activity[]> {
-		return this.items.map((i) => i.filter((j) =>
-			Math.abs(j.address.latitude - address.latitude) < .025 &&
-			Math.abs(j.address.longitude - address.longitude) < .025
-		));
-	}
+	// public near(address: Address): Observable<Activity[]> {
+	// 	return this.items.map((i) => i.filter((j) =>
+	// 		Math.abs(j.address.latitude - address.latitude) < .025 &&
+	// 		Math.abs(j.address.longitude - address.longitude) < .025
+	// 	));
+	// }
 
 }

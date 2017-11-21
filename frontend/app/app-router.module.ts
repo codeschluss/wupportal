@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MappingComponent } from 'app/components/mapping';
+import { MappingComponent } from 'app/views/mapping';
 
 @NgModule({
 	imports: [RouterModule.forRoot([

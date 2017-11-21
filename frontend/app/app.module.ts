@@ -17,10 +17,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from 'app/app.component';
 // import { AppRouterModule } from 'app/app-router.module';
 
-import { AdminComponent } from 'app/components/admin';
-import { DetailsComponent } from 'app/components/details';
-import { FilterComponent } from 'app/components/filter';
-import { MappingComponent } from 'app/components/mapping';
+import { AdminComponent } from 'app/views/admin';
+import { DetailsComponent } from 'app/views/details';
+import { FilterComponent } from 'app/views/filter';
+import { MappingComponent } from 'app/views/mapping';
 
 import { ActivityService } from 'app/services/activity';
 import { CategoryService } from 'app/services/category';

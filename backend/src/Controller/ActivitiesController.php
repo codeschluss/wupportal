@@ -41,11 +41,13 @@ class ActivitiesController extends AppController
         if (empty($params)) return;
 
         $query = $this->Activities->find()
+            ->leftJoinWith('Categories')
             ->leftJoinWith('Addresses.Suburbs')
             ->leftJoinWith('Providers.Organisations')
             ->leftJoinWith('TargetGroups')
             ->leftJoinWith('Tags')
             ->contain([
+                'Categories',
                 'Addresses.Suburbs',
                 'Providers.Organisations',
                 'Providers.Users',
@@ -59,6 +61,8 @@ class ActivitiesController extends AppController
             $query->where(['OR' => [
                 'Activities.name LIKE "%' . $keyword . '%"' . $ci,
                 'Activities.description LIKE "%' . $keyword . '%"' . $ci,
+                'Categories.name LIKE "%' . $keyword . '%"' . $ci,
+                'Categories.description LIKE "%' . $keyword . '%"' . $ci,
                 'Addresses.street LIKE "%' . $keyword . '%"' . $ci,
                 'Organisations.name LIKE "%' . $keyword . '%"' . $ci,
                 'Organisations.description LIKE "%' . $keyword . '%"' . $ci,
@@ -69,6 +73,10 @@ class ActivitiesController extends AppController
                 'TargetGroups.description LIKE "%' . $keyword . '%"' . $ci
             ]]);
         }
+
+        if (array_key_exists('categories', $params))
+            foreach ($params['categories'] as $id)
+                $query->where(['Categories.id' => $id]);
 
         if (array_key_exists('organisations', $params))
             foreach ($params['organisations'] as $id)
@@ -97,6 +105,7 @@ class ActivitiesController extends AppController
     public function index()
     {
         $query = $this->Activities->find()->contain([
+                'Categories',
                 'Addresses.Suburbs',
                 'Providers.Organisations',
                 'Providers.Users',
@@ -117,6 +126,7 @@ class ActivitiesController extends AppController
     public function view($id = null)
     {
         $query = $this->Activities->get($id)->contain([
+                'Categories',
                 'Addresses.Suburbs',
                 'Providers.Organisations',
                 'Providers.Users',

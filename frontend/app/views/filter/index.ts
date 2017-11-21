@@ -22,10 +22,10 @@ export class FilterComponent {
 	public selectables: Observable<Activity[]> = null;
 
 	@Output()
-	public query: Subject<Activity> = new Subject<Activity>(null);
+	public query: Subject<Activity> = new Subject<Activity>();
 
 	@Output()
-	public selection: Subject<Activity> = new Subject<Activity>(null);
+	public selection: Subject<Activity> = new Subject<Activity>();
 
 }
 

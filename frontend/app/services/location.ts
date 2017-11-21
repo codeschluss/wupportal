@@ -1,3 +1,5 @@
+import 'rxjs/add/observable/of';
+
 import { Observable } from 'rxjs/Observable';
 
 import { Injectable } from '@angular/core';
@@ -10,37 +12,26 @@ export class LocationService extends Service<Address> {
 
 	protected baseURL: string = null;
 
-	protected storable: boolean = true;
+	public add(item: Address): void { return; }
 
-	protected syncable: boolean = 'geolocation' in navigator;
+	public delete(item: Address): void { return; }
 
-	protected synctime: number = 1000 * 90;
+	public edit(item: Address): void { return; }
 
-	public filter(query: string = null): Observable<Address[]> {
-		return this.items.map((i) => [
-			i.slice(i.length - 1) || new Address()
-		]);
+	public get(query: string = null): Observable<Address> {
+		const address = new Address();
+
+		if ('geolocation' in navigator) {
+			navigator.geolocation.getCurrentPosition((pos) => {
+				if (pos.coords.latitude === 0 || pos.coords.longitude === 0) return;
+				address.latitude = pos.coords.latitude;
+				address.longitude = pos.coords.longitude;
+			});
+		}
+
+		return Observable.of(address);
 	}
 
-	public remove(item: Address): void { }
-
-	public save(item: Address): void { }
-
-	public update(item: Address): void { }
-
-	protected synchronise(): void {
-		this.timer = setTimeout(() => { this.synchronise(); }, this.synctime);
-		navigator.geolocation.getCurrentPosition((pos) => {
-			if (pos.coords.latitude !== 0 && pos.coords.longitude !== 0) {
-				this.items.next(this.items.value.concat((() => {
-					const address = new Address();
-					address.id = this.epoch().toString();
-					address.latitude = pos.coords.latitude;
-					address.longitude = pos.coords.longitude;
-					return address;
-				})()));
-			}
-		});
-	}
+	public list(): Observable<Address[]> { return null; }
 
 }

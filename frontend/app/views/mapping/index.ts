@@ -9,7 +9,6 @@ import { Input } from '@angular/core';
 import { Output } from '@angular/core';
 import { ViewChild } from '@angular/core';
 
-
 import { Activity } from 'app/models/activity';
 import { Address } from 'app/models/address';
 
@@ -21,14 +20,14 @@ import { Address } from 'app/models/address';
 
 export class MappingComponent {
 
-	@Input()
-	public configuration: Observable<Activity[]> = null;
+	// @Input()
+	// public configuration: Observable<Activity[]> = null;
 
 	@Input()
 	public selectables: Observable<Activity[]> = null;
 
 	@Output()
-	public selection: Subject<Activity> = new Subject<Activity>(null);
+	public selection: Subject<Activity> = new Subject<Activity>();
 
 	@ViewChild(MapComponent)
 	private map: MapComponent;

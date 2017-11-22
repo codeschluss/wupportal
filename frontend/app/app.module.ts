@@ -10,10 +10,14 @@ import { MatExpansionModule } from '@angular/material';
 import { MatIconModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatTabsModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { MatFormFieldModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
-import { MatPaginator } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,14 +26,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from 'app/app.component';
 // import { AppRouterModule } from 'app/app-router.module';
 
-import { AdminComponent } from 'app/views/admin';
 import { DetailsComponent } from 'app/views/details';
 import { FilterComponent } from 'app/views/filter';
 import { MappingComponent } from 'app/views/mapping';
 
 import { AuthGuard } from 'app/views/admin/login/auth.guard';
 import { LoginComponent } from 'app/views/admin/login/login.component';
-import { MapComponent } from 'app/views/map/map.component';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
 import { UsersComponent } from 'app/views/admin/users/users.component';
@@ -78,8 +80,12 @@ import { UserService } from 'app/services/user';
 		MatInputModule,
 		MatFormFieldModule,
 		MatTableModule,
-		MatPaginator,
 		MatTabsModule,
+		MatSelectModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MatAutocompleteModule,
+		MatPaginatorModule
 
 		// AppRouterModule
 	],

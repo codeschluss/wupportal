@@ -52,7 +52,7 @@ export class ActivitiesComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.orgas = new Array();
-		this.organisationService.list().then(orgas => {
+		this.organisationService.list().map(orgas => {
 			orgas.forEach(orga => {
 				this.orgas.push(orga);
 			});
@@ -89,23 +89,22 @@ export class ActivitiesComponent implements OnInit {
 				, { headers: this.headers }
 			).subscribe(newActivity => this.selectedActivity = newActivity.json());
 		} else {
-			this.nominatimService.get(this.addressInput).then(results => {
-				results.forEach(geoDate => {
-					this.selectedActivity.address.latitude = geoDate['lat'];
-					this.selectedActivity.address.longitude = geoDate['lon'];
-					this.selectedActivity.address.houseNumber = geoDate['address']['house_number'];
-					this.selectedActivity.address.postalCode = geoDate['address']['postcode'];
-					this.selectedActivity.address.place = geoDate['address']['city'];
-					this.selectedActivity.address.street = geoDate['address']['road'];
-				});
+			this.nominatimService.get(this.addressInput).map(geoDate => {
+				this.selectedActivity.address.latitude = geoDate['lat'];
+				this.selectedActivity.address.longitude = geoDate['lon'];
+				this.selectedActivity.address.houseNumber = geoDate['address']['house_number'];
+				this.selectedActivity.address.postalCode = geoDate['address']['postcode'];
+				this.selectedActivity.address.place = geoDate['address']['city'];
+				this.selectedActivity.address.street = geoDate['address']['road'];
 			});
+		};
 
-			return this.http.post('http://localhost:8765' + '/activity/',
-				JSON.stringify(this.selectedActivity)
-				, { headers: this.headers }
-			).subscribe(newActivity => this.selectedActivity = newActivity.json());
-		}
+		return this.http.post('http://localhost:8765' + '/activity/',
+			JSON.stringify(this.selectedActivity)
+			, { headers: this.headers }
+		).subscribe(newActivity => this.selectedActivity = newActivity.json());
 	}
+
 
 	selectActivity(activity: Activity): void {
 		this.selectedActivity = activity;
@@ -119,7 +118,7 @@ export class ActivitiesDatabase {
 
 	constructor(private activityService: ActivityService) {
 		this.activities = new Array();
-		this.activityService.list().then(activities => {
+		this.activityService.list().map(activities => {
 			activities.forEach(act => {
 				this.activities.push(act);
 				this.dataChange.next(this.activities);

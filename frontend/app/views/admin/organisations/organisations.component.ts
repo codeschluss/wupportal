@@ -23,7 +23,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class OrganisationsComponent implements OnInit {
 	protected headers: Headers = new Headers({ 'Accept': 'application/json', 'Access-Control-Allow-Origin': '*' });
 	public selectedOrga: Organisation;
-	displayedColumns: Array = ['id', 'name', 'info', 'eMail', 'telephone', 'website', 'street', 'housenumber', 'postalcode', 'place'];
+	displayedColumns: Array<String> = ['id', 'name', 'info', 'eMail', 'telephone', 'website', 'street', 'housenumber', 'postalcode', 'place'];
 	organisationsDatabase: OrganisationsDatabase = new OrganisationsDatabase(this.organisationService);
 	dataSource: OrganisationsDataSource | null;
 	public addressOrgaInput: string;
@@ -63,22 +63,20 @@ export class OrganisationsComponent implements OnInit {
 				, { headers: this.headers }
 			).subscribe(newActivity => this.selectedOrga = newActivity.json());
 		} else {
-			this.nominatimService.get(this.addressOrgaInput).then(results => {
-				results.forEach(geoDate => {
-					this.selectedOrga.addres.latitude = geoDate['lat'];
-					this.selectedOrga.addres.longitude = geoDate['lon'];
-					this.selectedOrga.addres.housenumber = geoDate['address']['house_number'];
-					this.selectedOrga.addres.postalcode = geoDate['address']['postcode'];
-					this.selectedOrga.addres.place = geoDate['address']['city'];
-					this.selectedOrga.addres.street = geoDate['address']['road'];
-				});
+			this.nominatimService.get(this.addressOrgaInput).map(geoDate => {
+				this.selectedOrga.address.latitude = geoDate['lat'];
+				this.selectedOrga.address.longitude = geoDate['lon'];
+				this.selectedOrga.address.houseNumber = geoDate['address']['house_number'];
+				this.selectedOrga.address.postalCode = geoDate['address']['postcode'];
+				this.selectedOrga.address.place = geoDate['address']['city'];
+				this.selectedOrga.address.street = geoDate['address']['road'];
 			});
+		};
 
-			return this.http.post('http://localhost:8765' + '/organisation/',
-				JSON.stringify(this.selectedOrga)
-				, { headers: this.headers }
-			).subscribe(newOrganisation => this.selectedOrga = newOrganisation.json());
-		}
+		return this.http.post('http://localhost:8765' + '/organisation/',
+			JSON.stringify(this.selectedOrga)
+			, { headers: this.headers }
+		).subscribe(newOrganisation => this.selectedOrga = newOrganisation.json());
 	}
 
 	selectOrganisation(organisation: Organisation): void {
@@ -92,7 +90,8 @@ export class OrganisationsDatabase {
 
 	constructor(private organisationService: OrganisationService) {
 		this.organisations = new Array();
-		this.organisationService.list().then(orgas => {
+		// This is not right but now it is possible to build again
+		this.organisationService.list().map(orgas => {
 			orgas.forEach(orga => {
 				this.organisations.push(orga);
 				this.dataChange.next(this.organisations);
@@ -104,7 +103,7 @@ export class OrganisationsDatabase {
 }
 
 export class OrganisationsDataSource extends DataSource<any> {
-	_filterChange: BehaviorSubject = new BehaviorSubject('');
+	_filterChange: BehaviorSubject<string> = new BehaviorSubject('');
 	get filter(): string { return this._filterChange.value; }
 	set filter(filter: string) { this._filterChange.next(filter); }
 

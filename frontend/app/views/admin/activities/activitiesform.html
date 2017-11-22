@@ -2,7 +2,7 @@
 	<div class="table-container mat-elevation-z8">
 		<div class="tabel-header">
 			<mat-form-field floatPlaceholder="never">
-				<input mdInput #filter placeholder="Filter users">
+				<input matInput #filter placeholder="Filter users">
 			</mat-form-field>
 		</div>
 
@@ -75,74 +75,74 @@
 				</mat-cell>
 			</ng-container>
 
-			<md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-			<md-row *mdRowDef="let row; columns: displayedColumns;" (click)="selectActivity(row)"></md-row>
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectActivity(row)"></mat-row>
 		</mat-table>
-		<md-paginator #paginator [length]="activitiesDatabase.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
-		</md-paginator>
+		<!-- <mat-paginator #paginator [length]="activitiesDatabase.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
+		</mat-paginator> -->
 	</div>
-	<button md-raised-button (click)="createActivity()">New Activity</button>
-	<button md-raised-button (click)="deselectActivity()">cancel</button>
+	<button mat-raised-button (click)="createActivity()">New Activity</button>
+	<button mat-raised-button (click)="deselectActivity()">cancel</button>
 	<div *ngIf="selectedActivity">
 		<form (ngSubmit)="onSubmitActivity()" class="well">
 			<mat-form-field class="form-control">
-				<input mdInput name="name" type=text placeholder="name" [(ngModel)]="selectedActivity.name" value={{selectedActivity.name}}
-				  id="actname_field">
+				<input matInput name="name" type=text placeholder="name" [(ngModel)]="selectedActivity.name" value={{selectedActivity.name}}
+				 id="actname_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<textarea mdInput name="description" placeholder="description" [(ngModel)]="selectedActivity.description" value={{selectedActivity.description}}
-				  id="actdescription_field"></textarea>
+				<textarea matInput name="description" placeholder="description" [(ngModel)]="selectedActivity.description" value={{selectedActivity.description}}
+				 id="actdescription_field"></textarea>
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input mdInput name="date" type=datetime-local placeholder="date" value={{selectedActivity.date}} id="actdate_field">
+				<input matInput name="date" type=datetime-local placeholder="date" value={{selectedActivity.date}} id="actdate_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input mdInput name="address" placeholder="address" [(ngModel)]="addressInput" id="actaddres_field">
+				<input matInput name="address" placeholder="address" [(ngModel)]="addressInput" id="actaddres_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input mdInput name="street" placeholder="street" [(ngModel)]="selectedActivity.addres.street" value={{selectedActivity?.addres?.street}}
-				  id="actstreet_field">
+				<input matInput name="street" placeholder="street" [(ngModel)]="selectedActivity.addres.street" value={{selectedActivity?.addres?.street}}
+				 id="actstreet_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input mdInput name="housenumber" placeholder="housenumber" [(ngModel)]="selectedActivity.addres.housenumber" value={{selectedActivity?.addres?.housenumber}}
-				  id="acthousenumber_field">
+				<input matInput name="housenumber" placeholder="housenumber" [(ngModel)]="selectedActivity.addres.housenumber" value={{selectedActivity?.addres?.housenumber}}
+				 id="acthousenumber_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input mdInput name="place" placeholder="place" [(ngModel)]="selectedActivity.addres.place" value={{selectedActivity?.addres?.place}}
-				  id="actaddres_field">
+				<input matInput name="place" placeholder="place" [(ngModel)]="selectedActivity.addres.place" value={{selectedActivity?.addres?.place}}
+				 id="actaddres_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input mdInput name="postalcode" placeholder="postalcode" [(ngModel)]="selectedActivity.addres.postalcode" value={{selectedActivity?.addres?.postalcode}}
-				  id="actaddres_field">
+				<input matInput name="postalcode" placeholder="postalcode" [(ngModel)]="selectedActivity.addres.postalcode" value={{selectedActivity?.addres?.postalcode}}
+				 id="actaddres_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input mdInput name="category" placeholder="category" [(ngModel)]="selectedActivity.category" value={{selectedActivity?.category?.name}}
-				  id="actcategory_field">
+				<input matInput name="category" placeholder="category" [(ngModel)]="selectedActivity.category" value={{selectedActivity?.category?.name}}
+				 id="actcategory_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input mdInput name="showInstructor" placeholder="showinstructor" [(ngModel)]="selectedActivity.showinstructor" value={{selectedActivity.showInstructor}}
-				  id="actshowinstructor_field">
+				<input matInput name="showInstructor" placeholder="showinstructor" [(ngModel)]="selectedActivity.showinstructor" value={{selectedActivity.showInstructor}}
+				 id="actshowinstructor_field">
 			</mat-form-field>
 
 			<mat-form-field class="auto-completion-full-width">
-				<input mdInput name="organisation" placeholder="organisation" aria-label="organisation" [mdAutocomplete]="auto" [formControl]="orgaCtrl">
-				<md-autocomplete #auto="mdAutocomplete">
-					<md-option *ngFor="let orga of filteredOrgas | async" [value]="orga.name">
+				<input matInput name="organisation" placeholder="organisation" aria-label="organisation" [matAutocomplete]="auto" [formControl]="orgaCtrl">
+				<mat-autocomplete #auto="matAutocomplete">
+					<mat-option *ngFor="let orga of filteredOrgas | async" [value]="orga.name">
 						<span>{{orga.name}}</span> |
 						<small>{{orga?.website}}</small>
-					</md-option>
-				</md-autocomplete>
+					</mat-option>
+				</mat-autocomplete>
 			</mat-form-field>
-			<button md-raised-button type="submit">Submit</button>
+			<button mat-raised-button type="submit">Submit</button>
 		</form>
 	</div>
 </div>

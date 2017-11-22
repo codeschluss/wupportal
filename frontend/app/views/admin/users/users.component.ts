@@ -77,7 +77,7 @@ export class UsersDatabase {
 
 	constructor(private userService: UserService) {
 		this.users = new Array();
-		this.userService.getUsers().then(users => {
+		this.userService.list().map(users => {
 			users.forEach(user => {
 				this.users.push(user);
 				this.dataChange.next(this.users);
@@ -103,7 +103,7 @@ export class UsersDataSource extends DataSource<any> {
 		];
 		return Observable.merge(...displayDataChanges).map(() => {
 			return this._usersDatabase.data.slice().filter((item: User) => {
-				const searchStr = (item.name).toLowerCase();
+				const searchStr = (item.username).toLowerCase();
 				return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
 			});
 		});

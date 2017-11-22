@@ -11,6 +11,11 @@ import { MatIconModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatTabsModule } from '@angular/material';
 
+import { MatFormFieldModule } from '@angular/material';
+import { MatTableModule } from '@angular/material';
+import { MatPaginator } from '@angular/material';
+
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -21,6 +26,15 @@ import { AdminComponent } from 'app/views/admin';
 import { DetailsComponent } from 'app/views/details';
 import { FilterComponent } from 'app/views/filter';
 import { MappingComponent } from 'app/views/mapping';
+
+import { AuthGuard } from 'app/views/admin/login/auth.guard';
+import { LoginComponent } from 'app/views/admin/login/login.component';
+import { MapComponent } from 'app/views/map/map.component';
+import { AdminComponent } from 'app/views/admin/admin.component';
+import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
+import { UsersComponent } from 'app/views/admin/users/users.component';
+import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
+
 
 import { ActivityService } from 'app/services/activity';
 import { CategoryService } from 'app/services/category';
@@ -39,10 +53,15 @@ import { UserService } from 'app/services/user';
 	declarations: [
 		AppComponent,
 
-		AdminComponent,
 		DetailsComponent,
 		FilterComponent,
-		MappingComponent
+		MappingComponent,
+
+		LoginComponent,
+		AdminComponent,
+		ActivitiesComponent,
+		OrganisationsComponent,
+		UsersComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -57,7 +76,10 @@ import { UserService } from 'app/services/user';
 		MatCardModule,
 		MatIconModule,
 		MatInputModule,
-		MatTabsModule
+		MatFormFieldModule,
+		MatTableModule,
+		MatPaginator,
+		MatTabsModule,
 
 		// AppRouterModule
 	],
@@ -70,7 +92,9 @@ import { UserService } from 'app/services/user';
 		OrganisationService,
 		SuburbService,
 		TargetGroupService,
-		UserService
+		UserService,
+
+		AuthGuard
 	]
 })
 

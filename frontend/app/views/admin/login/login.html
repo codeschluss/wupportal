@@ -1,0 +1,19 @@
+<div>
+	<h2>Login</h2>
+	<div id="login">
+		<form class="example-form">
+			<mat-form-field class="example-full-width">
+				<input matInput placeholder="eMail" [(ngModel)]="userNameInput" type="text" name="userName" required />
+			</mat-form-field>
+			<mat-form-field class="example-full-width">
+				<input matInput placeholder="password" [(ngModel)]="passwordInput" type="password" name="password" required />
+			</mat-form-field>
+			<div>
+				<button mat-raised-button (click)="fakeLogin()">Login</button>
+				<nav>
+					<button mat-raised-button (click)="cancel()">cancel</button>
+				</nav>
+			</div>
+		</form>
+	</div>
+</div>

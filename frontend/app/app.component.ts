@@ -9,7 +9,7 @@ import { OnInit } from '@angular/core';
 
 import { MatIconRegistry } from '@angular/material';
 
-import { AdminComponent } from 'app/views/admin';
+import { AdminComponent } from 'app/views/admin/admin.component';
 import { DetailsComponent } from 'app/views/details';
 import { FilterComponent } from 'app/views/filter';
 import { MappingComponent } from 'app/views/mapping';

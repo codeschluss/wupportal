@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS `wupportal`;
+CREATE DATABASE wupportal CHARACTER SET utf8 COLLATE utf8_general_ci;

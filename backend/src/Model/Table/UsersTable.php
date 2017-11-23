@@ -58,8 +58,8 @@ class UsersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->boolean('admin')
-            ->allowEmpty('admin');
+            ->boolean('superuser')
+            ->allowEmpty('superuser');
 
         $validator
             ->scalar('username')

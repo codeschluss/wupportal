@@ -1,3 +1,19 @@
+DROP TABLE IF EXISTS `i18n`;
+DROP TABLE IF EXISTS `activities_translations`;
+DROP TABLE IF EXISTS `activities_target_groups`;
+DROP TABLE IF EXISTS `activities_tags`;
+DROP TABLE IF EXISTS `activities`;
+DROP TABLE IF EXISTS `providers`;
+DROP TABLE IF EXISTS `organisations`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `addresses`;
+DROP TABLE IF EXISTS `suburbs`;
+DROP TABLE IF EXISTS `target_groups`;
+DROP TABLE IF EXISTS `tags`;
+DROP TABLE IF EXISTS `categories`;
+DROP TABLE IF EXISTS `translations`;
+DROP TABLE IF EXISTS `configurations`;
+
 CREATE TABLE `configurations` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`item` VARCHAR(255) NOT NULL,
@@ -194,3 +210,17 @@ CREATE TABLE `activities_translations` (
 		FOREIGN KEY (`translation_id`) REFERENCES `translations` (`id`)
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-- TODO
+CREATE TABLE `i18n` (
+	`id` CHAR(36) NOT NULL PRIMARY KEY,
+	`locale` VARCHAR(6) NOT NULL,
+	`model` varchar(255) NOT NULL,
+	`foreign_key` CHAR(36) NOT NULL,
+	`field` VARCHAR(255) NOT NULL,
+	`content` TEXT,
+
+	UNIQUE INDEX I18N_LOCALE_FIELD (`locale`, `model`, `foreign_key`, `field`),
+	INDEX I18N_FIELD (`model`, `foreign_key`, `field`)
+);
+

@@ -1,3 +1,5 @@
+SET character_set_client = utf8;
+
 INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
 ('00000000-0000-0000-0001-000000000001', 'mapcenterLongitude', '7.1756'),
 ('00000000-0000-0000-0001-000000000002', 'mapcenterLatitude', '51.2640'),
@@ -7,10 +9,10 @@ INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
 ('00000000-0000-0000-0001-000000000006', 'portalSubtitle', 'Integrationsportal');
 
 INSERT INTO `tags` (`id`, `name`, `description`) VALUES
-('00000000-0000-0000-0002-000000000001', 'sport', 'Sportaktivitaet'),
+('00000000-0000-0000-0002-000000000001', 'sport', 'Sportaktivität'),
 ('00000000-0000-0000-0002-000000000002', 'sprache', 'Sprachkurs'),
-('00000000-0000-0000-0002-000000000003', 'jung', 'Fuer junge Leute'),
-('00000000-0000-0000-0002-000000000004', 'alt', 'Fuer alte Leute'),
+('00000000-0000-0000-0002-000000000003', 'jung', 'Für junge Leute'),
+('00000000-0000-0000-0002-000000000004', 'alt', 'Für alte Leute'),
 ('00000000-0000-0000-0002-000000000005', 'lernen', 'Lernen'),
 ('00000000-0000-0000-0002-000000000006', 'jungundalt', 'jungundalt'),
 ('00000000-0000-0000-0002-000000000007', 'bla', 'bla'),
@@ -21,7 +23,7 @@ INSERT INTO `target_groups` (`id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0003-000000000001', 'Adults', 'Adult target group'),
 ('00000000-0000-0000-0003-000000000002', 'Kids', 'Kid target group');
 
-INSERT INTO `users` (`id`, `admin`, `username`, `password`, `fullname`, `phone`) VALUES
+INSERT INTO `users` (`id`, `superuser`, `username`, `password`, `fullname`, `phone`) VALUES
 ('00000000-0000-0000-0004-000000000001', 1, 'john@doe.com', 'password', 'John Doe\'s', '01234567890'),
 ('00000000-0000-0000-0004-000000000002', 0, 'max@mustermann.de', 'password', 'Max Mustermann', '09876543210');
 
@@ -46,9 +48,9 @@ INSERT INTO `providers` (`id`, `organisation_id`, `user_id`) VALUES
 ('00000000-0000-0000-0009-000000000002', '00000000-0000-0000-0008-000000000001', '00000000-0000-0000-0004-000000000002');
 
 INSERT INTO `activities` (`id`, `name`, `description`, `schedule`, `show_user`, `address_id`, `provider_id`, `category_id`) VALUES
-('00000000-0000-0000-000a-000000000001', 'Sprachkurs', 'Englisch Sprachkurs fuer Jung und Alt', '2017-08-31', 1, '00000000-0000-0000-0006-000000000001', '00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0007-000000000002'),
-('00000000-0000-0000-000a-000000000002', 'Sportaktivitaet', 'Sportaktivitaet für Jung und Alt', '2017-08-31', 0, '00000000-0000-0000-0006-000000000001', '00000000-0000-0000-0009-000000000002', '00000000-0000-0000-0007-000000000002'),
-('00000000-0000-0000-000a-000000000003', 'Sprachkurs', 'Deutsch Sprachkurs fuer Alt und Jung', '2017-08-30', 1, '00000000-0000-0000-0006-000000000002', '00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0007-000000000002'),
+('00000000-0000-0000-000a-000000000001', 'Sprachkurs', 'Englisch Sprachkurs für Jung und Alt', '2017-08-31', 1, '00000000-0000-0000-0006-000000000001', '00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0007-000000000002'),
+('00000000-0000-0000-000a-000000000002', 'Sportaktivität', 'Sportaktivität für Jung und Alt', '2017-08-31', 0, '00000000-0000-0000-0006-000000000001', '00000000-0000-0000-0009-000000000002', '00000000-0000-0000-0007-000000000002'),
+('00000000-0000-0000-000a-000000000003', 'Sprachkurs', 'Deutsch Sprachkurs für Alt und Jung', '2017-08-30', 1, '00000000-0000-0000-0006-000000000002', '00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0007-000000000002'),
 ('00000000-0000-0000-000a-000000000004', 'Sprachkurs', 'Englisch', '2017-09-30', 1, '00000000-0000-0000-0006-000000000002', '00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0007-000000000002');
 
 INSERT INTO `activities_tags` (`id`, `tag_id`, `activity_id`) VALUES

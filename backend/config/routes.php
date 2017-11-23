@@ -44,22 +44,33 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
-    $routes->resources('Activities', ['map' => ['filter' => [
-        'action' => 'filter',
-        'method' => 'GET'
-    ]]]);
-    $routes->resources('Categories');
-    $routes->resources('Configurations');
-    $routes->resources('Organisations');
-    $routes->resources('Suburbs');
-    $routes->resources('Tags');
-    $routes->resources('TargetGroups');
 
-	$routes->connect(
+    $routes->connect(
         '/:path',
         ['controller' => 'Pages', 'action' => 'display', 'home'],
         ['path' => '.*']
     );
+
+    $routes->resources('Activities', ['map' => ['filter' => [
+        'action' => 'filter',
+        'method' => 'GET'
+    ]]]);
+
+    $routes->scope('/api/', function($routes) {
+        $fetch = ['map' => ['fetch' => [
+            'action' => 'fetch',
+            'method' => 'POST',
+            'path' => '/fetch'
+        ]]];
+
+        $routes->resources('Categories');
+        $routes->resources('Configurations');
+        $routes->resources('Organisations');
+        $routes->resources('Suburbs');
+        $routes->resources('Tags');
+        $routes->resources('TargetGroups');
+
+    });
 });
 
 /**

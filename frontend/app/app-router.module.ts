@@ -10,8 +10,8 @@ import { AuthGuard } from 'app/views/admin/login/auth.guard';
 @NgModule({
 	imports: [RouterModule.forRoot([
 		{ path: '', component: MappingComponent },
-		{ path: '/login/', component: LoginComponent },
-		{ path: '/admin/', component: AdminComponent, canActivate: [AuthGuard] },
+		{ path: 'login', component: LoginComponent },
+		{ path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
 		// { path: '**', redirectTo: '' }
 	])],
 	exports: [RouterModule]

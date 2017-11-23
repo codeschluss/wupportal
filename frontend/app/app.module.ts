@@ -1,8 +1,10 @@
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 
 import { NgModule } from '@angular/core';
-
 import { HttpModule } from '@angular/http';
+import { Router } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { MatButtonModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
@@ -14,17 +16,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
 import { MatFormFieldModule } from '@angular/material';
 import { MatTableModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from 'app/app.component';
-// import { AppRouterModule } from 'app/app-router.module';
+import { AppRouterModule } from 'app/app-router.module';
 
 import { DetailsComponent } from 'app/views/details';
 import { FilterComponent } from 'app/views/filter';
@@ -36,7 +33,6 @@ import { AdminComponent } from 'app/views/admin/admin.component';
 import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
 import { UsersComponent } from 'app/views/admin/users/users.component';
 import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
-
 
 import { ActivityService } from 'app/services/activity';
 import { CategoryService } from 'app/services/category';
@@ -85,9 +81,9 @@ import { UserService } from 'app/services/user';
 		FormsModule,
 		ReactiveFormsModule,
 		MatAutocompleteModule,
-		MatPaginatorModule
+		MatPaginatorModule,
 
-		// AppRouterModule
+		AppRouterModule
 	],
 	providers: [
 		ActivityService,

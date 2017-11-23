@@ -3,6 +3,11 @@ backend/config/app.php
 backend/logs
 backend/tmp
 backend/webroot/js
+/backend/composer.lock
+/backend/tests
+/backend/tmp
+/backend/vendor
+/backend/plugins
 
 frontend/*.log
 frontend/node_modules

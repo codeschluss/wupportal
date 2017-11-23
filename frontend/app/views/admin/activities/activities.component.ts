@@ -97,7 +97,7 @@ export class ActivitiesComponent implements OnInit {
 				this.selectedActivity.address.place = geoDate['address']['city'];
 				this.selectedActivity.address.street = geoDate['address']['road'];
 			});
-		};
+		}
 
 		return this.http.post('http://localhost:8765' + '/activity/',
 			JSON.stringify(this.selectedActivity)

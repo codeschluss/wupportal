@@ -66,6 +66,7 @@ Router::scope('/', function (RouteBuilder $routes) {
         $routes->resources('Categories');
         $routes->resources('Configurations');
         $routes->resources('Organisations');
+        $routes->resources('Users');
         $routes->resources('Suburbs');
         $routes->resources('Tags');
         $routes->resources('TargetGroups');

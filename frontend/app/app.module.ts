@@ -35,7 +35,6 @@ import { AdminComponent } from 'app/views/admin/admin.component';
 import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
 import { UsersComponent } from 'app/views/admin/users/users.component';
 import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
-import { TableHttpExample } from 'app/views/admin/testarea/test.component';
 
 
 import { ActivityService } from 'app/services/activity';
@@ -64,7 +63,6 @@ import { UserService } from 'app/services/user';
 		ActivitiesComponent,
 		OrganisationsComponent,
 		UsersComponent,
-		TableHttpExample
 	],
 	imports: [
 		AngularOpenlayersModule,

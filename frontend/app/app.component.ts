@@ -11,7 +11,7 @@ import { MatIconRegistry } from '@angular/material';
 
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { DetailsComponent } from 'app/views/details';
-import { FilterComponent } from 'app/views/filter';
+// import { FilterComponent } from 'app/views/filter';
 import { MappingComponent } from 'app/views/mapping';
 
 import { ActivityService } from 'app/services/activity';
@@ -48,8 +48,8 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild(DetailsComponent)
 	private detailsComponent: DetailsComponent;
 
-	@ViewChild(FilterComponent)
-	private filterComponent: FilterComponent;
+	// @ViewChild(FilterComponent)
+	// private filterComponent: FilterComponent;
 
 	@ViewChild(MappingComponent)
 	private mappingComponent: MappingComponent;
@@ -71,7 +71,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 
 	public ngAfterViewInit(): void {
-		this.filterComponent.selection.subscribe((i) => console.log(i));
+		// this.filterComponent.selection.subscribe((i) => console.log(i));
 		// this.filterComponent.selection.subscribe((i) => console.log(i));
 	}
 
@@ -86,7 +86,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 
 	public ngOnInit(): void {
-		this.filterComponent.selectables = this.activityService.list();
+		// this.filterComponent.selectables = this.activityService.list();
 		// this.mappingComponent.selectables = this.activityService.list();
 
 		// this.activityService.connect();

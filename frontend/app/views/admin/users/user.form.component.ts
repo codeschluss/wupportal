@@ -11,54 +11,17 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-	selector: 'edit-users',
-	styleUrls: ['../table-basic.css'],
-	templateUrl: 'users.table.html',
+	selector: 'edit-user',
+	templateUrl: 'user.form.html',
 })
-export class UsersComponent implements AfterViewInit {
-	displayedColumns = ['id', 'username', 'fullname', 'phone'];
-	userDatabase: HttpDao | null;
-	dataSource = new MatTableDataSource();
-	// TODO
-	resultsLength;
 
-	applyFilter(filterValue: string) {
-		filterValue = filterValue.trim();
-		filterValue = filterValue.toLowerCase();
-		this.dataSource.filter = filterValue;
-	}
+export class UserEditComponent implements AfterViewInit {
 
+	constructor() { }
 
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild(MatSort) sort: MatSort;
-
-	constructor(private http: HttpClient) { }
-
-	ngAfterViewInit() {
-		this.dataSource.paginator = this.paginator;
-		this.userDatabase = new HttpDao(this.http);
-		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		Observable.merge(this.sort.sortChange, this.paginator.page)
-			.startWith(null)
-			.switchMap(() => {
-				return this.userDatabase.getData();
-			})
-			.map(data => {
-				return data;
-			})
-			.catch(() => {
-				return Observable.of([]);
-			})
-			.subscribe(data => this.dataSource.data = data);
-	}
+	ngAfterViewInit() { }
 }
 
-export class HttpDao {
-	constructor(private http: HttpClient) { }
-	getData(): Observable<User[]> {
-		return this.http.get<User[]>('http://localhost:8765/api/users');
-	}
-}
 
 
 

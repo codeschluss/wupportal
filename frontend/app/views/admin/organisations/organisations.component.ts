@@ -16,10 +16,16 @@ import 'rxjs/add/operator/switchMap';
 	templateUrl: 'organisations.table.html',
 })
 export class OrganisationsComponent implements AfterViewInit {
-	displayedColumns = ['name', 'description', 'mail', 'phone', 'website', 'address'];
+	displayedColumns = ['name', 'description', 'mail', 'phone', 'website', 'address', 'action'];
 	organisationDatabase: HttpDao | null;
 	dataSource = new MatTableDataSource();
-	resultsLength = 1;
+	resultsLength;
+
+	applyFilter(filterValue: string) {
+		filterValue = filterValue.trim();
+		filterValue = filterValue.toLowerCase();
+		this.dataSource.filter = filterValue;
+	}
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
@@ -27,6 +33,7 @@ export class OrganisationsComponent implements AfterViewInit {
 	constructor(private http: HttpClient) { }
 
 	ngAfterViewInit() {
+		this.dataSource.paginator = this.paginator;
 		this.organisationDatabase = new HttpDao(this.http);
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 		Observable.merge(this.sort.sortChange, this.paginator.page)

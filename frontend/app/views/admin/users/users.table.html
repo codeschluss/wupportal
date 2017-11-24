@@ -1,6 +1,12 @@
 <div class="user-container mat-elevation-z8">
 
-	<mat-table #table [dataSource]="dataSource" class="user-table" matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
+	<div class="users-table-header">
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+		</mat-form-field>
+	</div>
+
+	<mat-table #table [dataSource]="dataSource" class="user-table" matSort matSortActive="username" matSortDisableClear matSortDirection="asc">
 
 		<ng-container matColumnDef="id">
 			<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
@@ -27,7 +33,19 @@
 		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 	</mat-table>
 
-	<mat-paginator [length]="resultsLength" [pageSize]="30">
+	<!-- <ng-container matColumnDef="action">
+		<mat-header-cell *matHeaderCellDef>
+			Ändern/Löschen
+		</mat-header-cell>
+		<mat-cell *matCellDef="let row">
+			<a routerLink="['/user/edit/', row.id]">
+				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+			</a>
+			<i class="fa fa-trash-o" aria-hidden="true"></i>
+		</mat-cell>
+	</ng-container> -->
+
+	<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
 	</mat-paginator>
 
 </div>

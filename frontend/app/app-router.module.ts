@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { MappingComponent } from 'app/views/mapping';
 import { LoginComponent } from 'app/views/admin/login/login.component';
 import { AdminComponent } from 'app/views/admin/admin.component';
+import { UserEditComponent } from 'app/views/admin/users/user.form.component';
+import { OrganisationEditComponent } from 'app/views/admin/organisations/organisation.form.component';
 import { AuthGuard } from 'app/views/admin/login/auth.guard';
 
 @NgModule({
@@ -12,6 +14,8 @@ import { AuthGuard } from 'app/views/admin/login/auth.guard';
 		{ path: '', component: MappingComponent },
 		{ path: 'login', component: LoginComponent },
 		{ path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+		{ path: 'admin/user/edit/:id', component: UserEditComponent },
+		{ path: 'admin/organisation/edit/:id', component: OrganisationEditComponent },
 		// { path: '**', redirectTo: '' }
 	])],
 	exports: [RouterModule]

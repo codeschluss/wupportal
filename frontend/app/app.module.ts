@@ -34,8 +34,9 @@ import { LoginComponent } from 'app/views/admin/login/login.component';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
 import { UsersComponent } from 'app/views/admin/users/users.component';
+import { UserEditComponent } from 'app/views/admin/users/user.form.component';
 import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
-
+import { OrganisationEditComponent } from 'app/views/admin/organisations/organisation.form.component';
 
 import { ActivityService } from 'app/services/activity';
 import { CategoryService } from 'app/services/category';
@@ -62,7 +63,9 @@ import { UserService } from 'app/services/user';
 		AdminComponent,
 		ActivitiesComponent,
 		OrganisationsComponent,
+		OrganisationEditComponent,
 		UsersComponent,
+		UserEditComponent,
 	],
 	imports: [
 		AngularOpenlayersModule,

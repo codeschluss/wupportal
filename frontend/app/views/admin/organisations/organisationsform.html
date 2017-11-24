@@ -1,4 +1,40 @@
-<div>
+<div class="organisation-container mat-elevation-z8">
+
+	<mat-table #table [dataSource]="dataSource" class="organisation-table" matSortDirection="asc">
+
+		<ng-container matColumnDef="name">
+			<mat-header-cell *matHeaderCellDef>name</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="website">
+			<mat-header-cell *matHeaderCellDef>Website</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.website }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="description">
+			<mat-header-cell *matHeaderCellDef>Beschreibung</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.description }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="mail">
+			<mat-header-cell *matHeaderCellDef>eMail</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.mail }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="phone">
+			<mat-header-cell *matHeaderCellDef>Telephone</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+	</mat-table>
+
+</div>
+
+
+<!-- <div>
 	<div class="table-container mat-elevation-z8">
 		<div class="tabel-header">
 			<mat-form-field floatPlaceholder="never">
@@ -40,22 +76,22 @@
 
 			<ng-container matColumnDef="street">
 				<mat-header-cell *matHeaderCellDef> street </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.addres?.street}} </mat-cell>
+				<mat-cell *matCellDef="let row"> {{row?.address?.street}} </mat-cell>
 			</ng-container>
 
 			<ng-container matColumnDef="housenumber">
 				<mat-header-cell *matHeaderCellDef> housenumber </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.addres?.housenumber}} </mat-cell>
+				<mat-cell *matCellDef="let row"> {{row?.address?.housenumber}} </mat-cell>
 			</ng-container>
 
 			<ng-container matColumnDef="postalcode">
 				<mat-header-cell *matHeaderCellDef> postalcode </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.addres?.postalcode}} </mat-cell>
+				<mat-cell *matCellDef="let row"> {{row?.address?.postalcode}} </mat-cell>
 			</ng-container>
 
 			<ng-container matColumnDef="place">
 				<mat-header-cell *matHeaderCellDef> place </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.addres?.place}} </mat-cell>
+				<mat-cell *matCellDef="let row"> {{row?.address?.place}} </mat-cell>
 			</ng-container>
 
 			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -95,26 +131,26 @@
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input matInput placeholder="street" [(ngModel)]="selectedOrga.addres.street" name="street" value={{selectedOrga?.addres?.street}}
-				  id="orgastreet_field">
+				<input matInput placeholder="street" [(ngModel)]="selectedOrga.address.street" name="street" value={{selectedOrga?.address?.street}}
+				 id="orgastreet_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input matInput placeholder="housenumber" [(ngModel)]="selectedOrga.addres.housenumber" name="housenumber" value={{selectedOrga?.addres?.housenumber}}
-				  id="orgahousenumber_field">
+				<input matInput placeholder="housenumber" [(ngModel)]="selectedOrga.address.housenumber" name="housenumber" value={{selectedOrga?.address?.housenumber}}
+				 id="orgahousenumber_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input matInput placeholder="place" [(ngModel)]="selectedOrga.addres.place" name="place" value={{selectedOrga?.addres?.place}}
-				  id="orgaplace_field">
+				<input matInput placeholder="place" [(ngModel)]="selectedOrga.address.place" name="place" value={{selectedOrga?.address?.place}}
+				 id="orgaplace_field">
 			</mat-form-field>
 
 			<mat-form-field class="form-control">
-				<input matInput placeholder="postalcode" [(ngModel)]="selectedOrga.addres.postalcode" name="postalcode" value={{selectedOrga?.addres?.postalcode}}
-				  id="orgapostalcode_field">
+				<input matInput placeholder="postalcode" [(ngModel)]="selectedOrga.address.postalcode" name="postalcode" value={{selectedOrga?.address?.postalcode}}
+				 id="orgapostalcode_field">
 			</mat-form-field>
 
 			<button mat-raised-button type="submit">Submit</button>
 		</form>
 	</div>
-</div>
+</div> -->

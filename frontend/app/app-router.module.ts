@@ -14,8 +14,8 @@ import { AuthGuard } from 'app/views/admin/login/auth.guard';
 		{ path: '', component: MappingComponent },
 		{ path: 'login', component: LoginComponent },
 		{ path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-		{ path: 'admin/user/edit/:id', component: UserEditComponent },
-		{ path: 'admin/organisation/edit/:id', component: OrganisationEditComponent },
+		{ path: 'user/edit/:id', component: UserEditComponent },
+		{ path: 'organisation/edit/:id', component: OrganisationEditComponent },
 		// { path: '**', redirectTo: '' }
 	])],
 	exports: [RouterModule]

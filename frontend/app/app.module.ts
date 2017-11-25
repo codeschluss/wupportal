@@ -1,10 +1,11 @@
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 
 import { NgModule } from '@angular/core';
+import { Inject } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 // HttpModule is deprecated
 import { HttpModule } from '@angular/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -19,6 +20,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule, MatSortModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 
@@ -48,6 +50,8 @@ import { SuburbService } from 'app/services/suburb';
 import { TargetGroupService } from 'app/services/target-group';
 import { UserService } from 'app/services/user';
 
+import { DialogComponent } from 'app/views/utils/popup.component';
+
 @NgModule({
 	bootstrap: [
 		AppComponent
@@ -66,6 +70,7 @@ import { UserService } from 'app/services/user';
 		OrganisationEditComponent,
 		UsersComponent,
 		UserEditComponent,
+		DialogComponent,
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -75,6 +80,7 @@ import { UserService } from 'app/services/user';
 
 		BrowserAnimationsModule,
 		BrowserModule,
+		AppRouterModule,
 
 		MatButtonModule,
 		MatExpansionModule,
@@ -90,8 +96,8 @@ import { UserService } from 'app/services/user';
 		ReactiveFormsModule,
 		MatAutocompleteModule,
 		MatPaginatorModule,
+		MatDialogModule,
 
-		AppRouterModule
 	],
 	providers: [
 		ActivityService,
@@ -105,6 +111,9 @@ import { UserService } from 'app/services/user';
 		UserService,
 
 		AuthGuard
+	],
+	entryComponents: [
+		DialogComponent,
 	]
 })
 

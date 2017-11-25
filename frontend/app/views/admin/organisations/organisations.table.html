@@ -44,10 +44,12 @@
 				Ändern/Löschen
 			</mat-header-cell>
 			<mat-cell *matCellDef="let row">
-				<a routerLink='/organisation/edit/{{row.id}}'>
+				<button mat-button routerLink='/organisation/edit/{{row.id}}'>
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-				</a>
-				<i class="fa fa-trash-o" aria-hidden="true"></i>
+				</button>
+				<button mat-raised-button color="warn" (click)="openDialog(row)">
+					<i class="fa fa-trash-o" aria-hidden="true"></i>
+				</button>
 			</mat-cell>
 		</ng-container>
 

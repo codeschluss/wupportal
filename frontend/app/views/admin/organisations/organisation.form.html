@@ -1,5 +1,53 @@
-<div class="organisation-container mat-elevation-z8">
+<div>
+	<mat-card class="example-card" *ngIf="organisation$ | async as organisation">
+		<form class="well">
+			<mat-card-header>
+				<mat-form-field class="form-control">
+					<input matInput type=text placeholder="name" name="name" value={{organisation.name}} id="orga_name_field">
+				</mat-form-field>
+			</mat-card-header>
+			<mat-form-field class="form-control">
+				<textarea matInput type=text placeholder="description" name="description" value={{organisation.description}} id="orga_description_field"></textarea>
+			</mat-form-field>
 
-	Text wird hier nur dieser erscheinen
+			<mat-form-field class="form-control">
+				<input matInput type=text placeholder="mail" name="mail" value={{organisation.mail}} id="orga_mail_field">
+			</mat-form-field>
 
+			<mat-form-field class="form-control">
+				<input matInput type=text placeholder="phone" name="telephone" value={{organisation.phone}} id="orga_phone_field">
+			</mat-form-field>
+
+			<mat-form-field class="form-control">
+				<input matInput type=text placeholder="website" name="website" value={{organisation.website}} id="orga_website_field">
+			</mat-form-field>
+
+			<!-- <mat-form-field class="form-control">
+				<input matInput placeholder="address" name="address" [(ngModel)]="addressOrgaInput" id="orgaaddres_field">
+			</mat-form-field>
+
+			<mat-form-field class="form-control">
+				<input matInput placeholder="street" [(ngModel)]="organisation.address.street" name="street" value={{organisation?.address?.street}}
+				 id="orgastreet_field">
+			</mat-form-field>
+
+			<mat-form-field class="form-control">
+				<input matInput placeholder="housenumber" [(ngModel)]="organisation.address.housenumber" name="housenumber" value={{organisation?.address?.housenumber}}
+				 id="orgahousenumber_field">
+			</mat-form-field>
+
+			<mat-form-field class="form-control">
+				<input matInput placeholder="place" [(ngModel)]="organisation.address.place" name="place" value={{organisation?.address?.place}}
+				 id="orgaplace_field">
+			</mat-form-field>
+
+			<mat-form-field class="form-control">
+				<input matInput placeholder="postalcode" [(ngModel)]="organisation.address.postalcode" name="postalcode" value={{organisation?.address?.postalcode}}
+				 id="orgapostalcode_field">
+			</mat-form-field> -->
+
+			<button mat-raised-button type="submit">Submit</button>
+			<button mat-raised-button (click)="goToList()">Zurück</button>
+		</form>
+	</mat-card>
 </div>

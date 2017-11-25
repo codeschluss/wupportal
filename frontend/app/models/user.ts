@@ -8,4 +8,8 @@ export class User extends Model {
 	public fullname: string = '';
 	public phone: string = '';
 
+	public static getRepository(): string {
+		return 'users';
+	}
+
 }

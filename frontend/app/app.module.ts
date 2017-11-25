@@ -37,7 +37,7 @@ import { AuthGuard } from 'app/views/admin/login/auth.guard';
 import { LoginComponent } from 'app/views/admin/login/login.component';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
-import { UsersComponent } from 'app/views/admin/users/users.component';
+import { UsersTableComponent } from 'app/views/admin/users/users.table';
 import { UserEditComponent } from 'app/views/admin/users/user.form.component';
 import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
 import { OrganisationEditComponent } from 'app/views/admin/organisations/organisation.form.component';
@@ -73,7 +73,7 @@ import { DialogComponent } from 'app/views/utils/popup.component';
 		ActivityEditComponent,
 		OrganisationsComponent,
 		OrganisationEditComponent,
-		UsersComponent,
+		UsersTableComponent,
 		UserEditComponent,
 		DialogComponent,
 	],

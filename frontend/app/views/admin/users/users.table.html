@@ -1,283 +1,35 @@
-<div class="user-container mat-elevation-z8">
+<mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
-	<div class="users-table-header">
-		<mat-form-field>
-			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-		</mat-form-field>
-	</div>
+	<!-- username Column -->
+	<ng-container matColumnDef="number">
+		<mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+		<mat-cell *matCellDef="let row">{{ row.username }}</mat-cell>
+	</ng-container>
 
-	<mat-table #table [dataSource]="dataSource" class="user-table" matSort matSortActive="username" matSortDisableClear matSortDirection="asc">
+	<!-- fullname Column -->
+	<ng-container matColumnDef="title">
+		<mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+		<mat-cell *matCellDef="let row">{{ row.fullname }}</mat-cell>
+	</ng-container>
 
-		<ng-container matColumnDef="id">
-			<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
-				id</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
-		</ng-container>
+	<!-- phone Column -->
+	<ng-container matColumnDef="state">
+		<mat-header-cell *matHeaderCellDef>State</mat-header-cell>
+		<mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
+	</ng-container>
 
-		<ng-container matColumnDef="username">
-			<mat-header-cell *matHeaderCellDef>username</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.username }}</mat-cell>
-		</ng-container>
-
-		<ng-container matColumnDef="fullname">
-			<mat-header-cell *matHeaderCellDef>fullname</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.fullname }}</mat-cell>
-		</ng-container>
-
-		<ng-container matColumnDef="phone">
-			<mat-header-cell *matHeaderCellDef>phone</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
-		</ng-container>
-
-		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-	</mat-table>
-
-	<!-- <ng-container matColumnDef="action">
-		<mat-header-cell *matHeaderCellDef>
-			Ändern/Löschen
+	<!-- Created Column -->
+	<ng-container matColumnDef="created">
+		<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+			Created
 		</mat-header-cell>
-		<mat-cell *matCellDef="let row">
-			<a routerLink="['/user/edit/', row.id]">
-				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-			</a>
-			<i class="fa fa-trash-o" aria-hidden="true"></i>
-		</mat-cell>
-	</ng-container> -->
+		<mat-cell *matCellDef="let row">{{ row.created_at | date }}</mat-cell>
+	</ng-container>
 
-	<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
-	</mat-paginator>
+	<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+	<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
 
+<mat-paginator [pageSize]="tableState.pageSize" (page)="changedPage($event)">
+</mat-paginator>
 </div>
-
-
-<!-- <div>
-		<div class="table-container mat-elevation-z8">
-			<div class="tabel-header">
-				<mat-form-field floatPlaceholder="never">
-					<input matInput #filter placeholder="Filter users">
-				</mat-form-field>
-			</div>
-
-			<mat-table #table [dataSource]="dataSource">
-
-				<ng-container matColumnDef="id">
-					<mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="name">
-					<mat-header-cell *matHeaderCellDef> name </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="info">
-					<mat-header-cell *matHeaderCellDef> info </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row.info}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="eMail">
-					<mat-header-cell *matHeaderCellDef> eMail </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row.eMail}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="telephone">
-					<mat-header-cell *matHeaderCellDef> telephone </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row.telephone}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="website">
-					<mat-header-cell *matHeaderCellDef> website </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row.website}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="street">
-					<mat-header-cell *matHeaderCellDef> street </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row?.address?.street}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="housenumber">
-					<mat-header-cell *matHeaderCellDef> housenumber </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row?.address?.housenumber}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="postalcode">
-					<mat-header-cell *matHeaderCellDef> postalcode </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row?.address?.postalcode}} </mat-cell>
-				</ng-container>
-
-				<ng-container matColumnDef="place">
-					<mat-header-cell *matHeaderCellDef> place </mat-header-cell>
-					<mat-cell *matCellDef="let row"> {{row?.address?.place}} </mat-cell>
-				</ng-container>
-
-				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-				<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectOrganisation(row)"></mat-row>
-			</mat-table>
-			<mat-paginator #paginator [length]="organisationsDatabase.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
-			</mat-paginator>
-		</div>
-		<button mat-raised-button (click)="createOrganisation()">New Organisation</button>
-		<button mat-raised-button (click)="deselectOrganisation()">cancel</button>
-
-		<div *ngIf="selectedOrga">
-			<form (ngSubmit)="onSubmitOrganisation()" class="well">
-
-				<mat-form-field class="form-control">
-					<input matInput type=text placeholder="name" name="name" value={{selectedOrga.name}} id="organame_field">
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<textarea matInput placeholder="info" name="info" value={{selectedOrga.info}} id="orgainfo_field"></textarea>
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder="eMail" name="email" value={{selectedOrga.eMail}} id="orgaeMail_field">
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder="telephone" name="telephone" value={{selectedOrga.telephone}} id="orgatelephone_field">
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder="website" name="website" value={{selectedOrga.website}} id="orgawebsite_field">
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder="address" name="address" [(ngModel)]="addressOrgaInput" id="orgaaddres_field">
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder="street" [(ngModel)]="selectedOrga.address.street" name="street" value={{selectedOrga?.address?.street}}
-					 id="orgastreet_field">
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder="housenumber" [(ngModel)]="selectedOrga.address.housenumber" name="housenumber" value={{selectedOrga?.address?.housenumber}}
-					 id="orgahousenumber_field">
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder="place" [(ngModel)]="selectedOrga.address.place" name="place" value={{selectedOrga?.address?.place}}
-					 id="orgaplace_field">
-				</mat-form-field>
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder="postalcode" [(ngModel)]="selectedOrga.address.postalcode" name="postalcode" value={{selectedOrga?.address?.postalcode}}
-					 id="orgapostalcode_field">
-				</mat-form-field>
-
-				<button mat-raised-button type="submit">Submit</button>
-			</form>
-		</div>
-	</div> -->
-
-
-
-<!-- <div>
-	<div class="table-container mat-elevation-z8">
-		<div class="tabel-header">
-			<mat-form-field floatPlaceholder="never">
-				<input matInput #filter placeholder="Filter users">
-			</mat-form-field>
-		</div>
-
-		<mat-table #table [dataSource]="dataSource">
-
-			<ng-container matColumnDef="id">
-				<mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-			</ng-container>
-
-			<ng-container matColumnDef="name">
-				<mat-header-cell *matHeaderCellDef> name </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-			</ng-container>
-
-			<ng-container matColumnDef="eMail">
-				<mat-header-cell *matHeaderCellDef> eMail </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.eMail}} </mat-cell>
-			</ng-container>
-
-			<ng-container matColumnDef="telephone">
-				<mat-header-cell *matHeaderCellDef> telephone </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.telephone}} </mat-cell>
-			</ng-container>
-
-			<ng-container matColumnDef="role">
-				<mat-header-cell *matHeaderCellDef> role </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.role?.typeName}} </mat-cell>
-			</ng-container>
-
-			<ng-container matColumnDef="street">
-				<mat-header-cell *matHeaderCellDef> street </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.addres?.street}} </mat-cell>
-			</ng-container>
-
-			<ng-container matColumnDef="housenumber">
-				<mat-header-cell *matHeaderCellDef> housenumber </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.addres?.housenumber}} </mat-cell>
-			</ng-container>
-
-			<ng-container matColumnDef="postalcode">
-				<mat-header-cell *matHeaderCellDef> postalcode </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.addres?.postalcode}} </mat-cell>
-			</ng-container>
-
-			<ng-container matColumnDef="place">
-				<mat-header-cell *matHeaderCellDef> place </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row?.addres?.place}} </mat-cell>
-			</ng-container>
-
-			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-			<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectUser(row)"></mat-row>
-		</mat-table>
-		<mat-paginator #paginator [length]="usersDatabase.data.length" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]">
-		</mat-paginator>
-	</div>
-	<button mat-raised-button (click)="createUser()">New User</button>
-	<button mat-raised-button (click)="deselectUser()">cancel</button>
-
-	<div *ngIf="selectedUser">
-		<form (ngSubmit)="onSubmitUser()" class="well">
-
-			<mat-form-field class="form-control">
-				<input matInput type=text placeholder="name" value={{selectedUser.name}} id="username_field">
-			</mat-form-field>
-
-			<mat-form-field class="form-control">
-				<textarea matInput placeholder="info" value={{selectedUser.info}} id="userinfo_field"></textarea>
-			</mat-form-field>
-
-			<mat-form-field class="form-control">
-				<textarea matInput placeholder="eMail" value={{selectedUser.eMail}} id="usereMail_field"></textarea>
-			</mat-form-field>
-
-			<mat-form-field class="form-control">
-				<input matInput placeholder="telephone" value={{selectedUser.telephone}} id="usertelephone_field">
-			</mat-form-field>
-
-			<mat-form-field class="form-control">
-				<input matInput type=datetime-local placeholder="website" value={{selectedUser.website}} id="userwebsite_field">
-			</mat-form-field>
-
-			<mat-form-field class="form-control">
-				<input matInput placeholder="street" value={{selectedUser?.addres?.street}} id="userstreet_field">
-			</mat-form-field>
-
-			<mat-form-field class="form-control">
-				<input matInput placeholder="housenumber" value={{selectedUser?.addres?.housenumber}} id="userhousenumber_field">
-			</mat-form-field>
-
-			<mat-form-field class="form-control">
-				<input matInput placeholder="place" value={{selectedUser?.addres?.place}} id="userplace_field">
-			</mat-form-field>
-
-			<mat-form-field class="form-control">
-				<input matInput placeholder="postalcode" value={{selectedUser?.addres?.postalcode}} id="userpostalcode_field">
-			</mat-form-field>
-
-			<button mat-raised-button type="submit">Submit</button>
-		</form>
-	</div>
-</div> -->

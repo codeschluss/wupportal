@@ -58,7 +58,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->scope('/api/', function($routes) {
         $list = ['map' => ['list' => [
-            'action' => 'fetch',
+            'action' => 'list',
             'method' => 'POST',
             'path' => '/list'
         ]]];

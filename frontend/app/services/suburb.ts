@@ -6,6 +6,6 @@ import { Suburb } from 'app/models/suburb';
 @Injectable()
 export class SuburbService extends Service<Suburb> {
 
-	protected baseURL: string = '/suburbs/';
+	protected url: string = '/suburbs/';
 
 }

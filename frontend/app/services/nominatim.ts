@@ -10,7 +10,7 @@ import { Service } from 'app/services/service';
 @Injectable()
 export class NominatimService extends Service<Address> {
 
-	protected baseURL: string = 'https://nominatim.openstreetmap.org/search/';
+	protected url: string = 'https://nominatim.openstreetmap.org/search/';
 
 	private format: string = '?format=json&addressdetails=1';
 
@@ -35,5 +35,9 @@ export class NominatimService extends Service<Address> {
 	}
 
 	public list(): Observable<Address[]> { return null; }
+
+	public getUrl(): string {
+		return this.url;
+	}
 
 }

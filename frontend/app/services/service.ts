@@ -15,31 +15,37 @@ import { Model } from 'app/models/model';
 @Injectable()
 export abstract class Service<T extends Model> {
 
-	protected abstract baseURL: string;
+	protected baseURL: string = '/api/';
+
+	protected abstract url: string;
 
 	constructor(protected http: HttpClient) { }
 
 	public add(item: T): void {
-		this.http.put(this.baseURL + '/edit/' + item.id, JSON.stringify(item))
+		this.http.put(this.getUrl() + '/add/' + item.id, JSON.stringify(item))
 			.subscribe();
 	}
 
 	public delete(item: T): void {
-		this.http.delete(this.baseURL + '/edit/' + item.id)
+		this.http.delete(this.getUrl() + '/delete/' + item.id)
 			.subscribe();
 	}
 
 	public edit(item: T): void {
-		this.http.post(this.baseURL + '/add/', JSON.stringify(item))
+		this.http.post(this.getUrl() + '/edit/', JSON.stringify(item))
 			.subscribe();
 	}
 
 	public get(id: string): Observable<T> {
-		return this.http.get(this.baseURL + id).map(i => i as T);
+		return this.http.get(this.getUrl() + id).map(i => i as T);
 	}
 
 	public list(): Observable<T[]> {
-		return this.http.get(this.baseURL).map(i => i as T[]);
+		return this.http.get(this.getUrl()).map(i => i as T[]);
+	}
+
+	public getUrl(): string {
+		return this.baseURL + this.url;
 	}
 
 }

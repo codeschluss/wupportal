@@ -10,7 +10,7 @@ import { Service } from 'app/services/service';
 @Injectable()
 export class ConfigurationService extends Service<Configuration> {
 
-	protected baseURL: string = '/configurations/';
+	protected url: string = '/configurations/';
 
 	public get(query: string): Observable<Configuration> {
 		return this.list().map((i) => i.find((j) => j.item === query));

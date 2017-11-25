@@ -10,7 +10,7 @@ import { Service } from 'app/services/service';
 @Injectable()
 export class LocationService extends Service<Address> {
 
-	protected baseURL: string = null;
+	protected url: string = null;
 
 	public add(item: Address): void { return; }
 

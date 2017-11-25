@@ -6,6 +6,6 @@ import { Service } from 'app/services/service';
 @Injectable()
 export class CategoryService extends Service<Category> {
 
-	protected baseURL: string = '/categories/';
+	protected url: string = '/categories/';
 
 }

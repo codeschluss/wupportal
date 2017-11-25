@@ -9,7 +9,7 @@ import { Service } from 'app/services/service';
 @Injectable()
 export class ActivityService extends Service<Activity> {
 
-	protected baseURL: string = '/activities/';
+	protected url: string = '/activities/';
 
 	// public filter(query: string): Observable<Activity[]> {
 	// 	return this.items.asObservable();

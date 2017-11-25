@@ -6,6 +6,6 @@ import { User } from 'app/models/user';
 @Injectable()
 export class UserService extends Service<User> {
 
-	protected baseURL: string = '/users/';
+	protected url: string = '/users/';
 
 }

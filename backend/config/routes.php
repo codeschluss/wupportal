@@ -57,10 +57,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     ]]]);
 
     $routes->scope('/api/', function($routes) {
-        $fetch = ['map' => ['fetch' => [
+        $list = ['map' => ['list' => [
             'action' => 'fetch',
             'method' => 'POST',
-            'path' => '/fetch'
+            'path' => '/list'
         ]]];
 
         $routes->resources('Categories');

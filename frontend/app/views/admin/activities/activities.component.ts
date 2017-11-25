@@ -1,7 +1,5 @@
-import { Component, AfterViewInit, ViewChild, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs/Observable';
 import { Activity } from 'app/models/activity';
@@ -35,7 +33,6 @@ export class ActivitiesComponent implements AfterViewInit {
 	}
 
 	constructor(
-		private http: HttpClient,
 		private service: ActivityService,
 		public dialog: MatDialog,
 	) { }

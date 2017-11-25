@@ -23,7 +23,7 @@ export class LocationService extends Service<Address> {
 
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition((pos) => {
-				if (pos.coords.latitude === 0 || pos.coords.longitude === 0) return;
+				if (pos.coords.latitude === 0 || pos.coords.longitude === 0) { return; }
 				address.latitude = pos.coords.latitude;
 				address.longitude = pos.coords.longitude;
 			});

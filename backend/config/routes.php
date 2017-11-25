@@ -63,6 +63,7 @@ Router::scope('/', function (RouteBuilder $routes) {
             'path' => '/fetch'
         ]]];
 
+        $routes->resources('Activities');
         $routes->resources('Categories');
         $routes->resources('Configurations');
         $routes->resources('Organisations');

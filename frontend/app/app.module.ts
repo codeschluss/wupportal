@@ -22,6 +22,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule, MatSortModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from 'app/app.component';
@@ -39,6 +41,7 @@ import { UsersComponent } from 'app/views/admin/users/users.component';
 import { UserEditComponent } from 'app/views/admin/users/user.form.component';
 import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
 import { OrganisationEditComponent } from 'app/views/admin/organisations/organisation.form.component';
+import { ActivityEditComponent } from 'app/views/admin/activities/activity.form.component';
 
 import { ActivityService } from 'app/services/activity';
 import { CategoryService } from 'app/services/category';
@@ -49,6 +52,7 @@ import { OrganisationService } from 'app/services/organisation';
 import { SuburbService } from 'app/services/suburb';
 import { TargetGroupService } from 'app/services/target-group';
 import { UserService } from 'app/services/user';
+import { TagService } from 'app/services/tag';
 
 import { DialogComponent } from 'app/views/utils/popup.component';
 
@@ -66,6 +70,7 @@ import { DialogComponent } from 'app/views/utils/popup.component';
 		LoginComponent,
 		AdminComponent,
 		ActivitiesComponent,
+		ActivityEditComponent,
 		OrganisationsComponent,
 		OrganisationEditComponent,
 		UsersComponent,
@@ -97,6 +102,8 @@ import { DialogComponent } from 'app/views/utils/popup.component';
 		MatAutocompleteModule,
 		MatPaginatorModule,
 		MatDialogModule,
+		MatChipsModule,
+		MatListModule,
 
 	],
 	providers: [
@@ -109,6 +116,7 @@ import { DialogComponent } from 'app/views/utils/popup.component';
 		SuburbService,
 		TargetGroupService,
 		UserService,
+		TagService,
 
 		AuthGuard
 	],

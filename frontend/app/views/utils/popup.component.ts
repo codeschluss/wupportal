@@ -20,10 +20,6 @@ export class DialogComponent {
 		this.dialogRef.close();
 	}
 
-	onCancel(): void {
-		this.dialogRef.close();
-	}
-
 	onNoClick(): void {
 		this.dialogRef.close();
 	}

@@ -1,0 +1,31 @@
+<div>
+	<mat-card class="example-card" *ngIf="activity$ | async as activity">
+		<form class="well">
+			<mat-card-header>
+				<mat-form-field class="form-control">
+					<input matInput type=text placeholder="name" name="name" value={{activity.name}} id="activity_name_field">
+				</mat-form-field>
+			</mat-card-header>
+			<mat-form-field class="form-control">
+				<textarea matInput type=text placeholder="description" name="description" value={{activity.description}} id="activity_description_field"></textarea>
+			</mat-form-field>
+
+			<mat-form-field class="form-control">
+				<input matInput type=text placeholder="schedule" name="schedule" value={{activity.schedule}} id="activity_schedule_field">
+			</mat-form-field>
+
+
+			<mat-selection-list #tags>
+				<mat-list-option *ngFor="let tag of tags" selected="true">
+					{{tag}}
+				</mat-list-option>
+			</mat-selection-list>
+			<p>
+				ausgewählte tags: {{shoes.selectedOptions.selected.length}}
+			</p>
+
+			<button mat-raised-button type="submit">Submit</button>
+			<button mat-raised-button (click)="back()">Zurück</button>
+		</form>
+	</mat-card>
+</div>

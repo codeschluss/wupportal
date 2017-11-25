@@ -1,0 +1,66 @@
+<div class="activity-container mat-elevation-z8">
+
+	<div class="activities-table-header">
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+		</mat-form-field>
+	</div>
+
+	<mat-table #table [dataSource]="dataSource" class="activity-table" matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
+
+		<ng-container matColumnDef="name">
+			<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+				name</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="description">
+			<mat-header-cell *matHeaderCellDef>Beschreibung</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.description }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="schedule">
+			<mat-header-cell *matHeaderCellDef>Termine</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.schedule }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="tags">
+			<mat-header-cell *matHeaderCellDef>Tags</mat-header-cell>
+			<mat-cell *matCellDef="let row">
+				<mat-chip-list>
+					<mat-chip color="primary" selected="true" *ngFor="let tag of row?.tags">{{ tag.name }}</mat-chip>
+				</mat-chip-list>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="target_groups">
+			<mat-header-cell *matHeaderCellDef>Zielgruppen</mat-header-cell>
+			<mat-cell *matCellDef="let row">
+				<mat-chip-list>
+					<mat-chip *ngFor="let targetGroup of row?.target_groups">{{ targetGroup.name }}</mat-chip>
+				</mat-chip-list>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="action">
+			<mat-header-cell *matHeaderCellDef>
+				Ändern/Löschen
+			</mat-header-cell>
+			<mat-cell *matCellDef="let row">
+				<button mat-button routerLink='/activity/edit/{{row.id}}'>
+					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+				</button>
+				<button mat-raised-button color="warn" (click)="openDialog(row)">
+					<i class="fa fa-trash-o" aria-hidden="true"></i>
+				</button>
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+	</mat-table>
+
+	<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
+	</mat-paginator>
+
+</div>

@@ -24,6 +24,7 @@ export class ActivitiesComponent implements AfterViewInit {
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource();
 	resultsLength: Number;
 
+
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 
@@ -36,7 +37,7 @@ export class ActivitiesComponent implements AfterViewInit {
 	constructor(
 		private service: ActivityService,
 		public dialog: MatDialog,
-		private constants: Constants
+		public constants: Constants,
 	) { }
 
 	ngAfterViewInit(): void {

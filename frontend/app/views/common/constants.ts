@@ -1,44 +1,50 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
 export class Constants {
 
-	public static back = 'Zurück';
-	public static newElement = 'Neu';
-	public static cancel = 'Abbrechen';
-	public static next = 'Näachste';
-	public static previous = 'Vorherige';
-	public static items = 'Einträge';
-	public static of = 'von';
-	public static per = 'pro';
+	public back = 'Zurück';
+	public newElement = 'Neu';
+	public cancel = 'Abbrechen';
+	public next = 'Näachste';
+	public previous = 'Vorherige';
+	public items = 'Einträge';
+	public of = 'von';
+	public per = 'pro';
 
-	public static login = 'anmelden';
-	public static userName = 'Username';
-	public static password = 'Passwort';
+	public login = 'anmelden';
+	public userName = 'Username';
+	public password = 'Passwort';
 
-	public static filter = 'Filter';
-	public static configuration = 'Einstellungen';
+	public filter = 'Filter';
+	public configuration = 'Einstellungen';
 
-	public static deleteString = 'Löschen';
-	public static change = 'Ändern';
-	public static edit = 'Bearbeiten';
-	public static deleteMessage = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
+	public delete = 'Löschen';
+	public change = 'Ändern';
+	public edit = 'Bearbeiten';
+	public deleteMessage = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
 
-	public static website = 'Webseite';
-	public static description = 'Beschreibung';
-	public static nameString = 'Name';
-	public static phone = 'Telefon';
-	public static mail = 'e-Mail';
-	public static address = 'Adresse';
-	public static street = 'Straße';
-	public static postalCode = 'PLZ';
-	public static houseNumber = 'Hausnummer';
-	public static longitude = 'Längengrad';
-	public static Latitude = 'Breitengrad';
+	public website = 'Webseite';
+	public description = 'Beschreibung';
+	public nameString = 'Name';
+	public phone = 'Telefon';
+	public mail = 'e-Mail';
+	public address = 'Adresse';
+	public street = 'Straße';
+	public postalCode = 'PLZ';
+	public houseNumber = 'Hausnummer';
+	public longitude = 'Längengrad';
+	public latitude = 'Breitengrad';
+	public dates = 'Termine';
+	public tags = 'Tags';
+	public targetGroups = 'Zielgruppen';
 
-	public static organisations = 'Organisationen';
-	public static organisation = 'Organisation';
-	public static user = 'Benutzer';
-	public static activities = 'Aktivitäten';
-	public static activity = 'Aktivität';
+	public organisations = 'Organisationen';
+	public organisation = 'Organisation';
+	public user = 'Benutzer';
+	public activities = 'Aktivitäten';
+	public activity = 'Aktivität';
 
-	public static error = 'Fehler';
+	public error = 'Fehler';
 
 }

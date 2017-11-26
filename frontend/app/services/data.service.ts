@@ -6,8 +6,9 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { TableSate } from 'app/models/table.state';
-import { Model } from 'app/models/model';
+import { TableState } from 'app/models/table.state';
+import { Response } from 'app/models/response';
+
 
 @Injectable()
 export class DataService {
@@ -22,27 +23,27 @@ export class DataService {
 		this.baseUrl = this.endpoint + repository;
 	}
 
-	public add(record: any): Observable<any[]> {
+	public add(record: any): void {
 		this.http.put(this.baseUrl + '/add/' + record.id, JSON.stringify(record))
 			.subscribe();
 	}
 
-	public delete(record: any): Observable<any[]> {
+	public delete(record: any): void {
 		this.http.delete(this.baseUrl + '/delete/' + record.id)
 			.subscribe();
 	}
 
-	public edit(record: T): Observable<any[]> {
+	public edit(record: any): void {
 		this.http.post(this.baseUrl + '/edit/', JSON.stringify(record))
 			.subscribe();
 	}
 
 	public get(id: string): Observable<any> {
-		return this.http.get(this.baseUrl + id).map(i => i as T);
+		return this.http.get(this.baseUrl + id).map(i => i as any);
 	}
 
-	public list(request: TableState): Observable<any[]> {
-		return this.http.post(this.baseUrl, JSON.stringify(request)).map(i => i as T[]);
+	public list(request: TableState): Observable<Response> {
+		return this.http.post(this.baseUrl + '/list', JSON.stringify(request)).map(res => res as Response);
 	}
 
 }

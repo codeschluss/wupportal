@@ -1,6 +1,6 @@
 import { PageEvent, Sort } from '@angular/material';
 
-export class TableSate {
+export class TableState {
 
 	private filter: string;
 	private page: number;
@@ -11,6 +11,7 @@ export class TableSate {
 		this.filter = '';
 		this.page = 1;
 		this.pageSize = pageSize;
+		this.sort = { active: '', direction: '' };
 	}
 
 	setPagination(pageEvent: PageEvent): void {

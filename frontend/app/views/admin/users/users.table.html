@@ -1,20 +1,20 @@
 <mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
 	<!-- username Column -->
-	<ng-container matColumnDef="number">
-		<mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+	<ng-container matColumnDef="username">
+		<mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.username }}</mat-cell>
 	</ng-container>
 
 	<!-- fullname Column -->
-	<ng-container matColumnDef="title">
-		<mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+	<ng-container matColumnDef="fullname">
+		<mat-header-cell *matHeaderCellDef>Fullname</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.fullname }}</mat-cell>
 	</ng-container>
 
 	<!-- phone Column -->
-	<ng-container matColumnDef="state">
-		<mat-header-cell *matHeaderCellDef>State</mat-header-cell>
+	<ng-container matColumnDef="phone">
+		<mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
 	</ng-container>
 
@@ -32,4 +32,3 @@
 
 <mat-paginator [pageSize]="tableState.pageSize" (page)="changedPage($event)">
 </mat-paginator>
-</div>

@@ -140,7 +140,7 @@ class AppController extends Controller
      *
      * @return \Cake\Http\Response|void
      */
-    public function fetch()
+    public function list()
     {
         $query = $this->table()->find()->group($this->name . '.id');
         $request = $this->request->input('json_decode');
@@ -154,24 +154,26 @@ class AppController extends Controller
         foreach ($this->contain() as $contain)
             $query->leftJoinWith($contain)->contain($contain);
 
-        foreach ($request->sorted as $sort) $query->group($sort->id)
-            ->order([$sort->id => $sort->desc ? 'desc' : 'asc']);
+        // foreach ($request->sorted as $sort) $query->group($sort->id)
+        //     ->order([$sort->id => $sort->desc ? 'desc' : 'asc']);
 
-        foreach ($request->filtered as $filter)
-            if (!is_null($filter->value))
-                $query->where(function($exp, $q) use ($filter) {
-                    if (strpos($filter->value, '>') === 0) return
-                        $exp->gte($filter->id, substr($filter->value, 1));
+        // foreach ($request->filtered as $filter)
+        //     if (!is_null($filter->value))
+        //         $query->where(function($exp, $q) use ($filter) {
+        //             if (strpos($filter->value, '>') === 0) return
+        //                 $exp->gte($filter->id, substr($filter->value, 1));
 
-                    if (strpos($filter->value, '<') === 0) return
-                        $exp->lte($filter->id, substr($filter->value, 1));
+        //             if (strpos($filter->value, '<') === 0) return
+        //                 $exp->lte($filter->id, substr($filter->value, 1));
 
-                    return is_bool($filter->value)
-                        || is_numeric($filter->value)
-                        || strtotime($filter->value)
-                        ? $exp->eq($filter->id, $filter->value)
-                        : $exp->like($filter->id, "%$filter->value%");
-                });
+        //             return is_bool($filter->value)
+        //                 || is_numeric($filter->value)
+        //                 || strtotime($filter->value)
+        //                 ? $exp->eq($filter->id, $filter->value)
+        //                 : $exp->like($filter->id, "%$filter->value%");
+        //         });
+
+        // var_dump($query); exit;
 
         $this->data($this->paginate($query));
     }

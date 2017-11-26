@@ -63,13 +63,13 @@ Router::scope('/', function (RouteBuilder $routes) {
             'path' => '/list'
         ]]];
 
-        $routes->resources('Categories');
-        $routes->resources('Configurations');
-        $routes->resources('Organisations');
-        $routes->resources('Users');
-        $routes->resources('Suburbs');
-        $routes->resources('Tags');
-        $routes->resources('TargetGroups');
+        $routes->resources('Categories', $list);
+        $routes->resources('Configurations', $list);
+        $routes->resources('Organisations', $list);
+        $routes->resources('Users', $list);
+        $routes->resources('Suburbs',$list);
+        $routes->resources('Tags', $list);
+        $routes->resources('TargetGroups', $list);
 
     });
 });

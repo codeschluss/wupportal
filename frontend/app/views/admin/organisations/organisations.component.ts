@@ -4,7 +4,7 @@ import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs/Observable';
 import { Organisation } from 'app/models/organisation';
 import { OrganisationService } from 'app/services/organisation';
-import { DialogComponent } from 'app/views/utils/popup.component';
+import { DialogComponent } from 'app/views/common/popup.component';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';

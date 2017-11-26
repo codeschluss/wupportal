@@ -4,7 +4,8 @@ import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs/Observable';
 import { Activity } from 'app/models/activity';
 import { ActivityService } from 'app/services/activity';
-import { DialogComponent } from 'app/views/utils/popup.component';
+import { DialogComponent } from 'app/views/common/popup.component';
+import { Constants } from 'app/views/common/constants';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
@@ -35,6 +36,7 @@ export class ActivitiesComponent implements AfterViewInit {
 	constructor(
 		private service: ActivityService,
 		public dialog: MatDialog,
+		private constants: Constants
 	) { }
 
 	ngAfterViewInit(): void {

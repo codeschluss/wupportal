@@ -54,7 +54,7 @@ import { TargetGroupService } from 'app/services/target-group';
 import { UserService } from 'app/services/user';
 import { TagService } from 'app/services/tag';
 
-import { DialogComponent } from 'app/views/utils/popup.component';
+import { DialogComponent } from 'app/views/common/popup.component';
 
 @NgModule({
 	bootstrap: [

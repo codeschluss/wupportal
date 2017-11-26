@@ -41,6 +41,7 @@ export class Constants {
 
 	public organisations = 'Organisationen';
 	public organisation = 'Organisation';
+	public users = 'Benutzer';
 	public user = 'Benutzer';
 	public activities = 'Aktivitäten';
 	public activity = 'Aktivität';

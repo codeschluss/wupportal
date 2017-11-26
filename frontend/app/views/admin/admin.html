@@ -1,14 +1,9 @@
-<div id="tabs">
-	<mat-tab-group>
-		<mat-tab label="Activities">
-			<edit-activities></edit-activities>
-		</mat-tab>
-		<mat-tab label="Organisations">
-			<edit-organisation></edit-organisation>
-		</mat-tab>
-		<mat-tab label="Users">
-			<edit-users></edit-users>
-		</mat-tab>
-	</mat-tab-group>
+<div style="padding: 5px;">
+	<nav mat-tab-nav-bar>
+		<a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive #rla="routerLinkActive"
+		 [active]="rla.isActive" (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">
+			{{routeLink.label}}
+		</a>
+	</nav>
+	<router-outlet name='table'></router-outlet>
 </div>
-<button mat-raised-button (click)="cancel()">Back</button>

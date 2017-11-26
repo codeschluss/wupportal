@@ -1,19 +1,48 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
+import { Constants } from 'app/views/common/constants';
+
+
+// TODO: If Admin show all, otherwise check if owner or other rights
 
 @Component({
-	// TODO: If Admin show all, otherwise check if owner or other rights
 	templateUrl: 'admin.html',
 })
 
-export class AdminComponent {
+export class AdminComponent implements OnInit {
+	routeLinks: any[];
+	activeLinkIndex = -1;
+
 	constructor(
 		private location: Location,
-	) { }
+		private router: Router,
+		public constants: Constants,
+	) {
+		this.routeLinks = [
+			{
+				label: constants.activities,
+				link: ['/admin', { outlets: { table: ['activities'] } }],
+				index: 0
+			}, {
+				label: constants.organisations,
+				link: ['/admin', { outlets: { table: ['organisations'] } }],
+				index: 1
+			}, {
+				label: constants.users,
+				link: ['/admin', { outlets: { table: ['users'] } }],
+				index: 2
+			},
+		];
+	}
+
+	ngOnInit(): void {
+		this.router.events.subscribe((res) => {
+			this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
+		});
+	}
 
 	cancel(): void {
 		this.location.back();
 	}
-
 }

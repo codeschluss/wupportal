@@ -8,13 +8,22 @@ import { AdminComponent } from 'app/views/admin/admin.component';
 import { UserEditComponent } from 'app/views/admin/users/user.form.component';
 import { OrganisationEditComponent } from 'app/views/admin/organisations/organisation.form.component';
 import { ActivityEditComponent } from 'app/views/admin/activities/activity.form.component';
+import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
+import { UsersTableComponent } from 'app/views/admin/users/users.table';
+import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
 import { AuthGuard } from 'app/views/admin/login/auth.guard';
 
 @NgModule({
 	imports: [RouterModule.forRoot([
 		{ path: '', component: MappingComponent },
 		{ path: 'login', component: LoginComponent },
-		{ path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+		{
+			path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
+				{ path: 'activities', component: ActivitiesComponent, outlet: 'table' },
+				{ path: 'users', component: UsersTableComponent, outlet: 'table' },
+				{ path: 'organisations', component: OrganisationsComponent, outlet: 'table' }
+			]
+		},
 		{ path: 'user/edit/:id', component: UserEditComponent },
 		{ path: 'organisation/edit/:id', component: OrganisationEditComponent },
 		{ path: 'activity/edit/:id', component: ActivityEditComponent },

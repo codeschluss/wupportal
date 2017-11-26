@@ -36,6 +36,13 @@ class AppController extends Controller
     protected function contain() { return []; }
 
     /**
+     * filter helper.
+     *
+     * @return array Fields to use for filter
+     */
+    protected function fieldsTofilter() { return []; }
+
+    /**
      * @var array $paginate Paginator configuration
      */
     public $paginate;
@@ -151,27 +158,22 @@ class AppController extends Controller
             'page' => $request->page,
         ];
 
-        foreach ($this->contain() as $contain)
+        foreach ($this->contain() as $contain) {
             $query->leftJoinWith($contain)->contain($contain);
+        }
 
         // foreach ($request->sorted as $sort) $query->group($sort->id)
         //     ->order([$sort->id => $sort->desc ? 'desc' : 'asc']);
 
-        // foreach ($request->filtered as $filter)
-        //     if (!is_null($filter->value))
-        //         $query->where(function($exp, $q) use ($filter) {
-        //             if (strpos($filter->value, '>') === 0) return
-        //                 $exp->gte($filter->id, substr($filter->value, 1));
-
-        //             if (strpos($filter->value, '<') === 0) return
-        //                 $exp->lte($filter->id, substr($filter->value, 1));
-
-        //             return is_bool($filter->value)
-        //                 || is_numeric($filter->value)
-        //                 || strtotime($filter->value)
-        //                 ? $exp->eq($filter->id, $filter->value)
-        //                 : $exp->like($filter->id, "%$filter->value%");
-        //         });
+        if (!empty($request->filter)) {
+            $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+                $whereItems = [];
+                foreach ($this->fieldsTofilter() as $field) {
+                    $whereItems[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
+                }
+                return $whereItems;
+            }]);
+        }
 
         // var_dump($query); exit;
 

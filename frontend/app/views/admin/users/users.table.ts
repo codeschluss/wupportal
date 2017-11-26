@@ -34,9 +34,8 @@ export class UsersTableComponent implements AfterViewInit {
 	@ViewChild(MatSort) sort: MatSort;
 
 	applyFilter(filterValue: string): void {
-		filterValue = filterValue.trim();
-		filterValue = filterValue.toLowerCase();
-		this.dataSource.filter = filterValue;
+		this.tableState.setFilter(filterValue);
+		this.fetchData();
 	}
 
 	constructor(

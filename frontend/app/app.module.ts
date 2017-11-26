@@ -38,7 +38,7 @@ import { LoginComponent } from 'app/views/admin/login/login.component';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
 import { UsersTableComponent } from 'app/views/admin/users/users.table';
-import { UserEditComponent } from 'app/views/admin/users/user.form.component';
+import { UserFormComponent } from 'app/views/admin/users/user.form';
 import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
 import { OrganisationEditComponent } from 'app/views/admin/organisations/organisation.form.component';
 import { ActivityEditComponent } from 'app/views/admin/activities/activity.form.component';
@@ -69,7 +69,7 @@ import { DialogComponent } from 'app/views/common/popup.component';
 		OrganisationsComponent,
 		OrganisationEditComponent,
 		UsersTableComponent,
-		UserEditComponent,
+		UserFormComponent,
 		DialogComponent,
 	],
 	imports: [

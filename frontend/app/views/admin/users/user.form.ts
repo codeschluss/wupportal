@@ -15,11 +15,11 @@ import 'rxjs/add/operator/switchMap';
 	templateUrl: 'user.form.html',
 })
 
-export class UserEditComponent implements AfterViewInit {
+export class UserFormComponent implements AfterViewInit {
 
 	constructor() { }
 
-	ngAfterViewInit() { }
+	ngAfterViewInit(): void { }
 }
 
 

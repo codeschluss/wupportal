@@ -39,4 +39,6 @@ export class Constants {
 	public static activities = 'Aktivitäten';
 	public static activity = 'Aktivität';
 
+	public static error = 'Fehler';
+
 }

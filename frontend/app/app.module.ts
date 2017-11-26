@@ -54,6 +54,8 @@ import { TargetGroupService } from 'app/services/target-group';
 import { UserService } from 'app/services/user';
 import { TagService } from 'app/services/tag';
 
+import { Constants } from 'app/views/common/constants';
+
 import { DialogComponent } from 'app/views/common/popup.component';
 
 @NgModule({
@@ -117,6 +119,7 @@ import { DialogComponent } from 'app/views/common/popup.component';
 		TargetGroupService,
 		UserService,
 		TagService,
+		Constants,
 
 		AuthGuard
 	],

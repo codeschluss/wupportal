@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator, MatSort, MatTableDataSource, Sort, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -10,8 +10,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 
+import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
-import { dataServiceFactory } from 'app/services/data.service.factory';
 import { TableState } from 'app/models/table.state';
 import { Response } from 'app/models/response';
 
@@ -20,7 +20,7 @@ import { Response } from 'app/models/response';
 	styleUrls: ['../table-basic.css'],
 	templateUrl: 'users.table.html',
 	providers: [
-		{ provide: DataService, useFactory: dataServiceFactory('users'), deps: [HttpClient] }
+		{ provide: UserService, useFactory: DataServiceFactory('users'), deps: [HttpClient] }
 	]
 })
 export class UsersTableComponent implements AfterViewInit {
@@ -40,7 +40,7 @@ export class UsersTableComponent implements AfterViewInit {
 	}
 
 	constructor(
-		private dataService: DataService) {
+		@Inject(UserService) private dataService: DataService) {
 		this.tableState = new TableState(20);
 	}
 

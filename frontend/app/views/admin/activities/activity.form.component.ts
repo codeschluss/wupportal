@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { Activity } from 'app/models/activity';
 import { ActivityService } from 'app/services/activity';
 import { Tag } from 'app/models/tag';
-import { TagService } from 'app/services/tag';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
@@ -20,13 +19,12 @@ export class ActivityEditComponent implements OnInit {
 
 	constructor(
 		public service: ActivityService,
-		public tagService: TagService,
 		private location: Location,
 		public route: ActivatedRoute
 	) { }
 
 	ngOnInit(): void {
-		this.tags = this.tagService.list();
+		// this.tags = this.tagService.list();
 
 		this.activity$ = this.route.paramMap
 			.switchMap((params: ParamMap) =>

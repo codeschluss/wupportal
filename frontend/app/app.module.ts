@@ -44,15 +44,8 @@ import { OrganisationEditComponent } from 'app/views/admin/organisations/organis
 import { ActivityEditComponent } from 'app/views/admin/activities/activity.form.component';
 
 import { ActivityService } from 'app/services/activity';
-import { CategoryService } from 'app/services/category';
-import { ConfigurationService } from 'app/services/configuration';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
-import { OrganisationService } from 'app/services/organisation';
-import { SuburbService } from 'app/services/suburb';
-import { TargetGroupService } from 'app/services/target-group';
-import { UserService } from 'app/services/user';
-import { TagService } from 'app/services/tag';
 
 import { Constants } from 'app/views/common/constants';
 
@@ -110,15 +103,8 @@ import { DialogComponent } from 'app/views/common/popup.component';
 	],
 	providers: [
 		ActivityService,
-		CategoryService,
-		ConfigurationService,
 		LocationService,
 		NominatimService,
-		OrganisationService,
-		SuburbService,
-		TargetGroupService,
-		UserService,
-		TagService,
 		Constants,
 
 		AuthGuard

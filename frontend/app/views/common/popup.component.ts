@@ -1,15 +1,22 @@
 import { Component, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { OrganisationService } from 'app/services/organisation';
+
+import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
+import { DataService } from 'app/services/data.service';
 
 @Component({
 	templateUrl: 'popup.html',
+	providers: [
+		{ provide: OrganisationService, useFactory: DataServiceFactory('users'), deps: [HttpClient] }
+	]
 })
 
 export class DialogComponent {
 
 	constructor(
-		private service: OrganisationService,
+		@Inject(OrganisationService) private service: DataService,
 		public dialogRef: MatDialogRef<DialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) { }

@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
-import { Organisation } from 'app/models/organisation';
-import { OrganisationService } from 'app/services/organisation';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Observable } from 'rxjs/Observable';
+
+import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
+import { DataService } from 'app/services/data.service';
+import { Organisation } from 'app/models/organisation';
 
 @Component({
 	selector: 'edit-user',
 	templateUrl: 'organisation.form.html',
+	providers: [
+		{ provide: OrganisationService, useFactory: DataServiceFactory('organisations'), deps: [HttpClient] }
+	]
 })
 
 export class OrganisationEditComponent implements OnInit {
@@ -16,7 +22,7 @@ export class OrganisationEditComponent implements OnInit {
 	organisation$: Observable<Organisation>;
 
 	constructor(
-		public service: OrganisationService,
+		@Inject(OrganisationService) private service: DataService,
 		private location: Location,
 		public route: ActivatedRoute
 	) { }

@@ -15,28 +15,16 @@ import { DetailsComponent } from 'app/views/details';
 import { MappingComponent } from 'app/views/mapping';
 
 import { ActivityService } from 'app/services/activity';
-import { CategoryService } from 'app/services/category';
-import { ConfigurationService } from 'app/services/configuration';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
-import { OrganisationService } from 'app/services/organisation';
-import { SuburbService } from 'app/services/suburb';
-import { TargetGroupService } from 'app/services/target-group';
-import { UserService } from 'app/services/user';
 
 @Component({
 	providers: [
 		MatIconRegistry,
 
 		ActivityService,
-		CategoryService,
-		ConfigurationService,
 		LocationService,
-		NominatimService,
-		OrganisationService,
-		SuburbService,
-		TargetGroupService,
-		UserService
+		NominatimService
 	],
 	selector: 'app-root',
 	styleUrls: ['app.component.css'],
@@ -58,14 +46,14 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		private iconRegistry: MatIconRegistry,
 
 		private activityService: ActivityService,
-		private categoryService: CategoryService,
-		private configurationService: ConfigurationService,
+		// private categoryService: CategoryService,
+		// private configurationService: ConfigurationService,
 		private locationService: LocationService,
 		private nominatimService: NominatimService,
-		private organisationService: OrganisationService,
-		private suburbService: SuburbService,
-		private targetGroupService: TargetGroupService,
-		private userService: UserService
+		// private organisationService: OrganisationService,
+		// private suburbService: SuburbService,
+		// private targetGroupService: TargetGroupService,
+		// private userService: UserService
 	) {
 		iconRegistry.registerFontClassAlias('fontawesome', 'fa');
 	}

@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { HttpClient } from '@angular/common/http';
+
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs/Observable';
-import { Organisation } from 'app/models/organisation';
-import { OrganisationService } from 'app/services/organisation';
 import { DialogComponent } from 'app/views/common/popup.component';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/of';
@@ -12,10 +12,17 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 
+import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
+import { Organisation } from 'app/models/organisation';
+import { DataService } from 'app/services/data.service';
+
 @Component({
 	selector: 'edit-organisation',
 	styleUrls: ['../table-basic.css'],
 	templateUrl: 'organisations.table.html',
+	providers: [
+		{ provide: OrganisationService, useFactory: DataServiceFactory('organisations'), deps: [HttpClient] }
+	]
 })
 
 export class OrganisationsComponent implements AfterViewInit {
@@ -33,25 +40,15 @@ export class OrganisationsComponent implements AfterViewInit {
 	}
 
 	constructor(
-		private service: OrganisationService,
+		@Inject(OrganisationService) private service: DataService,
 		public dialog: MatDialog,
 	) { }
 
 	ngAfterViewInit(): void {
 		this.dataSource.paginator = this.paginator;
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		Observable.merge(this.sort.sortChange, this.paginator.page)
-			.startWith(null)
-			.switchMap(() => {
-				return this.service.list();
-			})
-			.map(data => {
-				return data;
-			})
-			.catch(() => {
-				return Observable.of([]);
-			})
-			.subscribe(data => this.dataSource.data = data);
+		// this.service.list()
+		// 	.subscribe(data => this.dataSource.data = data);
 	}
 
 	openDialog(row: any): void {

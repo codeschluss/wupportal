@@ -18,10 +18,10 @@ import { DataService } from 'app/services/data.service';
 
 @Component({
 	selector: 'edit-organisation',
-	styleUrls: ['../table-basic.css'],
+	styleUrls: ['../table.abstract.css'],
 	templateUrl: 'organisations.table.html',
 	providers: [
-		{ provide: OrganisationService, useFactory: DataServiceFactory('organisations'), deps: [HttpClient] }
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient] }
 	]
 })
 

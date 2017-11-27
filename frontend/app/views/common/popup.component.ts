@@ -9,7 +9,7 @@ import { DataService } from 'app/services/data.service';
 @Component({
 	templateUrl: 'popup.html',
 	providers: [
-		{ provide: OrganisationService, useFactory: DataServiceFactory('users'), deps: [HttpClient] }
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient] }
 	]
 })
 

@@ -12,7 +12,7 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
-        /**
+    /**
      * filter helper.
      *
      * @return array Fields to use for filter

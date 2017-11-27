@@ -13,4 +13,16 @@ use App\Controller\AppController;
 class TagsController extends AppController
 {
 
+    /**
+     * filter helper.
+     *
+     * @return array Fields to use for filter
+     */
+    protected function fieldsTofilter()
+    {
+        return [
+            'name'
+        ];
+    }
+
 }

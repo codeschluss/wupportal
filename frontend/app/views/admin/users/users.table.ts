@@ -10,23 +10,23 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 
+
 import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
 import { Response } from 'app/models/response';
+import { Constants } from 'app/views/common/constants';
+import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 
 @Component({
 	selector: 'edit-users',
-	styleUrls: ['../table-basic.css'],
+	styleUrls: ['../table.abstract.css'],
 	templateUrl: 'users.table.html',
 	providers: [
-		{ provide: UserService, useFactory: DataServiceFactory('users'), deps: [HttpClient] }
+		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient] },
 	]
 })
-export class UsersTableComponent implements AfterViewInit {
-
-	private tableState: TableState;
-
+export class UsersTableComponent extends AbstractTableComponent implements AfterViewInit {
 
 	displayedColumns: Array<string> = ['username', 'fullname', 'phone'];
 	dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
@@ -39,27 +39,8 @@ export class UsersTableComponent implements AfterViewInit {
 	}
 
 	constructor(
-		@Inject(UserService) private dataService: DataService) {
-		this.tableState = new TableState(20);
-	}
-
-	ngAfterViewInit(): void {
-		this.dataSource.paginator = this.paginator;
-		// this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.fetchData();
-	}
-
-	changedPage(event: PageEvent): void {
-		this.tableState.setPagination(event);
-		this.fetchData();
-	}
-
-	fetchData(): void {
-		this.dataService.list(this.tableState)
-			.subscribe(data => this.handleResponse(data));
-	}
-
-	handleResponse(response: Response): void {
-		this.dataSource.data = response.records;
+		@Inject(UserService) protected dataService: DataService,
+		public constants: Constants) {
+		super(dataService, constants);
 	}
 }

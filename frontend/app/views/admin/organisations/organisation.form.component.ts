@@ -13,7 +13,7 @@ import { Organisation } from 'app/models/organisation';
 	selector: 'edit-user',
 	templateUrl: 'organisation.form.html',
 	providers: [
-		{ provide: OrganisationService, useFactory: DataServiceFactory('organisations'), deps: [HttpClient] }
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient] }
 	]
 })
 

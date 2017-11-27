@@ -15,7 +15,7 @@ import 'rxjs/add/operator/switchMap';
 
 @Component({
 	selector: 'edit-activities',
-	styleUrls: ['../table-basic.css'],
+	styleUrls: ['../table.abstract.css'],
 	templateUrl: 'activities.table.html',
 })
 

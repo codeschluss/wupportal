@@ -6,14 +6,12 @@ export class TableState {
 	private page: number;
 	private pageSize: number;
 	private sort: Sort;
-	private pageSizeOptions: Array<number>;
 
 	constructor(pageSize: number, pageSizeOptions: Array<number>) {
 		this.filter = '';
 		this.page = 1;
 		this.pageSize = pageSize;
 		this.sort = { active: '', direction: '' };
-		this.pageSizeOptions = pageSizeOptions;
 	}
 
 	setPagination(pageEvent: PageEvent): void {

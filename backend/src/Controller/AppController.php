@@ -166,7 +166,7 @@ class AppController extends Controller
         //     ->order([$sort->id => $sort->desc ? 'desc' : 'asc']);
 
         if (!empty($request->filter)) {
-            $query->where(['OR' => function($exp, $q) use ($field, $request) {
+            $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
                 $whereClause = [];
                 foreach ($this->fieldsTofilter() as $field) {
                     $whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';

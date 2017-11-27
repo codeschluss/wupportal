@@ -21,7 +21,28 @@ class OrganisationsController extends AppController
     protected function contain()
     {
         return [
-            'Addresses'
+            'Addresses',
+            'Addresses.Suburbs'
+        ];
+    }
+
+    /**
+     * filter helper.
+     *
+     * @return array Fields to use for filter
+     */
+    protected function fieldsTofilter()
+    {
+        return [
+            'Organisations.name',
+            'Organisations.description',
+            'Organisations.website',
+            'Organisations.mail',
+            'Organisations.phone',
+            'Addresses.street',
+            'Addresses.postal_code',
+            'Addresses.place',
+            'Suburbs.name'
         ];
     }
 

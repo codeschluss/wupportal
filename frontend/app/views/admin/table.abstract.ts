@@ -17,7 +17,7 @@ export abstract class AbstractTableComponent implements AfterViewInit {
 	@ViewChild(MatSort)
 	protected sort: MatSort;
 
-	protected abstract displayedColumns: Map<string, string> = [];
+	protected abstract displayedColumns: Array<string> = [];
 	protected abstract dataSource: MatTableDataSource<any>;
 
 	protected tableState: TableState;

@@ -3,18 +3,13 @@ import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/m
 import { HttpClient } from '@angular/common/http';
 
 import { DataSource } from '@angular/cdk/table';
-import { Observable } from 'rxjs/Observable';
-import { DialogComponent } from 'app/views/common/popup.component';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/switchMap';
 
+import { DialogComponent } from 'app/views/common/popup.component';
 import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
 import { Organisation } from 'app/models/organisation';
 import { DataService } from 'app/services/data.service';
+import { Constants } from 'app/views/common/constants';
+import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 
 @Component({
 	selector: 'edit-organisation',
@@ -25,33 +20,19 @@ import { DataService } from 'app/services/data.service';
 	]
 })
 
-export class OrganisationsComponent implements AfterViewInit {
-	displayedColumns: String[] = ['name', 'description', 'mail', 'phone', 'website', 'address', 'action'];
-	dataSource: MatTableDataSource<Organisation> = new MatTableDataSource();
-	resultsLength: Number;
+export class OrganisationsComponent extends AbstractTableComponent {
 
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild(MatSort) sort: MatSort;
-
-	applyFilter(filterValue: string): void {
-		filterValue = filterValue.trim();
-		filterValue = filterValue.toLowerCase();
-		this.dataSource.filter = filterValue;
-	}
+	displayedColumns: Array<string> = ['name', 'description', 'mail', 'phone', 'website', 'address', 'action'];
+	dataSource: MatTableDataSource<Organisation> = new MatTableDataSource<Organisation>();
 
 	constructor(
-		@Inject(OrganisationService) private service: DataService,
-		public dialog: MatDialog,
-	) { }
-
-	ngAfterViewInit(): void {
-		this.dataSource.paginator = this.paginator;
-		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		// this.service.list()
-		// 	.subscribe(data => this.dataSource.data = data);
+		@Inject(OrganisationService) protected dataService: DataService,
+		public constants: Constants,
+		public dialog: MatDialog) {
+		super(dataService, constants);
 	}
 
-	openDialog(row: any): void {
+	openDialog(row: Organisation): void {
 		const dialogRef = this.dialog.open(DialogComponent, {
 			width: '250px',
 			data: {

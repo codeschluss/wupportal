@@ -9,6 +9,9 @@ import { DataServiceFactory, OrganisationService } from 'app/services/data.servi
 import { DataService } from 'app/services/data.service';
 import { Organisation } from 'app/models/organisation';
 
+import { Constants } from 'app/views/common/constants';
+
+
 @Component({
 	selector: 'edit-organisation',
 	templateUrl: 'organisation.form.html',
@@ -19,18 +22,23 @@ import { Organisation } from 'app/models/organisation';
 
 export class OrganisationFormComponent implements OnInit {
 
-	organisation$: Observable<Organisation>;
+	organisation$: Observable<Organisation[]>;
 
 	constructor(
 		@Inject(OrganisationService) private service: DataService,
 		private location: Location,
-		public route: ActivatedRoute
+		public route: ActivatedRoute,
+		public constants: Constants
 	) { }
 
 	ngOnInit(): void {
 		this.organisation$ = this.route.paramMap
 			.switchMap((params: ParamMap) =>
 				this.service.get(params.get('id')));
+	}
+
+	console(orga: any): void {
+		console.log('orga: ', orga);
 	}
 
 	back(): void {

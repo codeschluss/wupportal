@@ -19,7 +19,7 @@ import { AuthGuard } from 'app/views/admin/login/auth.guard';
 		{ path: 'login', component: LoginComponent },
 		{
 			path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
-				{ path: '**', redirectTo: 'organisations' },
+				{ path: '', component: OrganisationsTableComponent, outlet: 'table' },
 				{ path: 'activities', component: ActivitiesComponent, outlet: 'table' },
 				{ path: 'users', component: UsersTableComponent, outlet: 'table' },
 				{ path: 'organisations', component: OrganisationsTableComponent, outlet: 'table' }

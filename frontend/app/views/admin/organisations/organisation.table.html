@@ -35,8 +35,9 @@
 		</ng-container>
 
 		<ng-container matColumnDef="address">
-			<mat-header-cell *matHeaderCellDef>Address_id</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.address }}</mat-cell>
+			<mat-header-cell *matHeaderCellDef>{{constants.address}}</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.address.street + ' ' + row.address.house_number}}
+				<br/> {{row.address.postal_code + ' ' + row.address.place + ' ' + row.address.suburb.name }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="action">

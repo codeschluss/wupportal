@@ -37,6 +37,7 @@ export class Constants {
 	public street: string = 'Straße';
 	public postalCode: string = 'PLZ';
 	public houseNumber: string = 'Hausnummer';
+	public quarter: string = 'Viertel';
 	public longitude: string = 'Längengrad';
 	public latitude: string = 'Breitengrad';
 	public dates: string = 'Termine';

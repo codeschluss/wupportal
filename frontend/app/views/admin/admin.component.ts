@@ -12,7 +12,7 @@ import { Constants } from 'app/views/common/constants';
 
 export class AdminComponent implements OnInit {
 	routeLinks: any[];
-	activeLinkIndex = -1;
+	activeLinkIndex: number = -1;
 
 	constructor(
 		private location: Location,

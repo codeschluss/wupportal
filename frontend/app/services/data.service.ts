@@ -34,7 +34,7 @@ export class DataService {
 	}
 
 	public edit(record: any): void {
-		this.http.post(this.baseUrl + '/edit/', JSON.stringify(record))
+		this.http.patch(this.baseUrl + '/' + record.id + '/', JSON.stringify(record))
 			.subscribe();
 	}
 

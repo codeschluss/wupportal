@@ -36,12 +36,12 @@ import { MappingComponent } from 'app/views/mapping';
 import { AuthGuard } from 'app/views/admin/login/auth.guard';
 import { LoginComponent } from 'app/views/admin/login/login.component';
 import { AdminComponent } from 'app/views/admin/admin.component';
-import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
+import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
 import { UsersTableComponent } from 'app/views/admin/users/users.table';
 import { UserFormComponent } from 'app/views/admin/users/user.form';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
-import { ActivityEditComponent } from 'app/views/admin/activities/activity.form.component';
+import { ActivityFormComponent } from 'app/views/admin/activities/activity.form';
 
 import { ActivityService } from 'app/services/activity';
 import { LocationService } from 'app/services/location';
@@ -64,8 +64,8 @@ import { DialogComponent } from 'app/views/common/popup.component';
 
 		LoginComponent,
 		AdminComponent,
-		ActivitiesComponent,
-		ActivityEditComponent,
+		ActivityTableComponent,
+		ActivityFormComponent,
 		OrganisationsTableComponent,
 		OrganisationFormComponent,
 		UsersTableComponent,

@@ -16,10 +16,10 @@ import 'rxjs/add/operator/switchMap';
 @Component({
 	selector: 'edit-activities',
 	styleUrls: ['../table.abstract.css'],
-	templateUrl: 'activities.table.html',
+	templateUrl: 'activity.table.html',
 })
 
-export class ActivitiesComponent implements AfterViewInit {
+export class ActivityTableComponent implements AfterViewInit {
 	displayedColumns: String[] = ['name', 'description', 'schedule', 'tags', 'target_groups', 'action'];
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource();
 	resultsLength: Number;

@@ -12,7 +12,7 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 	templateUrl: 'activity.form.html',
 })
 
-export class ActivityEditComponent implements OnInit {
+export class ActivityFormComponent implements OnInit {
 
 	activity$: Observable<Activity>;
 	tags: Observable<Tag[]>;

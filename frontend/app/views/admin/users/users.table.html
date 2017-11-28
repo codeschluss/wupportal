@@ -37,7 +37,7 @@
 			{{constants.delete}}
 		</mat-header-cell>
 		<mat-cell *matCellDef="let row">
-			<button mat-raised-button color="warn" (click)="openDialog(row, row.username)">
+			<button mat-button color="warn" (click)="openDialog(row, row.username)">
 				<i class="fa fa-trash-o" aria-hidden="true"></i>
 			</button>
 		</mat-cell>

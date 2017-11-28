@@ -45,10 +45,10 @@
 				Ändern/Löschen
 			</mat-header-cell>
 			<mat-cell *matCellDef="let row">
-				<button mat-button routerLink='/organisation/edit/{{row.id}}'>
+				<button mat-button color="primary" routerLink='/organisation/edit/{{row.id}}'>
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 				</button>
-				<button mat-raised-button color="warn" (click)="openDialog(row, row.name)">
+				<button mat-button color="warn" (click)="openDialog(row, row.name)">
 					<i class="fa fa-trash-o" aria-hidden="true"></i>
 				</button>
 			</mat-cell>

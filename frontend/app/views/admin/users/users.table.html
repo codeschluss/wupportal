@@ -1,6 +1,6 @@
 <div class="filter">
 	<mat-form-field>
-		<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+		<input matInput (keyup)="handleFilter($event)" placeholder="Filter">
 	</mat-form-field>
 </div>
 
@@ -8,19 +8,19 @@
 
 	<!-- username Column -->
 	<ng-container matColumnDef="username">
-		<mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+		<mat-header-cell *matHeaderCellDef>{{constants.user}}</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.username }}</mat-cell>
 	</ng-container>
 
 	<!-- fullname Column -->
 	<ng-container matColumnDef="fullname">
-		<mat-header-cell *matHeaderCellDef>Fullname</mat-header-cell>
+		<mat-header-cell *matHeaderCellDef>{{constants.nameString}}</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.fullname }}</mat-cell>
 	</ng-container>
 
 	<!-- phone Column -->
 	<ng-container matColumnDef="phone">
-		<mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
+		<mat-header-cell *matHeaderCellDef>{{constants.phone}}</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
 	</ng-container>
 
@@ -36,6 +36,5 @@
 	<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
-<mat-paginator [pageSize]="constants.pageSize" [pageSizeOptions]="constants.pageSizeOptions" (page)="changedPage($event)">
-
+<mat-paginator [pageSize]="constants.pageSize" [pageSizeOptions]="constants.pageSizeOptions" (page)="handlePageChanged($event)">
 </mat-paginator>

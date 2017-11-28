@@ -36,12 +36,12 @@ export abstract class AbstractTableComponent implements AfterViewInit {
 		this.fetchData();
 	}
 
-	applyFilter(filterValue: string): void {
-		this.tableState.setFilter(filterValue);
+	handleFilter(changedEvent: any): void {
+		this.tableState.setFilter(changedEvent.target.value);
 		this.fetchData();
 	}
 
-	changedPage(event: PageEvent): void {
+	handlePageChanged(event: PageEvent): void {
 		this.tableState.setPagination(event);
 		this.fetchData();
 	}

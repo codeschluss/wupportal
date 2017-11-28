@@ -93,7 +93,7 @@ class AppController extends Controller
         $query = $this->table()->find()->contain($this->contain());
         $query->where([$this->name . '.id' => $id]);
 
-        $this->data($query->toArray());
+        $this->data($query->first());
     }
 
     /**

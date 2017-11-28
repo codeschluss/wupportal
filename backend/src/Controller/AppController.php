@@ -162,8 +162,11 @@ class AppController extends Controller
             $query->leftJoinWith($contain)->contain($contain);
         }
 
-        // foreach ($request->sorted as $sort) $query->group($sort->id)
-        //     ->order([$sort->id => $sort->desc ? 'desc' : 'asc']);
+        if (!empty($request->sort->direction)) {
+            $query
+                ->group($request->sort->active)
+                ->order([$request->sort->active => $request->sort->direction]);
+        }
 
         if (!empty($request->filter)) {
             $query->where(['OR' => function($exp, $q) use (&$field, &$request) {

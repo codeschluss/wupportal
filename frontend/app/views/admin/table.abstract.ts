@@ -32,17 +32,22 @@ export abstract class AbstractTableComponent implements AfterViewInit {
 
 	ngAfterViewInit(): void {
 		this.dataSource.paginator = this.paginator;
-		// this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 		this.fetchData();
 	}
 
-	handleFilter(changedEvent: any): void {
+	handleFiltered(changedEvent: any): void {
 		this.tableState.setFilter(changedEvent.target.value);
 		this.fetchData();
 	}
 
 	handlePageChanged(event: PageEvent): void {
 		this.tableState.setPagination(event);
+		this.fetchData();
+	}
+
+	handleSorted(event: Sort): void {
+		this.paginator.pageIndex = 0;
+		this.tableState.setSorting(event);
 		this.fetchData();
 	}
 

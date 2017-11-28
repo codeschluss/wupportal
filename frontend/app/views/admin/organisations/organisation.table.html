@@ -2,11 +2,11 @@
 
 	<div class="organisations-table-header">
 		<mat-form-field>
-			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+			<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
 		</mat-form-field>
 	</div>
 
-	<mat-table #table [dataSource]="dataSource" class="organisation-table" matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
+	<mat-table #table [dataSource]="dataSource" class="organisation-table" matSort (matSortChange)="handleSorted($event)">
 
 		<ng-container matColumnDef="name">
 			<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
@@ -59,7 +59,7 @@
 
 	</mat-table>
 
-	<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
+	<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" (page)="handlePageChanged($event)">
 	</mat-paginator>
 
 </div>

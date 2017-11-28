@@ -27,7 +27,7 @@
 	<!-- Created Column -->
 	<ng-container matColumnDef="created">
 		<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
-			Created
+			{{constants.createdAt}}
 		</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.created | date }}</mat-cell>
 	</ng-container>

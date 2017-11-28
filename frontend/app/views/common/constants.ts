@@ -51,6 +51,7 @@ export class Constants {
 	public user: string = 'Benutzer';
 	public activities: string = 'Aktivitäten';
 	public activity: string = 'Aktivität';
+	public account: string = 'Konto';
 
 	public error: string = 'Fehler';
 

@@ -33,6 +33,11 @@ export class AdminComponent implements OnInit {
 				link: ['/admin', { outlets: { table: ['users'] } }],
 				index: 2
 			},
+			{
+				label: constants.account,
+				link: ['/admin', { outlets: { table: ['account'] } }],
+				index: 3
+			},
 		];
 	}
 

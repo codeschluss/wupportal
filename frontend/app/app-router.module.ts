@@ -22,10 +22,10 @@ import { AuthGuard } from 'app/views/admin/login/auth.guard';
 				{ path: '', component: OrganisationsTableComponent, outlet: 'table' },
 				{ path: 'activities', component: ActivityTableComponent, outlet: 'table' },
 				{ path: 'users', component: UsersTableComponent, outlet: 'table' },
-				{ path: 'organisations', component: OrganisationsTableComponent, outlet: 'table' }
+				{ path: 'organisations', component: OrganisationsTableComponent, outlet: 'table' },
+				{ path: 'account', component: UserFormComponent, outlet: 'table' }
 			]
 		},
-		{ path: 'user/edit/:id', component: UserFormComponent },
 		{ path: 'organisation/edit/:id', component: OrganisationFormComponent },
 		{ path: 'activity/edit/:id', component: ActivityFormComponent },
 

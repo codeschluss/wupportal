@@ -48,9 +48,4 @@ export class OrganisationFormComponent implements OnInit {
 	back(): void {
 		this.location.back();
 	}
-
-	testSubmit(ngModel: Organisation): void {
-		console.log(ngModel);
-	}
-
 }

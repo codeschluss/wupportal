@@ -10,14 +10,14 @@ import { DataService } from 'app/services/data.service';
 import { Organisation } from 'app/models/organisation';
 
 @Component({
-	selector: 'edit-user',
+	selector: 'edit-organisation',
 	templateUrl: 'organisation.form.html',
 	providers: [
 		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient] }
 	]
 })
 
-export class OrganisationEditComponent implements OnInit {
+export class OrganisationFormComponent implements OnInit {
 
 	organisation$: Observable<Organisation>;
 

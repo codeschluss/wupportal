@@ -14,13 +14,13 @@ import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 @Component({
 	selector: 'edit-organisation',
 	styleUrls: ['../table.abstract.css'],
-	templateUrl: 'organisations.table.html',
+	templateUrl: 'organisation.table.html',
 	providers: [
 		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient] }
 	]
 })
 
-export class OrganisationsComponent extends AbstractTableComponent {
+export class OrganisationsTableComponent extends AbstractTableComponent {
 
 	displayedColumns: Array<string> = ['name', 'description', 'mail', 'phone', 'website', 'address', 'action'];
 	dataSource: MatTableDataSource<Organisation> = new MatTableDataSource<Organisation>();
@@ -37,7 +37,7 @@ export class OrganisationsComponent extends AbstractTableComponent {
 			width: '250px',
 			data: {
 				name: row.name,
-				message: 'wollen Sie diesen Eintrag wirklich löschen? ',
+				message: this.constants.deleteMessage,
 				id: row.id
 			}
 		});

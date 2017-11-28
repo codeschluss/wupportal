@@ -39,7 +39,7 @@ export class DataService {
 	}
 
 	public get(id: string): Observable<any> {
-		return this.http.get(this.baseUrl + id).map(i => i as any);
+		return this.http.get(this.baseUrl + '/' + id).map(i => i as any);
 	}
 
 	public list(request: TableState): Observable<Response> {

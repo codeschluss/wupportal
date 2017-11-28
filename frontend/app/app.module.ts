@@ -39,8 +39,8 @@ import { AdminComponent } from 'app/views/admin/admin.component';
 import { ActivitiesComponent } from 'app/views/admin/activities/activities.component';
 import { UsersTableComponent } from 'app/views/admin/users/users.table';
 import { UserFormComponent } from 'app/views/admin/users/user.form';
-import { OrganisationsComponent } from 'app/views/admin/organisations/organisations.component';
-import { OrganisationEditComponent } from 'app/views/admin/organisations/organisation.form.component';
+import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
+import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
 import { ActivityEditComponent } from 'app/views/admin/activities/activity.form.component';
 
 import { ActivityService } from 'app/services/activity';
@@ -66,8 +66,8 @@ import { DialogComponent } from 'app/views/common/popup.component';
 		AdminComponent,
 		ActivitiesComponent,
 		ActivityEditComponent,
-		OrganisationsComponent,
-		OrganisationEditComponent,
+		OrganisationsTableComponent,
+		OrganisationFormComponent,
 		UsersTableComponent,
 		UserFormComponent,
 		DialogComponent,

@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { DataSource } from '@angular/cdk/table';
 
-import { DialogComponent } from 'app/views/common/popup.component';
 import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
 import { Organisation } from 'app/models/organisation';
 import { DataService } from 'app/services/data.service';
@@ -27,23 +26,8 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 
 	constructor(
 		@Inject(OrganisationService) protected dataService: DataService,
-		public constants: Constants,
-		public dialog: MatDialog) {
-		super(dataService, constants);
-	}
-
-	openDialog(row: Organisation): void {
-		const dialogRef = this.dialog.open(DialogComponent, {
-			width: '250px',
-			data: {
-				name: row.name,
-				message: this.constants.deleteMessage,
-				id: row.id
-			}
-		});
-
-		dialogRef.afterClosed().subscribe(result => {
-			// this.ngAfterViewInit();
-		});
+		protected constants: Constants,
+		protected deleteDialog: MatDialog) {
+		super(dataService, constants, deleteDialog);
 	}
 }

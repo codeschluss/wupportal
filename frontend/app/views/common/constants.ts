@@ -10,7 +10,7 @@ export class Constants {
 	public back: string = 'Zurück';
 	public newElement: string = 'Neu';
 	public cancel: string = 'Abbrechen';
-	public next: string = 'Näachste';
+	public next: string = 'Nächste';
 	public previous: string = 'Vorherige';
 	public items: string = 'Einträge';
 	public of: string = 'von';
@@ -23,6 +23,7 @@ export class Constants {
 	public filter: string = 'Filter';
 	public configuration: string = 'Einstellungen';
 
+	public createdAt: string = 'Erstellt';
 	public delete: string = 'Löschen';
 	public change: string = 'Ändern';
 	public edit: string = 'Bearbeiten';

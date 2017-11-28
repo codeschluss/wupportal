@@ -29,7 +29,18 @@
 		<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
 			Created
 		</mat-header-cell>
-		<mat-cell *matCellDef="let row">{{ row.created_at | date }}</mat-cell>
+		<mat-cell *matCellDef="let row">{{ row.created | date }}</mat-cell>
+	</ng-container>
+
+	<ng-container matColumnDef="action">
+		<mat-header-cell *matHeaderCellDef>
+			{{constants.delete}}
+		</mat-header-cell>
+		<mat-cell *matCellDef="let row">
+			<button mat-raised-button color="warn" (click)="openDialog(row, row.username)">
+				<i class="fa fa-trash-o" aria-hidden="true"></i>
+			</button>
+		</mat-cell>
 	</ng-container>
 
 	<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -1,48 +1,58 @@
-<div>
-	<mat-card class="organisation-edit-card" *ngIf="organisation$ | async as organisation">
-		<form class="well">
+<div class="edit-container">
+	<mat-card class="organisation-edit-card" *ngIf="organisation">
+
+		<form (ngSubmit)="onSubmit()" class="well">
 			<mat-card-header>
-				<mat-form-field class="form-control">
-					<input matInput type=text placeholder={{constants.name}} name="name" value={{organisation.records[0].name}} id="orga_name_field">
-				</mat-form-field>
+				<h2>{{organisation.name}}</h2>
 			</mat-card-header>
-			<mat-form-field class="form-control">
-				<textarea matInput type=text placeholder={{constants.description}} name="description" value={{organisation.records[0].description}}
-				 id="orga_description_field"></textarea>
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="organisation.name" placeholder={{constants.name}} name="name" value={{organisation.name}}
+				 id="orga_name_field">
+			</mat-form-field>
+			<mat-form-field class="edit-form-full-width">
+				<textarea matInput type=text [(ngModel)]="organisation.description" placeholder={{constants.description}} name="description"
+				 value={{organisation.description}} id="orga_description_field"></textarea>
 			</mat-form-field>
 
-			<mat-form-field class="form-control">
-				<input matInput type=text placeholder={{constants.mail}} name="mail" value={{organisation.records[0].mail}} id="orga_mail_field">
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=email [(ngModel)]="organisation.mail" placeholder={{constants.mail}} name="mail" value={{organisation.mail}}
+				 id="orga_mail_field" min="10">
 			</mat-form-field>
 
-			<mat-form-field class="form-control">
-				<input matInput type=text placeholder={{constants.phone}} name="telephone" value={{organisation.records[0].phone}} id="orga_phone_field">
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="organisation.phone" placeholder={{constants.phone}} name="telephone" value={{organisation.phone}}
+				 id="orga_phone_field">
 			</mat-form-field>
 
-			<mat-form-field class="form-control">
-				<input matInput type=text placeholder={{constants.website}} name="website" value={{organisation.records[0].website}} id="orga_website_field">
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="organisation.website" placeholder={{constants.website}} name="website" value={{organisation.website}}
+				 id="orga_website_field">
 			</mat-form-field>
 			<mat-card class="address-card">
-
-				<mat-form-field class="form-control">
-					<input matInput placeholder={{constants.street}} name="street" value={{organisation.records[0].address.street}} id="orgaaddress_street">
+				<mat-card-header>
+					{{constants.address}}
+				</mat-card-header>
+				<mat-form-field class="edit-form-full-width">
+					<input matInput [(ngModel)]="organisation.address.street" placeholder={{constants.street}} name="street" value={{organisation.address.street}}
+					 id="orgaaddress_street">
 				</mat-form-field>
 
-				<mat-form-field class="form-control">
-					<input matInput placeholder={{constants.houseNumber}} name="house_number" value={{organisation.records[0].address.house_number}}
-					 id="orgaaddress_house_number">
+				<mat-form-field class="edit-form-full-width">
+					<input matInput [(ngModel)]="organisation.address.house_number" placeholder={{constants.houseNumber}} name="house_number"
+					 value={{organisation.address.house_number}} id="orgaaddress_house_number">
 				</mat-form-field>
 
-				<mat-form-field class="form-control">
-					<input matInput placeholder={{constants.postalCode}} name="postal_code" value={{organisation.records[0].address.postal_code}}
+				<mat-form-field class="edit-form-full-width">
+					<input matInput [(ngModel)]="organisation.address.postal_code" placeholder={{constants.postalCode}} name="postal_code" value={{organisation.address.postal_code}}
 					 id="orgaaddress_postal_code">
 				</mat-form-field>
 
-				<mat-form-field class="form-control">
-					<input matInput placeholder={{constants.quarter}} name="suburb_name" value={{organisation.records[0].address.suburb.name}}
+				<mat-form-field class="edit-form-full-width">
+					<input matInput [(ngModel)]="organisation.address.suburb.name" placeholder={{constants.quarter}} name="suburb_name" value={{organisation.address.suburb.name}}
 					 id="orgaaddress_suburb_name">
 				</mat-form-field>
 			</mat-card>
+			<button (click)="testSubmit()">click</button>
 			<button mat-raised-button type="submit">Submit</button>
 			<button mat-raised-button (click)="back()">Zurück</button>
 		</form>

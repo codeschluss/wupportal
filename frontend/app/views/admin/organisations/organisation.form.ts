@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
+import { NgForm } from '@angular/forms';
 
 import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
@@ -15,6 +16,7 @@ import { Constants } from 'app/views/common/constants';
 @Component({
 	selector: 'edit-organisation',
 	templateUrl: 'organisation.form.html',
+	styleUrls: ['../../../app.component.css'],
 	providers: [
 		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient] }
 	]
@@ -22,7 +24,7 @@ import { Constants } from 'app/views/common/constants';
 
 export class OrganisationFormComponent implements OnInit {
 
-	organisation$: Observable<Organisation[]>;
+	organisation: Organisation;
 
 	constructor(
 		@Inject(OrganisationService) private service: DataService,
@@ -32,17 +34,23 @@ export class OrganisationFormComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.organisation$ = this.route.paramMap
+		this.route.paramMap
 			.switchMap((params: ParamMap) =>
-				this.service.get(params.get('id')));
+				this.service.get(params.get('id'))).subscribe((data) => this.organisation = data.records);
+
 	}
 
-	console(orga: any): void {
-		console.log('orga: ', orga);
+	onSubmit(): void {
+		this.service.edit(this.organisation);
+		this.location.back();
 	}
 
 	back(): void {
 		this.location.back();
+	}
+
+	testSubmit(ngModel: Organisation): void {
+		console.log(ngModel);
 	}
 
 }

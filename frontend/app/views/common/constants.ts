@@ -19,6 +19,8 @@ export class Constants {
 	public login: string = 'anmelden';
 	public userName: string = 'Username';
 	public password: string = 'Passwort';
+	public newPassword: string = 'Neues Passwort';
+	public repeatPassword: string = 'Passwort wiederholen';
 
 	public filter: string = 'Filter';
 	public configuration: string = 'Einstellungen';
@@ -33,6 +35,7 @@ export class Constants {
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';
 	public nameString: string = 'Name';
+	public fullname: string = 'Vor- und Nachname';
 	public phone: string = 'Telefon';
 	public mail: string = 'e-Mail';
 	public address: string = 'Adresse';
@@ -53,6 +56,7 @@ export class Constants {
 	public activities: string = 'Aktivitäten';
 	public activity: string = 'Aktivität';
 	public account: string = 'Konto';
+	public accountManagement: string = 'Kontoverwaltung';
 
 	public error: string = 'Fehler';
 

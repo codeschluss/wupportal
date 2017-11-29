@@ -1,5 +1,31 @@
-<div class="user-container mat-elevation-z8">
+<div class="edit-container" *ngIf="user">
+	<form (ngSubmit)="onSubmit()" class="well">
+		<mat-card class="address-card">
+			<mat-card-header>
+				<h2>{{constants.accountManagement}}</h2>
+			</mat-card-header>
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="user.username" [ngModelOptions]="{standalone: true}" placeholder={{constants.mail}}>
+			</mat-form-field>
 
-	Text wird hier nur dieser erscheinen
+			<mat-form-field class="edit-form-full-width ">
+				<input matInput type=text [(ngModel)]="user.fullname" [ngModelOptions]="{standalone: true}" placeholder={{constants.fullnme}}>
+			</mat-form-field>
 
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="user.phone" [ngModelOptions]="{standalone: true}" placeholder={{constants.phone}}>
+			</mat-form-field>
+
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=password placeholder={{constants.newPassword}}>
+			</mat-form-field>
+
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=password [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" placeholder={{constants.repeatPassword}}>
+			</mat-form-field>
+
+			<button mat-raised-button type="submit">{{constants.save}}</button>
+			<button mat-raised-button (click)="back()">{{constants.back}}</button>
+		</mat-card>
+	</form>
 </div>

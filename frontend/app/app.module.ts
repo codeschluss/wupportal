@@ -46,6 +46,7 @@ import { ActivityFormComponent } from 'app/views/admin/activities/activity.form'
 import { ActivityService } from 'app/services/activity';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
+import { ValidationService } from 'app/services/validation.service';
 
 import { Constants } from 'app/views/common/constants';
 
@@ -109,6 +110,7 @@ import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selectio
 		LocationService,
 		NominatimService,
 		Constants,
+		ValidationService,
 
 		AuthGuard
 	],

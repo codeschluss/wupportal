@@ -1,10 +1,5 @@
-@import url(
-	'https://unpkg.com/font-awesome/css/font-awesome.min.css'
-);
-@import url(
-	'https://unpkg.com/@angular/material/prebuilt-themes/deeppurple-amber.css'
-);
-
+@import url('https://unpkg.com/font-awesome/css/font-awesome.min.css');
+@import url('https://unpkg.com/@angular/material/prebuilt-themes/deeppurple-amber.css');
 filter-component {
 	bottom: 0px;
 	left: 0px;
@@ -22,20 +17,20 @@ mapping-component {
 }
 
 .edit-container {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
-.edit-container > * {
-  width: 90%;
+.edit-container>* {
+	width: 90%;
 }
 
 .edit-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
+	min-width: 150px;
+	max-width: 500px;
+	width: 100%;
 }
 
 .edit-form-full-width {
-  width: 75%;
+	width: 75%;
 }

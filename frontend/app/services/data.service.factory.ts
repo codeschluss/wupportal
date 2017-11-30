@@ -7,6 +7,8 @@ export const UserService = new InjectionToken<DataService>('users');
 export const TagService = new InjectionToken<DataService>('tags');
 export const TargetGroupService = new InjectionToken<DataService>('targetGroups');
 export const OrganisationService = new InjectionToken<DataService>('organisations');
+export const AddressService = new InjectionToken<DataService>('addresses');
+export const SuburbService = new InjectionToken<DataService>('suburbs');
 export const CategoryService = new InjectionToken<DataService>('categories');
 export const ConfigurationService = new InjectionToken<DataService>('configurations');
 

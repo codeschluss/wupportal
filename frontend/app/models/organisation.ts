@@ -9,6 +9,7 @@ export class Organisation extends Model {
 	public mail: string = '';
 	public phone: string = '';
 	public image: any = {};
+	public address_id: string = '';
 
 	public address: Address = new Address();
 

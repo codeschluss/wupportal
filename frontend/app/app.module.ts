@@ -50,6 +50,8 @@ import { NominatimService } from 'app/services/nominatim';
 import { Constants } from 'app/views/common/constants';
 
 import { DialogComponent } from 'app/views/common/popup.component';
+import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
+
 
 @NgModule({
 	bootstrap: [
@@ -71,6 +73,7 @@ import { DialogComponent } from 'app/views/common/popup.component';
 		UsersTableComponent,
 		UserFormComponent,
 		DialogComponent,
+		SuburbSelectionComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -111,6 +114,7 @@ import { DialogComponent } from 'app/views/common/popup.component';
 	],
 	entryComponents: [
 		DialogComponent,
+		SuburbSelectionComponent
 	]
 })
 

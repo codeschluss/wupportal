@@ -10,6 +10,7 @@ import { Service } from 'app/services/service';
 @Injectable()
 export class NominatimService extends Service<Address> {
 
+	protected baseURL: string = '';
 	protected url: string = 'https://nominatim.openstreetmap.org/search/';
 
 	private format: string = '?format=json&addressdetails=1';
@@ -21,15 +22,26 @@ export class NominatimService extends Service<Address> {
 	public edit(item: Address): void { return; }
 
 	public get(query: string): Observable<Address> {
-		return this.http.get(this.baseURL + query + this.format)
+		console.log('get via Nominatim');
+		return this.http.get(this.url + query + this.format)
 			.map((res) => (res as JSON[]).shift()).map((i) => {
 				const address = new Address();
+				address.suburb = null;
 				address.latitude = i['lat'];
 				address.longitude = i['lon'];
-				address.houseNumber = i['address']['house_number'];
+				address.house_number = i['address']['house_number'];
 				address.place = i['address']['city'];
-				address.postalCode = i['address']['postcode'];
+				if (address.place == null) {
+					address.place = i['address']['county'];
+				}
+				address.postal_code = i['address']['postcode'];
 				address.street = i['address']['road'];
+				if (address.street == null) {
+					address.street = i['address']['construction'];
+				}
+				if (address.street == null) {
+					address.street = i['address']['pedestrian'];
+				}
 				return address;
 			});
 	}

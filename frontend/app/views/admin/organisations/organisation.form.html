@@ -25,35 +25,20 @@
 			</mat-form-field>
 
 			<mat-form-field class="edit-form-full-width">
-				<input matInput type=text [(ngModel)]="organisation.website" placeholder={{constants.website}} name="website" value={{organisation.website}}
-				 id="orga_website_field">
+				<input matInput type=text placeholder={{constants.website}} name="website" id="orga_website_field" name="website" value={{organisation.website}}>
 			</mat-form-field>
 			<mat-card class="address-card">
-				<mat-card-header>
-					{{constants.address}}
-				</mat-card-header>
 				<mat-form-field class="edit-form-full-width">
-					<input matInput [(ngModel)]="organisation.address.street" placeholder={{constants.street}} name="street" value={{organisation.address.street}}
-					 id="orgaaddress_street">
-				</mat-form-field>
-
-				<mat-form-field class="edit-form-full-width">
-					<input matInput [(ngModel)]="organisation.address.house_number" placeholder={{constants.houseNumber}} name="house_number"
-					 value={{organisation.address.house_number}} id="orgaaddress_house_number">
-				</mat-form-field>
-
-				<mat-form-field class="edit-form-full-width">
-					<input matInput [(ngModel)]="organisation.address.postal_code" placeholder={{constants.postalCode}} name="postal_code" value={{organisation.address.postal_code}}
-					 id="orgaaddress_postal_code">
-				</mat-form-field>
-
-				<mat-form-field class="edit-form-full-width">
-					<input matInput [(ngModel)]="organisation.address.suburb.name" placeholder={{constants.quarter}} name="suburb_name" value={{organisation.address.suburb.name}}
-					 id="orgaaddress_suburb_name">
+					<input matInput name="address" placeholder={{constants.address}} [matAutocomplete]="auto" [formControl]="addressCtrl">
+					<mat-autocomplete #auto="matAutocomplete" [displayWith]="toString">
+						<mat-option *ngFor="let address of filteredAddresses | async" [value]="address">
+							{{ toString(address) }}
+						</mat-option>
+					</mat-autocomplete>
 				</mat-form-field>
 			</mat-card>
 			<button mat-raised-button type="submit">{{constants.save}}</button>
-			<button mat-raised-button (click)="back()">{{constants.back}}</button>
 		</form>
+		<button mat-raised-button (click)="back()">{{constants.back}}</button>
 	</mat-card>
 </div>

@@ -20,30 +20,33 @@ export class DataService {
 		private http: HttpClient,
 		private repository: string
 	) {
-		this.baseUrl = this.endpoint + repository;
+		this.baseUrl = this.endpoint + repository + '/';
 	}
 
-	public add(record: any): void {
-		this.http.put(this.baseUrl + '/add/' + record.id, JSON.stringify(record))
-			.subscribe();
+	public add(record: any): Observable<any> {
+		return this.http.post(this.baseUrl, JSON.stringify(record));
 	}
 
 	public delete(record: any): void {
-		this.http.delete(this.baseUrl + '/delete/' + record.id)
+		this.http.delete(this.baseUrl + 'delete/' + record.id)
 			.subscribe();
 	}
 
 	public edit(record: any): void {
-		this.http.patch(this.baseUrl + '/' + record.id + '/', JSON.stringify(record))
+		this.http.patch(this.baseUrl + record.id + '/', JSON.stringify(record))
 			.subscribe();
 	}
 
 	public get(id: string): Observable<any> {
-		return this.http.get(this.baseUrl + '/' + id).map(i => i as any);
+		return this.http.get(this.baseUrl + id).map(i => i as any);
 	}
 
 	public list(request: TableState): Observable<Response> {
-		return this.http.post(this.baseUrl + '/list', JSON.stringify(request)).map(res => res as Response);
+		return this.http.post(this.baseUrl + 'list', JSON.stringify(request)).map(res => res as Response);
+	}
+
+	public getAll(): Observable<any> {
+		return this.http.get(this.baseUrl).map(res => res as any);
 	}
 
 }

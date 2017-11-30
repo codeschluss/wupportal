@@ -63,6 +63,7 @@ Router::scope('/', function (RouteBuilder $routes) {
             'path' => '/list'
         ]]];
 
+        $routes->resources('Addresses', $list);
         $routes->resources('Categories', $list);
         $routes->resources('Configurations', $list);
         $routes->resources('Organisations', $list);

@@ -8,23 +8,23 @@
 
 			<mat-form-field class="edit-form-full-width">
 				<input matInput type=text placeholder={{constants.mail}}
-				  formControlName="usernameCtrl"
+				  formControlName="username"
 				  [errorStateMatcher]="validation"
 				  required>
-				<mat-error *ngIf="usernameCtrl.hasError('required')">
+				<mat-error *ngIf="username.hasError('required')">
 					{{constants.isRequiredMessage}}
 				</mat-error>
-				<mat-error *ngIf="usernameCtrl.hasError('email')">
+				<mat-error *ngIf="username.hasError('email')">
 					{{constants.emailFormatMessage}}
 				</mat-error>
 			</mat-form-field>
 
 			<mat-form-field class="edit-form-full-width">
 				<input matInput type=text placeholder={{constants.fullname}}
-				  formControlName="fullnameCtrl"
+				  formControlName="fullname"
 				  [errorStateMatcher]="validation"
 				  required>
-				<mat-error *ngIf="fullnameCtrl.hasError('required')">
+				<mat-error *ngIf="fullname.hasError('required')">
 					{{constants.isRequiredMessage}}
 				</mat-error>
 			</mat-form-field>
@@ -32,19 +32,18 @@
 
 			<mat-form-field class="edit-form-full-width">
 				<input matInput type=text placeholder={{constants.phone}}
-				  formControlName="phoneCtrl"
-				  [errorStateMatcher]="validation">
+				  formControlName="phone" [errorStateMatcher]="validation">
 			</mat-form-field>
 
 			<form [formGroup]="passwordGroup"
 			  id="passwordGroup" #formDir="ngForm">
 				<mat-form-field class="edit-form-full-width">
 					<input matInput type=password placeholder={{constants.newPassword}}
-					  formControlName="newPasswordCtrl">
+					  formControlName="password">
 				</mat-form-field>
 				<mat-form-field class="edit-form-full-width">
-					<input matInput type=password placeholder={{constants.repeatPassword}}
-					  formControlName="repeatPasswordCtrl"
+					<input matInput type=password placeholder={{constants.confirmPassword}}
+					  formControlName="confirmPassword"
 					  [errorStateMatcher]="validation">
 				</mat-form-field>
 				<mat-error *ngIf="passwordGroup.invalid">
@@ -52,9 +51,10 @@
 				</mat-error>
 			</form>
 
-			<button mat-raised-button [disabled]="userForm.invalid"
-			  type="submit">{{constants.save}}</button>
-			<button mat-raised-button (click)="back()">{{constants.back}}</button>
+			<button mat-raised-button type="submit"
+			  [disabled]="userForm.invalid">{{constants.save}}</button>
+			<button mat-raised-button type="button"
+			  (click)="back()">{{constants.back}}</button>
 		</mat-card>
 	</form>
 </div>

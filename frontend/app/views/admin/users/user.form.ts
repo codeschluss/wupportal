@@ -47,6 +47,7 @@ export class UserFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
+		this.setUser();
 		this.service.edit(this.user);
 		this.location.back();
 	}
@@ -57,24 +58,33 @@ export class UserFormComponent implements OnInit {
 
 	initFormControls(): void {
 		this.passwordGroup = new FormGroup({
-			'newPasswordCtrl': new FormControl(),
-			'repeatPasswordCtrl': new FormControl()
+			'password': new FormControl(),
+			'confirmPassword': new FormControl()
 		}, this.validation.passwordMatch);
 
 		this.userForm = new FormGroup({
-			'usernameCtrl': new FormControl(this.user.username, [
+			'username': new FormControl(this.user.username, [
 				Validators.required,
 				Validators.email
 			]),
-			'fullnameCtrl': new FormControl(this.user.fullname, Validators.required),
-			'phoneCtrl': new FormControl(this.user.phone),
-			'passwordGroup': this.passwordGroup
+			'fullname': new FormControl(this.user.fullname, Validators.required),
+			'phone': new FormControl(this.user.phone),
+			'password': this.passwordGroup
 		});
 	}
 
-	get usernameCtrl(): any { return this.userForm.get('usernameCtrl'); }
-	get fullnameCtrl(): any { return this.userForm.get('fullnameCtrl'); }
-	get newPasswordCtrl(): any { return this.userForm.get('newPasswordCtrl'); }
-	get repeatPasswordCtrl(): any { return this.userForm.get('repeatPasswordCtrl'); }
+
+	setUser(): void {
+		this.user.username = this.username.value;
+		this.user.fullname = this.fullname.value;
+		this.user.phone = this.phone.value;
+		this.user.password = this.password.value.password;
+	}
+
+	get username(): any { return this.userForm.get('username'); }
+	get fullname(): any { return this.userForm.get('fullname'); }
+	get password(): any { return this.userForm.get('password'); }
+	get phone(): any { return this.userForm.get('phone'); }
+	get confirmPassword(): any { return this.userForm.get('confirmPassword'); }
 
 }

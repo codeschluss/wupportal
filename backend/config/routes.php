@@ -67,11 +67,15 @@ Router::scope('/', function (RouteBuilder $routes) {
         $routes->resources('Categories', $list);
         $routes->resources('Configurations', $list);
         $routes->resources('Organisations', $list);
-        $routes->resources('Users', $list);
         $routes->resources('Suburbs',$list);
         $routes->resources('Tags', $list);
         $routes->resources('TargetGroups', $list);
-
+        $routes->resources('Users', $list);
+        $routes->resources('Users', ['map' => ['login' => [
+            'action' => 'login',
+            'method' => 'POST',
+            'path' => '/login'
+        ]]]);
     });
 });
 

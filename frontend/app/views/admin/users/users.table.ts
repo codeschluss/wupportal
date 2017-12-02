@@ -7,13 +7,14 @@ import { DataServiceFactory, UserService } from 'app/services/data.service.facto
 import { DataService } from 'app/services/data.service';
 import { Constants } from 'app/views/common/constants';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 @Component({
 	selector: 'edit-users',
 	styleUrls: ['../table.abstract.css'],
 	templateUrl: 'users.table.html',
 	providers: [
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient] },
+		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
 	]
 })
 export class UsersTableComponent extends AbstractTableComponent {

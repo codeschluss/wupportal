@@ -6,6 +6,7 @@ export class TableState {
 	private page: number;
 	private pageSize: number;
 	private sort: Sort;
+	public _token: string = '';
 
 	constructor(pageSize: number, pageSizeOptions: Array<number>) {
 		this.filter = '';

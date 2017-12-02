@@ -9,13 +9,14 @@ import { Organisation } from 'app/models/organisation';
 import { DataService } from 'app/services/data.service';
 import { Constants } from 'app/views/common/constants';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 @Component({
 	selector: 'edit-organisation',
 	styleUrls: ['../table.abstract.css'],
 	templateUrl: 'organisation.table.html',
 	providers: [
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient] }
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 

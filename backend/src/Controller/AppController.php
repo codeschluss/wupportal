@@ -57,6 +57,50 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
+
+        $this->loadComponent('Auth', [
+            // 'loginAction' => [
+            //     'controller' => 'Users',
+            //     'action' => 'login',
+            //     'plugin' => 'Users'
+            // ],
+            'authenticate' => [
+                'Basic' => [
+                    'fields' => [
+                        'username' => 'username',
+                        'password' => 'password'],
+                    'userModel' => 'Users'
+                ],
+            ],
+            'storage' => 'Memory',
+            'unauthorizedRedirect' => false,
+            'loginAction' => false
+        ]);
+
+        // $this->loadComponent('Auth', [
+        //     'storage' => 'Memory',
+        //     // 'loginAction' => [
+        //     //     'controller' => 'Users',
+        //     //     'action' => 'login',
+        //     //     'plugin' => 'Users'
+        //     // ],
+        //     'authenticate' => [
+        //         'Form' => ['userModel' => 'Users'],
+        //         'ADmad/JwtAuth.Jwt' => [
+        //             'parameter' => '_token',
+        //             // 'finder' => 'auth',
+        //             'userModel' => 'Users',
+        //             'fields' => [
+        //                 'username' => 'username',
+        //                 'password' => 'password'
+        //             ],
+        //             'queryDatasource' => true
+        //         ]
+        //     ],
+        //     'unauthorizedRedirect' => false,
+        //     'checkAuthIn' => 'Controller.initialize',
+        //     // 'loginAction' => false
+        // ]);
     }
 
     /**
@@ -103,6 +147,7 @@ class AppController extends Controller
      */
     public function add()
     {
+        // var_dump($user); exit;
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->newEntity(),
@@ -149,6 +194,7 @@ class AppController extends Controller
      */
     public function list()
     {
+        // var_dump($request); exit;
         $query = $this->table()->find()->group($this->name . '.id');
         $request = $this->request->input('json_decode');
         if (is_null($request)) return;

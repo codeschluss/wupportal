@@ -10,6 +10,8 @@ export class Constants {
 	public back: string = 'Zurück';
 	public newElement: string = 'Neu';
 	public cancel: string = 'Abbrechen';
+	public newEntry: string = 'Neuen Eintrag anlegen';
+
 	public next: string = 'Nächste';
 	public previous: string = 'Vorherige';
 	public items: string = 'Einträge';

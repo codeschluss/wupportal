@@ -1,32 +1,42 @@
+<button mat-raised-button type="button"
+  (click)="newEntry()">
+	{{constants.newEntry}}</button>
+
 <div class="filter">
 	<mat-form-field>
-		<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
+		<input matInput (keyup)="handleFiltered($event)"
+		  placeholder="Filter">
 	</mat-form-field>
 </div>
 
-<mat-table #table [dataSource]="dataSource" class="example-table" matSort (matSortChange)="handleSorted($event)">
+<mat-table #table [dataSource]="dataSource"
+  class="example-table" matSort (matSortChange)="handleSorted($event)">
 
 	<!-- username Column -->
 	<ng-container matColumnDef="username">
-		<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.user}}</mat-header-cell>
+		<mat-header-cell *matHeaderCellDef
+		  mat-sort-header>{{constants.user}}</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.username }}</mat-cell>
 	</ng-container>
 
 	<!-- fullname Column -->
 	<ng-container matColumnDef="fullname">
-		<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.nameString}}</mat-header-cell>
+		<mat-header-cell *matHeaderCellDef
+		  mat-sort-header>{{constants.nameString}}</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.fullname }}</mat-cell>
 	</ng-container>
 
 	<!-- phone Column -->
 	<ng-container matColumnDef="phone">
-		<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.phone}}</mat-header-cell>
+		<mat-header-cell *matHeaderCellDef
+		  mat-sort-header>{{constants.phone}}</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
 	</ng-container>
 
 	<!-- Created Column -->
 	<ng-container matColumnDef="created">
-		<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+		<mat-header-cell *matHeaderCellDef
+		  mat-sort-header disableClear="true">
 			{{constants.createdAt}}
 		</mat-header-cell>
 		<mat-cell *matCellDef="let row">{{ row.created | date }}</mat-cell>
@@ -37,7 +47,8 @@
 			{{constants.delete}}
 		</mat-header-cell>
 		<mat-cell *matCellDef="let row">
-			<button mat-button color="warn" (click)="openDialog(row, row.username)">
+			<button mat-button color="warn"
+			  (click)="openDialog(row, row.username)">
 				<i class="fa fa-trash-o" aria-hidden="true"></i>
 			</button>
 		</mat-cell>
@@ -47,5 +58,7 @@
 	<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
-<mat-paginator [pageSize]="constants.pageSize" [pageSizeOptions]="constants.pageSizeOptions" (page)="handlePageChanged($event)">
+<mat-paginator [pageSize]="constants.pageSize"
+  [pageSizeOptions]="constants.pageSizeOptions"
+  (page)="handlePageChanged($event)">
 </mat-paginator>

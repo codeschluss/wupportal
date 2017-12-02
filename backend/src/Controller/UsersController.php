@@ -2,6 +2,10 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
+use Cake\Network\Exception\UnauthorizedException;
+use Cake\Utility\Security;
+use Firebase\JWT\JWT;
 
 /**
  * Users Controller
@@ -12,6 +16,13 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['add','login']);
+    }
+
     /**
      * filter helper.
      *
@@ -25,4 +36,32 @@ class UsersController extends AppController
             'phone'
         ];
     }
+
+    /**
+     * login method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function login()
+    {
+        $user = $this->Auth->identify();
+        if (!$user) {
+            $this->viewBuilder()->className('Json');
+            $this->set([
+                'success' => false,
+                'data' => null,
+                '_serialize' => ['success', 'data']
+            ]);
+        } else {
+            $this->viewBuilder()->className('Json');
+            $this->set([
+                'success' => true,
+                'data' => $user,
+                '_serialize' => ['success', 'data']
+            ]);
+        }
+
+
+    }
+
 }

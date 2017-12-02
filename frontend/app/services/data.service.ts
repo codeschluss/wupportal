@@ -3,11 +3,12 @@ import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { TableState } from 'app/models/table.state';
-import { Response } from 'app/models/response';
+import { DataResponse } from 'app/models/data.response';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 
 @Injectable()
@@ -18,7 +19,8 @@ export class DataService {
 
 	constructor(
 		private http: HttpClient,
-		private repository: string
+		private repository: string,
+		private authService: AuthenticationService
 	) {
 		this.baseUrl = this.endpoint + repository + '/';
 	}
@@ -41,8 +43,12 @@ export class DataService {
 		return this.http.get(this.baseUrl + id).map(i => i as any);
 	}
 
-	public list(request: TableState): Observable<Response> {
-		return this.http.post(this.baseUrl + 'list', JSON.stringify(request)).map(res => res as Response);
+	public list(request: TableState): Observable<DataResponse> {
+		return this.http.post(this.baseUrl + 'list', JSON.stringify(request), {
+			headers: new HttpHeaders()
+				.set('Content-Type', 'application/json')
+				.set('Authorization', this.authService.basicAuthString())
+		}).map(res => res as DataResponse);
 	}
 
 	public getAll(): Observable<any> {

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { MappingComponent } from 'app/views/mapping';
-import { LoginComponent } from 'app/views/admin/login/login.component';
+import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { UserFormComponent } from 'app/views/admin/users/user.form';
 import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
@@ -11,14 +11,14 @@ import { ActivityFormComponent } from 'app/views/admin/activities/activity.form'
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
 import { UsersTableComponent } from 'app/views/admin/users/users.table';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
-import { AuthGuard } from 'app/views/admin/login/auth.guard';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 @NgModule({
 	imports: [RouterModule.forRoot([
 		{ path: '', component: MappingComponent },
-		{ path: 'login', component: LoginComponent },
+		{ path: 'login', component: LoginFormComponent },
 		{
-			path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
+			path: 'admin', component: AdminComponent, canActivate: [AuthenticationService], children: [
 				{ path: '', component: OrganisationsTableComponent, outlet: 'table' },
 				{ path: 'activities', component: ActivityTableComponent, outlet: 'table' },
 				{ path: 'users', component: UsersTableComponent, outlet: 'table' },

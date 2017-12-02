@@ -2,6 +2,7 @@
 import { InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from 'app/services/data.service';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 export const UserService = new InjectionToken<DataService>('users');
 export const TagService = new InjectionToken<DataService>('tags');
@@ -14,7 +15,7 @@ export const ConfigurationService = new InjectionToken<DataService>('configurati
 
 export function DataServiceFactory(service: InjectionToken<DataService>): any {
 	const repository = service.toString().replace('InjectionToken ', '');
-	return (http: HttpClient) => {
-		return new DataService(http, repository);
+	return (http: HttpClient, authService: AuthenticationService) => {
+		return new DataService(http, repository, authService);
 	};
 }

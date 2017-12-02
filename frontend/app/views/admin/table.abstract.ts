@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
-import { Response } from 'app/models/response';
+import { DataResponse } from 'app/models/data.response';
 import { Constants } from 'app/views/common/constants';
 import { DialogComponent } from 'app/views/common/popup.component';
 
@@ -58,7 +58,7 @@ export abstract class AbstractTableComponent implements AfterViewInit {
 			.subscribe(data => this.handleResponse(data));
 	}
 
-	handleResponse(response: Response): void {
+	handleResponse(response: DataResponse): void {
 		this.dataSource.data = response.records;
 	}
 

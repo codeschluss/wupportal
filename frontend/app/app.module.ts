@@ -33,8 +33,7 @@ import { DetailsComponent } from 'app/views/details';
 import { FilterComponent } from 'app/views/filter';
 import { MappingComponent } from 'app/views/mapping';
 
-import { AuthGuard } from 'app/views/admin/login/auth.guard';
-import { LoginComponent } from 'app/views/admin/login/login.component';
+import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
 import { UsersTableComponent } from 'app/views/admin/users/users.table';
@@ -47,12 +46,12 @@ import { ActivityService } from 'app/services/activity';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
 import { ValidationService } from 'app/services/validation.service';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 import { Constants } from 'app/views/common/constants';
 
 import { DialogComponent } from 'app/views/common/popup.component';
 import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
-
 
 @NgModule({
 	bootstrap: [
@@ -65,7 +64,7 @@ import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selectio
 		FilterComponent,
 		MappingComponent,
 
-		LoginComponent,
+		LoginFormComponent,
 		AdminComponent,
 		ActivityTableComponent,
 		ActivityFormComponent,
@@ -111,8 +110,7 @@ import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selectio
 		NominatimService,
 		Constants,
 		ValidationService,
-
-		AuthGuard
+		AuthenticationService
 	],
 	entryComponents: [
 		DialogComponent,

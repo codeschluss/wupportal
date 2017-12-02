@@ -9,9 +9,7 @@
         "cakephp/cakephp": "3.5.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "~1.0",
-        "cakephp/plugin-installer": "~1.0",
-        "josegonzalez/dotenv": "2.*",
-        "admad/cakephp-jwt-auth": "^2.2"
+        "cakephp/plugin-installer": "~1.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",

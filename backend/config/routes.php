@@ -64,6 +64,7 @@ Router::scope('/', function (RouteBuilder $routes) {
         ]]];
 
         $routes->resources('Addresses', $list);
+        $routes->resources('Activities', $list);
         $routes->resources('Categories', $list);
         $routes->resources('Configurations', $list);
         $routes->resources('Organisations', $list);

@@ -37,7 +37,7 @@ export class UserFormComponent implements OnInit {
 	protected passwordGroup: FormGroup;
 
 	protected allOrganisations: Array<Organisation>;
-	protected initialOrganisations: Array<Organisation> = [];
+	protected initialOrganisations: Array<string> = [];
 
 	constructor(
 		@Inject(UserService) public userService: DataService,
@@ -52,7 +52,15 @@ export class UserFormComponent implements OnInit {
 
 	onSubmit(): void {
 		this.setUser();
-		this.userService.edit(this.user);
+		this.userService.edit(this.user)
+			.map(data => data.records as User)
+			.subscribe(user =>
+				this.authService.login(this.user.username, this.user.password)
+					.subscribe(succeeded => {
+						console.log('succeeded?', succeeded);
+						succeeded ? this.location.back() : this.authService.redirectToLogin();
+					})
+			);
 		this.location.back();
 	}
 
@@ -60,7 +68,7 @@ export class UserFormComponent implements OnInit {
 		this.user.username = this.usernameCtrl.value;
 		this.user.fullname = this.fullnameCtrl.value;
 		this.user.phone = this.phoneCtrl.value;
-		this.user.password = this.passwordCtrl.value.password;
+		this.user.password = this.passwordCtrl.value;
 	}
 
 	back(): void {
@@ -83,7 +91,7 @@ export class UserFormComponent implements OnInit {
 
 	initializeOrganisations(providers: Array<Provider>): void {
 		for (const provider of providers) {
-			this.initialOrganisations.push(provider.organisation);
+			this.initialOrganisations.push(provider.organisation.id);
 		}
 	}
 
@@ -91,14 +99,14 @@ export class UserFormComponent implements OnInit {
 		this.organisationService.getAll()
 			.map(value => value.records as Array<Organisation>)
 			.subscribe(orgas => {
-				this.allOrganisations = orgas;
 				this.initFormControls();
+				this.allOrganisations = orgas;
 			});
 	}
 
 	initFormControls(): void {
-		this.initUserForm();
 		this.initPasswordForm();
+		this.initUserForm();
 	}
 
 	initPasswordForm(): void {
@@ -119,16 +127,13 @@ export class UserFormComponent implements OnInit {
 			'organisationsCtrl': new FormControl(this.initialOrganisations),
 			'password': this.passwordGroup
 		});
-		this.organisationsCtrl.valueChanges.subscribe(data => {
-			console.log('organisationsCtrl', data);
-		});
 	}
 
 	get usernameCtrl(): any { return this.userForm.get('usernameCtrl'); }
 	get fullnameCtrl(): any { return this.userForm.get('fullnameCtrl'); }
-	get passwordCtrl(): any { return this.userForm.get('password'); }
+	get passwordCtrl(): any { return this.passwordGroup.get('passwordCtrl'); }
 	get phoneCtrl(): any { return this.userForm.get('phoneCtrl'); }
 	get organisationsCtrl(): any { return this.userForm.get('organisationsCtrl'); }
-	get confirmPasswordCtrl(): any { return this.userForm.get('confirmPassword'); }
+	get confirmPasswordCtrl(): any { return this.passwordGroup.get('confirmPasswordCtrl'); }
 
 }

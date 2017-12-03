@@ -41,11 +41,11 @@ export class DataService {
 		}).subscribe();
 	}
 
-	public edit(record: any): void {
-		this.http.patch(this.baseUrl + record.id + '/', JSON.stringify(record), {
+	public edit(record: any): Observable<any> {
+		return this.http.patch(this.baseUrl + record.id + '/', JSON.stringify(record), {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())
-		}).subscribe();
+		});
 	}
 
 	public get(id: string): Observable<any> {

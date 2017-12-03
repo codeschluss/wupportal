@@ -8,18 +8,21 @@ import { User } from 'app/models/user';
 @Injectable()
 export class AuthenticationService implements CanActivate {
 
+	private credentials: string = '';
+	public currentUser: User = null;
+
 	constructor(
 		private router: Router,
 		private http: HttpClient) {
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		if (this.getLocalStorage()) {
+		if (this.currentUser) {
 			// logged in so return true
 			return true;
 		}
 		// not logged in so redirect to login page
-		this.router.navigate(['/login']);
+		this.redirectToLogin();
 		return false;
 	}
 
@@ -31,7 +34,7 @@ export class AuthenticationService implements CanActivate {
 					.set('Content-Type', 'application/json')
 					.set('Authorization', 'Basic ' + credentials)
 			})
-			.map((resp) => resp as AuthResponse) // Check for internal server errors
+			.map((resp) => resp as AuthResponse) // TODO: Check for internal server errors
 			.map((response: AuthResponse) => {
 				return response.success
 					? this.handleSuccessLogin(response, credentials)
@@ -41,36 +44,23 @@ export class AuthenticationService implements CanActivate {
 
 	handleSuccessLogin(response: AuthResponse, credentials: string): boolean {
 		if (response.data) {
-			localStorage.setItem('current',
-				JSON.stringify({
-					credentials: credentials,
-					user: response.data
-				}));
+			this.credentials = credentials;
+			this.currentUser = response.data;
 			return true;
 		}
 		return false;
 	}
 
 	logout(): void {
-		localStorage.removeItem('current');
+		this.currentUser = null;
+		this.credentials = '';
 	}
 
 	basicAuthString(): string {
-		return this.getLocalStorage()
-			? 'Basic ' + this.getLocalStorage().credentials
-			: 'Basic';
+		return 'Basic ' + this.credentials;
 	}
 
-	get currentUser(): User {
-		return this.getLocalStorage()
-			? this.getLocalStorage().user
-			: null;
+	redirectToLogin(): void {
+		this.router.navigate(['/login']);
 	}
-
-	getLocalStorage(): any {
-		return localStorage.getItem('current')
-			? JSON.parse(localStorage.getItem('current'))
-			: null;
-	}
-
 }

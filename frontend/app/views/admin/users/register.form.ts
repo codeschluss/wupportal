@@ -43,10 +43,10 @@ export class RegisterFormComponent extends UserFormComponent implements OnInit {
 
 	initPasswordForm(): void {
 		this.passwordGroup = new FormGroup({
-			'password': new FormControl('', [
+			'passwordCtrl': new FormControl('', [
 				Validators.required
 			]),
-			'confirmPassword': new FormControl('', [
+			'confirmPasswordCtrl': new FormControl('', [
 				Validators.required
 			]),
 		}, this.validation.passwordMatch);

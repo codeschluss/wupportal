@@ -1,16 +1,15 @@
 import { Model } from 'app/models/model';
+import { Provider } from 'app/models/provider';
 
 export class User extends Model {
 
 	public id: string = '';
-	public admin: boolean = false;
+	public superuser: boolean = false;
 	public username: string = '';
 	public password: string = '';
 	public fullname: string = '';
 	public phone: string = '';
-
-	public static getRepository(): string {
-		return 'users';
-	}
-
+	public providers: Array<Provider> = [];
 }
+
+

@@ -24,6 +24,19 @@ class UsersController extends AppController
     }
 
     /**
+     * Contain helper.
+     *
+     * @return array Contained models
+     */
+    protected function contain()
+    {
+        return [
+            'Providers',
+            'Providers.Organisations'
+        ];
+    }
+
+    /**
      * filter helper.
      *
      * @return array Fields to use for filter

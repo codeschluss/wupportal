@@ -17,6 +17,7 @@ import { AuthenticationService } from 'app/services/authentication.service';
 
 import { User } from 'app/models/user';
 import { Organisation } from 'app/models/organisation';
+import { Provider } from 'app/models/provider';
 
 
 @Component({
@@ -32,10 +33,11 @@ import { Organisation } from 'app/models/organisation';
 export class UserFormComponent implements OnInit {
 
 	protected user: User;
-	protected organisations: Array<Organisation>;
-
 	protected userForm: FormGroup;
 	protected passwordGroup: FormGroup;
+
+	protected allOrganisations: Array<Organisation>;
+	protected initialOrganisations: Array<Organisation> = [];
 
 	constructor(
 		@Inject(UserService) public userService: DataService,
@@ -69,27 +71,34 @@ export class UserFormComponent implements OnInit {
 		return this.constants.notSamePasswordMessage;
 	}
 
-
 	ngOnInit(): void {
-		this.userService.get(this.authService.currentUser.id).subscribe(user => {
-			this.user = user.records;
-			this.initOrganisationsThenControls();
-		});
+		this.userService.get(this.authService.currentUser.id)
+			.map(data => data.records as User)
+			.subscribe(user => {
+				this.user = user;
+				this.initializeOrganisations(user.providers);
+				this.initAllOrganisationsThenControls();
+			});
 	}
 
-	initOrganisationsThenControls(): void {
+	initializeOrganisations(providers: Array<Provider>): void {
+		for (const provider of providers) {
+			this.initialOrganisations.push(provider.organisation);
+		}
+	}
+
+	initAllOrganisationsThenControls(): void {
 		this.organisationService.getAll()
 			.map(value => value.records as Array<Organisation>)
 			.subscribe(orgas => {
-				this.organisations = orgas;
-				console.log('orgas', this.organisations);
+				this.allOrganisations = orgas;
 				this.initFormControls();
 			});
 	}
 
 	initFormControls(): void {
-		this.initPasswordForm();
 		this.initUserForm();
+		this.initPasswordForm();
 	}
 
 	initPasswordForm(): void {
@@ -107,8 +116,11 @@ export class UserFormComponent implements OnInit {
 			]),
 			'fullnameCtrl': new FormControl(this.user.fullname, Validators.required),
 			'phoneCtrl': new FormControl(this.user.phone),
-			'organisationsCtrl': new FormControl(),
+			'organisationsCtrl': new FormControl(this.initialOrganisations),
 			'password': this.passwordGroup
+		});
+		this.organisationsCtrl.valueChanges.subscribe(data => {
+			console.log('organisationsCtrl', data);
 		});
 	}
 
@@ -116,7 +128,7 @@ export class UserFormComponent implements OnInit {
 	get fullnameCtrl(): any { return this.userForm.get('fullnameCtrl'); }
 	get passwordCtrl(): any { return this.userForm.get('password'); }
 	get phoneCtrl(): any { return this.userForm.get('phoneCtrl'); }
-	get organisationsCtrl(): any { return this.userForm.get('organisations'); }
+	get organisationsCtrl(): any { return this.userForm.get('organisationsCtrl'); }
 	get confirmPasswordCtrl(): any { return this.userForm.get('confirmPassword'); }
 
 }

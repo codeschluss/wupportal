@@ -3,6 +3,7 @@ import { Model } from 'app/models/model';
 
 export class Organisation extends Model {
 
+	public id: string = '';
 	public name: string = '';
 	public description: string = '';
 	public website: string = '';

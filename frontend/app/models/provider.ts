@@ -8,5 +8,7 @@ export class Provider extends Model {
 
 	public organisation: Organisation = new Organisation();
 	public user: User = new User();
+	public organisation_id: string;
+	public user_id: string;
 
 }

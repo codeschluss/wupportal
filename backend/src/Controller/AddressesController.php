@@ -12,7 +12,7 @@ use App\Controller\AppController;
  */
 class AddressesController extends AppController
 {
- /**
+     /**
      * Contain helper.
      *
      * @return array Contained models

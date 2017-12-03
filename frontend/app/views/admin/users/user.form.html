@@ -1,4 +1,4 @@
-<div class="edit-container" *ngIf="user && organisations">
+<div class="edit-container" *ngIf="user && allOrganisations">
 	<form [formGroup]="userForm" #formDir="ngForm"
 	  (ngSubmit)="onSubmit()" class="well">
 		<mat-card>
@@ -39,8 +39,8 @@
 				<mat-select placeholder={{constants.organisations}}
 				  formControlName="organisationsCtrl"
 				  multiple>
-					<mat-option *ngFor="let organisation of organisations"
-					  [value]="organisation">{{organisation.name}}</mat-option>
+					<mat-option *ngFor="let organisation of allOrganisations"
+					  [value]="organisation.id">{{organisation.name}}</mat-option>
 				</mat-select>
 			</mat-form-field>
 

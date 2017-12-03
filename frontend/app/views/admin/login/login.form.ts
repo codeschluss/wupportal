@@ -4,9 +4,11 @@ import { Location } from '@angular/common';
 
 import { AuthenticationService } from 'app/services/authentication.service';
 import { User } from 'app/models/user';
+import { Constants } from 'app/views/common/constants';
 
 @Component({
-	templateUrl: 'login.form.html'
+	templateUrl: 'login.form.html',
+	styleUrls: ['login.form.css']
 })
 export class LoginFormComponent implements OnInit {
 
@@ -17,20 +19,12 @@ export class LoginFormComponent implements OnInit {
 	constructor(private location: Location,
 		private router: Router,
 		private route: ActivatedRoute,
-		private authenticationService: AuthenticationService) { }
+		private authenticationService: AuthenticationService,
+		private constants: Constants) { }
 
 	cancel(): void {
 		this.location.back();
 	}
-
-	// fakeLogin(): void {
-	// 	if (this.userNameInput === 'john' && this.passwordInput === 'doe') {
-	// 		this.router.navigate(['/admin']);
-	// 		console.log('you are now logged in');
-	// 	} else {
-	// 		console.log('login rejected');
-	// 	}
-	// }
 
 	ngOnInit(): void {
 		// reset login status
@@ -42,7 +36,6 @@ export class LoginFormComponent implements OnInit {
 		this.authenticationService.login(this.user.username, this.user.password)
 			.subscribe(result => {
 				if (result) {
-					console.log('worked!');
 					this.router.navigate(['/admin']);
 				} else {
 					this.error = 'Username or password is incorrect';

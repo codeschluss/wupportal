@@ -26,27 +26,36 @@ export class DataService {
 	}
 
 	public add(record: any): Observable<any> {
-		return this.http.post(this.baseUrl, JSON.stringify(record));
+		return this.http.post(this.baseUrl, JSON.stringify(record), {
+			headers: new HttpHeaders()
+				.set('Authorization', this.authService.basicAuthString())
+		});
 	}
 
 	public delete(record: any): void {
-		this.http.delete(this.baseUrl + 'delete/' + record.id)
-			.subscribe();
+		this.http.delete(this.baseUrl + 'delete/' + record.id, {
+			headers: new HttpHeaders()
+				.set('Authorization', this.authService.basicAuthString())
+		}).subscribe();
 	}
 
 	public edit(record: any): void {
-		this.http.patch(this.baseUrl + record.id + '/', JSON.stringify(record))
-			.subscribe();
+		this.http.patch(this.baseUrl + record.id + '/', JSON.stringify(record), {
+			headers: new HttpHeaders()
+				.set('Authorization', this.authService.basicAuthString())
+		}).subscribe();
 	}
 
 	public get(id: string): Observable<any> {
-		return this.http.get(this.baseUrl + id).map(i => i as any);
+		return this.http.get(this.baseUrl + id, {
+			headers: new HttpHeaders()
+				.set('Authorization', this.authService.basicAuthString())
+		}).map(i => i as any);
 	}
 
 	public list(request: TableState): Observable<DataResponse> {
 		return this.http.post(this.baseUrl + 'list', JSON.stringify(request), {
 			headers: new HttpHeaders()
-				.set('Content-Type', 'application/json')
 				.set('Authorization', this.authService.basicAuthString())
 		}).map(res => res as DataResponse);
 	}

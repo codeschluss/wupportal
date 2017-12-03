@@ -1,25 +1,17 @@
-<div>
-	<h2>Login</h2>
-	<div id="login">
-		<form class="example-form">
-			<mat-form-field class="example-full-width">
-				<input matInput placeholder="eMail"
-				  [(ngModel)]="user.username"
-				  type="text" name="userName"
-				  required />
-			</mat-form-field>
-			<mat-form-field class="example-full-width">
-				<input matInput placeholder="password"
-				  [(ngModel)]="user.password"
-				  type="password" name="password"
-				  required />
-			</mat-form-field>
-			<div>
-				<button mat-raised-button (click)="login()">Login</button>
-				<nav>
-					<button mat-raised-button (click)="cancel()">cancel</button>
-				</nav>
-			</div>
-		</form>
-	</div>
-</div>
+<h2>{{constants.loginTitle}}</h2>
+<form class="login-form">
+	<mat-form-field class="example-full-width">
+		<input matInput placeholder={{constants.email}}
+		  [(ngModel)]="user.username" type="text"
+		  name="userName" required />
+	</mat-form-field>
+	<mat-form-field class="example-full-width">
+		<input matInput placeholder={{constants.password}}
+		  [(ngModel)]="user.password" type="password"
+		  name="password" required />
+	</mat-form-field>
+	<button mat-raised-button color="primary"
+	  (click)="login()">{{constants.login}}</button>
+	<button mat-raised-button color="accent"
+	  (click)="register()">{{constants.register}}</button>
+</form>

@@ -60,8 +60,22 @@ class UsersController extends AppController
                 '_serialize' => ['success', 'data']
             ]);
         }
-
-
     }
+
+    // public function isAuthorized($user = null)
+    // {
+    //     // Any registered user can access public functions
+    //     if (!$this->request->getParam('prefix')) {
+    //         return true;
+    //     }
+
+    //     // Only admins can access admin functions
+    //     if ($this->request->getParam('prefix') === 'admin') {
+    //         return (bool)($user['role'] === 'admin');
+    //     }
+
+    //     // Default deny
+    //     return false;
+    // }
 
 }

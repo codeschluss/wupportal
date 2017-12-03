@@ -12,6 +12,7 @@ import { ValidationService } from 'app/services/validation.service';
 import { Constants } from 'app/views/common/constants';
 
 import { User } from 'app/models/user';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { User } from 'app/models/user';
 	templateUrl: 'user.form.html',
 	styleUrls: ['user.form.css'],
 	providers: [
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient] }
+		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 

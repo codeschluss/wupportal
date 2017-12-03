@@ -19,6 +19,8 @@ export class Constants {
 	public per: string = 'pro';
 
 	public login: string = 'anmelden';
+	public loginTitel: string = 'Login';
+	public register: string = 'Registrieren';
 	public userName: string = 'Username';
 	public password: string = 'Passwort';
 	public newPassword: string = 'Neues Passwort';

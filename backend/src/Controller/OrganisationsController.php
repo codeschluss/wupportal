@@ -13,6 +13,13 @@ use App\Controller\AppController;
 class OrganisationsController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['list','view', 'index']);
+    }
+
+
     /**
      * Contain helper.
      *

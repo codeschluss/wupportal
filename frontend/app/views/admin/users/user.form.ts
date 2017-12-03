@@ -56,10 +56,8 @@ export class UserFormComponent implements OnInit {
 			.map(data => data.records as User)
 			.subscribe(user =>
 				this.authService.login(this.user.username, this.user.password)
-					.subscribe(succeeded => {
-						console.log('succeeded?', succeeded);
-						succeeded ? this.location.back() : this.authService.redirectToLogin();
-					})
+					.subscribe(succeeded =>
+						succeeded ? this.location.back() : this.authService.redirectToLogin())
 			);
 		this.location.back();
 	}

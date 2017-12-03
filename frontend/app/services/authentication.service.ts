@@ -26,18 +26,19 @@ export class AuthenticationService implements CanActivate {
 		return false;
 	}
 
-	login(username: string, password: string): Observable<boolean> {
-		const credentials = btoa(username + ':' + password);
+	login(username: string, pwd: string): Observable<boolean> {
+		const password = this.getPwd(pwd);
+		console.log('pwd', pwd);
+		console.log('password', password);
 		return this.http.post('/api/users/login',
 			JSON.stringify({ username: username, password: password }), {
 				headers: new HttpHeaders()
 					.set('Content-Type', 'application/json')
-					.set('Authorization', 'Basic ' + credentials)
 			})
 			.map((resp) => resp as AuthResponse) // TODO: Check for internal server errors
 			.map((response: AuthResponse) => {
 				return response.success
-					? this.handleSuccessLogin(response, credentials)
+					? this.handleSuccessLogin(response, btoa(username + ':' + password))
 					: false;
 			});
 	}
@@ -62,5 +63,13 @@ export class AuthenticationService implements CanActivate {
 
 	redirectToLogin(): void {
 		this.router.navigate(['/login']);
+	}
+
+	getPwd(password: string): string {
+		if (password) {
+			return password;
+		} else {
+			return this.credentials ? atob(this.credentials).split(':')[1] : '';
+		}
 	}
 }

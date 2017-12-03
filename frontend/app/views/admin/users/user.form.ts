@@ -3,7 +3,10 @@ import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
+
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { DataServiceFactory, OrganisationService, UserService } from 'app/services/data.service.factory';
@@ -17,7 +20,7 @@ import { Organisation } from 'app/models/organisation';
 
 
 @Component({
-	selector: 'edit-user',
+	selector: 'user-form',
 	templateUrl: 'user.form.html',
 	styleUrls: ['user.form.css'],
 	providers: [
@@ -37,6 +40,7 @@ export class UserFormComponent implements OnInit {
 	constructor(
 		@Inject(UserService) public userService: DataService,
 		@Inject(OrganisationService) public organisationService: DataService,
+		public authService: AuthenticationService,
 		public location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -44,32 +48,44 @@ export class UserFormComponent implements OnInit {
 	) { }
 
 
-	ngOnInit(): void {
-		// TODO: Get current user in the local storage
-		Observable.merge(
-			this.userService.get('00000000-0000-0000-0004-000000000001'),
-			this.organisationService.getAll()
-		).subscribe(data => {
-			console.log('what do you contain?', data);
-		});
-		this.userService.get('00000000-0000-0000-0004-000000000001').subscribe((data) => {
-			this.user = data.records;
-			this.initFormControls();
-		});
-	}
-
 	onSubmit(): void {
 		this.setUser();
 		this.userService.edit(this.user);
 		this.location.back();
 	}
 
+	setUser(): void {
+		this.user.username = this.usernameCtrl.value;
+		this.user.fullname = this.fullnameCtrl.value;
+		this.user.phone = this.phoneCtrl.value;
+		this.user.password = this.passwordCtrl.value.password;
+	}
+
 	back(): void {
 		this.location.back();
 	}
 
+	passwordInvalid(): string {
+		return this.constants.notSamePasswordMessage;
+	}
 
-	// ------- Form related stuff ----------
+
+	ngOnInit(): void {
+		this.userService.get(this.authService.currentUser.id).subscribe(user => {
+			this.user = user.records;
+			this.initOrganisationsThenControls();
+		});
+	}
+
+	initOrganisationsThenControls(): void {
+		this.organisationService.getAll()
+			.map(value => value.records as Array<Organisation>)
+			.subscribe(orgas => {
+				this.organisations = orgas;
+				console.log('orgas', this.organisations);
+				this.initFormControls();
+			});
+	}
 
 	initFormControls(): void {
 		this.initPasswordForm();
@@ -78,40 +94,29 @@ export class UserFormComponent implements OnInit {
 
 	initPasswordForm(): void {
 		this.passwordGroup = new FormGroup({
-			'password': new FormControl(),
-			'confirmPassword': new FormControl()
+			'passwordCtrl': new FormControl(),
+			'confirmPasswordCtrl': new FormControl()
 		}, this.validation.passwordMatch);
-	}
-
-	passwordInvalid(): string {
-		return this.constants.notSamePasswordMessage;
 	}
 
 	initUserForm(): void {
 		this.userForm = new FormGroup({
-			'username': new FormControl(this.user.username, [
+			'usernameCtrl': new FormControl(this.user.username, [
 				Validators.required,
 				Validators.email
 			]),
-			'fullname': new FormControl(this.user.fullname, Validators.required),
-			'phone': new FormControl(this.user.phone),
-			// 'organisations': new FormControl(this.organisatons),
+			'fullnameCtrl': new FormControl(this.user.fullname, Validators.required),
+			'phoneCtrl': new FormControl(this.user.phone),
+			'organisationsCtrl': new FormControl(),
 			'password': this.passwordGroup
 		});
 	}
 
-
-	setUser(): void {
-		this.user.username = this.username.value;
-		this.user.fullname = this.fullname.value;
-		this.user.phone = this.phone.value;
-		this.user.password = this.password.value.password;
-	}
-
-	get username(): any { return this.userForm.get('username'); }
-	get fullname(): any { return this.userForm.get('fullname'); }
-	get password(): any { return this.userForm.get('password'); }
-	get phone(): any { return this.userForm.get('phone'); }
-	get confirmPassword(): any { return this.userForm.get('confirmPassword'); }
+	get usernameCtrl(): any { return this.userForm.get('usernameCtrl'); }
+	get fullnameCtrl(): any { return this.userForm.get('fullnameCtrl'); }
+	get passwordCtrl(): any { return this.userForm.get('password'); }
+	get phoneCtrl(): any { return this.userForm.get('phoneCtrl'); }
+	get organisationsCtrl(): any { return this.userForm.get('organisations'); }
+	get confirmPasswordCtrl(): any { return this.userForm.get('confirmPassword'); }
 
 }

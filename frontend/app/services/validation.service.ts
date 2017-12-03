@@ -9,7 +9,7 @@ export class ValidationService implements ErrorStateMatcher {
 	}
 
 	passwordMatch(g: FormGroup): any {
-		return g.get('password').value === g.get('confirmPassword').value
+		return g.get('passwordCtrl').value === g.get('confirmPasswordCtrl').value
 			? null : { 'notEquivalent': true };
 	}
 }

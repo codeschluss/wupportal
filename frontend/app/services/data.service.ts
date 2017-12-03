@@ -66,7 +66,7 @@ export class DataService {
 		return this.http.get(this.baseUrl, {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())
-		}).map(res => res as any);
+		});
 	}
 
 }

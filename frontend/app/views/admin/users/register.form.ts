@@ -30,7 +30,7 @@ export class RegisterFormComponent extends UserFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.user = new User();
-		this.initFormControls();
+		this.initOrganisationsThenControls();
 	}
 
 	onSubmit(): void {

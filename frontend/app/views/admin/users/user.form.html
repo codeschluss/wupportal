@@ -1,4 +1,4 @@
-<div class="edit-container" *ngIf="user">
+<div class="edit-container" *ngIf="user && organisations">
 	<form [formGroup]="userForm" #formDir="ngForm"
 	  (ngSubmit)="onSubmit()" class="well">
 		<mat-card>
@@ -8,56 +8,53 @@
 
 			<mat-form-field class="edit-form-full-width">
 				<input matInput type=text placeholder={{constants.mail}}
-				  formControlName="username"
+				  formControlName="usernameCtrl"
 				  [errorStateMatcher]="validation"
 				  required>
-				<mat-error *ngIf="username.hasError('required')">
+				<mat-error *ngIf="usernameCtrl.hasError('required')">
 					{{constants.isRequiredMessage}}
 				</mat-error>
-				<mat-error *ngIf="username.hasError('email')">
+				<mat-error *ngIf="usernameCtrl.hasError('email')">
 					{{constants.emailFormatMessage}}
 				</mat-error>
 			</mat-form-field>
 
 			<mat-form-field class="edit-form-full-width">
 				<input matInput type=text placeholder={{constants.fullname}}
-				  formControlName="fullname"
+				  formControlName="fullnameCtrl"
 				  [errorStateMatcher]="validation"
 				  required>
-				<mat-error *ngIf="fullname.hasError('required')">
+				<mat-error *ngIf="fullnameCtrl.hasError('required')">
 					{{constants.isRequiredMessage}}
 				</mat-error>
 			</mat-form-field>
 
-
 			<mat-form-field class="edit-form-full-width">
 				<input matInput type=text placeholder={{constants.phone}}
-				  formControlName="phone" [errorStateMatcher]="validation">
+				  formControlName="phoneCtrl"
+				  [errorStateMatcher]="validation">
 			</mat-form-field>
 
-			<!-- <mat-form-field>
+			<mat-form-field>
 				<mat-select placeholder={{constants.organisations}}
-				  formControlName="organisations"
+				  formControlName="organisationsCtrl"
 				  multiple>
-					<mat-select-trigger>
-						{{organisations.name}}
-					</mat-select-trigger>
 					<mat-option *ngFor="let organisation of organisations"
-					  [value]="organisation">{{organisation}}</mat-option>
+					  [value]="organisation">{{organisation.name}}</mat-option>
 				</mat-select>
-			</mat-form-field> -->
+			</mat-form-field>
 
 
 			<form [formGroup]="passwordGroup"
 			  id="passwordGroup" #formDir="ngForm">
 				<mat-form-field class="edit-form-full-width">
 					<input matInput type=password placeholder={{constants.newPassword}}
-					  formControlName="password"
+					  formControlName="passwordCtrl"
 					  [errorStateMatcher]="validation">
 				</mat-form-field>
 				<mat-form-field class="edit-form-full-width">
 					<input matInput type=password placeholder={{constants.confirmPassword}}
-					  formControlName="confirmPassword"
+					  formControlName="confirmPasswordCtrl"
 					  [errorStateMatcher]="validation">
 				</mat-form-field>
 				<mat-error *ngIf="passwordGroup.invalid">

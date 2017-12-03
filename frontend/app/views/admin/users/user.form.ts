@@ -6,13 +6,14 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
+import { DataServiceFactory, OrganisationService, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
 import { Constants } from 'app/views/common/constants';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 import { User } from 'app/models/user';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { Organisation } from 'app/models/organisation';
 
 
 @Component({
@@ -20,18 +21,22 @@ import { AuthenticationService } from 'app/services/authentication.service';
 	templateUrl: 'user.form.html',
 	styleUrls: ['user.form.css'],
 	providers: [
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] }
+		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 
 export class UserFormComponent implements OnInit {
 
 	protected user: User;
+	protected organisations: Array<Organisation>;
+
 	protected userForm: FormGroup;
 	protected passwordGroup: FormGroup;
 
 	constructor(
-		@Inject(UserService) public service: DataService,
+		@Inject(UserService) public userService: DataService,
+		@Inject(OrganisationService) public organisationService: DataService,
 		public location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -41,7 +46,13 @@ export class UserFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		// TODO: Get current user in the local storage
-		this.service.get('00000000-0000-0000-0004-000000000001').subscribe((data) => {
+		Observable.merge(
+			this.userService.get('00000000-0000-0000-0004-000000000001'),
+			this.organisationService.getAll()
+		).subscribe(data => {
+			console.log('what do you contain?', data);
+		});
+		this.userService.get('00000000-0000-0000-0004-000000000001').subscribe((data) => {
 			this.user = data.records;
 			this.initFormControls();
 		});
@@ -49,13 +60,16 @@ export class UserFormComponent implements OnInit {
 
 	onSubmit(): void {
 		this.setUser();
-		this.service.edit(this.user);
+		this.userService.edit(this.user);
 		this.location.back();
 	}
 
 	back(): void {
 		this.location.back();
 	}
+
+
+	// ------- Form related stuff ----------
 
 	initFormControls(): void {
 		this.initPasswordForm();
@@ -81,6 +95,7 @@ export class UserFormComponent implements OnInit {
 			]),
 			'fullname': new FormControl(this.user.fullname, Validators.required),
 			'phone': new FormControl(this.user.phone),
+			// 'organisations': new FormControl(this.organisatons),
 			'password': this.passwordGroup
 		});
 	}

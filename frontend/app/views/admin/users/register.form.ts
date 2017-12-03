@@ -35,14 +35,13 @@ export class RegisterFormComponent extends UserFormComponent implements OnInit {
 
 	onSubmit(): void {
 		this.setUser();
-		this.service.add(this.user)
+		this.userService.add(this.user)
 			.subscribe(something => {
 				this.back();
 			});
 	}
 
 	initPasswordForm(): void {
-		console.log('initPassWordForm');
 		this.passwordGroup = new FormGroup({
 			'password': new FormControl('', [
 				Validators.required

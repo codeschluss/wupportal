@@ -35,6 +35,19 @@
 				  formControlName="phone" [errorStateMatcher]="validation">
 			</mat-form-field>
 
+			<!-- <mat-form-field>
+				<mat-select placeholder={{constants.organisations}}
+				  formControlName="organisations"
+				  multiple>
+					<mat-select-trigger>
+						{{organisations.name}}
+					</mat-select-trigger>
+					<mat-option *ngFor="let organisation of organisations"
+					  [value]="organisation">{{organisation}}</mat-option>
+				</mat-select>
+			</mat-form-field> -->
+
+
 			<form [formGroup]="passwordGroup"
 			  id="passwordGroup" #formDir="ngForm">
 				<mat-form-field class="edit-form-full-width">

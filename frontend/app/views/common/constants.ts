@@ -19,8 +19,8 @@ export class Constants {
 	public per: string = 'pro';
 
 	public login: string = 'anmelden';
-	public loginTitel: string = 'Login';
-	public register: string = 'Registrieren';
+	public loginTitle: string = 'Login';
+	public register: string = 'registrieren';
 	public userName: string = 'Username';
 	public password: string = 'Passwort';
 	public newPassword: string = 'Neues Passwort';
@@ -39,13 +39,14 @@ export class Constants {
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';
 	public emailFormatMessage: string = 'Feld muss Email Format haben';
 	public notSamePasswordMessage: string = 'Passwörter stimmen nicht überein';
+	public orAreEmptyMessage: string = 'oder sind leer';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';
 	public nameString: string = 'Name';
 	public fullname: string = 'Vor- und Nachname';
 	public phone: string = 'Telefon';
-	public mail: string = 'e-Mail';
+	public mail: string = 'Email';
 	public address: string = 'Adresse';
 	public street: string = 'Straße';
 	public postalCode: string = 'PLZ';
@@ -64,7 +65,6 @@ export class Constants {
 	public activities: string = 'Aktivitäten';
 	public activity: string = 'Aktivität';
 	public account: string = 'Konto';
-	public accountManagement: string = 'Kontoverwaltung';
 
 	public error: string = 'Fehler';
 

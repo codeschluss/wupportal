@@ -8,7 +8,7 @@ import { Constants } from 'app/views/common/constants';
 
 @Component({
 	templateUrl: 'login.form.html',
-	styleUrls: ['login.form.css']
+	styleUrls: ['./login.form.css']
 })
 export class LoginFormComponent implements OnInit {
 
@@ -21,10 +21,6 @@ export class LoginFormComponent implements OnInit {
 		private route: ActivatedRoute,
 		private authenticationService: AuthenticationService,
 		private constants: Constants) { }
-
-	cancel(): void {
-		this.location.back();
-	}
 
 	ngOnInit(): void {
 		// reset login status

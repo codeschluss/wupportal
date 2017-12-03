@@ -41,6 +41,7 @@ import { UserFormComponent } from 'app/views/admin/users/user.form';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
 import { ActivityFormComponent } from 'app/views/admin/activities/activity.form';
+import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 
 import { ActivityService } from 'app/services/activity';
 import { LocationService } from 'app/services/location';
@@ -65,6 +66,7 @@ import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selectio
 		MappingComponent,
 
 		LoginFormComponent,
+		RegisterFormComponent,
 		AdminComponent,
 		ActivityTableComponent,
 		ActivityFormComponent,

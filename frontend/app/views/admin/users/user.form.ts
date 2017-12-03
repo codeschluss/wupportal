@@ -26,13 +26,13 @@ import { AuthenticationService } from 'app/services/authentication.service';
 
 export class UserFormComponent implements OnInit {
 
-	private user: User;
-	private userForm: FormGroup;
-	private passwordGroup: FormGroup;
+	protected user: User;
+	protected userForm: FormGroup;
+	protected passwordGroup: FormGroup;
 
 	constructor(
-		@Inject(UserService) private service: DataService,
-		private location: Location,
+		@Inject(UserService) public service: DataService,
+		public location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
 		public validation: ValidationService
@@ -58,11 +58,22 @@ export class UserFormComponent implements OnInit {
 	}
 
 	initFormControls(): void {
+		this.initPasswordForm();
+		this.initUserForm();
+	}
+
+	initPasswordForm(): void {
 		this.passwordGroup = new FormGroup({
 			'password': new FormControl(),
 			'confirmPassword': new FormControl()
 		}, this.validation.passwordMatch);
+	}
 
+	passwordInvalid(): string {
+		return this.constants.notSamePasswordMessage;
+	}
+
+	initUserForm(): void {
 		this.userForm = new FormGroup({
 			'username': new FormControl(this.user.username, [
 				Validators.required,

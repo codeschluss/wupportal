@@ -26,6 +26,8 @@ export class DataService {
 	}
 
 	public add(record: any): Observable<any> {
+		console.log('add of user', record);
+		console.log('baseUrl', this.baseUrl);
 		return this.http.post(this.baseUrl, JSON.stringify(record), {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())

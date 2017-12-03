@@ -1,17 +1,25 @@
-<h2>{{constants.loginTitle}}</h2>
-<form class="login-form">
-	<mat-form-field class="example-full-width">
-		<input matInput placeholder={{constants.email}}
-		  [(ngModel)]="user.username" type="text"
-		  name="userName" required />
-	</mat-form-field>
-	<mat-form-field class="example-full-width">
-		<input matInput placeholder={{constants.password}}
-		  [(ngModel)]="user.password" type="password"
-		  name="password" required />
-	</mat-form-field>
-	<button mat-raised-button color="primary"
-	  (click)="login()">{{constants.login}}</button>
-	<button mat-raised-button color="accent"
-	  (click)="register()">{{constants.register}}</button>
-</form>
+<mat-card>
+	<mat-card-header>
+		<h2>{{constants.loginTitle}}</h2>
+	</mat-card-header>
+	<form id="login-form" #loginForm="ngForm"
+	  (ngSubmit)="login()">
+		<mat-form-field class="example-full-width">
+			<input matInput placeholder={{constants.mail}}
+			  [(ngModel)]="user.username"
+			  type="text" name="userName"
+			  required />
+		</mat-form-field>
+		<mat-form-field class="example-full-width">
+			<input matInput placeholder={{constants.password}}
+			  [(ngModel)]="user.password"
+			  type="password" name="password"
+			  required />
+		</mat-form-field>
+		<button mat-raised-button color="primary"
+		  [disabled]="loginForm.invalid"
+		  type="submit">{{constants.login}}</button>
+		<button mat-raised-button color="accent"
+		  type="button" routerLink='/register'>{{constants.register}}</button>
+	</form>
+</mat-card>

@@ -33,7 +33,6 @@ export class AuthenticationService implements CanActivate {
 			})
 			.map((resp) => resp as AuthResponse) // Check for internal server errors
 			.map((response: AuthResponse) => {
-				console.log('response', response);
 				return response.success
 					? this.handleSuccessLogin(response, credentials)
 					: false;
@@ -57,15 +56,21 @@ export class AuthenticationService implements CanActivate {
 	}
 
 	basicAuthString(): string {
-		return 'Basic ' + this.getLocalStorage().credentials;
+		return this.getLocalStorage()
+			? 'Basic ' + this.getLocalStorage().credentials
+			: 'Basic';
 	}
 
 	get currentUser(): User {
-		return this.getLocalStorage().user;
+		return this.getLocalStorage()
+			? this.getLocalStorage().user
+			: null;
 	}
 
 	getLocalStorage(): any {
-		return JSON.parse(localStorage.getItem('current'));
+		return localStorage.getItem('current')
+			? JSON.parse(localStorage.getItem('current'))
+			: null;
 	}
 
 }

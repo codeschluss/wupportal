@@ -13,10 +13,14 @@ import { UsersTableComponent } from 'app/views/admin/users/users.table';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { AuthenticationService } from 'app/services/authentication.service';
 
+// TODO: make non public visibility once everyone registered
+import { RegisterFormComponent } from 'app/views/admin/users/register.form';
+
 @NgModule({
 	imports: [RouterModule.forRoot([
 		{ path: '', component: MappingComponent },
 		{ path: 'login', component: LoginFormComponent },
+		{ path: 'register', component: RegisterFormComponent },
 		{
 			path: 'admin', component: AdminComponent, canActivate: [AuthenticationService], children: [
 				{ path: '', component: OrganisationsTableComponent, outlet: 'table' },

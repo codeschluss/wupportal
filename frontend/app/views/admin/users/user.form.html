@@ -1,9 +1,9 @@
 <div class="edit-container" *ngIf="user">
 	<form [formGroup]="userForm" #formDir="ngForm"
 	  (ngSubmit)="onSubmit()" class="well">
-		<mat-card class="address-card">
+		<mat-card>
 			<mat-card-header>
-				<h2>{{constants.accountManagement}}</h2>
+				<h2>{{constants.user}}</h2>
 			</mat-card-header>
 
 			<mat-form-field class="edit-form-full-width">
@@ -39,7 +39,8 @@
 			  id="passwordGroup" #formDir="ngForm">
 				<mat-form-field class="edit-form-full-width">
 					<input matInput type=password placeholder={{constants.newPassword}}
-					  formControlName="password">
+					  formControlName="password"
+					  [errorStateMatcher]="validation">
 				</mat-form-field>
 				<mat-form-field class="edit-form-full-width">
 					<input matInput type=password placeholder={{constants.confirmPassword}}
@@ -47,12 +48,12 @@
 					  [errorStateMatcher]="validation">
 				</mat-form-field>
 				<mat-error *ngIf="passwordGroup.invalid">
-					{{constants.notSamePasswordMessage}}
+					{{passwordInvalid()}}
 				</mat-error>
 			</form>
 
 			<button mat-raised-button type="submit"
-			  [disabled]="userForm.invalid">{{constants.save}}</button>
+			  color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
 			<button mat-raised-button type="button"
 			  (click)="back()">{{constants.back}}</button>
 		</mat-card>

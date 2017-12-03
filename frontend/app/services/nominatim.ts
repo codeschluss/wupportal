@@ -22,7 +22,6 @@ export class NominatimService extends Service<Address> {
 	public edit(item: Address): void { return; }
 
 	public get(query: string): Observable<Address> {
-		console.log('get via Nominatim');
 		return this.http.get(this.url + query + this.format)
 			.map((res) => (res as JSON[]).shift()).map((i) => {
 				const address = new Address();

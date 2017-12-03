@@ -63,7 +63,10 @@ export class DataService {
 	}
 
 	public getAll(): Observable<any> {
-		return this.http.get(this.baseUrl).map(res => res as any);
+		return this.http.get(this.baseUrl, {
+			headers: new HttpHeaders()
+				.set('Authorization', this.authService.basicAuthString())
+		}).map(res => res as any);
 	}
 
 }

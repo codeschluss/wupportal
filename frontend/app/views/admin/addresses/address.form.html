@@ -1,0 +1,31 @@
+<div>
+	{{data.message}}
+	<form #addressForm="ngForm" (ngSubmit)="onSubmit()" class="well">
+
+		<mat-form-field class="edit-form-full-width">
+			<textarea matInput type="text" required [(ngModel)]="address.street" placeholder={{constants.street}} name="street" value={{address.street}}
+			 id="address_street_field"></textarea>
+		</mat-form-field>
+		<mat-form-field class="edit-form-full-width">
+			<textarea matInput type="text" [(ngModel)]="address.house_number" placeholder={{constants.houseNumber}} name="houseNumber"
+			 value={{address.house_number}} id="address_house_number_field"></textarea>
+		</mat-form-field>
+		<mat-form-field class="edit-form-full-width">
+			<textarea matInput type=text [(ngModel)]="address.postal_code" placeholder={{constants.postalCode}} name="postal_code" value={{address.postal_code}}
+			 id="address_postal_code_field"></textarea>
+		</mat-form-field>
+		<mat-form-field class="edit-form-full-width">
+			<textarea matInput type="text" required [(ngModel)]="address.place" placeholder={{constants.place}} name="place" value={{address.place}}
+			 id="address_place_field"></textarea>
+		</mat-form-field>
+		<mat-form-field class="edit-form-full-width">
+			<textarea matInput type="number" required [(ngModel)]="address.latitude" placeholder={{constants.latitude}} name="latitude"
+			 value={{address.latitude}} id="address_latitude_field"></textarea>
+		</mat-form-field>
+		<mat-form-field class="edit-form-full-width">
+			<textarea matInput type="number" required [(ngModel)]="address.longitude" placeholder={{constants.longitude}} name="longitude"
+			 value={{address.longitude}} id="address_longitude_field"></textarea>
+		</mat-form-field>
+		<button mat-raised-button (click)="onSubmit()" [disabled]="addressForm.invalid">ok</button>
+	</form>
+</div>

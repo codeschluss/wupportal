@@ -10,9 +10,13 @@ import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 
 import { DataServiceFactory, OrganisationService, AddressService, SuburbService } from 'app/services/data.service.factory';
+import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { NominatimService } from 'app/services/nominatim';
 import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
+import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
+
+import { AuthenticationService } from 'app/services/authentication.service';
 
 import { Organisation } from 'app/models/organisation';
 import { Address } from 'app/models/address';
@@ -25,8 +29,8 @@ import { Constants } from 'app/views/common/constants';
 	templateUrl: 'organisation.form.html',
 	styleUrls: ['../../../app.component.css'],
 	providers: [
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient] },
-		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient] }
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] },
+		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 
@@ -38,13 +42,15 @@ export class OrganisationFormComponent implements OnInit {
 	nominatimAddress: Address;
 
 	constructor(
-		@Inject(OrganisationService) private service: DataService,
+		@Inject(OrganisationService) private organisationService: DataService,
 		@Inject(AddressService) private addressService: DataService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
 		private suburbSelectDialog: MatDialog,
+		private controlAddressDialog: MatDialog,
 		private nominatimService: NominatimService,
+		public validation: ValidationService
 	) {
 		this.addressService.getAll().subscribe((data) => this.addresses = data.records);
 	}
@@ -52,7 +58,7 @@ export class OrganisationFormComponent implements OnInit {
 	ngOnInit(): void {
 		this.route.paramMap
 			.switchMap((params: ParamMap) =>
-				this.service.get(params.get('id'))).subscribe((data) => {
+				this.organisationService.get(params.get('id'))).subscribe((data) => {
 					this.organisation = data.records;
 					this.addressCtrl = new FormControl(data.records.address);
 					this.filteredAddresses = this.addressCtrl.valueChanges
@@ -89,36 +95,73 @@ export class OrganisationFormComponent implements OnInit {
 		}
 	}
 
-	getNominatimData(): void {
-		this.nominatimService.get(this.toString(this.addressCtrl.value)).subscribe((data) => this.nominatimAddress = data);
+	checkAddress(address: Address): boolean {
+		if (address.house_number &&
+			address.place &&
+			address.postal_code &&
+			address.street) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	onSubmit(): void {
 		if (typeof this.addressCtrl.value === 'string') {
 			this.nominatimService.get(this.toString(this.addressCtrl.value)).subscribe((data) => {
 				this.nominatimAddress = data;
-				for (const currAddress of this.addresses) {
-					if (this.compareAddresses(currAddress, this.nominatimAddress)) {
-						this.organisation.address_id = currAddress.id;
-						this.service.edit(this.organisation);
+				if (!this.checkAddress(this.nominatimAddress)) {
+					this.controlAddress(this.nominatimAddress).subscribe(result => {
+						console.log('result: ' + result);
+						this.nominatimAddress = result;
+						if (this.findExistingAddress(this.nominatimAddress)) {
+							this.back();
+							return;
+						}
+						this.organisation.address = null;
+						this.openDialog(this.nominatimAddress);
+					});
+				} else {
+					if (this.findExistingAddress(this.nominatimAddress)) {
+						this.back();
 						return;
 					}
+					this.organisation.address = null;
+					this.openDialog(this.nominatimAddress);
 				}
-				this.organisation.address = null;
-				this.nominatimAddress.id = null;
-				this.openDialog(this.nominatimAddress);
 			});
 		} else {
 			if (this.addressCtrl.value.id) {
 				if (this.addressCtrl.value.id !== this.organisation.address_id) {
 					this.organisation.address_id = this.addressCtrl.value.id;
-				} else {
-					console.log('Address was not changed');
 				}
 			}
-			this.service.edit(this.organisation);
+			this.organisationService.edit(this.organisation);
 			this.back();
 		}
+	}
+
+	findExistingAddress(address: Address): boolean {
+		for (const currAddress of this.addresses) {
+			if (this.compareAddresses(currAddress, this.nominatimAddress)) {
+				this.organisation.address_id = currAddress.id;
+				this.organisationService.edit(this.organisation);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	controlAddress(address: Address): Observable<Address> {
+		const dialogRef = this.controlAddressDialog.open(AddressFormComponent, {
+			width: '80%',
+			data: {
+				name: '',
+				message: 'Sie können die eingegebene Addresse hier ändern:',
+				address: address
+			}
+		});
+		return dialogRef.afterClosed();
 	}
 
 	openDialog(newAddress: Address): void {
@@ -135,9 +178,9 @@ export class OrganisationFormComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(() => {
 			this.addressService.add(this.nominatimAddress).subscribe((response) => {
 				this.organisation.address_id = response.records.id;
-				this.service.edit(this.organisation);
+				this.organisationService.edit(this.organisation);
+				this.back();
 			});
-			this.back();
 		});
 	}
 

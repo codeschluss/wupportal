@@ -26,23 +26,26 @@ export class NominatimService extends Service<Address> {
 			.map((res) => (res as JSON[]).shift()).map((i) => {
 				const address = new Address();
 				address.suburb = null;
-				address.latitude = i['lat'];
-				address.longitude = i['lon'];
-				address.house_number = i['address']['house_number'];
-				address.place = i['address']['city'];
-				if (address.place == null) {
-					address.place = i['address']['county'];
-				}
-				address.postal_code = i['address']['postcode'];
-				address.street = i['address']['road'];
-				if (address.street == null) {
-					address.street = i['address']['construction'];
-				}
-				if (address.street == null) {
-					address.street = i['address']['pedestrian'];
+				if (i) {
+					address.latitude = i['lat'];
+					address.longitude = i['lon'];
+					address.house_number = i['address']['house_number'];
+					address.place = i['address']['city'];
+					if (address.place == null) {
+						address.place = i['address']['county'];
+					}
+					address.postal_code = i['address']['postcode'];
+					address.street = i['address']['road'];
+					if (address.street == null) {
+						address.street = i['address']['construction'];
+					}
+					if (address.street == null) {
+						address.street = i['address']['pedestrian'];
+					}
 				}
 				return address;
-			});
+			}
+			);
 	}
 
 	public list(): Observable<Address[]> { return null; }

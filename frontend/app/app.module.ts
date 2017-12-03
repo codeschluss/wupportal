@@ -53,6 +53,7 @@ import { Constants } from 'app/views/common/constants';
 
 import { DialogComponent } from 'app/views/common/popup.component';
 import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
+import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 
 @NgModule({
 	bootstrap: [
@@ -75,7 +76,8 @@ import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selectio
 		UsersTableComponent,
 		UserFormComponent,
 		DialogComponent,
-		SuburbSelectionComponent
+		SuburbSelectionComponent,
+		AddressFormComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -116,7 +118,8 @@ import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selectio
 	],
 	entryComponents: [
 		DialogComponent,
-		SuburbSelectionComponent
+		SuburbSelectionComponent,
+		AddressFormComponent
 	]
 })
 

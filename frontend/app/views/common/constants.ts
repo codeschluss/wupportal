@@ -50,6 +50,7 @@ export class Constants {
 	public address: string = 'Adresse';
 	public street: string = 'Straße';
 	public postalCode: string = 'PLZ';
+	public place: string = 'Ort';
 	public houseNumber: string = 'Hausnummer';
 	public quarter: string = 'Viertel';
 	public longitude: string = 'Längengrad';

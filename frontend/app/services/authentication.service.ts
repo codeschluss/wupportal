@@ -28,17 +28,17 @@ export class AuthenticationService implements CanActivate {
 
 	login(username: string, pwd: string): Observable<boolean> {
 		const password = this.getPwd(pwd);
-		console.log('pwd', pwd);
-		console.log('password', password);
+		const credentials = btoa(username + ':' + password);
 		return this.http.post('/api/users/login',
 			JSON.stringify({ username: username, password: password }), {
 				headers: new HttpHeaders()
 					.set('Content-Type', 'application/json')
+					.set('Authorization', 'Basic ' + credentials)
 			})
 			.map((resp) => resp as AuthResponse) // TODO: Check for internal server errors
 			.map((response: AuthResponse) => {
 				return response.success
-					? this.handleSuccessLogin(response, btoa(username + ':' + password))
+					? this.handleSuccessLogin(response, credentials)
 					: false;
 			});
 	}

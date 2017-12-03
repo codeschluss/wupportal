@@ -59,11 +59,6 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
 
         $this->loadComponent('Auth', [
-            // 'loginAction' => [
-            //     'controller' => 'Users',
-            //     'action' => 'login',
-            //     'plugin' => 'Users'
-            // ],
             'authenticate' => [
                 'Basic' => [
                     'fields' => [
@@ -76,31 +71,6 @@ class AppController extends Controller
             'unauthorizedRedirect' => false,
             'loginAction' => false
         ]);
-
-        // $this->loadComponent('Auth', [
-        //     'storage' => 'Memory',
-        //     // 'loginAction' => [
-        //     //     'controller' => 'Users',
-        //     //     'action' => 'login',
-        //     //     'plugin' => 'Users'
-        //     // ],
-        //     'authenticate' => [
-        //         'Form' => ['userModel' => 'Users'],
-        //         'ADmad/JwtAuth.Jwt' => [
-        //             'parameter' => '_token',
-        //             // 'finder' => 'auth',
-        //             'userModel' => 'Users',
-        //             'fields' => [
-        //                 'username' => 'username',
-        //                 'password' => 'password'
-        //             ],
-        //             'queryDatasource' => true
-        //         ]
-        //     ],
-        //     'unauthorizedRedirect' => false,
-        //     'checkAuthIn' => 'Controller.initialize',
-        //     // 'loginAction' => false
-        // ]);
     }
 
     /**

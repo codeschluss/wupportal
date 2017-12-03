@@ -66,7 +66,9 @@ export class UserFormComponent implements OnInit {
 		this.user.username = this.usernameCtrl.value;
 		this.user.fullname = this.fullnameCtrl.value;
 		this.user.phone = this.phoneCtrl.value;
-		this.user.password = this.passwordCtrl.value;
+		if (this.passwordCtrl.value) {
+			this.user.password = this.passwordCtrl.value;
+		}
 	}
 
 	back(): void {

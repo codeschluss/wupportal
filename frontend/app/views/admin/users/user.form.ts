@@ -55,17 +55,20 @@ export class UserFormComponent implements OnInit {
 
 	onSubmit(): void {
 		this.setData();
-		console.log('toDeleteProviders', this.toDeleteProviders);
-		console.log('this.user', this.user);
-		this.deleteProviders().subscribe(results =>
-			this.userService.edit(this.user)
-				.map(data => data.records as User)
-				.subscribe(user =>
-					this.authService.login(this.user.username, this.user.password)
-						.subscribe(succeeded =>
-							succeeded ? this.location.back() : this.authService.redirectToLogin())
-				));
+		this.toDeleteProviders.length === 0
+			? this.updateUser()
+			: this.deleteProviders().subscribe(results => this.updateUser());
 		this.location.back();
+	}
+
+	updateUser(): void {
+		this.userService.edit(this.user)
+			.map(data => data.records as User)
+			.subscribe(user =>
+				this.authService.login(this.user.username, this.user.password)
+					.subscribe(succeeded =>
+						succeeded ? this.location.back() : this.authService.redirectToLogin())
+			);
 	}
 
 	deleteProviders(): Observable<any> {
@@ -96,12 +99,10 @@ export class UserFormComponent implements OnInit {
 			}
 			return !deleted;
 		});
-		console.log('getProvidersToDelete', this.user);
 	}
 
 	// TODO: Check for easier method...
 	createProviders(): void {
-		console.log('createProviders - before', this.user);
 		outer:
 		for (const orga_id of this.organisationsCtrl.value) {
 			if (orga_id) {
@@ -122,7 +123,6 @@ export class UserFormComponent implements OnInit {
 				this.user.providers.push(provider);
 			}
 		}
-		console.log('getProvidersToDelete - after', this.user);
 	}
 
 	back(): void {

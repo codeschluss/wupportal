@@ -19,7 +19,7 @@ export class Activity extends Model {
 	public category: Category = new Category();
 
 	public tags: Tag[] = [];
-	public targetGroups: TargetGroup[] = [];
+	public target_groups: TargetGroup[] = [];
 	public translations: Translation[] = [];
 
 }

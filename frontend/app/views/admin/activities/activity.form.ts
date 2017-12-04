@@ -47,6 +47,7 @@ export class ActivityFormComponent implements OnInit {
 	targetGroups: TargetGroup[];
 	addressCtrl: FormControl;
 	tagsCtrl: FormControl;
+	targetGroupCtrl: FormControl;
 	addresses: Address[];
 	filteredAddresses: Observable<Address[]>;
 	nominatimAddress: Address;
@@ -74,11 +75,28 @@ export class ActivityFormComponent implements OnInit {
 					this.activity = data.records;
 					this.initTags();
 					this.addressCtrl = new FormControl(data.records.address);
+					this.targetGroupCtrl = new FormControl(this.initTargetGroupCtrl(data.records.target_groups));
 					this.filteredAddresses = this.addressCtrl.valueChanges
 						.startWith(<any>[])
 						.map(address => address && typeof address === 'object' ? this.toString(address) : address)
 						.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
 				});
+	}
+
+	initTargetGroupCtrl(targetGroups: TargetGroup[]): string[] {
+		const targetGroupIds: string[] = [];
+		for (const tg of targetGroups) {
+			targetGroupIds.push(tg.id);
+		}
+		return targetGroupIds;
+	}
+
+	initTags(): void {
+		const tagsNames: string[] = [];
+		for (const tag of this.activity.tags) {
+			tagsNames.push(tag.name);
+		}
+		this.tagsCtrl = new FormControl(tagsNames.join());
 	}
 
 	filterAddresses(name: string): Address[] {
@@ -94,14 +112,6 @@ export class ActivityFormComponent implements OnInit {
 			return (address.street + ' ' + address.house_number + ' ' + address.postal_code + ' ' +
 				address.place + ' ' + (address.suburb ? address.suburb.name : ''));
 		}
-	}
-
-	initTags(): void {
-		const tagsNames: string[] = [];
-		for (const tag of this.activity.tags) {
-			tagsNames.push(tag.name);
-		}
-		this.tagsCtrl = new FormControl(tagsNames.join());
 	}
 
 	containsEntry(any: any, array: any[]): boolean {
@@ -136,13 +146,24 @@ export class ActivityFormComponent implements OnInit {
 		}
 	}
 
+	generateTargetGroupArray(idArray: string[]): Observable<TargetGroup[]> {
+		const target_groups = [];
+		for (const id of idArray) {
+			target_groups.push(this.targetGroups.find(tg => tg.id === id));
+		}
+		return new Observable(observer => observer.next(target_groups));
+	}
+
 	onSubmit(): void {
 		this.activity.tags = [];
 		this.handleTags().subscribe(tags => {
 			tags.map((tag) => this.activity.tags.push(tag.records));
-			this.activityService.edit(this.activity).subscribe();
+			this.generateTargetGroupArray(this.targetGroupCtrl.value).
+				subscribe(targetGroups => {
+					this.activity.target_groups = targetGroups;
+					this.activityService.edit(this.activity).subscribe();
+				});
 		});
-
 		if (typeof this.addressCtrl.value === 'string') {
 			this.nominatimService.get(this.toString(this.addressCtrl.value)).subscribe((data) => {
 				this.nominatimAddress = data;
@@ -171,8 +192,7 @@ export class ActivityFormComponent implements OnInit {
 					this.activity.address_id = this.addressCtrl.value.id;
 				}
 			}
-			this.activityService.edit(this.activity);
-			this.back();
+			this.activityService.edit(this.activity).subscribe(() => this.back());
 		}
 	}
 
@@ -180,7 +200,7 @@ export class ActivityFormComponent implements OnInit {
 		for (const currAddress of this.addresses) {
 			if (this.compareAddresses(currAddress, this.nominatimAddress)) {
 				this.activity.address_id = currAddress.id;
-				this.activityService.edit(this.activity);
+				this.activityService.edit(this.activity).subscribe();
 				return true;
 			}
 		}
@@ -213,20 +233,20 @@ export class ActivityFormComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(() => {
 			this.addressService.add(this.nominatimAddress).subscribe((response) => {
 				this.activity.address_id = response.records.id;
-				this.activityService.edit(this.activity);
+				this.activityService.edit(this.activity).subscribe();
 				this.back();
 			});
 		});
 	}
 
 	handleTags(): Observable<any[]> {
-		const tagArray: Observable<Tag>[] = [];
+		const observableTagArray: Observable<Tag>[] = [];
 		this.tagsCtrl.value.split(',').map((tagName) => {
 			const currTag: Tag = new Tag();
 			currTag.name = tagName;
-			tagArray.push(this.tagService.add(currTag));
+			observableTagArray.push(this.tagService.add(currTag));
 		});
-		return Observable.forkJoin(tagArray);
+		return Observable.forkJoin(observableTagArray);
 	}
 
 	back(): void {

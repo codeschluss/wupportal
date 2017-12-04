@@ -25,12 +25,11 @@
 				<input matInput type=text [formControl]="tagsCtrl" placeholder="{{constants.tags}}" name="tags" id="activity_tags">
 			</mat-form-field>
 
-			<h2 class="edit-form-three-column-width">{{constants.targetGroups}}</h2>
-			<mat-selection-list class="edit-form-three-column-width" *ngIf="targetGroups">
-				<mat-list-option *ngFor="let targetGroup of targetGroups" selected={{containsEntry(targetGroup,activity.target_groups)}}>
-					{{targetGroup.name}}
-				</mat-list-option>
-			</mat-selection-list>
+			<mat-form-field>
+				<mat-select placeholder={{constants.targetGroups}} [formControl]="targetGroupCtrl" multiple>
+					<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
+				</mat-select>
+			</mat-form-field>
 
 			<mat-card class="address-card">
 				<mat-form-field class="edit-form-full-width">

@@ -34,6 +34,7 @@ export class Constants {
 	public delete: string = 'Löschen';
 	public change: string = 'Ändern';
 	public edit: string = 'Bearbeiten';
+	public chosen: string = 'Ausgewählt';
 
 	public deleteMessage: string = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';

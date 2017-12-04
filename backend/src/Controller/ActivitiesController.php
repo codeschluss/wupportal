@@ -48,4 +48,46 @@ class ActivitiesController extends AppController
             ];
         }
 
+        /**
+         * getByProvider TODO: Duplicate code
+         *
+         */
+        public function getByProvider()
+        {
+            // var_dump($request); exit;
+            $query = $this->table()->find()->group($this->name . '.id');
+            $request = $this->request->input('json_decode');
+            if (is_null($request)) return;
+
+            $this->paginate = [
+                'limit' => $request->pageSize,
+                'page' => $request->page,
+            ];
+
+            foreach ($this->contain() as $contain) {
+                $query->leftJoinWith($contain)->contain($contain);
+            }
+
+            if (!empty($request->sort->direction)) {
+                $query
+                    ->group($request->sort->active)
+                    ->order([$request->sort->active => $request->sort->direction]);
+            }
+
+            if (!empty($request->providerID)) {
+                $query->where(['Providers.id' => $request->providerID]);
+            }
+            if (!empty($request->filter)) {
+                $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+                    $whereClause = [];
+                    foreach ($this->fieldsTofilter() as $field) {
+                        $whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
+                    }
+                    return $whereClause;
+                }]);
+            }
+
+            $this->data($this->paginate($query));
+        }
+
 }

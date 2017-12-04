@@ -63,8 +63,14 @@ Router::scope('/', function (RouteBuilder $routes) {
             'path' => '/list'
         ]]];
 
-        $routes->resources('Addresses', $list);
         $routes->resources('Activities', $list);
+        $routes->resources('Activities', ['map' => ['getByProvider' => [
+            'action' => 'getByProvider',
+            'method' => 'POST',
+            'path' => '/getByProvider'
+        ]]]);
+
+        $routes->resources('Addresses', $list);
         $routes->resources('Categories', $list);
         $routes->resources('Configurations', $list);
         $routes->resources('Organisations', $list);

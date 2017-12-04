@@ -56,6 +56,10 @@ class ActivitiesTable extends Table
             'foreignKey' => 'category_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Schedules', [
+            'foreignKey' => 'schedule_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsToMany('Tags', [
             'foreignKey' => 'activity_id',
             'targetForeignKey' => 'tag_id',

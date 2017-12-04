@@ -78,6 +78,7 @@ Router::scope('/', function (RouteBuilder $routes) {
         $routes->resources('Tags', $list);
         $routes->resources('TargetGroups', $list);
         $routes->resources('Providers', $list);
+        $routes->resources('Schedules', $list);
         $routes->resources('Users', $list);
         $routes->resources('Users', ['map' => ['login' => [
             'action' => 'login',

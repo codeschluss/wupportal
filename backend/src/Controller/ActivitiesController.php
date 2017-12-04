@@ -26,7 +26,9 @@ class ActivitiesController extends AppController
                 'Tags',
                 'Categories',
                 'TargetGroups',
-                'Providers.Organisations'
+                'Providers.Organisations',
+                'Schedules',
+                'Schedules.Recurrences'
             ];
         }
 

@@ -27,7 +27,7 @@ import { Provider } from 'app/models/provider';
 	providers: [
 		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
 		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] },
-		{ provide: ProviderService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, ProviderService] }
+		{ provide: ProviderService, useFactory: DataServiceFactory(ProviderService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 
@@ -69,7 +69,7 @@ export class UserFormComponent implements OnInit {
 	deleteProviders(): Observable<any> {
 		const list = [];
 		for (const providerID of this.toDeleteProviders) {
-			console.log('orgaID', providerID);
+			console.log('providerID', providerID);
 			list.push(this.providerService.delete(providerID));
 		}
 		return forkJoin(list);
@@ -82,9 +82,19 @@ export class UserFormComponent implements OnInit {
 		if (this.passwordCtrl.value) {
 			this.user.password = this.passwordCtrl.value;
 		}
-		this.createProviders();
 		this.getProvidersToDelete();
+		this.createProviders();
+	}
 
+	// TODO: Check for easier method...
+	getProvidersToDelete(): void {
+		console.log('this.organisationsCtrl.value', this.organisationsCtrl.value);
+		for (const intialProvider of this.user.providers) {
+			if (intialProvider && !this.organisationsCtrl.value.includes(intialProvider.organisation_id)) {
+				console.log('intialProvider', intialProvider);
+				this.toDeleteProviders.push(intialProvider.id);
+			}
+		}
 	}
 
 	// TODO: Check for easier method...
@@ -92,8 +102,8 @@ export class UserFormComponent implements OnInit {
 		outer:
 		for (const orga_id of this.organisationsCtrl.value) {
 			if (orga_id) {
-				for (const existingProvider of this.user.providers) {
-					if (existingProvider.organisation_id === orga_id) {
+				for (const intialProvider of this.user.providers) {
+					if (intialProvider.organisation_id === orga_id) {
 						continue outer;
 					}
 				}
@@ -105,17 +115,6 @@ export class UserFormComponent implements OnInit {
 				provider.user = undefined;
 
 				this.user.providers.push(provider);
-			}
-		}
-	}
-
-	// TODO: Check for easier method...
-	getProvidersToDelete(): void {
-		console.log('this.organisationsCtrl.value', this.organisationsCtrl.value);
-		for (const initOrga of this.initialOrganisations) {
-			if (initOrga && !this.organisationsCtrl.value.includes(initOrga)) {
-				console.log('initOrga', initOrga);
-				this.toDeleteProviders.push(initOrga);
 			}
 		}
 	}

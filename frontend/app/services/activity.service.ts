@@ -27,10 +27,10 @@ export class ActivityService extends DataService {
 		}).map(res => res as DataResponse);
 	}
 
-	createProvidersList(): string[] {
-		const providerRequest: any = { 'providers': [] };
-		providerRequest.providers = this.authService.currentUser.providers.map(provider => provider.id);
-		return providerRequest;
+	createProvidersParam(): string[] {
+		const providersParam: any = { 'providers': [] };
+		providersParam.providers = this.authService.currentUser.providers.map(provider => provider.id);
+		return providersParam;
 	}
 
 }

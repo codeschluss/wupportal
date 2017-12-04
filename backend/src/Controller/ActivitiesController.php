@@ -58,6 +58,7 @@ class ActivitiesController extends AppController
             $query = $this->table()->find()->group($this->name . '.id');
             $request = $this->request->input('json_decode');
             if (is_null($request)) return;
+            if (empty($request->providers)) return;
 
             $this->paginate = [
                 'limit' => $request->pageSize,
@@ -74,15 +75,14 @@ class ActivitiesController extends AppController
                     ->order([$request->sort->active => $request->sort->direction]);
             }
 
-            if (!empty($request->providers)) {
-                $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
-                    $whereClause = [];
-                    foreach ($request->providers as $provider) {
-                        $whereClause[] = ['Providers.id' => $provider];
-                    }
-                    return $whereClause;
-                }]);
-            }
+            $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+                $whereClause = [];
+                foreach ($request->providers as $provider) {
+                    $whereClause[] = ['Providers.id' => $provider];
+                }
+                return $whereClause;
+            }]);
+
             if (!empty($request->filter)) {
                 $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
                     $whereClause = [];

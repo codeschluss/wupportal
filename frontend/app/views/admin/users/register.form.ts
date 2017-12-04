@@ -35,7 +35,7 @@ export class RegisterFormComponent extends UserFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		this.setUser();
+		this.setData();
 		this.userService.add(this.user)
 			.subscribe(something => {
 				this.authService.redirectToLogin();

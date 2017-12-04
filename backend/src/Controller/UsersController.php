@@ -31,7 +31,6 @@ class UsersController extends AppController
     protected function contain()
     {
         return [
-            'Providers',
             'Providers.Organisations'
         ];
     }
@@ -49,6 +48,25 @@ class UsersController extends AppController
             'phone'
         ];
     }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $request = json_decode($this->request->input(), true);
+        // var_dump($user); exit;
+        $this->data($this->table()->save(
+            $this->table()->patchEntity(
+                $this->table()->newEntity(),
+                json_decode($this->request->input(), true),
+                ['associated' => $this->contain()]
+            )
+        ));
+    }
+
 
     /**
      * login method

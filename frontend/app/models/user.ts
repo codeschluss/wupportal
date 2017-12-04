@@ -9,7 +9,7 @@ export class User extends Model {
 	public password: string = '';
 	public fullname: string = '';
 	public phone: string = '';
-	public providers: Array<Provider> = [];
+	public providers: Provider[] = new Array<Provider>();
 }
 
 

@@ -34,11 +34,11 @@ export class DataService {
 		});
 	}
 
-	public delete(record: any): void {
-		this.http.delete(this.baseUrl + 'delete/' + record.id, {
+	public delete(record: any): Observable<any> {
+		return this.http.delete(this.baseUrl + record.id, {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())
-		}).subscribe();
+		});
 	}
 
 	public edit(record: any): Observable<any> {

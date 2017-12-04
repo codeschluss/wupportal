@@ -5,6 +5,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 import 'rxjs/Rx';
 
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
@@ -19,14 +20,14 @@ import { User } from 'app/models/user';
 import { Organisation } from 'app/models/organisation';
 import { Provider } from 'app/models/provider';
 
-
 @Component({
 	selector: 'user-form',
 	templateUrl: 'user.form.html',
 	styleUrls: ['user.form.css'],
 	providers: [
 		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] },
+		{ provide: ProviderService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, ProviderService] }
 	]
 })
 
@@ -38,10 +39,12 @@ export class UserFormComponent implements OnInit {
 
 	protected allOrganisations: Array<Organisation>;
 	protected initialOrganisations: Array<string> = [];
+	protected toDeleteProviders: Array<string> = [];
 
 	constructor(
 		@Inject(UserService) public userService: DataService,
 		@Inject(OrganisationService) public organisationService: DataService,
+		@Inject(ProviderService) public providerService: DataService,
 		public authService: AuthenticationService,
 		public location: Location,
 		public route: ActivatedRoute,
@@ -51,23 +54,69 @@ export class UserFormComponent implements OnInit {
 
 
 	onSubmit(): void {
-		this.setUser();
-		this.userService.edit(this.user)
-			.map(data => data.records as User)
-			.subscribe(user =>
-				this.authService.login(this.user.username, this.user.password)
-					.subscribe(succeeded =>
-						succeeded ? this.location.back() : this.authService.redirectToLogin())
-			);
+		this.setData();
+		this.deleteProviders().subscribe(results =>
+			this.userService.edit(this.user)
+				.map(data => data.records as User)
+				.subscribe(user =>
+					this.authService.login(this.user.username, this.user.password)
+						.subscribe(succeeded =>
+							succeeded ? this.location.back() : this.authService.redirectToLogin())
+				));
 		this.location.back();
 	}
 
-	setUser(): void {
+	deleteProviders(): Observable<any> {
+		const list = [];
+		for (const providerID of this.toDeleteProviders) {
+			console.log('orgaID', providerID);
+			list.push(this.providerService.delete(providerID));
+		}
+		return forkJoin(list);
+	}
+
+	setData(): void {
 		this.user.username = this.usernameCtrl.value;
 		this.user.fullname = this.fullnameCtrl.value;
 		this.user.phone = this.phoneCtrl.value;
 		if (this.passwordCtrl.value) {
 			this.user.password = this.passwordCtrl.value;
+		}
+		this.createProviders();
+		this.getProvidersToDelete();
+
+	}
+
+	// TODO: Check for easier method...
+	createProviders(): void {
+		outer:
+		for (const orga_id of this.organisationsCtrl.value) {
+			if (orga_id) {
+				for (const existingProvider of this.user.providers) {
+					if (existingProvider.organisation_id === orga_id) {
+						continue outer;
+					}
+				}
+				const provider = new Provider();
+
+				provider.organisation_id = orga_id;
+				provider.user_id = this.user.id;
+				provider.organisation = undefined;
+				provider.user = undefined;
+
+				this.user.providers.push(provider);
+			}
+		}
+	}
+
+	// TODO: Check for easier method...
+	getProvidersToDelete(): void {
+		console.log('this.organisationsCtrl.value', this.organisationsCtrl.value);
+		for (const initOrga of this.initialOrganisations) {
+			if (initOrga && !this.organisationsCtrl.value.includes(initOrga)) {
+				console.log('initOrga', initOrga);
+				this.toDeleteProviders.push(initOrga);
+			}
 		}
 	}
 

@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * @property string $id
  * @property string $name
  * @property string $description
- * @property string $schedule
+ * @property string $schedule_id
  * @property bool $show_user
  * @property string $address_id
  * @property string $provider_id
@@ -20,6 +20,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Address $address
  * @property \App\Model\Entity\Provider $provider
  * @property \App\Model\Entity\Category $category
+ * @property \App\Model\Entity\Schedule $schedule
  * @property \App\Model\Entity\Tag[] $tags
  * @property \App\Model\Entity\TargetGroup[] $target_groups
  * @property \App\Model\Entity\Translation[] $translations
@@ -37,7 +38,21 @@ class Activity extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'name' => true,
+        'description' => true,
+        'schedule_id' => true,
+        'show_user' => true,
+        'address_id' => true,
+        'provider_id' => true,
+        'category_id' => true,
+        'created' => true,
+        'modified' => true,
+        'address' => true,
+        'provider' => true,
+        'category' => true,
+        'schedule' => true,
+        'tags' => true,
+        'target_groups' => true,
+        'translations' => true
     ];
 }

@@ -137,8 +137,8 @@ CREATE TABLE `providers` (
 CREATE TABLE `recurrences` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`weekly_period` INT UNSIGNED,
-	`beginnBy` DATE, 
-	`endBy` DATE
+	`beginn_by` DATE, 
+	`end_by` DATE
 );
 
 CREATE TABLE `week_days` (
@@ -146,7 +146,7 @@ CREATE TABLE `week_days` (
 	`name`CHAR(36)
 );
 
-CREATE TABLE `recurrence_week_days` (
+CREATE TABLE `recurrences_week_days` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`recurrence_id` CHAR(36),
 	`week_day_id` CHAR(36),

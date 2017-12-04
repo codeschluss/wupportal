@@ -15,10 +15,8 @@
 				 value={{activity.description}} id="activity_description_field"></textarea>
 			</mat-form-field>
 
-			<mat-form-field class="edit-form-full-width">
-				<input matInput type=text [(ngModel)]="activity.schedule" placeholder="{{constants.dates}}" name="schedule" value={{activity.schedule}}
-				 id="activity_schedule_field">
-			</mat-form-field>
+			Aktivität findet im {{activity.schedule.recurrence.weekly_period}} wöchentlicher Rythmus statt.
+			<div *ngFor="let entry of activity.schedule.recurrence.week_days">{{entry.name}}</div>
 
 			<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
 			<mat-form-field class="edit-form-full-width">

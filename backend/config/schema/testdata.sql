@@ -54,11 +54,11 @@ INSERT INTO `providers` (`id`, `organisation_id`, `user_id`) VALUES
 INSERT INTO `week_days` (`id`, `name`) VALUES 
 ('1', 'Montag'), ('2', 'Dienstag'), ('3', 'Mittwoch'), ('4', 'Donnerstag'), ('5', 'Freitag'), ('6', 'Samstag'), ('7', 'Sonntag');
 
-INSERT INTO `recurrences` (`id`, `weekly_period`, `beginnBy`, `endBy`) VALUES 
+INSERT INTO `recurrences` (`id`, `weekly_period`, `beginn_by`, `end_by`) VALUES 
 ('1', '2', '2017-12-24', '2018-12-24'), 
 ('2', '1', '2017-12-8', '2017-12-24');
 
-INSERT INTO `recurrence_week_days` (`id`, `week_day_id`,`recurrence_id`) VALUES
+INSERT INTO `recurrences_week_days` (`id`, `week_day_id`,`recurrence_id`) VALUES
 ('1', '4', '1'),
 ('2', '3', '2');
 

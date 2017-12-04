@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Activities Model
  *
+ * @property \App\Model\Table\SchedulesTable|\Cake\ORM\Association\BelongsTo $Schedules
  * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
  * @property \App\Model\Table\ProvidersTable|\Cake\ORM\Association\BelongsTo $Providers
  * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
@@ -45,6 +46,9 @@ class ActivitiesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Schedules', [
+            'foreignKey' => 'schedule_id'
+        ]);
         $this->belongsTo('Addresses', [
             'foreignKey' => 'address_id'
         ]);
@@ -54,10 +58,6 @@ class ActivitiesTable extends Table
         ]);
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Schedules', [
-            'foreignKey' => 'schedule_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsToMany('Tags', [
@@ -99,12 +99,9 @@ class ActivitiesTable extends Table
             ->allowEmpty('description');
 
         $validator
-            ->scalar('schedule')
-            ->allowEmpty('schedule');
-
-        $validator
             ->boolean('show_user')
-            ->allowEmpty('show_user');
+            ->requirePresence('show_user', 'create')
+            ->notEmpty('show_user');
 
         return $validator;
     }
@@ -118,6 +115,7 @@ class ActivitiesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['schedule_id'], 'Schedules'));
         $rules->add($rules->existsIn(['address_id'], 'Addresses'));
         $rules->add($rules->existsIn(['provider_id'], 'Providers'));
         $rules->add($rules->existsIn(['category_id'], 'Categories'));

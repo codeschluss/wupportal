@@ -10,7 +10,7 @@ import 'rxjs/Rx';
 
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { DataServiceFactory, OrganisationService, UserService } from 'app/services/data.service.factory';
+import { DataServiceFactory, OrganisationService, UserService, ProviderService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
 import { Constants } from 'app/views/common/constants';

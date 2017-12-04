@@ -4,8 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Network\Exception\UnauthorizedException;
-use Cake\Utility\Security;
-use Firebase\JWT\JWT;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -28,7 +27,7 @@ class UsersController extends AppController
      *
      * @return array Contained models
      */
-    protected function contain()
+    public function contain()
     {
         return [
             'Providers.Organisations'
@@ -58,8 +57,6 @@ class UsersController extends AppController
     {
         $request = json_decode($this->request->input(), true);
 
-
-
         // var_dump($user); exit;
         $this->data($this->table()->save(
             $this->table()->patchEntity(
@@ -87,10 +84,13 @@ class UsersController extends AppController
                 '_serialize' => ['success', 'data']
             ]);
         } else {
+            $query = $this->table()->find()->contain($this->contain());
+            $query->where(['Users.id' => $user['id']]);
+            $result = $query->first();
             $this->viewBuilder()->className('Json');
             $this->set([
                 'success' => true,
-                'data' => $user,
+                'data' => $result,
                 '_serialize' => ['success', 'data']
             ]);
         }

@@ -45,6 +45,7 @@ export class AuthenticationService implements CanActivate {
 
 	handleSuccessLogin(response: AuthResponse, credentials: string): boolean {
 		if (response.data) {
+			console.log('response.data', response.data);
 			this.credentials = credentials;
 			this.currentUser = response.data;
 			return true;

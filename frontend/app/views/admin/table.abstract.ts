@@ -1,4 +1,4 @@
-import { AfterViewInit, ViewChild } from '@angular/core';
+import { OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, Sort, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -10,7 +10,7 @@ import { DataResponse } from 'app/models/data.response';
 import { Constants } from 'app/views/common/constants';
 import { DialogComponent } from 'app/views/common/popup.component';
 
-export abstract class AbstractTableComponent implements AfterViewInit {
+export abstract class AbstractTableComponent implements OnInit {
 
 	@ViewChild(MatPaginator)
 	protected paginator: MatPaginator;
@@ -32,7 +32,7 @@ export abstract class AbstractTableComponent implements AfterViewInit {
 		this.tableState = new TableState(constants.defaultPageSize, constants.pageSizeOptions);
 	}
 
-	ngAfterViewInit(): void {
+	ngOnInit(): void {
 		this.dataSource.paginator = this.paginator;
 		this.fetchData();
 	}
@@ -73,7 +73,7 @@ export abstract class AbstractTableComponent implements AfterViewInit {
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
-			// this.ngAfterViewInit();
+			// this.ngOnit()
 		});
 	}
 }

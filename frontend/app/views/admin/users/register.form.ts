@@ -6,7 +6,7 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { DataServiceFactory, UserService, OrganisationService } from 'app/services/data.service.factory';
+import { DataServiceFactory, UserService, OrganisationService, ProviderService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
 import { Constants } from 'app/views/common/constants';
@@ -22,12 +22,14 @@ import { UserFormComponent } from 'app/views/admin/users/user.form';
 	styleUrls: ['user.form.css'],
 	providers: [
 		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] },
+		{ provide: ProviderService, useFactory: DataServiceFactory(ProviderService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 
 export class RegisterFormComponent extends UserFormComponent implements OnInit {
 
+	protected hasActivities: boolean = false;
 
 	ngOnInit(): void {
 		this.user = new User();

@@ -16,7 +16,6 @@ import { Tag } from 'app/models/tag';
 
 import {
 	DataServiceFactory,
-	ActivityService,
 	AddressService,
 	SuburbService,
 	TagService,
@@ -27,14 +26,15 @@ import { AuthenticationService } from 'app/services/authentication.service';
 import { NominatimService } from 'app/services/nominatim';
 import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
+import { ActivityService } from 'app/services/activity.service';
 
 
 @Component({
-	selector: 'edit-activity',
+	selector: 'activity-form',
 	templateUrl: 'activity.form.html',
 	styleUrls: ['../../../app.component.css'],
 	providers: [
-		{ provide: ActivityService, useFactory: DataServiceFactory(ActivityService), deps: [HttpClient, AuthenticationService] },
+		ActivityService,
 		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TagService, useFactory: DataServiceFactory(TagService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] }
@@ -53,7 +53,7 @@ export class ActivityFormComponent implements OnInit {
 	nominatimAddress: Address;
 
 	constructor(
-		@Inject(ActivityService) private activityService: DataService,
+		private activityService: ActivityService,
 		@Inject(AddressService) private addressService: DataService,
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,

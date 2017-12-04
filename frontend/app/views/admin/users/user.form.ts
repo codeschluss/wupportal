@@ -36,6 +36,7 @@ export class UserFormComponent implements OnInit {
 	protected user: User;
 	protected userForm: FormGroup;
 	protected passwordGroup: FormGroup;
+	protected hasActivities: boolean = true;
 
 	protected allOrganisations: Array<Organisation>;
 	protected initialOrganisations: Array<string> = [];
@@ -58,7 +59,6 @@ export class UserFormComponent implements OnInit {
 		this.toDeleteProviders.length === 0
 			? this.updateUser()
 			: this.deleteProviders().subscribe(results => this.updateUser());
-		this.location.back();
 	}
 
 	updateUser(): void {

@@ -13,4 +13,10 @@ use App\Controller\AppController;
 class ProvidersController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['add','index', 'view']);
+    }
+
 }

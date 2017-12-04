@@ -1,10 +1,11 @@
-import { Component, AfterViewInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 
 import { DataSource } from '@angular/cdk/table';
 
-import { DataServiceFactory, ActivityService } from 'app/services/data.service.factory';
+import { DataServiceFactory } from 'app/services/data.service.factory';
+import { ActivityService } from 'app/services/activity.service';
 import { Activity } from 'app/models/activity';
 import { DataService } from 'app/services/data.service';
 import { Constants } from 'app/views/common/constants';
@@ -12,23 +13,33 @@ import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
 
 @Component({
-	selector: 'edit-activity',
+	selector: 'activity-table',
 	styleUrls: ['../table.abstract.css'],
 	templateUrl: 'activity.table.html',
-	providers: [
-		{ provide: ActivityService, useFactory: DataServiceFactory(ActivityService), deps: [HttpClient, AuthenticationService] }
-	]
+	providers: [ActivityService]
 })
 
-export class ActivityTableComponent extends AbstractTableComponent {
+export class ActivityTableComponent extends AbstractTableComponent implements OnInit {
+
+	@Input() user: boolean = false;
 
 	displayedColumns: Array<string> = ['name', 'description', 'schedule', 'provider', 'tags', 'target_groups', 'action'];
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
 	constructor(
-		@Inject(ActivityService) protected dataService: DataService,
+		protected dataService: ActivityService,
 		protected constants: Constants,
 		protected deleteDialog: MatDialog) {
 		super(dataService, constants, deleteDialog);
 	}
+
+	fetchData(): void {
+		console.log('ActivityTableComponent', this.user);
+		this.user
+			? this.dataService.getByProviders(this.tableState)
+				.subscribe(data => this.handleResponse(data))
+			: this.dataService.list(this.tableState)
+				.subscribe(data => this.handleResponse(data));
+	}
+
 }

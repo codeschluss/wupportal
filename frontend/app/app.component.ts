@@ -14,7 +14,7 @@ import { DetailsComponent } from 'app/views/details';
 // import { FilterComponent } from 'app/views/filter';
 import { MappingComponent } from 'app/views/mapping';
 
-import { ActivityService } from 'app/services/activity';
+import { ActivityService } from 'app/services/activity.service';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
 

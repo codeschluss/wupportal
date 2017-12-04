@@ -14,13 +14,13 @@ import { AuthenticationService } from 'app/services/authentication.service';
 @Injectable()
 export class DataService {
 
-	private endpoint: string = '/api/';
-	private baseUrl: string;
+	protected endpoint: string = '/api/';
+	protected baseUrl: string;
 
 	constructor(
-		private http: HttpClient,
-		private repository: string,
-		private authService: AuthenticationService
+		protected http: HttpClient,
+		protected repository: string,
+		protected authService: AuthenticationService
 	) {
 		this.baseUrl = this.endpoint + repository + '/';
 	}

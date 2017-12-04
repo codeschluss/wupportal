@@ -34,8 +34,8 @@ export class DataService {
 		});
 	}
 
-	public delete(record: any): Observable<any> {
-		return this.http.delete(this.baseUrl + record.id, {
+	public delete(recordID: any): Observable<any> {
+		return this.http.delete(this.baseUrl + recordID, {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())
 		});

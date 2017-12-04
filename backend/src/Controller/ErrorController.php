@@ -53,7 +53,7 @@ class ErrorController extends AppController
     {
         parent::beforeRender($event);
 
-        $this->viewBuilder()->viewBuilder()->className('Json');
+        $this->viewBuilder()->className('Json');
     }
 
     /**

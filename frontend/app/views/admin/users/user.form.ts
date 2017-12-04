@@ -55,6 +55,8 @@ export class UserFormComponent implements OnInit {
 
 	onSubmit(): void {
 		this.setData();
+		console.log('toDeleteProviders', this.toDeleteProviders);
+		console.log('this.user', this.user);
 		this.deleteProviders().subscribe(results =>
 			this.userService.edit(this.user)
 				.map(data => data.records as User)
@@ -69,7 +71,6 @@ export class UserFormComponent implements OnInit {
 	deleteProviders(): Observable<any> {
 		const list = [];
 		for (const providerID of this.toDeleteProviders) {
-			console.log('providerID', providerID);
 			list.push(this.providerService.delete(providerID));
 		}
 		return forkJoin(list);
@@ -88,22 +89,26 @@ export class UserFormComponent implements OnInit {
 
 	// TODO: Check for easier method...
 	getProvidersToDelete(): void {
-		console.log('this.organisationsCtrl.value', this.organisationsCtrl.value);
-		for (const intialProvider of this.user.providers) {
-			if (intialProvider && !this.organisationsCtrl.value.includes(intialProvider.organisation_id)) {
-				console.log('intialProvider', intialProvider);
-				this.toDeleteProviders.push(intialProvider.id);
+		this.user.providers = this.user.providers.filter(provider => {
+			const deleted = !this.organisationsCtrl.value.includes(provider.organisation_id);
+			if (deleted) {
+				this.toDeleteProviders.push(provider.id);
 			}
-		}
+			return !deleted;
+		});
+		console.log('getProvidersToDelete', this.user);
 	}
 
 	// TODO: Check for easier method...
 	createProviders(): void {
+		console.log('createProviders - before', this.user);
 		outer:
 		for (const orga_id of this.organisationsCtrl.value) {
 			if (orga_id) {
 				for (const intialProvider of this.user.providers) {
 					if (intialProvider.organisation_id === orga_id) {
+						intialProvider.organisation = undefined;
+						intialProvider.user = undefined;
 						continue outer;
 					}
 				}
@@ -117,6 +122,7 @@ export class UserFormComponent implements OnInit {
 				this.user.providers.push(provider);
 			}
 		}
+		console.log('getProvidersToDelete - after', this.user);
 	}
 
 	back(): void {

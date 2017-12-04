@@ -13,6 +13,7 @@ export class Activity extends Model {
 	public schedule: string = '';
 	public showUser: boolean = false;
 
+	public address_id: string = '';
 	public address: Address = new Address();
 	public provider: Provider = new Provider();
 	public category: Category = new Category();

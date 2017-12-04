@@ -2,7 +2,7 @@
 
 	<div class="activities-table-header">
 		<mat-form-field>
-			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+			<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
 		</mat-form-field>
 	</div>
 
@@ -19,6 +19,11 @@
 			<mat-cell *matCellDef="let row">{{ row.description }}</mat-cell>
 		</ng-container>
 
+		<ng-container matColumnDef="provider">
+			<mat-header-cell *matHeaderCellDef> {{ constants.organisation }} </mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.provider.organisation.name }}</mat-cell>
+		</ng-container>
+
 		<ng-container matColumnDef="schedule">
 			<mat-header-cell *matHeaderCellDef>{{ constants.dates }}</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.schedule }}</mat-cell>
@@ -28,7 +33,7 @@
 			<mat-header-cell *matHeaderCellDef>{{ constants.tags }}</mat-header-cell>
 			<mat-cell *matCellDef="let row">
 				<mat-chip-list>
-					<mat-chip color="primary" selected="true" *ngFor="let tag of row?.tags">{{ tag.name }}</mat-chip>
+					<span *ngFor="let tag of row?.tags">{{tag.name + ' | '}}</span>
 				</mat-chip-list>
 			</mat-cell>
 		</ng-container>

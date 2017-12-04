@@ -43,7 +43,7 @@ import { OrganisationFormComponent } from 'app/views/admin/organisations/organis
 import { ActivityFormComponent } from 'app/views/admin/activities/activity.form';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 
-import { ActivityService } from 'app/services/activity';
+// import { ActivityService } from 'app/services/activity';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
 import { ValidationService } from 'app/services/validation.service';
@@ -109,7 +109,7 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 
 	],
 	providers: [
-		ActivityService,
+		// ActivityService,
 		LocationService,
 		NominatimService,
 		Constants,

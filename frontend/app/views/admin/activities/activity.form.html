@@ -1,31 +1,50 @@
-<div>
-	<mat-card class="example-card" *ngIf="activity$ | async as activity">
-		<form class="well">
+<div class="edit-container">
+	<mat-card class="activity-edit-card" *ngIf="activity">
+		<form #activityForm="ngForm" (ngSubmit)="onSubmit()" class="well">
 			<mat-card-header>
-				<mat-form-field class="form-control">
-					<input matInput type=text placeholder="name" name="name" value={{activity.name}} id="activity_name_field">
-				</mat-form-field>
+				<h2>{{ activity.name }}</h2>
 			</mat-card-header>
-			<mat-form-field class="form-control">
-				<textarea matInput type=text placeholder="description" name="description" value={{activity.description}} id="activity_description_field"></textarea>
+
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="activity.name" placeholder={{constants.name}} name="name" value={{activity.name}}
+				 required [errorStateMatcher]="validation" id="activity_name_field">
 			</mat-form-field>
 
-			<mat-form-field class="form-control">
-				<input matInput type=text placeholder="schedule" name="schedule" value={{activity.schedule}} id="activity_schedule_field">
+			<mat-form-field class="edit-form-full-width">
+				<textarea matInput type=text [(ngModel)]="activity.description" placeholder="{{constants.description}}" name="description"
+				 value={{activity.description}} id="activity_description_field"></textarea>
 			</mat-form-field>
 
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="activity.schedule" placeholder="{{constants.dates}}" name="schedule" value={{activity.schedule}}
+				 id="activity_schedule_field">
+			</mat-form-field>
 
-			<mat-selection-list #tags>
-				<mat-list-option *ngFor="let tag of tags" selected="true">
-					{{tag}}
+			<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [formControl]="tagsCtrl" placeholder="{{constants.tags}}" name="tags" id="activity_tags">
+			</mat-form-field>
+
+			<h2 class="edit-form-three-column-width">{{constants.targetGroups}}</h2>
+			<mat-selection-list class="edit-form-three-column-width" *ngIf="targetGroups">
+				<mat-list-option *ngFor="let targetGroup of targetGroups" selected={{containsEntry(targetGroup,activity.target_groups)}}>
+					{{targetGroup.name}}
 				</mat-list-option>
 			</mat-selection-list>
-			<p>
-				ausgewählte tags: {{shoes.selectedOptions.selected.length}}
-			</p>
 
-			<button mat-raised-button type="submit">Submit</button>
-			<button mat-raised-button (click)="back()">Zurück</button>
+			<mat-card class="address-card">
+				<mat-form-field class="edit-form-full-width">
+					<input matInput name="address" placeholder={{constants.address}} [matAutocomplete]="auto" [formControl]="addressCtrl">
+					<mat-autocomplete #auto="matAutocomplete" [displayWith]="toString">
+						<mat-option *ngFor="let address of filteredAddresses | async" [value]="address">
+							{{ toString(address) }}
+						</mat-option>
+					</mat-autocomplete>
+				</mat-form-field>
+			</mat-card>
+
+			<button mat-raised-button type="submit">{{constants.save}}</button>
 		</form>
+		<button mat-raised-button (click)="back()">{{constants.back}}</button>
 	</mat-card>
 </div>

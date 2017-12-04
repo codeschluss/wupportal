@@ -34,3 +34,7 @@ mapping-component {
 .edit-form-full-width {
 	width: 75%;
 }
+
+.edit-form-three-column-width {
+	width: 25%;
+}

@@ -9,13 +9,17 @@ import { NgForm, FormControl } from '@angular/forms';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 
-import { DataServiceFactory, OrganisationService, AddressService, SuburbService } from 'app/services/data.service.factory';
+import {
+	DataServiceFactory,
+	OrganisationService,
+	AddressService,
+	SuburbService
+} from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { NominatimService } from 'app/services/nominatim';
 import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
-
 import { AuthenticationService } from 'app/services/authentication.service';
 
 import { Organisation } from 'app/models/organisation';
@@ -112,7 +116,6 @@ export class OrganisationFormComponent implements OnInit {
 				this.nominatimAddress = data;
 				if (!this.checkAddress(this.nominatimAddress)) {
 					this.controlAddress(this.nominatimAddress).subscribe(result => {
-						console.log('result: ' + result);
 						this.nominatimAddress = result;
 						if (this.findExistingAddress(this.nominatimAddress)) {
 							this.back();

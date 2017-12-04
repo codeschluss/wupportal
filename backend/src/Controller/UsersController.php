@@ -57,6 +57,9 @@ class UsersController extends AppController
     public function add()
     {
         $request = json_decode($this->request->input(), true);
+
+
+
         // var_dump($user); exit;
         $this->data($this->table()->save(
             $this->table()->patchEntity(

@@ -64,10 +64,10 @@ Router::scope('/', function (RouteBuilder $routes) {
         ]]];
 
         $routes->resources('Activities', $list);
-        $routes->resources('Activities', ['map' => ['getByProvider' => [
-            'action' => 'getByProvider',
+        $routes->resources('Activities', ['map' => ['getByProviders' => [
+            'action' => 'getByProviders',
             'method' => 'POST',
-            'path' => '/getByProvider'
+            'path' => '/getByProviders'
         ]]]);
 
         $routes->resources('Addresses', $list);

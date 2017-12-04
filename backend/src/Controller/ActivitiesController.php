@@ -52,7 +52,7 @@ class ActivitiesController extends AppController
          * getByProvider TODO: Duplicate code
          *
          */
-        public function getByProvider()
+        public function getByProviders()
         {
             // var_dump($request); exit;
             $query = $this->table()->find()->group($this->name . '.id');
@@ -74,8 +74,14 @@ class ActivitiesController extends AppController
                     ->order([$request->sort->active => $request->sort->direction]);
             }
 
-            if (!empty($request->providerID)) {
-                $query->where(['Providers.id' => $request->providerID]);
+            if (!empty($request->providers)) {
+                $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+                    $whereClause = [];
+                    foreach ($request->providers as $provider) {
+                        $whereClause[] = ['Providers.id' => $provider];
+                    }
+                    return $whereClause;
+                }]);
             }
             if (!empty($request->filter)) {
                 $query->where(['OR' => function($exp, $q) use (&$field, &$request) {

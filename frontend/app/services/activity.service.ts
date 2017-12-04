@@ -19,7 +19,7 @@ export class ActivityService extends DataService {
 
 
 	public getByProviders(tableState: TableState): Observable<DataResponse> {
-		const request = Object.assign(tableState, this.createProvidersList());
+		const request = Object.assign(tableState, this.createProvidersParam());
 		console.log(request);
 		return this.http.post(this.baseUrl + 'getByProviders', JSON.stringify(request), {
 			headers: new HttpHeaders()

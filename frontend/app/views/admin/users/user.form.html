@@ -69,7 +69,14 @@
 		</mat-card>
 	</form>
 </div>
-<div *ngIf="hasActivities">
-	<activity-table user={{true}}>
-	</activity-table>
-</div>
+<mat-card *ngIf="hasActivities">
+	<mat-card-header>
+		<mat-card-title>
+			<h2>{{constants.activities}}</h2>
+		</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<activity-table user={{true}}>
+		</activity-table>
+	</mat-card-content>
+</mat-card>

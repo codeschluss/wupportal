@@ -20,7 +20,9 @@ $this->layout = false;
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Wupportal</title>
-	<base href="/">
+    <base href="/">
+    <link rel="stylesheet" href="styles/deeppurple-amber.css">
+    <link rel="stylesheet" href="styles/font-awesome.min.css">
 </head>
 
 <body>
@@ -28,6 +30,6 @@ $this->layout = false;
 	<script src="js/inline.bundle.js"></script>
 	<script src="js/polyfills.bundle.js"></script>
 	<script src="js/vendor.bundle.js"></script>
-	<script src="js/main.bundle.js"></script>
+    <script src="js/main.bundle.js"></script>
 </body>
 </html>

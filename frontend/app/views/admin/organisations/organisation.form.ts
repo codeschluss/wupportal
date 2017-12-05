@@ -41,7 +41,7 @@ import { ProviderService } from 'app/services/provider.service';
 
 export class OrganisationFormComponent implements OnInit {
 	organisation: Organisation;
-	addresses: Address[];
+	addresses: Address[] = [];
 	filteredAddresses: Observable<Address[]>;
 	addressCtrl: FormControl;
 	nominatimAddress: Address;
@@ -61,25 +61,30 @@ export class OrganisationFormComponent implements OnInit {
 		private nominatimService: NominatimService,
 		public validation: ValidationService
 	) {
-		this.addressService.getAll().subscribe((data) => this.addresses = data.records);
+		this.addressService.getAll().subscribe((data) => {
+			for (const add of data.records) {
+				this.addresses.push(new Address(add));
+			}
+		});
 	}
 
 	ngOnInit(): void {
 		this.route.paramMap
 			.switchMap((params: ParamMap) =>
-				this.organisationService.get(params.get('id'))).subscribe((data) => {
-					this.organisation = data.records;
-					this.addressCtrl = new FormControl(data.records.address);
+				this.organisationService.get(params.get('id'))).map(data => new Organisation(data.records)).subscribe((organisation) => {
+					this.organisation = organisation;
+					this.addressCtrl = new FormControl(this.organisation.address);
 					this.filteredAddresses = this.addressCtrl.valueChanges
 						.startWith(<any>[])
-						.map(address => address && typeof address === 'object' ? this.toString(address) : address)
+						.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
 						.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
 				});
 	}
 
-	filterAddresses(name: string): Address[] {
+	filterAddresses(query: string): Address[] {
+		console.log('filter: ' + query);
 		return this.addresses.filter(address =>
-			this.toString(address).toLocaleLowerCase().indexOf(name.toLowerCase()) !== -1);
+			address.toString.toLocaleLowerCase().indexOf(query.toLowerCase()) !== -1);
 	}
 
 	toString(address: any): string {
@@ -87,41 +92,40 @@ export class OrganisationFormComponent implements OnInit {
 			return address;
 		}
 		if (typeof address === 'object') {
-			return (address.street + ' ' + address.house_number + ' ' + address.postal_code + ' ' +
-				address.place + ' ' + (address.suburb ? address.suburb.name : ''));
+			return new Address(address).toString;
 		}
 	}
 
-	compareAddresses(address1: Address, address2: Address): boolean {
-		if (address1.street.toLocaleLowerCase().localeCompare(address2.street.toLocaleLowerCase()) === 0 &&
-			address1.house_number.toLocaleLowerCase().localeCompare(address2.house_number.toLocaleLowerCase()) === 0 &&
-			address1.postal_code.toLocaleLowerCase().localeCompare(address2.postal_code.toLocaleLowerCase()) === 0 &&
-			address1.place.toLocaleLowerCase().localeCompare(address2.place.toLocaleLowerCase()) === 0
-		) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// compareAddresses(address1: Address, address2: Address): boolean {
+	// 	if (address1.street.toLocaleLowerCase().localeCompare(address2.street.toLocaleLowerCase()) === 0 &&
+	// 		address1.house_number.toLocaleLowerCase().localeCompare(address2.house_number.toLocaleLowerCase()) === 0 &&
+	// 		address1.postal_code.toLocaleLowerCase().localeCompare(address2.postal_code.toLocaleLowerCase()) === 0 &&
+	// 		address1.place.toLocaleLowerCase().localeCompare(address2.place.toLocaleLowerCase()) === 0
+	// 	) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 
-	checkAddress(address: Address): boolean {
-		if (address.house_number &&
-			address.place &&
-			address.postal_code &&
-			address.street) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// checkAddress(address: Address): boolean {
+	// 	if (address.house_number &&
+	// 		address.place &&
+	// 		address.postal_code &&
+	// 		address.street) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 
 	onSubmit(): void {
 		if (typeof this.addressCtrl.value === 'string') {
-			this.nominatimService.get(this.toString(this.addressCtrl.value)).subscribe((data) => {
-				this.nominatimAddress = data;
-				if (!this.checkAddress(this.nominatimAddress)) {
+			this.nominatimService.get(this.addressCtrl.value).subscribe((data) => {
+				this.nominatimAddress = new Address(data);
+				if (!this.nominatimAddress.checkAddress) {
 					this.controlAddress(this.nominatimAddress).subscribe(result => {
-						this.nominatimAddress = result;
+						this.nominatimAddress = new Address(result);
 						if (this.findExistingAddress(this.nominatimAddress)) {
 							this.back();
 							return;
@@ -154,7 +158,7 @@ export class OrganisationFormComponent implements OnInit {
 
 	findExistingAddress(address: Address): boolean {
 		for (const currAddress of this.addresses) {
-			if (this.compareAddresses(currAddress, this.nominatimAddress)) {
+			if (currAddress.compareTo(this.nominatimAddress)) {
 				this.organisation.address_id = currAddress.id;
 				this.organisationService.edit(this.organisation);
 				return true;
@@ -189,7 +193,7 @@ export class OrganisationFormComponent implements OnInit {
 			data: {
 				name: '',
 				message: 'Sie haben eien neue Adresse eingegeben. Bitte geben Sie den entsprechenden Stadtteil ein.'
-					+ this.toString(newAddress),
+					+ newAddress.toString,
 				address: newAddress
 			}
 		});

@@ -19,7 +19,7 @@ export class LocationService extends Service<Address> {
 	public edit(item: Address): void { return; }
 
 	public get(query: string = null): Observable<Address> {
-		const address = new Address();
+		const address = new Address({});
 
 		if ('geolocation' in navigator) {
 			navigator.geolocation.getCurrentPosition((pos) => {

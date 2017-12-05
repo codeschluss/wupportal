@@ -31,6 +31,7 @@ export class ProviderTableComponent extends AbstractTableComponent {
 	}
 
 	fetchData(): void {
+		console.log('fetchData');
 		if (this.organisationID) {
 			this.dataService
 				.getByOrganisation(this.tableState, this.organisationID)

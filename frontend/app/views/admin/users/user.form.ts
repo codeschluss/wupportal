@@ -114,7 +114,7 @@ export class UserFormComponent implements OnInit {
 						continue outer;
 					}
 				}
-				const provider = new Provider();
+				const provider = new Provider({});
 
 				provider.organisation_id = orga_id;
 				provider.user_id = this.user.id;

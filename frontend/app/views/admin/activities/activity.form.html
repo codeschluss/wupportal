@@ -22,7 +22,7 @@
 						<mat-panel-title>
 							{{constants.dates}}
 						</mat-panel-title>
-						von {{activity.schedule.start_date}} bis {{activity.schedule.end_date}}
+						von {{activity.schedule.startTime}} bis {{activity.schedule.endTime}}
 					</mat-expansion-panel-header>
 					<mat-form-field>
 						<input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="activity.schedule.start_date" placeholder={{constants.beginn}}
@@ -71,9 +71,6 @@
 				<button mat-raised-button *ngIf="activity.schedule.recurrence" type="button" (click)="removeRecurrence()">Lösche diese regelmäßigen Einträge</button>
 
 			</mat-accordion>
-
-
-
 
 			<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
 			<mat-form-field class="edit-form-full-width">

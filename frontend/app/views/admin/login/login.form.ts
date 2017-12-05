@@ -12,7 +12,7 @@ import { Constants } from 'app/services/constants';
 })
 export class LoginFormComponent implements OnInit {
 
-	user: User = new User();
+	user: User = new User({});
 	loading: boolean = false;
 	error: string = '';
 

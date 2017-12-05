@@ -81,18 +81,22 @@ export class ActivityFormComponent implements OnInit {
 	ngOnInit(): void {
 		this.route.paramMap
 			.switchMap((params: ParamMap) =>
-				this.activityService.get(params.get('id'))).subscribe((data) => {
-					this.activity = data.records;
-					this.initTags();
-					this.addressCtrl = new FormControl(data.records.address);
-					this.targetGroupCtrl = data.records.target_groups ? new FormControl(this.initCtrl(data.records.target_groups)) : new FormControl();
-					this.weekDaysCtrl = (data.records.schedule && data.records.schedule.recurrence && data.records.schedule.recurrence.week_days) ?
-						new FormControl(this.initCtrl(data.records.schedule.recurrence.week_days)) : new FormControl();
-					this.filteredAddresses = this.addressCtrl.valueChanges
-						.startWith(<any>[])
-						.map(address => address && typeof address === 'object' ? this.toString(address) : address)
-						.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
-				});
+				this.activityService.get(params.get('id')))
+			.map(data =>
+				new Activity(data.records)
+			).subscribe(activity => {
+				this.activity = activity;
+				this.initTags();
+				this.addressCtrl = new FormControl(this.activity.address);
+				this.targetGroupCtrl = this.activity.target_groups ?
+					new FormControl(this.initCtrl(this.activity.target_groups)) : new FormControl();
+				this.weekDaysCtrl = (this.activity.schedule && activity.schedule.recurrence && this.activity.schedule.recurrence.week_days) ?
+					new FormControl(this.initCtrl(this.activity.schedule.recurrence.week_days)) : new FormControl();
+				this.filteredAddresses = this.addressCtrl.valueChanges
+					.startWith(<any>[])
+					.map(address => address && typeof address === 'object' ? this.toString(address) : address)
+					.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
+			});
 	}
 
 	initCtrl(array: any[]): string[] {
@@ -167,11 +171,11 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	generateSchedule(): void {
-		this.activity.schedule = new Schedule();
+		this.activity.schedule = new Schedule({});
 	}
 
 	generateRecurrence(): void {
-		this.activity.schedule.recurrence = new Recurrence();
+		this.activity.schedule.recurrence = new Recurrence({});
 	}
 
 	removeRecurrence(): void {
@@ -189,7 +193,7 @@ export class ActivityFormComponent implements OnInit {
 				});
 		});
 		if (typeof this.addressCtrl.value === 'string') {
-			this.nominatimService.get(this.toString(this.addressCtrl.value)).subscribe((data) => {
+			this.nominatimService.get(this.toString(this.addressCtrl.value)).subscribe(data => {
 				this.nominatimAddress = data;
 				if (!this.checkAddress(this.nominatimAddress)) {
 					this.controlAddress(this.nominatimAddress).subscribe(result => {
@@ -199,6 +203,7 @@ export class ActivityFormComponent implements OnInit {
 							return;
 						}
 						this.activity.address = null;
+						this.activity.address_id = null;
 						this.openDialog(this.nominatimAddress);
 					});
 				} else {
@@ -206,13 +211,14 @@ export class ActivityFormComponent implements OnInit {
 						this.back();
 						return;
 					}
-					this.activity.address = null;
+					this.activity.address = undefined;
 					this.openDialog(this.nominatimAddress);
 				}
 			});
 		} else {
 			if (this.addressCtrl.value.id) {
 				if (this.addressCtrl.value.id !== this.activity.address_id) {
+					this.activity.address = null;
 					this.activity.address_id = this.addressCtrl.value.id;
 				}
 			}

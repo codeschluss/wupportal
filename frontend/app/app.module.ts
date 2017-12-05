@@ -61,6 +61,8 @@ import { DialogComponent } from 'app/views/common/popup.component';
 import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 
+import { TableBoolComponent } from 'app/views/admin/table/bool.table';
+
 @NgModule({
 	bootstrap: [
 		AppComponent
@@ -85,7 +87,9 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 		UserFormComponent,
 		DialogComponent,
 		SuburbSelectionComponent,
-		AddressFormComponent
+		AddressFormComponent,
+
+		TableBoolComponent
 	],
 	imports: [
 		AngularOpenlayersModule,

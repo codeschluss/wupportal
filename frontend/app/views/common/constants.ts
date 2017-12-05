@@ -45,6 +45,7 @@ export class Constants {
 	public orAreEmptyMessage: string = 'oder sind leer';
 	public beginn: string = 'Anfang';
 	public end: string = 'Ende';
+	public deleteFromOrganisation: string = 'Aus Organisation löschen';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';
@@ -72,6 +73,7 @@ export class Constants {
 	public activities: string = 'Aktivitäten';
 	public activity: string = 'Aktivität';
 	public account: string = 'Konto';
+	public admin: string = 'Admin';
 
 	public error: string = 'Fehler';
 

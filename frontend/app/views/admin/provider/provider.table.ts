@@ -21,7 +21,7 @@ export class ProviderTableComponent extends AbstractTableComponent {
 
 	@Input() organisationID: string;
 
-	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'action'];
+	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'makeAdmin', 'deleteAdmin', 'delete'];
 	dataSource: MatTableDataSource<Provider> = new MatTableDataSource<Provider>();
 
 	constructor(

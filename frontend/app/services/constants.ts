@@ -65,6 +65,7 @@ export class Constants {
 	public weekDays: string = 'Wochentage';
 	public tags: string = 'Tags';
 	public targetGroups: string = 'Zielgruppen';
+	public category: string = 'Kategorie';
 
 	public organisations: string = 'Organisationen';
 	public organisation: string = 'Organisation';

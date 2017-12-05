@@ -20,7 +20,8 @@ export class Activity extends Model {
 		if (json.address) { this.address = new Address(json.address); }
 		this.provider_id = json.provider_id;
 		if (json.provider) { this.provider = new Provider(json.provider); }
-		this.category = json.category;
+		this.category_id = json.category_id;
+		if (json.category) { this.category = new Category(json.category); }
 		if (this.schedule) { this.schedule = new Schedule(json.schedule); }
 		this.tags = json.tags;
 		this.target_groups = json.target_groups;
@@ -35,6 +36,7 @@ export class Activity extends Model {
 	public address: Address = null;
 	public provider_id: string = '';
 	public provider: Provider = null;
+	public category_id: Category = null;
 	public category: Category = null;
 
 	public schedule: Schedule = null;

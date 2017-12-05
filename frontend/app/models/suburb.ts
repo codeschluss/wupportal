@@ -4,6 +4,7 @@ export class Suburb extends Model {
 
 	constructor(json: any) {
 		super();
+		this.id = json.id;
 		this.name = json.name;
 	}
 

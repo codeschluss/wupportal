@@ -13,8 +13,7 @@ export class Address extends Model {
 		this.street = json.street;
 		this.postal_code = json.postal_code;
 		this.suburb_id = json.suburb_id;
-
-		this.suburb = json.suburb ? new Suburb(json.suburb) : null;
+		if (json.suburb) { this.suburb = new Suburb(json.suburb); }
 	}
 
 	public latitude: number = 0;

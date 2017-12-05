@@ -12,6 +12,7 @@ export const AddressService = new InjectionToken<DataService>('addresses');
 export const SuburbService = new InjectionToken<DataService>('suburbs');
 export const CategoryService = new InjectionToken<DataService>('categories');
 export const ConfigurationService = new InjectionToken<DataService>('configurations');
+export const WeekDaysService = new InjectionToken<DataService>('week_days');
 
 export function DataServiceFactory(service: InjectionToken<DataService>): any {
 	const repository = service.toString().replace('InjectionToken ', '');

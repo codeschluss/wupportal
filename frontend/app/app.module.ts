@@ -15,6 +15,8 @@ import { MatExpansionModule } from '@angular/material';
 import { MatIconModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatTabsModule } from '@angular/material';
+import { MatRippleModule } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material'
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -23,7 +25,8 @@ import { MatFormFieldModule, MatSortModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatListModule } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';;
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from 'app/app.component';
@@ -111,6 +114,7 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 		MatDialogModule,
 		MatChipsModule,
 		MatListModule,
+		MatDatepickerModule,
 
 	],
 	providers: [
@@ -126,6 +130,8 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 		DialogComponent,
 		SuburbSelectionComponent,
 		AddressFormComponent
+	], exports: [
+		MatNativeDateModule,
 	]
 })
 

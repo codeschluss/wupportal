@@ -15,8 +15,65 @@
 				 value={{activity.description}} id="activity_description_field"></textarea>
 			</mat-form-field>
 
-			Aktivität findet im {{activity.schedule.recurrence.weekly_period}} wöchentlicher Rythmus statt.
-			<div *ngFor="let entry of activity.schedule.recurrence.week_days">{{entry.name}}</div>
+			<button mat-raised-button *ngIf="!activity.schedule" type="button" (click)="generateSchedule()">Erstelle einen Termin</button>
+			<mat-accordion *ngIf="activity.schedule">
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{constants.dates}}
+						</mat-panel-title>
+						von {{activity.schedule.start_date}} bis {{activity.schedule.end_date}}
+					</mat-expansion-panel-header>
+					<mat-form-field>
+						<input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="activity.schedule.start_date" placeholder={{constants.beginn}}
+						 name="schedule_start_by">
+						<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+						<mat-datepicker #pickerStartDate></mat-datepicker>
+					</mat-form-field>
+					<mat-form-field>
+						<input matInput [matDatepicker]="pickerEndDate" [(ngModel)]="activity.schedule.end_date" placeholder={{constants.end}} name="schedule_end_by">
+						<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+						<mat-datepicker #pickerEndDate></mat-datepicker>
+					</mat-form-field>
+
+
+				</mat-expansion-panel>
+				<div *ngIf="activity.schedule.recurrence">
+					<mat-expansion-panel (opened)="activity.schedule.recurrence">
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								{{constants.choose + ' ' + constants.dates}}
+							</mat-panel-title>
+							<mat-panel-description>
+								Veranstaltung ist {{activity.schedule.recurrence ? 'wiederkehrend' : 'einmalig'}}
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+						<mat-form-field>
+							<input matInput [matDatepicker]="pickerStart" [(ngModel)]="activity.schedule.recurrence.beginn_by" placeholder={{constants.beginn}}
+							 name="recurrence_beginn_by">
+							<mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+							<mat-datepicker #pickerStart></mat-datepicker>
+						</mat-form-field>
+						<mat-form-field>
+							<input matInput [matDatepicker]="pickerEnd" [(ngModel)]="activity.schedule.recurrence.end_by" placeholder={{constants.end}}
+							 name="recurrence_end_by">
+							<mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+							<mat-datepicker #pickerEnd></mat-datepicker>
+						</mat-form-field>
+						<mat-form-field>
+							<mat-select placeholder={{constants.weekDays}} [formControl]="weekDaysCtrl" multiple>
+								<mat-option *ngFor="let weekDay of weekDays" [value]="weekDay.id">{{weekDay.name}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</mat-expansion-panel>
+				</div>
+				<button mat-raised-button *ngIf="!activity.schedule.recurrence" type="button" (click)="generateRecurrence()">Erstelle einen regelmäßigen Termin</button>
+				<button mat-raised-button *ngIf="activity.schedule.recurrence" type="button" (click)="removeRecurrence()">Lösche diese regelmäßigen Einträge</button>
+
+			</mat-accordion>
+
+
+
 
 			<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
 			<mat-form-field class="edit-form-full-width">

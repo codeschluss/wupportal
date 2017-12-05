@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgForm, FormControl } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -13,10 +14,14 @@ import { Activity } from 'app/models/activity';
 import { Address } from 'app/models/address';
 import { TargetGroup } from 'app/models/target-group';
 import { Tag } from 'app/models/tag';
+import { Schedule } from 'app/models/schedule';
+import { Recurrence } from 'app/models/recurrence';
+import { WeekDay } from 'app/models/week-day';
 
 import {
 	DataServiceFactory,
 	AddressService,
+	WeekDaysService,
 	SuburbService,
 	TagService,
 	TargetGroupService
@@ -37,7 +42,8 @@ import { ActivityService } from 'app/services/activity.service';
 		ActivityService,
 		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TagService, useFactory: DataServiceFactory(TagService), deps: [HttpClient, AuthenticationService] },
-		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] }
+		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] },
+		{ provide: WeekDaysService, useFactory: DataServiceFactory(WeekDaysService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 
@@ -45,8 +51,10 @@ export class ActivityFormComponent implements OnInit {
 
 	activity: Activity;
 	targetGroups: TargetGroup[];
+	weekDays: WeekDay[];
 	addressCtrl: FormControl;
 	tagsCtrl: FormControl;
+	weekDaysCtrl: FormControl;
 	targetGroupCtrl: FormControl;
 	addresses: Address[];
 	filteredAddresses: Observable<Address[]>;
@@ -57,6 +65,7 @@ export class ActivityFormComponent implements OnInit {
 		@Inject(AddressService) private addressService: DataService,
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
+		@Inject(WeekDaysService) private weekDaysService: DataService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -66,6 +75,7 @@ export class ActivityFormComponent implements OnInit {
 	) {
 		this.addressService.getAll().subscribe((data) => this.addresses = data.records);
 		this.targetGroupService.getAll().subscribe((data) => this.targetGroups = data.records);
+		this.weekDaysService.getAll().subscribe((data) => this.weekDays = data.records);
 	}
 
 	ngOnInit(): void {
@@ -75,7 +85,9 @@ export class ActivityFormComponent implements OnInit {
 					this.activity = data.records;
 					this.initTags();
 					this.addressCtrl = new FormControl(data.records.address);
-					this.targetGroupCtrl = new FormControl(this.initTargetGroupCtrl(data.records.target_groups));
+					this.targetGroupCtrl = data.records.target_groups ? new FormControl(this.initCtrl(data.records.target_groups)) : new FormControl();
+					this.weekDaysCtrl = (data.records.schedule && data.records.schedule.recurrence && data.records.schedule.recurrence.week_days) ?
+						new FormControl(this.initCtrl(data.records.schedule.recurrence.week_days)) : new FormControl();
 					this.filteredAddresses = this.addressCtrl.valueChanges
 						.startWith(<any>[])
 						.map(address => address && typeof address === 'object' ? this.toString(address) : address)
@@ -83,12 +95,12 @@ export class ActivityFormComponent implements OnInit {
 				});
 	}
 
-	initTargetGroupCtrl(targetGroups: TargetGroup[]): string[] {
-		const targetGroupIds: string[] = [];
-		for (const tg of targetGroups) {
-			targetGroupIds.push(tg.id);
+	initCtrl(array: any[]): string[] {
+		const ids: string[] = [];
+		for (const item of array) {
+			ids.push(item.id);
 		}
-		return targetGroupIds;
+		return ids;
 	}
 
 	initTags(): void {
@@ -152,6 +164,18 @@ export class ActivityFormComponent implements OnInit {
 			target_groups.push(this.targetGroups.find(tg => tg.id === id));
 		}
 		return new Observable(observer => observer.next(target_groups));
+	}
+
+	generateSchedule(): void {
+		this.activity.schedule = new Schedule();
+	}
+
+	generateRecurrence(): void {
+		this.activity.schedule.recurrence = new Recurrence();
+	}
+
+	removeRecurrence(): void {
+		this.activity.schedule.recurrence = null;
 	}
 
 	onSubmit(): void {

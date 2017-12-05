@@ -79,7 +79,7 @@ Router::scope('/', function (RouteBuilder $routes) {
         $routes->resources('TargetGroups', $list);
         $routes->resources('Schedules', $list);
         $routes->resources('Recurrences', $list);
-
+        $routes->resources('WeekDays', $list);
         $routes->resources('Users', $list);
         $routes->resources('Users', ['map' => ['login' => [
             'action' => 'login',

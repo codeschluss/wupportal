@@ -28,7 +28,6 @@ class ActivitiesController extends AppController
             'TargetGroups',
             'Providers.Organisations',
             'Schedules',
-            // 'Schedules.Recurrences',
             'Schedules.Recurrences.WeekDays',
         ];
     }

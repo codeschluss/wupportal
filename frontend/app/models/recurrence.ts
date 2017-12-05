@@ -1,7 +1,7 @@
 import { Model } from 'app/models/model';
 import { WeekDay } from 'app/models/week-day';
 
-export class Reccurrence extends Model {
+export class Recurrence extends Model {
 
 	public id: string = '';
 	public weekly_period: number = 0;

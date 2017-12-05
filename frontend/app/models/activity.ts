@@ -19,7 +19,7 @@ export class Activity extends Model {
 	public provider: Provider = new Provider();
 	public category: Category = new Category();
 
-	public schedule: Schedule = new Schedule();
+	public schedule: Schedule = null;
 	public tags: Tag[] = [];
 	public target_groups: TargetGroup[] = [];
 	public translations: Translation[] = [];

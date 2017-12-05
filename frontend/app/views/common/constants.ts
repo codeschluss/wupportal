@@ -35,12 +35,16 @@ export class Constants {
 	public change: string = 'Ändern';
 	public edit: string = 'Bearbeiten';
 	public chosen: string = 'Ausgewählt';
+	public choose: string = 'wählen Sie';
+
 
 	public deleteMessage: string = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';
 	public emailFormatMessage: string = 'Feld muss Email Format haben';
 	public notSamePasswordMessage: string = 'Passwörter stimmen nicht überein';
 	public orAreEmptyMessage: string = 'oder sind leer';
+	public beginn: string = 'Anfang';
+	public end: string = 'Ende';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';
@@ -57,6 +61,7 @@ export class Constants {
 	public longitude: string = 'Längengrad';
 	public latitude: string = 'Breitengrad';
 	public dates: string = 'Termine';
+	public weekDays: string = 'Wochentage';
 	public tags: string = 'Tags';
 	public targetGroups: string = 'Zielgruppen';
 

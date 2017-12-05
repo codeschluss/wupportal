@@ -5,6 +5,7 @@ export class Recurrence extends Model {
 
 	constructor(json: any) {
 		super();
+		this.id = json.id;
 		this.weekly_period = json.weekly_period;
 		this.beginn_by = new Date(json.beginn_by);
 		this.end_by = new Date(json.end_by);

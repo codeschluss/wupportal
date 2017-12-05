@@ -4,6 +4,7 @@ export class Category extends Model {
 
 	constructor(json: any) {
 		super();
+		this.id = json.id;
 		this.name = json.name;
 		this.color = json.color;
 		this.description = json.description;

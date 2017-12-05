@@ -82,7 +82,6 @@ export class OrganisationFormComponent implements OnInit {
 	}
 
 	filterAddresses(query: string): Address[] {
-		console.log('filter: ' + query);
 		return this.addresses.filter(address =>
 			address.toString.toLocaleLowerCase().indexOf(query.toLowerCase()) !== -1);
 	}
@@ -143,11 +142,9 @@ export class OrganisationFormComponent implements OnInit {
 				}
 			});
 		} else {
-			if (this.addressCtrl.value.id) {
-				if (this.addressCtrl.value.id !== this.organisation.address_id) {
-					this.organisation.address_id = this.addressCtrl.value.id;
-				}
-			}
+			this.organisation.address = null;
+			this.organisation.address_id = this.addressCtrl.value.id;
+			this.organisationService.edit(this.organisation).subscribe(() => this.back());
 		}
 	}
 
@@ -196,7 +193,7 @@ export class OrganisationFormComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(() => {
 			this.addressService.add(this.nominatimAddress).subscribe((response) => {
 				this.organisation.address_id = response.records.id;
-				this.organisationService.edit(this.organisation);
+				this.organisationService.edit(this.organisation).subscribe();
 				this.back();
 			});
 		});

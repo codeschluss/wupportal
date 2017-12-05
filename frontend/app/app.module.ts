@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatTabsModule } from '@angular/material';
 import { MatRippleModule } from '@angular/material';
-import { MatNativeDateModule } from '@angular/material'
+import { MatNativeDateModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';

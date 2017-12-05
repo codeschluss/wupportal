@@ -24,7 +24,7 @@ import { AuthenticationService } from 'app/services/authentication.service';
 import { Organisation } from 'app/models/organisation';
 import { Address } from 'app/models/address';
 import { Constants } from 'app/services/constants';
-import { SuburbSelectionComponent } from 'app/views/admin/popup/popup.suburb.selection';
+import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
 
 @Component({
 	selector: 'edit-organisation',

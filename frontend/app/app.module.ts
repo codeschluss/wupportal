@@ -57,10 +57,13 @@ import { ValidationService } from 'app/services/validation.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
 
-import { DialogComponent } from 'app/views/admin/popup/popup.component';
-import { SuburbSelectionComponent } from 'app/views/admin/popup/popup.suburb.selection';
+import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
-import { ProviderDeleteComponent } from 'app/views/admin/popup/provider.delete';
+
+import { ProviderDeleteComponent } from 'app/views/admin/provider/provider.delete';
+import { ActivityDeleteComponent } from 'app/views/admin/activities/activity.delete';
+import { OrganisationDeleteComponent } from 'app/views/admin/organisations/organisation.delete';
+import { UserDeleteComponent } from 'app/views/admin/users/user.delete';
 
 @NgModule({
 	bootstrap: [
@@ -84,10 +87,14 @@ import { ProviderDeleteComponent } from 'app/views/admin/popup/provider.delete';
 		ActivityFormComponent,
 		OrganisationFormComponent,
 		UserFormComponent,
-		DialogComponent,
-		ProviderDeleteComponent,
+
 		SuburbSelectionComponent,
-		AddressFormComponent
+		AddressFormComponent,
+
+		ActivityDeleteComponent,
+		ProviderDeleteComponent,
+		OrganisationDeleteComponent,
+		UserDeleteComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -129,10 +136,12 @@ import { ProviderDeleteComponent } from 'app/views/admin/popup/provider.delete';
 		AuthenticationService
 	],
 	entryComponents: [
-		DialogComponent,
 		SuburbSelectionComponent,
 		AddressFormComponent,
-		ProviderDeleteComponent
+		ActivityDeleteComponent,
+		ProviderDeleteComponent,
+		OrganisationDeleteComponent,
+		UserDeleteComponent
 	], exports: [
 		MatNativeDateModule,
 	]

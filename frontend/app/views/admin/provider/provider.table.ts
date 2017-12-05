@@ -10,7 +10,7 @@ import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
 import { Constants } from 'app/services/constants';
-import { ProviderDeleteComponent } from 'app/views/admin/popup/provider.delete';
+import { ProviderDeleteComponent } from 'app/views/admin/provider/provider.delete';
 
 @Component({
 	selector: 'provider-table',
@@ -44,20 +44,6 @@ export class ProviderTableComponent extends AbstractTableComponent {
 	}
 
 	handleOpeningDialog(row: any, name: string): void {
-		console.log('handle', ProviderDeleteComponent);
 		this.openDialog(row, name, ProviderDeleteComponent);
-	}
-
-
-	openDialog(row: any, name: string, component: any): void {
-		console.log('ProviderDeleteComponent', ProviderDeleteComponent);
-		const dialogRef = this.deleteDialog.open(ProviderDeleteComponent, {
-			width: '250px',
-			data: {
-				name: name,
-				message: this.constants.deleteMessage,
-				id: row.id
-			}
-		});
 	}
 }

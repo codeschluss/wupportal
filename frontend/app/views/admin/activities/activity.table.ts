@@ -11,6 +11,7 @@ import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
+import { ActivityDeleteComponent } from 'app/views/admin/activities/activity.delete';
 
 @Component({
 	selector: 'activity-table',
@@ -34,12 +35,15 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	fetchData(): void {
-		console.log('ActivityTableComponent', this.user);
 		this.user
 			? this.dataService.getByProviders(this.tableState)
 				.subscribe(data => this.handleResponse(data))
 			: this.dataService.list(this.tableState)
 				.subscribe(data => this.handleResponse(data));
+	}
+
+	handleOpeningDialog(row: any, name: string): void {
+		this.openDialog(row, name, ActivityDeleteComponent);
 	}
 
 }

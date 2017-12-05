@@ -31,7 +31,7 @@ import { NominatimService } from 'app/services/nominatim';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { ActivityService } from 'app/services/activity.service';
 import { Constants } from 'app/services/constants';
-import { SuburbSelectionComponent } from 'app/views/admin/popup/popup.suburb.selection';
+import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
 
 
 @Component({

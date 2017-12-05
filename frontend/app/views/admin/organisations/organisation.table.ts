@@ -10,6 +10,7 @@ import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
+import { OrganisationDeleteComponent } from 'app/views/admin/organisations/organisation.delete';
 
 @Component({
 	selector: 'edit-organisation',
@@ -30,5 +31,9 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 		protected constants: Constants,
 		protected deleteDialog: MatDialog) {
 		super(dataService, constants, deleteDialog);
+	}
+
+	handleOpeningDialog(row: any, name: string): void {
+		this.openDialog(row, name, OrganisationDeleteComponent);
 	}
 }

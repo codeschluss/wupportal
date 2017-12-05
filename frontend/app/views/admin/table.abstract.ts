@@ -8,7 +8,6 @@ import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
 import { Constants } from 'app/services/constants';
-import { DialogComponent } from 'app/views/admin/popup/popup.component';
 
 export abstract class AbstractTableComponent implements OnInit {
 
@@ -62,12 +61,7 @@ export abstract class AbstractTableComponent implements OnInit {
 		this.dataSource.data = response.records;
 	}
 
-	handleOpeningDialog(row: any, name: string): void {
-		this.openDialog(row, name, DialogComponent);
-	}
-
 	openDialog(row: any, name: string, component: any): void {
-		console.log('component', component);
 		const dialogRef = this.deleteDialog.open(component, {
 			width: '250px',
 			data: {
@@ -76,9 +70,5 @@ export abstract class AbstractTableComponent implements OnInit {
 				id: row.id
 			}
 		});
-
-		// dialogRef.afterClosed().subscribe(result => {
-		// 	console.log('result', result);
-		// });
 	}
 }

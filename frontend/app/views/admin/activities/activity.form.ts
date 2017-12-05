@@ -9,7 +9,6 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import { Constants } from 'app/views/common/constants';
 import { Activity } from 'app/models/activity';
 import { Address } from 'app/models/address';
 import { TargetGroup } from 'app/models/target-group';
@@ -29,9 +28,10 @@ import {
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { NominatimService } from 'app/services/nominatim';
-import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { ActivityService } from 'app/services/activity.service';
+import { Constants } from 'app/services/constants';
+import { SuburbSelectionComponent } from 'app/views/admin/popup/popup.suburb.selection';
 
 
 @Component({

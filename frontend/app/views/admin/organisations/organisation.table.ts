@@ -7,9 +7,9 @@ import { DataSource } from '@angular/cdk/table';
 import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
 import { Organisation } from 'app/models/organisation';
 import { DataService } from 'app/services/data.service';
-import { Constants } from 'app/views/common/constants';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { Constants } from 'app/services/constants';
 
 @Component({
 	selector: 'edit-organisation',

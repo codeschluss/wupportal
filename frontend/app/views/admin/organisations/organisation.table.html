@@ -2,14 +2,18 @@
 
 	<div class="organisations-table-header">
 		<mat-form-field>
-			<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
+			<input matInput (keyup)="handleFiltered($event)"
+			  placeholder="Filter">
 		</mat-form-field>
 	</div>
 
-	<mat-table #table [dataSource]="dataSource" class="organisation-table" matSort (matSortChange)="handleSorted($event)">
+	<mat-table #table [dataSource]="dataSource"
+	  class="organisation-table" matSort
+	  (matSortChange)="handleSorted($event)">
 
 		<ng-container matColumnDef="name">
-			<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+			<mat-header-cell *matHeaderCellDef
+			  mat-sort-header disableClear="true">
 				name</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
 		</ng-container>
@@ -36,8 +40,13 @@
 
 		<ng-container matColumnDef="address">
 			<mat-header-cell *matHeaderCellDef>{{constants.address}}</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.address.street + ' ' + row.address.house_number}}
-				<br/> {{row.address.postal_code + ' ' + row.address.place + ' ' + row.address.suburb.name }}</mat-cell>
+			<mat-cell *matCellDef="let row">{{ row.address.street + ' '
+				+ row.address.house_number}}
+				<br/> {{row.address.postal_code
+				+ ' ' + row.address.place +
+				' ' + row.address.suburb.name
+				}}
+			</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="action">
@@ -45,10 +54,13 @@
 				Ändern/Löschen
 			</mat-header-cell>
 			<mat-cell *matCellDef="let row">
-				<button mat-button color="primary" routerLink='/organisation/edit/{{row.id}}'>
-					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+				<button mat-button color="primary"
+				  routerLink='/organisation/edit/{{row.id}}'>
+					<i class="fa fa-pencil-square-o"
+					  aria-hidden="true"></i>
 				</button>
-				<button mat-button color="warn" (click)="openDialog(row, row.name)">
+				<button mat-button color="warn"
+				  (click)="handleOpeningDialog(row, row.name)">
 					<i class="fa fa-trash-o" aria-hidden="true"></i>
 				</button>
 			</mat-cell>
@@ -59,7 +71,9 @@
 
 	</mat-table>
 
-	<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" (page)="handlePageChanged($event)">
+	<mat-paginator #paginator [pageSize]="5"
+	  [pageSizeOptions]="[5, 10, 20]"
+	  (page)="handlePageChanged($event)">
 	</mat-paginator>
 
 </div>

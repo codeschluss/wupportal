@@ -13,9 +13,9 @@ import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from
 import { DataServiceFactory, OrganisationService, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
-import { Constants } from 'app/views/common/constants';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
+import { Constants } from 'app/services/constants';
 
 import { User } from 'app/models/user';
 import { Organisation } from 'app/models/organisation';

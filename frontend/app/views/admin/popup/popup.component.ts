@@ -5,6 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
+import { Constants } from 'app/services/constants';
 
 @Component({
 	templateUrl: 'popup.html',
@@ -16,8 +17,9 @@ import { DataService } from 'app/services/data.service';
 export class DialogComponent {
 
 	constructor(
-		@Inject(OrganisationService) private service: DataService,
+		public constants: Constants,
 		public dialogRef: MatDialogRef<DialogComponent>,
+		@Inject(OrganisationService) private service: DataService,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) { }
 
@@ -27,7 +29,7 @@ export class DialogComponent {
 		this.dialogRef.close();
 	}
 
-	onNoClick(): void {
+	onCancel(): void {
 		this.dialogRef.close();
 	}
 }

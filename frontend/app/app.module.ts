@@ -25,8 +25,9 @@ import { MatFormFieldModule, MatSortModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatListModule } from '@angular/material/list';;
+import { MatListModule } from '@angular/material/list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from 'app/app.component';
@@ -54,14 +55,12 @@ import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
 import { ValidationService } from 'app/services/validation.service';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { Constants } from 'app/services/constants';
 
-import { Constants } from 'app/views/common/constants';
-
-import { DialogComponent } from 'app/views/common/popup.component';
-import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
+import { DialogComponent } from 'app/views/admin/popup/popup.component';
+import { SuburbSelectionComponent } from 'app/views/admin/popup/popup.suburb.selection';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
-
-import { TableBoolComponent } from 'app/views/admin/table/bool.table';
+import { ProviderDeleteComponent } from 'app/views/admin/popup/provider.delete';
 
 @NgModule({
 	bootstrap: [
@@ -86,10 +85,9 @@ import { TableBoolComponent } from 'app/views/admin/table/bool.table';
 		OrganisationFormComponent,
 		UserFormComponent,
 		DialogComponent,
+		ProviderDeleteComponent,
 		SuburbSelectionComponent,
-		AddressFormComponent,
-
-		TableBoolComponent
+		AddressFormComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -119,7 +117,7 @@ import { TableBoolComponent } from 'app/views/admin/table/bool.table';
 		MatChipsModule,
 		MatListModule,
 		MatDatepickerModule,
-
+		MatCheckboxModule
 	],
 	providers: [
 		ActivityService,
@@ -133,7 +131,8 @@ import { TableBoolComponent } from 'app/views/admin/table/bool.table';
 	entryComponents: [
 		DialogComponent,
 		SuburbSelectionComponent,
-		AddressFormComponent
+		AddressFormComponent,
+		ProviderDeleteComponent
 	], exports: [
 		MatNativeDateModule,
 	]

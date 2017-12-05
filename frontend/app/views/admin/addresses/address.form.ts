@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Constants } from 'app/views/common/constants';
 import { ValidationService } from 'app/services/validation.service';
 
 import { Address } from 'app/models/address';
+import { Constants } from 'app/services/constants';
 
 
 @Component({

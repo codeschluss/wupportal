@@ -5,9 +5,9 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 
 import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
-import { Constants } from 'app/views/common/constants';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { Constants } from 'app/services/constants';
 
 @Component({
 	selector: 'edit-users',

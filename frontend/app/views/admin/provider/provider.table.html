@@ -34,46 +34,23 @@
 		<mat-header-cell *matHeaderCellDef
 		  mat-sort-header>{{constants.admin}}</mat-header-cell>
 		<mat-cell *matCellDef="let row">
-			<table-bool bool={{row.admin}}></table-bool>
+			<mat-checkbox [(ngModel)]="row.admin">
+			</mat-checkbox>
 		</mat-cell>
 	</ng-container>
 
-	<!-- admin flag Column -->
-	<!-- <ng-container matColumnDef="delete">
-		<mat-header-cell *matHeaderCellDef>
-			{{constants.deleteFromOrganisation}}
-		</mat-header-cell>
-		<mat-cell *matCellDef="let row">
-			<button mat-button color="warn"
-			  (click)="openDialog(row, row.username)">
-				<i class="fa fa-trash-o" aria-hidden="true"></i>
-			</button>
-		</mat-cell>
-	</ng-container>
-
+	<!-- completely remove from organisation  -->
 	<ng-container matColumnDef="delete">
 		<mat-header-cell *matHeaderCellDef>
 			{{constants.deleteFromOrganisation}}
 		</mat-header-cell>
 		<mat-cell *matCellDef="let row">
-			<button mat-button color="warn"
-			  (click)="openDialog(row, row.username)">
+			<button mat-button type="button"
+			  color="warn" (click)="handleOpeningDialog(row, row.username)">
 				<i class="fa fa-trash-o" aria-hidden="true"></i>
 			</button>
 		</mat-cell>
 	</ng-container>
-
-	<ng-container matColumnDef="delete">
-		<mat-header-cell *matHeaderCellDef>
-			{{constants.deleteFromOrganisation}}
-		</mat-header-cell>
-		<mat-cell *matCellDef="let row">
-			<button mat-button color="warn"
-			  (click)="openDialog(row, row.username)">
-				<i class="fa fa-trash-o" aria-hidden="true"></i>
-			</button>
-		</mat-cell>
-	</ng-container> -->
 
 	<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 	<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

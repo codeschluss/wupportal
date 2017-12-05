@@ -5,11 +5,12 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 
 import { DataServiceFactory } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
-import { Constants } from 'app/views/common/constants';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
+import { Constants } from 'app/services/constants';
+import { ProviderDeleteComponent } from 'app/views/admin/popup/provider.delete';
 
 @Component({
 	selector: 'provider-table',
@@ -21,7 +22,7 @@ export class ProviderTableComponent extends AbstractTableComponent {
 
 	@Input() organisationID: string;
 
-	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'makeAdmin', 'deleteAdmin', 'delete'];
+	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'delete'];
 	dataSource: MatTableDataSource<Provider> = new MatTableDataSource<Provider>();
 
 	constructor(
@@ -38,4 +39,25 @@ export class ProviderTableComponent extends AbstractTableComponent {
 		}
 	}
 
+	getData(): Array<Provider> {
+		return this.dataSource.data;
+	}
+
+	handleOpeningDialog(row: any, name: string): void {
+		console.log('handle', ProviderDeleteComponent);
+		this.openDialog(row, name, ProviderDeleteComponent);
+	}
+
+
+	openDialog(row: any, name: string, component: any): void {
+		console.log('ProviderDeleteComponent', ProviderDeleteComponent);
+		const dialogRef = this.deleteDialog.open(ProviderDeleteComponent, {
+			width: '250px',
+			data: {
+				name: name,
+				message: this.constants.deleteMessage,
+				id: row.id
+			}
+		});
+	}
 }

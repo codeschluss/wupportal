@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
-import { Constants } from 'app/views/common/constants';
-
+import { Constants } from 'app/services/constants';
 
 // TODO: If Admin show all, otherwise check if owner or other rights
 

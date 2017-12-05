@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 
 import { AuthenticationService } from 'app/services/authentication.service';
 import { User } from 'app/models/user';
-import { Constants } from 'app/views/common/constants';
+import { Constants } from 'app/services/constants';
 
 @Component({
 	templateUrl: 'login.form.html',

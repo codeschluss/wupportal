@@ -48,7 +48,7 @@
 		</mat-header-cell>
 		<mat-cell *matCellDef="let row">
 			<button mat-button color="warn"
-			  (click)="openDialog(row, row.username)">
+			  (click)="handleOpeningDialog(row, row.username)">
 				<i class="fa fa-trash-o" aria-hidden="true"></i>
 			</button>
 		</mat-cell>

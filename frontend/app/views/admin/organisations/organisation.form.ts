@@ -18,15 +18,13 @@ import {
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { NominatimService } from 'app/services/nominatim';
-import { SuburbSelectionComponent } from 'app/views/common/popup.suburb.selection';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { AuthenticationService } from 'app/services/authentication.service';
 
 import { Organisation } from 'app/models/organisation';
 import { Address } from 'app/models/address';
-
-import { Constants } from 'app/views/common/constants';
-
+import { Constants } from 'app/services/constants';
+import { SuburbSelectionComponent } from 'app/views/admin/popup/popup.suburb.selection';
 
 @Component({
 	selector: 'edit-organisation',

@@ -7,8 +7,8 @@ import { DataServiceFactory, UserService } from 'app/services/data.service.facto
 import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
-import { Constants } from 'app/views/common/constants';
-import { DialogComponent } from 'app/views/common/popup.component';
+import { Constants } from 'app/services/constants';
+import { DialogComponent } from 'app/views/admin/popup/popup.component';
 
 export abstract class AbstractTableComponent implements OnInit {
 
@@ -62,8 +62,13 @@ export abstract class AbstractTableComponent implements OnInit {
 		this.dataSource.data = response.records;
 	}
 
-	openDialog(row: any, name: string): void {
-		const dialogRef = this.deleteDialog.open(DialogComponent, {
+	handleOpeningDialog(row: any, name: string): void {
+		this.openDialog(row, name, DialogComponent);
+	}
+
+	openDialog(row: any, name: string, component: any): void {
+		console.log('component', component);
+		const dialogRef = this.deleteDialog.open(component, {
 			width: '250px',
 			data: {
 				name: name,
@@ -72,8 +77,8 @@ export abstract class AbstractTableComponent implements OnInit {
 			}
 		});
 
-		dialogRef.afterClosed().subscribe(result => {
-			// this.ngOnit()
-		});
+		// dialogRef.afterClosed().subscribe(result => {
+		// 	console.log('result', result);
+		// });
 	}
 }

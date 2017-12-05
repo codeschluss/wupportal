@@ -60,13 +60,9 @@ export abstract class AbstractTableComponent implements OnInit {
 	}
 
 	onDelete(recordID: string): void {
-		if (this.deleteOnAction) {
-			this.dataService
-				.delete(recordID)
-				.subscribe(() => this.fetchData());
-		} else {
-			this.handleModelDeletion(recordID);
-		}
+		this.dataService
+			.delete(recordID)
+			.subscribe(() => this.fetchData());
 	}
 
 	getData(): Array<any> {

@@ -77,14 +77,21 @@ Router::scope('/', function (RouteBuilder $routes) {
         $routes->resources('Suburbs',$list);
         $routes->resources('Tags', $list);
         $routes->resources('TargetGroups', $list);
-        $routes->resources('Providers', $list);
         $routes->resources('Schedules', $list);
         $routes->resources('Recurrences', $list);
+
         $routes->resources('Users', $list);
         $routes->resources('Users', ['map' => ['login' => [
             'action' => 'login',
             'method' => 'POST',
             'path' => '/login'
+        ]]]);
+
+        $routes->resources('Providers', $list);
+        $routes->resources('Providers', ['map' => ['getByOrganisation' => [
+            'action' => 'getByOrganisation',
+            'method' => 'POST',
+            'path' => '/getByOrganisation'
         ]]]);
     });
 });

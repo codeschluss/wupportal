@@ -8,28 +8,27 @@ import { DataResponse } from 'app/models/data.response';
 import { DataService } from 'app/services/data.service';
 
 @Injectable()
-export class ActivityService extends DataService {
+export class ProviderService extends DataService {
 
 	constructor(
 		protected http: HttpClient,
 		protected authService: AuthenticationService
 	) {
-		super(http, 'activities', authService);
+		super(http, 'providers', authService);
 	}
 
-
-	public getByProviders(tableState: TableState): Observable<DataResponse> {
-		const request = Object.assign(tableState, this.createProvidersParam());
-		return this.http.post(this.baseUrl + 'getByProviders', JSON.stringify(request), {
+	public getByOrganisation(tableState: TableState, organisationID: string): Observable<DataResponse> {
+		const request = Object.assign(tableState, this.createProvidersParam(organisationID));
+		return this.http.post(this.baseUrl + 'getByOrganisation', JSON.stringify(request), {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())
 		}).map(res => res as DataResponse);
 	}
 
-	createProvidersParam(): string[] {
-		const providersParam: any = { 'providers': [] };
-		providersParam.providers = this.authService.currentUser.providers.map(provider => provider.id);
-		return providersParam;
+	createProvidersParam(organisationID: string): string[] {
+		const orgaParam: any = { 'organisation': '' };
+		orgaParam.organisation = organisationID;
+		return orgaParam;
 	}
 
 }

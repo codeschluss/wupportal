@@ -169,21 +169,39 @@ class AppController extends Controller
         $request = $this->request->input('json_decode');
         if (is_null($request)) return;
 
+        $this->setPagination($request);
+        $this->setJoins($query);
+        $this->setSorting($query, $request);
+        $this->setFiltering($query, $request);
+        $this->data($this->paginate($query));
+    }
+
+    protected function setPagination($request)
+    {
         $this->paginate = [
             'limit' => $request->pageSize,
             'page' => $request->page,
         ];
+    }
 
+    protected function setJoins($query)
+    {
         foreach ($this->contain() as $contain) {
             $query->leftJoinWith($contain)->contain($contain);
         }
+    }
 
+    protected function setSorting($query, $request)
+    {
         if (!empty($request->sort->direction)) {
             $query
                 ->group($request->sort->active)
                 ->order([$request->sort->active => $request->sort->direction]);
         }
+    }
 
+    protected function setFiltering($query, $request)
+    {
         if (!empty($request->filter)) {
             $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
                 $whereClause = [];
@@ -193,10 +211,6 @@ class AppController extends Controller
                 return $whereClause;
             }]);
         }
-
-        // var_dump($query); exit;
-
-        $this->data($this->paginate($query));
     }
 
     /**

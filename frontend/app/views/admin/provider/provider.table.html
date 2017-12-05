@@ -1,7 +1,3 @@
-<!-- <button mat-raised-button type="button"
-  (click)="newEntry()">
-	{{constants.newEntry}}</button> -->
-
 <div class="filter">
 	<mat-form-field>
 		<input matInput (keyup)="handleFiltered($event)"
@@ -16,30 +12,21 @@
 	<ng-container matColumnDef="username">
 		<mat-header-cell *matHeaderCellDef
 		  mat-sort-header>{{constants.user}}</mat-header-cell>
-		<mat-cell *matCellDef="let row">{{ row.username }}</mat-cell>
+		<mat-cell *matCellDef="let row">{{ row.user.username }}</mat-cell>
 	</ng-container>
 
 	<!-- fullname Column -->
 	<ng-container matColumnDef="fullname">
 		<mat-header-cell *matHeaderCellDef
 		  mat-sort-header>{{constants.nameString}}</mat-header-cell>
-		<mat-cell *matCellDef="let row">{{ row.fullname }}</mat-cell>
+		<mat-cell *matCellDef="let row">{{ row.user.fullname }}</mat-cell>
 	</ng-container>
 
 	<!-- phone Column -->
 	<ng-container matColumnDef="phone">
 		<mat-header-cell *matHeaderCellDef
 		  mat-sort-header>{{constants.phone}}</mat-header-cell>
-		<mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
-	</ng-container>
-
-	<!-- Created Column -->
-	<ng-container matColumnDef="created">
-		<mat-header-cell *matHeaderCellDef
-		  mat-sort-header disableClear="true">
-			{{constants.createdAt}}
-		</mat-header-cell>
-		<mat-cell *matCellDef="let row">{{ row.created | date }}</mat-cell>
+		<mat-cell *matCellDef="let row">{{ row.user.phone }}</mat-cell>
 	</ng-container>
 
 	<ng-container matColumnDef="action">

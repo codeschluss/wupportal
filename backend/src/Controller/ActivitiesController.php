@@ -13,90 +13,67 @@ use App\Controller\AppController;
 class ActivitiesController extends AppController
 {
 
-        /**
-         * Contain helper.
-         *
-         * @return array Contained models
-         */
-        protected function contain()
-        {
-            return [
-                'Addresses',
-                'Addresses.Suburbs',
-                'Tags',
-                'Categories',
-                'TargetGroups',
-                'Providers.Organisations',
-                'Schedules',
-                // 'Schedules.Recurrences',
-                'Schedules.Recurrences.WeekDays',
-            ];
-        }
+    /**
+     * Contain helper.
+     *
+     * @return array Contained models
+     */
+    protected function contain()
+    {
+        return [
+            'Addresses',
+            'Addresses.Suburbs',
+            'Tags',
+            'Categories',
+            'TargetGroups',
+            'Providers.Organisations',
+            'Schedules',
+            // 'Schedules.Recurrences',
+            'Schedules.Recurrences.WeekDays',
+        ];
+    }
 
-        /**
-         * filter helper.
-         *
-         * @return array Fields to use for filter
-         */
-        protected function fieldsTofilter()
-        {
-            return [
-                'Activities.name',
-                'Activities.description',
-                'Activities.schedule',
-                'Organisations.name',
-                'Categories.name',
-                'Tags.name',
-                'Suburbs.name'
-            ];
-        }
+    /**
+     * filter helper.
+     *
+     * @return array Fields to use for filter
+     */
+    protected function fieldsTofilter()
+    {
+        return [
+            'Activities.name',
+            'Activities.description',
+            'Activities.schedule',
+            'Organisations.name',
+            'Categories.name',
+            'Tags.name',
+            'Suburbs.name'
+        ];
+    }
 
-        /**
-         * getByProvider TODO: Duplicate code
-         *
-         */
-        public function getByProviders()
-        {
-            // var_dump($request); exit;
-            $query = $this->table()->find()->group($this->name . '.id');
-            $request = $this->request->input('json_decode');
-            if (is_null($request)) return;
-            if (empty($request->providers)) return;
+    public function getByProviders()
+    {
+        // var_dump($request); exit;
+        $query = $this->table()->find()->group($this->name . '.id');
+        $request = $this->request->input('json_decode');
+        if (is_null($request)) return;
+        if (empty($request->providers)) return;
 
-            $this->paginate = [
-                'limit' => $request->pageSize,
-                'page' => $request->page,
-            ];
+        $this->setPagination($request);
+        $this->setJoins($query);
+        $this->setSorting($query, $request);
+        $this->setFiltering($query, $request);
+        $this->data($this->paginate($query));
+    }
 
-            foreach ($this->contain() as $contain) {
-                $query->leftJoinWith($contain)->contain($contain);
+    private function setByProviders($query, $request) {
+        $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+            $whereClause = [];
+            foreach ($request->providers as $provider) {
+                $whereClause[] = ['Providers.id' => $provider];
             }
-
-            if (!empty($request->sort->direction)) {
-                $query
-                    ->group($request->sort->active)
-                    ->order([$request->sort->active => $request->sort->direction]);
-            }
-
-            $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
-                $whereClause = [];
-                foreach ($request->providers as $provider) {
-                    $whereClause[] = ['Providers.id' => $provider];
-                }
-                return $whereClause;
-            }]);
-
-            if (!empty($request->filter)) {
-                $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
-                    $whereClause = [];
-                    foreach ($this->fieldsTofilter() as $field) {
-                        $whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
-                    }
-                    return $whereClause;
-                }]);
-            }
-
-            $this->data($this->paginate($query));
-        }
+            return $whereClause;
+        }]);
+    }
 
 }

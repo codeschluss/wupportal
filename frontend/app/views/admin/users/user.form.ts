@@ -10,11 +10,12 @@ import 'rxjs/Rx';
 
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { DataServiceFactory, OrganisationService, UserService, ProviderService } from 'app/services/data.service.factory';
+import { DataServiceFactory, OrganisationService, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
 import { Constants } from 'app/views/common/constants';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { ProviderService } from 'app/services/provider.service';
 
 import { User } from 'app/models/user';
 import { Organisation } from 'app/models/organisation';
@@ -25,9 +26,9 @@ import { Provider } from 'app/models/provider';
 	templateUrl: 'user.form.html',
 	styleUrls: ['user.form.css'],
 	providers: [
+		ProviderService,
 		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] },
-		{ provide: ProviderService, useFactory: DataServiceFactory(ProviderService), deps: [HttpClient, AuthenticationService] }
+		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 
@@ -45,7 +46,7 @@ export class UserFormComponent implements OnInit {
 	constructor(
 		@Inject(UserService) public userService: DataService,
 		@Inject(OrganisationService) public organisationService: DataService,
-		@Inject(ProviderService) public providerService: DataService,
+		public providerService: ProviderService,
 		public authService: AuthenticationService,
 		public location: Location,
 		public route: ActivatedRoute,

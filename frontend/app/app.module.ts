@@ -33,17 +33,20 @@ import { DetailsComponent } from 'app/views/details';
 import { FilterComponent } from 'app/views/filter';
 import { MappingComponent } from 'app/views/mapping';
 
+import { UsersTableComponent } from 'app/views/admin/users/users.table';
+import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
+import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
+import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
+
 import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
-import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
-import { UsersTableComponent } from 'app/views/admin/users/users.table';
 import { UserFormComponent } from 'app/views/admin/users/user.form';
-import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
 import { ActivityFormComponent } from 'app/views/admin/activities/activity.form';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 
 import { ActivityService } from 'app/services/activity.service';
+import { ProviderService } from 'app/services/provider.service';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
 import { ValidationService } from 'app/services/validation.service';
@@ -66,14 +69,16 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 		FilterComponent,
 		MappingComponent,
 
+		UsersTableComponent,
+		OrganisationsTableComponent,
+		ActivityTableComponent,
+		ProviderTableComponent,
+
 		LoginFormComponent,
 		RegisterFormComponent,
 		AdminComponent,
-		ActivityTableComponent,
 		ActivityFormComponent,
-		OrganisationsTableComponent,
 		OrganisationFormComponent,
-		UsersTableComponent,
 		UserFormComponent,
 		DialogComponent,
 		SuburbSelectionComponent,
@@ -110,6 +115,7 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 	],
 	providers: [
 		ActivityService,
+		ProviderService,
 		LocationService,
 		NominatimService,
 		Constants,

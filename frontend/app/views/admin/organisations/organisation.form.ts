@@ -95,29 +95,6 @@ export class OrganisationFormComponent implements OnInit {
 		}
 	}
 
-	// compareAddresses(address1: Address, address2: Address): boolean {
-	// 	if (address1.street.toLocaleLowerCase().localeCompare(address2.street.toLocaleLowerCase()) === 0 &&
-	// 		address1.house_number.toLocaleLowerCase().localeCompare(address2.house_number.toLocaleLowerCase()) === 0 &&
-	// 		address1.postal_code.toLocaleLowerCase().localeCompare(address2.postal_code.toLocaleLowerCase()) === 0 &&
-	// 		address1.place.toLocaleLowerCase().localeCompare(address2.place.toLocaleLowerCase()) === 0
-	// 	) {
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
-	// checkAddress(address: Address): boolean {
-	// 	if (address.house_number &&
-	// 		address.place &&
-	// 		address.postal_code &&
-	// 		address.street) {
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
 	onSubmit(): void {
 		if (typeof this.addressCtrl.value === 'string') {
 			this.nominatimService.get(this.addressCtrl.value).subscribe((data) => {

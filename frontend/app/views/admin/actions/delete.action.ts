@@ -9,7 +9,7 @@ import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 @Component({
 	selector: 'delete-action',
 	template: `
-		<button mat-button color="warn"
+		<button mat-button color="warn" type="button"
 			(click)="openDialog()">
 			<i class="fa fa-trash-o" aria-hidden="true"></i>
 		</button>

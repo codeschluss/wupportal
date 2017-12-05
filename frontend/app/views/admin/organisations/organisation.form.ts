@@ -148,11 +148,6 @@ export class OrganisationFormComponent implements OnInit {
 					this.organisation.address_id = this.addressCtrl.value.id;
 				}
 			}
-			this.providerRequest()
-				.subscribe(() => this.organisationService
-					.edit(this.organisation)
-					.subscribe(() => this.back())
-				);
 		}
 	}
 

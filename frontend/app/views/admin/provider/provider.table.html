@@ -45,10 +45,10 @@
 			{{constants.deleteFromOrganisation}}
 		</mat-header-cell>
 		<mat-cell *matCellDef="let row">
-			<button mat-button type="button"
-			  color="warn" (click)="handleOpeningDialog(row, row.username)">
-				<i class="fa fa-trash-o" aria-hidden="true"></i>
-			</button>
+			<delete-action [recordID]="row.id"
+			  [nameToDelete]="row.user.username"
+			  (onDelete)="onDelete($event)">
+			</delete-action>
 		</mat-cell>
 	</ng-container>
 

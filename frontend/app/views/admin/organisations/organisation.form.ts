@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { NgForm, FormControl } from '@angular/forms';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 import {
 	DataServiceFactory,
@@ -25,6 +26,8 @@ import { Organisation } from 'app/models/organisation';
 import { Address } from 'app/models/address';
 import { Constants } from 'app/services/constants';
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
+import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
+import { ProviderService } from 'app/services/provider.service';
 
 @Component({
 	selector: 'edit-organisation',
@@ -43,9 +46,13 @@ export class OrganisationFormComponent implements OnInit {
 	addressCtrl: FormControl;
 	nominatimAddress: Address;
 
+	@ViewChild(ProviderTableComponent)
+	providerTable: ProviderTableComponent;
+
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		@Inject(AddressService) private addressService: DataService,
+		private providerService: ProviderService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -137,8 +144,11 @@ export class OrganisationFormComponent implements OnInit {
 					this.organisation.address_id = this.addressCtrl.value.id;
 				}
 			}
-			this.organisationService.edit(this.organisation);
-			this.back();
+			this.providerRequest()
+				.subscribe(() => this.organisationService
+					.edit(this.organisation)
+					.subscribe(() => this.back())
+				);
 		}
 	}
 
@@ -163,6 +173,14 @@ export class OrganisationFormComponent implements OnInit {
 			}
 		});
 		return dialogRef.afterClosed();
+	}
+
+	providerRequest(): Observable<any> {
+		const list = [];
+		for (const provider of this.providerTable.getData()) {
+			list.push(this.providerService.edit(provider));
+		}
+		return forkJoin(list);
 	}
 
 	openDialog(newAddress: Address): void {

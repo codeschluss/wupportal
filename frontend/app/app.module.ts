@@ -60,10 +60,8 @@ import { Constants } from 'app/services/constants';
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 
-import { ProviderDeleteComponent } from 'app/views/admin/provider/provider.delete';
-import { ActivityDeleteComponent } from 'app/views/admin/activities/activity.delete';
-import { OrganisationDeleteComponent } from 'app/views/admin/organisations/organisation.delete';
-import { UserDeleteComponent } from 'app/views/admin/users/user.delete';
+import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
+import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 
 @NgModule({
 	bootstrap: [
@@ -90,11 +88,8 @@ import { UserDeleteComponent } from 'app/views/admin/users/user.delete';
 
 		SuburbSelectionComponent,
 		AddressFormComponent,
-
-		ActivityDeleteComponent,
-		ProviderDeleteComponent,
-		OrganisationDeleteComponent,
-		UserDeleteComponent
+		DeleteDialogComponent,
+		DeleteActionComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -138,10 +133,7 @@ import { UserDeleteComponent } from 'app/views/admin/users/user.delete';
 	entryComponents: [
 		SuburbSelectionComponent,
 		AddressFormComponent,
-		ActivityDeleteComponent,
-		ProviderDeleteComponent,
-		OrganisationDeleteComponent,
-		UserDeleteComponent
+		DeleteDialogComponent
 	], exports: [
 		MatNativeDateModule,
 	]

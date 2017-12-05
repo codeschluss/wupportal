@@ -10,7 +10,6 @@ import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
 import { Constants } from 'app/services/constants';
-import { ProviderDeleteComponent } from 'app/views/admin/provider/provider.delete';
 
 @Component({
 	selector: 'provider-table',
@@ -27,23 +26,15 @@ export class ProviderTableComponent extends AbstractTableComponent {
 
 	constructor(
 		protected dataService: ProviderService,
-		protected constants: Constants,
-		protected deleteDialog: MatDialog) {
-		super(dataService, constants, deleteDialog);
+		protected constants: Constants) {
+		super(dataService, constants);
 	}
 
 	fetchData(): void {
 		if (this.organisationID) {
-			this.dataService.getByOrganisation(this.tableState, this.organisationID)
+			this.dataService
+				.getByOrganisation(this.tableState, this.organisationID)
 				.subscribe(data => this.handleResponse(data));
 		}
-	}
-
-	getData(): Array<Provider> {
-		return this.dataSource.data;
-	}
-
-	handleOpeningDialog(row: any, name: string): void {
-		this.openDialog(row, name, ProviderDeleteComponent);
 	}
 }

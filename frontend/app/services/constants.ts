@@ -45,7 +45,7 @@ export class Constants {
 	public orAreEmptyMessage: string = 'oder sind leer';
 	public beginn: string = 'Anfang';
 	public end: string = 'Ende';
-	public deleteFromOrganisation: string = 'Aus Organisation löschen';
+	public deleteFromOrganisation: string = 'Aus Organisation entfernen';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';

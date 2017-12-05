@@ -59,10 +59,9 @@
 					<i class="fa fa-pencil-square-o"
 					  aria-hidden="true"></i>
 				</button>
-				<button mat-button color="warn"
-				  (click)="handleOpeningDialog(row, row.name)">
-					<i class="fa fa-trash-o" aria-hidden="true"></i>
-				</button>
+				<delete-action [recordID]="row.id"
+				  [nameToDelete]="row.name" (onDelete)="onDelete($event)">
+				</delete-action>
 			</mat-cell>
 		</ng-container>
 

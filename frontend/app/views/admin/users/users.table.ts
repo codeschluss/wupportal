@@ -8,7 +8,6 @@ import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
-import { UserDeleteComponent } from 'app/views/admin/users/user.delete';
 
 @Component({
 	selector: 'edit-users',
@@ -27,10 +26,6 @@ export class UsersTableComponent extends AbstractTableComponent {
 		@Inject(UserService) protected dataService: DataService,
 		protected constants: Constants,
 		protected deleteDialog: MatDialog) {
-		super(dataService, constants, deleteDialog);
-	}
-
-	handleOpeningDialog(row: any, name: string): void {
-		this.openDialog(row, name, UserDeleteComponent);
+		super(dataService, constants);
 	}
 }

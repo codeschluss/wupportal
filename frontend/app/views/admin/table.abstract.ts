@@ -1,4 +1,4 @@
-import { OnInit, ViewChild } from '@angular/core';
+import { OnInit, ViewChild, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, Sort, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -17,17 +17,19 @@ export abstract class AbstractTableComponent implements OnInit {
 	@ViewChild(MatSort)
 	protected sort: MatSort;
 
+	@Input() deleteOnAction: boolean = true;
+
+	protected deleteList: Array<any> = [];
+
 	protected abstract displayedColumns: Array<string> = [];
 	protected abstract dataSource: MatTableDataSource<any>;
-	protected deleteDialog: MatDialog;
 	protected tableState: TableState;
 	protected constants: Constants;
 	protected dataService: DataService;
 
-	constructor(dataService: DataService, constants: Constants, deleteDialog: MatDialog) {
+	constructor(dataService: DataService, constants: Constants) {
 		this.dataService = dataService;
 		this.constants = constants;
-		this.deleteDialog = deleteDialog;
 		this.tableState = new TableState(constants.defaultPageSize, constants.pageSizeOptions);
 	}
 
@@ -61,14 +63,27 @@ export abstract class AbstractTableComponent implements OnInit {
 		this.dataSource.data = response.records;
 	}
 
-	openDialog(row: any, name: string, component: any): void {
-		const dialogRef = this.deleteDialog.open(component, {
-			width: '250px',
-			data: {
-				name: name,
-				message: this.constants.deleteMessage,
-				id: row.id
-			}
-		});
+	onDelete(recordID: string): void {
+		if (this.deleteOnAction) {
+			this.dataService
+				.delete(recordID)
+				.subscribe(() => this.fetchData());
+		} else {
+			this.handleModelDeletion(recordID);
+		}
+	}
+
+	handleModelDeletion(recordID: string): void {
+		this.dataSource.data.filter(record =>
+			record.id !== recordID);
+		this.deleteList.push(recordID);
+	}
+
+	getData(): Array<any> {
+		return this.dataSource.data;
+	}
+
+	getDeleted(): Array<any> {
+		return this.deleteList;
 	}
 }

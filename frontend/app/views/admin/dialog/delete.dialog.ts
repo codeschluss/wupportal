@@ -8,26 +8,29 @@ import { ProviderService } from 'app/services/provider.service';
 import { Constants } from 'app/services/constants';
 
 @Component({
-	templateUrl: '../dialog/dialog.delete.html',
+	template: `
+	<div>{{data.message}}</div>
+	<h3> {{data.name}} </h3>
+	<button mat-raised-button color="warn"
+  	(click)="onDelete()">{{constants.delete}}</button>
+	<button mat-raised-button (click)="onCancel()">{{constants.cancel}}</button>`,
 	providers: [ProviderService]
 })
 
-export class ProviderDeleteComponent {
+export class DeleteDialogComponent {
 
 	constructor(
 		public constants: Constants,
-		public dialogRef: MatDialogRef<ProviderDeleteComponent>,
-		protected service: ProviderService,
+		public dialogRef: MatDialogRef<DeleteDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) { }
 
 	onDelete(): void {
-		this.service.delete(this.data.id);
-		this.dialogRef.close();
+		this.dialogRef.close(true);
 	}
 
 	onCancel(): void {
-		this.dialogRef.close();
+		this.dialogRef.close(false);
 	}
 }
 

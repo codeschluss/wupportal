@@ -94,13 +94,15 @@ export class UserFormComponent implements OnInit {
 
 	// TODO: Check for easier method...
 	getProvidersToDelete(): void {
-		this.user.providers = this.user.providers.filter(provider => {
-			const deleted = !this.organisationsCtrl.value.includes(provider.organisation_id);
-			if (deleted) {
-				this.toDeleteProviders.push(provider.id);
-			}
-			return !deleted;
-		});
+		if (this.user.providers) {
+			this.user.providers = this.user.providers.filter(provider => {
+				const deleted = !this.organisationsCtrl.value.includes(provider.organisation_id);
+				if (deleted) {
+					this.toDeleteProviders.push(provider.id);
+				}
+				return !deleted;
+			});
+		}
 	}
 
 	// TODO: Check for easier method...

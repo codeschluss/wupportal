@@ -5,13 +5,13 @@ export class User extends Model {
 
 	constructor(json: any) {
 		super();
-		this.id = json.id;
-		this.superuser = json.superuser;
-		this.username = json.username;
-		this.password = json.password;
-		this.fullname = json.fullname;
-		this.phone = json.phone;
-		this.providers = json.providers;
+		json.id ? this.id = json.id : this.id = '';
+		json.superuser ? this.superuser = json.superuser : this.superuser = false;
+		json.username ? this.username = json.username : this.username = '';
+		json.password ? this.password = json.password : this.password = '';
+		json.fullname ? this.fullname = json.fullname : this.fullname = '';
+		json.phone ? this.phone = json.phone : this.phone = '';
+		json.providers ? this.providers = json.providers : this.providers = new Array<Provider>();
 	}
 
 	public superuser: boolean = false;

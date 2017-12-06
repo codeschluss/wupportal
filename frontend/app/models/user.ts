@@ -5,6 +5,7 @@ export class User extends Model {
 
 	constructor(json: any) {
 		super();
+		this.id = json.id;
 		this.superuser = json.superuser;
 		this.username = json.username;
 		this.password = json.password;

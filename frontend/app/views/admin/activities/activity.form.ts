@@ -13,6 +13,7 @@ import { Activity } from 'app/models/activity';
 import { Address } from 'app/models/address';
 import { TargetGroup } from 'app/models/target-group';
 import { Tag } from 'app/models/tag';
+import { Category } from 'app/models/category';
 import { Schedule } from 'app/models/schedule';
 import { Recurrence } from 'app/models/recurrence';
 import { WeekDay } from 'app/models/week-day';
@@ -23,7 +24,8 @@ import {
 	WeekDaysService,
 	SuburbService,
 	TagService,
-	TargetGroupService
+	TargetGroupService,
+	CategoryService
 } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
@@ -43,7 +45,8 @@ import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.se
 		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TagService, useFactory: DataServiceFactory(TagService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] },
-		{ provide: WeekDaysService, useFactory: DataServiceFactory(WeekDaysService), deps: [HttpClient, AuthenticationService] }
+		{ provide: WeekDaysService, useFactory: DataServiceFactory(WeekDaysService), deps: [HttpClient, AuthenticationService] },
+		{ provide: CategoryService, useFactory: DataServiceFactory(CategoryService), deps: [HttpClient, AuthenticationService] }
 	]
 })
 
@@ -52,11 +55,13 @@ export class ActivityFormComponent implements OnInit {
 	activity: Activity;
 	targetGroups: TargetGroup[];
 	weekDays: WeekDay[];
+	categories: Category[];
 	addressCtrl: FormControl;
 	tagsCtrl: FormControl;
+	categoryCtrl: FormControl;
 	weekDaysCtrl: FormControl;
 	targetGroupCtrl: FormControl;
-	addresses: Address[];
+	addresses: Address[] = [];
 	filteredAddresses: Observable<Address[]>;
 	nominatimAddress: Address;
 
@@ -66,6 +71,7 @@ export class ActivityFormComponent implements OnInit {
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
 		@Inject(WeekDaysService) private weekDaysService: DataService,
+		@Inject(CategoryService) private categoriesService: DataService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -73,9 +79,14 @@ export class ActivityFormComponent implements OnInit {
 		private suburbSelectDialog: MatDialog,
 		private controlAddressDialog: MatDialog,
 	) {
-		this.addressService.getAll().subscribe((data) => this.addresses = data.records);
+		this.addressService.getAll().subscribe((data) => {
+			for (const add of data.records) {
+				this.addresses.push(new Address(add));
+			}
+		});
 		this.targetGroupService.getAll().subscribe((data) => this.targetGroups = data.records);
 		this.weekDaysService.getAll().subscribe((data) => this.weekDays = data.records);
+		this.categoriesService.getAll().subscribe((data) => this.categories = data.records);
 	}
 
 	ngOnInit(): void {
@@ -88,13 +99,14 @@ export class ActivityFormComponent implements OnInit {
 				this.activity = activity;
 				this.initTags();
 				this.addressCtrl = new FormControl(this.activity.address);
+				this.categoryCtrl = new FormControl(this.activity.category.id);
 				this.targetGroupCtrl = this.activity.target_groups ?
 					new FormControl(this.initCtrl(this.activity.target_groups)) : new FormControl();
 				this.weekDaysCtrl = (this.activity.schedule && activity.schedule.recurrence && this.activity.schedule.recurrence.week_days) ?
 					new FormControl(this.initCtrl(this.activity.schedule.recurrence.week_days)) : new FormControl();
 				this.filteredAddresses = this.addressCtrl.valueChanges
 					.startWith(<any>[])
-					.map(address => address && typeof address === 'object' ? this.toString(address) : address)
+					.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
 					.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
 			});
 	}
@@ -117,7 +129,7 @@ export class ActivityFormComponent implements OnInit {
 
 	filterAddresses(name: string): Address[] {
 		return this.addresses.filter(address =>
-			this.toString(address).toLocaleLowerCase().indexOf(name.toLowerCase()) !== -1);
+			address.toString.toLocaleLowerCase().indexOf(name.toLowerCase()) !== -1);
 	}
 
 	toString(address: any): string {
@@ -125,8 +137,7 @@ export class ActivityFormComponent implements OnInit {
 			return address;
 		}
 		if (typeof address === 'object') {
-			return (address.street + ' ' + address.house_number + ' ' + address.postal_code + ' ' +
-				address.place + ' ' + (address.suburb ? address.suburb.name : ''));
+			return new Address(address).toString;
 		}
 	}
 
@@ -139,17 +150,17 @@ export class ActivityFormComponent implements OnInit {
 		return false;
 	}
 
-	compareAddresses(address1: Address, address2: Address): boolean {
-		if (address1.street.toLocaleLowerCase().localeCompare(address2.street.toLocaleLowerCase()) === 0 &&
-			address1.house_number.toLocaleLowerCase().localeCompare(address2.house_number.toLocaleLowerCase()) === 0 &&
-			address1.postal_code.toLocaleLowerCase().localeCompare(address2.postal_code.toLocaleLowerCase()) === 0 &&
-			address1.place.toLocaleLowerCase().localeCompare(address2.place.toLocaleLowerCase()) === 0
-		) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// compareAddresses(address1: Address, address2: Address): boolean {
+	// 	if (address1.street.toLocaleLowerCase().localeCompare(address2.street.toLocaleLowerCase()) === 0 &&
+	// 		address1.house_number.toLocaleLowerCase().localeCompare(address2.house_number.toLocaleLowerCase()) === 0 &&
+	// 		address1.postal_code.toLocaleLowerCase().localeCompare(address2.postal_code.toLocaleLowerCase()) === 0 &&
+	// 		address1.place.toLocaleLowerCase().localeCompare(address2.place.toLocaleLowerCase()) === 0
+	// 	) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 
 	checkAddress(address: Address): boolean {
 		if (address.house_number &&
@@ -192,18 +203,19 @@ export class ActivityFormComponent implements OnInit {
 					this.activityService.edit(this.activity).subscribe();
 				});
 		});
+		this.activity.category_id = this.categoryCtrl.value;
+
 		if (typeof this.addressCtrl.value === 'string') {
-			this.nominatimService.get(this.toString(this.addressCtrl.value)).subscribe(data => {
-				this.nominatimAddress = data;
+			this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
+				this.nominatimAddress = new Address(data);
 				if (!this.checkAddress(this.nominatimAddress)) {
 					this.controlAddress(this.nominatimAddress).subscribe(result => {
-						this.nominatimAddress = result;
+						this.nominatimAddress = new Address(result);
 						if (this.findExistingAddress(this.nominatimAddress)) {
 							this.back();
 							return;
 						}
 						this.activity.address = null;
-						this.activity.address_id = null;
 						this.openDialog(this.nominatimAddress);
 					});
 				} else {
@@ -211,24 +223,20 @@ export class ActivityFormComponent implements OnInit {
 						this.back();
 						return;
 					}
-					this.activity.address = undefined;
+					this.activity.address = null;
 					this.openDialog(this.nominatimAddress);
 				}
 			});
 		} else {
-			if (this.addressCtrl.value.id) {
-				if (this.addressCtrl.value.id !== this.activity.address_id) {
-					this.activity.address = null;
-					this.activity.address_id = this.addressCtrl.value.id;
-				}
-			}
+			this.activity.address = null;
+			this.activity.address_id = this.addressCtrl.value.id;
 			this.activityService.edit(this.activity).subscribe(() => this.back());
 		}
 	}
 
 	findExistingAddress(address: Address): boolean {
 		for (const currAddress of this.addresses) {
-			if (this.compareAddresses(currAddress, this.nominatimAddress)) {
+			if (currAddress.compareTo(this.nominatimAddress)) {
 				this.activity.address_id = currAddress.id;
 				this.activityService.edit(this.activity).subscribe();
 				return true;
@@ -255,7 +263,7 @@ export class ActivityFormComponent implements OnInit {
 			data: {
 				name: '',
 				message: 'Sie haben eien neue Adresse eingegeben. Bitte geben Sie den entsprechenden Stadtteil ein.'
-					+ this.toString(newAddress),
+					+ newAddress.toString,
 				address: newAddress
 			}
 		});

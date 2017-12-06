@@ -82,7 +82,6 @@ export class OrganisationFormComponent implements OnInit {
 	}
 
 	filterAddresses(query: string): Address[] {
-		console.log('filter: ' + query);
 		return this.addresses.filter(address =>
 			address.toString.toLocaleLowerCase().indexOf(query.toLowerCase()) !== -1);
 	}
@@ -95,29 +94,6 @@ export class OrganisationFormComponent implements OnInit {
 			return new Address(address).toString;
 		}
 	}
-
-	// compareAddresses(address1: Address, address2: Address): boolean {
-	// 	if (address1.street.toLocaleLowerCase().localeCompare(address2.street.toLocaleLowerCase()) === 0 &&
-	// 		address1.house_number.toLocaleLowerCase().localeCompare(address2.house_number.toLocaleLowerCase()) === 0 &&
-	// 		address1.postal_code.toLocaleLowerCase().localeCompare(address2.postal_code.toLocaleLowerCase()) === 0 &&
-	// 		address1.place.toLocaleLowerCase().localeCompare(address2.place.toLocaleLowerCase()) === 0
-	// 	) {
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
-	// checkAddress(address: Address): boolean {
-	// 	if (address.house_number &&
-	// 		address.place &&
-	// 		address.postal_code &&
-	// 		address.street) {
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
 
 	onSubmit(): void {
 		if (typeof this.addressCtrl.value === 'string') {
@@ -143,11 +119,9 @@ export class OrganisationFormComponent implements OnInit {
 				}
 			});
 		} else {
-			if (this.addressCtrl.value.id) {
-				if (this.addressCtrl.value.id !== this.organisation.address_id) {
-					this.organisation.address_id = this.addressCtrl.value.id;
-				}
-			}
+			this.organisation.address = null;
+			this.organisation.address_id = this.addressCtrl.value.id;
+			this.organisationService.edit(this.organisation).subscribe(() => this.back());
 		}
 	}
 
@@ -196,7 +170,7 @@ export class OrganisationFormComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(() => {
 			this.addressService.add(this.nominatimAddress).subscribe((response) => {
 				this.organisation.address_id = response.records.id;
-				this.organisationService.edit(this.organisation);
+				this.organisationService.edit(this.organisation).subscribe();
 				this.back();
 			});
 		});

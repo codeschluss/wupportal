@@ -38,6 +38,7 @@ export class UserFormComponent implements OnInit {
 	protected userForm: FormGroup;
 	protected passwordGroup: FormGroup;
 	protected hasActivities: boolean = true;
+	private userProviders: string[];
 
 	protected allOrganisations: Array<Organisation>;
 	protected initialOrganisations: Array<string> = [];
@@ -135,6 +136,7 @@ export class UserFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.userProviders = this.authService.currentUser.providers.map(provider => provider.id);
 		this.userService.get(this.authService.currentUser.id)
 			.map(data => data.records as User)
 			.subscribe(user => {
@@ -142,10 +144,6 @@ export class UserFormComponent implements OnInit {
 				this.initializeOrganisations(user.providers);
 				this.initAllOrganisationsThenControls();
 			});
-	}
-
-	getProviders(): Array<string> {
-		return this.authService.currentUser.providers.map(provider => provider.id);
 	}
 
 	initializeOrganisations(providers: Array<Provider>): void {

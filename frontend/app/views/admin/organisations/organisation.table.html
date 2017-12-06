@@ -11,30 +11,34 @@
 	  class="organisation-table" matSort
 	  (matSortChange)="handleSorted($event)">
 
-		<ng-container matColumnDef="name">
+		<ng-container matColumnDef="Organisations.name">
 			<mat-header-cell *matHeaderCellDef
 			  mat-sort-header disableClear="true">
-				name</mat-header-cell>
+				{{constants.nameString}}</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="website">
-			<mat-header-cell *matHeaderCellDef>Website</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef
+			  mat-sort-header>{{constants.website}}</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.website }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="description">
-			<mat-header-cell *matHeaderCellDef>Beschreibung</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef
+			  mat-sort-header>{{constants.description}}</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.description }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="mail">
-			<mat-header-cell *matHeaderCellDef>eMail</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef
+			  mat-sort-header>{{constants.mail}}</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.mail }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="phone">
-			<mat-header-cell *matHeaderCellDef>Telephone</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef
+			  mat-sort-header>Telephone</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
 		</ng-container>
 
@@ -51,7 +55,7 @@
 
 		<ng-container matColumnDef="action">
 			<mat-header-cell *matHeaderCellDef>
-				Ändern/Löschen
+				{{constants.edit}} / {{constants.delete}}
 			</mat-header-cell>
 			<mat-cell *matCellDef="let row">
 				<button mat-button color="primary"

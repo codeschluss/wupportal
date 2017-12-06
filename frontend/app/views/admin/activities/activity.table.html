@@ -2,40 +2,47 @@
 
 	<div class="activities-table-header">
 		<mat-form-field>
-			<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
+			<input matInput (keyup)="handleFiltered($event)"
+			  placeholder="Filter">
 		</mat-form-field>
 	</div>
 
-	<mat-table #table [dataSource]="dataSource" class="activity-table" matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
+	<mat-table #table [dataSource]="dataSource"
+	  class="activity-table" matSort
+	  matSortActive="name" matSortDisableClear
+	  matSortDirection="asc">
 
 		<ng-container matColumnDef="name">
-			<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+			<mat-header-cell *matHeaderCellDef
+			  mat-sort-header disableClear="true">
 				{{ constants.nameString }} </mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="description">
-			<mat-header-cell *matHeaderCellDef>
+			<mat-header-cell *matHeaderCellDef
+			  mat-sort-header>
 				{{ constants.description }}
 			</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row.description }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="provider">
-			<mat-header-cell *matHeaderCellDef>
-				{{ constants.organisation }}
+			<mat-header-cell mat-sort-header
+			  *matHeaderCellDef>
+				{{constants.organisation}}
 			</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.provider.organisation.name }}
+			<mat-cell *matCellDef="let row">{{row.provider.organisation.name}}
 			</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="schedule">
-			<mat-header-cell *matHeaderCellDef>{{ constants.dates }}</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.schedule }}</mat-cell>
+			<mat-header-cell *matHeaderCellDef>{{constants.dates}}</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{row.schedule}}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="tags">
-			<mat-header-cell *matHeaderCellDef>{{ constants.tags }}</mat-header-cell>
+			<mat-header-cell *matHeaderCellDef>{{constants.tags}}</mat-header-cell>
 			<mat-cell *matCellDef="let row">
 				<mat-chip-list>
 					<span *ngFor="let tag of row?.tags">{{tag.name + ' | '}}</span>
@@ -44,23 +51,26 @@
 		</ng-container>
 
 		<ng-container matColumnDef="target_groups">
-			<mat-header-cell *matHeaderCellDef>{{ constants.targetGroups }}</mat-header-cell>
+			<mat-header-cell mat-sort-header
+			  *matHeaderCellDef>{{constants.targetGroups}}</mat-header-cell>
 			<mat-cell *matCellDef="let row">
 				<mat-chip-list>
-					<mat-chip *ngFor="let targetGroup of row?.target_groups">{{ targetGroup.name }}</mat-chip>
+					<mat-chip *ngFor="let targetGroup of row?.target_groups">{{targetGroup.name}}</mat-chip>
 				</mat-chip-list>
 			</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="action">
 			<mat-header-cell *matHeaderCellDef>
-				{{ constants.edit}} / {{ constants.delete }}
+				{{constants.edit}} / {{constants.delete}}
 			</mat-header-cell>
 			<mat-cell *matCellDef="let row">
 				<button mat-button routerLink='/activity/edit/{{row.id}}'>
-					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					<i class="fa fa-pencil-square-o"
+					  aria-hidden="true"></i>
 				</button>
-				<delete-action [recordID]="row.id" [nameToDelete]="row.name" (onDelete)="onDelete($event)">
+				<delete-action [recordID]="row.id"
+				  [nameToDelete]="row.name" (onDelete)="onDelete($event)">
 				</delete-action>
 			</mat-cell>
 		</ng-container>
@@ -69,7 +79,8 @@
 		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 	</mat-table>
 
-	<mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
+	<mat-paginator #paginator [pageSize]="5"
+	  [pageSizeOptions]="[5, 10, 20]">
 	</mat-paginator>
 
 </div>

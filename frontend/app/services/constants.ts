@@ -50,6 +50,7 @@ export class Constants {
 	public beginn: string = 'Anfang';
 	public end: string = 'Ende';
 	public deleteFromOrganisation: string = 'Aus Organisation entfernen';
+	public wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';

@@ -13,8 +13,7 @@ import { Constants } from 'app/services/constants';
 export class LoginFormComponent implements OnInit {
 
 	user: User = new User({});
-	loading: boolean = false;
-	error: string = '';
+	error: string;
 
 	constructor(private location: Location,
 		private router: Router,
@@ -23,19 +22,16 @@ export class LoginFormComponent implements OnInit {
 		private constants: Constants) { }
 
 	ngOnInit(): void {
-		// reset login status
 		this.authenticationService.logout();
 	}
 
 	login(): void {
-		this.loading = true;
 		this.authenticationService.login(this.user.username, this.user.password)
 			.subscribe(result => {
 				if (result) {
 					this.router.navigate(['/admin']);
 				} else {
-					this.error = 'Username or password is incorrect';
-					this.loading = false;
+					this.error = this.constants.wrongCredentialsMessage;
 				}
 			});
 	}

@@ -66,8 +66,9 @@
 					  (click)="back()">{{constants.back}}</button>
 				</form>
 			</mat-tab>
-			<mat-tab label="{{constants.own}} {{constants.activities}}">
-				<mat-card *ngIf="hasActivities">
+			<mat-tab *ngIf="hasActivities"
+			  label="{{constants.own}} {{constants.activities}}">
+				<mat-card>
 					<mat-card-header>
 						<mat-card-title>
 							<h2>{{constants.activities}}</h2>

@@ -22,7 +22,7 @@ import { Constants } from 'app/services/constants';
 
 export class OrganisationsTableComponent extends AbstractTableComponent {
 
-	displayedColumns: Array<string> = ['name', 'description', 'mail', 'phone', 'website', 'address', 'action'];
+	displayedColumns: Array<string> = ['Organisations.name', 'description', 'mail', 'phone', 'website', 'address', 'action'];
 	dataSource: MatTableDataSource<Organisation> = new MatTableDataSource<Organisation>();
 
 	constructor(

@@ -60,10 +60,14 @@ export class ActivityFormComponent implements OnInit {
 	tagsCtrl: FormControl;
 	categoryCtrl: FormControl;
 	weekDaysCtrl: FormControl;
+	startTimeCtrl: FormControl;
+	endTimeCtrl: FormControl;
 	targetGroupCtrl: FormControl;
 	addresses: Address[] = [];
 	filteredAddresses: Observable<Address[]>;
 	nominatimAddress: Address;
+	showRecurrence: boolean;
+	scheduleIsRecurrent: boolean;
 
 	constructor(
 		private activityService: ActivityService,
@@ -97,12 +101,16 @@ export class ActivityFormComponent implements OnInit {
 				new Activity(data.records)
 			).subscribe(activity => {
 				this.activity = activity;
+				this.activity.schedule.recurrence ? this.scheduleIsRecurrent = true : this.scheduleIsRecurrent = false;
 				this.initTags();
+				this.activity.schedule.recurrence ? this.showRecurrence = true : this.showRecurrence = false;
 				this.addressCtrl = new FormControl(this.activity.address);
 				this.categoryCtrl = new FormControl(this.activity.category.id);
+				this.startTimeCtrl = new FormControl(this.activity.schedule.startTime);
+				this.endTimeCtrl = new FormControl(this.activity.schedule.endTime);
 				this.targetGroupCtrl = this.activity.target_groups ?
 					new FormControl(this.initCtrl(this.activity.target_groups)) : new FormControl();
-				this.weekDaysCtrl = (this.activity.schedule && activity.schedule.recurrence && this.activity.schedule.recurrence.week_days) ?
+				this.weekDaysCtrl = (this.activity.schedule && this.activity.schedule.recurrence && this.activity.schedule.recurrence.week_days) ?
 					new FormControl(this.initCtrl(this.activity.schedule.recurrence.week_days)) : new FormControl();
 				this.filteredAddresses = this.addressCtrl.valueChanges
 					.startWith(<any>[])
@@ -150,29 +158,6 @@ export class ActivityFormComponent implements OnInit {
 		return false;
 	}
 
-	// compareAddresses(address1: Address, address2: Address): boolean {
-	// 	if (address1.street.toLocaleLowerCase().localeCompare(address2.street.toLocaleLowerCase()) === 0 &&
-	// 		address1.house_number.toLocaleLowerCase().localeCompare(address2.house_number.toLocaleLowerCase()) === 0 &&
-	// 		address1.postal_code.toLocaleLowerCase().localeCompare(address2.postal_code.toLocaleLowerCase()) === 0 &&
-	// 		address1.place.toLocaleLowerCase().localeCompare(address2.place.toLocaleLowerCase()) === 0
-	// 	) {
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-	// }
-
-	checkAddress(address: Address): boolean {
-		if (address.house_number &&
-			address.place &&
-			address.postal_code &&
-			address.street) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	generateTargetGroupArray(idArray: string[]): Observable<TargetGroup[]> {
 		const target_groups = [];
 		for (const id of idArray) {
@@ -185,16 +170,10 @@ export class ActivityFormComponent implements OnInit {
 		this.activity.schedule = new Schedule({});
 	}
 
-	generateRecurrence(): void {
-		this.activity.schedule.recurrence = new Recurrence({});
-	}
-
-	removeRecurrence(): void {
-		this.activity.schedule.recurrence = null;
-	}
-
 	onSubmit(): void {
 		this.activity.tags = [];
+		this.activity.schedule = null;
+		this.activity.schedule_id = null;
 		this.handleTags().subscribe(tags => {
 			tags.map((tag) => this.activity.tags.push(tag.records));
 			this.generateTargetGroupArray(this.targetGroupCtrl.value).
@@ -202,36 +181,39 @@ export class ActivityFormComponent implements OnInit {
 					this.activity.target_groups = targetGroups;
 					this.activityService.edit(this.activity).subscribe();
 				});
-		});
-		this.activity.category_id = this.categoryCtrl.value;
 
-		if (typeof this.addressCtrl.value === 'string') {
-			this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
-				this.nominatimAddress = new Address(data);
-				if (!this.checkAddress(this.nominatimAddress)) {
-					this.controlAddress(this.nominatimAddress).subscribe(result => {
-						this.nominatimAddress = new Address(result);
+			// this.activity.schedule.startTime = this.startTimeCtrl.value;
+			// this.activity.schedule.endTime = this.endTimeCtrl.value;
+			// this.activity.category_id = this.categoryCtrl.value;
+
+			if (typeof this.addressCtrl.value === 'string') {
+				this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
+					this.nominatimAddress = new Address(data);
+					if (!this.nominatimAddress.checkAddress) {
+						this.controlAddress(this.nominatimAddress).subscribe(result => {
+							this.nominatimAddress = new Address(result);
+							if (this.findExistingAddress(this.nominatimAddress)) {
+								this.back();
+								return;
+							}
+							this.activity.address = null;
+							this.openDialog(this.nominatimAddress);
+						});
+					} else {
 						if (this.findExistingAddress(this.nominatimAddress)) {
 							this.back();
 							return;
 						}
 						this.activity.address = null;
 						this.openDialog(this.nominatimAddress);
-					});
-				} else {
-					if (this.findExistingAddress(this.nominatimAddress)) {
-						this.back();
-						return;
 					}
-					this.activity.address = null;
-					this.openDialog(this.nominatimAddress);
-				}
-			});
-		} else {
-			this.activity.address = null;
-			this.activity.address_id = this.addressCtrl.value.id;
-			this.activityService.edit(this.activity).subscribe(() => this.back());
-		}
+				});
+			} else {
+				this.activity.address = null;
+				this.activity.address_id = this.addressCtrl.value.id;
+				this.activityService.edit(this.activity).subscribe(() => this.back());
+			}
+		});
 	}
 
 	findExistingAddress(address: Address): boolean {

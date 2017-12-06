@@ -6,11 +6,12 @@ export class Schedule extends Model {
 	constructor(json: any) {
 		super();
 		this.id = json.id;
+		this.recurrence_id = json.recurrence_id;
 		if (json.recurrence) { this.recurrence = new Recurrence(json.recurrence); }
 		this.start_date = new Date(json.start_date);
 		this.end_date = new Date(json.end_date);
 	}
-
+	public recurrence_id: string = '';
 	public recurrence: Recurrence = null;
 	public start_date: Date = new Date();
 	public end_date: Date = new Date();
@@ -19,25 +20,31 @@ export class Schedule extends Model {
 	// else use Recurrence date without hours and minutes but still hours and minutes from schedule
 
 	public get startTime(): string {
-		console.log('getting start time');
-		return this.start_date.toLocaleTimeString();
+		return this.start_date.toLocaleTimeString(['de-AT'], { hour: '2-digit', minute: '2-digit' });
 	}
 
 	public get endTime(): string {
-		console.log('getting end time');
-		return this.end_date.toLocaleTimeString();
+		return this.end_date.toLocaleTimeString(['de-AT'], { hour: '2-digit', minute: '2-digit' });
 	}
 
 	public set startTime(time: string) {
-		const startTimeDate: Date = new Date(time);
-		this.start_date.setMinutes(startTimeDate.getMinutes());
-		this.start_date.setHours(startTimeDate.getHours());
+		this.start_date.setHours(parseInt(time.split(':')[0], 10));
+		this.start_date.setMinutes(parseInt(time.split(':')[1], 10));
 	}
 
 	public set endTime(time: string) {
-		const endTimeDate: Date = new Date(time);
-		this.end_date.setMinutes(endTimeDate.getMinutes());
-		this.end_date.setHours(endTimeDate.getHours());
+		console.log('beforeSetting: ' + this.end_date);
+		this.end_date.setHours(parseInt(time.split(':')[0], 10));
+		this.end_date.setMinutes(parseInt(time.split(':')[1], 10));
+		console.log('afterSetting: ' + this.end_date);
+	}
+
+	get toString(): string {
+		if (this.recurrence) {
+			return this.recurrence.week_days + ' ' + this.startTime;
+		} else {
+			return this.start_date.getDate + ' ' + this.startTime;
+		}
 	}
 
 }

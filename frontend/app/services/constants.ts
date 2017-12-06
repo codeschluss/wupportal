@@ -36,6 +36,8 @@ export class Constants {
 	public edit: string = 'Bearbeiten';
 	public chosen: string = 'Ausgewählt';
 	public choose: string = 'wählen Sie';
+	public create: string = 'Erstelle';
+	public frequently: string = 'Regelmäßig';
 
 	public coreData: string = 'Stammdaten';
 	public own: string = 'Eigene';

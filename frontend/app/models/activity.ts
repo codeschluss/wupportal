@@ -22,7 +22,8 @@ export class Activity extends Model {
 		if (json.provider) { this.provider = new Provider(json.provider); }
 		this.category_id = json.category_id;
 		if (json.category) { this.category = new Category(json.category); }
-		if (this.schedule) { this.schedule = new Schedule(json.schedule); }
+		this.schedule_id = json.schedule_id;
+		if (json.schedule) { this.schedule = new Schedule(json.schedule); }
 		this.tags = json.tags;
 		this.target_groups = json.target_groups;
 		this.translations = json.translations;
@@ -39,6 +40,7 @@ export class Activity extends Model {
 	public category_id: Category = null;
 	public category: Category = null;
 
+	public schedule_id: string = '';
 	public schedule: Schedule = null;
 	public tags: Tag[] = [];
 	public target_groups: TargetGroup[] = [];

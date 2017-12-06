@@ -1,4 +1,4 @@
-import { OnInit, ViewChild, Input } from '@angular/core';
+import { OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, Sort, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -8,6 +8,7 @@ import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
 import { Constants } from 'app/services/constants';
+import { } from '@angular/core/src/event_emitter';
 
 export abstract class AbstractTableComponent implements OnInit {
 
@@ -16,6 +17,8 @@ export abstract class AbstractTableComponent implements OnInit {
 
 	@ViewChild(MatSort)
 	protected sort: MatSort;
+
+	@Output() onLoadedData: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
 	protected abstract displayedColumns: Array<string> = [];
 	protected abstract dataSource: MatTableDataSource<any>;
@@ -57,15 +60,17 @@ export abstract class AbstractTableComponent implements OnInit {
 
 	handleResponse(response: DataResponse): void {
 		this.dataSource.data = response.records;
+		console.log('response.records', response.records);
+		this.onLoadedData.emit(response.records);
+	}
+
+	getData(): Array<any> {
+		return this.dataSource.data;
 	}
 
 	onDelete(recordID: string): void {
 		this.dataService
 			.delete(recordID)
 			.subscribe(() => this.fetchData());
-	}
-
-	getData(): Array<any> {
-		return this.dataSource.data;
 	}
 }

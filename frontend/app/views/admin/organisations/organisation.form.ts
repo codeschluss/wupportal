@@ -28,6 +28,7 @@ import { Constants } from 'app/services/constants';
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
 import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
 import { ProviderService } from 'app/services/provider.service';
+import { Provider } from 'app/models/provider';
 
 @Component({
 	selector: 'edit-organisation',
@@ -41,6 +42,7 @@ import { ProviderService } from 'app/services/provider.service';
 
 export class OrganisationFormComponent implements OnInit {
 	organisation: Organisation;
+	providerIDs: Array<string>;
 	addresses: Address[] = [];
 	filteredAddresses: Observable<Address[]>;
 	addressCtrl: FormControl;
@@ -119,9 +121,11 @@ export class OrganisationFormComponent implements OnInit {
 				}
 			});
 		} else {
-			this.organisation.address = null;
-			this.organisation.address_id = this.addressCtrl.value.id;
-			this.organisationService.edit(this.organisation).subscribe(() => this.back());
+			this.providerRequest().subscribe(() => {
+				this.organisation.address = null;
+				this.organisation.address_id = this.addressCtrl.value.id;
+				this.organisationService.edit(this.organisation).subscribe(() => this.back());
+			});
 		}
 	}
 
@@ -146,6 +150,10 @@ export class OrganisationFormComponent implements OnInit {
 			}
 		});
 		return dialogRef.afterClosed();
+	}
+
+	setProviders(providers: Array<Provider>): void {
+		this.providerIDs = providers.map(provider => provider.id);
 	}
 
 	providerRequest(): Observable<any> {

@@ -42,7 +42,6 @@ class ActivitiesController extends AppController
         return [
             'Activities.name',
             'Activities.description',
-            'Activities.schedule',
             'Organisations.name',
             'Categories.name',
             'Tags.name',

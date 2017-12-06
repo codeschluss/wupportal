@@ -42,9 +42,9 @@ class UsersController extends AppController
     protected function fieldsTofilter()
     {
         return [
-            'username',
-            'fullname',
-            'phone'
+            'Users.username',
+            'Users.fullname',
+            'Users.phone'
         ];
     }
 

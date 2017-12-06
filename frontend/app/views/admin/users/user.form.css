@@ -1,4 +1,9 @@
-#passwordGroup {
+#password-group {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#user-form {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }

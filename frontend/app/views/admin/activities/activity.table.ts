@@ -21,7 +21,7 @@ import { Constants } from 'app/services/constants';
 
 export class ActivityTableComponent extends AbstractTableComponent implements OnInit {
 
-	@Input() user: boolean = false;
+	@Input() providers: Array<string> = [];
 
 	displayedColumns: Array<string> = ['name', 'description', 'schedule', 'provider', 'tags', 'target_groups', 'action'];
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
@@ -33,8 +33,8 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	fetchData(): void {
-		this.user
-			? this.dataService.getByProviders(this.tableState)
+		this.providers.length !== 0
+			? this.dataService.getByProviders(this.tableState, this.providers)
 				.subscribe(data => this.handleResponse(data))
 			: this.dataService.list(this.tableState)
 				.subscribe(data => this.handleResponse(data));

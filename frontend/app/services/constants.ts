@@ -37,6 +37,8 @@ export class Constants {
 	public chosen: string = 'Ausgewählt';
 	public choose: string = 'wählen Sie';
 
+	public coreData: string = 'Stammdaten';
+	public own: string = 'Eigene';
 
 	public deleteMessage: string = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';

@@ -144,6 +144,10 @@ export class UserFormComponent implements OnInit {
 			});
 	}
 
+	getProviders(): Array<string> {
+		return this.authService.currentUser.providers.map(provider => provider.id);
+	}
+
 	initializeOrganisations(providers: Array<Provider>): void {
 		for (const provider of providers) {
 			this.initialOrganisations.push(provider.organisation.id);
@@ -177,7 +181,7 @@ export class UserFormComponent implements OnInit {
 				Validators.required,
 				Validators.email
 			]),
-			'fullnameCtrl': new FormControl(this.user.fullname, Validators.required),
+			'fullnameCtrl': new FormControl(this.user.fullname),
 			'phoneCtrl': new FormControl(this.user.phone),
 			'organisationsCtrl': new FormControl(this.initialOrganisations),
 			'password': this.passwordGroup

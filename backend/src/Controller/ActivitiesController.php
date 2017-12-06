@@ -62,6 +62,7 @@ class ActivitiesController extends AppController
         $this->setJoins($query);
         $this->setSorting($query, $request);
         $this->setFiltering($query, $request);
+        $this->setByProviders($query, $request);
         $this->data($this->paginate($query));
     }
 

@@ -17,18 +17,17 @@ export class ActivityService extends DataService {
 		super(http, 'activities', authService);
 	}
 
-
-	public getByProviders(tableState: TableState): Observable<DataResponse> {
-		const request = Object.assign(tableState, this.createProvidersParam());
+	public getByProviders(tableState: TableState, providers: Array<string>): Observable<DataResponse> {
+		const request = Object.assign(tableState, this.createProvidersParam(providers));
 		return this.http.post(this.baseUrl + 'getByProviders', JSON.stringify(request), {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())
 		}).map(res => res as DataResponse);
 	}
 
-	createProvidersParam(): string[] {
+	createProvidersParam(providers: Array<string>): Array<string> {
 		const providersParam: any = { 'providers': [] };
-		providersParam.providers = this.authService.currentUser.providers.map(provider => provider.id);
+		providersParam.providers = providers;
 		return providersParam;
 	}
 

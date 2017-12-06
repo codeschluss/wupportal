@@ -51,11 +51,11 @@ INSERT INTO `providers` (`id`, `organisation_id`, `user_id`) VALUES
 ('00000000-0000-0000-0009-000000000003', '00000000-0000-0000-0008-000000000001', 'e122098e-a2a1-4bce-b7d7-b08536dc2cef'),
 ('00000000-0000-0000-0009-000000000004', '00000000-0000-0000-0008-000000000002', 'e122098e-a2a1-4bce-b7d7-b08536dc2cef');
 
-INSERT INTO `week_days` (`id`, `name`) VALUES 
+INSERT INTO `week_days` (`id`, `name`) VALUES
 ('1', 'Montag'), ('2', 'Dienstag'), ('3', 'Mittwoch'), ('4', 'Donnerstag'), ('5', 'Freitag'), ('6', 'Samstag'), ('7', 'Sonntag');
 
-INSERT INTO `recurrences` (`id`, `weekly_period`, `beginn_by`, `end_by`) VALUES 
-('1', '2', '2017-12-24', '2018-12-24'), 
+INSERT INTO `recurrences` (`id`, `weekly_period`, `beginn_by`, `end_by`) VALUES
+('1', '2', '2017-12-24', '2018-12-24'),
 ('2', '1', '2017-12-8', '2017-12-24');
 
 INSERT INTO `recurrences_week_days` (`id`, `week_day_id`,`recurrence_id`) VALUES
@@ -73,8 +73,8 @@ INSERT INTO `schedules` (`id`, `start_date`, `end_date`) VALUES
 INSERT INTO `activities` (`id`, `name`, `description`, `schedule_id`, `show_user`, `address_id`, `provider_id`, `category_id`) VALUES
 ('00000000-0000-0000-000a-000000000001', 'Sprachkurs', 'Englisch Sprachkurs für Jung und Alt', '1', 1, '00000000-0000-0000-0006-000000000001', '00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0007-000000000002'),
 ('00000000-0000-0000-000a-000000000002', 'Sportaktivität', 'Sportaktivität für Jung und Alt', '2', 0, '00000000-0000-0000-0006-000000000001', '00000000-0000-0000-0009-000000000002', '00000000-0000-0000-0007-000000000002'),
-('00000000-0000-0000-000a-000000000003', 'Sprachkurs', 'Deutsch Sprachkurs für Alt und Jung', '3', 1, '00000000-0000-0000-0006-000000000002', '00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0007-000000000002'),
-('00000000-0000-0000-000a-000000000004', 'Sprachkurs', 'Englisch', '4', 1, '00000000-0000-0000-0006-000000000002', '00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0007-000000000002');
+('00000000-0000-0000-000a-000000000003', 'Sprachkurs', 'Deutsch Sprachkurs für Alt und Jung', '3', 1, '00000000-0000-0000-0006-000000000002', '00000000-0000-0000-0009-000000000003', '00000000-0000-0000-0007-000000000002'),
+('00000000-0000-0000-000a-000000000004', 'Sprachkurs', 'Englisch', '4', 1, '00000000-0000-0000-0006-000000000002', '00000000-0000-0000-0009-000000000003', '00000000-0000-0000-0007-000000000002');
 
 INSERT INTO `activities_tags` (`id`, `tag_id`, `activity_id`) VALUES
 ('00000000-0000-0000-000b-000000000001', '00000000-0000-0000-0002-000000000001', '00000000-0000-0000-000a-000000000002'),

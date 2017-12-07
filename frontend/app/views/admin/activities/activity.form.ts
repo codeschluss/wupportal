@@ -172,8 +172,8 @@ export class ActivityFormComponent implements OnInit {
 
 	onSubmit(): void {
 		this.activity.tags = [];
-		this.activity.schedule = null;
-		this.activity.schedule_id = null;
+		// this.activity.schedule = null;
+		// this.activity.schedule_id = null;
 		this.handleTags().subscribe(tags => {
 			tags.map((tag) => this.activity.tags.push(tag.records));
 			this.generateTargetGroupArray(this.targetGroupCtrl.value).
@@ -189,7 +189,7 @@ export class ActivityFormComponent implements OnInit {
 			if (typeof this.addressCtrl.value === 'string') {
 				this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
 					this.nominatimAddress = new Address(data);
-					if (!this.nominatimAddress.checkAddress) {
+					if (!this.nominatimAddress.checkAddress()) {
 						this.controlAddress(this.nominatimAddress).subscribe(result => {
 							this.nominatimAddress = new Address(result);
 							if (this.findExistingAddress(this.nominatimAddress)) {
@@ -197,6 +197,7 @@ export class ActivityFormComponent implements OnInit {
 								return;
 							}
 							this.activity.address = null;
+							this.nominatimAddress.suburb = null;
 							this.openDialog(this.nominatimAddress);
 						});
 					} else {
@@ -205,6 +206,7 @@ export class ActivityFormComponent implements OnInit {
 							return;
 						}
 						this.activity.address = null;
+						this.nominatimAddress.suburb = null;
 						this.openDialog(this.nominatimAddress);
 					}
 				});
@@ -218,7 +220,7 @@ export class ActivityFormComponent implements OnInit {
 
 	findExistingAddress(address: Address): boolean {
 		for (const currAddress of this.addresses) {
-			if (currAddress.compareTo(this.nominatimAddress)) {
+			if (currAddress.compareTo(address)) {
 				this.activity.address_id = currAddress.id;
 				this.activityService.edit(this.activity).subscribe();
 				return true;

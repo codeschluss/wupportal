@@ -31,6 +31,7 @@ export class SuburbSelectionComponent {
 	onNoClick(): void { }
 
 	onSubmit(): void {
+		this.data.suburb = null;
 		this.data.address.suburb_id = this.suburb.id;
 		this.dialogRef.close();
 	}

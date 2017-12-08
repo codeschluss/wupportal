@@ -1,99 +1,68 @@
 <div class="edit-container">
-	<mat-card class="activity-edit-card"
-	  *ngIf="activity">
-		<form #activityForm="ngForm" (ngSubmit)="onSubmit()"
-		  class="well">
+	<mat-card class="activity-edit-card" *ngIf="activity">
+		<form #activityForm="ngForm" (ngSubmit)="onSubmit()" class="well">
 			<mat-card-header>
 				<h2>{{ activity.name }}</h2>
 			</mat-card-header>
 
 			<mat-form-field class="edit-form-full-width">
-				<input matInput type="text" [(ngModel)]="activity.name"
-				  placeholder={{constants.name}}
-				  name="name" value={{activity.name}}
-				  required [errorStateMatcher]="validation"
-				  id="activity_name_field">
+				<input matInput type="text" [(ngModel)]="activity.name" placeholder={{constants.name}} name="name" value={{activity.name}}
+				 required [errorStateMatcher]="validation" id="activity_name_field">
 			</mat-form-field>
 
 			<mat-form-field class="edit-form-full-width">
-				<textarea matInput type="text"
-				  [(ngModel)]="activity.description"
-				  placeholder="{{constants.description}}"
-				  name="description" value={{activity.description}}
-				  id="activity_description_field"></textarea>
+				<textarea matInput type="text" [(ngModel)]="activity.description" placeholder="{{constants.description}}" name="description"
+				 value={{activity.description}} id="activity_description_field"></textarea>
 			</mat-form-field>
 
 			<mat-card class="schedule-card">
 				<mat-card-header>
 					<h2>{{constants.dates}}</h2>
-					<button mat-raised-button *ngIf="!activity.schedule"
-					  type="button" (click)="generateSchedule()">{{constants.create}} {{constants.dates}}</button>
+					<button mat-raised-button *ngIf="!activity.schedule" type="button" (click)="generateSchedule()">{{constants.create}} {{constants.dates}}</button>
 				</mat-card-header>
 
 
 				<!-- TODO: NO ngModel -->
-				<mat-checkbox *ngIf="activity.schedule"
-				  [(ngModel)]="activity.schedule.recurrence"
-				  name="isRecurrent">{{constants.frequently}}</mat-checkbox>
+				<mat-checkbox *ngIf="activity.schedule" [(ngModel)]="activity.schedule.recurrence" name="isRecurrent">{{constants.frequently}}</mat-checkbox>
 
 				<mat-form-field class="edit-form-full-width">
-					<input matInput type="time" placeholder="startTime"
-					  [formControl]="startTimeCtrl"
-					  name="start_time" id="activity_start_time">
+					<input matInput type="time" placeholder="startTime" [formControl]="startTimeCtrl" name="start_time" id="activity_start_time">
 				</mat-form-field>
 
 				<mat-form-field class="edit-form-full-width">
-					<input matInput type="time" placeholder="endTime"
-					  [formControl]="endTimeCtrl"
-					  name="end_time" id="activity_end_time">
+					<input matInput type="time" placeholder="endTime" [formControl]="endTimeCtrl" name="end_time" id="activity_end_time">
 				</mat-form-field>
 
 				<div *ngIf="!activity.schedule.recurrence">
 					<mat-form-field>
-						<input matInput [matDatepicker]="pickerStartDate"
-						  [(ngModel)]="activity.schedule.start_date"
-						  placeholder={{constants.beginn}}
-						  name="schedule_start_by">
-						<mat-datepicker-toggle matSuffix
-						  [for]="pickerStartDate"></mat-datepicker-toggle>
+						<input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="activity.schedule.start_date" placeholder={{constants.beginn}}
+						 name="schedule_start_by">
+						<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
 						<mat-datepicker #pickerStartDate></mat-datepicker>
 					</mat-form-field>
 					<mat-form-field>
-						<input matInput [matDatepicker]="pickerEndDate"
-						  [(ngModel)]="activity.schedule.end_date"
-						  placeholder={{constants.end}}
-						  name="schedule_end_by">
-						<mat-datepicker-toggle matSuffix
-						  [for]="pickerEndDate"></mat-datepicker-toggle>
+						<input matInput [matDatepicker]="pickerEndDate" [(ngModel)]="activity.schedule.end_date" placeholder={{constants.end}} name="schedule_end_by">
+						<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
 						<mat-datepicker #pickerEndDate></mat-datepicker>
 					</mat-form-field>
 				</div>
 
 				<div *ngIf="activity.schedule.recurrence">
 					<mat-form-field>
-						<input matInput [matDatepicker]="pickerStart"
-						  [(ngModel)]="activity.schedule.recurrence.beginn_by"
-						  placeholder={{constants.beginn}}
-						  name="recurrence_beginn_by">
-						<mat-datepicker-toggle matSuffix
-						  [for]="pickerStart"></mat-datepicker-toggle>
+						<input matInput [matDatepicker]="pickerStart" [(ngModel)]="activity.schedule.recurrence.beginn_by" placeholder={{constants.beginn}}
+						 name="recurrence_beginn_by">
+						<mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
 						<mat-datepicker #pickerStart></mat-datepicker>
 					</mat-form-field>
 					<mat-form-field>
-						<input matInput [matDatepicker]="pickerEnd"
-						  [(ngModel)]="activity.schedule.recurrence.end_by"
-						  placeholder={{constants.end}}
-						  name="recurrence_end_by">
-						<mat-datepicker-toggle matSuffix
-						  [for]="pickerEnd"></mat-datepicker-toggle>
+						<input matInput [matDatepicker]="pickerEnd" [(ngModel)]="activity.schedule.recurrence.end_by" placeholder={{constants.end}}
+						 name="recurrence_end_by">
+						<mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
 						<mat-datepicker #pickerEnd></mat-datepicker>
 					</mat-form-field>
 					<mat-form-field>
-						<mat-select placeholder={{constants.weekDays}}
-						  [formControl]="weekDaysCtrl"
-						  multiple>
-							<mat-option *ngFor="let weekDay of weekDays"
-							  [value]="weekDay.id">{{weekDay.name}}</mat-option>
+						<mat-select placeholder={{constants.weekDays}} [formControl]="weekDaysCtrl" multiple>
+							<mat-option *ngFor="let weekDay of weekDays" [value]="weekDay.id">{{weekDay.name}}</mat-option>
 						</mat-select>
 					</mat-form-field>
 				</div>
@@ -101,47 +70,34 @@
 
 			<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
 			<mat-form-field class="edit-form-full-width">
-				<input matInput type="text" [formControl]="tagsCtrl"
-				  placeholder="{{constants.tags}}"
-				  name="tags" id="activity_tags">
+				<input matInput type="text" [formControl]="tagsCtrl" placeholder="{{constants.tags}}" name="tags" id="activity_tags">
 			</mat-form-field>
 
 			<mat-form-field>
-				<mat-select placeholder={{constants.category}}
-				  [formControl]="categoryCtrl">
-					<mat-option *ngFor="let category of categories"
-					  [value]="category.id">{{category.name}}</mat-option>
+				<mat-select placeholder={{constants.category}} [formControl]="categoryCtrl">
+					<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
 				</mat-select>
 			</mat-form-field>
 
 			<mat-form-field>
-				<mat-select placeholder={{constants.targetGroups}}
-				  [formControl]="targetGroupCtrl"
-				  multiple>
-					<mat-option *ngFor="let targetGroup of targetGroups"
-					  [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
+				<mat-select placeholder={{constants.targetGroups}} [formControl]="targetGroupCtrl" multiple>
+					<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
 				</mat-select>
 			</mat-form-field>
 
 			<mat-card class="address-card">
 				<mat-form-field class="edit-form-full-width">
-					<input matInput name="address"
-					  placeholder={{constants.address}}
-					  [matAutocomplete]="auto" [formControl]="addressCtrl">
-					<mat-autocomplete #auto="matAutocomplete"
-					  [displayWith]="toString">
-						<mat-option *ngFor="let address of filteredAddresses | async"
-						  [value]="address">
+					<input matInput name="address" placeholder={{constants.address}} [matAutocomplete]="auto" [formControl]="addressCtrl">
+					<mat-autocomplete #auto="matAutocomplete" [displayWith]="toString">
+						<mat-option *ngFor="let address of filteredAddresses | async" [value]="address">
 							{{ address.toString }}
 						</mat-option>
 					</mat-autocomplete>
 				</mat-form-field>
 			</mat-card>
 
-			<button mat-raised-button color="primary"
-			  type="submit">{{constants.save}}</button>
-			<button mat-raised-button type="button"
-			  (click)="back()">{{constants.back}}</button>
+			<button mat-raised-button color="primary" type="submit">{{constants.save}}</button>
+			<button mat-raised-button type="button" (click)="back()">{{constants.back}}</button>
 		</form>
 	</mat-card>
 </div>

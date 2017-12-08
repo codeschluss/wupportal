@@ -41,7 +41,7 @@ export class Activity extends Model {
 	public category: Category = null;
 
 	public schedule_id: string = '';
-	public schedule: Schedule = new Schedule({});
+	public schedule: Schedule = null;
 	public tags: Tag[] = [];
 	public target_groups: TargetGroup[] = [];
 	public translations: Translation[] = [];

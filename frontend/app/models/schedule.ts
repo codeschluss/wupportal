@@ -41,9 +41,13 @@ export class Schedule extends Model {
 
 	get toString(): string {
 		if (this.recurrence) {
-			return this.recurrence.week_days + ' ' + this.startTime;
+			let dayNames: string = '';
+			for (const day of this.recurrence.week_days) {
+				dayNames += day.name;
+			}
+			return dayNames + 's ' + this.startTime;
 		} else {
-			return this.start_date.getDate + ' ' + this.startTime;
+			return this.start_date.getDay() + '.' + this.start_date.getMonth() + 1 + '.' + this.start_date.getFullYear() + ' ' + this.startTime;
 		}
 	}
 

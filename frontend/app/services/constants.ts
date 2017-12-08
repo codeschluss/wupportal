@@ -74,8 +74,8 @@ export class Constants {
 
 	public organisations: string = 'Organisationen';
 	public organisation: string = 'Organisation';
-	public users: string = 'Benutzer';
-	public user: string = 'Benutzer';
+	public users: string = 'Anbieter';
+	public user: string = 'Anbieter';
 	public activities: string = 'Aktivitäten';
 	public activity: string = 'Aktivität';
 	public account: string = 'Konto';

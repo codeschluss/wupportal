@@ -24,7 +24,7 @@ export class Address extends Model {
 	public street: string = '';
 	public suburb_id: string = '';
 
-	public suburb: Suburb = new Suburb({});
+	public suburb: Suburb = null;
 
 	get toString(): string {
 		return (this.street + ' ' + this.house_number + ' ' + this.postal_code + ' ' +

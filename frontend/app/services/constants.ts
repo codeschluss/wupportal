@@ -90,4 +90,9 @@ export class Constants {
 	public defaultPageSize: number = 25;
 	public pageSizeOptions: Array<number> = [5, 10, 25, 50, 100];
 
+	// --------------------------
+	// URLs
+	// --------------------------
+
+	public userURL: string = '(table:users)';
 }

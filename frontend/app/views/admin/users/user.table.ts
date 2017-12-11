@@ -12,12 +12,12 @@ import { Constants } from 'app/services/constants';
 @Component({
 	selector: 'edit-users',
 	styleUrls: ['../table.abstract.css'],
-	templateUrl: 'users.table.html',
+	templateUrl: 'user.table.html',
 	providers: [
 		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
 	]
 })
-export class UsersTableComponent extends AbstractTableComponent {
+export class UserTableComponent extends AbstractTableComponent {
 
 	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'created', 'action'];
 	dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();

@@ -9,11 +9,9 @@ import { UserFormComponent } from 'app/views/admin/users/user.form';
 import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
 import { ActivityFormComponent } from 'app/views/admin/activities/activity.form';
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
-import { UsersTableComponent } from 'app/views/admin/users/users.table';
+import { UserTableComponent } from 'app/views/admin/users/user.table';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { AuthenticationService } from 'app/services/authentication.service';
-
-// TODO: make non public visibility once everyone registered
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 
 @NgModule({
@@ -25,7 +23,7 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 			path: 'admin', component: AdminComponent, canActivate: [AuthenticationService], children: [
 				{ path: '', component: OrganisationsTableComponent, outlet: 'table' },
 				{ path: 'activities', component: ActivityTableComponent, outlet: 'table' },
-				{ path: 'users', component: UsersTableComponent, outlet: 'table' },
+				{ path: 'users', component: UserTableComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'organisations', component: OrganisationsTableComponent, outlet: 'table' },
 				{ path: 'account', component: UserFormComponent, outlet: 'table' }
 			]

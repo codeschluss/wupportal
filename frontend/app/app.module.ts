@@ -37,7 +37,7 @@ import { DetailsComponent } from 'app/views/details';
 import { FilterComponent } from 'app/views/filter';
 import { MappingComponent } from 'app/views/mapping';
 
-import { UsersTableComponent } from 'app/views/admin/users/users.table';
+import { UserTableComponent } from 'app/views/admin/users/user.table';
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
@@ -74,7 +74,7 @@ import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 		FilterComponent,
 		MappingComponent,
 
-		UsersTableComponent,
+		UserTableComponent,
 		OrganisationsTableComponent,
 		ActivityTableComponent,
 		ProviderTableComponent,

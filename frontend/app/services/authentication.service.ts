@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthResponse } from 'app/models/auth.response';
 import { User } from 'app/models/user';
+import { Constants } from 'app/services/constants';
 
 @Injectable()
 export class AuthenticationService implements CanActivate {
@@ -13,17 +14,35 @@ export class AuthenticationService implements CanActivate {
 
 	constructor(
 		private router: Router,
-		private http: HttpClient) {
+		private http: HttpClient,
+		private constants: Constants) {
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		if (this.currentUser) {
-			// logged in so return true
-			return true;
-		}
-		// not logged in so redirect to login page
+		return state.url.includes(this.constants.userURL)
+			? this.handleUserRoute()
+			: this.handleAdminRoute();
+	}
+
+	handleUserRoute(): boolean {
+		return this.isSuperUser()
+			? true
+			: this.handleRedirect();
+	}
+
+	handleAdminRoute(): boolean {
+		return this.currentUser
+			? true
+			: this.handleRedirect();
+	}
+
+	handleRedirect(): boolean {
 		this.redirectToLogin();
 		return false;
+	}
+
+	redirectToLogin(): void {
+		this.router.navigate(['/login']);
 	}
 
 	login(username: string, pwd: string): Observable<boolean> {
@@ -57,12 +76,14 @@ export class AuthenticationService implements CanActivate {
 		this.credentials = '';
 	}
 
-	basicAuthString(): string {
-		return 'Basic ' + this.credentials;
+	isSuperUser(): boolean {
+		return this.currentUser
+			? this.currentUser.superuser
+			: false;
 	}
 
-	redirectToLogin(): void {
-		this.router.navigate(['/login']);
+	basicAuthString(): string {
+		return 'Basic ' + this.credentials;
 	}
 
 	getPwd(password: string): string {

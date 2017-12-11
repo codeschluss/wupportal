@@ -1,5 +1,6 @@
 import { Model } from 'app/models/model';
 import { Provider } from 'app/models/provider';
+import { Organisation } from 'app/models/organisation';
 
 export class User extends Model {
 
@@ -29,6 +30,14 @@ export class User extends Model {
 		this.providers.forEach(provider => {
 			if (provider.admin) {
 				this.orgaAdmin = true;
+			}
+		});
+	}
+
+	public getAdminOrgas(): Array<Organisation> {
+		return this.providers.map(provider => {
+			if (provider.admin) {
+				return provider.organisation;
 			}
 		});
 	}

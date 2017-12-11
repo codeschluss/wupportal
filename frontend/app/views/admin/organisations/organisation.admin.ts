@@ -1,6 +1,8 @@
 import { Component, Inject, ViewChild, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators/map';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material';
 
 import {
 	DataServiceFactory,
@@ -13,6 +15,7 @@ import { Organisation } from 'app/models/organisation';
 import { Constants } from 'app/services/constants';
 import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
 import { Provider } from 'app/models/provider';
+import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
 
 @Component({
 	selector: 'organisation-admin',
@@ -34,23 +37,38 @@ export class OrganisationAdminComponent implements OnInit {
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		private authService: AuthenticationService,
-		public constants: Constants
+		public constants: Constants,
+		public selectOrgaDialog: MatDialog,
+		public location: Location
 	) { }
 
 	ngOnInit(): void {
+		const adminOrganisations: Array<Organisation> = this.authService.currentUser.getAdminOrgas();
+		adminOrganisations.length > 1
+			? this.selectOrganisation(adminOrganisations)
+			: this.setOrganisation(adminOrganisations.shift().id);
+	}
 
-		let organisationID: string;
-		this.authService.currentUser.providers.forEach(provider => {
-			if (provider.admin) {
-				organisationID = provider.organisation_id;
-			}
-		});
-
+	setOrganisation(organisationID: string): void {
 		this.organisationService.get(organisationID)
 			.map(data => new Organisation(data.records))
 			.subscribe((organisation) => {
 				this.organisation = organisation;
 			});
+	}
+
+	selectOrganisation(organisations: Array<Organisation>): void {
+		const dialogRef = this.selectOrgaDialog.open(OrganisationSelectionComponent, {
+			data: {
+				organisations: organisations
+			}
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			result
+				? this.setOrganisation(result)
+				: this.location.back();
+		});
 	}
 
 	setProviders(providers: Array<Provider>): void {

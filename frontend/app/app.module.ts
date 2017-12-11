@@ -47,6 +47,7 @@ import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { UserFormComponent } from 'app/views/admin/users/user.form';
 import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
+import { OrganisationAdminComponent } from 'app/views/admin/organisations/organisation.admin';
 import { ActivityFormComponent } from 'app/views/admin/activities/activity.form';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 
@@ -63,7 +64,8 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
-import { OrganisationAdminComponent } from 'app/views/admin/organisations/organisation.admin';
+import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
+
 
 @NgModule({
 	bootstrap: [
@@ -92,7 +94,8 @@ import { OrganisationAdminComponent } from 'app/views/admin/organisations/organi
 		SuburbSelectionComponent,
 		AddressFormComponent,
 		DeleteDialogComponent,
-		DeleteActionComponent
+		DeleteActionComponent,
+		OrganisationSelectionComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -137,7 +140,8 @@ import { OrganisationAdminComponent } from 'app/views/admin/organisations/organi
 	entryComponents: [
 		SuburbSelectionComponent,
 		AddressFormComponent,
-		DeleteDialogComponent
+		DeleteDialogComponent,
+		OrganisationSelectionComponent
 	], exports: [
 		MatNativeDateModule,
 	]

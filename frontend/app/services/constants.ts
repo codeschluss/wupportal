@@ -52,6 +52,8 @@ export class Constants {
 	public end: string = 'Ende';
 	public deleteFromOrganisation: string = 'Aus Organisation entfernen';
 	public wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
+	public multipleOrganisationMessage: string = 'Sie sind Administrator für mehere Organisationen';
+	public pleaseSelectMessage: string = 'Bitte wählen Sie eine aus:';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';

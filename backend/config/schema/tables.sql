@@ -111,7 +111,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `organisations` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`name` VARCHAR(255) NOT NULL,
+	`name` VARCHAR(255) UNIQUE NOT NULL,
 	`description` TEXT,
 	`website` VARCHAR(255),
 	`mail` VARCHAR(255),
@@ -130,6 +130,7 @@ CREATE TABLE `organisations` (
 CREATE TABLE `providers` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`admin` BOOLEAN DEFAULT FALSE,
+    `approved` BOOLEAN DEFAULT FALSE,
 	`organisation_id` CHAR(36),
 	`user_id` CHAR(36) NOT NULL,
 

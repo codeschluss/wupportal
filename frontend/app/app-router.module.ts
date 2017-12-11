@@ -7,6 +7,7 @@ import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { UserFormComponent } from 'app/views/admin/users/user.form';
 import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
+import { OrganisationAdminComponent } from 'app/views/admin/organisations/organisation.admin';
 import { ActivityFormComponent } from 'app/views/admin/activities/activity.form';
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
 import { UserTableComponent } from 'app/views/admin/users/user.table';
@@ -25,10 +26,10 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 				{ path: 'activities', component: ActivityTableComponent, outlet: 'table' },
 				{ path: 'users', component: UserTableComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'organisations', component: OrganisationsTableComponent, outlet: 'table' },
+				{ path: 'organisation-admin', component: OrganisationAdminComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'account', component: UserFormComponent, outlet: 'table' }
 			]
 		},
-		{ path: 'organisation/edit/:id', component: OrganisationFormComponent },
 		{ path: 'activity/edit/:id', component: ActivityFormComponent },
 
 		// { path: '**', redirectTo: '' }

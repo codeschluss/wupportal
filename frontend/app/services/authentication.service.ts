@@ -19,30 +19,13 @@ export class AuthenticationService implements CanActivate {
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		return state.url.includes(this.constants.userURL)
-			? this.handleUserRoute()
-			: this.handleAdminRoute();
-	}
-
-	handleUserRoute(): boolean {
-		return this.isSuperUser()
-			? true
-			: this.handleRedirect();
-	}
-
-	handleAdminRoute(): boolean {
-		return this.currentUser
-			? true
-			: this.handleRedirect();
-	}
-
-	handleRedirect(): boolean {
-		this.redirectToLogin();
-		return false;
-	}
-
-	redirectToLogin(): void {
-		this.router.navigate(['/login']);
+		if (state.url.includes(this.constants.userURL)) {
+			return this.handleSuperUserRoute();
+		}
+		if (state.url.includes(this.constants.orgaAdminURL)) {
+			return this.handleOrgaAdminRoute();
+		}
+		return this.handleProviderRoutes();
 	}
 
 	login(username: string, pwd: string): Observable<boolean> {
@@ -65,7 +48,7 @@ export class AuthenticationService implements CanActivate {
 	handleSuccessLogin(response: AuthResponse, credentials: string): boolean {
 		if (response.data) {
 			this.credentials = credentials;
-			this.currentUser = response.data;
+			this.currentUser = new User(response.data);
 			return true;
 		}
 		return false;
@@ -76,9 +59,42 @@ export class AuthenticationService implements CanActivate {
 		this.credentials = '';
 	}
 
+	handleProviderRoutes(): boolean {
+		return this.currentUser
+			? true
+			: this.handleRedirect();
+	}
+
+	handleSuperUserRoute(): boolean {
+		return this.isSuperUser()
+			? true
+			: this.handleRedirect();
+	}
+
+	handleOrgaAdminRoute(): boolean {
+		return this.isOrganisationAdmin()
+			? true
+			: this.handleRedirect();
+	}
+
+	handleRedirect(): boolean {
+		this.redirectToLogin();
+		return false;
+	}
+
+	redirectToLogin(): void {
+		this.router.navigate(['/login']);
+	}
+
 	isSuperUser(): boolean {
 		return this.currentUser
 			? this.currentUser.superuser
+			: false;
+	}
+
+	isOrganisationAdmin(): boolean {
+		return this.currentUser
+			? this.currentUser.orgaAdmin
 			: false;
 	}
 

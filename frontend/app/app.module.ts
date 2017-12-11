@@ -63,6 +63,7 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
+import { OrganisationAdminComponent } from 'app/views/admin/organisations/organisation.admin';
 
 @NgModule({
 	bootstrap: [
@@ -85,6 +86,7 @@ import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 		AdminComponent,
 		ActivityFormComponent,
 		OrganisationFormComponent,
+		OrganisationAdminComponent,
 		UserFormComponent,
 
 		SuburbSelectionComponent,

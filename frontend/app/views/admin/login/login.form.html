@@ -6,15 +6,13 @@
 	  (ngSubmit)="login()">
 		<mat-form-field class="example-full-width">
 			<input matInput placeholder={{constants.mail}}
-			  [(ngModel)]="user.username"
-			  type="text" name="userName"
-			  required />
+			  [(ngModel)]="username" type="text"
+			  name="userName" required />
 		</mat-form-field>
 		<mat-form-field class="example-full-width">
 			<input matInput placeholder={{constants.password}}
-			  [(ngModel)]="user.password"
-			  type="password" name="password"
-			  required />
+			  [(ngModel)]="password" type="password"
+			  name="password" required />
 		</mat-form-field>
 		<button mat-raised-button color="primary"
 		  [disabled]="loginForm.invalid"

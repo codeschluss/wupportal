@@ -1,7 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from 'app/models/user';
 import { MatTableDataSource, MatDialog } from '@angular/material';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+import { Location } from '@angular/common';
 
 import { DataServiceFactory } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
@@ -10,6 +11,7 @@ import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
 import { Constants } from 'app/services/constants';
+import { User } from 'app/models/user';
 
 @Component({
 	selector: 'provider-table',
@@ -21,12 +23,13 @@ export class ProviderTableComponent extends AbstractTableComponent {
 
 	@Input() organisationID: string;
 
-	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'delete'];
+	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'approved', 'delete'];
 	dataSource: MatTableDataSource<Provider> = new MatTableDataSource<Provider>();
 
 	constructor(
 		protected dataService: ProviderService,
-		protected constants: Constants) {
+		protected constants: Constants,
+		private location: Location) {
 		super(dataService, constants);
 	}
 
@@ -36,6 +39,25 @@ export class ProviderTableComponent extends AbstractTableComponent {
 				.getByOrganisation(this.tableState, this.organisationID)
 				.subscribe(data => this.handleResponse(data));
 		}
+	}
+
+	save(): void {
+		const list = [];
+		for (const provider of this.dataSource.data) {
+			this.prepareAdminFlag(provider);
+			list.push(this.dataService.edit(provider));
+		}
+		forkJoin(list).subscribe(() => this.back());
+	}
+
+	prepareAdminFlag(provider: Provider): void {
+		if (!provider.approved && provider.admin) {
+			provider.admin = false;
+		}
+	}
+
+	back(): void {
+		this.location.back();
 	}
 
 }

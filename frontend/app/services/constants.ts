@@ -29,6 +29,7 @@ export class Constants {
 	public filter: string = 'Filter';
 	public configuration: string = 'Einstellungen';
 
+	public approved: string = 'Bestätigt';
 	public createdAt: string = 'Erstellt';
 	public save: string = 'Speichern';
 	public delete: string = 'Löschen';
@@ -74,12 +75,14 @@ export class Constants {
 
 	public organisations: string = 'Organisationen';
 	public organisation: string = 'Organisation';
+	public organisationAdmin: string = 'Organisation verwalten';
 	public users: string = 'Anbieter';
 	public user: string = 'Anbieter';
 	public activities: string = 'Aktivitäten';
 	public activity: string = 'Aktivität';
 	public account: string = 'Konto';
 	public admin: string = 'Admin';
+
 
 	public error: string = 'Fehler';
 
@@ -95,4 +98,5 @@ export class Constants {
 	// --------------------------
 
 	public userURL: string = '(table:users)';
+	public orgaAdminURL: string = '(table:organisation-admin)';
 }

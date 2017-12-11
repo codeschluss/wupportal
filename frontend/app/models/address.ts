@@ -4,8 +4,7 @@ import { Suburb } from 'app/models/suburb';
 export class Address extends Model {
 
 	constructor(json: any) {
-		super();
-		this.id = json.id;
+		super(json.id);
 		this.latitude = json.latitude;
 		this.longitude = json.longitude;
 		this.house_number = json.house_number;

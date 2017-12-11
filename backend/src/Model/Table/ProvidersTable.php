@@ -46,7 +46,8 @@ class ProvidersTable extends Table
             'foreignKey' => 'organisation_id'
         ]);
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
         ]);
         $this->hasMany('Activities', [
             'foreignKey' => 'provider_id'
@@ -68,6 +69,10 @@ class ProvidersTable extends Table
         $validator
             ->boolean('admin')
             ->allowEmpty('admin');
+
+        $validator
+            ->boolean('approved')
+            ->allowEmpty('approved');
 
         return $validator;
     }

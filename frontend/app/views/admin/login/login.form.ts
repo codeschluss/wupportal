@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { AuthenticationService } from 'app/services/authentication.service';
-import { User } from 'app/models/user';
 import { Constants } from 'app/services/constants';
 
 @Component({
@@ -12,7 +11,8 @@ import { Constants } from 'app/services/constants';
 })
 export class LoginFormComponent implements OnInit {
 
-	user: User = new User({});
+	username: string = '';
+	password: string = '';
 	error: string;
 
 	constructor(private location: Location,
@@ -26,7 +26,7 @@ export class LoginFormComponent implements OnInit {
 	}
 
 	login(): void {
-		this.authenticationService.login(this.user.username, this.user.password)
+		this.authenticationService.login(this.username, this.password)
 			.subscribe(result => {
 				if (result) {
 					this.router.navigate(['/admin']);

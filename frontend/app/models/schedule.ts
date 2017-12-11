@@ -3,8 +3,7 @@ import { Model } from 'app/models/model';
 export class Schedule extends Model {
 
 	constructor(json: any) {
-		super();
-		this.id = json.id;
+		super(json.id);
 		this.start_date = json.start_date;
 		this.end_date = json.end_date;
 		this.activity_id = json.activity_id;

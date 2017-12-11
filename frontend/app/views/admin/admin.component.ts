@@ -20,10 +20,9 @@ export class AdminComponent implements OnInit {
 	) {
 		this.initUserTabs();
 
-		// // TODO: Make seperate tab for organisation edit view
-		// if (this.authService.isOrganisationAdmin()) {
-		// 	this.initOrganisationAdmin();
-		// }
+		if (this.authService.isOrganisationAdmin()) {
+			this.initOrganisationAdmin();
+		}
 
 		if (this.authService.isSuperUser()) {
 			this.initSuperUserTabs();
@@ -48,11 +47,19 @@ export class AdminComponent implements OnInit {
 		});
 	}
 
+	initOrganisationAdmin(): void {
+		this.routeLinks.push({
+			label: this.constants.organisationAdmin,
+			link: ['/admin', { outlets: { table: ['organisation-admin'] } }],
+			index: 3
+		});
+	}
+
 	initSuperUserTabs(): void {
 		this.routeLinks.push({
 			label: this.constants.account,
 			link: ['/admin', { outlets: { table: ['users'] } }],
-			index: 3
+			index: 4
 		});
 
 		// TODO: Configuration view

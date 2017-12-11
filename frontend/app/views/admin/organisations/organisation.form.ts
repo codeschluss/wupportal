@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +8,6 @@ import { Observable } from 'rxjs/Observable';
 import { NgForm, FormControl } from '@angular/forms';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import { forkJoin } from 'rxjs/observable/forkJoin';
 
 import {
 	DataServiceFactory,
@@ -31,7 +30,7 @@ import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
 
 @Component({
-	selector: 'edit-organisation',
+	selector: 'organisation-form',
 	templateUrl: 'organisation.form.html',
 	styleUrls: ['../../../app.component.css'],
 	providers: [
@@ -41,20 +40,17 @@ import { Provider } from 'app/models/provider';
 })
 
 export class OrganisationFormComponent implements OnInit {
-	organisation: Organisation;
-	providerIDs: Array<string>;
+
+	@Input() organisation: Organisation;
+
 	addresses: Address[] = [];
 	filteredAddresses: Observable<Address[]>;
 	addressCtrl: FormControl;
 	nominatimAddress: Address;
 
-	@ViewChild(ProviderTableComponent)
-	providerTable: ProviderTableComponent;
-
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		@Inject(AddressService) private addressService: DataService,
-		private providerService: ProviderService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -71,16 +67,15 @@ export class OrganisationFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.route.paramMap
-			.switchMap((params: ParamMap) =>
-				this.organisationService.get(params.get('id'))).map(data => new Organisation(data.records)).subscribe((organisation) => {
-					this.organisation = organisation;
-					this.addressCtrl = new FormControl(this.organisation.address);
-					this.filteredAddresses = this.addressCtrl.valueChanges
-						.startWith(<any>[])
-						.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
-						.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
-				});
+		if (!this.organisation) {
+			this.organisation = new Organisation({});
+		}
+		this.addressCtrl = new FormControl(this.organisation.address);
+		this.filteredAddresses = this.addressCtrl.valueChanges
+			.startWith(<any>[])
+			.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
+			.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
+
 	}
 
 	filterAddresses(query: string): Address[] {
@@ -121,11 +116,9 @@ export class OrganisationFormComponent implements OnInit {
 				}
 			});
 		} else {
-			this.providerRequest().subscribe(() => {
-				this.organisation.address = null;
-				this.organisation.address_id = this.addressCtrl.value.id;
-				this.organisationService.edit(this.organisation).subscribe(() => this.back());
-			});
+			this.organisation.address = null;
+			this.organisation.address_id = this.addressCtrl.value.id;
+			this.organisationService.edit(this.organisation).subscribe(() => this.back());
 		}
 	}
 
@@ -150,18 +143,6 @@ export class OrganisationFormComponent implements OnInit {
 			}
 		});
 		return dialogRef.afterClosed();
-	}
-
-	setProviders(providers: Array<Provider>): void {
-		this.providerIDs = providers.map(provider => provider.id);
-	}
-
-	providerRequest(): Observable<any> {
-		const list = [];
-		for (const provider of this.providerTable.getData()) {
-			list.push(this.providerService.edit(provider));
-		}
-		return forkJoin(list);
 	}
 
 	openDialog(newAddress: Address): void {

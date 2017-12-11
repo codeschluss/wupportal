@@ -11,8 +11,7 @@ import { Schedule } from 'app/models/schedule';
 export class Activity extends Model {
 
 	constructor(json: any) {
-		super();
-		this.id = json.id;
+		super(json.id);
 		this.name = json.name;
 		this.description = json.description;
 		this.showUser = json.showUser;

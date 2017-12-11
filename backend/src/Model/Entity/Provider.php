@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property string $id
  * @property bool $admin
+ * @property bool $approved
  * @property string $organisation_id
  * @property string $user_id
  * @property \Cake\I18n\FrozenTime $created
@@ -30,7 +31,14 @@ class Provider extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'admin' => true,
+        'approved' => true,
+        'organisation_id' => true,
+        'user_id' => true,
+        'created' => true,
+        'modified' => true,
+        'organisation' => true,
+        'user' => true,
+        'activities' => true
     ];
 }

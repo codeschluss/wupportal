@@ -1,78 +1,61 @@
 <div class="edit-container">
-	<mat-card class="organisation-edit-card" *ngIf="organisation">
-		<mat-card-header>
-			<h2>{{organisation.name}}</h2>
-		</mat-card-header>
-		<form #organisationForm="ngForm" (ngSubmit)="onSubmit()" class="well">
-			<mat-tab-group>
-				<mat-tab label={{constants.coreData}}>
-					<mat-form-field class="edit-form-full-width">
-						<input matInput type=text [(ngModel)]="organisation.name" placeholder={{constants.nameString}} name="name" value={{organisation.name}}
-						 required [errorStateMatcher]="validation" id="orga_name_field">
-					</mat-form-field>
+	<mat-card class="organisation-edit-card">
+		<form #organisationForm="ngForm"
+		  (ngSubmit)="onSubmit()" class="well">
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="organisation.name"
+				  placeholder={{constants.nameString}}
+				  name="name" value={{organisation.name}}
+				  required [errorStateMatcher]="validation"
+				  id="orga_name_field">
+			</mat-form-field>
 
-					<mat-form-field class="edit-form-full-width">
-						<textarea matInput type=text [(ngModel)]="organisation.description" placeholder={{constants.description}} name="description"
-						 value={{organisation.description}} id="orga_description_field"></textarea>
-					</mat-form-field>
+			<mat-form-field class="edit-form-full-width">
+				<textarea matInput type=text [(ngModel)]="organisation.description"
+				  placeholder={{constants.description}}
+				  name="description" value={{organisation.description}}
+				  id="orga_description_field"></textarea>
+			</mat-form-field>
 
-					<mat-form-field class="edit-form-full-width">
-						<input matInput type="email" [(ngModel)]="organisation.mail" placeholder={{constants.mail}} name="mail" value={{organisation.mail}}
-						 id="orga_mail_field" email="true">
-					</mat-form-field>
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type="email" [(ngModel)]="organisation.mail"
+				  placeholder={{constants.mail}}
+				  name="mail" value={{organisation.mail}}
+				  id="orga_mail_field" email="true">
+			</mat-form-field>
 
-					<mat-form-field class="edit-form-full-width">
-						<input matInput type=text [(ngModel)]="organisation.phone" placeholder={{constants.phone}} name="telephone" value={{organisation.phone}}
-						 id="orga_phone_field">
-					</mat-form-field>
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="organisation.phone"
+				  placeholder={{constants.phone}}
+				  name="telephone" value={{organisation.phone}}
+				  id="orga_phone_field">
+			</mat-form-field>
 
-					<mat-form-field class="edit-form-full-width">
-						<input matInput type=text [(ngModel)]="organisation.website" placeholder={{constants.website}} name="website" id="orga_website_field"
-						 value={{organisation.website}}>
-					</mat-form-field>
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text [(ngModel)]="organisation.website"
+				  placeholder={{constants.website}}
+				  name="website" id="orga_website_field"
+				  value={{organisation.website}}>
+			</mat-form-field>
 
-					<mat-card class="address-card">
-						<mat-form-field class="edit-form-full-width">
-							<input matInput name="address" placeholder={{constants.address}} [matAutocomplete]="auto" [formControl]="addressCtrl">
-							<mat-autocomplete #auto="matAutocomplete" [displayWith]="toString">
-								<mat-option *ngFor="let address of filteredAddresses | async" [value]="address">
-									{{ address.toString }}
-								</mat-option>
-							</mat-autocomplete>
-						</mat-form-field>
-					</mat-card>
-				</mat-tab>
-				<mat-tab label={{constants.user}}>
-					<!-- Provider user list -->
-					<mat-card>
-						<mat-card-header>
-							<mat-card-title>
-								<h2>{{constants.user}}</h2>
-							</mat-card-title>
-						</mat-card-header>
-						<mat-card-content>
-							<provider-table (onLoadedData)="setProviders($event)" organisationID={{organisation.id}}>
-							</provider-table>
-						</mat-card-content>
-					</mat-card>
-				</mat-tab>
-				<mat-tab label={{constants.activities}}>
-					<!-- Provider activity list -->
-					<mat-card *ngIf="providerIDs">
-						<mat-card-header>
-							<mat-card-title>
-								<h2>{{constants.activities}}</h2>
-							</mat-card-title>
-						</mat-card-header>
-						<mat-card-content>
-							<activity-table [providers]="providerIDs">
-							</activity-table>
-						</mat-card-content>
-					</mat-card>
-				</mat-tab>
-			</mat-tab-group>
-			<button mat-raised-button color="primary" type="submit" [disabled]="organisationForm.invalid">{{constants.save}}</button>
-			<button type="button" mat-raised-button (click)="back()">{{constants.back}}</button>
+			<mat-card class="address-card">
+				<mat-form-field class="edit-form-full-width">
+					<input matInput name="address"
+					  placeholder={{constants.address}}
+					  [matAutocomplete]="auto" [formControl]="addressCtrl">
+					<mat-autocomplete #auto="matAutocomplete"
+					  [displayWith]="toString">
+						<mat-option *ngFor="let address of filteredAddresses | async"
+						  [value]="address">
+							{{ address.toString }}
+						</mat-option>
+					</mat-autocomplete>
+				</mat-form-field>
+			</mat-card>
+			<button mat-raised-button color="primary"
+			  type="submit" [disabled]="organisationForm.invalid">{{constants.save}}</button>
+			<button type="button" mat-raised-button
+			  (click)="back()">{{constants.back}}</button>
 		</form>
 	</mat-card>
 </div>

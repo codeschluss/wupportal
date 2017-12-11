@@ -73,4 +73,6 @@ export abstract class AbstractTableComponent implements OnInit {
 			.delete(recordID)
 			.subscribe(() => this.fetchData());
 	}
+
+
 }

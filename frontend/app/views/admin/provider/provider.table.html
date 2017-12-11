@@ -34,12 +34,23 @@
 		<mat-header-cell *matHeaderCellDef
 		  mat-sort-header>{{constants.admin}}</mat-header-cell>
 		<mat-cell *matCellDef="let row">
-			<mat-checkbox [(ngModel)]="row.admin">
+			<mat-checkbox [disabled]="!row.approved"
+			  [(ngModel)]="row.admin">
 			</mat-checkbox>
 		</mat-cell>
 	</ng-container>
 
-	<!-- completely remove from organisation  -->
+	<!-- approval flag Column -->
+	<ng-container matColumnDef="approved">
+		<mat-header-cell *matHeaderCellDef
+		  mat-sort-header>{{constants.approved}}</mat-header-cell>
+		<mat-cell *matCellDef="let row">
+			<mat-checkbox [(ngModel)]="row.approved">
+			</mat-checkbox>
+		</mat-cell>
+	</ng-container>
+
+	<!-- completely remove from provider table  -->
 	<ng-container matColumnDef="delete">
 		<mat-header-cell *matHeaderCellDef>
 			{{constants.deleteFromOrganisation}}
@@ -60,3 +71,6 @@
   [pageSizeOptions]="constants.pageSizeOptions"
   (page)="handlePageChanged($event)">
 </mat-paginator>
+<button type="button" mat-raised-button
+  color="primary" (click)="save()">{{constants.save}}
+</button>

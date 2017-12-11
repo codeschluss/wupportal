@@ -32,7 +32,7 @@ export class RegisterFormComponent extends UserFormComponent implements OnInit {
 	protected hasActivities: boolean = false;
 
 	ngOnInit(): void {
-		this.user = new User({});
+		this.user = new User();
 		this.initAllOrganisationsThenControls();
 	}
 

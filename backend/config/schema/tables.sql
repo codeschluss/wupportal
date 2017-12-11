@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `activities_translations`;
 DROP TABLE IF EXISTS `activities_target_groups`;
 DROP TABLE IF EXISTS `activities_tags`;
 DROP TABLE IF EXISTS `activities`;
+DROP TABLE IF EXISTS `schedules`;
 DROP TABLE IF EXISTS `providers`;
 DROP TABLE IF EXISTS `organisations`;
 DROP TABLE IF EXISTS `users`;
@@ -46,6 +47,16 @@ CREATE TABLE `tags` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`name` VARCHAR(255) UNIQUE NOT NULL,
 	`description` TEXT,
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE `schedules` (
+	`id` CHAR(36) NOT NULL PRIMARY KEY,
+	`start_date` DATETIME,
+	`end_date` DATETIME,
+    `activity_id` CHAR(36),
 
 	`created` DATETIME NOT NULL DEFAULT NOW(),
 	`modified` DATETIME NOT NULL DEFAULT NOW()
@@ -134,48 +145,10 @@ CREATE TABLE `providers` (
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE `recurrences` (
-	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`weekly_period` INT UNSIGNED,
-	`beginn_by` DATE, 
-	`end_by` DATE
-);
-
-CREATE TABLE `week_days` (
-	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`name`CHAR(36)
-);
-
-CREATE TABLE `recurrences_week_days` (
-	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`recurrence_id` CHAR(36),
-	`week_day_id` CHAR(36),
-
-	CONSTRAINT `fkey_recurrence_week_days_recurrence`
-		FOREIGN KEY (`recurrence_id`) REFERENCES `recurrences` (`id`)
-		ON UPDATE CASCADE,
-
-	CONSTRAINT `fkey_recurrence_week_days_week_days`
-		FOREIGN KEY (`week_day_id`) REFERENCES `week_days` (`id`)
-		ON UPDATE CASCADE
-);
-
-CREATE TABLE `schedules` (
-	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`start_date` DATETIME,
-	`end_date` DATETIME,
-	`recurrence_id` CHAR(36),
-
-	CONSTRAINT `fkey_schedule_recurrence`
-		FOREIGN KEY (`recurrence_id`) REFERENCES `recurrences` (`id`)
-		ON UPDATE CASCADE
-);
-
 CREATE TABLE `activities` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`name` VARCHAR(255) NOT NULL,
 	`description` TEXT,
-	`schedule_id` CHAR(36),
 	`show_user` BOOLEAN NOT NULL DEFAULT 0,
 	`address_id` CHAR(36),
 	`provider_id` CHAR(36) NOT NULL,
@@ -183,10 +156,6 @@ CREATE TABLE `activities` (
 
 	`created` DATETIME NOT NULL DEFAULT NOW(),
 	`modified` DATETIME NOT NULL DEFAULT NOW(),
-
-	CONSTRAINT `fkey_activity_schedule`
-		FOREIGN KEY (`schedule_id`) REFERENCES `schedules` (`id`)
-		ON UPDATE CASCADE,
 
 	CONSTRAINT `fkey_activity_address`
 		FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)

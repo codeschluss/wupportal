@@ -9,8 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Schedules Model
  *
- * @property \App\Model\Table\RecurrencesTable|\Cake\ORM\Association\BelongsTo $Recurrences
- * @property \App\Model\Table\ActivitiesTable|\Cake\ORM\Association\HasMany $Activities
+ * @property \App\Model\Table\ActivitiesTable|\Cake\ORM\Association\BelongsTo $Activities
  *
  * @method \App\Model\Entity\Schedule get($primaryKey, $options = [])
  * @method \App\Model\Entity\Schedule newEntity($data = null, array $options = [])
@@ -19,6 +18,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Schedule patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Schedule[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Schedule findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class SchedulesTable extends Table
 {
@@ -37,11 +38,10 @@ class SchedulesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Recurrences', [
-            'foreignKey' => 'recurrence_id'
-        ]);
-        $this->hasMany('Activities', [
-            'foreignKey' => 'schedule_id'
+        $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Activities', [
+            'foreignKey' => 'activity_id'
         ]);
     }
 
@@ -77,7 +77,7 @@ class SchedulesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['recurrence_id'], 'Recurrences'));
+        $rules->add($rules->existsIn(['activity_id'], 'Activities'));
 
         return $rules;
     }

@@ -9,10 +9,10 @@ use Cake\Validation\Validator;
 /**
  * Activities Model
  *
- * @property \App\Model\Table\SchedulesTable|\Cake\ORM\Association\BelongsTo $Schedules
  * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
  * @property \App\Model\Table\ProvidersTable|\Cake\ORM\Association\BelongsTo $Providers
  * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
+ * @property \App\Model\Table\SchedulesTable|\Cake\ORM\Association\HasMany $Schedules
  * @property \App\Model\Table\TagsTable|\Cake\ORM\Association\BelongsToMany $Tags
  * @property \App\Model\Table\TargetGroupsTable|\Cake\ORM\Association\BelongsToMany $TargetGroups
  * @property \App\Model\Table\TranslationsTable|\Cake\ORM\Association\BelongsToMany $Translations
@@ -46,9 +46,6 @@ class ActivitiesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Schedules', [
-            'foreignKey' => 'schedule_id'
-        ]);
         $this->belongsTo('Addresses', [
             'foreignKey' => 'address_id'
         ]);
@@ -59,6 +56,9 @@ class ActivitiesTable extends Table
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
             'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Schedules', [
+            'foreignKey' => 'activity_id'
         ]);
         $this->belongsToMany('Tags', [
             'foreignKey' => 'activity_id',
@@ -115,7 +115,6 @@ class ActivitiesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['schedule_id'], 'Schedules'));
         $rules->add($rules->existsIn(['address_id'], 'Addresses'));
         $rules->add($rules->existsIn(['provider_id'], 'Providers'));
         $rules->add($rules->existsIn(['category_id'], 'Categories'));

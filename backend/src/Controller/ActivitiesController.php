@@ -13,7 +13,7 @@ use App\Controller\AppController;
 class ActivitiesController extends AppController
 {
 
-    /**
+   /**
      * Contain helper.
      *
      * @return array Contained models
@@ -27,8 +27,7 @@ class ActivitiesController extends AppController
             'Categories',
             'TargetGroups',
             'Providers.Organisations',
-            'Schedules',
-            'Schedules.Recurrences.WeekDays',
+            'Schedules'
         ];
     }
 
@@ -74,5 +73,4 @@ class ActivitiesController extends AppController
             return $whereClause;
         }]);
     }
-
 }

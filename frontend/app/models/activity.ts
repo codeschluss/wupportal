@@ -22,8 +22,7 @@ export class Activity extends Model {
 		if (json.provider) { this.provider = new Provider(json.provider); }
 		this.category_id = json.category_id;
 		if (json.category) { this.category = new Category(json.category); }
-		this.schedule_id = json.schedule_id;
-		if (json.schedule) { this.schedule = new Schedule(json.schedule); }
+		if (json.schedules.length) { this.schedules = this.buildScheduleArray(json.schedules); }
 		this.tags = json.tags;
 		this.target_groups = json.target_groups;
 		this.translations = json.translations;
@@ -40,10 +39,17 @@ export class Activity extends Model {
 	public category_id: Category = null;
 	public category: Category = null;
 
-	public schedule_id: string = '';
-	public schedule: Schedule = null;
+	public schedules: Schedule[] = null;
 	public tags: Tag[] = [];
 	public target_groups: TargetGroup[] = [];
 	public translations: Translation[] = [];
+
+	buildScheduleArray(dates: any[]): Schedule[] {
+		const scheduleArray: Schedule[] = [];
+		for (const date of dates) {
+			scheduleArray.push(new Schedule(date));
+		}
+		return scheduleArray;
+	}
 
 }

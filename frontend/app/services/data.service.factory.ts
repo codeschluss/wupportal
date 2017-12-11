@@ -9,10 +9,10 @@ export const TagService = new InjectionToken<DataService>('tags');
 export const TargetGroupService = new InjectionToken<DataService>('target_groups');
 export const OrganisationService = new InjectionToken<DataService>('organisations');
 export const AddressService = new InjectionToken<DataService>('addresses');
+export const ScheduleService = new InjectionToken<DataService>('schedules');
 export const SuburbService = new InjectionToken<DataService>('suburbs');
 export const CategoryService = new InjectionToken<DataService>('categories');
 export const ConfigurationService = new InjectionToken<DataService>('configurations');
-export const WeekDaysService = new InjectionToken<DataService>('week_days');
 
 export function DataServiceFactory(service: InjectionToken<DataService>): any {
 	const repository = service.toString().replace('InjectionToken ', '');

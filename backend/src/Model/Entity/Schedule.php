@@ -7,11 +7,12 @@ use Cake\ORM\Entity;
  * Schedule Entity
  *
  * @property string $id
- * @property \Cake\I18n\FrozenTime $start_date
- * @property \Cake\I18n\FrozenTime $end_date
- * @property string $recurrence_id
+ * @property \Cake\I18n\DateTime $start_date
+ * @property \Cake\I18n\DateTime $end_date
+ * @property string $activity_id
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\Recurrence $recurrence
  * @property \App\Model\Entity\Activity[] $activities
  */
 class Schedule extends Entity
@@ -27,10 +28,13 @@ class Schedule extends Entity
      * @var array
      */
     protected $_accessible = [
-        'start_date' => true,
-        'end_date' => true,
-        'recurrence_id' => true,
-        'recurrence' => true,
-        'activities' => true
+        '*' => true,
+        'id' => false
+        // 'start_date' => true,
+        // 'end_date' => true,
+        // 'activity_id' => true,
+        // 'created' => true,
+        // 'modified' => true,
+        // 'activities' => true
     ];
 }

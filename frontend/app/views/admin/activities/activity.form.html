@@ -18,21 +18,137 @@
 			<mat-card class="schedule-card">
 				<mat-card-header>
 					<h2>{{constants.dates}}</h2>
-					<button mat-raised-button *ngIf="!activity.schedule" type="button" (click)="generateSchedule()">{{constants.create}} {{constants.dates}}</button>
+
 				</mat-card-header>
 
+				<div *ngIf="activity.schedules">
+					<h2>Kontrollieren Sie an dieser Stelle bitte Ihre Einträge/Ihren Eintrag</h2>
+					<mat-accordion>
+						<div *ngFor="let schedule of activity.schedules; index as i">
+							<mat-expansion-panel [expanded]="panelNumber === i" (opened)="declerateDateForms(i)" hideToggle="true">
+								<mat-expansion-panel-header>
+									<mat-panel-title>
+										{{activity.schedules[i].toString}}
+									</mat-panel-title>
+									<mat-panel-description>
+										Hier Clicken, um diesen Termin zu bearbeiten
+									</mat-panel-description>
+								</mat-expansion-panel-header>
+								<mat-form-field>
+									<input matInput [matDatepicker]="pickerStartDate" name="schedule_start_by" [formControl]="currentStartDate" placeholder="von">
+									<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerStartDate></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput [matDatepicker]="pickerEndDate" name="schedule_end_by" [formControl]="currentEndDate" placeholder="bis">
+									<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerEndDate></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput type="text" name="start_time" [formControl]="currentStartTime" placeholder="von" id="currentStratTime">
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput type="text" name="end_time" [formControl]="currentEndTime" placeholder="bis" id="currentEndTime">
+								</mat-form-field>
+								<button mat-button type="button" (click)="changeDate(i)">{{constants.change}}</button>
+								<button mat-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
+							</mat-expansion-panel>
+						</div>
+					</mat-accordion>
+					<button mat-button type="button" (click)="removeCompleteSchedule()">{{constants.delete}}</button>
+				</div>
 
-				<!-- TODO: NO ngModel -->
+				<mat-horizontal-stepper *ngIf="!activity.schedules" [linear]="isLinear">
+					<mat-step>
+						<form>
+							<ng-template matStepLabel>{{constants.frequently}}</ng-template>
+							<h2>findet die Veranstaltung regelmäßig statt?</h2>
+							<mat-checkbox [(ngModel)]="scheduleIsRecurrent" name="scheduleIsRecurrent">{{constants.frequently}}</mat-checkbox>
+							<div *ngIf="scheduleIsRecurrent">
+								<h3>In welchem wöchentlichen Rythmus soll die Veranstaltung stattfinden? (Bei monatlichen Veranstaltungen, bitte "4"
+									eintragen, bei wöchentlichen "1")</h3>
+								<input matInput type="number" [(ngModel)]="weeklyRythm" name="weeklyRythm">
+							</div>
+							<div>
+								<button mat-button matStepperPrevious>{{constants.previous}}</button>
+								<button mat-button matStepperNext>{{constants.next}}</button>
+							</div>
+						</form>
+					</mat-step>
+
+					<mat-step>
+						<ng-template matStepLabel>Uhrzeit</ng-template>
+						<h2>Zu welcher Uhrzeit findet die Veranstaltung statt? </h2>
+						<form>
+							<mat-form-field>
+								<input matInput type="time" placeholder="startTime" [formControl]="startTimeCtrl" name="start_time" id="activity_start_time">
+							</mat-form-field>
+							<mat-form-field>
+								<input matInput type="time" placeholder="endTime" [formControl]="endTimeCtrl" name="end_time" id="activity_end_time">
+							</mat-form-field>
+							<div>
+								<button mat-button matStepperPrevious>{{constants.previous}}</button>
+								<button mat-button matStepperNext>{{constants.next}}</button>
+							</div>
+						</form>
+					</mat-step>
+					<mat-step>
+						<ng-template matStepLabel>Datum
+						</ng-template>
+						<h2>An welchem Datum beginnt bzw. endet die Veranstaltung? Bei eintägigen Veranstaltungen bitte zwei mal das gleiche Datum
+							angeben. Bei regelmäßigen Veranstaltungen bitte das Datum des ersten und das Datum des letzten Termins angeben.</h2>
+						<form>
+							<mat-form-field>
+								<input matInput [matDatepicker]="pickerStartDate" [formControl]="startDateCtrl" placeholder={{constants.beginn}} name="schedule_start_by">
+								<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+								<mat-datepicker #pickerStartDate></mat-datepicker>
+							</mat-form-field>
+							<mat-form-field>
+								<input matInput [matDatepicker]="pickerEndDate" [formControl]="endDateCtrl" placeholder={{constants.end}} name="schedule_end_by">
+								<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+								<mat-datepicker #pickerEndDate></mat-datepicker>
+							</mat-form-field>
+							<div>
+								<button mat-button matStepperPrevious>{{constants.previous}}</button>
+								<button mat-button (click)="generateSchedules()" matStepperNext>{{constants.next}}</button>
+							</div>
+						</form>
+					</mat-step>
+
+					<!-- 	<mat-step>
+							<ng-template matStepLabel>Geschafft
+							</ng-template>
+							<h2>Kontrollieren Sie an dieser Stelle bitte Ihre Einträge/ Ihren Eintrag</h2>
+							<div *ngFor="let schedule of activity.schedules">
+								Anfang: {{schedule.start_date}} - Ende: {{schedule.end_date}}
+								<form>
+								<mat-form-field>
+									<input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="schedule.start_date" placeholder={{constants.beginn}}
+									 name="schedule_start_by">
+									<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerStartDate></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput [matDatepicker]="pickerEndDate" [(ngModel)]="schedule.end_date" placeholder={{constants.end}} name="schedule_end_by">
+									<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerEndDate></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput type="time" placeholder="startTime" [formControl]="startTimeCtrl" name="start_time" id="activity_start_time">
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput type="time" placeholder="endTime" [formControl]="endTimeCtrl" name="end_time" id="activity_end_time">
+								</mat-form-field>
+								<div>
+									<button mat-button matStepperPrevious>{{constants.previous}}</button>
+									<button mat-button matStepperNext>{{constants.next}}</button>
+								</div>
+							</form>
+							</div>
+						</mat-step>-->
+				</mat-horizontal-stepper>
+				<!--
 				<mat-checkbox *ngIf="activity.schedule" [(ngModel)]="activity.schedule.recurrence" name="isRecurrent">{{constants.frequently}}</mat-checkbox>
-
-				<mat-form-field class="edit-form-full-width">
-					<input matInput type="time" placeholder="startTime" [formControl]="startTimeCtrl" name="start_time" id="activity_start_time">
-				</mat-form-field>
-
-				<mat-form-field class="edit-form-full-width">
-					<input matInput type="time" placeholder="endTime" [formControl]="endTimeCtrl" name="end_time" id="activity_end_time">
-				</mat-form-field>
-
 				<div *ngIf="!activity.schedule.recurrence">
 					<mat-form-field>
 						<input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="activity.schedule.start_date" placeholder={{constants.beginn}}
@@ -65,7 +181,7 @@
 							<mat-option *ngFor="let weekDay of weekDays" [value]="weekDay.id">{{weekDay.name}}</mat-option>
 						</mat-select>
 					</mat-form-field>
-				</div>
+				</div> -->
 			</mat-card>
 
 			<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
@@ -74,13 +190,13 @@
 			</mat-form-field>
 
 			<mat-form-field>
-				<mat-select placeholder={{constants.category}} [formControl]="categoryCtrl">
+				<mat-select placeholder={{constants.category}} [formControl]="categoryCtrl" name="activity_category">
 					<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
 				</mat-select>
 			</mat-form-field>
 
 			<mat-form-field>
-				<mat-select placeholder={{constants.targetGroups}} [formControl]="targetGroupCtrl" multiple>
+				<mat-select placeholder={{constants.targetGroups}} [formControl]="targetGroupCtrl" name="activity_targetGroups" multiple>
 					<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
 				</mat-select>
 			</mat-form-field>

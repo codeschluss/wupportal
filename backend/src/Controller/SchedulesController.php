@@ -13,23 +13,4 @@ use App\Controller\AppController;
 class SchedulesController extends AppController
 {
 
-    public function initialize()
-    {
-        parent::initialize();
-        $this->Auth->allow(['list','view', 'index']);
-    }
-
-
-    /**
-     * Contain helper.
-     *
-     * @return array Contained models
-     */
-    protected function contain()
-    {
-        return [
-            'Recurrences',
-        ];
-    }
-
 }

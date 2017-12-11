@@ -28,6 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatStepperModule } from '@angular/material/stepper';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from 'app/app.component';
@@ -119,7 +120,8 @@ import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 		MatChipsModule,
 		MatListModule,
 		MatDatepickerModule,
-		MatCheckboxModule
+		MatCheckboxModule,
+		MatStepperModule
 	],
 	providers: [
 		ActivityService,

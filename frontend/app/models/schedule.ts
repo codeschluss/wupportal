@@ -8,6 +8,7 @@ export class Schedule extends Model {
 		this.end_date = json.end_date;
 		this.activity_id = json.activity_id;
 		this.modified = json.modified;
+		this.created = json.created;
 	}
 
 	public start_date: string = '';
@@ -23,11 +24,11 @@ export class Schedule extends Model {
 	}
 
 	public set startTime(time: string) {
-		this.start_date = this.start_date.split(' ')[0] + time + ':00';
+		this.start_date = this.start_date.split(' ')[0] + ' ' + time + ':00';
 	}
 
 	public set endTime(time: string) {
-		this.end_date = this.end_date.split(' ')[0] + time + ':00';
+		this.end_date = this.end_date.split(' ')[0] + ' ' + time + ':00';
 	}
 
 	public get startDate(): string {
@@ -47,7 +48,7 @@ export class Schedule extends Model {
 	}
 
 	get toString(): string {
-		return new Date(this.start_date).toISOString().slice(0, 19).replace('T', ' ');
+		return this.start_date;
 	}
 
 }

@@ -24,7 +24,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 
 	@Input() providers: Array<string> = [];
 
-	displayedColumns: Array<string> = ['name', 'category', 'description', 'provider', 'schedules', 'tags', 'target_groups'];
+	displayedColumns: Array<string> = ['name', 'category', 'description', 'provider', 'schedules', 'tags', 'target_groups', 'action'];
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
 	constructor(

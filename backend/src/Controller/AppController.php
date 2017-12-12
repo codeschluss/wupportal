@@ -136,7 +136,7 @@ class AppController extends Controller
      */
     public function edit($id)
     {
-        var_dump($this->request); exit;
+        // var_dump($this->request); exit;
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->get($id, ['contain' => $this->contain()]),

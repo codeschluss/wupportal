@@ -55,7 +55,7 @@
 							</mat-expansion-panel>
 						</div>
 					</mat-accordion>
-					<button mat-button type="button" (click)="removeCompleteSchedule()">{{constants.delete}}</button>
+					<button mat-button color="warn" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
 				</div>
 
 				<mat-horizontal-stepper *ngIf="!activity.schedules.length" [linear]="isLinear">
@@ -114,74 +114,7 @@
 							</div>
 						</form>
 					</mat-step>
-
-					<!-- 	<mat-step>
-							<ng-template matStepLabel>Geschafft
-							</ng-template>
-							<h2>Kontrollieren Sie an dieser Stelle bitte Ihre Einträge/ Ihren Eintrag</h2>
-							<div *ngFor="let schedule of activity.schedules">
-								Anfang: {{schedule.start_date}} - Ende: {{schedule.end_date}}
-								<form>
-								<mat-form-field>
-									<input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="schedule.start_date" placeholder={{constants.beginn}}
-									 name="schedule_start_by">
-									<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-									<mat-datepicker #pickerStartDate></mat-datepicker>
-								</mat-form-field>
-								<mat-form-field>
-									<input matInput [matDatepicker]="pickerEndDate" [(ngModel)]="schedule.end_date" placeholder={{constants.end}} name="schedule_end_by">
-									<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-									<mat-datepicker #pickerEndDate></mat-datepicker>
-								</mat-form-field>
-								<mat-form-field>
-									<input matInput type="time" placeholder="startTime" [formControl]="startTimeCtrl" name="start_time" id="activity_start_time">
-								</mat-form-field>
-								<mat-form-field>
-									<input matInput type="time" placeholder="endTime" [formControl]="endTimeCtrl" name="end_time" id="activity_end_time">
-								</mat-form-field>
-								<div>
-									<button mat-button matStepperPrevious>{{constants.previous}}</button>
-									<button mat-button matStepperNext>{{constants.next}}</button>
-								</div>
-							</form>
-							</div>
-						</mat-step>-->
 				</mat-horizontal-stepper>
-				<!--
-				<mat-checkbox *ngIf="activity.schedule" [(ngModel)]="activity.schedule.recurrence" name="isRecurrent">{{constants.frequently}}</mat-checkbox>
-				<div *ngIf="!activity.schedule.recurrence">
-					<mat-form-field>
-						<input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="activity.schedule.start_date" placeholder={{constants.beginn}}
-						 name="schedule_start_by">
-						<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-						<mat-datepicker #pickerStartDate></mat-datepicker>
-					</mat-form-field>
-					<mat-form-field>
-						<input matInput [matDatepicker]="pickerEndDate" [(ngModel)]="activity.schedule.end_date" placeholder={{constants.end}} name="schedule_end_by">
-						<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-						<mat-datepicker #pickerEndDate></mat-datepicker>
-					</mat-form-field>
-				</div>
-
-				<div *ngIf="activity.schedule.recurrence">
-					<mat-form-field>
-						<input matInput [matDatepicker]="pickerStart" [(ngModel)]="activity.schedule.recurrence.beginn_by" placeholder={{constants.beginn}}
-						 name="recurrence_beginn_by">
-						<mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-						<mat-datepicker #pickerStart></mat-datepicker>
-					</mat-form-field>
-					<mat-form-field>
-						<input matInput [matDatepicker]="pickerEnd" [(ngModel)]="activity.schedule.recurrence.end_by" placeholder={{constants.end}}
-						 name="recurrence_end_by">
-						<mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-						<mat-datepicker #pickerEnd></mat-datepicker>
-					</mat-form-field>
-					<mat-form-field>
-						<mat-select placeholder={{constants.weekDays}} [formControl]="weekDaysCtrl" multiple>
-							<mat-option *ngFor="let weekDay of weekDays" [value]="weekDay.id">{{weekDay.name}}</mat-option>
-						</mat-select>
-					</mat-form-field>
-				</div> -->
 			</mat-card>
 
 			<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>

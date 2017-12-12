@@ -34,6 +34,7 @@ import { Constants } from 'app/services/constants';
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
 import { Object } from 'openlayers';
 import { Subscription } from 'rxjs/Subscription';
+import { generate } from 'rxjs/observable/generate';
 
 
 @Component({
@@ -109,22 +110,8 @@ export class ActivityFormComponent implements OnInit {
 			).subscribe(activity => {
 				this.activity = activity;
 				this.initTags();
-				if (this.activity.schedules.length) {
-					this.startTimeCtrl = new FormControl(this.activity.schedules[0].startTime);
-					this.endTimeCtrl = new FormControl(this.activity.schedules[0].endTime);
-					this.startDateCtrl = new FormControl(this.activity.schedules[0].start_date);
-					this.endDateCtrl = new FormControl(this.activity.schedules[this.activity.schedules.length - 1].end_date);
-					this.declerateDateForms(0);
-					if (this.activity.schedules.length > 1) {
-						this.scheduleIsRecurrent = true;
-					}
-				} else {
-					this.startTimeCtrl = new FormControl();
-					this.endTimeCtrl = new FormControl();
-					this.startDateCtrl = new FormControl();
-					this.endDateCtrl = new FormControl();
-				}
-
+				this.initScheduleFormCtrls();
+				this.declerateDateForms(-1);
 				this.addressCtrl = new FormControl(this.activity.address);
 				this.categoryCtrl = new FormControl(this.activity.category.id);
 				this.targetGroupCtrl = this.activity.target_groups ?
@@ -151,6 +138,25 @@ export class ActivityFormComponent implements OnInit {
 		}
 		this.tagsCtrl = new FormControl(tagsNames.join());
 	}
+
+
+	initScheduleFormCtrls(): void {
+		if (this.activity.schedules.length) {
+			this.startTimeCtrl = new FormControl(this.activity.schedules[0].startTime);
+			this.endTimeCtrl = new FormControl(this.activity.schedules[0].endTime);
+			this.startDateCtrl = new FormControl(this.activity.schedules[0].start_date);
+			this.endDateCtrl = new FormControl(this.activity.schedules[this.activity.schedules.length - 1].end_date);
+			if (this.activity.schedules.length > 1) {
+				this.scheduleIsRecurrent = true;
+			}
+		} else {
+			this.startTimeCtrl = new FormControl();
+			this.endTimeCtrl = new FormControl();
+			this.startDateCtrl = new FormControl();
+			this.endDateCtrl = new FormControl();
+		}
+	}
+
 
 	filterAddresses(name: string): Address[] {
 		return this.addresses.filter(address =>
@@ -198,17 +204,28 @@ export class ActivityFormComponent implements OnInit {
 			oneTimeSchedule.startDate = new Date(this.startDateCtrl.value).toISOString().slice(0, 19).replace('T', ' ');
 			oneTimeSchedule.end_date = new Date(this.endDateCtrl.value).toISOString().slice(0, 19).replace('T', ' ');
 			oneTimeSchedule.startTime = this.startTimeCtrl.value;
-			oneTimeSchedule.startTime = this.endTimeCtrl.value;
-			this.activity.schedules = [oneTimeSchedule];
+			oneTimeSchedule.endTime = this.endTimeCtrl.value;
+			this.activity.schedules = [];
+			this.activity.schedules.push(oneTimeSchedule);
+
 		}
+		this.declerateDateForms(-1);
 	}
 
 	declerateDateForms(i: number): void {
-		this.panelNumber = i;
-		this.currentStartDate = new FormControl(this.activity.schedules[i].start_date);
-		this.currentStartTime = new FormControl(String(this.activity.schedules[i].startTime));
-		this.currentEndDate = new FormControl(this.activity.schedules[i].end_date);
-		this.currentEndTime = new FormControl(String(this.activity.schedules[i].endTime));
+		console.log('i:', i);
+		if (i >= 0) {
+			this.currentStartDate = new FormControl(new Date(this.activity.schedules[i].start_date));
+			this.currentStartTime = new FormControl(String(this.activity.schedules[i].startTime));
+			this.currentEndDate = new FormControl(new Date(this.activity.schedules[i].end_date));
+			this.currentEndTime = new FormControl(String(this.activity.schedules[i].endTime));
+			this.panelNumber = i;
+		} else {
+			this.currentStartDate = new FormControl();
+			this.currentStartTime = new FormControl();
+			this.currentEndDate = new FormControl();
+			this.currentEndTime = new FormControl();
+		}
 	}
 
 	changeDate(i: number): void {
@@ -261,6 +278,7 @@ export class ActivityFormComponent implements OnInit {
 					this.scheduleService.delete(currSchedule.id).subscribe();
 				}
 				currSchedule.id = null;
+				currSchedule.created = null;
 				currSchedule.activity_id = this.activity.id;
 				this.scheduleService.add(currSchedule).subscribe();
 			});
@@ -293,37 +311,40 @@ export class ActivityFormComponent implements OnInit {
 				subscribe(targetGroups => {
 					this.activity.target_groups = targetGroups;
 				});
-		});
 
-		// if (typeof this.addressCtrl.value === 'string') {
-		// 	this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
-		// 		this.nominatimAddress = new Address(data);
-		// 		if (!this.nominatimAddress.checkAddress()) {
-		// 			this.controlAddress(this.nominatimAddress).subscribe(result => {
-		// 				this.nominatimAddress = new Address(result);
-		// 				if (this.findExistingAddress(this.nominatimAddress)) {
-		// 					this.back();
-		// 					return;
-		// 				}
-		// 				this.activity.address = null;
-		// 				this.nominatimAddress.suburb = null;
-		// 				this.openDialog(this.nominatimAddress);
-		// 			});
-		// 		} else {
-		// 			if (this.findExistingAddress(this.nominatimAddress)) {
-		// 				this.back();
-		// 				return;
-		// 			}
-		// 			this.activity.address = null;
-		// 			this.nominatimAddress.suburb = null;
-		// 			this.openDialog(this.nominatimAddress);
-		// 		}
-		// 	});
-		// } else {
-		// 	this.activity.address = null;
-		// 	this.activity.address_id = this.addressCtrl.value.id;
-		// 	this.activityService.edit(this.activity).subscribe(() => this.back());
-		// }
+
+			if (typeof this.addressCtrl.value === 'string') {
+				this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
+					this.nominatimAddress = new Address(data);
+					// if Nominatim returns incomplete Address
+					if (!this.nominatimAddress.checkAddress()) {
+						this.controlAddress(this.nominatimAddress).subscribe(result => {
+							this.nominatimAddress = new Address(result);
+							if (this.findExistingAddress(this.nominatimAddress)) {
+								this.back();
+								return;
+							}
+							this.activity.address = null;
+							this.nominatimAddress.suburb = null;
+							this.openDialog(this.nominatimAddress);
+						});
+						// if Nominatim returns complete Address
+					} else {
+						if (this.findExistingAddress(this.nominatimAddress)) {
+							this.back();
+							return;
+						}
+						this.activity.address = null;
+						this.nominatimAddress.suburb = null;
+						this.openDialog(this.nominatimAddress);
+					}
+				});
+			} else {
+				this.activity.address = null;
+				this.activity.address_id = this.addressCtrl.value.id;
+				this.activityService.edit(this.activity).subscribe(() => this.back());
+			}
+		});
 	}
 
 	findExistingAddress(address: Address): boolean {

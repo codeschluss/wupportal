@@ -57,7 +57,7 @@ export class AdminComponent implements OnInit {
 
 	initSuperUserTabs(): void {
 		this.routeLinks.push({
-			label: this.constants.account,
+			label: this.constants.userManagement,
 			link: ['/admin', { outlets: { table: ['users'] } }],
 			index: 4
 		});

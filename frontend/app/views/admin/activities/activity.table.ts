@@ -24,7 +24,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 
 	@Input() providers: Array<string> = [];
 
-	displayedColumns: Array<string> = ['name', 'category', 'description', 'provider', 'tags', 'target_groups'];
+	displayedColumns: Array<string> = ['name', 'category', 'description', 'provider', 'schedules', 'tags', 'target_groups'];
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
 	constructor(
@@ -42,9 +42,16 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 				.subscribe(data => this.handleResponse(data));
 	}
 
-	// toString(json: any): string {
-	// 	if (json) {
-	// 		return new Schedule(json).toString;
-	// 	}
-	// }
+	// only showing dates in the future
+	toString(schdules: Schedule[]): string {
+		if (schdules) {
+			for (const schedule of schdules) {
+				const currDate = new Date(schedule.start_date);
+				if (currDate > new Date(Date.now())) {
+					return new Schedule(schedule).toString;
+				}
+			}
+		}
+		return this.constants.noFutureDates;
+	}
 }

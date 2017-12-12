@@ -38,7 +38,7 @@ export class Activity extends Model {
 	public category_id: Category = null;
 	public category: Category = null;
 
-	public schedules: Schedule[] = null;
+	public schedules: Schedule[] = [];
 	public tags: Tag[] = [];
 	public target_groups: TargetGroup[] = [];
 	public translations: Translation[] = [];

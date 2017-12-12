@@ -109,7 +109,7 @@ export class ActivityFormComponent implements OnInit {
 			).subscribe(activity => {
 				this.activity = activity;
 				this.initTags();
-				if (this.activity.schedules) {
+				if (this.activity.schedules.length) {
 					this.startTimeCtrl = new FormControl(this.activity.schedules[0].startTime);
 					this.endTimeCtrl = new FormControl(this.activity.schedules[0].endTime);
 					this.startDateCtrl = new FormControl(this.activity.schedules[0].start_date);
@@ -233,7 +233,7 @@ export class ActivityFormComponent implements OnInit {
 
 	removeCompleteSchedule(): void {
 		this.toDeleteSchedules = this.activity.schedules;
-		this.activity.schedules = null;
+		this.activity.schedules = [];
 	}
 
 	generateTargetGroupArray(idArray: string[]): Observable<TargetGroup[]> {
@@ -254,7 +254,7 @@ export class ActivityFormComponent implements OnInit {
 
 	handleSchedules(): void {
 		// const observableScheduleArray: Observable<any>[] = [];
-		if (this.activity.schedules) {
+		if (this.activity.schedules.length) {
 			this.activity.schedules.map(sched => {
 				const currSchedule: Schedule = new Schedule(sched);
 				if (sched.id) {

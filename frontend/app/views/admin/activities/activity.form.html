@@ -21,7 +21,7 @@
 
 				</mat-card-header>
 
-				<div *ngIf="activity.schedules">
+				<div *ngIf="activity.schedules.length">
 					<h2>Kontrollieren Sie an dieser Stelle bitte Ihre Einträge/Ihren Eintrag</h2>
 					<mat-accordion>
 						<div *ngFor="let schedule of activity.schedules; index as i">
@@ -58,7 +58,7 @@
 					<button mat-button type="button" (click)="removeCompleteSchedule()">{{constants.delete}}</button>
 				</div>
 
-				<mat-horizontal-stepper *ngIf="!activity.schedules" [linear]="isLinear">
+				<mat-horizontal-stepper *ngIf="!activity.schedules.length" [linear]="isLinear">
 					<mat-step>
 						<form>
 							<ng-template matStepLabel>{{constants.frequently}}</ng-template>

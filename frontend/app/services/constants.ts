@@ -70,6 +70,7 @@ export class Constants {
 	public longitude: string = 'Längengrad';
 	public latitude: string = 'Breitengrad';
 	public dates: string = 'Termine';
+	public noFutureDates: string = 'Keine zukünftigen Termine';
 	public weekDays: string = 'Wochentage';
 	public tags: string = 'Tags';
 	public targetGroups: string = 'Zielgruppen';
@@ -84,6 +85,7 @@ export class Constants {
 	public activity: string = 'Aktivität';
 	public account: string = 'Konto';
 	public admin: string = 'Admin';
+	public userManagement: string = 'Nutzerverwaltung';
 
 
 	public error: string = 'Fehler';

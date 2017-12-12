@@ -23,7 +23,6 @@ export class ProviderTableComponent extends AbstractTableComponent {
 
 	@Input() organisationID: string;
 
-	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'approved', 'delete'];
 	dataSource: MatTableDataSource<Provider> = new MatTableDataSource<Provider>();
 
 	constructor(
@@ -31,6 +30,10 @@ export class ProviderTableComponent extends AbstractTableComponent {
 		protected constants: Constants,
 		private location: Location) {
 		super(dataService, constants);
+	}
+
+	initColumns(): void {
+		this.displayedColumns = ['username', 'fullname', 'phone', 'admin', 'approved', 'delete'];
 	}
 
 	fetchData(): void {

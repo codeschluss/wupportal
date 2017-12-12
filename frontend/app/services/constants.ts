@@ -32,6 +32,7 @@ export class Constants {
 	public approved: string = 'Bestätigt';
 	public createdAt: string = 'Erstellt';
 	public save: string = 'Speichern';
+	public select: strubg = 'Auswählen';
 	public delete: string = 'Löschen';
 	public deleteAll: string = 'Alle Einträge löschen';
 	public change: string = 'Ändern';

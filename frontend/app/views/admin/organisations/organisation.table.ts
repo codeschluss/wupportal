@@ -22,12 +22,24 @@ import { Constants } from 'app/services/constants';
 
 export class OrganisationsTableComponent extends AbstractTableComponent {
 
-	displayedColumns: Array<string> = ['Organisations.name', 'description', 'mail', 'phone', 'website', 'address', 'action'];
 	dataSource: MatTableDataSource<Organisation> = new MatTableDataSource<Organisation>();
 
 	constructor(
 		@Inject(OrganisationService) protected dataService: DataService,
-		protected constants: Constants) {
+		protected constants: Constants,
+		private authService: AuthenticationService) {
 		super(dataService, constants);
 	}
+
+	initColumns(): void {
+		this.displayedColumns = ['Organisations.name', 'description', 'mail', 'phone', 'website', 'address'];
+		if (this.actionsVisible()) {
+			this.displayedColumns.push('action');
+		}
+	}
+
+	actionsVisible(): boolean {
+		return this.authService.isSuperUser();
+	}
+
 }

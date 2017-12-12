@@ -53,7 +53,8 @@
 			</mat-cell>
 		</ng-container>
 
-		<ng-container matColumnDef="action">
+		<ng-container matColumnDef="action"
+		  *ngIf="actionsVisible()">
 			<mat-header-cell *matHeaderCellDef>
 				{{constants.edit}} / {{constants.delete}}
 			</mat-header-cell>

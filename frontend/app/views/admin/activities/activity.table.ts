@@ -23,8 +23,8 @@ import { Constants } from 'app/services/constants';
 export class ActivityTableComponent extends AbstractTableComponent implements OnInit {
 
 	@Input() providers: Array<string> = [];
+	@Input() showActions: boolean = false;
 
-	displayedColumns: Array<string> = ['name', 'category', 'description', 'provider', 'schedules', 'tags', 'target_groups', 'action'];
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
 	constructor(
@@ -32,6 +32,17 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 		protected dataService: ActivityService,
 		protected constants: Constants) {
 		super(dataService, constants);
+	}
+
+	initColumns(): void {
+		this.displayedColumns = ['name', 'category', 'description', 'provider', 'schedules', 'tags', 'target_groups'];
+		if (this.actionsVisible()) {
+			this.displayedColumns.push('action');
+		}
+	}
+
+	actionsVisible(): boolean {
+		return this.showActions || this.authService.isSuperUser();
 	}
 
 	fetchData(): void {

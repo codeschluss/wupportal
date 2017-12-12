@@ -20,8 +20,8 @@ export abstract class AbstractTableComponent implements OnInit {
 
 	@Output() onLoadedData: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
-	protected abstract displayedColumns: Array<string> = [];
-	protected abstract dataSource: MatTableDataSource<any>;
+	protected displayedColumns: Array<string>;
+	protected dataSource: MatTableDataSource<any>;
 	protected tableState: TableState;
 	protected constants: Constants;
 	protected dataService: DataService;
@@ -34,7 +34,12 @@ export abstract class AbstractTableComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.dataSource.paginator = this.paginator;
+		this.initColumns();
 		this.fetchData();
+	}
+
+	initColumns(): void {
+		this.displayedColumns = [];
 	}
 
 	handleFiltered(changedEvent: any): void {

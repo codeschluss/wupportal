@@ -90,7 +90,7 @@ export class Constants {
 	public account: string = 'Konto';
 	public admin: string = 'Admin';
 	public userManagement: string = 'Nutzerverwaltung';
-
+	public weekDaysArray: string[] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 
 	public error: string = 'Fehler';
 

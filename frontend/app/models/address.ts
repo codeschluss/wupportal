@@ -28,8 +28,16 @@ export class Address extends Model {
 	public suburb: Suburb = null;
 
 	get toString(): string {
-		return (this.street + ' ' + this.house_number + ' ' + this.postal_code + ' ' +
-			this.place + ' ' + (this.suburb ? this.suburb.name : ''));
+		if (this.checkAddress()) {
+			return (
+				this.street + ' ' +
+				this.house_number + ' ' +
+				this.postal_code + ' ' +
+				this.place + ' ' +
+				this.suburb.name);
+		} else {
+			return '';
+		}
 	}
 
 	public compareTo(address: Address): boolean {

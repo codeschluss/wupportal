@@ -1,17 +1,18 @@
 import { Model } from 'app/models/model';
+import { Constants } from 'app/services/constants';
 
 export class Schedule extends Model {
+
+	constants: Constants = new Constants();
 
 	constructor(json: any) {
 		super(json.id);
 		this.start_date = json.start_date;
 		this.end_date = json.end_date;
-		// this.activity_id = json.activity_id;
 	}
 
 	public start_date: string = '';
 	public end_date: string = '';
-	// public activity_id: string = '';
 
 	public get startTime(): string {
 		return new Date(this.start_date).toLocaleTimeString(['de-AT'], { hour: '2-digit', minute: '2-digit' });
@@ -48,7 +49,11 @@ export class Schedule extends Model {
 	}
 
 	get toString(): string {
-		return this.start_date + ' ' + this.end_date;
+		return this.getWeekDay(new Date(this.start_date).getDay()) + ' ' + this.start_date + ' ' + this.end_date;
+	}
+
+	getWeekDay(weekDayNumber: number): string {
+		return this.constants.weekDaysArray[weekDayNumber];
 	}
 
 }

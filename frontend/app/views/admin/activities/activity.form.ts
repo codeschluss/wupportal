@@ -351,8 +351,6 @@ export class ActivityFormComponent implements OnInit {
 				subscribe(targetGroups => {
 					this.activity.target_groups = targetGroups;
 				});
-
-
 			if (typeof this.addressCtrl.value === 'string') {
 				this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
 					this.nominatimAddress = new Address(data);

@@ -35,11 +35,13 @@ export class User extends Model {
 	}
 
 	public getAdminOrgas(): Array<Organisation> {
-		return this.providers.map(provider => {
+		const adminOrgas: Array<Organisation> = new Array<Organisation>();
+		this.providers.forEach(provider => {
 			if (provider.admin) {
-				return provider.organisation;
+				adminOrgas.push(provider.organisation);
 			}
 		});
+		return adminOrgas;
 	}
 }
 

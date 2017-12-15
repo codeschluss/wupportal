@@ -65,7 +65,6 @@ export abstract class AbstractTableComponent implements OnInit {
 
 	handleResponse(response: DataResponse): void {
 		this.dataSource.data = response.records;
-		console.log('response.records', response.records);
 		this.onLoadedData.emit(response.records);
 	}
 

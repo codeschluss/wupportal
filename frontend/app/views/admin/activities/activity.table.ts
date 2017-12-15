@@ -35,7 +35,16 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	initColumns(): void {
-		this.displayedColumns = ['name', 'category', 'description', 'provider', 'schedules', 'tags', 'target_groups'];
+		this.displayedColumns = [
+			'Activities.name',
+			'Categories.name',
+			'Activities.description',
+			'Organisations.name',
+			'schedules',
+			'tags',
+			'target_groups'
+		];
+
 		if (this.actionsVisible()) {
 			this.displayedColumns.push('action');
 		}

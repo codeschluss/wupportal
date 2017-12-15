@@ -15,6 +15,8 @@ import { TargetGroup } from 'app/models/target-group';
 import { Tag } from 'app/models/tag';
 import { Category } from 'app/models/category';
 import { Schedule } from 'app/models/schedule';
+import { User } from 'app/models/user';
+import { Provider } from 'app/models/provider';
 
 import {
 	DataServiceFactory,
@@ -23,10 +25,13 @@ import {
 	TagService,
 	TargetGroupService,
 	CategoryService,
+	OrganisationService,
+	UserService,
 	ScheduleService
 } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { ProviderService } from 'app/services/provider.service';
 import { NominatimService } from 'app/services/nominatim';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { ActivityService } from 'app/services/activity.service';
@@ -42,7 +47,9 @@ import { generate } from 'rxjs/observable/generate';
 	templateUrl: 'activity.form.html',
 	styleUrls: ['../../../app.component.css'],
 	providers: [
+		ProviderService,
 		ActivityService,
+		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
 		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TagService, useFactory: DataServiceFactory(TagService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] },
@@ -58,6 +65,10 @@ export class ActivityFormComponent implements OnInit {
 	targetGroups: TargetGroup[];
 	toDeleteSchedules: Schedule[];
 	categories: Category[];
+	providers: Provider[] = [];
+	showUser: boolean = false;
+	protected user: User;
+
 	addressCtrl: FormControl;
 	tagsCtrl: FormControl;
 	categoryCtrl: FormControl;
@@ -67,6 +78,7 @@ export class ActivityFormComponent implements OnInit {
 	endTimeCtrl: FormControl;
 	endDateCtrl: FormControl;
 	targetGroupCtrl: FormControl;
+	providerCtrl: FormControl;
 	addresses: Address[] = [];
 	filteredAddresses: Observable<Address[]>;
 	nominatimAddress: Address;
@@ -80,11 +92,13 @@ export class ActivityFormComponent implements OnInit {
 
 	constructor(
 		private activityService: ActivityService,
+		@Inject(UserService) public userService: DataService,
 		@Inject(AddressService) private addressService: DataService,
 		@Inject(ScheduleService) private scheduleService: DataService,
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
 		@Inject(CategoryService) private categoriesService: DataService,
+		public authService: AuthenticationService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -103,24 +117,48 @@ export class ActivityFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.paramMap
-			.switchMap((params: ParamMap) =>
-				this.activityService.get(params.get('id')))
-			.map(data =>
-				new Activity(data.records)
+			.switchMap((params: ParamMap) => {
+				if (params.get('id') === 'new') {
+					return new Observable(observer => observer.next(new Activity({})));
+				} else {
+					return this.activityService.get(params.get('id'));
+				}
+			})
+			.map(data => new Activity(data.records)
 			).subscribe(activity => {
 				this.activity = activity;
 				this.initTags();
 				this.initScheduleFormCtrls();
 				this.declerateDateForms(-1);
 				this.addressCtrl = new FormControl(this.activity.address);
-				this.categoryCtrl = new FormControl(this.activity.category.id);
+				this.providerCtrl = new FormControl();
+				this.categoryCtrl = new FormControl(this.activity.category);
 				this.targetGroupCtrl = this.activity.target_groups ?
 					new FormControl(this.initCtrl(this.activity.target_groups)) : new FormControl();
 				this.filteredAddresses = this.addressCtrl.valueChanges
 					.startWith(<any>[])
 					.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
 					.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
+				this.userService.get(this.authService.currentUser.id)
+					.map(data => data.records as User)
+					.subscribe(user => {
+						this.user = user;
+						this.initializeOrganisations(user.providers);
+					});
 			});
+
+
+	}
+
+	initializeOrganisations(providers: Array<Provider>): void {
+		this.providers = providers;
+		if (this.providers.length > 1) {
+			for (const prov of this.providers) {
+				if (prov.id === this.activity.provider.id) {
+					this.providerCtrl = new FormControl(prov);
+				}
+			}
+		}
 	}
 
 	initCtrl(array: any[]): string[] {
@@ -138,7 +176,6 @@ export class ActivityFormComponent implements OnInit {
 		}
 		this.tagsCtrl = new FormControl(tagsNames.join());
 	}
-
 
 	initScheduleFormCtrls(): void {
 		if (this.activity.schedules.length) {
@@ -191,9 +228,9 @@ export class ActivityFormComponent implements OnInit {
 			const end: Date = new Date(this.endDateCtrl.value);
 			while (currStartDate < end) {
 				const currSchedule = new Schedule({});
-				currSchedule.startDate = currStartDate.toISOString().slice(0, 19).replace('T', ' ');
+				currSchedule.startDate = String(currStartDate);
 				currSchedule.startTime = this.startTimeCtrl.value;
-				currSchedule.endDate = currEndDate.toISOString().slice(0, 19).replace('T', ' ');
+				currSchedule.endDate = String(currEndDate);
 				currSchedule.endTime = this.endTimeCtrl.value;
 				this.activity.schedules.push(currSchedule);
 				currStartDate.setDate(currStartDate.getDate() + (7 * this.weeklyRythm));
@@ -201,8 +238,8 @@ export class ActivityFormComponent implements OnInit {
 			}
 		} else {
 			const oneTimeSchedule: Schedule = new Schedule({});
-			oneTimeSchedule.startDate = new Date(this.startDateCtrl.value).toISOString().slice(0, 19).replace('T', ' ');
-			oneTimeSchedule.end_date = new Date(this.endDateCtrl.value).toISOString().slice(0, 19).replace('T', ' ');
+			oneTimeSchedule.startDate = String(this.startDateCtrl.value);
+			oneTimeSchedule.end_date = String(this.endDateCtrl.value);
 			oneTimeSchedule.startTime = this.startTimeCtrl.value;
 			oneTimeSchedule.endTime = this.endTimeCtrl.value;
 			this.activity.schedules = [];
@@ -213,7 +250,6 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	declerateDateForms(i: number): void {
-		console.log('i:', i);
 		if (i >= 0) {
 			this.currentStartDate = new FormControl(new Date(this.activity.schedules[i].start_date));
 			this.currentStartTime = new FormControl(String(this.activity.schedules[i].startTime));
@@ -270,21 +306,20 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	handleSchedules(): void {
-		// const observableScheduleArray: Observable<any>[] = [];
 		if (this.activity.schedules.length) {
 			this.activity.schedules.map(sched => {
-				const currSchedule: Schedule = new Schedule(sched);
 				if (sched.id) {
-					this.scheduleService.delete(currSchedule.id).subscribe();
+					// currSchedule.activity_id = this.activity.id;
+					this.scheduleService.edit(sched).subscribe();
+				} else {
+					// currSchedule.activity_id = this.activity.id;
+					console.log('new schedule entry: ', sched);
+					this.scheduleService.add(sched).subscribe(schedule => {
+						this.activity.schedules.push(new Schedule(schedule.records));
+					});
 				}
-				currSchedule.id = null;
-				currSchedule.created = null;
-				currSchedule.activity_id = this.activity.id;
-				this.scheduleService.add(currSchedule).subscribe();
 			});
 		}
-		this.activity.schedules = [];
-		// return Observable.forkJoin();
 	}
 
 	handleTags(): Observable<any[]> {
@@ -299,10 +334,15 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		this.activity.category = null;
+		if (this.showUser) {
+			this.activity.showUser = this.showUser;
+		} else {
+			this.activity.showUser = false;
+		}
 		this.activity.provider = null;
-		this.activity.category_id = this.categoryCtrl.value;
-
+		this.activity.provider_id = this.providerCtrl.value.id;
+		this.activity.category = null;
+		this.activity.category_id = this.categoryCtrl.value.id;
 		this.deleteSchedules();
 		this.handleTags().subscribe(tags => {
 			tags.map(tag => { if (tag.records) { this.activity.tags.push(tag.records); } });
@@ -321,7 +361,6 @@ export class ActivityFormComponent implements OnInit {
 						this.controlAddress(this.nominatimAddress).subscribe(result => {
 							this.nominatimAddress = new Address(result);
 							if (this.findExistingAddress(this.nominatimAddress)) {
-								this.back();
 								return;
 							}
 							this.activity.address = null;
@@ -331,7 +370,6 @@ export class ActivityFormComponent implements OnInit {
 						// if Nominatim returns complete Address
 					} else {
 						if (this.findExistingAddress(this.nominatimAddress)) {
-							this.back();
 							return;
 						}
 						this.activity.address = null;
@@ -340,9 +378,9 @@ export class ActivityFormComponent implements OnInit {
 					}
 				});
 			} else {
-				this.activity.address = null;
+				this.activity.address = this.addressCtrl.value;
 				this.activity.address_id = this.addressCtrl.value.id;
-				this.activityService.edit(this.activity).subscribe(() => this.back());
+				this.saveActivity(this.activity);
 			}
 		});
 	}
@@ -350,8 +388,9 @@ export class ActivityFormComponent implements OnInit {
 	findExistingAddress(address: Address): boolean {
 		for (const currAddress of this.addresses) {
 			if (currAddress.compareTo(address)) {
+				this.activity.address = currAddress;
 				this.activity.address_id = currAddress.id;
-				this.activityService.edit(this.activity).subscribe();
+				this.saveActivity(this.activity);
 				return true;
 			}
 		}
@@ -383,11 +422,19 @@ export class ActivityFormComponent implements OnInit {
 
 		dialogRef.afterClosed().subscribe(() => {
 			this.addressService.add(this.nominatimAddress).subscribe((response) => {
+				this.activity = response.records;
 				this.activity.address_id = response.records.id;
-				this.activityService.edit(this.activity).subscribe();
-				this.back();
+				this.saveActivity(this.activity);
 			});
 		});
+	}
+
+	saveActivity(activity: Activity): void {
+		if (activity.id) {
+			this.activityService.edit(this.activity).subscribe(() => this.back());
+		} else {
+			this.activityService.add(this.activity).subscribe(() => this.back());
+		}
 	}
 
 	back(): void {

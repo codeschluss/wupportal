@@ -73,4 +73,20 @@ class ActivitiesController extends AppController
             return $whereClause;
         }]);
     }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $this->data($this->table()->save(
+            $this->table()->patchEntity(
+                $this->table()->newEntity(),
+                json_decode(utf8_encode($this->request->input()), true),
+                ['associated' => $this->contain()]
+            )
+        ));
+     }
 }

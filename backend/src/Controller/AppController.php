@@ -98,7 +98,7 @@ class AppController extends Controller
     /**
      * View method
      *
-     * @param string|null $id Film id.
+     * @param string|null $id Entry id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -130,7 +130,7 @@ class AppController extends Controller
     /**
      * Edit method
      *
-     * @param string|null $id Film id.
+     * @param string|null $id Entry id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
@@ -149,7 +149,7 @@ class AppController extends Controller
     /**
      * Delete method
      *
-     * @param string|null $id Film id.
+     * @param string|null $id Entry id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

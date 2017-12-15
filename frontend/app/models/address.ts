@@ -4,15 +4,17 @@ import { Suburb } from 'app/models/suburb';
 export class Address extends Model {
 
 	constructor(json: any) {
-		super(json.id);
-		this.latitude = json.latitude;
-		this.longitude = json.longitude;
-		this.house_number = json.house_number;
-		this.place = json.place;
-		this.street = json.street;
-		this.postal_code = json.postal_code;
-		this.suburb_id = json.suburb_id;
-		if (json.suburb) { this.suburb = new Suburb(json.suburb); }
+		super(json ? json.id : '');
+		if (json) {
+			if (json.latitude) { this.latitude = json.latitude; }
+			if (json.longitude) { this.longitude = json.longitude; }
+			if (json.house_number) { this.house_number = json.house_number; }
+			if (json.place) { this.place = json.place; }
+			if (json.street) { this.street = json.street; }
+			if (json.postal_code) { this.postal_code = json.postal_code; }
+			if (json.suburb_id) { this.suburb_id = json.suburb_id; }
+			if (json.suburb) { this.suburb = new Suburb(json.suburb); }
+		}
 	}
 
 	public latitude: number = 0;

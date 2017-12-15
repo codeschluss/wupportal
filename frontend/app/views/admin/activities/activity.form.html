@@ -6,7 +6,7 @@
 			</mat-card-header>
 
 			<mat-form-field class="edit-form-full-width">
-				<input matInput type="text" [(ngModel)]="activity.name" placeholder={{constants.name}} name="name" value={{activity.name}}
+				<input matInput type="text" [(ngModel)]="activity.name" placeholder={{constants.title}} name="name" value={{activity.name}}
 				 required [errorStateMatcher]="validation" id="activity_name_field">
 			</mat-form-field>
 
@@ -14,6 +14,15 @@
 				<textarea matInput type="text" [(ngModel)]="activity.description" placeholder="{{constants.description}}" name="description"
 				 value={{activity.description}} id="activity_description_field"></textarea>
 			</mat-form-field>
+
+			<h2>Im Namen welcher Institution soll die Veranstaltung angelegt werden</h2>
+			<mat-form-field>
+				<mat-select placeholder={{constants.organisation}} [formControl]="providerCtrl" name="activity_provider_id">
+					<mat-option *ngFor="let provider of providers" [value]="provider">{{provider.organisation.name}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<mat-checkbox [(ngModel)]="showUser" name="showUser">{{constants.publicUser}}</mat-checkbox>
 
 			<mat-card class="schedule-card">
 				<mat-card-header>
@@ -28,7 +37,7 @@
 							<mat-expansion-panel [expanded]="panelNumber === i" (opened)="declerateDateForms(i)" hideToggle="true">
 								<mat-expansion-panel-header>
 									<mat-panel-title>
-										{{activity.schedules[i].toString}}
+										{{ activity.schedules[i].toString }}
 									</mat-panel-title>
 									<mat-panel-description>
 										Hier Clicken, um diesen Termin zu bearbeiten
@@ -45,10 +54,10 @@
 									<mat-datepicker #pickerEndDate></mat-datepicker>
 								</mat-form-field>
 								<mat-form-field>
-									<input matInput type="text" name="start_time" [formControl]="currentStartTime" placeholder="von" id="currentStratTime">
+									<input matInput type="time" name="start_time" [formControl]="currentStartTime" placeholder="von" id="currentStratTime">
 								</mat-form-field>
 								<mat-form-field>
-									<input matInput type="text" name="end_time" [formControl]="currentEndTime" placeholder="bis" id="currentEndTime">
+									<input matInput type="time" name="end_time" [formControl]="currentEndTime" placeholder="bis" id="currentEndTime">
 								</mat-form-field>
 								<button mat-button type="button" (click)="changeDate(i)">{{constants.change}}</button>
 								<button mat-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
@@ -124,7 +133,7 @@
 
 			<mat-form-field>
 				<mat-select placeholder={{constants.category}} [formControl]="categoryCtrl" name="activity_category">
-					<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+					<mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
 				</mat-select>
 			</mat-form-field>
 

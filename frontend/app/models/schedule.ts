@@ -6,14 +6,12 @@ export class Schedule extends Model {
 		super(json.id);
 		this.start_date = json.start_date;
 		this.end_date = json.end_date;
-		this.activity_id = json.activity_id;
-		this.modified = json.modified;
-		this.created = json.created;
+		// this.activity_id = json.activity_id;
 	}
 
 	public start_date: string = '';
 	public end_date: string = '';
-	public activity_id: string = '';
+	// public activity_id: string = '';
 
 	public get startTime(): string {
 		return new Date(this.start_date).toLocaleTimeString(['de-AT'], { hour: '2-digit', minute: '2-digit' });
@@ -24,10 +22,12 @@ export class Schedule extends Model {
 	}
 
 	public set startTime(time: string) {
+		this.start_date = new Date(this.start_date).toISOString().slice(0, 19).replace('T', ' ');
 		this.start_date = this.start_date.split(' ')[0] + ' ' + time + ':00';
 	}
 
 	public set endTime(time: string) {
+		this.end_date = new Date(this.end_date).toISOString().slice(0, 19).replace('T', ' ');
 		this.end_date = this.end_date.split(' ')[0] + ' ' + time + ':00';
 	}
 
@@ -48,7 +48,7 @@ export class Schedule extends Model {
 	}
 
 	get toString(): string {
-		return this.start_date;
+		return this.start_date + ' ' + this.end_date;
 	}
 
 }

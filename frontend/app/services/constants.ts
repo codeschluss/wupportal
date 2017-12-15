@@ -56,6 +56,7 @@ export class Constants {
 	public wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
 	public multipleOrganisationMessage: string = 'Sie sind Administrator für mehere Organisationen';
 	public pleaseSelectMessage: string = 'Bitte wählen Sie eine aus:';
+	public publicUser: string = 'Soll der Name des Anbieters zusätzlich zu den Angaben der Organisation angezeigt werden?';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';
@@ -74,6 +75,7 @@ export class Constants {
 	public dates: string = 'Termine';
 	public noFutureDates: string = 'Keine zukünftigen Termine';
 	public weekDays: string = 'Wochentage';
+	public title: string = 'Titel';
 	public tags: string = 'Tags';
 	public targetGroups: string = 'Zielgruppen';
 	public category: string = 'Kategorie';

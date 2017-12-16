@@ -87,9 +87,9 @@ export class ActivityFormComponent implements OnInit {
 
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 
-
 	constructor(
 		private activityService: ActivityService,
+		private providerService: ProviderService,
 		@Inject(UserService) public userService: DataService,
 		@Inject(AddressService) public addressService: DataService,
 		@Inject(ScheduleService) private scheduleService: DataService,
@@ -108,6 +108,13 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.providerService
+			.getByUser(this.authService.currentUser.id)
+			.map(data => data.records)
+			.subscribe(providers => providers.map(provider => {
+				if (provider.approved) { this.providers.push(provider); }
+			}));
+
 		this.route.paramMap
 			.switchMap((params: ParamMap) => {
 				if (params.get('id') === 'new') {
@@ -119,34 +126,18 @@ export class ActivityFormComponent implements OnInit {
 			.map(data => new Activity(data.records)
 			).subscribe(activity => {
 				this.activity = activity;
+				this.providerCtrl = new FormControl(this.activity.provider_id);
+				console.log(this.providerCtrl.value);
 				this.initTags();
 				this.initScheduleFormCtrls();
 				this.declerateDateForms(-1);
-				this.providerCtrl = new FormControl();
-				this.categoryCtrl = new FormControl(this.activity.category);
+				this.categoryCtrl = new FormControl(this.activity.category.id);
 				this.targetGroupCtrl = this.activity.target_groups ?
 					new FormControl(this.initCtrl(this.activity.target_groups)) : new FormControl();
-				this.userService.get(this.authService.currentUser.id)
-					.map(data => data.records as User)
-					.subscribe(user => {
-						this.user = user;
-						this.initializeOrganisations(user.providers);
-					});
 				this.firstFormGroup = this._formBuilder.group({
 					firstCtrl: ['', Validators.required]
 				});
 			});
-	}
-
-	initializeOrganisations(providers: Array<Provider>): void {
-		this.providers = providers;
-		if (this.providers.length > 1) {
-			for (const prov of this.providers) {
-				if (prov.id === this.activity.provider.id) {
-					this.providerCtrl = new FormControl(prov);
-				}
-			}
-		}
 	}
 
 	initCtrl(array: any[]): string[] {
@@ -217,7 +208,6 @@ export class ActivityFormComponent implements OnInit {
 			oneTimeSchedule.endTime = this.endTimeCtrl.value;
 			this.activity.schedules = [];
 			this.activity.schedules.push(oneTimeSchedule);
-
 		}
 		this.declerateDateForms(-1);
 	}
@@ -285,21 +275,21 @@ export class ActivityFormComponent implements OnInit {
 		}
 	}
 
-	handleSchedules(): void {
+	handleSchedules(): Observable<any[]> {
+		const observableAddressArray: Observable<any>[] = [];
 		if (this.activity.schedules.length) {
 			this.activity.schedules.map(sched => {
 				if (sched.id) {
 					// currSchedule.activity_id = this.activity.id;
-					this.scheduleService.edit(sched).subscribe();
+					observableAddressArray.push(this.scheduleService.edit(sched));
 				} else {
 					// currSchedule.activity_id = this.activity.id;
 					console.log('new schedule entry: ', sched);
-					this.scheduleService.add(sched).subscribe(schedule => {
-						this.activity.schedules.push(new Schedule(schedule.records));
-					});
+					observableAddressArray.push(this.scheduleService.add(sched));
 				}
 			});
 		}
+		return Observable.forkJoin(observableAddressArray);
 	}
 
 	handleTags(): Observable<any[]> {
@@ -314,6 +304,9 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	addressChanged(event: any): void {
+		if (event.id) {
+			this.activity.address_id = event.id;
+		}
 		this.activity.address = event;
 	}
 
@@ -327,75 +320,35 @@ export class ActivityFormComponent implements OnInit {
 		} else {
 			this.activity.showUser = false;
 		}
-		this.activity.provider = null;
-		this.activity.provider_id = this.providerCtrl.value.id;
-		this.activity.category = null;
-		this.activity.category_id = this.categoryCtrl.value.id;
-		this.deleteSchedules();
+		this.activity.provider = this.providers.find(provider => provider.id === this.providerCtrl.value);
+		this.activity.provider_id = this.providerCtrl.value;
+		this.activity.category = this.categories.find(category => category.id === this.categoryCtrl.value);
+		this.activity.category_id = this.categoryCtrl.value;
 		this.handleTags().subscribe(tags => {
 			tags.map(tag => { if (tag.records) { this.activity.tags.push(tag.records); } });
-			this.handleSchedules();
 			this.generateTargetGroupArray(this.targetGroupCtrl.value).
 				subscribe(targetGroups => {
 					this.activity.target_groups = targetGroups;
 				});
-			this.activity.address.suburb = null;
-			this.addressService.add(this.activity.address).subscribe(
-				response => {
-					this.activity.address = response.records;
-					this.activity.address_id = response.records.id;
-				}
-			);
 		});
 	}
 
 	onSubmit(): void {
-		this.saveActivity(this.activity);
+		this.deleteSchedules();
+		this.handleSchedules().subscribe(schedules => {
+			schedules.map(schedule => this.activity.schedules.push(new Schedule(schedule.records)));
+
+			if (!this.activity.address.id) {
+				this.addressService.add(this.activity.address).subscribe(
+					response => {
+						this.activity.address = response.records;
+						this.activity.address_id = response.records.id;
+					}
+				);
+			} this.saveActivity(this.activity);
+		});
+		this.back();
 	}
-
-	// findExistingAddress(address: Address): boolean {
-	// 	for (const currAddress of this.addresses) {
-	// 		if (currAddress.compareTo(address)) {
-	// 			this.activity.address = currAddress;
-	// 			this.activity.address_id = currAddress.id;
-	// 			this.saveActivity(this.activity);
-	// 			return true;
-	// 		}
-	// 	}
-	// 	return false;
-	// }
-
-	// controlAddress(address: Address): Observable<Address> {
-	// 	const dialogRef = this.controlAddressDialog.open(AddressFormComponent, {
-	// 		width: '80%',
-	// 		data: {
-	// 			name: '',
-	// 			message: 'Sie können die eingegebene Addresse hier ändern:',
-	// 			address: address
-	// 		}
-	// 	});
-	// 	return dialogRef.afterClosed();
-	// }
-
-	// openDialog(newAddress: Address): void {
-	// 	const dialogRef = this.suburbSelectDialog.open(SuburbSelectionComponent, {
-	// 		width: '250px',
-	// 		data: {
-	// 			name: '',
-	// 			message: 'Sie haben eien neue Adresse eingegeben. Bitte geben Sie den entsprechenden Stadtteil ein.'
-	// 				+ newAddress.toString,
-	// 			address: newAddress
-	// 		}
-	// 	});
-
-	// 	dialogRef.afterClosed().subscribe(() => {
-	// 		this.addressService.add(this.nominatimAddress).subscribe((response) => {
-	// 			this.activity = response.records;
-	// 			this.activity.address_id = response.records.id;
-	// 			this.saveActivity(this.activity);
-	// 		});
-	// 	});
-	// }
 
 	saveActivity(activity: Activity): void {
 		if (activity.id) {

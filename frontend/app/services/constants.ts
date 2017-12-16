@@ -71,6 +71,7 @@ export class Constants {
 	public multipleOrganisationMessage: string = 'Sie sind Administrator für mehere Organisationen';
 	public pleaseSelectMessage: string = 'Bitte wählen Sie eine aus:';
 	public publicUser: string = 'Soll der Name des Anbieters veröffentlicht werden?';
+	public dateTimeQuestion: string = 'Wann findet Ihre Veranstaltung statt?';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';

@@ -19,7 +19,7 @@ import { Constants } from 'app/services/constants';
 })
 export class UserTableComponent extends AbstractTableComponent {
 
-	displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'created', 'action'];
+	displayedColumns: Array<string>;
 	dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
 
 	constructor(
@@ -27,5 +27,9 @@ export class UserTableComponent extends AbstractTableComponent {
 		protected constants: Constants,
 		protected deleteDialog: MatDialog) {
 		super(dataService, constants);
+	}
+
+	initColumns(): void {
+		this.displayedColumns = ['username', 'fullname', 'phone', 'created', 'action'];
 	}
 }

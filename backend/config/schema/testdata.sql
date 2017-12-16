@@ -23,7 +23,7 @@ INSERT INTO `target_groups` (`id`, `name`, `description`) VALUES
 INSERT INTO `users` (`id`, `superuser`, `username`, `password`, `fullname`, `phone`) VALUES
 ('00000000-0000-0000-0004-000000000001', 1, 'john@doe.com', 'password', 'John Doe\'s', '01234567890'),
 ('00000000-0000-0000-0004-000000000002', 0, 'max@mustermann.de', 'password', 'Max Mustermann', '09876543210'),
-('e122098e-a2a1-4bce-b7d7-b08536dc2cef', 0, 'test@domain.de', '$2y$10$kA.4ijt9zkkfsfi6dRJc9eB6Ro.Q6SAR.CWsUou7QCq3htKfmcWoy', 'Tester', NULL);
+('e122098e-a2a1-4bce-b7d7-b08536dc2cef', 1, 'test@domain.de', '$2y$10$kA.4ijt9zkkfsfi6dRJc9eB6Ro.Q6SAR.CWsUou7QCq3htKfmcWoy', 'Tester', NULL);
 
 INSERT INTO `suburbs` (`id`, `name`) VALUES
 ('00000000-0000-0000-0005-000000000001', 'Elberfeld'),

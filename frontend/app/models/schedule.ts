@@ -3,8 +3,6 @@ import { Model } from 'app/models/model';
 
 export class Schedule extends Model {
 
-	// private constants: Constants = new Constants();
-
 	constructor(json: any) {
 		super(json.id);
 		this.start_date = json.start_date;
@@ -49,13 +47,17 @@ export class Schedule extends Model {
 	}
 
 	get toString(): string {
-		return this.start_date + ' ' + this.end_date;
+		if (this.start_date && this.end_date) {
+			return this.start_date + ' - ' + this.end_date;
+		} else {
+			return '';
+		}
 
 		// this.getWeekDay(new Date(this.start_date).getDay()) + ' ' +
 	}
 
 	// getWeekDay(weekDayNumber: number): string {
-	// 	return this.constants.weekDaysArray[weekDayNumber];
+	// 	return Costants.weekDaysArray[weekDayNumber];
 	// }
 
 }

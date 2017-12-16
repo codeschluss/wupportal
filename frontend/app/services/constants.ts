@@ -11,6 +11,7 @@ export class Constants {
 	public static previousPageLabel: string = 'Vorherige Seite';
 	public static itemsPerPageLabel: string = 'Einträge pro Seite';
 	public static of: string = 'von';
+	public static weekDaysArray: string[] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 
 	// --------------------------
 	// LABELS
@@ -31,8 +32,6 @@ export class Constants {
 
 	public filter: string = 'Filter';
 	public configuration: string = 'Einstellungen';
-	public mainData: string = 'Stammdaten';
-	public metaData: string = 'Metadaten';
 
 	public requests: string = 'Anfragen';
 	public showMembers: string = 'Mitglieder anzeigen';
@@ -55,7 +54,10 @@ export class Constants {
 	public previous: string = 'vorherige';
 
 	public coreData: string = 'Stammdaten';
+	public metaData: string = 'Metadaten';
 	public own: string = 'Eigene';
+	public no: string = 'Nein';
+	public yes: string = 'Ja';
 
 	public deleteMessage: string = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';
@@ -68,7 +70,7 @@ export class Constants {
 	public wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
 	public multipleOrganisationMessage: string = 'Sie sind Administrator für mehere Organisationen';
 	public pleaseSelectMessage: string = 'Bitte wählen Sie eine aus:';
-	public publicUser: string = 'Soll der Name des Anbieters zusätzlich zu den Angaben der Organisation angezeigt werden?';
+	public publicUser: string = 'Soll der Name des Anbieters veröffentlicht werden?';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';
@@ -85,8 +87,8 @@ export class Constants {
 	public longitude: string = 'Längengrad';
 	public latitude: string = 'Breitengrad';
 	public dates: string = 'Termine';
+	public date: string = 'Termin';
 	public noFutureDates: string = 'Keine zukünftigen Termine';
-	public weekDays: string = 'Wochentage';
 	public title: string = 'Titel';
 	public tags: string = 'Tags';
 	public targetGroups: string = 'Zielgruppen';
@@ -103,7 +105,6 @@ export class Constants {
 	public account: string = 'Konto';
 	public admin: string = 'Admin';
 	public userManagement: string = 'Nutzerverwaltung';
-	public weekDaysArray: string[] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 
 	public error: string = 'Fehler';
 	public done: string = 'Erledigt';

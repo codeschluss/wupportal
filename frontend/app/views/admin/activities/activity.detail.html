@@ -1,0 +1,39 @@
+<h3>{{constants.coreData}}</h3>
+<div>{{constants.title}} :
+	<b>{{activity.name}}</b>
+</div>
+<div>{{constants.organisation}} :
+	<b>{{activity.provider.organisation.name}}</b>
+</div>
+<div>{{constants.description}} :
+	<b>{{activity.description}}</b>
+</div>
+{{constants.publicUser}}
+<div *ngIf="activity.showUser">{{constants.no}}</div>
+<div *ngIf="!activity.showUser">
+	<b>{{constants.yes}}</b>
+	<!-- <div>{{activity.provider.user.fullname}}</div>
+	<div>{{activity.provider.user.username}}</div>
+	<div>{{activity.provider.user.phone}}</div> -->
+</div>
+<div>{{constants.address}} :
+	<b>{{activity.address.toString}}</b>
+</div>
+<h3>{{constants.metaData}}</h3>
+<div>{{constants.category}} :
+	<b>{{activity.category.name}}</b>
+</div>
+<span>
+	<mat-list role="list">
+		<mat-list-item role="listitem" *ngFor="let targetGroup of activity.targetGropus">{{targetGroup.name}}</mat-list-item>
+	</mat-list>
+</span>
+<span>
+	<mat-chip-list class="mat-chip-list-stacked">
+		<mat-chip selected="true" *ngFor="let tag of activity.tags">#{{tag.name}}</mat-chip>
+	</mat-chip-list>
+</span>
+<h3>{{constants.dates}}</h3>
+<mat-list role="list">
+	<mat-list-item role="listitem" *ngFor="let schedule of activity.schedules">{{schedule.toString}}</mat-list-item>
+</mat-list>

@@ -29,6 +29,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from 'app/app.component';
@@ -70,6 +71,7 @@ import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.
 
 import { PaginatorComponent } from 'app/views/admin/table/paginator.table';
 import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
+import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
 
 @NgModule({
 	bootstrap: [
@@ -82,6 +84,7 @@ import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
 		FilterComponent,
 		MappingComponent,
 		AddressAutocompleteComponent,
+		ActivityDetailComponent,
 
 		UserTableComponent,
 		OrganisationsTableComponent,
@@ -134,7 +137,8 @@ import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
 		MatListModule,
 		MatDatepickerModule,
 		MatCheckboxModule,
-		MatStepperModule
+		MatStepperModule,
+		MatGridListModule
 	],
 	providers: [
 		ActivityService,

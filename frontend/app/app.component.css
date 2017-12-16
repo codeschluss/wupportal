@@ -36,3 +36,7 @@ mapping-component {
 .edit-form-three-column-width {
 	width: 25%;
 }
+
+mat-chip {
+  max-width: 200px;
+}

@@ -31,6 +31,7 @@ import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
+import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
 import { ActivityService } from 'app/services/activity.service';
 import { Constants } from 'app/services/constants';
 import { Object } from 'openlayers';
@@ -135,7 +136,6 @@ export class ActivityFormComponent implements OnInit {
 					firstCtrl: ['', Validators.required]
 				});
 			});
-
 	}
 
 	initializeOrganisations(providers: Array<Provider>): void {
@@ -222,12 +222,19 @@ export class ActivityFormComponent implements OnInit {
 		this.declerateDateForms(-1);
 	}
 
+	addOneSchedule(): void {
+		this.activity.schedules.push(new Schedule({}));
+		this.declerateDateForms(this.activity.schedules.length - 1);
+	}
+
 	declerateDateForms(i: number): void {
 		if (i >= 0) {
-			this.currentStartDate = new FormControl(new Date(this.activity.schedules[i].start_date));
-			this.currentStartTime = new FormControl(String(this.activity.schedules[i].startTime));
-			this.currentEndDate = new FormControl(new Date(this.activity.schedules[i].end_date));
-			this.currentEndTime = new FormControl(String(this.activity.schedules[i].endTime));
+			if (this.activity.schedules[i]) {
+				this.currentStartDate = new FormControl(new Date(this.activity.schedules[i].start_date));
+				this.currentStartTime = new FormControl(String(this.activity.schedules[i].startTime));
+				this.currentEndDate = new FormControl(new Date(this.activity.schedules[i].end_date));
+				this.currentEndTime = new FormControl(String(this.activity.schedules[i].endTime));
+			}
 			this.panelNumber = i;
 		} else {
 			this.currentStartDate = new FormControl();
@@ -314,7 +321,7 @@ export class ActivityFormComponent implements OnInit {
 		this.addressAutocomplete.onSubmit();
 	}
 
-	onSubmit(): void {
+	prepareToSubmit(): void {
 		if (this.showUser) {
 			this.activity.showUser = this.showUser;
 		} else {
@@ -337,10 +344,13 @@ export class ActivityFormComponent implements OnInit {
 				response => {
 					this.activity.address = response.records;
 					this.activity.address_id = response.records.id;
-					this.saveActivity(this.activity);
 				}
 			);
 		});
+	}
+
+	onSubmit(): void {
+		this.saveActivity(this.activity);
 	}
 
 	// findExistingAddress(address: Address): boolean {

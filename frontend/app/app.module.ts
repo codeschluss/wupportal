@@ -42,6 +42,7 @@ import { UserTableComponent } from 'app/views/admin/users/user.table';
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
+import { ProviderApprovalTableComponent } from 'app/views/admin/provider/provider-approval.table';
 
 import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
@@ -66,7 +67,6 @@ import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
 
-
 @NgModule({
 	bootstrap: [
 		AppComponent
@@ -82,6 +82,7 @@ import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisat
 		OrganisationsTableComponent,
 		ActivityTableComponent,
 		ProviderTableComponent,
+		ProviderApprovalTableComponent,
 
 		LoginFormComponent,
 		RegisterFormComponent,

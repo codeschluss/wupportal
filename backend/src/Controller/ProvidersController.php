@@ -49,18 +49,23 @@ class ProvidersController extends AppController
 
     public function getByOrganisation()
     {
-        // var_dump($request); exit;
-        $query = $this->table()->find()->group($this->name . '.id');
         $request = $this->request->input('json_decode');
         if (is_null($request)) return;
-        if (is_null($request->organisation)) return;
+        if (!isset($request->organisation)) return;
 
-        $this->setPagination($request);
-        $this->setJoins($query);
-        $this->setSorting($query, $request);
-        $this->setFiltering($query, $request);
-        $this->setByOrganisation($query, $request);
-        $this->data($this->paginate($query));
+        if(isset($request->filter) || isset($request->sort)) {
+            $query = $this->table()->find()->group($this->name . '.id');
+            $this->setPagination($request);
+            $this->setJoins($query);
+            $this->setSorting($query, $request);
+            $this->setFiltering($query, $request);
+            $this->setByOrganisation($query, $request);
+            $this->data($this->paginate($query));
+        } else {
+            $query = $this->table()->find()->contain($this->contain());
+            $this->setByOrganisation($query, $request);
+            $this->data($query->all()->toArray());
+        }
     }
 
     private function setByOrganisation($query, $request) {

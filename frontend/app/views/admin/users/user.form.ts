@@ -26,7 +26,6 @@ import { Provider } from 'app/models/provider';
 	templateUrl: 'user.form.html',
 	styleUrls: ['user.form.css'],
 	providers: [
-		ProviderService,
 		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
 		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
 	]

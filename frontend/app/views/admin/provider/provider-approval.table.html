@@ -1,7 +1,7 @@
 <mat-card *ngIf="providers">
 	<mat-card-header>
 		<mat-card-title>
-			<h2>{{constants.members}}</h2>
+			<h2>{{constants.requests}}</h2>
 		</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
@@ -20,25 +20,23 @@
 				<mat-cell *matCellDef="let row">{{ row.user.fullname }}</mat-cell>
 			</ng-container>
 
-			<!-- phone Column -->
-			<ng-container matColumnDef="phone">
-				<mat-header-cell *matHeaderCellDef>{{constants.phone}}</mat-header-cell>
-				<mat-cell *matCellDef="let row">{{ row.user.phone }}</mat-cell>
-			</ng-container>
-
-			<!-- admin flag Column -->
-			<ng-container matColumnDef="admin">
-				<mat-header-cell *matHeaderCellDef>{{constants.admin}}</mat-header-cell>
+			<!-- Approve provider in organisation  -->
+			<ng-container matColumnDef="approve">
+				<mat-header-cell *matHeaderCellDef>
+					{{constants.approveRequest}}
+				</mat-header-cell>
 				<mat-cell *matCellDef="let row">
-					<mat-checkbox [(ngModel)]="row.admin">
-					</mat-checkbox>
+					<button mat-button color="primary"
+					  type="button" (click)="approve(row)">
+						<i class="fa fa-user-plus" aria-hidden="true"></i>
+					</button>
 				</mat-cell>
 			</ng-container>
 
 			<!-- completely remove from provider table  -->
-			<ng-container matColumnDef="delete">
+			<ng-container matColumnDef="decline">
 				<mat-header-cell *matHeaderCellDef>
-					{{constants.deleteFromOrganisation}}
+					{{constants.declineRequest}}
 				</mat-header-cell>
 				<mat-cell *matCellDef="let row">
 					<delete-action [recordID]="row.id"
@@ -51,9 +49,5 @@
 			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 			<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 		</mat-table>
-
-		<button type="button" mat-raised-button
-		  color="primary" (click)="save()">{{constants.save}}
-		</button>
 	</mat-card-content>
 </mat-card>

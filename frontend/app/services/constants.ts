@@ -29,7 +29,10 @@ export class Constants {
 	public filter: string = 'Filter';
 	public configuration: string = 'Einstellungen';
 
-	public approved: string = 'Bestätigt';
+	public showMembers: string = 'Mitglieder anzeigen';
+	public showRequests: string = 'Anragen anzeigen';
+	public declineRequest: string = 'Anfrage ablehnen';
+	public approveRequest: string = 'Anfrage bestätigen';
 	public createdAt: string = 'Erstellt';
 	public save: string = 'Speichern';
 	public select: string = 'Auswählen';
@@ -85,6 +88,7 @@ export class Constants {
 	public organisationAdmin: string = 'Organisation verwalten';
 	public users: string = 'Anbieter';
 	public user: string = 'Anbieter';
+	public members: string = 'Mitglieder';
 	public activities: string = 'Aktivitäten';
 	public activity: string = 'Aktivität';
 	public account: string = 'Konto';

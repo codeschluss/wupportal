@@ -17,8 +17,11 @@ export class ProviderService extends DataService {
 		super(http, 'providers', authService);
 	}
 
-	public getByOrganisation(tableState: TableState, organisationID: string): Observable<DataResponse> {
-		const request = Object.assign(tableState, this.createProvidersParam(organisationID));
+	public getByOrganisation(organisationID: string, tableState?: TableState): Observable<DataResponse> {
+		const request = tableState
+			&& Object.assign(tableState, this.createProvidersParam(organisationID))
+			|| this.createProvidersParam(organisationID);
+
 		return this.http.post(this.baseUrl + 'getByOrganisation', JSON.stringify(request), {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())

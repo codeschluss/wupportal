@@ -10,12 +10,14 @@ import {
 } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { ProviderService } from 'app/services/provider.service';
 
 import { Organisation } from 'app/models/organisation';
 import { Constants } from 'app/services/constants';
 import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
 import { Provider } from 'app/models/provider';
 import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
 	selector: 'organisation-admin',
@@ -29,13 +31,18 @@ import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisat
 export class OrganisationAdminComponent implements OnInit {
 
 	organisation: Organisation;
+	organisationProviders: Array<Provider>;
+	notApprovedProviders: Array<Provider>;
+	approvedProviders: Array<Provider>;
+
+	showRequests: boolean = false;
 
 	@ViewChild(ProviderTableComponent)
 	providerTable: ProviderTableComponent;
-	providerIDs: Array<string>;
 
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
+		private providerService: ProviderService,
 		private authService: AuthenticationService,
 		public constants: Constants,
 		public selectOrgaDialog: MatDialog,
@@ -46,15 +53,7 @@ export class OrganisationAdminComponent implements OnInit {
 		const adminOrganisations: Array<Organisation> = this.authService.currentUser.getAdminOrgas();
 		adminOrganisations.length > 1
 			? this.selectOrganisation(adminOrganisations)
-			: this.setOrganisation(adminOrganisations.shift().id);
-	}
-
-	setOrganisation(organisationID: string): void {
-		this.organisationService.get(organisationID)
-			.map(data => new Organisation(data.records))
-			.subscribe((organisation) => {
-				this.organisation = organisation;
-			});
+			: this.setOrganisationAndProviders(adminOrganisations.shift().id);
 	}
 
 	selectOrganisation(organisations: Array<Organisation>): void {
@@ -66,13 +65,62 @@ export class OrganisationAdminComponent implements OnInit {
 
 		dialogRef.afterClosed().subscribe(result => {
 			result
-				? this.setOrganisation(result)
+				? this.setOrganisationAndProviders(result)
 				: this.location.back();
 		});
 	}
 
-	setProviders(providers: Array<Provider>): void {
-		this.providerIDs = providers.map(provider => provider.id);
+	setOrganisationAndProviders(organisationID: string): void {
+		this.getOrganisation(organisationID)
+			.subscribe(organisation => {
+				this.organisation = organisation;
+				this.setProviders();
+			});
 	}
 
+	getOrganisation(organisationID: string): Observable<Organisation> {
+		return this.organisationService.get(organisationID)
+			.map(data => new Organisation(data.records));
+	}
+
+	setProviders(): void {
+		this.providerService
+			.getByOrganisation(this.organisation.id)
+			.map(data => data.records as Array<Provider>)
+			.subscribe(providers => {
+				this.organisationProviders = providers;
+				this.setDataForProviderTables();
+				this.switch();
+			});
+	}
+
+	setDataForProviderTables(): void {
+		this.notApprovedProviders = [];
+		this.approvedProviders = [];
+		this.organisationProviders
+			.forEach(provider => {
+				provider.approved
+					? this.approvedProviders.push(provider)
+					: this.notApprovedProviders.push(provider);
+			});
+	}
+
+	switch(): void {
+		this.showRequests = !this.showRequests;
+	}
+
+	switchButtonLabel(): string {
+		return this.showRequests
+			? this.constants.showMembers
+			: this.constants.showRequests;
+	}
+
+	onApproved(): void {
+		this.setProviders();
+	}
+
+	getProviderIDs(): Array<string> {
+		return this.organisationProviders
+			.map(provider => provider.id);
+	}
 }

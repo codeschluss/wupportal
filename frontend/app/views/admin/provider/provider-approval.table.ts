@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, Inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -14,21 +14,21 @@ import { Constants } from 'app/services/constants';
 import { User } from 'app/models/user';
 
 @Component({
-	selector: 'provider-table',
+	selector: 'provider-approval-table',
 	styleUrls: ['../table.abstract.css'],
-	templateUrl: 'provider.table.html'
+	templateUrl: 'provider-approval.table.html'
 })
-export class ProviderTableComponent implements OnChanges {
+export class ProviderApprovalTableComponent implements OnChanges {
 
 	@Input() providers: Array<Provider>;
+	@Output() onApproved: EventEmitter<Provider> = new EventEmitter<Provider>();
 
-	protected displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'delete'];
+	protected displayedColumns: Array<string> = ['username', 'fullname', 'approve', 'decline'];
 	dataSource: MatTableDataSource<Provider> = new MatTableDataSource<Provider>();
 
 	constructor(
 		protected dataService: ProviderService,
-		protected constants: Constants,
-		private location: Location) {
+		protected constants: Constants) {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
@@ -36,16 +36,8 @@ export class ProviderTableComponent implements OnChanges {
 		this.dataSource.data = providers.currentValue;
 	}
 
-	save(): void {
-		const list = [];
-		for (const provider of this.dataSource.data) {
-			list.push(this.dataService.edit(provider));
-		}
-		forkJoin(list).subscribe(() => this.back());
+	approve(row: any): void {
+		row.approved = true;
+		this.dataService.edit(row).subscribe(() => this.onApproved.emit(row));
 	}
-
-	back(): void {
-		this.location.back();
-	}
-
 }

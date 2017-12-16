@@ -55,6 +55,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	fetchData(): void {
+		console.log('providers', this.providers);
 		this.providers.length !== 0
 			? this.dataService.getByProviders(this.tableState, this.providers)
 				.subscribe(data => this.handleResponse(data))

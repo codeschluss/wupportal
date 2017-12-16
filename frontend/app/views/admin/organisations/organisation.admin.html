@@ -1,32 +1,33 @@
 <div class="edit-container">
 	<mat-card class="organisation-edit-card"
-	  *ngIf="organisation">
+	  *ngIf="organisation && approvedProviders && notApprovedProviders">
 		<mat-card-header>
 			<h2>{{organisation.name}}</h2>
 		</mat-card-header>
 		<mat-tab-group>
 			<mat-tab label={{constants.coreData}}>
+				<!-- Core data -->
 				<organisation-form [organisation]="organisation">
 				</organisation-form>
 			</mat-tab>
 			<mat-tab label={{constants.user}}>
 				<!-- Provider user list -->
-				<mat-card>
-					<mat-card-header>
-						<mat-card-title>
-							<h2>{{constants.user}}</h2>
-						</mat-card-title>
-					</mat-card-header>
-					<mat-card-content>
-						<provider-table (onLoadedData)="setProviders($event)"
-						  organisationID={{organisation.id}}>
-						</provider-table>
-					</mat-card-content>
-				</mat-card>
+				<button type="button" mat-button
+				  color="primary" (click)="switch()">{{switchButtonLabel()}}
+				</button>
+				<div *ngIf="showRequests">
+					<provider-approval-table [providers]="notApprovedProviders"
+					  (onApproved)="onApproved($event)">
+					</provider-approval-table>
+				</div>
+				<div *ngIf="!showRequests">
+					<provider-table [providers]="approvedProviders">
+					</provider-table>
+				</div>
 			</mat-tab>
 			<mat-tab label={{constants.activities}}>
 				<!-- Provider activity list -->
-				<mat-card *ngIf="providerIDs">
+				<mat-card>
 					<mat-card-header>
 						<mat-card-title>
 							<h2>{{constants.activities}}</h2>
@@ -34,7 +35,7 @@
 					</mat-card-header>
 					<mat-card-content>
 						<activity-table [showActions]="true"
-						  [providers]="providerIDs">
+						  [providers]="getProviderIDs()">
 						</activity-table>
 					</mat-card-content>
 				</mat-card>

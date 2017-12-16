@@ -9,7 +9,7 @@ import { Schedule } from 'app/models/schedule';
 
 
 export class Activity extends Model {
-	constructor(json: any) {
+	constructor(json: any = {} as Activity) {
 		super(json ? json.id : '');
 		if (json) {
 			if (json.name) { this.name = json.name; }

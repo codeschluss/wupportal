@@ -17,6 +17,7 @@ export class Constants {
 	// LABELS
 	// --------------------------
 
+	public close: string = 'Schließen';
 	public back: string = 'Zurück';
 	public newElement: string = 'Neu';
 	public cancel: string = 'Abbrechen';

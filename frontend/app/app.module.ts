@@ -8,29 +8,34 @@ import { HttpModule } from '@angular/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MatButtonModule, MatPaginatorIntl } from '@angular/material';
-import { MatCardModule } from '@angular/material';
-import { MatExpansionModule } from '@angular/material';
-import { MatIconModule } from '@angular/material';
-import { MatInputModule } from '@angular/material';
-import { MatTabsModule } from '@angular/material';
-import { MatRippleModule } from '@angular/material';
-import { MatNativeDateModule } from '@angular/material';
-import { MatSelectModule } from '@angular/material/select';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatFormFieldModule, MatSortModule } from '@angular/material';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatTableModule } from '@angular/material/table';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatListModule } from '@angular/material/list';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { FormsModule } from '@angular/forms';
+import {
+	MatButtonModule,
+	MatPaginatorIntl,
+	MatSidenavModule,
+	MatSnackBarModule,
+	MatCardModule,
+	MatExpansionModule,
+	MatIconModule,
+	MatTabsModule,
+	MatRippleModule,
+	MatNativeDateModule,
+	MatSelectModule,
+	MatPaginatorModule,
+	MatFormFieldModule,
+	MatSortModule,
+	MatDialogModule,
+	MatTableModule,
+	MatChipsModule,
+	MatListModule,
+	MatDatepickerModule,
+	MatCheckboxModule,
+	MatStepperModule,
+	MatGridListModule,
+	MatAutocompleteModule,
+	MatInputModule
+} from '@angular/material';
 
 import { AppComponent } from 'app/app.component';
 import { AppRouterModule } from 'app/app-router.module';
@@ -71,7 +76,10 @@ import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.
 
 import { PaginatorComponent } from 'app/views/admin/table/paginator.table';
 import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
+
 import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
+import { OrganisationDetailComponent } from 'app/views/admin/organisations/organisation.detail';
+
 
 @NgModule({
 	bootstrap: [
@@ -84,7 +92,6 @@ import { ActivityDetailComponent } from 'app/views/admin/activities/activity.det
 		FilterComponent,
 		MappingComponent,
 		AddressAutocompleteComponent,
-		ActivityDetailComponent,
 
 		UserTableComponent,
 		OrganisationsTableComponent,
@@ -99,6 +106,9 @@ import { ActivityDetailComponent } from 'app/views/admin/activities/activity.det
 		OrganisationFormComponent,
 		OrganisationAdminComponent,
 		UserFormComponent,
+
+		ActivityDetailComponent,
+		OrganisationDetailComponent,
 
 		SuburbSelectionComponent,
 		AddressFormComponent,
@@ -138,7 +148,10 @@ import { ActivityDetailComponent } from 'app/views/admin/activities/activity.det
 		MatDatepickerModule,
 		MatCheckboxModule,
 		MatStepperModule,
-		MatGridListModule
+		MatGridListModule,
+		MatSidenavModule,
+		MatAutocompleteModule,
+		MatInputModule
 	],
 	providers: [
 		ActivityService,

@@ -1,0 +1,28 @@
+<mat-card *ngIf="organisation">
+	<mat-card-header>
+		<mat-card-title>
+			<h3>{{constants.coreData}}</h3>
+		</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<div>{{constants.title}} :
+			<b>{{organisation.name}}</b>
+		</div>
+		<div>{{constants.description}} :
+			<b>{{organisation.description}}</b>
+		</div>
+
+		<div>{{constants.website}} :
+			<b>{{organisation.website}}</b>
+		</div>
+		<div>{{constants.mail}} :
+			<b>{{organisation.mail}}</b>
+		</div>
+		<div>{{constants.phone}} :
+			<b>{{organisation.phone}}</b>
+		</div>
+		<div>{{constants.address}} :
+			<b>{{organisation.address.toString}}</b>
+		</div>
+	</mat-card-content>
+</mat-card>

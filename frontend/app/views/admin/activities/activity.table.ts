@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatSidenav } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 
 import { DataSource } from '@angular/cdk/table';
@@ -24,6 +24,11 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 
 	@Input() providers: Array<string> = [];
 	@Input() showActions: boolean = false;
+
+	@ViewChild('sidenav')
+	sidenav: MatSidenav;
+
+	currentDetail: Activity;
 
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
@@ -74,5 +79,19 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 			}
 		}
 		return this.constants.noFutureDates;
+	}
+
+	showDetails(row: any): void {
+		if (this.currentDetail && row.id === this.currentDetail.id) {
+			this.sidenav.close();
+		} else {
+			this.currentDetail = new Activity(row);
+			this.sidenav.open();
+		}
+	}
+
+	closeDetails(): void {
+		this.currentDetail = null;
+		this.sidenav.close();
 	}
 }

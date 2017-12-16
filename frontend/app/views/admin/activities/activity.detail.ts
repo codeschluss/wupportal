@@ -1,15 +1,6 @@
-import { Component, Inject, ViewChild, Input } from '@angular/core';
-import { Location } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { NgForm, FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import 'rxjs/add/observable/of';
+import { Component, OnChanges, Input, SimpleChange, SimpleChanges } from '@angular/core';
 
 import { Activity } from 'app/models/activity';
-
 import { Constants } from 'app/services/constants';
 
 
@@ -19,12 +10,17 @@ import { Constants } from 'app/services/constants';
 	styleUrls: ['../../../app.component.css']
 })
 
-export class ActivityDetailComponent {
+export class ActivityDetailComponent implements OnChanges {
 
 	@Input() activity: Activity;
 
 	constructor(
 		public constants: Constants
 	) { }
+
+	ngOnChanges(changes: SimpleChanges): void {
+		const activity: SimpleChange = changes.activity;
+		this.activity = activity.currentValue;
+	}
 
 }

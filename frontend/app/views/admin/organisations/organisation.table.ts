@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, ViewChild, Inject } from '@angular/core';
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSidenav } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 
 import { DataSource } from '@angular/cdk/table';
@@ -22,6 +22,11 @@ import { Constants } from 'app/services/constants';
 
 export class OrganisationsTableComponent extends AbstractTableComponent {
 
+	@ViewChild('sidenav')
+	sidenav: MatSidenav;
+
+	currentDetail: Organisation;
+
 	dataSource: MatTableDataSource<Organisation> = new MatTableDataSource<Organisation>();
 
 	constructor(
@@ -40,6 +45,20 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 
 	actionsVisible(): boolean {
 		return this.authService.isSuperUser();
+	}
+
+	showDetails(row: any): void {
+		if (this.currentDetail && row.id === this.currentDetail.id) {
+			this.sidenav.close();
+		} else {
+			this.currentDetail = new Organisation(row);
+			this.sidenav.open();
+		}
+	}
+
+	closeDetails(): void {
+		this.currentDetail = null;
+		this.sidenav.close();
 	}
 
 }

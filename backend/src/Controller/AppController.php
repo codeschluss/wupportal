@@ -117,7 +117,7 @@ class AppController extends Controller
      */
     public function add()
     {
-        // var_dump($user); exit;
+        // var_dump( json_decode(utf8_encode($this->request->input()), true)); exit;
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->newEntity(),
@@ -136,11 +136,11 @@ class AppController extends Controller
      */
     public function edit($id)
     {
-        // var_dump($this->request); exit;
+        // var_dump($this->request->input()); exit;
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->get($id, ['contain' => $this->contain()]),
-                json_decode($this->request->input(), true),
+                json_decode(utf8_encode($this->request->input()), true),
                 ['associated' => $this->contain()]
             )
         ));

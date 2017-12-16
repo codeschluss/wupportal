@@ -25,7 +25,7 @@ export class Address extends Model {
 	public street: string = '';
 	public suburb_id: string = '';
 
-	public suburb: Suburb = null;
+	public suburb: Suburb = new Suburb;
 
 	get toString(): string {
 		if (this.checkAddress()) {

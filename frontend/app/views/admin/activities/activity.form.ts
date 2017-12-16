@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { NgForm, FormControl } from '@angular/forms';
+import { NgForm, FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -10,7 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { Activity } from 'app/models/activity';
-import { Address } from 'app/models/address';
 import { TargetGroup } from 'app/models/target-group';
 import { Tag } from 'app/models/tag';
 import { Category } from 'app/models/category';
@@ -19,9 +18,8 @@ import { User } from 'app/models/user';
 import { Provider } from 'app/models/provider';
 
 import {
-	DataServiceFactory,
 	AddressService,
-	SuburbService,
+	DataServiceFactory,
 	TagService,
 	TargetGroupService,
 	CategoryService,
@@ -32,11 +30,9 @@ import {
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
-import { NominatimService } from 'app/services/nominatim';
-import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
+import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 import { ActivityService } from 'app/services/activity.service';
 import { Constants } from 'app/services/constants';
-import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
 import { Object } from 'openlayers';
 import { Subscription } from 'rxjs/Subscription';
 import { generate } from 'rxjs/observable/generate';
@@ -49,8 +45,8 @@ import { generate } from 'rxjs/observable/generate';
 	providers: [
 		ProviderService,
 		ActivityService,
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
 		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] },
+		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TagService, useFactory: DataServiceFactory(TagService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] },
 		{ provide: CategoryService, useFactory: DataServiceFactory(CategoryService), deps: [HttpClient, AuthenticationService] },
@@ -69,7 +65,6 @@ export class ActivityFormComponent implements OnInit {
 	showUser: boolean = false;
 	protected user: User;
 
-	addressCtrl: FormControl;
 	tagsCtrl: FormControl;
 	categoryCtrl: FormControl;
 	weekDaysCtrl: FormControl;
@@ -79,21 +74,23 @@ export class ActivityFormComponent implements OnInit {
 	endDateCtrl: FormControl;
 	targetGroupCtrl: FormControl;
 	providerCtrl: FormControl;
-	addresses: Address[] = [];
-	filteredAddresses: Observable<Address[]>;
-	nominatimAddress: Address;
 	showRecurrence: boolean;
 	scheduleIsRecurrent: boolean = false;
+	isLinear: boolean = false;
 	weeklyRythm: number = 1;
 	currentStartDate: FormControl;
 	currentStartTime: FormControl;
 	currentEndDate: FormControl;
 	currentEndTime: FormControl;
+	firstFormGroup: FormGroup;
+
+	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
+
 
 	constructor(
 		private activityService: ActivityService,
 		@Inject(UserService) public userService: DataService,
-		@Inject(AddressService) private addressService: DataService,
+		@Inject(AddressService) public addressService: DataService,
 		@Inject(ScheduleService) private scheduleService: DataService,
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
@@ -102,15 +99,9 @@ export class ActivityFormComponent implements OnInit {
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
-		private nominatimService: NominatimService,
-		private suburbSelectDialog: MatDialog,
 		private controlAddressDialog: MatDialog,
+		private _formBuilder: FormBuilder
 	) {
-		this.addressService.getAll().subscribe((data) => {
-			for (const add of data.records) {
-				this.addresses.push(new Address(add));
-			}
-		});
 		this.targetGroupService.getAll().subscribe((data) => this.targetGroups = data.records);
 		this.categoriesService.getAll().subscribe((data) => this.categories = data.records);
 	}
@@ -130,23 +121,20 @@ export class ActivityFormComponent implements OnInit {
 				this.initTags();
 				this.initScheduleFormCtrls();
 				this.declerateDateForms(-1);
-				this.addressCtrl = new FormControl(this.activity.address);
 				this.providerCtrl = new FormControl();
 				this.categoryCtrl = new FormControl(this.activity.category);
 				this.targetGroupCtrl = this.activity.target_groups ?
 					new FormControl(this.initCtrl(this.activity.target_groups)) : new FormControl();
-				this.filteredAddresses = this.addressCtrl.valueChanges
-					.startWith(<any>[])
-					.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
-					.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
 				this.userService.get(this.authService.currentUser.id)
 					.map(data => data.records as User)
 					.subscribe(user => {
 						this.user = user;
 						this.initializeOrganisations(user.providers);
 					});
+				this.firstFormGroup = this._formBuilder.group({
+					firstCtrl: ['', Validators.required]
+				});
 			});
-
 
 	}
 
@@ -191,21 +179,6 @@ export class ActivityFormComponent implements OnInit {
 			this.endTimeCtrl = new FormControl();
 			this.startDateCtrl = new FormControl();
 			this.endDateCtrl = new FormControl();
-		}
-	}
-
-
-	filterAddresses(name: string): Address[] {
-		return this.addresses.filter(address =>
-			address.toString.toLocaleLowerCase().indexOf(name.toLowerCase()) !== -1);
-	}
-
-	toString(address: any): string {
-		if (typeof address === 'string') {
-			return address;
-		}
-		if (typeof address === 'object') {
-			return new Address(address).toString;
 		}
 	}
 
@@ -333,6 +306,14 @@ export class ActivityFormComponent implements OnInit {
 		return Observable.forkJoin(observableTagArray);
 	}
 
+	addressChanged(event: any): void {
+		this.activity.address = event;
+	}
+
+	addressSubmitt(): void {
+		this.addressAutocomplete.onSubmit();
+	}
+
 	onSubmit(): void {
 		if (this.showUser) {
 			this.activity.showUser = this.showUser;
@@ -351,81 +332,60 @@ export class ActivityFormComponent implements OnInit {
 				subscribe(targetGroups => {
 					this.activity.target_groups = targetGroups;
 				});
-			if (typeof this.addressCtrl.value === 'string') {
-				this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
-					this.nominatimAddress = new Address(data);
-					// if Nominatim returns incomplete Address
-					if (!this.nominatimAddress.checkAddress()) {
-						this.controlAddress(this.nominatimAddress).subscribe(result => {
-							this.nominatimAddress = new Address(result);
-							if (this.findExistingAddress(this.nominatimAddress)) {
-								return;
-							}
-							this.activity.address = null;
-							this.nominatimAddress.suburb = null;
-							this.openDialog(this.nominatimAddress);
-						});
-						// if Nominatim returns complete Address
-					} else {
-						if (this.findExistingAddress(this.nominatimAddress)) {
-							return;
-						}
-						this.activity.address = null;
-						this.nominatimAddress.suburb = null;
-						this.openDialog(this.nominatimAddress);
-					}
-				});
-			} else {
-				this.activity.address = this.addressCtrl.value;
-				this.activity.address_id = this.addressCtrl.value.id;
-				this.saveActivity(this.activity);
-			}
+			this.activity.address.suburb = null;
+			this.addressService.add(this.activity.address).subscribe(
+				response => {
+					this.activity.address = response.records;
+					this.activity.address_id = response.records.id;
+					this.saveActivity(this.activity);
+				}
+			);
 		});
 	}
 
-	findExistingAddress(address: Address): boolean {
-		for (const currAddress of this.addresses) {
-			if (currAddress.compareTo(address)) {
-				this.activity.address = currAddress;
-				this.activity.address_id = currAddress.id;
-				this.saveActivity(this.activity);
-				return true;
-			}
-		}
-		return false;
-	}
+	// findExistingAddress(address: Address): boolean {
+	// 	for (const currAddress of this.addresses) {
+	// 		if (currAddress.compareTo(address)) {
+	// 			this.activity.address = currAddress;
+	// 			this.activity.address_id = currAddress.id;
+	// 			this.saveActivity(this.activity);
+	// 			return true;
+	// 		}
+	// 	}
+	// 	return false;
+	// }
 
-	controlAddress(address: Address): Observable<Address> {
-		const dialogRef = this.controlAddressDialog.open(AddressFormComponent, {
-			width: '80%',
-			data: {
-				name: '',
-				message: 'Sie können die eingegebene Addresse hier ändern:',
-				address: address
-			}
-		});
-		return dialogRef.afterClosed();
-	}
+	// controlAddress(address: Address): Observable<Address> {
+	// 	const dialogRef = this.controlAddressDialog.open(AddressFormComponent, {
+	// 		width: '80%',
+	// 		data: {
+	// 			name: '',
+	// 			message: 'Sie können die eingegebene Addresse hier ändern:',
+	// 			address: address
+	// 		}
+	// 	});
+	// 	return dialogRef.afterClosed();
+	// }
 
-	openDialog(newAddress: Address): void {
-		const dialogRef = this.suburbSelectDialog.open(SuburbSelectionComponent, {
-			width: '250px',
-			data: {
-				name: '',
-				message: 'Sie haben eien neue Adresse eingegeben. Bitte geben Sie den entsprechenden Stadtteil ein.'
-					+ newAddress.toString,
-				address: newAddress
-			}
-		});
+	// openDialog(newAddress: Address): void {
+	// 	const dialogRef = this.suburbSelectDialog.open(SuburbSelectionComponent, {
+	// 		width: '250px',
+	// 		data: {
+	// 			name: '',
+	// 			message: 'Sie haben eien neue Adresse eingegeben. Bitte geben Sie den entsprechenden Stadtteil ein.'
+	// 				+ newAddress.toString,
+	// 			address: newAddress
+	// 		}
+	// 	});
 
-		dialogRef.afterClosed().subscribe(() => {
-			this.addressService.add(this.nominatimAddress).subscribe((response) => {
-				this.activity = response.records;
-				this.activity.address_id = response.records.id;
-				this.saveActivity(this.activity);
-			});
-		});
-	}
+	// 	dialogRef.afterClosed().subscribe(() => {
+	// 		this.addressService.add(this.nominatimAddress).subscribe((response) => {
+	// 			this.activity = response.records;
+	// 			this.activity.address_id = response.records.id;
+	// 			this.saveActivity(this.activity);
+	// 		});
+	// 	});
+	// }
 
 	saveActivity(activity: Activity): void {
 		if (activity.id) {
@@ -438,5 +398,6 @@ export class ActivityFormComponent implements OnInit {
 	back(): void {
 		this.location.back();
 	}
+
 
 }

@@ -66,6 +66,7 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
+import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 
 import { PaginatorComponent } from 'app/views/admin/table/paginator.table';
 import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
@@ -80,6 +81,7 @@ import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
 		DetailsComponent,
 		FilterComponent,
 		MappingComponent,
+		AddressAutocompleteComponent,
 
 		UserTableComponent,
 		OrganisationsTableComponent,

@@ -29,7 +29,6 @@ export class AddressFormComponent {
 	onNoClick(): void { }
 
 	onSubmit(): void {
-		console.log('this.address:' + this.address);
 		this.dialogRef.close(this.address);
 	}
 }

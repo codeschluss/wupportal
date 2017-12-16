@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\Activity[] $activities
+ * @property \App\Model\Entity\Activity $activity
  */
 class Schedule extends Entity
 {
@@ -29,12 +29,12 @@ class Schedule extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+        'id' => false,
         // 'start_date' => true,
         // 'end_date' => true,
         // 'activity_id' => true,
         // 'created' => true,
         // 'modified' => true,
-        // 'activities' => true
+        // 'activity' => true
     ];
 }

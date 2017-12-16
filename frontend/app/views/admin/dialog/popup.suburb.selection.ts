@@ -28,12 +28,10 @@ export class SuburbSelectionComponent {
 		this.service.getAll().subscribe((response) => this.suburbs = response.records);
 	}
 
-	onNoClick(): void { }
-
 	onSubmit(): void {
-		this.data.suburb = null;
 		this.data.address.suburb_id = this.suburb.id;
-		this.dialogRef.close();
+		this.data.address.suburb = this.suburb;
+		this.dialogRef.close(this.data);
 	}
 }
 

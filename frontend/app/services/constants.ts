@@ -31,6 +31,8 @@ export class Constants {
 
 	public filter: string = 'Filter';
 	public configuration: string = 'Einstellungen';
+	public mainData: string = 'Stammdaten';
+	public metaData: string = 'Metadaten';
 
 	public requests: string = 'Anfragen';
 	public showMembers: string = 'Mitglieder anzeigen';
@@ -47,7 +49,10 @@ export class Constants {
 	public chosen: string = 'Ausgewählt';
 	public choose: string = 'wählen Sie';
 	public create: string = 'Erstelle';
+	public calculate: string = 'Errechne';
 	public frequently: string = 'Regelmäßig';
+	public next: string = 'weiter';
+	public previous: string = 'vorherige';
 
 	public coreData: string = 'Stammdaten';
 	public own: string = 'Eigene';
@@ -101,6 +106,7 @@ export class Constants {
 	public weekDaysArray: string[] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 
 	public error: string = 'Fehler';
+	public done: string = 'Erledigt';
 
 
 	// --------------------------

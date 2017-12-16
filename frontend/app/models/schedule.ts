@@ -1,9 +1,9 @@
 import { Model } from 'app/models/model';
-import { Constants } from 'app/services/constants';
+// import { Constants } from 'app/services/constants';
 
 export class Schedule extends Model {
 
-	constants: Constants = new Constants();
+	// private constants: Constants = new Constants();
 
 	constructor(json: any) {
 		super(json.id);
@@ -49,11 +49,13 @@ export class Schedule extends Model {
 	}
 
 	get toString(): string {
-		return this.getWeekDay(new Date(this.start_date).getDay()) + ' ' + this.start_date + ' ' + this.end_date;
+		return this.start_date + ' ' + this.end_date;
+
+		// this.getWeekDay(new Date(this.start_date).getDay()) + ' ' +
 	}
 
-	getWeekDay(weekDayNumber: number): string {
-		return this.constants.weekDaysArray[weekDayNumber];
-	}
+	// getWeekDay(weekDayNumber: number): string {
+	// 	return this.constants.weekDaysArray[weekDayNumber];
+	// }
 
 }

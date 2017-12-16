@@ -57,7 +57,5 @@
 	<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
-<mat-paginator [pageSize]="constants.pageSize"
-  [pageSizeOptions]="constants.pageSizeOptions"
-  (page)="handlePageChanged($event)">
-</mat-paginator>
+<table-paginator (handlePageChanged)="handlePageChanged($event)">
+</table-paginator>

@@ -4,6 +4,15 @@ import { Injectable } from '@angular/core';
 export class Constants {
 
 	// --------------------------
+	// STATIC
+	// --------------------------
+
+	public static nextPageLabel: string = 'Nächste Seite';
+	public static previousPageLabel: string = 'Vorherige Seite';
+	public static itemsPerPageLabel: string = 'Einträge pro Seite';
+	public static of: string = 'von';
+
+	// --------------------------
 	// LABELS
 	// --------------------------
 
@@ -11,12 +20,6 @@ export class Constants {
 	public newElement: string = 'Neu';
 	public cancel: string = 'Abbrechen';
 	public newEntry: string = 'Neuen Eintrag anlegen';
-
-	public next: string = 'Nächste';
-	public previous: string = 'Vorherige';
-	public items: string = 'Einträge';
-	public of: string = 'von';
-	public per: string = 'pro';
 
 	public login: string = 'anmelden';
 	public loginTitle: string = 'Login';
@@ -29,6 +32,7 @@ export class Constants {
 	public filter: string = 'Filter';
 	public configuration: string = 'Einstellungen';
 
+	public requests: string = 'Anfragen';
 	public showMembers: string = 'Mitglieder anzeigen';
 	public showRequests: string = 'Anragen anzeigen';
 	public declineRequest: string = 'Anfrage ablehnen';
@@ -97,6 +101,7 @@ export class Constants {
 	public weekDaysArray: string[] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 
 	public error: string = 'Fehler';
+
 
 	// --------------------------
 	// TABLE

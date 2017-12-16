@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatPaginatorIntl } from '@angular/material';
 import { MatCardModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material';
 import { MatIconModule } from '@angular/material';
@@ -67,6 +67,9 @@ import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
 
+import { PaginatorComponent } from 'app/views/admin/table/paginator.table';
+import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
+
 @NgModule({
 	bootstrap: [
 		AppComponent
@@ -96,7 +99,9 @@ import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisat
 		AddressFormComponent,
 		DeleteDialogComponent,
 		DeleteActionComponent,
-		OrganisationSelectionComponent
+		OrganisationSelectionComponent,
+
+		PaginatorComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -136,7 +141,8 @@ import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisat
 		NominatimService,
 		Constants,
 		ValidationService,
-		AuthenticationService
+		AuthenticationService,
+		{ provide: MatPaginatorIntl, useClass: PaginatorLabels }
 	],
 	entryComponents: [
 		SuburbSelectionComponent,

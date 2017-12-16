@@ -8,12 +8,12 @@ import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
 import { Constants } from 'app/services/constants';
-import { } from '@angular/core/src/event_emitter';
+import { PaginatorComponent } from 'app/views/admin/table/paginator.table';
 
 export abstract class AbstractTableComponent implements OnInit {
 
-	@ViewChild(MatPaginator)
-	protected paginator: MatPaginator;
+	@ViewChild(PaginatorComponent)
+	protected tablePaginator: PaginatorComponent;
 
 	@ViewChild(MatSort)
 	protected sort: MatSort;
@@ -33,7 +33,7 @@ export abstract class AbstractTableComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.dataSource.paginator = this.paginator;
+		this.dataSource.paginator = this.tablePaginator.paginator;
 		this.initColumns();
 		this.fetchData();
 	}
@@ -53,7 +53,7 @@ export abstract class AbstractTableComponent implements OnInit {
 	}
 
 	handleSorted(event: Sort): void {
-		this.paginator.pageIndex = 0;
+		this.tablePaginator.paginator.pageIndex = 0;
 		this.tableState.setSorting(event);
 		this.fetchData();
 	}

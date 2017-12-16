@@ -50,10 +50,14 @@ export class OrganisationAdminComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		const adminOrganisations: Array<Organisation> = this.authService.currentUser.getAdminOrgas();
-		adminOrganisations.length > 1
-			? this.selectOrganisation(adminOrganisations)
-			: this.setOrganisationAndProviders(adminOrganisations.shift().id);
+		this.providerService
+			.getByUser(this.authService.currentUser.id, true)
+			.map(data => data.records.map(provider => provider.organisation))
+			.subscribe(adminOrganisations => {
+				adminOrganisations.length > 1
+					? this.selectOrganisation(adminOrganisations)
+					: this.setOrganisationAndProviders(adminOrganisations.shift().id);
+			});
 	}
 
 	selectOrganisation(organisations: Array<Organisation>): void {

@@ -91,6 +91,11 @@ Router::scope('/', function (RouteBuilder $routes) {
             'method' => 'POST',
             'path' => '/getByOrganisation'
         ]]]);
+        $routes->resources('Providers', ['map' => ['getByUser' => [
+            'action' => 'getByUser',
+            'method' => 'POST',
+            'path' => '/getByUser'
+        ]]]);
     });
 });
 

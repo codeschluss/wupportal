@@ -46,6 +46,24 @@ class ProvidersController extends AppController
         ];
     }
 
+    public function getByUser()
+    {
+        $request = $this->request->input('json_decode');
+        if (is_null($request)) return;
+        if (!isset($request->user)) return;
+
+        $query = $this->table()->find()->contain($this->contain());
+        if (isset($request->admin)) {
+            $query->where([$this->name . '.admin' => $request->admin]);
+        }
+        $this->setByUser($query, $request);
+        $this->data($query->all()->toArray());
+    }
+
+    private function setByUser($query, $request) {
+        $query->where([$this->name . '.user_id' => $request->user]);
+    }
+
 
     public function getByOrganisation()
     {

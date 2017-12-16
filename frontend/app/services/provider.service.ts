@@ -34,4 +34,27 @@ export class ProviderService extends DataService {
 		return orgaParam;
 	}
 
+	public getByUser(userID: string, admin?: boolean): Observable<DataResponse> {
+		const request = admin
+			&& Object.assign(this.createAdminParam(admin), this.createUserParam(userID))
+			|| this.createUserParam(userID);
+
+		return this.http.post(this.baseUrl + 'getByUser', JSON.stringify(request), {
+			headers: new HttpHeaders()
+				.set('Authorization', this.authService.basicAuthString())
+		}).map(res => res as DataResponse);
+	}
+
+	createUserParam(userID: string): string[] {
+		const userParam: any = { 'user': '' };
+		userParam.user = userID;
+		return userParam;
+	}
+
+	createAdminParam(admin: boolean): string[] {
+		const adminParam: any = { 'admin': '' };
+		adminParam.admin = admin;
+		return adminParam;
+	}
+
 }

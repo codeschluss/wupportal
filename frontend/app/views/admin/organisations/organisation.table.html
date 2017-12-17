@@ -2,8 +2,7 @@
 
 	<mat-sidenav-container class="example-container">
 		<mat-sidenav #sidenav mode="over">
-			<button mat-raised-button type="button"
-			  color="accent" (click)="closeDetails()">
+			<button mat-raised-button type="button" color="accent" (click)="closeDetails()">
 				{{constants.close}}
 			</button>
 			<organisation-detail [organisation]="currentDetail">
@@ -13,79 +12,61 @@
 		<mat-sidenav-content>
 			<div class="organisations-table-header">
 				<mat-form-field>
-					<input matInput (keyup)="handleFiltered($event)"
-					  placeholder="Filter">
+					<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
 				</mat-form-field>
+				<button mat-button routerLink='/organisation/edit/new'>
+					{{ constants.newEntry }}
+				</button>
 			</div>
 
-			<mat-table #table [dataSource]="dataSource"
-			  class="organisation-table" matSort
-			  (matSortChange)="handleSorted($event)">
+			<mat-table #table [dataSource]="dataSource" class="organisation-table" matSort (matSortChange)="handleSorted($event)">
 
 				<ng-container matColumnDef="Organisations.name">
-					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header disableClear="true">
+					<mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
 						{{constants.nameString}}</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.name }}</mat-cell>
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.name }}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="website">
-					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>{{constants.website}}</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.website}}</mat-header-cell>
 					<mat-cell *matCellDef="let row">
 						<a target="_blank" (click)="goToWebsite(row.website)">{{ row.website }}</a>
 					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="description">
-					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>{{constants.description}}</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.description }}</mat-cell>
+					<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.description}}</mat-header-cell>
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.description }}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="mail">
-					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>{{constants.mail}}</mat-header-cell>
+					<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.mail}}</mat-header-cell>
 					<mat-cell *matCellDef="let row">
 						<a [href]="'mailto:' + row.mail">{{ row.mail }}</a>
 					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="phone">
-					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>Telephone</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.phone }}</mat-cell>
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Telephone</mat-header-cell>
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.phone }}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="address">
 					<mat-header-cell *matHeaderCellDef>{{constants.address}}</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.address.street + '
-						' + row.address.house_number}}
-						<br/> {{row.address.postal_code
-						+ ' ' + row.address.place
-						+ ' ' + row.address.suburb.name
-						}}
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.address.street + ' ' + row.address.house_number}}
+						<br/> {{row.address.postal_code + ' ' + row.address.place + ' ' + row.address.suburb.name }}
 					</mat-cell>
 				</ng-container>
 
-				<ng-container matColumnDef="action"
-				  *ngIf="actionsVisible()">
+				<ng-container matColumnDef="action" *ngIf="actionsVisible()">
 					<mat-header-cell *matHeaderCellDef>
 						{{constants.edit}} / {{constants.delete}}
 					</mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<button mat-button color="primary"
-						  routerLink='/organisation/edit/{{row.id}}'>
-							<i class="fa fa-pencil-square-o"
-							  aria-hidden="true"></i>
+						<button mat-button color="primary" routerLink='/organisation/edit/{{row.id}}'>
+							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 						</button>
-						<delete-action [recordID]="row.id"
-						  [nameToDelete]="row.name"
-						  (onDelete)="onDelete($event)">
+						<delete-action [recordID]="row.id" [nameToDelete]="row.name" (onDelete)="onDelete($event)">
 						</delete-action>
 					</mat-cell>
 				</ng-container>

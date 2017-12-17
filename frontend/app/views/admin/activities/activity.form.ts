@@ -126,8 +126,10 @@ export class ActivityFormComponent implements OnInit {
 			.map(data => new Activity(data.records)
 			).subscribe(activity => {
 				this.activity = activity;
+				if (this.providers.indexOf(this.activity.provider) === -1) {
+					this.providers.push(this.activity.provider);
+				}
 				this.providerCtrl = new FormControl(this.activity.provider_id);
-				console.log(this.providerCtrl.value);
 				this.initTags();
 				this.initScheduleFormCtrls();
 				this.declerateDateForms(-1);
@@ -173,14 +175,14 @@ export class ActivityFormComponent implements OnInit {
 		}
 	}
 
-	containsEntry(any: any, array: any[]): boolean {
-		for (const entry of array) {
-			if (entry.id === any.id) {
-				return true;
-			}
-		}
-		return false;
-	}
+	// containsEntry(any: any, array: any[]): boolean {
+	// 	for (const entry of array) {
+	// 		if (entry.id === any.id) {
+	// 			return true;
+	// 		}
+	// 	}
+	// 	return false;
+	// }
 
 	generateSchedules(): void {
 		if (this.scheduleIsRecurrent) {
@@ -326,28 +328,28 @@ export class ActivityFormComponent implements OnInit {
 		this.activity.category_id = this.categoryCtrl.value;
 		this.handleTags().subscribe(tags => {
 			tags.map(tag => { if (tag.records) { this.activity.tags.push(tag.records); } });
-			this.generateTargetGroupArray(this.targetGroupCtrl.value).
-				subscribe(targetGroups => {
-					this.activity.target_groups = targetGroups;
-				});
 		});
-	}
-
-	onSubmit(): void {
+		this.generateTargetGroupArray(this.targetGroupCtrl.value).
+			subscribe(targetGroups => {
+				this.activity.target_groups = targetGroups;
+			});
 		this.deleteSchedules();
 		this.handleSchedules().subscribe(schedules => {
 			schedules.map(schedule => this.activity.schedules.push(new Schedule(schedule.records)));
-
-			if (!this.activity.address.id) {
-				this.addressService.add(this.activity.address).subscribe(
-					response => {
-						this.activity.address = response.records;
-						this.activity.address_id = response.records.id;
-					}
-				);
-			} this.saveActivity(this.activity);
 		});
-		this.back();
+		if (!this.activity.address.id) {
+			this.activity.address.suburb = null;
+			this.addressService.add(this.activity.address).subscribe(
+				response => {
+					this.activity.address = response.records;
+					this.activity.address.suburb = response.records.suburb;
+					this.activity.address_id = response.records.id;
+				});
+		}
+	}
+
+	onSubmit(): void {
+		this.saveActivity(this.activity);
 	}
 
 	saveActivity(activity: Activity): void {

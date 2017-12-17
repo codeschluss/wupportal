@@ -34,7 +34,7 @@ export class Address extends Model {
 				this.house_number + ' ' +
 				this.postal_code + ' ' +
 				this.place + ' ' +
-				this.suburb.name);
+				(this.suburb ? this.suburb.name : ''));
 		} else {
 			return '';
 		}

@@ -31,6 +31,7 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 			]
 		},
 		{ path: 'activity/edit/:id', component: ActivityFormComponent },
+		{ path: 'organisation/edit/:id', component: OrganisationFormComponent }
 
 		// { path: '**', redirectTo: '' }
 	])],

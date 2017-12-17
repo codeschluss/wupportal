@@ -110,6 +110,7 @@ export class Constants {
 
 	public error: string = 'Fehler';
 	public done: string = 'Erledigt';
+	public summary: string = 'Zusammenfassung';
 
 
 	// --------------------------

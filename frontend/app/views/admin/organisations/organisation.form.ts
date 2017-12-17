@@ -20,6 +20,7 @@ import { DataService } from 'app/services/data.service';
 import { NominatimService } from 'app/services/nominatim';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 
 import { Organisation } from 'app/models/organisation';
 import { Address } from 'app/models/address';
@@ -42,6 +43,7 @@ import { Provider } from 'app/models/provider';
 export class OrganisationFormComponent implements OnInit {
 
 	@Input() organisation: Organisation;
+	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 
 	addresses: Address[] = [];
 	filteredAddresses: Observable<Address[]>;
@@ -64,35 +66,55 @@ export class OrganisationFormComponent implements OnInit {
 				this.addresses.push(new Address(add));
 			}
 		});
+		this.route.paramMap
+			.switchMap((params: ParamMap) => {
+				if (params.get('id') === 'new') {
+					return new Observable(observer => observer.next(new Organisation({})));
+				} else {
+					return this.organisationService.get(params.get('id'));
+				}
+			}).map(data => new Organisation(data.records)).
+			subscribe(organisation => this.organisation = organisation);
 	}
 
 	ngOnInit(): void {
 		if (!this.organisation) {
 			this.organisation = new Organisation({});
 		}
-		this.addressCtrl = new FormControl(this.organisation.address);
-		this.filteredAddresses = this.addressCtrl.valueChanges
-			.startWith(<any>[])
-			.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
-			.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
+		// 	this.addressCtrl = new FormControl(this.organisation.address);
+		// 	this.filteredAddresses = this.addressCtrl.valueChanges
+		// 		.startWith(<any>[])
+		// 		.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
+		// 		.map(address => address ? this.filterAddresses(address) : this.addresses.slice());
+		// }
 
+		// filterAddresses(query: string): Address[] {
+		// 	return this.addresses.filter(address =>
+		// 		address.toString.toLocaleLowerCase().indexOf(query.toLowerCase()) !== -1);
+		// }
+
+		// toString(address: any): string {
+		// 	if (typeof address === 'string') {
+		// 		return address;
+		// 	}
+		// 	if (typeof address === 'object') {
+		// 		return new Address(address).toString;
+		// 	}
 	}
 
-	filterAddresses(query: string): Address[] {
-		return this.addresses.filter(address =>
-			address.toString.toLocaleLowerCase().indexOf(query.toLowerCase()) !== -1);
+	addressChanged(event: any): void {
+		if (event.id) {
+			this.organisation.address_id = event.id;
+		}
+		this.organisation.address = event;
 	}
 
-	toString(address: any): string {
-		if (typeof address === 'string') {
-			return address;
-		}
-		if (typeof address === 'object') {
-			return new Address(address).toString;
-		}
+	addressSubmitt(): void {
+		this.addressAutocomplete.onSubmit();
 	}
 
 	onSubmit(): void {
+		this.addressSubmitt();
 		if (typeof this.addressCtrl.value === 'string') {
 			this.nominatimService.get(this.addressCtrl.value).subscribe((data) => {
 				this.nominatimAddress = new Address(data);

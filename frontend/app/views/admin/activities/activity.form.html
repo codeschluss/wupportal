@@ -28,7 +28,7 @@
 							</mat-form-field>
 							<mat-checkbox [(ngModel)]="showUser" name="showUser">{{constants.publicUser}}</mat-checkbox>
 							<div>
-								<button type="button" mat-button matStepperNext>{{constants.next}}</button>
+								<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
 							</div>
 						</form>
 					</mat-card>
@@ -42,8 +42,8 @@
 							<address-autocomplete-form #addressAutocompleteComponent [address]="activity.address" (changedAddress)="addressChanged($event)"></address-autocomplete-form>
 						</mat-card>
 						<div>
-							<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" mat-button matStepperNext (click)="addressSubmitt()">{{constants.next}}</button>
+							<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
+							<button type="button" mat-raised-button color="primary" matStepperNext (click)="addressSubmitt()">{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
@@ -70,8 +70,8 @@
 						</mat-form-field>
 
 						<div>
-							<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" mat-button matStepperNext>{{constants.next}}</button>
+							<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
+							<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
@@ -111,13 +111,13 @@
 											<mat-form-field>
 												<input matInput type="time" name="end_time" [formControl]="currentEndTime" placeholder="bis" id="currentEndTime">
 											</mat-form-field>
-											<button mat-button type="button" (click)="changeDate(i)">{{constants.change}}</button>
-											<button mat-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
+											<button mat-raised-button type="button" (click)="changeDate(i)">{{constants.change}}</button>
+											<button mat-raised-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
 										</mat-expansion-panel>
 									</div>
 								</mat-accordion>
-								<button mat-button color="warn" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
-								<button mat-button type="button" (click)="addOneSchedule()">{{constants.create + ' ' + constants.date}}</button>
+								<button mat-raised-button color="warn" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
+								<button mat-raised-button type="button" (click)="addOneSchedule()">{{constants.create + ' ' + constants.date}}</button>
 							</div>
 							<div *ngIf="!activity.schedules.length">
 								<form>
@@ -155,14 +155,14 @@
 										<mat-datepicker #pickerEndDate></mat-datepicker>
 									</mat-form-field>
 									<div>
-										<button type="button" mat-button (click)="generateSchedules()" matStepperNext>{{constants.calculate + ' ' + constants.dates}}</button>
+										<button type="button" mat-button (click)="generateSchedules()" matStepperNext>{{constants.ok}}</button>
 									</div>
 								</form>
 							</div>
 						</mat-card>
 						<div>
 							<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" mat-button matStepperNext (click)="prepareToSubmit()">{{constants.next}}</button>
+							<button type="button" mat-raised-button color="primary" matStepperNext (click)="prepareToSubmit()">{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
@@ -178,7 +178,7 @@
 				</mat-step>
 
 			</mat-horizontal-stepper>
-			<button mat-button color="warn" (click)="back()">{{constants.cancel}}</button>
+			<button mat-raised-button color="warn" (click)="back()">{{constants.cancel}}</button>
 		</mat-card>
 	</form>
 </div>

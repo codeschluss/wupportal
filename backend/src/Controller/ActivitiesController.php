@@ -84,7 +84,7 @@ class ActivitiesController extends AppController
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->newEntity(),
-                json_decode(utf8_encode($this->request->input()), true),
+                json_decode($this->request->input(), true),
                 ['associated' => $this->contain()]
             )
         ));

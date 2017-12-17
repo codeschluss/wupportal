@@ -117,11 +117,15 @@ class AppController extends Controller
      */
     public function add()
     {
-        // var_dump( json_decode(utf8_encode($this->request->input()), true)); exit;
+        // var_dump($this->table()->patchEntity(
+        //     $this->table()->newEntity(),
+        //     json_decode(utf8_decode($this->request->input()), true),
+        //     ['associated' => $this->contain()]
+        // )); exit;
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->newEntity(),
-                json_decode($this->request->input(), true),
+                json_decode(utf8_decode($this->request->input()), true),
                 ['associated' => $this->contain()]
             )
         ));
@@ -136,11 +140,15 @@ class AppController extends Controller
      */
     public function edit($id)
     {
-        // var_dump($this->request->input()); exit;
+        // var_dump( $this->table()->patchEntity(
+        //     $this->table()->get($id, ['contain' => $this->contain()]),
+        //     json_decode(utf8_decode($this->request->input()), true),
+        //     ['associated' => $this->contain()]
+        // )); exit;
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->get($id, ['contain' => $this->contain()]),
-                json_decode(utf8_encode($this->request->input()), true),
+                json_decode(utf8_decode($this->request->input()), true),
                 ['associated' => $this->contain()]
             )
         ));

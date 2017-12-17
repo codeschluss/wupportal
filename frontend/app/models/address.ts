@@ -53,7 +53,7 @@ export class Address extends Model {
 	}
 
 	public checkAddress(): boolean {
-		if (this.house_number &&
+		if ((this.house_number !== '0') &&
 			this.place &&
 			this.postal_code &&
 			this.street) {

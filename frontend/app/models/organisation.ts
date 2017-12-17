@@ -8,10 +8,10 @@ export class Organisation extends Model {
 	public website: string = '';
 	public mail: string = '';
 	public phone: string = '';
-	public image: any = {};
+	public image: any = null;
 	public address_id: string = '';
 
-	public address: Address = null;
+	public address: Address = new Address({});
 
 	constructor(json: any = {} as Organisation) {
 		super(json.id);
@@ -20,9 +20,9 @@ export class Organisation extends Model {
 		this.website = json.website && json.website || '';
 		this.mail = json.mail && json.mail || '';
 		this.phone = json.phone && json.phone || '';
-		this.image = json.image && json.image || {};
+		this.image = json.image && json.image || null;
 		this.address_id = json.address_id && json.address_id || {};
-		this.address = json.address && new Address(json.address) || null;
+		this.address = json.address && new Address(json.address) || new Address({});
 	}
 
 }

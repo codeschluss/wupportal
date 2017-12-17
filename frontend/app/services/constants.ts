@@ -59,6 +59,7 @@ export class Constants {
 	public own: string = 'Eigene';
 	public no: string = 'Nein';
 	public yes: string = 'Ja';
+	public ok: string = 'OK';
 
 	public deleteMessage: string = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';
@@ -73,6 +74,7 @@ export class Constants {
 	public pleaseSelectMessage: string = 'Bitte wählen Sie eine aus:';
 	public publicUser: string = 'Soll der Name des Anbieters veröffentlicht werden?';
 	public dateTimeQuestion: string = 'Wann findet Ihre Veranstaltung statt?';
+	public pleaseControl: string = 'Bitte kontrollieren Sie Ihre Angaben';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';

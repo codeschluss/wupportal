@@ -5,7 +5,7 @@
 				<mat-card-header>
 					<h2>{{ activity.name }}</h2>
 				</mat-card-header>
-				<mat-step [stepControl]="firstFormGroup">
+				<mat-step [stepControl]="stepperFormGroup">
 					<mat-card>
 						<form>
 							<ng-template matStepLabel>{{constants.coreData}}</ng-template>
@@ -34,7 +34,7 @@
 					</mat-card>
 				</mat-step>
 
-				<mat-step [stepControl]="firstFormGroup">
+				<mat-step [stepControl]="stepperFormGroup">
 					<ng-template matStepLabel>{{constants.address}}</ng-template>
 					<h2>Wo findet die Veranstaltung statt? </h2>
 					<form>
@@ -48,7 +48,7 @@
 					</form>
 				</mat-step>
 
-				<mat-step [stepControl]="firstFormGroup">
+				<mat-step [stepControl]="stepperFormGroup">
 					<ng-template matStepLabel>{{constants.metaData}}</ng-template>
 					<h2>Ergänzen Sie weitere Daten, damit Nutzer ihre Veranstaltung besser finden können</h2>
 					<form>
@@ -76,7 +76,7 @@
 					</form>
 				</mat-step>
 
-				<mat-step [stepControl]="firstFormGroup">
+				<mat-step [stepControl]="stepperFormGroup">
 					<ng-template matStepLabel>{{constants.dates}}</ng-template>
 					<h2>{{constants.dateTimeQuestion}}</h2>
 
@@ -124,9 +124,11 @@
 									<h2>Findet die Veranstaltung regelmäßig statt?</h2>
 									<mat-checkbox [(ngModel)]="scheduleIsRecurrent" name="scheduleIsRecurrent">{{constants.frequently}}</mat-checkbox>
 									<div *ngIf="scheduleIsRecurrent">
-										<div>In welchem wöchentlichen Rythmus soll die Veranstaltung stattfinden? (Bei monatlichen Veranstaltungen, bitte "4"
-											eintragen, bei wöchentlichen "1")</div>
-										<input matInput type="number" [(ngModel)]="weeklyRythm" name="weeklyRythm">
+										<span>In welchem wöchentlichen Rythmus soll die Veranstaltung stattfinden? (Bei monatlichen Veranstaltungen, bitte "4"
+											eintragen, bei wöchentlichen "1")</span>
+										<span>
+											<input matInput type="number" [(ngModel)]="weeklyRythm" name="weeklyRythm">
+										</span>
 									</div>
 								</form>
 								<ng-template matStepLabel>Uhrzeit</ng-template>
@@ -167,9 +169,9 @@
 					</form>
 				</mat-step>
 
-				<mat-step [stepControl]="firstFormGroup">
-					<ng-template matStepLabel>{{constants.done}}</ng-template>
-					<h2>Bitte kontrollieren Sie Ihre Eingaben und speichern Sie anschließend</h2>
+				<mat-step [stepControl]="stepperFormGroup">
+					<ng-template matStepLabel>{{constants.summary}}</ng-template>
+					<h2>{{constants.pleaseControl}}</h2>
 					<activity-detail [activity]="activity"></activity-detail>
 					<div>
 						<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>

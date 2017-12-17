@@ -83,7 +83,7 @@ export class ActivityFormComponent implements OnInit {
 	currentStartTime: FormControl;
 	currentEndDate: FormControl;
 	currentEndTime: FormControl;
-	firstFormGroup: FormGroup;
+	stepperFormGroup: FormGroup;
 
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 
@@ -136,8 +136,8 @@ export class ActivityFormComponent implements OnInit {
 				this.categoryCtrl = new FormControl(this.activity.category.id);
 				this.targetGroupCtrl = this.activity.target_groups ?
 					new FormControl(this.initCtrl(this.activity.target_groups)) : new FormControl();
-				this.firstFormGroup = this._formBuilder.group({
-					firstCtrl: ['', Validators.required]
+				this.stepperFormGroup = this._formBuilder.group({
+					stepCtrl: ['', Validators.required]
 				});
 			});
 	}
@@ -258,6 +258,7 @@ export class ActivityFormComponent implements OnInit {
 
 	removeCompleteSchedule(): void {
 		this.toDeleteSchedules = this.activity.schedules;
+		console.log(this.toDeleteSchedules);
 		this.activity.schedules = [];
 	}
 
@@ -349,11 +350,7 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		this.saveActivity(this.activity);
-	}
-
-	saveActivity(activity: Activity): void {
-		if (activity.id) {
+		if (this.activity.id) {
 			this.activityService.edit(this.activity).subscribe(() => this.back());
 		} else {
 			this.activityService.add(this.activity).subscribe(() => this.back());

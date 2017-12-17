@@ -125,7 +125,7 @@ class AppController extends Controller
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->newEntity(),
-                json_decode(utf8_decode($this->request->input()), true),
+                json_decode($this->request->input(), true),
                 ['associated' => $this->contain()]
             )
         ));
@@ -148,7 +148,7 @@ class AppController extends Controller
         $this->data($this->table()->save(
             $this->table()->patchEntity(
                 $this->table()->get($id, ['contain' => $this->contain()]),
-                json_decode(utf8_decode($this->request->input()), true),
+                json_decode($this->request->input(), true),
                 ['associated' => $this->contain()]
             )
         ));

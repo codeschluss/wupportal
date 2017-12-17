@@ -33,8 +33,9 @@
 				<ng-container matColumnDef="website">
 					<mat-header-cell *matHeaderCellDef
 					  mat-sort-header>{{constants.website}}</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.website }}</mat-cell>
+					<mat-cell *matCellDef="let row">
+						<a target="_blank" (click)="goToWebsite(row.website)">{{ row.website }}</a>
+					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="description">
@@ -47,8 +48,9 @@
 				<ng-container matColumnDef="mail">
 					<mat-header-cell *matHeaderCellDef
 					  mat-sort-header>{{constants.mail}}</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.mail }}</mat-cell>
+					<mat-cell *matCellDef="let row">
+						<a [href]="'mailto:' + row.mail">{{ row.mail }}</a>
+					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="phone">

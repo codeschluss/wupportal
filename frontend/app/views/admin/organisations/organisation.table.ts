@@ -24,7 +24,7 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 
 	@ViewChild('sidenav')
 	sidenav: MatSidenav;
-
+	showNewButton: boolean = false;
 	currentDetail: Organisation;
 
 	dataSource: MatTableDataSource<Organisation> = new MatTableDataSource<Organisation>();
@@ -37,13 +37,14 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 	}
 
 	initColumns(): void {
-		this.displayedColumns = ['Organisations.name', 'description', 'mail', 'phone', 'website', 'address'];
+		this.displayedColumns = ['Organisations.name', 'mail', 'phone', 'website', 'address'];
 		if (this.actionsVisible()) {
 			this.displayedColumns.push('action');
 		}
 	}
 
 	actionsVisible(): boolean {
+		this.showNewButton = true;
 		return this.authService.isSuperUser();
 	}
 

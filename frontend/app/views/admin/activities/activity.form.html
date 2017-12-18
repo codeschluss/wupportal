@@ -1,37 +1,40 @@
 <div class="edit-container" *ngIf="activity">
-	<form (ngSubmit)="onSubmit()">
+	<form #activityForm="ngForm" (ngSubmit)="onSubmit()">
 		<mat-card class="activity-edit-card">
 			<mat-horizontal-stepper [linear]="isLinear">
 				<mat-card-header>
 					<h2>{{ activity.name }}</h2>
 				</mat-card-header>
 				<mat-step [stepControl]="stepperFormGroup">
-					<mat-card>
-						<form>
-							<ng-template matStepLabel>{{constants.coreData}}</ng-template>
-							<h2>Stammdaten Ihrer Veranstaltung</h2>
-							<mat-form-field class="edit-form-full-width">
-								<input matInput type="text" [(ngModel)]="activity.name" placeholder={{constants.title}} name="name" value={{activity.name}}
-								 required [errorStateMatcher]="validation" id="activity_name_field">
-							</mat-form-field>
+					<form [formGroup]="stepperFormGroup">
+						<mat-card>
+							<form>
+								<ng-template matStepLabel>{{constants.coreData}}</ng-template>
+								<h2>Stammdaten Ihrer Veranstaltung</h2>
+								<mat-form-field class="edit-form-full-width">
+									<input matInput type="text" [(ngModel)]="activity.name" placeholder={{constants.title}} name="name" value={{activity.name}}
+									 required [errorStateMatcher]="validation" id="activity_name_field">
+								</mat-form-field>
 
-							<mat-form-field class="edit-form-full-width">
-								<textarea matInput type="text" [(ngModel)]="activity.description" placeholder="{{constants.description}}" name="description"
-								 value={{activity.description}} id="activity_description_field"></textarea>
-							</mat-form-field>
+								<mat-form-field class="edit-form-full-width">
+									<textarea matInput type="text" [(ngModel)]="activity.description" placeholder="{{constants.description}}" name="description"
+									 value={{activity.description}} id="activity_description_field"></textarea>
+								</mat-form-field>
 
-							<h2>Im Namen welcher Institution soll die Veranstaltung angelegt werden</h2>
-							<mat-form-field>
-								<mat-select placeholder={{constants.organisation}} [formControl]="providerCtrl" name="activity_provider_id">
-									<mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.organisation.name}}</mat-option>
-								</mat-select>
-							</mat-form-field>
-							<mat-checkbox [(ngModel)]="showUser" name="showUser">{{constants.publicUser}}</mat-checkbox>
-							<div>
-								<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
-							</div>
-						</form>
-					</mat-card>
+								<h2>Im Namen welcher Organisation soll die Veranstaltung angelegt werden</h2>
+								<mat-form-field>
+									<mat-select required [errorStateMatcher]="validation" placeholder={{constants.organisation}} [formControl]="providerCtrl"
+									 name="activity_provider_id" id="provider">
+										<mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.organisation ? provider.organisation.name : ''}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<mat-checkbox [(ngModel)]="showUser" name="showUser">{{constants.publicUser}}</mat-checkbox>
+								<div>
+									<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+								</div>
+							</form>
+						</mat-card>
+					</form>
 				</mat-step>
 
 				<mat-step [stepControl]="stepperFormGroup">
@@ -58,13 +61,14 @@
 						</mat-form-field>
 
 						<mat-form-field>
-							<mat-select placeholder={{constants.category}} [formControl]="categoryCtrl" name="activity_category">
+							<mat-select required [errorStateMatcher]="validation" placeholder={{constants.category}} [formControl]="categoryCtrl" name="activity_category">
 								<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
 							</mat-select>
 						</mat-form-field>
 
 						<mat-form-field>
-							<mat-select placeholder={{constants.targetGroups}} [formControl]="targetGroupCtrl" name="activity_targetGroups" multiple>
+							<mat-select required [errorStateMatcher]="validation" placeholder={{constants.targetGroups}} [formControl]="targetGroupCtrl"
+							 name="activity_targetGroups" multiple>
 								<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
 							</mat-select>
 						</mat-form-field>
@@ -79,7 +83,6 @@
 				<mat-step [stepControl]="stepperFormGroup">
 					<ng-template matStepLabel>{{constants.dates}}</ng-template>
 					<h2>{{constants.dateTimeQuestion}}</h2>
-
 					<form>
 						<mat-card class="schedule-card">
 							<div *ngIf="activity.schedules.length">
@@ -157,14 +160,14 @@
 										<mat-datepicker #pickerEndDate></mat-datepicker>
 									</mat-form-field>
 									<div>
-										<button type="button" mat-button (click)="generateSchedules()" matStepperNext>{{constants.ok}}</button>
+										<button type="button" [disabled]="activityForm.invalid" mat-button (click)="generateSchedules()" matStepperNext>{{constants.ok}}</button>
 									</div>
 								</form>
 							</div>
 						</mat-card>
 						<div>
 							<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" mat-raised-button color="primary" matStepperNext (click)="prepareToSubmit()">{{constants.next}}</button>
+							<button type="button" [disabled]="activityForm.invalid" mat-raised-button color="primary" matStepperNext (click)="prepareToSubmit()">{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
@@ -172,10 +175,10 @@
 				<mat-step [stepControl]="stepperFormGroup">
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
 					<h2>{{constants.pleaseControl}}</h2>
-					<activity-detail [activity]="activity"></activity-detail>
+					<activity-detail *ngIf="activity.provider.organisation" [activity]="activity"></activity-detail>
 					<div>
 						<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-						<button mat-raised-button color="primary" type="submit">{{constants.save}}</button>
+						<button mat-raised-button color="primary" [disabled]="activityForm.invalid" type="submit">{{constants.save}}</button>
 					</div>
 				</mat-step>
 

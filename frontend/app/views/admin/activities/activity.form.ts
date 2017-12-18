@@ -27,6 +27,7 @@ import {
 	UserService,
 	ScheduleService
 } from 'app/services/data.service.factory';
+import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
@@ -84,6 +85,7 @@ export class ActivityFormComponent implements OnInit {
 	currentEndDate: FormControl;
 	currentEndTime: FormControl;
 	stepperFormGroup: FormGroup;
+	stepperFirstFormGroup: FormGroup;
 
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 
@@ -101,7 +103,8 @@ export class ActivityFormComponent implements OnInit {
 		public route: ActivatedRoute,
 		public constants: Constants,
 		private controlAddressDialog: MatDialog,
-		private _formBuilder: FormBuilder
+		private _formBuilder: FormBuilder,
+		public validation: ValidationService,
 	) {
 		this.targetGroupService.getAll().subscribe((data) => this.targetGroups = data.records);
 		this.categoriesService.getAll().subscribe((data) => this.categories = data.records);
@@ -126,10 +129,16 @@ export class ActivityFormComponent implements OnInit {
 			.map(data => new Activity(data.records)
 			).subscribe(activity => {
 				this.activity = activity;
-				if (this.providers.indexOf(this.activity.provider) === -1) {
-					this.providers.push(this.activity.provider);
+				if (this.activity.provider.id) {
+					console.log('provider detected');
+					if (this.providers.indexOf(this.activity.provider) === -1) {
+						this.providers.push(this.activity.provider);
+					}
+					this.providerCtrl = new FormControl(this.activity.provider_id);
+				} else {
+					this.providerCtrl = new FormControl();
 				}
-				this.providerCtrl = new FormControl(this.activity.provider_id);
+
 				this.initTags();
 				this.initScheduleFormCtrls();
 				this.declerateDateForms(-1);

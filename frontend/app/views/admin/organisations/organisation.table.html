@@ -14,7 +14,7 @@
 				<mat-form-field>
 					<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
 				</mat-form-field>
-				<button mat-button routerLink='/organisation/edit/new'>
+				<button mat-button *ngIf="showNewButton" routerLink='/organisation/edit/new'>
 					{{ constants.newEntry }}
 				</button>
 			</div>
@@ -30,19 +30,19 @@
 				<ng-container matColumnDef="website">
 					<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.website}}</mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<a target="_blank" (click)="goToWebsite(row.website)">{{ row.website }}</a>
+						<a target="_blank" (click)="goToWebsite(row.website)">{{ row.website ? row.website : ''}}</a>
 					</mat-cell>
 				</ng-container>
 
-				<ng-container matColumnDef="description">
+				<!-- <ng-container matColumnDef="description">
 					<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.description}}</mat-header-cell>
-					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.description }}</mat-cell>
-				</ng-container>
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.description ? row.description : '' }}</mat-cell>
+				</ng-container> -->
 
 				<ng-container matColumnDef="mail">
 					<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.mail}}</mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<a [href]="'mailto:' + row.mail">{{ row.mail }}</a>
+						<a [href]="'mailto:' + row.mail">{{ row.mail ? row.mail : '' }}</a>
 					</mat-cell>
 				</ng-container>
 
@@ -53,8 +53,8 @@
 
 				<ng-container matColumnDef="address">
 					<mat-header-cell *matHeaderCellDef>{{constants.address}}</mat-header-cell>
-					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.address.street + ' ' + row.address.house_number}}
-						<br/> {{row.address.postal_code + ' ' + row.address.place + ' ' + row.address.suburb.name }}
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.address ? (row.address.street + ' ' + row.address.house_number) : ''}}
+						<br/> {{row.address ? (row.address.postal_code + ' ' + row.address.place + ' ' + row.address.suburb.name) : ''}}
 					</mat-cell>
 				</ng-container>
 

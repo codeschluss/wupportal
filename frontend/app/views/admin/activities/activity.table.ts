@@ -6,6 +6,7 @@ import { DataSource } from '@angular/cdk/table';
 
 import { DataServiceFactory } from 'app/services/data.service.factory';
 import { ActivityService } from 'app/services/activity.service';
+import { ProviderService } from 'app/services/provider.service';
 import { Activity } from 'app/models/activity';
 import { Schedule } from 'app/models/schedule';
 import { DataService } from 'app/services/data.service';
@@ -17,7 +18,8 @@ import { Constants } from 'app/services/constants';
 	selector: 'activity-table',
 	styleUrls: ['../table.abstract.css'],
 	templateUrl: 'activity.table.html',
-	providers: [ActivityService]
+	providers: [
+		ProviderService, ActivityService]
 })
 
 export class ActivityTableComponent extends AbstractTableComponent implements OnInit {
@@ -29,14 +31,30 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	sidenav: MatSidenav;
 
 	currentDetail: Activity;
-
+	showNewButton: boolean = false;
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
 	constructor(
 		protected authService: AuthenticationService,
 		protected dataService: ActivityService,
+		private providerService: ProviderService,
 		protected constants: Constants) {
 		super(dataService, constants);
+		this.checkNewButton();
+	}
+
+	checkNewButton(): void {
+		if (this.actionsVisible()) {
+			this.showNewButton = true;
+		} else {
+			let tmpProvs = 0;
+			this.providerService
+				.getByUser(this.authService.currentUser.id)
+				.map(data => data.records)
+				.subscribe(providers => providers.map(provider => {
+					if (provider.approved || this.showNewButton) { tmpProvs++; this.showNewButton = true; }
+				}));
+		}
 	}
 
 	initColumns(): void {
@@ -45,7 +63,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 			'Categories.name',
 			'Activities.description',
 			'Organisations.name',
-			'schedules',
+			// 'schedules',
 			'tags',
 			'target_groups'
 		];

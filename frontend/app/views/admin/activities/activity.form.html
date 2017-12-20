@@ -1,46 +1,57 @@
 <div class="edit-container" *ngIf="activity">
+	<h2>{{ activity.name }}</h2>
 	<form #activityForm="ngForm" (ngSubmit)="onSubmit()">
 		<mat-card class="activity-edit-card">
 			<mat-horizontal-stepper [linear]="isLinear">
-				<mat-card-header>
-					<h2>{{ activity.name }}</h2>
-				</mat-card-header>
-				<mat-step [stepControl]="stepperFormGroup">
-					<form [formGroup]="stepperFormGroup">
+				<mat-step [stepControl]="firstFormGroup">
+					<form [formGroup]="firstFormGroup">
 						<mat-card>
-							<form>
-								<ng-template matStepLabel>{{constants.coreData}}</ng-template>
-								<h2>Stammdaten Ihrer Veranstaltung</h2>
-								<mat-form-field class="edit-form-full-width">
-									<input matInput type="text" [(ngModel)]="activity.name" placeholder={{constants.title}} name="name" value={{activity.name}}
-									 required [errorStateMatcher]="validation" id="activity_name_field">
-								</mat-form-field>
+							<ng-template matStepLabel>{{constants.coreData}}</ng-template>
+							<h2>Stammdaten Ihrer Veranstaltung</h2>
+							<mat-form-field class="edit-form-full-width">
+								<input matInput type="text" formControlName="nameCtrl" placeholder={{constants.title}} name="name" value={{activity.name}}
+								 required id="activity_name_field">
+							</mat-form-field>
+							<mat-form-field class="edit-form-full-width">
+								<textarea matInput type="text" formControlName="descriptionCtrl" placeholder="{{constants.description}}" name="description"
+								 value={{activity.description}} id="activity_description_field"></textarea>
+							</mat-form-field>
+							<h2>Im Namen welcher Organisation soll die Veranstaltung angelegt werden</h2>
+							<mat-form-field>
+								<mat-select required placeholder={{constants.organisation}} formControlName="providerCtrl" name="activity_provider_id">
+									<mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.organisation ? provider.organisation.name : ''}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<mat-checkbox formControlName="showUserCtrl" name="showUser">{{constants.publicUser}}</mat-checkbox>
 
-								<mat-form-field class="edit-form-full-width">
-									<textarea matInput type="text" [(ngModel)]="activity.description" placeholder="{{constants.description}}" name="description"
-									 value={{activity.description}} id="activity_description_field"></textarea>
-								</mat-form-field>
+							<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
+							<mat-form-field class="edit-form-full-width">
+								<input matInput type="text" formControlName="tagsCtrl" placeholder="{{constants.tags}}" name="tags" id="activity_tags">
+							</mat-form-field>
 
-								<h2>Im Namen welcher Organisation soll die Veranstaltung angelegt werden</h2>
-								<mat-form-field>
-									<mat-select required [errorStateMatcher]="validation" placeholder={{constants.organisation}} [formControl]="providerCtrl"
-									 name="activity_provider_id" id="provider">
-										<mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.organisation ? provider.organisation.name : ''}}</mat-option>
-									</mat-select>
-								</mat-form-field>
-								<mat-checkbox [(ngModel)]="showUser" name="showUser">{{constants.publicUser}}</mat-checkbox>
-								<div>
-									<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
-								</div>
-							</form>
+							<mat-form-field>
+								<mat-select required placeholder={{constants.category}} formControlName="categoryCtrl" name="activity_category">
+									<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+
+							<mat-form-field>
+								<mat-select placeholder={{constants.targetGroups}} formControlName="targetGroupCtrl" name="activity_targetGroups" multiple>
+									<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+
+							<div>
+								<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+							</div>
 						</mat-card>
 					</form>
 				</mat-step>
 
-				<mat-step [stepControl]="stepperFormGroup">
+				<mat-step [stepControl]="secondFormGroup">
 					<ng-template matStepLabel>{{constants.address}}</ng-template>
 					<h2>Wo findet die Veranstaltung statt? </h2>
-					<form>
+					<form [formGroup]="secondFormGroup">
 						<mat-card class="address-card">
 							<address-autocomplete-form #addressAutocompleteComponent [address]="activity.address" (changedAddress)="addressChanged($event)"></address-autocomplete-form>
 						</mat-card>
@@ -51,39 +62,10 @@
 					</form>
 				</mat-step>
 
-				<mat-step [stepControl]="stepperFormGroup">
-					<ng-template matStepLabel>{{constants.metaData}}</ng-template>
-					<h2>Ergänzen Sie weitere Daten, damit Nutzer ihre Veranstaltung besser finden können</h2>
-					<form>
-						<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
-						<mat-form-field class="edit-form-full-width">
-							<input matInput type="text" [formControl]="tagsCtrl" placeholder="{{constants.tags}}" name="tags" id="activity_tags">
-						</mat-form-field>
-
-						<mat-form-field>
-							<mat-select required [errorStateMatcher]="validation" placeholder={{constants.category}} [formControl]="categoryCtrl" name="activity_category">
-								<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
-							</mat-select>
-						</mat-form-field>
-
-						<mat-form-field>
-							<mat-select required [errorStateMatcher]="validation" placeholder={{constants.targetGroups}} [formControl]="targetGroupCtrl"
-							 name="activity_targetGroups" multiple>
-								<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
-							</mat-select>
-						</mat-form-field>
-
-						<div>
-							<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
-						</div>
-					</form>
-				</mat-step>
-
-				<mat-step [stepControl]="stepperFormGroup">
+				<mat-step [stepControl]="thirdFormGroup">
 					<ng-template matStepLabel>{{constants.dates}}</ng-template>
 					<h2>{{constants.dateTimeQuestion}}</h2>
-					<form>
+					<form [formGroup]="thirdFormGroup">
 						<mat-card class="schedule-card">
 							<div *ngIf="activity.schedules.length">
 								<h2>Kontrollieren Sie an dieser Stelle bitte Ihre Einträge/Ihren Eintrag</h2>
@@ -123,46 +105,39 @@
 								<button mat-raised-button type="button" (click)="addOneSchedule()">{{constants.create + ' ' + constants.date}}</button>
 							</div>
 							<div *ngIf="!activity.schedules.length">
-								<form>
-									<h2>Findet die Veranstaltung regelmäßig statt?</h2>
-									<mat-checkbox [(ngModel)]="scheduleIsRecurrent" name="scheduleIsRecurrent">{{constants.frequently}}</mat-checkbox>
-									<div *ngIf="scheduleIsRecurrent">
-										<span>In welchem wöchentlichen Rythmus soll die Veranstaltung stattfinden? (Bei monatlichen Veranstaltungen, bitte "4"
-											eintragen, bei wöchentlichen "1")</span>
-										<span>
-											<input matInput type="number" [(ngModel)]="weeklyRythm" name="weeklyRythm">
-										</span>
-									</div>
-								</form>
+								<!-- <h2>Findet die Veranstaltung regelmäßig statt?</h2>
+								<mat-checkbox formControlName="scheduleIsRecurrentCtrl" name="scheduleIsRecurrent">{{constants.frequently}}</mat-checkbox>
+								-->
+								<span>
+									In welchem wöchentlichen Rythmus soll die Veranstaltung stattfinden? Bei einer einmaligen Veranstaltung bitte "0" eingeben</span>
+								<span>
+									<input matInput type="number" formControlName="weeklyRythmCtrl" name="weeklyRythm">
+								</span>
 								<ng-template matStepLabel>Uhrzeit</ng-template>
 								<div>Zu welcher Uhrzeit findet die Veranstaltung statt? </div>
-								<form>
-									<mat-form-field>
-										<input matInput type="time" placeholder="startTime" [formControl]="startTimeCtrl" name="start_time" id="activity_start_time">
-									</mat-form-field>
-									<mat-form-field>
-										<input matInput type="time" placeholder="endTime" [formControl]="endTimeCtrl" name="end_time" id="activity_end_time">
-									</mat-form-field>
-								</form>
+								<mat-form-field>
+									<input matInput type="time" placeholder="startTime" formControlName="startTimeCtrl" name="start_time" id="activity_start_time">
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput type="time" placeholder="endTime" formControlName="endTimeCtrl" name="end_time" id="activity_end_time">
+								</mat-form-field>
 								<ng-template matStepLabel>Datum
 								</ng-template>
 								<div>An welchem Datum beginnt bzw. endet die Veranstaltung? Bei eintägigen Veranstaltungen bitte zwei mal das gleiche
 									Datum angeben. Bei regelmäßigen Veranstaltungen bitte das Datum des ersten und das Datum des letzten Termins angeben.</div>
-								<form>
-									<mat-form-field>
-										<input matInput [matDatepicker]="pickerStartDate" [formControl]="startDateCtrl" placeholder={{constants.beginn}} name="schedule_start_by">
-										<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-										<mat-datepicker #pickerStartDate></mat-datepicker>
-									</mat-form-field>
-									<mat-form-field>
-										<input matInput [matDatepicker]="pickerEndDate" [formControl]="endDateCtrl" placeholder={{constants.end}} name="schedule_end_by">
-										<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-										<mat-datepicker #pickerEndDate></mat-datepicker>
-									</mat-form-field>
-									<div>
-										<button type="button" [disabled]="activityForm.invalid" mat-button (click)="generateSchedules()" matStepperNext>{{constants.ok}}</button>
-									</div>
-								</form>
+								<mat-form-field>
+									<input matInput [matDatepicker]="pickerStartDate" formControlName="startDateCtrl" placeholder={{constants.beginn}} name="schedule_start_by">
+									<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerStartDate></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput [matDatepicker]="pickerEndDate" formControlName="endDateCtrl" placeholder={{constants.end}} name="schedule_end_by">
+									<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerEndDate></mat-datepicker>
+								</mat-form-field>
+								<!-- <div>
+									<button type="button" [disabled]="activityForm.invalid" mat-button matStepperNext>{{constants.ok}}</button>
+								</div> -->
 							</div>
 						</mat-card>
 						<div>
@@ -172,10 +147,10 @@
 					</form>
 				</mat-step>
 
-				<mat-step [stepControl]="stepperFormGroup">
+				<mat-step>
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
 					<h2>{{constants.pleaseControl}}</h2>
-					<activity-detail *ngIf="activity.provider.organisation" [activity]="activity"></activity-detail>
+					<activity-detail *ngIf="activity.provider && activity.provider.organisation" [activity]="activity"></activity-detail>
 					<div>
 						<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
 						<button mat-raised-button color="primary" [disabled]="activityForm.invalid" type="submit">{{constants.save}}</button>

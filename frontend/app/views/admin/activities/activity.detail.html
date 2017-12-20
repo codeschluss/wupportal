@@ -9,30 +9,31 @@
 			<b>{{activity.name}}</b>
 		</div>
 		<div>{{constants.organisation}} :
-			<b>{{activity.provider.organisation.name}}</b>
+			<b *ngIf="activity.provider">{{activity.provider.organisation.name}}</b>
 		</div>
 		<div>{{constants.description}} :
 			<b>{{activity.description}}</b>
 		</div>
 		{{constants.publicUser}}
-		<div *ngIf="activity.showUser">{{constants.no}}</div>
-		<div *ngIf="!activity.showUser">
+		<div *ngIf="activity.show_user">
 			<b>{{constants.yes}}</b>
+		</div>
+		<div *ngIf="!activity.show_user">
+			<b>{{constants.no}}</b>
 			<!-- <div>{{activity.provider.user.fullname}}</div>
 		<div>{{activity.provider.user.username}}</div>
 		<div>{{activity.provider.user.phone}}</div> -->
 		</div>
 		<div>{{constants.address}} :
-			<b>{{activity.address.toString}}</b>
+			<b *ngIf="activity.address">{{activity.address.toString}}</b>
 		</div>
 		<h3>{{constants.metaData}}</h3>
 		<div>{{constants.category}} :
-			<b>{{activity.category.name}}</b>
+			<b *ngIf="activity.category">{{activity.category.name}}</b>
 		</div>
 		<span>
 			<mat-list role="list">
-				<mat-list-item role="listitem"
-				  *ngFor="let targetGroup of activity.targetGropus">{{targetGroup.name}}</mat-list-item>
+				<mat-list-item role="listitem" *ngFor="let targetGroup of activity.targetGropus">{{targetGroup.name}}</mat-list-item>
 			</mat-list>
 		</span>
 		<span>
@@ -42,8 +43,7 @@
 		</span>
 		<h3>{{constants.dates}}</h3>
 		<mat-list role="list">
-			<mat-list-item role="listitem"
-			  *ngFor="let schedule of activity.schedules">{{schedule.toString}}</mat-list-item>
+			<mat-list-item role="listitem" *ngFor="let schedule of activity.schedules">{{schedule.toString}}</mat-list-item>
 		</mat-list>
 	</mat-card-content>
 </mat-card>

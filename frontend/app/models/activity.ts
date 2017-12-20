@@ -14,7 +14,7 @@ export class Activity extends Model {
 		if (json) {
 			if (json.name) { this.name = json.name; }
 			if (json.description) { this.description = json.description; }
-			if (json.showUser) { this.showUser = json.showUser; }
+			if (json.show_user) { this.show_user = json.showUser; }
 			if (json.address_id) { this.address_id = json.address_id; }
 			if (json.address) { this.address = new Address(json.address); }
 			if (json.provider_id) { this.provider_id = json.provider_id; }
@@ -30,7 +30,7 @@ export class Activity extends Model {
 
 	public name: string = '';
 	public description: string = '';
-	public showUser: boolean = false;
+	public show_user: boolean = false;
 
 	public address_id: string = '';
 	public address: Address = new Address({});

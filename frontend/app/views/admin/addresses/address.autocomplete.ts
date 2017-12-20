@@ -84,13 +84,16 @@ export class AddressAutocompleteComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		console.log('AddressAutocomplete submit');
 		if (typeof this.addressCtrl.value === 'string') {
 			this.handleStringEntry();
 		} else {
-			this.address = this.addressCtrl.value;
-			this.changedAddress.emit(this.address);
-			this.addressCtrl = new FormControl(this.address);
+			if (new Address(this.addressCtrl.value).checkAddress()) {
+				this.address = this.addressCtrl.value;
+				this.changedAddress.emit(this.address);
+				this.addressCtrl = new FormControl(this.address);
+			} else {
+				this.changedAddress.emit(null);
+			}
 		}
 	}
 

@@ -9,6 +9,7 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
+import { Address } from 'app/models/address';
 import { Activity } from 'app/models/activity';
 import { TargetGroup } from 'app/models/target-group';
 import { Tag } from 'app/models/tag';
@@ -62,30 +63,19 @@ export class ActivityFormComponent implements OnInit {
 	panelNumber: number;
 	targetGroups: TargetGroup[];
 	toDeleteSchedules: Schedule[];
+	schedules: Schedule[];
 	categories: Category[];
 	providers: Provider[] = [];
-	showUser: boolean = false;
 	protected user: User;
 
-	tagsCtrl: FormControl;
-	categoryCtrl: FormControl;
-	weekDaysCtrl: FormControl;
-	startTimeCtrl: FormControl;
-	startDateCtrl: FormControl;
-	endTimeCtrl: FormControl;
-	endDateCtrl: FormControl;
-	targetGroupCtrl: FormControl;
-	providerCtrl: FormControl;
-	showRecurrence: boolean;
-	scheduleIsRecurrent: boolean = false;
-	isLinear: boolean = false;
-	weeklyRythm: number = 1;
+	isLinear: boolean = true;
 	currentStartDate: FormControl;
 	currentStartTime: FormControl;
 	currentEndDate: FormControl;
 	currentEndTime: FormControl;
-	stepperFormGroup: FormGroup;
-	stepperFirstFormGroup: FormGroup;
+	firstFormGroup: FormGroup;
+	secondFormGroup: FormGroup;
+	thirdFormGroup: FormGroup;
 
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 
@@ -102,7 +92,6 @@ export class ActivityFormComponent implements OnInit {
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
-		private controlAddressDialog: MatDialog,
 		private _formBuilder: FormBuilder,
 		public validation: ValidationService,
 	) {
@@ -130,23 +119,32 @@ export class ActivityFormComponent implements OnInit {
 			).subscribe(activity => {
 				this.activity = activity;
 				if (this.activity.provider.id) {
-					console.log('provider detected');
 					if (this.providers.indexOf(this.activity.provider) === -1) {
 						this.providers.push(this.activity.provider);
 					}
-					this.providerCtrl = new FormControl(this.activity.provider_id);
-				} else {
-					this.providerCtrl = new FormControl();
 				}
-
-				this.initTags();
-				this.initScheduleFormCtrls();
 				this.declerateDateForms(-1);
-				this.categoryCtrl = new FormControl(this.activity.category.id);
-				this.targetGroupCtrl = this.activity.target_groups ?
-					new FormControl(this.initCtrl(this.activity.target_groups)) : new FormControl();
-				this.stepperFormGroup = this._formBuilder.group({
-					stepCtrl: ['', Validators.required]
+				this.firstFormGroup = new FormGroup({
+					'providerCtrl': new FormControl(this.activity.provider_id, [
+						Validators.required
+					]),
+					'nameCtrl': new FormControl(this.activity.name, [
+						Validators.required
+					]),
+					'showUserCtrl': new FormControl(this.activity.show_user ? this.activity.show_user : false),
+					'descriptionCtrl': new FormControl(this.activity.description),
+					'tagsCtrl': new FormControl(this.initTags()),
+					'categoryCtrl': new FormControl(this.activity.category.id, [Validators.required]),
+					'targetGroupCtrl': new FormControl(this.activity.target_groups)
+				});
+				this.secondFormGroup = this._formBuilder.group({
+				});
+				this.thirdFormGroup = this._formBuilder.group({
+					'startTimeCtrl': new FormControl(this.activity.schedules[0] ? this.activity.schedules[0].startTime : ''),
+					'endTimeCtrl': new FormControl(this.activity.schedules[0] ? this.activity.schedules[0].endTime : ''),
+					'startDateCtrl': new FormControl(this.activity.schedules[0] ? this.activity.schedules[0].start_date : ''),
+					'endDateCtrl': new FormControl(this.activity.schedules[0] ? this.activity.schedules[this.activity.schedules.length - 1].end_date : ''),
+					'weeklyRythmCtrl': new FormControl(0)
 				});
 			});
 	}
@@ -159,66 +157,40 @@ export class ActivityFormComponent implements OnInit {
 		return ids;
 	}
 
-	initTags(): void {
+	initTags(): string {
 		const tagsNames: string[] = [];
 		for (const tag of this.activity.tags) {
 			tagsNames.push(tag.name);
 		}
-		this.tagsCtrl = new FormControl(tagsNames.join());
+		return tagsNames.join();
 	}
-
-	initScheduleFormCtrls(): void {
-		if (this.activity.schedules.length) {
-			this.startTimeCtrl = new FormControl(this.activity.schedules[0].startTime);
-			this.endTimeCtrl = new FormControl(this.activity.schedules[0].endTime);
-			this.startDateCtrl = new FormControl(this.activity.schedules[0].start_date);
-			this.endDateCtrl = new FormControl(this.activity.schedules[this.activity.schedules.length - 1].end_date);
-			if (this.activity.schedules.length > 1) {
-				this.scheduleIsRecurrent = true;
-			}
-		} else {
-			this.startTimeCtrl = new FormControl();
-			this.endTimeCtrl = new FormControl();
-			this.startDateCtrl = new FormControl();
-			this.endDateCtrl = new FormControl();
-		}
-	}
-
-	// containsEntry(any: any, array: any[]): boolean {
-	// 	for (const entry of array) {
-	// 		if (entry.id === any.id) {
-	// 			return true;
-	// 		}
-	// 	}
-	// 	return false;
-	// }
 
 	generateSchedules(): void {
-		if (this.scheduleIsRecurrent) {
-			if (!this.activity.schedules) {
-				this.activity.schedules = [];
+		if (this.thirdFormGroup.get('weeklyRythmCtrl').value > 0) {
+			if (!this.schedules) {
+				this.schedules = [];
 			}
-			const currStartDate = new Date(this.startDateCtrl.value);
-			const currEndDate = new Date(this.startDateCtrl.value);
-			const end: Date = new Date(this.endDateCtrl.value);
+			const currStartDate = new Date(this.thirdFormGroup.get('startDateCtrl').value);
+			const currEndDate = new Date(this.thirdFormGroup.get('startDateCtrl').value);
+			const end: Date = new Date(this.thirdFormGroup.get('endDateCtrl').value);
 			while (currStartDate < end) {
 				const currSchedule = new Schedule({});
 				currSchedule.startDate = String(currStartDate);
-				currSchedule.startTime = this.startTimeCtrl.value;
+				currSchedule.startTime = this.thirdFormGroup.get('startTimeCtrl').value;
 				currSchedule.endDate = String(currEndDate);
-				currSchedule.endTime = this.endTimeCtrl.value;
-				this.activity.schedules.push(currSchedule);
-				currStartDate.setDate(currStartDate.getDate() + (7 * this.weeklyRythm));
-				currEndDate.setDate(currEndDate.getDate() + (7 * this.weeklyRythm));
+				currSchedule.endTime = this.thirdFormGroup.get('endTimeCtrl').value;
+				this.schedules.push(currSchedule);
+				currStartDate.setDate(currStartDate.getDate() + (7 * this.thirdFormGroup.get('weeklyRythmCtrl').value));
+				currEndDate.setDate(currEndDate.getDate() + (7 * this.thirdFormGroup.get('weeklyRythmCtrl').value));
 			}
 		} else {
 			const oneTimeSchedule: Schedule = new Schedule({});
-			oneTimeSchedule.startDate = String(this.startDateCtrl.value);
-			oneTimeSchedule.end_date = String(this.endDateCtrl.value);
-			oneTimeSchedule.startTime = this.startTimeCtrl.value;
-			oneTimeSchedule.endTime = this.endTimeCtrl.value;
-			this.activity.schedules = [];
-			this.activity.schedules.push(oneTimeSchedule);
+			oneTimeSchedule.startDate = String(this.thirdFormGroup.get('startDateCtrl').value);
+			oneTimeSchedule.end_date = String(this.thirdFormGroup.get('endDateCtrl').value);
+			oneTimeSchedule.startTime = this.thirdFormGroup.get('startTimeCtrl').value;
+			oneTimeSchedule.endTime = this.thirdFormGroup.get('endTimeCtrl').value;
+			this.schedules = [];
+			this.schedules.push(oneTimeSchedule);
 		}
 		this.declerateDateForms(-1);
 	}
@@ -267,7 +239,6 @@ export class ActivityFormComponent implements OnInit {
 
 	removeCompleteSchedule(): void {
 		this.toDeleteSchedules = this.activity.schedules;
-		console.log(this.toDeleteSchedules);
 		this.activity.schedules = [];
 	}
 
@@ -288,26 +259,23 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	handleSchedules(): Observable<any[]> {
-		const observableAddressArray: Observable<any>[] = [];
-		if (this.activity.schedules.length) {
-			this.activity.schedules.map(sched => {
+		const observableScheduleArray: Observable<any>[] = [];
+		if (this.schedules.length) {
+			this.schedules.map(sched => {
 				if (sched.id) {
-					// currSchedule.activity_id = this.activity.id;
-					observableAddressArray.push(this.scheduleService.edit(sched));
+					observableScheduleArray.push(this.scheduleService.edit(sched));
 				} else {
-					// currSchedule.activity_id = this.activity.id;
-					console.log('new schedule entry: ', sched);
-					observableAddressArray.push(this.scheduleService.add(sched));
+					observableScheduleArray.push(this.scheduleService.add(sched));
 				}
 			});
 		}
-		return Observable.forkJoin(observableAddressArray);
+		return Observable.forkJoin(observableScheduleArray);
 	}
 
 	handleTags(): Observable<any[]> {
 		const observableTagArray: Observable<any>[] = [];
 		this.activity.tags = [];
-		this.tagsCtrl.value.split(',').map((tagName) => {
+		this.firstFormGroup.get('tagsCtrl').value.split(',').map((tagName) => {
 			const currTag: Tag = new Tag();
 			currTag.name = tagName;
 			observableTagArray.push(this.tagService.add(currTag));
@@ -316,7 +284,7 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	addressChanged(event: any): void {
-		if (event.id) {
+		if (event && event.id) {
 			this.activity.address_id = event.id;
 		}
 		this.activity.address = event;
@@ -327,19 +295,20 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	prepareToSubmit(): void {
-		if (this.showUser) {
-			this.activity.showUser = this.showUser;
-		} else {
-			this.activity.showUser = false;
+		if (this.thirdFormGroup.get('startDateCtrl').value) {
+			this.generateSchedules();
 		}
-		this.activity.provider = this.providers.find(provider => provider.id === this.providerCtrl.value);
-		this.activity.provider_id = this.providerCtrl.value;
-		this.activity.category = this.categories.find(category => category.id === this.categoryCtrl.value);
-		this.activity.category_id = this.categoryCtrl.value;
+		this.activity.name = this.firstFormGroup.get('nameCtrl').value;
+		this.activity.description = this.firstFormGroup.get('descriptionCtrl').value;
+		this.activity.show_user = this.firstFormGroup.get('showUserCtrl').value;
+		this.activity.provider = this.providers.find(provider => provider.id === this.firstFormGroup.get('providerCtrl').value);
+		this.activity.provider_id = this.firstFormGroup.get('providerCtrl').value;
+		this.activity.category = this.categories.find(category => category.id === this.firstFormGroup.get('categoryCtrl').value);
+		this.activity.category_id = this.firstFormGroup.get('categoryCtrl').value;
 		this.handleTags().subscribe(tags => {
 			tags.map(tag => { if (tag.records) { this.activity.tags.push(tag.records); } });
 		});
-		this.generateTargetGroupArray(this.targetGroupCtrl.value).
+		this.generateTargetGroupArray(this.firstFormGroup.get('targetGroupCtrl').value).
 			subscribe(targetGroups => {
 				this.activity.target_groups = targetGroups;
 			});
@@ -347,18 +316,22 @@ export class ActivityFormComponent implements OnInit {
 		this.handleSchedules().subscribe(schedules => {
 			schedules.map(schedule => this.activity.schedules.push(new Schedule(schedule.records)));
 		});
-		if (!this.activity.address.id) {
+		if (this.activity.address && !this.activity.address.id) {
 			this.activity.address.suburb = null;
-			this.addressService.add(this.activity.address).subscribe(
-				response => {
-					this.activity.address = response.records;
-					this.activity.address.suburb = response.records.suburb;
-					this.activity.address_id = response.records.id;
+			this.addressService.add(this.activity.address).
+				map(response => new Address(response.records)).subscribe(
+				address => {
+					this.activity.address = address;
+					this.activity.address.suburb = address.suburb;
+					this.activity.address_id = address.id;
 				});
 		}
 	}
 
 	onSubmit(): void {
+		this.activity.provider = null;
+		this.activity.category = null;
+		this.activity.address = null;
 		if (this.activity.id) {
 			this.activityService.edit(this.activity).subscribe(() => this.back());
 		} else {

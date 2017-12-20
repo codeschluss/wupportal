@@ -103,11 +103,12 @@
 								</mat-accordion>
 								<button mat-raised-button color="warn" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
 								<button mat-raised-button type="button" (click)="addOneSchedule()">{{constants.create + ' ' + constants.date}}</button>
+								<div>
+									<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
+									<button type="button" mat-raised-button color="primary" matStepperNext (click)="prepareToSubmit()">{{constants.next}}</button>
+								</div>
 							</div>
 							<div *ngIf="!activity.schedules.length">
-								<!-- <h2>Findet die Veranstaltung regelmäßig statt?</h2>
-								<mat-checkbox formControlName="scheduleIsRecurrentCtrl" name="scheduleIsRecurrent">{{constants.frequently}}</mat-checkbox>
-								-->
 								<span>
 									In welchem wöchentlichen Rythmus soll die Veranstaltung stattfinden? Bei einer einmaligen Veranstaltung bitte "0" eingeben</span>
 								<span>
@@ -135,15 +136,11 @@
 									<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
 									<mat-datepicker #pickerEndDate></mat-datepicker>
 								</mat-form-field>
-								<!-- <div>
-									<button type="button" [disabled]="activityForm.invalid" mat-button matStepperNext>{{constants.ok}}</button>
-								</div> -->
+								<div>
+									<button type="button" (click)="generateSchedules()" mat-button>{{constants.ok}}</button>
+								</div>
 							</div>
 						</mat-card>
-						<div>
-							<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" [disabled]="activityForm.invalid" mat-raised-button color="primary" matStepperNext (click)="prepareToSubmit()">{{constants.next}}</button>
-						</div>
 					</form>
 				</mat-step>
 
@@ -158,7 +155,7 @@
 				</mat-step>
 
 			</mat-horizontal-stepper>
-			<button mat-raised-button color="warn" (click)="back()">{{constants.cancel}}</button>
+			<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
 		</mat-card>
 	</form>
 </div>

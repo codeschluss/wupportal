@@ -63,9 +63,9 @@ export class ActivityFormComponent implements OnInit {
 	panelNumber: number;
 	targetGroups: TargetGroup[];
 	toDeleteSchedules: Schedule[];
-	schedules: Schedule[];
 	categories: Category[];
 	providers: Provider[] = [];
+	// schedules: Schedule[];
 	protected user: User;
 
 	isLinear: boolean = true;
@@ -166,9 +166,10 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	generateSchedules(): void {
+		console.log(this.thirdFormGroup.get('startDateCtrl').value);
 		if (this.thirdFormGroup.get('weeklyRythmCtrl').value > 0) {
-			if (!this.schedules) {
-				this.schedules = [];
+			if (!this.activity.schedules) {
+				this.activity.schedules = [];
 			}
 			const currStartDate = new Date(this.thirdFormGroup.get('startDateCtrl').value);
 			const currEndDate = new Date(this.thirdFormGroup.get('startDateCtrl').value);
@@ -179,7 +180,7 @@ export class ActivityFormComponent implements OnInit {
 				currSchedule.startTime = this.thirdFormGroup.get('startTimeCtrl').value;
 				currSchedule.endDate = String(currEndDate);
 				currSchedule.endTime = this.thirdFormGroup.get('endTimeCtrl').value;
-				this.schedules.push(currSchedule);
+				this.activity.schedules.push(currSchedule);
 				currStartDate.setDate(currStartDate.getDate() + (7 * this.thirdFormGroup.get('weeklyRythmCtrl').value));
 				currEndDate.setDate(currEndDate.getDate() + (7 * this.thirdFormGroup.get('weeklyRythmCtrl').value));
 			}
@@ -189,8 +190,8 @@ export class ActivityFormComponent implements OnInit {
 			oneTimeSchedule.end_date = String(this.thirdFormGroup.get('endDateCtrl').value);
 			oneTimeSchedule.startTime = this.thirdFormGroup.get('startTimeCtrl').value;
 			oneTimeSchedule.endTime = this.thirdFormGroup.get('endTimeCtrl').value;
-			this.schedules = [];
-			this.schedules.push(oneTimeSchedule);
+			this.activity.schedules = [];
+			this.activity.schedules.push(oneTimeSchedule);
 		}
 		this.declerateDateForms(-1);
 	}
@@ -260,8 +261,8 @@ export class ActivityFormComponent implements OnInit {
 
 	handleSchedules(): Observable<any[]> {
 		const observableScheduleArray: Observable<any>[] = [];
-		if (this.schedules.length) {
-			this.schedules.map(sched => {
+		if (this.activity.schedules.length) {
+			this.activity.schedules.map(sched => {
 				if (sched.id) {
 					observableScheduleArray.push(this.scheduleService.edit(sched));
 				} else {
@@ -269,6 +270,7 @@ export class ActivityFormComponent implements OnInit {
 				}
 			});
 		}
+		this.activity.schedules = [];
 		return Observable.forkJoin(observableScheduleArray);
 	}
 
@@ -295,9 +297,6 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	prepareToSubmit(): void {
-		if (this.thirdFormGroup.get('startDateCtrl').value) {
-			this.generateSchedules();
-		}
 		this.activity.name = this.firstFormGroup.get('nameCtrl').value;
 		this.activity.description = this.firstFormGroup.get('descriptionCtrl').value;
 		this.activity.show_user = this.firstFormGroup.get('showUserCtrl').value;
@@ -314,7 +313,11 @@ export class ActivityFormComponent implements OnInit {
 			});
 		this.deleteSchedules();
 		this.handleSchedules().subscribe(schedules => {
-			schedules.map(schedule => this.activity.schedules.push(new Schedule(schedule.records)));
+			schedules.map(schedule => {
+				if (!this.activity.schedules.find(currSched => new Schedule(schedule.records).compareTo(new Schedule(currSched)))) {
+					this.activity.schedules.push(new Schedule(schedule.records));
+				}
+			});
 		});
 		if (this.activity.address && !this.activity.address.id) {
 			this.activity.address.suburb = null;

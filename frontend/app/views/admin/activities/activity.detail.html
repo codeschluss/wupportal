@@ -14,16 +14,18 @@
 		<div>{{constants.description}} :
 			<b>{{activity.description}}</b>
 		</div>
-		{{constants.publicUser}}
+		<!-- {{constants.publicUser}}
 		<div *ngIf="activity.show_user">
 			<b>{{constants.yes}}</b>
+			<div>{{activity.provider.user.fullname}}</div>
+			<div>{{activity.provider.user.username}}</div>
+			<div>{{activity.provider.user.phone}}</div>
 		</div>
 		<div *ngIf="!activity.show_user">
 			<b>{{constants.no}}</b>
-			<!-- <div>{{activity.provider.user.fullname}}</div>
-		<div>{{activity.provider.user.username}}</div>
-		<div>{{activity.provider.user.phone}}</div> -->
-		</div>
+			<div>{{activity.provider.organisation.mail}}</div>
+			<div>{{activity.provider.organisation.phone}}</div>
+		</div>-->
 		<div>{{constants.address}} :
 			<b *ngIf="activity.address">{{activity.address.toString}}</b>
 		</div>

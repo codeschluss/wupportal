@@ -52,12 +52,13 @@ export class Schedule extends Model {
 		} else {
 			return '';
 		}
-
-		// this.getWeekDay(new Date(this.start_date).getDay()) + ' ' +
 	}
 
-	// getWeekDay(weekDayNumber: number): string {
-	// 	return Costants.weekDaysArray[weekDayNumber];
-	// }
+	public compareTo(schedule: Schedule): boolean {
+		if (this.toString.localeCompare(schedule.toString)) {
+			return true;
+		}
+		return false;
+	}
 
 }

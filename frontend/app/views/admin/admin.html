@@ -1,11 +1,17 @@
 <div style="padding: 5px;">
 	<nav mat-tab-nav-bar>
-		<a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link" routerLinkActive #rla="routerLinkActive"
-		 [active]="rla.isActive" (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">
+		<a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;"
+		  [routerLink]="routeLink.link"
+		  routerLinkActive #rla="routerLinkActive"
+		  [active]="rla.isActive" (click)="activeLinkIndex = i"
+		  [routerLinkActiveOptions]="{exact: true}">
 			{{routeLink.label}}
 		</a>
-		Problem/Anregungen hier melden:
-		<a target="_blank" href="https://github.com/codeschluss/wupportal/issues">https://github.com/codeschluss/wupportal/issues</a> oder an info@codeschluss.de
 	</nav>
 	<router-outlet name='table'></router-outlet>
+</div>
+<div id="temp-footer">
+	Problem/Anregungen hier melden:
+	<a target="_blank" href="https://github.com/codeschluss/wupportal/issues">https://github.com/codeschluss/wupportal/issues</a>
+	oder an info@codeschluss.de
 </div>

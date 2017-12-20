@@ -49,6 +49,7 @@ import { ActivityTableComponent } from 'app/views/admin/activities/activity.tabl
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
 import { ProviderApprovalTableComponent } from 'app/views/admin/provider/provider-approval.table';
+import { ProviderRequestTableComponent } from 'app/views/admin/provider/provider-request.table';
 
 import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
@@ -81,6 +82,7 @@ import { ActivityDetailComponent } from 'app/views/admin/activities/activity.det
 import { OrganisationDetailComponent } from 'app/views/admin/organisations/organisation.detail';
 
 
+
 @NgModule({
 	bootstrap: [
 		AppComponent
@@ -98,6 +100,7 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		ActivityTableComponent,
 		ProviderTableComponent,
 		ProviderApprovalTableComponent,
+		ProviderRequestTableComponent,
 
 		LoginFormComponent,
 		RegisterFormComponent,

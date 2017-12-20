@@ -38,5 +38,11 @@ mapping-component {
 }
 
 mat-chip {
-  max-width: 200px;
+	max-width: 200px;
+}
+
+#temp-footer {
+	margin-top: 35px;
+	font-size: 12px;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
 }

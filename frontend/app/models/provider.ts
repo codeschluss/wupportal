@@ -4,12 +4,12 @@ import { User } from 'app/models/user';
 
 export class Provider extends Model {
 
-	public admin: boolean = false;
-	public approved: boolean = false;
-	public organisation: Organisation = null;
-	public user: User = null;
-	public organisation_id: string = '';
-	public user_id: string = '';
+	public admin: boolean;
+	public approved: boolean;
+	public organisation: Organisation;
+	public user: User;
+	public organisation_id: string;
+	public user_id: string;
 
 	constructor(json: any = {} as Provider) {
 		super(json.id);

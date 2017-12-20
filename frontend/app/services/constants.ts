@@ -53,6 +53,7 @@ export class Constants {
 	public frequently: string = 'Regelmäßig';
 	public next: string = 'weiter';
 	public previous: string = 'vorherige';
+	public approved: string = 'Bestätigt';
 
 	public coreData: string = 'Stammdaten';
 	public metaData: string = 'Metadaten';

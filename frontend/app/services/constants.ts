@@ -30,6 +30,7 @@ export class Constants {
 	public password: string = 'Passwort';
 	public newPassword: string = 'Neues Passwort';
 	public confirmPassword: string = 'Passwort wiederholen';
+	public registration: string = 'Registrierung';
 
 	public filter: string = 'Filter';
 	public configuration: string = 'Einstellungen';

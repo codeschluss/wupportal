@@ -1,0 +1,67 @@
+<div class="edit-container" *ngIf="allOrganisations">
+	<mat-card>
+		<mat-card-header>
+			<h2>{{constants.registration}}</h2>
+		</mat-card-header>
+
+		<form id="user-form" [formGroup]="userForm"
+		  #formDir="ngForm" (ngSubmit)="onSubmit()"
+		  class="well">
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text placeholder={{constants.mail}}
+				  formControlName="usernameCtrl"
+				  [errorStateMatcher]="validation"
+				  required>
+				<mat-error *ngIf="usernameCtrl.hasError('required')">
+					{{constants.isRequiredMessage}}
+				</mat-error>
+				<mat-error *ngIf="usernameCtrl.hasError('email')">
+					{{constants.emailFormatMessage}}
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text placeholder={{constants.fullname}}
+				  formControlName="fullnameCtrl"
+				  [errorStateMatcher]="validation">
+			</mat-form-field>
+
+			<mat-form-field class="edit-form-full-width">
+				<input matInput type=text placeholder={{constants.phone}}
+				  formControlName="phoneCtrl"
+				  [errorStateMatcher]="validation">
+			</mat-form-field>
+
+			<mat-form-field>
+				<mat-select placeholder={{constants.organisations}}
+				  formControlName="organisationsCtrl"
+				  multiple>
+					<mat-option *ngFor="let organisation of allOrganisations"
+					  [value]="organisation.id">{{organisation.name}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<form [formGroup]="passwordGroup"
+			  id="password-group" #formDir="ngForm">
+				<mat-form-field class="edit-form-full-width">
+					<input matInput type=password placeholder={{constants.newPassword}}
+					  formControlName="passwordCtrl"
+					  [errorStateMatcher]="validation">
+				</mat-form-field>
+				<mat-form-field class="edit-form-full-width">
+					<input matInput type=password placeholder={{constants.confirmPassword}}
+					  formControlName="confirmPasswordCtrl"
+					  [errorStateMatcher]="validation">
+				</mat-form-field>
+				<mat-error *ngIf="passwordGroup.invalid">
+					{{passwordInvalid()}}
+				</mat-error>
+			</form>
+
+			<button mat-raised-button type="submit"
+			  color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
+			<button mat-raised-button type="button"
+			  (click)="back()">{{constants.back}}</button>
+		</form>
+	</mat-card>
+</div>

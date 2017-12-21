@@ -30,7 +30,7 @@ if (php_sapi_name() === 'cli-server') {
 require dirname(__DIR__) . '/config/requirements.php';
 
 // Autoload vendor files
-$loader = require dirname(__DIR__) . '/vendor/autoload.php';
+$loader = require dirname(__DIR__) . '/cakephp/vendor/autoload.php';
 
 // Autoload application
 $loader->addPsr4('App\\', dirname(__DIR__) . '/src');

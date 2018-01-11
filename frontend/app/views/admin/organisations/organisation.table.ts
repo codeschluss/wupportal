@@ -24,7 +24,6 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 
 	@ViewChild('sidenav')
 	sidenav: MatSidenav;
-	showNewButton: boolean = false;
 	currentDetail: Organisation;
 
 	dataSource: MatTableDataSource<Organisation> = new MatTableDataSource<Organisation>();
@@ -44,7 +43,6 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 	}
 
 	actionsVisible(): boolean {
-		this.showNewButton = true;
 		return this.authService.isSuperUser();
 	}
 

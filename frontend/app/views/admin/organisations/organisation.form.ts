@@ -18,6 +18,7 @@ import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
+import { UserTableComponent } from 'app/views/admin/users/user.table';
 
 import { Organisation } from 'app/models/organisation';
 import { Address } from 'app/models/address';
@@ -40,12 +41,15 @@ export class OrganisationFormComponent implements OnInit {
 
 	@Input() organisation: Organisation;
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
+	@ViewChild('userTableComponent') usersTable: UserTableComponent;
 
 	stepperFormGroup: FormGroup;
+	adminProviders: Array<Provider> = new Array<Provider>();
 
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		@Inject(AddressService) private addressService: DataService,
+		private providerService: ProviderService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -92,13 +96,35 @@ export class OrganisationFormComponent implements OnInit {
 		}
 	}
 
+	approvedAsAdmin(event: any[]): void {
+		for (const userID of event) {
+			const provider = new Provider();
+			provider.approved = true;
+			provider.admin = true;
+			provider.user_id = userID;
+			this.adminProviders.push(provider);
+		}
+	}
+
 	onSubmit(): void {
 		this.organisation.address = null;
 		if (this.organisation.id) {
 			this.organisationService.edit(this.organisation).subscribe(() => this.back());
 		} else {
-			this.organisationService.add(this.organisation).subscribe(() => this.back());
+			this.organisationService.add(this.organisation).subscribe(orga =>
+				this.combineProviderSubsribtions(orga.records).subscribe(() => this.back())
+			);
 		}
+	}
+
+	combineProviderSubsribtions(orga: Organisation): Observable<any[]> {
+		const observableProviderArray: Observable<any>[] = [];
+		for (const provider of this.adminProviders) {
+			console.log('orga.id: ' + orga.id);
+			provider.organisation_id = orga.id;
+			observableProviderArray.push(this.providerService.add(provider));
+		}
+		return Observable.forkJoin(observableProviderArray);
 	}
 
 	back(): void {

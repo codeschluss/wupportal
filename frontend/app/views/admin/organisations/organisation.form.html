@@ -12,6 +12,18 @@
 						<textarea matInput type=text [(ngModel)]="organisation.description" placeholder={{constants.description}} name="description"
 						 value={{organisation.description}} id="orga_description_field"></textarea>
 					</mat-form-field>
+					<mat-form-field class="edit-form-full-width">
+						<input matInput type="email" [(ngModel)]="organisation.mail" placeholder={{constants.mail}} name="mail" value={{organisation.mail}}
+						 id="orga_mail_field" email="true">
+					</mat-form-field>
+					<mat-form-field class="edit-form-full-width">
+						<input matInput type=text [(ngModel)]="organisation.phone" placeholder={{constants.phone}} name="telephone" value={{organisation.phone}}
+						 id="orga_phone_field">
+					</mat-form-field>
+					<mat-form-field class="edit-form-full-width">
+						<input matInput type=text [(ngModel)]="organisation.website" placeholder={{constants.website}} name="website" id="orga_website_field"
+						 value={{organisation.website}}>
+					</mat-form-field>
 					<div>
 						<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
 					</div>
@@ -27,19 +39,8 @@
 					</div>
 				</mat-step>
 				<mat-step [stepControl]="stepperFormGroup">
-					<ng-template matStepLabel>{{constants.metaData}}</ng-template>
-					<mat-form-field class="edit-form-full-width">
-						<input matInput type="email" [(ngModel)]="organisation.mail" placeholder={{constants.mail}} name="mail" value={{organisation.mail}}
-						 id="orga_mail_field" email="true">
-					</mat-form-field>
-					<mat-form-field class="edit-form-full-width">
-						<input matInput type=text [(ngModel)]="organisation.phone" placeholder={{constants.phone}} name="telephone" value={{organisation.phone}}
-						 id="orga_phone_field">
-					</mat-form-field>
-					<mat-form-field class="edit-form-full-width">
-						<input matInput type=text [(ngModel)]="organisation.website" placeholder={{constants.website}} name="website" id="orga_website_field"
-						 value={{organisation.website}}>
-					</mat-form-field>
+					<ng-template matStepLabel>{{constants.users}}</ng-template>
+					<edit-users #usersTable [organisation]="organisation" (approvedAsAdmin)="approvedAsAdmin($event)"></edit-users>
 					<div>
 						<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
 						<button type="button" mat-raised-button color="primary" (click)="prepareSubmit()" matStepperNext>{{constants.next}}</button>

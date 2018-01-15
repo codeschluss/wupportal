@@ -22,7 +22,7 @@ export class Organisation extends Model {
 		this.phone = json.phone && json.phone || '';
 		this.image = json.image && json.image || null;
 		this.address_id = json.address_id && json.address_id || {};
-		this.address = json.address && new Address(json.address) || new Address({});
+		if (json.address) { this.address = new Address(json.address); }
 	}
 
 }

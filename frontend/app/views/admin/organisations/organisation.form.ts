@@ -74,10 +74,12 @@ export class OrganisationFormComponent implements OnInit {
 	}
 
 	addressChanged(event: any): void {
-		if (event.id) {
-			this.organisation.address_id = event.id;
+		if (event) {
+			if (event.id) {
+				this.organisation.address_id = event.id;
+			}
+			this.organisation.address = event;
 		}
-		this.organisation.address = event;
 	}
 
 	addressSubmit(): void {
@@ -85,14 +87,16 @@ export class OrganisationFormComponent implements OnInit {
 	}
 
 	prepareSubmit(): void {
-		if (!this.organisation.address.id) {
-			this.organisation.address.suburb = null;
-			this.addressService.add(this.organisation.address).subscribe(
-				response => {
-					this.organisation.address = response.records;
-					this.organisation.address.suburb = response.records.suburb;
-					this.organisation.address_id = response.records.id;
-				});
+		if (this.organisation.address.checkAddress()) {
+			if (!this.organisation.address.id) {
+				this.organisation.address.suburb = null;
+				this.addressService.add(this.organisation.address).subscribe(
+					response => {
+						this.organisation.address = response.records;
+						this.organisation.address.suburb = response.records.suburb;
+						this.organisation.address_id = response.records.id;
+					});
+			}
 		}
 	}
 
@@ -116,9 +120,13 @@ export class OrganisationFormComponent implements OnInit {
 		if (this.organisation.id) {
 			this.organisationService.edit(this.organisation).subscribe(() => this.back());
 		} else {
-			this.organisationService.add(this.organisation).subscribe(orga =>
-				this.combineProviderSubsribtions(orga.records).subscribe(() => this.back())
-			);
+			this.organisationService.add(this.organisation).subscribe(orga => {
+				if (this.adminProviders.length) {
+					this.combineProviderSubsribtions(orga.records).subscribe(() => this.back());
+				} else {
+					this.back();
+				}
+			});
 		}
 	}
 

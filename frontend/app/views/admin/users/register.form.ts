@@ -72,14 +72,16 @@ export class RegisterFormComponent implements OnInit {
 	}
 
 	createProviders(): void {
-		for (const orga_id of this.organisationsCtrl.value) {
-			if (orga_id) {
-				const provider = new Provider();
-				provider.organisation_id = orga_id;
-				provider.user_id = this.user.id;
-				provider.organisation = undefined;
-				provider.user = undefined;
-				this.user.providers.push(provider);
+		if (this.organisationsCtrl.value) {
+			for (const orga_id of this.organisationsCtrl.value) {
+				if (orga_id) {
+					const provider = new Provider();
+					provider.organisation_id = orga_id;
+					provider.user_id = this.user.id;
+					provider.organisation = undefined;
+					provider.user = undefined;
+					this.user.providers.push(provider);
+				}
 			}
 		}
 	}

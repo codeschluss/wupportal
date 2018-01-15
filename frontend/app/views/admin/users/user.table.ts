@@ -25,7 +25,8 @@ export class UserTableComponent extends AbstractTableComponent {
 	confirmedUserIDs: Array<number> = new Array<number>();
 
 	@Input() organisation: Organisation;
-	@Output() approvedAsAdmin: EventEmitter<Array<number>> = new EventEmitter<Array<number>>();
+	@Output() approvedAsAdmin: EventEmitter<number> = new EventEmitter<number>();
+	@Output() removedAsAdmin: EventEmitter<number> = new EventEmitter<number>();
 
 	constructor(
 		@Inject(UserService) protected dataService: DataService,
@@ -38,11 +39,6 @@ export class UserTableComponent extends AbstractTableComponent {
 		this.displayedColumns = ['username', 'fullname', 'phone', 'created', 'action'];
 	}
 
-	confirmAsAdmin(userID: number): void {
-		this.confirmedUserIDs.push(userID);
-		this.approvedAsAdmin.emit(this.confirmedUserIDs);
-	}
-
 	isAdmin(userID: number): boolean {
 		if (this.confirmedUserIDs.indexOf(userID) === -1) {
 			return false;
@@ -51,8 +47,15 @@ export class UserTableComponent extends AbstractTableComponent {
 		}
 	}
 
-	removeAdmin(userId: number): void {
-		const index = this.confirmedUserIDs.indexOf(userId);
-		this.confirmedUserIDs.splice(index, 1);
+	addAdmin(userID: number): void {
+		this.confirmedUserIDs.push(userID);
+		this.approvedAsAdmin.emit(userID);
 	}
+
+	removeAdmin(userID: number): void {
+		const index = this.confirmedUserIDs.indexOf(userID);
+		this.confirmedUserIDs.splice(index, 1);
+		this.removedAsAdmin.emit(userID);
+	}
+
 }

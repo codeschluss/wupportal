@@ -96,14 +96,19 @@ export class OrganisationFormComponent implements OnInit {
 		}
 	}
 
-	approvedAsAdmin(event: any[]): void {
-		for (const userID of event) {
-			const provider = new Provider();
-			provider.approved = true;
-			provider.admin = true;
-			provider.user_id = userID;
-			this.adminProviders.push(provider);
-		}
+	approvedAsAdmin(event: any): void {
+		const provider = new Provider();
+		provider.approved = true;
+		provider.admin = true;
+		provider.user_id = event;
+		this.adminProviders.push(provider);
+	}
+
+	removedAsAdmin(event: any): void {
+		const index = this.adminProviders.indexOf(
+			this.adminProviders.find(provider => provider.user_id === event)
+		);
+		this.adminProviders.splice(index, 1);
 	}
 
 	onSubmit(): void {
@@ -120,7 +125,6 @@ export class OrganisationFormComponent implements OnInit {
 	combineProviderSubsribtions(orga: Organisation): Observable<any[]> {
 		const observableProviderArray: Observable<any>[] = [];
 		for (const provider of this.adminProviders) {
-			console.log('orga.id: ' + orga.id);
 			provider.organisation_id = orga.id;
 			observableProviderArray.push(this.providerService.add(provider));
 		}

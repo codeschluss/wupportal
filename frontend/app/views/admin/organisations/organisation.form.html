@@ -40,7 +40,7 @@
 				</mat-step>
 				<mat-step [stepControl]="stepperFormGroup">
 					<ng-template matStepLabel>{{constants.users}}</ng-template>
-					<edit-users #usersTable [organisation]="organisation" (approvedAsAdmin)="approvedAsAdmin($event)"></edit-users>
+					<edit-users #usersTable [organisation]="organisation" (approvedAsAdmin)="approvedAsAdmin($event)" (removedAsAdmin)="removedAsAdmin($event)"></edit-users>
 					<div>
 						<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
 						<button type="button" mat-raised-button color="primary" (click)="prepareSubmit()" matStepperNext>{{constants.next}}</button>

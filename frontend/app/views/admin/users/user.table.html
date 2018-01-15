@@ -38,7 +38,7 @@
 
 	<ng-container matColumnDef="action">
 		<mat-header-cell *matHeaderCellDef>
-			{{organisation ? constants.edit : constants.delete}}
+			{{organisation ? constants.admin + '?' : constants.delete}}
 		</mat-header-cell>
 		<mat-cell *matCellDef="let row">
 			<div *ngIf="!organisation">

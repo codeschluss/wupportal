@@ -50,14 +50,25 @@ export class OrganisationAdminComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.providerService
-			.getByUser(this.authService.currentUser.id, true)
-			.map(data => data.records.map(provider => provider.organisation))
-			.subscribe(adminOrganisations => {
-				adminOrganisations.length > 1
-					? this.selectOrganisation(adminOrganisations)
-					: this.setOrganisationAndProviders(adminOrganisations.shift().id);
-			});
+		this.authService.isSuperUser()
+			? this.organisationService
+				.getAll()
+				.map(data => data.records)
+				.subscribe(organisations => {
+					this.handleRequestedOrganisations(organisations);
+				})
+			: this.providerService
+				.getByUser(this.authService.currentUser.id, true)
+				.map(data => data.records.map(provider => provider.organisation))
+				.subscribe(adminOrganisations => {
+					this.handleRequestedOrganisations(adminOrganisations);
+				});
+	}
+
+	handleRequestedOrganisations(organisations: Array<Organisation>): void {
+		organisations.length > 1
+			? this.selectOrganisation(organisations)
+			: this.setOrganisationAndProviders(organisations.shift().id);
 	}
 
 	selectOrganisation(organisations: Array<Organisation>): void {

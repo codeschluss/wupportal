@@ -28,8 +28,8 @@ import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
 
 @Component({
-	selector: 'organisation-form',
-	templateUrl: 'organisation.form.html',
+	selector: 'organisation-update',
+	templateUrl: 'organisation.update.html',
 	styleUrls: ['../../../app.component.css'],
 	providers: [
 		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] },
@@ -37,88 +37,29 @@ import { Provider } from 'app/models/provider';
 	]
 })
 
-export class OrganisationFormComponent implements OnInit {
+export class OrganisationUpdateComponent {
 
 	@Input() organisation: Organisation;
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
-	@ViewChild('userTableComponent') usersTable: UserTableComponent;
-
-	stepperFormGroup: FormGroup;
-	adminProviders: Array<Provider> = new Array<Provider>();
 
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		@Inject(AddressService) private addressService: DataService,
-		private providerService: ProviderService,
 		private location: Location,
-		public route: ActivatedRoute,
 		public constants: Constants,
 		public validation: ValidationService,
-		private _formBuilder: FormBuilder
 	) { }
-
-	ngOnInit(): void {
-		this.route.paramMap
-			.switchMap((params: ParamMap) => {
-				if (params.get('id') === 'new') {
-					return new Observable(observer => observer.next(new Organisation({})));
-				} else {
-					return this.organisationService.get(params.get('id'));
-				}
-			}).map(data => new Organisation(data.records)).
-			subscribe(organisation => this.organisation = organisation);
-
-		this.stepperFormGroup = this._formBuilder.group({
-			stepCtrl: ['', Validators.required]
-		});
-	}
-
-	addressSubmit(): void {
-		this.addressAutocomplete
-			.getAddress()
-			.subscribe(address => {
-				this.organisation.address = address;
-				this.organisation.address_id = address.id;
-			});
-	}
-
-	approvedAsAdmin(event: any): void {
-		const provider = new Provider();
-		provider.approved = true;
-		provider.admin = true;
-		provider.user_id = event;
-		this.adminProviders.push(provider);
-	}
-
-	removedAsAdmin(event: any): void {
-		const index = this.adminProviders.indexOf(
-			this.adminProviders.find(provider => provider.user_id === event)
-		);
-		this.adminProviders.splice(index, 1);
-	}
 
 	onSubmit(): void {
 		this.organisation.address = null;
-		if (this.organisation.id) {
-			this.organisationService.edit(this.organisation).subscribe(() => this.back());
-		} else {
-			this.organisationService.add(this.organisation).subscribe(orga => {
-				if (this.adminProviders.length) {
-					this.combineProviderSubsribtions(orga.records).subscribe(() => this.back());
-				} else {
-					this.back();
-				}
-			});
-		}
-	}
-
-	combineProviderSubsribtions(orga: Organisation): Observable<any[]> {
-		const observableProviderArray: Observable<any>[] = [];
-		for (const provider of this.adminProviders) {
-			provider.organisation_id = orga.id;
-			observableProviderArray.push(this.providerService.add(provider));
-		}
-		return Observable.forkJoin(observableProviderArray);
+		this.addressAutocomplete.getAddress().subscribe(address => {
+			console.log('OrganisationUpdateComponent - address', address);
+			this.organisation.address_id = address.id;
+			console.log('this.organisation', this.organisation);
+			this.organisationService
+				.edit(this.organisation)
+				.subscribe(() => this.back());
+		});
 	}
 
 	back(): void {

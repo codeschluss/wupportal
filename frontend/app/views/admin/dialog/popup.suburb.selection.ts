@@ -29,9 +29,7 @@ export class SuburbSelectionComponent {
 	}
 
 	onSubmit(): void {
-		this.data.address.suburb_id = this.suburb.id;
-		this.data.address.suburb = this.suburb;
-		this.dialogRef.close(this.data);
+		this.dialogRef.close(this.suburb);
 	}
 }
 

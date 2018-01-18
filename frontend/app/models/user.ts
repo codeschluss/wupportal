@@ -4,12 +4,12 @@ import { Organisation } from 'app/models/organisation';
 
 export class User extends Model {
 
-	public superuser: boolean = false;
-	public username: string = '';
-	public password: string = '';
-	public fullname: string = '';
-	public phone: string = '';
-	public providers: Provider[] = new Array<Provider>();
+	public superuser: boolean;
+	public username: string;
+	public password: string;
+	public fullname: string;
+	public phone: string;
+	public providers: Provider[];
 
 	// calculated field
 	public orgaAdmin: boolean = false;

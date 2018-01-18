@@ -55,6 +55,7 @@ import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { UserFormComponent } from 'app/views/admin/users/user.form';
 import { OrganisationFormComponent } from 'app/views/admin/organisations/organisation.form';
+import { OrganisationUpdateComponent } from 'app/views/admin/organisations/organisation.update';
 import { OrganisationAdminComponent } from 'app/views/admin/organisations/organisation.admin';
 import { ActivityFormComponent } from 'app/views/admin/activities/activity.form';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
@@ -107,6 +108,7 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		AdminComponent,
 		ActivityFormComponent,
 		OrganisationFormComponent,
+		OrganisationUpdateComponent,
 		OrganisationAdminComponent,
 		UserFormComponent,
 

@@ -36,15 +36,17 @@ import { generate } from 'rxjs/observable/generate';
 	]
 })
 
+/*
+	TODO: Processing is not save! Needs check and let observer give null values
+*/
 export class AddressAutocompleteComponent implements OnInit {
+
+	@Input() initialAddress: Address;
 
 	addressCtrl: FormControl;
 	addresses: Address[] = [];
 	filteredAddresses: Observable<Address[]>;
-	nominatimAddress: Address;
-
-	@Input() address: Address;
-	@Output() changedAddress: EventEmitter<Address> = new EventEmitter<Address>();
+	observer: any;
 
 	constructor(
 		@Inject(AddressService) private addressService: DataService,
@@ -54,15 +56,15 @@ export class AddressAutocompleteComponent implements OnInit {
 		private nominatimService: NominatimService,
 		public authService: AuthenticationService
 	) {
-		this.addressService.getAll().subscribe((response) => {
-			for (const add of response.records) {
-				this.addresses.push(new Address(add));
-			}
-		});
+		this.addressService.getAll()
+			.map(response => response.records.map(addressJson => new Address(addressJson)))
+			.subscribe(addresses => {
+				this.addresses = addresses;
+			});
 	}
 
 	ngOnInit(): void {
-		this.addressCtrl = new FormControl(this.address);
+		this.addressCtrl = new FormControl(this.initialAddress);
 		this.filteredAddresses = this.addressCtrl.valueChanges
 			.startWith(<any>[])
 			.map(address => address && typeof address === 'object' ? new Address(address).toString : address)
@@ -83,80 +85,91 @@ export class AddressAutocompleteComponent implements OnInit {
 		}
 	}
 
-	onSubmit(): void {
-		if (typeof this.addressCtrl.value === 'string') {
-			this.handleStringEntry();
-		} else {
-			if (new Address(this.addressCtrl.value).checkAddress()) {
-				this.address = this.addressCtrl.value;
-				this.changedAddress.emit(this.address);
-				this.addressCtrl = new FormControl(this.address);
-			} else {
-				this.changedAddress.emit(null);
-			}
-		}
-	}
-
-	handleStringEntry(): void {
-		this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
-			this.nominatimAddress = new Address(data);
-			if (!this.nominatimAddress.checkAddress()) {
-				this.controlAddress().subscribe(result => {
-					this.nominatimAddress = new Address(result);
-					this.addMissingInformation();
-				});
-			} else {
-				this.addMissingInformation();
-			}
+	getAddress(): Observable<any> {
+		return Observable.create(observer => {
+			this.observer = observer;
+			const addressValue: any = this.addressCtrl.value;
+			typeof addressValue === 'string'
+				? this.handleStringValue(addressValue)
+				: this.handleObjectValue(addressValue);
 		});
 	}
 
-	addMissingInformation(): void {
-		if (!this.findExistingAddress(this.nominatimAddress)) {
-			this.suburbDialog().subscribe(response => {
-				this.address = response.address;
-				this.addressCtrl = new FormControl(this.address);
-				this.changedAddress.emit(this.address);
-			});
-		}
+	handleObjectValue(addressObj: any): void {
+		addressObj.isValid()
+			? this.observer.next(this.addressCtrl.value)
+			: this.observer.next(null);
 	}
 
-	findExistingAddress(address: Address): boolean {
+	handleStringValue(addressString: string): void {
+		addressString
+			? this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
+				const nominatimAddress: Address = new Address(data);
+				nominatimAddress.isValid()
+					? this.handleNominatimResponse(nominatimAddress)
+					: this.handleAddressCreation();
+			})
+			: this.observer.next(null);
+	}
+
+	handleNominatimResponse(nominatimAddress: Address): void {
+		const existingAddress: Address = this.alreadyExits(nominatimAddress);
+		existingAddress
+			? this.observer.next(existingAddress)
+			: this.setAddress(nominatimAddress);
+	}
+
+	alreadyExits(address: Address): Address {
 		for (const currAddress of this.addresses) {
 			if (currAddress.compareTo(address)) {
-				this.address = currAddress;
-				return true;
+				return currAddress;
 			}
 		}
-		return false;
+		return null;
 	}
 
-	controlAddress(): Observable<any> {
+	handleAddressCreation(): void {
+		this.createAddress().subscribe(address => {
+			this.setAddress(address);
+		});
+	}
+
+	setAddress(address: Address): void {
+		this.getSuburb(address).subscribe(suburb => {
+			address.suburb_id = suburb.id;
+			address.suburb = null;
+			this.saveAddress(address);
+		});
+	}
+
+	saveAddress(address: Address): void {
+		this.addressService.add(address)
+			.map(response => new Address(response.records))
+			.subscribe(savedAddress => {
+				this.observer.next(savedAddress);
+			});
+	}
+
+	createAddress(): Observable<any> {
 		const dialogRef = this.controlAddressDialog.open(AddressFormComponent, {
 			disableClose: true,
 			width: '80%',
 			data: {
-				name: '',
 				message: 'Sie können die eingegebene Addresse hier ändern:',
-				address: this.nominatimAddress
 			}
 		});
-
 		return dialogRef.afterClosed();
 	}
 
-	suburbDialog(): Observable<any> {
+	getSuburb(address: Address): Observable<any> {
 		const dialogRef = this.suburbSelectDialog.open(SuburbSelectionComponent, {
 			disableClose: true,
 			width: '250px',
 			data: {
-				name: '',
-				message: 'Sie haben eien neue Adresse eingegeben. Bitte geben Sie den entsprechenden Stadtteil ein.'
-					+ this.nominatimAddress.toString,
-				address: this.nominatimAddress
+				message: 'Sie haben eine neue Adresse eingegeben. Bitte geben Sie den entsprechenden Stadtteil ein.'
+					+ address.toString,
 			}
 		});
-
 		return dialogRef.afterClosed();
 	}
 

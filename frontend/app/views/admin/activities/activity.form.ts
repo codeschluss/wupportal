@@ -285,15 +285,13 @@ export class ActivityFormComponent implements OnInit {
 		return Observable.forkJoin(observableTagArray);
 	}
 
-	addressChanged(event: any): void {
-		if (event && event.id) {
-			this.activity.address_id = event.id;
-		}
-		this.activity.address = event;
-	}
-
-	addressSubmitt(): void {
-		this.addressAutocomplete.onSubmit();
+	addressSubmit(): void {
+		this.addressAutocomplete
+			.getAddress()
+			.subscribe(address => {
+				this.activity.address = address;
+				this.activity.address_id = address.id;
+			});
 	}
 
 	prepareToSubmit(): void {
@@ -319,16 +317,6 @@ export class ActivityFormComponent implements OnInit {
 				}
 			});
 		});
-		if (this.activity.address && !this.activity.address.id) {
-			this.activity.address.suburb = null;
-			this.addressService.add(this.activity.address).
-				map(response => new Address(response.records)).subscribe(
-				address => {
-					this.activity.address = address;
-					this.activity.address.suburb = address.suburb;
-					this.activity.address_id = address.id;
-				});
-		}
 	}
 
 	onSubmit(): void {

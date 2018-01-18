@@ -23,7 +23,7 @@ export class AddressFormComponent {
 		public validation: ValidationService,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 	) {
-		this.address = data.address;
+		this.address = new Address();
 	}
 
 	onNoClick(): void { }

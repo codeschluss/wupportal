@@ -3,64 +3,50 @@ import { Suburb } from 'app/models/suburb';
 
 export class Address extends Model {
 
-	constructor(json: any) {
-		super(json ? json.id : '');
-		if (json) {
-			if (json.latitude) { this.latitude = json.latitude; }
-			if (json.longitude) { this.longitude = json.longitude; }
-			if (json.house_number) { this.house_number = json.house_number; }
-			if (json.place) { this.place = json.place; }
-			if (json.street) { this.street = json.street; }
-			if (json.postal_code) { this.postal_code = json.postal_code; }
-			if (json.suburb_id) { this.suburb_id = json.suburb_id; }
-			if (json.suburb) { this.suburb = new Suburb(json.suburb); }
-		}
+	public latitude: number;
+	public longitude: number;
+	public house_number: string;
+	public place: string;
+	public postal_code: string;
+	public street: string;
+	public suburb_id: string;
+	public suburb: Suburb;
+
+	constructor(json: any = {} as Address) {
+		super(json.id);
+		this.latitude = json.latitude && json.latitude || 0;
+		this.longitude = json.longitude && json.longitude || 0;
+		this.house_number = json.house_number && json.house_number || '0';
+		this.place = json.place && json.place || '';
+		this.postal_code = json.postal_code && json.postal_code || '';
+		this.street = json.street && json.street || '';
+		this.suburb_id = json.suburb_id && json.suburb_id || '';
+		this.suburb = json.suburb && new Suburb(json.suburb) || new Suburb();
 	}
 
-	public latitude: number = 0;
-	public longitude: number = 0;
-	public house_number: string = '0';
-	public place: string = '';
-	public postal_code: string = '';
-	public street: string = '';
-	public suburb_id: string = '';
-
-	public suburb: Suburb = new Suburb;
-
 	get toString(): string {
-		if (this.checkAddress()) {
-			return (
+		return this.isValid()
+			? (
 				this.street + ' ' +
 				this.house_number + ' ' +
 				this.postal_code + ' ' +
 				this.place + ' ' +
-				(this.suburb ? this.suburb.name : ''));
-		} else {
-			return '';
-		}
+				(this.suburb ? this.suburb.name : ''))
+			: '';
 	}
 
 	public compareTo(address: Address): boolean {
-		if (address.street.toLocaleLowerCase().localeCompare(this.street.toLocaleLowerCase()) === 0 &&
+		return address.street.toLocaleLowerCase().localeCompare(this.street.toLocaleLowerCase()) === 0 &&
 			address.house_number.toLocaleLowerCase().localeCompare(this.house_number.toLocaleLowerCase()) === 0 &&
 			address.postal_code.toLocaleLowerCase().localeCompare(this.postal_code.toLocaleLowerCase()) === 0 &&
-			address.place.toLocaleLowerCase().localeCompare(this.place.toLocaleLowerCase()) === 0
-		) {
-			return true;
-		} else {
-			return false;
-		}
+			address.place.toLocaleLowerCase().localeCompare(this.place.toLocaleLowerCase()) === 0;
 	}
 
-	public checkAddress(): boolean {
-		if ((this.house_number !== '0') &&
-			this.place &&
+	public isValid(): boolean {
+		return this.place &&
 			this.postal_code &&
-			this.street) {
-			return true;
-		} else {
-			return false;
-		}
+			this.street &&
+			this.house_number !== '0';
 	}
 
 }

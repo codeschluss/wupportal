@@ -9,40 +9,63 @@
 							<ng-template matStepLabel>{{constants.coreData}}</ng-template>
 							<h2>Stammdaten Ihrer Veranstaltung</h2>
 							<mat-form-field class="edit-form-full-width">
-								<input matInput type="text" formControlName="nameCtrl" placeholder={{constants.title}} name="name" value={{activity.name}}
-								 required id="activity_name_field">
+								<input matInput type="text" formControlName="nameCtrl"
+								  placeholder={{constants.title}}
+								  name="name" value={{activity.name}}
+								  required id="activity_name_field">
 							</mat-form-field>
 							<mat-form-field class="edit-form-full-width">
-								<textarea matInput type="text" formControlName="descriptionCtrl" placeholder="{{constants.description}}" name="description"
-								 value={{activity.description}} id="activity_description_field"></textarea>
+								<textarea matInput type="text"
+								  formControlName="descriptionCtrl"
+								  placeholder="{{constants.description}}"
+								  name="description" value={{activity.description}}
+								  id="activity_description_field"></textarea>
 							</mat-form-field>
-							<h2>Im Namen welcher Organisation soll die Veranstaltung angelegt werden</h2>
+							<h2>Im Namen welcher Organisation
+								soll die Veranstaltung
+								angelegt werden</h2>
 							<mat-form-field>
-								<mat-select required placeholder={{constants.organisation}} formControlName="providerCtrl" name="activity_provider_id">
-									<mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.organisation ? provider.organisation.name : ''}}</mat-option>
+								<mat-select required placeholder={{constants.organisation}}
+								  formControlName="providerCtrl"
+								  name="activity_provider_id">
+									<mat-option *ngFor="let provider of providers"
+									  [value]="provider.id">{{provider.organisation
+										? provider.organisation.name
+										: ''}}</mat-option>
 								</mat-select>
 							</mat-form-field>
-							<mat-checkbox formControlName="showUserCtrl" name="showUser">{{constants.publicUser}}</mat-checkbox>
+							<mat-checkbox formControlName="showUserCtrl"
+							  name="showUser">{{constants.publicUser}}</mat-checkbox>
 
 							<h2 class="edit-form-three-column-width">{{constants.tags}}</h2>
 							<mat-form-field class="edit-form-full-width">
-								<input matInput type="text" formControlName="tagsCtrl" placeholder="{{constants.tags}}" name="tags" id="activity_tags">
+								<input matInput type="text" formControlName="tagsCtrl"
+								  placeholder="{{constants.tags}}"
+								  name="tags" id="activity_tags">
 							</mat-form-field>
 
 							<mat-form-field>
-								<mat-select required placeholder={{constants.category}} formControlName="categoryCtrl" name="activity_category">
-									<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+								<mat-select required placeholder={{constants.category}}
+								  formControlName="categoryCtrl"
+								  name="activity_category">
+									<mat-option *ngFor="let category of categories"
+									  [value]="category.id">{{category.name}}</mat-option>
 								</mat-select>
 							</mat-form-field>
 
 							<mat-form-field>
-								<mat-select placeholder={{constants.targetGroups}} formControlName="targetGroupCtrl" name="activity_targetGroups" multiple>
-									<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
+								<mat-select placeholder={{constants.targetGroups}}
+								  formControlName="targetGroupCtrl"
+								  name="activity_targetGroups"
+								  multiple>
+									<mat-option *ngFor="let targetGroup of targetGroups"
+									  [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
 								</mat-select>
 							</mat-form-field>
 
 							<div>
-								<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+								<button type="button" mat-raised-button
+								  color="primary" matStepperNext>{{constants.next}}</button>
 							</div>
 						</mat-card>
 					</form>
@@ -50,14 +73,19 @@
 
 				<mat-step [stepControl]="secondFormGroup">
 					<ng-template matStepLabel>{{constants.address}}</ng-template>
-					<h2>Wo findet die Veranstaltung statt? </h2>
+					<h2>Wo findet die Veranstaltung
+						statt? </h2>
 					<form [formGroup]="secondFormGroup">
 						<mat-card class="address-card">
-							<address-autocomplete-form #addressAutocompleteComponent [address]="activity.address" (changedAddress)="addressChanged($event)"></address-autocomplete-form>
+							<address-autocomplete-form #addressAutocompleteComponent
+							  [initialAddress]="activity.address"></address-autocomplete-form>
 						</mat-card>
 						<div>
-							<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" mat-raised-button color="primary" matStepperNext (click)="addressSubmitt()">{{constants.next}}</button>
+							<button type="button" mat-raised-button
+							  matStepperPrevious>{{constants.previous}}</button>
+							<button type="button" mat-raised-button
+							  color="primary" matStepperNext
+							  (click)="addressSubmit()">{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
@@ -68,76 +96,129 @@
 					<form [formGroup]="thirdFormGroup">
 						<mat-card class="schedule-card">
 							<div *ngIf="activity.schedules.length">
-								<h2>Kontrollieren Sie an dieser Stelle bitte Ihre Einträge/Ihren Eintrag</h2>
+								<h2>Kontrollieren Sie an dieser
+									Stelle bitte Ihre Einträge/Ihren
+									Eintrag
+								</h2>
 								<mat-accordion>
 									<div *ngFor="let schedule of activity.schedules; index as i">
-										<mat-expansion-panel [expanded]="panelNumber === i" (opened)="declerateDateForms(i)" hideToggle="true">
+										<mat-expansion-panel [expanded]="panelNumber === i"
+										  (opened)="declerateDateForms(i)"
+										  hideToggle="true">
 											<mat-expansion-panel-header>
 												<mat-panel-title>
-													{{ activity.schedules[i].toString }}
+													{{ activity.schedules[i].toString
+													}}
 												</mat-panel-title>
 												<mat-panel-description>
 													{{constants.change}}
 												</mat-panel-description>
 											</mat-expansion-panel-header>
 											<mat-form-field>
-												<input matInput [matDatepicker]="pickerStartDate" name="schedule_start_by" [formControl]="currentStartDate" placeholder="von">
-												<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+												<input matInput [matDatepicker]="pickerStartDate"
+												  name="schedule_start_by"
+												  [formControl]="currentStartDate"
+												  placeholder="von">
+												<mat-datepicker-toggle matSuffix
+												  [for]="pickerStartDate"></mat-datepicker-toggle>
 												<mat-datepicker #pickerStartDate></mat-datepicker>
 											</mat-form-field>
 											<mat-form-field>
-												<input matInput [matDatepicker]="pickerEndDate" name="schedule_end_by" [formControl]="currentEndDate" placeholder="bis">
-												<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+												<input matInput [matDatepicker]="pickerEndDate"
+												  name="schedule_end_by"
+												  [formControl]="currentEndDate"
+												  placeholder="bis">
+												<mat-datepicker-toggle matSuffix
+												  [for]="pickerEndDate"></mat-datepicker-toggle>
 												<mat-datepicker #pickerEndDate></mat-datepicker>
 											</mat-form-field>
 											<mat-form-field>
-												<input matInput type="time" name="start_time" [formControl]="currentStartTime" placeholder="von" id="currentStratTime">
+												<input matInput type="time" name="start_time"
+												  [formControl]="currentStartTime"
+												  placeholder="von" id="currentStratTime">
 											</mat-form-field>
 											<mat-form-field>
-												<input matInput type="time" name="end_time" [formControl]="currentEndTime" placeholder="bis" id="currentEndTime">
+												<input matInput type="time" name="end_time"
+												  [formControl]="currentEndTime"
+												  placeholder="bis" id="currentEndTime">
 											</mat-form-field>
-											<button mat-raised-button type="button" (click)="changeDate(i)">{{constants.change}}</button>
-											<button mat-raised-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
+											<button mat-raised-button type="button"
+											  (click)="changeDate(i)">{{constants.change}}</button>
+											<button mat-raised-button type="button"
+											  (click)="removeDateEntry(i)">{{constants.delete}}</button>
 										</mat-expansion-panel>
 									</div>
 								</mat-accordion>
-								<button mat-raised-button color="warn" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
-								<button mat-raised-button type="button" (click)="addOneSchedule()">{{constants.create + ' ' + constants.date}}</button>
+								<button mat-raised-button color="warn"
+								  type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
+								<button mat-raised-button type="button"
+								  (click)="addOneSchedule()">{{constants.create + '
+									' + constants.date}}</button>
 								<div>
-									<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-									<button type="button" mat-raised-button color="primary" matStepperNext (click)="prepareToSubmit()">{{constants.next}}</button>
+									<button type="button" mat-button
+									  matStepperPrevious>{{constants.previous}}</button>
+									<button type="button" mat-raised-button
+									  color="primary" matStepperNext
+									  (click)="prepareToSubmit()">{{constants.next}}</button>
 								</div>
 							</div>
 							<div *ngIf="!activity.schedules.length">
 								<span>
-									In welchem wöchentlichen Rythmus soll die Veranstaltung stattfinden? Bei einer einmaligen Veranstaltung bitte "0" eingeben</span>
+									In welchem wöchentlichen Rythmus
+									soll die Veranstaltung
+									stattfinden? Bei einer
+									einmaligen Veranstaltung
+									bitte "0" eingeben</span>
 								<span>
-									<input matInput type="number" formControlName="weeklyRythmCtrl" name="weeklyRythm">
+									<input matInput type="number" formControlName="weeklyRythmCtrl"
+									  name="weeklyRythm">
 								</span>
 								<ng-template matStepLabel>Uhrzeit</ng-template>
-								<div>Zu welcher Uhrzeit findet die Veranstaltung statt? </div>
+								<div>Zu welcher Uhrzeit findet
+									die Veranstaltung statt?
+								</div>
 								<mat-form-field>
-									<input matInput type="time" placeholder="startTime" formControlName="startTimeCtrl" name="start_time" id="activity_start_time">
+									<input matInput type="time" placeholder="startTime"
+									  formControlName="startTimeCtrl"
+									  name="start_time" id="activity_start_time">
 								</mat-form-field>
 								<mat-form-field>
-									<input matInput type="time" placeholder="endTime" formControlName="endTimeCtrl" name="end_time" id="activity_end_time">
+									<input matInput type="time" placeholder="endTime"
+									  formControlName="endTimeCtrl"
+									  name="end_time" id="activity_end_time">
 								</mat-form-field>
 								<ng-template matStepLabel>Datum
 								</ng-template>
-								<div>An welchem Datum beginnt bzw. endet die Veranstaltung? Bei eintägigen Veranstaltungen bitte zwei mal das gleiche
-									Datum angeben. Bei regelmäßigen Veranstaltungen bitte das Datum des ersten und das Datum des letzten Termins angeben.</div>
+								<div>An welchem Datum beginnt
+									bzw. endet die Veranstaltung?
+									Bei eintägigen Veranstaltungen
+									bitte zwei mal das gleiche
+									Datum angeben. Bei regelmäßigen
+									Veranstaltungen bitte
+									das Datum des ersten und
+									das Datum des letzten
+									Termins angeben.</div>
 								<mat-form-field>
-									<input matInput [matDatepicker]="pickerStartDate" formControlName="startDateCtrl" placeholder={{constants.beginn}} name="schedule_start_by">
-									<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+									<input matInput [matDatepicker]="pickerStartDate"
+									  formControlName="startDateCtrl"
+									  placeholder={{constants.beginn}}
+									  name="schedule_start_by">
+									<mat-datepicker-toggle matSuffix
+									  [for]="pickerStartDate"></mat-datepicker-toggle>
 									<mat-datepicker #pickerStartDate></mat-datepicker>
 								</mat-form-field>
 								<mat-form-field>
-									<input matInput [matDatepicker]="pickerEndDate" formControlName="endDateCtrl" placeholder={{constants.end}} name="schedule_end_by">
-									<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+									<input matInput [matDatepicker]="pickerEndDate"
+									  formControlName="endDateCtrl"
+									  placeholder={{constants.end}}
+									  name="schedule_end_by">
+									<mat-datepicker-toggle matSuffix
+									  [for]="pickerEndDate"></mat-datepicker-toggle>
 									<mat-datepicker #pickerEndDate></mat-datepicker>
 								</mat-form-field>
 								<div>
-									<button type="button" (click)="generateSchedules()" mat-button>{{constants.ok}}</button>
+									<button type="button" (click)="generateSchedules()"
+									  mat-button>{{constants.ok}}</button>
 								</div>
 							</div>
 						</mat-card>
@@ -147,15 +228,20 @@
 				<mat-step>
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
 					<h2>{{constants.pleaseControl}}</h2>
-					<activity-detail *ngIf="activity.provider && activity.provider.organisation" [activity]="activity"></activity-detail>
+					<activity-detail *ngIf="activity.provider && activity.provider.organisation"
+					  [activity]="activity"></activity-detail>
 					<div>
-						<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-						<button mat-raised-button color="primary" [disabled]="activityForm.invalid" type="submit">{{constants.save}}</button>
+						<button type="button" mat-button
+						  matStepperPrevious>{{constants.previous}}</button>
+						<button mat-raised-button color="primary"
+						  [disabled]="activityForm.invalid"
+						  type="submit">{{constants.save}}</button>
 					</div>
 				</mat-step>
 
 			</mat-horizontal-stepper>
-			<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
+			<button mat-raised-button color="warn"
+			  type="button" (click)="back()">{{constants.cancel}}</button>
 		</mat-card>
 	</form>
 </div>

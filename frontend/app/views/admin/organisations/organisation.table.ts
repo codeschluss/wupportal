@@ -60,8 +60,14 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 		this.sidenav.close();
 	}
 
-	goToWebsite(website: string): void {
-		window.location.href = 'http://' + website;
+	generateWebSite(url: string): string {
+		if (!url) {
+			return '';
+		}
+		if (url.includes('http')) {
+			return url;
+		}
+		return 'http://' + url;
 	}
 
 }

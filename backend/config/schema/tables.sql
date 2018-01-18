@@ -131,7 +131,7 @@ CREATE TABLE `providers` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`admin` BOOLEAN DEFAULT FALSE,
     `approved` BOOLEAN DEFAULT FALSE,
-	`organisation_id` CHAR(36),
+	`organisation_id` CHAR(36) NOT NULL,
 	`user_id` CHAR(36) NOT NULL,
 
 	`created` DATETIME NOT NULL DEFAULT NOW(),

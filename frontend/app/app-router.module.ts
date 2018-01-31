@@ -26,7 +26,7 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 				{ path: 'activities', component: ActivityTableComponent, outlet: 'table' },
 				{ path: 'users', component: UserTableComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'organisations', component: OrganisationsTableComponent, outlet: 'table' },
-				{ path: 'organisation-admin', component: OrganisationAdminComponent, canActivate: [AuthenticationService], outlet: 'table' },
+				{ path: 'organisation-admin/:id', component: OrganisationAdminComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'account', component: UserFormComponent, outlet: 'table' }
 			]
 		},

@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit {
 	initOrganisationAdmin(): void {
 		this.routeLinks.push({
 			label: this.constants.organisationAdmin,
-			link: ['/admin', { outlets: { table: ['organisation-admin'] } }],
+			link: ['/admin', { outlets: { table: ['organisation-admin', 'from-nav'] } }],
 			index: 3
 		});
 	}

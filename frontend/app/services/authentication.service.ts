@@ -72,7 +72,7 @@ export class AuthenticationService implements CanActivate {
 	}
 
 	handleOrgaAdminRoute(): boolean {
-		return this.isOrganisationAdmin()
+		return this.isOrganisationAdmin() || this.isSuperUser()
 			? true
 			: this.handleRedirect();
 	}

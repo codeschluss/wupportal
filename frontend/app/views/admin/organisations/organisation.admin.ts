@@ -2,6 +2,7 @@ import { Component, Inject, ViewChild, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators/map';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
 import {
@@ -46,10 +47,20 @@ export class OrganisationAdminComponent implements OnInit {
 		private authService: AuthenticationService,
 		public constants: Constants,
 		public selectOrgaDialog: MatDialog,
-		public location: Location
+		public location: Location,
+		public route: ActivatedRoute,
 	) { }
 
 	ngOnInit(): void {
+		this.route.paramMap
+			.forEach((params: ParamMap) =>
+				params.get('id') === 'from-nav'
+					? this.handleFromNavigation()
+					: this.setOrganisationAndProviders(params.get('id'))
+			);
+	}
+
+	handleFromNavigation(): void {
 		this.authService.isSuperUser()
 			? this.organisationService
 				.getAll()

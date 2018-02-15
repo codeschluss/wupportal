@@ -28,229 +28,236 @@ use Cake\ORM\TableRegistry;
  */
 class AppController extends Controller
 {
-    /**
-     * Contain helper.
-     *
-     * @return array Contained models
-     */
-    protected function contain() { return []; }
+	/**
+	 * Contain helper.
+	 *
+	 * @return array Contained models
+	 */
+	protected function contain() { return []; }
 
-    /**
-     * filter helper.
-     *
-     * @return array Fields to use for filter
-     */
-    protected function fieldsTofilter() { return []; }
+	/**
+	 * filter helper.
+	 *
+	 * @return array Fields to use for filter
+	 */
+	protected function fieldsTofilter() { return []; }
 
-    /**
-     * @var array $paginate Paginator configuration
-     */
-    public $paginate;
+	/**
+	 * @var array $paginate Paginator configuration
+	 */
+	public $paginate;
 
-    /**
-     * Initialization hook method.
-     *
-     * @return void
-     */
-    public function initialize()
-    {
-        parent::initialize();
+	/**
+	 * Initialization hook method.
+	 *
+	 * @return void
+	 */
+	public function initialize()
+	{
+			parent::initialize();
 
-        $this->loadComponent('RequestHandler');
+			$this->loadComponent('RequestHandler');
 
-        $this->loadComponent('Auth', [
-            'authenticate' => [
-                'Basic' => [
-                    'fields' => [
-                        'username' => 'username',
-                        'password' => 'password'],
-                    'userModel' => 'Users'
-                ],
-            ],
-            'storage' => 'Memory',
-            'unauthorizedRedirect' => false,
-            'loginAction' => false
-        ]);
-    }
+			$this->loadComponent('Auth', [
+				'authorize' => ['Controller'],
+				'authenticate' => [
+						'Basic' => [
+								'fields' => [
+										'username' => 'username',
+										'password' => 'password'],
+								'userModel' => 'Users'
+						],
+				],
+				'storage' => 'Memory',
+				'unauthorizedRedirect' => false,
+				'loginAction' => false
+			]);
+	}
 
-    /**
-     * Before render callback.
-     *
-     * @param \Cake\Event\Event $event The beforeRender event.
-     * @return \Cake\Http\Response|null|void
-     */
-    public function beforeRender(Event $event)
-    {
-    }
+	public function isAuthorized($user)
+	{
+		// Admin can access every action and default deny if not
+		return isset($user['superuser']) && $user['superuser'];
+	}
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
-    public function index()
-    {
-        $query = $this->table()->find()->contain($this->contain());
+	/**
+	 * Before render callback.
+	 *
+	 * @param \Cake\Event\Event $event The beforeRender event.
+	 * @return \Cake\Http\Response|null|void
+	 */
+	public function beforeRender(Event $event)
+	{
+	}
 
-        $this->data($query->all()->toArray());
-    }
+	/**
+	 * Index method
+	 *
+	 * @return \Cake\Http\Response|void
+	 */
+	public function index()
+	{
+			$query = $this->table()->find()->contain($this->contain());
 
-    /**
-     * View method
-     *
-     * @param string|null $id Entry id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $query = $this->table()->find()->contain($this->contain());
-        $query->where([$this->name . '.id' => $id]);
+			$this->data($query->all()->toArray());
+	}
 
-        $this->data($query->first());
-    }
+	/**
+	 * View method
+	 *
+	 * @param string|null $id Entry id.
+	 * @return \Cake\Http\Response|void
+	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+	 */
+	public function view($id = null)
+	{
+			$query = $this->table()->find()->contain($this->contain());
+			$query->where([$this->name . '.id' => $id]);
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        // var_dump($this->table()->patchEntity(
-        //     $this->table()->newEntity(),
-        //     json_decode($this->request->input(), true),
-        //     ['associated' => $this->contain()]
-        // )); exit;
-        $this->data($this->table()->save(
-            $this->table()->patchEntity(
-                $this->table()->newEntity(),
-                json_decode($this->request->input(), true),
-                ['associated' => $this->contain()]
-            )
-        ));
-    }
+			$this->data($query->first());
+	}
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Entry id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id)
-    {
-        // var_dump( $this->table()->patchEntity(
-        //     $this->table()->get($id, ['contain' => $this->contain()]),
-        //     json_decode($this->request->input(), true),
-        //     ['associated' => $this->contain()]
-        // )); exit;
-        $this->data($this->table()->save(
-            $this->table()->patchEntity(
-                $this->table()->get($id, ['contain' => $this->contain()]),
-                json_decode($this->request->input(), true),
-                ['associated' => $this->contain()]
-            )
-        ));
-    }
+	/**
+	 * Add method
+	 *
+	 * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+	 */
+	public function add()
+	{
+			// var_dump($this->table()->patchEntity(
+			//     $this->table()->newEntity(),
+			//     json_decode($this->request->input(), true),
+			//     ['associated' => $this->contain()]
+			// )); exit;
+			$this->data($this->table()->save(
+					$this->table()->patchEntity(
+							$this->table()->newEntity(),
+							json_decode($this->request->input(), true),
+							['associated' => $this->contain()]
+					)
+			));
+	}
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Entry id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id)
-    {
-        $this->data($this->table()->delete($this->table()->get($id)));
-    }
+	/**
+	 * Edit method
+	 *
+	 * @param string|null $id Entry id.
+	 * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+	 * @throws \Cake\Network\Exception\NotFoundException When record not found.
+	 */
+	public function edit($id)
+	{
+			// var_dump( $this->table()->patchEntity(
+			//     $this->table()->get($id, ['contain' => $this->contain()]),
+			//     json_decode($this->request->input(), true),
+			//     ['associated' => $this->contain()]
+			// )); exit;
+			$this->data($this->table()->save(
+					$this->table()->patchEntity(
+							$this->table()->get($id, ['contain' => $this->contain()]),
+							json_decode($this->request->input(), true),
+							['associated' => $this->contain()]
+					)
+			));
+	}
 
-    /**
-     * Fetch method
-     *
-     * @return \Cake\Http\Response|void
-     */
-    public function list()
-    {
-        // var_dump($request); exit;
-        $query = $this->table()->find()->group($this->name . '.id');
-        $request = $this->request->input('json_decode');
-        if (is_null($request)) return;
+	/**
+	 * Delete method
+	 *
+	 * @param string|null $id Entry id.
+	 * @return \Cake\Http\Response|null Redirects to index.
+	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+	 */
+	public function delete($id)
+	{
+			$this->data($this->table()->delete($this->table()->get($id)));
+	}
 
-        $this->setPagination($request);
-        $this->setJoins($query);
-        $this->setSorting($query, $request);
-        $this->setFiltering($query, $request);
-        $this->data($this->paginate($query));
-    }
+	/**
+	 * Fetch method
+	 *
+	 * @return \Cake\Http\Response|void
+	 */
+	public function list()
+	{
+			// var_dump($request); exit;
+			$query = $this->table()->find()->group($this->name . '.id');
+			$request = $this->request->input('json_decode');
+			if (is_null($request)) return;
 
-    protected function setPagination($request)
-    {
-        $this->paginate = [
-            'limit' => $request->pageSize,
-            'page' => $request->page,
-        ];
-    }
+			$this->setPagination($request);
+			$this->setJoins($query);
+			$this->setSorting($query, $request);
+			$this->setFiltering($query, $request);
+			$this->data($this->paginate($query));
+	}
 
-    protected function setJoins($query)
-    {
-        foreach ($this->contain() as $contain) {
-            $query->leftJoinWith($contain)->contain($contain);
-        }
-    }
+	protected function setPagination($request)
+	{
+			$this->paginate = [
+					'limit' => $request->pageSize,
+					'page' => $request->page,
+			];
+	}
 
-    protected function setSorting($query, $request)
-    {
-        if (!empty($request->sort->direction)) {
-            $query
-                ->group($request->sort->active)
-                ->order([$request->sort->active => $request->sort->direction]);
-        }
-    }
+	protected function setJoins($query)
+	{
+			foreach ($this->contain() as $contain) {
+					$query->leftJoinWith($contain)->contain($contain);
+			}
+	}
 
-    protected function setFiltering($query, $request)
-    {
-        if (!empty($request->filter)) {
-            $query->where(['OR' => function($exp, $q) use (&$field, &$request) {
-                $whereClause = [];
-                foreach ($this->fieldsTofilter() as $field) {
-                    $whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
-                }
-                return $whereClause;
-            }]);
-        }
-    }
+	protected function setSorting($query, $request)
+	{
+			if (!empty($request->sort->direction)) {
+					$query
+							->group($request->sort->active)
+							->order([$request->sort->active => $request->sort->direction]);
+			}
+	}
 
-    /**
-     * Data response helper.
-     *
-     * @return void
-     */
-    protected function data($response)
-    {
-        is_bool($response)
-            ? $this->set('bool', $response)
-            : $this->set('records', $response);
+	protected function setFiltering($query, $request)
+	{
+			if (!empty($request->filter)) {
+					$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+							$whereClause = [];
+							foreach ($this->fieldsTofilter() as $field) {
+									$whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
+							}
+							return $whereClause;
+					}]);
+			}
+	}
 
-        if ($this->Paginator) $this->set('pages',
-            $this->Paginator->getPagingParams()[$this->name]['pageCount']);
+	/**
+	 * Data response helper.
+	 *
+	 * @return void
+	 */
+	protected function data($response)
+	{
+			is_bool($response)
+					? $this->set('bool', $response)
+					: $this->set('records', $response);
 
-        if ($this->request->_matchedRoute === '/pdf/screenings/:id') {
-            $this->viewBuilder()->className('CakePdf\View\PdfView');
-        } else {
-            $this->viewBuilder()->className('Json');
-            $this->set('_serialize', true);
-        }
-    }
+			if ($this->Paginator) $this->set('pages',
+					$this->Paginator->getPagingParams()[$this->name]['pageCount']);
 
-    /**
-     * Table helper.
-     *
-     * @return \Cake\ORM\Table
-     */
-    protected function table()
-    {
-        return $this->{$this->name};
-    }
+			if ($this->request->_matchedRoute === '/pdf/screenings/:id') {
+					$this->viewBuilder()->className('CakePdf\View\PdfView');
+			} else {
+					$this->viewBuilder()->className('Json');
+					$this->set('_serialize', true);
+			}
+	}
+
+	/**
+	 * Table helper.
+	 *
+	 * @return \Cake\ORM\Table
+	 */
+	protected function table()
+	{
+			return $this->{$this->name};
+	}
 }

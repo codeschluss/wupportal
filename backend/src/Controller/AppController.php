@@ -77,6 +77,10 @@ class AppController extends Controller
 	public function isAuthorized($user)
 	{
 		// Admin can access every action and default deny if not
+		return $this->isSuperuser($user);
+	}
+
+	protected function isSuperuser($user) {
 		return isset($user['superuser']) && $user['superuser'];
 	}
 
@@ -236,19 +240,16 @@ class AppController extends Controller
 	 */
 	protected function data($response)
 	{
-			is_bool($response)
-					? $this->set('bool', $response)
-					: $this->set('records', $response);
+		is_bool($response)
+			? $this->set('bool', $response)
+			: $this->set('records', $response);
 
-			if ($this->Paginator) $this->set('pages',
-					$this->Paginator->getPagingParams()[$this->name]['pageCount']);
+		if ($this->Paginator) $this->set('pages',
+			$this->Paginator->getPagingParams()[$this->name]['pageCount']);
 
-			if ($this->request->_matchedRoute === '/pdf/screenings/:id') {
-					$this->viewBuilder()->className('CakePdf\View\PdfView');
-			} else {
-					$this->viewBuilder()->className('Json');
-					$this->set('_serialize', true);
-			}
+		$this->viewBuilder()->className('Json');
+		$this->set('_serialize', true);
+
 	}
 
 	/**

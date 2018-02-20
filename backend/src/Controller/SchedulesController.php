@@ -13,4 +13,10 @@ use App\Controller\AppController;
 class SchedulesController extends AppController
 {
 
+	public function initialize()
+	{
+		parent::initialize();
+		$this->Auth->allow(['view','list', 'index', 'add']);
+	}
+
 }

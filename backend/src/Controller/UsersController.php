@@ -98,23 +98,26 @@ class UsersController extends AppController
 
 	public function isAuthorized($user)
 	{
+		$request = $this->request->input('json_decode');
 		switch ($this->request->getParam('action')) {
 			case 'edit':
 				// users can only view details of themselves
-				$request = $this->request->input('json_decode');
-				return $this->isOwnUser($this->request->getParam('id'), $user['id'])
-					&& $this->isOwnUser($request->id, $user['id']);
+				return $this->isOwnUser($request->id,$user);
 			case 'view':
 				// users can only view details of themselves
-				return $this->isOwnUser($this->request->getParam('id'), $user['id']);
+				return $this->request->getParam('id') === $user['id'];
+			case 'delete':
+				// user can be deleted by himself or superusers
+				return $this->isSuperuser($user) || $this->isOwnUser($request->id,$user);
 			default:
 				return parent::isAuthorized($user);
 		}
 	}
 
-	public function isOwnUser($paramUserId, $userId)
+	protected function isOwnUser($requestUserId, $user)
 	{
-		return ($paramUserId === $userId);
+		return $this->request->getParam('id') === $user['id']
+			&& $requestUserId === $user['id'];
 	}
 
 }

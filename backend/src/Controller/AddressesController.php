@@ -13,35 +13,40 @@ use App\Controller\AppController;
 class AddressesController extends AppController
 {
 
-    /**
-     * Contain helper.
-     *
-     * @return array Contained models
-     */
-    protected function contain()
-    {
-        return [
-            'Suburbs'
-        ];
-    }
+	/**
+	 * Contain helper.
+	 *
+	 * @return array Contained models
+	 */
+	protected function contain()
+	{
+		return [
+				'Suburbs'
+		];
+	}
 
-    /**
-     * filter helper.
-     *
-     * @return array Fields to use for filter
-     */
-    protected function fieldsTofilter()
-    {
-        return [
-            'latitude',
-            'longitude',
-            'street',
-            'postal_code',
-            'place',
-            'Suburbs.name'
-        ];
-    }
+	/**
+	 * filter helper.
+	 *
+	 * @return array Fields to use for filter
+	 */
+	protected function fieldsTofilter()
+	{
+		return [
+			'latitude',
+			'longitude',
+			'street',
+			'postal_code',
+			'place',
+			'Suburbs.name'
+		];
+	}
 
+	public function initialize()
+	{
+		parent::initialize();
+		$this->Auth->allow(['view','list', 'index', 'add']);
+	}
 
 
 }

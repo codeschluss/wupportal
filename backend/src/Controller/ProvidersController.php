@@ -132,10 +132,7 @@ class ProvidersController extends AppController
 			return false;
 		}
 
-		if (($request->approved && !$storedProvider->approved)
-				|| ($request->admin && !$storedProvider->admin)) {
-			return false;
-		}
-		return true;
+		return (($request->approved && !$storedProvider->approved)
+				|| ($request->admin && !$storedProvider->admin));
 	}
 }

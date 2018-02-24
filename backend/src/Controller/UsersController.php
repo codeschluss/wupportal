@@ -92,32 +92,89 @@ class UsersController extends AppController
 
 	public function initialize()
 	{
-			parent::initialize();
-			$this->Auth->allow(['add','login']);
+		parent::initialize();
+		$this->Auth->allow(['login']);
+	}
+
+	public function beforeFilter(Event $event)
+	{
+		parent::beforeFilter($event);
+
+		$request = $this->request->input('json_decode');
+
+		if ($this->request->getParam('action') === 'add') {
+			if($request->superuser && !$this->Auth->user('superuser')) {
+				$this->Auth->deny('add');
+			} else {
+				$this->Auth->allow('add');
+			}
+		}
 	}
 
 	public function isAuthorized($user)
 	{
+		if ($this->isSuperuser($user)) return true;
+
 		$request = $this->request->input('json_decode');
 		switch ($this->request->getParam('action')) {
-			case 'edit':
-				// users can only view details of themselves
-				return $this->isOwnUser($request->id,$user);
+				case 'edit':
+				// user can only edit details if:
+				//	- own user and no permission granting (superuser, admin, approved)
+				//  - superuser
+				return $this->isOwnUser($request->id,$user) && $this->noPermissionGrants($request, $user);
 			case 'view':
-				// users can only view details of themselves
-				return $this->request->getParam('id') === $user['id'];
 			case 'delete':
-				// user can be deleted by himself or superusers
-				return $this->isSuperuser($user) || $this->isOwnUser($request->id,$user);
+				// user can be deleted/view by himself or superusers
+				return $this->request->getParam('id') === $user['id'];
 			default:
 				return parent::isAuthorized($user);
 		}
 	}
 
-	protected function isOwnUser($requestUserId, $user)
+	private function isOwnUser($requestUserId, $user)
 	{
 		return $this->request->getParam('id') === $user['id']
 			&& $requestUserId === $user['id'];
+	}
+
+	private function noPermissionGrants($request, $user) {
+		$storedUser = $this->getStoredUser($user['id']);
+		if ($request->superuser && !$storedUser->superuser) {
+			return false;
+		}
+		return $this->checkProviderPermissionGrants($request->providers,$storedUser->providers);
+	}
+
+	private function getStoredUser($userId) {
+		return $this->table()
+			->find()
+			->contain($this->contain())
+			->where([
+				$this->name . '.id' => $userId,
+			])
+			->first();
+	}
+
+	private function checkProviderPermissionGrants($requestProviders, $storedProviders) {
+		if (!empty($requestProviders)) {
+			foreach ($requestProviders as $requestProvider) {
+				if($requestProvider->admin || $requestProvider->approved) {
+					if (!empty($storedProviders)) {
+						foreach($storedProviders as $storedProvider) {
+							if($storedProvider->id === $requestProvider->id) {
+								if (($requestProvider->approved && !$storedProvider->approved)
+									|| ($requestProvider->admin && !$storedProvider->admin)) {
+										return false;
+								}
+							}
+						}
+					} else {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 }

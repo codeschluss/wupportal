@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Tags Controller
@@ -48,7 +49,30 @@ class TagsController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['view','list', 'index', 'add']);
+		$this->Auth->allow(['view','list', 'index']);
 	}
 
+	public function isAuthorized($user)
+	{
+		if ($this->isSuperuser($user)) return true;
+
+		switch ($this->request->getParam('action')) {
+			case 'add':
+				return $this->isApprovedProvider($user['id']);
+			default:
+				return parent::isAuthorized($user);
+		}
+	}
+
+	private function isApprovedProvider($userId) {
+		$providers = TableRegistry::get('Providers');
+		$result = $providers->find()
+			->select(['id'])
+			->where([
+				'user_id' => $userId,
+				'approved' => true
+			])
+		->first();
+		return !empty($result);
+	}
 }

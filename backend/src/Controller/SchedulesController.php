@@ -27,31 +27,59 @@ class SchedulesController extends AppController
 		$request = $this->request->input('json_decode');
 		switch ($this->request->getParam('action')) {
 			case 'add':
+				return  $this->isOwnActivity($user['id'], $request->activity_id) || $this->isOrgaAdminActivity($user['id'], $request->activity_id);
 			case 'edit':
+				if ($this->request->getParam('id') !== $request->id) return false;
+
+				return
+					(($this->isOwnSchedule($user['id'], $this->request->getParam('id'))
+					&& $this->isOwnActivity($user['id'], $request->activity_id))
+					||
+					($this->isOrgaAdminSchedule($user['id'], $this->request->getParam('id'))
+					&& $this->isOrgaAdminActivity($user['id'], $request->activity_id)));
 			case 'delete':
-				return  $this->isOwnActivity($user['id'], $request) || $this->isOrgaAdminActivity($user['id'], $request);
+				return $this->isOwnSchedule($user['id'], $this->request->getParam('id'))
+					|| $this->isOrgaAdminSchedule($user['id'], $this->request->getParam('id'));
 			default:
 				return parent::isAuthorized($user);
 		}
 	}
 
-	private function isOwnActivity($userId, $request)
+	private function isOwnActivity($userId, $activityId)
+	{
+		return $this->isAllowedByActivity($this->getProviderSubquery($userId), $activityId);
+	}
+
+	private function isOrgaAdminActivity($userId, $activityId)
+	{
+		return $this->isAllowedByActivity($this->getProviderOrganisationSubquery($userId), $activityId);
+	}
+
+	private function isOwnSchedule($userId, $scheduleId)
+	{
+		return $this->isAllowedBySchedule($this->getProviderSubquery($userId), $scheduleId);
+	}
+
+	private function isOrgaAdminSchedule($userId, $scheduleId)
+	{
+		return $this->isAllowedBySchedule($this->getProviderOrganisationSubquery($userId), $scheduleId);
+	}
+
+	private function getProviderSubquery($userId)
 	{
 		$providers = TableRegistry::get('Providers');
-		$subqueryProviders = $providers->find()
+		return $providers->find()
 			->select(['id'])
 			->where([
 				'Providers.user_id' => $userId,
 				'Providers.approved' => true
 			]);
-
-		return $this->isAllowed($subqueryProviders, $request->activity_id);
 	}
 
-	private function isOrgaAdminActivity($userId, $request)
+	private function getProviderOrganisationSubquery($userId)
 	{
 		$organisations = TableRegistry::get('Organisations');
-		$subqueryOrganisations = $organisations->find()
+		$organisationAdminSubquery = $organisations->find()
 			->innerJoinWith('Providers')
 			->select(['id'])
 			->where([
@@ -60,16 +88,14 @@ class SchedulesController extends AppController
 			]);
 
 		$providers = TableRegistry::get('Providers');
-		$subqueryProviders = $providers->find()
+		return $providers->find()
 		->select(['id'])
-    ->where(function ($exp, $q) use ($subqueryOrganisations) {
-        return $exp->in('organisation_id', $subqueryOrganisations);
+    ->where(function ($exp, $q) use ($organisationAdminSubquery) {
+        return $exp->in('organisation_id', $organisationAdminSubquery);
 		});
-
-		return $this->isAllowed($subqueryProviders, $request->activity_id);
 	}
 
-	private function isAllowed($subqueryProviders, $activityId)
+	private function isAllowedByActivity($subqueryProviders, $activityId)
 	{
 		$activities = TableRegistry::get('Activities');
 		$result = $activities->find()
@@ -80,7 +106,22 @@ class SchedulesController extends AppController
 			->andWhere(['Activities.id' => $activityId])
 			->first();
 
-		// var_dump($result); exit;
+		return !empty($result);
+	}
+
+	private function isAllowedBySchedule($subqueryProviders, $scheduleId)
+	{
+		$result = $this->table()->find()
+			->innerJoinWith('Activities')
+			->select(['id'])
+			->where(function ($exp, $q) use ($subqueryProviders) {
+					return $exp->in('Activities.provider_id', $subqueryProviders);
+			})
+			->andWhere([
+				'Schedules.id' => $scheduleId,
+			])
+			->first();
+
 		return !empty($result);
 	}
 

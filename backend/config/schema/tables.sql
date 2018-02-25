@@ -56,7 +56,7 @@ CREATE TABLE `schedules` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`start_date` DATETIME,
 	`end_date` DATETIME,
-    `activity_id` CHAR(36),
+  `activity_id` CHAR(36),
 
 	`created` DATETIME NOT NULL DEFAULT NOW(),
 	`modified` DATETIME NOT NULL DEFAULT NOW()

@@ -18,7 +18,8 @@ INSERT INTO `users` (`id`, `superuser`, `username`, `password`, `fullname`, `pho
 
 INSERT INTO `suburbs` (`id`, `name`) VALUES
 ('00000000-0000-0000-0005-100000000000', 'suburb1'),
-('00000000-0000-0000-0005-200000000000', 'suburb2');
+('00000000-0000-0000-0005-200000000000', 'suburb2'),
+('00000000-0000-0000-0005-300000000000', 'todelete');
 
 INSERT INTO `addresses` (`id`, `longitude`, `latitude`, `street`, `house_number`, `postal_code`, `place`, `suburb_id`) VALUES
 ('00000000-0000-0000-0006-100000000000', 7.14733123779296900000, 51.25588989257812500000, 'address1', '1', '42103', 'wuppertal', '00000000-0000-0000-0005-100000000000'),

@@ -19,4 +19,16 @@ class SuburbsController extends AppController
 		$this->Auth->allow(['view','list', 'index']);
 	}
 
+	public function isAuthorized($user)
+	{
+		if ($this->isSuperuser($user)) return true;
+
+		switch ($this->request->getParam('action')) {
+			case 'add':
+				return $this->isApprovedProvider($user['id']);
+			default:
+				return parent::isAuthorized($user);
+		}
+	}
+
 }

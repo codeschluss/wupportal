@@ -63,16 +63,4 @@ class TagsController extends AppController
 				return parent::isAuthorized($user);
 		}
 	}
-
-	private function isApprovedProvider($userId) {
-		$providers = TableRegistry::get('Providers');
-		$result = $providers->find()
-			->select(['id'])
-			->where([
-				'user_id' => $userId,
-				'approved' => true
-			])
-		->first();
-		return !empty($result);
-	}
 }

@@ -84,6 +84,18 @@ class AppController extends Controller
 		return isset($user['superuser']) && $user['superuser'];
 	}
 
+	protected function isApprovedProvider($userId) {
+		$providers = TableRegistry::get('Providers');
+		$result = $providers->find()
+			->select(['id'])
+			->where([
+				'user_id' => $userId,
+				'approved' => true
+			])
+		->first();
+		return !empty($result);
+	}
+
 	/**
 	 * Before render callback.
 	 *

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Providers Controller
@@ -88,7 +89,7 @@ class ProvidersController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['index', 'view', 'add', 'getByUser', 'getByOrganisation']);
+		$this->Auth->allow(['getByUser', 'getByOrganisation']);
 	}
 
 	public function isAuthorized($user)
@@ -96,43 +97,77 @@ class ProvidersController extends AppController
 		if ($this->isSuperuser($user)) return true;
 
 		$request = $this->request->input('json_decode');
-		$storedProvider = $this->getStoredProvider($user['id'], $request->organisation_id);
-
 		switch ($this->request->getParam('action')) {
-			case 'edit':
-				// request is authorized when user:
-				//	- is superuser
-				//	- is admin of this provider organisation
-				//	- is own user but only valid if user doesnt change
-				//		from not approved to approved or not admin to admin
-				if (($storedProvider !== null && !is_bool($storedProvider) && $storedProvider->admin)
-						|| $this->validEditProvider($user, $request, $storedProvider)) {
-					return true;
-				}
-				return false;
+			case 'add':
+				return $this->isOwnUserAndValid($user['id'], $request)
+					|| $this->isOrgaAdminUser($user['id'], $request->organisation_id);
+			case 'view':
 			case 'delete':
-				return $request->user_id === $user['id'] || $storedProvider->admin;
+				return $this->isOwnProvider($user['id'], $this->request->getParam('id'))
+					|| $this->isOrgaAdminProvider($user['id'], $this->request->getParam('id'));
+			case 'edit':
+				if ($this->request->getParam('id') !== $request->id) return false;
+				return $this->isOwnProviderAndValid($user['id'], $request)
+					|| $this->isOrgaAdminProvider($user['id'], $this->request->getParam('id'));
 			default:
 				return parent::isAuthorized($user);
 		}
 	}
 
-	private function getStoredProvider($userId, $organisationId)
+	private function isOwnUserAndValid($userId, $request)
 	{
-		$query = $this->table()->find()->contain($this->contain());
-		$query->where([
-			$this->name . '.user_id' => $userId,
-			$this->name . '.organisation_id' => $organisationId
-		]);
-		return $query->first();
+		return $userId === $request->user_id
+			&& !$request->approved
+			&& !$request->admin;
 	}
 
-	private function validEditProvider($user, $request, $storedProvider) {
-		if ($user['id'] !== $request->user_id) {
-			return false;
-		}
+	private function isOrgaAdminUser($ownUserId, $organisationId)
+	{
+		return $this->table()
+			->exists([
+				'user_id' => $ownUserId,
+				'organisation_id' => $organisationId,
+				'admin' => true
+			]);
+	}
 
-		return (($request->approved && !$storedProvider->approved)
-				|| ($request->admin && !$storedProvider->admin));
+	private function isOwnProvider($userId, $providerId)
+	{
+		$result = $this->getOwnProvider($userId,$providerId);
+		return !empty($result);
+	}
+
+	private function isOrgaAdminProvider($userId, $providerId)
+	{
+		$organisationAdminSubquery = $this->getAdminOrganisationsQuery($userId);
+
+		$result = $this->table()->find()
+		->select(['id'])
+    ->where(function ($exp, $q) use ($organisationAdminSubquery) {
+        return $exp->in('organisation_id', $organisationAdminSubquery);
+		})
+		->andWhere(['id' => $providerId])
+		->first();
+
+		return !empty($result);
+	}
+
+	private function isOwnProviderAndValid($userid, $request)
+	{
+		$ownProvider = $this->getOwnProvider($userid,$request->id);
+		return (!empty($ownProvider) &&
+			(!($request->approved && !$ownProvider->approved)
+			|| !($request->admin && !$ownProvider->admin)));
+	}
+
+	private function getOwnProvider($userId, $providerId)
+	{
+		return $this->table()->find()
+			->select(['id'])
+			->where([
+				'Providers.user_id' => $userId,
+				'Providers.id' => $providerId
+			])
+			->first();
 	}
 }

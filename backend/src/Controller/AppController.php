@@ -74,28 +74,6 @@ class AppController extends Controller
 			]);
 	}
 
-	public function isAuthorized($user)
-	{
-		// Admin can access every action and default deny if not
-		return $this->isSuperuser($user);
-	}
-
-	protected function isSuperuser($user) {
-		return isset($user['superuser']) && $user['superuser'];
-	}
-
-	protected function isApprovedProvider($userId) {
-		$providers = TableRegistry::get('Providers');
-		$result = $providers->find()
-			->select(['id'])
-			->where([
-				'user_id' => $userId,
-				'approved' => true
-			])
-		->first();
-		return !empty($result);
-	}
-
 	/**
 	 * Before render callback.
 	 *
@@ -272,5 +250,60 @@ class AppController extends Controller
 	protected function table()
 	{
 			return $this->{$this->name};
+	}
+
+	/*
+		################### Authorization ##############
+	*/
+
+	public function isAuthorized($user)
+	{
+		// Admin can access every action and default deny if not
+		return $this->isSuperuser($user);
+	}
+
+	protected function isSuperuser($user) {
+		return isset($user['superuser']) && $user['superuser'];
+	}
+
+	protected function isApprovedProvider($userId)
+	{
+		$result = $this->getProviderQuery($userId)->first();
+		return !empty($result);
+	}
+
+	protected function getProviderQuery($userId)
+	{
+		$providers = TableRegistry::get('Providers');
+		return $providers->find()
+			->select(['id'])
+			->where([
+				'Providers.user_id' => $userId,
+				'Providers.approved' => true
+			]);
+	}
+
+	protected function getProviderOrganisationQuery($userId)
+	{
+		$organisationAdminSubquery = $this->getAdminOrganisationsQuery($userId);
+
+		$providers = TableRegistry::get('Providers');
+		return $providers->find()
+		->select(['id'])
+    ->where(function ($exp, $q) use ($organisationAdminSubquery) {
+        return $exp->in('organisation_id', $organisationAdminSubquery);
+		});
+	}
+
+	protected function getAdminOrganisationsQuery($userId)
+	{
+		$organisations = TableRegistry::get('Organisations');
+		return $organisations->find()
+			->innerJoinWith('Providers')
+			->select(['id'])
+			->where([
+				'Providers.user_id' => $userId,
+				'Providers.admin' => true
+			]);
 	}
 }

@@ -121,7 +121,9 @@ class UsersController extends AppController
 				// user can only edit details if:
 				//	- own user and no permission granting (superuser, admin, approved)
 				//  - superuser
-				return $this->isOwnUser($request->id,$user) && $this->noPermissionGrants($request, $user);
+				//
+				return $this->isOwnUser($request->id, $user['id'])
+					&& $this->noPermissionGrants($request, $user['id']);
 			case 'view':
 			case 'delete':
 				// user can be deleted/view by himself or superusers
@@ -131,14 +133,14 @@ class UsersController extends AppController
 		}
 	}
 
-	private function isOwnUser($requestUserId, $user)
+	private function isOwnUser($requestUserId, $userId)
 	{
-		return $this->request->getParam('id') === $user['id']
-			&& $requestUserId === $user['id'];
+		return $this->request->getParam('id') === $userId
+			&& $requestUserId === $userId;
 	}
 
-	private function noPermissionGrants($request, $user) {
-		$storedUser = $this->getStoredUser($user['id']);
+	private function noPermissionGrants($request, $userId) {
+		$storedUser = $this->getStoredUser($userId);
 		if ($request->superuser && !$storedUser->superuser) {
 			return false;
 		}

@@ -13,6 +13,7 @@ import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'activity-table',
@@ -90,8 +91,8 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	toString(schdules: Schedule[]): string {
 		if (schdules) {
 			for (const schedule of schdules) {
-				const currDate = new Date(schedule.start_date);
-				if (currDate > new Date(Date.now())) {
+				const currDate = moment(schedule.start_date);
+				if (currDate.isAfter(moment())) {
 					return new Schedule(schedule).toString;
 				}
 			}

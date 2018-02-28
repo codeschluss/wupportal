@@ -43,7 +43,11 @@ export class OrganisationFormComponent implements OnInit {
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 	@ViewChild('userTableComponent') usersTable: UserTableComponent;
 
-	stepperFormGroup: FormGroup;
+	firstFormGroup: FormGroup;
+	secondFormGroup: FormGroup;
+	thirdFormGroup: FormGroup;
+
+
 	adminProviders: Array<Provider> = new Array<Provider>();
 
 	constructor(
@@ -58,28 +62,37 @@ export class OrganisationFormComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.route.paramMap
-			.switchMap((params: ParamMap) => {
-				if (params.get('id') === 'new') {
-					return new Observable(observer => observer.next(new Organisation({})));
-				} else {
-					return this.organisationService.get(params.get('id'));
-				}
-			}).map(data => new Organisation(data.records)).
-			subscribe(organisation => this.organisation = organisation);
+		this.organisation = new Organisation();
 
-		this.stepperFormGroup = this._formBuilder.group({
-			stepCtrl: ['', Validators.required]
+		this.firstFormGroup = this._formBuilder.group({
+			nameCtrl: new FormControl('', [Validators.required]),
+			descriptionCtrl: new FormControl(''),
+			mailCtrl: new FormControl(''),
+			phoneCtrl: new FormControl(''),
+			webSiteCtrl: new FormControl('')
 		});
+		this.secondFormGroup = this._formBuilder.group({
+			addressCtrl: new FormControl(this.organisation.address.isValid(), [Validators.required])
+		});
+		this.thirdFormGroup = this._formBuilder.group({
+		});
+
 	}
 
 	addressSubmit(): void {
-		this.addressAutocomplete
-			.getAddress()
-			.subscribe(address => {
+		const addressObservable = this.addressAutocomplete.getAddress();
+		if (addressObservable) {
+			addressObservable.subscribe(address => {
 				this.organisation.address = address;
 				this.organisation.address_id = address.id;
+				this.secondFormGroup.get('addressCtrl').setValue(this.organisation.address);
 			});
+		}
+	}
+
+	resetAddress(): void {
+		this.organisation.address = new Address();
+		this.secondFormGroup.get('addressCtrl').setValue('');
 	}
 
 	approvedAsAdmin(event: any): void {

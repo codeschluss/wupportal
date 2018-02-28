@@ -11,7 +11,17 @@ export class Constants {
 	public static previousPageLabel: string = 'Vorherige Seite';
 	public static itemsPerPageLabel: string = 'Einträge pro Seite';
 	public static of: string = 'von';
-	public static weekDaysArray: string[] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+	public weekDaysArray: string[] = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
+	public rythm: string = 'Rythmus';
+	public from: string = 'von';
+	public to: string = 'bis';
+	public unique: string = 'einmalig';
+	public daily: string = 'täglich';
+	public weekly: string = 'wöchentlich';
+	public weekdays: string = 'Wochentage';
+	public monthly: string = 'monatlich';
+	public yearly: string = 'jährlich';
+	public countryCode: string = 'de';
 
 	// --------------------------
 	// LABELS
@@ -68,7 +78,7 @@ export class Constants {
 	public emailFormatMessage: string = 'Feld muss Email Format haben';
 	public notSamePasswordMessage: string = 'Passwörter stimmen nicht überein';
 	public orAreEmptyMessage: string = 'oder sind leer';
-	public beginn: string = 'Anfang';
+	public begin: string = 'Anfang';
 	public end: string = 'Ende';
 	public deleteFromOrganisation: string = 'Aus Organisation entfernen';
 	public wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';

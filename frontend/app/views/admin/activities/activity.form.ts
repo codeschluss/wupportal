@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, WeekDay } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgForm, FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -39,7 +39,12 @@ import { Constants } from 'app/services/constants';
 import { Object } from 'openlayers';
 import { Subscription } from 'rxjs/Subscription';
 import { generate } from 'rxjs/observable/generate';
+import * as moment from 'moment';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { RRule, RRuleSet, Weekday } from 'rrule';
 
+// @Author: Pseipel
 
 @Component({
 	selector: 'activity-form',
@@ -53,7 +58,21 @@ import { generate } from 'rxjs/observable/generate';
 		{ provide: TagService, useFactory: DataServiceFactory(TagService), deps: [HttpClient, AuthenticationService] },
 		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] },
 		{ provide: CategoryService, useFactory: DataServiceFactory(CategoryService), deps: [HttpClient, AuthenticationService] },
-		{ provide: ScheduleService, useFactory: DataServiceFactory(ScheduleService), deps: [HttpClient, AuthenticationService] }
+		{ provide: ScheduleService, useFactory: DataServiceFactory(ScheduleService), deps: [HttpClient, AuthenticationService] },
+		{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+		{
+			provide: MAT_DATE_FORMATS, useValue: {
+				parse: {
+					dateInput: 'LL',
+				},
+				display: {
+					dateInput: 'LL',
+					monthYearLabel: 'MMM YYYY',
+					dateA11yLabel: 'LL',
+					monthYearA11yLabel: 'MMMM YYYY',
+				},
+			}
+		},
 	]
 })
 
@@ -65,14 +84,14 @@ export class ActivityFormComponent implements OnInit {
 	toDeleteSchedules: Schedule[];
 	categories: Category[];
 	providers: Provider[] = [];
-	// schedules: Schedule[];
 	protected user: User;
 
-	isLinear: boolean = true;
 	currentStartDate: FormControl;
-	currentStartTime: FormControl;
+	currentStartTimeHour: FormControl;
+	currentStartTimeMinute: FormControl;
 	currentEndDate: FormControl;
-	currentEndTime: FormControl;
+	currentEndTimeHour: FormControl;
+	currentEndTimeMinute: FormControl;
 	firstFormGroup: FormGroup;
 	secondFormGroup: FormGroup;
 	thirdFormGroup: FormGroup;
@@ -80,6 +99,7 @@ export class ActivityFormComponent implements OnInit {
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 
 	constructor(
+		private adapter: DateAdapter<any>,
 		private activityService: ActivityService,
 		private providerService: ProviderService,
 		@Inject(UserService) public userService: DataService,
@@ -100,6 +120,7 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.adapter.setLocale(this.constants.countryCode);
 		this.providerService
 			.getByUser(this.authService.currentUser.id)
 			.map(data => data.records)
@@ -133,20 +154,53 @@ export class ActivityFormComponent implements OnInit {
 					]),
 					'showUserCtrl': new FormControl(this.activity.show_user ? this.activity.show_user : false),
 					'descriptionCtrl': new FormControl(this.activity.description),
-					'tagsCtrl': new FormControl(this.initTags()),
+					'tagsCtrl': new FormControl(''),
 					'categoryCtrl': new FormControl(this.activity.category.id, [Validators.required]),
 					'targetGroupCtrl': new FormControl(this.activity.target_groups)
 				});
-				this.secondFormGroup = this._formBuilder.group({
+				this.secondFormGroup = new FormGroup({
+					'addressCtrl': new FormControl(this.activity.address.isValid(), [Validators.required])
 				});
-				this.thirdFormGroup = this._formBuilder.group({
-					'startTimeCtrl': new FormControl(this.activity.schedules[0] ? this.activity.schedules[0].startTime : ''),
-					'endTimeCtrl': new FormControl(this.activity.schedules[0] ? this.activity.schedules[0].endTime : ''),
-					'startDateCtrl': new FormControl(this.activity.schedules[0] ? this.activity.schedules[0].start_date : ''),
-					'endDateCtrl': new FormControl(this.activity.schedules[0] ? this.activity.schedules[this.activity.schedules.length - 1].end_date : ''),
-					'weeklyRythmCtrl': new FormControl(0)
+				this.thirdFormGroup = new FormGroup({
+					'startTimeHourCtrl': new FormControl(this.activity.schedules[0] ?
+						moment(this.activity.schedules[0].startTime).hour() : moment().hour()),
+					'startTimeMinuteCtrl': new FormControl(this.activity.schedules[0] ?
+						moment(this.activity.schedules[0].startTime).minute() : moment().minute()),
+					'endTimeHourCtrl': new FormControl(this.activity.schedules[0] ?
+						moment(this.activity.schedules[0].endTime).hour() : moment().hour()),
+					'endTimeMinuteCtrl': new FormControl(this.activity.schedules[0] ?
+						moment(this.activity.schedules[0].endTime).minute() : moment().minute()),
+					'startDateCtrl': new FormControl(this.activity.schedules[0] ?
+						moment(this.activity.schedules[0].startDate) : moment()),
+					'endDateCtrl': new FormControl(this.activity.schedules[0] ?
+						moment(this.activity.schedules[this.activity.schedules.length - 1].end_date) : moment()),
+					'rythmPeriodCtrl': new FormControl(1),
+					'weekdaysCtrl': new FormControl([1]),
+					'weekdayNumberCtrl': new FormControl(1),
+					'monthlyRecurrenceCtrl': new FormControl('monthDate'),
+					'monthDateCtrl': new FormControl(1),
+					'rythmUnitCtrl': new FormControl('unique'),
+					'schedulesCtrl': new FormControl(this.activity.schedules, [Validators.required])
+				});
+				this.firstFormGroup.get('tagsCtrl').valueChanges.subscribe(currTagsValue => {
+					if (currTagsValue.endsWith(',')) {
+						if (!this.activity.tags.find(tag => tag.name === currTagsValue.split(',')[0].toLowerCase())) {
+							const currTag = new Tag();
+							currTag.name = currTagsValue.split(',')[0].toLowerCase();
+							this.activity.tags.push(currTag);
+						}
+						this.firstFormGroup.get('tagsCtrl').setValue('');
+					}
 				});
 			});
+	}
+
+	removeTag(tagName: string): void {
+		for (let i = this.activity.tags.length - 1; i >= 0; i--) {
+			if (this.activity.tags[i].name === tagName) {
+				this.activity.tags.splice(i, 1);
+			}
+		}
 	}
 
 	initCtrl(array: any[]): string[] {
@@ -157,43 +211,120 @@ export class ActivityFormComponent implements OnInit {
 		return ids;
 	}
 
-	initTags(): string {
-		const tagsNames: string[] = [];
-		for (const tag of this.activity.tags) {
-			tagsNames.push(tag.name);
-		}
-		return tagsNames.join();
-	}
-
 	generateSchedules(): void {
-		console.log(this.thirdFormGroup.get('startDateCtrl').value);
-		if (this.thirdFormGroup.get('weeklyRythmCtrl').value > 0) {
+		if (this.thirdFormGroup.get('rythmPeriodCtrl').value > 0 && this.thirdFormGroup.get('rythmUnitCtrl').value !== 'unique') {
 			if (!this.activity.schedules) {
 				this.activity.schedules = [];
 			}
-			const currStartDate = new Date(this.thirdFormGroup.get('startDateCtrl').value);
-			const currEndDate = new Date(this.thirdFormGroup.get('startDateCtrl').value);
-			const end: Date = new Date(this.thirdFormGroup.get('endDateCtrl').value);
-			while (currStartDate < end) {
-				const currSchedule = new Schedule({});
-				currSchedule.startDate = String(currStartDate);
-				currSchedule.startTime = this.thirdFormGroup.get('startTimeCtrl').value;
-				currSchedule.endDate = String(currEndDate);
-				currSchedule.endTime = this.thirdFormGroup.get('endTimeCtrl').value;
-				this.activity.schedules.push(currSchedule);
-				currStartDate.setDate(currStartDate.getDate() + (7 * this.thirdFormGroup.get('weeklyRythmCtrl').value));
-				currEndDate.setDate(currEndDate.getDate() + (7 * this.thirdFormGroup.get('weeklyRythmCtrl').value));
+			const startDate = moment(this.thirdFormGroup.get('startDateCtrl').value);
+			const endDate = moment(this.thirdFormGroup.get('endDateCtrl').value);
+			const recurrenceRange = { start: startDate, end: endDate };
+
+			let rule;
+
+			switch (this.thirdFormGroup.get('rythmUnitCtrl').value) {
+				case 'years':
+					rule = new RRule({
+						freq: RRule.YEARLY,
+						interval: this.thirdFormGroup.get('rythmPeriodCtrl').value,
+						dtstart: startDate.toDate(),
+						until: endDate.toDate()
+					});
+					break;
+				case 'months':
+					if (this.thirdFormGroup.get('monthlyRecurrenceCtrl').value === 'monthDate') {
+						if (startDate.date() > this.thirdFormGroup.get('monthDateCtrl').value) {
+							startDate.add(this.thirdFormGroup.get('rythmPeriodCtrl').value, 'month');
+						}
+						startDate.date(this.thirdFormGroup.get('monthDateCtrl').value);
+						rule = new RRule({
+							freq: RRule.MONTHLY,
+							interval: this.thirdFormGroup.get('rythmPeriodCtrl').value,
+							dtstart: startDate.toDate(),
+							until: endDate.toDate()
+						});
+					} else {
+						const byweekdayArray = [];
+						for (let i = 0; i < this.thirdFormGroup.get('weekdaysCtrl').value.length; i++) {
+							let weekday;
+							switch (this.thirdFormGroup.get('weekdaysCtrl').value[i]) {
+								case 0:
+									weekday = RRule.MO;
+									break;
+								case 1:
+									weekday = RRule.TU;
+									break;
+								case 2:
+									weekday = RRule.WE;
+									break;
+								case 3:
+									weekday = RRule.TH;
+									break;
+								case 4:
+									weekday = RRule.FR;
+									break;
+								case 5:
+									weekday = RRule.SA;
+									break;
+								default:
+									weekday = RRule.SU;
+							}
+							byweekdayArray.push(weekday.nth(
+								this.thirdFormGroup.get('weekdayNumberCtrl').value === 5 ? -1 : this.thirdFormGroup.get('weekdayNumberCtrl').value)
+							);
+						}
+
+						rule = new RRule({
+							freq: RRule.MONTHLY,
+							interval: this.thirdFormGroup.get('rythmPeriodCtrl').value,
+							byweekday: byweekdayArray,
+							dtstart: startDate.toDate(),
+							until: endDate.toDate()
+						});
+					}
+					break;
+				case 'weeks':
+					rule = new RRule({
+						freq: RRule.WEEKLY,
+						interval: this.thirdFormGroup.get('rythmPeriodCtrl').value,
+						byweekday: this.thirdFormGroup.get('weekdaysCtrl').value,
+						dtstart: startDate.toDate(),
+						until: endDate.toDate()
+					});
+					break;
+				default:
+					rule = new RRule({
+						freq: RRule.DAILY,
+						interval: this.thirdFormGroup.get('rythmPeriodCtrl').value,
+						dtstart: startDate.toDate(),
+						until: endDate.toDate()
+					});
 			}
+			const allDates: Date[] = rule.all();
+			allDates.map(date => {
+				const currSchedule = new Schedule({});
+				currSchedule.startDate = moment(date).format();
+				currSchedule.startTimeHour = this.thirdFormGroup.get('startTimeHourCtrl').value;
+				currSchedule.startTimeMinute = this.thirdFormGroup.get('startTimeMinuteCtrl').value;
+				currSchedule.endDate = moment(date).format();
+				currSchedule.endTimeHour = this.thirdFormGroup.get('endTimeHourCtrl').value;
+				currSchedule.endTimeMinute = this.thirdFormGroup.get('endTimeMinuteCtrl').value;
+				this.activity.schedules.push(currSchedule);
+			});
 		} else {
 			const oneTimeSchedule: Schedule = new Schedule({});
-			oneTimeSchedule.startDate = String(this.thirdFormGroup.get('startDateCtrl').value);
-			oneTimeSchedule.end_date = String(this.thirdFormGroup.get('endDateCtrl').value);
-			oneTimeSchedule.startTime = this.thirdFormGroup.get('startTimeCtrl').value;
-			oneTimeSchedule.endTime = this.thirdFormGroup.get('endTimeCtrl').value;
+			oneTimeSchedule.startDate = this.thirdFormGroup.get('startDateCtrl').value;
+			oneTimeSchedule.endDate = this.thirdFormGroup.get('endDateCtrl').value;
+			oneTimeSchedule.startTimeHour = this.thirdFormGroup.get('startTimeHourCtrl').value;
+			oneTimeSchedule.startTimeMinute = this.thirdFormGroup.get('startTimeMinuteCtrl').value;
+			oneTimeSchedule.endTimeHour = this.thirdFormGroup.get('endTimeHourCtrl').value;
+			oneTimeSchedule.endTimeMinute = this.thirdFormGroup.get('endTimeMinuteCtrl').value;
 			this.activity.schedules = [];
 			this.activity.schedules.push(oneTimeSchedule);
 		}
 		this.declerateDateForms(-1);
+		this.thirdFormGroup.get('schedulesCtrl').setValue(this.activity.schedules);
+		console.log(this.thirdFormGroup.get('schedulesCtrl').value);
 	}
 
 	addOneSchedule(): void {
@@ -204,31 +335,38 @@ export class ActivityFormComponent implements OnInit {
 	declerateDateForms(i: number): void {
 		if (i >= 0) {
 			if (this.activity.schedules[i]) {
-				this.currentStartDate = new FormControl(new Date(this.activity.schedules[i].start_date));
-				this.currentStartTime = new FormControl(String(this.activity.schedules[i].startTime));
-				this.currentEndDate = new FormControl(new Date(this.activity.schedules[i].end_date));
-				this.currentEndTime = new FormControl(String(this.activity.schedules[i].endTime));
+				this.currentStartDate = new FormControl(moment(this.activity.schedules[i].start_date).format());
+				this.currentStartTimeHour = new FormControl(moment(this.activity.schedules[i].startTime).hour());
+				this.currentStartTimeMinute = new FormControl(moment(this.activity.schedules[i].startTime).minute());
+				this.currentEndDate = new FormControl(moment(this.activity.schedules[i].end_date).format());
+				this.currentEndTimeHour = new FormControl(moment(this.activity.schedules[i].endTime).hour());
+				this.currentEndTimeMinute = new FormControl(moment(this.activity.schedules[i].endTime).minute());
 			}
 			this.panelNumber = i;
 		} else {
 			this.currentStartDate = new FormControl();
-			this.currentStartTime = new FormControl();
+			this.currentStartTimeHour = new FormControl();
+			this.currentStartTimeMinute = new FormControl();
 			this.currentEndDate = new FormControl();
-			this.currentEndTime = new FormControl();
+			this.currentEndTimeHour = new FormControl();
+			this.currentEndTimeMinute = new FormControl();
 		}
 	}
 
 	changeDate(i: number): void {
-		this.activity.schedules[i].start_date = this.currentStartDate.value;
-		this.activity.schedules[i].startTime = this.currentStartTime.value;
-		this.activity.schedules[i].end_date = this.currentEndDate.value;
-		this.activity.schedules[i].endTime = this.currentEndTime.value;
+		this.activity.schedules[i].startDate = this.currentStartDate.value;
+		this.activity.schedules[i].startTimeHour = this.currentStartTimeHour.value;
+		this.activity.schedules[i].startTimeMinute = this.currentStartTimeMinute.value;
+		this.activity.schedules[i].endDate = this.currentEndDate.value;
+		this.activity.schedules[i].endTimeHour = this.currentEndTimeHour.value;
+		this.activity.schedules[i].endTimeMinute = this.currentEndTimeMinute.value;
 		this.panelNumber = -1;
 	}
 
 	removeDateEntry(i: number): void {
 		if (!this.toDeleteSchedules) {
 			this.toDeleteSchedules = [];
+			this.thirdFormGroup.get('startDateCtrl').setValue(moment());
 		}
 		this.toDeleteSchedules.push(this.activity.schedules[i]);
 		if (i === 0) {
@@ -241,6 +379,7 @@ export class ActivityFormComponent implements OnInit {
 	removeCompleteSchedule(): void {
 		this.toDeleteSchedules = this.activity.schedules;
 		this.activity.schedules = [];
+		this.thirdFormGroup.get('schedulesCtrl').setValue(this.activity.schedules);
 	}
 
 	generateTargetGroupArray(idArray: string[]): Observable<TargetGroup[]> {
@@ -251,47 +390,42 @@ export class ActivityFormComponent implements OnInit {
 		return new Observable(observer => observer.next(target_groups));
 	}
 
-	deleteSchedules(): void {
-		if (this.toDeleteSchedules) {
-			for (const schedule of this.toDeleteSchedules) {
-				this.scheduleService.delete(schedule.id).subscribe();
-			}
-		}
-	}
-
-	handleSchedules(): Observable<any[]> {
-		const observableScheduleArray: Observable<any>[] = [];
-		if (this.activity.schedules.length) {
-			this.activity.schedules.map(sched => {
-				if (sched.id) {
-					observableScheduleArray.push(this.scheduleService.edit(sched));
-				} else {
-					observableScheduleArray.push(this.scheduleService.add(sched));
-				}
-			});
-		}
-		this.activity.schedules = [];
-		return Observable.forkJoin(observableScheduleArray);
-	}
-
 	handleTags(): Observable<any[]> {
 		const observableTagArray: Observable<any>[] = [];
 		this.activity.tags = [];
-		this.firstFormGroup.get('tagsCtrl').value.split(',').map((tagName) => {
-			const currTag: Tag = new Tag();
+		const tagsArray = this.firstFormGroup.get('tagsCtrl').value.split(',');
+		tagsArray.map(tagName => {
+			const currTag = new Tag();
 			currTag.name = tagName;
 			observableTagArray.push(this.tagService.add(currTag));
 		});
 		return Observable.forkJoin(observableTagArray);
 	}
 
+	deleteSchedules(): void {
+		if (this.toDeleteSchedules) {
+			for (const schedule of this.toDeleteSchedules) {
+				if (schedule.id) {
+					this.scheduleService.delete(schedule.id).subscribe();
+				}
+			}
+		}
+	}
+
 	addressSubmit(): void {
-		this.addressAutocomplete
-			.getAddress()
-			.subscribe(address => {
+		const addressObservable = this.addressAutocomplete.getAddress();
+		if (addressObservable) {
+			addressObservable.subscribe(address => {
 				this.activity.address = address;
 				this.activity.address_id = address.id;
+				this.secondFormGroup.get('addressCtrl').setValue(this.activity.address);
 			});
+		}
+	}
+
+	resetAddress(): void {
+		this.activity.address = new Address();
+		this.secondFormGroup.get('addressCtrl').setValue('');
 	}
 
 	prepareToSubmit(): void {
@@ -302,27 +436,17 @@ export class ActivityFormComponent implements OnInit {
 		this.activity.provider_id = this.firstFormGroup.get('providerCtrl').value;
 		this.activity.category = this.categories.find(category => category.id === this.firstFormGroup.get('categoryCtrl').value);
 		this.activity.category_id = this.firstFormGroup.get('categoryCtrl').value;
-		this.handleTags().subscribe(tags => {
-			tags.map(tag => { if (tag.records) { this.activity.tags.push(tag.records); } });
-		});
-		this.generateTargetGroupArray(this.firstFormGroup.get('targetGroupCtrl').value).
-			subscribe(targetGroups => {
-				this.activity.target_groups = targetGroups;
-			});
-		this.deleteSchedules();
-		this.handleSchedules().subscribe(schedules => {
-			schedules.map(schedule => {
-				if (!this.activity.schedules.find(currSched => new Schedule(schedule.records).compareTo(new Schedule(currSched)))) {
-					this.activity.schedules.push(new Schedule(schedule.records));
-				}
-			});
-		});
 	}
 
 	onSubmit(): void {
 		this.activity.provider = null;
 		this.activity.category = null;
 		this.activity.address = null;
+		this.deleteSchedules();
+		this.generateTargetGroupArray(this.firstFormGroup.get('targetGroupCtrl').value).
+			subscribe(targetGroups => {
+				this.activity.target_groups = targetGroups;
+			});
 		if (this.activity.id) {
 			this.activityService.edit(this.activity).subscribe(() => this.back());
 		} else {
@@ -334,5 +458,5 @@ export class ActivityFormComponent implements OnInit {
 		this.location.back();
 	}
 
-
 }
+

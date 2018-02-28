@@ -1,12 +1,8 @@
-<form (ngSubmit)="onSubmit()">
+<form>
 	<mat-form-field class="edit-form-full-width">
-		<input matInput name="address"
-		  placeholder={{constants.address}}
-		  [matAutocomplete]="auto" [formControl]="addressCtrl">
-		<mat-autocomplete #auto="matAutocomplete"
-		  [displayWith]="toString">
-			<mat-option *ngFor="let address of filteredAddresses | async"
-			  [value]="address">
+		<input matInput name="address" placeholder={{constants.address}} [matAutocomplete]="auto" [formControl]="addressCtrl">
+		<mat-autocomplete #auto="matAutocomplete" [displayWith]="toString">
+			<mat-option *ngFor="let address of filteredAddresses | async" [value]="address">
 				{{ address.toString }}
 			</mat-option>
 		</mat-autocomplete>

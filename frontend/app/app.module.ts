@@ -9,6 +9,9 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRadioModule } from '@angular/material/radio';
 
 import {
 	MatButtonModule,
@@ -151,6 +154,9 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		MatChipsModule,
 		MatListModule,
 		MatDatepickerModule,
+		MatMomentDateModule,
+		MatTooltipModule,
+		MatRadioModule,
 		MatCheckboxModule,
 		MatStepperModule,
 		MatGridListModule,

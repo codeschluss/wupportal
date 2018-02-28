@@ -86,13 +86,16 @@ export class AddressAutocompleteComponent implements OnInit {
 	}
 
 	getAddress(): Observable<any> {
-		return Observable.create(observer => {
-			this.observer = observer;
-			const addressValue: any = this.addressCtrl.value;
-			typeof addressValue === 'string'
-				? this.handleStringValue(addressValue)
-				: this.handleObjectValue(addressValue);
-		});
+		const addressValue: any = this.addressCtrl.value;
+		if ((addressValue instanceof Address && addressValue.isValid()) ||
+			(typeof addressValue === 'string' && addressValue.length >= 5)) {
+			return Observable.create(observer => {
+				this.observer = observer;
+				typeof addressValue === 'string'
+					? this.handleStringValue(addressValue)
+					: this.handleObjectValue(addressValue);
+			});
+		}
 	}
 
 	handleObjectValue(addressObj: any): void {

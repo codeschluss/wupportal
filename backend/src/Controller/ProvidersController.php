@@ -86,12 +86,6 @@ class ProvidersController extends AppController
 		$query->where([$this->name . '.organisation_id' => $request->organisation]);
 	}
 
-	public function initialize()
-	{
-		parent::initialize();
-		$this->Auth->allow(['getByUser', 'getByOrganisation']);
-	}
-
 	public function isAuthorized($user)
 	{
 		if ($this->isSuperuser($user)) return true;
@@ -101,14 +95,18 @@ class ProvidersController extends AppController
 			case 'add':
 				return $this->isOwnUserAndValid($user['id'], $request)
 					|| $this->isOrgaAdminUser($user['id'], $request->organisation_id);
+			case 'edit':
+				return $this->isValidEditRequest($request) &&
+					($this->isOwnProviderAndValid($user['id'], $request)
+					|| $this->isOrgaAdminProvider($user['id'], $this->request->getParam('id')));
 			case 'view':
 			case 'delete':
 				return $this->isOwnProvider($user['id'], $this->request->getParam('id'))
 					|| $this->isOrgaAdminProvider($user['id'], $this->request->getParam('id'));
-			case 'edit':
-				if ($this->request->getParam('id') !== $request->id) return false;
-				return $this->isOwnProviderAndValid($user['id'], $request)
-					|| $this->isOrgaAdminProvider($user['id'], $this->request->getParam('id'));
+			case 'getByOrganisation':
+				return $this->isOrgaAdminUser($user['id'], $request->organisation);
+			case 'getByUser':
+				return $user['id'] === $request->user;
 			default:
 				return parent::isAuthorized($user);
 		}
@@ -137,7 +135,7 @@ class ProvidersController extends AppController
 		return !empty($result);
 	}
 
-	private function isOrgaAdminProvider($userId, $providerId)
+	private function isOrgaAdminProvider($userId, $requestId)
 	{
 		$organisationAdminSubquery = $this->getAdminOrganisationsQuery($userId);
 
@@ -146,7 +144,7 @@ class ProvidersController extends AppController
     ->where(function ($exp, $q) use ($organisationAdminSubquery) {
         return $exp->in('organisation_id', $organisationAdminSubquery);
 		})
-		->andWhere(['id' => $providerId])
+		->andWhere(['id' => $requestId])
 		->first();
 
 		return !empty($result);
@@ -158,6 +156,17 @@ class ProvidersController extends AppController
 		return (!empty($ownProvider) &&
 			(!($request->approved && !$ownProvider->approved)
 			|| !($request->admin && !$ownProvider->admin)));
+	}
+
+	private function isValidEditRequest($request)
+	{
+		if ($this->request->getParam('id') !== $request->id) return false;
+
+		return $this->table()
+			->exists([
+				'id' => $request->id,
+				'user_id' => $request->user_id
+			]);
 	}
 
 	private function getOwnProvider($userId, $providerId)

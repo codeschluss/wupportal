@@ -29,7 +29,9 @@ INSERT INTO `addresses` (`id`, `longitude`, `latitude`, `street`, `house_number`
 
 INSERT INTO `categories` (`id`, `name`, `description`, `color`) VALUES
 ('00000000-0000-0000-0007-100000000000', 'category1', 'category1', 'green'),
-('00000000-0000-0000-0007-200000000000', 'category2', 'category2', 'yellow');
+('00000000-0000-0000-0007-200000000000', 'category2', 'category2', 'yellow'),
+('00000000-0000-0000-0007-300000000000', 'category3', 'category3', 'black'),
+('00000000-0000-0000-0007-400000000000', 'todelete', 'todelete', 'lila');
 
 INSERT INTO `organisations` (`id`, `name`, `description`, `website`, `mail`, `phone`, `image`, `address_id`) VALUES
 ('00000000-0000-0000-0008-100000000000', 'organisation1', 'organisation1', 'www.orga1.de', 'organisation@1.de', '01234567890', null, '00000000-0000-0000-0006-100000000000'),

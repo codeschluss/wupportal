@@ -272,6 +272,17 @@ class AppController extends Controller
 		return !empty($result);
 	}
 
+	protected function isOrgaAdminUser($ownUserId, $organisationId)
+	{
+		$providers = TableRegistry::get('Providers');
+		return $providers
+			->exists([
+				'user_id' => $ownUserId,
+				'organisation_id' => $organisationId,
+				'admin' => true
+			]);
+	}
+
 	protected function getProviderQuery($userId)
 	{
 		$providers = TableRegistry::get('Providers');

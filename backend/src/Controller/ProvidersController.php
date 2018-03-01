@@ -119,16 +119,6 @@ class ProvidersController extends AppController
 			&& !$request->admin;
 	}
 
-	private function isOrgaAdminUser($ownUserId, $organisationId)
-	{
-		return $this->table()
-			->exists([
-				'user_id' => $ownUserId,
-				'organisation_id' => $organisationId,
-				'admin' => true
-			]);
-	}
-
 	private function isOwnProvider($userId, $providerId)
 	{
 		$result = $this->getOwnProvider($userId,$providerId);

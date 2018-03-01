@@ -56,29 +56,17 @@ class OrganisationsController extends AppController
 	{
 		if ($this->isSuperuser($user)) return true;
 
-		$request = $this->request->input('json_decode');
-		$storedProvider = $this->getStoredProvider($user['id'], $request->id);
-
 		switch ($this->request->getParam('action')) {
 			case 'edit':
-				// request is authorized when user is admin of this organisation
-				return ($storedProvider !== null
-					&& !is_bool($storedProvider)
-					&& $storedProvider->admin);
+				$request = $this->request->input('json_decode');
+				return $request->id === $this->request->getParam('id')
+					&& $this->isOrgaAdminUser($user['id'], $request->id);
 			case 'delete':
-				return $storedProvider->admin;
+				return $this->isOrgaAdminUser($user['id'], $this->request->getParam('id'));
 			default:
+				// add method
 				return parent::isAuthorized($user);
 		}
 	}
 
-	private function getStoredProvider($userId, $organisationId)
-	{
-		$query = $this->table()->find()->contain('Providers');
-		$query->where([
-			'Providers.user_id' => $userId,
-			'Providers.organisation_id' => $organisationId
-		]);
-		return $query->first();
-	}
 }

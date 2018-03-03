@@ -29,20 +29,21 @@ export class NominatimService extends Service<Address> {
 				if (i) {
 					address.latitude = i['lat'];
 					address.longitude = i['lon'];
-					address.house_number = i['address']['house_number'];
+					address.house_number = i['address']['house_number'] ? i['address']['house_number'] : '';
 					address.place = i['address']['city'];
 					if (address.place == null) {
-						address.place = i['address']['county'];
+						address.place = i['address']['county'] ? i['address']['county'] : '';
 					}
-					address.postal_code = i['address']['postcode'];
+					address.postal_code = i['address']['postcode'] ? i['address']['postcode'] : '';
 					address.street = i['address']['road'];
 					if (address.street == null) {
 						address.street = i['address']['construction'];
 					}
 					if (address.street == null) {
-						address.street = i['address']['pedestrian'];
+						address.street = i['address']['pedestrian'] ? i['address']['pedestrian'] : '';
 					}
 				}
+				console.log(address);
 				return address;
 			}
 			);

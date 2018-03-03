@@ -110,7 +110,7 @@ export class AddressAutocompleteComponent implements OnInit {
 				const nominatimAddress: Address = new Address(data);
 				nominatimAddress.isValid()
 					? this.handleNominatimResponse(nominatimAddress)
-					: this.handleAddressCreation();
+					: this.handleAddressCreation(nominatimAddress);
 			})
 			: this.observer.next(null);
 	}
@@ -131,9 +131,9 @@ export class AddressAutocompleteComponent implements OnInit {
 		return null;
 	}
 
-	handleAddressCreation(): void {
-		this.createAddress().subscribe(address => {
-			this.setAddress(address);
+	handleAddressCreation(address: Address): void {
+		this.createAddress(address).subscribe(addressResponse => {
+			if (addressResponse.isValid()) { this.setAddress(addressResponse); }
 		});
 	}
 
@@ -153,12 +153,13 @@ export class AddressAutocompleteComponent implements OnInit {
 			});
 	}
 
-	createAddress(): Observable<any> {
+	createAddress(address: Address): Observable<any> {
 		const dialogRef = this.controlAddressDialog.open(AddressFormComponent, {
 			disableClose: true,
 			width: '80%',
 			data: {
 				message: 'Sie können die eingegebene Addresse hier ändern:',
+				address: address,
 			}
 		});
 		return dialogRef.afterClosed();

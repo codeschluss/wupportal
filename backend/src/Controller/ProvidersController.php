@@ -125,21 +125,6 @@ class ProvidersController extends AppController
 		return !empty($result);
 	}
 
-	private function isOrgaAdminProvider($userId, $requestId)
-	{
-		$organisationAdminSubquery = $this->getAdminOrganisationsQuery($userId);
-
-		$result = $this->table()->find()
-		->select(['id'])
-    ->where(function ($exp, $q) use ($organisationAdminSubquery) {
-        return $exp->in('organisation_id', $organisationAdminSubquery);
-		})
-		->andWhere(['id' => $requestId])
-		->first();
-
-		return !empty($result);
-	}
-
 	private function isOwnProviderAndValid($userid, $request)
 	{
 		$ownProvider = $this->getOwnProvider($userid,$request->id);

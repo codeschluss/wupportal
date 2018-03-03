@@ -283,6 +283,22 @@ class AppController extends Controller
 			]);
 	}
 
+	protected function isOrgaAdminProvider($userId, $providerId)
+	{
+		$organisationAdminSubquery = $this->getAdminOrganisationsQuery($userId);
+
+		$providers = TableRegistry::get('Providers');
+		$result = $providers->find()
+		->select(['id'])
+    ->where(function ($exp, $q) use ($organisationAdminSubquery) {
+        return $exp->in('organisation_id', $organisationAdminSubquery);
+		})
+		->andWhere(['id' => $providerId])
+		->first();
+
+		return !empty($result);
+	}
+
 	protected function getProviderQuery($userId)
 	{
 		$providers = TableRegistry::get('Providers');

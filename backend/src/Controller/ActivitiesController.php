@@ -85,44 +85,53 @@ class ActivitiesController extends AppController
 		if ($this->isSuperuser($user)) return true;
 
 		$request = $this->request->input('json_decode');
-		$storedProvider = $this->getStoredProvider($user['id'], $request->provider->organisation_id);
-
 		switch ($this->request->getParam('action')) {
 			case 'add':
-				return $storedProvider->approved;
+				return $this->isApprovedProviderForOrga($user['id'], $request->provider_id)
+					|| $this->isOrgaAdminProvider($user['id'], $request->provider_id);
 			case 'edit':
-				// request is authorized when user is:
-				//	- admin of this organisation
-				//	- is own provider of this activity
-				return $storedProvider !== null && !is_bool($storedProvider) &&
-				($storedProvider->admin || $this->validEditOwnActivity($user, $request));
+				return $this->request->getParam('id') === $request->id &&
+					($this->isOwnActivity($user['id'], $request->id)
+					|| $this->isOrgaAdminActivity($user['id'], $request->id));
+
 			case 'delete':
-				return $request->provider->user_id === $user['id'] || $storedProvider->admin;
+				return $this->isOwnActivity($user['id'],  $this->request->getParam('id'))
+					|| $this->isOrgaAdminActivity($user['id'],  $this->request->getParam('id'));
 			default:
 				return parent::isAuthorized($user);
 		}
 	}
 
-	private function getStoredProvider($userId, $organisationId)
+	private function isApprovedProviderForOrga($userId, $providerId)
 	{
-		$query = $this->table()->find()->contain('Providers');
-		$query->where([
-			'Providers.user_id' => $userId,
-			'Providers.organisation_id' => $organisationId
-		]);
-		return $query->first();
+		$result = $this->getProviderQuery($userId)
+			->andWhere(['Providers.id' => $providerId])
+			->first();
+		return !empty($result);
 	}
 
-	private function validEditOwnActivity($user, $request) {
-		if ($user['id'] !== $request->provider->user_id) {
-			return false;
-		}
-		return $this->isOwnedBy($request->provider->id, $request->id);
+	private function isOwnActivity($userId, $activityId)
+	{
+		return $this->isAllowed($this->getProviderQuery($userId), $activityId);
 	}
 
-	private function isOwnedBy($providerId, $activityId)
+	private function isOrgaAdminActivity($userId, $activityId)
 	{
-		return $this->table()->exists(['id' => $activityId, 'provider_id' => $providerId]);
+		return $this->isAllowed($this->getProviderOrganisationQuery($userId), $activityId);
+	}
+
+	private function isAllowed($subqueryProviders, $activityId)
+	{
+		$result = $this->table()->find()
+			->select(['id'])
+			->where(function ($exp, $q) use ($subqueryProviders) {
+					return $exp->in('Activities.provider_id', $subqueryProviders);
+			})
+			->andWhere(['Activities.id' => $activityId])
+			->first();
+
+		return !empty($result);
+
 	}
 
 }

@@ -4,15 +4,18 @@ import { HttpClient } from '@angular/common/http';
 
 import { DataSource } from '@angular/cdk/table';
 
-import { DataServiceFactory } from 'app/services/data.service.factory';
+import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
 import { ActivityService } from 'app/services/activity.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Activity } from 'app/models/activity';
+import { User } from 'app/models/user';
 import { Schedule } from 'app/models/schedule';
 import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
+import { Provider } from 'app/models/provider';
+
 import * as moment from 'moment';
 
 @Component({
@@ -20,7 +23,9 @@ import * as moment from 'moment';
 	styleUrls: ['../table.abstract.css'],
 	templateUrl: 'activity.table.html',
 	providers: [
-		ProviderService, ActivityService]
+		ProviderService, ActivityService,
+		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] }
+	]
 })
 
 export class ActivityTableComponent extends AbstractTableComponent implements OnInit {
@@ -32,6 +37,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	sidenav: MatSidenav;
 
 	currentDetail: Activity;
+	currentUser: User;
 	showNewButton: boolean = false;
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
@@ -39,6 +45,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 		protected authService: AuthenticationService,
 		protected dataService: ActivityService,
 		private providerService: ProviderService,
+		@Inject(UserService) public userService: DataService,
 		protected constants: Constants) {
 		super(dataService, constants);
 		this.checkNewButton();
@@ -105,12 +112,18 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 			this.sidenav.close();
 		} else {
 			this.currentDetail = new Activity(row);
+			if (this.currentDetail.show_user) {
+				this.userService.get(this.currentDetail.provider.user_id).subscribe(user => {
+					this.currentUser = new User(user.records);
+				});
+			}
 			this.sidenav.open();
 		}
 	}
 
 	closeDetails(): void {
 		this.currentDetail = null;
+		this.currentUser = new User();
 		this.sidenav.close();
 	}
 }

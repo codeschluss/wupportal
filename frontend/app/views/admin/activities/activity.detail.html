@@ -1,4 +1,4 @@
-<mat-card *ngIf="activity">
+<mat-card *ngIf="activity && activity.provider && activity.provider.organisation">
 	<mat-card-header>
 		<mat-card-title>
 			<h3>{{constants.coreData}}</h3>
@@ -10,22 +10,28 @@
 		</div>
 		<div>{{constants.organisation}} :
 			<b *ngIf="activity.provider">{{activity.provider.organisation.name}}</b>
+			<div>{{activity.provider.organisation.mail ? constants.mail + ':' + activity.provider.organisation.mail : ''}}</div>
+			<div>{{activity.provider.organisation.phone ? constants.phone + ': ' + activity.provider.organisation.phone : ''}}</div>
 		</div>
 		<div>{{constants.description}} :
 			<b>{{activity.description}}</b>
 		</div>
-		<!-- {{constants.publicUser}}
-		<div *ngIf="activity.show_user">
+		{{constants.publicUser}}
+		<div *ngIf="activity.show_user && user">
 			<b>{{constants.yes}}</b>
-			<div>{{activity.provider.user.fullname}}</div>
-			<div>{{activity.provider.user.username}}</div>
-			<div>{{activity.provider.user.phone}}</div>
+			<div>{{user.fullname ? constants.nameString + ': ' : ''}}
+				<b>{{user.fullname ? user.fullname : ''}}</b>
+			</div>
+			<div>{{user.username ? constants.user + ': ' : ''}}
+				<b>{{user.username ? user.username : ''}}</b>
+			</div>
+			<div>{{user.phone ? constants.phone + ': ' : ''}}
+				<b>{{user.phone ? user.phone : ''}}</b>
+			</div>
 		</div>
 		<div *ngIf="!activity.show_user">
 			<b>{{constants.no}}</b>
-			<div>{{activity.provider.organisation.mail}}</div>
-			<div>{{activity.provider.organisation.phone}}</div>
-		</div>-->
+		</div>
 		<div>{{constants.address}} :
 			<b *ngIf="activity.address">{{activity.address.toString}}</b>
 		</div>

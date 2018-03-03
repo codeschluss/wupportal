@@ -3,7 +3,8 @@ import { Location, WeekDay } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgForm, FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatChipInputEvent } from '@angular/material';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
@@ -84,7 +85,7 @@ export class ActivityFormComponent implements OnInit {
 	toDeleteSchedules: Schedule[];
 	categories: Category[];
 	providers: Provider[] = [];
-	protected user: User;
+	user: User = new User();
 
 	currentStartDate: FormControl;
 	currentStartTimeHour: FormControl;
@@ -95,6 +96,7 @@ export class ActivityFormComponent implements OnInit {
 	firstFormGroup: FormGroup;
 	secondFormGroup: FormGroup;
 	thirdFormGroup: FormGroup;
+	separatorKeysCodes: any[] = [ENTER, COMMA];
 
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 
@@ -121,13 +123,13 @@ export class ActivityFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.adapter.setLocale(this.constants.countryCode);
+
 		this.providerService
 			.getByUser(this.authService.currentUser.id)
 			.map(data => data.records)
 			.subscribe(providers => providers.map(provider => {
 				if (provider.approved) { this.providers.push(provider); }
 			}));
-
 		this.route.paramMap
 			.switchMap((params: ParamMap) => {
 				if (params.get('id') === 'new') {
@@ -182,26 +184,42 @@ export class ActivityFormComponent implements OnInit {
 					'rythmUnitCtrl': new FormControl('unique'),
 					'schedulesCtrl': new FormControl(this.activity.schedules, [Validators.required])
 				});
-				this.firstFormGroup.get('tagsCtrl').valueChanges.subscribe(currTagsValue => {
-					if (currTagsValue.endsWith(',')) {
-						if (!this.activity.tags.find(tag => tag.name === currTagsValue.split(',')[0].toLowerCase())) {
-							const currTag = new Tag();
-							currTag.name = currTagsValue.split(',')[0].toLowerCase();
-							this.activity.tags.push(currTag);
-						}
-						this.firstFormGroup.get('tagsCtrl').setValue('');
-					}
+
+				this.firstFormGroup.get('nameCtrl').valueChanges.subscribe(name => { this.activity.name = name; });
+				this.firstFormGroup.get('descriptionCtrl').valueChanges.subscribe(description => { this.activity.description = description; });
+				this.firstFormGroup.get('providerCtrl').valueChanges.subscribe(() =>
+					this.activity.provider = this.providers.find(provider => provider.id === this.firstFormGroup.get('providerCtrl').value));
+				this.firstFormGroup.get('providerCtrl').valueChanges.subscribe(providerID => { this.activity.provider_id = providerID; });
+				this.firstFormGroup.get('showUserCtrl').valueChanges.subscribe(showUser => { this.activity.show_user = showUser; });
+				this.firstFormGroup.get('categoryCtrl').valueChanges.subscribe(() =>
+					this.activity.category = this.categories.find(category => category.id === this.firstFormGroup.get('categoryCtrl').value));
+				this.firstFormGroup.get('categoryCtrl').valueChanges.subscribe(catID => { this.activity.category_id = catID; });
+				this.userService.get(this.activity.provider.user_id).subscribe(user => {
+					this.user = new User(user.records);
 				});
 			});
 	}
 
-	removeTag(tagName: string): void {
-		for (let i = this.activity.tags.length - 1; i >= 0; i--) {
-			if (this.activity.tags[i].name === tagName) {
-				this.activity.tags.splice(i, 1);
-			}
+	addTag(event: MatChipInputEvent): void {
+		const input = event.input;
+		const value = event.value;
+
+		const currTag = new Tag();
+		currTag.name = value.trim().toLowerCase();
+		this.activity.tags.push(currTag);
+
+		if (input) {
+			input.value = '';
 		}
 	}
+
+	removeTag(tag: Tag): void {
+		const index = this.activity.tags.indexOf(tag);
+		if (index >= 0) {
+			this.activity.tags.splice(index, 1);
+		}
+	}
+
 
 	initCtrl(array: any[]): string[] {
 		const ids: string[] = [];
@@ -324,7 +342,6 @@ export class ActivityFormComponent implements OnInit {
 		}
 		this.declerateDateForms(-1);
 		this.thirdFormGroup.get('schedulesCtrl').setValue(this.activity.schedules);
-		console.log(this.thirdFormGroup.get('schedulesCtrl').value);
 	}
 
 	addOneSchedule(): void {
@@ -426,16 +443,6 @@ export class ActivityFormComponent implements OnInit {
 	resetAddress(): void {
 		this.activity.address = new Address();
 		this.secondFormGroup.get('addressCtrl').setValue('');
-	}
-
-	prepareToSubmit(): void {
-		this.activity.name = this.firstFormGroup.get('nameCtrl').value;
-		this.activity.description = this.firstFormGroup.get('descriptionCtrl').value;
-		this.activity.show_user = this.firstFormGroup.get('showUserCtrl').value;
-		this.activity.provider = this.providers.find(provider => provider.id === this.firstFormGroup.get('providerCtrl').value);
-		this.activity.provider_id = this.firstFormGroup.get('providerCtrl').value;
-		this.activity.category = this.categories.find(category => category.id === this.firstFormGroup.get('categoryCtrl').value);
-		this.activity.category_id = this.firstFormGroup.get('categoryCtrl').value;
 	}
 
 	onSubmit(): void {

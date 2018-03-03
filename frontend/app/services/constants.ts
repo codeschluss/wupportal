@@ -15,7 +15,12 @@ export class Constants {
 	public rythm: string = 'Rythmus';
 	public from: string = 'von';
 	public to: string = 'bis';
+	public at: string = 'am';
 	public unique: string = 'einmalig';
+	public day: string = 'Tag';
+	public week: string = 'Woche';
+	public month: string = 'Monat';
+	public year: string = 'Jahr';
 	public daily: string = 'täglich';
 	public weekly: string = 'wöchentlich';
 	public weekdays: string = 'Wochentage';
@@ -80,13 +85,28 @@ export class Constants {
 	public orAreEmptyMessage: string = 'oder sind leer';
 	public begin: string = 'Anfang';
 	public end: string = 'Ende';
+	public last: string = 'letzten';
 	public deleteFromOrganisation: string = 'Aus Organisation entfernen';
 	public wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
 	public multipleOrganisationMessage: string = 'Sie sind Administrator für mehere Organisationen';
 	public pleaseSelectMessage: string = 'Bitte wählen Sie eine aus:';
 	public publicUser: string = 'Soll der Name des Anbieters veröffentlicht werden?';
 	public dateTimeQuestion: string = 'Wann findet Ihre Veranstaltung statt?';
+	public placeQuestion: string = 'Wo findet Ihre Veranstaltung statt?';
 	public pleaseControl: string = 'Bitte kontrollieren Sie Ihre Angaben';
+	public scheduleListExplanation: string = 'Sie können an dieser Stelle auch Anpssungen vornehmen, ' +
+		'indem Sie auf den jeweiligen	termin klicken.';
+	public chooseOrganisationForActivity: string = 'Im Namen welcher Organisation soll die Veranstaltung angelegt werden';
+	public tagsHint: string = 'Schlagworte bitte mit Komma trennen';
+	public scheduleInfo: string =
+		'Bei eintägigen Veranstaltungen bitte zwei mal' +
+		'das gleiche Datum angeben.Für regelmäßige Veranstaltungen bitte das Datum	des ersten und des' +
+		'letzten Termins angeben.Sie können die Termine anschließend noch einmal kontrollieren und verändern.';
+	public followingWeekdays: string = 'an folgenden Wochentagen';
+	public everyMonth: string = 'eines jeden Monats';
+	public every: string = 'Jede(n/s)';
+	public suffixAmount: string = 'te(n/s)';
+	public suffixNumber: string = 'ten';
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';

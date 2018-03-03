@@ -63,7 +63,6 @@ export class OrganisationFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.organisation = new Organisation();
-
 		this.firstFormGroup = this._formBuilder.group({
 			nameCtrl: new FormControl('', [Validators.required]),
 			descriptionCtrl: new FormControl(''),
@@ -76,7 +75,11 @@ export class OrganisationFormComponent implements OnInit {
 		});
 		this.thirdFormGroup = this._formBuilder.group({
 		});
-
+		this.firstFormGroup.get('nameCtrl').valueChanges.subscribe(name => { this.organisation.name = name; });
+		this.firstFormGroup.get('descriptionCtrl').valueChanges.subscribe(description => { this.organisation.description = description; });
+		this.firstFormGroup.get('mailCtrl').valueChanges.subscribe(mail => { this.organisation.mail = mail; });
+		this.firstFormGroup.get('phoneCtrl').valueChanges.subscribe(phone => { this.organisation.phone = phone; });
+		this.firstFormGroup.get('webSiteCtrl').valueChanges.subscribe(website => { this.organisation.website = website; });
 	}
 
 	addressSubmit(): void {

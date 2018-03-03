@@ -14,7 +14,7 @@ export class Activity extends Model {
 		if (json) {
 			if (json.name) { this.name = json.name; }
 			if (json.description) { this.description = json.description; }
-			if (json.show_user) { this.show_user = json.showUser; }
+			if (json.show_user) { this.show_user = json.show_user; }
 			if (json.address_id) { this.address_id = json.address_id; }
 			if (json.address) { this.address = new Address(json.address); }
 			if (json.provider_id) { this.provider_id = json.provider_id; }

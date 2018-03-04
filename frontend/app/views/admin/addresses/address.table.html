@@ -1,0 +1,72 @@
+<div class="address-container mat-elevation-z8">
+
+	<div class="addresses-table-header">
+		<mat-form-field>
+			<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
+		</mat-form-field>
+	</div>
+
+	<mat-table #table [dataSource]="dataSource" class="address-table">
+
+		<ng-container matColumnDef="Address.street">
+			<mat-header-cell *matHeaderCellDef disableClear="true">
+				{{ constants.street }} </mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.street }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="Address.house_number">
+			<mat-header-cell *matHeaderCellDef disableClear="true">
+				{{ constants.houseNumber }} </mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.house_number }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="Address.postal_code">
+			<mat-header-cell *matHeaderCellDef disableClear="true">
+				{{ constants.postalCode }} </mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.postal_code }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="Address.place">
+			<mat-header-cell *matHeaderCellDef disableClear="true">
+				{{ constants.place }} </mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.place }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="Suburb.name">
+			<mat-header-cell *matHeaderCellDef disableClear="true">
+				{{ constants.quarter }} </mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.suburb.name }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="Address.latitude">
+			<mat-header-cell *matHeaderCellDef disableClear="true">
+				{{ constants.latitude }} </mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.latitude }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="Address.longitude">
+			<mat-header-cell *matHeaderCellDef disableClear="true">
+				{{ constants.longitude }} </mat-header-cell>
+			<mat-cell *matCellDef="let row">{{ row.longitude }}</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="action">
+			<mat-header-cell *matHeaderCellDef>
+				{{constants.edit}} / {{constants.delete}}
+			</mat-header-cell>
+			<mat-cell *matCellDef="let row">
+				<button mat-button color="primary" routerLink='/address/edit/{{row.id}}'>
+					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+				</button>
+				<delete-action [recordID]="row.id" [nameToDelete]="row.name" (onDelete)="onDelete($event)">
+				</delete-action>
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+	</mat-table>
+
+	<table-paginator #PaginatorComponent (handlePageChanged)="handlePageChanged($event)">
+	</table-paginator>
+</div>

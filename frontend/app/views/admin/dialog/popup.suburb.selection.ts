@@ -7,6 +7,7 @@ import { DataServiceFactory, SuburbService } from 'app/services/data.service.fac
 import { Suburb } from 'app/models/suburb';
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { Constants } from 'app/services/constants';
 
 
 @Component({
@@ -21,10 +22,14 @@ export class SuburbSelectionComponent {
 	suburb: Suburb;
 
 	constructor(
+		protected constants: Constants,
 		@Inject(SuburbService) private service: DataService,
 		public dialogRef: MatDialogRef<SuburbSelectionComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) {
+		if (data.address && data.address.suburb) {
+			this.suburb = data.address.suburb;
+		}
 		this.service.getAll().subscribe((response) => this.suburbs = response.records);
 	}
 

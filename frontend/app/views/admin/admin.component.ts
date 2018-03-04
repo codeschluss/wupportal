@@ -11,7 +11,7 @@ import { AuthenticationService } from 'app/services/authentication.service';
 
 export class AdminComponent implements OnInit {
 	routeLinks: any[] = [];
-	activeLinkIndex: number = -1;
+	activeLinkIndex: number = 0;
 
 	constructor(
 		private location: Location,
@@ -62,12 +62,17 @@ export class AdminComponent implements OnInit {
 			link: ['/admin', { outlets: { table: ['users'] } }],
 			index: 4
 		});
+		this.routeLinks.push({
+			label: this.constants.addressManagement,
+			link: ['/admin', { outlets: { table: ['addresses'] } }],
+			index: 5
+		});
 
 		// TODO: Configuration view
 	}
 
 	ngOnInit(): void {
-		this.router.events.subscribe((res) => {
+		this.router.events.subscribe(() => {
 			this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
 		});
 	}

@@ -72,7 +72,10 @@ import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
 
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
+import { AddressCreateFormComponent } from 'app/views/admin/addresses/address.create.form';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
+import { AddressTableComponent } from 'app/views/admin/addresses/address.table';
+
 
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
@@ -101,6 +104,7 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 
 		UserTableComponent,
 		OrganisationsTableComponent,
+		AddressTableComponent,
 		ActivityTableComponent,
 		ProviderTableComponent,
 		ProviderApprovalTableComponent,
@@ -119,6 +123,7 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		OrganisationDetailComponent,
 
 		SuburbSelectionComponent,
+		AddressCreateFormComponent,
 		AddressFormComponent,
 		DeleteDialogComponent,
 		DeleteActionComponent,
@@ -176,7 +181,7 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 	],
 	entryComponents: [
 		SuburbSelectionComponent,
-		AddressFormComponent,
+		AddressCreateFormComponent,
 		DeleteDialogComponent,
 		OrganisationSelectionComponent
 	], exports: [

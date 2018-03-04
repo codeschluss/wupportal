@@ -19,7 +19,7 @@ import {
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { NominatimService } from 'app/services/nominatim';
-import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
+import { AddressCreateFormComponent } from 'app/views/admin/addresses/address.create.form';
 import { Constants } from 'app/services/constants';
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
 import { Object } from 'openlayers';
@@ -133,7 +133,8 @@ export class AddressAutocompleteComponent implements OnInit {
 
 	handleAddressCreation(address: Address): void {
 		this.createAddress(address).subscribe(addressResponse => {
-			if (addressResponse.isValid()) { this.setAddress(addressResponse); }
+			const responseAddress = new Address(addressResponse);
+			if (responseAddress.isValid()) { this.setAddress(responseAddress); }
 		});
 	}
 
@@ -154,7 +155,7 @@ export class AddressAutocompleteComponent implements OnInit {
 	}
 
 	createAddress(address: Address): Observable<any> {
-		const dialogRef = this.controlAddressDialog.open(AddressFormComponent, {
+		const dialogRef = this.controlAddressDialog.open(AddressCreateFormComponent, {
 			disableClose: true,
 			width: '80%',
 			data: {
@@ -172,6 +173,7 @@ export class AddressAutocompleteComponent implements OnInit {
 			data: {
 				message: 'Sie haben eine neue Adresse eingegeben. Bitte geben Sie den entsprechenden Stadtteil ein.'
 					+ address.toString,
+				address: address
 			}
 		});
 		return dialogRef.afterClosed();

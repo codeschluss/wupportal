@@ -115,11 +115,12 @@ export class Constants {
 	public phone: string = 'Telefon';
 	public mail: string = 'Email';
 	public address: string = 'Adresse';
+	public addressManagement: string = 'Adressverwaltung';
 	public street: string = 'Straße';
 	public postalCode: string = 'PLZ';
 	public place: string = 'Ort';
 	public houseNumber: string = 'Hausnummer';
-	public quarter: string = 'Viertel';
+	public quarter: string = 'quatier';
 	public longitude: string = 'Längengrad';
 	public latitude: string = 'Breitengrad';
 	public dates: string = 'Termine';

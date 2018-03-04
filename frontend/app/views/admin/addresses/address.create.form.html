@@ -1,5 +1,7 @@
-<mat-card *ngIf="address">
+<div>
+	{{data.message}}
 	<form #addressForm="ngForm" (ngSubmit)="onSubmit()" class="well">
+
 		<mat-form-field class="edit-form-full-width">
 			<input matInput type="text" required [(ngModel)]="address.street" placeholder={{constants.street}} name="street" value={{address.street}}
 			 id="address_street_field">
@@ -24,15 +26,7 @@
 			<input matInput type="number" required [(ngModel)]="address.longitude" placeholder={{constants.longitude}} name="longitude"
 			 value={{address.longitude}} id="address_longitude_field">
 		</mat-form-field>
-		<div *ngIf="address.suburb && address.suburb.name">{{address.suburb.name + ' '}}
-			<i (click)="resetSuburb()" class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i>
-		</div>
-		<mat-form-field *ngIf="!address.suburb">
-			<mat-select name="suburb" placeholder={{constants.quarter}} [(ngModel)]="address.suburb">
-				<mat-option *ngFor="let suburb of suburbs" [value]="suburb">{{suburb.name}}</mat-option>
-			</mat-select>
-		</mat-form-field>
-		<button mat-raised-button (click)="onSubmit()">{{constants.ok}}</button>
-		<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
+		<button mat-raised-button (click)="onSubmit()" [disabled]="addressForm.invalid">{{constants.ok}}</button>
+		<button mat-raised-button color="warn" (click)="cancel()">{{constants.cancel}}</button>
 	</form>
-</mat-card>
+</div>

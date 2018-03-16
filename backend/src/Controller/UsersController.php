@@ -121,7 +121,6 @@ class UsersController extends AppController
 				// user can only edit details if:
 				//	- own user and no permission granting (superuser, admin, approved)
 				//  - superuser
-				//
 				return $this->isOwnUser($request->id, $user['id'])
 					&& $this->noPermissionGrants($request, $user['id']);
 			case 'view':

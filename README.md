@@ -26,10 +26,12 @@ When those prerequisites are met, at least one administrative user should be cre
 Clone the repository
 
 #### Step 2.
-generate app.php in backend\config by duplicating app.default.php and configure it
+generate app.php in backend\config by duplicating app.default.php (change name to app.php). Then configure it:
+- change database settings in section Datasources of app.php: driver (most cases Cake\Database\Driver\Mysql), username (most cases root), password (most cases empty), database (should be 'wupportal') 
+- generate security salt as follows ```php gen-salt.php``` in folder backend\config. Copy the output from the console and paste it in the corresponding security section of app.php. This generated hash value is especially necessary for hashing the user passwords in database. 
 
 #### Step 3. 
-[Composer](https://getcomposer.org/) install
+[Composer](https://getcomposer.org/) install in folder \backend (where composer.json is)
 
 #### Step 4. 
 go to frontend and 

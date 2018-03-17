@@ -13,5 +13,4 @@ frontend/*.log
 frontend/node_modules
 frontend/dist
 frontend/package-lock.json
-/backend/webroot/fonts
-/backend/webroot/styles
+/backend/webroot/js

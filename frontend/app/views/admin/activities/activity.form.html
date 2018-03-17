@@ -118,7 +118,7 @@
 									</mat-grid-tile>
 
 									<mat-grid-tile colspan="1" rowspan="1">
-										<h3>INFOS</h3>
+										<h3>{{ constants.infos }}</h3>
 									</mat-grid-tile>
 
 									<mat-grid-tile colspan="1" rowspan="1">
@@ -269,7 +269,6 @@
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
 					<h2>{{constants.pleaseControl}}</h2>
 					<activity-detail *ngIf="activity && user" [user]="user" [activity]="activity"></activity-detail>
-					<!-- <activity-detail *ngIf="activity && !user" [activity]="activity"></activity-detail> -->
 					<div>
 						<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
 						<button mat-raised-button color="primary" type="submit">{{constants.save}}</button>

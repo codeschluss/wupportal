@@ -1,0 +1,18 @@
+<mat-card class="edit-container">
+	<h2>{{ constants.configuration }}
+		<span style="color:red;  font-size: large;">{{ constants.warning + ' ' + constants.configWarning}} </span>
+	</h2>
+	<form #configForm="ngForm" (ngSubmit)="onSubmit()">
+		<mat-grid-list cols="3" rowHeight="100px">
+			<div *ngFor="let config of configurations;let i = index">
+				<mat-grid-tile colspan="1" rowspan="1">
+					<mat-form-field class="edit-form-full-width">
+						<input matInput type="text" name="config.{{i}}.value" [(ngModel)]=config.value placeholder={{constants[config.item]}} required/>
+					</mat-form-field>
+				</mat-grid-tile>
+			</div>
+		</mat-grid-list>
+		<button mat-raised-button [disabled]="!configForm.form.valid" color="primary" type="submit">{{constants.save}}</button>
+		<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
+	</form>
+</mat-card>

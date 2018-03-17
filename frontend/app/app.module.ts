@@ -76,6 +76,7 @@ import { AddressCreateFormComponent } from 'app/views/admin/addresses/address.cr
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { AddressTableComponent } from 'app/views/admin/addresses/address.table';
 
+import { ConfigFormComponent } from 'app/views/admin/configs/config.form';
 
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
@@ -125,6 +126,7 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		SuburbSelectionComponent,
 		AddressCreateFormComponent,
 		AddressFormComponent,
+		ConfigFormComponent,
 		DeleteDialogComponent,
 		DeleteActionComponent,
 		OrganisationSelectionComponent,

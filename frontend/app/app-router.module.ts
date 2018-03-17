@@ -14,6 +14,7 @@ import { UserTableComponent } from 'app/views/admin/users/user.table';
 import { AddressTableComponent } from 'app/views/admin/addresses/address.table';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
+import { ConfigFormComponent } from 'app/views/admin/configs/config.form';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 
@@ -28,6 +29,7 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 				{ path: 'activities', component: ActivityTableComponent, outlet: 'table' },
 				{ path: 'users', component: UserTableComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'addresses', component: AddressTableComponent, canActivate: [AuthenticationService], outlet: 'table' },
+				{ path: 'configurations', component: ConfigFormComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'organisations', component: OrganisationsTableComponent, outlet: 'table' },
 				{ path: 'organisation-admin/:id', component: OrganisationAdminComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'account', component: UserFormComponent, outlet: 'table' }

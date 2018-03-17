@@ -146,6 +146,16 @@ export class Constants {
 	public error: string = 'Fehler';
 	public done: string = 'Erledigt';
 	public summary: string = 'Zusammenfassung';
+	public infos: string = 'Infos';
+	public warning: string = 'Achtung!';
+
+	public configWarning: string = 'Durch Veränderungen in diesem Bereich verändern Sie die öffentliche Darstellung dieses Portals!';
+	public mapcenterLongitude: string = 'Längengrad für Kartenmittelpunkt';
+	public mapcenterLatitude: string = 'Breitengrad für Kartenmittelpunkt';
+	public zoomfactor: string = 'Zoomfaktor für Karte';
+	public mapProjection: string = 'Kartenprojektion';
+	public portalName: string = 'Name dieses Portals';
+	public portalSubtitle: string = 'Unterschrift dieses Portalnamens';
 
 
 	// --------------------------

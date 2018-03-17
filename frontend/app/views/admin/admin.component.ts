@@ -67,8 +67,11 @@ export class AdminComponent implements OnInit {
 			link: ['/admin', { outlets: { table: ['addresses'] } }],
 			index: 5
 		});
-
-		// TODO: Configuration view
+		this.routeLinks.push({
+			label: this.constants.configuration,
+			link: ['/admin', { outlets: { table: ['configurations'] } }],
+			index: 6
+		});
 	}
 
 	ngOnInit(): void {

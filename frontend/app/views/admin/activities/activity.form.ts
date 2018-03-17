@@ -321,10 +321,10 @@ export class ActivityFormComponent implements OnInit {
 			const allDates: Date[] = rule.all();
 			allDates.map(date => {
 				const currSchedule = new Schedule({});
-				currSchedule.startDate = moment(date).format();
+				currSchedule.startDate = moment(date).utc().format();
 				currSchedule.startTimeHour = this.thirdFormGroup.get('startTimeHourCtrl').value;
 				currSchedule.startTimeMinute = this.thirdFormGroup.get('startTimeMinuteCtrl').value;
-				currSchedule.endDate = moment(date).format();
+				currSchedule.endDate = moment(date).utc().format();
 				currSchedule.endTimeHour = this.thirdFormGroup.get('endTimeHourCtrl').value;
 				currSchedule.endTimeMinute = this.thirdFormGroup.get('endTimeMinuteCtrl').value;
 				this.activity.schedules.push(currSchedule);
@@ -352,10 +352,10 @@ export class ActivityFormComponent implements OnInit {
 	declerateDateForms(i: number): void {
 		if (i >= 0) {
 			if (this.activity.schedules[i]) {
-				this.currentStartDate = new FormControl(moment(this.activity.schedules[i].start_date).format());
+				this.currentStartDate = new FormControl(this.activity.schedules[i].start_date);
 				this.currentStartTimeHour = new FormControl(moment(this.activity.schedules[i].startTime).hour());
 				this.currentStartTimeMinute = new FormControl(moment(this.activity.schedules[i].startTime).minute());
-				this.currentEndDate = new FormControl(moment(this.activity.schedules[i].end_date).format());
+				this.currentEndDate = new FormControl(this.activity.schedules[i].end_date);
 				this.currentEndTimeHour = new FormControl(moment(this.activity.schedules[i].endTime).hour());
 				this.currentEndTimeMinute = new FormControl(moment(this.activity.schedules[i].endTime).minute());
 			}

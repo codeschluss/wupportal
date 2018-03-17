@@ -188,10 +188,10 @@ Type::build('datetime')
 Type::build('timestamp')
     ->useImmutable();
 
-Cake\I18n\Date::setToStringFormat('yyyy-MM-dd hh:mm:ss');
-Cake\I18n\Date::setJsonEncodeFormat('yyyy-MM-dd hh:mm:ss');  // For any mutable Date
-Cake\I18n\FrozenTime::setToStringFormat('yyyy-MM-dd hh:mm:ss');
-Cake\I18n\FrozenTime::setJsonEncodeFormat('yyyy-MM-dd hh:mm:ss');
+// Cake\I18n\Date::setToStringFormat('yyyy-MM-dd hh:mm:ss');
+// Cake\I18n\Date::setJsonEncodeFormat('yyyy-MM-dd hh:mm:ss');  // For any mutable Date
+// Cake\I18n\FrozenTime::setToStringFormat('yyyy-MM-dd hh:mm:ss');
+// Cake\I18n\FrozenTime::setJsonEncodeFormat('yyyy-MM-dd hh:mm:ss');
 
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize

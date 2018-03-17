@@ -42,25 +42,6 @@ class UsersController extends AppController
 			];
 	}
 
-	/**
-	 * Add method
-	 *
-	 * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-	 */
-	public function add()
-	{
-			$request = json_decode($this->request->input(), true);
-
-			// var_dump($user); exit;
-			$this->data($this->table()->save(
-					$this->table()->patchEntity(
-							$this->table()->newEntity(),
-							json_decode($this->request->input(), true),
-							['associated' => $this->contain()]
-					)
-			));
-	}
-
 
 	/**
 	 * login method
@@ -71,12 +52,8 @@ class UsersController extends AppController
 	{
 			$user = $this->Auth->identify();
 			if (!$user) {
-					$this->viewBuilder()->className('Json');
-					$this->set([
-							'success' => false,
-							'data' => null,
-							'_serialize' => ['success', 'data']
-					]);
+				$response = $this->response->withStatus(401);
+				return $response;
 			} else {
 					$query = $this->table()->find()->contain($this->contain());
 					$query->where(['Users.id' => $user['id']]);

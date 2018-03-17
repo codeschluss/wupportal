@@ -9,10 +9,11 @@ import { Injectable } from '@angular/core';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { Service } from './service';
 
 
 @Injectable()
-export class DataService {
+export class DataService extends Service {
 
 	protected endpoint: string = '/api/';
 	protected baseUrl: string;
@@ -22,6 +23,7 @@ export class DataService {
 		protected repository: string,
 		protected authService: AuthenticationService
 	) {
+		super();
 		this.baseUrl = this.endpoint + repository + '/';
 	}
 

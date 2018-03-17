@@ -8,7 +8,7 @@ import { Address } from 'app/models/address';
 import { Service } from 'app/services/service';
 
 @Injectable()
-export class LocationService extends Service<Address> {
+export class LocationService extends Service {
 
 	protected url: string = null;
 

@@ -27,12 +27,9 @@ export class LoginFormComponent implements OnInit {
 
 	login(): void {
 		this.authenticationService.login(this.username, this.password)
-			.subscribe(result => {
-				if (result) {
-					this.router.navigate(['/admin']);
-				} else {
-					this.error = this.constants.wrongCredentialsMessage;
-				}
-			});
+			.subscribe(
+				success => this.router.navigate(['/admin']),
+				error => this.error = error.message
+			);
 	}
 }

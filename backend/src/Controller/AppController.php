@@ -17,6 +17,7 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Core\Exception\Exception;
 
 /**
  * Application Controller
@@ -118,18 +119,17 @@ class AppController extends Controller
 	 */
 	public function add()
 	{
-			// var_dump($this->table()->patchEntity(
-			//     $this->table()->newEntity(),
-			//     json_decode($this->request->input(), true),
-			//     ['associated' => $this->contain()]
-			// )); exit;
-			$this->data($this->table()->save(
-					$this->table()->patchEntity(
-							$this->table()->newEntity(),
-							json_decode($this->request->input(), true),
-							['associated' => $this->contain()]
-					)
-			));
+		$result = $this->table()->patchEntity(
+			$this->table()->newEntity(),
+			json_decode($this->request->input(), true),
+			['associated' => $this->contain()]
+		);
+
+		if ($result->errors()) {
+			return $this->handleError($result->errors());
+		} else {
+			$this->data($this->table()->save($result));
+		}
 	}
 
 	/**
@@ -141,11 +141,6 @@ class AppController extends Controller
 	 */
 	public function edit($id)
 	{
-			// var_dump( $this->table()->patchEntity(
-			//     $this->table()->get($id, ['contain' => $this->contain()]),
-			//     json_decode($this->request->input(), true),
-			//     ['associated' => $this->contain()]
-			// )); exit;
 			$this->data($this->table()->save(
 					$this->table()->patchEntity(
 							$this->table()->get($id, ['contain' => $this->contain()]),
@@ -164,7 +159,7 @@ class AppController extends Controller
 	 */
 	public function delete($id)
 	{
-			$this->data($this->table()->delete($this->table()->get($id)));
+		$this->data($this->table()->delete($this->table()->get($id)));
 	}
 
 	/**
@@ -189,10 +184,10 @@ class AppController extends Controller
 
 	protected function setPagination($request)
 	{
-			$this->paginate = [
-					'limit' => $request->pageSize,
-					'page' => $request->page,
-			];
+		$this->paginate = [
+				'limit' => $request->pageSize,
+				'page' => $request->page,
+		];
 	}
 
 	protected function setJoins($query)
@@ -239,6 +234,15 @@ class AppController extends Controller
 		$this->set('_serialize', true);
 	}
 
+	protected function handleError($errors) {
+		foreach ($errors as $error) {
+			if (key($error) === 'unique') {
+				$response = $this->response->withStatus(409);
+				return $response;
+			}
+		}
+	}
+
 	protected function setPaginagingResponse($query)
 	{
 		if ($this->Paginator)
@@ -256,7 +260,7 @@ class AppController extends Controller
 	 */
 	protected function table()
 	{
-			return $this->{$this->name};
+		return $this->{$this->name};
 	}
 
 	/*

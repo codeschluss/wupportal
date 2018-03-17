@@ -1,25 +1,25 @@
-import 'rxjs/add/operator/map';
-
-import { Observable } from 'rxjs/Observable';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 
 import { Address } from 'app/models/address';
 import { Service } from 'app/services/service';
 
+
 @Injectable()
-export class NominatimService extends Service<Address> {
+export class NominatimService extends Service {
+
+	constructor(
+		private http: HttpClient) {
+		super();
+	}
 
 	protected baseURL: string = '';
 	protected url: string = 'https://nominatim.openstreetmap.org/search/';
 
 	private format: string = '?format=json&addressdetails=1';
-
-	public add(item: Address): void { return; }
-
-	public delete(item: Address): void { return; }
-
-	public edit(item: Address): void { return; }
 
 	public get(query: string): Observable<Address> {
 		return this.http.get(this.url + query + this.format)
@@ -43,16 +43,9 @@ export class NominatimService extends Service<Address> {
 						address.street = i['address']['pedestrian'] ? i['address']['pedestrian'] : '';
 					}
 				}
-				console.log(address);
 				return address;
 			}
 			);
-	}
-
-	public list(): Observable<Address[]> { return null; }
-
-	public getUrl(): string {
-		return this.url;
 	}
 
 }

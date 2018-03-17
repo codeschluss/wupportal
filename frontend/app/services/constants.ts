@@ -4,6 +4,15 @@ import { Injectable } from '@angular/core';
 export class Constants {
 
 	// --------------------------
+	// SERVER ERROR MESSAGES
+	// --------------------------
+
+	public static wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
+	public static duplicateEntryMessage: string = 'Datensatz mit dem Namen existiert bereits. Bitte anderen Namen auswählen';
+	public static wrongInputFormatMessage: string = 'Format der Eingabefelder sind nicht korrekt';
+	public static unexpectedErrorMessage: string = 'Unerwarteter Serverfehler. Bitte erneut probieren oder Codeschluss kontaktieren';
+
+	// --------------------------
 	// STATIC
 	// --------------------------
 
@@ -88,7 +97,6 @@ export class Constants {
 	public end: string = 'Ende';
 	public last: string = 'letzten';
 	public deleteFromOrganisation: string = 'Aus Organisation entfernen';
-	public wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
 	public multipleOrganisationMessage: string = 'Sie sind Administrator für mehere Organisationen';
 	public pleaseSelectMessage: string = 'Bitte wählen Sie eine aus:';
 	public publicUser: string = 'Soll der Name des Anbieters veröffentlicht werden?';
@@ -157,7 +165,6 @@ export class Constants {
 	public mapProjection: string = 'Kartenprojektion';
 	public portalName: string = 'Name dieses Portals';
 	public portalSubtitle: string = 'Unterschrift dieses Portalnamens';
-
 
 	// --------------------------
 	// TABLE

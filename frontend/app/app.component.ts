@@ -21,9 +21,8 @@ import { NominatimService } from 'app/services/nominatim';
 @Component({
 	providers: [
 		MatIconRegistry,
-
 		ActivityService,
-		LocationService,
+		// LocationService,
 		NominatimService
 	],
 	selector: 'app-root',
@@ -48,8 +47,8 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		private activityService: ActivityService,
 		// private categoryService: CategoryService,
 		// private configurationService: ConfigurationService,
-		private locationService: LocationService,
-		private nominatimService: NominatimService,
+		// private locationService: LocationService,
+		// private nominatimService: NominatimService,
 		// private organisationService: OrganisationService,
 		// private suburbService: SuburbService,
 		// private targetGroupService: TargetGroupService,

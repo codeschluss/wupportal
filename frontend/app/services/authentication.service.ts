@@ -5,9 +5,11 @@ import { Observable } from 'rxjs/Observable';
 import { AuthResponse } from 'app/models/auth.response';
 import { User } from 'app/models/user';
 import { Constants } from 'app/services/constants';
+import { Error } from 'app/models/error';
+import { Service } from './service';
 
 @Injectable()
-export class AuthenticationService implements CanActivate {
+export class AuthenticationService extends Service implements CanActivate {
 
 	private credentials: string = '';
 	public currentUser: User = null;
@@ -16,6 +18,7 @@ export class AuthenticationService implements CanActivate {
 		private router: Router,
 		private http: HttpClient,
 		private constants: Constants) {
+		super();
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -28,7 +31,7 @@ export class AuthenticationService implements CanActivate {
 		return this.handleProviderRoutes();
 	}
 
-	login(username: string, pwd: string): Observable<boolean> {
+	login(username: string, pwd: string): Observable<any> {
 		const password = this.getPwd(pwd);
 		const credentials = btoa(username + ':' + password);
 		return this.http.post('/api/users/login', null, {
@@ -36,21 +39,18 @@ export class AuthenticationService implements CanActivate {
 				.set('Content-Type', 'application/json')
 				.set('Authorization', 'Basic ' + credentials)
 		})
-			.map((resp) => resp as AuthResponse) // TODO: Check for internal server errors
-			.map((response: AuthResponse) => {
-				return response.success
-					? this.handleSuccessLogin(response, credentials)
-					: false;
-			});
+			.map((resp) => resp as AuthResponse)
+			.map((response: AuthResponse) => this.handleSuccessLogin(response, credentials))
+			.catch((e: any) => this.handleError(e));
 	}
 
-	handleSuccessLogin(response: AuthResponse, credentials: string): boolean {
+	handleSuccessLogin(response: AuthResponse, credentials: string): void {
 		if (response.data) {
 			this.credentials = credentials;
 			this.currentUser = new User(response.data);
-			return true;
+		} else {
+			this.redirectToLogin();
 		}
-		return false;
 	}
 
 	logout(): void {
@@ -102,10 +102,8 @@ export class AuthenticationService implements CanActivate {
 	}
 
 	getPwd(password: string): string {
-		if (password) {
-			return password;
-		} else {
-			return this.credentials ? atob(this.credentials).split(':')[1] : '';
-		}
+		return password
+			? password
+			: this.credentials ? atob(this.credentials).split(':')[1] : '';
 	}
 }

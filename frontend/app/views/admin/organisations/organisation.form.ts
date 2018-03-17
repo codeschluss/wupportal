@@ -71,7 +71,7 @@ export class OrganisationFormComponent implements OnInit {
 			webSiteCtrl: new FormControl('')
 		});
 		this.secondFormGroup = this._formBuilder.group({
-			addressCtrl: new FormControl(this.organisation.address.isValid(), [Validators.required])
+			addressCtrl: new FormControl(this.organisation.address.isValid, [Validators.required])
 		});
 		this.thirdFormGroup = this._formBuilder.group({
 		});

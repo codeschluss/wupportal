@@ -99,7 +99,7 @@ export class OrganisationAdminComponent implements OnInit {
 	setOrganisationAndProviders(organisationID: string): void {
 		this.getOrganisation(organisationID)
 			.subscribe(organisation => {
-				this.organisation = organisation;
+				this.organisation = new Organisation(organisation);
 				this.setProviders();
 			});
 	}

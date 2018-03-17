@@ -48,18 +48,28 @@ export class OrganisationUpdateComponent {
 		private location: Location,
 		public constants: Constants,
 		public validation: ValidationService,
-	) { }
+	) {
+	}
+
+	addressSubmit(): void {
+		const addressObservable = this.addressAutocomplete.getAddress();
+		if (addressObservable) {
+			addressObservable.subscribe(address => {
+				this.organisation.address = new Address(address);
+				this.organisation.address_id = address.id;
+			});
+		}
+	}
+
+	resetAddress(): void {
+		this.organisation.address = new Address();
+	}
 
 	onSubmit(): void {
 		this.organisation.address = null;
-		this.addressAutocomplete.getAddress().subscribe(address => {
-			console.log('OrganisationUpdateComponent - address', address);
-			this.organisation.address_id = address.id;
-			console.log('this.organisation', this.organisation);
-			this.organisationService
-				.edit(this.organisation)
-				.subscribe(() => this.back());
-		});
+		this.organisationService
+			.edit(this.organisation)
+			.subscribe(() => this.back());
 	}
 
 	back(): void {

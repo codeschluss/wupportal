@@ -87,7 +87,7 @@ export class AddressAutocompleteComponent implements OnInit {
 
 	getAddress(): Observable<any> {
 		const addressValue: any = this.addressCtrl.value;
-		if ((addressValue instanceof Address && addressValue.isValid()) ||
+		if ((addressValue instanceof Address && addressValue.isValid) ||
 			(typeof addressValue === 'string' && addressValue.length >= 5)) {
 			return Observable.create(observer => {
 				this.observer = observer;
@@ -99,7 +99,7 @@ export class AddressAutocompleteComponent implements OnInit {
 	}
 
 	handleObjectValue(addressObj: any): void {
-		addressObj.isValid()
+		addressObj.isValid
 			? this.observer.next(this.addressCtrl.value)
 			: this.observer.next(null);
 	}
@@ -108,7 +108,7 @@ export class AddressAutocompleteComponent implements OnInit {
 		addressString
 			? this.nominatimService.get(this.addressCtrl.value).subscribe(data => {
 				const nominatimAddress: Address = new Address(data);
-				nominatimAddress.isValid()
+				nominatimAddress.isValid
 					? this.handleNominatimResponse(nominatimAddress)
 					: this.handleAddressCreation(nominatimAddress);
 			})
@@ -134,7 +134,7 @@ export class AddressAutocompleteComponent implements OnInit {
 	handleAddressCreation(address: Address): void {
 		this.createAddress(address).subscribe(addressResponse => {
 			const responseAddress = new Address(addressResponse);
-			if (responseAddress.isValid()) { this.setAddress(responseAddress); }
+			if (responseAddress.isValid) { this.setAddress(responseAddress); }
 		});
 	}
 

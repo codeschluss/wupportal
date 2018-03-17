@@ -161,7 +161,7 @@ export class ActivityFormComponent implements OnInit {
 					'targetGroupCtrl': new FormControl(this.activity.target_groups)
 				});
 				this.secondFormGroup = new FormGroup({
-					'addressCtrl': new FormControl(this.activity.address.isValid(), [Validators.required])
+					'addressCtrl': new FormControl(this.activity.address.isValid, [Validators.required])
 				});
 				this.thirdFormGroup = new FormGroup({
 					'startTimeHourCtrl': new FormControl(this.activity.schedules[0] ?

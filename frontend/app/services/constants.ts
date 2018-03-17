@@ -77,6 +77,7 @@ export class Constants {
 	public no: string = 'Nein';
 	public yes: string = 'Ja';
 	public ok: string = 'OK';
+	public required: string = 'notwendig';
 
 	public deleteMessage: string = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';

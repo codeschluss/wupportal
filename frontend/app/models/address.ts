@@ -25,7 +25,7 @@ export class Address extends Model {
 	}
 
 	get toString(): string {
-		return this.isValid()
+		return this.isValid
 			? (
 				this.street + ' ' +
 				this.house_number + ' ' +
@@ -42,7 +42,7 @@ export class Address extends Model {
 			address.place.toLocaleLowerCase().localeCompare(this.place.toLocaleLowerCase()) === 0;
 	}
 
-	public isValid(): boolean {
+	get isValid(): boolean {
 		return this.place &&
 			this.postal_code &&
 			this.street &&

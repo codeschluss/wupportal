@@ -62,6 +62,7 @@ class ActivitiesController extends AppController
 		$this->setFiltering($query, $request);
 		$this->setByProviders($query, $request);
 		$this->data($this->paginate($query));
+		$this->setPaginagingResponse($query);
 	}
 
 	private function setByProviders($query, $request) {

@@ -42,13 +42,13 @@ export class AddressTableComponent extends AbstractTableComponent implements OnI
 
 	initColumns(): void {
 		this.displayedColumns = [
-			'Address.street',
-			'Address.house_number',
-			'Address.postal_code',
-			'Address.place',
-			'Suburb.name',
-			'Address.latitude',
-			'Address.longitude',
+			'Addresses.street',
+			'Addresses.house_number',
+			'Addresses.postal_code',
+			'Addresses.place',
+			'Suburbs.name',
+			'Addresses.latitude',
+			'Addresses.longitude',
 			'action'
 		];
 	}

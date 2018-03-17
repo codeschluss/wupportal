@@ -23,8 +23,11 @@ export class TableState {
 		this.filter = filter;
 	}
 
-	setSorting(sort: Sort): void {
-		this.sort = sort;
+	setSorting(active: string, direction: any): void {
+		if (active && direction) {
+			this.sort.active = active;
+			this.sort.direction = direction;
+		}
 	}
 
 }

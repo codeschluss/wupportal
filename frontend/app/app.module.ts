@@ -83,7 +83,6 @@ import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 
-import { PaginatorComponent } from 'app/views/admin/table/paginator.table';
 import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
 
 import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
@@ -129,9 +128,7 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		ConfigFormComponent,
 		DeleteDialogComponent,
 		DeleteActionComponent,
-		OrganisationSelectionComponent,
-
-		PaginatorComponent
+		OrganisationSelectionComponent
 	],
 	imports: [
 		AngularOpenlayersModule,

@@ -1,4 +1,4 @@
-import { OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { OnInit, AfterViewInit, ViewChild, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, Sort, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -8,12 +8,10 @@ import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
 import { Constants } from 'app/services/constants';
-import { PaginatorComponent } from 'app/views/admin/table/paginator.table';
 
-export abstract class AbstractTableComponent implements OnInit {
+export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 
-	@ViewChild(PaginatorComponent)
-	protected tablePaginator: PaginatorComponent;
+	@ViewChildren(MatPaginator) paginator: MatPaginator;
 
 	@ViewChild(MatSort)
 	protected sort: MatSort;
@@ -25,6 +23,7 @@ export abstract class AbstractTableComponent implements OnInit {
 	protected tableState: TableState;
 	protected constants: Constants;
 	protected dataService: DataService;
+	protected totalCount: number;
 
 	constructor(dataService: DataService, constants: Constants) {
 		this.dataService = dataService;
@@ -33,8 +32,12 @@ export abstract class AbstractTableComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.dataSource.paginator = this.tablePaginator.paginator;
+		this.dataSource.paginator = this.paginator;
 		this.initColumns();
+	}
+
+	ngAfterViewInit(): void {
+		this.tableState.setSorting(this.sort.active, this.sort.start);
 		this.fetchData();
 	}
 
@@ -53,18 +56,21 @@ export abstract class AbstractTableComponent implements OnInit {
 	}
 
 	handleSorted(event: Sort): void {
-		this.tablePaginator.paginator.pageIndex = 0;
-		this.tableState.setSorting(event);
+		this.paginator.pageIndex = 0;
+		this.tableState.setSorting(event.active, event.direction);
 		this.fetchData();
 	}
 
 	fetchData(): void {
 		this.dataService.list(this.tableState)
-			.subscribe(data => this.handleResponse(data));
+			.subscribe(data => {
+				this.handleResponse(data);
+			});
 	}
 
 	handleResponse(response: DataResponse): void {
 		this.dataSource.data = response.records;
+		this.totalCount = response.totalCount;
 		this.onLoadedData.emit(response.records);
 	}
 

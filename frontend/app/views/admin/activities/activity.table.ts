@@ -69,9 +69,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 		this.displayedColumns = [
 			'Activities.name',
 			'Categories.name',
-			'Activities.description',
 			'Organisations.name',
-			// 'schedules',
 			'tags',
 			'target_groups'
 		];

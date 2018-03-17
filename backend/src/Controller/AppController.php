@@ -184,6 +184,7 @@ class AppController extends Controller
 			$this->setSorting($query, $request);
 			$this->setFiltering($query, $request);
 			$this->data($this->paginate($query));
+			$this->setPaginagingResponse($query);
 	}
 
 	protected function setPagination($request)
@@ -203,10 +204,10 @@ class AppController extends Controller
 
 	protected function setSorting($query, $request)
 	{
-			if (!empty($request->sort->direction)) {
-					$query
-							->group($request->sort->active)
-							->order([$request->sort->active => $request->sort->direction]);
+		if (!empty($request->sort->direction)) {
+			$query
+				->group($request->sort->active)
+				->order([$request->sort->active => $request->sort->direction]);
 			}
 	}
 
@@ -234,12 +235,18 @@ class AppController extends Controller
 			? $this->set('bool', $response)
 			: $this->set('records', $response);
 
-		if ($this->Paginator) $this->set('pages',
-			$this->Paginator->getPagingParams()[$this->name]['pageCount']);
-
 		$this->viewBuilder()->className('Json');
 		$this->set('_serialize', true);
+	}
 
+	protected function setPaginagingResponse($query)
+	{
+		if ($this->Paginator)
+		{
+			$this->set('pages',
+				$this->Paginator->getPagingParams()[$this->name]['pageCount']);
+		}
+		$this->set('totalCount', $query->count());
 	}
 
 	/**

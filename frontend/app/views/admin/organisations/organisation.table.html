@@ -24,42 +24,47 @@
 
 			<mat-table #table [dataSource]="dataSource"
 			  class="organisation-table" matSort
-			  (matSortChange)="handleSorted($event)">
+			  (matSortChange)="handleSorted($event)"
+			  matSortActive="Organisations.name"
+			  matSortDirection="asc" matSortDisableClear>
 
 				<ng-container matColumnDef="Organisations.name">
 					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header disableClear="true">
-						{{constants.nameString}}</mat-header-cell>
+					  mat-sort-header>
+						{{constants.nameString}}
+					</mat-header-cell>
 					<mat-cell *matCellDef="let row"
 					  (click)="showDetails(row)">{{ row.name }}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="website">
 					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>{{constants.website}}</mat-header-cell>
+					  mat-sort-header>
+						{{constants.website}}
+					</mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<a target="_blank" [href]="generateWebSite(row.website)">{{ row.website ? row.website
-							: ''}}</a>
+						<a target="_blank" [href]="generateWebSite(row.website)">
+							{{row.website ? row.website : ''}}
+						</a>
 					</mat-cell>
 				</ng-container>
 
-				<!-- <ng-container matColumnDef="description">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>{{constants.description}}</mat-header-cell>
-					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{ row.description ? row.description : '' }}</mat-cell>
-				</ng-container> -->
-
 				<ng-container matColumnDef="mail">
 					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>{{constants.mail}}</mat-header-cell>
+					  mat-sort-header>
+						{{constants.mail}}
+					</mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<a [href]="'mailto:' + row.mail">{{ row.mail ? row.mail :
-							'' }}</a>
+						<a [href]="'mailto:' + row.mail">
+							{{row.mail ? row.mail : ''}}</a>
 					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="phone">
 					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>Telephone</mat-header-cell>
+					  mat-sort-header>
+						{{constants.phone}}
+					</mat-header-cell>
 					<mat-cell *matCellDef="let row"
 					  (click)="showDetails(row)">{{ row.phone }}</mat-cell>
 				</ng-container>
@@ -67,7 +72,8 @@
 				<ng-container matColumnDef="address">
 					<mat-header-cell *matHeaderCellDef>{{constants.address}}</mat-header-cell>
 					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.address ? (row.address.street
+					  (click)="showDetails(row)">
+						{{row.address ? (row.address.street
 						+ ' ' + row.address.house_number)
 						: ''}}
 						<br/> {{row.address ? (row.address.postal_code
@@ -99,8 +105,10 @@
 				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 			</mat-table>
 
-			<table-paginator (handlePageChanged)="handlePageChanged($event)">
-			</table-paginator>
+			<mat-paginator [pageSize]="constants.defaultPageSize"
+			  [pageSizeOptions]="constants.pageSizeOptions"
+			  [length]="totalCount" (page)="handlePageChanged($event)">
+			</mat-paginator>
 		</mat-sidenav-content>
 	</mat-sidenav-container>
 

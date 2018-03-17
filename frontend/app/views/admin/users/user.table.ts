@@ -36,7 +36,7 @@ export class UserTableComponent extends AbstractTableComponent {
 	}
 
 	initColumns(): void {
-		this.displayedColumns = ['username', 'fullname', 'phone', 'created', 'action'];
+		this.displayedColumns = ['username', 'fullname', 'Users.phone', 'created', 'action'];
 	}
 
 	isAdmin(userID: number): boolean {

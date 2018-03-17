@@ -52,7 +52,7 @@ export class Constants {
 
 	public requests: string = 'Anfragen';
 	public showMembers: string = 'Mitglieder anzeigen';
-	public showRequests: string = 'Anragen anzeigen';
+	public showRequests: string = 'Anfragen anzeigen';
 	public declineRequest: string = 'Anfrage ablehnen';
 	public approveRequest: string = 'Anfrage bestätigen';
 	public createdAt: string = 'Erstellt';
@@ -120,7 +120,7 @@ export class Constants {
 	public postalCode: string = 'PLZ';
 	public place: string = 'Ort';
 	public houseNumber: string = 'Hausnummer';
-	public quarter: string = 'quatier';
+	public quarter: string = 'Quartier';
 	public longitude: string = 'Längengrad';
 	public latitude: string = 'Breitengrad';
 	public dates: string = 'Termine';

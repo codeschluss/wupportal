@@ -43,9 +43,8 @@ class ProvidersController extends AppController
 		if (isset($request->admin)) {
 			$query->where([$this->name . '.admin' => $request->admin]);
 		}
-		$this->setByUser($query, $request);
 		$result = $query
-			->$query->where([$this->name . '.user_id' => $request->user])
+			->where([$this->name . '.user_id' => $request->user])
 			->all()
 			->toArray();
 
@@ -83,7 +82,7 @@ class ProvidersController extends AppController
 
 		return $this->ResponseHandler->isNotFoundError($response)
 			? $this->ResponseHandler->responseNotFoundError($this->name)
-			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $response));
+			: $this->ResponseHandler->responseSuccess($response);
 	}
 
 	private function getOrgaWhereClause($request)

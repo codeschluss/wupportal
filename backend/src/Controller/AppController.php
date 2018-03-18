@@ -148,7 +148,7 @@ class AppController extends Controller
 		$result = $this->table()->delete($this->table()->get($id));
 
 		// delete throws own not found exception
-		return $this->ResponseHandler->responseSuccess();
+		return $this->ResponseHandler->responseSuccess('deleted');
 	}
 
 	/**

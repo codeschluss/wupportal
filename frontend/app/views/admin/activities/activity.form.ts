@@ -399,21 +399,18 @@ export class ActivityFormComponent implements OnInit {
 		this.thirdFormGroup.get('schedulesCtrl').setValue(this.activity.schedules);
 	}
 
-	generateTargetGroupArray(idArray: string[]): Observable<TargetGroup[]> {
+	generateTargetGroupArray(idArray: string[]): void {
 		const target_groups = [];
 		for (const id of idArray) {
 			target_groups.push(this.targetGroups.find(tg => tg.id === id));
 		}
-		return new Observable(observer => observer.next(target_groups));
+		this.activity.target_groups = target_groups;
 	}
 
 	handleTags(): Observable<any[]> {
 		const observableTagArray: Observable<any>[] = [];
-		this.activity.tags = [];
-		const tagsArray = this.firstFormGroup.get('tagsCtrl').value.split(',');
-		tagsArray.map(tagName => {
-			const currTag = new Tag();
-			currTag.name = tagName;
+		this.activity.tags.map(tagName => {
+			const currTag = tagName;
 			observableTagArray.push(this.tagService.add(currTag));
 		});
 		return Observable.forkJoin(observableTagArray);
@@ -450,14 +447,24 @@ export class ActivityFormComponent implements OnInit {
 		this.activity.category = null;
 		this.activity.address = null;
 		this.deleteSchedules();
-		this.generateTargetGroupArray(this.firstFormGroup.get('targetGroupCtrl').value).
-			subscribe(targetGroups => {
-				this.activity.target_groups = targetGroups;
+		this.generateTargetGroupArray(this.firstFormGroup.get('targetGroupCtrl').value);
+		if (this.activity.tags) {
+			this.handleTags().subscribe(tags => {
+				for (const tag of tags) {
+					this.activity.tags.push(tag.records);
+				}
+				if (this.activity.id) {
+					this.activityService.edit(this.activity).subscribe(() => this.back());
+				} else {
+					this.activityService.add(this.activity).subscribe(() => this.back());
+				}
 			});
-		if (this.activity.id) {
-			this.activityService.edit(this.activity).subscribe(() => this.back());
 		} else {
-			this.activityService.add(this.activity).subscribe(() => this.back());
+			if (this.activity.id) {
+				this.activityService.edit(this.activity).subscribe(() => this.back());
+			} else {
+				this.activityService.add(this.activity).subscribe(() => this.back());
+			}
 		}
 	}
 

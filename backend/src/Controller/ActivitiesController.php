@@ -13,11 +13,13 @@ use App\Controller\AppController;
 class ActivitiesController extends AppController
 {
 
-	/**
-	 * Contain helper.
-	 *
-	 * @return array Contained models
-	 */
+	public function initialize()
+	{
+		parent::initialize();
+		$this->Auth->allow(['view','list', 'index', 'getByProviders']);
+	}
+
+	/** @return array associated models */
 	protected function contain()
 	{
 		return [
@@ -31,11 +33,7 @@ class ActivitiesController extends AppController
 		];
 	}
 
-	/**
-	 * filter helper.
-	 *
-	 * @return array Fields to use for filter
-	 */
+	/** @return array Fields to use for filter  */
 	protected function fieldsTofilter()
 	{
 		return [
@@ -53,19 +51,26 @@ class ActivitiesController extends AppController
 		// var_dump($request); exit;
 		$query = $this->table()->find()->group($this->name . '.id');
 		$request = $this->request->input('json_decode');
-		if (is_null($request)) return;
-		if (empty($request->providers)) return;
+		if (is_null($request) && empty($request->providers))
+			return $this->ResponseHandler->responseError();
+
 
 		$this->setPagination($request);
 		$this->setJoins($query);
 		$this->setSorting($query, $request);
 		$this->setFiltering($query, $request);
 		$this->setByProviders($query, $request);
-		$this->data($this->paginate($query));
-		$this->setPaginagingResponse($query);
+
+		$result = $this->paginate($query)->toArray();
+
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name)
+			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $result));
+
 	}
 
-	private function setByProviders($query, $request) {
+	private function setByProviders($query, $request)
+	{
 		$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
 			$whereClause = [];
 			foreach ($request->providers as $provider) {
@@ -73,12 +78,6 @@ class ActivitiesController extends AppController
 			}
 			return $whereClause;
 		}]);
-	}
-
-	public function initialize()
-	{
-		parent::initialize();
-		$this->Auth->allow(['view','list', 'index', 'getByProviders']);
 	}
 
 	public function isAuthorized($user)

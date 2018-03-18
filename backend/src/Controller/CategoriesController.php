@@ -13,22 +13,18 @@ use App\Controller\AppController;
 class CategoriesController extends AppController
 {
 
-	/**
-	 * filter helper.
-	 *
-	 * @return array Fields to use for filter
-	 */
+	public function initialize()
+	{
+		parent::initialize();
+		$this->Auth->allow(['view','list', 'index']);
+	}
+
+	/** @return array Fields to use for filter  */
 	protected function fieldsTofilter()
 	{
 		return [
 			'name'
 		];
-	}
-
-	public function initialize()
-	{
-		parent::initialize();
-		$this->Auth->allow(['view','list', 'index']);
 	}
 
 }

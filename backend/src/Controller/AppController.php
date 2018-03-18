@@ -18,6 +18,8 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Exception\Exception;
+use Cake\Network\Exception\ConflictException;
+use \stdClass;
 
 /**
  * Application Controller
@@ -29,87 +31,71 @@ use Cake\Core\Exception\Exception;
  */
 class AppController extends Controller
 {
-	/**
-	 * Contain helper.
-	 *
-	 * @return array Contained models
-	 */
-	protected function contain() { return []; }
 
-	/**
-	 * filter helper.
-	 *
-	 * @return array Fields to use for filter
-	 */
-	protected function fieldsTofilter() { return []; }
-
-	/**
-	 * @var array $paginate Paginator configuration
-	 */
+	/** @var array $paginate Paginator configuration */
 	public $paginate;
 
 	/**
 	 * Initialization hook method.
-	 *
 	 * @return void
 	 */
 	public function initialize()
 	{
-			parent::initialize();
-
-			$this->loadComponent('RequestHandler');
-
-			$this->loadComponent('Auth', [
-				'authorize' => ['Controller'],
-				'authenticate' => [
-						'Basic' => [
-								'fields' => [
-										'username' => 'username',
-										'password' => 'password'],
-								'userModel' => 'Users'
-						],
+		parent::initialize();
+		$this->loadComponent('ResponseHandler');
+		$this->loadComponent('Auth', [
+			'authorize' => ['Controller'],
+			'authenticate' => [
+				'Basic' => [
+					'fields' => [
+						'username' => 'username',
+						'password' => 'password'],
+					'userModel' => 'Users'
 				],
-				'storage' => 'Memory',
-				'unauthorizedRedirect' => false,
-				'loginAction' => false
-			]);
+			],
+			'storage' => 'Memory',
+			'unauthorizedRedirect' => false,
+			'loginAction' => false
+		]);
 	}
 
-	/**
-	 * Before render callback.
-	 *
-	 * @param \Cake\Event\Event $event The beforeRender event.
-	 * @return \Cake\Http\Response|null|void
-	 */
-	public function beforeRender(Event $event)
-	{
-	}
+	/** @return array associated models */
+	protected function contain() { return []; }
+
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilter() { return []; }
 
 	/**
-	 * Index method
-	 *
-	 * @return \Cake\Http\Response|void
+	 * mapped to http get method without param
+	 * @return \Cake\Http\Response all records
 	 */
 	public function index()
 	{
-			$query = $this->table()->find()->contain($this->contain());
+		$result = $this->table()->find()
+			->contain($this->contain())
+			->all()
+			->toArray();
 
-			$this->data($query->all()->toArray());
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name)
+			: $this->ResponseHandler->responseSuccess($result);
 	}
 
 	/**
-	 * View method
-	 *
+	 * mapped to http get method with id param
 	 * @param string|null $id Entry id.
-	 * @return \Cake\Http\Response|void
-	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+	 * @return \Cake\Http\Response record for the entry id
 	 */
 	public function view($id = null)
 	{
-			$query = $this->table()->find()->contain($this->contain());
-			$query->where([$this->name . '.id' => $id]);
+		$result = $this->table()->find()
+			->contain($this->contain())
+			->where([$this->name . '.id' => $id])
+			->first();
 
-			$this->data($query->first());
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name . '.id')
+			: $this->ResponseHandler->responseSuccess($result);
 	}
 
 	/**
@@ -125,11 +111,9 @@ class AppController extends Controller
 			['associated' => $this->contain()]
 		);
 
-		if ($result->errors()) {
-			return $this->handleError($result->errors());
-		} else {
-			$this->data($this->table()->save($result));
-		}
+		return $result->errors()
+			? $this->ResponseHandler->responseError($result->errors())
+			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
 	}
 
 	/**
@@ -141,13 +125,15 @@ class AppController extends Controller
 	 */
 	public function edit($id)
 	{
-			$this->data($this->table()->save(
-					$this->table()->patchEntity(
-							$this->table()->get($id, ['contain' => $this->contain()]),
-							json_decode($this->request->input(), true),
-							['associated' => $this->contain()]
-					)
-			));
+		$result = $this->table()->patchEntity(
+			$this->table()->get($id, ['contain' => $this->contain()]),
+			json_decode($this->request->input(), true),
+			['associated' => $this->contain()]
+		);
+
+		return $result->errors()
+			? $this->ResponseHandler->responseError($result->errors())
+			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
 	}
 
 	/**
@@ -159,7 +145,10 @@ class AppController extends Controller
 	 */
 	public function delete($id)
 	{
-		$this->data($this->table()->delete($this->table()->get($id)));
+		$result = $this->table()->delete($this->table()->get($id));
+
+		// delete throws own not found exception
+		return $this->ResponseHandler->responseSuccess();
 	}
 
 	/**
@@ -169,32 +158,35 @@ class AppController extends Controller
 	 */
 	public function list()
 	{
-			// var_dump($request); exit;
-			$query = $this->table()->find()->group($this->name . '.id');
-			$request = $this->request->input('json_decode');
-			if (is_null($request)) return;
+		// var_dump($request); exit;
+		$query = $this->table()->find()->group($this->name . '.id');
+		$request = $this->request->input('json_decode');
+		if (is_null($request)) return $this->ResponseHandler->responseError();
 
-			$this->setPagination($request);
-			$this->setJoins($query);
-			$this->setSorting($query, $request);
-			$this->setFiltering($query, $request);
-			$this->data($this->paginate($query));
-			$this->setPaginagingResponse($query);
+		$this->setPagination($request);
+		$this->setJoins($query);
+		$this->setSorting($query, $request);
+		$this->setFiltering($query, $request);
+
+		$result = $this->paginate($query)->toArray();
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name)
+			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $result));
 	}
 
 	protected function setPagination($request)
 	{
 		$this->paginate = [
-				'limit' => $request->pageSize,
-				'page' => $request->page,
+			'limit' => $request->pageSize,
+			'page' => $request->page,
 		];
 	}
 
 	protected function setJoins($query)
 	{
-			foreach ($this->contain() as $contain) {
-					$query->leftJoinWith($contain)->contain($contain);
-			}
+		foreach ($this->contain() as $contain) {
+			$query->leftJoinWith($contain)->contain($contain);
+		}
 	}
 
 	protected function setSorting($query, $request)
@@ -203,54 +195,27 @@ class AppController extends Controller
 			$query
 				->group($request->sort->active)
 				->order([$request->sort->active => $request->sort->direction]);
-			}
+		}
 	}
 
 	protected function setFiltering($query, $request)
 	{
-			if (!empty($request->filter)) {
-					$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
-							$whereClause = [];
-							foreach ($this->fieldsTofilter() as $field) {
-									$whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
-							}
-							return $whereClause;
-					}]);
-			}
-	}
-
-	/**
-	 * Data response helper.
-	 *
-	 * @return void
-	 */
-	protected function data($response)
-	{
-		is_bool($response)
-			? $this->set('bool', $response)
-			: $this->set('records', $response);
-
-		$this->viewBuilder()->className('Json');
-		$this->set('_serialize', true);
-	}
-
-	protected function handleError($errors) {
-		foreach ($errors as $error) {
-			if (key($error) === 'unique') {
-				$response = $this->response->withStatus(409);
-				return $response;
-			}
+		if (!empty($request->filter)) {
+			$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+				$whereClause = [];
+				foreach ($this->fieldsTofilter() as $field) {
+					$whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
+				}
+				return $whereClause;
+			}]);
 		}
 	}
 
-	protected function setPaginagingResponse($query)
-	{
-		if ($this->Paginator)
-		{
-			$this->set('pages',
-				$this->Paginator->getPagingParams()[$this->name]['pageCount']);
-		}
-		$this->set('totalCount', $query->count());
+	protected function createListResponse($query,$result) {
+		$listResponse = new stdClass();
+		$listResponse->records = $result;
+		$listResponse->totalCount = $query->count();
+		return $listResponse;
 	}
 
 	/**

@@ -16,30 +16,28 @@ use Cake\ORM\TableRegistry;
 class UsersController extends AppController
 {
 
-	/**
-	 * Contain helper.
-	 *
-	 * @return array Contained models
-	 */
-	public function contain()
+	public function initialize()
 	{
-			return [
-					'Providers.Organisations'
-			];
+		parent::initialize();
+		$this->Auth->allow(['login']);
 	}
 
-	/**
-	 * filter helper.
-	 *
-	 * @return array Fields to use for filter
-	 */
+	/** @return array associated models */
+	public function contain()
+	{
+		return [
+			'Providers.Organisations'
+		];
+	}
+
+	/** @return array Fields to use for filter  */
 	protected function fieldsTofilter()
 	{
-			return [
-					'Users.username',
-					'Users.fullname',
-					'Users.phone'
-			];
+		return [
+			'Users.username',
+			'Users.fullname',
+			'Users.phone'
+		];
 	}
 
 
@@ -52,25 +50,14 @@ class UsersController extends AppController
 	{
 			$user = $this->Auth->identify();
 			if (!$user) {
-				$response = $this->response->withStatus(401);
-				return $response;
+				return $this->ResponseHandler->responseNotAuthorized();
 			} else {
-					$query = $this->table()->find()->contain($this->contain());
-					$query->where(['Users.id' => $user['id']]);
-					$result = $query->first();
-					$this->viewBuilder()->className('Json');
-					$this->set([
-							'success' => true,
-							'data' => $result,
-							'_serialize' => ['success', 'data']
-					]);
+				$result = $this->table()->find()
+					->contain($this->contain())
+					->where(['Users.id' => $user['id']])
+					->first();
+				return $this->ResponseHandler->responseSuccess($result);
 			}
-	}
-
-	public function initialize()
-	{
-		parent::initialize();
-		$this->Auth->allow(['login']);
 	}
 
 	public function beforeFilter(Event $event)
@@ -102,7 +89,7 @@ class UsersController extends AppController
 					&& $this->noPermissionGrants($request, $user['id']);
 			case 'view':
 			case 'delete':
-				// user can be deleted/view by himself or superusers
+				// user can be deleted/view by hims	elf or superusers
 				return $this->request->getParam('id') === $user['id'];
 			default:
 				return parent::isAuthorized($user);

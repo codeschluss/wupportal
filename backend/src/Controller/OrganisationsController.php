@@ -13,11 +13,13 @@ use App\Controller\AppController;
 class OrganisationsController extends AppController
 {
 
-	/**
-	 * Contain helper.
-	 *
-	 * @return array Contained models
-	 */
+	public function initialize()
+	{
+		parent::initialize();
+		$this->Auth->allow(['list','view', 'index']);
+	}
+
+	/** @return array associated models */
 	protected function contain()
 	{
 		return [
@@ -26,11 +28,7 @@ class OrganisationsController extends AppController
 		];
 	}
 
-	/**
-	 * filter helper.
-	 *
-	 * @return array Fields to use for filter
-	 */
+	/** @return array Fields to use for filter  */
 	protected function fieldsTofilter()
 	{
 		return [
@@ -44,12 +42,6 @@ class OrganisationsController extends AppController
 			'Addresses.place',
 			'Suburbs.name'
 		];
-	}
-
-	public function initialize()
-	{
-		parent::initialize();
-		$this->Auth->allow(['list','view', 'index']);
 	}
 
 	public function isAuthorized($user)

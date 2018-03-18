@@ -14,11 +14,7 @@ use Cake\ORM\TableRegistry;
 class ProvidersController extends AppController
 {
 
-	/**
-	 * Contain helper.
-	 *
-	 * @return array Contained models
-	 */
+	/** @return array associated models */
 	public function contain()
 	{
 		return [
@@ -27,63 +23,72 @@ class ProvidersController extends AppController
 		];
 	}
 
-	/**
-	 * filter helper.
-	 *
-	 * @return array Fields to use for filter
-	 */
+	/** @return array Fields to use for filter  */
 	protected function fieldsTofilter()
 	{
-			return [
-					'Users.username',
-					'Users.fullname',
-					'Users.phone'
-			];
+		return [
+			'Users.username',
+			'Users.fullname',
+			'Users.phone'
+		];
 	}
 
-    public function getByUser()
-    {
-        $request = $this->request->input('json_decode');
-        if (is_null($request)) return;
-        if (!isset($request->user)) return;
+  public function getByUser()
+	{
+		$request = $this->request->input('json_decode');
+		if (is_null($request) && !isset($request->user))
+			return $this->ResponseHandler->responseError();
 
-        $query = $this->table()->find()->contain($this->contain());
-        if (isset($request->admin)) {
-            $query->where([$this->name . '.admin' => $request->admin]);
-        }
-        $this->setByUser($query, $request);
-        $this->data($query->all()->toArray());
-    }
+		$query = $this->table()->find()->contain($this->contain());
+		if (isset($request->admin)) {
+			$query->where([$this->name . '.admin' => $request->admin]);
+		}
+		$this->setByUser($query, $request);
+		$result = $query
+			->$query->where([$this->name . '.user_id' => $request->user])
+			->all()
+			->toArray();
 
-    private function setByUser($query, $request) {
-        $query->where([$this->name . '.user_id' => $request->user]);
-    }
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name)
+			: $this->ResponseHandler->responseSuccess($result);
 
+  }
 
 	public function getByOrganisation()
 	{
 		$request = $this->request->input('json_decode');
-		if (is_null($request)) return;
-		if (!isset($request->organisation)) return;
+		if (is_null($request) && !isset($request->organisation))
+			return $this->ResponseHandler->responseError();
 
 		if(isset($request->filter) || isset($request->sort)) {
-			$query = $this->table()->find()->group($this->name . '.id');
+			$query = $this->table()->find()
+				->group($this->name . '.id')
+				->where($this->getOrgaWhereClause($request));
+
 			$this->setPagination($request);
 			$this->setJoins($query);
 			$this->setSorting($query, $request);
 			$this->setFiltering($query, $request);
-			$this->setByOrganisation($query, $request);
-			$this->data($this->paginate($query));
+			$result = $this->paginate($query)->toArray();
+
+			$response = $this->createListResponse($query, $result);
 		} else {
-			$query = $this->table()->find()->contain($this->contain());
-			$this->setByOrganisation($query, $request);
-			$this->data($query->all()->toArray());
+			$response = $this->table()->find()
+				->contain($this->contain())
+				->where($this->getOrgaWhereClause($request))
+				->all()
+				->toArray();
 		}
+
+		return $this->ResponseHandler->isNotFoundError($response)
+			? $this->ResponseHandler->responseNotFoundError($this->name)
+			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $response));
 	}
 
-	private function setByOrganisation($query, $request)
+	private function getOrgaWhereClause($request)
 	{
-		$query->where([$this->name . '.organisation_id' => $request->organisation]);
+		return [$this->name . '.organisation_id' => $request->organisation];
 	}
 
 	public function isAuthorized($user)

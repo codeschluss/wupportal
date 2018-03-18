@@ -9,6 +9,7 @@ export class Constants {
 
 	public static wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
 	public static duplicateEntryMessage: string = 'Datensatz mit dem Namen existiert bereits. Bitte anderen Namen auswählen';
+	public static notFoundMessage: string = 'Kein Datensatz zu den Suchkriterien gefunden';
 	public static wrongInputFormatMessage: string = 'Format der Eingabefelder sind nicht korrekt';
 	public static unexpectedErrorMessage: string = 'Unerwarteter Serverfehler. Bitte erneut probieren oder Codeschluss kontaktieren';
 

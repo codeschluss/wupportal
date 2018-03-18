@@ -16,8 +16,9 @@ export abstract class Service {
 	private getErrorMessage(status: number): string {
 		switch (status) {
 			case 401:
-			case 403:
 				return Constants.wrongCredentialsMessage;
+			case 404:
+				return Constants.notFoundMessage;
 			case 409:
 				return Constants.duplicateEntryMessage;
 			case 400:

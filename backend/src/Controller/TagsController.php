@@ -14,11 +14,7 @@ use Cake\ORM\TableRegistry;
 class TagsController extends AppController
 {
 
-	/**
-	 * filter helper.
-	 *
-	 * @return array Fields to use for filter
-	 */
+	/** @return array Fields to use for filter  */
 	protected function fieldsTofilter()
 	{
 		return [
@@ -33,17 +29,15 @@ class TagsController extends AppController
 	 */
 	public function add()
 	{
-			// var_dump($user); exit;
-			$request = $this->request->input('json_decode');
-			$query = $this->table()->find()->contain($this->contain());
-			$query->where([$this->name . '.name' => $request->name]);
+		// var_dump($user); exit;
+		$request = $this->request->input('json_decode');
+		$query = $this->table()->find()->contain($this->contain());
+		$query->where([$this->name . '.name' => $request->name]);
 
-			$result = $query->first();
-			if ($result) {
-					$this->data($result);
-			} else {
-					parent::add();
-			}
+		$result = $query->first();
+		return $result
+			? $this->ResponseHandler->responseSuccess($result)
+			: parent::add();
 	}
 
 	public function initialize()

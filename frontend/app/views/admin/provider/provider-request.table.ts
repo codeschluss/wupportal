@@ -67,7 +67,7 @@ export class ProviderRequestTableComponent implements OnInit {
 
 	setOrganisationOptions(): void {
 		this.organisationService.getAll()
-			.map(value => value.records as Array<Organisation>)
+			.map(value => value as Array<Organisation>)
 			.subscribe(orgas => {
 				this.organisationOptions = orgas;
 				this.setData(this.user.providers

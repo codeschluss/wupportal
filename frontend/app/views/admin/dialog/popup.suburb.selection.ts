@@ -30,7 +30,7 @@ export class SuburbSelectionComponent {
 		if (data.address && data.address.suburb) {
 			this.suburb = data.address.suburb;
 		}
-		this.service.getAll().subscribe((response) => this.suburbs = response.records);
+		this.service.getAll().subscribe((response) => this.suburbs = response);
 	}
 
 	onSubmit(): void {

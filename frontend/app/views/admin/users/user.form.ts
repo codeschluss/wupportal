@@ -61,7 +61,6 @@ export class UserFormComponent implements OnInit {
 
 	updateUser(): void {
 		this.userService.edit(this.user)
-			.map(data => data.records as User)
 			.subscribe(user =>
 				this.authService.login(this.user.username, this.user.password)
 					.subscribe(succeeded =>
@@ -83,7 +82,6 @@ export class UserFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.userService.get(this.authService.currentUser.id)
-			.map(data => data.records as User)
 			.subscribe(user => {
 				this.user = user;
 				this.initFormControls();

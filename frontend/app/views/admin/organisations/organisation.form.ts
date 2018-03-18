@@ -120,7 +120,7 @@ export class OrganisationFormComponent implements OnInit {
 		} else {
 			this.organisationService.add(this.organisation).subscribe(orga => {
 				if (this.adminProviders.length) {
-					this.combineProviderSubsribtions(orga.records).subscribe(() => this.back());
+					this.combineProviderSubsribtions(orga).subscribe(() => this.back());
 				} else {
 					this.back();
 				}

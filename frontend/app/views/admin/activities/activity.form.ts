@@ -117,8 +117,8 @@ export class ActivityFormComponent implements OnInit {
 		private _formBuilder: FormBuilder,
 		public validation: ValidationService,
 	) {
-		this.targetGroupService.getAll().subscribe((data) => this.targetGroups = data.records);
-		this.categoriesService.getAll().subscribe((data) => this.categories = data.records);
+		this.targetGroupService.getAll().subscribe((data) => this.targetGroups = data);
+		this.categoriesService.getAll().subscribe((data) => this.categories = data);
 	}
 
 	ngOnInit(): void {
@@ -126,7 +126,6 @@ export class ActivityFormComponent implements OnInit {
 
 		this.providerService
 			.getByUser(this.authService.currentUser.id)
-			.map(data => data.records)
 			.subscribe(providers => providers.map(provider => {
 				if (provider.approved) { this.providers.push(provider); }
 			}));
@@ -138,8 +137,7 @@ export class ActivityFormComponent implements OnInit {
 					return this.activityService.get(params.get('id'));
 				}
 			})
-			.map(data => new Activity(data.records)
-			).subscribe(activity => {
+			.subscribe(activity => {
 				this.activity = activity;
 				if (this.activity.provider.id) {
 					if (this.providers.indexOf(this.activity.provider) === -1) {
@@ -195,7 +193,7 @@ export class ActivityFormComponent implements OnInit {
 					this.activity.category = this.categories.find(category => category.id === this.firstFormGroup.get('categoryCtrl').value));
 				this.firstFormGroup.get('categoryCtrl').valueChanges.subscribe(catID => { this.activity.category_id = catID; });
 				this.userService.get(this.activity.provider.user_id).subscribe(user => {
-					this.user = new User(user.records);
+					this.user = new User(user);
 				});
 			});
 	}

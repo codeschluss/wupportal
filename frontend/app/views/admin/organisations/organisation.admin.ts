@@ -64,13 +64,12 @@ export class OrganisationAdminComponent implements OnInit {
 		this.authService.isSuperUser()
 			? this.organisationService
 				.getAll()
-				.map(data => data.records)
 				.subscribe(organisations => {
 					this.handleRequestedOrganisations(organisations);
 				})
 			: this.providerService
 				.getByUser(this.authService.currentUser.id, true)
-				.map(data => data.records.map(provider => provider.organisation))
+				.map(data => data.map(provider => provider.organisation))
 				.subscribe(adminOrganisations => {
 					this.handleRequestedOrganisations(adminOrganisations);
 				});
@@ -106,13 +105,13 @@ export class OrganisationAdminComponent implements OnInit {
 
 	getOrganisation(organisationID: string): Observable<Organisation> {
 		return this.organisationService.get(organisationID)
-			.map(data => new Organisation(data.records));
+			.map(data => new Organisation(data));
 	}
 
 	setProviders(): void {
 		this.providerService
 			.getByOrganisation(this.organisation.id)
-			.map(data => data.records as Array<Provider>)
+			.map(data => data as Array<Provider>)
 			.subscribe(providers => {
 				this.organisationProviders = providers;
 				this.setDataForProviderTables();

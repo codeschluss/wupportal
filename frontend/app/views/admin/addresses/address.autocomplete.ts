@@ -57,7 +57,7 @@ export class AddressAutocompleteComponent implements OnInit {
 		public authService: AuthenticationService
 	) {
 		this.addressService.getAll()
-			.map(response => response.records.map(addressJson => new Address(addressJson)))
+			.map(response => response.map(addressJson => new Address(addressJson)))
 			.subscribe(addresses => {
 				this.addresses = addresses;
 			});
@@ -148,7 +148,7 @@ export class AddressAutocompleteComponent implements OnInit {
 
 	saveAddress(address: Address): void {
 		this.addressService.add(address)
-			.map(response => new Address(response.records))
+			.map(response => new Address(response))
 			.subscribe(savedAddress => {
 				this.observer.next(savedAddress);
 			});

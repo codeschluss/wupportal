@@ -34,7 +34,7 @@ export class ConfigFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.configurationService.getAll().subscribe(configs => { this.configurations = configs.records; });
+		this.configurationService.getAll().subscribe(configs => { this.configurations = configs; });
 	}
 
 	mergeConfigs(): Observable<any[]> {

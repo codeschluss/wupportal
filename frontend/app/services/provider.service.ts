@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 
 import { AuthenticationService } from 'app/services/authentication.service';
 import { TableState } from 'app/models/table.state';
-import { DataResponse } from 'app/models/data.response';
 import { DataService } from 'app/services/data.service';
 
 @Injectable()
@@ -17,7 +16,7 @@ export class ProviderService extends DataService {
 		super(http, 'providers', authService);
 	}
 
-	public getByOrganisation(organisationID: string, tableState?: TableState): Observable<DataResponse> {
+	public getByOrganisation(organisationID: string, tableState?: TableState): Observable<any> {
 		const request = tableState
 			&& Object.assign(tableState, this.createProvidersParam(organisationID))
 			|| this.createProvidersParam(organisationID);
@@ -25,7 +24,7 @@ export class ProviderService extends DataService {
 		return this.http.post(this.baseUrl + 'getByOrganisation', JSON.stringify(request), {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())
-		}).map(res => res as DataResponse);
+		});
 	}
 
 	createProvidersParam(organisationID: string): string[] {
@@ -34,7 +33,7 @@ export class ProviderService extends DataService {
 		return orgaParam;
 	}
 
-	public getByUser(userID: string, admin?: boolean): Observable<DataResponse> {
+	public getByUser(userID: string, admin?: boolean): Observable<any> {
 		const request = admin
 			&& Object.assign(this.createAdminParam(admin), this.createUserParam(userID))
 			|| this.createUserParam(userID);
@@ -42,7 +41,7 @@ export class ProviderService extends DataService {
 		return this.http.post(this.baseUrl + 'getByUser', JSON.stringify(request), {
 			headers: new HttpHeaders()
 				.set('Authorization', this.authService.basicAuthString())
-		}).map(res => res as DataResponse);
+		});
 	}
 
 	createUserParam(userID: string): string[] {

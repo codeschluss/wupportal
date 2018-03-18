@@ -93,7 +93,7 @@ export class RegisterFormComponent implements OnInit {
 
 	initAllOrganisationsThenControls(): void {
 		this.organisationService.getAll()
-			.map(value => value.records as Array<Organisation>)
+			.map(value => value as Array<Organisation>)
 			.subscribe(orgas => {
 				this.initFormControls();
 				this.allOrganisations = orgas;

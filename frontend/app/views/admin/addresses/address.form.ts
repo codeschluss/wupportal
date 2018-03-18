@@ -50,8 +50,8 @@ export class AddressFormComponent implements OnInit {
 		this.route.paramMap
 			.switchMap((params: ParamMap) => {
 				return this.addressService.get(params.get('id'));
-			}).subscribe(address => this.address = new Address(address.records));
-		this.suburbService.getAll().subscribe((response) => this.suburbs = response.records);
+			}).subscribe(address => this.address = new Address(address));
+		this.suburbService.getAll().subscribe((response) => this.suburbs = response);
 	}
 
 	resetSuburb(): void {

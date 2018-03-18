@@ -9,6 +9,7 @@ import { Constants } from './constants';
 export abstract class Service {
 
 	protected handleError(e: any): Observable<Error> {
+		console.log('e', e);
 		const err: Error = new Error(e.status, this.getErrorMessage(e.status), e);
 		return Observable.throw(err);
 	}

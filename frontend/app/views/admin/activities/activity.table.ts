@@ -58,7 +58,6 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 			let tmpProvs = 0;
 			this.providerService
 				.getByUser(this.authService.currentUser.id)
-				.map(data => data.records)
 				.subscribe(providers => providers.map(provider => {
 					if (provider.approved || this.showNewButton) { tmpProvs++; this.showNewButton = true; }
 				}));
@@ -111,7 +110,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 			this.currentDetail = new Activity(row);
 			if (this.currentDetail.show_user) {
 				this.userService.get(this.currentDetail.provider.user_id).subscribe(user => {
-					this.currentUser = new User(user.records);
+					this.currentUser = new User(user);
 				});
 			}
 			this.sidenav.open();

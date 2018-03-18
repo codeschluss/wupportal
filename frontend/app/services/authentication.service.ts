@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { AuthResponse } from 'app/models/auth.response';
 import { User } from 'app/models/user';
 import { Constants } from 'app/services/constants';
 import { Error } from 'app/models/error';
@@ -39,15 +38,14 @@ export class AuthenticationService extends Service implements CanActivate {
 				.set('Content-Type', 'application/json')
 				.set('Authorization', 'Basic ' + credentials)
 		})
-			.map((resp) => resp as AuthResponse)
-			.map((response: AuthResponse) => this.handleSuccessLogin(response, credentials))
+			.map((response: User) => this.handleSuccessLogin(response, credentials))
 			.catch((e: any) => this.handleError(e));
 	}
 
-	handleSuccessLogin(response: AuthResponse, credentials: string): void {
-		if (response.data) {
+	handleSuccessLogin(response: User, credentials: string): void {
+		if (response) {
 			this.credentials = credentials;
-			this.currentUser = new User(response.data);
+			this.currentUser = new User(response);
 		} else {
 			this.redirectToLogin();
 		}

@@ -1,0 +1,61 @@
+<div id="filter-container">
+	<mat-card id="query">
+		<table>
+			<tr>
+				<td>
+					<button mat-icon-button (click)="false">
+						<mat-icon fontSet="fa" fontIcon="fa-crosshairs"></mat-icon>
+					</button>
+				</td>
+				<td>
+					<!-- disabled and tooltip should be removed when functionality -->
+					<mat-form-field floatPlaceholder="never" [matTooltip]="constants.outOfOrder">
+						<input disabled="true" matInput placeholder="Search" (keyup.enter)="false">
+					</mat-form-field>
+				</td>
+				<td>
+					<button mat-icon-button (click)="filters.toggle()">
+						<mat-icon fontSet="fa" fontIcon="fa-ellipsis-v">
+						</mat-icon>
+					</button>
+				</td>
+			</tr>
+		</table>
+
+		<mat-expansion-panel #filters hideToggle="true">
+			<mat-expansion-panel-header [collapsedHeight]="0" [expandedHeight]="0">
+			</mat-expansion-panel-header>
+
+			<mat-tab-group>
+				<mat-tab label="Organisations">&nbsp;</mat-tab>
+				<mat-tab label="Categories">&nbsp;</mat-tab>
+				<mat-tab label="Suburbs">&nbsp;</mat-tab>
+				<mat-tab label="Target Groups">&nbsp;</mat-tab>
+				<mat-tab label="Tags">&nbsp;</mat-tab>
+			</mat-tab-group>
+		</mat-expansion-panel>
+	</mat-card>
+
+	<mat-accordion id="selectables" [ngClass]="{ 'mat-expanded': selection|async }">
+		<mat-expansion-panel *ngFor="let selectable of selectables|async" (opened)="selection.next(selectable)" (closed)="selection.next(null)">
+
+			<mat-expansion-panel-header>
+				<mat-panel-title>{{selectable.name}}</mat-panel-title>
+				<mat-panel-description>{{selectable.category.name}}</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<!--  -->
+			<dl>
+				<dt>Description</dt>
+				<dd>{{selectable.description}}</dd>
+				<dt>Schedule</dt>
+				<dd>{{selectable.schedule}}</dd>
+				<dt>Address</dt>
+				<dd>{{selectable.address.street}} {{selectable.address.houseNumber}}</dd>
+				<dd>{{selectable.address.postalCode}} {{selectable.address.place}}</dd>
+				<dd>{{selectable.address.suburb?.name}}</dd>
+			</dl>
+			<!--  -->
+		</mat-expansion-panel>
+	</mat-accordion>
+</div>

@@ -3,7 +3,7 @@
 	margin-bottom: 16px;
 	max-width: 100%;
 	padding: 0;
-	width: 400px;
+	width: 350px;
 }
 
 #query mat-icon.fa {
@@ -25,7 +25,13 @@
 	width: 100%;
 }
 
-
+#filter-container{
+	z-index: 3;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	pointer-events: all;
+}
 
 
 
@@ -43,12 +49,6 @@
 	min-width: 0;
 	padding: 0 12px;
 }
-
-
-
-
-
-
 
 
 

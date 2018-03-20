@@ -12,7 +12,7 @@ import { MatIconRegistry } from '@angular/material';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { DetailsComponent } from 'app/views/details';
 // import { FilterComponent } from 'app/views/filter';
-import { MappingComponent } from 'app/views/mapping';
+import { MappingComponent } from 'app/views/mapping/map';
 
 import { ActivityService } from 'app/services/activity.service';
 import { LocationService } from 'app/services/location';

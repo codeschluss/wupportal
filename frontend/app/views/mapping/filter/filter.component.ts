@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Constants } from 'app/services/constants';
 
 import { Component } from '@angular/core';
 import { Input } from '@angular/core';
@@ -9,11 +10,15 @@ import { Activity } from 'app/models/activity';
 
 @Component({
 	selector: 'filter-component',
-	styleUrls: ['style.css'],
-	templateUrl: 'view.html'
+	styleUrls: ['filter.css'],
+	templateUrl: 'filter.html'
 })
 
 export class FilterComponent {
+
+	constructor(
+		protected constants: Constants
+	) { }
 
 	@Input()
 	public configuration: Observable<Activity[]> = null;

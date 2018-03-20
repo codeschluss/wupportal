@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MappingComponent } from 'app/views/mapping';
+import { MappingComponent } from 'app/views/mapping/map';
 import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { UserFormComponent } from 'app/views/admin/users/user.form';

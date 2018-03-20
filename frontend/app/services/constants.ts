@@ -158,6 +158,7 @@ export class Constants {
 	public summary: string = 'Zusammenfassung';
 	public infos: string = 'Infos';
 	public warning: string = 'Achtung!';
+	public outOfOrder: string = 'Funktioniert nicht. Wird derzeit entwickelt!';
 
 	public configWarning: string = 'Durch Veränderungen in diesem Bereich verändern Sie die öffentliche Darstellung dieses Portals!';
 	public mapcenterLongitude: string = 'Längengrad für Kartenmittelpunkt';

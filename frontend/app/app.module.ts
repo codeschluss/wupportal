@@ -44,8 +44,8 @@ import { AppComponent } from 'app/app.component';
 import { AppRouterModule } from 'app/app-router.module';
 
 import { DetailsComponent } from 'app/views/details';
-import { FilterComponent } from 'app/views/filter';
-import { MappingComponent } from 'app/views/mapping';
+import { FilterComponent } from 'app/views/mapping/filter/filter.component';
+import { MappingComponent } from 'app/views/mapping/map';
 
 import { UserTableComponent } from 'app/views/admin/users/user.table';
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';

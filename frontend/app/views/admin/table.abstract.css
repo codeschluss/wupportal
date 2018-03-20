@@ -43,10 +43,6 @@
 	flex: 1 1 auto;
 }
 
-.linked-cell {
-	cursor: pointer;
-}
-
 .auto-completion-form {
 	min-width: 150px;
 	max-width: 500px;
@@ -55,4 +51,12 @@
 
   .auto-completion-full-width {
 	width: 30%;
-  }
+	}
+
+	.clickable {
+		cursor: pointer;
+	}
+
+	.clickable:hover {
+		background-color: gray;
+	}

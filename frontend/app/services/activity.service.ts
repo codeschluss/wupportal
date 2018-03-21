@@ -25,10 +25,8 @@ export class ActivityService extends DataService {
 		}).map(res => res as DataResponse);
 	}
 
-	createProvidersParam(providers: Array<string>): Array<string> {
-		const providersParam: any = { 'providers': [] };
-		providersParam.providers = providers;
-		return providersParam;
+	createProvidersParam(providers: Array<string>): any {
+		return { 'providers': providers };
 	}
 
 }

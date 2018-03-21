@@ -27,10 +27,8 @@ export class ProviderService extends DataService {
 		});
 	}
 
-	createProvidersParam(organisationID: string): string[] {
-		const orgaParam: any = { 'organisation': '' };
-		orgaParam.organisation = organisationID;
-		return orgaParam;
+	createProvidersParam(organisationID: string): any {
+		return { 'organisation': organisationID };
 	}
 
 	public getByUser(userID: string, admin?: boolean): Observable<any> {
@@ -44,10 +42,9 @@ export class ProviderService extends DataService {
 		});
 	}
 
-	createUserParam(userID: string): string[] {
-		const userParam: any = { 'user': '' };
-		userParam.user = userID;
-		return userParam;
+	createUserParam(userID: string): any {
+		return { 'user': userID };
+
 	}
 
 	createAdminParam(admin: boolean): string[] {

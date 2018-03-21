@@ -25,27 +25,32 @@ When those prerequisites are met, at least one administrative user should be cre
 #### Step 1. 
 Clone the repository
 
-#### Step 2.
+#### Step 2. 
+Download and Install [NodeJS](https://nodejs.org)
+
+#### Step 3. 
+start DB and [insert data](https://github.com/codeschluss/wupportal/tree/master/backend/config/schema). You can use the init_database.bat (for example with [xampp](https://www.apachefriends.org/index.html)). 
+If necessary add MySQL to your path environment.
+
+#### Step 4.
 generate app.php in backend\config by duplicating app.default.php (change name to app.php). Then configure it:
 - change database settings in section Datasources of app.php: driver (most cases Cake\Database\Driver\Mysql), username (most cases root), password (most cases empty), database (should be 'wupportal') 
 - generate security salt as follows ```php gen-salt.php``` in folder backend\config. Copy the output from the console and paste it in the corresponding security section of app.php. This generated hash value is especially necessary for hashing the user passwords in database. 
 
-#### Step 3. 
-[Composer](https://getcomposer.org/) install in folder \backend (where composer.json is)
-
-#### Step 4. 
-go to frontend and 
-```npm run install```
-
 #### Step 5. 
-start DB and [insert data](https://github.com/codeschluss/wupportal/tree/master/backend/config/schema)
+[Composer](https://getcomposer.org/) and install it. Run ```composer install``` in folder \backend (where composer.json is)
 
 #### Step 6. 
 go to backend\webroot and 
 start development server (example: ```php -S 0.0.0.0:4200```)
+If necessary add php to your path environment.
 
-#### Step 7.
+#### Step 7. 
+go to frontend and ```npm install```
+
+#### Step 8.
 go to frontend and
 ```npm run build```
 
-
+#### Step 9.
+open http://localhost:4200 (or whatever your port is) and open the app. 

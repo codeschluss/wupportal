@@ -23,10 +23,7 @@ import { Observable } from 'rxjs/Observable';
 @Component({
 	selector: 'organisation-admin',
 	templateUrl: 'organisation.admin.html',
-	styleUrls: ['../../../app.component.css'],
-	providers: [
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
-	]
+	styleUrls: ['../../../app.component.css']
 })
 
 export class OrganisationAdminComponent implements OnInit {

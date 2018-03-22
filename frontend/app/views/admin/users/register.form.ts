@@ -19,12 +19,7 @@ import { Organisation } from 'app/models/organisation';
 @Component({
 	selector: 'register-user',
 	templateUrl: 'register.form.html',
-	styleUrls: ['user.form.css'],
-	providers: [
-		ProviderService,
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
-	]
+	styleUrls: ['user.form.css']
 })
 
 export class RegisterFormComponent implements OnInit {

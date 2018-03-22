@@ -23,12 +23,7 @@ import { Suburb } from '../../../models/suburb';
 
 
 @Component({
-	templateUrl: 'address.form.html',
-	providers: [
-		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] },
-		{ provide: SuburbService, useFactory: DataServiceFactory(SuburbService), deps: [HttpClient, AuthenticationService] },
-	]
-
+	templateUrl: 'address.form.html'
 })
 
 export class AddressFormComponent implements OnInit {

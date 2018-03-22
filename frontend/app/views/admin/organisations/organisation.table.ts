@@ -14,10 +14,7 @@ import { Constants } from 'app/services/constants';
 @Component({
 	selector: 'edit-organisation',
 	styleUrls: ['../table.abstract.css'],
-	templateUrl: 'organisation.table.html',
-	providers: [
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
-	]
+	templateUrl: 'organisation.table.html'
 })
 
 export class OrganisationsTableComponent extends AbstractTableComponent {

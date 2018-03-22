@@ -44,6 +44,13 @@ export class ProviderTableComponent implements OnChanges {
 		forkJoin(list).subscribe(() => this.back());
 	}
 
+	onDelete(recordID: string): void {
+		this.dataService
+			.delete(recordID)
+			.subscribe(() => this.dataSource.data =
+				this.dataSource.data.filter(provider => provider.id !== recordID));
+	}
+
 	back(): void {
 		this.location.back();
 	}

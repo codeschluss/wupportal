@@ -22,10 +22,7 @@ import { Provider } from 'app/models/provider';
 @Component({
 	selector: 'user-form',
 	templateUrl: 'user.form.html',
-	styleUrls: ['user.form.css'],
-	providers: [
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] }
-	]
+	styleUrls: ['user.form.css']
 })
 
 export class UserFormComponent implements OnInit {

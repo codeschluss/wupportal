@@ -13,10 +13,7 @@ import { Organisation } from 'app/models/organisation';
 @Component({
 	selector: 'edit-users',
 	styleUrls: ['../table.abstract.css'],
-	templateUrl: 'user.table.html',
-	providers: [
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
-	]
+	templateUrl: 'user.table.html'
 })
 export class UserTableComponent extends AbstractTableComponent {
 

@@ -30,11 +30,7 @@ import { Provider } from 'app/models/provider';
 @Component({
 	selector: 'organisation-update',
 	templateUrl: 'organisation.update.html',
-	styleUrls: ['../../../app.component.css'],
-	providers: [
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] },
-		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] }
-	]
+	styleUrls: ['../../../app.component.css']
 })
 
 export class OrganisationUpdateComponent {

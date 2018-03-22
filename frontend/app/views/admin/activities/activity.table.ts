@@ -21,11 +21,7 @@ import * as moment from 'moment';
 @Component({
 	selector: 'activity-table',
 	styleUrls: ['../table.abstract.css'],
-	templateUrl: 'activity.table.html',
-	providers: [
-		ProviderService, ActivityService,
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] }
-	]
+	templateUrl: 'activity.table.html'
 })
 
 export class ActivityTableComponent extends AbstractTableComponent implements OnInit {

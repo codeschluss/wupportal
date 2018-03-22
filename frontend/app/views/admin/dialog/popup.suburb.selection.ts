@@ -11,10 +11,7 @@ import { Constants } from 'app/services/constants';
 
 
 @Component({
-	templateUrl: 'popup.suburb.html',
-	providers: [
-		{ provide: SuburbService, useFactory: DataServiceFactory(SuburbService), deps: [HttpClient, AuthenticationService] }
-	]
+	templateUrl: 'popup.suburb.html'
 })
 
 export class SuburbSelectionComponent {

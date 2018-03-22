@@ -52,14 +52,6 @@ import { RRule, RRuleSet, Weekday } from 'rrule';
 	templateUrl: 'activity.form.html',
 	styleUrls: ['../../../app.component.css'],
 	providers: [
-		ProviderService,
-		ActivityService,
-		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] },
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
-		{ provide: TagService, useFactory: DataServiceFactory(TagService), deps: [HttpClient, AuthenticationService] },
-		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] },
-		{ provide: CategoryService, useFactory: DataServiceFactory(CategoryService), deps: [HttpClient, AuthenticationService] },
-		{ provide: ScheduleService, useFactory: DataServiceFactory(ScheduleService), deps: [HttpClient, AuthenticationService] },
 		{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 		{
 			provide: MAT_DATE_FORMATS, useValue: {

@@ -22,11 +22,7 @@ import { MatTableDataSource } from '@angular/material';
 
 @Component({
 	selector: 'provider-request',
-	templateUrl: 'provider-request.table.html',
-	providers: [
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] }
-	]
+	templateUrl: 'provider-request.table.html'
 })
 
 export class ProviderRequestTableComponent implements OnInit {

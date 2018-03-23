@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+
 import { Observable } from 'rxjs/Observable';
+
 import { User } from 'app/models/user';
 import { Constants } from 'app/services/constants';
 import { Error } from 'app/models/error';
@@ -16,8 +19,9 @@ export class AuthenticationService extends Service implements CanActivate {
 	constructor(
 		private router: Router,
 		private http: HttpClient,
-		private constants: Constants) {
-		super();
+		private constants: Constants,
+		protected messageBar: MatSnackBar) {
+		super(messageBar);
 	}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -39,7 +43,7 @@ export class AuthenticationService extends Service implements CanActivate {
 				.set('Authorization', 'Basic ' + credentials)
 		})
 			.map((response: User) => this.handleSuccessLogin(response, credentials))
-			.catch((e: any) => this.handleError(e));
+			.catch(error => this.handleError(error));
 	}
 
 	handleSuccessLogin(response: User, credentials: string): void {

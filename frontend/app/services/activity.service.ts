@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+
+import { Observable } from 'rxjs/Observable';
 
 import { AuthenticationService } from 'app/services/authentication.service';
 import { TableState } from 'app/models/table.state';
@@ -12,9 +14,10 @@ export class ActivityService extends DataService {
 
 	constructor(
 		protected http: HttpClient,
-		protected authService: AuthenticationService
+		protected authService: AuthenticationService,
+		protected messageBar: MatSnackBar
 	) {
-		super(http, 'activities', authService);
+		super('activities', http, authService, messageBar);
 	}
 
 	public getByProviders(tableState: TableState, providers: Array<string>): Observable<DataResponse> {

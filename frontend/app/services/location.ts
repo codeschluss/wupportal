@@ -1,8 +1,8 @@
-import 'rxjs/add/observable/of';
+import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
-
-import { Injectable } from '@angular/core';
+import 'rxjs/add/observable/of';
 
 import { Address } from 'app/models/address';
 import { Service } from 'app/services/service';
@@ -10,13 +10,11 @@ import { Service } from 'app/services/service';
 @Injectable()
 export class LocationService extends Service {
 
-	protected url: string = null;
-
-	public add(item: Address): void { return; }
-
-	public delete(item: Address): void { return; }
-
-	public edit(item: Address): void { return; }
+	constructor(
+		protected messageBar: MatSnackBar
+	) {
+		super(messageBar);
+	}
 
 	public get(query: string = null): Observable<Address> {
 		const address = new Address({});

@@ -1,6 +1,8 @@
 
 import { InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+
 import { DataService } from 'app/services/data.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 
@@ -16,7 +18,7 @@ export const ConfigurationService = new InjectionToken<DataService>('configurati
 
 export function DataServiceFactory(service: InjectionToken<DataService>): any {
 	const repository = service.toString().replace('InjectionToken ', '');
-	return (http: HttpClient, authService: AuthenticationService) => {
-		return new DataService(http, repository, authService);
+	return (http: HttpClient, authService: AuthenticationService, messageBar: MatSnackBar) => {
+		return new DataService(repository, http, authService, messageBar);
 	};
 }

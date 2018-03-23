@@ -130,35 +130,25 @@ export class ProviderRequestTableComponent implements OnInit {
 	}
 
 	deleteProviders(): Array<any> {
-		const list = [];
-		for (const providerID of this.providersToDelete) {
-			console.log('providerToDelete', providerID);
-			list.push(this.providerService.delete(providerID));
-		}
-		return list;
+		return this.providersToDelete.map(providerID =>
+			this.providerService.delete(providerID)
+		);
 	}
 
 	addProvider(): Array<any> {
-		const list = [];
-		for (const provider of this.providersToAdd) {
-			console.log('providerToAdd', provider);
+		return this.providersToAdd.map(provider => {
 			const saveProvider = new Provider();
 			saveProvider.organisation_id = provider.organisation_id;
 			saveProvider.user_id = provider.user_id;
-			list.push(this.providerService.add(saveProvider));
-		}
-		console.log('addProvider', list);
-		return list;
+			return this.providerService.add(saveProvider);
+		});
 	}
 
 	updateUser(): void {
 		this.authService.login(this.user.username, this.user.password)
-			.subscribe(succeeded =>
-				succeeded ? this.location.back() : this.authService.redirectToLogin());
+			.subscribe(
+				null,
+				error => this.authService.redirectToLogin()
+			);
 	}
-
-	back(): void {
-		this.location.back();
-	}
-
 }

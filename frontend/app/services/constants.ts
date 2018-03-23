@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class Constants {
 
 	// --------------------------
-	// SERVER ERROR MESSAGES
+	// SERVER MESSAGES
 	// --------------------------
 
 	public static wrongCredentialsMessage: string = 'Kein Nutzer mit diesem Password gefunden';
@@ -12,15 +12,21 @@ export class Constants {
 	public static notFoundMessage: string = 'Kein Datensatz zu den Suchkriterien gefunden';
 	public static wrongInputFormatMessage: string = 'Format der Eingabefelder sind nicht korrekt';
 	public static unexpectedErrorMessage: string = 'Unerwarteter Serverfehler. Bitte erneut probieren oder Codeschluss kontaktieren';
+	public static successfulActionMessage: string = 'Aktion wurde erfolgreich ausgeführt';
 
 	// --------------------------
 	// STATIC
 	// --------------------------
-
+	public static close: string = 'Schließen';
 	public static nextPageLabel: string = 'Nächste Seite';
 	public static previousPageLabel: string = 'Vorherige Seite';
 	public static itemsPerPageLabel: string = 'Einträge pro Seite';
 	public static of: string = 'von';
+
+	// --------------------------
+	// LABELS
+	// --------------------------
+
 	public weekDaysArray: string[] = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
 	public rythm: string = 'Rythmus';
 	public from: string = 'von';
@@ -38,11 +44,6 @@ export class Constants {
 	public yearly: string = 'jährlich';
 	public countryCode: string = 'de';
 
-	// --------------------------
-	// LABELS
-	// --------------------------
-
-	public close: string = 'Schließen';
 	public back: string = 'Zurück';
 	public newElement: string = 'Neu';
 	public cancel: string = 'Abbrechen';
@@ -51,7 +52,7 @@ export class Constants {
 	public login: string = 'anmelden';
 	public loginTitle: string = 'Login';
 	public register: string = 'registrieren';
-	public userName: string = 'Username';
+	public userName: string = 'Benutzername';
 	public password: string = 'Passwort';
 	public newPassword: string = 'Neues Passwort';
 	public confirmPassword: string = 'Passwort wiederholen';

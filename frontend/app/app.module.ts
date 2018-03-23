@@ -17,6 +17,7 @@ import {
 	MatButtonModule,
 	MatPaginatorIntl,
 	MatSidenavModule,
+	MatSnackBar,
 	MatSnackBarModule,
 	MatCardModule,
 	MatExpansionModule,
@@ -178,7 +179,8 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		MatGridListModule,
 		MatSidenavModule,
 		MatAutocompleteModule,
-		MatInputModule
+		MatInputModule,
+		MatSnackBarModule
 	],
 	providers: [
 		ActivityService,
@@ -189,15 +191,42 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		ValidationService,
 		AuthenticationService,
 		{ provide: MatPaginatorIntl, useClass: PaginatorLabels },
-		{ provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService), deps: [HttpClient, AuthenticationService] },
-		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] },
-		{ provide: UserService, useFactory: DataServiceFactory(UserService), deps: [HttpClient, AuthenticationService] },
-		{ provide: SuburbService, useFactory: DataServiceFactory(SuburbService), deps: [HttpClient, AuthenticationService] },
-		{ provide: ConfigurationService, useFactory: DataServiceFactory(ConfigurationService), deps: [HttpClient, AuthenticationService] },
-		{ provide: TagService, useFactory: DataServiceFactory(TagService), deps: [HttpClient, AuthenticationService] },
-		{ provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService), deps: [HttpClient, AuthenticationService] },
-		{ provide: CategoryService, useFactory: DataServiceFactory(CategoryService), deps: [HttpClient, AuthenticationService] },
-		{ provide: ScheduleService, useFactory: DataServiceFactory(ScheduleService), deps: [HttpClient, AuthenticationService] }
+		{
+			provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		},
+		{
+			provide: AddressService, useFactory: DataServiceFactory(AddressService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		},
+		{
+			provide: UserService, useFactory: DataServiceFactory(UserService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		},
+		{
+			provide: SuburbService, useFactory: DataServiceFactory(SuburbService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		},
+		{
+			provide: ConfigurationService, useFactory: DataServiceFactory(ConfigurationService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		},
+		{
+			provide: TagService, useFactory: DataServiceFactory(TagService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		},
+		{
+			provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		},
+		{
+			provide: CategoryService, useFactory: DataServiceFactory(CategoryService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		},
+		{
+			provide: ScheduleService, useFactory: DataServiceFactory(ScheduleService),
+			deps: [HttpClient, AuthenticationService, MatSnackBar]
+		}
 	],
 	entryComponents: [
 		SuburbSelectionComponent,

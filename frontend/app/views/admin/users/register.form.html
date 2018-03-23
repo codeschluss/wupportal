@@ -8,7 +8,7 @@
 		  #formDir="ngForm" (ngSubmit)="onSubmit()"
 		  class="well">
 			<mat-form-field class="edit-form-full-width">
-				<input matInput type=text placeholder={{constants.mail}}
+				<input matInput type=text placeholder="{{constants.mail + ' / ' + constants.userName}}"
 				  formControlName="usernameCtrl"
 				  [errorStateMatcher]="validation"
 				  required>

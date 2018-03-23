@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
-import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 import { Address } from 'app/models/address';
 import { Service } from 'app/services/service';
@@ -12,8 +13,9 @@ import { Service } from 'app/services/service';
 export class NominatimService extends Service {
 
 	constructor(
-		private http: HttpClient) {
-		super();
+		private http: HttpClient,
+		protected messagebar: MatSnackBar) {
+		super(messagebar);
 	}
 
 	protected baseURL: string = '';

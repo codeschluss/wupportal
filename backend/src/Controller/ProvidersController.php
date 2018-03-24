@@ -127,7 +127,6 @@ class ProvidersController extends AppController
 	{
 		if ($userid !== $request->user_id) return false;
 		$ownProvider = $this->table()->getByUser($userid,$request->id);
-		// var_dump($ownProvider); exit;
 		return !empty($ownProvider) &&
 			(!($request->approved && !$ownProvider->approved)
 			|| !($request->admin && !$ownProvider->admin));

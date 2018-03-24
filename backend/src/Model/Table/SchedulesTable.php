@@ -24,61 +24,72 @@ use Cake\Validation\Validator;
 class SchedulesTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
 
-        $this->setTable('schedules');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+		$this->setTable('schedules');
+		$this->setDisplayField('id');
+		$this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+		$this->addBehavior('Timestamp');
 
-        $this->belongsTo('Activities', [
-            'foreignKey' => 'activity_id'
-        ]);
-    }
+		$this->belongsTo('Activities', [
+				'foreignKey' => 'activity_id'
+		]);
+	}
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator)
+	{
+		$validator
+			->uuid('id')
+			->allowEmpty('id', 'create');
 
-        $validator
-            ->dateTime('start_date')
-            ->allowEmpty('start_date');
+		$validator
+			->dateTime('start_date')
+			->allowEmpty('start_date');
 
-        $validator
-            ->dateTime('end_date')
-            ->allowEmpty('end_date');
+		$validator
+			->dateTime('end_date')
+			->allowEmpty('end_date');
 
-        return $validator;
-    }
+		return $validator;
+	}
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['activity_id'], 'Activities'));
+	/**
+	 * Returns a rules checker object that will be used for validating
+	 * application integrity.
+	 *
+	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+	 * @return \Cake\ORM\RulesChecker
+	 */
+	public function buildRules(RulesChecker $rules)
+	{
+		$rules->add($rules->existsIn(['activity_id'], 'Activities'));
 
-        return $rules;
-    }
+		return $rules;
+	}
+
+	public function isOwnedByValidActivity($scheduleId, $activities)
+	{
+		return
+			$this->exists([
+				'Schedules.id' => $scheduleId,
+				function ($exp, $q) use ($activities) {
+					return $exp->in('Schedules.activity_id', $activities);
+				}
+			]);
+	}
 }

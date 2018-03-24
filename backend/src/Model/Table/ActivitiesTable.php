@@ -132,10 +132,21 @@ class ActivitiesTable extends Table
 	public function isOwnedByValidProvider($providers, $activityId)
 	{
 	return
-		$this->exists(['Activities.id' => $activityId,
+		$this->exists([
+			'Activities.id' => $activityId,
 			function ($exp, $q) use ($providers) {
 				return $exp->in('Activities.provider_id', $providers);
 			}
 		]);
+	}
+
+	public function getByProviders($providers)
+	{
+		return
+			$this->find()
+			->select(['id'])
+			->where(function ($exp, $q) use ($providers) {
+					return $exp->in('Activities.provider_id', $providers);
+			});
 	}
 }

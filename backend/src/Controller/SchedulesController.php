@@ -69,31 +69,14 @@ class SchedulesController extends AppController
 	private function isAllowedByActivity($subqueryProviders, $activityId)
 	{
 		$activities = TableRegistry::get('Activities');
-		$result = $activities->find()
-			->select(['id'])
-			->where(function ($exp, $q) use ($subqueryProviders) {
-					return $exp->in('Activities.provider_id', $subqueryProviders);
-			})
-			->andWhere(['Activities.id' => $activityId])
-			->first();
-
-		return !empty($result);
+		return $activities->isOwnedByValidProvider($subqueryProviders, $activityId);
 	}
 
 	private function isAllowedBySchedule($subqueryProviders, $scheduleId)
 	{
-		$result = $this->table()->find()
-			->innerJoinWith('Activities')
-			->select(['id'])
-			->where(function ($exp, $q) use ($subqueryProviders) {
-					return $exp->in('Activities.provider_id', $subqueryProviders);
-			})
-			->andWhere([
-				'Schedules.id' => $scheduleId,
-			])
-			->first();
-
-		return !empty($result);
+		$activities = TableRegistry::get('Activities');
+		return $this->table()->isOwnedByValidActivity($scheduleId,
+			$activities->getByProviders($subqueryProviders));
 	}
 
 }

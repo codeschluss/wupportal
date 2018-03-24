@@ -242,71 +242,41 @@ class AppController extends Controller
 		return isset($user['superuser']) && $user['superuser'];
 	}
 
-	protected function isApprovedProvider($userId)
+	protected function isApprovedProvider($userId, $providerId = null)
 	{
-		$result = $this->getProviderQuery($userId)->first();
-		return !empty($result);
+		$providers = TableRegistry::get('Providers');
+		return $providers->isApprovedProvider($userId, $providerId);
 	}
 
 	protected function isOrgaAdminUser($ownUserId, $organisationId)
 	{
 		$providers = TableRegistry::get('Providers');
-		return $providers
-			->exists([
-				'user_id' => $ownUserId,
-				'organisation_id' => $organisationId,
-				'admin' => true
-			]);
+		return $providers->isOrgaAdminUser($ownUserId, $organisationId);
 	}
 
 	protected function isOrgaAdminProvider($userId, $providerId)
 	{
-		$organisationAdminSubquery = $this->getAdminOrganisationsQuery($userId);
-
 		$providers = TableRegistry::get('Providers');
-		$result = $providers->find()
-		->select(['id'])
-    ->where(function ($exp, $q) use ($organisationAdminSubquery) {
-        return $exp->in('organisation_id', $organisationAdminSubquery);
-		})
-		->andWhere(['id' => $providerId])
-		->first();
-		// var_dump($result); exit;
-		return !empty($result);
+		return $providers->isOrgaAdminProvider($userId, $providerId,
+			$this->getAdminOrganisationsQuery($userId));
 	}
 
 	protected function getProviderQuery($userId)
 	{
 		$providers = TableRegistry::get('Providers');
-		return $providers->find()
-			->select(['id'])
-			->where([
-				'Providers.user_id' => $userId,
-				'Providers.approved' => true
-			]);
+		return $providers->getProviderQuery($userId);
 	}
 
 	protected function getProviderOrganisationQuery($userId)
 	{
-		$organisationAdminSubquery = $this->getAdminOrganisationsQuery($userId);
-
 		$providers = TableRegistry::get('Providers');
-		return $providers->find()
-		->select(['id'])
-    ->where(function ($exp, $q) use ($organisationAdminSubquery) {
-        return $exp->in('organisation_id', $organisationAdminSubquery);
-		});
+		return $providers->getProviderOrganisationQuery($userId,
+			$this->getAdminOrganisationsQuery($userId));
 	}
 
 	protected function getAdminOrganisationsQuery($userId)
 	{
 		$organisations = TableRegistry::get('Organisations');
-		return $organisations->find()
-			->innerJoinWith('Providers')
-			->select(['id'])
-			->where([
-				'Providers.user_id' => $userId,
-				'Providers.admin' => true
-			]);
+		return $organisations->getAdminOrganisationsQuery($userId);
 	}
 }

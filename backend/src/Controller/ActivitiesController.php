@@ -87,7 +87,7 @@ class ActivitiesController extends AppController
 		$request = $this->request->input('json_decode');
 		switch ($this->request->getParam('action')) {
 			case 'add':
-				return $this->isApprovedProviderForOrga($user['id'], $request->provider_id)
+				return $this->isApprovedProvider($user['id'], $request->provider_id)
 					|| $this->isOrgaAdminProvider($user['id'], $request->provider_id);
 			case 'edit':
 				return $this->request->getParam('id') === $request->id &&
@@ -99,14 +99,6 @@ class ActivitiesController extends AppController
 			default:
 				return parent::isAuthorized($user);
 		}
-	}
-
-	private function isApprovedProviderForOrga($userId, $providerId)
-	{
-		$result = $this->getProviderQuery($userId)
-			->andWhere(['Providers.id' => $providerId])
-			->first();
-		return !empty($result);
 	}
 
 	private function isOwnActivity($userId, $activityId)

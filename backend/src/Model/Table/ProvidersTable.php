@@ -110,6 +110,27 @@ class ProvidersTable extends Table
 				->first();
 	}
 
+	public function getProviderQuery($userId)
+	{
+		return
+			$this->find()
+			->select(['id'])
+			->where([
+				'Providers.user_id' => $userId,
+				'Providers.approved' => true
+			]);
+	}
+
+	public function getProviderOrganisationQuery($userId, $organisations)
+	{
+		return
+			$this->find()
+			->select(['id'])
+			->where(function ($exp, $q) use ($organisations) {
+					return $exp->in('Providers.organisation_id', $organisations);
+			});
+	}
+
 	public function isOwnProvider($userId, $providerId)
 	{
 		return
@@ -119,14 +140,39 @@ class ProvidersTable extends Table
 			]);
 	}
 
-	// private function getQueryByUser()
-	// {
-	// 	return $this->find()
-	// 		->select(['id'])
-	// 		->where([
-	// 			'Providers.user_id' => $userId,
-	// 			'Providers.id' => $providerId
-	// 		])
-	// }
+	public function isOrgaAdminUser($ownUserId, $organisationId)
+	{
+		return
+			$this->exists([
+				'Providers.user_id' => $ownUserId,
+				'Providers.organisation_id' => $organisationId,
+				'Providers.admin' => true
+			]);
+	}
+
+	public function isApprovedProvider($userId, $providerId = null)
+	{
+		return $providerId
+			? $this->exists([
+					'Providers.user_id' => $userId,
+					'Providers.id' => $providerId,
+					'Providers.approved' => true
+				])
+			: $this->exists([
+					'Providers.user_id' => $userId,
+					'Providers.approved' => true
+				]);
+	}
+
+	public function isOrgaAdminProvider($userId, $providerId, $organisationAdmins)
+	{
+		return
+			$this->exists([
+				'id' => $providerId,
+				function ($exp, $q) use ($organisationAdmins) {
+        	return $exp->in('organisation_id', $organisationAdmins);
+				}
+			]);
+	}
 
 }

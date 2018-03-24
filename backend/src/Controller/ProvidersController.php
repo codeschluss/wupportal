@@ -100,12 +100,12 @@ class ProvidersController extends AppController
 				return $this->isOwnUserAndValid($user['id'], $request)
 					|| $this->isOrgaAdminUser($user['id'], $request->organisation_id);
 			case 'edit':
-				return $this->isValidEditRequest($request) &&
+				return $this->request->getParam('id') === $request->id &&
 					($this->isOwnProviderAndValid($user['id'], $request)
 					|| $this->isOrgaAdminProvider($user['id'], $this->request->getParam('id')));
 			case 'view':
 			case 'delete':
-				return $this->isOwnProvider($user['id'], $this->request->getParam('id'))
+				return $this->table()->isOwnProvider($user['id'], $this->request->getParam('id'))
 					|| $this->isOrgaAdminProvider($user['id'], $this->request->getParam('id'));
 			case 'getByOrganisation':
 				return $this->isOrgaAdminUser($user['id'], $request->organisation);
@@ -123,39 +123,13 @@ class ProvidersController extends AppController
 			&& !$request->admin;
 	}
 
-	private function isOwnProvider($userId, $providerId)
-	{
-		$result = $this->getOwnProvider($userId,$providerId);
-		return !empty($result);
-	}
-
 	private function isOwnProviderAndValid($userid, $request)
 	{
-		$ownProvider = $this->getOwnProvider($userid,$request->id);
-		return (!empty($ownProvider) &&
+		if ($userid !== $request->user_id) return false;
+		$ownProvider = $this->table()->getByUser($userid,$request->id);
+		// var_dump($ownProvider); exit;
+		return !empty($ownProvider) &&
 			(!($request->approved && !$ownProvider->approved)
-			|| !($request->admin && !$ownProvider->admin)));
-	}
-
-	private function isValidEditRequest($request)
-	{
-		if ($this->request->getParam('id') !== $request->id) return false;
-
-		return $this->table()
-			->exists([
-				'id' => $request->id,
-				'user_id' => $request->user_id
-			]);
-	}
-
-	private function getOwnProvider($userId, $providerId)
-	{
-		return $this->table()->find()
-			->select(['id'])
-			->where([
-				'Providers.user_id' => $userId,
-				'Providers.id' => $providerId
-			])
-			->first();
+			|| !($request->admin && !$ownProvider->admin));
 	}
 }

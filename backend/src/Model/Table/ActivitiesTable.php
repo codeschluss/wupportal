@@ -30,95 +30,112 @@ use Cake\Validation\Validator;
 class ActivitiesTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
 
-        $this->setTable('activities');
-        $this->setDisplayField('name');
-        $this->setPrimaryKey('id');
+		$this->setTable('activities');
+		$this->setDisplayField('name');
+		$this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+		$this->addBehavior('Timestamp');
 
-        $this->belongsTo('Addresses', [
-            'foreignKey' => 'address_id'
-        ]);
-        $this->belongsTo('Providers', [
-            'foreignKey' => 'provider_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->hasMany('Schedules', [
-            'foreignKey' => 'activity_id'
-        ]);
-        $this->belongsToMany('Tags', [
-            'foreignKey' => 'activity_id',
-            'targetForeignKey' => 'tag_id',
-            'joinTable' => 'activities_tags'
-        ]);
-        $this->belongsToMany('TargetGroups', [
-            'foreignKey' => 'activity_id',
-            'targetForeignKey' => 'target_group_id',
-            'joinTable' => 'activities_target_groups'
-        ]);
-        $this->belongsToMany('Translations', [
-            'foreignKey' => 'activity_id',
-            'targetForeignKey' => 'translation_id',
-            'joinTable' => 'activities_translations'
-        ]);
-    }
+		$this->belongsTo('Addresses', [
+			'foreignKey' => 'address_id'
+		]);
+		$this->belongsTo('Providers', [
+			'foreignKey' => 'provider_id',
+			'joinType' => 'INNER'
+		]);
+		$this->belongsTo('Categories', [
+			'foreignKey' => 'category_id',
+			'joinType' => 'INNER'
+		]);
+		$this->hasMany('Schedules', [
+			'foreignKey' => 'activity_id'
+		]);
+		$this->belongsToMany('Tags', [
+			'foreignKey' => 'activity_id',
+			'targetForeignKey' => 'tag_id',
+			'joinTable' => 'activities_tags'
+		]);
+		$this->belongsToMany('TargetGroups', [
+			'foreignKey' => 'activity_id',
+			'targetForeignKey' => 'target_group_id',
+			'joinTable' => 'activities_target_groups'
+		]);
+		$this->belongsToMany('Translations', [
+			'foreignKey' => 'activity_id',
+			'targetForeignKey' => 'translation_id',
+			'joinTable' => 'activities_translations'
+		]);
+	}
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator)
+	{
+		$validator
+			->uuid('id')
+			->allowEmpty('id', 'create');
 
-        $validator
-            ->scalar('name')
-            ->requirePresence('name', 'create')
-            ->notEmpty('name');
+		$validator
+			->scalar('name')
+			->requirePresence('name', 'create')
+			->notEmpty('name');
 
-        $validator
-            ->scalar('description')
-            ->allowEmpty('description');
+		$validator
+			->scalar('description')
+			->allowEmpty('description');
 
-        $validator
-            ->boolean('show_user')
-            ->requirePresence('show_user', 'create')
-            ->notEmpty('show_user');
+		$validator
+			->boolean('show_user')
+			->requirePresence('show_user', 'create')
+			->notEmpty('show_user');
 
-        return $validator;
-    }
+		return $validator;
+	}
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['address_id'], 'Addresses'));
-        $rules->add($rules->existsIn(['provider_id'], 'Providers'));
-        $rules->add($rules->existsIn(['category_id'], 'Categories'));
+	/**
+	 * Returns a rules checker object that will be used for validating
+	 * application integrity.
+	 *
+	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+	 * @return \Cake\ORM\RulesChecker
+	 */
+	public function buildRules(RulesChecker $rules)
+	{
+		$rules->add($rules->existsIn(['address_id'], 'Addresses'));
+		$rules->add($rules->existsIn(['provider_id'], 'Providers'));
+		$rules->add($rules->existsIn(['category_id'], 'Categories'));
 
-        return $rules;
-    }
+		return $rules;
+	}
+
+	/**
+	 * check if the specified activity is owned by one of the provided providers
+	 *
+	 * @param $providers list or subquery for providers
+	 * @param $activityId activity ID of the activity to check
+	 * @return Boolean
+	 */
+	public function isOwnedByValidProvider($providers, $activityId)
+	{
+	return
+		$this->exists(['Activities.id' => $activityId,
+			function ($exp, $q) use ($providers) {
+				return $exp->in('Activities.provider_id', $providers);
+			}
+		]);
+	}
 }

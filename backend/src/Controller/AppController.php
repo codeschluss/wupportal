@@ -271,7 +271,7 @@ class AppController extends Controller
 		})
 		->andWhere(['id' => $providerId])
 		->first();
-
+		// var_dump($result); exit;
 		return !empty($result);
 	}
 

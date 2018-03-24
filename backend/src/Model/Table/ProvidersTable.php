@@ -26,69 +26,107 @@ use Cake\Validation\Validator;
 class ProvidersTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
 
-        $this->setTable('providers');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+		$this->setTable('providers');
+		$this->setDisplayField('id');
+		$this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+		$this->addBehavior('Timestamp');
 
-        $this->belongsTo('Organisations', [
-            'foreignKey' => 'organisation_id'
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->hasMany('Activities', [
-            'foreignKey' => 'provider_id'
-        ]);
-    }
+		$this->belongsTo('Organisations', [
+			'foreignKey' => 'organisation_id'
+		]);
+		$this->belongsTo('Users', [
+			'foreignKey' => 'user_id',
+			'joinType' => 'INNER'
+		]);
+		$this->hasMany('Activities', [
+			'foreignKey' => 'provider_id'
+		]);
+	}
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator)
+	{
+		$validator
+			->uuid('id')
+			->allowEmpty('id', 'create');
 
-        $validator
-            ->boolean('admin')
-            ->allowEmpty('admin');
+		$validator
+			->boolean('admin')
+			->allowEmpty('admin');
 
-        $validator
-            ->boolean('approved')
-            ->allowEmpty('approved');
+		$validator
+			->boolean('approved')
+			->allowEmpty('approved');
 
-        return $validator;
-    }
+		return $validator;
+	}
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['organisation_id'], 'Organisations'));
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+	/**
+	 * Returns a rules checker object that will be used for validating
+	 * application integrity.
+	 *
+	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+	 * @return \Cake\ORM\RulesChecker
+	 */
+	public function buildRules(RulesChecker $rules)
+	{
+		$rules->add($rules->existsIn(['organisation_id'], 'Organisations'));
+		$rules->add($rules->existsIn(['user_id'], 'Users'));
 
-        return $rules;
-    }
+		return $rules;
+	}
+
+	/**
+	 *	returns provider for a given user ID and provider ID
+	 *
+	 * @param $userId
+	 * @param $providerId
+	 * @return app\Model\Entity\Provider
+	 */
+	public function getByUser($userId, $providerId)
+	{
+		return
+			$this->find()
+				->where([
+					'Providers.user_id' => $userId,
+					'Providers.id' => $providerId
+				])
+				->first();
+	}
+
+	public function isOwnProvider($userId, $providerId)
+	{
+		return
+			$this->exists([
+				'Providers.user_id' => $userId,
+				'Providers.id' => $providerId
+			]);
+	}
+
+	// private function getQueryByUser()
+	// {
+	// 	return $this->find()
+	// 		->select(['id'])
+	// 		->where([
+	// 			'Providers.user_id' => $userId,
+	// 			'Providers.id' => $providerId
+	// 		])
+	// }
+
 }

@@ -80,8 +80,8 @@ export class ActivityFormComponent implements OnInit {
 		private _formBuilder: FormBuilder,
 		public validation: ValidationService,
 	) {
-		this.targetGroupService.getAll().subscribe((data) => this.targetGroups = data);
-		this.categoriesService.getAll().subscribe((data) => this.categories = data);
+		this.targetGroupService.getAll().subscribe((targetGroups) => this.targetGroups = targetGroups);
+		this.categoriesService.getAll().subscribe((categories) => this.categories = categories);
 	}
 
 	ngOnInit(): void {
@@ -100,6 +100,9 @@ export class ActivityFormComponent implements OnInit {
 			})
 			.subscribe(activity => {
 				this.activity = new Activity(activity);
+				const targetGropuIDs = [];
+				this.activity.target_groups.forEach(tg => targetGropuIDs.push(tg.id));
+
 				if (this.activity.provider.id) {
 					if (this.providers.indexOf(this.activity.provider) === -1) {
 						this.providers.push(this.activity.provider);
@@ -116,7 +119,7 @@ export class ActivityFormComponent implements OnInit {
 					'descriptionCtrl': new FormControl(this.activity.description),
 					'tagsCtrl': new FormControl(''),
 					'categoryCtrl': new FormControl(this.activity.category.id, [Validators.required]),
-					'targetGroupCtrl': new FormControl(this.activity.target_groups)
+					'targetGroupCtrl': new FormControl(targetGropuIDs)
 				});
 				this.secondFormGroup = new FormGroup({
 					'addressCtrl': new FormControl(new Address(this.activity.address).isValid ?

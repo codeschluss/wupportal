@@ -110,8 +110,8 @@ export class Constants {
 	public chooseOrganisationForActivity: string = 'Im Namen welcher Organisation soll die Veranstaltung angelegt werden';
 	public tagsHint: string = 'Schlagworte bitte mit Komma trennen';
 	public scheduleInfo: string =
-		'Bei eintägigen Veranstaltungen bitte zwei mal' +
-		'das gleiche Datum angeben.Für regelmäßige Veranstaltungen bitte das Datum	des ersten und des' +
+		'Bei eintägigen Veranstaltungen bitte zwei mal ' +
+		'das gleiche Datum angeben.Für regelmäßige Veranstaltungen bitte das Datum	des ersten und des ' +
 		'letzten Termins angeben.Sie können die Termine anschließend noch einmal kontrollieren und verändern.';
 	public followingWeekdays: string = 'an folgenden Wochentagen';
 	public everyMonth: string = 'eines jeden Monats';

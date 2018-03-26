@@ -24,14 +24,12 @@
 				<mat-grid-tile colspan="2" rowspan="1">
 					<div>
 						<mat-form-field>
-							<input matInput style="width:50px;" [matDatepicker]="pickerStartDate" formControlName="startDateCtrl" placeholder={{constants.begin}}
-							 name="schedule_start_by">
+							<input matInput [matDatepicker]="pickerStartDate" formControlName="startDateCtrl" placeholder={{constants.begin}} name="schedule_start_by">
 							<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
 							<mat-datepicker #pickerStartDate></mat-datepicker>
 						</mat-form-field>
 						<mat-form-field>
-							<input matInput style="width:50px;" [matDatepicker]="pickerEndDate" formControlName="endDateCtrl" placeholder={{constants.end}}
-							 name="schedule_end_by">
+							<input matInput [matDatepicker]="pickerEndDate" formControlName="endDateCtrl" placeholder={{constants.end}} name="schedule_end_by">
 							<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
 							<mat-datepicker #pickerEndDate></mat-datepicker>
 						</mat-form-field>
@@ -150,10 +148,10 @@
 									<mat-datepicker #pickerStartDate></mat-datepicker>
 								</mat-form-field>
 								<mat-form-field>
-									<input matInput type="number" name="curr_start_time_hour" [formControl]="currentStartTimeHour" id="currentStratTimeHour">
+									<input matInput type="number" name="curr_start_time_hour" max="23" min="0" [formControl]="currentStartTimeHour" id="currentStratTimeHour">
 								</mat-form-field>:
 								<mat-form-field>
-									<input matInput type="number" name="curr_start_time_minute" [formControl]="currentStartTimeMinute" id="currentStratTimeMinute">
+									<input matInput type="number" name="curr_start_time_minute" max="59" min="0" [formControl]="currentStartTimeMinute" id="currentStratTimeMinute">
 								</mat-form-field>
 							</div>
 							<div>
@@ -163,10 +161,10 @@
 									<mat-datepicker #pickerEndDate></mat-datepicker>
 								</mat-form-field>
 								<mat-form-field>
-									<input matInput type="number" name="curr_end_time_hour" [formControl]="currentEndTimeHour" id="currentEndTimeHour">
+									<input matInput type="number" name="curr_end_time_hour" max="23" min="0" [formControl]="currentEndTimeHour" id="currentEndTimeHour">
 								</mat-form-field>
 								<mat-form-field>
-									<input matInput type="number" name="curr_end_time_minute" [formControl]="currentEndTimeMinute" id="currentEndTimeMinute">
+									<input matInput type="number" name="curr_end_time_minute" max="59" min="0" [formControl]="currentEndTimeMinute" id="currentEndTimeMinute">
 								</mat-form-field>
 								<button mat-raised-button type="button" (click)="changeDate(i)">{{constants.change}}</button>
 								<button mat-raised-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>

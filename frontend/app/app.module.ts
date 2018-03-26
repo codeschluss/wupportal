@@ -100,6 +100,7 @@ import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
 
 import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
 import { OrganisationDetailComponent } from 'app/views/admin/organisations/organisation.detail';
+import { SchedulerComponent } from './views/admin/schedules/scheduler.component';
 
 
 
@@ -114,6 +115,7 @@ import { OrganisationDetailComponent } from 'app/views/admin/organisations/organ
 		FilterComponent,
 		MappingComponent,
 		AddressAutocompleteComponent,
+		SchedulerComponent,
 
 		UserTableComponent,
 		OrganisationsTableComponent,

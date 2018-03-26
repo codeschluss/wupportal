@@ -7,9 +7,9 @@ export class Schedule extends Model {
 	constructor(json: any) {
 		super(json.id);
 		this.start_date_moment = moment(json.start_date).utc();
-		this.start_date = this.start_date_moment.format();
+		this.start_date = this.start_date_moment.format('YYYY-MM-DD HH:mm:ss');
 		this.end_date_moment = moment(json.end_date).utc();
-		this.end_date = moment(json.end_date).utc().format();
+		this.end_date = moment(json.end_date).utc().format('YYYY-MM-DD HH:mm:ss');
 	}
 
 	public start_date: string = moment().format('YYYY-MM-DD HH:mm:ss');

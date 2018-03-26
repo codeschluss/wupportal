@@ -56,7 +56,3 @@
 	.clickable {
 		cursor: pointer;
 	}
-
-	.clickable:hover {
-		background-color: gray;
-	}

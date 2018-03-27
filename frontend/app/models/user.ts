@@ -13,6 +13,7 @@ export class User extends Model {
 
 	// calculated field
 	public orgaAdmin: boolean = false;
+	public approvedProvider: boolean = false;
 
 	constructor(json: any = {} as User) {
 		super(json.id);
@@ -23,13 +24,16 @@ export class User extends Model {
 		this.phone = json.phone && json.phone || '';
 		this.providers = json.providers && json.providers || new Array<Provider>();
 
-		this.setOrgaAdmin();
+		this.setAdminAndApprovalFlag();
 	}
 
-	private setOrgaAdmin(): void {
+	private setAdminAndApprovalFlag(): void {
 		this.providers.forEach(provider => {
 			if (provider.admin) {
 				this.orgaAdmin = true;
+			}
+			if (provider.approved) {
+				this.approvedProvider = true;
 			}
 		});
 	}

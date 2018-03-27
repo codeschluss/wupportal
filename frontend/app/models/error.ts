@@ -1,12 +1,12 @@
 export class Error {
 
-	public status: number;
 	public message: string;
 	public error: any;
+	public messageDuration: number;
 
-	constructor(status: number, message: string, error: any) {
-		this.status = status;
+	constructor(error: any = {}, message: string = '', messageDuration: number = 0) {
 		this.message = message;
 		this.error = error;
+		this.messageDuration = messageDuration;
 	}
 }

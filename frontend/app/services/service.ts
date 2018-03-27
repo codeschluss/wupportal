@@ -14,35 +14,37 @@ export abstract class Service {
 	constructor(protected messageBar: MatSnackBar) { }
 
 	public handleSuccess(response: any): void {
-		this.openMessageBar('Aktion wurde erfolgreich ausgeführt');
+		this.openMessageBar(Constants.successfulActionMessage, Constants.SHORT);
 		return response;
 	}
 
 	protected handleError(responseError: HttpErrorResponse): Observable<Error> {
-		const err: Error = new Error(responseError.status, this.getErrorMessage(responseError), responseError);
-		this.openMessageBar(err.message);
+		const err: Error = this.createError(responseError);
+		this.openMessageBar(err.message, err.messageDuration);
 		return Observable.throw(err);
 	}
 
-	private getErrorMessage(error: HttpErrorResponse): string {
-		switch (error.status) {
+	private createError(httpError: HttpErrorResponse): Error {
+		switch (httpError.status) {
 			case 401:
-				return Constants.wrongCredentialsMessage;
+				return new Error(httpError, Constants.wrongCredentialsMessage, Constants.SHORT);
 			case 404:
-				return Constants.notFoundMessage;
+				return new Error(httpError, Constants.notFoundMessage, Constants.SHORT);
 			case 409:
-				return Constants.duplicateEntryMessage;
+				return new Error(httpError, Constants.duplicateEntryMessage, Constants.MIDDLE);
 			case 400:
-				return Constants.wrongInputFormatMessage;
+				return new Error(httpError, Constants.wrongInputFormatMessage, Constants.MIDDLE);
 			default:
-				const errorString = JSON.stringify(error);
-				return Constants.unexpectedErrorMessage + ' - Fehler: ' + errorString;
+				const errorMessage: string = Constants.unexpectedErrorMessage
+					+ ' - ' + Constants.error + ': '
+					+ JSON.stringify(httpError);
+				return new Error(httpError, errorMessage, Constants.LONG);
 		}
 	}
 
-	public openMessageBar(message: string): void {
+	public openMessageBar(message: string, duration: number): void {
 		this.messageBar.open(message, Constants.close, {
-			duration: 9999999,
+			duration: duration,
 		});
 	}
 

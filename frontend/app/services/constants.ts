@@ -14,6 +14,10 @@ export class Constants {
 	public static unexpectedErrorMessage: string = 'Unerwarteter Serverfehler. Bitte erneut probieren oder Codeschluss kontaktieren';
 	public static successfulActionMessage: string = 'Aktion wurde erfolgreich ausgeführt';
 
+	public static SHORT: number = 2000;
+	public static MIDDLE: number = 7000;
+	public static LONG: number = 99999;
+
 	// --------------------------
 	// STATIC
 	// --------------------------
@@ -22,6 +26,7 @@ export class Constants {
 	public static previousPageLabel: string = 'Vorherige Seite';
 	public static itemsPerPageLabel: string = 'Einträge pro Seite';
 	public static of: string = 'von';
+	public static error: string = 'Fehler';
 
 	// --------------------------
 	// LABELS
@@ -154,7 +159,6 @@ export class Constants {
 	public admin: string = 'Admin';
 	public userManagement: string = 'Nutzerverwaltung';
 
-	public error: string = 'Fehler';
 	public done: string = 'Erledigt';
 	public summary: string = 'Zusammenfassung';
 	public infos: string = 'Infos';

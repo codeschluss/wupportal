@@ -1,5 +1,18 @@
-/* #login-form {
-	margin: 0 auto;
-	display: flex;
-	flex-direction: column;
-} */
+#login-form {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	width: 30%;
+	background: whitesmoke;
+	margin-top: 50px;
+}
+
+.login-input-field {
+	width: 25vw;
+}
+
+.mat-card-header {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}

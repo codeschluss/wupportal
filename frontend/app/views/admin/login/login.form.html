@@ -1,24 +1,18 @@
-<mat-card>
+<mat-card id="login-form">
 	<mat-card-header>
-		<h2>{{constants.loginTitle}}</h2>
+		<mat-card-title>
+			<h2>{{constants.loginTitle}}</h2>
+		</mat-card-title>
 	</mat-card-header>
-	<form id="login-form" #loginForm="ngForm"
-	  (ngSubmit)="login()">
-		<mat-form-field class="example-full-width">
-			<input matInput placeholder={{constants.mail}}
-			  [(ngModel)]="username" type="text"
-			  name="userName" required />
+	<form #loginForm="ngForm" (ngSubmit)="login()">
+		<mat-form-field class="login-input-field">
+			<input matInput placeholder={{constants.mail}} [(ngModel)]="username" type="text" name="userName" required />
 		</mat-form-field>
-		<mat-form-field class="example-full-width">
-			<input matInput placeholder={{constants.password}}
-			  [(ngModel)]="password" type="password"
-			  name="password" required />
+		<mat-form-field class="login-input-field">
+			<input matInput placeholder={{constants.password}} [(ngModel)]="password" type="password" name="password" required />
 		</mat-form-field>
-		<button mat-raised-button color="primary"
-		  [disabled]="loginForm.invalid"
-		  type="submit">{{constants.login}}</button>
-		<button mat-raised-button color="accent"
-		  type="button" routerLink='/register'>{{constants.register}}</button>
+		<button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit">{{constants.login}}</button>
+		<button mat-raised-button color="accent" type="button" routerLink='/register'>{{constants.register}}</button>
 	</form>
 	<mat-error *ngIf="error">
 		{{error}}

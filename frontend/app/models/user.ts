@@ -11,10 +11,6 @@ export class User extends Model {
 	public phone: string;
 	public providers: Provider[];
 
-	// calculated field
-	public orgaAdmin: boolean = false;
-	public approvedProvider: boolean = false;
-
 	constructor(json: any = {} as User) {
 		super(json.id);
 		this.superuser = json.superuser && json.superuser || false;
@@ -23,19 +19,6 @@ export class User extends Model {
 		this.fullname = json.fullname && json.fullname || '';
 		this.phone = json.phone && json.phone || '';
 		this.providers = json.providers && json.providers || new Array<Provider>();
-
-		this.setAdminAndApprovalFlag();
-	}
-
-	private setAdminAndApprovalFlag(): void {
-		this.providers.forEach(provider => {
-			if (provider.admin) {
-				this.orgaAdmin = true;
-			}
-			if (provider.approved) {
-				this.approvedProvider = true;
-			}
-		});
 	}
 
 	public getAdminOrgas(): Array<Organisation> {
@@ -46,6 +29,26 @@ export class User extends Model {
 			}
 		});
 		return adminOrgas;
+	}
+
+	public isOrgaAdmin(): boolean {
+		let orgaAdmin: boolean = false;
+		this.providers.forEach(provider => {
+			if (provider.admin) {
+				orgaAdmin = true;
+			}
+		});
+		return orgaAdmin;
+	}
+
+	public isApproved(): boolean {
+		let isApprovedProvider: boolean = false;
+		this.providers.forEach(provider => {
+			if (provider.approved) {
+				isApprovedProvider = true;
+			}
+		});
+		return isApprovedProvider;
 	}
 }
 

@@ -19,8 +19,8 @@ class ActivitiesController extends AppController
 		$this->Auth->allow(['view','list', 'index', 'getByProviders']);
 	}
 
-	/** @return array associated models */
-	protected function contain()
+	/** @return array base of associated models */
+	protected function baseContain()
 	{
 		return [
 			'Addresses',
@@ -28,9 +28,17 @@ class ActivitiesController extends AppController
 			'Tags',
 			'Categories',
 			'TargetGroups',
-			'Providers.Organisations',
-			'Schedules'
+			'Schedules',
+			'Providers.Organisations'
 		];
+	}
+
+	/** @return array associated models */
+	protected function contain()
+	{
+		$associatedTables = $this->baseContain();
+		array_push($associatedTables, 'Providers.Users');
+		return $associatedTables;
 	}
 
 	/** @return array Fields to use for filter  */
@@ -46,14 +54,74 @@ class ActivitiesController extends AppController
 		];
 	}
 
+	/**
+	 * mapped to http get method without param
+	 * @return \Cake\Http\Response all records
+	 */
+	public function index()
+	{
+		$result = $this->table()->find()
+			->contain($this->contain())
+			->all()
+			->toArray();
+
+		$this->prepareResult($result);
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name)
+			: $this->ResponseHandler->responseSuccess($result);
+	}
+
+	/**
+	 * mapped to http get method with id param
+	 * @param string|null $id Entry id.
+	 * @return \Cake\Http\Response record for the entry id
+	 */
+	public function view($id = null)
+	{
+		$associatedTables = $this->table()->showUserActive($id)
+			? $this->contain()
+			: $this->baseContain();
+
+		$result = $this->table()->find()
+			->contain($associatedTables)
+			->where([$this->name . '.id' => $id])
+			->first();
+
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name . '.id')
+			: $this->ResponseHandler->responseSuccess($result);
+	}
+
+	/**
+	 * Fetch method
+	 *
+	 * @return \Cake\Http\Response|void
+	 */
+	public function list()
+	{
+		$query = $this->table()->find()->group($this->name . '.id');
+		$request = $this->request->input('json_decode');
+		if (is_null($request)) return $this->ResponseHandler->responseError();
+
+		$this->setPagination($request);
+		$this->setJoins($query);
+		$this->setSorting($query, $request);
+		$this->setFiltering($query, $request);
+
+		$result = $this->paginate($query)->toArray();
+		$this->prepareResult($result);
+
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name)
+			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $result));
+	}
+
 	public function getByProviders()
 	{
-		// var_dump($request); exit;
 		$query = $this->table()->find()->group($this->name . '.id');
 		$request = $this->request->input('json_decode');
 		if (is_null($request) && empty($request->providers))
 			return $this->ResponseHandler->responseError();
-
 
 		$this->setPagination($request);
 		$this->setJoins($query);
@@ -62,11 +130,11 @@ class ActivitiesController extends AppController
 		$this->setByProviders($query, $request);
 
 		$result = $this->paginate($query)->toArray();
+		$this->prepareResult($result);
 
 		return $this->ResponseHandler->isNotFoundError($result)
 			? $this->ResponseHandler->responseNotFoundError($this->name)
 			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $result));
-
 	}
 
 	private function setByProviders($query, $request)
@@ -78,6 +146,16 @@ class ActivitiesController extends AppController
 			}
 			return $whereClause;
 		}]);
+	}
+
+	private function prepareResult($result)
+	{
+		foreach ($result as $activity) {
+			if (!$activity->show_user) {
+				unset($activity->provider->user);
+				unset($activity->provider->user_id);
+			}
+		}
 	}
 
 	public function isAuthorized($user)

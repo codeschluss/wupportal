@@ -140,6 +140,14 @@ class ActivitiesTable extends Table
 		]);
 	}
 
+	public function showUserActive($id)
+	{
+		return $this->exists([
+			'id' => $id,
+			'show_user' => true
+		]);
+	}
+
 	public function getByProviders($providers)
 	{
 		return

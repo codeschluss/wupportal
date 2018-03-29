@@ -95,7 +95,13 @@ export class AuthenticationService extends Service implements CanActivate {
 
 	isOrganisationAdmin(): boolean {
 		return this.currentUser
-			? this.currentUser.orgaAdmin
+			? this.currentUser.isOrgaAdmin()
+			: false;
+	}
+
+	isApprovedProvider(): boolean {
+		return this.currentUser
+			? this.currentUser.isApproved()
 			: false;
 	}
 

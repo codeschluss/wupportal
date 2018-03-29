@@ -158,7 +158,6 @@ class AppController extends Controller
 	 */
 	public function list()
 	{
-		// var_dump($request); exit;
 		$query = $this->table()->find()->group($this->name . '.id');
 		$request = $this->request->input('json_decode');
 		if (is_null($request)) return $this->ResponseHandler->responseError();

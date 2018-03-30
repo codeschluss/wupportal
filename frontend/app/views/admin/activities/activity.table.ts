@@ -48,11 +48,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	checkNewButton(): void {
-		if (this.actionsVisible()) {
-			this.showNewButton = true;
-		} else {
-			this.showNewButton = this.authService.currentUser.approvedProvider;
-		}
+		this.showNewButton = this.actionsVisible();
 	}
 
 	initColumns(): void {
@@ -70,7 +66,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	actionsVisible(): boolean {
-		return this.showActions || this.authService.isSuperUser();
+		return this.showActions || this.authService.isSuperUser() || this.authService.isApprovedProvider();
 	}
 
 	fetchData(): void {

@@ -24,6 +24,7 @@ export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 	protected constants: Constants;
 	protected dataService: DataService;
 	protected totalCount: number;
+	protected finishedLoading: boolean = false;
 
 	constructor(dataService: DataService, constants: Constants) {
 		this.dataService = dataService;
@@ -72,6 +73,7 @@ export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 		this.dataSource.data = response.records;
 		this.totalCount = response.totalCount;
 		this.onLoadedData.emit(response.records);
+		this.finishedLoading = true;
 	}
 
 	getData(): Array<any> {

@@ -2,6 +2,12 @@
 	<mat-card class="organisation-edit-card">
 		<form #organisationForm="ngForm" (ngSubmit)="onSubmit()" class="well">
 			<mat-horizontal-stepper linear="true">
+				<ng-template matStepperIcon="done">
+					<i class="fa fa-check" aria-hidden="true"></i>
+				</ng-template>
+				<ng-template matStepperIcon="edit">
+					<i class="fa fa-check" aria-hidden="true"></i>
+				</ng-template>
 				<mat-step [stepControl]="firstFormGroup">
 					<form [formGroup]="firstFormGroup">
 						<ng-template matStepLabel>{{constants.coreData}}</ng-template>
@@ -61,7 +67,7 @@
 				<mat-step>
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
 					<h2>{{constants.pleaseControl}}</h2>
-					<organisation-detail *ngIf="organisation && organisation.address" [organisation]="organisation"></organisation-detail>
+					<organisation-detail *ngIf="organisation && organisation.address" [organisation]="organisation" largeTitle="true"></organisation-detail>
 					<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
 					<button mat-raised-button color="primary" type="submit">{{constants.save}}</button>
 				</mat-step>

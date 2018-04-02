@@ -2,53 +2,62 @@
 	<h2>{{ activity.name }}</h2>
 	<form #activityForm="ngForm" (ngSubmit)="onSubmit()">
 		<mat-card class="activity-edit-card">
-			<mat-horizontal-stepper linear="true">
+			<mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
+				<ng-template matStepperIcon="done">
+					<i class="fa fa-check" aria-hidden="true"></i>
+				</ng-template>
+				<ng-template matStepperIcon="edit">
+					<i class="fa fa-check" aria-hidden="true"></i>
+				</ng-template>
 				<mat-step [stepControl]="firstFormGroup">
 					<form [formGroup]="firstFormGroup">
 						<mat-card>
 							<ng-template matStepLabel>{{constants.coreData}}</ng-template>
-							<h2>{{constants.coreData}}</h2>
-							<mat-form-field class="edit-form-full-width">
-								<input matInput type="text" formControlName="nameCtrl" placeholder={{constants.title}} name="name" value={{activity.name}}
-								 required id="activity_name_field">
-							</mat-form-field>
-							<mat-form-field class="edit-form-full-width">
-								<textarea matInput type="text" formControlName="descriptionCtrl" placeholder="{{constants.description}}" name="description"
-								 value={{activity.description}} id="activity_description_field"></textarea>
-							</mat-form-field>
-							<h2>{{constants.chooseOrganisationForActivity}}</h2>
-							<mat-form-field>
-								<mat-select required placeholder={{constants.organisation}} formControlName="providerCtrl" name="activity_provider_id">
-									<mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.organisation ? provider.organisation.name : ''}}</mat-option>
-								</mat-select>
-							</mat-form-field>
-							<mat-checkbox *ngIf="activity.provider && activity.provider.organisation" formControlName="showUserCtrl" name="showUser">{{constants.publicUser}}</mat-checkbox>
-
-							<h2 class="edit-form-three-column-width" matTooltip='Durch Klicken entfernen Sie die Schlagworte'>{{constants.tags}}</h2>
-							<mat-form-field class="tags-chip-list" style="width:100%;">
-								<mat-chip-list #chipList>
-									<mat-chip *ngFor="let tag of activity.tags" selectable="true" removable="true">
-										{{tag.name + ' '}}
-										<i (click)="removeTag(tag)" class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i>
-									</mat-chip>
-									<input placeholder={{constants.tags}} [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur="true"
-									 (matChipInputTokenEnd)="addTag($event)" />
-								</mat-chip-list>
-							</mat-form-field>
-
-							<mat-form-field>
-								<mat-select required placeholder={{constants.category}} formControlName="categoryCtrl" name="activity_category">
-									<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
-								</mat-select>
-							</mat-form-field>
-
-							<mat-form-field>
-								<mat-select placeholder={{constants.targetGroups}} formControlName="targetGroupCtrl" name="activity_targetGroups" multiple>
-									<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
-								</mat-select>
-							</mat-form-field>
-							<div>
-								<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+							<div class="container-fluid">
+								<h2>{{constants.coreData}}</h2>
+								<div class="row">
+									<div class="col">
+										<mat-form-field class="edit-form">
+											<input matInput type="text" formControlName="nameCtrl" placeholder={{constants.title}} name="name" value={{activity.name}}
+											 required id="activity_name_field">
+										</mat-form-field>
+										<mat-form-field class="edit-form">
+											<textarea matInput type="text" formControlName="descriptionCtrl" placeholder="{{constants.description}}" name="description"
+											 value={{activity.description}} id="activity_description_field" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+										</mat-form-field>
+										<mat-form-field class="edit-form">
+											<mat-select required placeholder={{constants.organisation}} formControlName="providerCtrl" name="activity_provider_id">
+												<mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.organisation ? provider.organisation.name : ''}}</mat-option>
+											</mat-select>
+										</mat-form-field>
+										<mat-checkbox *ngIf="activity.provider && activity.provider.organisation" formControlName="showUserCtrl" name="showUser">{{constants.publicUser}}</mat-checkbox>
+									</div>
+									<div class="col">
+										<mat-form-field class="tags-chip-list edit-form">
+											<mat-chip-list #chipList>
+												<mat-chip *ngFor="let tag of activity.tags" selectable="true" removable="true">
+													{{tag.name + ' '}}
+													<i (click)="removeTag(tag)" class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i>
+												</mat-chip>
+												<input placeholder={{constants.tags}} [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur="true"
+												 (matChipInputTokenEnd)="addTag($event)" />
+											</mat-chip-list>
+										</mat-form-field>
+										<mat-form-field class="edit-form">
+											<mat-select required placeholder={{constants.category}} formControlName="categoryCtrl" name="activity_category">
+												<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+											</mat-select>
+										</mat-form-field>
+										<mat-form-field class="edit-form">
+											<mat-select placeholder={{constants.targetGroups}} formControlName="targetGroupCtrl" name="activity_targetGroups" multiple>
+												<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+								<div>
+									<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+								</div>
 							</div>
 						</mat-card>
 					</form>
@@ -56,23 +65,25 @@
 
 				<mat-step [stepControl]="secondFormGroup">
 					<ng-template matStepLabel>{{constants.address}}</ng-template>
-					<h2>{{constants.placeQuestion}}</h2>
-					<form [formGroup]="secondFormGroup">
-						<mat-card class="address-card" *ngIf="activity.address">
-							<div *ngIf="secondFormGroup.invalid">
-								<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="activity.address"></address-autocomplete-form>
-								<button type="button" mat-raised-button color="primary" (click)="addressSubmit()">{{constants.ok}}</button>
+					<div class="container-fluid">
+						<h2>{{constants.placeQuestion}}</h2>
+						<form [formGroup]="secondFormGroup">
+							<mat-card class="address-card" *ngIf="activity.address">
+								<div *ngIf="secondFormGroup.invalid">
+									<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="activity.address"></address-autocomplete-form>
+									<button type="button" mat-raised-button color="primary" (click)="addressSubmit()">{{constants.ok}}</button>
+								</div>
+								<div *ngIf="!secondFormGroup.invalid">
+									{{secondFormGroup.controls.addressCtrl.value.toString}}
+									<button type="button" mat-raised-button color="primary" (click)="resetAddress()">{{constants.change}}</button>
+								</div>
+							</mat-card>
+							<div>
+								<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
+								<button type="button" mat-raised-button color="primary" [disabled]="secondFormGroup.invalid" matStepperNext>{{constants.next}}</button>
 							</div>
-							<div *ngIf="!secondFormGroup.invalid">
-								{{secondFormGroup.controls.addressCtrl.value.toString}}
-								<button type="button" mat-raised-button color="primary" (click)="resetAddress()">{{constants.change}}</button>
-							</div>
-						</mat-card>
-						<div>
-							<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" mat-raised-button color="primary" [disabled]="secondFormGroup.invalid" matStepperNext>{{constants.next}}</button>
-						</div>
-					</form>
+						</form>
+					</div>
 				</mat-step>
 
 				<mat-step [stepControl]="thirdFormGroup">
@@ -82,7 +93,7 @@
 
 				<mat-step>
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
-					<h2>{{constants.pleaseControl}}</h2>
+					<div>{{constants.pleaseControl}}</div>
 					<activity-detail *ngIf="activity && user" [user]="user" [activity]="activity"></activity-detail>
 					<div>
 						<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>

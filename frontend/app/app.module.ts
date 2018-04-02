@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
 	MatButtonModule,
@@ -182,7 +183,8 @@ import { SchedulerComponent } from './views/admin/schedules/scheduler.component'
 		MatSidenavModule,
 		MatAutocompleteModule,
 		MatInputModule,
-		MatSnackBarModule
+		MatSnackBarModule,
+		MatProgressSpinnerModule
 	],
 	providers: [
 		ActivityService,

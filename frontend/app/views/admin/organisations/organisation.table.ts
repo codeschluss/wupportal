@@ -44,8 +44,8 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 	}
 
 	showDetails(row: any): void {
-		if (this.currentDetail && row.id === this.currentDetail.id) {
-			this.sidenav.close();
+		if (this.sidenav.opened && this.currentDetail && row.id === this.currentDetail.id) {
+			this.closeDetails();
 		} else {
 			this.currentDetail = new Organisation(row);
 			this.sidenav.open();

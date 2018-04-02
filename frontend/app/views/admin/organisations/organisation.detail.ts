@@ -13,6 +13,7 @@ import { Organisation } from 'app/models/organisation';
 export class OrganisationDetailComponent implements OnChanges {
 
 	@Input() organisation: Organisation;
+	@Input() largeTitle: Boolean;
 
 	constructor(
 		public constants: Constants

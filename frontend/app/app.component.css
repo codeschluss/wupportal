@@ -1,3 +1,13 @@
+html, body {
+	height: 100%;
+ }
+
+.main{
+	height: auto;
+	min-height: 100%;
+	padding-bottom: 50px;
+}
+
 filter-component {
 	bottom: 0px;
 	left: 0px;
@@ -41,8 +51,35 @@ mat-chip {
 	max-width: 200px;
 }
 
-#temp-footer {
-	margin-top: 35px;
-	font-size: 12px;
-	font-family: Roboto, "Helvetica Neue", sans-serif;
+.navbar-light{
+	background-color:	#FFD700;
 }
+
+.footer {
+	height:50px;
+	margin-top: -50px;
+	color: black;
+	background-color:	#FFD700;
+	text-align: center;
+	border-right: 15px solid white;
+	border-left: 15px solid white;
+}
+
+.footer > a:link    {color:#000;}
+.footer > a:visited {color:#000;}
+.footer > a:hover   {color:#000;}
+.footer > a:active  {color:#000;}
+
+.loadingOverlay{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	min-height: 300px;
+	margin: 0px auto;
+}
+
+.loadingOverlay > mat-spinner {
+	margin: 0 auto;
+}
+
+

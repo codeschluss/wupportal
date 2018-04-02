@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgForm, FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MatDialog, MatChipInputEvent } from '@angular/material';
+import { MatDialog, MatChipInputEvent, MatIconModule } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';

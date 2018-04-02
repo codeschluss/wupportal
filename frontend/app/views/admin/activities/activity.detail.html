@@ -1,57 +1,59 @@
 <mat-card *ngIf="activity && activity.provider && activity.provider.organisation">
-	<mat-card-header>
-		<mat-card-title>
-			<h3>{{constants.coreData}}</h3>
-		</mat-card-title>
-	</mat-card-header>
 	<mat-card-content>
-		<div>{{constants.title}} :
-			<b>{{activity.name}}</b>
-		</div>
-		<div>{{constants.organisation}} :
-			<b *ngIf="activity.provider">{{activity.provider.organisation.name}}</b>
-			<div>{{activity.provider.organisation.mail ? constants.mail + ':' + activity.provider.organisation.mail : ''}}</div>
-			<div>{{activity.provider.organisation.phone ? constants.phone + ': ' + activity.provider.organisation.phone : ''}}</div>
-		</div>
-		<div>{{constants.description}} :
-			<b>{{activity.description}}</b>
-		</div>
-		{{constants.publicUser}}
-		<div *ngIf="activity.show_user && user">
-			<b>{{constants.yes}}</b>
-			<div>{{user.fullname ? constants.nameString + ': ' : ''}}
-				<b>{{user.fullname ? user.fullname : ''}}</b>
+		<div class="container-fluid">
+			<h3>{{activity.name}}</h3>
+			<div *ngIf="activity.show_user && user">
+				<div class="row">
+					<div class="col">{{user.fullname ? constants.nameString + ': ' : ''}}
+						<b class="col">{{user.fullname ? user.fullname : ''}}</b>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">{{user.username ? constants.user + ': ' : ''}}
+						<b class="col">{{user.username ? user.username : ''}}</b>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">{{user.phone ? constants.phone + ': ' : ''}}
+						<b class="col">{{user.phone ? user.phone : ''}}</b>
+					</div>
+				</div>
 			</div>
-			<div>{{user.username ? constants.user + ': ' : ''}}
-				<b>{{user.username ? user.username : ''}}</b>
+			<div class="row">
+				<div class="col col-lg-2">{{constants.address}}
+				</div>
+				<div class="col">
+					<b *ngIf="activity.address">{{activity.address.toString}}</b>
+				</div>
 			</div>
-			<div>{{user.phone ? constants.phone + ': ' : ''}}
-				<b>{{user.phone ? user.phone : ''}}</b>
+			<hr>
+			<div class="row" *ngIf="activity.category">
+				<div class="col col-lg-2">{{constants.category}}</div>
+				<b class="col">{{activity.category.name}}</b>
 			</div>
+			<div class="row" *ngIf="activity.target_groups.length">
+				<div class="col col-lg-2">{{constants.targetGroups}}</div>
+				<div class="col">
+					<mat-chip-list class="mat-chip-list-stacked">
+						<mat-chip color="accent" selected="true" *ngFor="let targetGroup of activity.target_groups">
+							{{targetGroup.name}}
+						</mat-chip>
+					</mat-chip-list>
+				</div>
+			</div>
+			<div class="row" *ngIf="activity.tags.length">
+				<div class="col col-lg-2">{{constants.tags}}</div>
+				<div class="col">
+					<mat-chip-list class="mat-chip-list-stacked">
+						<mat-chip selected="true" *ngFor="let tag of activity.tags">#{{tag.name}}</mat-chip>
+					</mat-chip-list>
+				</div>
+			</div>
+			<organisation-detail [organisation]="activity.provider.organisation" [largeTitle]="false"></organisation-detail>
+			<h3 class="row">{{constants.dates}}</h3>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item" *ngFor="let schedule of activity.schedules">{{schedule.toString}}</li>
+			</ul>
 		</div>
-		<div *ngIf="!activity.show_user">
-			<b>{{constants.no}}</b>
-		</div>
-		<div>{{constants.address}} :
-			<b *ngIf="activity.address">{{activity.address.toString}}</b>
-		</div>
-		<h3>{{constants.metaData}}</h3>
-		<div>{{constants.category}} :
-			<b *ngIf="activity.category">{{activity.category.name}}</b>
-		</div>
-		<span>
-			<mat-list role="list">
-				<mat-list-item role="listitem" *ngFor="let targetGroup of activity.targetGropus">{{targetGroup.name}}</mat-list-item>
-			</mat-list>
-		</span>
-		<span>
-			<mat-chip-list class="mat-chip-list-stacked">
-				<mat-chip selected="true" *ngFor="let tag of activity.tags">#{{tag.name}}</mat-chip>
-			</mat-chip-list>
-		</span>
-		<h3>{{constants.dates}}</h3>
-		<mat-list role="list">
-			<mat-list-item role="listitem" *ngFor="let schedule of activity.schedules">{{schedule.toString}}</mat-list-item>
-		</mat-list>
 	</mat-card-content>
 </mat-card>

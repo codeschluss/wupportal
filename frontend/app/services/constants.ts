@@ -88,7 +88,7 @@ export class Constants {
 	public approved: string = 'Bestätigt';
 
 	public coreData: string = 'Stammdaten';
-	public metaData: string = 'Metadaten';
+	public metaData: string = 'Weitere Angaben';
 	public own: string = 'Eigene';
 	public no: string = 'Nein';
 	public yes: string = 'Ja';
@@ -106,13 +106,13 @@ export class Constants {
 	public deleteFromOrganisation: string = 'Aus Organisation entfernen';
 	public multipleOrganisationMessage: string = 'Sie sind Administrator für mehere Organisationen';
 	public pleaseSelectMessage: string = 'Bitte wählen Sie eine aus:';
-	public publicUser: string = 'Soll der Name des Anbieters veröffentlicht werden?';
+	public publicUser: string = 'Name des Anbieters veröffentlichen?';
 	public dateTimeQuestion: string = 'Wann findet Ihre Veranstaltung statt?';
 	public placeQuestion: string = 'Wo findet Ihre Veranstaltung statt?';
 	public pleaseControl: string = 'Bitte kontrollieren Sie Ihre Angaben';
 	public scheduleListExplanation: string = 'Sie können an dieser Stelle auch Anpssungen vornehmen, ' +
 		'indem Sie auf den jeweiligen	termin klicken.';
-	public chooseOrganisationForActivity: string = 'Im Namen welcher Organisation soll die Veranstaltung angelegt werden';
+	// public chooseOrganisationForActivity: string = 'Für welche Organisation soll die Veranstaltung angelegt werden';
 	public tagsHint: string = 'Schlagworte bitte mit Komma trennen';
 	public scheduleInfo: string =
 		'Bei eintägigen Veranstaltungen bitte zwei mal ' +

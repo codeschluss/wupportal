@@ -25,7 +25,7 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 		{ path: 'register', component: RegisterFormComponent },
 		{
 			path: 'admin', component: AdminComponent, canActivate: [AuthenticationService], children: [
-				{ path: '', component: ActivityTableComponent, outlet: 'table' },
+				{ path: '', redirectTo: '/admin/(table:activities)', pathMatch: 'full' },
 				{ path: 'activities', component: ActivityTableComponent, outlet: 'table' },
 				{ path: 'users', component: UserTableComponent, canActivate: [AuthenticationService], outlet: 'table' },
 				{ path: 'addresses', component: AddressTableComponent, canActivate: [AuthenticationService], outlet: 'table' },
@@ -38,8 +38,7 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 		{ path: 'activity/edit/:id', component: ActivityFormComponent },
 		{ path: 'organisation/edit/:id', component: OrganisationFormComponent },
 		{ path: 'address/edit/:id', component: AddressFormComponent },
-
-		// { path: '**', redirectTo: '' }
+		{ path: '**', redirectTo: '/', pathMatch: 'full' }
 	])],
 	exports: [RouterModule]
 })

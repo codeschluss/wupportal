@@ -91,8 +91,8 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	showDetails(row: any): void {
-		if (this.currentDetail && row.id === this.currentDetail.id) {
-			this.sidenav.close();
+		if (this.sidenav.opened && this.currentDetail && row.id === this.currentDetail.id) {
+			this.closeDetails();
 		} else {
 			this.currentDetail = new Activity(row);
 			if (this.currentDetail.show_user) {

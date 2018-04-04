@@ -94,7 +94,7 @@
 				<mat-step>
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
 					<div>{{constants.pleaseControl}}</div>
-					<activity-detail *ngIf="activity && user" [user]="user" [activity]="activity"></activity-detail>
+					<activity-detail *ngIf="activity && user" [activity]="activity"></activity-detail>
 					<div>
 						<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
 						<button mat-raised-button color="primary" type="submit">{{constants.save}}</button>

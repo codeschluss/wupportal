@@ -15,7 +15,6 @@ import { DataServiceFactory } from 'app/services/data.service.factory';
 export class ActivityDetailComponent implements OnChanges {
 
 	@Input() activity: Activity;
-	@Input() user: User;
 
 	constructor(
 		public constants: Constants
@@ -25,10 +24,6 @@ export class ActivityDetailComponent implements OnChanges {
 		if (changes.activity) {
 			const activity: SimpleChange = changes.activity;
 			this.activity = activity.currentValue;
-		}
-		if (this.user && changes.user) {
-			const user: SimpleChange = changes.user;
-			this.user = user.currentValue;
 		}
 	}
 

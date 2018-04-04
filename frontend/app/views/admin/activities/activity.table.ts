@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { DataSource } from '@angular/cdk/table';
 
-import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
+import { DataServiceFactory } from 'app/services/data.service.factory';
 import { ActivityService } from 'app/services/activity.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Activity } from 'app/models/activity';
@@ -33,7 +33,6 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	sidenav: MatSidenav;
 
 	currentDetail: Activity;
-	currentUser: User;
 	showNewButton: boolean = false;
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
@@ -41,7 +40,6 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 		protected authService: AuthenticationService,
 		protected dataService: ActivityService,
 		private providerService: ProviderService,
-		@Inject(UserService) public userService: DataService,
 		protected constants: Constants) {
 		super(dataService, constants);
 		this.checkNewButton();
@@ -95,18 +93,12 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 			this.closeDetails();
 		} else {
 			this.currentDetail = new Activity(row);
-			if (this.currentDetail.show_user) {
-				this.userService.get(this.currentDetail.provider.user_id).subscribe(user => {
-					this.currentUser = new User(user);
-				});
-			}
 			this.sidenav.open();
 		}
 	}
 
 	closeDetails(): void {
 		this.currentDetail = null;
-		this.currentUser = new User();
 		this.sidenav.close();
 	}
 }

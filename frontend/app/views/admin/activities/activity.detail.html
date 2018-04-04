@@ -2,20 +2,20 @@
 	<mat-card-content>
 		<div class="container-fluid">
 			<h3>{{activity.name}}</h3>
-			<div *ngIf="activity.show_user && activity.user">
+			<div *ngIf="activity.show_user && activity.provider.user">
 				<div class="row">
-					<div class="col">{{activity.user.fullname ? constants.nameString + ': ' : ''}}
-						<b class="col">{{activity.user.fullname ? activity.user.fullname : ''}}</b>
+					<div class="col">{{activity.provider.user.fullname ? constants.nameString + ': ' : ''}}
+						<b class="col">{{activity.provider.user.fullname ? activity.provider.user.fullname : ''}}</b>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">{{activity.user.username ? constants.user + ': ' : ''}}
-						<b class="col">{{activity.user.username ? activity.user.username : ''}}</b>
+					<div class="col">{{activity.provider.user.username ? constants.user + ': ' : ''}}
+						<b class="col">{{activity.provider.user.username ? activity.provider.user.username : ''}}</b>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">{{activity.user.phone ? constants.phone + ': ' : ''}}
-						<b class="col">{{activity.user.phone ? activity.user.phone : ''}}</b>
+					<div class="col">{{activity.provider.user.phone ? constants.phone + ': ' : ''}}
+						<b class="col">{{activity.provider.user.phone ? activity.provider.user.phone : ''}}</b>
 					</div>
 				</div>
 			</div>

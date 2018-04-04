@@ -43,7 +43,6 @@ export class OrganisationFormComponent implements OnInit {
 	secondFormGroup: FormGroup;
 	thirdFormGroup: FormGroup;
 
-
 	adminProviders: Array<Provider> = new Array<Provider>();
 
 	constructor(
@@ -98,7 +97,8 @@ export class OrganisationFormComponent implements OnInit {
 		const provider = new Provider();
 		provider.approved = true;
 		provider.admin = true;
-		provider.user_id = event;
+		provider.user_id = event.id;
+		provider.user = event;
 		this.adminProviders.push(provider);
 	}
 
@@ -128,6 +128,7 @@ export class OrganisationFormComponent implements OnInit {
 		const observableProviderArray: Observable<any>[] = [];
 		for (const provider of this.adminProviders) {
 			provider.organisation_id = orga.id;
+			provider.user = null;
 			observableProviderArray.push(this.providerService.add(provider));
 		}
 		return Observable.forkJoin(observableProviderArray);

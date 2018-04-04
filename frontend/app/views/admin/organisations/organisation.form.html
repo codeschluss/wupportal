@@ -63,11 +63,14 @@
 						<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
 					</div>
 				</mat-step>
-
 				<mat-step>
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
 					<h2>{{constants.pleaseControl}}</h2>
 					<organisation-detail *ngIf="organisation && organisation.address" [organisation]="organisation" largeTitle="true"></organisation-detail>
+					<h3>{{constants.admins}}</h3>
+					<mat-list role="list">
+						<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider.user.fullname + ' (' + provider.user.username + ')'}}</mat-list-item>
+					</mat-list>
 					<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
 					<button mat-raised-button color="primary" type="submit">{{constants.save}}</button>
 				</mat-step>

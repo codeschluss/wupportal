@@ -29,9 +29,6 @@
 					<button type="button" mat-raised-button color="primary" (click)="resetAddress()">{{constants.change}}</button>
 				</div>
 			</mat-card>
-			<!-- <mat-card class="address-card">
-				<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="organisation.address"></address-autocomplete-form>
-			</mat-card> -->
 			<button *ngIf="organisation.address" mat-raised-button color="primary" type="submit" [disabled]="organisationForm.invalid || !organisation.address.isValid">{{constants.save}}</button>
 			<button type="button" mat-raised-button (click)="back()">{{constants.cancel}}</button>
 		</form>

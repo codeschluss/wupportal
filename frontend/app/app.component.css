@@ -47,6 +47,14 @@ mapping-component {
 	width: 25%;
 }
 
+.address-card {
+	height: 200px;
+}
+
+.schedule-card{
+	height: 500px;
+}
+
 mat-chip {
 	max-width: 200px;
 }
@@ -81,5 +89,6 @@ mat-chip {
 .loadingOverlay > mat-spinner {
 	margin: 0 auto;
 }
+
 
 

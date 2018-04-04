@@ -157,6 +157,7 @@ export class Constants {
 	public activity: string = 'Aktivität';
 	public account: string = 'Konto';
 	public admin: string = 'Admin';
+	public admins: string = 'Admins';
 	public userManagement: string = 'Nutzerverwaltung';
 
 	public done: string = 'Erledigt';

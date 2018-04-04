@@ -19,11 +19,11 @@ export class UserTableComponent extends AbstractTableComponent {
 
 	displayedColumns: Array<string>;
 	dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
-	confirmedUserIDs: Array<number> = new Array<number>();
+	confirmedUserIDs: Array<string> = new Array<string>();
 
 	@Input() organisation: Organisation;
-	@Output() approvedAsAdmin: EventEmitter<number> = new EventEmitter<number>();
-	@Output() removedAsAdmin: EventEmitter<number> = new EventEmitter<number>();
+	@Output() approvedAsAdmin: EventEmitter<User> = new EventEmitter<User>();
+	@Output() removedAsAdmin: EventEmitter<string> = new EventEmitter<string>();
 
 	constructor(
 		@Inject(UserService) protected dataService: DataService,
@@ -36,23 +36,23 @@ export class UserTableComponent extends AbstractTableComponent {
 		this.displayedColumns = ['username', 'fullname', 'Users.phone', 'created', 'action'];
 	}
 
-	isAdmin(userID: number): boolean {
-		if (this.confirmedUserIDs.indexOf(userID) === -1) {
+	isAdmin(user: User): boolean {
+		if (this.confirmedUserIDs.indexOf(user.id) === -1) {
 			return false;
 		} else {
 			return true;
 		}
 	}
 
-	addAdmin(userID: number): void {
-		this.confirmedUserIDs.push(userID);
-		this.approvedAsAdmin.emit(userID);
+	addAdmin(user: User): void {
+		this.confirmedUserIDs.push(user.id);
+		this.approvedAsAdmin.emit(user);
 	}
 
-	removeAdmin(userID: number): void {
-		const index = this.confirmedUserIDs.indexOf(userID);
+	removeAdmin(user: User): void {
+		const index = this.confirmedUserIDs.indexOf(user.id);
 		this.confirmedUserIDs.splice(index, 1);
-		this.removedAsAdmin.emit(userID);
+		this.removedAsAdmin.emit(user.id);
 	}
 
 }

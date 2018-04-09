@@ -30,7 +30,7 @@ import { generate } from 'rxjs/observable/generate';
 @Component({
 	selector: 'address-autocomplete-form',
 	templateUrl: 'address.autocomplete.html',
-	styleUrls: ['../../../app.component.css']
+	styleUrls: ['../../../app.component.css', '../admin.area.css']
 })
 
 /*

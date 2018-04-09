@@ -143,6 +143,7 @@ export class Constants {
 	public date: string = 'Termin';
 	public noFutureDates: string = 'Keine zukünftigen Termine';
 	public title: string = 'Titel';
+	public noTitle: string = 'Kein Titel';
 	public tags: string = 'Tags';
 	public targetGroups: string = 'Zielgruppen';
 	public category: string = 'Kategorie';

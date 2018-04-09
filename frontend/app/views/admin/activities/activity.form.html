@@ -1,7 +1,8 @@
-<mat-card class="edit-container" *ngIf="activity">
-	<h2>{{ activity.name }}</h2>
+<mat-card class="container-fluid" *ngIf="activity">
+	<h2 *ngIf="activity.name">{{ activity.name }}</h2>
+	<h2 *ngIf="!activity.name">{{ constants.noTitle}}</h2>
 	<form #activityForm="ngForm" (ngSubmit)="onSubmit()">
-		<mat-card class="activity-edit-card">
+		<mat-card class="container-fluid">
 			<mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
 				<ng-template matStepperIcon="done">
 					<i class="fa fa-check" aria-hidden="true"></i>
@@ -17,15 +18,15 @@
 								<h2>{{constants.coreData}}</h2>
 								<div class="row">
 									<div class="col">
-										<mat-form-field class="edit-form">
+										<mat-form-field class="form-full-width">
 											<input matInput type="text" formControlName="nameCtrl" placeholder={{constants.title}} name="name" value={{activity.name}}
 											 required id="activity_name_field">
 										</mat-form-field>
-										<mat-form-field class="edit-form">
+										<mat-form-field class="form-full-width">
 											<textarea matInput type="text" formControlName="descriptionCtrl" placeholder="{{constants.description}}" name="description"
 											 value={{activity.description}} id="activity_description_field" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
 										</mat-form-field>
-										<mat-form-field class="edit-form">
+										<mat-form-field class="form-full-width">
 											<mat-select required placeholder={{constants.organisation}} formControlName="providerCtrl" name="activity_provider_id">
 												<mat-option *ngFor="let provider of providers" [value]="provider.id">{{provider.organisation ? provider.organisation.name : ''}}</mat-option>
 											</mat-select>
@@ -33,7 +34,7 @@
 										<mat-checkbox *ngIf="activity.provider && activity.provider.organisation" formControlName="showUserCtrl" name="showUser">{{constants.publicUser}}</mat-checkbox>
 									</div>
 									<div class="col">
-										<mat-form-field class="tags-chip-list edit-form">
+										<mat-form-field class="tags-chip-list form-full-width">
 											<mat-chip-list #chipList>
 												<mat-chip *ngFor="let tag of activity.tags" selectable="true" removable="true">
 													{{tag.name + ' '}}
@@ -43,12 +44,12 @@
 												 (matChipInputTokenEnd)="addTag($event)" />
 											</mat-chip-list>
 										</mat-form-field>
-										<mat-form-field class="edit-form">
+										<mat-form-field class="form-full-width">
 											<mat-select required placeholder={{constants.category}} formControlName="categoryCtrl" name="activity_category">
 												<mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
 											</mat-select>
 										</mat-form-field>
-										<mat-form-field class="edit-form">
+										<mat-form-field class="form-full-width">
 											<mat-select placeholder={{constants.targetGroups}} formControlName="targetGroupCtrl" name="activity_targetGroups" multiple>
 												<mat-option *ngFor="let targetGroup of targetGroups" [value]="targetGroup.id">{{targetGroup.name}}</mat-option>
 											</mat-select>

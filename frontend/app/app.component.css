@@ -33,20 +33,6 @@ mapping-component {
 	width: 90%;
 }
 
-.edit-form {
-	min-width: 150px;
-	max-width: 500px;
-	width: 100%;
-}
-
-.edit-form-full-width {
-	width: 75%;
-}
-
-.edit-form-three-column-width {
-	width: 25%;
-}
-
 .address-card {
 	height: 200px;
 }
@@ -66,6 +52,7 @@ mat-chip {
 .footer {
 	height:50px;
 	margin-top: -50px;
+	padding: 10px;
 	color: black;
 	background-color:	#FFD700;
 	text-align: center;

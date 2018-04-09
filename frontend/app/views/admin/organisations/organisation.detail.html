@@ -1,29 +1,52 @@
-<mat-card *ngIf="organisation">
-	<mat-card-content>
-		<div class="row" *ngIf="!largeTitle">
-			<div class="col">{{constants.organisation}}</div>
-			<b class="col">{{organisation.name}}</b>
+<div [ngClass]="largeTitle ? 'orga-detail container-fluid' : 'orga-detail'" *ngIf="organisation">
+	<b *ngIf="!largeTitle">{{organisation.name}}</b>
+	<h3 *ngIf="largeTitle">{{organisation.name}}</h3>
+	<hr>
+	<div class="row" *ngIf="organisation.website">
+		<div class="col">{{constants.website}}</div>
+		<div class="col">
+			<b>{{organisation.website}}</b>
 		</div>
-		<h3 *ngIf="largeTitle">{{organisation.name}}</h3>
-		<div class="row" *ngIf="organisation.description">
-			<div class="col">{{constants.description}}</div>
-			<b class="col">{{organisation.description}}</b>
+	</div>
+	<div class="row" *ngIf="organisation.mail">
+		<div class="col">{{constants.mail}}</div>
+		<div class="col">
+			<b>{{organisation.mail}}</b>
 		</div>
-		<div class="row" *ngIf="organisation.website">
-			<div class="col">{{constants.website}}</div>
-			<b class="col">{{organisation.website}}</b>
+	</div>
+	<div class="row" *ngIf="organisation.phone">
+		<div class="col">{{constants.phone}}</div>
+		<div class="col">
+			<b>{{organisation.phone}}</b>
 		</div>
-		<div class="row" *ngIf="organisation.mail">
-			<div class="col">{{constants.mail}}</div>
-			<b class="col">{{organisation.mail}}</b>
+	</div>
+	<div class="row" *ngIf="organisation.address">
+		<div class="col">{{constants.address}} </div>
+		<div class="col">
+			<b>{{organisation.address.toString}}</b>
 		</div>
-		<div class="row" *ngIf="organisation.phone">
-			<div class="col">{{constants.phone}}</div>
-			<b class="col">{{organisation.phone}}</b>
+	</div>
+	<div *ngIf="organisation.description && !largeTitle">
+		<a data-toggle="collapse" href="#collapseOrgaDescription" aria-expanded="largeTitle" aria-controls="collapseOrgaDescription">
+			<div class="row justify-content-md-center">
+				<div class="col align-self-start">
+					<b>{{constants.description}}</b>
+				</div>
+			</div>
+		</a>
+		<div class="collapse" id="collapseOrgaDescription">
+			{{organisation.description}}
 		</div>
-		<div class="row" *ngIf="organisation.address">
-			<div class="col">{{constants.address}} </div>
-			<b class="col">{{organisation.address.toString}}</b>
+	</div>
+	<div *ngIf="organisation.description && largeTitle">
+		<hr>
+		<div class="row">
+			<div class="col align-self-start">{{constants.description}}</div>
 		</div>
-	</mat-card-content>
-</mat-card>
+		<div class="row">
+			<div class="col">
+				<b>{{organisation.description}}</b>
+			</div>
+		</div>
+	</div>
+</div>

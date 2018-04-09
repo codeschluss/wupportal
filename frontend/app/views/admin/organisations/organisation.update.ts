@@ -30,7 +30,7 @@ import { Provider } from 'app/models/provider';
 @Component({
 	selector: 'organisation-update',
 	templateUrl: 'organisation.update.html',
-	styleUrls: ['../../../app.component.css']
+	styleUrls: ['../../../app.component.css', '../admin.area.css']
 })
 
 export class OrganisationUpdateComponent {

@@ -19,7 +19,7 @@ import { Organisation } from 'app/models/organisation';
 @Component({
 	selector: 'register-user',
 	templateUrl: 'register.form.html',
-	styleUrls: ['user.form.css']
+	styleUrls: ['user.form.css', '../admin.area.css']
 })
 
 export class RegisterFormComponent implements OnInit {

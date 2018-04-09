@@ -16,7 +16,7 @@ import { DataServiceFactory } from '../../../services/data.service.factory';
 @Component({
 	selector: 'config-form',
 	templateUrl: 'config.form.html',
-	styleUrls: ['../../../app.component.css']
+	styleUrls: ['../../../app.component.css', '../admin.area.css']
 })
 
 export class ConfigFormComponent implements OnInit {

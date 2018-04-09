@@ -222,7 +222,6 @@ CREATE TABLE `activities_translations` (
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--- TODO
 CREATE TABLE `i18n` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`locale` VARCHAR(6) NOT NULL,

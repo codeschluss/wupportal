@@ -685,7 +685,22 @@
 	"created": "2018-02-27 12:46:08",
 	"modified": "2018-02-27 12:46:08",
 	"address": null
-}</con:request><con:assertion type="Valid HTTP Status Codes" id="2cbf8707-640a-4fde-9a69-dc27636f7eff" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="df7a6794-7e5c-4adc-9e75-9b2b5a667eee" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="edit" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="ab2f9825-c83d-4b0c-920a-b721027c0303"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="07f07123-52cb-4d85-b17a-431d9296f20a" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0008-300000000000</con:endpoint><con:request>{
+}</con:request><con:assertion type="Valid HTTP Status Codes" id="2cbf8707-640a-4fde-9a69-dc27636f7eff" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="superuser_with translation" id="5c6bee8f-e4a3-4e33-970b-6934641988c4"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="c4604c36-8291-48f8-9fd4-7e8490f60c0c" name="superuser_with translation" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}</con:endpoint><con:request>{
+	"id": "",
+	"name": "organisationTranslation",
+	"description": {
+		"de": "german organisation",
+		"es": "spanish organisation",
+	},
+	"website": "www.orgaY.de",
+	"mail": "organisation@Y.de",
+	"phone": "01234567890",
+	"image": null,
+	"address_id": "00000000-0000-0000-0006-100000000000",
+	"created": "2018-02-27 12:46:08",
+	"modified": "2018-02-27 12:46:08",
+	"address": null
+}</con:request><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="df7a6794-7e5c-4adc-9e75-9b2b5a667eee" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="edit" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="ab2f9825-c83d-4b0c-920a-b721027c0303"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="07f07123-52cb-4d85-b17a-431d9296f20a" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0008-300000000000</con:endpoint><con:request>{
 	"id": "00000000-0000-0000-0008-300000000000",
 	"name": "organisation3",
 	"description": "changed",

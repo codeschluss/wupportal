@@ -39,7 +39,8 @@ INSERT INTO `organisations` (`id`, `name`, `description`, `website`, `mail`, `ph
 ('00000000-0000-0000-0008-200000000000', 'organisation2', 'organisation2', 'www.organisation2.com', 'organisation@2.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-300000000000', 'organisation3', 'organisation3', 'www.organisation3.com', 'organisation@3.com', '09876543210', null, '00000000-0000-0000-0006-200000000000'),
 ('00000000-0000-0000-0008-400000000000', 'organisationToDeleteSuperUser', 'organisationToDelete', 'www.organisationDelete.com', 'organisation@Delete.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
-('00000000-0000-0000-0008-500000000000', 'organisationToDeleteOrgaAdmin', 'organisationToDelete', 'www.organisationDelete.com', 'organisation@Delete.com', '09876543210', null, '00000000-0000-0000-0006-100000000000');
+('00000000-0000-0000-0008-500000000000', 'organisationToDeleteOrgaAdmin', 'organisationToDelete', 'www.organisationDelete.com', 'organisation@Delete.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
+('00000000-0000-0000-0008-600000000000', 'orgaTranslate', 'Das ist eine Organisation', 'www.organisationTranslate.com', 'organisation@translate.com', '09876543210', null, '00000000-0000-0000-0006-100000000000');
 
 INSERT INTO `providers` (`id`, `organisation_id`, `user_id`, `admin`, `approved`) VALUES
 ('00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0008-100000000000', '00000000-0000-0000-0004-200000000000', 1, 1),

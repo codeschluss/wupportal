@@ -107,7 +107,7 @@ class AppController extends Controller
 	{
 		$result = $this->table()->patchEntity(
 			$this->table()->newEntity(),
-			json_decode($this->request->input(), true),
+			$this->createEntity($this->request->input()),
 			['associated' => $this->contain()]
 		);
 
@@ -127,13 +127,24 @@ class AppController extends Controller
 	{
 		$result = $this->table()->patchEntity(
 			$this->table()->get($id, ['contain' => $this->contain()]),
-			json_decode($this->request->input(), true),
+			$this->createEntity($this->request->input()),
 			['associated' => $this->contain()]
 		);
 
 		return $result->errors()
 			? $this->ResponseHandler->responseError($result->errors())
 			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
+	}
+
+	/**
+	 * Helper function to create an entity from request
+	 * @param Request
+	 * @return Entity
+	 *
+	 */
+	protected function createEntity($request)
+	{
+		return json_decode($this->request->input(), true);
 	}
 
 	/**

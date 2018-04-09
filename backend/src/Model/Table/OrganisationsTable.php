@@ -47,6 +47,8 @@ class OrganisationsTable extends Table
 		$this->hasMany('Providers', [
 			'foreignKey' => 'organisation_id'
 		]);
+
+		$this->addBehavior('Translate', ['fields' => ['description']]);
 	}
 
 	/**

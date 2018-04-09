@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\I18n;
 
 /**
  * Organisations Controller
@@ -23,8 +24,8 @@ class OrganisationsController extends AppController
 	protected function contain()
 	{
 		return [
-				'Addresses',
-				'Addresses.Suburbs'
+			'Addresses',
+			'Addresses.Suburbs'
 		];
 	}
 
@@ -42,6 +43,17 @@ class OrganisationsController extends AppController
 			'Addresses.place',
 			'Suburbs.name'
 		];
+	}
+
+	/**
+	 * Helper function to create an entity from request
+	 * @param Request
+	 * @return Entity
+	 *
+	 */
+	protected function createEntity($request)
+	{
+		return json_decode($this->request->input(), true);
 	}
 
 	public function isAuthorized($user)

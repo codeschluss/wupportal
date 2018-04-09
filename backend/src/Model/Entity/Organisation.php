@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\Behavior\Translate\TranslateTrait;
 
 /**
  * Organisation Entity
@@ -22,6 +23,8 @@ use Cake\ORM\Entity;
  */
 class Organisation extends Entity
 {
+
+	use TranslateTrait;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

@@ -64,9 +64,10 @@ export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 
 	fetchData(): void {
 		this.dataService.list(this.tableState)
-			.subscribe(data => {
-				this.handleResponse(data);
-			});
+			.subscribe(
+				data => this.handleResponse(data),
+				error => this.dataSource.data = []
+			);
 	}
 
 	handleResponse(response: DataResponse): void {

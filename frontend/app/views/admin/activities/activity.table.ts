@@ -68,11 +68,14 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	fetchData(): void {
-		this.providers.length !== 0
+		const request = this.providers.length !== 0
 			? this.dataService.getByProviders(this.tableState, this.providers)
-				.subscribe(data => this.handleResponse(data))
-			: this.dataService.list(this.tableState)
-				.subscribe(data => this.handleResponse(data));
+			: this.dataService.list(this.tableState);
+
+		request.subscribe(
+			data => this.handleResponse(data),
+			error => this.dataSource.data = []
+		);
 	}
 
 	// only showing dates in the future

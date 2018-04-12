@@ -46,7 +46,7 @@ import { generate } from 'rxjs/observable/generate';
 @Component({
 	selector: 'activity-form',
 	templateUrl: 'activity.form.html',
-	styleUrls: ['../../../app.component.css'],
+	styleUrls: ['../../../app.component.css', '../admin.area.css'],
 
 })
 

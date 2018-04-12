@@ -7,7 +7,7 @@ import { Constants } from 'app/services/constants';
 
 @Component({
 	templateUrl: 'login.form.html',
-	styleUrls: ['./login.form.css']
+	styleUrls: ['../admin.area.css']
 })
 export class LoginFormComponent implements OnInit {
 

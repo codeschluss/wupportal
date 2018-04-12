@@ -1,4 +1,7 @@
-<mat-card class="edit-container">
+<mat-card class="edit-container gray-card">
+	<div class="loadingOverlay" *ngIf="!configurations">
+		<mat-spinner></mat-spinner>
+	</div>
 	<h2>{{ constants.configuration }}
 		<span style="color:red;  font-size: large;">{{ constants.warning + ' ' + constants.configWarning}} </span>
 	</h2>
@@ -6,13 +9,13 @@
 		<mat-grid-list cols="3" rowHeight="100px">
 			<div *ngFor="let config of configurations;let i = index">
 				<mat-grid-tile colspan="1" rowspan="1">
-					<mat-form-field class="edit-form-full-width">
+					<mat-form-field class="form-full-width">
 						<input matInput type="text" name="config.{{i}}.value" [(ngModel)]=config.value placeholder={{constants[config.item]}} required/>
 					</mat-form-field>
 				</mat-grid-tile>
 			</div>
 		</mat-grid-list>
-		<button mat-raised-button [disabled]="!configForm.form.valid" color="primary" type="submit">{{constants.save}}</button>
 		<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
+		<button mat-raised-button [disabled]="!configForm.form.valid" color="primary" type="submit">{{constants.save}}</button>
 	</form>
 </mat-card>

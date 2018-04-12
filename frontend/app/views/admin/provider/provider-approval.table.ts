@@ -40,4 +40,11 @@ export class ProviderApprovalTableComponent implements OnChanges {
 		row.approved = true;
 		this.dataService.edit(row).subscribe(() => this.onApproved.emit(row));
 	}
+
+	onDelete(recordID: string): void {
+		this.dataService
+			.delete(recordID)
+			.subscribe(() => this.dataSource.data =
+				this.dataSource.data.filter(provider => provider.id !== recordID));
+	}
 }

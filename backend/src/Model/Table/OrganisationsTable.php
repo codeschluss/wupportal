@@ -66,7 +66,8 @@ class OrganisationsTable extends Table
 		$validator
 			->scalar('name')
 			->requirePresence('name', 'create')
-			->notEmpty('name');
+			->notEmpty('name')
+			->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
 		$validator
 			->scalar('description')
@@ -100,6 +101,7 @@ class OrganisationsTable extends Table
 	public function buildRules(RulesChecker $rules)
 	{
 		$rules->add($rules->existsIn(['address_id'], 'Addresses'));
+		$rules->add($rules->isUnique(['name']));
 
 		return $rules;
 	}

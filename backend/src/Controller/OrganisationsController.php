@@ -45,17 +45,6 @@ class OrganisationsController extends AppController
 		];
 	}
 
-	/**
-	 * Helper function to create an entity from request
-	 * @param Request
-	 * @return Entity
-	 *
-	 */
-	protected function createEntity($request)
-	{
-		return json_decode($this->request->input(), true);
-	}
-
 	public function isAuthorized($user)
 	{
 		if ($this->isSuperuser($user)) return true;

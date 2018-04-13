@@ -105,15 +105,9 @@ class AppController extends Controller
 	 */
 	public function add()
 	{
-		$result = $this->table()->patchEntity(
-			$this->table()->newEntity(),
-			$this->createEntity($this->request->input()),
-			['associated' => $this->contain()]
+		return $this->storeInDb(
+			$this->table()->newEntity()
 		);
-
-		return $result->errors()
-			? $this->ResponseHandler->responseError($result->errors())
-			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
 	}
 
 	/**
@@ -125,26 +119,34 @@ class AppController extends Controller
 	 */
 	public function edit($id)
 	{
+		return $this->storeInDb(
+			$this->table()->get($id, ['contain' => $this->contain()])
+		);
+	}
+
+	protected function storeInDb($baseEntity)
+	{
+		$requestEntity = json_decode($this->request->input(), true);
 		$result = $this->table()->patchEntity(
-			$this->table()->get($id, ['contain' => $this->contain()]),
-			$this->createEntity($this->request->input()),
+			$baseEntity,
+			$requestEntity,
 			['associated' => $this->contain()]
 		);
+
+		$this->saveTranslations($requestEntity, $result);
 
 		return $result->errors()
 			? $this->ResponseHandler->responseError($result->errors())
 			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
 	}
 
-	/**
-	 * Helper function to create an entity from request
-	 * @param Request
-	 * @return Entity
-	 *
-	 */
-	protected function createEntity($request)
+	protected function saveTranslations($requestEntity, $storingEntity)
 	{
-		return json_decode($this->request->input(), true);
+		if(array_key_exists('_translations', $requestEntity)) {
+			foreach ($requestEntity['_translations'] as $lang => $data) {
+    		$storingEntity->translation($lang)->set($data, ['guard' => false]);
+			}
+		}
 	}
 
 	/**

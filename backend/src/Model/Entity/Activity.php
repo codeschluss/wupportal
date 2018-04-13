@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\Behavior\Translate\TranslateTrait;
 
 /**
  * Activity Entity
@@ -25,6 +26,8 @@ use Cake\ORM\Entity;
  */
 class Activity extends Entity
 {
+
+		use TranslateTrait;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

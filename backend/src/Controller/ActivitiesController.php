@@ -19,41 +19,6 @@ class ActivitiesController extends AppController
 		$this->Auth->allow(['view','list', 'index', 'getByProviders']);
 	}
 
-	/** @return array base of associated models */
-	protected function baseContain()
-	{
-		return [
-			'Addresses',
-			'Addresses.Suburbs',
-			'Tags',
-			'Categories',
-			'TargetGroups',
-			'Schedules',
-			'Providers.Organisations'
-		];
-	}
-
-	/** @return array associated models */
-	protected function contain()
-	{
-		$associatedTables = $this->baseContain();
-		array_push($associatedTables, 'Providers.Users');
-		return $associatedTables;
-	}
-
-	/** @return array Fields to use for filter  */
-	protected function fieldsTofilter()
-	{
-		return [
-			'Activities.name',
-			'Activities.description',
-			'Organisations.name',
-			'Categories.name',
-			'Tags.name',
-			'Suburbs.name'
-		];
-	}
-
 	/**
 	 * mapped to http get method without param
 	 * @return \Cake\Http\Response all records
@@ -156,6 +121,41 @@ class ActivitiesController extends AppController
 				unset($activity->provider->user_id);
 			}
 		}
+	}
+
+	/** @return array base of associated models */
+	protected function baseContain()
+	{
+		return [
+			'Addresses',
+			'Addresses.Suburbs',
+			'Tags',
+			'Categories',
+			'TargetGroups',
+			'Schedules',
+			'Providers.Organisations'
+		];
+	}
+
+	/** @return array associated models */
+	protected function contain()
+	{
+		$associatedTables = $this->baseContain();
+		array_push($associatedTables, 'Providers.Users');
+		return $associatedTables;
+	}
+
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilter()
+	{
+		return [
+			'Activities.name',
+			'Activities.description',
+			'Organisations.name',
+			'Categories.name',
+			'Tags.name',
+			'Suburbs.name'
+		];
 	}
 
 	public function isAuthorized($user)

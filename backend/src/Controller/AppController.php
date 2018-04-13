@@ -19,6 +19,7 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\ConflictException;
+use Cake\I18n\I18n;
 use \stdClass;
 
 /**
@@ -59,11 +60,19 @@ class AppController extends Controller
 		]);
 	}
 
-	/** @return array associated models */
-	protected function contain() { return []; }
+	public function beforeFilter(Event $event)
+	{
+		parent::beforeFilter($event);
+		$this->setLocale();
+	}
 
-	/** @return array Fields to use for filter  */
-	protected function fieldsTofilter() { return []; }
+	protected function setLocale()
+	{
+		$langCode = $this->request->getHeaderLine('Accept-Language');
+		if ($langCode !== 'de') {
+			I18n::locale($langCode);
+		}
+	}
 
 	/**
 	 * mapped to http get method without param
@@ -224,6 +233,12 @@ class AppController extends Controller
 			}]);
 		}
 	}
+
+	/** @return array associated models */
+	protected function contain() { return []; }
+
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilter() { return []; }
 
 	protected function createListResponse($query,$result) {
 		$listResponse = new stdClass();

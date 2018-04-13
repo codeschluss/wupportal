@@ -33,6 +33,8 @@ class OrganisationsTable extends Table
 	 */
 	public function initialize(array $config)
 	{
+		parent::initialize($config);
+
 		$this->setTable('organisations');
 		$this->setDisplayField('name');
 		$this->setPrimaryKey('id');

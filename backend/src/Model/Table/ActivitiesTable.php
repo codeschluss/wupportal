@@ -69,6 +69,8 @@ class ActivitiesTable extends Table
 			'targetForeignKey' => 'target_group_id',
 			'joinTable' => 'activities_target_groups'
 		]);
+
+		$this->addBehavior('Translate', ['fields' => ['name', 'description']]);
 	}
 
 	/**
@@ -137,7 +139,7 @@ class ActivitiesTable extends Table
 	public function showUserActive($id)
 	{
 		return $this->exists([
-			'id' => $id,
+			'Activities.id' => $id,
 			'show_user' => true
 		]);
 	}

@@ -14,12 +14,10 @@ use Cake\ORM\TableRegistry;
 class TagsController extends AppController
 {
 
-	/** @return array Fields to use for filter  */
-	protected function fieldsTofilter()
+	public function initialize()
 	{
-		return [
-			'name'
-		];
+		parent::initialize();
+		$this->Auth->allow(['view','list', 'index']);
 	}
 
 	/**
@@ -40,10 +38,12 @@ class TagsController extends AppController
 			: parent::add();
 	}
 
-	public function initialize()
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilter()
 	{
-		parent::initialize();
-		$this->Auth->allow(['view','list', 'index']);
+		return [
+			'name'
+		];
 	}
 
 	public function isAuthorized($user)

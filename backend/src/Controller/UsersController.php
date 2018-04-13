@@ -22,24 +22,19 @@ class UsersController extends AppController
 		$this->Auth->allow(['login']);
 	}
 
-	/** @return array associated models */
-	public function contain()
+	public function beforeFilter(Event $event)
 	{
-		return [
-			'Providers.Organisations'
-		];
-	}
+		parent::beforeFilter($event);
 
-	/** @return array Fields to use for filter  */
-	protected function fieldsTofilter()
-	{
-		return [
-			'Users.username',
-			'Users.fullname',
-			'Users.phone'
-		];
+		$request = $this->request->input('json_decode');
+		if ($this->request->getParam('action') === 'add') {
+			if($request->superuser && !$this->Auth->user('superuser')) {
+				$this->Auth->deny('add');
+			} else {
+				$this->Auth->allow('add');
+			}
+		}
 	}
-
 
 	/**
 	 * login method
@@ -60,20 +55,24 @@ class UsersController extends AppController
 			}
 	}
 
-	public function beforeFilter(Event $event)
+	/** @return array associated models */
+	public function contain()
 	{
-		parent::beforeFilter($event);
-
-		$request = $this->request->input('json_decode');
-
-		if ($this->request->getParam('action') === 'add') {
-			if($request->superuser && !$this->Auth->user('superuser')) {
-				$this->Auth->deny('add');
-			} else {
-				$this->Auth->allow('add');
-			}
-		}
+		return [
+			'Providers.Organisations'
+		];
 	}
+
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilter()
+	{
+		return [
+			'Users.username',
+			'Users.fullname',
+			'Users.phone'
+		];
+	}
+
 
 	public function isAuthorized($user)
 	{

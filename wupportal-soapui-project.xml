@@ -716,7 +716,7 @@
 	"created": "2018-02-27 12:46:08",
 	"modified": "2018-02-27 12:46:08",
 	"address": null,
-	"_translations": [
+	"translations": [
 		{
 			"es": {
 				"description": "tracudir organización"
@@ -728,7 +728,7 @@
 			}
 		}
 	]
-}</con:request><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties><con:property><con:name>Encoding</con:name><con:value>UTF-8</con:value></con:property></con:properties></con:testCase><con:testCase id="df7a6794-7e5c-4adc-9e75-9b2b5a667eee" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="edit" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="ab2f9825-c83d-4b0c-920a-b721027c0303"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="07f07123-52cb-4d85-b17a-431d9296f20a" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0008-300000000000</con:endpoint><con:request>{
+}</con:request><con:assertion type="Valid HTTP Status Codes" id="4b281695-9b54-446f-8c9a-b76c688aa579" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="92c93662-7dbf-45b6-a5b4-a5c0f9e6ea2c" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"description":"tracudir organización"},"fr":{"description":"traduire organisation"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties><con:property><con:name>Encoding</con:name><con:value>UTF-8</con:value></con:property></con:properties></con:testCase><con:testCase id="df7a6794-7e5c-4adc-9e75-9b2b5a667eee" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="edit" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="ab2f9825-c83d-4b0c-920a-b721027c0303"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="07f07123-52cb-4d85-b17a-431d9296f20a" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0008-300000000000</con:endpoint><con:request>{
 	"id": "00000000-0000-0000-0008-300000000000",
 	"name": "organisation3",
 	"description": "changed",

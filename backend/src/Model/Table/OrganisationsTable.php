@@ -33,8 +33,6 @@ class OrganisationsTable extends Table
 	 */
 	public function initialize(array $config)
 	{
-		parent::initialize($config);
-
 		$this->setTable('organisations');
 		$this->setDisplayField('name');
 		$this->setPrimaryKey('id');
@@ -95,7 +93,7 @@ class OrganisationsTable extends Table
 	 * Returns a rules checker object that will be used for validating
 	 * application integrity.
 	 *
-	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+	 * @param \Cake\ORM\RulesChecker $rules The rcaules object to be modified.
 	 * @return \Cake\ORM\RulesChecker
 	 */
 	public function buildRules(RulesChecker $rules)

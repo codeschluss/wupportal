@@ -22,7 +22,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Schedule[] $schedules
  * @property \App\Model\Entity\Tag[] $tags
  * @property \App\Model\Entity\TargetGroup[] $target_groups
- * @property \App\Model\Entity\Translation[] $translations
  */
 class Activity extends Entity
 {
@@ -50,7 +49,6 @@ class Activity extends Entity
         'category' => true,
         'schedules' => true,
         'tags' => true,
-        'target_groups' => true,
-        'translations' => true
+        'target_groups' => true
     ];
 }

@@ -2,19 +2,20 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\Behavior\Translate\TranslateTrait;
 
 /**
- * ActivitiesTag Entity
+ * Translation Entity
  *
  * @property string $id
- * @property string $activity_id
- * @property string $tag_id
- *
- * @property \App\Model\Entity\Activity $activity
- * @property \App\Model\Entity\Tag $tag
+ * @property string $locale
+ * @property string $name
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  */
-class ActivitiesTag extends Entity
+class Translation extends Entity
 {
+	use TranslateTrait;
 
 	/**
 	 * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -26,7 +27,9 @@ class ActivitiesTag extends Entity
 	 * @var array
 	 */
 	protected $_accessible = [
-		'*' => true,
-		'id' => false
+		'locale' => true,
+		'name' => true,
+		'created' => true,
+		'modified' => true
 	];
 }

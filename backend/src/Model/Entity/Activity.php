@@ -26,7 +26,6 @@ use Cake\ORM\Behavior\Translate\TranslateTrait;
  */
 class Activity extends Entity
 {
-
 	use TranslateTrait;
 
 	/**

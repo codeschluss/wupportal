@@ -97,7 +97,11 @@ class AppController extends Controller
 	 */
 	public function view($id = null)
 	{
-		$result = $this->table()->find()
+		$finder = $this->table()->behaviors()->has('Translate')
+			? $this->table()->find('translations')
+			: $this->table()->find();
+
+		$result = $finder
 			->contain($this->contain())
 			->where([$this->name . '.id' => $id])
 			->first();

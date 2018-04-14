@@ -206,13 +206,13 @@ CREATE TABLE `activities_target_groups` (
 );
 
 CREATE TABLE `i18n` (
-    `id` CHAR(36) NOT NULL PRIMARY KEY,
-    `locale` varchar(6) NOT NULL,
-    `model` varchar(255) NOT NULL,
-    `foreign_key` CHAR(36) NOT NULL,
-    `field` varchar(255) NOT NULL,
-    `content` text,
+	`id` CHAR(36) NOT NULL PRIMARY KEY,
+	`locale` varchar(6) NOT NULL,
+	`model` varchar(255) NOT NULL,
+	`foreign_key` CHAR(36) NOT NULL,
+	`field` varchar(255) NOT NULL,
+	`content` text,
 
-    UNIQUE INDEX I18N_LOCALE_FIELD(`locale`, `model`, `foreign_key`, `field`),
-    INDEX I18N_FIELD(`model`, `foreign_key`, `field`)
+	UNIQUE INDEX I18N_LOCALE_FIELD(`locale`, `model`, `foreign_key`, `field`),
+	INDEX I18N_FIELD(`model`, `foreign_key`, `field`)
 );

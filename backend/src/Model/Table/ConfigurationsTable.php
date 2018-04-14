@@ -22,45 +22,45 @@ use Cake\Validation\Validator;
 class ConfigurationsTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
 
-        $this->setTable('configurations');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+		$this->setTable('configurations');
+		$this->setDisplayField('id');
+		$this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
-    }
+		$this->addBehavior('Timestamp');
+	}
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator)
+	{
+		$validator
+			->uuid('id')
+			->allowEmpty('id', 'create');
 
-        $validator
-            ->scalar('item')
-            ->requirePresence('item', 'create')
-            ->notEmpty('item');
+		$validator
+			->scalar('item')
+			->requirePresence('item', 'create')
+			->notEmpty('item');
 
-        $validator
-            ->scalar('value')
-            ->requirePresence('value', 'create')
-            ->notEmpty('value');
+		$validator
+			->scalar('value')
+			->requirePresence('value', 'create')
+			->notEmpty('value');
 
-        return $validator;
-    }
+		return $validator;
+	}
 }

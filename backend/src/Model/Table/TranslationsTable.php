@@ -7,21 +7,19 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Suburbs Model
+ * Translations Model
  *
- * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\HasMany $Addresses
- *
- * @method \App\Model\Entity\Suburb get($primaryKey, $options = [])
- * @method \App\Model\Entity\Suburb newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Suburb[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Suburb|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Suburb patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Suburb[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Suburb findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Translation get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Translation newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Translation[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Translation|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Translation patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Translation[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Translation findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class SuburbsTable extends Table
+class TranslationsTable extends Table
 {
 
 	/**
@@ -34,15 +32,12 @@ class SuburbsTable extends Table
 	{
 		parent::initialize($config);
 
-		$this->setTable('suburbs');
+		$this->setTable('translations');
 		$this->setDisplayField('name');
 		$this->setPrimaryKey('id');
 
 		$this->addBehavior('Timestamp');
-
-		$this->hasMany('Addresses', [
-			'foreignKey' => 'suburb_id'
-		]);
+		$this->addBehavior('Translate', ['fields' => ['name']]);
 	}
 
 	/**
@@ -58,7 +53,15 @@ class SuburbsTable extends Table
 			->allowEmpty('id', 'create');
 
 		$validator
+			->scalar('locale')
+			->maxLength('locale', 6)
+			->requirePresence('locale', 'create')
+			->notEmpty('locale')
+			->add('locale', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+		$validator
 			->scalar('name')
+			->maxLength('name', 255)
 			->requirePresence('name', 'create')
 			->notEmpty('name')
 			->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
@@ -75,6 +78,7 @@ class SuburbsTable extends Table
 	 */
 	public function buildRules(RulesChecker $rules)
 	{
+		$rules->add($rules->isUnique(['locale']));
 		$rules->add($rules->isUnique(['name']));
 
 		return $rules;

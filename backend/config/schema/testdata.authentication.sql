@@ -2,7 +2,9 @@ SET character_set_client = utf8;
 
 INSERT INTO `tags` (`id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0002-100000000000', 'tag1', 'tag1'),
-('00000000-0000-0000-0002-200000000000', 'tag2', 'tag2');
+('00000000-0000-0000-0002-200000000000', 'tag2', 'tag2'),
+('00000000-0000-0000-0002-300000000000', 'tagTranslateRead', 'tagTranslateRead'),
+('00000000-0000-0000-0002-400000000000', 'tagTranslateEdit', 'tagTranslateEdit');
 
 INSERT INTO `target_groups` (`id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0003-100000000000', 'target1', 'target1'),
@@ -84,4 +86,8 @@ INSERT INTO `i18n` (`id`, `locale`, `model`, `foreign_key`, `field`, `content`) 
 ('00000000-0000-0000-0012-700000000000', 'es', 'Activities', '00000000-0000-0000-0010-800000000000', 'description', 'tracudir actividad'),
 ('00000000-0000-0000-0012-800000000000', 'fr', 'Activities', '00000000-0000-0000-0010-800000000000', 'description', 'traduire activité'),
 ('00000000-0000-0000-0012-900000000000', 'es', 'Activities', '00000000-0000-0000-0010-900000000000', 'description', 'Aktivität2_description_übersetzt_es'),
-('00000000-0000-0000-0012-110000000000', 'fr', 'Activities', '00000000-0000-0000-0010-900000000000', 'description', 'Aktivität2_description_übersetzt_fr');
+('00000000-0000-0000-0012-110000000000', 'fr', 'Activities', '00000000-0000-0000-0010-900000000000', 'description', 'Aktivität2_description_übersetzt_fr'),
+('00000000-0000-0000-0012-120000000000', 'es', 'Tags', '00000000-0000-0000-0002-300000000000', 'name', 'tag_tagTranslateRead_es'),
+('00000000-0000-0000-0012-130000000000', 'fr', 'Tags', '00000000-0000-0000-0002-300000000000', 'name', 'tag_tagTranslateRead_fr'),
+('00000000-0000-0000-0012-140000000000', 'es', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_es'),
+('00000000-0000-0000-0012-150000000000', 'fr', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_fr');

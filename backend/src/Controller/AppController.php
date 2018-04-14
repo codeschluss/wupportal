@@ -69,7 +69,8 @@ class AppController extends Controller
 	protected function setLocale()
 	{
 		$langCode = $this->request->getHeaderLine('Accept-Language');
-		if ($langCode !== 'de') {
+		$translationTable = TableRegistry::get('Translations');
+		if ($translationTable->exists(['locale' => $langCode])) {
 			I18n::locale($langCode);
 		}
 	}

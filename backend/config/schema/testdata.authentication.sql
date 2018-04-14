@@ -8,7 +8,9 @@ INSERT INTO `tags` (`id`, `name`, `description`) VALUES
 
 INSERT INTO `target_groups` (`id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0003-100000000000', 'target1', 'target1'),
-('00000000-0000-0000-0003-200000000000', 'target2', 'target2');
+('00000000-0000-0000-0003-200000000000', 'target2', 'target2'),
+('00000000-0000-0000-0003-300000000000', 'targetTranslateRead', 'targetTranslateRead'),
+('00000000-0000-0000-0003-400000000000', 'targetTranslateEdit', 'targetTranslateEdit');
 
 INSERT INTO `users` (`id`, `superuser`, `username`, `password`, `fullname`, `phone`) VALUES
 ('00000000-0000-0000-0004-100000000000', 1, 'super@user', '$2y$10$VVFNql01lVC3k/B0a2L5XOh0DYIVkF1SPBL6rQxvM8h9GWLcsI0J2', 'superuser', '01234567890'),
@@ -90,4 +92,8 @@ INSERT INTO `i18n` (`id`, `locale`, `model`, `foreign_key`, `field`, `content`) 
 ('00000000-0000-0000-0012-120000000000', 'es', 'Tags', '00000000-0000-0000-0002-300000000000', 'name', 'tag_tagTranslateRead_es'),
 ('00000000-0000-0000-0012-130000000000', 'fr', 'Tags', '00000000-0000-0000-0002-300000000000', 'name', 'tag_tagTranslateRead_fr'),
 ('00000000-0000-0000-0012-140000000000', 'es', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_es'),
-('00000000-0000-0000-0012-150000000000', 'fr', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_fr');
+('00000000-0000-0000-0012-150000000000', 'fr', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_fr'),
+('00000000-0000-0000-0012-160000000000', 'es', 'TargetGroups', '00000000-0000-0000-0003-300000000000', 'name', 'target_TranslateRead_es'),
+('00000000-0000-0000-0012-170000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-300000000000', 'name', 'target_TranslateRead_fr'),
+('00000000-0000-0000-0012-180000000000', 'es', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_es'),
+('00000000-0000-0000-0012-190000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_fr');

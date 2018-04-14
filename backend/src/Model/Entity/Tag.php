@@ -17,7 +17,6 @@ use Cake\ORM\Behavior\Translate\TranslateTrait;
  */
 class Tag extends Entity
 {
-
 	use TranslateTrait;
 
 	/**

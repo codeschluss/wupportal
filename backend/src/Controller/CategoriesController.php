@@ -27,4 +27,12 @@ class CategoriesController extends AppController
 		];
 	}
 
+	/** @return array Fields to use to filter translations  */
+	protected function fieldsTofilterTranslated()
+	{
+		return [
+			$this->table()->translationField('name')
+		];
+	}
+
 }

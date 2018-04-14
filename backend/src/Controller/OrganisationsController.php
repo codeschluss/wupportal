@@ -45,6 +45,22 @@ class OrganisationsController extends AppController
 		];
 	}
 
+	/** @return array Fields to use to filter translations  */
+	protected function fieldsTofilterTranslated()
+	{
+		return [
+			$this->table()->translationField('name'),
+			$this->table()->translationField('description'),
+			'Organisations.website',
+			'Organisations.mail',
+			'Organisations.phone',
+			'Addresses.street',
+			'Addresses.postal_code',
+			'Addresses.place',
+			'Suburbs.name'
+		];
+	}
+
 	public function isAuthorized($user)
 	{
 		if ($this->isSuperuser($user)) return true;

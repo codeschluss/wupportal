@@ -50,4 +50,13 @@ class TranslationsController extends AppController
 		];
 	}
 
+	/** @return array Fields to use to filter translations  */
+	protected function fieldsTofilterTranslated()
+	{
+		return [
+			'locale',
+			$this->table()->translationField('name')
+		];
+	}
+
 }

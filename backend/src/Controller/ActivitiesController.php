@@ -158,6 +158,18 @@ class ActivitiesController extends AppController
 		];
 	}
 
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilterTranslated()
+	{
+		return [
+			$this->table()->translationField('name'),
+			$this->table()->translationField('description'),
+			$this->table()->Tags->translationField('name'),
+			'Suburbs.name',
+			'Organisations.name',
+		];
+	}
+
 	public function isAuthorized($user)
 	{
 		if ($this->isSuperuser($user)) return true;

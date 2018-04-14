@@ -70,7 +70,7 @@ class AppController extends Controller
 	{
 		$langCode = $this->request->getHeaderLine('Accept-Language');
 		$translationTable = TableRegistry::get('Translations');
-		if ($translationTable->exists(['locale' => $langCode])) {
+		if ($translationTable->exists(['Translations.locale' => $langCode])) {
 			I18n::locale($langCode);
 		}
 	}
@@ -190,7 +190,6 @@ class AppController extends Controller
 		$query = $this->table()->find()->group($this->name . '.id');
 		$request = $this->request->input('json_decode');
 		if (is_null($request)) return $this->ResponseHandler->responseError();
-
 		$this->setPagination($request);
 		$this->setJoins($query);
 		$this->setSorting($query, $request);
@@ -206,7 +205,7 @@ class AppController extends Controller
 	{
 		$this->paginate = [
 			'limit' => $request->pageSize,
-			'page' => $request->page,
+			'page' => $request->page
 		];
 	}
 
@@ -230,9 +229,15 @@ class AppController extends Controller
 	{
 		if (!empty($request->filter)) {
 			$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+				$translationTable = TableRegistry::get('Translations');
+				$fieldsToFilter = $translationTable
+					->exists(['Translations.locale' => $this->request->getHeaderLine('Accept-Language')])
+					? $this->fieldsTofilterTranslated()
+					: $this->fieldsTofilter();
+
 				$whereClause = [];
-				foreach ($this->fieldsTofilter() as $field) {
-					$whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
+				foreach ($fieldsToFilter as $field) {
+					$whereClause[] = [$field . ' LIKE' => '%' . $request->filter . '%'];
 				}
 				return $whereClause;
 			}]);
@@ -244,6 +249,9 @@ class AppController extends Controller
 
 	/** @return array Fields to use for filter  */
 	protected function fieldsTofilter() { return []; }
+
+		/** @return array Fields to use to filter translations  */
+	protected function fieldsTofilterTranslated()  { return $this->fieldsToFilter(); }
 
 	protected function createListResponse($query,$result) {
 		$listResponse = new stdClass();

@@ -46,6 +46,14 @@ class TagsController extends AppController
 		];
 	}
 
+	/** @return array Fields to use to filter translations  */
+	protected function fieldsTofilterTranslated()
+	{
+		return [
+			$this->table()->translationField('name')
+		];
+	}
+
 	public function isAuthorized($user)
 	{
 		if ($this->isSuperuser($user)) return true;

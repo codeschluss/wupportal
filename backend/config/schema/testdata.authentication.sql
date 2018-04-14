@@ -36,7 +36,9 @@ INSERT INTO `categories` (`id`, `name`, `description`, `color`) VALUES
 ('00000000-0000-0000-0007-100000000000', 'category1', 'category1', 'green'),
 ('00000000-0000-0000-0007-200000000000', 'category2', 'category2', 'yellow'),
 ('00000000-0000-0000-0007-300000000000', 'category3', 'category3', 'black'),
-('00000000-0000-0000-0007-400000000000', 'todelete', 'todelete', 'lila');
+('00000000-0000-0000-0007-400000000000', 'todelete', 'todelete', 'lila'),
+('00000000-0000-0000-0007-500000000000', 'categoryTranslateRead', 'categoryTranslateRead', 'read'),
+('00000000-0000-0000-0007-600000000000', 'categoryTranslateEdit', 'categoryTranslateEdit', 'edit');
 
 INSERT INTO `organisations` (`id`, `name`, `description`, `website`, `mail`, `phone`, `image`, `address_id`) VALUES
 ('00000000-0000-0000-0008-100000000000', 'organisation1', 'organisation1', 'www.orga1.de', 'organisation@1.de', '01234567890', null, '00000000-0000-0000-0006-100000000000'),
@@ -96,4 +98,8 @@ INSERT INTO `i18n` (`id`, `locale`, `model`, `foreign_key`, `field`, `content`) 
 ('00000000-0000-0000-0012-160000000000', 'es', 'TargetGroups', '00000000-0000-0000-0003-300000000000', 'name', 'target_TranslateRead_es'),
 ('00000000-0000-0000-0012-170000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-300000000000', 'name', 'target_TranslateRead_fr'),
 ('00000000-0000-0000-0012-180000000000', 'es', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_es'),
-('00000000-0000-0000-0012-190000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_fr');
+('00000000-0000-0000-0012-190000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_fr'),
+('00000000-0000-0000-0012-210000000000', 'es', 'Categories', '00000000-0000-0000-0007-500000000000', 'name', 'category_TranslateRead_es'),
+('00000000-0000-0000-0012-220000000000', 'fr', 'Categories', '00000000-0000-0000-0007-500000000000', 'name', 'category_TranslateRead_fr'),
+('00000000-0000-0000-0012-230000000000', 'es', 'Categories', '00000000-0000-0000-0007-600000000000', 'name', 'category_TranslateEdit_es'),
+('00000000-0000-0000-0012-240000000000', 'fr', 'Categories', '00000000-0000-0000-0007-600000000000', 'name', 'category_TranslateEdit_fr');

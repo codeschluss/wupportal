@@ -24,70 +24,72 @@ use Cake\Validation\Validator;
 class CategoriesTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
 
-        $this->setTable('categories');
-        $this->setDisplayField('name');
-        $this->setPrimaryKey('id');
+		$this->setTable('categories');
+		$this->setDisplayField('name');
+		$this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+		$this->addBehavior('Timestamp');
 
-        $this->hasMany('Activities', [
-            'foreignKey' => 'category_id'
-        ]);
-    }
+		$this->hasMany('Activities', [
+			'foreignKey' => 'category_id'
+		]);
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
+		$this->addBehavior('Translate', ['fields' => ['name']]);
+	}
 
-        $validator
-            ->scalar('name')
-            ->requirePresence('name', 'create')
-            ->notEmpty('name')
-            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator)
+	{
+		$validator
+			->uuid('id')
+			->allowEmpty('id', 'create');
 
-        $validator
-            ->scalar('description')
-            ->allowEmpty('description');
+		$validator
+			->scalar('name')
+			->requirePresence('name', 'create')
+			->notEmpty('name')
+			->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-        $validator
-            ->scalar('color')
-            ->requirePresence('color', 'create')
-            ->notEmpty('color')
-            ->add('color', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+		$validator
+			->scalar('description')
+			->allowEmpty('description');
 
-        return $validator;
-    }
+		$validator
+			->scalar('color')
+			->requirePresence('color', 'create')
+			->notEmpty('color')
+			->add('color', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->isUnique(['name']));
-        $rules->add($rules->isUnique(['color']));
+		return $validator;
+	}
 
-        return $rules;
-    }
+	/**
+	 * Returns a rules checker object that will be used for validating
+	 * application integrity.
+	 *
+	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+	 * @return \Cake\ORM\RulesChecker
+	 */
+	public function buildRules(RulesChecker $rules)
+	{
+		$rules->add($rules->isUnique(['name']));
+		$rules->add($rules->isUnique(['color']));
+
+		return $rules;
+	}
 }

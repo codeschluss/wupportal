@@ -1,0 +1,38 @@
+<form class="container-fluid" (ngSubmit)="onSubmit()">
+	<div class="row">
+		<div class="col">
+			<mat-form-field>
+				<input matInput [matDatepicker]="pickerStartDate" name="schedule_start_by" [formControl]="startDate" placeholder={{constants.from}}>
+				<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+				<mat-datepicker #pickerStartDate></mat-datepicker>
+			</mat-form-field>
+		</div>
+		<div class="col">
+			<mat-form-field>
+				<input matInput type="number" name="curr_start_time_hour" max="23" min="0" [formControl]="startTimeHour" id="stratTimeHour">
+			</mat-form-field>:
+			<mat-form-field>
+				<input matInput type="number" name="curr_start_time_minute" max="59" min="0" [formControl]="startTimeMinute" id="stratTimeMinute">
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<mat-form-field>
+				<input matInput [matDatepicker]="pickerEndDate" name="schedule_end_by" [formControl]="endDate" placeholder={{constants.to}}>
+				<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+				<mat-datepicker #pickerEndDate></mat-datepicker>
+			</mat-form-field>
+		</div>
+		<div class="col">
+			<mat-form-field>
+				<input matInput type="number" name="curr_end_time_hour" max="23" min="0" [formControl]="endTimeHour" id="endTimeHour">
+			</mat-form-field>:
+			<mat-form-field>
+				<input matInput type="number" name="curr_end_time_minute" max="59" min="0" [formControl]="endTimeMinute" id="endTimeMinute">
+			</mat-form-field>
+		</div>
+	</div>
+	<button mat-raised-button type="button" color="warn" data-dismiss="modal" (click)="onCancel()">{{constants.cancel}}</button>
+	<button mat-raised-button type="submit" color="primary">{{constants.ok}}</button>
+</form>

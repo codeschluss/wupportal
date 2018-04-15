@@ -14,19 +14,18 @@ import {
 } from 'app/services/data.service.factory';
 
 import { Schedule } from '../../../models/schedule';
+import { NewScheduleDialogComponent } from '../dialog/scheduler.new.entry';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
 import { RRule, RRuleSet, Weekday } from 'rrule';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDialog } from '@angular/material';
 
 import { DataService } from 'app/services/data.service';
 
 import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
-import { Object } from 'openlayers';
-import { Subscription } from 'rxjs/Subscription';
-import { generate } from 'rxjs/observable/generate';
 
 
 @Component({
@@ -69,6 +68,7 @@ export class SchedulerComponent implements OnInit {
 	constructor(
 		public constants: Constants,
 		private adapter: DateAdapter<any>,
+		private dialog: MatDialog,
 		@Inject(ScheduleService) private scheduleService: DataService,
 	) {
 	}
@@ -77,17 +77,17 @@ export class SchedulerComponent implements OnInit {
 		this.adapter.setLocale(this.constants.countryCode);
 		this.formGroup = new FormGroup({
 			'startTimeHourCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].startTime).hour() : moment().hour()),
+				moment(this.schedules[0].startTime).hour() : ''),
 			'startTimeMinuteCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].startTime).minute() : moment().minute()),
+				moment(this.schedules[0].startTime).minute() : ''),
 			'endTimeHourCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].endTime).hour() : moment().hour()),
+				moment(this.schedules[0].endTime).hour() : ''),
 			'endTimeMinuteCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].endTime).minute() : moment().minute()),
+				moment(this.schedules[0].endTime).minute() : ''),
 			'startDateCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].startDate) : moment()),
+				moment(this.schedules[0].startDate).add(1, 'day') : ''),
 			'endDateCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[this.schedules.length - 1].end_date) : moment()),
+				moment(this.schedules[this.schedules.length - 1].endDate).add(1, 'day') : ''),
 			'rythmPeriodCtrl': new FormControl(1),
 			'weekdaysCtrl': new FormControl([1]),
 			'weekdayNumberCtrl': new FormControl(1),
@@ -108,8 +108,8 @@ export class SchedulerComponent implements OnInit {
 			if (!this.schedules) {
 				this.schedules = [];
 			}
-			const startDate = moment(this.formGroup.get('startDateCtrl').value);
-			const endDate = moment(this.formGroup.get('endDateCtrl').value);
+			let startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day');
+			const endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day');
 			const recurrenceRange = { start: startDate, end: endDate };
 
 			let rule;
@@ -128,7 +128,7 @@ export class SchedulerComponent implements OnInit {
 						if (startDate.date() > this.formGroup.get('monthDateCtrl').value) {
 							startDate.add(this.formGroup.get('rythmPeriodCtrl').value, 'month');
 						}
-						startDate.date(this.formGroup.get('monthDateCtrl').value);
+						startDate = startDate.date(this.formGroup.get('monthDateCtrl').value).add(1, 'day');
 						rule = new RRule({
 							freq: RRule.MONTHLY,
 							interval: this.formGroup.get('rythmPeriodCtrl').value,
@@ -165,7 +165,6 @@ export class SchedulerComponent implements OnInit {
 								this.formGroup.get('weekdayNumberCtrl').value === 5 ? -1 : this.formGroup.get('weekdayNumberCtrl').value)
 							);
 						}
-
 						rule = new RRule({
 							freq: RRule.MONTHLY,
 							interval: this.formGroup.get('rythmPeriodCtrl').value,
@@ -205,8 +204,8 @@ export class SchedulerComponent implements OnInit {
 			});
 		} else {
 			const oneTimeSchedule: Schedule = new Schedule({});
-			oneTimeSchedule.startDate = this.formGroup.get('startDateCtrl').value;
-			oneTimeSchedule.endDate = this.formGroup.get('endDateCtrl').value;
+			oneTimeSchedule.startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day').format();
+			oneTimeSchedule.endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day').format();
 			oneTimeSchedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
 			oneTimeSchedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
 			oneTimeSchedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
@@ -218,18 +217,13 @@ export class SchedulerComponent implements OnInit {
 		this.formGroup.get('schedulesCtrl').setValue(this.schedules);
 	}
 
-	addOneSchedule(): void {
-		this.schedules.push(new Schedule({}));
-		this.declerateDateForms(this.schedules.length - 1);
-	}
-
 	declerateDateForms(i: number): void {
 		if (i >= 0) {
 			if (this.schedules[i]) {
-				this.currentStartDate = new FormControl(this.schedules[i].start_date);
+				this.currentStartDate = new FormControl(this.schedules[i].startDate);
 				this.currentStartTimeHour = new FormControl(moment(this.schedules[i].startTime).hour());
 				this.currentStartTimeMinute = new FormControl(moment(this.schedules[i].startTime).minute());
-				this.currentEndDate = new FormControl(this.schedules[i].end_date);
+				this.currentEndDate = new FormControl(this.schedules[i].endDate);
 				this.currentEndTimeHour = new FormControl(moment(this.schedules[i].endTime).hour());
 				this.currentEndTimeMinute = new FormControl(moment(this.schedules[i].endTime).minute());
 			}
@@ -245,10 +239,10 @@ export class SchedulerComponent implements OnInit {
 	}
 
 	changeDate(i: number): void {
-		this.schedules[i].startDate = this.currentStartDate.value;
+		this.schedules[i].startDate = moment(this.currentStartDate.value).add(1, 'day').format();
 		this.schedules[i].startTimeHour = this.currentStartTimeHour.value;
 		this.schedules[i].startTimeMinute = this.currentStartTimeMinute.value;
-		this.schedules[i].endDate = this.currentEndDate.value;
+		this.schedules[i].endDate = moment(this.currentEndDate.value).add(1, 'day').format();
 		this.schedules[i].endTimeHour = this.currentEndTimeHour.value;
 		this.schedules[i].endTimeMinute = this.currentEndTimeMinute.value;
 		this.panelNumber = -1;
@@ -260,11 +254,18 @@ export class SchedulerComponent implements OnInit {
 			this.formGroup.get('startDateCtrl').setValue(moment());
 		}
 		this.toDeleteSchedules.push(this.schedules[i]);
-		if (i === 0) {
-			this.removeCompleteSchedule();
-		} else {
-			this.schedules.splice(i, 1);
-		}
+		this.schedules.splice(i, 1);
+	}
+
+	newEntry(): void {
+		const dialogRef = this.dialog.open(NewScheduleDialogComponent, {
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			if (result) {
+				this.schedules.push(result);
+			}
+		});
 	}
 
 	removeCompleteSchedule(): void {

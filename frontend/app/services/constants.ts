@@ -32,7 +32,7 @@ export class Constants {
 	// LABELS
 	// --------------------------
 
-	public weekDaysArray: string[] = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
+	public weekDaysArray: string[] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 	public rythm: string = 'Rythmus';
 	public from: string = 'von';
 	public to: string = 'bis';

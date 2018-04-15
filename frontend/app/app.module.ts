@@ -95,6 +95,7 @@ import { ConfigFormComponent } from 'app/views/admin/configs/config.form';
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
 import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
+import { NewScheduleDialogComponent } from 'app/views/admin/dialog/scheduler.new.entry';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 
 import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
@@ -144,7 +145,8 @@ import { SchedulerComponent } from './views/admin/schedules/scheduler.component'
 		ConfigFormComponent,
 		DeleteDialogComponent,
 		DeleteActionComponent,
-		OrganisationSelectionComponent
+		OrganisationSelectionComponent,
+		NewScheduleDialogComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -236,7 +238,8 @@ import { SchedulerComponent } from './views/admin/schedules/scheduler.component'
 		SuburbSelectionComponent,
 		AddressCreateFormComponent,
 		DeleteDialogComponent,
-		OrganisationSelectionComponent
+		OrganisationSelectionComponent,
+		NewScheduleDialogComponent
 	], exports: [
 		MatNativeDateModule,
 	]

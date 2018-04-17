@@ -1,10 +1,10 @@
-<form>
-	<mat-form-field class="form-full-width">
-		<input matInput name="address" placeholder={{constants.address}} [matAutocomplete]="auto" [formControl]="addressCtrl">
-		<mat-autocomplete #auto="matAutocomplete" [displayWith]="toString">
-			<mat-option *ngFor="let address of filteredAddresses | async" [value]="address">
-				{{ address.toString }}
-			</mat-option>
-		</mat-autocomplete>
-	</mat-form-field>
-</form>
+<!-- <form> -->
+<mat-form-field class="form-full-width">
+	<input matInput name="address" placeholder={{constants.address}} [matAutocomplete]="auto" [formControl]="addressCtrl">
+	<mat-autocomplete #auto="matAutocomplete" [displayWith]="toString">
+		<mat-option *ngFor="let address of filteredAddresses | async" [value]="address">
+			{{ address.toString }}
+		</mat-option>
+	</mat-autocomplete>
+</mat-form-field>
+<!-- </form> -->

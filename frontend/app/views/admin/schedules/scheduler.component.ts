@@ -31,7 +31,7 @@ import { Constants } from 'app/services/constants';
 @Component({
 	selector: 'scheduler-component-form',
 	templateUrl: 'scheduler.component.html',
-	styleUrls: ['../../../app.component.css'],
+	styleUrls: ['../../../app.component.css', '../admin.area.css'],
 	providers: [
 		{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 		{
@@ -56,6 +56,7 @@ export class SchedulerComponent implements OnInit {
 	@Output() onScheduleChange: EventEmitter<Schedule[]> = new EventEmitter<Schedule[]>();
 
 	formGroup: FormGroup;
+	schedulesCtrl: FormControl;
 	currentStartDate: FormControl;
 	currentStartTimeHour: FormControl;
 	currentStartTimeMinute: FormControl;
@@ -75,29 +76,43 @@ export class SchedulerComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.adapter.setLocale(this.constants.countryCode);
+
 		this.formGroup = new FormGroup({
 			'startTimeHourCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].startTime).hour() : ''),
+				moment(this.schedules[0].startTime).hour() : '', [
+					Validators.required
+				]),
 			'startTimeMinuteCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].startTime).minute() : ''),
+				moment(this.schedules[0].startTime).minute() : '', [
+					Validators.required
+				]),
 			'endTimeHourCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].endTime).hour() : ''),
+				moment(this.schedules[0].endTime).hour() : '', [
+					Validators.required
+				]),
 			'endTimeMinuteCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].endTime).minute() : ''),
+				moment(this.schedules[0].endTime).minute() : '', [
+					Validators.required
+				]),
 			'startDateCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[0].startDate).add(1, 'day') : ''),
+				moment(this.schedules[0].startDate).add(1, 'day') : '', [
+					Validators.required
+				]),
 			'endDateCtrl': new FormControl(this.schedules[0] ?
-				moment(this.schedules[this.schedules.length - 1].endDate).add(1, 'day') : ''),
+				moment(this.schedules[this.schedules.length - 1].endDate).add(1, 'day') : '', [
+					Validators.required
+				]),
 			'rythmPeriodCtrl': new FormControl(1),
 			'weekdaysCtrl': new FormControl([1]),
 			'weekdayNumberCtrl': new FormControl(1),
 			'monthlyRecurrenceCtrl': new FormControl('monthDate'),
 			'monthDateCtrl': new FormControl(1),
 			'rythmUnitCtrl': new FormControl('unique'),
-			'schedulesCtrl': new FormControl(this.schedules, [Validators.required])
 		});
 
-		this.formGroup.get('schedulesCtrl').valueChanges.subscribe(schedules => {
+		this.schedulesCtrl = new FormControl(this.schedules, [Validators.required]);
+
+		this.schedulesCtrl.valueChanges.subscribe(schedules => {
 			this.onScheduleChange.emit(schedules);
 		});
 		this.declerateDateForms(-1);
@@ -214,7 +229,7 @@ export class SchedulerComponent implements OnInit {
 			this.schedules.push(oneTimeSchedule);
 		}
 		this.declerateDateForms(-1);
-		this.formGroup.get('schedulesCtrl').setValue(this.schedules);
+		this.schedulesCtrl.setValue(this.schedules);
 	}
 
 	declerateDateForms(i: number): void {
@@ -259,6 +274,8 @@ export class SchedulerComponent implements OnInit {
 
 	newEntry(): void {
 		const dialogRef = this.dialog.open(NewScheduleDialogComponent, {
+			minWidth: 320,
+			minHeight: 480
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
@@ -271,7 +288,7 @@ export class SchedulerComponent implements OnInit {
 	removeCompleteSchedule(): void {
 		this.toDeleteSchedules = this.schedules;
 		this.schedules = [];
-		this.formGroup.get('schedulesCtrl').setValue(this.schedules);
+		this.schedulesCtrl.setValue(this.schedules);
 	}
 
 	deleteSchedules(): void {

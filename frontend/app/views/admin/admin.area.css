@@ -11,6 +11,10 @@
 	display: block;
 }
 
+.centered-text-content {
+	text-align: center;
+}
+
 .mat-card-header {
 	margin-left: auto;
 	margin-right: auto;
@@ -26,6 +30,10 @@
 
 .form-full-width {
 	width: 85%;
+}
+
+.form-small {
+	width: 25%;
 }
 
 .loadingOverlay{

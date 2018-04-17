@@ -14,6 +14,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 @Component({
 	selector: 'new-schedule-dialog',
 	templateUrl: 'scheduler.new.entry.component.html',
+	styleUrls: ['../admin.area.css'],
 	providers: [
 		{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 		{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
@@ -21,12 +22,15 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 })
 
 export class NewScheduleDialogComponent {
-	startDate: FormControl;
-	startTimeHour: FormControl;
-	startTimeMinute: FormControl;
-	endDate: FormControl;
-	endTimeHour: FormControl;
-	endTimeMinute: FormControl;
+
+	formGroup: FormGroup;
+	// startDate: FormControl = new FormControl();
+	// startTimeHour: FormControl = new FormControl();
+	// startTimeMinute: FormControl = new FormControl();
+
+	// endDate: FormControl = new FormControl();
+	// endTimeHour: FormControl = new FormControl();
+	// endTimeMinute: FormControl = new FormControl();
 
 	constructor(
 		private adapter: DateAdapter<any>,
@@ -34,35 +38,40 @@ export class NewScheduleDialogComponent {
 		private constants: Constants
 	) {
 		this.adapter.setLocale(this.constants.countryCode);
-		this.setFormControls();
+		this.formGroup = new FormGroup({
+			'startTimeHourCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'startTimeMinuteCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'endTimeHourCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'endTimeMinuteCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'startDateCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'endDateCtrl': new FormControl('', [
+				Validators.required
+			]),
+		});
 	}
 
 	onCancel(): void {
 		this.dialogRef.close();
 	}
 
-	setFormControls(): void {
-		const initStartDate = moment().utc();
-		const initEndDate = moment().utc();
-		console.log('initEndDate:', initEndDate);
-		this.startDate = new FormControl(initStartDate);
-		console.log('this.startDate.value in setFormCtrls():', this.startDate.value);
-		this.startTimeHour = new FormControl(initStartDate.hour);
-		this.startTimeMinute = new FormControl(initStartDate.minute);
-		this.endDate = new FormControl(initEndDate);
-		this.endTimeHour = new FormControl(initEndDate.hour);
-		this.endTimeMinute = new FormControl(initEndDate.minute);
-	}
-
 	generateNewEntry(): Schedule {
 		const schedule = new Schedule({});
-		schedule.startDate = this.startDate.value.add(1, 'day');
-		schedule.startTimeHour = this.startTimeHour.value;
-		schedule.startTimeMinute = this.startTimeMinute.value;
-		schedule.endDate = this.endDate.value.add(1, 'day');
-		schedule.endTimeHour = this.endTimeHour.value;
-		schedule.endTimeMinute = this.endTimeMinute.value;
-		console.log('schedule:', schedule);
+		schedule.startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day').format();
+		schedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
+		schedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
+		schedule.endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day').format();
+		schedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
+		schedule.endTimeMinute = this.formGroup.get('endTimeMinuteCtrl').value;
 		return schedule;
 	}
 

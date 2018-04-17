@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
+
 use App\Controller\AppController;
 
 /**
@@ -74,6 +76,7 @@ class ActivitiesController extends AppController
 		$this->setFiltering($query, $request);
 
 		$result = $this->paginate($query)->toArray();
+		// $result = $query->all()->toArray();
 		$this->prepareResult($result);
 
 		return $this->ResponseHandler->isNotFoundError($result)
@@ -100,6 +103,58 @@ class ActivitiesController extends AppController
 		return $this->ResponseHandler->isNotFoundError($result)
 			? $this->ResponseHandler->responseNotFoundError($this->name)
 			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $result));
+	}
+
+	protected function setJoins($query)
+	{
+		if ($this->isLocaleSet()) {
+			$query->leftJoinWith('Tags')->contain($this->contain());
+
+		} else {
+			foreach ($this->contain() as $contain) {
+				$query->leftJoinWith($contain)->contain($contain);
+			}
+		}
+	}
+
+	protected function setFiltering($query, $request)
+	{
+		if (!empty($request->filter)) {
+			$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+				$fieldsToFilter = $this->isLocaleSet()
+					? $this->fieldsTofilterTranslated()
+					: $this->fieldsTofilter();
+
+				$whereClause = [];
+				foreach ($fieldsToFilter as $field) {
+					$whereClause[] = [$field . ' LIKE' => '%' . $request->filter . '%'];
+				}
+				$tagsQuery = $this
+					->getTranslationFilterQuery($request->filter);
+
+				$whereClause[] = function ($exp) use ($tagsQuery) {
+					return $exp->exists($tagsQuery);
+				};
+
+				return $whereClause;
+			}]);
+		}
+	}
+
+	private function getTranslationFilterQuery($filter)
+	{
+		return $this->table()->Tags
+    ->find()
+    ->select(['id'])
+    ->innerJoinWith('ActivitiesTags')
+    ->where(function ($exp) use ($filter)  {
+			return $exp
+				->equalFields('ActivitiesTags.activity_id', 'Activities.id')
+				->like(
+					$this->table()->Tags->translationField('name'),
+					'%' . $filter . '%'
+				);
+    });
 	}
 
 	private function setByProviders($query, $request)
@@ -164,7 +219,7 @@ class ActivitiesController extends AppController
 		return [
 			$this->table()->translationField('name'),
 			$this->table()->translationField('description'),
-			$this->table()->Tags->translationField('name'),
+			$this->table()->Categories->translationField('name'),
 			'Suburbs.name',
 			'Organisations.name',
 		];

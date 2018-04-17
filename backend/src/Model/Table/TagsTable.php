@@ -87,4 +87,20 @@ class TagsTable extends Table
 
 		return $rules;
 	}
+
+	public function getTranslationFilterQuery($filter)
+	{
+		return $this->find()
+			->select(['id'])
+			->innerJoinWith('ActivitiesTags')
+    	->where(function ($exp) use ($filter)  {
+        return $exp
+					->equalFields('ActivitiesTags.activity_id', 'Activities.id')
+					->like(
+						$this->translationField('name'),
+						'%' . $filter . '%'
+					);
+		});
+
+	}
 }

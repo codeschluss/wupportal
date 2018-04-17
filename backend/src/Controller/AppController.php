@@ -69,10 +69,16 @@ class AppController extends Controller
 	protected function setLocale()
 	{
 		$langCode = $this->request->getHeaderLine('Accept-Language');
-		$translationTable = TableRegistry::get('Translations');
-		if ($translationTable->exists(['Translations.locale' => $langCode])) {
-			I18n::locale($langCode);
+		if (TableRegistry::get('Translations')
+			->exists(['Translations.locale' => $langCode])) {
+			I18n::setLocale($langCode);
 		}
+	}
+
+	protected function isLocaleSet()
+	{
+		return TableRegistry::get('Translations')
+			->exists(['Translations.locale' => I18n::getLocale()]);
 	}
 
 	/**
@@ -190,7 +196,7 @@ class AppController extends Controller
 		$query = $this->table()->find()->group($this->name . '.id');
 		$request = $this->request->input('json_decode');
 		if (is_null($request)) return $this->ResponseHandler->responseError();
-		$this->setPagination($request);
+		$this->setPagination($request);#
 		$this->setJoins($query);
 		$this->setSorting($query, $request);
 		$this->setFiltering($query, $request);
@@ -229,9 +235,7 @@ class AppController extends Controller
 	{
 		if (!empty($request->filter)) {
 			$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
-				$translationTable = TableRegistry::get('Translations');
-				$fieldsToFilter = $translationTable
-					->exists(['Translations.locale' => $this->request->getHeaderLine('Accept-Language')])
+				$fieldsToFilter = $this->isLocaleSet()
 					? $this->fieldsTofilterTranslated()
 					: $this->fieldsTofilter();
 
@@ -286,39 +290,39 @@ class AppController extends Controller
 
 	protected function isApprovedProvider($userId, $providerId = null)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->isApprovedProvider($userId, $providerId);
+		return TableRegistry::get('Providers')
+			->isApprovedProvider($userId, $providerId);
 	}
 
 	protected function isOrgaAdminUser($ownUserId, $organisationId)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->isOrgaAdminUser($ownUserId, $organisationId);
+		return TableRegistry::get('Providers')
+			->isOrgaAdminUser($ownUserId, $organisationId);
 	}
 
 	protected function isOrgaAdminProvider($userId, $providerId)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->isOrgaAdminProvider($userId, $providerId,
-			$this->getAdminOrganisationsQuery($userId));
+		return TableRegistry::get('Providers')
+			->isOrgaAdminProvider($userId, $providerId,
+				$this->getAdminOrganisationsQuery($userId));
 	}
 
 	protected function getProviderQuery($userId)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->getProviderQuery($userId);
+		return TableRegistry::get('Providers')
+			->getProviderQuery($userId);
 	}
 
 	protected function getProviderOrganisationQuery($userId)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->getProviderOrganisationQuery($userId,
-			$this->getAdminOrganisationsQuery($userId));
+		return TableRegistry::get('Providers')
+			->getProviderOrganisationQuery($userId,
+				$this->getAdminOrganisationsQuery($userId));
 	}
 
 	protected function getAdminOrganisationsQuery($userId)
 	{
-		$organisations = TableRegistry::get('Organisations');
-		return $organisations->getAdminOrganisationsQuery($userId);
+		return TableRegistry::get('Organisations')
+			->getAdminOrganisationsQuery($userId);
 	}
 }

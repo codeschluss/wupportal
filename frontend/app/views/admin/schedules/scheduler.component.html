@@ -181,36 +181,41 @@
 								{{constants.change + '/' + constants.delete}}
 							</mat-panel-description>
 						</mat-expansion-panel-header>
-						<div>
-							<mat-form-field>
-								<input matInput [matDatepicker]="pickerStartDate" name="schedule_start_by" [formControl]="currentStartDate" placeholder={{constants.from}}
-								 readonly>
-								<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-								<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
-							</mat-form-field>
-							<mat-form-field>
-								<input matInput type="number" name="curr_start_time_hour" max="23" min="0" [formControl]="currentStartTimeHour" id="currentStratTimeHour">
-							</mat-form-field>:
-							<mat-form-field>
-								<input matInput type="number" name="curr_start_time_minute" max="59" min="0" [formControl]="currentStartTimeMinute" id="currentStratTimeMinute">
-							</mat-form-field>
-						</div>
-						<div>
-							<mat-form-field>
-								<input matInput [matDatepicker]="pickerEndDate" name="schedule_end_by" [formControl]="currentEndDate" placeholder={{constants.to}}
-								 readonly>
-								<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-								<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
-							</mat-form-field>
-							<mat-form-field>
-								<input matInput type="number" name="curr_end_time_hour" max="23" min="0" [formControl]="currentEndTimeHour" id="currentEndTimeHour">
-							</mat-form-field>:
-							<mat-form-field>
-								<input matInput type="number" name="curr_end_time_minute" max="59" min="0" [formControl]="currentEndTimeMinute" id="currentEndTimeMinute">
-							</mat-form-field>
-							<button mat-raised-button type="button" (click)="changeDate(i)">{{constants.change}}</button>
-							<button mat-raised-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
-						</div>
+						<form [formGroup]="currScheduleFormGroup">
+							<div>
+								<mat-form-field>
+									<input matInput required [matDatepicker]="pickerStartDate" name="schedule_start_by" formControlName="currentStartDate" placeholder={{constants.from}}
+									 readonly>
+									<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput required type="number" name="curr_start_time_hour" max="23" min="0" formControlName="currentStartTimeHour"
+									 id="currentStratTimeHour">
+								</mat-form-field>:
+								<mat-form-field>
+									<input matInput required type="number" name="curr_start_time_minute" max="59" min="0" formControlName="currentStartTimeMinute"
+									 id="currentStratTimeMinute">
+								</mat-form-field>
+							</div>
+							<div>
+								<mat-form-field>
+									<input required matInput [matDatepicker]="pickerEndDate" name="schedule_end_by" formControlName="currentEndDate" placeholder={{constants.to}}
+									 readonly>
+									<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input required matInput type="number" name="curr_end_time_hour" max="23" min="0" formControlName="currentEndTimeHour" id="currentEndTimeHour">
+								</mat-form-field>:
+								<mat-form-field>
+									<input required matInput type="number" name="curr_end_time_minute" max="59" min="0" formControlName="currentEndTimeMinute"
+									 id="currentEndTimeMinute">
+								</mat-form-field>
+								<button mat-raised-button type="button" [disabled]="currScheduleFormGroup.invalid" (click)="changeDate(i)">{{constants.change}}</button>
+								<button mat-raised-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
+							</div>
+						</form>
 					</mat-expansion-panel>
 				</div>
 			</mat-accordion>

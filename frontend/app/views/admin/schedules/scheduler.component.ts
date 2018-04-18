@@ -56,13 +56,9 @@ export class SchedulerComponent implements OnInit {
 	@Output() onScheduleChange: EventEmitter<Schedule[]> = new EventEmitter<Schedule[]>();
 
 	formGroup: FormGroup;
+	currScheduleFormGroup: FormGroup;
+
 	schedulesCtrl: FormControl;
-	currentStartDate: FormControl;
-	currentStartTimeHour: FormControl;
-	currentStartTimeMinute: FormControl;
-	currentEndDate: FormControl;
-	currentEndTimeHour: FormControl;
-	currentEndTimeMinute: FormControl;
 	panelNumber: number;
 	toDeleteSchedules: Schedule[];
 
@@ -108,6 +104,27 @@ export class SchedulerComponent implements OnInit {
 			'monthlyRecurrenceCtrl': new FormControl('monthDate'),
 			'monthDateCtrl': new FormControl(1),
 			'rythmUnitCtrl': new FormControl('unique'),
+		});
+
+		this.currScheduleFormGroup = new FormGroup({
+			'currentStartDate': new FormControl('', [
+				Validators.required
+			]),
+			'currentStartTimeHour': new FormControl('', [
+				Validators.required
+			]),
+			'currentStartTimeMinute': new FormControl('', [
+				Validators.required
+			]),
+			'currentEndDate': new FormControl('', [
+				Validators.required
+			]),
+			'currentEndTimeHour': new FormControl('', [
+				Validators.required
+			]),
+			'currentEndTimeMinute': new FormControl('', [
+				Validators.required
+			])
 		});
 
 		this.schedulesCtrl = new FormControl(this.schedules, [Validators.required]);
@@ -235,31 +252,33 @@ export class SchedulerComponent implements OnInit {
 	declerateDateForms(i: number): void {
 		if (i >= 0) {
 			if (this.schedules[i]) {
-				this.currentStartDate = new FormControl(this.schedules[i].startDate);
-				this.currentStartTimeHour = new FormControl(moment(this.schedules[i].startTime).hour());
-				this.currentStartTimeMinute = new FormControl(moment(this.schedules[i].startTime).minute());
-				this.currentEndDate = new FormControl(this.schedules[i].endDate);
-				this.currentEndTimeHour = new FormControl(moment(this.schedules[i].endTime).hour());
-				this.currentEndTimeMinute = new FormControl(moment(this.schedules[i].endTime).minute());
+				this.currScheduleFormGroup.get('currentStartDate').setValue(this.schedules[i].startDate);
+				this.currScheduleFormGroup.get('currentStartTimeHour').setValue(moment(this.schedules[i].startTime).hour());
+				this.currScheduleFormGroup.get('currentStartTimeMinute').setValue(moment(this.schedules[i].startTime).minute());
+				this.currScheduleFormGroup.get('currentEndDate').setValue(this.schedules[i].endDate);
+				this.currScheduleFormGroup.get('currentEndTimeHour').setValue(
+					moment(this.schedules[i].endTime).hour());
+				this.currScheduleFormGroup.get('currentEndTimeMinute').setValue(
+					moment(this.schedules[i].endTime).minute());
 			}
 			this.panelNumber = i;
 		} else {
-			this.currentStartDate = new FormControl();
-			this.currentStartTimeHour = new FormControl();
-			this.currentStartTimeMinute = new FormControl();
-			this.currentEndDate = new FormControl();
-			this.currentEndTimeHour = new FormControl();
-			this.currentEndTimeMinute = new FormControl();
+			this.currScheduleFormGroup.get('currentStartDate').reset();
+			this.currScheduleFormGroup.get('currentStartTimeHour').reset();
+			this.currScheduleFormGroup.get('currentStartTimeMinute').reset();
+			this.currScheduleFormGroup.get('currentEndDate').reset();
+			this.currScheduleFormGroup.get('currentEndTimeHour').reset();
+			this.currScheduleFormGroup.get('currentEndTimeMinute').reset();
 		}
 	}
 
 	changeDate(i: number): void {
-		this.schedules[i].startDate = moment(this.currentStartDate.value).add(1, 'day').format();
-		this.schedules[i].startTimeHour = this.currentStartTimeHour.value;
-		this.schedules[i].startTimeMinute = this.currentStartTimeMinute.value;
-		this.schedules[i].endDate = moment(this.currentEndDate.value).add(1, 'day').format();
-		this.schedules[i].endTimeHour = this.currentEndTimeHour.value;
-		this.schedules[i].endTimeMinute = this.currentEndTimeMinute.value;
+		this.schedules[i].startDate = moment(this.currScheduleFormGroup.get('currentStartDate').value).format();
+		this.schedules[i].startTimeHour = this.currScheduleFormGroup.get('currentStartTimeHour').value;
+		this.schedules[i].startTimeMinute = this.currScheduleFormGroup.get('currentStartTimeMinute').value;
+		this.schedules[i].endDate = moment(this.currScheduleFormGroup.get('currentEndDate').value).format();
+		this.schedules[i].endTimeHour = this.currScheduleFormGroup.get('currentEndTimeHour').value;
+		this.schedules[i].endTimeMinute = this.currScheduleFormGroup.get('currentEndTimeMinute').value;
 		this.panelNumber = -1;
 	}
 

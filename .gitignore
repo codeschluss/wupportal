@@ -1,16 +1,11 @@
 backend/config/.env
 backend/config/app.php
+backend/webroot/js
+backend/composer.lock
 backend/logs
 backend/tmp
-backend/webroot/js
-/backend/composer.lock
-/backend/tests
-/backend/tmp
-/backend/vendor
-/backend/plugins
+backend/vendor
 
 frontend/*.log
 frontend/node_modules
-frontend/dist
 frontend/package-lock.json
-/backend/webroot/js

@@ -1,0 +1,56 @@
+@keyframes linear-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes stroke-rotate {
+    0% { stroke-dashoffset: 268.606171882px; transform: rotate(0); }
+    12.5% { stroke-dashoffset: 56.548667765px; transform: rotate(0); }
+    12.5001% { stroke-dashoffset: 56.548667765px; transform: rotateX(180deg) rotate(72.5deg); }
+    25% { stroke-dashoffset: 268.606171882px; transform: rotateX(180deg) rotate(72.5deg); }
+
+    25.0001% { stroke-dashoffset: 268.606171882px; transform: rotate(270deg); }
+    37.5% { stroke-dashoffset: 56.548667765px; transform: rotate(270deg); }
+    37.5001% { stroke-dashoffset: 56.548667765px; transform: rotateX(180deg) rotate(161.5deg); }
+    50% { stroke-dashoffset: 268.606171882px; transform: rotateX(180deg) rotate(161.5deg); }
+
+    50.0001% { stroke-dashoffset: 268.606171882px; transform: rotate(180deg); }
+    62.5% { stroke-dashoffset: 56.548667765px; transform: rotate(180deg); }
+    62.5001% { stroke-dashoffset: 56.548667765px; transform: rotateX(180deg) rotate(251.5deg); }
+    75% { stroke-dashoffset: 268.606171882px; transform: rotateX(180deg) rotate(251.5deg); }
+
+    75.0001% { stroke-dashoffset: 268.606171882px; transform: rotate(90deg); }
+    87.5% { stroke-dashoffset: 56.548667765px; transform: rotate(90deg); }
+    87.5001% { stroke-dashoffset: 56.548667765px; transform: rotateX(180deg) rotate(341.5deg); }
+    100% { stroke-dashoffset: 268.606171882px; transform: rotateX(180deg) rotate(341.5deg); }
+}
+#loader {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    z-index: 100;
+}
+.mat-progress-spinner {
+    animation: linear-rotate 2000ms linear infinite;
+    display: block;
+    position: absolute;
+    right: 50%;
+    top: 50%;
+}
+.mat-progress-spinner svg {
+    position: absolute;
+    transform: rotate(-90deg);
+    top: 0;
+    left: 0;
+    transform-origin: 0;
+    overflow: visible;
+}
+.mat-progress-spinner circle {
+    animation-duration: 4000ms;
+    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+    animation-iteration-count: infinite;
+    fill: transparent;
+    transform-origin: center;
+    transition: stroke-dashoffset 225ms linear;
+    transition-property: stroke;
+}

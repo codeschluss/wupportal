@@ -26,83 +26,83 @@ use Cake\Validation\Validator;
 class AddressesTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
 
-        $this->setTable('addresses');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+		$this->setTable('addresses');
+		$this->setDisplayField('id');
+		$this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+		$this->addBehavior('Timestamp');
 
-        $this->belongsTo('Suburbs', [
-            'foreignKey' => 'suburb_id'
-        ]);
-        $this->hasMany('Activities', [
-            'foreignKey' => 'address_id'
-        ]);
-        $this->hasMany('Organisations', [
-            'foreignKey' => 'address_id'
-        ]);
-    }
+		$this->belongsTo('Suburbs', [
+			'foreignKey' => 'suburb_id'
+		]);
+		$this->hasMany('Activities', [
+			'foreignKey' => 'address_id'
+		]);
+		$this->hasMany('Organisations', [
+			'foreignKey' => 'address_id'
+		]);
+	}
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator)
+	{
+		$validator
+			->uuid('id')
+			->allowEmpty('id', 'create');
 
-        $validator
-            ->numeric('latitude')
-            ->allowEmpty('latitude');
+		$validator
+			->numeric('latitude')
+			->allowEmpty('latitude');
 
-        $validator
-            ->numeric('longitude')
-            ->allowEmpty('longitude');
+		$validator
+			->numeric('longitude')
+			->allowEmpty('longitude');
 
-        $validator
-            ->scalar('street')
-            ->allowEmpty('street');
+		$validator
+			->scalar('street')
+			->allowEmpty('street');
 
-        $validator
-            ->scalar('house_number')
-            ->allowEmpty('house_number');
+		$validator
+			->scalar('house_number')
+			->allowEmpty('house_number');
 
-        $validator
-            ->scalar('postal_code')
-            ->allowEmpty('postal_code');
+		$validator
+			->scalar('postal_code')
+			->allowEmpty('postal_code');
 
-        $validator
-            ->scalar('place')
-            ->allowEmpty('place');
+		$validator
+			->scalar('place')
+			->allowEmpty('place');
 
-        return $validator;
-    }
+		return $validator;
+	}
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['suburb_id'], 'Suburbs'));
+	/**
+	 * Returns a rules checker object that will be used for validating
+	 * application integrity.
+	 *
+	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+	 * @return \Cake\ORM\RulesChecker
+	 */
+	public function buildRules(RulesChecker $rules)
+	{
+		$rules->add($rules->existsIn(['suburb_id'], 'Suburbs'));
 
-        return $rules;
-    }
+		return $rules;
+	}
 }

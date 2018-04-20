@@ -205,33 +205,14 @@ CREATE TABLE `activities_target_groups` (
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE `activities_translations` (
-	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`activity_id` CHAR(36) NOT NULL,
-	`translation_id` CHAR(36) NOT NULL,
-
-	CONSTRAINT `uniq_activity_translation`
-		UNIQUE (`activity_id`, `translation_id`),
-
-	CONSTRAINT `fkey_activity_translation`
-		FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
-		ON UPDATE CASCADE ON DELETE CASCADE,
-
-	CONSTRAINT `fkey_translation_activity`
-		FOREIGN KEY (`translation_id`) REFERENCES `translations` (`id`)
-		ON UPDATE CASCADE ON DELETE CASCADE
-);
-
--- TODO
 CREATE TABLE `i18n` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
-	`locale` VARCHAR(6) NOT NULL,
+	`locale` varchar(6) NOT NULL,
 	`model` varchar(255) NOT NULL,
 	`foreign_key` CHAR(36) NOT NULL,
-	`field` VARCHAR(255) NOT NULL,
-	`content` TEXT,
+	`field` varchar(255) NOT NULL,
+	`content` text,
 
-	UNIQUE INDEX I18N_LOCALE_FIELD (`locale`, `model`, `foreign_key`, `field`),
-	INDEX I18N_FIELD (`model`, `foreign_key`, `field`)
+	UNIQUE INDEX I18N_LOCALE_FIELD(`locale`, `model`, `foreign_key`, `field`),
+	INDEX I18N_FIELD(`model`, `foreign_key`, `field`)
 );
-

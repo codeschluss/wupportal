@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
+
 use App\Controller\AppController;
 
 /**
@@ -17,41 +19,6 @@ class ActivitiesController extends AppController
 	{
 		parent::initialize();
 		$this->Auth->allow(['view','list', 'index', 'getByProviders']);
-	}
-
-	/** @return array base of associated models */
-	protected function baseContain()
-	{
-		return [
-			'Addresses',
-			'Addresses.Suburbs',
-			'Tags',
-			'Categories',
-			'TargetGroups',
-			'Schedules',
-			'Providers.Organisations'
-		];
-	}
-
-	/** @return array associated models */
-	protected function contain()
-	{
-		$associatedTables = $this->baseContain();
-		array_push($associatedTables, 'Providers.Users');
-		return $associatedTables;
-	}
-
-	/** @return array Fields to use for filter  */
-	protected function fieldsTofilter()
-	{
-		return [
-			'Activities.name',
-			'Activities.description',
-			'Organisations.name',
-			'Categories.name',
-			'Tags.name',
-			'Suburbs.name'
-		];
 	}
 
 	/**
@@ -109,6 +76,7 @@ class ActivitiesController extends AppController
 		$this->setFiltering($query, $request);
 
 		$result = $this->paginate($query)->toArray();
+		// $result = $query->all()->toArray();
 		$this->prepareResult($result);
 
 		return $this->ResponseHandler->isNotFoundError($result)
@@ -137,6 +105,40 @@ class ActivitiesController extends AppController
 			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $result));
 	}
 
+	protected function setJoins($query)
+	{
+		if ($this->isLocaleSet()) {
+			$query->leftJoinWith('Tags')->contain($this->contain());
+
+		} else {
+			foreach ($this->contain() as $contain) {
+				$query->leftJoinWith($contain)->contain($contain);
+			}
+		}
+	}
+
+	protected function setFiltering($query, $request)
+	{
+		if (!empty($request->filter)) {
+			$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+				$fieldsToFilter = $this->isLocaleSet()
+					? $this->fieldsTofilterTranslated()
+					: $this->fieldsTofilter();
+
+				$whereClause = [];
+				foreach ($fieldsToFilter as $field) {
+					$whereClause[] = [$field . ' LIKE' => '%' . $request->filter . '%'];
+				}
+
+				$tagsQuery = $this->table()->getTranslatedTagsQuery($request->filter);
+				$whereClause[] = function ($exp) use ($tagsQuery) {
+					return $exp->exists($tagsQuery);
+				};
+				return $whereClause;
+			}]);
+		}
+	}
+
 	private function setByProviders($query, $request)
 	{
 		$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
@@ -156,6 +158,53 @@ class ActivitiesController extends AppController
 				unset($activity->provider->user_id);
 			}
 		}
+	}
+
+	/** @return array base of associated models */
+	protected function baseContain()
+	{
+		return [
+			'Addresses',
+			'Addresses.Suburbs',
+			'Tags',
+			'Categories',
+			'TargetGroups',
+			'Schedules',
+			'Providers.Organisations'
+		];
+	}
+
+	/** @return array associated models */
+	protected function contain()
+	{
+		$associatedTables = $this->baseContain();
+		array_push($associatedTables, 'Providers.Users');
+		return $associatedTables;
+	}
+
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilter()
+	{
+		return [
+			'Activities.name',
+			'Activities.description',
+			'Organisations.name',
+			'Categories.name',
+			'Tags.name',
+			'Suburbs.name'
+		];
+	}
+
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilterTranslated()
+	{
+		return [
+			$this->table()->translationField('name'),
+			$this->table()->translationField('description'),
+			$this->table()->Categories->translationField('name'),
+			'Suburbs.name',
+			'Organisations.name',
+		];
 	}
 
 	public function isAuthorized($user)

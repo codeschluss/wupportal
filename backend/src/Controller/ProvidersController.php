@@ -14,25 +14,6 @@ use Cake\ORM\TableRegistry;
 class ProvidersController extends AppController
 {
 
-	/** @return array associated models */
-	public function contain()
-	{
-		return [
-			'Users',
-			'Organisations'
-		];
-	}
-
-	/** @return array Fields to use for filter  */
-	protected function fieldsTofilter()
-	{
-		return [
-			'Users.username',
-			'Users.fullname',
-			'Users.phone'
-		];
-	}
-
   public function getByUser()
 	{
 		$request = $this->request->input('json_decode');
@@ -88,6 +69,25 @@ class ProvidersController extends AppController
 	private function getOrgaWhereClause($request)
 	{
 		return [$this->name . '.organisation_id' => $request->organisation];
+	}
+
+	/** @return array associated models */
+	public function contain()
+	{
+		return [
+			'Users',
+			'Organisations'
+		];
+	}
+
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilter()
+	{
+		return [
+			'Users.username',
+			'Users.fullname',
+			'Users.phone'
+		];
 	}
 
 	public function isAuthorized($user)

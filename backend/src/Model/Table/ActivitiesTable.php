@@ -15,7 +15,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\SchedulesTable|\Cake\ORM\Association\HasMany $Schedules
  * @property \App\Model\Table\TagsTable|\Cake\ORM\Association\BelongsToMany $Tags
  * @property \App\Model\Table\TargetGroupsTable|\Cake\ORM\Association\BelongsToMany $TargetGroups
- * @property \App\Model\Table\TranslationsTable|\Cake\ORM\Association\BelongsToMany $Translations
  *
  * @method \App\Model\Entity\Activity get($primaryKey, $options = [])
  * @method \App\Model\Entity\Activity newEntity($data = null, array $options = [])
@@ -70,11 +69,8 @@ class ActivitiesTable extends Table
 			'targetForeignKey' => 'target_group_id',
 			'joinTable' => 'activities_target_groups'
 		]);
-		$this->belongsToMany('Translations', [
-			'foreignKey' => 'activity_id',
-			'targetForeignKey' => 'translation_id',
-			'joinTable' => 'activities_translations'
-		]);
+
+		$this->addBehavior('Translate', ['fields' => ['name', 'description']]);
 	}
 
 	/**
@@ -143,7 +139,7 @@ class ActivitiesTable extends Table
 	public function showUserActive($id)
 	{
 		return $this->exists([
-			'id' => $id,
+			'Activities.id' => $id,
 			'show_user' => true
 		]);
 	}
@@ -154,7 +150,23 @@ class ActivitiesTable extends Table
 			$this->find()
 			->select(['id'])
 			->where(function ($exp, $q) use ($providers) {
-					return $exp->in('Activities.provider_id', $providers);
+				return $exp->in('Activities.provider_id', $providers);
 			});
+	}
+
+	public function getTranslatedTagsQuery($filter)
+	{
+		return $this->Tags
+    ->find()
+    ->select(['id'])
+    ->innerJoinWith('ActivitiesTags')
+    ->where(function ($exp) use ($filter)  {
+			return $exp
+				->equalFields('ActivitiesTags.activity_id', 'Activities.id')
+				->like(
+					$this->Tags->translationField('name'),
+					'%' . $filter . '%'
+				);
+    });
 	}
 }

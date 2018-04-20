@@ -24,76 +24,76 @@ use Cake\Validation\Validator;
 class UsersTable extends Table
 {
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+	/**
+	 * Initialize method
+	 *
+	 * @param array $config The configuration for the Table.
+	 * @return void
+	 */
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
 
-        $this->setTable('users');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+		$this->setTable('users');
+		$this->setDisplayField('id');
+		$this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+		$this->addBehavior('Timestamp');
 
-        $this->hasMany('Providers', [
-            'foreignKey' => 'user_id'
-        ]);
-    }
+		$this->hasMany('Providers', [
+			'foreignKey' => 'user_id'
+		]);
+	}
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
+	/**
+	 * Default validation rules.
+	 *
+	 * @param \Cake\Validation\Validator $validator Validator instance.
+	 * @return \Cake\Validation\Validator
+	 */
+	public function validationDefault(Validator $validator)
+	{
+		$validator
+			->uuid('id')
+			->allowEmpty('id', 'create');
 
-        $validator
-            ->boolean('superuser')
-            ->allowEmpty('superuser');
+		$validator
+			->boolean('superuser')
+			->allowEmpty('superuser');
 
-        $validator
-            ->scalar('username')
-            ->requirePresence('username', 'create')
-            ->notEmpty('username')
-            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+		$validator
+			->scalar('username')
+			->requirePresence('username', 'create')
+			->notEmpty('username')
+			->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-        $validator
-            ->scalar('password')
-            ->requirePresence('password', 'create')
-            ->notEmpty('password');
+		$validator
+			->scalar('password')
+			->requirePresence('password', 'create')
+			->notEmpty('password');
 
-        $validator
-            ->scalar('fullname')
-            ->allowEmpty('fullname');
+		$validator
+			->scalar('fullname')
+			->allowEmpty('fullname');
 
-        $validator
-            ->scalar('phone')
-            ->allowEmpty('phone');
+		$validator
+			->scalar('phone')
+			->allowEmpty('phone');
 
-        return $validator;
-    }
+		return $validator;
+	}
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->isUnique(['username']));
+	/**
+	 * Returns a rules checker object that will be used for validating
+	 * application integrity.
+	 *
+	 * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+	 * @return \Cake\ORM\RulesChecker
+	 */
+	public function buildRules(RulesChecker $rules)
+	{
+		$rules->add($rules->isUnique(['username']));
 
-        return $rules;
-    }
+		return $rules;
+	}
 }

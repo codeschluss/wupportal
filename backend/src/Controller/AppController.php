@@ -19,6 +19,7 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\ConflictException;
+use Cake\I18n\I18n;
 use \stdClass;
 
 /**
@@ -59,11 +60,26 @@ class AppController extends Controller
 		]);
 	}
 
-	/** @return array associated models */
-	protected function contain() { return []; }
+	public function beforeFilter(Event $event)
+	{
+		parent::beforeFilter($event);
+		$this->setLocale();
+	}
 
-	/** @return array Fields to use for filter  */
-	protected function fieldsTofilter() { return []; }
+	protected function setLocale()
+	{
+		$langCode = $this->request->getHeaderLine('Accept-Language');
+		if (TableRegistry::get('Translations')
+			->exists(['Translations.locale' => $langCode])) {
+			I18n::setLocale($langCode);
+		}
+	}
+
+	protected function isLocaleSet()
+	{
+		return TableRegistry::get('Translations')
+			->exists(['Translations.locale' => I18n::getLocale()]);
+	}
 
 	/**
 	 * mapped to http get method without param
@@ -88,7 +104,11 @@ class AppController extends Controller
 	 */
 	public function view($id = null)
 	{
-		$result = $this->table()->find()
+		$finder = $this->table()->behaviors()->has('Translate')
+			? $this->table()->find('translations')
+			: $this->table()->find();
+
+		$result = $finder
 			->contain($this->contain())
 			->where([$this->name . '.id' => $id])
 			->first();
@@ -105,15 +125,9 @@ class AppController extends Controller
 	 */
 	public function add()
 	{
-		$result = $this->table()->patchEntity(
-			$this->table()->newEntity(),
-			json_decode($this->request->input(), true),
-			['associated' => $this->contain()]
+		return $this->storeInDb(
+			$this->table()->newEntity()
 		);
-
-		return $result->errors()
-			? $this->ResponseHandler->responseError($result->errors())
-			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
 	}
 
 	/**
@@ -125,15 +139,36 @@ class AppController extends Controller
 	 */
 	public function edit($id)
 	{
+		return $this->storeInDb(
+			$this->table()->get($id, ['contain' => $this->contain()])
+		);
+	}
+
+	protected function storeInDb($baseEntity)
+	{
+		$requestEntity = json_decode($this->request->input(), true);
 		$result = $this->table()->patchEntity(
-			$this->table()->get($id, ['contain' => $this->contain()]),
-			json_decode($this->request->input(), true),
+			$baseEntity,
+			$requestEntity,
 			['associated' => $this->contain()]
 		);
+
+		$this->saveTranslations($requestEntity, $result);
 
 		return $result->errors()
 			? $this->ResponseHandler->responseError($result->errors())
 			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
+	}
+
+	protected function saveTranslations($requestEntity, $storingEntity)
+	{
+		if(array_key_exists('translations', $requestEntity)) {
+			foreach ($requestEntity['translations'] as $translation) {
+				$storingEntity
+					->translation(key($translation))
+					->set($translation[key($translation)], ['guard' => false]);
+			}
+		}
 	}
 
 	/**
@@ -161,8 +196,7 @@ class AppController extends Controller
 		$query = $this->table()->find()->group($this->name . '.id');
 		$request = $this->request->input('json_decode');
 		if (is_null($request)) return $this->ResponseHandler->responseError();
-
-		$this->setPagination($request);
+		$this->setPagination($request);#
 		$this->setJoins($query);
 		$this->setSorting($query, $request);
 		$this->setFiltering($query, $request);
@@ -177,7 +211,7 @@ class AppController extends Controller
 	{
 		$this->paginate = [
 			'limit' => $request->pageSize,
-			'page' => $request->page,
+			'page' => $request->page
 		];
 	}
 
@@ -201,14 +235,27 @@ class AppController extends Controller
 	{
 		if (!empty($request->filter)) {
 			$query->where(['OR' => function($exp, $q) use (&$field, &$request) {
+				$fieldsToFilter = $this->isLocaleSet()
+					? $this->fieldsTofilterTranslated()
+					: $this->fieldsTofilter();
+
 				$whereClause = [];
-				foreach ($this->fieldsTofilter() as $field) {
-					$whereClause[] = $field . ' LIKE "%' . $request->filter . '%" COLLATE utf8_general_ci';
+				foreach ($fieldsToFilter as $field) {
+					$whereClause[] = [$field . ' LIKE' => '%' . $request->filter . '%'];
 				}
 				return $whereClause;
 			}]);
 		}
 	}
+
+	/** @return array associated models */
+	protected function contain() { return []; }
+
+	/** @return array Fields to use for filter  */
+	protected function fieldsTofilter() { return []; }
+
+		/** @return array Fields to use to filter translations  */
+	protected function fieldsTofilterTranslated()  { return $this->fieldsToFilter(); }
 
 	protected function createListResponse($query,$result) {
 		$listResponse = new stdClass();
@@ -243,39 +290,39 @@ class AppController extends Controller
 
 	protected function isApprovedProvider($userId, $providerId = null)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->isApprovedProvider($userId, $providerId);
+		return TableRegistry::get('Providers')
+			->isApprovedProvider($userId, $providerId);
 	}
 
 	protected function isOrgaAdminUser($ownUserId, $organisationId)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->isOrgaAdminUser($ownUserId, $organisationId);
+		return TableRegistry::get('Providers')
+			->isOrgaAdminUser($ownUserId, $organisationId);
 	}
 
 	protected function isOrgaAdminProvider($userId, $providerId)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->isOrgaAdminProvider($userId, $providerId,
-			$this->getAdminOrganisationsQuery($userId));
+		return TableRegistry::get('Providers')
+			->isOrgaAdminProvider($userId, $providerId,
+				$this->getAdminOrganisationsQuery($userId));
 	}
 
 	protected function getProviderQuery($userId)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->getProviderQuery($userId);
+		return TableRegistry::get('Providers')
+			->getProviderQuery($userId);
 	}
 
 	protected function getProviderOrganisationQuery($userId)
 	{
-		$providers = TableRegistry::get('Providers');
-		return $providers->getProviderOrganisationQuery($userId,
-			$this->getAdminOrganisationsQuery($userId));
+		return TableRegistry::get('Providers')
+			->getProviderOrganisationQuery($userId,
+				$this->getAdminOrganisationsQuery($userId));
 	}
 
 	protected function getAdminOrganisationsQuery($userId)
 	{
-		$organisations = TableRegistry::get('Organisations');
-		return $organisations->getAdminOrganisationsQuery($userId);
+		return TableRegistry::get('Organisations')
+			->getAdminOrganisationsQuery($userId);
 	}
 }

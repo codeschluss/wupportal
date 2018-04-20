@@ -45,58 +45,59 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
 
-    $routes->connect(
-        '/:path',
-        ['controller' => 'Pages', 'action' => 'display', 'home'],
-        ['path' => '.*']
-    );
+	$routes->connect(
+		'/:path',
+		['controller' => 'Pages', 'action' => 'display', 'home'],
+		['path' => '.*']
+	);
 
-    $routes->resources('Activities', ['map' => ['filter' => [
-        'action' => 'filter',
-        'method' => 'GET'
-    ]]]);
+	$routes->resources('Activities', ['map' => ['filter' => [
+		'action' => 'filter',
+		'method' => 'GET'
+	]]]);
 
-    $routes->scope('/api/', function($routes) {
-        $list = ['map' => ['list' => [
-            'action' => 'list',
-            'method' => 'POST',
-            'path' => '/list'
-        ]]];
+	$routes->scope('/api/', function($routes) {
+		$list = ['map' => ['list' => [
+			'action' => 'list',
+			'method' => 'POST',
+			'path' => '/list'
+		]]];
 
-        $routes->resources('Activities', $list);
-        $routes->resources('Activities', ['map' => ['getByProviders' => [
-            'action' => 'getByProviders',
-            'method' => 'POST',
-            'path' => '/getByProviders'
-        ]]]);
+		$routes->resources('Activities', $list);
+		$routes->resources('Activities', ['map' => ['getByProviders' => [
+			'action' => 'getByProviders',
+			'method' => 'POST',
+			'path' => '/getByProviders'
+		]]]);
 
-        $routes->resources('Addresses', $list);
-        $routes->resources('Categories', $list);
-        $routes->resources('Configurations', $list);
-        $routes->resources('Organisations', $list);
-        $routes->resources('Suburbs',$list);
-        $routes->resources('Tags', $list);
-        $routes->resources('TargetGroups', $list);
-        $routes->resources('Schedules', $list);
-        $routes->resources('Users', $list);
-        $routes->resources('Users', ['map' => ['login' => [
-            'action' => 'login',
-            'method' => 'POST',
-            'path' => '/login'
-        ]]]);
+		$routes->resources('Addresses', $list);
+		$routes->resources('Categories', $list);
+		$routes->resources('Configurations', $list);
+		$routes->resources('Organisations', $list);
+		$routes->resources('Suburbs',$list);
+		$routes->resources('Tags', $list);
+		$routes->resources('TargetGroups', $list);
+		$routes->resources('Schedules', $list);
+		$routes->resources('Translations', $list);
+		$routes->resources('Users', $list);
+		$routes->resources('Users', ['map' => ['login' => [
+			'action' => 'login',
+			'method' => 'POST',
+			'path' => '/login'
+		]]]);
 
-        $routes->resources('Providers', $list);
-        $routes->resources('Providers', ['map' => ['getByOrganisation' => [
-            'action' => 'getByOrganisation',
-            'method' => 'POST',
-            'path' => '/getByOrganisation'
-        ]]]);
-        $routes->resources('Providers', ['map' => ['getByUser' => [
-            'action' => 'getByUser',
-            'method' => 'POST',
-            'path' => '/getByUser'
-        ]]]);
-    });
+		$routes->resources('Providers', $list);
+		$routes->resources('Providers', ['map' => ['getByOrganisation' => [
+			'action' => 'getByOrganisation',
+			'method' => 'POST',
+			'path' => '/getByOrganisation'
+		]]]);
+		$routes->resources('Providers', ['map' => ['getByUser' => [
+			'action' => 'getByUser',
+			'method' => 'POST',
+			'path' => '/getByUser'
+		]]]);
+	});
 });
 
 /**

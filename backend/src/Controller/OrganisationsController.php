@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\I18n;
 
 /**
  * Organisations Controller
@@ -23,8 +24,8 @@ class OrganisationsController extends AppController
 	protected function contain()
 	{
 		return [
-				'Addresses',
-				'Addresses.Suburbs'
+			'Addresses',
+			'Addresses.Suburbs'
 		];
 	}
 
@@ -34,6 +35,22 @@ class OrganisationsController extends AppController
 		return [
 			'Organisations.name',
 			'Organisations.description',
+			'Organisations.website',
+			'Organisations.mail',
+			'Organisations.phone',
+			'Addresses.street',
+			'Addresses.postal_code',
+			'Addresses.place',
+			'Suburbs.name'
+		];
+	}
+
+	/** @return array Fields to use to filter translations  */
+	protected function fieldsTofilterTranslated()
+	{
+		return [
+			$this->table()->translationField('name'),
+			$this->table()->translationField('description'),
 			'Organisations.website',
 			'Organisations.mail',
 			'Organisations.phone',

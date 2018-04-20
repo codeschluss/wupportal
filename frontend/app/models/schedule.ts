@@ -61,7 +61,7 @@ export class Schedule extends Model {
 
 	public set endDate(date: string) {
 		this.end_date_moment = moment(date);
-		this.end_date = this.start_date_moment.utc().format('YYYY-MM-DD HH:mm:ss');
+		this.end_date = this.end_date_moment.utc().format('YYYY-MM-DD HH:mm:ss');
 	}
 
 	get toString(): string {

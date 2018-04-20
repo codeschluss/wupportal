@@ -32,7 +32,7 @@ export class Constants {
 	// LABELS
 	// --------------------------
 
-	public weekDaysArray: string[] = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
+	public weekDaysArray: string[] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 	public rythm: string = 'Rythmus';
 	public from: string = 'von';
 	public to: string = 'bis';
@@ -123,6 +123,12 @@ export class Constants {
 	public every: string = 'Jede(n/s)';
 	public suffixAmount: string = 'te(n/s)';
 	public suffixNumber: string = 'ten';
+	public timeOfDay: string = 'Uhrzeit';
+	public dateTime: string = 'Datum';
+	public minutes: string = 'Minuten';
+	public hours: string = 'Stunden';
+	public additional: string = 'Zusätzlichen';
+
 
 	public website: string = 'Webseite';
 	public description: string = 'Beschreibung';

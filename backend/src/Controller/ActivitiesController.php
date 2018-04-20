@@ -129,32 +129,14 @@ class ActivitiesController extends AppController
 				foreach ($fieldsToFilter as $field) {
 					$whereClause[] = [$field . ' LIKE' => '%' . $request->filter . '%'];
 				}
-				$tagsQuery = $this
-					->getTranslationFilterQuery($request->filter);
 
+				$tagsQuery = $this->table()->getTranslatedTagsQuery($request->filter);
 				$whereClause[] = function ($exp) use ($tagsQuery) {
 					return $exp->exists($tagsQuery);
 				};
-
 				return $whereClause;
 			}]);
 		}
-	}
-
-	private function getTranslationFilterQuery($filter)
-	{
-		return $this->table()->Tags
-    ->find()
-    ->select(['id'])
-    ->innerJoinWith('ActivitiesTags')
-    ->where(function ($exp) use ($filter)  {
-			return $exp
-				->equalFields('ActivitiesTags.activity_id', 'Activities.id')
-				->like(
-					$this->table()->Tags->translationField('name'),
-					'%' . $filter . '%'
-				);
-    });
 	}
 
 	private function setByProviders($query, $request)

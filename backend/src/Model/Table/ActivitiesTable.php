@@ -150,7 +150,23 @@ class ActivitiesTable extends Table
 			$this->find()
 			->select(['id'])
 			->where(function ($exp, $q) use ($providers) {
-					return $exp->in('Activities.provider_id', $providers);
+				return $exp->in('Activities.provider_id', $providers);
 			});
+	}
+
+	public function getTranslatedTagsQuery($filter)
+	{
+		return $this->Tags
+    ->find()
+    ->select(['id'])
+    ->innerJoinWith('ActivitiesTags')
+    ->where(function ($exp) use ($filter)  {
+			return $exp
+				->equalFields('ActivitiesTags.activity_id', 'Activities.id')
+				->like(
+					$this->Tags->translationField('name'),
+					'%' . $filter . '%'
+				);
+    });
 	}
 }

@@ -24,7 +24,7 @@ $this->layout = false;
 
 	<link rel="stylesheet" href="css/spinner.css">
 	<link rel="stylesheet" href="css/deeppurple-amber.css">
-	<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+	<link rel="stylesheet" href="css/font-awesome.min.css">
 
 	<!-- TODO: remove 3rd-party requests -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">

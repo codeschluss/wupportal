@@ -38,7 +38,7 @@
 											<mat-chip-list #chipList>
 												<mat-chip *ngFor="let tag of activity.tags" selectable="true" removable="true">
 													{{tag.name + ' '}}
-													<fa-icon (click)="removeTag(tag)" [icon]="faTrash" class="text-danger">
+													<fa-icon (click)="removeTag(tag)" [icon]="faTrashAlt" class="text-danger">
 													</fa-icon>
 												</mat-chip>
 												<input placeholder={{constants.tags}} [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur="true"

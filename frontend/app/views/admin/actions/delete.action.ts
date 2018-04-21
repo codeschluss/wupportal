@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Constants } from 'app/services/constants';
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 @Component({
@@ -13,7 +13,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 	styleUrls: ['../../../app.component.css'],
 	template: `
 		<button mat-button type="button" (click)="openDialog()">
-			<fa-icon [icon]="faTrash" class="text-danger"></fa-icon>
+			<fa-icon [icon]="faTrashAlt" class="text-danger"></fa-icon>
 		</button>
 	`
 })
@@ -23,7 +23,7 @@ export class DeleteActionComponent {
 	@Input() recordID: string;
 	@Input() nameToDelete: string;
 	@Output() onDelete: EventEmitter<string> = new EventEmitter<string>();
-	faTrash: IconDefinition = faTrash;
+	faTrashAlt: IconDefinition = faTrashAlt;
 	constructor(
 		public constants: Constants,
 		public deleteDialog: MatDialog) {

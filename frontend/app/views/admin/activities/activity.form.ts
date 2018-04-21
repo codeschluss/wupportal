@@ -40,7 +40,7 @@ import { Constants } from 'app/services/constants';
 import { Object } from 'openlayers';
 import { Subscription } from 'rxjs/Subscription';
 import { generate } from 'rxjs/observable/generate';
-import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 // @Author: Pseipel
@@ -63,7 +63,7 @@ export class ActivityFormComponent implements OnInit {
 	thirdFormGroup: FormGroup;
 	user: User;
 	faCheck: IconDefinition = faCheck;
-	faTrash: IconDefinition = faTrash;
+	faTrashAlt: IconDefinition = faTrashAlt;
 
 	separatorKeysCodes: any[] = [ENTER, COMMA];
 

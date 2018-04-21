@@ -8,9 +8,10 @@ import { Constants } from 'app/services/constants';
 	template: `
 	<div>{{data.message}}</div>
 	<h3> {{data.name}} </h3>
-	<button mat-raised-button color="warn"
+	<button class="btn btn-danger"
   	(click)="onDelete()">{{constants.delete}}</button>
-	<button mat-raised-button (click)="onCancel()">{{constants.cancel}}</button>`
+	<button class="btn btn-secondary" (click)="onCancel()">{{constants.cancel}}</button>`,
+	styleUrls: ['../../../app.component.css']
 })
 
 export class DeleteDialogComponent {

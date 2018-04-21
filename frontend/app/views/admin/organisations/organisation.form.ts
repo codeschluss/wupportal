@@ -26,6 +26,8 @@ import { Constants } from 'app/services/constants';
 import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
 import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 @Component({
 	selector: 'organisation-form',
@@ -42,6 +44,7 @@ export class OrganisationFormComponent implements OnInit {
 	firstFormGroup: FormGroup;
 	secondFormGroup: FormGroup;
 	thirdFormGroup: FormGroup;
+	faCheck: IconDefinition = faCheck;
 
 	adminProviders: Array<Provider> = new Array<Provider>();
 

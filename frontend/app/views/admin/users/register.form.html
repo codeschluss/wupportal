@@ -54,8 +54,8 @@
 				{{passwordInvalid()}}
 			</mat-error>
 		</form>
-
-		<button mat-raised-button type="submit" color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
-		<button mat-raised-button type="button" (click)="back()">{{constants.back}}</button>
+		<span class="fab fa-bitcoin"></span>
+		<button class="btn btn-secondary" type="button" (click)="back()">{{constants.back}}</button>
+		<button class="btn btn-primary" type="submit" color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
 	</form>
 </mat-card>

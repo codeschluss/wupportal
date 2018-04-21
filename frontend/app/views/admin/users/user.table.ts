@@ -12,7 +12,7 @@ import { Organisation } from 'app/models/organisation';
 
 @Component({
 	selector: 'edit-users',
-	styleUrls: ['../table.abstract.css'],
+	styleUrls: ['../table.abstract.css', '../../../app.component.css'],
 	templateUrl: 'user.table.html'
 })
 export class UserTableComponent extends AbstractTableComponent {

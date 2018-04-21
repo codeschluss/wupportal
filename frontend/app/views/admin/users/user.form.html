@@ -39,8 +39,8 @@
 									{{passwordInvalid()}}
 								</mat-error>
 							</form>
-							<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.back}}</button>
-							<button mat-raised-button type="submit" color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
+							<button class="btn btn-danger" type="button" (click)="back()">{{constants.back}}</button>
+							<button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">{{constants.save}}</button>
 						</div>
 					</div>
 				</form>

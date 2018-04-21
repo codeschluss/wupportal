@@ -13,7 +13,7 @@ import { Constants } from 'app/services/constants';
 
 @Component({
 	selector: 'edit-organisation',
-	styleUrls: ['../table.abstract.css'],
+	styleUrls: ['../table.abstract.css', '../../../app.component.css'],
 	templateUrl: 'organisation.table.html'
 })
 

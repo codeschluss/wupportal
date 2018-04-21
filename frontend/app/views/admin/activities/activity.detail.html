@@ -49,9 +49,9 @@
 			</mat-chip-list>
 		</div>
 	</div>
-	<organisation-detail [organisation]="activity.provider.organisation" [largeTitle]="false"></organisation-detail>
 	<b>{{constants.dates}}</b>
 	<ul class="list-group list-group-flush">
 		<li class="list-group-item" *ngFor="let schedule of activity.schedules">{{schedule.toString}}</li>
 	</ul>
+	<organisation-detail [organisation]="activity.provider.organisation" [largeTitle]="false"></organisation-detail>
 </div>

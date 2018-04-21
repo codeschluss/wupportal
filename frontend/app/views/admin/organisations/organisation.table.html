@@ -4,9 +4,6 @@
 <div class="organisation-container mat-elevation-z8">
 	<mat-sidenav-container>
 		<mat-sidenav #sidenav mode="over">
-			<button mat-raised-button type="button" color="accent" (click)="closeDetails()">
-				{{constants.close}}
-			</button>
 			<organisation-detail [organisation]="currentDetail" largeTitle="true">
 			</organisation-detail>
 		</mat-sidenav>
@@ -17,7 +14,7 @@
 					<mat-form-field>
 						<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
 					</mat-form-field>
-					<button mat-raised-button color="accent" *ngIf="actionsVisible()" routerLink='/organisation/edit/new'>
+					<button class="btn btn-warning" *ngIf="actionsVisible()" routerLink='/organisation/edit/new'>
 						{{ constants.newEntry }}
 					</button>
 				</div>
@@ -74,7 +71,7 @@
 						</mat-header-cell>
 						<mat-cell *matCellDef="let row">
 							<button mat-button color="primary" [routerLink]="['/admin', { outlets: { table: ['organisation-admin', row.id] } }]">
-								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+								<fa-icon [icon]="faPencilAlt"></fa-icon>
 							</button>
 							<delete-action [recordID]="row.id" [nameToDelete]="row.name" (onDelete)="onDelete($event)">
 							</delete-action>

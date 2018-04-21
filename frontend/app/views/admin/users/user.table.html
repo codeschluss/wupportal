@@ -1,7 +1,3 @@
-<!-- <button mat-raised-button type="button"
-  (click)="newEntry()">
-	{{constants.newEntry}}</button> -->
-
 <div class="filter">
 	<mat-form-field>
 		<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
@@ -47,9 +43,9 @@
 				</delete-action>
 			</div>
 			<div *ngIf="organisation">
-				<button mat-raised-button *ngIf="!isAdmin(row)" type="button" (click)="addAdmin(row)">{{constants.no}}
+				<button class="btn btn-light" *ngIf="!isAdmin(row)" type="button" (click)="addAdmin(row)">{{constants.no}}
 				</button>
-				<button mat-raised-button color="primary" *ngIf="isAdmin(row)" type="button" (click)="removeAdmin(row)">{{constants.yes}}
+				<button class="btn btn-primary" *ngIf="isAdmin(row)" type="button" (click)="removeAdmin(row)">{{constants.yes}}
 				</button>
 			</div>
 		</mat-cell>

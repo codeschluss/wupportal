@@ -5,10 +5,10 @@
 		<mat-card class="container-fluid">
 			<mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
 				<ng-template matStepperIcon="done">
-					<i class="fa fa-check" aria-hidden="true"></i>
+					<fa-icon [icon]="faCheck"></fa-icon>
 				</ng-template>
 				<ng-template matStepperIcon="edit">
-					<i class="fa fa-check" aria-hidden="true"></i>
+					<fa-icon [icon]="faCheck"></fa-icon>
 				</ng-template>
 				<mat-step [stepControl]="firstFormGroup">
 					<form [formGroup]="firstFormGroup">
@@ -38,7 +38,8 @@
 											<mat-chip-list #chipList>
 												<mat-chip *ngFor="let tag of activity.tags" selectable="true" removable="true">
 													{{tag.name + ' '}}
-													<i (click)="removeTag(tag)" class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i>
+													<fa-icon (click)="removeTag(tag)" [icon]="faTrash" class="text-danger">
+													</fa-icon>
 												</mat-chip>
 												<input placeholder={{constants.tags}} [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur="true"
 												 (matChipInputTokenEnd)="addTag($event)" />
@@ -57,7 +58,7 @@
 									</div>
 								</div>
 								<div>
-									<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+									<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
 								</div>
 							</div>
 						</mat-card>
@@ -72,16 +73,16 @@
 							<mat-card class="address-card" *ngIf="activity.address">
 								<div *ngIf="secondFormGroup.invalid">
 									<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="activity.address"></address-autocomplete-form>
-									<button type="button" mat-raised-button color="primary" (click)="addressSubmit()">{{constants.ok}}</button>
+									<button type="button" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
 								</div>
 								<div *ngIf="!secondFormGroup.invalid">
 									{{secondFormGroup.controls.addressCtrl.value.toString}}
-									<button type="button" mat-raised-button color="primary" (click)="resetAddress()">{{constants.change}}</button>
+									<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
 								</div>
 							</mat-card>
 							<div>
-								<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
-								<button type="button" mat-raised-button color="primary" [disabled]="secondFormGroup.invalid" matStepperNext>{{constants.next}}</button>
+								<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+								<button type="button" class="btn btn-primary" [disabled]="secondFormGroup.invalid" matStepperNext>{{constants.next}}</button>
 							</div>
 						</form>
 					</div>
@@ -97,12 +98,12 @@
 					<div>{{constants.pleaseControl}}</div>
 					<activity-detail *ngIf="activity && user" [activity]="activity"></activity-detail>
 					<div>
-						<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-						<button mat-raised-button color="primary" type="submit">{{constants.save}}</button>
+						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+						<button type="submit" class="btn btn-primary">{{constants.save}}</button>
 					</div>
 				</mat-step>
 			</mat-horizontal-stepper>
-			<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
+			<button type="button" class="btn btn-danger" (click)="back()">{{constants.cancel}}</button>
 		</mat-card>
 	</form>
 </mat-card>

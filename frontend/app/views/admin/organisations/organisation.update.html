@@ -28,14 +28,14 @@
 			<div *ngIf="!organisation.address.isValid">
 				{{constants.address + ' ' + constants.required}}
 				<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="organisation.address"></address-autocomplete-form>
-				<button type="button" mat-raised-button color="primary" (click)="addressSubmit()">{{constants.ok}}</button>
+				<button type="button" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
 			</div>
 			<div *ngIf="organisation.address.isValid">
 				{{organisation.address.toString}}
-				<button type="button" mat-raised-button color="primary" (click)="resetAddress()">{{constants.change}}</button>
+				<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
 			</div>
 		</mat-card>
-		<button type="button" mat-raised-button color="warn" (click)="back()">{{constants.cancel}}</button>
-		<button *ngIf="organisation.address" mat-raised-button color="primary" type="submit" [disabled]="organisationForm.invalid || !organisation.address.isValid">{{constants.save}}</button>
+		<button type="button" class="btn btn-primary" (click)="back()">{{constants.cancel}}</button>
+		<button *ngIf="organisation.address" type="submit" class="btn btn-primary" [disabled]="organisationForm.invalid || !organisation.address.isValid">{{constants.save}}</button>
 	</form>
 </div>

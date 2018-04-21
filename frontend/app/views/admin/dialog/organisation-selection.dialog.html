@@ -1,15 +1,17 @@
-<form (ngSubmit)="onSelect()">
-	<h3>
-		{{constants.multipleOrganisationMessage}}
-	</h3>
-	<div>{{constants.pleaseSelectMessage}}</div>
-	<mat-form-field>
-		<mat-select placeholder={{constants.organisations}} [(ngModel)]="selectedOrgaID" name="selectedOrganisation">
-			<mat-option *ngFor="let organisation of data.organisations" [value]="organisation.id">
-				{{organisation.name}}
-			</mat-option>
-		</mat-select>
-	</mat-form-field>
-	<button mat-raised-button color="warn" type="button" (click)="onCancel()">{{constants.back}}</button>
-	<button mat-raised-button type="submit" color="primary">{{constants.select}}</button>
-</form>
+<mat-card>
+	<form (ngSubmit)="onSelect()">
+		<h3>
+			{{constants.multipleOrganisationMessage}}
+		</h3>
+		<div>{{constants.pleaseSelectMessage}}</div>
+		<mat-form-field>
+			<mat-select placeholder={{constants.organisations}} [(ngModel)]="selectedOrgaID" name="selectedOrganisation">
+				<mat-option *ngFor="let organisation of data.organisations" [value]="organisation.id">
+					{{organisation.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<button class="btn btn-danger" type="button" (click)="onCancel()">{{constants.back}}</button>
+		<button class="btn btn-primary" type="submit" color="primary">{{constants.select}}</button>
+	</form>
+</mat-card>

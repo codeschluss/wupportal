@@ -162,7 +162,7 @@
 		</div>
 		<div class="row">
 			<div class="col align-self-start">
-				<button mat-raised-button type="button" color="primary" [disabled]="formGroup.invalid" (click)="generateSchedules()" mat-button>{{constants.create}} {{constants.dates}}</button>
+				<button class="btn btn-primary" type="button" [disabled]="formGroup.invalid" (click)="generateSchedules()">{{constants.create}} {{constants.dates}}</button>
 			</div>
 		</div>
 	</div>
@@ -212,8 +212,8 @@
 									<input required matInput type="number" name="curr_end_time_minute" max="59" min="0" formControlName="currentEndTimeMinute"
 									 id="currentEndTimeMinute">
 								</mat-form-field>
-								<button mat-raised-button type="button" [disabled]="currScheduleFormGroup.invalid" (click)="changeDate(i)">{{constants.change}}</button>
-								<button mat-raised-button type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
+								<button class="btn btn-secondary" [disabled]="currScheduleFormGroup.invalid" (click)="changeDate(i)">{{constants.change}}</button>
+								<button class="btn btn-danger" type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
 							</div>
 						</form>
 					</mat-expansion-panel>
@@ -221,10 +221,10 @@
 			</mat-accordion>
 		</div>
 		<div>
-			<button mat-raised-button color="warn" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
-			<button mat-raised-button color="accent" type="button" (click)="newEntry()">{{constants.create + ' ' + constants.additional + ' ' + constants.date}}</button>
+			<button class="btn btn-danger" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
+			<button class="btn btn-primary" type="button" (click)="newEntry()">{{constants.create + ' ' + constants.additional + ' ' + constants.date}}</button>
 		</div>
 	</div>
-	<button type="button" mat-button matStepperPrevious>{{constants.previous}}</button>
-	<button type="button" mat-raised-button color="primary" [disabled]="schedulesCtrl.invalid" matStepperNext>{{constants.next}}</button>
+	<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+	<button type="button" class="btn btn-primary" color="primary" [disabled]="schedulesCtrl.invalid" matStepperNext>{{constants.next}}</button>
 </form>

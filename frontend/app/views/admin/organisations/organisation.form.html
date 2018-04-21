@@ -5,10 +5,10 @@
 		<form #organisationForm="ngForm" (ngSubmit)="onSubmit()" class="well">
 			<mat-horizontal-stepper linear="true">
 				<ng-template matStepperIcon="done">
-					<i class="fa fa-check" aria-hidden="true"></i>
+					<fa-icon [icon]="faCheck"></fa-icon>
 				</ng-template>
 				<ng-template matStepperIcon="edit">
-					<i class="fa fa-check" aria-hidden="true"></i>
+					<fa-icon [icon]="faCheck"></fa-icon>
 				</ng-template>
 				<mat-step [stepControl]="firstFormGroup">
 					<form [formGroup]="firstFormGroup">
@@ -40,7 +40,7 @@
 							</div>
 						</div>
 						<div>
-							<button type="button" [disabled]="firstFormGroup.invalid" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+							<button type="button" class="btn btn-primary" [disabled]="firstFormGroup.invalid" matStepperNext>{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
@@ -50,16 +50,16 @@
 						<mat-card class="address-card" *ngIf="organisation.address">
 							<div *ngIf="secondFormGroup.invalid">
 								<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="organisation.address"></address-autocomplete-form>
-								<button type="button" mat-raised-button color="primary" (click)="addressSubmit()">{{constants.ok}}</button>
+								<button type="button" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
 							</div>
 							<div *ngIf="!secondFormGroup.invalid && organisation.address">
 								{{organisation.address.toString}}
-								<button type="button" mat-raised-button color="primary" (click)="resetAddress()">{{constants.change}}</button>
+								<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
 							</div>
 						</mat-card>
 						<div>
-							<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" [disabled]="secondFormGroup.invalid" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+							<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+							<button type="button" [disabled]="secondFormGroup.invalid" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
@@ -67,8 +67,8 @@
 					<ng-template matStepLabel>{{constants.users}}</ng-template>
 					<edit-users #usersTable [organisation]="organisation" (approvedAsAdmin)="approvedAsAdmin($event)" (removedAsAdmin)="removedAsAdmin($event)"></edit-users>
 					<div>
-						<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
-						<button type="button" mat-raised-button color="primary" matStepperNext>{{constants.next}}</button>
+						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+						<button type="button" class="btn btn-warning" matStepperNext>{{constants.next}}</button>
 					</div>
 				</mat-step>
 				<mat-step>
@@ -79,11 +79,11 @@
 					<mat-list role="list">
 						<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider.user.fullname + ' (' + provider.user.username + ')'}}</mat-list-item>
 					</mat-list>
-					<button type="button" mat-raised-button matStepperPrevious>{{constants.previous}}</button>
-					<button mat-raised-button color="primary" type="submit">{{constants.save}}</button>
+					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+					<button class="btn btn-primary" type="submit">{{constants.save}}</button>
 				</mat-step>
 			</mat-horizontal-stepper>
-			<button type="button" mat-raised-button color="warn" (click)="back()">{{constants.cancel}}</button>
+			<button type="button" class="btn btn-cancel" (click)="back()">{{constants.cancel}}</button>
 		</form>
 	</mat-card>
 </div>

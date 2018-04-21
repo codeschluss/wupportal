@@ -14,7 +14,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 @Component({
 	selector: 'new-schedule-dialog',
 	templateUrl: 'scheduler.new.entry.component.html',
-	styleUrls: ['../admin.area.css'],
+	styleUrls: ['../admin.area.css', '../../../app.component.css'],
 	providers: [
 		{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 		{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
@@ -24,13 +24,6 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 export class NewScheduleDialogComponent {
 
 	formGroup: FormGroup;
-	// startDate: FormControl = new FormControl();
-	// startTimeHour: FormControl = new FormControl();
-	// startTimeMinute: FormControl = new FormControl();
-
-	// endDate: FormControl = new FormControl();
-	// endTimeHour: FormControl = new FormControl();
-	// endTimeMinute: FormControl = new FormControl();
 
 	constructor(
 		private adapter: DateAdapter<any>,

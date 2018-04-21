@@ -14,7 +14,7 @@
 			</mat-tab>
 			<mat-tab label={{constants.user}}>
 				<!-- Provider user list -->
-				<button type="button" mat-raised-button color="accent" (click)="switch()">{{switchButtonLabel()}}
+				<button type="button" class="btn btn-warning" (click)="switch()">{{switchButtonLabel()}}
 				</button>
 				<div *ngIf="showRequests">
 					<provider-approval-table [providers]="notApprovedProviders" (onApproved)="onApproved($event)">

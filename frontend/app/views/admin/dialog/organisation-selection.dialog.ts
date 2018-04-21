@@ -5,7 +5,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Constants } from 'app/services/constants';
 
 @Component({
-	templateUrl: 'organisation-selection.dialog.html'
+	templateUrl: 'organisation-selection.dialog.html',
+	styleUrls: ['../../../app.component.css']
 })
 export class OrganisationSelectionComponent {
 

@@ -15,7 +15,7 @@
 				</mat-grid-tile>
 			</div>
 		</mat-grid-list>
-		<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
-		<button mat-raised-button [disabled]="!configForm.form.valid" color="primary" type="submit">{{constants.save}}</button>
+		<button class="btn btn-danger" type="button" (click)="back()">{{constants.cancel}}</button>
+		<button class="btn btn-primary" [disabled]="!configForm.form.valid" color="primary" type="submit">{{constants.save}}</button>
 	</form>
 </mat-card>

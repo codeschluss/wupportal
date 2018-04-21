@@ -11,9 +11,9 @@
 		<mat-form-field class="form-full-width">
 			<input matInput placeholder={{constants.password}} [(ngModel)]="password" type="password" name="password" required />
 		</mat-form-field>
-		<div class="row centered-content">
-			<button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit">{{constants.login}}</button>
-			<button mat-raised-button color="accent" type="button" routerLink='/register'>{{constants.register}}</button>
+		<div class="centered-content">
+			<button class="btn btn-primary" [disabled]="loginForm.invalid">{{constants.login}}</button>
+			<button class="btn btn-warning" routerLink='/register'>{{constants.register}}</button>
 		</div>
 	</form>
 	<mat-error *ngIf="error">

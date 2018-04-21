@@ -9,7 +9,7 @@ import { DataServiceFactory } from 'app/services/data.service.factory';
 @Component({
 	selector: 'activity-detail',
 	templateUrl: 'activity.detail.html',
-	styleUrls: ['../../../app.component.css']
+	styleUrls: ['../../../app.component.css', '../admin.area.css']
 })
 
 export class ActivityDetailComponent implements OnChanges {

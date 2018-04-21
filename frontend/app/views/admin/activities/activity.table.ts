@@ -20,7 +20,7 @@ import * as moment from 'moment';
 
 @Component({
 	selector: 'activity-table',
-	styleUrls: ['../table.abstract.css'],
+	styleUrls: ['../admin.area.css', '../table.abstract.css', '../../../app.component.css'],
 	templateUrl: 'activity.table.html'
 })
 

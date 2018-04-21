@@ -7,7 +7,7 @@ import { Organisation } from 'app/models/organisation';
 @Component({
 	selector: 'organisation-detail',
 	templateUrl: 'organisation.detail.html',
-	styleUrls: ['organisation.css', '../admin.area.css']
+	styleUrls: ['organisation.css', '../admin.area.css', '../../../app.component.css']
 })
 
 export class OrganisationDetailComponent implements OnChanges {

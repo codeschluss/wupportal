@@ -15,7 +15,7 @@ import { User } from 'app/models/user';
 
 @Component({
 	selector: 'provider-table',
-	styleUrls: ['../table.abstract.css'],
+	styleUrls: ['../table.abstract.css', '../../../app.component.css'],
 	templateUrl: 'provider.table.html'
 })
 export class ProviderTableComponent implements OnChanges {

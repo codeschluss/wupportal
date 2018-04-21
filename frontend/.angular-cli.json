@@ -3,18 +3,22 @@
 	"project": {
 		"name": "wupportal-client"
 	},
-	"apps": [{
-		"root": ".",
-		"index": "index.html",
-		"outDir": "../backend/webroot/js",
-		"main": "main.ts",
-		"polyfills": "polyfills.ts",
-		"tsconfig": "tsconfig.json"
-	}],
-	"lint": [{
-		"files": "app/**/*.ts",
-		"project": "tsconfig.json"
-	}],
+	"apps": [
+		{
+			"root": ".",
+			"index": "index.html",
+			"outDir": "../backend/webroot/js",
+			"main": "main.ts",
+			"polyfills": "polyfills.ts",
+			"tsconfig": "tsconfig.json"
+		}
+	],
+	"lint": [
+		{
+			"files": "app/**/*.ts",
+			"project": "tsconfig.json"
+		}
+	],
 	"defaults": {
 		"styleExt": "css"
 	}

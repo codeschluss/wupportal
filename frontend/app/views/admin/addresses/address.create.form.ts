@@ -11,6 +11,7 @@ import { Constants } from 'app/services/constants';
 
 @Component({
 	templateUrl: 'address.create.form.html',
+	styleUrls: ['../../../app.component.css']
 })
 
 export class AddressCreateFormComponent {

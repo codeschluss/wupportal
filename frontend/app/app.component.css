@@ -1,3 +1,5 @@
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 html, body {
 	height: 100%;
  }
@@ -67,14 +69,19 @@ mat-chip {
 
 .loadingOverlay{
 	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
 	min-height: 300px;
-	margin: 0px auto;
+	z-index: 10;
 }
 
 .loadingOverlay > mat-spinner {
+	width: 100px;
+	height: 100px;
 	margin: 0 auto;
+	position: absolute;
 }
 
 

@@ -12,10 +12,12 @@ import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
 import { Constants } from 'app/services/constants';
 import { User } from 'app/models/user';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 @Component({
 	selector: 'provider-approval-table',
-	styleUrls: ['../table.abstract.css'],
+	styleUrls: ['../table.abstract.css', '../../../app.component.css'],
 	templateUrl: 'provider-approval.table.html'
 })
 export class ProviderApprovalTableComponent implements OnChanges {
@@ -25,7 +27,7 @@ export class ProviderApprovalTableComponent implements OnChanges {
 
 	protected displayedColumns: Array<string> = ['username', 'fullname', 'approve', 'decline'];
 	dataSource: MatTableDataSource<Provider> = new MatTableDataSource<Provider>();
-
+	faUserPlus: IconDefinition = faUserPlus;
 	constructor(
 		protected dataService: ProviderService,
 		protected constants: Constants) {

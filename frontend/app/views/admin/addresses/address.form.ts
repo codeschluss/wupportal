@@ -23,7 +23,8 @@ import { Suburb } from '../../../models/suburb';
 
 
 @Component({
-	templateUrl: 'address.form.html'
+	templateUrl: 'address.form.html',
+	styleUrls: ['../../../app.component.css']
 })
 
 export class AddressFormComponent implements OnInit {

@@ -5,13 +5,15 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Constants } from 'app/services/constants';
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 @Component({
 	selector: 'delete-action',
+	styleUrls: ['../../../app.component.css'],
 	template: `
-		<button mat-button color="warn" type="button"
-			(click)="openDialog()">
-			<i class="fa fa-trash-o" aria-hidden="true"></i>
+		<button mat-button type="button" (click)="openDialog()">
+			<fa-icon [icon]="faTrash" class="text-danger"></fa-icon>
 		</button>
 	`
 })
@@ -21,7 +23,7 @@ export class DeleteActionComponent {
 	@Input() recordID: string;
 	@Input() nameToDelete: string;
 	@Output() onDelete: EventEmitter<string> = new EventEmitter<string>();
-
+	faTrash: IconDefinition = faTrash;
 	constructor(
 		public constants: Constants,
 		public deleteDialog: MatDialog) {

@@ -22,7 +22,7 @@ import { Provider } from 'app/models/provider';
 @Component({
 	selector: 'user-form',
 	templateUrl: 'user.form.html',
-	styleUrls: ['user.form.css', '../admin.area.css']
+	styleUrls: ['user.form.css', '../admin.area.css', '../../../app.component.css']
 })
 
 export class UserFormComponent implements OnInit {

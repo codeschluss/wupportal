@@ -41,7 +41,7 @@
 				 value={{address.longitude}} id="address_longitude_field">
 			</mat-form-field>
 		</div>
-		<button mat-raised-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
-		<button mat-raised-button color="primary" (click)="onSubmit()">{{constants.ok}}</button>
+		<button class="btn btn-danger" type="button" (click)="back()">{{constants.cancel}}</button>
+		<button class="btn btn-warning-primary" (click)="onSubmit()">{{constants.ok}}</button>
 	</form>
 </mat-card>

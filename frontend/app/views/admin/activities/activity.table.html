@@ -3,12 +3,6 @@
 </div>
 <mat-sidenav-container>
 	<mat-sidenav #sidenav mode="over">
-		<button mat-raised-button type="button" color="accent" (click)="closeDetails()">
-			{{constants.close}}
-		</button>
-		<button mat-raised-button color="warn" (click)="closeDetails()">
-			{{constants.close}}
-		</button>
 		<activity-detail *ngIf="currentDetail" [activity]="currentDetail"></activity-detail>
 	</mat-sidenav>
 
@@ -18,7 +12,7 @@
 				<mat-form-field>
 					<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
 				</mat-form-field>
-				<button mat-raised-button color="accent" *ngIf="showNewButton" routerLink='/activity/edit/new'>
+				<button class="btn btn-warning" *ngIf="showNewButton" routerLink='/activity/edit/new'>
 					{{ constants.newEntry }}
 				</button>
 			</div>
@@ -71,8 +65,8 @@
 						{{constants.edit}} / {{constants.delete}}
 					</mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<button mat-button color="primary" routerLink='/activity/edit/{{row.id}}'>
-							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+						<button mat-button routerLink='/activity/edit/{{row.id}}'>
+							<fa-icon [icon]="faPencilAlt" class="text-primary"></fa-icon>
 						</button>
 						<delete-action [recordID]="row.id" [nameToDelete]="row.name" (onDelete)="onDelete($event)">
 						</delete-action>

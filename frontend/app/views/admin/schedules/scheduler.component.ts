@@ -293,8 +293,8 @@ export class SchedulerComponent implements OnInit {
 
 	newEntry(): void {
 		const dialogRef = this.dialog.open(NewScheduleDialogComponent, {
-			minWidth: 320,
-			minHeight: 480
+			minWidth: 550,
+			minHeight: 550
 		});
 
 		dialogRef.afterClosed().subscribe(result => {

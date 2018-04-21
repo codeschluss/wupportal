@@ -26,19 +26,7 @@
 			<b>{{organisation.address.toString}}</b>
 		</div>
 	</div>
-	<div *ngIf="organisation.description && !largeTitle">
-		<a data-toggle="collapse" href="#collapseOrgaDescription" aria-expanded="largeTitle" aria-controls="collapseOrgaDescription">
-			<div class="row justify-content-md-center">
-				<div class="col align-self-start">
-					<b>{{constants.description}}</b>
-				</div>
-			</div>
-		</a>
-		<div class="collapse" id="collapseOrgaDescription">
-			{{organisation.description}}
-		</div>
-	</div>
-	<div *ngIf="organisation.description && largeTitle">
+	<div *ngIf="organisation.description">
 		<hr>
 		<div class="row">
 			<div class="col align-self-start">{{constants.description}}</div>

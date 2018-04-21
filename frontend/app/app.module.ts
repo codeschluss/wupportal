@@ -42,6 +42,8 @@ import {
 	MatInputModule
 } from '@angular/material';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { AppComponent } from 'app/app.component';
 import { AppRouterModule } from 'app/app-router.module';
 
@@ -186,7 +188,8 @@ import { SchedulerComponent } from './views/admin/schedules/scheduler.component'
 		MatAutocompleteModule,
 		MatInputModule,
 		MatSnackBarModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		FontAwesomeModule
 	],
 	providers: [
 		ActivityService,

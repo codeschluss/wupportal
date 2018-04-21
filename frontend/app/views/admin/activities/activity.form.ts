@@ -40,6 +40,8 @@ import { Constants } from 'app/services/constants';
 import { Object } from 'openlayers';
 import { Subscription } from 'rxjs/Subscription';
 import { generate } from 'rxjs/observable/generate';
+import { faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 // @Author: Pseipel
 
@@ -60,6 +62,9 @@ export class ActivityFormComponent implements OnInit {
 	secondFormGroup: FormGroup;
 	thirdFormGroup: FormGroup;
 	user: User;
+	faCheck: IconDefinition = faCheck;
+	faTrash: IconDefinition = faTrash;
+
 	separatorKeysCodes: any[] = [ENTER, COMMA];
 
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
@@ -85,11 +90,17 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.providerService
-			.getByUser(this.authService.currentUser.id)
-			.subscribe(providers => providers.map(provider => {
+		if (this.authService.isSuperUser) {
+			this.providerService.getAll().subscribe(providers => providers.map(provider => {
 				if (provider.approved) { this.providers.push(provider); }
 			}));
+		} else {
+			this.providerService
+				.getByUser(this.authService.currentUser.id)
+				.subscribe(providers => providers.map(provider => {
+					if (provider.approved) { this.providers.push(provider); }
+				}));
+		}
 		this.route.paramMap
 			.switchMap((params: ParamMap) => {
 				if (params.get('id') === 'new') {

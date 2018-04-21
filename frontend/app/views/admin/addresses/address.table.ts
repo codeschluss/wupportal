@@ -18,7 +18,7 @@ import * as moment from 'moment';
 
 @Component({
 	selector: 'address-table',
-	styleUrls: ['../table.abstract.css'],
+	styleUrls: ['../table.abstract.css', '../../../app.component.css'],
 	templateUrl: 'address.table.html',
 	providers: [
 		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] }

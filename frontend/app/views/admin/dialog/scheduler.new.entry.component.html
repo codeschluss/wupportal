@@ -1,49 +1,51 @@
-<form class="container-fluid centered-text-content" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-	<h3>{{constants.newEntry}}</h3>
-	<div class="row">
-		<div class="col">{{constants.dateTime}}</div>
-		<div class="col">{{constants.timeOfDay}}</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<mat-form-field class="form-full-width">
-				<input matInput required placeholder={{constants.begin}} [matDatepicker]="pickerStartDate" name="schedule_start_by" formControlName="startDateCtrl"
-				 placeholder={{constants.from}} readonly>
-				<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-				<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
-			</mat-form-field>
+<mat-card>
+	<form class="container-fluid centered-text-content" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+		<h3>{{constants.newEntry}}</h3>
+		<div class="row">
+			<div class="col">{{constants.dateTime}}</div>
+			<div class="col">{{constants.timeOfDay}}</div>
 		</div>
-		<div class="col">
-			<mat-form-field class="form-small">
-				<input matInput required type="number" placeholder={{constants.hours}} name="curr_start_time_hour" max="23" min="0" formControlName="startTimeHourCtrl"
-				 id="stratTimeHour">
-			</mat-form-field>:
-			<mat-form-field class="form-small">
-				<input matInput required type="number" placeholder={{constants.minutes}} name="curr_start_time_minute" max="59" min="0" formControlName="startTimeMinuteCtrl"
-				 id="stratTimeMinute">
-			</mat-form-field>
+		<div class="row">
+			<div class="col">
+				<mat-form-field class="form-full-width">
+					<input matInput required placeholder={{constants.begin}} [matDatepicker]="pickerStartDate" name="schedule_start_by" formControlName="startDateCtrl"
+					 placeholder={{constants.from}} readonly>
+					<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+					<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
+				</mat-form-field>
+			</div>
+			<div class="col">
+				<mat-form-field class="form-small">
+					<input matInput required type="number" placeholder={{constants.hours}} name="curr_start_time_hour" max="23" min="0" formControlName="startTimeHourCtrl"
+					 id="stratTimeHour">
+				</mat-form-field>:
+				<mat-form-field class="form-small">
+					<input matInput required type="number" placeholder={{constants.minutes}} name="curr_start_time_minute" max="59" min="0" formControlName="startTimeMinuteCtrl"
+					 id="stratTimeMinute">
+				</mat-form-field>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<mat-form-field class="form-full-width">
-				<input matInput placeholder={{constants.end}} [matDatepicker]="pickerEndDate" name="schedule_end_by" formControlName="endDateCtrl"
-				 placeholder={{constants.to}} readonly>
-				<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-				<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
-			</mat-form-field>
+		<div class="row">
+			<div class="col">
+				<mat-form-field class="form-full-width">
+					<input matInput placeholder={{constants.end}} [matDatepicker]="pickerEndDate" name="schedule_end_by" formControlName="endDateCtrl"
+					 placeholder={{constants.to}} readonly>
+					<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+					<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
+				</mat-form-field>
+			</div>
+			<div class="col">
+				<mat-form-field class="form-small">
+					<input matInput required type="number" placeholder={{constants.hours}} name="curr_end_time_hour" max="23" min="0" formControlName="endTimeHourCtrl"
+					 id="endTimeHour">
+				</mat-form-field>:
+				<mat-form-field class="form-small">
+					<input matInput required type="number" placeholder={{constants.minutes}} name="curr_end_time_minute" max="59" min="0" formControlName="endTimeMinuteCtrl"
+					 id="endTimeMinute">
+				</mat-form-field>
+			</div>
 		</div>
-		<div class="col">
-			<mat-form-field class="form-small">
-				<input matInput required type="number" placeholder={{constants.hours}} name="curr_end_time_hour" max="23" min="0" formControlName="endTimeHourCtrl"
-				 id="endTimeHour">
-			</mat-form-field>:
-			<mat-form-field class="form-small">
-				<input matInput required type="number" placeholder={{constants.minutes}} name="curr_end_time_minute" max="59" min="0" formControlName="endTimeMinuteCtrl"
-				 id="endTimeMinute">
-			</mat-form-field>
-		</div>
-	</div>
-	<button mat-raised-button type="button" color="warn" data-dismiss="modal" (click)="onCancel()">{{constants.cancel}}</button>
-	<button mat-raised-button type="submit" [disabled]="formGroup.invalid" color="primary">{{constants.ok}}</button>
-</form>
+		<button class="btn btn-danger" type="button" color="warn" data-dismiss="modal" (click)="onCancel()">{{constants.cancel}}</button>
+		<button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid" color="primary">{{constants.ok}}</button>
+	</form>
+</mat-card>

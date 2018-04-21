@@ -5,8 +5,7 @@
 		</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
-		<mat-table #table [dataSource]="dataSource"
-		  class="example-table">
+		<mat-table #table [dataSource]="dataSource" class="example-table">
 
 			<!-- username Column -->
 			<ng-container matColumnDef="username">
@@ -26,9 +25,9 @@
 					{{constants.approveRequest}}
 				</mat-header-cell>
 				<mat-cell *matCellDef="let row">
-					<button mat-button color="primary"
-					  type="button" (click)="approve(row)">
-						<i class="fa fa-user-plus" aria-hidden="true"></i>
+					<button mat-button color="primary" type="button" (click)="approve(row)">
+						<fa-icon [icon]="faUserPlus" class="text-success"></fa-icon>
+						<!-- <i class="fa fa-user-plus" aria-hidden="true"></i> -->
 					</button>
 				</mat-cell>
 			</ng-container>
@@ -39,9 +38,7 @@
 					{{constants.declineRequest}}
 				</mat-header-cell>
 				<mat-cell *matCellDef="let row">
-					<delete-action [recordID]="row.id"
-					  [nameToDelete]="row.user.username"
-					  (onDelete)="onDelete($event)">
+					<delete-action [recordID]="row.id" [nameToDelete]="row.user.username" (onDelete)="onDelete($event)">
 					</delete-action>
 				</mat-cell>
 			</ng-container>

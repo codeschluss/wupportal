@@ -8,6 +8,8 @@ import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
 import { Constants } from 'app/services/constants';
+import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
+import { faPencilAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 
@@ -25,6 +27,8 @@ export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 	protected dataService: DataService;
 	protected totalCount: number;
 	protected finishedLoading: boolean = false;
+	faPencilAlt: IconDefinition = faPencilAlt;
+	faUserPlus: IconDefinition = faUserPlus;
 
 	constructor(dataService: DataService, constants: Constants) {
 		this.dataService = dataService;

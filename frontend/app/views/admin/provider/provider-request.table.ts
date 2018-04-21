@@ -19,10 +19,13 @@ import { User } from 'app/models/user';
 import { Organisation } from 'app/models/organisation';
 import { Provider } from 'app/models/provider';
 import { MatTableDataSource } from '@angular/material';
+import { faCheck, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 @Component({
 	selector: 'provider-request',
-	templateUrl: 'provider-request.table.html'
+	templateUrl: 'provider-request.table.html',
+	styleUrls: ['../../../app.component.css']
 })
 
 export class ProviderRequestTableComponent implements OnInit {
@@ -38,6 +41,8 @@ export class ProviderRequestTableComponent implements OnInit {
 
 	private providersToAdd: Array<Provider>;
 	private providersToDelete: Array<string>;
+	faCheck: IconDefinition = faCheck;
+	faMinus: IconDefinition = faMinus;
 
 	constructor(
 		@Inject(OrganisationService) public organisationService: DataService,

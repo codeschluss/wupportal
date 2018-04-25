@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, Sort, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
-import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
 import { Constants } from 'app/services/constants';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 import { faPencilAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { IDataService } from 'app/services/data.service.interface';
 
 export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 
@@ -24,13 +24,13 @@ export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 	protected dataSource: MatTableDataSource<any>;
 	protected tableState: TableState;
 	protected constants: Constants;
-	protected dataService: DataService;
+	protected dataService: IDataService;
 	protected totalCount: number;
 	protected finishedLoading: boolean = false;
 	faPencilAlt: IconDefinition = faPencilAlt;
 	faUserPlus: IconDefinition = faUserPlus;
 
-	constructor(dataService: DataService, constants: Constants) {
+	constructor(dataService: IDataService, constants: Constants) {
 		this.dataService = dataService;
 		this.constants = constants;
 		this.tableState = new TableState(constants.defaultPageSize, constants.pageSizeOptions);

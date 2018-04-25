@@ -17,7 +17,6 @@ import {
 	SuburbService
 } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
-import { AuthenticationService } from 'app/services/authentication.service';
 import { NominatimService } from 'app/services/nominatim';
 import { AddressCreateFormComponent } from 'app/views/admin/addresses/address.create.form';
 import { Constants } from 'app/services/constants';
@@ -50,8 +49,7 @@ export class AddressAutocompleteComponent implements OnInit {
 		public constants: Constants,
 		private suburbSelectDialog: MatDialog,
 		private controlAddressDialog: MatDialog,
-		private nominatimService: NominatimService,
-		public authService: AuthenticationService
+		private nominatimService: NominatimService
 	) {
 		this.addressService.getAll()
 			.map(response => response.map(addressJson => new Address(addressJson)))

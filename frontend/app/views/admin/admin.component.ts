@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 import { Constants } from 'app/services/constants';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 
 @Component({
 	templateUrl: 'admin.html',
@@ -17,15 +17,15 @@ export class AdminComponent implements OnInit {
 		private location: Location,
 		private router: Router,
 		public constants: Constants,
-		private authService: AuthenticationService
+		private userService: UserService
 	) {
 		this.initUserTabs();
 
-		if (this.authService.isOrganisationAdmin()) {
+		if (this.userService.isOrganisationAdmin()) {
 			this.initOrganisationAdmin();
 		}
 
-		if (this.authService.isSuperUser()) {
+		if (this.userService.isSuperUser()) {
 			this.initSuperUserTabs();
 		}
 	}

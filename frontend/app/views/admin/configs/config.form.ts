@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AuthenticationService } from 'app/services/authentication.service';
 import { NgModel, NgForm } from '@angular/forms';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';

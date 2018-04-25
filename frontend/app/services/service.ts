@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
@@ -11,7 +12,50 @@ import { Constants } from './constants';
 @Injectable()
 export abstract class Service {
 
-	constructor(protected messageBar: MatSnackBar) { }
+	constructor(
+		protected http: HttpClient,
+		protected messageBar: MatSnackBar
+	) { }
+
+	public httpPost(url: string, body: any, auth: string, showSuccessMessage: boolean = false): Observable<any> {
+		return this.http.post(url, JSON.stringify(body), {
+			headers: new HttpHeaders()
+				.set('Authorization', auth)
+		})
+			.map(response => showSuccessMessage ? this.handleSuccess(response) : response)
+			.catch(error => this.handleError(error));
+	}
+
+	public httpDelete(url: string, auth: string): Observable<any> {
+		return this.http.delete(url, {
+			headers: new HttpHeaders()
+				.set('Authorization', auth)
+		})
+			.map(response => this.handleSuccess(response))
+			.catch(error => this.handleError(error));
+	}
+
+	public httpPatch(url: string, body: any, auth: string): Observable<any> {
+		return this.http.patch(url, JSON.stringify(body), {
+			headers: new HttpHeaders()
+				.set('Authorization', auth)
+		})
+			.map(response => this.handleSuccess(response))
+			.catch(error => this.handleError(error));
+	}
+
+	public httpGet(url: string, auth: string = '', language: string = ''): Observable<any> {
+		const headers = auth && language
+			? new HttpHeaders()
+				.set('Authorization', auth)
+				.set('Accept-Language', language)
+			: new HttpHeaders();
+
+		return this.http.get(url, {
+			headers: headers
+		})
+			.catch(error => this.handleError(error));
+	}
 
 	public handleSuccess(response: any): void {
 		this.openMessageBar(Constants.successfulActionMessage, Constants.SHORT);

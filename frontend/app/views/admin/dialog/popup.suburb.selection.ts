@@ -6,7 +6,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DataServiceFactory, SuburbService } from 'app/services/data.service.factory';
 import { Suburb } from 'app/models/suburb';
 import { DataService } from 'app/services/data.service';
-import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
 
 

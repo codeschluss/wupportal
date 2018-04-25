@@ -18,7 +18,6 @@ import { DataService } from 'app/services/data.service';
 import { DataServiceFactory } from 'app/services/data.service.factory';
 import { HttpClient } from '@angular/common/http';
 import { ActivityService } from 'app/services/activity.service';
-import { AuthenticationService } from 'app/services/authentication.service';
 
 import { Activity } from 'app/models/activity';
 import { Address } from 'app/models/address';
@@ -29,11 +28,7 @@ import { coordinate } from 'openlayers';
 @Component({
 	selector: 'mapping-component',
 	styleUrls: ['map.css'],
-	templateUrl: 'map.html',
-	providers: [
-		ActivityService,
-		{ provide: ConfigurationService, useFactory: DataServiceFactory(ConfigurationService), deps: [HttpClient, AuthenticationService] },
-	]
+	templateUrl: 'map.html'
 })
 
 export class MappingComponent implements OnInit, AfterViewInit {

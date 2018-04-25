@@ -5,10 +5,10 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { DataServiceFactory, UserService, OrganisationService } from 'app/services/data.service.factory';
+import { OrganisationService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Constants } from 'app/services/constants';
 
@@ -30,10 +30,9 @@ export class RegisterFormComponent implements OnInit {
 	private allOrganisations: Array<Organisation>;
 
 	constructor(
-		@Inject(UserService) public userService: DataService,
 		@Inject(OrganisationService) public organisationService: DataService,
 		public providerService: ProviderService,
-		public authService: AuthenticationService,
+		public userService: UserService,
 		public location: Location,
 		public constants: Constants,
 		public validation: ValidationService
@@ -43,7 +42,7 @@ export class RegisterFormComponent implements OnInit {
 		this.setData();
 		this.userService.add(this.user)
 			.subscribe(() => {
-				this.authService.redirectToLogin();
+				this.userService.redirectToLogin();
 			});
 	}
 

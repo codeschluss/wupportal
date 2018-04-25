@@ -11,7 +11,7 @@ import { Address } from 'app/models/address';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 import { Constants } from 'app/services/constants';
 
 import * as moment from 'moment';
@@ -19,10 +19,7 @@ import * as moment from 'moment';
 @Component({
 	selector: 'address-table',
 	styleUrls: ['../table.abstract.css', '../../../app.component.css'],
-	templateUrl: 'address.table.html',
-	providers: [
-		{ provide: AddressService, useFactory: DataServiceFactory(AddressService), deps: [HttpClient, AuthenticationService] }
-	]
+	templateUrl: 'address.table.html'
 })
 
 export class AddressTableComponent extends AbstractTableComponent implements OnInit {
@@ -34,7 +31,7 @@ export class AddressTableComponent extends AbstractTableComponent implements OnI
 	dataSource: MatTableDataSource<Address> = new MatTableDataSource<Address>();
 
 	constructor(
-		protected authService: AuthenticationService,
+		protected userService: UserService,
 		@Inject(AddressService) public dataService: DataService,
 		protected constants: Constants) {
 		super(dataService, constants);
@@ -51,12 +48,6 @@ export class AddressTableComponent extends AbstractTableComponent implements OnI
 			'Addresses.longitude',
 			'action'
 		];
-	}
-
-	newAddress(): void {
-	}
-
-	editAddress(row: Address): void {
 	}
 
 }

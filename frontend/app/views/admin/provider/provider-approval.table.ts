@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import { DataServiceFactory } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
-import { AuthenticationService } from 'app/services/authentication.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
 import { Constants } from 'app/services/constants';

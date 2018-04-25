@@ -7,6 +7,11 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as moment from 'moment';
+import { RRule, RRuleSet, Weekday } from 'rrule';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDialog } from '@angular/material';
 
 import {
 	DataServiceFactory,
@@ -15,16 +20,7 @@ import {
 
 import { Schedule } from '../../../models/schedule';
 import { NewScheduleDialogComponent } from '../dialog/scheduler.new.entry';
-
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import * as moment from 'moment';
-import { RRule, RRuleSet, Weekday } from 'rrule';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDialog } from '@angular/material';
-
 import { DataService } from 'app/services/data.service';
-
-import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
 
 

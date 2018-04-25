@@ -10,10 +10,8 @@ import 'rxjs/Rx';
 
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
-import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 import { Constants } from 'app/services/constants';
 
 import { User } from 'app/models/user';
@@ -33,8 +31,7 @@ export class UserFormComponent implements OnInit {
 	protected hasActivities: boolean = true;
 
 	constructor(
-		@Inject(UserService) public userService: DataService,
-		public authService: AuthenticationService,
+		public userService: UserService,
 		public location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -59,10 +56,10 @@ export class UserFormComponent implements OnInit {
 	updateUser(): void {
 		this.userService.edit(this.user)
 			.subscribe(user =>
-				this.authService.login(this.user.username, this.user.password)
+				this.userService.login(this.user.username, this.user.password)
 					.subscribe(
 						null,
-						error => this.authService.redirectToLogin())
+						error => this.userService.redirectToLogin())
 			);
 	}
 
@@ -75,7 +72,7 @@ export class UserFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.userService.get(this.authService.currentUser.id)
+		this.userService.get(this.userService.currentUser.id)
 			.subscribe(user => {
 				this.user = user;
 				this.initFormControls();

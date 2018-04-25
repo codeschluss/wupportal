@@ -69,14 +69,14 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 
 import { ActivityService } from 'app/services/activity.service';
 import { ProviderService } from 'app/services/provider.service';
+import { UserService } from 'app/services/user.service';
+import { AuthGuardService } from 'app/services/authguard.service';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
 import { ValidationService } from 'app/services/validation.service';
-import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
 import {
 	DataServiceFactory,
-	UserService,
 	TagService,
 	TargetGroupService,
 	OrganisationService,
@@ -85,6 +85,7 @@ import {
 	SuburbService,
 	CategoryService,
 	ConfigurationService,
+	TranslationService
 } from 'app/services/data.service.factory';
 
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
@@ -104,7 +105,7 @@ import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
 
 import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
 import { OrganisationDetailComponent } from 'app/views/admin/organisations/organisation.detail';
-import { SchedulerComponent } from './views/admin/schedules/scheduler.component';
+import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.component';
 
 
 
@@ -192,49 +193,50 @@ import { SchedulerComponent } from './views/admin/schedules/scheduler.component'
 		FontAwesomeModule
 	],
 	providers: [
+		AuthGuardService,
 		ActivityService,
 		ProviderService,
+		UserService,
 		LocationService,
 		NominatimService,
 		Constants,
 		ValidationService,
-		AuthenticationService,
 		{ provide: MatPaginatorIntl, useClass: PaginatorLabels },
 		{
 			provide: OrganisationService, useFactory: DataServiceFactory(OrganisationService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
+			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{
 			provide: AddressService, useFactory: DataServiceFactory(AddressService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
-		},
-		{
-			provide: UserService, useFactory: DataServiceFactory(UserService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
+			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{
 			provide: SuburbService, useFactory: DataServiceFactory(SuburbService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
+			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{
 			provide: ConfigurationService, useFactory: DataServiceFactory(ConfigurationService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
+			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{
 			provide: TagService, useFactory: DataServiceFactory(TagService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
+			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{
 			provide: TargetGroupService, useFactory: DataServiceFactory(TargetGroupService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
+			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{
 			provide: CategoryService, useFactory: DataServiceFactory(CategoryService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
+			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{
 			provide: ScheduleService, useFactory: DataServiceFactory(ScheduleService),
-			deps: [HttpClient, AuthenticationService, MatSnackBar]
+			deps: [HttpClient, UserService, MatSnackBar]
+		},
+		{
+			provide: TranslationService, useFactory: DataServiceFactory(TranslationService),
+			deps: [HttpClient, UserService, MatSnackBar]
 		}
 	],
 	entryComponents: [

@@ -7,12 +7,13 @@ import { DataSource } from '@angular/cdk/table';
 import { DataServiceFactory } from 'app/services/data.service.factory';
 import { ActivityService } from 'app/services/activity.service';
 import { ProviderService } from 'app/services/provider.service';
+import { UserService } from 'app/services/user.service';
+
 import { Activity } from 'app/models/activity';
 import { User } from 'app/models/user';
 import { Schedule } from 'app/models/schedule';
 import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
-import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
 import { Provider } from 'app/models/provider';
 
@@ -37,7 +38,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
 	constructor(
-		protected authService: AuthenticationService,
+		protected userService: UserService,
 		protected dataService: ActivityService,
 		private providerService: ProviderService,
 		protected constants: Constants) {
@@ -46,7 +47,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	checkNewButton(): void {
-		this.showNewButton = this.actionsVisible() || this.authService.isApprovedProvider();
+		this.showNewButton = this.actionsVisible() || this.userService.isApprovedProvider();
 	}
 
 	initColumns(): void {
@@ -64,7 +65,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 	}
 
 	actionsVisible(): boolean {
-		return this.showActions || this.authService.isSuperUser();
+		return this.showActions || this.userService.isSuperUser();
 	}
 
 	fetchData(): void {

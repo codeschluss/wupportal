@@ -76,7 +76,6 @@ class ActivitiesController extends AppController
 		$this->setFiltering($query, $request);
 
 		$result = $this->paginate($query)->toArray();
-		// $result = $query->all()->toArray();
 		$this->prepareResult($result);
 
 		return $this->ResponseHandler->isNotFoundError($result)
@@ -109,7 +108,6 @@ class ActivitiesController extends AppController
 	{
 		if ($this->isLocaleSet()) {
 			$query->leftJoinWith('Tags')->contain($this->contain());
-
 		} else {
 			foreach ($this->contain() as $contain) {
 				$query->leftJoinWith($contain)->contain($contain);

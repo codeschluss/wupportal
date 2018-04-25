@@ -16,7 +16,6 @@ import {
 } from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
-import { AuthenticationService } from 'app/services/authentication.service';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 import { UserTableComponent } from 'app/views/admin/users/user.table';
 

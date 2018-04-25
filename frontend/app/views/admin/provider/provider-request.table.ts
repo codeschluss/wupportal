@@ -8,10 +8,10 @@ import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import 'rxjs/Rx';
 
-import { DataServiceFactory, OrganisationService, UserService } from 'app/services/data.service.factory';
+import { DataServiceFactory, OrganisationService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 import { ProviderService } from 'app/services/provider.service';
 import { Constants } from 'app/services/constants';
 
@@ -49,7 +49,7 @@ export class ProviderRequestTableComponent implements OnInit {
 		public providerService: ProviderService,
 		public constants: Constants,
 		public location: Location,
-		public authService: AuthenticationService
+		public userService: UserService
 	) { }
 
 	ngOnInit(): void {
@@ -150,10 +150,10 @@ export class ProviderRequestTableComponent implements OnInit {
 	}
 
 	updateUser(): void {
-		this.authService.login(this.user.username, this.user.password)
+		this.userService.login(this.user.username, this.user.password)
 			.subscribe(
 				null,
-				error => this.authService.redirectToLogin()
+				error => this.userService.redirectToLogin()
 			);
 	}
 }

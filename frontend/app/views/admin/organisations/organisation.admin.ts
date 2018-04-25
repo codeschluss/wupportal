@@ -10,7 +10,7 @@ import {
 	OrganisationService
 } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 import { ProviderService } from 'app/services/provider.service';
 
 import { Organisation } from 'app/models/organisation';
@@ -41,7 +41,7 @@ export class OrganisationAdminComponent implements OnInit {
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		private providerService: ProviderService,
-		private authService: AuthenticationService,
+		private userService: UserService,
 		public constants: Constants,
 		public selectOrgaDialog: MatDialog,
 		public location: Location,
@@ -58,14 +58,14 @@ export class OrganisationAdminComponent implements OnInit {
 	}
 
 	handleFromNavigation(): void {
-		this.authService.isSuperUser()
+		this.userService.isSuperUser()
 			? this.organisationService
 				.getAll()
 				.subscribe(organisations => {
 					this.handleRequestedOrganisations(organisations);
 				})
 			: this.providerService
-				.getByUser(this.authService.currentUser.id, true)
+				.getByUser(this.userService.currentUser.id, true)
 				.map(data => data.map(provider => provider.organisation))
 				.subscribe(adminOrganisations => {
 					this.handleRequestedOrganisations(adminOrganisations);

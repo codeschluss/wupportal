@@ -8,40 +8,73 @@ import { Observable } from 'rxjs/Observable';
 import { User } from 'app/models/user';
 import { Constants } from 'app/services/constants';
 import { Error } from 'app/models/error';
-import { Service } from './service';
+import { Service } from 'app/services/service';
+import { IDataService } from 'app/services/data.service.interface';
+import { TableState } from 'app/models/table.state';
 
 @Injectable()
-export class AuthenticationService extends Service implements CanActivate {
+export class UserService extends Service implements IDataService {
 
 	private credentials: string = '';
 	public currentUser: User = null;
+	private baseUrl: string = '/api/users/';
 
 	constructor(
-		private router: Router,
-		private http: HttpClient,
-		private constants: Constants,
-		protected messageBar: MatSnackBar) {
-		super(messageBar);
+		protected http: HttpClient,
+		protected messageBar: MatSnackBar,
+		private router: Router
+	) {
+		super(http, messageBar);
 	}
 
-	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		if (state.url.includes(this.constants.userURL)) {
-			return this.handleSuperUserRoute();
-		}
-		if (state.url.includes(this.constants.orgaAdminURL)) {
-			return this.handleOrgaAdminRoute();
-		}
-		return this.handleProviderRoutes();
+	public add(record: any): Observable<any> {
+		return this.httpPost(
+			this.baseUrl,
+			record,
+			this.getBasicAuth());
+	}
+
+	public delete(recordID: any): Observable<any> {
+		return this.httpDelete(
+			this.baseUrl + recordID,
+			this.getBasicAuth());
+	}
+
+	public edit(record: any): Observable<any> {
+		return this.httpPatch(
+			this.baseUrl + record.id,
+			record,
+			this.getBasicAuth()
+		);
+	}
+
+	public get(id: string): Observable<any> {
+		return this.httpGet(
+			this.baseUrl + id,
+			this.getBasicAuth(),
+			this.getCurrentLanguage()
+		);
+	}
+
+	public getAll(): Observable<any> {
+		return this.httpGet(
+			this.baseUrl,
+			this.getBasicAuth(),
+			this.getCurrentLanguage()
+		);
+	}
+
+	public list(request: TableState): Observable<any> {
+		return this.httpPost(
+			this.baseUrl,
+			request,
+			this.getBasicAuth());
 	}
 
 	login(username: string, pwd: string): Observable<any> {
 		const password = this.getPwd(pwd);
 		const credentials = btoa(username + ':' + password);
-		return this.http.post('/api/users/login', null, {
-			headers: new HttpHeaders()
-				.set('Content-Type', 'application/json')
-				.set('Authorization', 'Basic ' + credentials)
-		})
+		return this.httpPost(this.baseUrl + 'login', null, 'Basic ' + credentials, false)
 			.map((response: User) => this.handleSuccessLogin(response, credentials))
 			.catch(error => this.handleError(error));
 	}
@@ -53,34 +86,6 @@ export class AuthenticationService extends Service implements CanActivate {
 		} else {
 			this.redirectToLogin();
 		}
-	}
-
-	logout(): void {
-		this.currentUser = null;
-		this.credentials = '';
-	}
-
-	handleProviderRoutes(): boolean {
-		return this.currentUser
-			? true
-			: this.handleRedirect();
-	}
-
-	handleSuperUserRoute(): boolean {
-		return this.isSuperUser()
-			? true
-			: this.handleRedirect();
-	}
-
-	handleOrgaAdminRoute(): boolean {
-		return this.isOrganisationAdmin() || this.isSuperUser()
-			? true
-			: this.handleRedirect();
-	}
-
-	handleRedirect(): boolean {
-		this.redirectToLogin();
-		return false;
 	}
 
 	redirectToLogin(): void {
@@ -105,8 +110,12 @@ export class AuthenticationService extends Service implements CanActivate {
 			: false;
 	}
 
-	basicAuthString(): string {
+	getBasicAuth(): string {
 		return 'Basic ' + this.credentials;
+	}
+
+	getCurrentLanguage(): string {
+		return 'de';
 	}
 
 	getPwd(password: string): string {
@@ -114,4 +123,7 @@ export class AuthenticationService extends Service implements CanActivate {
 			? password
 			: this.credentials ? atob(this.credentials).split(':')[1] : '';
 	}
+
+
+
 }

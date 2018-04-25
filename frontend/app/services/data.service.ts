@@ -8,13 +8,14 @@ import 'rxjs/add/operator/map';
 
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
-import { AuthenticationService } from 'app/services/authentication.service';
-import { Service } from './service';
-import { Error } from '../models/error';
+import { UserService } from 'app/services/user.service';
+import { Service } from 'app/services/service';
+import { Error } from 'app/models/error';
+import { IDataService } from 'app/services/data.service.interface';
 
 
 @Injectable()
-export class DataService extends Service {
+export class DataService extends Service implements IDataService {
 
 	protected endpoint: string = '/api/';
 	protected baseUrl: string;
@@ -22,62 +23,55 @@ export class DataService extends Service {
 	constructor(
 		protected repository: string,
 		protected http: HttpClient,
-		protected authService: AuthenticationService,
-		protected messageBar: MatSnackBar
-	) {
-		super(messageBar);
+		protected userService: UserService,
+		protected messageBar: MatSnackBar) {
+		super(http, messageBar);
 		this.baseUrl = this.endpoint + repository + '/';
 	}
 
 	public add(record: any): Observable<any> {
-		return this.http.post(this.baseUrl, JSON.stringify(record), {
-			headers: new HttpHeaders()
-				.set('Authorization', this.authService.basicAuthString())
-		})
-			.map(response => this.handleSuccess(response))
-			.catch(error => this.handleError(error));
+		return this.httpPost(
+			this.baseUrl,
+			record,
+			this.userService.getBasicAuth(),
+			true);
 	}
 
 	public delete(recordID: any): Observable<any> {
-		return this.http.delete(this.baseUrl + recordID, {
-			headers: new HttpHeaders()
-				.set('Authorization', this.authService.basicAuthString())
-		})
-			.map(response => this.handleSuccess(response))
-			.catch(error => this.handleError(error));
+		return this.httpDelete(
+			this.baseUrl + recordID,
+			this.userService.getBasicAuth());
 	}
 
 	public edit(record: any): Observable<any> {
-		return this.http.patch(this.baseUrl + record.id + '/', JSON.stringify(record), {
-			headers: new HttpHeaders()
-				.set('Authorization', this.authService.basicAuthString())
-		})
-			.map(response => this.handleSuccess(response))
-			.catch(error => this.handleError(error));
+		return this.httpPatch(
+			this.baseUrl + record.id,
+			record,
+			this.userService.getBasicAuth()
+		);
 	}
 
 	public get(id: string): Observable<any> {
-		return this.http.get(this.baseUrl + id, {
-			headers: new HttpHeaders()
-				.set('Authorization', this.authService.basicAuthString())
-		})
-			.catch(error => this.handleError(error));
-	}
-
-	public list(request: TableState): Observable<any> {
-		return this.http.post(this.baseUrl + 'list', JSON.stringify(request), {
-			headers: new HttpHeaders()
-				.set('Authorization', this.authService.basicAuthString())
-		}).map(res => res as DataResponse)
-			.catch(error => this.handleError(error));
+		return this.httpGet(
+			this.baseUrl + id,
+			this.userService.getBasicAuth(),
+			this.userService.getCurrentLanguage()
+		);
 	}
 
 	public getAll(): Observable<any> {
-		return this.http.get(this.baseUrl, {
-			headers: new HttpHeaders()
-				.set('Authorization', this.authService.basicAuthString())
-		})
-			.catch(error => this.handleError(error));
+		return this.httpGet(
+			this.baseUrl,
+			this.userService.getBasicAuth(),
+			this.userService.getCurrentLanguage()
+		);
+	}
+
+	public list(request: TableState): Observable<any> {
+		return this.httpPost(
+			this.baseUrl + 'list',
+			request,
+			this.userService.getBasicAuth());
 	}
 
 }

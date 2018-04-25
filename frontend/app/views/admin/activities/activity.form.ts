@@ -25,13 +25,13 @@ import {
 	TagService,
 	TargetGroupService,
 	CategoryService,
-	OrganisationService,
-	UserService,
+	OrganisationService
 } from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 import { ProviderService } from 'app/services/provider.service';
+
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.component';
 import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
@@ -73,12 +73,11 @@ export class ActivityFormComponent implements OnInit {
 	constructor(
 		private activityService: ActivityService,
 		private providerService: ProviderService,
-		@Inject(UserService) public userService: DataService,
+		public userService: UserService,
 		@Inject(AddressService) public addressService: DataService,
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
 		@Inject(CategoryService) private categoriesService: DataService,
-		public authService: AuthenticationService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -90,13 +89,13 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		if (this.authService.isSuperUser) {
+		if (this.userService.isSuperUser) {
 			this.providerService.getAll().subscribe(providers => providers.map(provider => {
 				if (provider.approved) { this.providers.push(provider); }
 			}));
 		} else {
 			this.providerService
-				.getByUser(this.authService.currentUser.id)
+				.getByUser(this.userService.currentUser.id)
 				.subscribe(providers => providers.map(provider => {
 					if (provider.approved) { this.providers.push(provider); }
 				}));
@@ -149,12 +148,12 @@ export class ActivityFormComponent implements OnInit {
 				this.firstFormGroup.get('categoryCtrl').valueChanges.subscribe(() =>
 					this.activity.category = this.categories.find(category => category.id === this.firstFormGroup.get('categoryCtrl').value));
 				this.firstFormGroup.get('categoryCtrl').valueChanges.subscribe(catID => { this.activity.category_id = catID; });
-				if (this.authService.isSuperUser()) {
+				if (this.userService.isSuperUser()) {
 					this.userService.get(this.activity.provider.user_id).subscribe(user => {
 						this.user = new User(user);
 					});
 				} else {
-					this.user = this.authService.currentUser;
+					this.user = this.userService.currentUser;
 				}
 				this.onScheduleChange(this.activity.schedules);
 			});

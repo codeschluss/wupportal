@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 import { TableState } from 'app/models/table.state';
 import { DataResponse } from 'app/models/data.response';
 import { DataService } from 'app/services/data.service';
@@ -14,18 +14,19 @@ export class ActivityService extends DataService {
 
 	constructor(
 		protected http: HttpClient,
-		protected authService: AuthenticationService,
+		protected userService: UserService,
 		protected messageBar: MatSnackBar
 	) {
-		super('activities', http, authService, messageBar);
+		super('activities', http, userService, messageBar);
 	}
 
 	public getByProviders(tableState: TableState, providers: Array<string>): Observable<DataResponse> {
 		const request = Object.assign(tableState, this.createProvidersParam(providers));
-		return this.http.post(this.baseUrl + 'getByProviders', JSON.stringify(request), {
-			headers: new HttpHeaders()
-				.set('Authorization', this.authService.basicAuthString())
-		}).map(res => res as DataResponse);
+		return this.httpPost(
+			this.baseUrl + 'getByProviders',
+			request,
+			this.userService.getBasicAuth()
+		);
 	}
 
 	createProvidersParam(providers: Array<string>): any {

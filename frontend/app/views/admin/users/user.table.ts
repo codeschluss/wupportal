@@ -3,12 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { User } from 'app/models/user';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 
-import { DataServiceFactory, UserService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
-import { AuthenticationService } from 'app/services/authentication.service';
 import { Constants } from 'app/services/constants';
 import { Organisation } from 'app/models/organisation';
+import { UserService } from 'app/services/user.service';
 
 @Component({
 	selector: 'edit-users',
@@ -26,7 +25,7 @@ export class UserTableComponent extends AbstractTableComponent {
 	@Output() removedAsAdmin: EventEmitter<string> = new EventEmitter<string>();
 
 	constructor(
-		@Inject(UserService) protected dataService: DataService,
+		protected dataService: UserService,
 		protected constants: Constants,
 		protected deleteDialog: MatDialog) {
 		super(dataService, constants);
@@ -37,11 +36,7 @@ export class UserTableComponent extends AbstractTableComponent {
 	}
 
 	isAdmin(user: User): boolean {
-		if (this.confirmedUserIDs.indexOf(user.id) === -1) {
-			return false;
-		} else {
-			return true;
-		}
+		return this.confirmedUserIDs.indexOf(user.id) !== -1;
 	}
 
 	addAdmin(user: User): void {

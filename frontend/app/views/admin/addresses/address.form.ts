@@ -6,7 +6,6 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { DataService } from 'app/services/data.service';
-import { AuthenticationService } from 'app/services/authentication.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ValidationService } from 'app/services/validation.service';

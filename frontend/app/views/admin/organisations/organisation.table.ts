@@ -8,7 +8,7 @@ import { DataServiceFactory, OrganisationService } from 'app/services/data.servi
 import { Organisation } from 'app/models/organisation';
 import { DataService } from 'app/services/data.service';
 import { AbstractTableComponent } from 'app/views/admin/table.abstract';
-import { AuthenticationService } from 'app/services/authentication.service';
+import { UserService } from 'app/services/user.service';
 import { Constants } from 'app/services/constants';
 
 @Component({
@@ -28,7 +28,7 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 	constructor(
 		@Inject(OrganisationService) protected dataService: DataService,
 		protected constants: Constants,
-		private authService: AuthenticationService) {
+		private userService: UserService) {
 		super(dataService, constants);
 	}
 
@@ -40,7 +40,7 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 	}
 
 	actionsVisible(): boolean {
-		return this.authService.isSuperUser();
+		return this.userService.isSuperUser();
 	}
 
 	showDetails(row: any): void {

@@ -8,13 +8,7 @@ import { Address } from 'app/models/address';
 import { Service } from 'app/services/service';
 
 @Injectable()
-export class LocationService extends Service {
-
-	constructor(
-		protected messageBar: MatSnackBar
-	) {
-		super(messageBar);
-	}
+export class LocationService {
 
 	public get(query: string = null): Observable<Address> {
 		const address = new Address({});

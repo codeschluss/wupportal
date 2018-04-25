@@ -12,7 +12,6 @@ import { UserService } from 'app/services/user.service';
 export class AuthGuardService implements CanActivate {
 
 	constructor(
-		private router: Router,
 		private constants: Constants,
 		private userService: UserService) { }
 
@@ -45,11 +44,7 @@ export class AuthGuardService implements CanActivate {
 	}
 
 	handleRedirect(): boolean {
-		this.redirectToLogin();
+		this.userService.redirectToLogin();
 		return false;
-	}
-
-	redirectToLogin(): void {
-		this.router.navigate(['/login']);
 	}
 }

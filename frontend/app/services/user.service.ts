@@ -69,7 +69,7 @@ export class UserService extends Service implements IDataService {
 			this.getHeader());
 	}
 
-	login(username: string, pwd: string): Observable<any> {
+	public login(username: string, pwd: string): Observable<any> {
 		const password = this.getPwd(pwd);
 		this.credentials = btoa(username + ':' + password);
 		return this.httpPost(
@@ -84,29 +84,29 @@ export class UserService extends Service implements IDataService {
 			});
 	}
 
-	redirectToLogin(): void {
+	public redirectToLogin(): void {
 		this.router.navigate(['/login']);
 	}
 
-	isSuperUser(): boolean {
+	public isSuperUser(): boolean {
 		return this.currentUser
 			? this.currentUser.superuser
 			: false;
 	}
 
-	isOrganisationAdmin(): boolean {
+	public isOrganisationAdmin(): boolean {
 		return this.currentUser
 			? this.currentUser.isOrgaAdmin()
 			: false;
 	}
 
-	isApprovedProvider(): boolean {
+	public isApprovedProvider(): boolean {
 		return this.currentUser
 			? this.currentUser.isApproved()
 			: false;
 	}
 
-	getPwd(password: string): string {
+	public getPwd(password: string): string {
 		return password
 			? password
 			: this.credentials ? atob(this.credentials).split(':')[1] : '';
@@ -118,18 +118,18 @@ export class UserService extends Service implements IDataService {
 	}
 
 
-	getBasicAuth(): string {
+	public getBasicAuth(): string {
 		return 'Basic ' + this.credentials;
 	}
 
-	getCurrentLanguage(): string {
+	public getCurrentLanguage(): string {
 		const storedLanguage = window.localStorage.getItem('accept-language-wupportal');
 		return storedLanguage
 			? storedLanguage
 			: 'de';
 	}
 
-	setCurrentLanguage(language: string): void {
+	public setCurrentLanguage(language: string): void {
 		window.localStorage.setItem('accept-language-wupportal', language);
 	}
 

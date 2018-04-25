@@ -31,7 +31,7 @@ export class ProviderService extends DataService {
 		);
 	}
 
-	createProvidersParam(organisationID: string): any {
+	private createProvidersParam(organisationID: string): any {
 		return { 'organisation': organisationID };
 	}
 
@@ -47,11 +47,11 @@ export class ProviderService extends DataService {
 		);
 	}
 
-	createUserParam(userID: string): any {
+	private createUserParam(userID: string): any {
 		return { 'user': userID };
 	}
 
-	createAdminParam(admin: boolean): any {
+	private createAdminParam(admin: boolean): any {
 		return { 'admin': admin };
 	}
 

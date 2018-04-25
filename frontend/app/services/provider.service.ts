@@ -27,7 +27,7 @@ export class ProviderService extends DataService {
 		return this.httpPost(
 			this.baseUrl + 'getByOrganisation',
 			request,
-			this.userService.getBasicAuth()
+			this.getHeader()
 		);
 	}
 
@@ -43,7 +43,7 @@ export class ProviderService extends DataService {
 		return this.httpPost(
 			this.baseUrl + 'getByUser',
 			request,
-			this.userService.getBasicAuth()
+			this.getHeader()
 		);
 	}
 

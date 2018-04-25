@@ -25,7 +25,7 @@ export class ActivityService extends DataService {
 		return this.httpPost(
 			this.baseUrl + 'getByProviders',
 			request,
-			this.userService.getBasicAuth()
+			this.getHeader()
 		);
 	}
 

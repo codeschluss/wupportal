@@ -33,37 +33,35 @@ export class DataService extends Service implements IDataService {
 		return this.httpPost(
 			this.baseUrl,
 			record,
-			this.userService.getBasicAuth(),
+			this.getHeader(),
 			true);
 	}
 
 	public delete(recordID: any): Observable<any> {
 		return this.httpDelete(
 			this.baseUrl + recordID,
-			this.userService.getBasicAuth());
+			this.getHeader());
 	}
 
 	public edit(record: any): Observable<any> {
 		return this.httpPatch(
 			this.baseUrl + record.id,
 			record,
-			this.userService.getBasicAuth()
+			this.getHeader()
 		);
 	}
 
 	public get(id: string): Observable<any> {
 		return this.httpGet(
 			this.baseUrl + id,
-			this.userService.getBasicAuth(),
-			this.userService.getCurrentLanguage()
+			this.getHeader()
 		);
 	}
 
 	public getAll(): Observable<any> {
 		return this.httpGet(
 			this.baseUrl,
-			this.userService.getBasicAuth(),
-			this.userService.getCurrentLanguage()
+			this.getHeader()
 		);
 	}
 
@@ -71,7 +69,13 @@ export class DataService extends Service implements IDataService {
 		return this.httpPost(
 			this.baseUrl + 'list',
 			request,
-			this.userService.getBasicAuth());
+			this.getHeader());
+	}
+
+	protected getHeader(): HttpHeaders {
+		return new HttpHeaders()
+			.set('Authorization', this.userService.getBasicAuth())
+			.set('Accept-Language', this.userService.getCurrentLanguage());
 	}
 
 }

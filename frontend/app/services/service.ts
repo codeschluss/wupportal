@@ -17,42 +17,33 @@ export abstract class Service {
 		protected messageBar: MatSnackBar
 	) { }
 
-	public httpPost(url: string, body: any, auth: string, showSuccessMessage: boolean = false): Observable<any> {
+	public httpPost(url: string, body: any, header: any, showSuccessMessage: boolean = false): Observable<any> {
 		return this.http.post(url, JSON.stringify(body), {
-			headers: new HttpHeaders()
-				.set('Authorization', auth)
+			headers: header
 		})
 			.map(response => showSuccessMessage ? this.handleSuccess(response) : response)
 			.catch(error => this.handleError(error));
 	}
 
-	public httpDelete(url: string, auth: string): Observable<any> {
+	public httpDelete(url: string, header: any): Observable<any> {
 		return this.http.delete(url, {
-			headers: new HttpHeaders()
-				.set('Authorization', auth)
+			headers: header
 		})
 			.map(response => this.handleSuccess(response))
 			.catch(error => this.handleError(error));
 	}
 
-	public httpPatch(url: string, body: any, auth: string): Observable<any> {
+	public httpPatch(url: string, body: any, header: any): Observable<any> {
 		return this.http.patch(url, JSON.stringify(body), {
-			headers: new HttpHeaders()
-				.set('Authorization', auth)
+			headers: header
 		})
 			.map(response => this.handleSuccess(response))
 			.catch(error => this.handleError(error));
 	}
 
-	public httpGet(url: string, auth: string = '', language: string = ''): Observable<any> {
-		const headers = auth && language
-			? new HttpHeaders()
-				.set('Authorization', auth)
-				.set('Accept-Language', language)
-			: new HttpHeaders();
-
+	public httpGet(url: string, header: any): Observable<any> {
 		return this.http.get(url, {
-			headers: headers
+			headers: header
 		})
 			.catch(error => this.handleError(error));
 	}

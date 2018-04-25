@@ -23,7 +23,8 @@ export class NominatimService extends Service {
 
 	public get(query: string): Observable<Address> {
 		return this.httpGet(
-			this.url + query + this.format
+			this.url + query + this.format,
+			null
 		).map((res) => (res as JSON[]).shift()).map((i) => {
 			const address = new Address({});
 			address.suburb = null;

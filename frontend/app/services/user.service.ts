@@ -31,36 +31,34 @@ export class UserService extends Service implements IDataService {
 		return this.httpPost(
 			this.baseUrl,
 			record,
-			this.getBasicAuth());
+			this.getHeader());
 	}
 
 	public delete(recordID: any): Observable<any> {
 		return this.httpDelete(
 			this.baseUrl + recordID,
-			this.getBasicAuth());
+			this.getHeader());
 	}
 
 	public edit(record: any): Observable<any> {
 		return this.httpPatch(
 			this.baseUrl + record.id,
 			record,
-			this.getBasicAuth()
+			this.getHeader()
 		);
 	}
 
 	public get(id: string): Observable<any> {
 		return this.httpGet(
 			this.baseUrl + id,
-			this.getBasicAuth(),
-			this.getCurrentLanguage()
+			this.getHeader()
 		);
 	}
 
 	public getAll(): Observable<any> {
 		return this.httpGet(
 			this.baseUrl,
-			this.getBasicAuth(),
-			this.getCurrentLanguage()
+			this.getHeader()
 		);
 	}
 
@@ -68,24 +66,22 @@ export class UserService extends Service implements IDataService {
 		return this.httpPost(
 			this.baseUrl,
 			request,
-			this.getBasicAuth());
+			this.getHeader());
 	}
 
 	login(username: string, pwd: string): Observable<any> {
 		const password = this.getPwd(pwd);
-		const credentials = btoa(username + ':' + password);
-		return this.httpPost(this.baseUrl + 'login', null, 'Basic ' + credentials, false)
-			.map((response: User) => this.handleSuccessLogin(response, credentials))
-			.catch(error => this.handleError(error));
-	}
-
-	handleSuccessLogin(response: User, credentials: string): void {
-		if (response) {
-			this.credentials = credentials;
-			this.currentUser = new User(response);
-		} else {
-			this.redirectToLogin();
-		}
+		this.credentials = btoa(username + ':' + password);
+		return this.httpPost(
+			this.baseUrl + 'login',
+			null,
+			this.getHeader()
+		)
+			.map((response: User) => this.currentUser = new User(response))
+			.catch(error => {
+				this.redirectToLogin();
+				return this.handleError(error);
+			});
 	}
 
 	redirectToLogin(): void {
@@ -110,20 +106,31 @@ export class UserService extends Service implements IDataService {
 			: false;
 	}
 
-	getBasicAuth(): string {
-		return 'Basic ' + this.credentials;
-	}
-
-	getCurrentLanguage(): string {
-		return 'de';
-	}
-
 	getPwd(password: string): string {
 		return password
 			? password
 			: this.credentials ? atob(this.credentials).split(':')[1] : '';
 	}
+	private getHeader(): HttpHeaders {
+		return new HttpHeaders()
+			.set('Authorization', this.getBasicAuth())
+			.set('Accept-Language', this.getCurrentLanguage());
+	}
 
 
+	getBasicAuth(): string {
+		return 'Basic ' + this.credentials;
+	}
+
+	getCurrentLanguage(): string {
+		const storedLanguage = window.localStorage.getItem('accept-language-wupportal');
+		return storedLanguage
+			? storedLanguage
+			: 'de';
+	}
+
+	setCurrentLanguage(language: string): void {
+		window.localStorage.setItem('accept-language-wupportal', language);
+	}
 
 }

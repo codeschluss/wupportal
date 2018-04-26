@@ -17,12 +17,14 @@ import { OrganisationsTableComponent } from 'app/views/admin/organisations/organ
 import { ConfigFormComponent } from 'app/views/admin/configs/config.form';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 import { AuthGuardService } from './services/authguard.service';
+import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.password';
 
 @NgModule({
 	imports: [RouterModule.forRoot([
 		{ path: '', component: MappingComponent },
 		{ path: 'login', component: LoginFormComponent },
 		{ path: 'register', component: RegisterFormComponent },
+		{ path: 'password', component: ForgottenPasswordFormComponent },
 		{
 			path: 'admin', component: AdminComponent, canActivate: [AuthGuardService], children: [
 				{ path: '', redirectTo: '/admin/(table:activities)', pathMatch: 'full' },

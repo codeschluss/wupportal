@@ -6,7 +6,8 @@ INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
 ('00000000-0000-0000-0001-000000000003', 'zoomfactor', '13.5'),
 ('00000000-0000-0000-0001-000000000004', 'mapProjection', 'EPSG:4326'),
 ('00000000-0000-0000-0001-000000000005', 'portalName', 'Wupportal'),
-('00000000-0000-0000-0001-000000000006', 'portalSubtitle', 'Integrationsportal');
+('00000000-0000-0000-0001-000000000006', 'portalSubtitle', 'Integrationsportal'),
+('00000000-0000-0000-0001-000000000006', 'portalMail', 'webmaster@wupportal.org');
 
 INSERT INTO `tags` (`id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0002-000000000001', 'sport', 'Sportaktivität'),

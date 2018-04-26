@@ -14,6 +14,7 @@
 		<div class="centered-content">
 			<button class="btn btn-primary" [disabled]="loginForm.invalid">{{constants.login}}</button>
 			<button class="btn btn-warning" routerLink='/register'>{{constants.register}}</button>
+			<button *ngIf="error" class="btn btn-dark" routerLink='/password'>{{constants.forgottenPassword}}</button>
 		</div>
 	</form>
 	<mat-error *ngIf="error">

@@ -85,7 +85,8 @@ import {
 	SuburbService,
 	CategoryService,
 	ConfigurationService,
-	TranslationService
+	TranslationService,
+	MailService
 } from 'app/services/data.service.factory';
 
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
@@ -106,7 +107,7 @@ import { PaginatorLabels } from 'app/views/admin/table/paginator.labels';
 import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
 import { OrganisationDetailComponent } from 'app/views/admin/organisations/organisation.detail';
 import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.component';
-
+import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.password';
 
 
 @NgModule({
@@ -132,6 +133,7 @@ import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.componen
 
 		LoginFormComponent,
 		RegisterFormComponent,
+		ForgottenPasswordFormComponent,
 		AdminComponent,
 		ActivityFormComponent,
 		OrganisationFormComponent,
@@ -236,6 +238,10 @@ import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.componen
 		},
 		{
 			provide: TranslationService, useFactory: DataServiceFactory(TranslationService),
+			deps: [HttpClient, UserService, MatSnackBar]
+		},
+		{
+			provide: MailService, useFactory: DataServiceFactory(MailService),
 			deps: [HttpClient, UserService, MatSnackBar]
 		}
 	],

@@ -16,6 +16,7 @@ export const CategoryService = new InjectionToken<DataService>('categories');
 export const ConfigurationService = new InjectionToken<DataService>('configurations');
 export const TranslationService = new InjectionToken<DataService>('translations');
 export const UserDataService = new InjectionToken<DataService>('users');
+export const MailService = new InjectionToken<DataService>('mail');
 
 export function DataServiceFactory(service: InjectionToken<DataService>): any {
 	const repository = service.toString().replace('InjectionToken ', '');

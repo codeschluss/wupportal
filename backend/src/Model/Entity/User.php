@@ -3,6 +3,8 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * User Entity
@@ -53,5 +55,15 @@ class User extends Entity
 	protected function _setPassword($password)
 	{
 		return (new DefaultPasswordHasher)->hash($password);
+	}
+
+	public function setNewPassword($newPassword) {
+		$this->password = $newPassword;
+		$userTable = TableRegistry::get('Users');
+		$userTable->patchEntity(
+			$userTable->get($this->id),
+			json_decode($this, true)
+		);
+		$userTable->save($this);
 	}
 }

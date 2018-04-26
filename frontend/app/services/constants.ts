@@ -99,6 +99,10 @@ export class Constants {
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';
 	public emailFormatMessage: string = 'Feld muss Email Format haben';
 	public notSamePasswordMessage: string = 'Passwörter stimmen nicht überein';
+	public forgottenPasswordMessage: string = 'Sie haben ihr Passwort vergessen.' +
+		'Bitte melden Sie sich mit dem unten stehenden Passwort erneut an und ändern Sie es sobald Sie angemeldet sind.';
+	public forgottenPassword: string = 'Passwort vergessen';
+	public enterYourMail: string = 'Bitte geben Sie Ihr Passwort ein';
 	public orAreEmptyMessage: string = 'oder sind leer';
 	public begin: string = 'Anfang';
 	public end: string = 'Ende';

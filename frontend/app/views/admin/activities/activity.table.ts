@@ -79,19 +79,6 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 		);
 	}
 
-	// only showing dates in the future
-	toString(schdules: Schedule[]): string {
-		if (schdules) {
-			for (const schedule of schdules) {
-				const currDate = moment(schedule.start_date);
-				if (currDate.isAfter(moment())) {
-					return new Schedule(schedule).toString;
-				}
-			}
-		}
-		return this.constants.noFutureDates;
-	}
-
 	showDetails(row: any): void {
 		if (this.sidenav.opened && this.currentDetail && row.id === this.currentDetail.id) {
 			this.closeDetails();

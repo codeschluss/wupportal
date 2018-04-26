@@ -25,10 +25,10 @@ import { Provider } from 'app/models/provider';
 
 export class UserFormComponent implements OnInit {
 
-	protected user: User;
-	protected userForm: FormGroup;
-	protected passwordGroup: FormGroup;
-	protected hasActivities: boolean = true;
+	private user: User;
+	private userForm: FormGroup;
+	private passwordGroup: FormGroup;
+	private hasActivities: boolean = false;
 
 	constructor(
 		public userService: UserService,
@@ -76,6 +76,7 @@ export class UserFormComponent implements OnInit {
 			.subscribe(user => {
 				this.user = user;
 				this.initFormControls();
+				this.hasActivities = this.user.providers.length !== 0;
 			});
 	}
 

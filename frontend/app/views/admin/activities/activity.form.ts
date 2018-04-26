@@ -89,7 +89,7 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		if (this.userService.isSuperUser) {
+		if (this.userService.isSuperUser()) {
 			this.providerService.getAll().subscribe(providers => providers.map(provider => {
 				if (provider.approved) { this.providers.push(provider); }
 			}));

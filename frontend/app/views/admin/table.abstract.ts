@@ -70,7 +70,7 @@ export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 		this.dataService.list(this.tableState)
 			.subscribe(
 				data => this.handleResponse(data),
-				error => this.dataSource.data = []
+				error => this.handleError()
 			);
 	}
 
@@ -78,6 +78,11 @@ export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 		this.dataSource.data = response.records;
 		this.totalCount = response.totalCount;
 		this.onLoadedData.emit(response.records);
+		this.finishedLoading = true;
+	}
+
+	handleError(): void {
+		this.dataSource.data = [];
 		this.finishedLoading = true;
 	}
 

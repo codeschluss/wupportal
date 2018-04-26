@@ -10,7 +10,6 @@ export class Organisation extends Model {
 	public phone: string = '';
 	public image: any = null;
 	public address_id: string = '';
-
 	public address: Address = new Address({});
 
 	constructor(json: any = {} as Organisation) {

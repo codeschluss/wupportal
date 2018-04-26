@@ -75,7 +75,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 
 		request.subscribe(
 			data => this.handleResponse(data),
-			error => this.dataSource.data = []
+			error => this.handleError()
 		);
 	}
 

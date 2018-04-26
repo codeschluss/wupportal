@@ -82,10 +82,6 @@ export class RegisterFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.user = new User();
-		this.initAllOrganisationsThenControls();
-	}
-
-	initAllOrganisationsThenControls(): void {
 		this.organisationService.getAll()
 			.map(value => value as Array<Organisation>)
 			.subscribe(orgas => {

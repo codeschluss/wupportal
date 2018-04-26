@@ -77,11 +77,7 @@ export class UserService extends Service implements IDataService {
 			null,
 			this.getHeader()
 		)
-			.map((response: User) => this.currentUser = new User(response))
-			.catch(error => {
-				this.redirectToLogin();
-				return this.handleError(error);
-			});
+			.map((response: User) => this.currentUser = new User(response));
 	}
 
 	public redirectToLogin(): void {

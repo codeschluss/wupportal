@@ -1,14 +1,19 @@
-<mat-card class="gray-card container centered-content" *ngIf="allOrganisations">
+<mat-card class="gray-card container centered-content"
+  *ngIf="allOrganisations">
 	<mat-card-header>
 		<h2>{{constants.registration}}</h2>
 	</mat-card-header>
 
-	<form id="user-form" [formGroup]="userForm" #formDir="ngForm" (ngSubmit)="onSubmit()" class="container-fluid">
+	<form id="user-form" [formGroup]="userForm"
+	  #formDir="ngForm" (ngSubmit)="onSubmit()"
+	  class="container-fluid">
 		<div class="row">
 			<div class="col">
 				<mat-form-field class="form-full-width">
-					<input matInput type=text placeholder="{{constants.mail + ' / ' + constants.userName}}" formControlName="usernameCtrl" [errorStateMatcher]="validation"
-					 required>
+					<input matInput type=text placeholder="{{constants.mail + ' / ' + constants.userName}}"
+					  formControlName="usernameCtrl"
+					  [errorStateMatcher]="validation"
+					  required>
 					<mat-error *ngIf="usernameCtrl.hasError('required')">
 						{{constants.isRequiredMessage}}
 					</mat-error>
@@ -19,34 +24,46 @@
 			</div>
 			<div class="col">
 				<mat-form-field class="form-full-width">
-					<input matInput type=text placeholder={{constants.fullname}} formControlName="fullnameCtrl" [errorStateMatcher]="validation">
+					<input matInput type=text placeholder={{constants.fullname}}
+					  formControlName="fullnameCtrl"
+					  [errorStateMatcher]="validation">
 				</mat-form-field>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col">
 				<mat-form-field class="form-full-width">
-					<input matInput type=text placeholder={{constants.phone}} formControlName="phoneCtrl" [errorStateMatcher]="validation">
+					<input matInput type=text placeholder={{constants.phone}}
+					  formControlName="phoneCtrl"
+					  [errorStateMatcher]="validation">
 				</mat-form-field>
 			</div>
 			<div class="col">
 				<mat-form-field class="form-full-width">
-					<mat-select placeholder={{constants.organisations}} formControlName="organisationsCtrl" multiple>
-						<mat-option *ngFor="let organisation of allOrganisations" [value]="organisation.id">{{organisation.name}}</mat-option>
+					<mat-select placeholder={{constants.organisations}}
+					  formControlName="organisationsCtrl"
+					  multiple>
+						<mat-option *ngFor="let organisation of allOrganisations"
+						  [value]="organisation.id">{{organisation.name}}</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
 		</div>
-		<form [formGroup]="passwordGroup" id="password-group" #formDir="ngForm">
+		<form [formGroup]="passwordGroup"
+		  id="password-group" #formDir="ngForm">
 			<div class="row">
 				<div class="col">
 					<mat-form-field class="form-full-width">
-						<input matInput type=password placeholder={{constants.newPassword}} formControlName="passwordCtrl" [errorStateMatcher]="validation">
+						<input matInput type=password placeholder={{constants.newPassword}}
+						  formControlName="passwordCtrl"
+						  [errorStateMatcher]="validation">
 					</mat-form-field>
 				</div>
 				<div class="col">
 					<mat-form-field class="form-full-width">
-						<input matInput type=password placeholder={{constants.confirmPassword}} formControlName="confirmPasswordCtrl" [errorStateMatcher]="validation">
+						<input matInput type=password placeholder={{constants.confirmPassword}}
+						  formControlName="confirmPasswordCtrl"
+						  [errorStateMatcher]="validation">
 					</mat-form-field>
 				</div>
 			</div>
@@ -54,8 +71,10 @@
 				{{passwordInvalid()}}
 			</mat-error>
 		</form>
-		<span class="fab fa-bitcoin"></span>
-		<button class="btn btn-secondary" type="button" (click)="back()">{{constants.back}}</button>
-		<button class="btn btn-primary" type="submit" color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
+		<button class="btn btn-secondary"
+		  type="button" (click)="back()">{{constants.back}}</button>
+		<button class="btn btn-primary"
+		  type="submit" color="primary"
+		  [disabled]="userForm.invalid">{{constants.save}}</button>
 	</form>
 </mat-card>

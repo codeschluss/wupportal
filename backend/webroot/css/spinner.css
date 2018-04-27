@@ -23,13 +23,6 @@
     87.5001% { stroke-dashoffset: 56.548667765px; transform: rotateX(180deg) rotate(341.5deg); }
     100% { stroke-dashoffset: 268.606171882px; transform: rotateX(180deg) rotate(341.5deg); }
 }
-#loader {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    z-index: 100;
-}
 .mat-progress-spinner {
     animation: linear-rotate 2000ms linear infinite;
     display: block;
@@ -38,18 +31,23 @@
     top: 50%;
 }
 .mat-progress-spinner svg {
+    height: 100px;
+    left: 0;
+    overflow: visible;
     position: absolute;
     transform: rotate(-90deg);
-    top: 0;
-    left: 0;
     transform-origin: 0;
-    overflow: visible;
+    top: 0;
+    width: 100px;
 }
 .mat-progress-spinner circle {
+    animation: stroke-rotate;
     animation-duration: 4000ms;
-    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
     animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
     fill: transparent;
+    stroke-dasharray: 282.743px;
+    stroke-width: 10%;
     transform-origin: center;
     transition: stroke-dashoffset 225ms linear;
     transition-property: stroke;

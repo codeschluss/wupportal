@@ -15,8 +15,9 @@ mapping-component {
 	transition: all 200ms;
 	width: 100%;
 }
+
 /* TODO: relative to viewport (possibly padding percentage hack) */
-.mat-drawer-shown ~ mat-sidenav-content > mapping-component {
+*::ng-deep .mat-drawer-shown ~ mat-sidenav-content > mapping-component {
 	margin: 0 -240px 0 240px !important;
 }
 

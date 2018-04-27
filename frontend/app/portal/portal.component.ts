@@ -25,7 +25,6 @@ import { MappingComponent } from 'app/portal/mapping/mapping.component';
 import { SearchComponent } from 'app/portal/search/search.component';
 
 @Component({
-	encapsulation: ViewEncapsulation.None,
 	styleUrls: ['portal.component.css'],
 	templateUrl: 'portal.component.html',
 })

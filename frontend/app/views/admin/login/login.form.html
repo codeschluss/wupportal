@@ -6,18 +6,24 @@
 	</mat-card-header>
 	<form #loginForm="ngForm" (ngSubmit)="login()">
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder={{constants.mail}} [(ngModel)]="username" type="text" name="userName" required />
+			<input matInput placeholder={{constants.mail}}
+			  [(ngModel)]="username" type="text"
+			  name="userName" required />
 		</mat-form-field>
 		<mat-form-field class="form-full-width">
-			<input matInput placeholder={{constants.password}} [(ngModel)]="password" type="password" name="password" required />
+			<input matInput placeholder={{constants.password}}
+			  [(ngModel)]="password" type="password"
+			  name="password" required />
 		</mat-form-field>
+		<mat-error *ngIf="error">
+			{{error}}
+		</mat-error>
 		<div class="centered-content">
-			<button class="btn btn-primary" [disabled]="loginForm.invalid">{{constants.login}}</button>
-			<button class="btn btn-warning" routerLink='/register'>{{constants.register}}</button>
-			<button *ngIf="error" class="btn btn-dark" routerLink='/password'>{{constants.forgottenPassword}}</button>
+			<button class="btn btn-primary"
+			  [disabled]="loginForm.invalid">{{constants.login}}</button>
+			<button class="btn btn-warning"
+			  routerLink='/register'>{{constants.register}}</button>
 		</div>
 	</form>
-	<mat-error *ngIf="error">
-		{{error}}
-	</mat-error>
+	<button class="btn btn-link" routerLink='/password'>{{constants.forgottenPassword}}</button>
 </mat-card>

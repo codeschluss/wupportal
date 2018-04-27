@@ -34,9 +34,9 @@ export class ForgottenPasswordFormComponent {
 			subject: this.constants.forgottenPassword,
 			resetPassword: true
 		};
-		this.mailService.add(data).subscribe(
-			() => { this.back(); }
-		);
+		this.mailService
+			.add(data)
+			.subscribe(() => this.back());
 	}
 
 	back(): void {

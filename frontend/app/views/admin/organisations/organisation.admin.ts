@@ -29,11 +29,12 @@ import { Observable } from 'rxjs/Observable';
 export class OrganisationAdminComponent implements OnInit {
 
 	organisation: Organisation;
-	organisationProviders: Array<Provider>;
+	organisationProviders: Array<Provider> = [];
 	notApprovedProviders: Array<Provider>;
 	approvedProviders: Array<Provider>;
 
 	showRequests: boolean = false;
+	hasActivities: boolean = false;
 
 	@ViewChild(ProviderTableComponent)
 	providerTable: ProviderTableComponent;
@@ -113,6 +114,7 @@ export class OrganisationAdminComponent implements OnInit {
 				this.organisationProviders = providers;
 				this.setDataForProviderTables();
 				this.switch();
+				this.hasActivities = true;
 			});
 	}
 

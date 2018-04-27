@@ -101,8 +101,9 @@ export class Constants {
 	public notSamePasswordMessage: string = 'Passwörter stimmen nicht überein';
 	public forgottenPasswordMessage: string = 'Sie haben ihr Passwort vergessen.' +
 		'Bitte melden Sie sich mit dem unten stehenden Passwort erneut an und ändern Sie es sobald Sie angemeldet sind.';
-	public forgottenPassword: string = 'Passwort vergessen';
-	public enterYourMail: string = 'Bitte geben Sie Ihr Passwort ein';
+	public forgottenPassword: string = 'Passwort vergessen?';
+	public enterYourMail: string = 'Bitte geben Sie Ihre Email Adresse ein';
+	public resetPassword: string = 'Passwort zurück setzen';
 	public orAreEmptyMessage: string = 'oder sind leer';
 	public begin: string = 'Anfang';
 	public end: string = 'Ende';

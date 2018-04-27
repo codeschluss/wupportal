@@ -31,10 +31,10 @@ class MailingController extends AppController
 				$configuration = $this->getConfigs();
 				$email = new Email('default');
         $email
-            ->from([$configuration['portalMail'] => $configuration['portalName']])
+            ->from("milli@codeschluss.de")
             ->to($data->mailRecipient)
-            ->subject($data->subject)
-            ->send($message);
+						->subject($data->subject)
+						->send($message);
 
         return $this->response->withStatus(200);
 		}
@@ -44,9 +44,15 @@ class MailingController extends AppController
 			$user = $userTable->find()
 				->where(['Users.username' => $mailRecipient])
 				->first();
-			if(!$user)
-				exit;
-			$user->setNewPassword($newPassword);
+
+			if(!$user) exit;
+
+			$user->password = $newPassword;
+			$userTable->patchEntity(
+				$userTable->get($user->id),
+				json_decode($user, true)
+			);
+			$userTable->save($user);
 		}
 
 		private function getConfigs() {

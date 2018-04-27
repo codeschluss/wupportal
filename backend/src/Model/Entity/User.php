@@ -56,14 +56,4 @@ class User extends Entity
 	{
 		return (new DefaultPasswordHasher)->hash($password);
 	}
-
-	public function setNewPassword($newPassword) {
-		$this->password = $newPassword;
-		$userTable = TableRegistry::get('Users');
-		$userTable->patchEntity(
-			$userTable->get($this->id),
-			json_decode($this, true)
-		);
-		$userTable->save($this);
-	}
 }

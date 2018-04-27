@@ -194,18 +194,14 @@
 	"id": "",
 	"name": "targetTranslationAdd",
 	"description": "targetTranslationAdd",
-	"translations": [
-		{
-			"es": {
-				"name": "target_added_es"
-			}
+	"_translations": {
+		"es": {
+			"name": "target_added_es"
 		},
-		{
-			"fr": {
-				"name": "target_added_fr"
-			}
+		"fr": {
+			"name": "target_added_fr"
 		}
-	]
+	}
 }</con:request><con:assertion type="JsonPath Match" id="2325ca95-b24e-474e-bd24-563c0dc15a9d" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"target_added_es"},"fr":{"name":"target_added_fr"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="5ea67658-9908-4f56-8f15-5162a84b994a" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider" id="e17ba5fa-d28e-4e40-a71f-781f11284981"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="d17342c6-ea28-4bc2-b93c-b5b7165d4e37" name="provider" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}</con:endpoint><con:request>{
 "id": "",
 "name": "target4",
@@ -222,18 +218,14 @@
 	"id": "00000000-0000-0000-0003-400000000000",
 	"name": "targetTranslateEdit",
 	"description": "targetTranslateEdit",
-	"translations": [
-		{
-			"es": {
-				"name": "target_changed_es"
-			}
+	"_translations": {
+		"es": {
+			"name": "target_changed_es"
 		},
-		{
-			"fr": {
-				"name": "target_changedd_fr"
-			}
+		"fr": {
+			"name": "target_changedd_fr"
 		}
-	]
+	}
 }</con:request><con:assertion type="JsonPath Match" id="4132f703-60b2-42d7-8068-419487ec535b" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"target_changed_es"},"fr":{"name":"target_changedd_fr"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="472fdbb7-a85c-4817-9ad7-881ed769b3cd" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider" id="c64bd270-babb-4946-8f1c-7bc915a85dcb"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="74db8d41-afbb-4c0d-bef2-e1a37a720b9e" name="provider" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0003-100000000000</con:endpoint><con:request>{
 "id": "00000000-0000-0000-0003-100000000000",
 "name": "target6",
@@ -272,18 +264,14 @@
 	"id": "",
 	"name": "tagTranslate",
 	"description": "tagTranslate",
-	"translations": [
-		{
-			"es": {
-				"name": "tag_added_es"
-			}
+	"_translations": {
+		"es": {
+			"name": "tag_added_es"
 		},
-		{
-			"fr": {
-				"name": "tag_added_fr"
-			}
+		"fr": {
+			"name": "tag_added_fr"
 		}
-	]
+	}
 }</con:request><con:assertion type="JsonPath Match" id="0bda706a-c87e-409b-9af7-7b1bcacec225" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"tag_added_es"},"fr":{"name":"tag_added_fr"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="e1cb3d15-76f7-4c07-b7ca-74efda69caa6" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="approved provider" id="8001abc4-1c02-408d-a502-3fe9c6a101b6"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="474d8ed0-19a0-4f4e-b5bc-65757c65a5af" name="approved provider" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}</con:endpoint><con:request>{
 "id": "",
 "name": "tag5",
@@ -324,18 +312,14 @@
 	"id": "00000000-0000-0000-0002-400000000000",
 	"name": "tagTranslatedChanged",
 	"description": "tagTranslatedChanged",
-	"translations": [
-		{
-			"es": {
-				"name": "tag_changed_es"
-			}
+	"_translations": {
+		"es": {
+			"name": "tag_changed_es"
 		},
-		{
-			"fr": {
-				"name": "tag_changed_fr"
-			}
+		"fr": {
+			"name": "tag_changed_fr"
 		}
-	]
+	}
 }</con:request><con:assertion type="Valid HTTP Status Codes" id="a7dd7fa0-8cc5-4bbe-a462-5f0d3a07d021" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="9fd12b63-1fa5-4d58-a5ad-f0042cd6effb" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"tag_changed_es"},"fr":{"name":"tag_changed_fr"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="bf2fa432-c542-41e8-b6c6-76c62c6e1e4b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="delete" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="79006231-51ad-427b-a625-c28342c86f09"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="6cf52c9e-ad74-4b7a-bc49-b851a63453a1" name="superuser" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0002-100000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="068c7e11-e403-4aa2-9822-5407348687f8" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider" id="1be8ae81-c7a7-4b20-8315-ec66a92612fe"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="fd0ad47e-c53c-4cb4-8bd3-0ad4a34a10bb" name="provider" postQueryString="false" mediaType="application/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0002-100000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="83b7ec47-c3b6-4e84-b467-4d94a745cc66" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:username>provider1@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="not registered user" id="b211ee26-7772-424a-bb9a-27f3ba3abe94"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="44238732-b974-43b5-a96f-cf2d72ae0338" name="not registered user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0002-100000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="5dc2b9e8-e0fe-4ba2-aa94-114794b73e9f" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties><con:property><con:name>endpoint</con:name><con:value>${#Project#endpoint}/tags</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>endpoint</con:name><con:value>${#Project#endpoint}/tags</con:value></con:property></con:properties></con:testSuite><con:testSuite id="8192be30-0db2-4aec-a8d2-ca9731560b5e" name="suburb"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="5592312d-ebd9-4fce-872e-a63c670fd38c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="list" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="provider" id="d311b4c7-d71f-47af-8bb1-bc7766d312de"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="63cfb6f2-5672-42b6-bf19-1338832818f2" name="provider" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestCase#endpoint}</con:endpoint><con:request>{
 	${#Project#listParams}
 }</con:request><con:assertion type="Simple Contains" id="fdfdcf2e-fd43-4506-bfe2-2758def95b80" name="Contains records"><con:configuration><token>records</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="fd0af625-2d65-44c6-98ae-d2752769ab3a" name="Contains totalCount"><con:configuration><token>totalCount</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="41fc9b2c-6a79-44a5-87ce-5025294704bc" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>provider1@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="not registered user" id="f00bc537-a92a-4ff5-981e-ad3acbb1139b"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="24398e2b-d6c8-4d36-93d0-ba4206aebdce" name="not registered user" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestCase#endpoint}</con:endpoint><con:request>{
@@ -722,18 +706,14 @@
 	"name": "categoryTranslateAdd",
 	"description": "categoryTranslateAdd",
 	"color": "added",
-	"translations": [
-		{
-			"es": {
-				"name": "category_added_es"
-			}
+	"_translations": {
+		"es": {
+			"name": "category_added_es"
 		},
-		{
-			"fr": {
-				"name": "category_added_fr"
-			}
+		"fr": {
+			"name": "category_added_fr"
 		}
-	]
+	}
 }</con:request><con:assertion type="JsonPath Match" id="536a85d4-d6ca-4268-a1d7-b433dbb13fe5" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"category_added_es"},"fr":{"name":"category_added_fr"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="e1dac0e7-2209-4646-92be-08470971357b" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="a6268a11-cb56-4400-8133-e7a36b3c0527" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="edit" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="c5e3d168-4ba5-4606-991c-51272f02530c"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="6cb83180-271f-4ef5-a0fa-739a03a70a34" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0007-200000000000</con:endpoint><con:request>{
 	"id": "00000000-0000-0000-0007-200000000000",
 	"name": "categorychanged",
@@ -767,18 +747,14 @@
 	"name": "categoryTranslateEdit",
 	"description": "categoryTranslateEdit",
 	"color": "edit",
-	"translations": [
-		{
-			"es": {
-				"name": "category_changed_es"
-			}
+	"_translations": {
+		"es": {
+			"name": "category_changed_es"
 		},
-		{
-			"fr": {
-				"name": "category_changed_fr"
-			}
+		"fr": {
+			"name": "category_changed_fr"
 		}
-	]
+	}
 }</con:request><con:assertion type="JsonPath Match" id="5ca83205-4178-46cc-9c07-6388ffb17862" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"category_changed_es"},"fr":{"name":"category_changed_fr"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="9e0755de-fd52-4b7b-84d6-1532a385611d" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="7d4c6956-5d1d-4d05-9956-2f12f2cdcfe2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="delete" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="c47e653b-3597-415c-a181-c8502b9a79e9"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="660a721f-ebc5-48e5-bc8e-fcc14d860b62" name="superuser" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0007-400000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="5f572526-fb01-4fce-ba30-bb59ae57e5b8" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="admin" id="b7ff432c-766d-4fed-924a-95ceea39f546"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="f1f64d04-68be-47b2-96ec-429b2e2070d1" name="admin" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0007-300000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="e896e5d7-ee5c-4b33-914c-a041e8b724c1" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:username>admin@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider" id="7db6e96e-b38a-4b4d-9bea-2bb4215852d6"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="7133e527-5938-4bda-9d3b-6bf7f3f81091" name="provider" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0007-300000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="2c7d1218-e0c2-46e8-9b87-cb5374b1211f" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:username>provider2@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="not registered user" id="796c2ba4-8845-4575-b562-b8aa1128f3e3"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="7e32d14b-2794-4dda-b9ff-01b15d038af5" name="not registered user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0007-300000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="3ca4c101-3893-4830-a015-e4d0db136c99" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties><con:property><con:name>endpoint</con:name><con:value>${#Project#endpoint}/categories</con:value></con:property></con:properties></con:testSuite><con:testSuite id="8dbc420f-5739-48c4-8048-bdb0f92f4355" name="organisations"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="45b286d2-0d31-417e-8ee4-b59da47214ff" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="list" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="10356965-342c-4d38-88a4-48a556262a43"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="af4d1a42-ea12-4241-afc4-4b578d2d7474" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestCase#endpoint}</con:endpoint><con:request>{
 	${#Project#listParams}
 }</con:request><con:assertion type="Simple Contains" id="e596b5e2-76ce-412e-a693-41e918060622" name="Contains totalCount"><con:configuration><token>totalCount</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="ed23d181-fac6-4f96-879a-ce167e7db644" name="Contains records"><con:configuration><token>records</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="69d5e027-25c9-4d62-ae3e-507b34aa9058" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider" id="8a2108e1-edee-4165-b855-4f1085f31765"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="55548f28-a1d1-421c-8e1c-3560b1aef80f" name="provider" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestCase#endpoint}</con:endpoint><con:request>{
@@ -856,18 +832,14 @@
 	"created": "2018-02-27 12:46:08",
 	"modified": "2018-02-27 12:46:08",
 	"address": null,
-	"translations": [
-		{
-			"es": {
-				"description": "español"
-			}
+	"_translations": {
+		"es": {
+			"description": "español"
 		},
-		{
-			"fr": {
-				"description": "français"
-			}
+		"fr": {
+			"description": "français"
 		}
-	]
+	}
 }</con:request><con:assertion type="Valid HTTP Status Codes" id="4b281695-9b54-446f-8c9a-b76c688aa579" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="92c93662-7dbf-45b6-a5b4-a5c0f9e6ea2c" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"description":"español"},"fr":{"description":"français"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties><con:property><con:name>Encoding</con:name><con:value>UTF-8</con:value></con:property></con:properties></con:testCase><con:testCase id="df7a6794-7e5c-4adc-9e75-9b2b5a667eee" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="edit" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="ab2f9825-c83d-4b0c-920a-b721027c0303"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="07f07123-52cb-4d85-b17a-431d9296f20a" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0008-300000000000</con:endpoint><con:request>{
 	"id": "00000000-0000-0000-0008-300000000000",
 	"name": "organisation3",
@@ -889,18 +861,14 @@
 	"phone": "09876543210",
 	"image": null,
 	"address_id": "00000000-0000-0000-0006-100000000000",
-	"translations": [
-		{
-			"es": {
-				"description": "cambiar español"
-			}
+	"_translations": {
+		"es": {
+			"description": "cambiar español"
 		},
-		{
-			"fr": {
-				"description": "changer français"
-			}
+		"fr": {
+			"description": "changer français"
 		}
-	]
+	}
 }</con:request><con:assertion type="JsonPath Match" id="f337626d-86e0-4b3c-be5e-9667af89f434" name="Contains id"><con:configuration><path>id</path><content>00000000-0000-0000-0008-600000000000</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="7c70546f-7604-479e-8466-293165163990" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="202ba8ca-b2f9-49b5-9a20-3f76a623c08c" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"description":"cambiar español"},"fr":{"description":"changer français"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="admin_own orga" id="55f216f7-160a-4e7b-80ef-a7ba20fd239d"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="e0579f9a-7dee-44b1-bd65-00af0388505e" name="admin_own orga" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0008-100000000000</con:endpoint><con:request>{
 	"id": "00000000-0000-0000-0008-100000000000",
 	"name": "organisation1",
@@ -1053,20 +1021,16 @@
 	"category": null,
 	"tags": [],
 	"address": null,
-	"translations": [
-		{
-			"es": {
-				"name": "español",
-				"description": "descripción"
-			}
+	"_translations": {
+		"es": {
+			"name": "español",
+			"description": "descripción"
 		},
-		{
-			"fr": {
-				"name": "français",
-				"description": "description"
-			}
+		"fr": {
+			"name": "français",
+			"description": "description"
 		}
-	]
+	}
 }</con:request><con:assertion type="JsonPath Match" id="896b9eab-9bd3-486e-989e-eab7ccb0c0a7" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"español","description":"descripción"},"fr":{"name":"français","description":"description"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="e70cbcb2-85f0-45de-b8f5-7108f45a6337" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>provider1@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="approved provider_other" id="2a14a2a6-d7db-441e-ad24-998492d90020"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="2803d2e7-6c00-4c0a-9d9a-10b06237892e" name="approved provider_other" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}</con:endpoint><con:request>{
 	"id": "",
 	"name": "activityNew4",
@@ -1226,20 +1190,16 @@
 	"category": null,
 	"tags": [],
 	"address": null,
-	"translations": [
-		{
-			"es": {
-				"name": "español changed",
-				"description": "descripción changed"
-			}
+	"_translations": {
+		"es": {
+			"name": "español changed",
+			"description": "descripción changed"
 		},
-		{
-			"fr": {
-				"name": "français changed",
-				"description": "description changed"
-			}
+		"fr": {
+			"name": "français changed",
+			"description": "description changed"
 		}
-	]
+	}
 }</con:request><con:assertion type="JsonPath Match" id="78c9fa43-d236-405a-ab5d-f98fcdfc0af0" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"español changed","description":"descripción changed"},"fr":{"name":"français changed","description":"description changed"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" id="9d5a7b7b-b6c5-457b-b70e-d7a73f32763d" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>provider1@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="7e05fb32-32b3-4736-88d7-3a20b10c78d2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="delete" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="5e32ae5e-bc30-4333-b397-d59ce6fdf4c7"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="24d4263b-acad-4935-8d67-0ad4ca686aad" name="superuser" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0010-400000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="9dfe0922-46f7-494c-bab3-fe7eb2e2b6e9" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="admin_own orga" id="4314dbbe-4918-458e-98c4-0a4881ec5c5d"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="67d65e08-06b4-446d-83a6-996275bed66b" name="admin_own orga" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0010-500000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="95ae7ba0-7118-4e27-9a19-21beb9ea1cef" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>admin@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="admin_other orga" id="5f731c92-3619-4fb3-84e5-6422a1edd882"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="32e60c79-738b-4c21-8329-b039861d64d6" name="admin_other orga" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0010-300000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="1de7f1c4-76b8-478f-b6c5-0cc1b6147d2f" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:username>admin@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider_own" id="9b4eb070-d3db-4064-914b-72c4df6c78c4"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="da28282e-aaae-4d7c-938a-29648a1d4df2" name="provider_own" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0010-600000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="560198f5-2b8f-4959-a6ed-77f272b178d1" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:username>provider1@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider_other" id="e191cf31-fb94-4e96-91de-d9e7a8aab046"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="1dbc8404-2a59-4cee-9424-047cf3bf9559" name="provider_other" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0010-300000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="b5d9b929-688e-4cb9-abb9-bfbd62de15af" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:username>provider1@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="not registered user" id="f0ae7d58-8074-4efd-b6ec-c6ef214adc8e"><con:settings/><con:config method="DELETE" xsi:type="con:HttpRequest" id="34e6261c-9103-4f44-a7b6-6183e440b037" name="not registered user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0010-300000000000</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="1cf53f31-f178-4e25-b464-ad4a8ffade70" name="Valid HTTP Status Codes"><con:configuration><codes>401,403</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="97f6a85c-71d3-4de9-8390-738544f7b82e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getByProvider" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="d004a910-184b-44d8-bf07-b21a59ab7d02"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="1159f8cd-28b7-4d80-b4e1-7f4950488860" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestCase#endpoint}</con:endpoint><con:request>{
 	${#Project#listParams},
 	"providers":["00000000-0000-0000-0009-200000000000"]
@@ -1390,18 +1350,14 @@
 	"id": "",
 	"locale": "se",
 	"name": "toAddWithTranslation",
-	"translations": [
-		{
-			"es": {
-				"name": "translation_added_es"
-			}
+	"_translations": {
+		"es": {
+			"name": "translation_added_es"
 		},
-		{
-			"fr": {
-				"name": "translation_added_fr"
-			}
+		"fr": {
+			"name": "translation_added_fr"
 		}
-	]
+	}
 }</con:request><con:assertion type="Valid HTTP Status Codes" id="307084c3-fb7c-4742-8af0-3cae3e980c60" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="720cfa24-74bc-48db-8469-c25acedec675" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"translation_added_es"},"fr":{"name":"translation_added_fr"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider" id="d81347c8-efb5-49a4-85cd-e4576cd621cb"><con:settings/><con:config method="POST" xsi:type="con:HttpRequest" id="b0ca85fa-e24f-4475-9fe1-d22da7c82894" name="provider" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}</con:endpoint><con:request>{
 	"id": "",
 	"locale": "xx",
@@ -1418,18 +1374,14 @@
 	"id": "00000000-0000-0000-0013-200000000000",
 	"locale": "fr",
 	"name": "Changed",
-	"translations": [
-		{
-			"es": {
-				"name": "translation_changed_es"
-			}
+	"_translations": {
+		"es": {
+			"name": "translation_changed_es"
 		},
-		{
-			"fr": {
-				"name": "translation_changed_fr"
-			}
+		"fr": {
+			"name": "translation_changed_fr"
 		}
-	]
+	}
 }</con:request><con:assertion type="Valid HTTP Status Codes" id="03591ee7-aefd-4e23-ae27-586d9b67d58b" name="Valid HTTP Status Codes"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="5efac9f1-0fd1-4093-a519-78fb81adb421" name="JsonPath Match"><con:configuration><path>_translations</path><content>{"es":{"name":"translation_changed_es"},"fr":{"name":"translation_changed_fr"}}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username>super@user</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="httprequest" name="provider" id="15231841-1cc8-44c3-965e-a697f79bd326"><con:settings/><con:config method="PATCH" xsi:type="con:HttpRequest" id="5ccdc2f4-8d24-452e-a7e9-c7c42922be61" name="provider" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${#TestSuite#endpoint}/00000000-0000-0000-0013-200000000000</con:endpoint><con:request>{
 	"id": "00000000-0000-0000-0013-200000000000",
 	"locale": "fr",

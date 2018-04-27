@@ -162,11 +162,11 @@ class AppController extends Controller
 
 	protected function saveTranslations($requestEntity, $storingEntity)
 	{
-		if(array_key_exists('translations', $requestEntity)) {
-			foreach ($requestEntity['translations'] as $translation) {
+		if (isset($requestEntity['_translations'])) {
+			foreach ($requestEntity['_translations'] as $lang => $data) {
 				$storingEntity
-					->translation(key($translation))
-					->set($translation[key($translation)], ['guard' => false]);
+					->translation($lang)
+					->set($data, ['guard' => false]);
 			}
 		}
 	}

@@ -64,7 +64,7 @@ export class UserService extends Service implements IDataService {
 
 	public list(request: TableState): Observable<any> {
 		return this.httpPost(
-			this.baseUrl,
+			this.baseUrl + 'list',
 			request,
 			this.getHeader());
 	}

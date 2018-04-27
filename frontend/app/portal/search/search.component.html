@@ -1,0 +1,77 @@
+<nav>
+	<mat-card>
+		<mat-form-field>
+			<input #query matInput (keyup.enter)="commitSearch(query.value)">
+			<mat-hint align="start" (click)="expanded = !expanded">
+				Advanced Search
+				<fa-icon [icon]="expanded ? 'angle-up' : 'angle-down'"></fa-icon>
+			</mat-hint>
+			<mat-hint align="end" (click)="results = !results">
+				{{ (selectables | async).length }} Results
+				<fa-icon [icon]="results ? 'angle-up' : 'angle-down'"></fa-icon>
+			</mat-hint>
+		</mat-form-field>
+
+		<mat-expansion-panel hideToggle="true" [expanded]="expanded">
+			<mat-expansion-panel-header [collapsedHeight]="0" [expandedHeight]="0">
+			</mat-expansion-panel-header>
+			<mat-tab-group>
+				<mat-tab label="Organisations">
+					&nbsp;
+				</mat-tab>
+				<mat-tab label="Categories">
+					&nbsp;
+				</mat-tab>
+				<mat-tab label="Suburbs">
+					&nbsp;
+				</mat-tab>
+				<mat-tab label="Target Groups">
+					&nbsp;
+				</mat-tab>
+				<mat-tab label="Tags">
+					&nbsp;
+				</mat-tab>
+			</mat-tab-group>
+		</mat-expansion-panel>
+	</mat-card>
+</nav>
+
+<content>
+	<mat-expansion-panel hideToggle="true" [expanded]="results">
+		<mat-expansion-panel-header [collapsedHeight]="0" [expandedHeight]="0">
+		</mat-expansion-panel-header>
+		<mat-accordion>
+			<ng-container *ngFor="let activity of selectables | async">
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{ activity.name }}
+						</mat-panel-title>
+						<mat-panel-description>
+							{{ activity.category.name }}
+						</mat-panel-description>
+						<canvas [style.background]="activity.category.color">
+						</canvas>
+					</mat-expansion-panel-header>
+
+					<!--  -->
+					<dl>
+						<dt>Description</dt>
+						<dd>{{activity.description}}</dd>
+						<dt>Schedule</dt>
+						<dd>{{activity.schedule}}</dd>
+						<dt>Address</dt>
+						<dd>{{activity.address.street}} {{activity.address.houseNumber}}</dd>
+						<dd>{{activity.address.postalCode}} {{activity.address.place}}</dd>
+						<dd>{{activity.address.suburb?.name}}</dd>
+					</dl>
+					<!--  -->
+
+					<button mat-mini-fab [routerLink]="['activity', activity.id]">
+						<fa-icon icon="location-arrow"></fa-icon>
+					</button>
+				</mat-expansion-panel>
+			</ng-container>
+		</mat-accordion>
+	</mat-expansion-panel>
+</content>

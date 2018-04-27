@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MappingComponent } from 'app/views/mapping/map';
 import { LoginFormComponent } from 'app/views/admin/login/login.form';
 import { AdminComponent } from 'app/views/admin/admin.component';
 import { UserFormComponent } from 'app/views/admin/users/user.form';
@@ -18,10 +17,11 @@ import { ConfigFormComponent } from 'app/views/admin/configs/config.form';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 import { AuthGuardService } from './services/authguard.service';
 import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.password';
+import { PortalModule } from 'app/portal/portal.module';
 
 @NgModule({
 	imports: [RouterModule.forRoot([
-		{ path: '', component: MappingComponent },
+		{ path: '', loadChildren: () => PortalModule },
 		{ path: 'login', component: LoginFormComponent },
 		{ path: 'register', component: RegisterFormComponent },
 		{ path: 'password', component: ForgottenPasswordFormComponent },

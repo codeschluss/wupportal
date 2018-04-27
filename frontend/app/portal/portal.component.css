@@ -1,0 +1,63 @@
+mat-sidenav {
+	max-width: 480px;
+	width: 100%;
+}
+mat-sidenav-container {
+	bottom: 0;
+	left: 0;
+	position: fixed !important;
+	right: 0;
+	top: 0;
+}
+mapping-component {
+	height: 100%;
+	position: fixed;
+	transition: all 200ms;
+	width: 100%;
+}
+/* TODO: relative to viewport (possibly padding percentage hack) */
+.mat-drawer-shown ~ mat-sidenav-content > mapping-component {
+	margin: 0 -240px 0 240px !important;
+}
+
+nav.fab-dial {
+	bottom: 12px;
+	display: flex;
+	flex-flow: column-reverse;
+	position: fixed;
+	right: 12px;
+	z-index: 1;
+}
+nav.fab-dial.vert {
+	flex-flow: row-reverse;
+}
+nav.fab-dial fa-icon {
+	display: block;
+	font-size: 150%;
+	transition: all 500ms;
+}
+nav.fab-dial > .mat-fab {
+	transition: all 500ms;
+}
+nav.fab-dial > .mat-fab:first-child {
+	z-index: 2;
+}
+nav.fab-dial > .mat-fab + .mat-fab {
+	margin: 0 0 -56px 0;
+	opacity: 0;
+	pointer-events: none;
+}
+nav.fab-dial.vert > .mat-fab + .mat-fab {
+	margin: 0 -56px 0 0;
+}
+nav.fab-dial.open > .mat-fab + .mat-fab {
+	margin: 0 0 12px 0;
+	opacity: 1;
+	pointer-events: initial;
+}
+nav.fab-dial.open.vert > .mat-fab + .mat-fab {
+	margin: 0 12px 0 0;
+}
+nav.fab-dial.open > .mat-fab:first-child fa-icon {
+	transform: rotate(135deg);
+}

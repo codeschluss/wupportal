@@ -48,9 +48,6 @@ import { AppComponent } from 'app/app.component';
 import { AppRouterModule } from 'app/app-router.module';
 
 import { DetailsComponent } from 'app/views/details';
-import { FilterComponent } from 'app/views/mapping/filter/filter.component';
-import { MappingComponent } from 'app/views/mapping/map';
-
 import { UserTableComponent } from 'app/views/admin/users/user.table';
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
@@ -118,8 +115,6 @@ import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.pa
 		AppComponent,
 
 		DetailsComponent,
-		FilterComponent,
-		MappingComponent,
 		AddressAutocompleteComponent,
 		SchedulerComponent,
 

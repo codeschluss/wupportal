@@ -1,0 +1,85 @@
+nav {
+	padding: 12px;
+}
+nav mat-card {
+	box-sizing: border-box;
+	padding: 12px;
+	max-width: calc(480px - 2 * 12px);
+	width: 100%;
+	z-index: 2;
+}
+nav mat-form-field {
+	width: 100%;
+}
+nav mat-hint {
+	cursor: pointer;
+	transition: all 200ms;
+}
+nav mat-hint:hover {
+	color: currentColor;
+}
+/*  */
+nav mat-expansion-panel {
+	box-shadow: none;
+}
+nav mat-expansion-panel::ng-deep .mat-expansion-panel-body {
+	padding: 0;
+}
+nav mat-expansion-panel::ng-deep .mat-tab-label {
+	height: 32px;
+	min-width: 0;
+	padding: 0 12px;
+}
+nav mat-expansion-panel::ng-deep .mat-tab-labels {
+	justify-content: center;
+}
+/*  */
+
+content {
+	box-sizing: border-box;
+	display: block;
+	padding: 12px;
+	pointer-events: none;
+	position: relative;
+	width: 100%;
+	z-index: 2;
+}
+content > mat-expansion-panel {
+	background: transparent;
+	box-shadow: none;
+	max-width: calc(480px - 2 * 12px);
+	width: 100%;
+}
+content mat-accordion {
+	display: block;
+	margin: 0 -24px -16px -24px;
+	pointer-events: initial;
+}
+content mat-accordion mat-expansion-panel {
+	position: relative;
+}
+content mat-accordion mat-expansion-panel button[mat-mini-fab] {
+	bottom: 12px;
+	position: absolute;
+	right: 12px;
+	transform: scale(0);
+	transition: all 200ms;
+}
+content mat-accordion mat-expansion-panel.mat-expanded button[mat-mini-fab] {
+	transform: scale(1);
+}
+content mat-accordion mat-expansion-panel-header {
+	position: relative;
+}
+content mat-accordion canvas {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 8px;
+}
+content mat-accordion mat-panel-description {
+	display: inline;
+	font-size: 12px;
+	text-align: right;
+}

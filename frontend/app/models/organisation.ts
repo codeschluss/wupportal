@@ -11,6 +11,7 @@ export class Organisation extends Model {
 	public image: any = null;
 	public address_id: string = '';
 	public address: Address = new Address({});
+	public _translations: any = {};
 
 	constructor(json: any = {} as Organisation) {
 		super(json.id);
@@ -21,6 +22,7 @@ export class Organisation extends Model {
 		this.phone = json.phone && json.phone || '';
 		this.image = json.image && json.image || null;
 		this.address_id = json.address_id && json.address_id || {};
+		this._translations = json._translations && Object.assign(json._translations) || {};
 		if (json.address) { this.address = new Address(json.address); }
 	}
 

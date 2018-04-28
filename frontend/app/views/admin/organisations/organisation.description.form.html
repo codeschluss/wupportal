@@ -1,0 +1,35 @@
+<mat-card class="gray-card centered-text-content">
+	<mat-card-header>
+		<mat-card-title>{{constants.description}} / {{constants.translations}}</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<mat-form-field>
+			<mat-select placeholder={{constants.chooseLanguage}} [(value)]="selectedLanguage">
+				<mat-option *ngFor="let translation of translations" [value]="translation.locale">
+					{{ translation.name }}
+					<span *ngIf="translation.locale !== constants.defaultCountryCode">
+						<fa-icon *ngIf="!organisation._translations[translation.locale].description" [icon]="faTimes " style="color:red "></fa-icon>
+						<fa-icon *ngIf="organisation._translations[translation.locale].description" [icon]="faCheck " style="color:green "></fa-icon>
+					</span>
+					<span *ngIf="translation.locale === constants.defaultCountryCode">
+						<fa-icon *ngIf="!organisation.description" [icon]="faTimes " style="color:red;"></fa-icon>
+						<fa-icon *ngIf="organisation.description" [icon]="faCheck " style="color:green;"></fa-icon>
+					</span>
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<div *ngIf="selectedLanguage == constants.defaultCountryCode ">
+			<mat-form-field class="form-full-width ">
+				<textarea matInput type=text [(ngModel)]="organisation.description " name="description " id="orga_description_field " placeholder={{constants.description}}
+				 matTextareaAutosize matAutosizeMinRows="4 " matAutosizeMaxRows="10 "></textarea>
+			</mat-form-field>
+		</div>
+		<div *ngIf="selectedLanguage != constants.defaultCountryCode ">
+			<mat-form-field class="form-full-width ">
+				<textarea matInput type=text [(ngModel)]="organisation._translations[selectedLanguage].description " name="description
+					 " id="orga_translation_ description_field " placeholder={{constants.description}} matTextareaAutosize matAutosizeMinRows="4 "
+				 matAutosizeMaxRows="10 "></textarea>
+			</mat-form-field>
+		</div>
+	</mat-card-content>
+</mat-card>

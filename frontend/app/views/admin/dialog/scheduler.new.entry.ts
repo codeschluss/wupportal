@@ -30,7 +30,7 @@ export class NewScheduleDialogComponent {
 		public dialogRef: MatDialogRef<NewScheduleDialogComponent>,
 		private constants: Constants
 	) {
-		this.adapter.setLocale(this.constants.countryCode);
+		this.adapter.setLocale(this.constants.defaultCountryCode);
 		this.formGroup = new FormGroup({
 			'startTimeHourCtrl': new FormControl('', [
 				Validators.required

@@ -3,6 +3,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 import { Constants } from 'app/services/constants';
 import { UserService } from 'app/services/user.service';
+import { faMap } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
+
 
 @Component({
 	templateUrl: 'admin.html',
@@ -10,8 +13,10 @@ import { UserService } from 'app/services/user.service';
 })
 
 export class AdminComponent implements OnInit {
-	routeLinks: any[] = [];
-	activeLinkIndex: number = 0;
+	private routeLinks: any[] = [];
+	private activeLinkIndex: number = 0;
+	private faMap: IconDefinition = faMap;
+
 
 	constructor(
 		private location: Location,

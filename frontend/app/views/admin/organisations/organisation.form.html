@@ -33,10 +33,7 @@
 								</mat-form-field>
 							</div>
 							<div class="col">
-								<mat-form-field class="form-full-width">
-									<textarea matInput type=text formControlName="descriptionCtrl" placeholder={{constants.description}} name="description" value={{organisation.description}}
-									 id="orga_description_field"></textarea>
-								</mat-form-field>
+								<organisation-description [organisation]="organisation"></organisation-description>
 							</div>
 						</div>
 						<div>
@@ -77,7 +74,7 @@
 					<organisation-detail *ngIf="organisation && organisation.address" [organisation]="organisation" largeTitle="true"></organisation-detail>
 					<h3>{{constants.admins}}</h3>
 					<mat-list role="list">
-						<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider.user.fullname + ' (' + provider.user.username + ')'}}</mat-list-item>
+						<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider?.user?.fullname + ' (' + provider?.user?.username + ')'}}</mat-list-item>
 					</mat-list>
 					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
 					<button class="btn btn-primary" type="submit">{{constants.save}}</button>

@@ -47,7 +47,11 @@ export class Constants {
 	public weekdays: string = 'Wochentage';
 	public monthly: string = 'monatlich';
 	public yearly: string = 'jährlich';
-	public countryCode: string = 'de';
+	public defaultCountryCode: string = 'de';
+	public defaultLanguage: string = 'Deutsch';
+	public chooseLanguage: string = 'Sprachauswahl';
+	public translations: string = 'Übersetzungen';
+
 
 	public back: string = 'Zurück';
 	public newElement: string = 'Neu';

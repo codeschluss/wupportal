@@ -17,13 +17,9 @@
 				</mat-form-field>
 			</div>
 			<div class="col">
-				<mat-form-field class="form-full-width">
-					<textarea matInput type=text [(ngModel)]="organisation.description" name="description" id="orga_description_field" placeholder={{constants.description}}
-					 matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="10"></textarea>
-				</mat-form-field>
+				<organisation-description [organisation]="organisation"></organisation-description>
 			</div>
 		</div>
-
 		<mat-card class="address-card" *ngIf="organisation.address">
 			<div *ngIf="!organisation.address.isValid">
 				{{constants.address + ' ' + constants.required}}
@@ -35,7 +31,7 @@
 				<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
 			</div>
 		</mat-card>
-		<button type="button" class="btn btn-primary" (click)="back()">{{constants.cancel}}</button>
+		<button type="button" class="btn btn-warning" (click)="back()">{{constants.cancel}}</button>
 		<button *ngIf="organisation.address" type="submit" class="btn btn-primary" [disabled]="organisationForm.invalid || !organisation.address.isValid">{{constants.save}}</button>
 	</form>
 </div>

@@ -12,12 +12,14 @@ import { map } from 'rxjs/operators/map';
 import {
 	DataServiceFactory,
 	OrganisationService,
-	AddressService
+	AddressService,
+	TranslationService
 } from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 import { UserTableComponent } from 'app/views/admin/users/user.table';
+import { OrganisationDescriptionComponent } from 'app/views/admin/organisations/organisation.description.form';
 
 import { Organisation } from 'app/models/organisation';
 import { Address } from 'app/models/address';
@@ -44,12 +46,14 @@ export class OrganisationFormComponent implements OnInit {
 	secondFormGroup: FormGroup;
 	thirdFormGroup: FormGroup;
 	faCheck: IconDefinition = faCheck;
-
+	translations: any[] = [];
+	selectedLanguage: '';
 	adminProviders: Array<Provider> = new Array<Provider>();
 
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		@Inject(AddressService) private addressService: DataService,
+		@Inject(TranslationService) private translationService: DataService,
 		private providerService: ProviderService,
 		private location: Location,
 		public route: ActivatedRoute,
@@ -62,7 +66,6 @@ export class OrganisationFormComponent implements OnInit {
 		this.organisation = new Organisation();
 		this.firstFormGroup = this._formBuilder.group({
 			nameCtrl: new FormControl('', [Validators.required]),
-			descriptionCtrl: new FormControl(''),
 			mailCtrl: new FormControl(''),
 			phoneCtrl: new FormControl(''),
 			webSiteCtrl: new FormControl('')
@@ -73,7 +76,6 @@ export class OrganisationFormComponent implements OnInit {
 		this.thirdFormGroup = this._formBuilder.group({
 		});
 		this.firstFormGroup.get('nameCtrl').valueChanges.subscribe(name => { this.organisation.name = name; });
-		this.firstFormGroup.get('descriptionCtrl').valueChanges.subscribe(description => { this.organisation.description = description; });
 		this.firstFormGroup.get('mailCtrl').valueChanges.subscribe(mail => { this.organisation.mail = mail; });
 		this.firstFormGroup.get('phoneCtrl').valueChanges.subscribe(phone => { this.organisation.phone = phone; });
 		this.firstFormGroup.get('webSiteCtrl').valueChanges.subscribe(website => { this.organisation.website = website; });

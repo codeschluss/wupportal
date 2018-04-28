@@ -12,11 +12,13 @@ import { map } from 'rxjs/operators/map';
 import {
 	DataServiceFactory,
 	OrganisationService,
-	AddressService
+	AddressService,
+	TranslationService
 } from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
+import { OrganisationDescriptionComponent } from 'app/views/admin/organisations/organisation.description.form';
 import { UserTableComponent } from 'app/views/admin/users/user.table';
 
 import { Organisation } from 'app/models/organisation';
@@ -61,6 +63,7 @@ export class OrganisationUpdateComponent {
 	}
 
 	onSubmit(): void {
+		// empty translations sould be detected and automatically added
 		this.organisation.address = null;
 		this.organisationService
 			.edit(this.organisation)

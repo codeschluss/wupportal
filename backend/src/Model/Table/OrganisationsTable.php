@@ -48,7 +48,10 @@ class OrganisationsTable extends Table
 			'foreignKey' => 'organisation_id'
 		]);
 
-		$this->addBehavior('Translate', ['fields' => ['description']]);
+		$this->addBehavior('Translate', [
+			'fields' => ['description'],
+			'allowEmptyTranslations' => true
+			]);
 	}
 
 	/**

@@ -21,7 +21,7 @@ import { DataServiceFactory } from '../../../services/data.service.factory';
 export class ConfigFormComponent implements OnInit {
 
 	private configurations: Configuration[];
-
+	private loading: boolean = true;
 	constructor(
 		private location: Location,
 		public constants: Constants,
@@ -30,7 +30,10 @@ export class ConfigFormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.configurationService.getAll().subscribe(configs => { this.configurations = configs; });
+		this.configurationService.getAll().subscribe(
+			configs => { this.configurations = configs; },
+			null,
+			() => this.loading = false);
 	}
 
 	mergeConfigs(): Observable<any[]> {

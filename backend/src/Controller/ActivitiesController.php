@@ -49,7 +49,7 @@ class ActivitiesController extends AppController
 			? $this->contain()
 			: $this->baseContain();
 
-		$result = $this->table()->find()
+		$result = $this->table()->find('translations')
 			->contain($associatedTables)
 			->where([$this->name . '.id' => $id])
 			->first();

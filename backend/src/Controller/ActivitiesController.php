@@ -61,8 +61,11 @@ class ActivitiesController extends AppController
 
 	public function mapfilter() {
 		$request = $this->request->input('json_decode');
+		$query = $this->table()->find();
 
 
+
+		$this->prepareResult($result);
 		return $this->response
 			->withStatus(200)
 			->withType('application/json')

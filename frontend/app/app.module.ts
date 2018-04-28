@@ -105,7 +105,7 @@ import { ActivityDetailComponent } from 'app/views/admin/activities/activity.det
 import { OrganisationDetailComponent } from 'app/views/admin/organisations/organisation.detail';
 import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.component';
 import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.password';
-import { OrganisationDescriptionComponent } from './views/admin/organisations/organisation.description.form';
+import { TranslatableFieldsComponent } from './views/admin/translations/translatable.form';
 
 
 @NgModule({
@@ -147,7 +147,7 @@ import { OrganisationDescriptionComponent } from './views/admin/organisations/or
 		DeleteDialogComponent,
 		DeleteActionComponent,
 		OrganisationSelectionComponent,
-		OrganisationDescriptionComponent,
+		TranslatableFieldsComponent,
 		NewScheduleDialogComponent
 	],
 	imports: [

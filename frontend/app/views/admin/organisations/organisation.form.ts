@@ -19,7 +19,7 @@ import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 import { UserTableComponent } from 'app/views/admin/users/user.table';
-import { OrganisationDescriptionComponent } from 'app/views/admin/organisations/organisation.description.form';
+import { TranslatableFieldsComponent } from 'app/views/admin/translations/translatable.form';
 
 import { Organisation } from 'app/models/organisation';
 import { Address } from 'app/models/address';
@@ -42,9 +42,9 @@ export class OrganisationFormComponent implements OnInit {
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 	@ViewChild('userTableComponent') usersTable: UserTableComponent;
 
-	firstFormGroup: FormGroup;
-	secondFormGroup: FormGroup;
-	thirdFormGroup: FormGroup;
+	baseDataFormGroup: FormGroup;
+	addressFormGroup: FormGroup;
+	adminFormGroup: FormGroup;
 	faCheck: IconDefinition = faCheck;
 	translations: any[] = [];
 	selectedLanguage: '';
@@ -64,21 +64,24 @@ export class OrganisationFormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.organisation = new Organisation();
-		this.firstFormGroup = this._formBuilder.group({
+		this.baseDataFormGroup = this._formBuilder.group({
 			nameCtrl: new FormControl('', [Validators.required]),
+			descriptionCtrl: new FormControl(''),
 			mailCtrl: new FormControl(''),
 			phoneCtrl: new FormControl(''),
 			webSiteCtrl: new FormControl('')
 		});
-		this.secondFormGroup = this._formBuilder.group({
+		this.addressFormGroup = this._formBuilder.group({
 			addressCtrl: new FormControl(this.organisation.address.isValid, [Validators.required])
 		});
-		this.thirdFormGroup = this._formBuilder.group({
+
+		this.adminFormGroup = this._formBuilder.group({
 		});
-		this.firstFormGroup.get('nameCtrl').valueChanges.subscribe(name => { this.organisation.name = name; });
-		this.firstFormGroup.get('mailCtrl').valueChanges.subscribe(mail => { this.organisation.mail = mail; });
-		this.firstFormGroup.get('phoneCtrl').valueChanges.subscribe(phone => { this.organisation.phone = phone; });
-		this.firstFormGroup.get('webSiteCtrl').valueChanges.subscribe(website => { this.organisation.website = website; });
+		this.baseDataFormGroup.get('nameCtrl').valueChanges.subscribe(name => { this.organisation.name = name; });
+		this.baseDataFormGroup.get('descriptionCtrl').valueChanges.subscribe(description => { this.organisation.description = description; });
+		this.baseDataFormGroup.get('mailCtrl').valueChanges.subscribe(mail => { this.organisation.mail = mail; });
+		this.baseDataFormGroup.get('phoneCtrl').valueChanges.subscribe(phone => { this.organisation.phone = phone; });
+		this.baseDataFormGroup.get('webSiteCtrl').valueChanges.subscribe(website => { this.organisation.website = website; });
 	}
 
 	addressSubmit(): void {
@@ -87,14 +90,14 @@ export class OrganisationFormComponent implements OnInit {
 			addressObservable.subscribe(address => {
 				this.organisation.address = address;
 				this.organisation.address_id = address.id;
-				this.secondFormGroup.get('addressCtrl').setValue(this.organisation.address);
+				this.addressFormGroup.get('addressCtrl').setValue(this.organisation.address);
 			});
 		}
 	}
 
 	resetAddress(): void {
 		this.organisation.address = new Address();
-		this.secondFormGroup.get('addressCtrl').setValue('');
+		this.addressFormGroup.get('addressCtrl').setValue('');
 	}
 
 	approvedAsAdmin(event: any): void {

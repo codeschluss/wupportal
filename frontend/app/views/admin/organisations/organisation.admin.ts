@@ -18,12 +18,14 @@ import { Constants } from 'app/services/constants';
 import { ProviderTableComponent } from 'app/views/admin/provider/provider.table';
 import { Provider } from 'app/models/provider';
 import { OrganisationSelectionComponent } from 'app/views/admin/dialog/organisation-selection.dialog';
+import { TranslatableFieldsComponent } from 'app/views/admin/translations/translatable.form';
+
 import { Observable } from 'rxjs/Observable';
 
 @Component({
 	selector: 'organisation-admin',
 	templateUrl: 'organisation.admin.html',
-	styleUrls: ['../../../app.component.css']
+	styleUrls: ['../../../app.component.css', '../admin.area.css']
 })
 
 export class OrganisationAdminComponent implements OnInit {

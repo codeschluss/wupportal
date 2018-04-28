@@ -42,6 +42,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { generate } from 'rxjs/observable/generate';
 import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
+import { TranslatableFieldsComponent } from 'app/views/admin/translations/translatable.form';
 
 // @Author: Pseipel
 
@@ -58,9 +59,9 @@ export class ActivityFormComponent implements OnInit {
 	targetGroups: TargetGroup[];
 	categories: Category[];
 	providers: Provider[] = [];
-	firstFormGroup: FormGroup;
-	secondFormGroup: FormGroup;
-	thirdFormGroup: FormGroup;
+	baseDataFormGroup: FormGroup;
+	addressFormGroup: FormGroup;
+	schedulesFormGroup: FormGroup;
 	user: User;
 	faCheck: IconDefinition = faCheck;
 	faTrashAlt: IconDefinition = faTrashAlt;
@@ -118,7 +119,7 @@ export class ActivityFormComponent implements OnInit {
 						this.providers.push(this.activity.provider);
 					}
 				}
-				this.firstFormGroup = new FormGroup({
+				this.baseDataFormGroup = new FormGroup({
 					'providerCtrl': new FormControl(this.activity.provider_id, [
 						Validators.required
 					]),
@@ -131,23 +132,23 @@ export class ActivityFormComponent implements OnInit {
 					'categoryCtrl': new FormControl(this.activity.category.id, [Validators.required]),
 					'targetGroupCtrl': new FormControl(targetGropuIDs)
 				});
-				this.secondFormGroup = new FormGroup({
+				this.addressFormGroup = new FormGroup({
 					'addressCtrl': new FormControl(new Address(this.activity.address).isValid ?
 						new Address(this.activity.address) : '', [Validators.required])
 				});
-				this.thirdFormGroup = new FormGroup({
+				this.schedulesFormGroup = new FormGroup({
 					'schedulesCtrl': new FormControl(this.activity.schedules, [Validators.required])
 				});
 
-				this.firstFormGroup.get('nameCtrl').valueChanges.subscribe(name => { this.activity.name = name; });
-				this.firstFormGroup.get('descriptionCtrl').valueChanges.subscribe(description => { this.activity.description = description; });
-				this.firstFormGroup.get('providerCtrl').valueChanges.subscribe(() =>
-					this.activity.provider = this.providers.find(provider => provider.id === this.firstFormGroup.get('providerCtrl').value));
-				this.firstFormGroup.get('providerCtrl').valueChanges.subscribe(providerID => { this.activity.provider_id = providerID; });
-				this.firstFormGroup.get('showUserCtrl').valueChanges.subscribe(showUser => { this.activity.show_user = showUser; });
-				this.firstFormGroup.get('categoryCtrl').valueChanges.subscribe(() =>
-					this.activity.category = this.categories.find(category => category.id === this.firstFormGroup.get('categoryCtrl').value));
-				this.firstFormGroup.get('categoryCtrl').valueChanges.subscribe(catID => { this.activity.category_id = catID; });
+				this.baseDataFormGroup.get('nameCtrl').valueChanges.subscribe(name => { this.activity.name = name; });
+				this.baseDataFormGroup.get('descriptionCtrl').valueChanges.subscribe(description => { this.activity.description = description; });
+				this.baseDataFormGroup.get('providerCtrl').valueChanges.subscribe(() =>
+					this.activity.provider = this.providers.find(provider => provider.id === this.baseDataFormGroup.get('providerCtrl').value));
+				this.baseDataFormGroup.get('providerCtrl').valueChanges.subscribe(providerID => { this.activity.provider_id = providerID; });
+				this.baseDataFormGroup.get('showUserCtrl').valueChanges.subscribe(showUser => { this.activity.show_user = showUser; });
+				this.baseDataFormGroup.get('categoryCtrl').valueChanges.subscribe(() =>
+					this.activity.category = this.categories.find(category => category.id === this.baseDataFormGroup.get('categoryCtrl').value));
+				this.baseDataFormGroup.get('categoryCtrl').valueChanges.subscribe(catID => { this.activity.category_id = catID; });
 				if (this.userService.isSuperUser()) {
 					this.userService.get(this.activity.provider.user_id).subscribe(user => {
 						this.user = new User(user);
@@ -161,7 +162,7 @@ export class ActivityFormComponent implements OnInit {
 
 	onScheduleChange(schedules: Schedule[]): void {
 		this.activity.schedules = schedules;
-		this.thirdFormGroup.get('schedulesCtrl').setValue(this.activity.schedules);
+		this.schedulesFormGroup.get('schedulesCtrl').setValue(this.activity.schedules);
 	}
 
 	addTag(event: MatChipInputEvent): void {
@@ -216,14 +217,14 @@ export class ActivityFormComponent implements OnInit {
 				const address = new Address(addressResponse);
 				this.activity.address = address;
 				this.activity.address_id = address.id;
-				this.secondFormGroup.get('addressCtrl').setValue(this.activity.address);
+				this.addressFormGroup.get('addressCtrl').setValue(this.activity.address);
 			});
 		}
 	}
 
 	resetAddress(): void {
 		this.activity.address = new Address();
-		this.secondFormGroup.get('addressCtrl').setValue('');
+		this.addressFormGroup.get('addressCtrl').setValue('');
 	}
 
 	onSubmit(): void {
@@ -231,7 +232,7 @@ export class ActivityFormComponent implements OnInit {
 		this.activity.category = null;
 		this.activity.address = null;
 		this.scheduler.deleteSchedules();
-		this.generateTargetGroupArray(this.firstFormGroup.get('targetGroupCtrl').value);
+		this.generateTargetGroupArray(this.baseDataFormGroup.get('targetGroupCtrl').value);
 		if (this.activity.tags.length) {
 			this.handleTags().subscribe(tags => {
 				for (const tag of tags) {

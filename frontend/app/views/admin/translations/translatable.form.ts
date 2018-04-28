@@ -13,16 +13,17 @@ import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 
 @Component({
-	selector: 'organisation-description',
+	selector: 'translatable-form',
 	styleUrls: ['../../../app.component.css', '../admin.area.css'],
-	templateUrl: 'organisation.description.form.html'
+	templateUrl: 'translatable.form.html'
 })
 
-export class OrganisationDescriptionComponent implements OnInit {
+export class TranslatableFieldsComponent implements OnInit {
 
-	@Input() organisation: Organisation;
+	@Input() multiLingualObject: {};
 
 	translations: any[] = [];
+	translatableAttributes: string[] = [];
 	selectedLanguage: String;
 	faCheck: IconDefinition = faCheck;
 	faTimes: IconDefinition = faTimes;
@@ -34,24 +35,39 @@ export class OrganisationDescriptionComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.initTranslations();
-		this.selectedLanguage = this.constants.defaultCountryCode;
 	}
 
 	initTranslations(): void {
 		this.translationService.getAll().subscribe(records => {
 			this.translations = records;
-			this.translations.push({ locale: this.constants.defaultCountryCode, name: this.constants.defaultLanguage });
-			if (Object.keys(this.organisation._translations).length === 0 && this.organisation._translations.constructor === Object) {
-				this.buildEmptyTranslations(records);
-			}
+			this.buildEmptyTranslations(records);
+			this.initTranslatableFields();
+			this.selectedLanguage = this.translations[0].locale;
 		});
+	}
+
+	initTranslatableFields(): void {
+		Object.keys(this.multiLingualObject['_translations'][this.translations[0].locale]).map(
+			key => this.translatableAttributes.push(key)
+		);
 	}
 
 	buildEmptyTranslations(records: any): void {
 		records.map(translation => {
-			const currLocale: any = { locale: translation.locale, description: '' };
-			this.organisation._translations[translation.locale] = currLocale;
+			if (!this.multiLingualObject['_translations'][translation.locale]
+				|| (Object.keys(this.multiLingualObject['_translations'][translation.locale]).length === 0
+					&& this.multiLingualObject['_translations'][translation.locale].constructor === Object)) {
+				const currLocale: any = { locale: translation.locale, description: '' };
+				this.multiLingualObject['_translations'][translation.locale] = currLocale;
+			}
 		});
+	}
+
+	getPlaceHolder(attribute: string): string {
+		if (attribute === 'name') {
+			attribute = 'nameString';
+		}
+		return this.constants[attribute] ? this.constants[attribute] : attribute;
 	}
 
 }

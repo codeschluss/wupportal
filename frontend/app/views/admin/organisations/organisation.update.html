@@ -17,7 +17,10 @@
 				</mat-form-field>
 			</div>
 			<div class="col">
-				<organisation-description [organisation]="organisation"></organisation-description>
+				<mat-form-field class="form-full-width">
+					<textarea matInput type=text [(ngModel)]="organisation.description" name="description" id="orga_description_field" placeholder={{constants.description}}
+					 matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="10"></textarea>
+				</mat-form-field>
 			</div>
 		</div>
 		<mat-card class="address-card" *ngIf="organisation.address">

@@ -10,8 +10,8 @@
 				<ng-template matStepperIcon="edit">
 					<fa-icon [icon]="faCheck"></fa-icon>
 				</ng-template>
-				<mat-step [stepControl]="firstFormGroup">
-					<form [formGroup]="firstFormGroup">
+				<mat-step [stepControl]="baseDataFormGroup">
+					<form [formGroup]="baseDataFormGroup">
 						<ng-template matStepLabel>{{constants.coreData}}</ng-template>
 						<div class="row">
 							<div class="col">
@@ -33,34 +33,45 @@
 								</mat-form-field>
 							</div>
 							<div class="col">
-								<organisation-description [organisation]="organisation"></organisation-description>
+								<mat-form-field class="form-full-width">
+									<textarea matInput type=text formControlName="descriptionCtrl" placeholder={{constants.description}} name="description" value={{organisation.description}}
+									 id="orga_description_field"></textarea>
+								</mat-form-field>
 							</div>
 						</div>
 						<div>
-							<button type="button" class="btn btn-primary" [disabled]="firstFormGroup.invalid" matStepperNext>{{constants.next}}</button>
+							<button type="button" class="btn btn-primary" [disabled]="baseDataFormGroup.invalid" matStepperNext>{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
-				<mat-step [stepControl]="secondFormGroup">
+				<mat-step>
+					<ng-template matStepLabel>{{constants.translations}}</ng-template>
+					<translatable-form [multiLingualObject]="organisation"></translatable-form>
+					<div>
+						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+						<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
+					</div>
+				</mat-step>
+				<mat-step [stepControl]="addressFormGroup">
 					<ng-template matStepLabel>{{constants.address}}</ng-template>
-					<form [formGroup]="secondFormGroup">
+					<form [formGroup]="addressFormGroup">
 						<mat-card class="address-card" *ngIf="organisation.address">
-							<div *ngIf="secondFormGroup.invalid">
+							<div *ngIf="addressFormGroup.invalid">
 								<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="organisation.address"></address-autocomplete-form>
 								<button type="button" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
 							</div>
-							<div *ngIf="!secondFormGroup.invalid && organisation.address">
+							<div *ngIf="!addressFormGroup.invalid && organisation.address">
 								{{organisation.address.toString}}
 								<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
 							</div>
 						</mat-card>
 						<div>
 							<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" [disabled]="secondFormGroup.invalid" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
+							<button type="button" [disabled]="addressFormGroup.invalid" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
 						</div>
 					</form>
 				</mat-step>
-				<mat-step [stepControl]="thirdFormGroup">
+				<mat-step [stepControl]="adminFormGroup">
 					<ng-template matStepLabel>{{constants.users}}</ng-template>
 					<edit-users #usersTable [organisation]="organisation" (approvedAsAdmin)="approvedAsAdmin($event)" (removedAsAdmin)="removedAsAdmin($event)"></edit-users>
 					<div>

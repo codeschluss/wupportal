@@ -23,7 +23,7 @@ export class Activity extends Model {
 			if (json.schedules && json.schedules.length) { this.schedules = this.buildScheduleArray(json.schedules); }
 			if (json.tags) { this.tags = json.tags; }
 			if (json.target_groups) { this.target_groups = json.target_groups; }
-			// this.translations = Object.assign(json._translations);
+			this._translations = json._translations && Object.assign(json._translations) || {};
 		}
 	}
 
@@ -41,7 +41,7 @@ export class Activity extends Model {
 	public schedules: Schedule[] = [];
 	public tags: Tag[] = [];
 	public target_groups: TargetGroup[] = [];
-	public translations: any = {};
+	public _translations: any = {};
 
 	buildScheduleArray(dates: any[]): Schedule[] {
 		const scheduleArray: Schedule[] = [];

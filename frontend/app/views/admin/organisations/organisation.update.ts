@@ -18,7 +18,7 @@ import {
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
-import { OrganisationDescriptionComponent } from 'app/views/admin/organisations/organisation.description.form';
+import { TranslatableFieldsComponent } from 'app/views/admin/translations/translatable.form';
 import { UserTableComponent } from 'app/views/admin/users/user.table';
 
 import { Organisation } from 'app/models/organisation';

@@ -1,0 +1,24 @@
+<mat-card class="centered-text-content">
+	<mat-card-header>
+		<mat-card-title>{{constants.coreData + ' ' + constants.translations}}</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<mat-form-field>
+			<mat-select placeholder={{constants.chooseLanguage}} [(value)]="selectedLanguage">
+				<mat-option *ngFor="let translation of translations" [value]="translation.locale">
+					{{ translation.name }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<div *ngFor="let attribute of translatableAttributes">
+			<mat-form-field *ngIf="attribute !== 'description' && attribute !== 'locale'" class="form-full-width">
+				<input matInput type=text [(ngModel)]="multiLingualObject['_translations'][selectedLanguage][attribute]" name="[attribute]"
+				 id="[attribute]" placeholder={{getPlaceHolder(attribute)}}>
+			</mat-form-field>
+			<mat-form-field *ngIf="attribute === 'description'" class="form-full-width">
+				<textarea matInput type=text [(ngModel)]="multiLingualObject['_translations'][selectedLanguage][attribute]" name="[attribute]"
+				 id="[attribute]" placeholder={{getPlaceHolder(attribute)}} matTextareaAutosize matAutosizeMinRows="4 " matAutosizeMaxRows="10 "></textarea>
+			</mat-form-field>
+		</div>
+	</mat-card-content>
+</mat-card>

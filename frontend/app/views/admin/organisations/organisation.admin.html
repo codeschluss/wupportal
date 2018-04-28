@@ -2,27 +2,26 @@
 	<div class="loadingOverlay" *ngIf="!organisation">
 		<mat-spinner></mat-spinner>
 	</div>
-	<mat-card class="organisation-edit-card"
-	  *ngIf="organisation">
+	<mat-card class="organisation-edit-card" *ngIf="organisation">
 		<mat-card-header>
 			<h2>{{organisation.name}}</h2>
 		</mat-card-header>
 		<mat-tab-group>
 			<mat-tab label={{constants.coreData}}>
 				<!-- Core data -->
-				<organisation-update class="centered-content"
-				  [organisation]="organisation">
+				<organisation-update [organisation]="organisation">
 				</organisation-update>
 			</mat-tab>
-			<mat-tab *ngIf="approvedProviders"
-			  label={{constants.user}}>
+			<mat-tab label={{constants.translations}}>
+				<!-- Translations -->
+				<translatable-form class="gray-card" [multiLingualObject]="organisation"></translatable-form>
+			</mat-tab>
+			<mat-tab *ngIf="approvedProviders" label={{constants.user}}>
 				<!-- Provider user list -->
-				<button type="button" class="btn btn-warning"
-				  (click)="switch()">{{switchButtonLabel()}}
+				<button type="button" class="btn btn-warning" (click)="switch()">{{switchButtonLabel()}}
 				</button>
 				<div *ngIf="showRequests && notApprovedProviders">
-					<provider-approval-table [providers]="notApprovedProviders"
-					  (onApproved)="onApproved($event)">
+					<provider-approval-table [providers]="notApprovedProviders" (onApproved)="onApproved($event)">
 					</provider-approval-table>
 				</div>
 				<div *ngIf="!showRequests">
@@ -30,8 +29,7 @@
 					</provider-table>
 				</div>
 			</mat-tab>
-			<mat-tab label={{constants.activities}}
-			  *ngIf="hasActivities">
+			<mat-tab label={{constants.activities}} *ngIf="hasActivities">
 				<!-- Provider activity list -->
 				<mat-card>
 					<mat-card-header>
@@ -40,8 +38,7 @@
 						</mat-card-title>
 					</mat-card-header>
 					<mat-card-content>
-						<activity-table [showActions]="true"
-						  [providers]="getProviderIDs()">
+						<activity-table [showActions]="true" [providers]="getProviderIDs()">
 						</activity-table>
 					</mat-card-content>
 				</mat-card>

@@ -51,11 +51,6 @@ Router::scope('/', function (RouteBuilder $routes) {
 		['path' => '.*']
 	);
 
-	$routes->resources('Activities', ['map' => ['filter' => [
-		'action' => 'filter',
-		'method' => 'GET'
-	]]]);
-
 	$routes->scope('/api/', function($routes) {
 		$list = ['map' => ['list' => [
 			'action' => 'list',
@@ -64,11 +59,17 @@ Router::scope('/', function (RouteBuilder $routes) {
 		]]];
 
 		$routes->resources('Activities', $list);
-		$routes->resources('Activities', ['map' => ['getByProviders' => [
-			'action' => 'getByProviders',
-			'method' => 'POST',
-			'path' => '/getByProviders'
-		]]]);
+		$routes->resources('Activities', ['map' => [
+			'getByProviders' => [
+				'action' => 'getByProviders',
+				'method' => 'POST',
+				'path' => '/getByProviders'],
+			'mapfilter' => [
+				'action' => 'mapfilter',
+				'method' => 'POST',
+				'path' => '/mapfilter'
+			]
+		]]);
 
 		$routes->resources('Addresses', $list);
 		$routes->resources('Categories', $list);
@@ -87,16 +88,17 @@ Router::scope('/', function (RouteBuilder $routes) {
 		]]]);
 
 		$routes->resources('Providers', $list);
-		$routes->resources('Providers', ['map' => ['getByOrganisation' => [
-			'action' => 'getByOrganisation',
-			'method' => 'POST',
-			'path' => '/getByOrganisation'
-		]]]);
-		$routes->resources('Providers', ['map' => ['getByUser' => [
-			'action' => 'getByUser',
-			'method' => 'POST',
-			'path' => '/getByUser'
-		]]]);
+		$routes->resources('Providers', ['map' => [
+			'getByOrganisation' => [
+				'action' => 'getByOrganisation',
+				'method' => 'POST',
+				'path' => '/getByOrganisation'],
+			'getByUser' => [
+						'action' => 'getByUser',
+						'method' => 'POST',
+						'path' => '/getByUser'
+			]
+		]]);
 
 		$routes->connect('/forgotpwd',
 			['controller' => 'Mailing', 'action' => 'forgotPwd']

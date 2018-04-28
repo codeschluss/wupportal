@@ -18,7 +18,7 @@ class ActivitiesController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['view','list', 'index', 'getByProviders']);
+		$this->Auth->allow(['view','list', 'index', 'getByProviders', 'mapfilter']);
 	}
 
 	/**
@@ -59,6 +59,16 @@ class ActivitiesController extends AppController
 			: $this->ResponseHandler->responseSuccess($result);
 	}
 
+	public function mapfilter() {
+		$request = $this->request->input('json_decode');
+
+
+		return $this->response
+			->withStatus(200)
+			->withType('application/json')
+			->withStringBody(json_encode(true));
+	}
+
 	/**
 	 * Fetch method
 	 *
@@ -66,9 +76,9 @@ class ActivitiesController extends AppController
 	 */
 	public function list()
 	{
-		$query = $this->table()->find()->group($this->name . '.id');
 		$request = $this->request->input('json_decode');
 		if (is_null($request)) return $this->ResponseHandler->responseError();
+		$query = $this->table()->find()->group($this->name . '.id');
 
 		$this->setPagination($request);
 		$this->setJoins($query);

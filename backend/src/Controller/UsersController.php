@@ -36,6 +36,28 @@ class UsersController extends AppController
 		}
 	}
 
+
+	/**
+	 * Add method
+	 *
+	 * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+	 */
+	public function add()
+	{
+		$response = $this->persist(
+			$this->table()->newEntity()
+		);
+
+		$requestUser = json_decode($this->request->input(), true);
+		if ($response->getStatusCode() == 200 && !empty($requestUser['providers'])) {
+			foreach ($requestUser['providers'] as $provider) {
+				$this->MailHandler->sendMailForNewProvider($provider['organisation_id'], $requestUser['username']);
+			}
+		}
+
+		return $response;
+	}
+
 	/**
 	 * login method
 	 *

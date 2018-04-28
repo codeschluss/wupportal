@@ -131,6 +131,30 @@ class ProvidersTable extends Table
 			});
 	}
 
+	public function getAdminMailsForProvider($organisationId) {
+		$matching = $this->find()
+			->innerJoinWith('Users')
+			->select(['Users.username'])
+			->where([
+				'Providers.organisation_id' => $organisationId,
+				'Providers.admin' => true
+			])
+			->all()
+			->toArray();
+
+		return array_map(function ($match) {
+			return $match->_matchingData['Users']->username;
+		}, $matching);
+	}
+
+	public function hasOrgaAdmin($organisationId) {
+		return
+			$this->exists([
+				'Providers.organisation_id' => $organisationId,
+				'Providers.admin' => true
+			]);
+	}
+
 	public function isOwnProvider($userId, $providerId)
 	{
 		return

@@ -97,8 +97,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 			'method' => 'POST',
 			'path' => '/getByUser'
 		]]]);
-		$routes->connect('/mail',
-			['controller' => 'Mailing', 'action' => 'mail']
+
+		$routes->connect('/forgotpwd',
+			['controller' => 'Mailing', 'action' => 'forgotPwd']
 		);
 	});
 });

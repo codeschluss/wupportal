@@ -83,7 +83,7 @@ import {
 	CategoryService,
 	ConfigurationService,
 	TranslationService,
-	MailService
+	ForgotPasswordService
 } from 'app/services/data.service.factory';
 
 import { SuburbSelectionComponent } from 'app/views/admin/dialog/popup.suburb.selection';
@@ -238,7 +238,7 @@ import { OrganisationDescriptionComponent } from './views/admin/organisations/or
 			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{
-			provide: MailService, useFactory: DataServiceFactory(MailService),
+			provide: ForgotPasswordService, useFactory: DataServiceFactory(ForgotPasswordService),
 			deps: [HttpClient, UserService, MatSnackBar]
 		}
 	],

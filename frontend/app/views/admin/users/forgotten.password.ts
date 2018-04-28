@@ -1,9 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Constants } from '../../../services/constants';
-import { DataService } from '../../../services/data.service';
-import { MailService } from '../../../services/data.service.factory';
+
+import { Constants } from 'app/services/constants';
+import { ForgotPasswordService } from 'app/services/data.service.factory';
+import { UserService } from 'app/services/user.service';
+import { DataService } from 'app/services/data.service';
 
 
 @Component({
@@ -14,32 +16,17 @@ import { MailService } from '../../../services/data.service.factory';
 
 export class ForgottenPasswordFormComponent {
 
-	private formGroup: FormGroup;
+	private mail: string;
 
 	constructor(
-		public constants: Constants,
-		private location: Location,
-		@Inject(MailService) private mailService: DataService,
-	) {
-		this.formGroup = new FormGroup({
-			'mailCtrl': new FormControl('', Validators.required)
-		});
-	}
+		@Inject(ForgotPasswordService) private forgotPwdService: DataService,
+		private constants: Constants,
+		private userService: UserService
+	) { }
 
-	onSubmit(): any {
-		console.log('submit', this.formGroup.get('mailCtrl').value);
-		const data = {
-			message: this.constants.forgottenPasswordMessage,
-			mailRecipient: this.formGroup.get('mailCtrl').value,
-			subject: this.constants.forgottenPassword,
-			resetPassword: true
-		};
-		this.mailService
-			.add(data)
-			.subscribe(() => this.back());
-	}
-
-	back(): void {
-		this.location.back();
+	onSubmit(): void {
+		this.forgotPwdService
+			.add(this.mail)
+			.subscribe(() => this.userService.redirectToLogin());
 	}
 }

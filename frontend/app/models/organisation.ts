@@ -13,6 +13,7 @@ export class Organisation extends Model {
 	public address: Address = new Address({});
 	public _translations: any = {};
 
+
 	constructor(json: any = {} as Organisation) {
 		super(json.id);
 		this.name = json.name && json.name || '';
@@ -24,6 +25,7 @@ export class Organisation extends Model {
 		this.address_id = json.address_id && json.address_id || {};
 		this._translations = json._translations && Object.assign(json._translations) || {};
 		if (json.address) { this.address = new Address(json.address); }
+
 	}
 
 }

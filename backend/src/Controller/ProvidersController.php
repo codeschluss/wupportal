@@ -14,6 +14,27 @@ use Cake\ORM\TableRegistry;
 class ProvidersController extends AppController
 {
 
+	/**
+	 * Add method
+	 *
+	 * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+	 */
+	public function add()
+	{
+		$response = $this->persist(
+			$this->table()->newEntity()
+		);
+
+		$requestProvider = json_decode($this->request->input(), true);
+		if ($response->getStatusCode() == 200) {
+			$this->MailHandler->sendMailForNewProvider(
+				$requestProvider['organisation_id'],
+				TableRegistry::get('Users')->getUsername($requestProvider['user_id']));
+		}
+
+		return $response;
+	}
+
   public function getByUser()
 	{
 		$request = $this->request->input('json_decode');

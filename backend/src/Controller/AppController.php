@@ -44,6 +44,7 @@ class AppController extends Controller
 	{
 		parent::initialize();
 		$this->loadComponent('ResponseHandler');
+		$this->loadComponent('MailHandler');
 		$this->loadComponent('Auth', [
 			'authorize' => ['Controller'],
 			'authenticate' => [
@@ -125,7 +126,7 @@ class AppController extends Controller
 	 */
 	public function add()
 	{
-		return $this->storeInDb(
+		return $this->persist(
 			$this->table()->newEntity()
 		);
 	}
@@ -139,12 +140,12 @@ class AppController extends Controller
 	 */
 	public function edit($id)
 	{
-		return $this->storeInDb(
+		return $this->persist(
 			$this->table()->get($id, ['contain' => $this->contain()])
 		);
 	}
 
-	protected function storeInDb($baseEntity)
+	protected function persist($baseEntity)
 	{
 		$requestEntity = json_decode($this->request->input(), true);
 		$result = $this->table()->patchEntity(

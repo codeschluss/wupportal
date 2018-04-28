@@ -120,4 +120,13 @@ class OrganisationsTable extends Table
 				'Providers.admin' => true
 			]);
 	}
+
+	public function getOrganisationName($organisationId) {
+		return
+			$this->find()
+				->select(['Organisations.name'])
+				->where(['Organisations.id' => $organisationId])
+				->first()
+				->name;
+	}
 }

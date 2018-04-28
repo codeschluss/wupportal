@@ -97,4 +97,35 @@ class UsersTable extends Table
 		return $rules;
 	}
 
+	public function getSuperuserMails() {
+		$matching = $this->find()
+			->select(['Users.username'])
+			->where([
+				'Users.superuser' => true
+			])
+			->all()
+			->toArray();
+
+		return array_map(function ($match) {
+			return $match->username;
+		}, $matching);
+	}
+
+	public function getUsername($id) {
+		return $this->find()
+			->select(['Users.username'])
+			->where([
+				'Users.id' => $id
+			])
+			->first()
+			->username;
+	}
+
+	public function getUserByName($userMail) {
+		return $this->find()
+			->where([
+				'Users.username' => $userMail
+			])
+			->first();
+	}
 }

@@ -63,4 +63,22 @@ class ConfigurationsTable extends Table
 
 		return $validator;
 	}
+
+	public function getPortalMail() {
+		return
+			$this->find()
+				->select(['Configurations.value'])
+				->where(['Configurations.item' => 'portalMail'])
+				->first()
+				->value;
+	}
+
+	public function getPortalName() {
+		return
+			$this->find()
+				->select(['Configurations.value'])
+				->where(['Configurations.item' => 'portalName'])
+				->first()
+				->value;
+	}
 }

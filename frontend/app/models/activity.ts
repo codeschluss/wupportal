@@ -4,7 +4,6 @@ import { Model } from 'app/models/model';
 import { Provider } from 'app/models/provider';
 import { Tag } from 'app/models/tag';
 import { TargetGroup } from 'app/models/target-group';
-import { Translation } from 'app/models/translation';
 import { Schedule } from 'app/models/schedule';
 
 
@@ -24,7 +23,7 @@ export class Activity extends Model {
 			if (json.schedules && json.schedules.length) { this.schedules = this.buildScheduleArray(json.schedules); }
 			if (json.tags) { this.tags = json.tags; }
 			if (json.target_groups) { this.target_groups = json.target_groups; }
-			// if (json.translations) { this.translations = json.translations; }
+			// this.translations = Object.assign(json._translations);
 		}
 	}
 
@@ -42,7 +41,7 @@ export class Activity extends Model {
 	public schedules: Schedule[] = [];
 	public tags: Tag[] = [];
 	public target_groups: TargetGroup[] = [];
-	// public translations: Translation[] = null;
+	public translations: any = {};
 
 	buildScheduleArray(dates: any[]): Schedule[] {
 		const scheduleArray: Schedule[] = [];

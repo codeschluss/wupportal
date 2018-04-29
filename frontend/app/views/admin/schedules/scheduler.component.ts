@@ -285,6 +285,7 @@ export class SchedulerComponent implements OnInit {
 		}
 		this.toDeleteSchedules.push(this.schedules[i]);
 		this.schedules.splice(i, 1);
+		this.schedulesCtrl.setValue(this.schedules);
 	}
 
 	newEntry(): void {

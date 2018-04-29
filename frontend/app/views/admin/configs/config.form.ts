@@ -36,6 +36,10 @@ export class ConfigFormComponent implements OnInit {
 			() => this.loading = false);
 	}
 
+	getLabel(item: string): string {
+		return this.constants[item] ? this.constants[item] : item;
+	}
+
 	mergeConfigs(): Observable<any[]> {
 		const observableConfigArray: Observable<any>[] = [];
 		this.configurations.map(config =>

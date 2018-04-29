@@ -1,108 +1,106 @@
-<div class="edit-container" *ngIf="organisation">
-	<mat-card class=" container-fluid organisation-edit-card">
-		<h3 *ngIf="organisation.name">{{organisation.name}}</h3>
-		<h3 *ngIf="!organisation.name">{{constants.noTitle}}</h3>
-		<form #organisationForm="ngForm" (ngSubmit)="onSubmit()" class="well">
-			<mat-horizontal-stepper (selectionChange)="stepperValueChange($event)" linear="true">
-				<ng-template matStepperIcon="done">
-					<fa-icon [icon]="faCheck"></fa-icon>
-				</ng-template>
-				<ng-template matStepperIcon="edit">
-					<fa-icon [icon]="faCheck"></fa-icon>
-				</ng-template>
-				<mat-step [stepControl]="baseDataFormGroup">
-					<form [formGroup]="baseDataFormGroup">
-						<ng-template matStepLabel>{{constants.coreData}}</ng-template>
-						<div class="row">
-							<div class="col">
-								<mat-form-field class="form-full-width">
-									<input matInput type=text formControlName="nameCtrl" placeholder={{constants.nameString}} name="name" value={{organisation.name}}
-									 required [errorStateMatcher]="validation" id="orga_name_field">
-								</mat-form-field>
-								<mat-form-field class="form-full-width">
-									<input matInput type="email" formControlName="mailCtrl" placeholder={{constants.mail}} name="mail" value={{organisation.mail}}
-									 id="orga_mail_field">
-								</mat-form-field>
-								<mat-form-field class="form-full-width">
-									<input matInput type=text formControlName="phoneCtrl" placeholder={{constants.phone}} name="telephone" value={{organisation.phone}}
-									 id="orga_phone_field">
-								</mat-form-field>
-								<mat-form-field class="form-full-width">
-									<input matInput type=text formControlName="webSiteCtrl" placeholder={{constants.website}} name="website" id="orga_website_field"
-									 value={{organisation.website}}>
-								</mat-form-field>
-							</div>
-							<div class="col">
-								<mat-form-field class="form-full-width">
-									<textarea matInput type=text formControlName="descriptionCtrl" placeholder={{constants.description}} name="description" value={{organisation.description}}
-									 id="orga_description_field"></textarea>
-								</mat-form-field>
-							</div>
+<mat-card class="container-fluid organisation-edit-card" *ngIf="organisation">
+	<h3 *ngIf="organisation.name">{{organisation.name}}</h3>
+	<h3 *ngIf="!organisation.name">{{constants.noTitle}}</h3>
+	<form #organisationForm="ngForm" (ngSubmit)="onSubmit()" class="well">
+		<mat-horizontal-stepper (selectionChange)="stepperValueChange($event)" linear="true">
+			<ng-template matStepperIcon="done">
+				<fa-icon [icon]="faCheck"></fa-icon>
+			</ng-template>
+			<ng-template matStepperIcon="edit">
+				<fa-icon [icon]="faCheck"></fa-icon>
+			</ng-template>
+			<mat-step [stepControl]="baseDataFormGroup">
+				<form [formGroup]="baseDataFormGroup">
+					<ng-template matStepLabel>{{constants.coreData}}</ng-template>
+					<div class="row">
+						<div class="col">
+							<mat-form-field class="form-full-width">
+								<input matInput type=text formControlName="nameCtrl" placeholder={{constants.nameString}} name="name" value={{organisation.name}}
+								 required [errorStateMatcher]="validation" id="orga_name_field">
+							</mat-form-field>
+							<mat-form-field class="form-full-width">
+								<input matInput type="email" formControlName="mailCtrl" placeholder={{constants.mail}} name="mail" value={{organisation.mail}}
+								 id="orga_mail_field">
+							</mat-form-field>
+							<mat-form-field class="form-full-width">
+								<input matInput type=text formControlName="phoneCtrl" placeholder={{constants.phone}} name="telephone" value={{organisation.phone}}
+								 id="orga_phone_field">
+							</mat-form-field>
+							<mat-form-field class="form-full-width">
+								<input matInput type=text formControlName="webSiteCtrl" placeholder={{constants.website}} name="website" id="orga_website_field"
+								 value={{organisation.website}}>
+							</mat-form-field>
 						</div>
-						<div>
-							<button type="button" class="btn btn-primary" [disabled]="baseDataFormGroup.invalid" matStepperNext>{{constants.next}}</button>
+						<div class="col">
+							<mat-form-field class="form-full-width">
+								<textarea matInput type=text formControlName="descriptionCtrl" placeholder={{constants.description}} name="description" value={{organisation.description}}
+								 id="orga_description_field"></textarea>
+							</mat-form-field>
 						</div>
-					</form>
-				</mat-step>
-				<mat-step>
-					<ng-template matStepLabel>{{constants.translations}}</ng-template>
-					<translatable-form #translatableFieldsComponent [multiLingualObject]="organisation" [translatableAttributes]="['description']"></translatable-form>
+					</div>
+					<div>
+						<button type="button" class="btn btn-primary" [disabled]="baseDataFormGroup.invalid" matStepperNext>{{constants.next}}</button>
+					</div>
+				</form>
+			</mat-step>
+			<mat-step>
+				<ng-template matStepLabel>{{constants.translations}}</ng-template>
+				<translatable-form #translatableFieldsComponent [multiLingualObject]="organisation" [translatableAttributes]="['description']"></translatable-form>
+				<div>
+					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+					<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
+				</div>
+			</mat-step>
+			<mat-step [stepControl]="addressFormGroup">
+				<ng-template matStepLabel>{{constants.address}}</ng-template>
+				<form [formGroup]="addressFormGroup">
+					<mat-card class="address-card" *ngIf="organisation.address">
+						<div *ngIf="addressFormGroup.invalid">
+							<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="organisation.address"></address-autocomplete-form>
+						</div>
+						<div *ngIf="!addressFormGroup.invalid && organisation.address">
+							{{organisation.address.toString}}
+							<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
+						</div>
+					</mat-card>
 					<div>
 						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-						<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
+						<button type="button" [disabled]="addressFormGroup.invalid" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
+						<button type="button" *ngIf="addressFormGroup.invalid" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
 					</div>
-				</mat-step>
-				<mat-step [stepControl]="addressFormGroup">
-					<ng-template matStepLabel>{{constants.address}}</ng-template>
-					<form [formGroup]="addressFormGroup">
-						<mat-card class="address-card" *ngIf="organisation.address">
-							<div *ngIf="addressFormGroup.invalid">
-								<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="organisation.address"></address-autocomplete-form>
-								<button type="button" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
-							</div>
-							<div *ngIf="!addressFormGroup.invalid && organisation.address">
-								{{organisation.address.toString}}
-								<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
-							</div>
-						</mat-card>
-						<div>
-							<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-							<button type="button" [disabled]="addressFormGroup.invalid" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
-						</div>
-					</form>
-				</mat-step>
-				<mat-step [stepControl]="adminFormGroup">
-					<ng-template matStepLabel>{{constants.users}}</ng-template>
-					<edit-users #usersTable [organisation]="organisation" (approvedAsAdmin)="approvedAsAdmin($event)" (removedAsAdmin)="removedAsAdmin($event)"></edit-users>
-					<div>
+				</form>
+			</mat-step>
+			<mat-step [stepControl]="adminFormGroup">
+				<ng-template matStepLabel>{{constants.users}}</ng-template>
+				<edit-users #usersTable [organisation]="organisation" (approvedAsAdmin)="approvedAsAdmin($event)" (removedAsAdmin)="removedAsAdmin($event)"></edit-users>
+				<div>
+					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+					<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
+				</div>
+			</mat-step>
+			<mat-step>
+				<ng-template matStepLabel>{{constants.summary}}</ng-template>
+				<h3>{{constants.pleaseControl}}</h3>
+				<mat-tab-group>
+					<mat-tab label="{{constants.coreData}}">
+						<organisation-detail *ngIf="organisation && organisation.address" [organisation]="organisation" largeTitle="true"></organisation-detail>
+						<h3>{{constants.admins}}</h3>
+						<mat-list role="list">
+							<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider?.user?.fullname + ' (' + provider?.user?.username + ')'}}</mat-list-item>
+						</mat-list>
 						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-						<button type="button" class="btn btn-warning" matStepperNext>{{constants.next}}</button>
-					</div>
-				</mat-step>
-				<mat-step>
-					<ng-template matStepLabel>{{constants.summary}}</ng-template>
-					<h2>{{constants.pleaseControl}}</h2>
-					<mat-tab-group>
-						<mat-tab label="{{constants.coreData}}">
-							<organisation-detail *ngIf="organisation && organisation.address" [organisation]="organisation" largeTitle="true"></organisation-detail>
-							<h3>{{constants.admins}}</h3>
-							<mat-list role="list">
-								<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider?.user?.fullname + ' (' + provider?.user?.username + ')'}}</mat-list-item>
-							</mat-list>
-							<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-							<button class="btn btn-primary" type="submit">{{constants.save}}</button>
-						</mat-tab>
-						<mat-tab label="{{constants.translations}}">
-							<div *ngFor="let translation of translations">
-								<b>{{getLanguageLabel(translation['locale'])}}</b>
-								<div>{{translation['description']}}</div>
-								<hr>
-							</div>
-						</mat-tab>
-					</mat-tab-group>
-				</mat-step>
-			</mat-horizontal-stepper>
-			<button type="button" class="btn btn-cancel" (click)="back()">{{constants.cancel}}</button>
-		</form>
-	</mat-card>
-</div>
+						<button class="btn btn-primary" type="submit">{{constants.save}}</button>
+					</mat-tab>
+					<mat-tab label="{{constants.translations}}">
+						<div *ngFor="let translation of translations">
+							<b>{{getLanguageLabel(translation['locale'])}}</b>
+							<div>{{translation['description']}}</div>
+							<hr>
+						</div>
+					</mat-tab>
+				</mat-tab-group>
+			</mat-step>
+		</mat-horizontal-stepper>
+		<button type="button" class="btn" (click)="back()">{{constants.cancel}}</button>
+	</form>
+</mat-card>

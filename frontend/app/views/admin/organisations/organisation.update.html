@@ -34,7 +34,7 @@
 				<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
 			</div>
 		</mat-card>
-		<button type="button" class="btn btn-warning" (click)="back()">{{constants.cancel}}</button>
+		<button type="button" class="btn" (click)="back()">{{constants.back}}</button>
 		<button *ngIf="organisation.address" type="submit" class="btn btn-primary" [disabled]="organisationForm.invalid || !organisation.address.isValid">{{constants.save}}</button>
 	</form>
 </div>

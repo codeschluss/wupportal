@@ -10,12 +10,12 @@
 			<div *ngFor="let config of configurations;let i = index">
 				<mat-grid-tile colspan="1" rowspan="1">
 					<mat-form-field class="form-full-width">
-						<input matInput type="text" name="config.{{i}}.value" [(ngModel)]=config.value placeholder={{constants[config.item]}} required/>
+						<input matInput type="text" name="config.{{i}}.value" [(ngModel)]=config.value placeholder={{getLabel(config.item)}} required/>
 					</mat-form-field>
 				</mat-grid-tile>
 			</div>
 		</mat-grid-list>
-		<button class="btn btn-danger" type="button" (click)="back()">{{constants.cancel}}</button>
+		<button class="btn" type="button" (click)="back()">{{constants.back}}</button>
 		<button class="btn btn-primary" [disabled]="!configForm.form.valid" color="primary" type="submit">{{constants.save}}</button>
 	</form>
 </mat-card>

@@ -8,6 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import { DataService } from 'app/services/data.service';
 
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 import { ValidationService } from 'app/services/validation.service';
 
 import {
@@ -30,6 +32,7 @@ export class AddressFormComponent implements OnInit {
 
 	address: Address;
 	suburbs: Suburb[];
+	faTrashAlt: IconDefinition = faTrashAlt;
 
 	constructor(
 		private location: Location,

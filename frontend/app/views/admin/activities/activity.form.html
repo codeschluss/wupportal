@@ -1,6 +1,6 @@
 <mat-card class="container-fluid" *ngIf="activity">
-	<h2 *ngIf="activity.name">{{ activity.name }}</h2>
-	<h2 *ngIf="!activity.name">{{ constants.noTitle}}</h2>
+	<h3 *ngIf="activity.name">{{ activity.name }}</h3>
+	<h3 *ngIf="!activity.name">{{ constants.noTitle}}</h3>
 	<form #activityForm="ngForm" (ngSubmit)="onSubmit()">
 		<mat-card class="container-fluid">
 			<mat-horizontal-stepper (selectionChange)="stepperValueChange($event)" linear="true" #stepper="matHorizontalStepper">
@@ -15,7 +15,7 @@
 						<mat-card>
 							<ng-template matStepLabel>{{constants.coreData}}</ng-template>
 							<div class="container-fluid">
-								<h2>{{constants.coreData}}</h2>
+								<h3>{{constants.coreData}}</h3>
 								<div class="row">
 									<div class="col">
 										<mat-form-field class="form-full-width">
@@ -75,12 +75,11 @@
 				<mat-step [stepControl]="addressFormGroup">
 					<ng-template matStepLabel>{{constants.address}}</ng-template>
 					<div class="container-fluid">
-						<h2>{{constants.placeQuestion}}</h2>
+						<h3>{{constants.placeQuestion}}</h3>
 						<form [formGroup]="addressFormGroup">
 							<mat-card class="address-card" *ngIf="activity.address">
 								<div *ngIf="addressFormGroup.invalid">
 									<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="activity.address"></address-autocomplete-form>
-									<button type="button" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
 								</div>
 								<div *ngIf="!addressFormGroup.invalid">
 									{{addressFormGroup.controls.addressCtrl.value.toString}}
@@ -90,6 +89,7 @@
 							<div>
 								<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
 								<button type="button" class="btn btn-primary" [disabled]="addressFormGroup.invalid" matStepperNext>{{constants.next}}</button>
+								<button type="button" class="btn btn-primary" *ngIf="addressFormGroup.invalid" (click)="addressSubmit()">{{constants.ok}}</button>
 							</div>
 						</form>
 					</div>
@@ -97,9 +97,11 @@
 				<mat-step [stepControl]="schedulesFormGroup">
 					<ng-template matStepLabel>{{constants.dates}}</ng-template>
 					<scheduler-component-form #schedulerComponent [schedules]="activity.schedules" (onScheduleChange)="onScheduleChange($event)"></scheduler-component-form>
-					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-					<button type="button" class="btn btn-primary" color="primary" [disabled]="schedulesFormGroup.invalid" (click)="saveTranslations()"
-					 matStepperNext>{{constants.next}}</button>
+					<div *ngIf="!schedulesFormGroup.invalid">
+						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+						<button type="button" class="btn btn-primary" color="primary" [disabled]="schedulesFormGroup.invalid" (click)="saveTranslations()"
+						 matStepperNext>{{constants.next}}</button>
+					</div>
 				</mat-step>
 				<mat-step>
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
@@ -123,7 +125,7 @@
 					</mat-tab-group>
 				</mat-step>
 			</mat-horizontal-stepper>
-			<button type="button" class="btn btn-danger" (click)="back()">{{constants.cancel}}</button>
+			<button type="button" class="btn" (click)="back()">{{constants.cancel}}</button>
 		</mat-card>
 	</form>
 </mat-card>

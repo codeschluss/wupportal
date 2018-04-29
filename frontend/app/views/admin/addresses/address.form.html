@@ -22,7 +22,8 @@
 					 id="address_place_field">
 				</mat-form-field>
 				<span *ngIf="address.suburb && address.suburb.name">{{address.suburb.name + ' '}}
-					<i (click)="resetSuburb()" class="fa fa-trash-o" aria-hidden="true" style="color:red;"></i>
+					<fa-icon (click)="resetSuburb()" [icon]="faTrashAlt" class="text-danger">
+					</fa-icon>
 				</span>
 				<mat-form-field *ngIf="!address.suburb">
 					<mat-select name="suburb" placeholder={{constants.quarter}} [(ngModel)]="address.suburb">

@@ -5,7 +5,7 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { OrganisationService } from 'app/services/data.service.factory';
+import { OrganisationService, ConfigurationService } from 'app/services/data.service.factory';
 import { DataService } from 'app/services/data.service';
 import { ValidationService } from 'app/services/validation.service';
 import { UserService } from 'app/services/user.service';
@@ -28,15 +28,20 @@ export class RegisterFormComponent implements OnInit {
 	private userForm: FormGroup;
 	private passwordGroup: FormGroup;
 	private allOrganisations: Array<Organisation>;
+	private portalTitle: string = '';
 
 	constructor(
 		@Inject(OrganisationService) public organisationService: DataService,
+		@Inject(ConfigurationService) private configurationService: DataService,
 		public providerService: ProviderService,
 		public userService: UserService,
 		public location: Location,
 		public constants: Constants,
 		public validation: ValidationService
-	) { }
+	) {
+		this.configurationService.getAll().subscribe(
+			configs => { this.portalTitle = configs.find(item => item.item === 'portalName').value; });
+	}
 
 	onSubmit(): void {
 		this.setData();

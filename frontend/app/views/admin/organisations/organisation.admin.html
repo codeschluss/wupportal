@@ -14,7 +14,9 @@
 			</mat-tab>
 			<mat-tab label={{constants.translations}}>
 				<!-- Translations -->
-				<translatable-form class="gray-card" [multiLingualObject]="organisation"></translatable-form>
+				<translatable-form #translatableFieldsComponent [multiLingualObject]="organisation" [translatableAttributes]="['description']"></translatable-form>
+				<button type="button" class="btn btn-warning" (click)="back()">{{constants.cancel}}</button>
+				<button type="button" class="btn btn-primary" (click)="saveTranslations()">{{constants.save}}</button>
 			</mat-tab>
 			<mat-tab *ngIf="approvedProviders" label={{constants.user}}>
 				<!-- Provider user list -->

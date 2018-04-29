@@ -43,6 +43,7 @@ import { generate } from 'rxjs/observable/generate';
 import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 import { TranslatableFieldsComponent } from 'app/views/admin/translations/translatable.form';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 // @Author: Pseipel
 
@@ -70,6 +71,7 @@ export class ActivityFormComponent implements OnInit {
 
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 	@ViewChild('schedulerComponent') scheduler: SchedulerComponent;
+	@ViewChild('translatableFieldsComponent') translatableFieldsComponent: TranslatableFieldsComponent;
 
 	constructor(
 		private activityService: ActivityService,
@@ -225,6 +227,18 @@ export class ActivityFormComponent implements OnInit {
 	resetAddress(): void {
 		this.activity.address = new Address();
 		this.addressFormGroup.get('addressCtrl').setValue('');
+	}
+
+	stepperValueChange(event: StepperSelectionEvent): void {
+		console.log(event);
+		console.log(event.selectedStep);
+		if (event.selectedIndex === 4) {
+			this.saveTranslations();
+		}
+	}
+
+	saveTranslations(): void {
+		this.activity._translations = this.translatableFieldsComponent.getTranslations();
 	}
 
 	onSubmit(): void {

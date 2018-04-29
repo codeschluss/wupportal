@@ -29,6 +29,7 @@ import { ProviderService } from 'app/services/provider.service';
 import { Provider } from 'app/models/provider';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 @Component({
 	selector: 'organisation-form',
@@ -41,6 +42,8 @@ export class OrganisationFormComponent implements OnInit {
 	@Input() organisation: Organisation;
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 	@ViewChild('userTableComponent') usersTable: UserTableComponent;
+	@ViewChild('translatableFieldsComponent') translatableFieldsComponent: TranslatableFieldsComponent;
+
 
 	baseDataFormGroup: FormGroup;
 	addressFormGroup: FormGroup;
@@ -114,6 +117,18 @@ export class OrganisationFormComponent implements OnInit {
 			this.adminProviders.find(provider => provider.user_id === event)
 		);
 		this.adminProviders.splice(index, 1);
+	}
+
+	stepperValueChange(event: StepperSelectionEvent): void {
+		console.log(event);
+		console.log(event.selectedStep);
+		if (event.selectedIndex === 4) {
+			this.saveTranslations();
+		}
+	}
+
+	saveTranslations(): void {
+		this.organisation._translations = this.translatableFieldsComponent.getTranslations();
 	}
 
 	onSubmit(): void {

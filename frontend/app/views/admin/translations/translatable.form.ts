@@ -10,6 +10,7 @@ import { EventEmitter } from 'events';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
+import { TranslationApiService } from '../../../services/translation.api.service';
 
 
 @Component({
@@ -21,44 +22,47 @@ import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 export class TranslatableFieldsComponent implements OnInit {
 
 	@Input() multiLingualObject: {};
+	@Input() translatableAttributes: string[];
 
 	translations: any[] = [];
-	translatableAttributes: string[] = [];
 	selectedLanguage: String;
 	faCheck: IconDefinition = faCheck;
 	faTimes: IconDefinition = faTimes;
 
 	constructor(
 		@Inject(TranslationService) private translationService: DataService,
+		private translationApiServcie: TranslationApiService,
 		protected constants: Constants
 	) { }
 
 	ngOnInit(): void {
+		if (Array.isArray(this.multiLingualObject['_translations'])) {
+			this.multiLingualObject['_translations'] = {};
+		}
 		this.initTranslations();
 	}
 
 	initTranslations(): void {
 		this.translationService.getAll().subscribe(records => {
 			this.translations = records;
-			this.buildEmptyTranslations(records);
-			this.initTranslatableFields();
 			this.selectedLanguage = this.translations[0].locale;
+			this.buildEmptyTranslations(records);
 		});
-	}
-
-	initTranslatableFields(): void {
-		Object.keys(this.multiLingualObject['_translations'][this.translations[0].locale]).map(
-			key => this.translatableAttributes.push(key)
-		);
 	}
 
 	buildEmptyTranslations(records: any): void {
 		records.map(translation => {
-			if (!this.multiLingualObject['_translations'][translation.locale]
-				|| (Object.keys(this.multiLingualObject['_translations'][translation.locale]).length === 0
-					&& this.multiLingualObject['_translations'][translation.locale].constructor === Object)) {
-				const currLocale: any = { locale: translation.locale, description: '' };
-				this.multiLingualObject['_translations'][translation.locale] = currLocale;
+			const locale = translation.locale;
+			if (!this.multiLingualObject['_translations']) {
+				this.multiLingualObject['_translations'] = {};
+			}
+			if (!this.multiLingualObject['_translations'][locale]
+				|| (Object.keys(this.multiLingualObject['_translations'][locale]).length === 0
+					&& this.multiLingualObject['_translations'][locale].constructor === Object)) {
+				const currLocale: any = {};
+				currLocale.locale = locale;
+				this.translatableAttributes.map(attribute => currLocale[attribute] = '');
+				this.multiLingualObject['_translations'][locale] = currLocale;
 			}
 		});
 	}
@@ -70,5 +74,24 @@ export class TranslatableFieldsComponent implements OnInit {
 		return this.constants[attribute] ? this.constants[attribute] : attribute;
 	}
 
+	getTranslations(): any {
+		const _translations = {};
+		Object.keys(this.multiLingualObject['_translations']).forEach(languageCode => {
+			Object.keys(this.multiLingualObject['_translations'][languageCode]).forEach(attribute => {
+				if (attribute !== 'locale') {
+					if (!this.multiLingualObject['_translations'][languageCode][attribute]) {
+						console.log(this.multiLingualObject[attribute] + ': ' + languageCode);
+						this.multiLingualObject['_translations'][languageCode][attribute] = this.multiLingualObject[attribute] + ': ' + languageCode;
+						// this.translationApiServcie.getTranslation(this.multiLingualObject[attribute], languageCode).subscribe(translation => {
+						// 	this.multiLingualObject['_translations'][languageCode][attribute] = translation;
+						// });
+					}
+				}
+			});
+		});
+		return this.multiLingualObject['_translations'];
+	}
+
 }
+
 

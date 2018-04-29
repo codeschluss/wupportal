@@ -3,7 +3,7 @@
 	<h2 *ngIf="!activity.name">{{ constants.noTitle}}</h2>
 	<form #activityForm="ngForm" (ngSubmit)="onSubmit()">
 		<mat-card class="container-fluid">
-			<mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
+			<mat-horizontal-stepper (selectionChange)="stepperValueChange($event)" linear="true" #stepper="matHorizontalStepper">
 				<ng-template matStepperIcon="done">
 					<fa-icon [icon]="faCheck"></fa-icon>
 				</ng-template>
@@ -66,7 +66,7 @@
 				</mat-step>
 				<mat-step>
 					<ng-template matStepLabel>{{constants.translations}}</ng-template>
-					<translatable-form [multiLingualObject]="activity"></translatable-form>
+					<translatable-form #translatableFieldsComponent [multiLingualObject]="activity" [translatableAttributes]="['name', 'description']"></translatable-form>
 					<div>
 						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
 						<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
@@ -98,6 +98,9 @@
 				<mat-step [stepControl]="schedulesFormGroup">
 					<ng-template matStepLabel>{{constants.dates}}</ng-template>
 					<scheduler-component-form #schedulerComponent [schedules]="activity.schedules" (onScheduleChange)="onScheduleChange($event)"></scheduler-component-form>
+					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+					<button type="button" class="btn btn-primary" color="primary" [disabled]="schedulesFormGroup.invalid" (click)="saveTranslations()"
+					 matStepperNext>{{constants.next}}</button>
 				</mat-step>
 
 				<mat-step>

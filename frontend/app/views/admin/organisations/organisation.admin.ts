@@ -41,6 +41,9 @@ export class OrganisationAdminComponent implements OnInit {
 	@ViewChild(ProviderTableComponent)
 	providerTable: ProviderTableComponent;
 
+	@ViewChild('translatableFieldsComponent')
+	translatableFieldsComponent: TranslatableFieldsComponent;
+
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		private providerService: ProviderService,
@@ -148,5 +151,14 @@ export class OrganisationAdminComponent implements OnInit {
 	getProviderIDs(): Array<string> {
 		return this.organisationProviders
 			.map(provider => provider.id);
+	}
+
+	saveTranslations(): void {
+		this.organisation._translations = this.translatableFieldsComponent.getTranslations();
+		this.organisationService.edit(this.organisation).subscribe();
+	}
+
+	back(): void {
+		this.location.back();
 	}
 }

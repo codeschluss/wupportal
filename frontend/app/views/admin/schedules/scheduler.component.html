@@ -220,11 +220,5 @@
 				</div>
 			</mat-accordion>
 		</div>
-		<div>
-			<button class="btn btn-danger" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
-			<button class="btn btn-primary" type="button" (click)="newEntry()">{{constants.create + ' ' + constants.additional + ' ' + constants.date}}</button>
-		</div>
 	</div>
-	<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-	<button type="button" class="btn btn-primary" color="primary" [disabled]="schedulesCtrl.invalid" matStepperNext>{{constants.next}}</button>
 </form>

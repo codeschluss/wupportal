@@ -71,6 +71,7 @@ import { UserService } from 'app/services/user.service';
 import { AuthGuardService } from 'app/services/authguard.service';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
+import { TranslationApiService } from './services/translation.api.service';
 import { ValidationService } from 'app/services/validation.service';
 import { Constants } from 'app/services/constants';
 import {
@@ -199,6 +200,7 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		UserService,
 		LocationService,
 		NominatimService,
+		TranslationApiService,
 		Constants,
 		ValidationService,
 		{ provide: MatPaginatorIntl, useClass: PaginatorLabels },

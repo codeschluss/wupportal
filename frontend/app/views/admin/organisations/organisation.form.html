@@ -3,7 +3,7 @@
 		<h3 *ngIf="organisation.name">{{organisation.name}}</h3>
 		<h3 *ngIf="!organisation.name">{{constants.noTitle}}</h3>
 		<form #organisationForm="ngForm" (ngSubmit)="onSubmit()" class="well">
-			<mat-horizontal-stepper linear="true">
+			<mat-horizontal-stepper (selectionChange)="stepperValueChange($event)" linear="true">
 				<ng-template matStepperIcon="done">
 					<fa-icon [icon]="faCheck"></fa-icon>
 				</ng-template>
@@ -46,7 +46,7 @@
 				</mat-step>
 				<mat-step>
 					<ng-template matStepLabel>{{constants.translations}}</ng-template>
-					<translatable-form [multiLingualObject]="organisation"></translatable-form>
+					<translatable-form #translatableFieldsComponent [multiLingualObject]="organisation" [translatableAttributes]="['description']"></translatable-form>
 					<div>
 						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
 						<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>

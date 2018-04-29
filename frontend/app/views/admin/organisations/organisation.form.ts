@@ -85,6 +85,13 @@ export class OrganisationFormComponent implements OnInit {
 		this.baseDataFormGroup.get('mailCtrl').valueChanges.subscribe(mail => { this.organisation.mail = mail; });
 		this.baseDataFormGroup.get('phoneCtrl').valueChanges.subscribe(phone => { this.organisation.phone = phone; });
 		this.baseDataFormGroup.get('webSiteCtrl').valueChanges.subscribe(website => { this.organisation.website = website; });
+		this.initTranslations();
+	}
+
+	initTranslations(): void {
+		this.translationService.getAll().subscribe(records => {
+			this.translations = records;
+		});
 	}
 
 	addressSubmit(): void {
@@ -120,11 +127,13 @@ export class OrganisationFormComponent implements OnInit {
 	}
 
 	stepperValueChange(event: StepperSelectionEvent): void {
-		console.log(event);
-		console.log(event.selectedStep);
 		if (event.selectedIndex === 4) {
 			this.saveTranslations();
 		}
+	}
+
+	getLanguageLabel(locale: string): string {
+		return this.translations.find(translation => translation.locale === locale).name;
 	}
 
 	saveTranslations(): void {

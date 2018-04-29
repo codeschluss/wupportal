@@ -25,7 +25,8 @@ import {
 	TagService,
 	TargetGroupService,
 	CategoryService,
-	OrganisationService
+	OrganisationService,
+	TranslationService
 } from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
@@ -37,7 +38,6 @@ import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.componen
 import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
 import { ActivityService } from 'app/services/activity.service';
 import { Constants } from 'app/services/constants';
-import { Object } from 'openlayers';
 import { Subscription } from 'rxjs/Subscription';
 import { generate } from 'rxjs/observable/generate';
 import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -72,6 +72,7 @@ export class ActivityFormComponent implements OnInit {
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 	@ViewChild('schedulerComponent') scheduler: SchedulerComponent;
 	@ViewChild('translatableFieldsComponent') translatableFieldsComponent: TranslatableFieldsComponent;
+	private translations: any[];
 
 	constructor(
 		private activityService: ActivityService,
@@ -81,6 +82,7 @@ export class ActivityFormComponent implements OnInit {
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
 		@Inject(CategoryService) private categoriesService: DataService,
+		@Inject(TranslationService) private translationService: DataService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -160,11 +162,18 @@ export class ActivityFormComponent implements OnInit {
 				}
 				this.onScheduleChange(this.activity.schedules);
 			});
+		this.initTranslations();
 	}
 
 	onScheduleChange(schedules: Schedule[]): void {
 		this.activity.schedules = schedules;
 		this.schedulesFormGroup.get('schedulesCtrl').setValue(this.activity.schedules);
+	}
+
+	initTranslations(): void {
+		this.translationService.getAll().subscribe(records => {
+			this.translations = records;
+		});
 	}
 
 	addTag(event: MatChipInputEvent): void {
@@ -230,11 +239,13 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	stepperValueChange(event: StepperSelectionEvent): void {
-		console.log(event);
-		console.log(event.selectedStep);
 		if (event.selectedIndex === 4) {
 			this.saveTranslations();
 		}
+	}
+
+	getLanguageLabel(locale: string): string {
+		return this.translations.find(translation => translation.locale === locale).name;
 	}
 
 	saveTranslations(): void {

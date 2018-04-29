@@ -82,13 +82,24 @@
 				<mat-step>
 					<ng-template matStepLabel>{{constants.summary}}</ng-template>
 					<h2>{{constants.pleaseControl}}</h2>
-					<organisation-detail *ngIf="organisation && organisation.address" [organisation]="organisation" largeTitle="true"></organisation-detail>
-					<h3>{{constants.admins}}</h3>
-					<mat-list role="list">
-						<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider?.user?.fullname + ' (' + provider?.user?.username + ')'}}</mat-list-item>
-					</mat-list>
-					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-					<button class="btn btn-primary" type="submit">{{constants.save}}</button>
+					<mat-tab-group>
+						<mat-tab label="{{constants.coreData}}">
+							<organisation-detail *ngIf="organisation && organisation.address" [organisation]="organisation" largeTitle="true"></organisation-detail>
+							<h3>{{constants.admins}}</h3>
+							<mat-list role="list">
+								<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider?.user?.fullname + ' (' + provider?.user?.username + ')'}}</mat-list-item>
+							</mat-list>
+							<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
+							<button class="btn btn-primary" type="submit">{{constants.save}}</button>
+						</mat-tab>
+						<mat-tab label="{{constants.translations}}">
+							<div *ngFor="let translation of translations">
+								<b>{{getLanguageLabel(translation['locale'])}}</b>
+								<div>{{translation['description']}}</div>
+								<hr>
+							</div>
+						</mat-tab>
+					</mat-tab-group>
 				</mat-step>
 			</mat-horizontal-stepper>
 			<button type="button" class="btn btn-cancel" (click)="back()">{{constants.cancel}}</button>

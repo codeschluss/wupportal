@@ -2,6 +2,7 @@ import { Component, OnChanges, Input, SimpleChange, SimpleChanges } from '@angul
 
 import { Constants } from 'app/services/constants';
 import { Organisation } from 'app/models/organisation';
+import { DataService } from '../../../services/data.service';
 
 
 @Component({
@@ -20,8 +21,10 @@ export class OrganisationDetailComponent implements OnChanges {
 	) { }
 
 	ngOnChanges(changes: SimpleChanges): void {
-		const organisation: SimpleChange = changes.organisation;
-		this.organisation = organisation.currentValue;
+		if (changes.organisation) {
+			const organisation: SimpleChange = changes.organisation;
+			this.organisation = organisation.currentValue;
+		}
 	}
 
 }

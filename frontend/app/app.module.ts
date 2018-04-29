@@ -94,6 +94,9 @@ import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { AddressTableComponent } from 'app/views/admin/addresses/address.table';
 
 import { ConfigFormComponent } from 'app/views/admin/configs/config.form';
+import { TargetGroupComponent } from './views/admin/configs/targetgroup.form';
+import { TagComponent } from './views/admin/configs/tag.form';
+import { CategoryComponent } from './views/admin/configs/category.form';
 
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
@@ -146,6 +149,9 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		AddressCreateFormComponent,
 		AddressFormComponent,
 		ConfigFormComponent,
+		TargetGroupComponent,
+		TagComponent,
+		CategoryComponent,
 		DeleteDialogComponent,
 		DeleteActionComponent,
 		OrganisationSelectionComponent,

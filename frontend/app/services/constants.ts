@@ -160,7 +160,9 @@ export class Constants {
 	public noTitle: string = 'Kein Titel';
 	public tags: string = 'Tags';
 	public targetGroups: string = 'Zielgruppen';
+	public targetGroup: string = 'Zielgruppe';
 	public category: string = 'Kategorie';
+	public categories: string = 'Kategorien';
 
 	public organisations: string = 'Organisationen';
 	public organisation: string = 'Organisation';

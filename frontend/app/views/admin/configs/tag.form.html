@@ -1,0 +1,33 @@
+<mat-card class="edit-container gray-card">
+	<div class="loadingOverlay" *ngIf="!tags">
+		<mat-spinner></mat-spinner>
+	</div>
+	<h2>{{ constants.tags }}
+	</h2>
+	<form #targetgroupsForm="ngForm" (ngSubmit)="onSubmit()">
+		<mat-grid-list cols="3" rowHeight="100px">
+			<div *ngFor="let tag of tags;let i = index">
+				<mat-grid-tile colspan="1" rowspan="1">
+					<mat-form-field class="form-full-width">
+						<input matInput type="text" name="tag{{i}}.name" [(ngModel)]=tag.name/>
+					</mat-form-field>
+					<span>
+						<fa-icon (click)="deleteTag(tag)" [icon]="faTrashAlt" class="text-danger">
+						</fa-icon>
+					</span>
+				</mat-grid-tile>
+			</div>
+		</mat-grid-list>
+		<mat-card>
+			<form>
+				<h3>{{ constants.newEntry }}</h3>
+				<mat-form-field class="form-full-width">
+					<input matInput type="text" name="new" placeholder="{{constants.newElement}}" [(ngModel)]="newTagName" />
+				</mat-form-field>
+				<button class="btn" type="button" (click)="addTag()">{{constants.newEntry}}</button>
+			</form>
+		</mat-card>
+		<button class="btn" type="button" (click)="back()">{{constants.back}}</button>
+		<button class="btn btn-primary" color="primary" type="submit">{{constants.save}}</button>
+	</form>
+</mat-card>

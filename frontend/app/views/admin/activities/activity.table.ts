@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatSidenav } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatSidenav, MatSlideToggleChange } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 
 import { DataSource } from '@angular/cdk/table';
@@ -17,8 +17,6 @@ import { AbstractTableComponent } from 'app/views/admin/table.abstract';
 import { Constants } from 'app/services/constants';
 import { Provider } from 'app/models/provider';
 
-import * as moment from 'moment';
-
 @Component({
 	selector: 'activity-table',
 	styleUrls: ['../admin.area.css', '../table.abstract.css', '../../../app.component.css'],
@@ -35,6 +33,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 
 	currentDetail: Activity;
 	showNewButton: boolean = false;
+	onlyFutureSchedules: boolean = false;
 	dataSource: MatTableDataSource<Activity> = new MatTableDataSource<Activity>();
 
 	constructor(
@@ -62,6 +61,11 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 		if (this.actionsVisible()) {
 			this.displayedColumns.push('action');
 		}
+	}
+
+	handleSliderChanged(event: MatSlideToggleChange): void {
+		Object.assign(this.tableState, { future: this.onlyFutureSchedules });
+		this.fetchData();
 	}
 
 	actionsVisible(): boolean {

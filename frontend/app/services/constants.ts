@@ -117,6 +117,7 @@ export class Constants {
 	public dateTimeQuestion: string = 'Wann findet Ihre Veranstaltung statt?';
 	public placeQuestion: string = 'Wo findet Ihre Veranstaltung statt?';
 	public pleaseControl: string = 'Bitte kontrollieren Sie Ihre Angaben';
+	public showOnlyFutureActivities: string = 'nur aktuelle Aktivitäten';
 	public scheduleListExplanation: string = 'Sie können an dieser Stelle auch Anpssungen vornehmen, ' +
 		'indem Sie auf den jeweiligen	termin klicken.';
 	// public chooseOrganisationForActivity: string = 'Für welche Organisation soll die Veranstaltung angelegt werden';

@@ -79,12 +79,6 @@ class ActivitiesController extends AppController
 			: $this->ResponseHandler->responseSuccess($result);
 	}
 
-	private function setOnlyFutureSchedulesFilter($query) {
-		$query->matching('Schedules', function ($q) {
-    	return $q->where(['Schedules.end_date >' => $q->func()->now('date')]);
-		});
-	}
-
 	private function setAdvancedFilters($query) {
 		$request = $this->request->input('json_decode');
 		$emptyEntities = [];
@@ -169,6 +163,7 @@ class ActivitiesController extends AppController
 
 		$this->setPagination($request);
 		$this->setJoins($query);
+		$this->setOnlyFutureSchedulesFilter($query);
 		$this->setSorting($query, $request);
 		$this->setFiltering($query, $request);
 
@@ -189,6 +184,7 @@ class ActivitiesController extends AppController
 
 		$this->setPagination($request);
 		$this->setJoins($query);
+		$this->setOnlyFutureSchedulesFilter($query);
 		$this->setSorting($query, $request);
 		$this->setFiltering($query, $request);
 		$this->setByProviders($query, $request);
@@ -212,6 +208,15 @@ class ActivitiesController extends AppController
 			foreach ($this->contain() as $contain) {
 				$query->leftJoinWith($contain)->contain($contain);
 			}
+		}
+	}
+
+	private function setOnlyFutureSchedulesFilter($query) {
+		if(isset($this->request->input('json_decode')->future)
+			&& $this->request->input('json_decode')->future) {
+				$query->matching('Schedules', function ($q) {
+					return $q->where(['Schedules.end_date >' => $q->func()->now('date')]);
+				});
 		}
 	}
 

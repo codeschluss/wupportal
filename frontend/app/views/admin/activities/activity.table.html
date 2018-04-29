@@ -14,14 +14,16 @@
 					<input matInput (keyup)="handleFiltered($event)"
 					  placeholder="Filter">
 				</mat-form-field>
+				<mat-slide-toggle [color]="primary"
+				  [(ngModel)]="onlyFutureSchedules"
+				  (change)="handleSliderChanged($event)">
+					{{constants.showOnlyFutureActivities}}
+				</mat-slide-toggle>
 				<button class="btn btn-warning"
 				  *ngIf="showNewButton" routerLink='/activity/edit/new'>
-					{{ constants.newEntry }}
+					{{constants.newEntry}}
 				</button>
 			</div>
-			<!-- <div class="loadingOverlay" *ngIf="!finishedLoading">
-				<mat-spinner></mat-spinner>
-			</div> -->
 			<mat-table #table [dataSource]="dataSource"
 			  class="activity-table" matSort
 			  (matSortChange)="handleSorted($event)"

@@ -39,7 +39,8 @@ import {
 	MatStepperModule,
 	MatGridListModule,
 	MatAutocompleteModule,
-	MatInputModule
+	MatInputModule,
+	MatSlideToggleModule
 } from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -164,7 +165,6 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		MatExpansionModule,
 		MatCardModule,
 		MatIconModule,
-		MatInputModule,
 		MatFormFieldModule,
 		MatTableModule,
 		MatSortModule,
@@ -189,7 +189,8 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		MatInputModule,
 		MatSnackBarModule,
 		MatProgressSpinnerModule,
-		FontAwesomeModule
+		FontAwesomeModule,
+		MatSlideToggleModule
 	],
 	providers: [
 		AuthGuardService,

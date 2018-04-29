@@ -56,7 +56,11 @@ class MailHandlerComponent extends Component
 			$this->configs->getPortalName() . ' - Neuer Anbieter für Organisation ' . $organisationName;
 	}
 
-
+	/**
+	 * Sends new password in a mail to specified target
+	 *
+	 * @return void
+	 */
 	public function sendForgotPwdMail($newPassword, $userMailAddress) {
 		$this->email->viewVars([
 			'newPassword' => $newPassword,

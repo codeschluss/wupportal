@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
-
+use Cake\I18n\Time;
 use App\Controller\AppController;
 
 /**
@@ -63,16 +63,97 @@ class ActivitiesController extends AppController
 	}
 
 	public function mapfilter() {
-		$request = $this->request->input('json_decode');
 		$query = $this->table()->find();
+		$this->setJoins($query);
+		$this->setOnlyFutureSchedulesFilter($query);
 
+		$emptyEntities = $this->setAdvancedFilters($query);
+		$this->setFreetextFilter($query, $emptyEntities);
 
-
+		// var_dump($query); exit;
+		$result = $query->all()->toArray();
 		$this->prepareResult($result);
-		return $this->response
-			->withStatus(200)
-			->withType('application/json')
-			->withStringBody(json_encode(true));
+
+		return $this->ResponseHandler->isNotFoundError($result)
+			? $this->ResponseHandler->responseNotFoundError($this->name)
+			: $this->ResponseHandler->responseSuccess($result);
+	}
+
+	private function setOnlyFutureSchedulesFilter($query) {
+		$query->matching('Schedules', function ($q) {
+    	return $q->where(['Schedules.end_date >' => $q->func()->now('date')]);
+		});
+	}
+
+	private function setAdvancedFilters($query) {
+		$request = $this->request->input('json_decode');
+		$emptyEntities = [];
+		if(isset($request->advanced) && $request->advanced) {
+			foreach ($request->advanced as $entity => $ids) {
+				if ($ids && !empty($ids)) {
+					$query->where(['OR' =>
+						function($exp, $q) use ($entity, $ids) {
+							return array_map(function ($id) use ($entity) {
+								return [$entity . '.id' => $id];
+							}, $ids);
+						}
+					]);
+				} else {
+					$emptyEntities[] = $entity;
+				}
+			}
+		}
+		return $emptyEntities;
+	}
+
+	private function setFreetextFilter($query, $emptyEntities) {
+		if(isset($this->request->input('json_decode')->filter)) {
+			$filter = $this->request->input('json_decode')->filter;
+			if($filter) {
+				$query->where(['OR' =>
+					function($exp, $q) use ($emptyEntities, $filter) {
+						$or = [];
+						if (!empty($emptyEntities)) {
+							$or =
+								array_map(function ($entity) use ($filter) {
+									return $this->getFilterFieldsQuery($entity, $filter);
+								}, $emptyEntities);
+						}
+
+						if ($this->isLocaleSet()) {
+							$or[] = [$this->table()->translationField('name') . ' LIKE' => '%' . $filter . '%'];
+							$or[] = [$this->table()->translationField('description') . ' LIKE' => '%' . $filter . '%'];
+						} else {
+							$or[] = ['Activities.name LIKE' =>  '%' . $filter . '%'];
+							$or[] = ['Activities.description LIKE' => '%' . $filter . '%'];
+						}
+
+						return $or;
+					}
+				]);
+			}
+		}
+	}
+
+	private function getFilterFieldsQuery($entity, $filter) {
+		switch($entity) {
+			case 'Organisations':
+			case 'Suburbs':
+				return [$entity . '.name LIKE' => '%' . $filter . '%'];
+			case 'Categories':
+				return $this->isLocaleSet()
+					?	[$this->table()->Categories->translationField('name') . ' LIKE' => '%' . $filter . '%']
+					: [$entity . '.name LIKE' => '%' . $filter . '%'];
+			case 'Tags':
+				if($this->isLocaleSet()) {
+					$tagsQuery = $this->table()->getTranslatedTagsQuery($filter);
+					return
+						function ($exp) use ($tagsQuery) {
+							return $exp->exists($tagsQuery);
+						};
+				}
+				return [$entity . '.name LIKE' => '%' . $filter . '%'];
+		}
 	}
 
 	/**

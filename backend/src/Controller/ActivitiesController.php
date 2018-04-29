@@ -204,7 +204,10 @@ class ActivitiesController extends AppController
 	protected function setJoins($query)
 	{
 		if ($this->isLocaleSet()) {
-			$query->leftJoinWith('Tags')->contain($this->contain());
+			$query
+			->leftJoinWith('Tags')
+			->leftJoinWith('TargetGroups')
+			->contain($this->contain());
 		} else {
 			foreach ($this->contain() as $contain) {
 				$query->leftJoinWith($contain)->contain($contain);

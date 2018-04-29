@@ -14,6 +14,8 @@ use Cake\ORM\TableRegistry;
 class SchedulesController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Schedules.start_date';
+
 	public function initialize()
 	{
 		parent::initialize();

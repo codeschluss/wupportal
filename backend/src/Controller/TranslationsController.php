@@ -14,6 +14,8 @@ use Cake\ORM\TableRegistry;
 class TranslationsController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Translations.locale';
+
 	public function initialize()
 	{
 		parent::initialize();

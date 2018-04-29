@@ -13,6 +13,8 @@ use App\Controller\AppController;
 class SuburbsController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Suburbs.name';
+
 	public function initialize()
 	{
 		parent::initialize();

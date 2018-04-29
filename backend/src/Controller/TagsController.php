@@ -14,6 +14,8 @@ use Cake\ORM\TableRegistry;
 class TagsController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Tags.name';
+
 	public function initialize()
 	{
 		parent::initialize();

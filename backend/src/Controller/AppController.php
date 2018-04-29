@@ -36,6 +36,8 @@ class AppController extends Controller
 	/** @var array $paginate Paginator configuration */
 	public $paginate;
 
+	protected $DEFAULT_SORT = '';
+
 	/**
 	 * Initialization hook method.
 	 * @return void
@@ -90,6 +92,7 @@ class AppController extends Controller
 	{
 		$result = $this->table()->find()
 			->contain($this->contain())
+			->order([$this->DEFAULT_SORT => 'ASC'])
 			->all()
 			->toArray();
 

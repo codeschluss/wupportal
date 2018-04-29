@@ -13,6 +13,8 @@ use App\Controller\AppController;
 class TargetGroupsController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'TargetGroups.name';
+
 	public function initialize()
 	{
 		parent::initialize();

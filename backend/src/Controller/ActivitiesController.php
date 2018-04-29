@@ -15,6 +15,8 @@ use App\Controller\AppController;
 class ActivitiesController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Activities.name';
+
 	public function initialize()
 	{
 		parent::initialize();
@@ -29,6 +31,7 @@ class ActivitiesController extends AppController
 	{
 		$result = $this->table()->find()
 			->contain($this->contain())
+			->order([$this->DEFAULT_SORT => 'ASC'])
 			->all()
 			->toArray();
 

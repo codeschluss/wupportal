@@ -14,6 +14,8 @@ use Cake\I18n\I18n;
 class OrganisationsController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Organisations.name';
+
 	public function initialize()
 	{
 		parent::initialize();

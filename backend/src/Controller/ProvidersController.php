@@ -14,6 +14,8 @@ use Cake\ORM\TableRegistry;
 class ProvidersController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Providers.id';
+
 	/**
 	 * Add method
 	 *

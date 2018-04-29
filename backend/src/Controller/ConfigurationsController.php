@@ -13,6 +13,8 @@ use App\Controller\AppController;
 class ConfigurationsController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Configurations.item';
+
 	public function initialize()
 	{
 		parent::initialize();

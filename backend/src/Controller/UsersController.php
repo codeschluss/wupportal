@@ -16,6 +16,8 @@ use Cake\ORM\TableRegistry;
 class UsersController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Users.username';
+
 	public function initialize()
 	{
 		parent::initialize();

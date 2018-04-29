@@ -13,6 +13,8 @@ use App\Controller\AppController;
 class AddressesController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Suburbs.name';
+
 	public function initialize()
 	{
 		parent::initialize();
@@ -23,7 +25,7 @@ class AddressesController extends AppController
 	protected function contain()
 	{
 		return [
-				'Suburbs'
+			'Suburbs'
 		];
 	}
 

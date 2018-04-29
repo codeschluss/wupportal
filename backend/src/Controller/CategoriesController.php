@@ -13,6 +13,8 @@ use App\Controller\AppController;
 class CategoriesController extends AppController
 {
 
+	protected $DEFAULT_SORT = 'Categories.name';
+
 	public function initialize()
 	{
 		parent::initialize();

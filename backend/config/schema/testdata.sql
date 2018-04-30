@@ -161,8 +161,9 @@ INSERT INTO `i18n` (`id`, `locale`, `model`, `foreign_key`, `field`, `content`) 
 ('00000000-0000-0000-0012-280000000000', 'fr', 'Translations', '00000000-0000-0000-0013-100000000000', 'name', 'translations_read_fr'),
 ('00000000-0000-0000-0012-290000000000', 'es', 'Translations', '00000000-0000-0000-0013-200000000000', 'name', 'translations_edit_es'),
 ('00000000-0000-0000-0012-310000000000', 'fr', 'Translations', '00000000-0000-0000-0013-300000000000', 'name', 'translations_edit_fr'),
-
 ('00000000-0000-0000-0012-320000000000', 'es', 'Activities', '00000000-0000-0000-0010-160000000000', 'name', 'mapAllWithoutFree_Translated');
 
 INSERT INTO `translations` (`id`, `locale`, `name`) VALUES
-('00000000-0000-0000-0013-100000000000', 'es', 'ToRead');
+('00000000-0000-0000-0013-100000000000', 'es', 'ToRead'),
+('00000000-0000-0000-0013-200000000000', 'fr', 'ToEdit'),
+('00000000-0000-0000-0013-300000000000', 'en', 'ToDelete');

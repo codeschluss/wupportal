@@ -49,7 +49,6 @@ export class OrganisationFormComponent implements OnInit {
 	addressFormGroup: FormGroup;
 	adminFormGroup: FormGroup;
 	faCheck: IconDefinition = faCheck;
-	translations: any[] = [];
 	selectedLanguage: '';
 	adminProviders: Array<Provider> = new Array<Provider>();
 
@@ -85,13 +84,6 @@ export class OrganisationFormComponent implements OnInit {
 		this.baseDataFormGroup.get('mailCtrl').valueChanges.subscribe(mail => { this.organisation.mail = mail; });
 		this.baseDataFormGroup.get('phoneCtrl').valueChanges.subscribe(phone => { this.organisation.phone = phone; });
 		this.baseDataFormGroup.get('webSiteCtrl').valueChanges.subscribe(website => { this.organisation.website = website; });
-		this.initTranslations();
-	}
-
-	initTranslations(): void {
-		this.translationService.getAll().subscribe(records => {
-			this.translations = records;
-		});
 	}
 
 	addressSubmit(): void {
@@ -132,10 +124,6 @@ export class OrganisationFormComponent implements OnInit {
 		}
 	}
 
-	getLanguageLabel(locale: string): string {
-		return this.translations.find(translation => translation.locale === locale).name;
-	}
-
 	saveTranslations(): void {
 		// this.organisation._translations = this.translatableFieldsComponent.getTranslations();
 	}
@@ -153,13 +141,6 @@ export class OrganisationFormComponent implements OnInit {
 				}
 			});
 		}
-	}
-
-	getTranslationsAsArray(): any[] {
-		const translations = [];
-		Object.keys(this.organisation._translations).forEach(
-			lang => translations.push(this.organisation._translations[lang]));
-		return translations;
 	}
 
 	combineProviderSubsribtions(orga: Organisation): Observable<any[]> {

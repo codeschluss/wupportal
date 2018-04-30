@@ -72,7 +72,6 @@ export class ActivityFormComponent implements OnInit {
 	@ViewChild('addressAutocompleteComponent') addressAutocomplete: AddressAutocompleteComponent;
 	@ViewChild('schedulerComponent') scheduler: SchedulerComponent;
 	@ViewChild('translatableFieldsComponent') translatableFieldsComponent: TranslatableFieldsComponent;
-	private translations: any[];
 
 	constructor(
 		private activityService: ActivityService,
@@ -162,18 +161,11 @@ export class ActivityFormComponent implements OnInit {
 				}
 				this.onScheduleChange(this.activity.schedules);
 			});
-		this.initTranslations();
 	}
 
 	onScheduleChange(schedules: Schedule[]): void {
 		this.activity.schedules = schedules;
 		this.schedulesFormGroup.get('schedulesCtrl').setValue(this.activity.schedules);
-	}
-
-	initTranslations(): void {
-		this.translationService.getAll().subscribe(records => {
-			this.translations = records;
-		});
 	}
 
 	addTag(event: MatChipInputEvent): void {
@@ -244,21 +236,10 @@ export class ActivityFormComponent implements OnInit {
 		}
 	}
 
-	getLanguageLabel(locale: string): string {
-		return this.translations.find(translation => translation.locale === locale).name;
-	}
-
 	saveTranslations(): void {
 		// console.log('this.activity._translations before getTranslations', this.activity._translations);
 		// this.activity._translations = this.translatableFieldsComponent.getTranslations();
 		// console.log('this.activity._translations after getTranslations: ', this.activity._translations);
-	}
-
-	getTranslationsAsArray(): any[] {
-		const translations = [];
-		Object.keys(this.activity._translations).forEach(
-			lang => translations.push(this.activity._translations[lang]));
-		return translations;
 	}
 
 	onSubmit(): void {

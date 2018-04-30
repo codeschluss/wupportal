@@ -114,16 +114,9 @@
 								<button type="submit" class="btn btn-primary">{{constants.save}}</button>
 							</div>
 						</mat-tab>
-						<ng-template *ngIf="translations">
-							<mat-tab label="{{constants.translations}}">
-								<div *ngFor="let translation of getTranslationsAsArray()">
-									<b>{{getLanguageLabel(translation['locale'])}}</b>
-									<div>{{translation['name']}}</div>
-									<div>{{translation['description']}}</div>
-									<hr>
-								</div>
-							</mat-tab>
-						</ng-template>
+						<mat-tab label="{{constants.translations}}">
+							<translatable-form #translatableFieldsComponent [multiLingualObject]="activity" [translatableAttributes]="['name', 'description']"></translatable-form>
+						</mat-tab>
 					</mat-tab-group>
 				</mat-step>
 			</mat-horizontal-stepper>

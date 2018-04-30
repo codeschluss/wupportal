@@ -69,6 +69,38 @@ export class SchedulerComponent implements OnInit {
 	ngOnInit(): void {
 		this.adapter.setLocale(this.constants.defaultCountryCode);
 
+		this.initFormGroups();
+
+		this.currScheduleFormGroup = new FormGroup({
+			'currentStartDate': new FormControl('', [
+				Validators.required
+			]),
+			'currentStartTimeHour': new FormControl('', [
+				Validators.required
+			]),
+			'currentStartTimeMinute': new FormControl('', [
+				Validators.required
+			]),
+			'currentEndDate': new FormControl('', [
+				Validators.required
+			]),
+			'currentEndTimeHour': new FormControl('', [
+				Validators.required
+			]),
+			'currentEndTimeMinute': new FormControl('', [
+				Validators.required
+			])
+		});
+
+		this.schedulesCtrl = new FormControl(this.schedules, [Validators.required]);
+
+		this.schedulesCtrl.valueChanges.subscribe(schedules => {
+			this.onScheduleChange.emit(schedules);
+		});
+		this.declerateDateForms(-1);
+	}
+
+	private initFormGroups(): void {
 		this.formGroup = new FormGroup({
 			'startTimeHourCtrl': new FormControl(this.schedules[0] ?
 				moment(this.schedules[0].startTime).hour() : '', [
@@ -101,34 +133,6 @@ export class SchedulerComponent implements OnInit {
 			'monthDateCtrl': new FormControl(1),
 			'rythmUnitCtrl': new FormControl('unique'),
 		});
-
-		this.currScheduleFormGroup = new FormGroup({
-			'currentStartDate': new FormControl('', [
-				Validators.required
-			]),
-			'currentStartTimeHour': new FormControl('', [
-				Validators.required
-			]),
-			'currentStartTimeMinute': new FormControl('', [
-				Validators.required
-			]),
-			'currentEndDate': new FormControl('', [
-				Validators.required
-			]),
-			'currentEndTimeHour': new FormControl('', [
-				Validators.required
-			]),
-			'currentEndTimeMinute': new FormControl('', [
-				Validators.required
-			])
-		});
-
-		this.schedulesCtrl = new FormControl(this.schedules, [Validators.required]);
-
-		this.schedulesCtrl.valueChanges.subscribe(schedules => {
-			this.onScheduleChange.emit(schedules);
-		});
-		this.declerateDateForms(-1);
 	}
 
 	generateSchedules(): void {
@@ -286,6 +290,9 @@ export class SchedulerComponent implements OnInit {
 		this.toDeleteSchedules.push(this.schedules[i]);
 		this.schedules.splice(i, 1);
 		this.schedulesCtrl.setValue(this.schedules);
+		if (!this.schedules.length) {
+			this.initFormGroups();
+		}
 	}
 
 	newEntry(): void {
@@ -305,6 +312,7 @@ export class SchedulerComponent implements OnInit {
 		this.toDeleteSchedules = this.schedules;
 		this.schedules = [];
 		this.schedulesCtrl.setValue(this.schedules);
+		this.initFormGroups();
 	}
 
 	deleteSchedules(): void {

@@ -154,7 +154,7 @@ export class OrganisationAdminComponent implements OnInit {
 	}
 
 	saveTranslations(): void {
-		this.organisation._translations = this.translatableFieldsComponent.getTranslations();
+		// this.organisation._translations = this.translatableFieldsComponent.getTranslations();
 		this.organisationService.edit(this.organisation).subscribe();
 	}
 

@@ -249,9 +249,16 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	saveTranslations(): void {
-		console.log('before getTranslations');
-		this.activity._translations = this.translatableFieldsComponent.getTranslations();
-		console.log('after getTranslations');
+		// console.log('this.activity._translations before getTranslations', this.activity._translations);
+		// this.activity._translations = this.translatableFieldsComponent.getTranslations();
+		// console.log('this.activity._translations after getTranslations: ', this.activity._translations);
+	}
+
+	getTranslationsAsArray(): any[] {
+		const translations = [];
+		Object.keys(this.activity._translations).forEach(
+			lang => translations.push(this.activity._translations[lang]));
+		return translations;
 	}
 
 	onSubmit(): void {

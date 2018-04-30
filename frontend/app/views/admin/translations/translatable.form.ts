@@ -70,20 +70,22 @@ export class TranslatableFieldsComponent implements OnInit {
 		return this.constants[attribute] ? this.constants[attribute] : attribute;
 	}
 
-	getTranslations(): any {
+	public async getTranslations() {
 		const _translations = {};
-
-		Object.keys(this.multiLingualObject['_translations']).forEach(languageCode => {
-			Object.keys(this.multiLingualObject['_translations'][languageCode]).forEach(attribute => {
+		console.log('1');
+		for (const languageCode of Object.keys(this.multiLingualObject['_translations'])) {
+			for (const attribute of Object.keys(this.multiLingualObject['_translations'][languageCode])) {
 				if (attribute !== 'locale') {
 					if (!this.multiLingualObject['_translations'][languageCode][attribute]) {
+						console.log('before translate', this.multiLingualObject['_translations'][languageCode][attribute]);
 						this.multiLingualObject['_translations'][languageCode][attribute] =
-							this.translationService.translate(this.multiLingualObject[attribute], languageCode);
+							await this.translationService.translate(this.multiLingualObject[attribute], languageCode);
+						console.log('afer translate', this.multiLingualObject['_translations'][languageCode][attribute]);
 					}
 				}
-			});
-		});
-
+			}
+		}
+		console.log('return');
 		return this.multiLingualObject['_translations'];
 	}
 

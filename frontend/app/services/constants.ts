@@ -11,6 +11,7 @@ export class Constants {
 	public static duplicateEntryMessage: string = 'Datensatz mit dem Namen existiert bereits. Bitte anderen Namen auswählen';
 	public static notFoundMessage: string = 'Kein Datensatz zu den Suchkriterien gefunden';
 	public static wrongInputFormatMessage: string = 'Format der Eingabefelder sind nicht korrekt';
+	public static serviceNotAvailable: string = 'Automatische Übersetzung nicht verfügbar. Bitte bei Bedarf manuell übersetzen.';
 	public static unexpectedErrorMessage: string = 'Unerwarteter Serverfehler. Bitte erneut probieren oder Codeschluss kontaktieren';
 	public static successfulActionMessage: string = 'Aktion wurde erfolgreich ausgeführt';
 

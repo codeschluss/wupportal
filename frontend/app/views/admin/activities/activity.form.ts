@@ -25,8 +25,7 @@ import {
 	TagService,
 	TargetGroupService,
 	CategoryService,
-	OrganisationService,
-	TranslationService
+	OrganisationService
 } from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
@@ -44,6 +43,7 @@ import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 import { TranslatableFieldsComponent } from 'app/views/admin/translations/translatable.form';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { TranslationService } from 'app/services/translation.service';
 
 // @Author: Pseipel
 
@@ -82,7 +82,7 @@ export class ActivityFormComponent implements OnInit {
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
 		@Inject(CategoryService) private categoriesService: DataService,
-		@Inject(TranslationService) private translationService: DataService,
+		private translationService: TranslationService,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
@@ -249,7 +249,9 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	saveTranslations(): void {
+		console.log('before getTranslations');
 		this.activity._translations = this.translatableFieldsComponent.getTranslations();
+		console.log('after getTranslations');
 	}
 
 	onSubmit(): void {

@@ -69,6 +69,8 @@ export abstract class Service {
 				return new Error(httpError, Constants.duplicateEntryMessage, Constants.MIDDLE);
 			case 400:
 				return new Error(httpError, Constants.wrongInputFormatMessage, Constants.MIDDLE);
+			case 503:
+				return new Error(httpError, Constants.serviceNotAvailable, Constants.MIDDLE);
 			default:
 				const errorMessage: string = Constants.unexpectedErrorMessage
 					+ ' - ' + Constants.error + ': '

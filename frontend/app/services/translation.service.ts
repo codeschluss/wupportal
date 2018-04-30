@@ -19,11 +19,12 @@ export class TranslationService extends DataService {
 	}
 
 	public async translate(text: string, to: string): Promise<string> {
-		return await this.httpPost(
+		return this.httpPost(
 			this.baseUrl + 'translate',
 			this.createBody(text, to),
 			this.getHeader()
-		).toPromise();
+		).toPromise()
+			.catch(e => this.handleError(e));
 	}
 
 	public createBody(text: string, to: string): any {

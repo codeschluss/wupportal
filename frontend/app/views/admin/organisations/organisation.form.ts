@@ -137,7 +137,7 @@ export class OrganisationFormComponent implements OnInit {
 	}
 
 	saveTranslations(): void {
-		this.organisation._translations = this.translatableFieldsComponent.getTranslations();
+		// this.organisation._translations = this.translatableFieldsComponent.getTranslations();
 	}
 
 	onSubmit(): void {
@@ -153,6 +153,13 @@ export class OrganisationFormComponent implements OnInit {
 				}
 			});
 		}
+	}
+
+	getTranslationsAsArray(): any[] {
+		const translations = [];
+		Object.keys(this.organisation._translations).forEach(
+			lang => translations.push(this.organisation._translations[lang]));
+		return translations;
 	}
 
 	combineProviderSubsribtions(orga: Organisation): Observable<any[]> {

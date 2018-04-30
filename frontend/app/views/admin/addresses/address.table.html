@@ -62,7 +62,7 @@
 			<mat-header-cell *matHeaderCellDef>
 				{{constants.edit}} / {{constants.delete}}
 			</mat-header-cell>
-			<mat-cell *matCellDef="let row">
+			<mat-cell *matCellDef="let row" style="display: inherit;">
 				<button mat-button routerLink='/address/edit/{{row.id}}'>
 					<fa-icon [icon]="faPencilAlt" class="text-primary"></fa-icon>
 				</button>

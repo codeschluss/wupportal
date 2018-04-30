@@ -91,13 +91,15 @@
 						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
 						<button class="btn btn-primary" type="submit">{{constants.save}}</button>
 					</mat-tab>
-					<mat-tab label="{{constants.translations}}">
-						<div *ngFor="let translation of translations">
-							<b>{{getLanguageLabel(translation['locale'])}}</b>
-							<div>{{translation['description']}}</div>
-							<hr>
-						</div>
-					</mat-tab>
+					<ng-template *ngIf="translations">
+						<mat-tab label="{{constants.translations}}">
+							<div *ngFor="let translation of getTranslationsAsArray()">
+								<b>{{getLanguageLabel(translation['locale'])}}</b>
+								<div>{{translation['description']}}</div>
+								<hr>
+							</div>
+						</mat-tab>
+					</ng-template>
 				</mat-tab-group>
 			</mat-step>
 		</mat-horizontal-stepper>

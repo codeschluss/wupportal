@@ -1,17 +1,14 @@
 import { Component, Inject, Input, Output, SimpleChanges, OnInit } from '@angular/core';
-
-import { TranslationService } from 'app/services/data.service.factory';
-import { Organisation } from 'app/models/organisation';
-import { DataService } from 'app/services/data.service';
-
-import { Constants } from 'app/services/constants';
-import { EventEmitter } from 'events';
-
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
-import { TranslationApiService } from '../../../services/translation.api.service';
+import { Observable } from 'rxjs/Observable';
 
+import { DataService } from 'app/services/data.service';
+import { TranslationService } from 'app/services/translation.service';
+import { Constants } from 'app/services/constants';
+
+import { Organisation } from 'app/models/organisation';
 
 @Component({
 	selector: 'translatable-form',
@@ -30,8 +27,7 @@ export class TranslatableFieldsComponent implements OnInit {
 	faTimes: IconDefinition = faTimes;
 
 	constructor(
-		@Inject(TranslationService) private translationService: DataService,
-		private translationApiServcie: TranslationApiService,
+		private translationService: TranslationService,
 		protected constants: Constants
 	) { }
 
@@ -76,19 +72,18 @@ export class TranslatableFieldsComponent implements OnInit {
 
 	getTranslations(): any {
 		const _translations = {};
+
 		Object.keys(this.multiLingualObject['_translations']).forEach(languageCode => {
 			Object.keys(this.multiLingualObject['_translations'][languageCode]).forEach(attribute => {
 				if (attribute !== 'locale') {
 					if (!this.multiLingualObject['_translations'][languageCode][attribute]) {
-						console.log(this.multiLingualObject[attribute] + ': ' + languageCode);
-						this.multiLingualObject['_translations'][languageCode][attribute] = this.multiLingualObject[attribute] + ': ' + languageCode;
-						// this.translationApiServcie.getTranslation(this.multiLingualObject[attribute], languageCode).subscribe(translation => {
-						// 	this.multiLingualObject['_translations'][languageCode][attribute] = translation;
-						// });
+						this.multiLingualObject['_translations'][languageCode][attribute] =
+							this.translationService.translate(this.multiLingualObject[attribute], languageCode);
 					}
 				}
 			});
 		});
+
 		return this.multiLingualObject['_translations'];
 	}
 

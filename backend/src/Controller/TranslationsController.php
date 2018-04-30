@@ -3,6 +3,9 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Client;
+use Cake\Utility\Xml;
+use Cake\Core\Configure;
 
 /**
  * Translations Controller
@@ -43,6 +46,37 @@ class TranslationsController extends AppController
 		return $this->ResponseHandler->responseSuccess('deleted');
 	}
 
+	/**
+	 * translates a given string to target language.
+	 */
+	public function translate()
+	{
+		$request = json_decode($this->request->input(), true);
+		if (!isset($request['to']) && !isset($request['text'])) {
+			return $this->ResponseHandler->responseError();
+		}
+
+		$http = new Client();
+		$response = $http->get(Configure::read('Azure.translate-url'),
+			[
+			'to' => $request['to'],
+			'from' => 'de',
+			'text' => $request['text']
+			],
+			[
+			'headers' => ['Ocp-Apim-Subscription-Key' => Configure::read('Azure.subscription-key')]
+			]
+		);
+
+		if($response->isOk()) {
+			$responseBody = Xml::toArray($response->xml);
+			return $this->ResponseHandler->responseSuccess($responseBody['string']);
+		} else {
+			return $this->ResponseHandler->createResponse(503);
+		}
+
+	}
+
 	/** @return array Fields to use for filter  */
 	protected function fieldsTofilter()
 	{
@@ -59,6 +93,19 @@ class TranslationsController extends AppController
 			'locale',
 			$this->table()->translationField('name')
 		];
+	}
+
+
+	public function isAuthorized($user)
+	{
+		if ($this->isSuperuser($user)) return true;
+
+		switch ($this->request->getParam('action')) {
+			case 'translate':
+				return $this->isApprovedProvider($user['id']);
+			default:
+				return parent::isAuthorized($user);
+		}
 	}
 
 }

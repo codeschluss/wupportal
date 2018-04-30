@@ -12,10 +12,10 @@ import { map } from 'rxjs/operators/map';
 import {
 	DataServiceFactory,
 	OrganisationService,
-	AddressService,
-	TranslationService
+	AddressService
 } from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
+import { TranslationService } from 'app/services/translation.service';
 import { DataService } from 'app/services/data.service';
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 import { UserTableComponent } from 'app/views/admin/users/user.table';
@@ -56,7 +56,7 @@ export class OrganisationFormComponent implements OnInit {
 	constructor(
 		@Inject(OrganisationService) private organisationService: DataService,
 		@Inject(AddressService) private addressService: DataService,
-		@Inject(TranslationService) private translationService: DataService,
+		private translationService: TranslationService,
 		private providerService: ProviderService,
 		private location: Location,
 		public route: ActivatedRoute,

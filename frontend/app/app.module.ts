@@ -68,10 +68,10 @@ import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 import { ActivityService } from 'app/services/activity.service';
 import { ProviderService } from 'app/services/provider.service';
 import { UserService } from 'app/services/user.service';
+import { TranslationService } from 'app/services/translation.service';
 import { AuthGuardService } from 'app/services/authguard.service';
 import { LocationService } from 'app/services/location';
 import { NominatimService } from 'app/services/nominatim';
-import { TranslationApiService } from './services/translation.api.service';
 import { ValidationService } from 'app/services/validation.service';
 import { Constants } from 'app/services/constants';
 import {
@@ -84,7 +84,6 @@ import {
 	SuburbService,
 	CategoryService,
 	ConfigurationService,
-	TranslationService,
 	ForgotPasswordService
 } from 'app/services/data.service.factory';
 
@@ -206,7 +205,7 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		UserService,
 		LocationService,
 		NominatimService,
-		TranslationApiService,
+		TranslationService,
 		Constants,
 		ValidationService,
 		{ provide: MatPaginatorIntl, useClass: PaginatorLabels },
@@ -240,10 +239,6 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		},
 		{
 			provide: ScheduleService, useFactory: DataServiceFactory(ScheduleService),
-			deps: [HttpClient, UserService, MatSnackBar]
-		},
-		{
-			provide: TranslationService, useFactory: DataServiceFactory(TranslationService),
 			deps: [HttpClient, UserService, MatSnackBar]
 		},
 		{

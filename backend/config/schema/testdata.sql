@@ -165,6 +165,4 @@ INSERT INTO `i18n` (`id`, `locale`, `model`, `foreign_key`, `field`, `content`) 
 ('00000000-0000-0000-0012-320000000000', 'es', 'Activities', '00000000-0000-0000-0010-160000000000', 'name', 'mapAllWithoutFree_Translated');
 
 INSERT INTO `translations` (`id`, `locale`, `name`) VALUES
-('00000000-0000-0000-0013-100000000000', 'es', 'ToRead'),
-('00000000-0000-0000-0013-200000000000', 'fr', 'ToEdit'),
-('00000000-0000-0000-0013-300000000000', 'en', 'ToDelete');
+('00000000-0000-0000-0013-100000000000', 'es', 'ToRead');

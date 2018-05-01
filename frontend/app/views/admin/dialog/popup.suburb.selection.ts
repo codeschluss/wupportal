@@ -10,7 +10,8 @@ import { Constants } from 'app/services/constants';
 
 
 @Component({
-	templateUrl: 'popup.suburb.html'
+	templateUrl: 'popup.suburb.html',
+	styleUrls: ['../admin.area.css', '../../../app.component.css']
 })
 
 export class SuburbSelectionComponent {

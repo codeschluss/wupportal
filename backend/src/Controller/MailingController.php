@@ -54,6 +54,6 @@ class MailingController extends AppController
 
 		return $result->errors()
 			? $this->ResponseHandler->responseError($result->errors())
-			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
+			: $this->ResponseHandler->responseSuccess($userTable->save($user));
 	}
 }

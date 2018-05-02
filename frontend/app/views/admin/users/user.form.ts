@@ -58,7 +58,7 @@ export class UserFormComponent implements OnInit {
 			.subscribe(user =>
 				this.userService.login(this.user.username, this.user.password)
 					.subscribe(
-						null,
+						() => this.user = this.userService.currentUser,
 						error => this.userService.redirectToLogin())
 			);
 	}

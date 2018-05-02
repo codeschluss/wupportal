@@ -29,4 +29,8 @@ export class ForgottenPasswordFormComponent {
 			.add(this.mail)
 			.subscribe(() => this.userService.redirectToLogin());
 	}
+
+	back(): void {
+		this.userService.redirectToLogin();
+	}
 }

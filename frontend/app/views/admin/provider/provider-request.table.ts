@@ -121,12 +121,13 @@ export class ProviderRequestTableComponent implements OnInit {
 		this.providersToDelete = new Array<string>();
 		if (this.user.providers) {
 			this.user.providers.forEach(provider => {
-				const deleted = !this.organisationsCtrl.value.includes(provider.organisation_id);
+				const deleted = !selectedOrgaIDs.includes(provider.organisation_id);
 				if (deleted) {
 					this.providersToDelete.push(provider.id);
 				}
 			});
 		}
+		console.log('this.providersToDelete', this.providersToDelete);
 	}
 
 	onSubmit(): void {
@@ -157,7 +158,7 @@ export class ProviderRequestTableComponent implements OnInit {
 	updateUser(): void {
 		this.userService.login(this.user.username, this.user.password)
 			.subscribe(
-				null,
+				() => this.user = this.userService.currentUser,
 				error => this.userService.redirectToLogin()
 			);
 	}

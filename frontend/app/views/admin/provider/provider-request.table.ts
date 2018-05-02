@@ -78,7 +78,6 @@ export class ProviderRequestTableComponent implements OnInit {
 	}
 
 	setData(selectedOrgaIDs: Array<string>): void {
-		console.log('value', selectedOrgaIDs);
 		this.setCurrentProviders(selectedOrgaIDs);
 		this.setDeletedProviders(selectedOrgaIDs);
 	}
@@ -127,7 +126,6 @@ export class ProviderRequestTableComponent implements OnInit {
 				}
 			});
 		}
-		console.log('this.providersToDelete', this.providersToDelete);
 	}
 
 	onSubmit(): void {

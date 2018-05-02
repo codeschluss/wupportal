@@ -14,7 +14,7 @@ import { User } from 'app/models/user';
 
 @Component({
 	selector: 'provider-table',
-	styleUrls: ['../table.abstract.css', '../../../app.component.css'],
+	styleUrls: ['../table.abstract.css', '../admin.area.css', '../../../app.component.css'],
 	templateUrl: 'provider.table.html'
 })
 export class ProviderTableComponent implements OnChanges {
@@ -23,6 +23,7 @@ export class ProviderTableComponent implements OnChanges {
 
 	protected displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'delete'];
 	dataSource: MatTableDataSource<Provider> = new MatTableDataSource<Provider>();
+	private isLoading: boolean = false;
 
 	constructor(
 		protected dataService: ProviderService,
@@ -36,15 +37,20 @@ export class ProviderTableComponent implements OnChanges {
 	}
 
 	save(): void {
+		this.isLoading = true;
 		const editObservables = this.dataSource.data.map(provider => this.dataService.edit(provider));
-		forkJoin(editObservables).subscribe();
+		forkJoin(editObservables).subscribe(() => this.isLoading = false);
 	}
 
 	onDelete(recordID: string): void {
+		this.isLoading = true;
 		this.dataService
 			.delete(recordID)
-			.subscribe(() => this.dataSource.data =
-				this.dataSource.data.filter(provider => provider.id !== recordID));
+			.subscribe(() => {
+				this.dataSource.data =
+					this.dataSource.data.filter(provider => provider.id !== recordID);
+				this.isLoading = false;
+			});
 	}
 
 	back(): void {

@@ -43,6 +43,7 @@ export class ProviderRequestTableComponent implements OnInit {
 	private providersToDelete: Array<string>;
 	faCheck: IconDefinition = faCheck;
 	faMinus: IconDefinition = faMinus;
+	private isLoading: boolean = false;
 
 	constructor(
 		@Inject(OrganisationService) public organisationService: DataService,
@@ -129,9 +130,13 @@ export class ProviderRequestTableComponent implements OnInit {
 	}
 
 	onSubmit(): void {
+		this.isLoading = true;
 		let requests = [];
 		requests = requests.concat(this.deleteProviders(), this.addProvider());
-		forkJoin(requests).subscribe(() => this.updateUser());
+		forkJoin(requests).subscribe(() => {
+			this.isLoading = false;
+			this.updateUser();
+		});
 	}
 
 	deleteProviders(): Array<any> {

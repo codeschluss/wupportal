@@ -1,3 +1,6 @@
+<div class="loadingOverlay" *ngIf="isLoading">
+	<mat-spinner></mat-spinner>
+</div>
 <mat-card *ngIf="providers">
 	<mat-card-header>
 		<mat-card-title>
@@ -5,7 +8,8 @@
 		</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
-		<mat-table #table [dataSource]="dataSource" class="example-table">
+		<mat-table #table [dataSource]="dataSource"
+		  class="example-table">
 
 			<!-- username Column -->
 			<ng-container matColumnDef="username">
@@ -40,7 +44,9 @@
 					{{constants.deleteFromOrganisation}}
 				</mat-header-cell>
 				<mat-cell *matCellDef="let row">
-					<delete-action [recordID]="row.id" [nameToDelete]="row.user.username" (onDelete)="onDelete($event)">
+					<delete-action [recordID]="row.id"
+					  [nameToDelete]="row.user.username"
+					  (onDelete)="onDelete($event)">
 					</delete-action>
 				</mat-cell>
 			</ng-container>
@@ -49,7 +55,8 @@
 			<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 		</mat-table>
 
-		<button type="button" class="btn btn-primary" (click)="save()">{{constants.save}}
+		<button type="button" class="btn btn-primary"
+		  (click)="save()">{{constants.save}}
 		</button>
 	</mat-card-content>
 </mat-card>

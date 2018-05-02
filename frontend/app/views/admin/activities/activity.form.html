@@ -115,7 +115,8 @@
 							</div>
 						</mat-tab>
 						<mat-tab label="{{constants.translations}}">
-							<translatable-form #translatableFieldsComponent [multiLingualObject]="activity" [translatableAttributes]="['name', 'description']"></translatable-form>
+							<translatable-form #translatableFieldsComponent [multiLingualObject]="activity" [translatableAttributes]="['name', 'description']"
+							 [disabled]="true"></translatable-form>
 						</mat-tab>
 					</mat-tab-group>
 				</mat-step>

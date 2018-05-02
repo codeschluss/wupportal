@@ -20,6 +20,7 @@ export class TranslatableFieldsComponent implements OnInit {
 
 	@Input() multiLingualObject: {};
 	@Input() translatableAttributes: string[];
+	@Input() disabled: boolean;
 
 	translations: any[] = [];
 	selectedLanguage: String;

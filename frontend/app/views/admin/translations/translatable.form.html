@@ -12,12 +12,13 @@
 		</mat-form-field>
 		<div *ngFor="let attribute of translatableAttributes">
 			<mat-form-field *ngIf="attribute !== 'description'" class="form-full-width">
-				<input matInput type=text [(ngModel)]="multiLingualObject['_translations'][selectedLanguage][attribute]" name="[attribute]"
-				 id="[attribute]" placeholder={{getPlaceHolder(attribute)}}>
+				<input matInput [disabled]="disabled" type=text [(ngModel)]="multiLingualObject['_translations'][selectedLanguage][attribute]"
+				 name="[attribute]" id="[attribute]" placeholder={{getPlaceHolder(attribute)}}>
 			</mat-form-field>
 			<mat-form-field *ngIf="attribute === 'description'" class="form-full-width">
-				<textarea matInput type=text [(ngModel)]="multiLingualObject['_translations'][selectedLanguage][attribute]" name="[attribute]"
-				 id="[attribute]" placeholder={{getPlaceHolder(attribute)}} matTextareaAutosize matAutosizeMinRows="4 " matAutosizeMaxRows="10 "></textarea>
+				<textarea matInput [disabled]="disabled" type=text [(ngModel)]="multiLingualObject['_translations'][selectedLanguage][attribute]"
+				 name="[attribute]" id="[attribute]" placeholder={{getPlaceHolder(attribute)}} matTextareaAutosize matAutosizeMinRows="4 "
+				 matAutosizeMaxRows="10 "></textarea>
 			</mat-form-field>
 		</div>
 	</mat-card-content>

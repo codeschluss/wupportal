@@ -29,6 +29,19 @@
 		</mat-list-item>
 	</ng-container>
 
+	<ng-container *ngIf="item.website">
+		<a mat-button color="primary" tabindex="-1" target="_blank"
+			[href]="item.website">
+			<mat-list-item>
+				<fa-icon mat-list-icon icon="star"></fa-icon>
+				<div class="mat-list-text">
+					<strong mat-line>Website</strong>
+					<p mat-line>{{ item.website }}</p>
+				</div>
+			</mat-list-item>
+		</a>
+	</ng-container>
+
 	<ng-container *ngIf="item.mail || item.phone || item.website">
 		<mat-divider></mat-divider>
 
@@ -55,19 +68,6 @@
 					<div class="mat-list-text">
 						<strong mat-line>Telefon-Kontakt</strong>
 						<p mat-line>{{ item.phone }}</p>
-					</div>
-				</mat-list-item>
-			</a>
-		</ng-container>
-
-		<ng-container *ngIf="item.website">
-			<a mat-button color="primary" tabindex="-1" target="_blank"
-				[href]="item.website">
-				<mat-list-item>
-					<fa-icon mat-list-icon icon="star"></fa-icon>
-					<div class="mat-list-text">
-						<strong mat-line>Website</strong>
-						<p mat-line>{{ item.website }}</p>
 					</div>
 				</mat-list-item>
 			</a>

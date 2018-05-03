@@ -277,7 +277,7 @@ class ActivitiesController extends AppController
 			'Categories',
 			'TargetGroups',
 			'Schedules',
-			'Providers.Organisations.Addresses'
+			'Providers.Organisations'
 		];
 	}
 

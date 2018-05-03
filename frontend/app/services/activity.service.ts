@@ -20,6 +20,14 @@ export class ActivityService extends DataService {
 		super('activities', http, userService, messageBar);
 	}
 
+	public getByMapfilter(filter: any): Observable<any> {
+		return this.httpPost(
+			this.baseUrl + 'mapfilter',
+			filter,
+			this.getHeader()
+		);
+	}
+
 	public getByProviders(tableState: TableState, providers: Array<string>): Observable<DataResponse> {
 		const request = Object.assign(tableState, this.createProvidersParam(providers));
 		return this.httpPost(

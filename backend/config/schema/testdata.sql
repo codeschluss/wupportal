@@ -51,14 +51,14 @@ INSERT INTO `addresses` (`id`, `longitude`, `latitude`, `street`, `house_number`
 ('00000000-0000-0000-0006-500000000000', 7.1, 51.2, 'mapfilter', '1', '42103', 'mapfilter', '00000000-0000-0000-0005-500000000000');
 
 INSERT INTO `categories` (`id`, `name`, `description`, `color`) VALUES
-('00000000-0000-0000-0007-100000000000', 'category1', 'category1', 'green'),
-('00000000-0000-0000-0007-200000000000', 'category2', 'category2', 'yellow'),
-('00000000-0000-0000-0007-300000000000', 'category3', 'category3', 'black'),
-('00000000-0000-0000-0007-400000000000', 'todelete', 'todelete', 'lila'),
-('00000000-0000-0000-0007-500000000000', 'categoryTranslateRead', 'categoryTranslateRead', 'read'),
-('00000000-0000-0000-0007-600000000000', 'categoryTranslateEdit', 'categoryTranslateEdit', 'edit'),
-('00000000-0000-0000-0007-700000000000', 'mapfilter', 'mapfilter', 'map'),
-('00000000-0000-0000-0007-800000000000', 'mapfilterAllWithoutFree', 'mapfilterAllWithoutFree', 'all');
+('00000000-0000-0000-0007-100000000000', 'category1', 'category1', 'darkgreen'),
+('00000000-0000-0000-0007-200000000000', 'category2', 'category2', 'green'),
+('00000000-0000-0000-0007-300000000000', 'category3', 'category3', 'lightgreen'),
+('00000000-0000-0000-0007-400000000000', 'todelete', 'todelete', 'red'),
+('00000000-0000-0000-0007-500000000000', 'categoryTranslateRead', 'categoryTranslateRead', 'darkblue'),
+('00000000-0000-0000-0007-600000000000', 'categoryTranslateEdit', 'categoryTranslateEdit', 'lightblue'),
+('00000000-0000-0000-0007-700000000000', 'mapfilter', 'mapfilter', 'orange'),
+('00000000-0000-0000-0007-800000000000', 'mapfilterAllWithoutFree', 'mapfilterAllWithoutFree', 'yellow');
 
 INSERT INTO `organisations` (`id`, `name`, `description`, `website`, `mail`, `phone`, `image`, `address_id`) VALUES
 ('00000000-0000-0000-0008-100000000000', 'organisation1', 'organisation1', 'www.orga1.de', 'organisation@1.de', '01234567890', null, '00000000-0000-0000-0006-100000000000'),

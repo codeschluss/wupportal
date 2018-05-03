@@ -30,6 +30,7 @@
 	<mat-list-item>
 		<fa-icon mat-list-icon icon="calendar-alt"></fa-icon>
 		<div class="mat-list-text">
+			<strong mat-line>Termine</strong>
 			<ng-container *ngFor="let i of item.schedules">
 				<p mat-line>{{ i.start_date | date:'EEEE, dd.MM.yyyy, HH:mm' }}</p>
 			</ng-container>

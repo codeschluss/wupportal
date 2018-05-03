@@ -1,3 +1,5 @@
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {
 	AfterViewInit,
 	Component,
@@ -7,22 +9,15 @@ import {
 	OnInit,
 	ViewChild
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import * as colorConvert from 'color-convert';
 
+import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import {
 	LayerVectorComponent,
 	MapComponent,
 	ViewComponent
 } from 'ngx-openlayers';
-import {
-	Feature,
-	MapBrowserEvent,
-	proj,
-	style
-} from 'openlayers';
 
 import { Subject } from 'rxjs/Subject';
 
@@ -34,6 +29,9 @@ import { Constants } from 'app/services/constants';
 import {
 	AboutActivityComponent
 } from 'app/portal/about/about.activity.component';
+import {
+	AboutOrganisationComponent
+} from 'app/portal/about/about.organisation.component';
 import {
 	ActivityDialogComponent
 } from 'app/portal/dialogs/activity.dialog.component';
@@ -64,7 +62,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 	private projection: string;
 	private zoomfactor: number;
 
-	private readonly ngUnsubscribe: Subject<null> = new Subject();
+	private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
 	constructor(
 		@Inject(Constants)
@@ -76,11 +74,12 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 	) { }
 
 	public ngOnInit(): void {
+		this.activities = [];
 
 		// TODO: move to db
 		this.clusterspan = 10;
 
-		for (const item of this.route.snapshot.data['configuration']) {
+		for (const item of this.route.snapshot.data.configuration) {
 			switch (item.item) {
 				case 'mapcenterLatitude':
 					this.latitude = parseFloat(item.value);
@@ -94,8 +93,6 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 				case 'zoomfactor':
 					this.zoomfactor = parseFloat(item.value);
 					break;
-				default:
-					continue;
 			}
 		}
 	}
@@ -107,7 +104,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.aolMap.loadTilesWhileAnimating = true;
 		this.aolMap.loadTilesWhileInteracting = true;
 		this.aolMap.onSingleClick.takeUntil(this.ngUnsubscribe)
-			.subscribe((event: MapBrowserEvent) => this.handleClick(event));
+			.subscribe((event: MapBrowserEvent) => this.onClick(event));
 
 		this.router.events.filter(i => i instanceof NavigationEnd).startWith(null)
 			.takeUntil(this.ngUnsubscribe).subscribe(() => this.applyRoutes());
@@ -118,24 +115,13 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.ngUnsubscribe.complete();
 	}
 
-	private handleClick(event: MapBrowserEvent): void {
-		const click = this.aolMap.instance.getFeaturesAtPixel(event.pixel);
-		const feats = click && click.length ? click[0].get('features') : [];
-
-		switch (feats.length) {
-			case 0:
-				this.router.navigate(['']);
-				break;
-			case 1:
-				this.router.navigate(['activity', feats[0].getId()]);
-				break;
-			default:
-				this.router.navigate(['']).then(() => {
-					this.dialog.open(ActivityDialogComponent, {
-						data: feats.map(i => this.activities.find(j => j.id === i.getId()))
-					}).afterClosed().subscribe((activity: Activity) =>
-						this.router.navigate(activity ? ['activity', activity.id] : ['']));
-				});
+	public centerAddress(address: Address): void {
+		if (address.longitude && address.latitude) {
+			this.aolView.instance.animate({
+				center: proj.fromLonLat([address.longitude, address.latitude]),
+				// duration: 1000,
+				zoom: Math.max(this.aolView.instance.getZoom(), this.zoomfactor * 1.25)
+			});
 		}
 	}
 
@@ -145,40 +131,62 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 				case AboutActivityComponent:
 					this.centerAddress(child.snapshot.data.activity.address);
 					break;
-				default:
-					continue;
+				case AboutOrganisationComponent:
+					this.centerAddress(child.snapshot.data.organisation.address);
+					break;
 			}
 		}
 	}
 
-	private centerAddress(address: Address): void {
-		this.aolView.instance.animate({
-			center: proj.fromLonLat([address.longitude, address.latitude]),
-			duration: 1000,
-			zoom: Math.max(this.aolView.instance.getZoom(), this.zoomfactor * 1.25)
-		});
-	}
-
 	private clusterStyle(feature: Feature): style.Style {
-		const colours = feature.get('features').map(i => {
-		const activity = this.activities.find(j => i.getId() === j.id);
+		const colors = feature.get('features').map(i => {
+			// TODO: ngx-openlayers async id binding bug
+			// const activity = this.activities.find(j => i.getId() === j.id);
+			const id = i.getStyle().getText().getText();
+			const activity = this.activities.find(j => id === j.id);
+			// /TODO
 
-		return colorConvert.keyword.rgb(activity.category.color)
-			|| colorConvert.hex.rgb(activity.category.color);
+			return colorConvert.keyword.rgb(activity.category.color)
+				|| colorConvert.hex.rgb(activity.category.color);
 		});
 
-		const r = colours.reduce((i, j) => i + j[0], 0) / colours.length;
-		const g = colours.reduce((i, j) => i + j[1], 0) / colours.length;
-		const b = colours.reduce((i, j) => i + j[2], 0) / colours.length;
+		const r = colors.reduce((i, j) => i + j[0], 0) / colors.length;
+		const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
+		const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
 
 		return new style.Style({
 			image: new style.Icon({
 				anchor: [.5, 1],
 				color: [r, g, b, 1],
-				scale: 0.9 + colours.length / 10,
-				src: '/imgs/pin.svg'
+				scale: 0.9 + colors.length / 10,
+				src: '/imgs/mapmarker.svg'
 			})
 		});
+	}
+
+	private onClick(event: MapBrowserEvent): void {
+		const click = this.aolMap.instance.getFeaturesAtPixel(event.pixel);
+		const feats = click && click.length ? click[0].get('features') : [];
+
+		switch (feats.length) {
+			case 0:
+				this.router.navigate(['/']);
+				break;
+			case 1:
+				this.router.navigate(['/activity', feats[0].getId()]);
+				break;
+			default:
+				this.router.navigate(['/']).then(() => {
+					this.dialog.open(ActivityDialogComponent, {
+						// TODO: ngx-openlayers async id binding bug
+						// data: feats.map(i => this.activities.find(j => j.id === i.getId()))
+						data: feats.map(i => i.getStyle().getText().getText())
+							.map(i => this.activities.find(j => j.id === i))
+						// /TODO
+					}).afterClosed().filter(i => i).subscribe((activity: Activity) =>
+						this.router.navigate(['/activity', activity.id]));
+				});
+		}
 	}
 
 }

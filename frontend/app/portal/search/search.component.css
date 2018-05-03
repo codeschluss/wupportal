@@ -1,77 +1,133 @@
+/* :host > * + * {
+	margin-top: 0;
+} */
+
 nav {
-	padding: 12px;
+	margin: 12px;
+	pointer-events: none;
+	position: relative;
+	z-index: 2;
 }
 nav mat-card {
 	box-sizing: border-box;
-	padding: 12px;
 	max-width: calc(480px - 2 * 12px);
+	padding: 12px;
+	pointer-events: initial;
 	width: 100%;
-	z-index: 2;
 }
 nav mat-form-field {
 	width: 100%;
 }
-nav mat-hint {
-	cursor: pointer;
-	transition: all 200ms;
+nav mat-form-field::ng-deep .mat-input-wrapper {
+	margin-bottom: 12px;
 }
-nav mat-hint:hover {
-	color: currentColor;
+/*
+nav mat-form-field::ng-deep label {
+	text-align: center;
 }
-/*  */
-nav mat-expansion-panel {
-	box-shadow: none;
+ */
+nav mat-placeholder mat-icon {
+	width: 3.3em;
 }
-nav mat-expansion-panel::ng-deep .mat-expansion-panel-body {
+nav mat-hint button {
+	line-height: 24px;
+	min-width: 0;
+	padding: 0 8px;
+}
+nav mat-progress-bar {
+	bottom: 0;
+	left: 0;
+	max-width: calc(480px - 2 * 12px);
+	position: absolute;
+	transition: all 100ms;
+}
+nav mat-progress-bar.hide {
+	height: 0;
+}
+
+menu {
+	margin: 12px;
 	padding: 0;
+	pointer-events: none;
+	position: relative;
+	z-index: 2;
 }
-nav mat-expansion-panel::ng-deep .mat-tab-label {
+menu mat-card {
+	padding: 0;
+	pointer-events: initial;
+	max-width: calc(480px - 2 * 12px);
+	width: 100%;
+}
+menu mat-tab-group {
+	padding: 12px;
+}
+menu mat-tab-group::ng-deep mat-tab-header {
+	margin-bottom: 8px;
+}
+menu mat-tab-group::ng-deep .mat-tab-label {
 	height: 32px;
 	min-width: 0;
-	padding: 0 12px;
+	padding: 0 8px;
 }
-nav mat-expansion-panel::ng-deep .mat-tab-labels {
-	justify-content: center;
+menu mat-tab-group::ng-deep .mat-tab-labels {
+	justify-content: space-between;
 }
-/*  */
+menu mat-tab-group::ng-deep .mat-tab-body-content {
+	overflow: hidden;
+}
+menu mat-expansion-panel {
+	box-shadow: none;
+}
+menu mat-expansion-panel::ng-deep .mat-expansion-panel-body {
+	padding: 0;
+}
 
 content {
 	box-sizing: border-box;
 	display: block;
-	padding: 12px;
+	margin: 12px;
 	pointer-events: none;
 	position: relative;
-	width: 100%;
 	z-index: 2;
 }
 content > mat-expansion-panel {
 	background: transparent;
 	box-shadow: none;
 	max-width: calc(480px - 2 * 12px);
+	pointer-events: initial;
 	width: 100%;
 }
 content mat-accordion {
 	display: block;
 	margin: 0 -24px -16px -24px;
-	pointer-events: initial;
+}
+content mat-accordion fa-icon {
+	font-size: 150%;
+}
+content mat-accordion fa-icon::ng-deep path {
+	stroke: black;
+	stroke-width: 24px;
 }
 content mat-accordion mat-expansion-panel {
 	position: relative;
 }
-content mat-accordion mat-expansion-panel button[mat-mini-fab] {
+content mat-accordion mat-expansion-panel.mat-expansion-panel-spacing {
+	margin: 8px 0;
+}
+content mat-accordion mat-expansion-panel::ng-deep button {
 	bottom: 12px;
 	position: absolute;
 	right: 12px;
 	transform: scale(0);
-	transition: all 200ms;
+	transition: all 100ms;
 }
-content mat-accordion mat-expansion-panel.mat-expanded button[mat-mini-fab] {
+content mat-accordion mat-expansion-panel::ng-deep .mat-expanded button {
 	transform: scale(1);
 }
 content mat-accordion mat-expansion-panel-header {
 	position: relative;
 }
-content mat-accordion canvas {
+content mat-accordion mat-expansion-panel-header canvas {
 	height: 100%;
 	left: 0;
 	position: absolute;
@@ -82,4 +138,17 @@ content mat-accordion mat-panel-description {
 	display: inline;
 	font-size: 12px;
 	text-align: right;
+}
+content mat-list fa-icon::ng-deep path {
+	fill: transparent;
+	stroke: currentColor;
+}
+content mat-list a[mat-button] {
+	display: block;
+	line-height: inherit;
+	padding: 0;
+	text-align: inherit;
+}
+content mat-list a[mat-button] mat-list-item {
+	color: inherit;
 }

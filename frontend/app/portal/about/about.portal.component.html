@@ -1,0 +1,243 @@
+<ng-template #title>Über das Wupportal</ng-template>
+
+<mat-list>
+	<mat-list-item>
+		<h2>Öffentliche Träger</h2>
+	</mat-list-item>
+
+	<h3 mat-subheader>Zentrum für Integration, Bildung & kulturelle Vielfalt</h3>
+
+	<mat-list-item>
+		<mat-icon svgIcon="kommzent"></mat-icon>
+	</mat-list-item>
+
+	<mat-list-item>
+		<p>
+			Das Zentrum Integration und Bildung ist das fachliche Herzstück im Ressort
+			Zuwanderung und Integration. In dem Zentrum werden neue Konzepte und
+			Handlungswege entwickelt, erprobt und bei Erfolg im Einvernehmen mit der
+			zuständigen Stelle implementiert.
+		</p>
+	</mat-list-item>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="tel:+492025632750">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="phone"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Telefon-Kontakt</strong>
+				<p mat-line>(+49) 202 5632750</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1" target="_blank"
+		href="http://www.integration-in-wuppertal.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="star"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Integration in Wuppertal Website</strong>
+				<p mat-line>www.integration-in-wuppertal.de</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<mat-divider></mat-divider>
+
+	<h3 mat-subheader>TransZent</h3>
+
+	<mat-list-item>
+		<mat-icon svgIcon="transzent"></mat-icon>
+	</mat-list-item>
+
+	<mat-list-item>
+		<p>
+			TransZent ist ein Interdisziplinäres Zentrum der Bergischen Universität
+			Wuppertal (BUW), das im Oktober 2013 von der BUW und dem Wuppertal
+			Institut für Klima, Umwelt, Energie gGmbH in Kooperation gegründet wurde.
+		</p>
+	</mat-list-item>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:transzent@uni-wuppertal.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="envelope"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>E-Mail-Kontakt</strong>
+				<p mat-line>transzent@uni-wuppertal.de</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="tel:+4920274746440">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="phone"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Telefon-Kontakt</strong>
+				<p mat-line>(+49) 202 74746440</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1" target="_blank"
+		href="https://www.transzent.uni-wuppertal.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="star"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>TransZent Website</strong>
+				<p mat-line>www.transzent.uni-wuppertal.de</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<mat-divider></mat-divider>
+
+	<mat-list-item>
+		<h2>Technische Umsetzung</h2>
+	</mat-list-item>
+
+	<mat-list-item>
+		<mat-icon svgIcon="codeschluss"></mat-icon>
+	</mat-list-item>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:info@codeschluss.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="envelope"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>E-Mail-Kontakt</strong>
+				<p mat-line>info@codeschluss.de</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1" target="_blank"
+		href="https://www.codeschluss.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="star"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Codeschluss Website</strong>
+				<p mat-line>www.codeschluss.de</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1" target="_blank"
+		href="https://github.com/codeschluss/wupportal">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="code"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Wupportal Code-Repositorium</strong>
+				<p mat-line>github.com/codeschluss/wupportal</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<mat-divider></mat-divider>
+
+	<mat-list-item>
+		<h2>Rechtliche Hinweise</h2>
+	</mat-list-item>
+
+	<ng-container *ngIf="!legal">
+		<a mat-button color="primary" tabindex="-1" (click)="legal = !legal">
+			<mat-list-item>
+				<fa-icon mat-list-icon icon="balance-scale"></fa-icon>
+				<strong mat-line>Hinweise einblenden</strong>
+				<p mat-line>Rechtliche Hinweise bzgl. TMG und DSGVO anzeigen</p>
+			</mat-list-item>
+		</a>
+	</ng-container>
+
+	<ng-container *ngIf="legal">
+		<h3 mat-subheader>Angaben gemäß §5 TMG</h3>
+
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="balance-scale"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Ansprechpartner</strong>
+				<p mat-line>Zentrum für Integration, Bildung & kulturelle Vielfalt</p>
+			</div>
+		</mat-list-item>
+
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="sign"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Anschrift</strong>
+				<p mat-line>Friedrich-Engels-Allee 28, 42103 Wuppertal</p>
+			</div>
+		</mat-list-item>
+
+		<mat-list-item>
+			<p>
+				<em>Redaktionelle Hinweise</em>
+				Alle redaktionellen Inhalte (Angebote, Textinhalte, etc.) dieser Website
+				sind geistiges Eigentum und obliegen der Verantwortlichkeit der
+				erstellenden und edierenden Personnen bzw. rechtlichen Körper.
+			</p>
+		</mat-list-item>
+
+		<mat-divider></mat-divider>
+
+		<h3 mat-subheader>Datenschutzerklärung</h3>
+
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="balance-scale"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Ansprechpartner im Sinne der DSGVO</strong>
+				<p mat-line>Zentrum für Integration, Bildung & kulturelle Vielfalt</p>
+			</div>
+		</mat-list-item>
+
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="lock"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Verschlüsste Datenübertragung</strong>
+				<p mat-line>Diese Website nutzt moderne Verschlüsselungsverfahren</p>
+			</div>
+		</mat-list-item>
+
+		<mat-list-item>
+			<p>
+				<em>Erfassung allgemeiner Informationen</em>
+				Wenn Sie auf unsere Webseite zugreifen, werden automatisch Informationen
+				allgemeiner Natur erfasst. Diese Informationen beinhalten etwa die Art des
+				Webbrowsers, das verwendete Betriebssystem, den Domainnamen Ihres Internet
+				Service Providers und Ähnliches. Hierbei handelt es sich ausschließlich um
+				Informationen, welche keine Rückschlüsse auf Ihre Person zulassen. Diese
+				Informationen sind technisch notwendig, um von Ihnen angeforderte Inhalte
+				von Webseiten korrekt auszuliefern und fallen bei Nutzung des Internets
+				zwingend an. Anonyme Informationen dieser Art werden von uns statistisch
+				ausgewertet, um unseren Internetauftritt und die dahinterstehende Technik
+				zu optimieren.
+			</p>
+		</mat-list-item>
+
+		<mat-list-item>
+			<p>
+				<em>Verwendung von OpenStreeMaps</em>
+				Diese Webseite verwendet OpenStreetMaps, um geographische Informationen
+				visuell darzustellen. Bei Ihrer Nutzung von OpenStreetMaps werden Daten
+				über die Nutzung der Kartenfunktionen durch Besucher erhoben, verarbeitet
+				und genutzt. Nähere Informationen über die Datenverarbeitung durch die
+				OpenStreeMaps Foundation können Sie den
+				<a href="https://wiki.openstreetmap.org/wiki/Privacy_Policy">
+					entsprechenden Datenschutzhinweisen
+				</a>
+				entnehmen.
+			</p>
+		</mat-list-item>
+
+		<mat-list-item>
+			<p>
+				<em>Änderung unserer Datenschutzbestimmungen</em>
+				Wir behalten uns vor, diese Datenschutzerklärung gelegentlich anzupassen,
+				damit sie stets den aktuellen rechtlichen Anforderungen entspricht oder um
+				Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen, z.
+				B. bei der Einführung neuer Services. Für Ihren erneuten Besuch gilt dann
+				die neue Datenschutzerklärung.
+			</p>
+		</mat-list-item>
+	</ng-container>
+</mat-list>

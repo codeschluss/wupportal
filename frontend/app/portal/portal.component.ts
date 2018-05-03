@@ -1,48 +1,62 @@
-import {
-	Component,
-	OnInit,
-	OnDestroy,
-	ViewChild,
-	AfterViewInit,
-	ViewEncapsulation
-} from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import {
+	AfterViewInit,
+	Component,
+	Inject,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+} from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { Activity } from 'app/models/activity';
-import { Organisation } from 'app/models/organisation';
+import { Translation } from 'app/models/translation';
+
+import { UserService } from 'app/services/user.service';
 
 import {
-	AboutActivityComponent
-} from 'app/portal/about/about.activity.component';
-import {
-	AboutOrganisationComponent
-} from 'app/portal/about/about.organisation.component';
-import { MappingComponent } from 'app/portal/mapping/mapping.component';
-import { SearchComponent } from 'app/portal/search/search.component';
+	TranslationDialogComponent
+} from 'app/portal/dialogs/translation.dialog.component';
+
+// import { Organisation } from 'app/models/organisation';
+
+// import {
+// 	AboutActivityComponent
+// } from 'app/portal/about/about.activity.component';
+// import {
+// 	AboutOrganisationComponent
+// } from 'app/portal/about/about.organisation.component';
+// import { MappingComponent } from 'app/portal/mapping/mapping.component';
+// import { SearchComponent } from 'app/portal/search/search.component';
 
 @Component({
+	providers: [UserService],
 	styleUrls: ['portal.component.css'],
 	templateUrl: 'portal.component.html',
 })
 
 export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	@ViewChild('mapping-component')
-	private mappingComponent: MappingComponent;
+	// @ViewChild('mapping-component')
+	// private mappingComponent: MappingComponent;
 
-	@ViewChild('search-component')
-	private searchComponent: SearchComponent;
+	// @ViewChild('search-component')
+	// private searchComponent: SearchComponent;
 
 	private landscape: Observable<boolean>;
 	private selectables: BehaviorSubject<Activity[]>;
 
-	private readonly ngUnsubscribe: Subject<null> = new Subject();
+	private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
 	constructor(
+		@Inject(UserService)
+		private userService: UserService,
+
+		private dialog: MatDialog,
 		private route:  ActivatedRoute,
 		private router: Router
 	) { }
@@ -52,13 +66,11 @@ export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
 			.startWith(window.innerWidth > window.innerHeight)
 			.map(() => window.innerWidth > window.innerHeight);
 
-		// TODO: initial filter
 		this.selectables = new BehaviorSubject<Activity[]>(
-			this.route.snapshot.data['activities'] || []);
+			this.route.snapshot.data.activities || []);
 	}
 
 	public ngAfterViewInit(): void {
-
 	}
 
 	public ngOnDestroy(): void {
@@ -69,62 +81,30 @@ export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.ngUnsubscribe.complete();
 	}
 
-
-	private handleTabular(): void {
-	}
-
 	private handleTracking(): void {
 	}
 
 	private handleTranslate(): void {
+		this.dialog.open(TranslationDialogComponent, {
+			data: this.route.snapshot.data.translations
+		}).afterClosed().filter(i => i).subscribe((translation: Translation) => {
+			if (translation.locale !== this.userService.getCurrentLanguage()) {
+				const navigation = this.router.onSameUrlNavigation;
+				const resolve = this.route.routeConfig.runGuardsAndResolvers;
+				const strategy = this.router.routeReuseStrategy.shouldReuseRoute;
+
+				this.router.onSameUrlNavigation = 'reload';
+				this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+				this.route.routeConfig.runGuardsAndResolvers = 'always';
+				this.userService.setCurrentLanguage(translation.locale);
+
+				this.router.navigate([this.router.url]).then(() => {
+					this.router.onSameUrlNavigation = navigation;
+					this.router.routeReuseStrategy.shouldReuseRoute = strategy;
+					this.route.routeConfig.runGuardsAndResolvers = resolve;
+				});
+			}
+		});
 	}
 
 }
-
-
-
-
-		// this.activity.next(null);
-		// this.activity.complete();
-
-		// this.organisation.next(null);
-		// this.organisation.complete();
-
-	// private clearRoute(): void {
-	// 	for (const child of this.route.children) {
-	// 		switch (child.component) {
-	// 			case AboutActivityComponent:
-	// 				this.activity.next(null);
-	// 				break;
-	// 			case AboutOrganisationComponent:
-	// 				this.organisation.next(null);
-	// 				break;
-	// 			default:
-	// 				continue;
-	// 		}
-	// 	}
-	// }
-
-		// Observable.merge(
-		// 	this.activity.map(i => i && ['activity', i.id]),
-		// 	this.organisation.map(i => i && ['organisation', i.id])
-		// ).takeUntil(this.ngUnsubscribe)
-		// 	.subscribe(i => this.router.navigate(i || ['']));
-
-		// private router: Router
-		// const activityRoute: ActivatedRoute = this.route.children
-		// 	.find(i => i.component === AboutActivityComponent);
-
-		// const organisationRoute: ActivatedRoute = this.route.children
-		// 	.find(i => i.component === AboutOrganisationComponent);
-
-		// this.activity = new BehaviorSubject<Activity>(
-		// 	activityRoute ? activityRoute.snapshot.data.activity : null);
-
-		// this.organisation = new BehaviorSubject<Organisation>(
-		// 	organisationRoute ? organisationRoute.snapshot.data.activity : null);
-
-
-	// private activity: BehaviorSubject<Activity>;
-
-	// private organisation: BehaviorSubject<Organisation>;

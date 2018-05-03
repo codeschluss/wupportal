@@ -1,26 +1,20 @@
-import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
-
-import { Constants } from 'app/services/constants';
+import { Component } from '@angular/core';
 
 import { Organisation } from 'app/models/organisation';
 
+import { AboutComponent } from 'app/portal/about/about.component';
+
 @Component({
-	selector: 'about-organisation',
 	styleUrls: ['about.component.css'],
 	templateUrl: 'about.organisation.component.html',
 })
 
-export class AboutOrganisationComponent implements OnChanges {
+export class AboutOrganisationComponent extends AboutComponent {
 
-	@Input() organisation: Organisation;
+	private item: Organisation;
 
-	constructor(
-		public constants: Constants
-	) { }
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes.organisation)
-			this.organisation = changes.organisation.currentValue;
+	public ngOnInit(): void {
+		this.item = this.route.snapshot.data.organisation;
 	}
 
 }

@@ -1,18 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import {
 	MatButtonModule,
 	MatCardModule,
+	MatCheckboxModule,
 	MatDialogModule,
 	MatExpansionModule,
 	MatFormFieldModule,
 	MatIconModule,
 	MatInputModule,
 	MatListModule,
+	MatProgressBarModule,
 	MatSidenavModule,
-	MatSnackBar,
-	MatTabsModule
+	MatTabsModule,
+	MatToolbarModule
 } from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -21,58 +23,70 @@ import * as fas from '@fortawesome/free-solid-svg-icons';
 
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 
-import { ActivityService } from 'app/services/activity.service';
-import { UserService } from 'app/services/user.service';
-import {
-	ActivityResolver,
-	ConfigurationResolver,
-	DataResolverFactory,
-	OrganisationResolver
-} from 'app/services/data.resolver.factory';
-import {
-	ConfigurationService,
-	DataServiceFactory,
-	OrganisationService
-} from 'app/services/data.service.factory';
-
+import { PortalRouter } from 'app/portal/portal.router';
 import {
 	ActivityDialogComponent
 } from 'app/portal/dialogs/activity.dialog.component';
-import { PortalRouter } from 'app/portal/portal.router';
+import {
+	TranslationDialogComponent
+} from 'app/portal/dialogs/translation.dialog.component';
 
+import { AboutPortalComponent } from 'app/portal/about/about.portal.component';
+import { MappingComponent } from 'app/portal/mapping/mapping.component';
+import { PortalComponent } from 'app/portal/portal.component';
+import { SearchComponent } from 'app/portal/search/search.component';
 import {
 	AboutActivityComponent
 } from 'app/portal/about/about.activity.component';
 import {
 	AboutOrganisationComponent
 } from 'app/portal/about/about.organisation.component';
-import { MappingComponent } from 'app/portal/mapping/mapping.component';
-import { PortalComponent } from 'app/portal/portal.component';
-import { SearchComponent } from 'app/portal/search/search.component';
+import {
+	SearchFilterComponent
+} from 'app/portal/search/search.filter.component';
 
 fontawesome.add(
 	fas.faAngleDown,
 	fas.faAngleUp,
+	fas.faBalanceScale,
+	fas.faBookmark,
+	fas.faCalendarAlt,
+	fas.faChartPie,
+	fas.faCode,
 	fas.faComments,
-	// fas.faEllipsisV,
-	fas.faListAlt,
+	fas.faEnvelope,
+	fas.faHome,
+	fas.faInfo,
 	fas.faLocationArrow,
+	fas.faLock,
 	fas.faMapMarkerAlt,
+	fas.faPhone,
 	fas.faPlus,
+	fas.faSearch,
+	fas.faSign,
+	fas.faStar,
+	fas.faTags,
+	fas.faTimes,
 	fas.faUser
 );
 
 @NgModule({
 	declarations: [
-		AboutActivityComponent,
-		AboutOrganisationComponent,
-		ActivityDialogComponent,
 		MappingComponent,
 		PortalComponent,
-		SearchComponent
+		SearchComponent,
+		SearchFilterComponent,
+
+		AboutActivityComponent,
+		AboutOrganisationComponent,
+		AboutPortalComponent,
+
+		ActivityDialogComponent,
+		TranslationDialogComponent
 	],
 	entryComponents: [
-		ActivityDialogComponent
+		ActivityDialogComponent,
+		TranslationDialogComponent
 	],
 	imports: [
 		AngularOpenlayersModule,
@@ -82,43 +96,17 @@ fontawesome.add(
 
 		MatButtonModule,
 		MatCardModule,
+		MatCheckboxModule,
 		MatDialogModule,
 		MatExpansionModule,
 		MatFormFieldModule,
 		MatIconModule,
 		MatInputModule,
 		MatListModule,
+		MatProgressBarModule,
 		MatSidenavModule,
-		MatTabsModule
-	],
-	providers: [
-		ActivityService,
-		{
-			provide: ActivityResolver,
-			deps: [ActivityService],
-			useFactory: DataResolverFactory(ActivityResolver)
-		},
-		{
-			provide: ConfigurationService,
-			deps: [HttpClient, UserService, MatSnackBar],
-			useFactory: DataServiceFactory(ConfigurationService)
-		},
-		{
-			provide: ConfigurationResolver,
-			deps: [ConfigurationService],
-			useFactory: DataResolverFactory(ConfigurationResolver)
-		},
-		{
-			provide: OrganisationService,
-			deps: [HttpClient, UserService, MatSnackBar],
-			useFactory: DataServiceFactory(OrganisationService)
-		},
-		{
-			provide: OrganisationResolver,
-			deps: [OrganisationService],
-			useFactory: DataResolverFactory(OrganisationResolver)
-		},
-		UserService
+		MatTabsModule,
+		MatToolbarModule
 	]
 })
 

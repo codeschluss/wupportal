@@ -1,31 +1,76 @@
-<!--
-<mat-card *ngIf="organisation">
-	<mat-card-content>
-		<div class="row" *ngIf="!largeTitle">
-			<div class="col">{{constants.organisation}}</div>
-			<b class="col">{{organisation.name}}</b>
-		</div>
-		<h3 *ngIf="largeTitle">{{organisation.name}}</h3>
-		<div class="row" *ngIf="organisation.description">
-			<div class="col">{{constants.description}}</div>
-			<b class="col">{{organisation.description}}</b>
-		</div>
-		<div class="row" *ngIf="organisation.website">
-			<div class="col">{{constants.website}}</div>
-			<b class="col">{{organisation.website}}</b>
-		</div>
-		<div class="row" *ngIf="organisation.mail">
-			<div class="col">{{constants.mail}}</div>
-			<b class="col">{{organisation.mail}}</b>
-		</div>
-		<div class="row" *ngIf="organisation.phone">
-			<div class="col">{{constants.phone}}</div>
-			<b class="col">{{organisation.phone}}</b>
-		</div>
-		<div class="row" *ngIf="organisation.address">
-			<div class="col">{{constants.address}} </div>
-			<b class="col">{{organisation.address.toString}}</b>
-		</div>
-	</mat-card-content>
-</mat-card>
--->
+<ng-template #title>Organisations-Details</ng-template>
+
+<mat-list>
+	<mat-list-item>
+		<h2>{{ item.name }}</h2>
+	</mat-list-item>
+
+	<h3 mat-subheader>Allgemein</h3>
+
+	<mat-list-item>
+		<fa-icon mat-list-icon icon="info"></fa-icon>
+		<p [style.paddingLeft]="'16px'">{{ item.description }}</p>
+	</mat-list-item>
+
+	<ng-container *ngIf="item.address">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="map-marker-alt"></fa-icon>
+			<div class="mat-list-text">
+				<p mat-line>
+					{{ item.address.street }}
+					{{ item.address.house_number }}
+				</p>
+				<p mat-line>
+					{{ item.address.postal_code }}
+					{{ item.address.place }}
+					{{ item.address.suburb?.name }}
+				</p>
+			</div>
+		</mat-list-item>
+	</ng-container>
+
+	<ng-container *ngIf="item.mail || item.phone || item.website">
+		<mat-divider></mat-divider>
+
+		<h3 mat-subheader>Kontakt</h3>
+
+		<ng-container *ngIf="item.mail">
+			<a mat-button color="primary" tabindex="-1"
+				[href]="'mailto:' + item.mail">
+				<mat-list-item>
+					<fa-icon mat-list-icon icon="envelope"></fa-icon>
+					<div class="mat-list-text">
+						<strong mat-line>E-Mail-Kontakt</strong>
+						<p mat-line>{{ item.mail }}</p>
+					</div>
+				</mat-list-item>
+			</a>
+		</ng-container>
+
+		<ng-container *ngIf="item.phone">
+			<a mat-button color="primary" tabindex="-1"
+				[href]="'tel:' + item.phone">
+				<mat-list-item>
+					<fa-icon mat-list-icon icon="phone"></fa-icon>
+					<div class="mat-list-text">
+						<strong mat-line>Telefon-Kontakt</strong>
+						<p mat-line>{{ item.phone }}</p>
+					</div>
+				</mat-list-item>
+			</a>
+		</ng-container>
+
+		<ng-container *ngIf="item.website">
+			<a mat-button color="primary" tabindex="-1" target="_blank"
+				[href]="item.website">
+				<mat-list-item>
+					<fa-icon mat-list-icon icon="star"></fa-icon>
+					<div class="mat-list-text">
+						<strong mat-line>Website</strong>
+						<p mat-line>{{ item.website }}</p>
+					</div>
+				</mat-list-item>
+			</a>
+		</ng-container>
+	</ng-container>
+</mat-list>

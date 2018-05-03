@@ -2,7 +2,7 @@
 	<aol-interaction-default>
 	</aol-interaction-default>
 
-	<aol-view enableRotation="" [zoom]="zoomfactor">
+	<aol-view enableRotation [zoom]="zoomfactor">
 		<aol-coordinate [srid]="projection" [x]="longitude" [y]="latitude">
 		</aol-coordinate>
 	</aol-view>
@@ -12,20 +12,32 @@
 		</aol-source-osm>
 	</aol-layer-tile>
 
-	<aol-layer-vector [zIndex]="10">
-		<aol-source-cluster [distance]="clusterspan">
-			<aol-source-vector [overlaps]="true">
-				<ng-container *ngFor="let activity of activities">
-					<aol-feature [id]="activity.id">
-						<aol-geometry-point>
-							<aol-coordinate [srid]="projection"
-								[x]="activity.address.longitude"
-								[y]="activity.address.latitude">
-							</aol-coordinate>
-						</aol-geometry-point>
-					</aol-feature>
-				</ng-container>
-			</aol-source-vector>
-		</aol-source-cluster>
+	<aol-layer-vector>
+		<ng-container *ngIf="!!activities.length">
+			<aol-source-cluster [distance]="clusterspan">
+				<aol-source-vector [overlaps]="true">
+					<ng-container *ngFor="let i of activities">
+						<!-- TODO: ngx-openlayers async id binding bug -->
+						<!-- <aol-feature [id]="i.id"> -->
+						<aol-feature>
+						<!-- /TODO -->
+							<aol-geometry-point>
+								<aol-coordinate
+									[srid]="projection"
+									[x]="i.address.longitude"
+									[y]="i.address.latitude">
+								</aol-coordinate>
+							</aol-geometry-point>
+							<!-- TODO: ngx-openlayers async id binding bug -->
+							<aol-style>
+								<aol-style-text [text]="i.id">
+								</aol-style-text>
+							</aol-style>
+							<!-- /TODO -->
+						</aol-feature>
+					</ng-container>
+				</aol-source-vector>
+			</aol-source-cluster>
+		</ng-container>
 	</aol-layer-vector>
 </aol-map>

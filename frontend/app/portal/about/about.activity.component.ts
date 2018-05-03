@@ -1,32 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { Subject } from 'rxjs/Subject';
+import { Component } from '@angular/core';
 
 import { Activity } from 'app/models/activity';
 
-import { Constants } from 'app/services/constants';
+import { AboutComponent } from 'app/portal/about/about.component';
 
 @Component({
-	selector: 'about-activity',
 	styleUrls: ['about.component.css'],
 	templateUrl: 'about.activity.component.html'
 })
 
-export class AboutActivityComponent implements OnInit, OnDestroy {
+export class AboutActivityComponent extends AboutComponent {
 
-	private readonly ngUnsubscribe: Subject<null> = new Subject();
-
-	constructor(
-		public route:  ActivatedRoute
-	) { }
+	private item: Activity;
 
 	public ngOnInit(): void {
-	}
-
-	public ngOnDestroy(): void {
-		this.ngUnsubscribe.next();
-		this.ngUnsubscribe.complete();
+		this.item = this.route.snapshot.data.activity;
 	}
 
 }

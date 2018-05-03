@@ -13,6 +13,7 @@ export const ScheduleResolver = new InjectionToken<DataResolver>('schedules');
 export const SuburbResolver = new InjectionToken<DataResolver>('suburbs');
 export const TagResolver = new InjectionToken<DataResolver>('tags');
 export const TargetGroupResolver = new InjectionToken<DataResolver>('target_groups');
+export const TranslationResolver = new InjectionToken<DataResolver>('translations');
 export const UserResolver = new InjectionToken<DataResolver>('users');
 
 export function DataResolverFactory(token: InjectionToken<DataResolver>): any {

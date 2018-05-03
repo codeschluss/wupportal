@@ -1,7 +1,14 @@
 <mat-sidenav-container>
-	<mat-sidenav [opened]="!!route.snapshot.children.length"
-		(closed)="router.navigate([''])" (opened)="open = false">
-		<router-outlet></router-outlet>
+	<mat-sidenav #sidenav [opened]="!!route.snapshot.children.length"
+		(closed)="router.navigate(['/'])" (openedStart)="dial = false">
+		<mat-toolbar color="primary">
+			<ng-content *ngTemplateOutlet="title"></ng-content>
+			<button mat-icon-button color (click)="sidenav.close()">
+				<fa-icon icon="times"></fa-icon>
+			</button>
+		</mat-toolbar>
+
+		<router-outlet (activate)="title = $event.title"></router-outlet>
 	</mat-sidenav>
 
 	<mat-sidenav-content>
@@ -11,8 +18,8 @@
 		<search-component [selectables]="selectables">
 		</search-component>
 
-		<nav class="fab-dial" [class.open]="open" [class.vert]="landscape | async">
-			<button mat-fab color="" (click)="open = !open">
+		<nav class="fab-dial" [class.open]="dial" [class.vert]="landscape | async">
+			<button mat-fab color (click)="dial = !dial">
 				<fa-icon icon="plus"></fa-icon>
 			</button>
 			<button mat-fab color="primary" (click)="handleTranslate()">
@@ -21,13 +28,9 @@
 			<button mat-fab color="primary" (click)="handleTracking()">
 				<fa-icon icon="location-arrow"></fa-icon>
 			</button>
-			<button mat-fab color="primary" (click)="handleTabular()">
-				<fa-icon icon="list-alt"></fa-icon>
-			</button>
-			<button mat-fab color="primary" routerLink="/login">
-				<fa-icon icon="user"></fa-icon>
+			<button mat-fab color="primary" routerLink="/about">
+				<fa-icon icon="info"></fa-icon>
 			</button>
 		</nav>
 	</mat-sidenav-content>
 </mat-sidenav-container>
-

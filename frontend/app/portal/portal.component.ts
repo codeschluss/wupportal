@@ -14,10 +14,12 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 
 import { Activity } from 'app/models/activity';
+import { Address } from 'app/models/address';
 import { Translation } from 'app/models/translation';
 
 import { UserService } from 'app/services/user.service';
 
+import { MappingComponent } from 'app/portal/mapping/mapping.component';
 import {
 	TranslationDialogComponent
 } from 'app/portal/dialogs/translation.dialog.component';
@@ -35,6 +37,9 @@ export class PortalComponent implements OnInit, OnDestroy {
 
 	public toolbarHead: ElementRef;
 	public viewFabdial: boolean;
+
+	@ViewChild(MappingComponent)
+	private mapping: MappingComponent;
 
 	constructor(
 		public route:  ActivatedRoute,
@@ -57,6 +62,11 @@ export class PortalComponent implements OnInit, OnDestroy {
 	}
 
 	public onTracking(): void {
+		navigator.geolocation.getCurrentPosition((pos) =>
+			this.mapping.centerAddress(<Address>{
+				latitude: pos.coords.latitude,
+				longitude: pos.coords.longitude
+			}));
 	}
 
 	public onTranslate(): void {

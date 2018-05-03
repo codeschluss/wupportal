@@ -1,14 +1,14 @@
 <mat-sidenav-container>
 	<mat-sidenav #sidenav [opened]="!!route.snapshot.children.length"
-		(closed)="router.navigate(['/'])" (openedStart)="dial = false">
+		(closed)="router.navigate(['/'])" (openedStart)="viewFabdial = false">
 		<mat-toolbar color="primary">
-			<ng-content *ngTemplateOutlet="title"></ng-content>
+			<ng-content *ngTemplateOutlet="toolbarHead"></ng-content>
 			<button mat-icon-button color (click)="sidenav.close()">
 				<fa-icon icon="times"></fa-icon>
 			</button>
 		</mat-toolbar>
 
-		<router-outlet (activate)="title = $event.title"></router-outlet>
+		<router-outlet (activate)="toolbarHead = $event.title"></router-outlet>
 	</mat-sidenav>
 
 	<mat-sidenav-content>
@@ -18,14 +18,14 @@
 		<search-component [selectables]="selectables">
 		</search-component>
 
-		<nav class="fab-dial" [class.open]="dial" [class.vert]="landscape | async">
-			<button mat-fab color (click)="dial = !dial">
+		<nav class="fab-dial" [class.open]="viewFabdial">
+			<button mat-fab color (click)="viewFabdial = !viewFabdial">
 				<fa-icon icon="plus"></fa-icon>
 			</button>
-			<button mat-fab color="primary" (click)="handleTranslate()">
+			<button mat-fab color="primary" (click)="onTranslate()">
 				<fa-icon icon="comments"></fa-icon>
 			</button>
-			<button mat-fab color="primary" (click)="handleTracking()">
+			<button mat-fab color="primary" (click)="onTracking()">
 				<fa-icon icon="location-arrow"></fa-icon>
 			</button>
 			<button mat-fab color="primary" routerLink="/about">

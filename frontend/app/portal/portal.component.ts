@@ -1,16 +1,16 @@
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-	AfterViewInit,
 	Component,
+	ElementRef,
 	Inject,
 	OnDestroy,
 	OnInit,
-	ViewChild,
+	Output,
+	ViewChild
 } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { Activity } from 'app/models/activity';
@@ -22,69 +22,44 @@ import {
 	TranslationDialogComponent
 } from 'app/portal/dialogs/translation.dialog.component';
 
-// import { Organisation } from 'app/models/organisation';
-
-// import {
-// 	AboutActivityComponent
-// } from 'app/portal/about/about.activity.component';
-// import {
-// 	AboutOrganisationComponent
-// } from 'app/portal/about/about.organisation.component';
-// import { MappingComponent } from 'app/portal/mapping/mapping.component';
-// import { SearchComponent } from 'app/portal/search/search.component';
-
 @Component({
 	providers: [UserService],
 	styleUrls: ['portal.component.css'],
 	templateUrl: 'portal.component.html',
 })
 
-export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PortalComponent implements OnInit, OnDestroy {
 
-	// @ViewChild('mapping-component')
-	// private mappingComponent: MappingComponent;
+	@Output()
+	public selectables: BehaviorSubject<Activity[]>;
 
-	// @ViewChild('search-component')
-	// private searchComponent: SearchComponent;
-
-	private landscape: Observable<boolean>;
-	private selectables: BehaviorSubject<Activity[]>;
-
-	private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
+	public toolbarHead: ElementRef;
+	public viewFabdial: boolean;
 
 	constructor(
+		public route:  ActivatedRoute,
+		public router: Router,
+
 		@Inject(UserService)
 		private userService: UserService,
 
-		private dialog: MatDialog,
-		private route:  ActivatedRoute,
-		private router: Router
+		private dialog: MatDialog
 	) { }
 
 	public ngOnInit(): void {
-		this.landscape = Observable.fromEvent(window, 'resize')
-			.startWith(window.innerWidth > window.innerHeight)
-			.map(() => window.innerWidth > window.innerHeight);
-
 		this.selectables = new BehaviorSubject<Activity[]>(
 			this.route.snapshot.data.activities || []);
-	}
-
-	public ngAfterViewInit(): void {
 	}
 
 	public ngOnDestroy(): void {
 		this.selectables.next(null);
 		this.selectables.complete();
-
-		this.ngUnsubscribe.next(null);
-		this.ngUnsubscribe.complete();
 	}
 
-	private handleTracking(): void {
+	public onTracking(): void {
 	}
 
-	private handleTranslate(): void {
+	public onTranslate(): void {
 		this.dialog.open(TranslationDialogComponent, {
 			data: this.route.snapshot.data.translations
 		}).afterClosed().filter(i => i).subscribe((translation: Translation) => {

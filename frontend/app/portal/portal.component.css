@@ -36,9 +36,6 @@ nav.fab-dial {
 	right: 12px;
 	z-index: 1;
 }
-nav.fab-dial.vert {
-	flex-flow: row-reverse;
-}
 nav.fab-dial fa-icon {
 	display: block;
 	font-size: 150%;
@@ -55,16 +52,10 @@ nav.fab-dial > .mat-fab + .mat-fab {
 	opacity: 0;
 	pointer-events: none;
 }
-nav.fab-dial.vert > .mat-fab + .mat-fab {
-	margin: 0 -56px 0 0;
-}
 nav.fab-dial.open > .mat-fab + .mat-fab {
 	margin: 0 0 8px 0;
 	opacity: 1;
 	pointer-events: initial;
-}
-nav.fab-dial.open.vert > .mat-fab + .mat-fab {
-	margin: 0 8px 0 0;
 }
 nav.fab-dial.open > .mat-fab:first-child fa-icon {
 	transform: rotate(135deg);

@@ -17,11 +17,10 @@ import { ConfigFormComponent } from 'app/views/admin/configs/config.form';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 import { AuthGuardService } from './services/authguard.service';
 import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.password';
-import { PortalModule } from 'app/portal/portal.module';
 
 @NgModule({
 	imports: [RouterModule.forRoot([
-		{ path: '', loadChildren: () => PortalModule },
+		{ path: '', loadChildren: 'app/portal/portal.module#PortalModule' },
 		{ path: 'login', component: LoginFormComponent },
 		{ path: 'register', component: RegisterFormComponent },
 		{ path: 'password', component: ForgottenPasswordFormComponent },

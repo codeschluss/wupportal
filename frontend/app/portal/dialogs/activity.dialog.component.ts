@@ -26,7 +26,7 @@ export class ActivityDialogComponent {
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA)
-		private activities: Activity[],
+		public activities: Activity[],
 
 		private dialog: MatDialogRef<ActivityDialogComponent>
 	) { }

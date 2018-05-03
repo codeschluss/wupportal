@@ -140,8 +140,9 @@
 		<h2>Rechtliche Hinweise</h2>
 	</mat-list-item>
 
-	<ng-container *ngIf="!legal">
-		<a mat-button color="primary" tabindex="-1" (click)="legal = !legal">
+	<ng-container *ngIf="!showLegal">
+		<a mat-button color="primary" tabindex="-1"
+			(click)="showLegal = !showLegal">
 			<mat-list-item>
 				<fa-icon mat-list-icon icon="balance-scale"></fa-icon>
 				<strong mat-line>Hinweise einblenden</strong>
@@ -150,7 +151,7 @@
 		</a>
 	</ng-container>
 
-	<ng-container *ngIf="legal">
+	<ng-container *ngIf="showLegal">
 		<h3 mat-subheader>Angaben gemäß §5 TMG</h3>
 
 		<mat-list-item>

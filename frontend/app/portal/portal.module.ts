@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
 	MatButtonModule,
@@ -23,7 +22,7 @@ import * as fas from '@fortawesome/free-solid-svg-icons';
 
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 
-import { PortalRouter } from 'app/portal/portal.router';
+import { PortalRouterModule } from 'app/portal/portal-router.module';
 import {
 	ActivityDialogComponent
 } from 'app/portal/dialogs/activity.dialog.component';
@@ -92,7 +91,7 @@ fontawesome.add(
 		AngularOpenlayersModule,
 		CommonModule,
 		FontAwesomeModule,
-		PortalRouter,
+		PortalRouterModule,
 
 		MatButtonModule,
 		MatCardModule,

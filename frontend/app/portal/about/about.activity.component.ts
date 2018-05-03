@@ -1,17 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Activity } from 'app/models/activity';
-
-import { AboutComponent } from 'app/portal/about/about.component';
 
 @Component({
 	styleUrls: ['about.component.css'],
 	templateUrl: 'about.activity.component.html'
 })
 
-export class AboutActivityComponent extends AboutComponent {
+export class AboutActivityComponent implements OnInit {
 
-	private item: Activity;
+	@ViewChild('title')
+	public title: ElementRef;
+
+	public item: Activity;
+
+	constructor(
+		private route: ActivatedRoute
+	) { }
 
 	public ngOnInit(): void {
 		this.item = this.route.snapshot.data.activity;

@@ -17,5 +17,5 @@ export const TranslationResolver = new InjectionToken<DataResolver>('translation
 export const UserResolver = new InjectionToken<DataResolver>('users');
 
 export function DataResolverFactory(token: InjectionToken<DataResolver>): any {
-	return (dataService: DataService) =>  new DataResolver(dataService);
+	return (dataService: DataService) => new DataResolver(dataService);
 }

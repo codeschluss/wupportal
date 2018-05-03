@@ -1,24 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-
-import { AboutComponent } from 'app/portal/about/about.component';
 
 @Component({
 	styleUrls: ['about.component.css'],
 	templateUrl: 'about.portal.component.html'
 })
 
-export class AboutPortalComponent extends AboutComponent {
+export class AboutPortalComponent implements OnInit {
+
+	@ViewChild('title')
+	public title: ElementRef;
+
+	public showLegal: boolean;
 
 	constructor(
 		private domSanitizer: DomSanitizer,
-		private iconRegistry: MatIconRegistry,
-		protected route: ActivatedRoute
-	) {
-		super(route);
-	}
+		private iconRegistry: MatIconRegistry
+	) { }
 
 	public ngOnInit(): void {
 		this.iconRegistry.addSvgIcon('codeschluss', this.domSanitizer

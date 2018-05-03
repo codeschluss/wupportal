@@ -47,6 +47,12 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input()
 	public activities: Activity[];
 
+	public clusterspan: number;
+	public latitude: number;
+	public longitude: number;
+	public projection: string;
+	public zoomfactor: number;
+
 	@ViewChild(LayerVectorComponent)
 	private aolLayer: LayerVectorComponent;
 
@@ -55,12 +61,6 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	@ViewChild(ViewComponent)
 	private aolView: ViewComponent;
-
-	private clusterspan: number;
-	private latitude: number;
-	private longitude: number;
-	private projection: string;
-	private zoomfactor: number;
 
 	private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 

@@ -7,29 +7,29 @@
 				<mat-icon svgIcon="wuppertal"></mat-icon><b>upportal durchsuchen</b>
 			</mat-placeholder>
 
-			<mat-hint align="start" (click)="showFilters = !showFilters">
+			<mat-hint align="start" (click)="viewFilters = !viewFilters">
 				<button mat-button [color]="filter.selected() && 'primary'">
 					{{ filter.selected() }} Filter
-					<fa-icon [icon]="showFilters ? 'angle-up' : 'angle-down'"></fa-icon>
+					<fa-icon [icon]="viewFilters ? 'angle-up' : 'angle-down'"></fa-icon>
 				</button>
 			</mat-hint>
 
-			<mat-hint align="end" (click)="showResults = !showResults">
+			<mat-hint align="end" (click)="viewResults = !viewResults">
 				<button mat-button [color]="(selectables | async).length && 'primary'">
 					{{ (selectables | async).length }} Ergebnisse
-					<fa-icon [icon]="showResults ? 'angle-up' : 'angle-down'"></fa-icon>
+					<fa-icon [icon]="viewResults ? 'angle-up' : 'angle-down'"></fa-icon>
 				</button>
 			</mat-hint>
 		</mat-form-field>
 	</mat-card>
 
-	<mat-progress-bar color="primay" mode="query" [class.hide]="!showLoading">
+	<mat-progress-bar color="primay" mode="query" [class.hide]="!viewLoading">
 	</mat-progress-bar>
 </nav>
 
 <menu>
 	<mat-card>
-		<mat-expansion-panel hideToggle="true" [expanded]="showFilters">
+		<mat-expansion-panel hideToggle="true" [expanded]="viewFilters">
 			<mat-tab-group>
 				<mat-tab>
 					<ng-template mat-tab-label>Kategorien</ng-template>
@@ -62,7 +62,7 @@
 </menu>
 
 <content>
-	<mat-expansion-panel hideToggle="true" [expanded]="showResults">
+	<mat-expansion-panel hideToggle="true" [expanded]="viewResults">
 		<mat-accordion>
 			<ng-container *ngFor="let i of selectables | async">
 				<mat-expansion-panel>

@@ -38,7 +38,6 @@ $this->layout = false;
 	</app-root>
 	<script src="js/inline.bundle.js"></script>
 	<script src="js/polyfills.bundle.js"></script>
-	<script src="js/vendor.bundle.js"></script>
 	<script src="js/main.bundle.js"></script>
 </body>
 </html>

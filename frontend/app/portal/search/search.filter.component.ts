@@ -36,7 +36,7 @@ export class SearchFilterComponent implements OnInit {
 	private filters: Model[];
 
 	constructor(
-		private route: ActivatedRoute
+		public route: ActivatedRoute
 	) {
 		this.filter = new EventEmitter<[string, Model[]]>();
 	}
@@ -46,7 +46,7 @@ export class SearchFilterComponent implements OnInit {
 		this.filter.emit([this.field, this.filters]);
 	}
 
-	private onChange(event: MatSelectionListChange): void {
+	public onChange(event: MatSelectionListChange): void {
 		const model = this.route.snapshot.data[this.field.toLowerCase()]
 			.find(i => i.id === event.option.value);
 

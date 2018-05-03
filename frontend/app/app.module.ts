@@ -111,7 +111,6 @@ import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.componen
 import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.password';
 import { TranslatableFieldsComponent } from './views/admin/translations/translatable.form';
 
-
 @NgModule({
 	bootstrap: [
 		AppComponent
@@ -258,5 +257,3 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 })
 
 export class AppModule { }
-
-

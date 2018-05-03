@@ -19,7 +19,7 @@ export class TranslationDialogComponent {
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA)
-		private translations: Translation[],
+		public translations: Translation[],
 
 		private dialog: MatDialogRef<TranslationDialogComponent>,
 	) { }

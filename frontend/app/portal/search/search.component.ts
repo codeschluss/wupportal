@@ -27,12 +27,12 @@ export class SearchComponent implements OnInit, OnDestroy {
 	@Input()
 	public selectables: BehaviorSubject<Activity[]>;
 
-	private input: string;
-	private filter: object;
+	public filter: any;
+	public input: string;
 
-	private showFilters: boolean;
-	private showLoading: boolean;
-	private showResults: boolean;
+	public viewFilters: boolean;
+	public viewLoading: boolean;
+	public viewResults: boolean;
 
 	private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
@@ -60,27 +60,27 @@ export class SearchComponent implements OnInit, OnDestroy {
 		this.ngUnsubscribe.complete();
 	}
 
-	private onInput(event: Event): void {
+	public onInput(event: Event): void {
 		this.input = (<HTMLInputElement> event.target).value;
 	}
 
-	private onFilter(event: [string, Model[]]): void {
+	public onFilter(event: [string, Model[]]): void {
 		this.filter[event[0]] = event[1].map(i => i.id);
 	}
 
-	private onSearch(): void {
+	public onSearch(): void {
 		const search = { };
-		if (this.showFilters) Object.assign(search, { advanced: this.filter });
+		if (this.viewFilters) Object.assign(search, { advanced: this.filter });
 		if (this.input) Object.assign(search, { filter: this.input });
 
-		this.showLoading = true;
+		this.viewLoading = true;
 		this.selectables.next([]);
 
 		this.activityService.getByMapfilter(search)
-			.finally(() => this.showLoading = false)
+			.finally(() => this.viewLoading = false)
 			.subscribe((activities: Activity[]) => {
 				this.selectables.next(activities);
-				this.showResults = !!activities.length;
+				this.viewResults = !!activities.length;
 			});
 	}
 

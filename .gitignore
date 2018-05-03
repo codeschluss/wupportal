@@ -7,5 +7,6 @@ backend/tmp
 backend/vendor
 
 frontend/*.log
+frontend/dist
 frontend/node_modules
 frontend/package-lock.json

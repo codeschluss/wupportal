@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { Constants } from '../../../services/constants';
 import { Schedule } from '../../../models/schedule';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { ValidationService } from '../../../services/validation.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class NewScheduleDialogComponent {
 	constructor(
 		private adapter: DateAdapter<any>,
 		public dialogRef: MatDialogRef<NewScheduleDialogComponent>,
+		public validation: ValidationService,
 		private constants: Constants
 	) {
 		this.adapter.setLocale(this.constants.defaultCountryCode);
@@ -50,7 +52,7 @@ export class NewScheduleDialogComponent {
 			'endDateCtrl': new FormControl('', [
 				Validators.required
 			]),
-		});
+		}, this.validation.validDate);
 	}
 
 	onCancel(): void {

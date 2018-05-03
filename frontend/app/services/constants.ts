@@ -108,6 +108,7 @@ export class Constants {
 	public enterYourMail: string = 'Bitte geben Sie Ihre Email Adresse ein';
 	public resetPassword: string = 'Passwort zurück setzen';
 	public orAreEmptyMessage: string = 'oder sind leer';
+	public endBeforeStartError: string = 'Ende liegt vor Beginn';
 	public begin: string = 'Anfang';
 	public end: string = 'Ende';
 	public last: string = 'letzten';

@@ -22,6 +22,7 @@ import { Schedule } from '../../../models/schedule';
 import { NewScheduleDialogComponent } from '../dialog/scheduler.new.entry';
 import { DataService } from 'app/services/data.service';
 import { Constants } from 'app/services/constants';
+import { ValidationService } from '../../../services/validation.service';
 
 
 @Component({
@@ -62,42 +63,23 @@ export class SchedulerComponent implements OnInit {
 		public constants: Constants,
 		private adapter: DateAdapter<any>,
 		private dialog: MatDialog,
+		public validation: ValidationService,
+		public currValidation: ValidationService,
 		@Inject(ScheduleService) private scheduleService: DataService,
 	) {
 	}
 
 	ngOnInit(): void {
 		this.adapter.setLocale(this.constants.defaultCountryCode);
-
-		this.initFormGroups();
-
-		this.currScheduleFormGroup = new FormGroup({
-			'currentStartDate': new FormControl('', [
-				Validators.required
-			]),
-			'currentStartTimeHour': new FormControl('', [
-				Validators.required
-			]),
-			'currentStartTimeMinute': new FormControl('', [
-				Validators.required
-			]),
-			'currentEndDate': new FormControl('', [
-				Validators.required
-			]),
-			'currentEndTimeHour': new FormControl('', [
-				Validators.required
-			]),
-			'currentEndTimeMinute': new FormControl('', [
-				Validators.required
-			])
-		});
-
+		this.initCurrFormGroup();
 		this.schedulesCtrl = new FormControl(this.schedules, [Validators.required]);
 
 		this.schedulesCtrl.valueChanges.subscribe(schedules => {
 			this.onScheduleChange.emit(schedules);
 		});
 		this.declerateDateForms(-1);
+		this.initFormGroups();
+
 	}
 
 	private initFormGroups(): void {
@@ -132,153 +114,179 @@ export class SchedulerComponent implements OnInit {
 			'monthlyRecurrenceCtrl': new FormControl('monthDate'),
 			'monthDateCtrl': new FormControl(1),
 			'rythmUnitCtrl': new FormControl('unique'),
-		});
+		}, this.validation.validDate);
+	}
+
+	private initCurrFormGroup(): void {
+		this.currScheduleFormGroup = new FormGroup({
+			'startDateCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'startTimeHourCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'startTimeMinuteCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'endDateCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'endTimeHourCtrl': new FormControl('', [
+				Validators.required
+			]),
+			'endTimeMinuteCtrl': new FormControl('', [
+				Validators.required
+			])
+		}, this.currValidation.validDate);
 	}
 
 	generateSchedules(): void {
-		if (this.formGroup.get('rythmPeriodCtrl').value > 0 && this.formGroup.get('rythmUnitCtrl').value !== 'unique') {
-			if (!this.schedules) {
-				this.schedules = [];
-			}
-			let startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day');
-			const endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day');
-			const recurrenceRange = { start: startDate, end: endDate };
+		if (this.formGroup.valid) {
+			if (this.formGroup.get('rythmPeriodCtrl').value > 0 && this.formGroup.get('rythmUnitCtrl').value !== 'unique') {
+				if (!this.schedules) {
+					this.schedules = [];
+				}
+				let startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day');
+				const endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day');
+				const recurrenceRange = { start: startDate, end: endDate };
 
-			let rule;
+				let rule;
 
-			switch (this.formGroup.get('rythmUnitCtrl').value) {
-				case 'years':
-					rule = new RRule({
-						freq: RRule.YEARLY,
-						interval: this.formGroup.get('rythmPeriodCtrl').value,
-						dtstart: startDate.toDate(),
-						until: endDate.toDate()
-					});
-					break;
-				case 'months':
-					if (this.formGroup.get('monthlyRecurrenceCtrl').value === 'monthDate') {
-						if (startDate.date() > this.formGroup.get('monthDateCtrl').value) {
-							startDate.add(this.formGroup.get('rythmPeriodCtrl').value, 'month');
-						}
-						startDate = startDate.date(this.formGroup.get('monthDateCtrl').value).add(1, 'day');
+				switch (this.formGroup.get('rythmUnitCtrl').value) {
+					case 'years':
 						rule = new RRule({
-							freq: RRule.MONTHLY,
+							freq: RRule.YEARLY,
 							interval: this.formGroup.get('rythmPeriodCtrl').value,
 							dtstart: startDate.toDate(),
 							until: endDate.toDate()
 						});
-					} else {
-						const byweekdayArray = [];
-						for (let i = 0; i < this.formGroup.get('weekdaysCtrl').value.length; i++) {
-							let weekday;
-							switch (this.formGroup.get('weekdaysCtrl').value[i]) {
-								case 0:
-									weekday = RRule.MO;
-									break;
-								case 1:
-									weekday = RRule.TU;
-									break;
-								case 2:
-									weekday = RRule.WE;
-									break;
-								case 3:
-									weekday = RRule.TH;
-									break;
-								case 4:
-									weekday = RRule.FR;
-									break;
-								case 5:
-									weekday = RRule.SA;
-									break;
-								default:
-									weekday = RRule.SU;
+						break;
+					case 'months':
+						if (this.formGroup.get('monthlyRecurrenceCtrl').value === 'monthDate') {
+							if (startDate.date() > this.formGroup.get('monthDateCtrl').value) {
+								startDate.add(this.formGroup.get('rythmPeriodCtrl').value, 'month');
 							}
-							byweekdayArray.push(weekday.nth(
-								this.formGroup.get('weekdayNumberCtrl').value === 5 ? -1 : this.formGroup.get('weekdayNumberCtrl').value)
-							);
+							startDate = startDate.date(this.formGroup.get('monthDateCtrl').value).add(1, 'day');
+							rule = new RRule({
+								freq: RRule.MONTHLY,
+								interval: this.formGroup.get('rythmPeriodCtrl').value,
+								dtstart: startDate.toDate(),
+								until: endDate.toDate()
+							});
+						} else {
+							const byweekdayArray = [];
+							for (let i = 0; i < this.formGroup.get('weekdaysCtrl').value.length; i++) {
+								let weekday;
+								switch (this.formGroup.get('weekdaysCtrl').value[i]) {
+									case 0:
+										weekday = RRule.MO;
+										break;
+									case 1:
+										weekday = RRule.TU;
+										break;
+									case 2:
+										weekday = RRule.WE;
+										break;
+									case 3:
+										weekday = RRule.TH;
+										break;
+									case 4:
+										weekday = RRule.FR;
+										break;
+									case 5:
+										weekday = RRule.SA;
+										break;
+									default:
+										weekday = RRule.SU;
+								}
+								byweekdayArray.push(weekday.nth(
+									this.formGroup.get('weekdayNumberCtrl').value === 5 ? -1 : this.formGroup.get('weekdayNumberCtrl').value)
+								);
+							}
+							rule = new RRule({
+								freq: RRule.MONTHLY,
+								interval: this.formGroup.get('rythmPeriodCtrl').value,
+								byweekday: byweekdayArray,
+								dtstart: startDate.toDate(),
+								until: endDate.toDate()
+							});
 						}
+						break;
+					case 'weeks':
 						rule = new RRule({
-							freq: RRule.MONTHLY,
+							freq: RRule.WEEKLY,
 							interval: this.formGroup.get('rythmPeriodCtrl').value,
-							byweekday: byweekdayArray,
+							byweekday: this.formGroup.get('weekdaysCtrl').value,
 							dtstart: startDate.toDate(),
 							until: endDate.toDate()
 						});
-					}
-					break;
-				case 'weeks':
-					rule = new RRule({
-						freq: RRule.WEEKLY,
-						interval: this.formGroup.get('rythmPeriodCtrl').value,
-						byweekday: this.formGroup.get('weekdaysCtrl').value,
-						dtstart: startDate.toDate(),
-						until: endDate.toDate()
-					});
-					break;
-				default:
-					rule = new RRule({
-						freq: RRule.DAILY,
-						interval: this.formGroup.get('rythmPeriodCtrl').value,
-						dtstart: startDate.toDate(),
-						until: endDate.toDate()
-					});
+						break;
+					default:
+						rule = new RRule({
+							freq: RRule.DAILY,
+							interval: this.formGroup.get('rythmPeriodCtrl').value,
+							dtstart: startDate.toDate(),
+							until: endDate.toDate()
+						});
+				}
+				const allDates: Date[] = rule.all();
+				allDates.map(date => {
+					const currSchedule = new Schedule({});
+					currSchedule.startDate = moment(date).utc().format();
+					currSchedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
+					currSchedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
+					currSchedule.endDate = moment(date).utc().format();
+					currSchedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
+					currSchedule.endTimeMinute = this.formGroup.get('endTimeMinuteCtrl').value;
+					this.schedules.push(currSchedule);
+				});
+			} else {
+				const oneTimeSchedule: Schedule = new Schedule({});
+				oneTimeSchedule.startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day').format();
+				oneTimeSchedule.endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day').format();
+				oneTimeSchedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
+				oneTimeSchedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
+				oneTimeSchedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
+				oneTimeSchedule.endTimeMinute = this.formGroup.get('endTimeMinuteCtrl').value;
+				this.schedules = [];
+				this.schedules.push(oneTimeSchedule);
 			}
-			const allDates: Date[] = rule.all();
-			allDates.map(date => {
-				const currSchedule = new Schedule({});
-				currSchedule.startDate = moment(date).utc().format();
-				currSchedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
-				currSchedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
-				currSchedule.endDate = moment(date).utc().format();
-				currSchedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
-				currSchedule.endTimeMinute = this.formGroup.get('endTimeMinuteCtrl').value;
-				this.schedules.push(currSchedule);
-			});
-		} else {
-			const oneTimeSchedule: Schedule = new Schedule({});
-			oneTimeSchedule.startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day').format();
-			oneTimeSchedule.endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day').format();
-			oneTimeSchedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
-			oneTimeSchedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
-			oneTimeSchedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
-			oneTimeSchedule.endTimeMinute = this.formGroup.get('endTimeMinuteCtrl').value;
-			this.schedules = [];
-			this.schedules.push(oneTimeSchedule);
+			this.declerateDateForms(-1);
+			this.schedulesCtrl.setValue(this.schedules);
 		}
-		this.declerateDateForms(-1);
-		this.schedulesCtrl.setValue(this.schedules);
 	}
+
 
 	declerateDateForms(i: number): void {
 		if (i >= 0) {
 			if (this.schedules[i]) {
-				this.currScheduleFormGroup.get('currentStartDate').setValue(this.schedules[i].startDate);
-				this.currScheduleFormGroup.get('currentStartTimeHour').setValue(moment(this.schedules[i].startTime).hour());
-				this.currScheduleFormGroup.get('currentStartTimeMinute').setValue(moment(this.schedules[i].startTime).minute());
-				this.currScheduleFormGroup.get('currentEndDate').setValue(this.schedules[i].endDate);
-				this.currScheduleFormGroup.get('currentEndTimeHour').setValue(
+				this.currScheduleFormGroup.get('startDateCtrl').setValue(this.schedules[i].startDate);
+				this.currScheduleFormGroup.get('startTimeHourCtrl').setValue(moment(this.schedules[i].startTime).hour());
+				this.currScheduleFormGroup.get('startTimeMinuteCtrl').setValue(moment(this.schedules[i].startTime).minute());
+				this.currScheduleFormGroup.get('endDateCtrl').setValue(this.schedules[i].endDate);
+				this.currScheduleFormGroup.get('endTimeHourCtrl').setValue(
 					moment(this.schedules[i].endTime).hour());
-				this.currScheduleFormGroup.get('currentEndTimeMinute').setValue(
+				this.currScheduleFormGroup.get('endTimeMinuteCtrl').setValue(
 					moment(this.schedules[i].endTime).minute());
 			}
 			this.panelNumber = i;
 		} else {
-			this.currScheduleFormGroup.get('currentStartDate').reset();
-			this.currScheduleFormGroup.get('currentStartTimeHour').reset();
-			this.currScheduleFormGroup.get('currentStartTimeMinute').reset();
-			this.currScheduleFormGroup.get('currentEndDate').reset();
-			this.currScheduleFormGroup.get('currentEndTimeHour').reset();
-			this.currScheduleFormGroup.get('currentEndTimeMinute').reset();
+			this.currScheduleFormGroup.get('startDateCtrl').reset();
+			this.currScheduleFormGroup.get('startTimeHourCtrl').reset();
+			this.currScheduleFormGroup.get('startTimeMinuteCtrl').reset();
+			this.currScheduleFormGroup.get('endDateCtrl').reset();
+			this.currScheduleFormGroup.get('endTimeHourCtrl').reset();
+			this.currScheduleFormGroup.get('endTimeMinuteCtrl').reset();
 		}
 	}
 
 	changeDate(i: number): void {
-		this.schedules[i].startDate = moment(this.currScheduleFormGroup.get('currentStartDate').value).format();
-		this.schedules[i].startTimeHour = this.currScheduleFormGroup.get('currentStartTimeHour').value;
-		this.schedules[i].startTimeMinute = this.currScheduleFormGroup.get('currentStartTimeMinute').value;
-		this.schedules[i].endDate = moment(this.currScheduleFormGroup.get('currentEndDate').value).format();
-		this.schedules[i].endTimeHour = this.currScheduleFormGroup.get('currentEndTimeHour').value;
-		this.schedules[i].endTimeMinute = this.currScheduleFormGroup.get('currentEndTimeMinute').value;
+		this.schedules[i].startDate = moment(this.currScheduleFormGroup.get('startDateCtrl').value).format();
+		this.schedules[i].startTimeHour = this.currScheduleFormGroup.get('startTimeHourCtrl').value;
+		this.schedules[i].startTimeMinute = this.currScheduleFormGroup.get('startTimeMinuteCtrl').value;
+		this.schedules[i].endDate = moment(this.currScheduleFormGroup.get('endDateCtrl').value).format();
+		this.schedules[i].endTimeHour = this.currScheduleFormGroup.get('endTimeHourCtrl').value;
+		this.schedules[i].endTimeMinute = this.currScheduleFormGroup.get('endTimeMinuteCtrl').value;
 		this.panelNumber = -1;
 	}
 

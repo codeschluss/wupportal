@@ -45,6 +45,14 @@
 				</mat-form-field>
 			</div>
 		</div>
+		<mat-error *ngIf=formGroup.invalid>
+			<div *ngIf="formGroup.invalid && !formGroup.errors">
+				{{constants.isRequiredMessage}}
+			</div>
+			<div *ngIf="formGroup.errors && formGroup.errors.endBeforeStart">
+				{{constants.endBeforeStartError}}
+			</div>
+		</mat-error>
 		<button class="btn btn-danger" type="button" color="warn" data-dismiss="modal" (click)="onCancel()">{{constants.cancel}}</button>
 		<button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid" color="primary">{{constants.ok}}</button>
 	</form>

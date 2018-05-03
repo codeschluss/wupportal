@@ -19,7 +19,7 @@ export class SuburbSelectionComponent {
 	suburb: Suburb;
 
 	constructor(
-		protected constants: Constants,
+		public constants: Constants,
 		@Inject(SuburbService) private service: DataService,
 		public dialogRef: MatDialogRef<SuburbSelectionComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
@@ -34,5 +34,3 @@ export class SuburbSelectionComponent {
 		this.dialogRef.close(this.suburb);
 	}
 }
-
-

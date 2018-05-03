@@ -23,7 +23,7 @@ export class ProviderTableComponent implements OnChanges {
 
 	protected displayedColumns: Array<string> = ['username', 'fullname', 'phone', 'admin', 'delete'];
 	dataSource: MatTableDataSource<Provider> = new MatTableDataSource<Provider>();
-	private isLoading: boolean = false;
+	public isLoading: boolean = false;
 
 	constructor(
 		protected dataService: ProviderService,

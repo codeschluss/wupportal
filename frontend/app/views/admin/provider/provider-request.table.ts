@@ -33,7 +33,7 @@ export class ProviderRequestTableComponent implements OnInit {
 	@Input() private user: User;
 
 	private selectedOrganisations: Array<string>;
-	private organisationOptions: Array<Organisation>;
+	public organisationOptions: Array<Organisation>;
 	private organisationsCtrl: FormControl;
 
 	private displayedColumns: Array<string> = ['name', 'website', 'mail', 'phone', 'approved'];
@@ -43,7 +43,7 @@ export class ProviderRequestTableComponent implements OnInit {
 	private providersToDelete: Array<string>;
 	faCheck: IconDefinition = faCheck;
 	faMinus: IconDefinition = faMinus;
-	private isLoading: boolean = false;
+	public isLoading: boolean = false;
 
 	constructor(
 		@Inject(OrganisationService) public organisationService: DataService,

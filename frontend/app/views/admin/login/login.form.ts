@@ -23,7 +23,7 @@ export class LoginFormComponent {
 		private route: ActivatedRoute,
 		private userService: UserService,
 		@Inject(ConfigurationService) private configurationService: DataService,
-		private constants: Constants) {
+		public constants: Constants) {
 		this.configurationService.getAll().subscribe(
 			configs => { this.portalTitle = configs.find(item => item.item === 'portalName').value; });
 	}

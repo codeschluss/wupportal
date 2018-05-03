@@ -23,9 +23,9 @@ import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 export class TargetGroupComponent implements OnInit {
 
-	private targetGroups: TargetGroup[];
+	public targetGroups: TargetGroup[];
 	private loading: boolean = true;
-	private newTargetGroupName: string = '';
+	public newTargetGroupName: string = '';
 	private targeGroupsToDelte: TargetGroup[] = [];
 	private faTrashAlt: IconDefinition = faTrashAlt;
 
@@ -81,4 +81,3 @@ export class TargetGroupComponent implements OnInit {
 	}
 
 }
-

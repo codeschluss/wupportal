@@ -27,7 +27,7 @@ export class OrganisationsTableComponent extends AbstractTableComponent {
 
 	constructor(
 		@Inject(OrganisationService) protected dataService: DataService,
-		protected constants: Constants,
+		public constants: Constants,
 		private userService: UserService) {
 		super(dataService, constants);
 	}

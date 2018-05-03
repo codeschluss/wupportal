@@ -23,9 +23,9 @@ import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 export class TagComponent implements OnInit {
 
-	private tags: Tag[];
+	public tags: Tag[];
 	private loading: boolean = true;
-	private newTagName: string = '';
+	public newTagName: string = '';
 	private targeGroupsToDelte: Tag[] = [];
 	private faTrashAlt: IconDefinition = faTrashAlt;
 
@@ -79,4 +79,3 @@ export class TagComponent implements OnInit {
 	}
 
 }
-

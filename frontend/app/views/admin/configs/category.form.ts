@@ -23,9 +23,9 @@ import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 
 export class CategoryComponent implements OnInit {
 
-	private categories: Category[];
+	public categories: Category[];
 	private loading: boolean = true;
-	private newCategoryName: string = '';
+	public newCategoryName: string = '';
 	private targeGroupsToDelte: Category[] = [];
 	private faTrashAlt: IconDefinition = faTrashAlt;
 
@@ -79,4 +79,3 @@ export class CategoryComponent implements OnInit {
 	}
 
 }
-

@@ -16,11 +16,11 @@ import { DataService } from 'app/services/data.service';
 
 export class ForgottenPasswordFormComponent {
 
-	private mail: string;
+	public mail: string;
 
 	constructor(
 		@Inject(ForgotPasswordService) private forgotPwdService: DataService,
-		private constants: Constants,
+		public constants: Constants,
 		private userService: UserService
 	) { }
 

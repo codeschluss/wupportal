@@ -30,7 +30,7 @@ export class NewScheduleDialogComponent {
 		private adapter: DateAdapter<any>,
 		public dialogRef: MatDialogRef<NewScheduleDialogComponent>,
 		public validation: ValidationService,
-		private constants: Constants
+		public constants: Constants
 	) {
 		this.adapter.setLocale(this.constants.defaultCountryCode);
 		this.formGroup = new FormGroup({

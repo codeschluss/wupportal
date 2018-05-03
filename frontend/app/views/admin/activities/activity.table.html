@@ -14,7 +14,7 @@
 					<input matInput (keyup)="handleFiltered($event)"
 					  placeholder="Filter">
 				</mat-form-field>
-				<mat-slide-toggle [color]="primary"
+				<mat-slide-toggle [color]="'primary'"
 				  [(ngModel)]="onlyFutureSchedules"
 				  (change)="handleSliderChanged($event)">
 					{{constants.showOnlyFutureActivities}}

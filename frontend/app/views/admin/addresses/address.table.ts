@@ -33,7 +33,7 @@ export class AddressTableComponent extends AbstractTableComponent implements OnI
 	constructor(
 		protected userService: UserService,
 		@Inject(AddressService) public dataService: DataService,
-		protected constants: Constants) {
+		public constants: Constants) {
 		super(dataService, constants);
 	}
 

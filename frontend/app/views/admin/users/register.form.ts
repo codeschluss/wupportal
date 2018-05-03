@@ -27,7 +27,7 @@ export class RegisterFormComponent implements OnInit {
 	private user: User;
 	private userForm: FormGroup;
 	private passwordGroup: FormGroup;
-	private allOrganisations: Array<Organisation>;
+	public allOrganisations: Array<Organisation>;
 	private portalTitle: string = '';
 
 	constructor(

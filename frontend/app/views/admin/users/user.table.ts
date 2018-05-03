@@ -26,7 +26,7 @@ export class UserTableComponent extends AbstractTableComponent {
 
 	constructor(
 		protected dataService: UserService,
-		protected constants: Constants,
+		public constants: Constants,
 		protected deleteDialog: MatDialog) {
 		super(dataService, constants);
 	}

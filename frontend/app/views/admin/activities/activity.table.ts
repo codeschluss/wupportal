@@ -40,7 +40,7 @@ export class ActivityTableComponent extends AbstractTableComponent implements On
 		protected userService: UserService,
 		protected dataService: ActivityService,
 		private providerService: ProviderService,
-		protected constants: Constants) {
+		public constants: Constants) {
 		super(dataService, constants);
 		this.checkNewButton();
 	}

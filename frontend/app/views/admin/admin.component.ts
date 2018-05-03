@@ -13,9 +13,9 @@ import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 })
 
 export class AdminComponent implements OnInit {
-	private routeLinks: any[] = [];
+	public routeLinks: any[] = [];
 	private activeLinkIndex: number = 0;
-	private faMap: IconDefinition = faMap;
+	public faMap: IconDefinition = faMap;
 
 
 	constructor(

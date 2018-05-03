@@ -20,13 +20,13 @@ export abstract class AbstractTableComponent implements OnInit, AfterViewInit {
 
 	@Output() onLoadedData: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
-	protected displayedColumns: Array<string>;
+	public displayedColumns: Array<string>;
 	protected dataSource: MatTableDataSource<any>;
 	protected tableState: TableState;
-	protected constants: Constants;
+	public constants: Constants;
 	protected dataService: IDataService;
-	protected totalCount: number;
-	protected finishedLoading: boolean = false;
+	public totalCount: number;
+	public finishedLoading: boolean = false;
 	faPencilAlt: IconDefinition = faPencilAlt;
 	faUserPlus: IconDefinition = faUserPlus;
 

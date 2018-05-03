@@ -20,7 +20,7 @@ import { DataServiceFactory } from '../../../services/data.service.factory';
 
 export class ConfigFormComponent implements OnInit {
 
-	private configurations: Configuration[];
+	public configurations: Configuration[];
 	private loading: boolean = true;
 	constructor(
 		private location: Location,
@@ -58,4 +58,3 @@ export class ConfigFormComponent implements OnInit {
 	}
 
 }
-

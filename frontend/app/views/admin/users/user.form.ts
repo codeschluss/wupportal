@@ -25,7 +25,7 @@ import { Provider } from 'app/models/provider';
 
 export class UserFormComponent implements OnInit {
 
-	private user: User;
+	public user: User;
 	private userForm: FormGroup;
 	private passwordGroup: FormGroup;
 	private hasActivities: boolean = false;

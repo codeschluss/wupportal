@@ -10,7 +10,7 @@ import { Constants } from 'app/services/constants';
 })
 export class OrganisationSelectionComponent {
 
-	private selectedOrgaID: string;
+	public selectedOrgaID: string;
 
 	constructor(
 		public constants: Constants,

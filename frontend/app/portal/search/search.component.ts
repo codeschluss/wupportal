@@ -70,8 +70,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
 	public onSearch(): void {
 		const search = { };
-		if (this.viewFilters) Object.assign(search, { advanced: this.filter });
-		if (this.input) Object.assign(search, { filter: this.input });
+		if (this.input) { Object.assign(search, { filter: this.input }); }
+		if (this.viewFilters) { Object.assign(search, { advanced: this.filter }); }
 
 		this.viewLoading = true;
 		this.selectables.next([]);

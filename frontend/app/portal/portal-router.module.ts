@@ -43,6 +43,7 @@ import {
 				path: '',
 				component: PortalComponent,
 				resolve: {
+					activities: ActivityResolver,
 					categories: CategoryResolver,
 					configuration: ConfigurationResolver,
 					organisations: OrganisationResolver,

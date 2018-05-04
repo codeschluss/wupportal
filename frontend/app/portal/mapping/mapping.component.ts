@@ -142,7 +142,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 			// const activity = this.activities.find(j => i.getId() === j.id);
 			const id = i.getStyle().getText().getText();
 			const activity = this.activities.find(j => id === j.id);
-			// /TODO
+			// ENDTODO
 
 			return colorConvert.keyword.rgb(activity.category.color)
 				|| colorConvert.hex.rgb(activity.category.color);
@@ -171,7 +171,13 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.router.navigate(['/']);
 				break;
 			case 1:
-				this.router.navigate(['/activity', feats[0].getId()]);
+				// TODO: ngx-openlayers async id binding bug
+				// this.router.navigate(['/activity', feats[0].getId()]);
+				this.router.navigate([
+					'/activity',
+					feats[0].getStyle().getText().getText()]
+				);
+				// ENDTODO
 				break;
 			default:
 				this.router.navigate(['/']).then(() => {
@@ -180,7 +186,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 						// data: feats.map(i => this.activities.find(j => j.id === i.getId()))
 						data: feats.map(i => i.getStyle().getText().getText())
 							.map(i => this.activities.find(j => j.id === i))
-						// /TODO
+						// ENDTODO
 					}).afterClosed().filter(i => i).subscribe((activity: Activity) =>
 						this.router.navigate(['/activity', activity.id]));
 				});

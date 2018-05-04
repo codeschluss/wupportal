@@ -17,7 +17,7 @@ nav mat-form-field {
 nav mat-form-field::ng-deep .mat-input-wrapper {
 	margin-bottom: 12px;
 }
-nav mat-placeholder {
+nav mat-form-field:not(.mat-focused)::ng-deep .mat-form-field-label {
 	color: rgba(0, 0, 0, .38);
 }
 nav mat-placeholder mat-icon {

@@ -4,7 +4,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Translation } from 'app/models/translation';
 
 @Component({
+	styles: [
+		'h4[mat-dialog-title] { text-align: center }'
+	],
 	template: `
+		<h4 mat-dialog-title>Sprache wählen</h4>
 		<mat-dialog-content>
 			<mat-nav-list>
 				<ng-container *ngFor="let i of translations">

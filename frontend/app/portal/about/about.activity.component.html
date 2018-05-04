@@ -2,15 +2,16 @@
 
 <mat-list>
 	<mat-list-item>
-		<h2>{{ item.name }}</h2>
+		<h3>{{ item.name }}</h3>
 	</mat-list-item>
-
-	<h3 mat-subheader>Allgemein</h3>
 
 	<mat-list-item>
-		<fa-icon mat-list-icon icon="info"></fa-icon>
-		<p [style.paddingLeft]="'16px'">{{ item.description }}</p>
+		<p class="hyphenate">{{ item.description }}</p>
 	</mat-list-item>
+
+	<mat-divider></mat-divider>
+
+	<h4 mat-subheader>Allgemein</h4>
 
 	<mat-list-item>
 		<fa-icon mat-list-icon icon="map-marker-alt"></fa-icon>
@@ -39,7 +40,7 @@
 
 	<mat-divider></mat-divider>
 
-	<h3 mat-subheader>Zuordnung</h3>
+	<h4 mat-subheader>Zuordnung</h4>
 
 	<mat-list-item>
 		<fa-icon mat-list-icon icon="bookmark" [style.fill]="item.category.color">
@@ -92,14 +93,14 @@
 	<ng-container *ngIf="item.show_user">
 		<mat-divider></mat-divider>
 
-		<h3 mat-subheader>Person</h3>
+		<h4 mat-subheader>Person</h4>
 
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="user"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>{{ item.provider.user.fullname }}</strong>
 				<p mat-line>
-					<slot>Aktiv seit</slot>
+					Aktiv seit
 					{{ item.provider.user.created | date:'dd.MM.yyyy' }}
 				</p>
 			</div>

@@ -2,10 +2,10 @@
 
 <mat-list>
 	<mat-list-item>
-		<h2>Öffentliche Träger</h2>
+		<h3>Öffentliche Träger</h3>
 	</mat-list-item>
 
-	<h3 mat-subheader>Login für Kooperationspartner</h3>
+	<h4 mat-subheader>Login für Kooperationspartner</h4>
 
 	<a mat-button color="primary" tabindex="-1" [routerLink]="['/login']">
 		<mat-list-item>
@@ -19,15 +19,14 @@
 
 	<mat-divider></mat-divider>
 
-	<h3 mat-subheader>Zentrum für Integration, Bildung & kulturelle Vielfalt</h3>
+	<h4 mat-subheader>Zentrum für Integration, Bildung & kulturelle Vielfalt</h4>
 
 	<mat-list-item>
 		<mat-icon svgIcon="kommzent"></mat-icon>
 	</mat-list-item>
 
 	<mat-list-item>
-		<fa-icon mat-list-icon icon="info"></fa-icon>
-		<p [style.paddingLeft]="'16px'">
+		<p class="hyphenate">
 			Das Zentrum Integration und Bildung ist das fachliche Herzstück im Ressort
 			Zuwanderung und Integration. In dem Zentrum werden neue Konzepte und
 			Handlungswege entwickelt, erprobt und bei Erfolg im Einvernehmen mit der
@@ -59,15 +58,14 @@
 
 	<mat-divider></mat-divider>
 
-	<h3 mat-subheader>TransZent</h3>
+	<h4 mat-subheader>TransZent</h4>
 
 	<mat-list-item>
 		<mat-icon svgIcon="transzent"></mat-icon>
 	</mat-list-item>
 
 	<mat-list-item>
-		<fa-icon mat-list-icon icon="info"></fa-icon>
-		<p [style.paddingLeft]="'16px'">
+		<p class="hyphenate">
 			TransZent ist ein Interdisziplinäres Zentrum der Bergischen Universität
 			Wuppertal (BUW), das im Oktober 2013 von der BUW und dem Wuppertal
 			Institut für Klima, Umwelt, Energie gGmbH in Kooperation gegründet wurde.
@@ -110,7 +108,7 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h2>Technische Umsetzung</h2>
+		<h3>Technische Umsetzung</h3>
 	</mat-list-item>
 
 	<mat-list-item>
@@ -153,7 +151,7 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h2>Rechtliche Hinweise</h2>
+		<h3>Rechtliche Hinweise</h3>
 	</mat-list-item>
 
 	<ng-container *ngIf="!showLegal">
@@ -168,7 +166,7 @@
 	</ng-container>
 
 	<ng-container *ngIf="showLegal">
-		<h3 mat-subheader>Angaben gemäß §5 TMG</h3>
+		<h4 mat-subheader>Angaben gemäß §5 TMG</h4>
 
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="user"></fa-icon>
@@ -187,7 +185,7 @@
 		</mat-list-item>
 
 		<mat-list-item>
-			<p>
+			<p class="hyphenate">
 				<em>Redaktionelle Hinweise</em>
 				Alle redaktionellen Inhalte (Angebote, Textinhalte, etc.) dieser Website
 				sind geistiges Eigentum und obliegen der Verantwortlichkeit der
@@ -197,7 +195,7 @@
 
 		<mat-divider></mat-divider>
 
-		<h3 mat-subheader>Datenschutzerklärung</h3>
+		<h4 mat-subheader>Datenschutzerklärung</h4>
 
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="user"></fa-icon>
@@ -211,12 +209,12 @@
 			<fa-icon mat-list-icon icon="key"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>Verschlüsste Datenübertragung</strong>
-				<p mat-line>Diese Website nutzt moderne Verschlüsselungsverfahren</p>
+				<p mat-line>Diese Website nutzt moderne SSL-Verschlüsselung</p>
 			</div>
 		</mat-list-item>
 
 		<mat-list-item>
-			<p>
+			<p class="hyphenate">
 				<em>Erfassung allgemeiner Informationen</em>
 				Wenn Sie auf unsere Webseite zugreifen, werden automatisch Informationen
 				allgemeiner Natur erfasst. Diese Informationen beinhalten etwa die Art
@@ -232,22 +230,30 @@
 		</mat-list-item>
 
 		<mat-list-item>
-			<p>
-				<em>Verwendung von OpenStreeMaps</em>
-				Diese Webseite verwendet OpenStreetMaps, um geographische Informationen
+			<p class="hyphenate">
+				<em>Verwendung von OpenStreeMap</em>
+				Diese Webseite verwendet OpenStreetMap, um geographische Informationen
 				visuell darzustellen. Bei Ihrer Nutzung von OpenStreetMaps werden Daten
 				über die Nutzung der Kartenfunktionen durch Besucher erhoben,
 				verarbeitet und genutzt. Nähere Informationen über die Datenverarbeitung
-				durch die OpenStreeMaps Foundation können Sie den
-				<a href="https://wiki.openstreetmap.org/wiki/Privacy_Policy">
-					entsprechenden Datenschutzhinweisen
-				</a>
-				entnehmen.
+				durch die OpenStreeMap Foundation können Sie den entsprechenden
+				Datenschutzhinweisen entnehmen.
 			</p>
 		</mat-list-item>
 
+		<a mat-button color="primary" tabindex="-1" target="_blank"
+			href="https://wiki.openstreetmap.org/wiki/Privacy_Policy">
+			<mat-list-item>
+				<fa-icon mat-list-icon icon="star"></fa-icon>
+				<div class="mat-list-text">
+					<strong mat-line>OpenStreeMap Datenschutzhinweise</strong>
+					<p mat-line>wiki.openstreetmap.org/wiki/Privacy_Policy</p>
+				</div>
+			</mat-list-item>
+		</a>
+
 		<mat-list-item>
-			<p>
+			<p class="hyphenate">
 				<em>Änderung unserer Datenschutzbestimmungen</em>
 				Wir behalten uns vor, diese Datenschutzerklärung gelegentlich
 				anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen

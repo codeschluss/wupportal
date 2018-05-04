@@ -2,15 +2,16 @@
 
 <mat-list>
 	<mat-list-item>
-		<h2>{{ item.name }}</h2>
+		<h3>{{ item.name }}</h3>
 	</mat-list-item>
-
-	<h3 mat-subheader>Allgemein</h3>
 
 	<mat-list-item>
-		<fa-icon mat-list-icon icon="info"></fa-icon>
-		<p [style.paddingLeft]="'16px'">{{ item.description }}</p>
+		<p class="hyphenate">{{ item.description }}</p>
 	</mat-list-item>
+
+	<mat-divider></mat-divider>
+
+	<h4 mat-subheader>Allgemein</h4>
 
 	<ng-container *ngIf="item.address">
 		<mat-list-item>
@@ -45,7 +46,7 @@
 	<ng-container *ngIf="item.mail || item.phone || item.website">
 		<mat-divider></mat-divider>
 
-		<h3 mat-subheader>Kontakt</h3>
+		<h4 mat-subheader>Kontakt</h4>
 
 		<ng-container *ngIf="item.mail">
 			<a mat-button color="primary" tabindex="-1"

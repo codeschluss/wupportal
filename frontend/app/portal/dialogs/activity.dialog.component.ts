@@ -6,9 +6,11 @@ import { Activity } from 'app/models/activity';
 @Component({
 	styles: [
 		'fa-icon { padding-right: 10px; }',
-		'fa-icon::ng-deep path { stroke: black; stroke-width: 24px; }'
+		'fa-icon::ng-deep path { stroke: black; stroke-width: 24px; }',
+		'h4[mat-dialog-title] { text-align: center }'
 	],
 	template: `
+		<h4 mat-dialog-title>Aktivität wählen</h4>
 		<mat-dialog-content>
 			<mat-nav-list>
 				<ng-container *ngFor="let i of activities">

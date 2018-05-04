@@ -4,10 +4,10 @@
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"build": "ng build -d=js -vc=true",
-		"lint": "ng lint",
-		"start": "ng build -d=js -vc=true --watch",
-		"pack": "ng build -d=js -nc -oh=none -vc=true -prod --aot"
+		"build": "ng build -d=js -nc -oh=none -vc=true",
+		"start": "ng build -d=js -nc -oh=none -vc=true --watch",
+		"strip": "ng build -d=js -nc -oh=none -vc=true --prod",
+		"lint": "ng lint"
 	},
 	"dependencies": {
 		"@angular/animations": "5.2.10",

@@ -59,8 +59,6 @@
 					<mat-cell *matCellDef="let row">
 						<fa-icon [icon]="faCheck" *ngIf="row.approved"></fa-icon>
 						<fa-icon [icon]="faMinus" *ngIf="!row.approved"></fa-icon>
-						<!-- <i *ngIf="row.approved" class="fa fa-check-square-o" aria-hidden="true"></i> -->
-						<!-- <i *ngIf="!row.approved" class="fa fa-minus-square-o" aria-hidden="true"></i> -->
 					</mat-cell>
 				</ng-container>
 
@@ -70,7 +68,7 @@
 		</mat-card-content>
 
 		<mat-card-actions>
-			<button class="btn btn-secondary"
+			<button class="btn btn-danger"
 			  type="button" (click)="back()">{{constants.back}}</button>
 			<button class="btn btn-primary"
 			  type="submit">{{constants.save}}</button>

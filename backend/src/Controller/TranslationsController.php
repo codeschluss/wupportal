@@ -6,6 +6,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Http\Client;
 use Cake\Utility\Xml;
 use Cake\Core\Configure;
+use \stdClass;
 
 /**
  * Translations Controller
@@ -47,7 +48,34 @@ class TranslationsController extends AppController
 	}
 
 	/**
-	 * translates a given string to target language.
+	 * translates all given strings from German to given target languages
+	 */
+	public function translateAll()
+	{
+		$request = json_decode($this->request->input(), true);
+
+		if (!isset($request['languages']) || empty($request['languages'])
+			|| !isset($request['properties']) || empty($request['properties'])) {
+				return $this->ResponseHandler->responseError();
+		}
+
+		$responseObj = [];
+		foreach ($request['languages'] as $lang ) {
+			foreach ($request['properties'] as $prop => $value) {
+				$text = $value . " (" . Configure::read('Azure.autmatic-translation') . ")";
+				$translation = $this->getTranslation($lang, $text);
+				if ($translation) {
+					$responseObj[$lang][$prop] = $translation;
+				} else {
+					return $this->ResponseHandler->createResponse(503);
+				}
+			}
+		}
+		return $this->ResponseHandler->responseSuccess($responseObj);
+	}
+
+	/**
+	 * translates a given string from German to target language.
 	 */
 	public function translate()
 	{
@@ -56,25 +84,34 @@ class TranslationsController extends AppController
 			return $this->ResponseHandler->responseError();
 		}
 
+		$translation = $this->getTranslation($request['to'], $request['text']);
+		return $translation
+			? $this->ResponseHandler->responseSuccess($translation)
+			: $this->ResponseHandler->createResponse(503);
+	}
+
+	/**
+	 * translates a given string from German to target language.
+	 * @return String translation
+	 * @return false if translation failed
+	 */
+	private function getTranslation($targetLanguage, $text)
+	{
 		$http = new Client();
 		$response = $http->get(Configure::read('Azure.translate-url'),
 			[
-			'to' => $request['to'],
+			'to' => $targetLanguage,
 			'from' => 'de',
-			'text' => $request['text']
+			'text' => $text
 			],
 			[
 			'headers' => ['Ocp-Apim-Subscription-Key' => Configure::read('Azure.subscription-key')]
 			]
 		);
 
-		if($response->isOk()) {
-			$responseBody = Xml::toArray($response->xml);
-			return $this->ResponseHandler->responseSuccess($responseBody['string']);
-		} else {
-			return $this->ResponseHandler->createResponse(503);
-		}
-
+		return $response->isOk()
+			? Xml::toArray($response->xml)['string']
+			: false;
 	}
 
 	/** @return array Fields to use for filter  */
@@ -101,6 +138,7 @@ class TranslationsController extends AppController
 		if ($this->isSuperuser($user)) return true;
 
 		switch ($this->request->getParam('action')) {
+			case 'translateAll':
 			case 'translate':
 				return $this->isApprovedProvider($user['id']);
 			default:

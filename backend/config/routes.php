@@ -81,11 +81,18 @@ Router::scope('/', function (RouteBuilder $routes) {
 		$routes->resources('Schedules', $list);
 
 		$routes->resources('Translations', $list);
-		$routes->resources('Translations', ['map' => ['translate' => [
-			'action' => 'translate',
-			'method' => 'POST',
-			'path' => '/translate'
-		]]]);
+		$routes->resources('Translations', ['map' => [
+			'translate' => [
+				'action' => 'translate',
+				'method' => 'POST',
+				'path' => '/translate'
+			],
+			'translate' => [
+				'action' => 'translateAll',
+				'method' => 'POST',
+				'path' => '/translateAll'
+			]
+		]]);
 
 		$routes->resources('Users', $list);
 		$routes->resources('Users', ['map' => ['login' => [

@@ -128,6 +128,10 @@ export class ProviderRequestTableComponent implements OnInit {
 		}
 	}
 
+	back(): void {
+		this.location.back();
+	}
+
 	onSubmit(): void {
 		this.isLoading = true;
 		let requests = [];

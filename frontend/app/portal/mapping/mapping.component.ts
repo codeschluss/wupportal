@@ -74,8 +74,6 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 	) { }
 
 	public ngOnInit(): void {
-		this.activities = [];
-
 		// TODO: move to db
 		this.clusterspan = 10;
 

@@ -25,7 +25,6 @@ import {
 	MatIconModule,
 	MatTabsModule,
 	MatRippleModule,
-	MatNativeDateModule,
 	MatSelectModule,
 	MatPaginatorModule,
 	MatFormFieldModule,
@@ -252,7 +251,6 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		OrganisationSelectionComponent,
 		NewScheduleDialogComponent
 	], exports: [
-		MatNativeDateModule,
 	]
 })
 

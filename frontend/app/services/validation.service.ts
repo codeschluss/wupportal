@@ -24,7 +24,6 @@ export class ValidationService implements ErrorStateMatcher {
 			const endMoment = moment(dateForm.get('endDateCtrl').value);
 			endMoment.set({ hour: dateForm.get('endTimeHourCtrl').value });
 			endMoment.set({ minute: dateForm.get('endTimeMinuteCtrl').value });
-			console.log('endBeforeStart: ', dateForm);
 			return startMoment.isBefore(endMoment) ? null : { 'endBeforeStart': true };
 		}
 	}

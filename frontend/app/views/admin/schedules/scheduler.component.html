@@ -1,4 +1,4 @@
-<h2>{{constants.dateTimeQuestion}}</h2>
+<h3>{{constants.dateTimeQuestion}}</h3>
 
 <div class="container-fluid" *ngIf="!schedules.length">
 	<form #formDir="ngForm" id="form-group" [formGroup]="formGroup">
@@ -180,8 +180,8 @@
 </div>
 <div *ngIf="schedules.length" style="overflow: hidden;">
 	<div style="overflow-y: scroll; height: 400px;">
-		<h2>{{constants.pleaseControl}} {{constants.scheduleListExplanation}}
-		</h2>
+		<h3>{{constants.pleaseControl}} {{constants.scheduleListExplanation}}
+		</h3>
 		<mat-accordion>
 			<div *ngFor="let schedule of schedules; index as i">
 				<mat-expansion-panel [expanded]="panelNumber === i" (opened)="declerateDateForms(i)" hideToggle="true">
@@ -194,44 +194,55 @@
 						</mat-panel-description>
 					</mat-expansion-panel-header>
 					<form #formDir="ngForm" id="curr-form-group" [formGroup]="currScheduleFormGroup">
-						<div>
-							<mat-form-field>
-								<input matInput required [matDatepicker]="pickerStartDate" name="schedule_start_by" formControlName="startDateCtrl" placeholder={{constants.from}}
-								 readonly>
-								<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-								<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
-							</mat-form-field>
-							<mat-form-field>
-								<input matInput required type="number" name="curr_start_time_hour" max="23" min="0" formControlName="startTimeHourCtrl" id="currentStratTimeHour">
-							</mat-form-field>:
-							<mat-form-field>
-								<input matInput required type="number" name="curr_start_time_minute" max="59" min="0" formControlName="startTimeMinuteCtrl"
-								 id="currentStratTimeMinute">
-							</mat-form-field>
+						<div class="row">
+							<div class="col">
+								<mat-form-field>
+									<input matInput required [matDatepicker]="pickerStartDate" name="schedule_start_by" formControlName="startDateCtrl" placeholder={{constants.from}}
+									 readonly>
+									<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input matInput required type="number" name="curr_start_time_hour" max="23" min="0" placeholder={{constants.hours}} formControlName="startTimeHourCtrl"
+									 id="currentStratTimeHour">
+								</mat-form-field>:
+								<mat-form-field>
+									<input matInput required type="number" name="curr_start_time_minute" max="59" min="0" placeholder={{constants.minutes}} formControlName="startTimeMinuteCtrl"
+									 id="currentStratTimeMinute">
+								</mat-form-field>
+							</div>
+							<div class="col">
+								<mat-error *ngIf=currScheduleFormGroup.invalid>
+									<div *ngIf="currScheduleFormGroup.invalid && !currScheduleFormGroup.errors">
+										{{constants.isRequiredMessage}}
+									</div>
+									<div *ngIf="currScheduleFormGroup.errors && currScheduleFormGroup.errors.endBeforeStart">
+										{{constants.endBeforeStartError}}
+									</div>
+								</mat-error>
+							</div>
 						</div>
-						<div>
-							<mat-form-field>
-								<input required matInput [matDatepicker]="pickerEndDate" name="schedule_end_by" formControlName="endDateCtrl" placeholder={{constants.to}}
-								 readonly>
-								<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-								<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
-							</mat-form-field>
-							<mat-form-field>
-								<input required matInput type="number" name="curr_end_time_hour" max="23" min="0" formControlName="endTimeHourCtrl" id="currentEndTimeHour">
-							</mat-form-field>:
-							<mat-form-field>
-								<input required matInput type="number" name="curr_end_time_minute" max="59" min="0" formControlName="endTimeMinuteCtrl" id="currentEndTimeMinute">
-							</mat-form-field>
-							<mat-error *ngIf=currScheduleFormGroup.invalid>
-								<div *ngIf="currScheduleFormGroup.invalid && !currScheduleFormGroup.errors">
-									{{constants.isRequiredMessage}}
-								</div>
-								<div *ngIf="currScheduleFormGroup.errors && currScheduleFormGroup.errors.endBeforeStart">
-									{{constants.endBeforeStartError}}
-								</div>
-							</mat-error>
-							<button class="btn btn-secondary" [disabled]="currScheduleFormGroup.invalid" (click)="changeDate(i)">{{constants.change}}</button>
-							<button class="btn btn-danger" type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
+						<div class="row">
+							<div class="col">
+								<mat-form-field>
+									<input required matInput [matDatepicker]="pickerEndDate" name="schedule_end_by" formControlName="endDateCtrl" placeholder={{constants.to}}
+									 readonly>
+									<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+									<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
+								</mat-form-field>
+								<mat-form-field>
+									<input required matInput type="number" name="curr_end_time_hour" max="23" min="0" placeholder={{constants.hours}} formControlName="endTimeHourCtrl"
+									 id="currentEndTimeHour">
+								</mat-form-field>:
+								<mat-form-field>
+									<input required matInput type="number" name="curr_end_time_minute" max="59" min="0" placeholder={{constants.minutes}} formControlName="endTimeMinuteCtrl"
+									 id="currentEndTimeMinute">
+								</mat-form-field>
+							</div>
+							<div class="col">
+								<button class="btn btn-secondary" type="button" [disabled]="currScheduleFormGroup.invalid" (click)="changeDate(i)">{{constants.change}}</button>
+								<button class="btn btn-danger" type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
+							</div>
 						</div>
 					</form>
 				</mat-expansion-panel>

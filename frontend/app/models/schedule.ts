@@ -9,13 +9,13 @@ export class Schedule extends Model {
 		this.start_date_moment = moment(json.start_date).utc();
 		this.start_date = this.start_date_moment.format('YYYY-MM-DD HH:mm:ss');
 		this.end_date_moment = moment(json.end_date).utc();
-		this.end_date = moment(json.end_date).utc().format('YYYY-MM-DD HH:mm:ss');
+		this.end_date = this.end_date_moment.format('YYYY-MM-DD HH:mm:ss');
 	}
 
 	public start_date: string = moment().format('YYYY-MM-DD HH:mm:ss');
 	public end_date: string = moment().format('YYYY-MM-DD HH:mm:ss');
-	private start_date_moment: Moment = moment().utc();
-	private end_date_moment: Moment = moment().utc();
+	private start_date_moment: Moment = moment();
+	private end_date_moment: Moment = moment();
 
 
 	public get startTime(): string {
@@ -46,22 +46,22 @@ export class Schedule extends Model {
 		this.end_date = this.end_date_moment.format('YYYY-MM-DD HH:mm:ss');
 	}
 
-	public get startDate(): string {
-		return this.start_date;
+	public get startDate(): Moment {
+		return this.start_date_moment;
 	}
 
-	public set startDate(date: string) {
+	public set startDate(date: Moment) {
 		this.start_date_moment = moment(date);
-		this.start_date = this.start_date_moment.utc().format('YYYY-MM-DD HH:mm:ss');
+		this.start_date = this.start_date_moment.format('YYYY-MM-DD HH:mm:ss');
 	}
 
-	public get endDate(): string {
-		return this.end_date;
+	public get endDate(): Moment {
+		return this.end_date_moment;
 	}
 
-	public set endDate(date: string) {
+	public set endDate(date: Moment) {
 		this.end_date_moment = moment(date);
-		this.end_date = this.end_date_moment.utc().format('YYYY-MM-DD HH:mm:ss');
+		this.end_date = this.end_date_moment.format('YYYY-MM-DD HH:mm:ss');
 	}
 
 	get toString(): string {

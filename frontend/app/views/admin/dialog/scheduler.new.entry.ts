@@ -61,10 +61,10 @@ export class NewScheduleDialogComponent {
 
 	generateNewEntry(): Schedule {
 		const schedule = new Schedule({});
-		schedule.startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day').format();
+		schedule.startDate = moment(this.formGroup.get('startDateCtrl').value);
 		schedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
 		schedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
-		schedule.endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day').format();
+		schedule.endDate = moment(this.formGroup.get('endDateCtrl').value);
 		schedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
 		schedule.endTimeMinute = this.formGroup.get('endTimeMinuteCtrl').value;
 		return schedule;

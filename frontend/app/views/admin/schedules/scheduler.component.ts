@@ -79,6 +79,9 @@ export class SchedulerComponent implements OnInit {
 		});
 		this.declerateDateForms(-1);
 		this.initFormGroups();
+		console.log('moment().format():', moment().format());
+		console.log('new Date():', new Date());
+		console.log('moment(new Date()).:', moment(new Date()).format());
 
 	}
 
@@ -119,7 +122,7 @@ export class SchedulerComponent implements OnInit {
 
 	private initCurrFormGroup(): void {
 		this.currScheduleFormGroup = new FormGroup({
-			'startDateCtrl': new FormControl('', [
+			'startDateCtrl': new FormControl(new Date(), [
 				Validators.required
 			]),
 			'startTimeHourCtrl': new FormControl('', [
@@ -128,7 +131,7 @@ export class SchedulerComponent implements OnInit {
 			'startTimeMinuteCtrl': new FormControl('', [
 				Validators.required
 			]),
-			'endDateCtrl': new FormControl('', [
+			'endDateCtrl': new FormControl(new Date(), [
 				Validators.required
 			]),
 			'endTimeHourCtrl': new FormControl('', [
@@ -146,8 +149,8 @@ export class SchedulerComponent implements OnInit {
 				if (!this.schedules) {
 					this.schedules = [];
 				}
-				let startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day');
-				const endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day');
+				const startDate = moment(this.formGroup.get('startDateCtrl').value);
+				const endDate = moment(this.formGroup.get('endDateCtrl').value);
 				const recurrenceRange = { start: startDate, end: endDate };
 
 				let rule;
@@ -166,7 +169,7 @@ export class SchedulerComponent implements OnInit {
 							if (startDate.date() > this.formGroup.get('monthDateCtrl').value) {
 								startDate.add(this.formGroup.get('rythmPeriodCtrl').value, 'month');
 							}
-							startDate = startDate.date(this.formGroup.get('monthDateCtrl').value).add(1, 'day');
+							// startDate = startDate.date(this.formGroup.get('monthDateCtrl').value).add(1, 'day');
 							rule = new RRule({
 								freq: RRule.MONTHLY,
 								interval: this.formGroup.get('rythmPeriodCtrl').value,
@@ -232,18 +235,18 @@ export class SchedulerComponent implements OnInit {
 				const allDates: Date[] = rule.all();
 				allDates.map(date => {
 					const currSchedule = new Schedule({});
-					currSchedule.startDate = moment(date).utc().format();
+					currSchedule.startDate = moment(date);
 					currSchedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
 					currSchedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
-					currSchedule.endDate = moment(date).utc().format();
+					currSchedule.endDate = moment(date);
 					currSchedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
 					currSchedule.endTimeMinute = this.formGroup.get('endTimeMinuteCtrl').value;
 					this.schedules.push(currSchedule);
 				});
 			} else {
 				const oneTimeSchedule: Schedule = new Schedule({});
-				oneTimeSchedule.startDate = moment(this.formGroup.get('startDateCtrl').value).add(1, 'day').format();
-				oneTimeSchedule.endDate = moment(this.formGroup.get('endDateCtrl').value).add(1, 'day').format();
+				oneTimeSchedule.startDate = this.formGroup.get('startDateCtrl').value;
+				oneTimeSchedule.endDate = this.formGroup.get('endDateCtrl').value;
 				oneTimeSchedule.startTimeHour = this.formGroup.get('startTimeHourCtrl').value;
 				oneTimeSchedule.startTimeMinute = this.formGroup.get('startTimeMinuteCtrl').value;
 				oneTimeSchedule.endTimeHour = this.formGroup.get('endTimeHourCtrl').value;
@@ -281,10 +284,11 @@ export class SchedulerComponent implements OnInit {
 	}
 
 	changeDate(i: number): void {
-		this.schedules[i].startDate = moment(this.currScheduleFormGroup.get('startDateCtrl').value).format();
+		console.log('this.currScheduleFormGroup.get(startDateCtrl).value: ', this.currScheduleFormGroup.get('startDateCtrl').value);
+		this.schedules[i].startDate = moment(this.currScheduleFormGroup.get('startDateCtrl').value);
 		this.schedules[i].startTimeHour = this.currScheduleFormGroup.get('startTimeHourCtrl').value;
 		this.schedules[i].startTimeMinute = this.currScheduleFormGroup.get('startTimeMinuteCtrl').value;
-		this.schedules[i].endDate = moment(this.currScheduleFormGroup.get('endDateCtrl').value).format();
+		this.schedules[i].endDate = moment(this.currScheduleFormGroup.get('endDateCtrl').value);
 		this.schedules[i].endTimeHour = this.currScheduleFormGroup.get('endTimeHourCtrl').value;
 		this.schedules[i].endTimeMinute = this.currScheduleFormGroup.get('endTimeMinuteCtrl').value;
 		this.panelNumber = -1;

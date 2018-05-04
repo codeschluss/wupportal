@@ -63,6 +63,7 @@ class ResponseHandlerComponent extends Component
 		return $this->controller->response
 			->withStatus($statusCode)
 			->withType('application/json')
-			->withStringBody(json_encode($responseBody));
+			->withStringBody(json_encode($responseBody))
+			->withDisabledCache();
 	}
 }

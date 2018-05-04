@@ -110,7 +110,8 @@ export class UserService extends Service implements IDataService {
 	private getHeader(): HttpHeaders {
 		return new HttpHeaders()
 			.set('Authorization', this.getBasicAuth())
-			.set('Accept-Language', this.getCurrentLanguage());
+			.set('Accept-Language', this.getCurrentLanguage())
+			.set('Cache-Control', 'no-cache');
 	}
 
 

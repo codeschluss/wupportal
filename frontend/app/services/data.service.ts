@@ -75,7 +75,8 @@ export class DataService extends Service implements IDataService {
 	protected getHeader(): HttpHeaders {
 		return new HttpHeaders()
 			.set('Authorization', this.userService.getBasicAuth())
-			.set('Accept-Language', this.userService.getCurrentLanguage());
+			.set('Accept-Language', this.userService.getCurrentLanguage())
+			.set('Cache-Control', 'no-cache');
 	}
 
 }

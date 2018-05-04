@@ -20,12 +20,13 @@ $this->layout = false;
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Wupportal</title>
-	<link rel="manifest" href="/manifest.json">
 	<base href="/">
+	<title>Wupportal</title>
 
+	<link rel="manifest" href="manifest.json">
 	<link rel="stylesheet" href="css/spinner.css">
 	<link rel="stylesheet" href="css/deeppurple-amber.css">
+	<link rel="icon" href="imgs/appicon.png" type="image/png">
 </head>
 
 <body style="height: 100%; margin: 0;">

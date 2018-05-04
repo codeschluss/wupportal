@@ -62,7 +62,8 @@ export class PortalComponent implements OnInit, OnDestroy {
 	}
 
 	public onTracking(): void {
-		navigator.geolocation.getCurrentPosition((pos) =>
+		this.viewFabdial = false;
+		window.navigator.geolocation.getCurrentPosition((pos) =>
 			this.mapping.centerAddress(<Address>{
 				latitude: pos.coords.latitude,
 				longitude: pos.coords.longitude
@@ -70,6 +71,7 @@ export class PortalComponent implements OnInit, OnDestroy {
 	}
 
 	public onTranslate(): void {
+		this.viewFabdial = false;
 		this.dialog.open(TranslationDialogComponent, {
 			data: this.route.snapshot.data.translations
 		}).afterClosed().filter(i => i).subscribe((translation: Translation) => {

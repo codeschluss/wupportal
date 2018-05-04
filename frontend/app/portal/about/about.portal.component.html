@@ -5,20 +5,6 @@
 		<h3>Öffentliche Träger</h3>
 	</mat-list-item>
 
-	<h4 mat-subheader>Login für Kooperationspartner</h4>
-
-	<a mat-button color="primary" tabindex="-1" [routerLink]="['/login']">
-		<mat-list-item>
-			<fa-icon mat-list-icon icon="home"></fa-icon>
-			<div class="mat-list-text">
-				<strong mat-line>Administration</strong>
-				<p mat-line>Redaktionelle Schnittstelle für Träger</p>
-			</div>
-		</mat-list-item>
-	</a>
-
-	<mat-divider></mat-divider>
-
 	<h4 mat-subheader>Zentrum für Integration, Bildung & kulturelle Vielfalt</h4>
 
 	<mat-list-item>
@@ -101,6 +87,28 @@
 			<div class="mat-list-text">
 				<strong mat-line>Telefon-Kontakt</strong>
 				<p mat-line>(+49) 202 74746440</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<mat-divider></mat-divider>
+
+	<h4 mat-subheader>Kooperationspartner</h4>
+
+	<mat-list-item>
+		<p class="hyphenate">
+			Das Wupportal bietet freien Trägern, Bildungseinrichtungen,
+			Gefloheneninitiativen und Migrierten-Organisationen die Möglichkeit
+			einen informativen Steckbrief zu hinterlegen und Angebote zu schalten.
+		</p>
+	</mat-list-item>
+
+	<a mat-button color="primary" tabindex="-1" [routerLink]="['/login']">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="unlock-alt"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Administration</strong>
+				<p mat-line>Redaktionelle Schnittstelle</p>
 			</div>
 		</mat-list-item>
 	</a>

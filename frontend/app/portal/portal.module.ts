@@ -66,6 +66,7 @@ fontawesome.add(
 	fas.faStar,
 	fas.faTags,
 	fas.faTimes,
+	fas.faUnlockAlt,
 	fas.faUser
 );
 

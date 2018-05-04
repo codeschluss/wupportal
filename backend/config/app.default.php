@@ -255,7 +255,8 @@ return [
              * mysql configuration directive 'innodb_stats_on_metadata = 0'
              * which is the recommended value in production environments
              */
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+						//'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+						'init' => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET SESSION SQL_BIG_SELECTS=1'],
 
             'url' => env('DATABASE_URL', null),
         ],

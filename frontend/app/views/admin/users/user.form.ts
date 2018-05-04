@@ -45,12 +45,11 @@ export class UserFormComponent implements OnInit {
 	}
 
 	setData(): void {
+		console.log('this.usernameCtrl.value', this.usernameCtrl.value);
 		this.user.username = this.usernameCtrl.value;
 		this.user.fullname = this.fullnameCtrl.value;
 		this.user.phone = this.phoneCtrl.value;
-		if (this.passwordCtrl.value) {
-			this.user.password = this.passwordCtrl.value;
-		}
+		this.user.password = this.passwordCtrl.value && this.passwordCtrl.value || undefined;
 	}
 
 	updateUser(): void {
@@ -58,7 +57,9 @@ export class UserFormComponent implements OnInit {
 			.subscribe(user =>
 				this.userService.login(this.user.username, this.user.password)
 					.subscribe(
-						() => this.user = this.userService.currentUser,
+						() => {
+							this.user = this.userService.currentUser;
+						},
 						error => this.userService.redirectToLogin())
 			);
 	}

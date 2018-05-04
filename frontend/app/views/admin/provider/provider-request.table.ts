@@ -133,13 +133,18 @@ export class ProviderRequestTableComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		this.isLoading = true;
 		let requests = [];
 		requests = requests.concat(this.deleteProviders(), this.addProvider());
-		forkJoin(requests).subscribe(() => {
-			this.isLoading = false;
-			this.updateUser();
-		});
+
+		if (requests.length > 0) {
+			this.isLoading = true;
+			forkJoin(requests).subscribe(() => {
+				this.isLoading = false;
+				this.providersToAdd = new Array<Provider>();
+				this.providersToDelete = new Array<string>();
+				this.updateUser();
+			});
+		}
 	}
 
 	deleteProviders(): Array<any> {

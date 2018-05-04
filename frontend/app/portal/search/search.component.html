@@ -3,21 +3,31 @@
 		<mat-form-field>
 			<input matInput (change)="onInput($event)" (keyup.enter)="onSearch()">
 
+			<button mat-button matSuffix mat-icon-button>
+				<fa-icon icon="i-cursor"></fa-icon>
+			</button>
+
 			<mat-placeholder>
 				<mat-icon svgIcon="wuppertal"></mat-icon><b>upportal durchsuchen</b>
 			</mat-placeholder>
 
-			<mat-hint align="start" (click)="viewFilters = !viewFilters">
-				<button mat-button [color]="filter.selected() && 'primary'">
-					{{ filter.selected() }} Filter
+			<mat-hint align="start">
+				<button mat-button [color]="(selectables | async).length && 'primary'"
+					(click)="viewResults = !viewResults">
+					{{ (selectables | async).length }} Ergebnisse
+					<fa-icon [icon]="viewResults ? 'angle-up' : 'angle-down'"></fa-icon>
+				</button>
+				<button mat-button [color]="filter.size && 'primary'"
+					(click)="viewFilters = !viewFilters">
+					{{ filter.size }} Filter
 					<fa-icon [icon]="viewFilters ? 'angle-up' : 'angle-down'"></fa-icon>
 				</button>
 			</mat-hint>
 
-			<mat-hint align="end" (click)="viewResults = !viewResults">
-				<button mat-button [color]="(selectables | async).length && 'primary'">
-					{{ (selectables | async).length }} Ergebnisse
-					<fa-icon [icon]="viewResults ? 'angle-up' : 'angle-down'"></fa-icon>
+			<mat-hint align="end">
+				<button mat-button color="primary" (click)="onSearch()">
+					Suchen
+					<fa-icon icon="long-arrow-alt-right"></fa-icon>
 				</button>
 			</mat-hint>
 		</mat-form-field>
@@ -76,87 +86,85 @@
 						</mat-panel-description>
 					</mat-expansion-panel-header>
 
-					<ng-template matExpansionPanelContent>
-						<p>{{ i.description }}</p>
+					<p>{{ i.description }}</p>
 
-						<mat-divider></mat-divider>
+					<mat-divider></mat-divider>
 
-						<mat-list>
-							<a mat-button color="primary" tabindex="-1"
-								[routerLink]="['/activity', i.id]">
-								<mat-list-item>
-									<fa-icon mat-list-icon icon="map-marker-alt"></fa-icon>
-									<div class="mat-list-text">
-										<p mat-line>
-											{{ i.address.street }}
-											{{ i.address.house_number }}
-										</p>
-										<p mat-line>
-											{{ i.address.postal_code }}
-											{{ i.address.place }}
-											{{ i.address.suburb?.name }}
-										</p>
-									</div>
-								</mat-list-item>
-							</a>
-
-							<a mat-button color="primary" tabindex="-1"
-								[routerLink]="['/organisation', i.provider.organisation.id]">
-								<mat-list-item>
-									<fa-icon mat-list-icon icon="home"></fa-icon>
-									<div class="mat-list-text">
-										<strong mat-line>Organisation</strong>
-										<p mat-line>{{ i.provider.organisation.name }}</p>
-									</div>
-								</mat-list-item>
-							</a>
-
-							<ng-container *ngIf="i.show_user">
-								<mat-list-item>
-									<fa-icon mat-list-icon icon="user"></fa-icon>
-									<div class="mat-list-text">
-										<strong mat-line>Person</strong>
-										<p mat-line>{{ i.provider.user.fullname }}</p>
-									</div>
-								</mat-list-item>
-							</ng-container>
-
+					<mat-list>
+						<a mat-button color="primary" tabindex="-1"
+							[routerLink]="['/activity', i.id]">
 							<mat-list-item>
-								<fa-icon mat-list-icon icon="calendar-alt"></fa-icon>
+								<fa-icon mat-list-icon icon="map-marker-alt"></fa-icon>
 								<div class="mat-list-text">
-									<strong mat-line>Termine</strong>
-									<ng-container *ngFor="let j of i.schedules">
-										<p mat-line>
-											{{ j.start_date | date:'EEEE, dd.MM.yyyy, HH:mm' }}
-										</p>
-									</ng-container>
+									<p mat-line>
+										{{ i.address.street }}
+										{{ i.address.house_number }}
+									</p>
+									<p mat-line>
+										{{ i.address.postal_code }}
+										{{ i.address.place }}
+										{{ i.address.suburb?.name }}
+									</p>
 								</div>
 							</mat-list-item>
+						</a>
+
+						<a mat-button color="primary" tabindex="-1"
+							[routerLink]="['/organisation', i.provider.organisation.id]">
+							<mat-list-item>
+								<fa-icon mat-list-icon icon="home"></fa-icon>
+								<div class="mat-list-text">
+									<strong mat-line>Organisation</strong>
+									<p mat-line>{{ i.provider.organisation.name }}</p>
+								</div>
+							</mat-list-item>
+						</a>
+
+						<ng-container *ngIf="i.show_user">
+							<mat-list-item>
+								<fa-icon mat-list-icon icon="user"></fa-icon>
+								<div class="mat-list-text">
+									<strong mat-line>Person</strong>
+									<p mat-line>{{ i.provider.user.fullname }}</p>
+								</div>
+							</mat-list-item>
+						</ng-container>
+
+						<mat-list-item>
+							<fa-icon mat-list-icon icon="calendar-alt"></fa-icon>
+							<div class="mat-list-text">
+								<strong mat-line>Termine</strong>
+								<ng-container *ngFor="let j of i.schedules">
+									<p mat-line>
+										{{ j.start_date | date:'EEEE, dd.MM.yyyy, HH:mm' }}
+									</p>
+								</ng-container>
+							</div>
+						</mat-list-item>
 <!--
 
-							<mat-list-item>
-								<fa-icon mat-list-icon icon="building"></fa-icon>
-								<div class="mat-list-text">
-									<strong mat-line>Zielgruppen</strong>
-									<ng-container *ngFor="let j of i.target_groups">
-										<p mat-line>{{ j.name }}</p>
-									</ng-container>
-								</div>
-							</mat-list-item>
- -->
-<!--
-							<mat-list-item>
-								<fa-icon mat-list-icon icon="tags"></fa-icon>
-								<div class="mat-list-text">
-									<strong mat-line>Tags</strong>
-									<ng-container *ngFor="let j of i.tags">
-										<p mat-line>{{ j.name }}</p>
-									</ng-container>
-								</div>
-							</mat-list-item>
+						<mat-list-item>
+							<fa-icon mat-list-icon icon="building"></fa-icon>
+							<div class="mat-list-text">
+								<strong mat-line>Zielgruppen</strong>
+								<ng-container *ngFor="let j of i.target_groups">
+									<p mat-line>{{ j.name }}</p>
+								</ng-container>
+							</div>
+						</mat-list-item>
 -->
-						</mat-list>
-					</ng-template>
+<!--
+						<mat-list-item>
+							<fa-icon mat-list-icon icon="tags"></fa-icon>
+							<div class="mat-list-text">
+								<strong mat-line>Tags</strong>
+								<ng-container *ngFor="let j of i.tags">
+									<p mat-line>{{ j.name }}</p>
+								</ng-container>
+							</div>
+						</mat-list-item>
+-->
+					</mat-list>
 				</mat-expansion-panel>
 			</ng-container>
 		</mat-accordion>

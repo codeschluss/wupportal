@@ -48,8 +48,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 		this.filter = { };
 		this.input = '';
 
-		this.filter['selected'] = () => Object.keys(this.filter)
-			.map(i => this.filter[i].length).reduce((i, j) => i + j, 0);
+		Object.defineProperty(this.filter, 'size', {
+			get: (): number => Object.keys(this.filter)
+				.map(i => this.filter[i].length).reduce((i, j) => i + j, 0)
+		});
 
 		this.iconRegistry.addSvgIcon('wuppertal', this.domSanitizer
 			.bypassSecurityTrustResourceUrl('/imgs/wuppertal.svg'));
@@ -70,8 +72,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
 	public onSearch(): void {
 		const search = { };
-		if (this.input) { Object.assign(search, { filter: this.input }); }
-		if (this.viewFilters) { Object.assign(search, { advanced: this.filter }); }
+		if (this.filter.size) { Object.assign(search, { advanced: this.filter }); }
+		if (this.input.length) { Object.assign(search, { filter: this.input }); }
 
 		this.viewLoading = true;
 		this.selectables.next([]);

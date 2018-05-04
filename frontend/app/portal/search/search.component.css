@@ -14,11 +14,11 @@ nav mat-card {
 nav mat-form-field {
 	width: 100%;
 }
-nav mat-form-field [mat-icon-button] {
-	color: rgba(0, 0, 0, .54);
-}
 nav mat-form-field::ng-deep .mat-input-wrapper {
 	margin-bottom: 12px;
+}
+nav mat-placeholder {
+	color: rgba(0, 0, 0, .38);
 }
 nav mat-placeholder mat-icon {
 	width: 3.3em;

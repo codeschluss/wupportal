@@ -56,7 +56,6 @@ fontawesome.add(
 	fas.faEnvelope,
 	fas.faLongArrowAltRight,
 	fas.faHome,
-	fas.faICursor,
 	fas.faInfo,
 	fas.faKey,
 	fas.faLocationArrow,

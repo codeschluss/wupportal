@@ -52,11 +52,11 @@ nav.fab-dial > .mat-fab + .mat-fab {
 	opacity: 0;
 	pointer-events: none;
 }
-nav.fab-dial.open > .mat-fab + .mat-fab {
+nav.fab-dial.view > .mat-fab + .mat-fab {
 	margin: 0 0 8px 0;
 	opacity: 1;
 	pointer-events: initial;
 }
-nav.fab-dial.open > .mat-fab:first-child fa-icon {
+nav.fab-dial.view > .mat-fab:first-child fa-icon {
 	transform: rotate(135deg);
 }

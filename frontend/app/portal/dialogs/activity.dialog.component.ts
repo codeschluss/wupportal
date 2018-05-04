@@ -11,6 +11,7 @@ import { Activity } from 'app/models/activity';
 	],
 	template: `
 		<h4 mat-dialog-title>Aktivität wählen</h4>
+		<mat-divider></mat-divider>
 		<mat-dialog-content>
 			<mat-nav-list>
 				<ng-container *ngFor="let i of activities">

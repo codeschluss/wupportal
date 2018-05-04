@@ -9,6 +9,7 @@ import { Translation } from 'app/models/translation';
 	],
 	template: `
 		<h4 mat-dialog-title>Sprache wählen</h4>
+		<mat-divider></mat-divider>
 		<mat-dialog-content>
 			<mat-nav-list>
 				<ng-container *ngFor="let i of translations">

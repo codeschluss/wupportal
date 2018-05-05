@@ -92,8 +92,7 @@
 						<button class="btn btn-primary" type="submit">{{constants.save}}</button>
 					</mat-tab>
 					<mat-tab label="{{constants.translations}}">
-						<translatable-form #translatableFieldsComponent [multiLingualObject]="organisation" [translatableAttributes]="['description']"
-						 [disabled]="true"></translatable-form>
+						<translatable-form [multiLingualObject]="organisation" [translatableAttributes]="['description']" [disabled]="true"></translatable-form>
 					</mat-tab>
 				</mat-tab-group>
 			</mat-step>

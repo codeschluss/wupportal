@@ -237,9 +237,25 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	saveTranslations(): void {
-		// console.log('this.activity._translations before getTranslations', this.activity._translations);
-		// this.activity._translations = this.translatableFieldsComponent.getTranslations();
-		// console.log('this.activity._translations after getTranslations: ', this.activity._translations);
+		this.translatableFieldsComponent.getTranslations().subscribe(translationsRetrieved => {
+			// if empty cake returns an empty array
+			if (Array.isArray(this.activity._translations)) {
+				this.activity._translations = {};
+			}
+			for (const languageCode of Object.keys(this.activity._translations)) {
+				if (!this.activity._translations[languageCode]) {
+					this.activity._translations[languageCode] = translationsRetrieved[languageCode];
+				} else {
+					for (const attribute of Object.keys(this.activity._translations[languageCode])) {
+						if (!this.activity._translations[languageCode][attribute]) {
+							if (translationsRetrieved[languageCode][attribute]) {
+								this.activity._translations[languageCode][attribute] = translationsRetrieved[languageCode][attribute];
+							}
+						}
+					}
+				}
+			}
+		});
 	}
 
 	onSubmit(): void {

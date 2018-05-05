@@ -9,6 +9,7 @@ import { TranslationService } from 'app/services/translation.service';
 import { Constants } from 'app/services/constants';
 
 import { Organisation } from 'app/models/organisation';
+import { TranslationRequest } from '../../../models/translation.all.request';
 
 @Component({
 	selector: 'translatable-form',
@@ -21,6 +22,7 @@ export class TranslatableFieldsComponent implements OnInit {
 	@Input() multiLingualObject: {};
 	@Input() translatableAttributes: string[];
 	@Input() disabled: boolean;
+	@Output() translatedContents: any;
 
 	translations: any[] = [];
 	selectedLanguage: String;
@@ -71,24 +73,40 @@ export class TranslatableFieldsComponent implements OnInit {
 		return this.constants[attribute] ? this.constants[attribute] : attribute;
 	}
 
-	// public async getTranslations() {
-	// 	const _translations = {};
-	// 	console.log('1');
-	// 	for (const languageCode of Object.keys(this.multiLingualObject['_translations'])) {
-	// 		for (const attribute of Object.keys(this.multiLingualObject['_translations'][languageCode])) {
-	// 			if (attribute !== 'locale') {
-	// 				if (!this.multiLingualObject['_translations'][languageCode][attribute]) {
-	// 					console.log('before translate', this.multiLingualObject['_translations'][languageCode][attribute]);
-	// 					this.multiLingualObject['_translations'][languageCode][attribute] =
-	// 						await this.translationService.translate(this.multiLingualObject[attribute], languageCode);
-	// 					console.log('afer translate', this.multiLingualObject['_translations'][languageCode][attribute]);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	console.log('return');
-	// 	return this.multiLingualObject['_translations'];
-	// }
+	public getTranslations(): Observable<any> {
+		const toTranslate = this.buildTranslationRequest();
+		if (toTranslate) {
+			return this.translationService.translateAll(toTranslate);
+		}
+	}
+
+	public buildTranslationRequest(): TranslationRequest {
+		const languagesToTranslate: string[] = [];
+		const propertiesToTransLate: Map<string, string> = new Map<string, string>();
+		for (const language of this.translations) {
+			const languageCode = language.locale;
+			if (!this.multiLingualObject['_translations'][languageCode]) {
+				languagesToTranslate.push(languageCode);
+			} else {
+				for (const attribute of Object.keys(this.multiLingualObject['_translations'][languageCode])) {
+					if (attribute !== 'locale') {
+						if (!this.multiLingualObject['_translations'][languageCode][attribute]) {
+							languagesToTranslate.push(languageCode);
+							propertiesToTransLate[attribute] = this.multiLingualObject[attribute];
+						}
+					}
+				}
+			}
+		}
+
+		if (languagesToTranslate) {
+			const translationsRequest: TranslationRequest =
+				new TranslationRequest(propertiesToTransLate, Array.from(new Set(languagesToTranslate)));
+			return translationsRequest;
+		} else {
+			return null;
+		}
+	}
 
 }
 

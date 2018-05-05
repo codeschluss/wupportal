@@ -154,8 +154,25 @@ export class OrganisationAdminComponent implements OnInit {
 	}
 
 	saveTranslations(): void {
-		// this.organisation._translations = this.translatableFieldsComponent.getTranslations();
-		this.organisationService.edit(this.organisation).subscribe();
+		this.translatableFieldsComponent.getTranslations().subscribe(translationsRetrieved => {
+			// if empty cake returns an empty array
+			if (Array.isArray(this.organisation._translations)) {
+				this.organisation._translations = {};
+			}
+			for (const languageCode of Object.keys(this.organisation._translations)) {
+				if (!this.organisation._translations[languageCode]) {
+					this.organisation._translations[languageCode] = translationsRetrieved[languageCode];
+				} else {
+					for (const attribute of Object.keys(this.organisation._translations[languageCode])) {
+						if (!this.organisation._translations[languageCode][attribute]) {
+							if (translationsRetrieved[languageCode][attribute]) {
+								this.organisation._translations[languageCode][attribute] = translationsRetrieved[languageCode][attribute];
+							}
+						}
+					}
+				}
+			}
+		});
 	}
 
 	back(): void {

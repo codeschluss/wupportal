@@ -79,10 +79,6 @@ export class SchedulerComponent implements OnInit {
 		});
 		this.declerateDateForms(-1);
 		this.initFormGroups();
-		console.log('moment().format():', moment().format());
-		console.log('new Date():', new Date());
-		console.log('moment(new Date()).:', moment(new Date()).format());
-
 	}
 
 	private initFormGroups(): void {
@@ -169,7 +165,6 @@ export class SchedulerComponent implements OnInit {
 							if (startDate.date() > this.formGroup.get('monthDateCtrl').value) {
 								startDate.add(this.formGroup.get('rythmPeriodCtrl').value, 'month');
 							}
-							// startDate = startDate.date(this.formGroup.get('monthDateCtrl').value).add(1, 'day');
 							rule = new RRule({
 								freq: RRule.MONTHLY,
 								interval: this.formGroup.get('rythmPeriodCtrl').value,
@@ -284,7 +279,6 @@ export class SchedulerComponent implements OnInit {
 	}
 
 	changeDate(i: number): void {
-		console.log('this.currScheduleFormGroup.get(startDateCtrl).value: ', this.currScheduleFormGroup.get('startDateCtrl').value);
 		this.schedules[i].startDate = moment(this.currScheduleFormGroup.get('startDateCtrl').value);
 		this.schedules[i].startTimeHour = this.currScheduleFormGroup.get('startTimeHourCtrl').value;
 		this.schedules[i].startTimeMinute = this.currScheduleFormGroup.get('startTimeMinuteCtrl').value;

@@ -1,4 +1,4 @@
-import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgForm, FormControl } from '@angular/forms';

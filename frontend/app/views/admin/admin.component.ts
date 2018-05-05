@@ -5,6 +5,8 @@ import { Constants } from 'app/services/constants';
 import { UserService } from 'app/services/user.service';
 import { faMap } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
+import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -22,7 +24,9 @@ export class AdminComponent implements OnInit {
 		private location: Location,
 		private router: Router,
 		public constants: Constants,
-		private userService: UserService
+		private userService: UserService,
+		private iconRegistry: MatIconRegistry,
+		private domSanitizer: DomSanitizer
 	) {
 		this.initUserTabs();
 
@@ -80,6 +84,9 @@ export class AdminComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.iconRegistry.addSvgIcon('wuppertal', this.domSanitizer
+			.bypassSecurityTrustResourceUrl('/imgs/wuppertal.svg'));
+
 		this.router.events.subscribe(() => {
 			this.activeLinkIndex = this.routeLinks.indexOf(this.routeLinks.find(tab => tab.link === '.' + this.router.url));
 		});

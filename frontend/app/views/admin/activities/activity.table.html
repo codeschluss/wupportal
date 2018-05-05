@@ -3,63 +3,48 @@
 </div>
 <mat-sidenav-container>
 	<mat-sidenav #sidenav mode="over">
-		<activity-detail *ngIf="currentDetail"
-		  [activity]="currentDetail"></activity-detail>
+		<activity-detail *ngIf="currentDetail" [activity]="currentDetail"></activity-detail>
 	</mat-sidenav>
 
 	<mat-sidenav-content>
 		<div class="table-container">
 			<div class="table-header">
 				<mat-form-field>
-					<input matInput (keyup)="handleFiltered($event)"
-					  placeholder="Filter">
+					<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
 				</mat-form-field>
-				<mat-slide-toggle [color]="'primary'"
-				  [(ngModel)]="onlyFutureSchedules"
-				  (change)="handleSliderChanged($event)">
+				<mat-slide-toggle [color]="'primary'" [(ngModel)]="onlyFutureSchedules" (change)="handleSliderChanged($event)">
 					{{constants.showOnlyFutureActivities}}
 				</mat-slide-toggle>
-				<button class="btn btn-warning"
-				  *ngIf="showNewButton" routerLink='/activity/edit/new'>
+				<button class="btn btn-warning" *ngIf="showNewButton" [routerLink]="['/admin', { outlets: { table: ['activity-edit', 'new'] } }]">
 					{{constants.newEntry}}
 				</button>
 			</div>
-			<mat-table #table [dataSource]="dataSource"
-			  class="activity-table" matSort
-			  (matSortChange)="handleSorted($event)"
-			  matSortActive="Activities.name"
-			  matSortDirection="asc" matSortDisableClear>
+			<mat-table #table [dataSource]="dataSource" class="activity-table" matSort (matSortChange)="handleSorted($event)" matSortActive="Activities.name"
+			 matSortDirection="asc" matSortDisableClear>
 
 				<ng-container matColumnDef="Activities.name">
-					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>
+					<mat-header-cell *matHeaderCellDef mat-sort-header>
 						{{ constants.nameString }} </mat-header-cell>
-					<mat-cell class="clickable" *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.name }}</mat-cell>
+					<mat-cell class="clickable" *matCellDef="let row" (click)="showDetails(row)">{{ row.name }}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="Categories.name">
-					<mat-header-cell *matHeaderCellDef
-					  mat-sort-header>
+					<mat-header-cell *matHeaderCellDef mat-sort-header>
 						{{ constants.category }} </mat-header-cell>
-					<mat-cell class="clickable" *matCellDef="let row"
-					  (click)="showDetails(row)">{{ row.category.name }}</mat-cell>
+					<mat-cell class="clickable" *matCellDef="let row" (click)="showDetails(row)">{{ row.category.name }}</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="Organisations.name">
-					<mat-header-cell mat-sort-header
-					  *matHeaderCellDef>
+					<mat-header-cell mat-sort-header *matHeaderCellDef>
 						{{constants.organisation}}
 					</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">{{row.provider.organisation.name}}
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">{{row.provider.organisation.name}}
 					</mat-cell>
 				</ng-container>
 
 				<ng-container matColumnDef="tags">
 					<mat-header-cell *matHeaderCellDef>{{constants.tags}}</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">
 						<mat-chip-list>
 							<span *ngFor="let tag of row?.tags">{{tag.name + ' | '}}</span>
 						</mat-chip-list>
@@ -68,26 +53,22 @@
 
 				<ng-container matColumnDef="target_groups">
 					<mat-header-cell *matHeaderCellDef>{{constants.targetGroups}}</mat-header-cell>
-					<mat-cell *matCellDef="let row"
-					  (click)="showDetails(row)">
+					<mat-cell *matCellDef="let row" (click)="showDetails(row)">
 						<mat-chip-list>
 							<mat-chip *ngFor="let targetGroup of row?.target_groups">{{targetGroup.name}}</mat-chip>
 						</mat-chip-list>
 					</mat-cell>
 				</ng-container>
 
-				<ng-container matColumnDef="action"
-				  *ngIf="actionsVisible()">
+				<ng-container matColumnDef="action" *ngIf="actionsVisible()">
 					<mat-header-cell *matHeaderCellDef>
 						{{constants.edit}} / {{constants.delete}}
 					</mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<button mat-button routerLink='/activity/edit/{{row.id}}'>
+						<button mat-button [routerLink]="['/admin', { outlets: { table: ['activity-edit', row.id] } }]">
 							<fa-icon [icon]="faPencilAlt" class="text-primary"></fa-icon>
 						</button>
-						<delete-action [recordID]="row.id"
-						  [nameToDelete]="row.name"
-						  (onDelete)="onDelete($event)">
+						<delete-action [recordID]="row.id" [nameToDelete]="row.name" (onDelete)="onDelete($event)">
 						</delete-action>
 					</mat-cell>
 				</ng-container>
@@ -96,9 +77,8 @@
 				<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 			</mat-table>
 
-			<mat-paginator [pageSize]="constants.defaultPageSize"
-			  [pageSizeOptions]="constants.pageSizeOptions"
-			  [length]="totalCount" (page)="handlePageChanged($event)">
+			<mat-paginator [pageSize]="constants.defaultPageSize" [pageSizeOptions]="constants.pageSizeOptions" [length]="totalCount"
+			 (page)="handlePageChanged($event)">
 			</mat-paginator>
 		</div>
 	</mat-sidenav-content>

@@ -33,12 +33,12 @@ import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.pa
 				{ path: 'configurations', component: ConfigFormComponent, canActivate: [AuthGuardService], outlet: 'table' },
 				{ path: 'organisations', component: OrganisationsTableComponent, outlet: 'table' },
 				{ path: 'organisation-admin/:id', component: OrganisationAdminComponent, canActivate: [AuthGuardService], outlet: 'table' },
-				{ path: 'account', component: UserFormComponent, outlet: 'table' }
+				{ path: 'account', component: UserFormComponent, outlet: 'table' },
+				{ path: 'activity-edit/:id', component: ActivityFormComponent, canActivate: [AuthGuardService], outlet: 'table' },
+				{ path: 'organisation-edit/:id', component: OrganisationFormComponent, canActivate: [AuthGuardService], outlet: 'table' },
+				{ path: 'address-edit/:id', component: AddressFormComponent, canActivate: [AuthGuardService], outlet: 'table' }
 			]
 		},
-		{ path: 'activity/edit/:id', component: ActivityFormComponent },
-		{ path: 'organisation/edit/:id', component: OrganisationFormComponent },
-		{ path: 'address/edit/:id', component: AddressFormComponent },
 		{ path: '**', redirectTo: '/', pathMatch: 'full' }
 	])],
 	exports: [RouterModule]

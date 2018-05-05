@@ -14,7 +14,7 @@
 					<mat-form-field>
 						<input matInput (keyup)="handleFiltered($event)" placeholder="Filter">
 					</mat-form-field>
-					<button class="btn btn-warning" *ngIf="actionsVisible()" routerLink='/organisation/edit/new'>
+					<button class="btn btn-warning" *ngIf="actionsVisible()" [routerLink]="['/admin', { outlets: { table: ['organisation-edit', 'new'] } }]">
 						{{ constants.newEntry }}
 					</button>
 				</div>

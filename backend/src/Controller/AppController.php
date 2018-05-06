@@ -159,9 +159,12 @@ class AppController extends Controller
 
 		$this->saveTranslations($requestEntity, $result);
 
-		return $result->errors()
-			? $this->ResponseHandler->responseError($result->errors())
-			: $this->ResponseHandler->responseSuccess($this->table()->save($result));
+		if ($result->errors()) {
+			return $this->ResponseHandler->responseError($result->errors());
+		} else {
+			$savedObj = $this->table()->save($result);
+			return $this->view($savedObj->id);
+		}
 	}
 
 	protected function saveTranslations($requestEntity, $storingEntity)

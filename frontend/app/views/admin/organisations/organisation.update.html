@@ -1,40 +1,60 @@
-<div class="container-fluid gray-card" *ngIf="organisation">
-	<form #organisationForm="ngForm" (ngSubmit)="onSubmit()" class="well">
+<div class="container-fluid gray-card"
+  *ngIf="organisation">
+	<form #organisationForm="ngForm"
+	  (ngSubmit)="onSubmit()" class="well">
 		<div class="row">
 			<div class="col">
 				<mat-form-field class="form-full-width">
-					<input matInput type=text [(ngModel)]="organisation.name" placeholder={{constants.nameString}} name="name" required [errorStateMatcher]="validation"
-					 id="orga_name_field">
+					<input matInput type=text [(ngModel)]="organisation.name"
+					  placeholder={{constants.nameString}}
+					  name="name" required [errorStateMatcher]="validation"
+					  id="orga_name_field">
 				</mat-form-field>
 				<mat-form-field class="form-full-width">
-					<input matInput type="email" [(ngModel)]="organisation.mail" placeholder={{constants.mail}} name="mail" id="orga_mail_field">
+					<input matInput type="email" [(ngModel)]="organisation.mail"
+					  placeholder={{constants.mail}}
+					  name="mail" id="orga_mail_field">
 				</mat-form-field>
 				<mat-form-field class="form-full-width">
-					<input matInput type=text [(ngModel)]="organisation.phone" placeholder={{constants.phone}} name="telephone" id="orga_phone_field">
+					<input matInput type=text [(ngModel)]="organisation.phone"
+					  placeholder={{constants.phone}}
+					  name="telephone" id="orga_phone_field">
 				</mat-form-field>
 				<mat-form-field class="form-full-width">
-					<input matInput type=text [(ngModel)]="organisation.website" placeholder={{constants.website}} name="website" id="orga_website_field">
+					<input matInput type=text [(ngModel)]="organisation.website"
+					  placeholder={{constants.website}}
+					  name="website" id="orga_website_field">
 				</mat-form-field>
 			</div>
 			<div class="col">
 				<mat-form-field class="form-full-width">
-					<textarea matInput type=text [(ngModel)]="organisation.description" name="description" id="orga_description_field" placeholder={{constants.description}}
-					 matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="10"></textarea>
+					<textarea matInput type=text [(ngModel)]="organisation.description"
+					  name="description" id="orga_description_field"
+					  placeholder={{constants.description}}
+					  matTextareaAutosize matAutosizeMinRows="4"
+					  matAutosizeMaxRows="10"></textarea>
 				</mat-form-field>
 			</div>
 		</div>
-		<mat-card class="address-card" *ngIf="organisation.address">
+		<mat-card class="address-card"
+		  *ngIf="organisation.address">
 			<div *ngIf="!organisation.address.isValid">
 				{{constants.address + ' ' + constants.required}}
-				<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="organisation.address"></address-autocomplete-form>
-				<button type="button" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
+				<address-autocomplete-form #addressAutocompleteComponent
+				  [initialAddress]="organisation.address"></address-autocomplete-form>
+				<button type="button" class="btn btn-primary"
+				  (click)="addressSubmit()">{{constants.ok}}</button>
 			</div>
 			<div *ngIf="organisation.address.isValid">
 				{{organisation.address.toString}}
-				<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
+				<button type="button" class="btn btn-primary"
+				  (click)="resetAddress()">{{constants.change}}</button>
 			</div>
 		</mat-card>
-		<button type="button" class="btn" (click)="back()">{{constants.back}}</button>
-		<button *ngIf="organisation.address" type="submit" class="btn btn-primary" [disabled]="organisationForm.invalid || !organisation.address.isValid">{{constants.save}}</button>
+		<button type="button" class="btn"
+		  (click)="back()">{{constants.back}}</button>
+		<button *ngIf="organisation.address"
+		  type="submit" class="btn btn-primary"
+		  [disabled]="organisationForm.invalid || !organisation.address.isValid">{{constants.save}}</button>
 	</form>
 </div>

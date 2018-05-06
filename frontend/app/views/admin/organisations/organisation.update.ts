@@ -44,6 +44,7 @@ export class OrganisationUpdateComponent {
 		public constants: Constants,
 		public validation: ValidationService,
 	) {
+		console.log('organisation', this.organisation);
 	}
 
 	addressSubmit(): void {
@@ -64,7 +65,7 @@ export class OrganisationUpdateComponent {
 		this.organisation.address = null;
 		this.organisationService
 			.edit(this.organisation)
-			.subscribe();
+			.subscribe(newOrga => this.organisation = new Organisation(newOrga));
 	}
 
 	back(): void {

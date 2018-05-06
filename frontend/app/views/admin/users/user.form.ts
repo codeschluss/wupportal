@@ -45,7 +45,6 @@ export class UserFormComponent implements OnInit {
 	}
 
 	setData(): void {
-		console.log('this.usernameCtrl.value', this.usernameCtrl.value);
 		this.user.username = this.usernameCtrl.value;
 		this.user.fullname = this.fullnameCtrl.value;
 		this.user.phone = this.phoneCtrl.value;

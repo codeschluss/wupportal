@@ -239,56 +239,58 @@ export class ActivityFormComponent implements OnInit {
 	}
 
 	saveTranslations(): void {
-		this.translatableFieldsComponent.getTranslations().subscribe(translationsRetrieved => {
-			// if empty cake returns an empty array
-			if (Array.isArray(this.activity._translations)) {
-				this.activity._translations = {};
-			}
-			for (const languageCode of Object.keys(this.activity._translations)) {
-				if (!this.activity._translations[languageCode]) {
-					this.activity._translations[languageCode] = translationsRetrieved[languageCode];
-				} else {
-					for (const attribute of Object.keys(this.activity._translations[languageCode])) {
-						if (!this.activity._translations[languageCode][attribute]) {
-							if (translationsRetrieved[languageCode][attribute]) {
-								this.activity._translations[languageCode][attribute] = translationsRetrieved[languageCode][attribute];
+		const translationsSubscriber = this.translatableFieldsComponent.getTranslations();
+		if (translationsSubscriber) {
+			translationsSubscriber.subscribe(translationsRetrieved => {
+				// if empty cake returns an empty array
+				if (Array.isArray(this.activity._translations)) {
+					this.activity._translations = {};
+				}
+				for (const languageCode of Object.keys(this.activity._translations)) {
+					if (!this.activity._translations[languageCode]) {
+						this.activity._translations[languageCode] = translationsRetrieved[languageCode];
+					} else {
+						for (const attribute of Object.keys(this.activity._translations[languageCode])) {
+							if (!this.activity._translations[languageCode][attribute]) {
+								if (translationsRetrieved[languageCode][attribute]) {
+									this.activity._translations[languageCode][attribute] = translationsRetrieved[languageCode][attribute];
+								}
 							}
 						}
 					}
 				}
-			}
-		});
-	}
+			});
+		}
 
-	onSubmit(): void {
-		this.activity.provider = null;
-		this.activity.category = null;
-		this.activity.address = null;
-		this.scheduler.deleteSchedules();
-		this.generateTargetGroupArray(this.baseDataFormGroup.get('targetGroupCtrl').value);
-		if (this.activity.tags.length) {
-			this.handleTags().subscribe(tags => {
-				for (const tag of tags) {
-					this.activity.tags.push(tag);
-				}
-				if (this.activity.id) {
+		onSubmit(): void {
+			this.activity.provider = null;
+			this.activity.category = null;
+			this.activity.address = null;
+			this.scheduler.deleteSchedules();
+			this.generateTargetGroupArray(this.baseDataFormGroup.get('targetGroupCtrl').value);
+			if(this.activity.tags.length) {
+				this.handleTags().subscribe(tags => {
+					for (const tag of tags) {
+						this.activity.tags.push(tag);
+					}
+					if (this.activity.id) {
+						this.activityService.edit(this.activity).subscribe(() => this.back());
+					} else {
+						this.activityService.add(this.activity).subscribe(() => this.back());
+					}
+				});
+			} else {
+				if(this.activity.id) {
 					this.activityService.edit(this.activity).subscribe(() => this.back());
 				} else {
 					this.activityService.add(this.activity).subscribe(() => this.back());
 				}
-			});
-		} else {
-			if (this.activity.id) {
-				this.activityService.edit(this.activity).subscribe(() => this.back());
-			} else {
-				this.activityService.add(this.activity).subscribe(() => this.back());
 			}
 		}
-	}
 
-	back(): void {
-		this.location.back();
-	}
+		back(): void {
+			this.location.back();
+		}
 
-}
+	}
 

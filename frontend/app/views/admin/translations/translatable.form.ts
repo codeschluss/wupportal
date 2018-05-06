@@ -99,7 +99,7 @@ export class TranslatableFieldsComponent implements OnInit {
 			}
 		}
 
-		if (languagesToTranslate) {
+		if (languagesToTranslate.length) {
 			const translationsRequest: TranslationRequest =
 				new TranslationRequest(propertiesToTransLate, Array.from(new Set(languagesToTranslate)));
 			return translationsRequest;

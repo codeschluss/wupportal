@@ -59,6 +59,7 @@ class TranslationsController extends AppController
 				return $this->ResponseHandler->responseError();
 		}
 
+		try {
 		$responseObj = [];
 		foreach ($request['languages'] as $lang ) {
 			foreach ($request['properties'] as $prop => $value) {
@@ -71,7 +72,12 @@ class TranslationsController extends AppController
 				}
 			}
 		}
+
 		return $this->ResponseHandler->responseSuccess($responseObj);
+		} catch(\Expection $e) {
+			return $this->ResponseHandler->createResponse(503);
+		}
+
 	}
 
 	/**
@@ -84,10 +90,16 @@ class TranslationsController extends AppController
 			return $this->ResponseHandler->responseError();
 		}
 
+		try {
 		$translation = $this->getTranslation($request['to'], $request['text']);
+
 		return $translation
 			? $this->ResponseHandler->responseSuccess($translation)
 			: $this->ResponseHandler->createResponse(503);
+		} catch(\Exception $e) {
+			return $this->ResponseHandler->createResponse(503);
+		}
+
 	}
 
 	/**
@@ -105,7 +117,8 @@ class TranslationsController extends AppController
 			'text' => $text
 			],
 			[
-			'headers' => ['Ocp-Apim-Subscription-Key' => Configure::read('Azure.subscription-key')]
+			'headers' => ['Ocp-Apim-Subscription-Key' => Configure::read('Azure.subscription-key')],
+			'timeout' => 60
 			]
 		);
 

@@ -68,7 +68,10 @@ class ActivitiesController extends AppController
 		$this->setOnlyFutureSchedulesFilter($query);
 
 		$emptyEntities = $this->setAdvancedFilters($query);
-		$this->setFreetextFilter($query, $emptyEntities);
+
+		empty($emptyEntities)
+			? $this->setFiltering($query, $this->request->input('json_decode'))
+			:	$this->setFreetextFilter($query, $emptyEntities);
 
 		$result = $query->all()->toArray();
 		$this->prepareResult($result);
@@ -81,7 +84,7 @@ class ActivitiesController extends AppController
 	private function setAdvancedFilters($query) {
 		$request = $this->request->input('json_decode');
 		$emptyEntities = [];
-		if(isset($request->advanced) && $request->advanced) {
+		if(isset($request->advanced) && !empty($request->advanced)) {
 			foreach ($request->advanced as $entity => $ids) {
 				if ($ids && !empty($ids)) {
 					$query->where(['OR' =>
@@ -102,7 +105,7 @@ class ActivitiesController extends AppController
 	private function setFreetextFilter($query, $emptyEntities) {
 		if(isset($this->request->input('json_decode')->filter)) {
 			$filter = $this->request->input('json_decode')->filter;
-			if($filter) {
+			if(!empty($filter)) {
 				$query->where(['OR' =>
 					function($exp, $q) use ($emptyEntities, $filter) {
 						$or = [];

@@ -206,10 +206,10 @@ export class ActivityFormComponent implements OnInit {
 
 	handleTags(): Observable<any[]> {
 		const observableTagArray: Observable<any>[] = [];
-		this.activity.tags.map(tagName => {
-			const currTag = tagName;
+		this.activity.tags.forEach(currTag => {
 			observableTagArray.push(this.tagService.add(currTag));
 		});
+		this.activity.tags = [];
 		return Observable.forkJoin(observableTagArray);
 	}
 

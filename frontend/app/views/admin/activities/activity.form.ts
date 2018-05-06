@@ -261,36 +261,37 @@ export class ActivityFormComponent implements OnInit {
 				}
 			});
 		}
+	}
 
-		onSubmit(): void {
-			this.activity.provider = null;
-			this.activity.category = null;
-			this.activity.address = null;
-			this.scheduler.deleteSchedules();
-			this.generateTargetGroupArray(this.baseDataFormGroup.get('targetGroupCtrl').value);
-			if(this.activity.tags.length) {
-				this.handleTags().subscribe(tags => {
-					for (const tag of tags) {
-						this.activity.tags.push(tag);
-					}
-					if (this.activity.id) {
-						this.activityService.edit(this.activity).subscribe(() => this.back());
-					} else {
-						this.activityService.add(this.activity).subscribe(() => this.back());
-					}
-				});
-			} else {
-				if(this.activity.id) {
+	onSubmit(): void {
+		this.activity.provider = null;
+		this.activity.category = null;
+		this.activity.address = null;
+		this.scheduler.deleteSchedules();
+		this.generateTargetGroupArray(this.baseDataFormGroup.get('targetGroupCtrl').value);
+		if (this.activity.tags.length) {
+			this.handleTags().subscribe(tags => {
+				for (const tag of tags) {
+					this.activity.tags.push(tag);
+				}
+				if (this.activity.id) {
 					this.activityService.edit(this.activity).subscribe(() => this.back());
 				} else {
 					this.activityService.add(this.activity).subscribe(() => this.back());
 				}
+			});
+		} else {
+			if (this.activity.id) {
+				this.activityService.edit(this.activity).subscribe(() => this.back());
+			} else {
+				this.activityService.add(this.activity).subscribe(() => this.back());
 			}
 		}
-
-		back(): void {
-			this.location.back();
-		}
-
 	}
+
+	back(): void {
+		this.location.back();
+	}
+
+}
 

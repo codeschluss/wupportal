@@ -171,7 +171,9 @@ export class ActivityFormComponent implements OnInit {
 	addTag(event: MatChipInputEvent): void {
 		const input = event.input;
 		const value = event.value.trim().toLowerCase();
-		if (value.length > 0) {
+		if (value.length > 0
+			&& !this.activity.tags.find(tag => tag.name === value)
+		) {
 			const currTag = new Tag();
 			currTag.name = value;
 			this.activity.tags.push(currTag);

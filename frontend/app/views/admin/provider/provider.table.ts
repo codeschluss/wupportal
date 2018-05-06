@@ -39,7 +39,9 @@ export class ProviderTableComponent implements OnChanges {
 	save(): void {
 		this.isLoading = true;
 		const editObservables = this.dataSource.data.map(provider => this.dataService.edit(provider));
-		forkJoin(editObservables).subscribe(() => this.isLoading = false);
+		forkJoin(editObservables).subscribe(() => this.isLoading = false,
+			() => this.isLoading = false,
+			() => this.isLoading = false);
 	}
 
 	onDelete(recordID: string): void {

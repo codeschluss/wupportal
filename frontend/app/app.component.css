@@ -1,10 +1,10 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
-html, body {
+html,
+body {
 	height: 100%;
- }
+}
 
-.main{
+.main {
 	height: auto;
 	min-height: 100%;
 	padding-bottom: 50px;
@@ -39,7 +39,7 @@ mapping-component {
 	height: 200px;
 }
 
-.schedule-card{
+.schedule-card {
 	height: 500px;
 }
 
@@ -47,27 +47,38 @@ mat-chip {
 	max-width: 200px;
 }
 
-.navbar-light{
-	background-color:	#FFD700;
+.navbar-light {
+	background-color: #FFD700;
 }
 
 .footer {
-	height:50px;
+	height: 50px;
 	margin-top: -50px;
 	padding: 10px;
 	color: black;
-	background-color:	#FFD700;
+	background-color: #FFD700;
 	text-align: center;
 	border-right: 15px solid white;
 	border-left: 15px solid white;
 }
 
-.footer > a:link    {color:#000;}
-.footer > a:visited {color:#000;}
-.footer > a:hover   {color:#000;}
-.footer > a:active  {color:#000;}
+.footer>a:link {
+	color: #000;
+}
 
-.loadingOverlay{
+.footer>a:visited {
+	color: #000;
+}
+
+.footer>a:hover {
+	color: #000;
+}
+
+.footer>a:active {
+	color: #000;
+}
+
+.loadingOverlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -77,12 +88,13 @@ mat-chip {
 	z-index: 10;
 }
 
-.loadingOverlay > mat-spinner {
+.loadingOverlay>mat-spinner {
 	width: 100px;
 	height: 100px;
 	margin: 0 auto;
 	position: absolute;
 }
 
-
-
+.nav-link {
+	cursor: pointer;
+}

@@ -223,7 +223,7 @@ class ActivitiesController extends AppController
 
 	private function setOnlyFutureSchedulesFilter($query) {
 		$query->matching('Schedules', function ($q) {
-			return $q->where(['Schedules.end_date >' => $q->func()->now('date')]);
+			return $q->where(['Schedules.start_date >' => $q->func()->now('date')]);
 		});
 	}
 

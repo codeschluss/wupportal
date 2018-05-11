@@ -44,7 +44,7 @@
 			<mat-header-cell *matHeaderCellDef mat-sort-header>
 				{{constants.quarter}}
 			</mat-header-cell>
-			<mat-cell *matCellDef="let row">{{ row.suburb.name }}</mat-cell>
+			<mat-cell *matCellDef="let row">{{ row?.suburb?.name }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="Addresses.latitude">

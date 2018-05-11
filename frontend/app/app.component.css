@@ -47,35 +47,43 @@ mat-chip {
 	max-width: 200px;
 }
 
-.navbar-light {
-	background-color: #FFD700;
+.navbar-dark {
+	background-color: #3f51b5;
+}
+
+.navbar-dark > * {
+	color: white;
 }
 
 .footer {
 	height: 50px;
 	margin-top: -50px;
 	padding: 10px;
-	color: black;
-	background-color: #FFD700;
+	color: #3f51b5;
+	border-top: solid #3f51b5 2px;
 	text-align: center;
 	border-right: 15px solid white;
 	border-left: 15px solid white;
 }
 
+.footer > * {
+	color: #3f51b5;
+}
+
 .footer>a:link {
-	color: #000;
+	color: #3f51b5;
 }
 
 .footer>a:visited {
-	color: #000;
+	color: #3f51b5;
 }
 
 .footer>a:hover {
-	color: #000;
+	color: rgb(3, 23, 243);
 }
 
 .footer>a:active {
-	color: #000;
+	color: #3f51b5;
 }
 
 .loadingOverlay {

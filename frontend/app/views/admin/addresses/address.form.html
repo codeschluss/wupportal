@@ -25,7 +25,7 @@
 					<fa-icon (click)="resetSuburb()" [icon]="faTrashAlt" class="text-danger">
 					</fa-icon>
 				</span>
-				<mat-form-field *ngIf="!address.suburb">
+				<mat-form-field *ngIf="!address.suburb || !address.suburb.name">
 					<mat-select name="suburb" placeholder={{constants.quarter}} [(ngModel)]="address.suburb">
 						<mat-option *ngFor="let suburb of suburbs" [value]="suburb">{{suburb.name}}</mat-option>
 					</mat-select>

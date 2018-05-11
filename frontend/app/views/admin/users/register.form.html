@@ -1,4 +1,4 @@
-<mat-card class="gray-card container centered-content" *ngIf="allOrganisations">
+<mat-card class="gray-card centered-content" *ngIf="allOrganisations">
 	<mat-card-header>
 		<mat-card-title>
 			<h2>{{portalTitle}}</h2>
@@ -6,7 +6,7 @@
 		<mat-card-subtitle>{{constants.registration}}</mat-card-subtitle>
 	</mat-card-header>
 
-	<form id="user-form" [formGroup]="userForm" #formDir="ngForm" (ngSubmit)="onSubmit()" class="container-fluid">
+	<form id="user-form" [formGroup]="userForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
 		<div class="row">
 			<div class="col">
 				<mat-form-field class="form-full-width">
@@ -57,7 +57,7 @@
 				{{passwordInvalid()}}
 			</mat-error>
 		</form>
-		<button class="btn btn-secondary" type="button" (click)="back()">{{constants.back}}</button>
-		<button class="btn btn-primary" type="submit" color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
+		<button mat-button type="button" (click)="back()">{{constants.back}}</button>
+		<button mat-button color="primary" type="submit" color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
 	</form>
 </mat-card>

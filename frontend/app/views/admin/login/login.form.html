@@ -1,4 +1,4 @@
-<mat-card id="login-form" class="container gray-card centered-content">
+<mat-card id="login-form" class="gray-card centered-content">
 	<mat-card-header>
 		<mat-card-title>
 			<h2>{{portalTitle}}</h2>
@@ -16,9 +16,9 @@
 			{{error}}
 		</mat-error>
 		<div class="centered-content">
-			<button class="btn btn-primary" [disabled]="loginForm.invalid">{{constants.login}}</button>
-			<button class="btn btn-warning" routerLink='/register'>{{constants.register}}</button>
+			<button mat-button color="primary" [disabled]="loginForm.invalid">{{constants.login}}</button>
+			<button mat-button routerLink='/register'>{{constants.register}}</button>
 		</div>
 	</form>
-	<button class="btn btn-link" routerLink='/password'>{{constants.forgottenPassword}}</button>
+	<a routerLink='/password'>{{constants.forgottenPassword}}</a>
 </mat-card>

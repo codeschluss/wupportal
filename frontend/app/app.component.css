@@ -1,4 +1,6 @@
-@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap-grid.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap-grid.min.css";
+
 html,
 body {
 	height: 100%;
@@ -59,31 +61,32 @@ mat-chip {
 	height: 50px;
 	margin-top: -50px;
 	padding: 10px;
-	color: #3f51b5;
-	border-top: solid #3f51b5 2px;
+	font-size: 12px;
 	text-align: center;
 	border-right: 15px solid white;
 	border-left: 15px solid white;
+	text-align: center;
+	display: block;
 }
 
 .footer > * {
-	color: #3f51b5;
+	color: white;
 }
 
 .footer>a:link {
-	color: #3f51b5;
+	color: white;
 }
 
 .footer>a:visited {
-	color: #3f51b5;
+	color: white;
 }
 
 .footer>a:hover {
-	color: rgb(3, 23, 243);
+	color: white;
 }
 
 .footer>a:active {
-	color: #3f51b5;
+	color: white;
 }
 
 .loadingOverlay {
@@ -105,4 +108,21 @@ mat-chip {
 
 .nav-link {
 	cursor: pointer;
+}
+
+.nav-item.active > * {
+	color: white;
+}
+
+.nav-title {
+	right: 25px;
+	display: block;
+	position: absolute;
+	color: white;
+}
+
+.nav-title mat-icon {
+	width: 3.3em;
+	vertical-align: sub;
+	margin-right: -5px;
 }

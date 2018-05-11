@@ -1,4 +1,4 @@
-<div [ngClass]="largeTitle ? 'orga-detail container-fluid' : 'orga-detail'" *ngIf="organisation">
+<mat-card [ngClass]="orga-detail" *ngIf="organisation">
 	<b *ngIf="!largeTitle">{{organisation.name}}</b>
 	<h3 *ngIf="largeTitle">{{organisation.name}}</h3>
 	<hr>
@@ -37,4 +37,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</mat-card>

@@ -2,8 +2,7 @@
 	<mat-spinner></mat-spinner>
 </div>
 <mat-card *ngIf="organisationOptions">
-	<form #formDir="ngForm" (ngSubmit)="onSubmit()"
-	  class="well">
+	<form #formDir="ngForm" (ngSubmit)="onSubmit()" class="well">
 		<mat-card-header>
 			<mat-card-title>
 				<h2>{{constants.organisations}}</h2>
@@ -11,11 +10,8 @@
 		</mat-card-header>
 		<mat-card-content>
 			<mat-form-field>
-				<mat-select placeholder={{constants.organisations}}
-				  [formControl]="organisationsCtrl"
-				  multiple>
-					<mat-option *ngFor="let organisation of organisationOptions"
-					  [value]="organisation.id">{{organisation.name}}</mat-option>
+				<mat-select placeholder={{constants.organisations}} [formControl]="organisationsCtrl" multiple>
+					<mat-option *ngFor="let organisation of organisationOptions" [value]="organisation.id">{{organisation.name}}</mat-option>
 				</mat-select>
 			</mat-form-field>
 
@@ -30,8 +26,7 @@
 					<mat-header-cell *matHeaderCellDef>{{constants.website}}</mat-header-cell>
 					<mat-cell *matCellDef="let row">
 						<a target="_blank" (click)="goToWebsite(row.website)">
-							{{row.organisation.website ? row.organisation?.website
-							: ''}}
+							{{row.organisation.website ? row.organisation?.website : ''}}
 						</a>
 					</mat-cell>
 				</ng-container>
@@ -39,9 +34,7 @@
 				<ng-container matColumnDef="mail">
 					<mat-header-cell *matHeaderCellDef>{{constants.mail}}</mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<a [href]="'mailto:' + row.mail">{{row.organisation?.mail?
-							row.organisation.mail :
-							''}}
+						<a [href]="'mailto:' + row.mail">{{row.organisation?.mail? row.organisation.mail : ''}}
 						</a>
 					</mat-cell>
 				</ng-container>
@@ -68,10 +61,8 @@
 		</mat-card-content>
 
 		<mat-card-actions>
-			<button class="btn btn-danger"
-			  type="button" (click)="back()">{{constants.back}}</button>
-			<button class="btn btn-primary"
-			  type="submit">{{constants.save}}</button>
+			<button mat-button color="warn" type="button" (click)="back()">{{constants.back}}</button>
+			<button mat-button color="primary" type="submit">{{constants.save}}</button>
 		</mat-card-actions>
 	</form>
 </mat-card>

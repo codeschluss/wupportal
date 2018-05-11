@@ -47,9 +47,9 @@
 				</delete-action>
 			</div>
 			<div *ngIf="organisation">
-				<button class="btn btn-light" *ngIf="!isAdmin(row)" type="button" (click)="addAdmin(row)">{{constants.no}}
+				<button mat-button *ngIf="!isAdmin(row)" type="button" (click)="addAdmin(row)">{{constants.no}}
 				</button>
-				<button class="btn btn-primary" *ngIf="isAdmin(row)" type="button" (click)="removeAdmin(row)">{{constants.yes}}
+				<button mat-button color="primary" *ngIf="isAdmin(row)" type="button" (click)="removeAdmin(row)">{{constants.yes}}
 				</button>
 			</div>
 		</mat-cell>

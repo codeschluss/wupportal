@@ -39,7 +39,8 @@ import {
 	MatGridListModule,
 	MatAutocompleteModule,
 	MatInputModule,
-	MatSlideToggleModule
+	MatSlideToggleModule,
+	MatToolbarModule
 } from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -194,7 +195,8 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		MatSnackBarModule,
 		MatProgressSpinnerModule,
 		FontAwesomeModule,
-		MatSlideToggleModule
+		MatSlideToggleModule,
+		MatToolbarModule
 	],
 	providers: [
 		AuthGuardService,

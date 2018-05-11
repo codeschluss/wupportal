@@ -12,8 +12,10 @@
 						<input matInput type="text" name="category{{i}}.name" [(ngModel)]=category.name/>
 					</mat-form-field>
 					<span>
-						<fa-icon (click)="deleteCategory(category)" [icon]="faTrashAlt" class="text-danger">
-						</fa-icon>
+						<button mat-button color="warn" type="button">
+							<fa-icon (click)="deleteCategory(category)" [icon]="faTrashAlt">
+							</fa-icon>
+						</button>
 					</span>
 				</mat-grid-tile>
 			</div>
@@ -24,10 +26,10 @@
 				<mat-form-field class="form-full-width">
 					<input matInput type="text" name="new" placeholder="{{constants.category}}" [(ngModel)]="newCategoryName" />
 				</mat-form-field>
-				<button class="btn" type="button" (click)="addCategory()">{{constants.newEntry}}</button>
+				<button mat-button color="primary" type="button" (click)="addCategory()">{{constants.newEntry}}</button>
 			</form>
 		</mat-card>
-		<button class="btn" type="button" (click)="back()">{{constants.back}}</button>
-		<button class="btn btn-primary" color="primary" type="submit">{{constants.save}}</button>
+		<button mat-button type="button" (click)="back()">{{constants.back}}</button>
+		<button mat-button color="primary" type="submit">{{constants.save}}</button>
 	</form>
 </mat-card>

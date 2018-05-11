@@ -12,8 +12,10 @@
 						<input matInput type="text" name="tag{{i}}.name" [(ngModel)]=tag.name/>
 					</mat-form-field>
 					<span>
-						<fa-icon (click)="deleteTag(tag)" [icon]="faTrashAlt" class="text-danger">
-						</fa-icon>
+						<button mat-button type="button" color="warn">
+							<fa-icon (click)="deleteTag(tag)" [icon]="faTrashAlt">
+							</fa-icon>
+						</button>
 					</span>
 				</mat-grid-tile>
 			</div>
@@ -24,10 +26,10 @@
 				<mat-form-field class="form-full-width">
 					<input matInput type="text" name="new" placeholder="{{constants.newElement}}" [(ngModel)]="newTagName" />
 				</mat-form-field>
-				<button class="btn" type="button" (click)="addTag()">{{constants.newEntry}}</button>
+				<button mat-button color="primary" type="button" (click)="addTag()">{{constants.newEntry}}</button>
 			</form>
 		</mat-card>
-		<button class="btn" type="button" (click)="back()">{{constants.back}}</button>
-		<button class="btn btn-primary" color="primary" type="submit">{{constants.save}}</button>
+		<button mat-button type="button" (click)="back()">{{constants.back}}</button>
+		<button mat-button color="primary" type="submit">{{constants.save}}</button>
 	</form>
 </mat-card>

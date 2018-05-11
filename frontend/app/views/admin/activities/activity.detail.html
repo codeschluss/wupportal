@@ -1,4 +1,4 @@
-<div class="container-fluid activity-detail" *ngIf="activity && activity.provider && activity.provider.organisation">
+<mat-card class="activity-detail" *ngIf="activity && activity.provider && activity.provider.organisation">
 	<h3>{{activity.name}}</h3>
 	<hr>
 	<div *ngIf="activity.show_user && activity.provider.user">
@@ -54,4 +54,4 @@
 		<li class="list-group-item" *ngFor="let schedule of activity.schedules">{{schedule.toString}}</li>
 	</ul>
 	<organisation-detail [organisation]="activity.provider.organisation" [largeTitle]="false"></organisation-detail>
-</div>
+</mat-card>

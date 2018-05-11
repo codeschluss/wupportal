@@ -1,33 +1,27 @@
-<mat-card style="height: 100%">
-	<div class="container-fluid main">
-		<nav class="navbar navbar-dark navbar-expand-lg">
-			<a class="navbar-brand" routerLink="/admin/map">
-				<fa-icon [icon]="faMap"></fa-icon>
-			</a>
-			<button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
-			 aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarToggler">
-				<ul class="navbar-nav mr-auto">
-					<li *ngFor="let routeLink of routeLinks; let i = index;" class="nav-item" [routerLink]="routeLink.link" routerLinkActive="active"
-					 [routerLinkActiveOptions]="{exact: true}">
-						<a class="nav-link" (click)="activeLinkIndex = i">
-							{{routeLink.label}}
-						</a>
-					</li>
-				</ul>
-				<div class="form-inline my-2 my-lg-0">
-					<mat-icon style="width: 3.3em;" svgIcon="wuppertal"></mat-icon>
+<div style="height: 100%">
+	<div class="main">
+		<mat-toolbar class="navbar" color="primary">
+			<mat-toolbar-row>
+				<a mat-button routerLink="/admin/map">
+					<fa-icon [icon]="faMap" class="nav-item active" style="color: white;"></fa-icon>
+				</a>
+				<span *ngFor="let routeLink of routeLinks; let i = index;" class="nav-item" [routerLink]="routeLink.link" routerLinkActive="active"
+				 [routerLinkActiveOptions]="{exact: true}">
+					<a mat-button (click)="activeLinkIndex = i">
+						{{routeLink.label}}
+					</a>
+				</span>
+				<span class="nav-title">
+					<mat-icon svgIcon="wuppertal"></mat-icon>
 					<b>upportal</b>
-				</div>
-			</div>
-		</nav>
-		<router-outlet class="container-fluid" name="table">
+				</span>
+			</mat-toolbar-row>
+		</mat-toolbar>
+		<router-outlet name="table">
 		</router-outlet>
 	</div>
-	<footer class="footer">
+	<mat-toolbar class="footer" color="primary">
 		Powered by:
 		<a href="mailto:info@codeschluss.de">Valmir Etemi, Philip Schildkmap, Peter Seipel</a>
-	</footer>
-</mat-card>
+	</mat-toolbar>
+</div>

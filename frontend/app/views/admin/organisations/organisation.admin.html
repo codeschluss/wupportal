@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div>
 	<div class="loadingOverlay" *ngIf="!organisation">
 		<mat-spinner></mat-spinner>
 	</div>
@@ -15,12 +15,12 @@
 			<mat-tab label={{constants.translations}}>
 				<!-- Translations -->
 				<translatable-form #translatableFieldsComponent [multiLingualObject]="organisation" [translatableAttributes]="['description']"></translatable-form>
-				<button type="button" class="btn" (click)="back()">{{constants.back}}</button>
-				<button type="button" class="btn btn-primary" (click)="saveTranslations()">{{constants.save}}</button>
+				<button mat-button type="button" (click)="back()">{{constants.back}}</button>
+				<button mat-button color="primary" type="button" (click)="saveTranslations()">{{constants.save}}</button>
 			</mat-tab>
 			<mat-tab *ngIf="approvedProviders" label={{constants.user}}>
 				<!-- Provider user list -->
-				<button type="button" class="btn btn-warning" (click)="switch()">{{switchButtonLabel()}}
+				<button mat-button color="primary" type="button" (click)="switch()">{{switchButtonLabel()}}
 				</button>
 				<div *ngIf="showRequests && notApprovedProviders">
 					<provider-approval-table [providers]="notApprovedProviders" (onApproved)="onApproved($event)">

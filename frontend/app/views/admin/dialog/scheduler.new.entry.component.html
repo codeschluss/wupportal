@@ -1,5 +1,5 @@
 <mat-card>
-	<form class="container-fluid centered-text-content" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+	<form class="centered-text-content" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 		<h3>{{constants.newEntry}}</h3>
 		<div class="row">
 			<div class="col">{{constants.dateTime}}</div>
@@ -53,7 +53,7 @@
 				{{constants.endBeforeStartError}}
 			</div>
 		</mat-error>
-		<button class="btn btn-danger" type="button" color="warn" data-dismiss="modal" (click)="onCancel()">{{constants.cancel}}</button>
-		<button class="btn btn-primary" type="submit" [disabled]="formGroup.invalid" color="primary">{{constants.ok}}</button>
+		<button mat-button type="button" color="warn" data-dismiss="modal" (click)="onCancel()">{{constants.cancel}}</button>
+		<button mat-button color="primary" type="submit" [disabled]="formGroup.invalid">{{constants.ok}}</button>
 	</form>
 </mat-card>

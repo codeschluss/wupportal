@@ -1,4 +1,4 @@
-<mat-card class="container-fluid organisation-edit-card" *ngIf="organisation">
+<mat-card class="organisation-edit-card" *ngIf="organisation">
 	<h3 *ngIf="organisation.name">{{organisation.name}}</h3>
 	<h3 *ngIf="!organisation.name">{{constants.noTitle}}</h3>
 	<form #organisationForm="ngForm" (ngSubmit)="onSubmit()" class="well">
@@ -39,7 +39,7 @@
 						</div>
 					</div>
 					<div>
-						<button type="button" class="btn btn-primary" [disabled]="baseDataFormGroup.invalid" matStepperNext>{{constants.next}}</button>
+						<button mat-button color="primary" type="button" [disabled]="baseDataFormGroup.invalid" matStepperNext>{{constants.next}}</button>
 					</div>
 				</form>
 			</mat-step>
@@ -47,8 +47,8 @@
 				<ng-template matStepLabel>{{constants.translations}}</ng-template>
 				<translatable-form #translatableFieldsComponent [multiLingualObject]="organisation" [translatableAttributes]="['description']"></translatable-form>
 				<div>
-					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-					<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
+					<button mat-button type="button" matStepperPrevious>{{constants.previous}}</button>
+					<button mat-button color="primary" type="button" matStepperNext>{{constants.next}}</button>
 				</div>
 			</mat-step>
 			<mat-step [stepControl]="addressFormGroup">
@@ -60,13 +60,13 @@
 						</div>
 						<div *ngIf="!addressFormGroup.invalid && organisation.address">
 							{{organisation.address.toString}}
-							<button type="button" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>
+							<button mat-button color="warn" type="button" (click)="resetAddress()">{{constants.change}}</button>
 						</div>
 					</mat-card>
 					<div>
-						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-						<button type="button" [disabled]="addressFormGroup.invalid" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
-						<button type="button" *ngIf="addressFormGroup.invalid" class="btn btn-primary" (click)="addressSubmit()">{{constants.ok}}</button>
+						<button mat-button type="button" matStepperPrevious>{{constants.previous}}</button>
+						<button mat-button type="button" [disabled]="addressFormGroup.invalid" color="primary" matStepperNext>{{constants.next}}</button>
+						<button mat-button color="primary" type="button" *ngIf="addressFormGroup.invalid" (click)="addressSubmit()">{{constants.ok}}</button>
 					</div>
 				</form>
 			</mat-step>
@@ -74,8 +74,8 @@
 				<ng-template matStepLabel>{{constants.users}}</ng-template>
 				<edit-users #usersTable [organisation]="organisation" (approvedAsAdmin)="approvedAsAdmin($event)" (removedAsAdmin)="removedAsAdmin($event)"></edit-users>
 				<div>
-					<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-					<button type="button" class="btn btn-primary" matStepperNext>{{constants.next}}</button>
+					<button mat-button type="button" matStepperPrevious>{{constants.previous}}</button>
+					<button mat-button color="primary" type="button" matStepperNext>{{constants.next}}</button>
 				</div>
 			</mat-step>
 			<mat-step>
@@ -88,8 +88,8 @@
 						<mat-list role="list">
 							<mat-list-item role="listitem" *ngFor="let provider of adminProviders">{{provider?.user?.fullname + ' (' + provider?.user?.username + ')'}}</mat-list-item>
 						</mat-list>
-						<button type="button" class="btn btn-secondary" matStepperPrevious>{{constants.previous}}</button>
-						<button class="btn btn-primary" type="submit">{{constants.save}}</button>
+						<button mat-button type="button" matStepperPrevious>{{constants.previous}}</button>
+						<button mat-button color="primary" type="submit">{{constants.save}}</button>
 					</mat-tab>
 					<mat-tab label="{{constants.translations}}">
 						<translatable-form [multiLingualObject]="organisation" [translatableAttributes]="['description']" [disabled]="true"></translatable-form>
@@ -97,6 +97,6 @@
 				</mat-tab-group>
 			</mat-step>
 		</mat-horizontal-stepper>
-		<button type="button" class="btn" (click)="back()">{{constants.cancel}}</button>
+		<button mat-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
 	</form>
 </mat-card>

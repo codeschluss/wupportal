@@ -1,6 +1,6 @@
 <h3>{{constants.dateTimeQuestion}}</h3>
 
-<div class="container-fluid" *ngIf="!schedules.length">
+<div *ngIf="!schedules.length">
 	<form #formDir="ngForm" id="form-group" [formGroup]="formGroup">
 		<div class="row">
 			<!-- col for entering data -->
@@ -165,7 +165,7 @@
 		</div>
 		<div class="row">
 			<div class="col align-self-start">
-				<button class="btn btn-primary" type="button" [disabled]="formGroup.invalid" (click)="generateSchedules()">{{constants.create}} {{constants.dates}}</button>
+				<button mat-button color="primary" type="button" [disabled]="formGroup.invalid" (click)="generateSchedules()">{{constants.create}} {{constants.dates}}</button>
 			</div>
 		</div>
 		<mat-error *ngIf=formGroup.invalid>
@@ -240,8 +240,8 @@
 								</mat-form-field>
 							</div>
 							<div class="col">
-								<button class="btn btn-secondary" type="button" [disabled]="currScheduleFormGroup.invalid" (click)="changeDate(i)">{{constants.change}}</button>
-								<button class="btn btn-danger" type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
+								<button mat-button type="button" [disabled]="currScheduleFormGroup.invalid" (click)="changeDate(i)">{{constants.change}}</button>
+								<button mat-button color="warn" type="button" (click)="removeDateEntry(i)">{{constants.delete}}</button>
 							</div>
 						</div>
 					</form>
@@ -251,7 +251,7 @@
 	</div>
 
 	<div>
-		<button class="btn btn-danger" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
-		<button class="btn btn-primary" type="button" (click)="newEntry()">{{constants.create + ' ' + constants.additional + ' ' + constants.date}}</button>
+		<button mat-button color="warn" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
+		<button mat-button color="primary" type="button" (click)="newEntry()">{{constants.create + ' ' + constants.additional + ' ' + constants.date}}</button>
 	</div>
 </div>

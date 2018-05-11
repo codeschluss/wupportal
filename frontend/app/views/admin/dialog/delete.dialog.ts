@@ -8,9 +8,9 @@ import { Constants } from 'app/services/constants';
 	template: `
 	<div>{{data.message}}</div>
 	<h3> {{data.name}} </h3>
-	<button class="btn btn-danger"
+	<button mat-button color="warn"
   	(click)="onDelete()">{{constants.delete}}</button>
-	<button class="btn btn-secondary" (click)="onCancel()">{{constants.cancel}}</button>`,
+	<button mat-button (click)="onCancel()">{{constants.cancel}}</button>`,
 	styleUrls: ['../../../app.component.css']
 })
 

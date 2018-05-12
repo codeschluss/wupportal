@@ -48,7 +48,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppComponent } from 'app/app.component';
 import { AppRouterModule } from 'app/app-router.module';
 
-import { DetailsComponent } from 'app/views/details';
 import { UserTableComponent } from 'app/views/admin/users/user.table';
 import { ActivityTableComponent } from 'app/views/admin/activities/activity.table';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
@@ -118,7 +117,6 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 	declarations: [
 		AppComponent,
 
-		DetailsComponent,
 		AddressAutocompleteComponent,
 		SchedulerComponent,
 

@@ -25,12 +25,7 @@ export class ActivityService extends DataService {
 			this.baseUrl + 'mapfilter',
 			filter,
 			this.getHeader()
-		)
-			// TODO: move to backend
-			.map((results: Array<any>) => results.filter(
-				(i, index) => results.findIndex(j => j.id === i.id) === index
-			));
-			// ENDTODO
+		);
 	}
 
 	public getByProviders(tableState: TableState, providers: Array<string>): Observable<DataResponse> {

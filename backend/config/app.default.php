@@ -344,11 +344,11 @@ return [
      */
     'Session' => [
         'defaults' => 'php',
-		],
+    ],
 
-		'Azure' => [
-			'translate-url' => 'http://api.microsofttranslator.com/v2/http.svc/translate',
-			'subscription-key' => '<INSERT-KEY>',
-			'autmatic-translation' => 'maschinell übersetzt'
-		],
+    'Azure' => [
+        'translate-url' => 'http://api.microsofttranslator.com/v2/http.svc/translate',
+        'subscription-key' => '<INSERT-KEY>',
+        'autmatic-translation' => 'maschinell übersetzt'
+    ],
 ];

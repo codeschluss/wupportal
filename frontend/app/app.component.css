@@ -7,7 +7,7 @@ body {
 
 .main {
 	height: auto;
-	min-height: 100%;
+	min-height: calc(100% - 50px);
 	padding-bottom: 50px;
 }
 
@@ -25,15 +25,6 @@ mapping-component {
 	position: absolute;
 	right: 0;
 	top: 0;
-}
-
-.edit-container {
-	display: flex;
-	flex-direction: column;
-}
-
-.edit-container>* {
-	width: 90%;
 }
 
 .address-card {

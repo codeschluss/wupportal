@@ -50,10 +50,6 @@
 	margin: 0 auto;
 }
 
-.edit-container{
-	min-height: 300px;
-}
-
 mat-sidenav {
 	min-width: 30%;
 }

@@ -60,8 +60,10 @@
 					<ng-container matColumnDef="address">
 						<mat-header-cell *matHeaderCellDef>{{constants.address}}</mat-header-cell>
 						<mat-cell *matCellDef="let row" (click)="showDetails(row)">
-							{{row?.address?.street + ' ' + row?.address?.house_number}}
-							<br/> {{row?.address?.postal_code + ' ' + row?.address?.place + ' ' + row?.address?.suburb?.name}}
+							<div *ngIf="row.address">
+								{{row?.address?.street + ' ' + row?.address?.house_number}}
+								<br/> {{row?.address?.postal_code + ' ' + row?.address?.place + ' ' + row?.address?.suburb?.name}}
+							</div>
 						</mat-cell>
 					</ng-container>
 

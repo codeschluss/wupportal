@@ -1,3 +1,7 @@
+<div class="loadingOverlay" *ngIf="isClicked">
+	<mat-spinner></mat-spinner>
+</div>
+
 <mat-card class="gray-card centered-content" *ngIf="allOrganisations">
 	<mat-card-header>
 		<mat-card-title>
@@ -58,6 +62,6 @@
 			</mat-error>
 		</form>
 		<button mat-button type="button" (click)="back()">{{constants.back}}</button>
-		<button mat-button color="primary" type="submit" color="primary" [disabled]="userForm.invalid">{{constants.save}}</button>
+		<button mat-button color="primary" type="submit" color="primary" [disabled]="userForm.invalid && ! isClicked">{{constants.save}}</button>
 	</form>
 </mat-card>

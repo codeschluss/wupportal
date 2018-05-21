@@ -26,6 +26,7 @@ export class RegisterFormComponent implements OnInit {
 
 	private user: User;
 	private userForm: FormGroup;
+	private isClicked: Boolean;
 	private passwordGroup: FormGroup;
 	public allOrganisations: Array<Organisation>;
 	private portalTitle: string = '';
@@ -44,9 +45,11 @@ export class RegisterFormComponent implements OnInit {
 	}
 
 	onSubmit(): void {
+		this.isClicked = true;
 		this.setData();
 		this.userService.add(this.user)
 			.subscribe(() => {
+				this.isClicked = false;
 				this.userService.redirectToLogin();
 			});
 	}

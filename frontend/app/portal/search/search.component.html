@@ -4,7 +4,8 @@
 			<input matInput (change)="onInput($event)" (keyup.enter)="onSearch()">
 
 			<mat-placeholder>
-				<mat-icon svgIcon="wuppertal"></mat-icon><b>upportal durchsuchen</b>
+				<mat-icon svgIcon="wuppertal"></mat-icon><b>upportal</b>
+				<b><slot i18n="@@query">durchsuchen</slot></b>
 			</mat-placeholder>
 
 			<mat-hint align="start">

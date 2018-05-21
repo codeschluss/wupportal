@@ -8,7 +8,9 @@ import { Translation } from 'app/models/translation';
 		'h4[mat-dialog-title] { text-align: center }'
 	],
 	template: `
-		<h4 mat-dialog-title>Sprache wählen</h4>
+		<h4 mat-dialog-title>
+			<slot i18n="@@selectLanguage">Sprache wählen</slot>
+		</h4>
 		<mat-divider></mat-divider>
 		<mat-dialog-content>
 			<mat-nav-list>

@@ -10,7 +10,9 @@ import { Activity } from 'app/models/activity';
 		'h4[mat-dialog-title] { text-align: center }'
 	],
 	template: `
-		<h4 mat-dialog-title>Aktivität wählen</h4>
+		<h4 mat-dialog-title>
+			<slot i18n="@@selectActivity">Aktivität wählen</slot>
+		</h4>
 		<mat-divider></mat-divider>
 		<mat-dialog-content>
 			<mat-nav-list>

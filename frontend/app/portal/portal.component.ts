@@ -35,7 +35,7 @@ export class PortalComponent implements OnInit, OnDestroy {
 	@Output()
 	public selectables: BehaviorSubject<Activity[]>;
 
-	public toolbarHead: ElementRef;
+	public sidenavHeader: ElementRef;
 	public viewFabdial: boolean;
 
 	@ViewChild(MappingComponent)

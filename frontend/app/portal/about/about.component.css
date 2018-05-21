@@ -39,7 +39,7 @@ mat-list p.hyphenate {
 	float: left;
 }
 .comma::after {
-  content: ',';
+  content: ',\00a0';
 }
 .comma:last-of-type::after {
   content: none;

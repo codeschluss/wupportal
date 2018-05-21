@@ -2,13 +2,13 @@
 	<mat-sidenav #sidenav [opened]="!!route.snapshot.children.length"
 		(closed)="router.navigate(['/'])" (openedStart)="viewFabdial = false">
 		<mat-toolbar color="primary">
-			<ng-content *ngTemplateOutlet="toolbarHead"></ng-content>
+			<ng-content *ngTemplateOutlet="sidenavHeader"></ng-content>
 			<button mat-icon-button color (click)="sidenav.close()">
 				<fa-icon icon="times"></fa-icon>
 			</button>
 		</mat-toolbar>
 
-		<router-outlet (activate)="toolbarHead = $event.title"></router-outlet>
+		<router-outlet (activate)="sidenavHeader = $event.header"></router-outlet>
 	</mat-sidenav>
 
 	<mat-sidenav-content>

@@ -1,8 +1,10 @@
-<ng-template #title>Über das Wupportal</ng-template>
+<ng-template #header>
+		<slot i18n="@@aboutWupportal">Über das Wupportal</slot>
+	</ng-template>
 
 <mat-list>
 	<mat-list-item>
-		<h3>Öffentliche Träger</h3>
+		<h3><slot i18n="@@publicAgency">Öffentliche Träger</slot></h3>
 	</mat-list-item>
 
 	<h4 mat-subheader>Zentrum für Integration, Bildung & kulturelle Vielfalt</h4>
@@ -25,7 +27,9 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="star"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Integration in Wuppertal Website</strong>
+				<strong mat-line>
+					<slot i18n="@@website">Internetpräsenz</slot>
+				</strong>
 				<p mat-line>www.integration-in-wuppertal.de</p>
 			</div>
 		</mat-list-item>
@@ -36,7 +40,9 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="phone"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Telefon-Kontakt</strong>
+				<strong mat-line>
+					<slot i18n="@@contactPhone">Telefon-Kontakt</slot>
+				</strong>
 				<p mat-line>(+49) 202 5632750</p>
 			</div>
 		</mat-list-item>
@@ -63,7 +69,9 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="star"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>TransZent Website</strong>
+				<strong mat-line>
+					<slot i18n="@@website">Internetpräsenz</slot>
+				</strong>
 				<p mat-line>www.transzent.uni-wuppertal.de</p>
 			</div>
 		</mat-list-item>
@@ -74,7 +82,9 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="envelope"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>E-Mail-Kontakt</strong>
+				<strong mat-line>
+					<slot i18n="@@contactMail">E-Mail-Kontakt</slot>
+				</strong>
 				<p mat-line>transzent@uni-wuppertal.de</p>
 			</div>
 		</mat-list-item>
@@ -85,7 +95,9 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="phone"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Telefon-Kontakt</strong>
+				<strong mat-line>
+					<slot i18n="@@contactPhone">Telefon-Kontakt</slot>
+				</strong>
 				<p mat-line>(+49) 202 74746440</p>
 			</div>
 		</mat-list-item>
@@ -98,7 +110,7 @@
 	<mat-list-item>
 		<p class="hyphenate">
 			Das Wupportal bietet freien Trägern, Bildungseinrichtungen,
-			Gefloheneninitiativen und Migrierten-Organisationen die Möglichkeit
+			Geflüchteteninitiativen und Migrierten-Organisationen die Möglichkeit
 			einen informativen Steckbrief zu hinterlegen und Angebote zu schalten.
 		</p>
 	</mat-list-item>
@@ -119,28 +131,35 @@
 		<h3>Technische Umsetzung</h3>
 	</mat-list-item>
 
-	<mat-list-item>
-		<mat-icon svgIcon="codeschluss"></mat-icon>
-	</mat-list-item>
-
-	<a mat-button color="primary" tabindex="-1" target="_blank"
-		href="https://www.codeschluss.de">
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:valmir.e@gmx.de">
 		<mat-list-item>
-			<fa-icon mat-list-icon icon="star"></fa-icon>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Codeschluss Website</strong>
-				<p mat-line>www.codeschluss.de</p>
+				<strong mat-line>Valmir Etemi</strong>
+				<p mat-line>valmir.e@gmx.de</p>
 			</div>
 		</mat-list-item>
 	</a>
 
 	<a mat-button color="primary" tabindex="-1"
-		href="mailto:info@codeschluss.de">
+		href="mailto:me@phil.re">
 		<mat-list-item>
-			<fa-icon mat-list-icon icon="envelope"></fa-icon>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>E-Mail-Kontakt</strong>
-				<p mat-line>info@codeschluss.de</p>
+				<strong mat-line>Philip Schildkamp</strong>
+				<p mat-line>me@phil.re</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:pseipel@web.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Peter Seipel</strong>
+				<p mat-line>pseipel@web.de</p>
 			</div>
 		</mat-list-item>
 	</a>
@@ -150,7 +169,7 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="code"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Wupportal Code-Repositorium</strong>
+				<strong mat-line>Wupportal Code-Repository</strong>
 				<p mat-line>github.com/codeschluss/wupportal</p>
 			</div>
 		</mat-list-item>
@@ -203,12 +222,12 @@
 
 		<mat-divider></mat-divider>
 
-		<h4 mat-subheader>Datenschutzerklärung</h4>
+		<h4 mat-subheader>Datenschutzerklärung gemäß DSGVO</h4>
 
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="user"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Ansprechpartner im Sinne der DSGVO</strong>
+				<strong mat-line>Ansprechpartner</strong>
 				<p mat-line>Zentrum für Integration, Bildung & kulturelle Vielfalt</p>
 			</div>
 		</mat-list-item>

@@ -10,19 +10,21 @@
 			<mat-hint align="start">
 				<button mat-button [color]="(selectables | async).length && 'primary'"
 					(click)="viewResults = !viewResults">
-					{{ (selectables | async).length }} Ergebnisse
+					{{ (selectables | async).length }}
+					<slot i18n="@@results">Ergebnisse</slot>
 					<fa-icon [icon]="viewResults ? 'angle-up' : 'angle-down'"></fa-icon>
 				</button>
 				<button mat-button [color]="filter.size && 'primary'"
 					(click)="viewFilters = !viewFilters">
-					{{ filter.size }} Filter
+					{{ filter.size }}
+					<slot i18n="@@filters">Filter</slot>
 					<fa-icon [icon]="viewFilters ? 'angle-up' : 'angle-down'"></fa-icon>
 				</button>
 			</mat-hint>
 
 			<mat-hint align="end">
 				<button mat-button color="primary" (click)="onSearch()">
-					Suchen
+					<slot i18n="@@search">Suchen</slot>
 					<fa-icon icon="long-arrow-alt-right"></fa-icon>
 				</button>
 			</mat-hint>
@@ -38,27 +40,37 @@
 		<mat-expansion-panel hideToggle="true" [expanded]="viewFilters">
 			<mat-tab-group>
 				<mat-tab>
-					<ng-template mat-tab-label>Kategorien</ng-template>
+					<ng-template mat-tab-label>
+						<slot i18n="@@categories">Kategorien</slot>
+					</ng-template>
 					<search-filter field="Categories" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
 				<mat-tab>
-					<ng-template mat-tab-label>Organisationen</ng-template>
+					<ng-template mat-tab-label>
+						<slot i18n="@@organisations">Organisationen</slot>
+					</ng-template>
 					<search-filter field="Organisations" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
 				<mat-tab>
-					<ng-template mat-tab-label>Quartiere</ng-template>
+					<ng-template mat-tab-label>
+						<slot i18n="@@suburbs">Quartiere</slot>
+					</ng-template>
 					<search-filter field="Suburbs" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
 				<mat-tab>
-					<ng-template mat-tab-label>Zielgruppen</ng-template>
+					<ng-template mat-tab-label>
+						<slot i18n="@@targetGroups">Zielgruppen</slot>
+					</ng-template>
 					<search-filter field="TargetGroups" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
 				<mat-tab>
-					<ng-template mat-tab-label>Tags</ng-template>
+					<ng-template mat-tab-label>
+						<slot i18n="@@tags">Tags</slot>
+					</ng-template>
 					<search-filter field="Tags" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
@@ -110,7 +122,9 @@
 							<mat-list-item>
 								<fa-icon mat-list-icon icon="home"></fa-icon>
 								<div class="mat-list-text">
-									<strong mat-line>Organisation</strong>
+									<strong mat-line>
+										<slot i18n="@@organisation">Organisation</slot>
+									</strong>
 									<p mat-line>{{ i.provider.organisation.name }}</p>
 								</div>
 							</mat-list-item>
@@ -120,7 +134,9 @@
 							<mat-list-item>
 								<fa-icon mat-list-icon icon="user"></fa-icon>
 								<div class="mat-list-text">
-									<strong mat-line>Person</strong>
+									<strong mat-line>
+										<slot i18n="@@person">Person</slot>
+									</strong>
 									<p mat-line>{{ i.provider.user.fullname }}</p>
 								</div>
 							</mat-list-item>
@@ -129,12 +145,14 @@
 						<mat-list-item>
 							<fa-icon mat-list-icon icon="calendar-alt"></fa-icon>
 							<div class="mat-list-text">
-								<strong mat-line>Termine</strong>
-								<ng-container *ngFor="let j of i.schedules">
-									<p mat-line>
-										{{ j.start_date | date:'EEEE, dd.MM.yyyy, HH:mm' }}
-									</p>
-								</ng-container>
+								<strong mat-line>
+									<slot i18n="@@schedule">Nächster Termin</slot>
+								</strong>
+								<p mat-line>
+									{{ i.schedules[0].start_date | date:'dd.MM.yyyy, HH:mm' }}
+									&ndash;
+									{{ i.schedules[0].end_date | date:'dd.MM.yyyy, HH:mm' }}
+								</p>
 							</div>
 						</mat-list-item>
 <!--

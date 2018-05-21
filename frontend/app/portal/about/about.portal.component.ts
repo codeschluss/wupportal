@@ -10,25 +10,25 @@ import { ActivatedRoute } from '@angular/router';
 
 export class AboutPortalComponent implements OnInit {
 
-	@ViewChild('title')
-	public title: ElementRef;
+	@ViewChild('header')
+	public header: ElementRef;
 
 	public showLegal: boolean;
 
 	constructor(
 		private domSanitizer: DomSanitizer,
-		private iconRegistry: MatIconRegistry
+		private iconRegistry: MatIconRegistry,
+		private route: ActivatedRoute
 	) { }
 
 	public ngOnInit(): void {
-		this.iconRegistry.addSvgIcon('codeschluss', this.domSanitizer
-			.bypassSecurityTrustResourceUrl('/imgs/codeschluss.svg'));
-
 		this.iconRegistry.addSvgIcon('kommzent', this.domSanitizer
 			.bypassSecurityTrustResourceUrl('/imgs/kommzent.svg'));
 
 		this.iconRegistry.addSvgIcon('transzent', this.domSanitizer
 			.bypassSecurityTrustResourceUrl('/imgs/transzent.svg'));
+
+		this.showLegal = this.route.snapshot.fragment === 'legal';
 	}
 
 }

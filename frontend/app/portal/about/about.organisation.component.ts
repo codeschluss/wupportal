@@ -10,8 +10,8 @@ import { Organisation } from 'app/models/organisation';
 
 export class AboutOrganisationComponent implements OnInit {
 
-	@ViewChild('title')
-	public title: ElementRef;
+	@ViewChild('header')
+	public header: ElementRef;
 
 	public item: Organisation;
 

@@ -1,4 +1,6 @@
-<ng-template #title>Aktivitäts-Details</ng-template>
+<ng-template #header>
+	<slot i18n="@@aboutActivity">Aktivitäts-Details</slot>
+</ng-template>
 
 <mat-list>
 	<mat-list-item>
@@ -11,7 +13,9 @@
 
 	<mat-divider></mat-divider>
 
-	<h4 mat-subheader>Allgemein</h4>
+	<h4 mat-subheader>
+		<slot i18n="@@general">Allgemein</slot>
+	</h4>
 
 	<mat-list-item>
 		<fa-icon mat-list-icon icon="map-marker-alt"></fa-icon>
@@ -28,25 +32,51 @@
 		</div>
 	</mat-list-item>
 
-	<mat-list-item>
-		<fa-icon mat-list-icon icon="calendar-alt"></fa-icon>
-		<div class="mat-list-text">
-			<strong mat-line>Termine</strong>
-			<ng-container *ngFor="let i of item.schedules">
-				<p mat-line>{{ i.start_date | date:'EEEE, dd.MM.yyyy, HH:mm' }}</p>
-			</ng-container>
-		</div>
-	</mat-list-item>
+	<a mat-button color="primary" tabindex="-1"
+		(click)="viewSchedules = !viewSchedules">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="calendar-alt"></fa-icon>
+			<div class="mat-list-text">
+				<ng-container *ngIf="viewSchedules">
+					<strong mat-line>
+						<slot i18n="@@schedules">Alle Termine</slot>
+					</strong>
+					<ng-container *ngFor="let i of item.schedules">
+						<p mat-line>
+							{{ i.start_date | date:'dd.MM.yyyy, HH:mm' }}
+							&ndash;
+							{{ i.end_date | date:'dd.MM.yyyy, HH:mm' }}
+						</p>
+					</ng-container>
+				</ng-container>
+
+				<ng-container *ngIf="!viewSchedules">
+					<strong mat-line>
+						<slot i18n="@@schedule">Nächster Termin</slot>
+					</strong>
+					<p mat-line>
+						{{ item.schedules[0].start_date | date:'dd.MM.yyyy, HH:mm' }}
+						&ndash;
+						{{ item.schedules[0].end_date | date:'dd.MM.yyyy, HH:mm' }}
+					</p>
+				</ng-container>
+			</div>
+		</mat-list-item>
+	</a>
 
 	<mat-divider></mat-divider>
 
-	<h4 mat-subheader>Zuordnung</h4>
+	<h4 mat-subheader>
+		<slot i18n="@@classification">Einordnung</slot>
+	</h4>
 
 	<mat-list-item>
 		<fa-icon mat-list-icon icon="bookmark" [style.fill]="item.category.color">
 		</fa-icon>
 		<div class="mat-list-text">
-			<strong mat-line>Kategorie</strong>
+			<strong mat-line>
+				<slot i18n="@@category">Kategorie</slot>
+			</strong>
 			<p mat-line>{{ item.category.name }}</p>
 		</div>
 	</mat-list-item>
@@ -56,7 +86,9 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="home"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Organisation</strong>
+				<strong mat-line>
+					<slot i18n="@@organisation">Organisation</slot>
+				</strong>
 				<p mat-line>{{ item.provider.organisation.name }}</p>
 			</div>
 		</mat-list-item>
@@ -66,7 +98,9 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="chart-pie"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Zielgruppen</strong>
+				<strong mat-line>
+					<slot i18n="@@targetGroups">Zielgruppen</slot>
+				</strong>
 				<p mat-line>
 					<ng-container *ngFor="let i of item.target_groups">
 						<span class="comma">{{ i.name }}</span>
@@ -80,7 +114,9 @@
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="tags"></fa-icon>
 			<div class="mat-list-text">
-				<strong mat-line>Tags</strong>
+				<strong mat-line>
+					<slot i18n="@@tags">Tags</slot>
+				</strong>
 				<p mat-line>
 					<ng-container *ngFor="let i of item.tags">
 						<span class="comma">{{ i.name }}</span>
@@ -93,14 +129,16 @@
 	<ng-container *ngIf="item.show_user">
 		<mat-divider></mat-divider>
 
-		<h4 mat-subheader>Person</h4>
+		<h4 mat-subheader>
+			<slot i18n="@@person">Person</slot>
+		</h4>
 
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="user"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>{{ item.provider.user.fullname }}</strong>
 				<p mat-line>
-					Aktiv seit
+					<slot i18n="@@created">Aktiv seit</slot>
 					{{ item.provider.user.created | date:'dd.MM.yyyy' }}
 				</p>
 			</div>
@@ -111,7 +149,9 @@
 			<mat-list-item>
 				<fa-icon mat-list-icon icon="envelope"></fa-icon>
 				<div class="mat-list-text">
-					<strong mat-line>E-Mail-Kontakt</strong>
+					<strong mat-line>
+						<slot i18n="@@contactMail">E-Mail-Kontakt</slot>
+					</strong>
 					<p mat-line>{{ item.provider.user.username }}</p>
 				</div>
 			</mat-list-item>
@@ -123,7 +163,9 @@
 				<mat-list-item>
 					<fa-icon mat-list-icon icon="phone"></fa-icon>
 					<div class="mat-list-text">
-						<strong mat-line>Telefon-Kontakt</strong>
+						<strong mat-line>
+							<slot i18n="@@contactPhone">Telefon-Kontakt</slot>
+						</strong>
 						<p mat-line>{{ item.provider.user.phone }}</p>
 					</div>
 				</mat-list-item>

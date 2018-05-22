@@ -63,7 +63,7 @@ class ActivitiesController extends AppController
 	}
 
 	public function mapfilter() {
-		$query = $this->table()->find()->distinct();
+		$query = $this->table()->find()->distinct('Schedules.activity_id');
 		$this->setJoins($query);
 		$this->setOnlyFutureSchedulesFilter($query);
 

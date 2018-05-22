@@ -178,7 +178,7 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => 'Mail',
+            'className' => 'Debug',
             // The following keys are used in SMTP transports
             'host' => 'localhost',
             'port' => 25,

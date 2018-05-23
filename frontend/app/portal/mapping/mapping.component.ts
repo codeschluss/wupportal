@@ -152,14 +152,22 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 		const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
 		const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
 
-		return new style.Style({
-			image: new style.Icon({
-				anchor: [.5, 1],
-				color: [r, g, b, 1],
-				scale: 0.9 + colors.length / 10,
-				src: '/imgs/mapmarker.svg'
-			})
-		});
+		let icon = {
+			anchor: [.5, 1],
+			color: '#' + colorConvert.rgb.hex(r, g, b),
+			scale: 0.9 + colors.length / 10,
+			src: '/imgs/mapmarker.svg'
+		};
+
+		if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
+			Object.assign(icon, {
+				imgSize: [60, 96],
+				scale: icon.scale / 3,
+				src: '/imgs/mapmarker.png'
+			});
+		}
+
+		return new style.Style({ image: new style.Icon(icon) });
 	}
 
 	private onClick(event: MapBrowserEvent): void {

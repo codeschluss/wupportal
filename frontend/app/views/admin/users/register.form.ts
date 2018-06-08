@@ -26,7 +26,7 @@ export class RegisterFormComponent implements OnInit {
 
 	private user: User;
 	private userForm: FormGroup;
-	private isClicked: Boolean;
+	public isClicked: Boolean;
 	private passwordGroup: FormGroup;
 	public allOrganisations: Array<Organisation>;
 	private portalTitle: string = '';

@@ -65,60 +65,67 @@
           <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="activityProviders" datatype="html">
-        <source>Kooperationspartner</source>
+      <trans-unit id="orgaRealisation" datatype="html">
+        <source>Organisatorische Umsetzung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
           <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="municipalSupport" datatype="html">
+        <source>Städtische Betreuung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="academicSupport" datatype="html">
+        <source>Akademische Betreuung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techRealisation" datatype="html">
+        <source>Technische Umsetzung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
       <trans-unit id="specialThanks" datatype="html">
         <source>Besonderer Dank</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
-          <context context-type="linenumber">133</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="municipalSupervision" datatype="html">
-        <source>Städtische Betreuung</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
-          <context context-type="linenumber">143</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="academicSupervision" datatype="html">
-        <source>Akademische Betreuung</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">189</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectSupport" datatype="html">
         <source>Projektbegleitung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="academicPatronage" datatype="html">
         <source>Akademische Schirmherrschaft</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
-          <context context-type="linenumber">182</context>
+          <context context-type="linenumber">212</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="technicalRealisation" datatype="html">
-        <source>Technische Umsetzung</source>
+      <trans-unit id="activityProviders" datatype="html">
+        <source>Kooperationspartner</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
-          <context context-type="linenumber">191</context>
+          <context context-type="linenumber">221</context>
         </context-group>
       </trans-unit>
       <trans-unit id="legalNotices" datatype="html">
         <source>Rechtliche Hinweise</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
-          <context context-type="linenumber">241</context>
+          <context context-type="linenumber">245</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aboutActivity" datatype="html">

@@ -22,21 +22,25 @@
         <source>E-Mail-Kontakt</source>
         <target>Contact e-mail</target>
       </trans-unit>
-      <trans-unit id="activityProviders" datatype="html">
-        <source>Kooperationspartner</source>
-        <target>Activity providers</target>
+      <trans-unit id="orgaRealisation" datatype="html">
+        <source>Organisatorische Umsetzung</source>
+        <target>Organisational realisation</target>
+      </trans-unit>
+      <trans-unit id="municipalSupport" datatype="html">
+        <source>Städtische Betreuung</source>
+        <target>Municipal support</target>
+      </trans-unit>
+      <trans-unit id="academicSupport" datatype="html">
+        <source>Akademische Betreuung</source>
+        <target>Academic support</target>
+      </trans-unit>
+      <trans-unit id="techRealisation" datatype="html">
+        <source>Technische Umsetzung</source>
+        <target>Technical realisation</target>
       </trans-unit>
       <trans-unit id="specialThanks" datatype="html">
         <source>Besonderer Dank</source>
         <target>Special thanks</target>
-      </trans-unit>
-      <trans-unit id="municipalSupervision" datatype="html">
-        <source>Städtische Betreuung</source>
-        <target>Minicipal supervision</target>
-      </trans-unit>
-      <trans-unit id="academicSupervision" datatype="html">
-        <source>Akademische Betreuung</source>
-        <target>Academic supervision</target>
       </trans-unit>
       <trans-unit id="projectSupport" datatype="html">
         <source>Projektbegleitung</source>
@@ -46,9 +50,9 @@
         <source>Akademische Schirmherrschaft</source>
         <target>Academic patronage</target>
       </trans-unit>
-      <trans-unit id="technicalRealisation" datatype="html">
-        <source>Technische Umsetzung</source>
-        <target>Technical realisation</target>
+      <trans-unit id="activityProviders" datatype="html">
+        <source>Kooperationspartner</source>
+        <target>Activity providers</target>
       </trans-unit>
       <trans-unit id="legalNotices" datatype="html">
         <source>Rechtliche Hinweise</source>
@@ -113,6 +117,10 @@
       <trans-unit id="selectLanguage" datatype="html">
         <source>Sprache wählen</source>
         <target>Select language</target>
+      </trans-unit>
+      <trans-unit id="query" datatype="html">
+        <source>durchsuchen</source>
+        <target>search</target>
       </trans-unit>
       <trans-unit id="results" datatype="html">
         <source>Ergebnisse</source>

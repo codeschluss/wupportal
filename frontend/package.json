@@ -7,6 +7,7 @@
 		"build": "ng build -d=js -nc -oh=none -vc=true",
 		"start": "ng build -d=js -nc -oh=none -vc=true --watch",
 		"strip": "ng build -d=js -nc -oh=none -vc=true --prod",
+		"lang": "ng xi18n --locale=de --out-file=strings.xlf --output-path=locales",
 		"lint": "ng lint"
 	},
 	"dependencies": {

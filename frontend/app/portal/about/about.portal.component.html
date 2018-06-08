@@ -106,31 +106,14 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h3><slot i18n="@@activityProviders">Kooperationspartner</slot></h3>
+		<h3><slot i18n="@@orgaRealisation">Organisatorische Umsetzung</slot></h3>
 	</mat-list-item>
 
 	<mat-list-item>
 		<p class="hyphenate">
-			Das Wupportal bietet freien Trägern, Bildungseinrichtungen,
-			Geflüchteteninitiativen und Migrierten-Organisationen die Möglichkeit
-			einen informativen Steckbrief zu hinterlegen und Angebote zu schalten.
+			Die folgenden Personen haben maßgeblich an der organisationellen
+			Betreuung, Beratung und damit Umsetzung dieses Portals mitgewirkt.
 		</p>
-	</mat-list-item>
-
-	<a mat-button color="primary" tabindex="-1" [routerLink]="['/login']">
-		<mat-list-item>
-			<fa-icon mat-list-icon icon="unlock-alt"></fa-icon>
-			<div class="mat-list-text">
-				<strong mat-line>Administration</strong>
-				<p mat-line>Redaktionelle Schnittstelle</p>
-			</div>
-		</mat-list-item>
-	</a>
-
-	<mat-divider></mat-divider>
-
-	<mat-list-item>
-		<h3><slot i18n="@@specialThanks">Besonderer Dank</slot></h3>
 	</mat-list-item>
 
 	<a mat-button color="primary" tabindex="-1"
@@ -140,7 +123,7 @@
 			<div class="mat-list-text">
 				<strong mat-line>Sonja Noderer</strong>
 				<p mat-line>
-					<slot i18n="@@municipalSupervision">Städtische Betreuung</slot>
+					<slot i18n="@@municipalSupport">Städtische Betreuung</slot>
 				</p>
 			</div>
 		</mat-list-item>
@@ -153,33 +136,7 @@
 			<div class="mat-list-text">
 				<strong mat-line>Dr. Laura Mathiaszyk</strong>
 				<p mat-line>
-					<slot i18n="@@academicSupervision">Akademische Betreuung</slot>
-				</p>
-			</div>
-		</mat-list-item>
-	</a>
-
-	<a mat-button color="primary" tabindex="-1"
-		href="mailto:jens.klussmann@stadt.wuppertal.de">
-		<mat-list-item>
-			<fa-icon mat-list-icon icon="user"></fa-icon>
-			<div class="mat-list-text">
-				<strong mat-line>Jens Klußmann</strong>
-				<p mat-line>
-					<slot i18n="@@projectSupport">Projektbegleitung</slot>
-				</p>
-			</div>
-		</mat-list-item>
-	</a>
-
-	<a mat-button color="primary" tabindex="-1"
-		href="mailto:oeide@uni-koeln.de">
-		<mat-list-item>
-			<fa-icon mat-list-icon icon="user"></fa-icon>
-			<div class="mat-list-text">
-				<strong mat-line>Prof. Dr. Øyvind Eide</strong>
-				<p mat-line>
-					<slot i18n="@@academicPatronage">Akademische Schirmherrschaft</slot>
+					<slot i18n="@@academicSupport">Akademische Betreuung</slot>
 				</p>
 			</div>
 		</mat-list-item>
@@ -188,7 +145,14 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h3><slot i18n="@@technicalRealisation">Technische Umsetzung</slot></h3>
+		<h3><slot i18n="@@techRealisation">Technische Umsetzung</slot></h3>
+	</mat-list-item>
+
+	<mat-list-item>
+		<p class="hyphenate">
+			Die technische Umsetzung dieses Portals wurde im Rahmen des ehrenamtlichen
+			Engagements der Folgenden Personen vollzogen.
+		</p>
 	</mat-list-item>
 
 	<a mat-button color="primary" tabindex="-1"
@@ -231,6 +195,68 @@
 			<div class="mat-list-text">
 				<strong mat-line>Wupportal Code-Repository</strong>
 				<p mat-line>github.com/codeschluss/wupportal</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<mat-list-item>
+		<h3><slot i18n="@@specialThanks">Besonderer Dank</slot></h3>
+	</mat-list-item>
+
+	<mat-list-item>
+		<p class="hyphenate">
+			Die Genannten haben in besonderer Weise dazu beigetragen, dass dieses
+			Portal zu Stande kommen konnte, waren jedoch nicht oder in nur geringem
+			Maße an der praktischen Umsetzung beteiligt.
+		</p>
+	</mat-list-item>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:jens.klussmann@stadt.wuppertal.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Jens Klußmann</strong>
+				<p mat-line>
+					<slot i18n="@@projectSupport">Projektbegleitung</slot>
+				</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:oeide@uni-koeln.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Prof. Dr. Øyvind Eide</strong>
+				<p mat-line>
+					<slot i18n="@@academicPatronage">Akademische Schirmherrschaft</slot>
+				</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<mat-divider></mat-divider>
+
+	<mat-list-item>
+		<h3><slot i18n="@@activityProviders">Kooperationspartner</slot></h3>
+	</mat-list-item>
+
+	<mat-list-item>
+		<p class="hyphenate">
+			Das Wupportal bietet freien Trägern, Bildungseinrichtungen,
+			Geflüchteteninitiativen und Migrierten-Organisationen die Möglichkeit
+			einen informativen Steckbrief zu hinterlegen und Angebote zu schalten.
+		</p>
+	</mat-list-item>
+
+	<a mat-button color="primary" tabindex="-1" [routerLink]="['/login']">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="unlock-alt"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Administration</strong>
+				<p mat-line>Redaktionelle Schnittstelle</p>
 			</div>
 		</mat-list-item>
 	</a>

@@ -1,6 +1,6 @@
 <ng-template #header>
-		<slot i18n="@@aboutWupportal">Über das Wupportal</slot>
-	</ng-template>
+	<slot i18n="@@aboutWupportal">Über das Wupportal</slot>
+</ng-template>
 
 <mat-list>
 	<mat-list-item>
@@ -105,7 +105,9 @@
 
 	<mat-divider></mat-divider>
 
-	<h4 mat-subheader>Kooperationspartner</h4>
+	<mat-list-item>
+		<h3><slot i18n="@@activityProviders">Kooperationspartner</slot></h3>
+	</mat-list-item>
 
 	<mat-list-item>
 		<p class="hyphenate">
@@ -128,7 +130,65 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h3>Technische Umsetzung</h3>
+		<h3><slot i18n="@@specialThanks">Besonderer Dank</slot></h3>
+	</mat-list-item>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:sonja.noderer@stadt.wuppertal.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Sonja Noderer</strong>
+				<p mat-line>
+					<slot i18n="@@municipalSupervision">Städtische Betreuung</slot>
+				</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:mathiaszyk@wohlstandstransformation.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Dr. Laura Mathiaszyk</strong>
+				<p mat-line>
+					<slot i18n="@@academicSupervision">Akademische Betreuung</slot>
+				</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:jens.klussmann@stadt.wuppertal.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Jens Klußmann</strong>
+				<p mat-line>
+					<slot i18n="@@projectSupport">Projektbegleitung</slot>
+				</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:oeide@uni-koeln.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Prof. Dr. Øyvind Eide</strong>
+				<p mat-line>
+					<slot i18n="@@academicPatronage">Akademische Schirmherrschaft</slot>
+				</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<mat-divider></mat-divider>
+
+	<mat-list-item>
+		<h3><slot i18n="@@technicalRealisation">Technische Umsetzung</slot></h3>
 	</mat-list-item>
 
 	<a mat-button color="primary" tabindex="-1"
@@ -178,7 +238,7 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h3>Rechtliche Hinweise</h3>
+		<h3><slot i18n="@@legalNotices">Rechtliche Hinweise</slot></h3>
 	</mat-list-item>
 
 	<ng-container *ngIf="!showLegal">
@@ -245,24 +305,23 @@
 				<em>Erfassung allgemeiner Informationen</em>
 				Wenn Sie auf unsere Webseite zugreifen, werden automatisch Informationen
 				allgemeiner Natur erfasst. Diese Informationen beinhalten etwa die Art
-				des Webbrowsers, das verwendete Betriebssystem, den Domainnamen Ihres
-				Internet Service Providers und Ähnliches. Hierbei handelt es sich
-				ausschließlich um Informationen, welche keine Rückschlüsse auf Ihre
-				Person zulassen. Diese Informationen sind technisch notwendig, um von
-				Ihnen angeforderte Inhalte von Webseiten korrekt auszuliefern und fallen
-				bei Nutzung des Internets zwingend an. Anonyme Informationen dieser Art
-				werden von uns statistisch ausgewertet, um unseren Internetauftritt und
-				die dahinterstehende Technik zu optimieren.
+				Ihres Webbrowsers, Ihr verwendetes Betriebssystem, Ihre IP Adresse und
+				Ähnliches. Hierbei handelt es sich ausschließlich um Informationen,
+				welche keine Rückschlüsse auf Ihre Person zulassen. Diese Informationen
+				sind technisch notwendig, um von Ihnen angeforderte Webinhalte korrekt
+				auszuliefern und fallen bei Nutzung des Internets zwingend an. Anonyme
+				Informationen dieser Art werden von uns statistisch ausgewertet, um
+				unseren Internetauftritt und die dahinterstehende Technik zu optimieren
+				und vor Schäden zu bewahren.
 			</p>
 		</mat-list-item>
 
 		<mat-list-item>
 			<p class="hyphenate">
 				<em>Verwendung von OpenStreeMap</em>
-				Diese Webseite verwendet OpenStreetMap, um geographische Informationen
-				visuell darzustellen. Bei Ihrer Nutzung von OpenStreetMaps werden Daten
-				über die Nutzung der Kartenfunktionen durch Besucher erhoben,
-				verarbeitet und genutzt. Nähere Informationen über die Datenverarbeitung
+				Diese Webseite verwendet OpenStreetMap zur Darstellung der Landkarten.
+				Durch Ihre Nutzung werden somit Daten von Ihnen an die OpenStreetMaps
+				Foundation übermittelt.  Nähere Informationen über die Datenverarbeitung
 				durch die OpenStreeMap Foundation können Sie den entsprechenden
 				Datenschutzhinweisen entnehmen.
 			</p>
@@ -282,12 +341,48 @@
 		<mat-list-item>
 			<p class="hyphenate">
 				<em>Änderung unserer Datenschutzbestimmungen</em>
-				Wir behalten uns vor, diese Datenschutzerklärung gelegentlich
-				anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen
-				entspricht oder um Änderungen unserer Leistungen in der
-				Datenschutzerklärung umzusetzen, z. B. bei der Einführung neuer
-				Services. Für Ihren erneuten Besuch gilt dann die neue
-				Datenschutzerklärung.
+				Wir behalten uns vor, diese Datenschutzerklärung jederzeit anzupassen,
+				damit stets allen aktuellen rechtlichen Anforderungen entsprochen wird
+				oder um sie an Funktionserweiterungen dieser Applikation anzupassen.
+				Für Ihren Besuch gilt stets die aktuellste Datenschutzerklärung.
+			</p>
+		</mat-list-item>
+
+		<mat-list-item>
+			<p class="hyphenate">
+				<em>Nutzerrechte</em>
+				Als Nutzende unserer Webseite haben Sie jederzeit die Möglichkeit uns
+				gegenüber die Ihnen durch den Gesetzgeber zugesicherten Rechte geltend
+				zu machen. Hierzu wenden Sie Sich bitte an den oben genannten
+				Ansprechpartner für Datenschutz.
+			</p>
+		</mat-list-item>
+		<mat-list-item>
+			<ul>
+				<li>Recht auf Widerruf Ihrer Einwilligung zur Datenverarbeitung
+					(gem. Art. 7 Abs. 3 DSGVO)</li>
+				<li>Recht auf Auskunft über alle von uns über Sie erhobenen Daten
+					(gem. Art. 15 DSGVO)</li>
+				<li>Recht auf Berichtigung aller von uns über Sie erhobenen Daten
+					(gem. Art. 16 DSGVO)</li>
+				<li>Recht auf Löschung aller von uns über Sie erhobenen Daten
+					(gem. Art. 17 DSGVO)</li>
+				<li>Recht auf Einschränkung der Verarbeitung ihrer Daten
+					(gem. Art. 18 DSGVO)</li>
+				<li>Recht auf Übertragbarkeit aller von uns über Sie erhobenen Daten
+					(gem. Art. 20 DSGVO)</li>
+				<li>Recht auf Widerspruch gegen unsere Verarbeitung Ihrer Daten
+					(gem. Art. 21 DSGVO)</li>
+			</ul>
+		</mat-list-item>
+		<mat-list-item>
+			<p class="hyphenate">
+				Darüber hinaus können Sie Sich (gem. Art. 77 DSGVO) im Beschwerdefall an
+				eine entsprechende Aufsichtsbehörde wenden. Die Zuständigkeit richtet
+				sich nach Bundesland, Arbeitsbereich und mutmaßlichem Verstoß. Für
+				weitere Informationen und Beratung konsultieren Sie bitte die
+				Dienststelle der Bundesbeauftragten für den Datenschutz und die
+				Informationsfreiheit.
 			</p>
 		</mat-list-item>
 	</ng-container>

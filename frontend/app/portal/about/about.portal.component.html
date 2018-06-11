@@ -212,19 +212,6 @@
 	</mat-list-item>
 
 	<a mat-button color="primary" tabindex="-1"
-		href="mailto:jens.klussmann@stadt.wuppertal.de">
-		<mat-list-item>
-			<fa-icon mat-list-icon icon="user"></fa-icon>
-			<div class="mat-list-text">
-				<strong mat-line>Jens Klußmann</strong>
-				<p mat-line>
-					<slot i18n="@@projectSupport">Projektbegleitung</slot>
-				</p>
-			</div>
-		</mat-list-item>
-	</a>
-
-	<a mat-button color="primary" tabindex="-1"
 		href="mailto:oeide@uni-koeln.de">
 		<mat-list-item>
 			<fa-icon mat-list-icon icon="user"></fa-icon>
@@ -232,6 +219,19 @@
 				<strong mat-line>Prof. Dr. Øyvind Eide</strong>
 				<p mat-line>
 					<slot i18n="@@academicPatronage">Akademische Schirmherrschaft</slot>
+				</p>
+			</div>
+		</mat-list-item>
+	</a>
+
+	<a mat-button color="primary" tabindex="-1"
+		href="mailto:jens.klussmann@stadt.wuppertal.de">
+		<mat-list-item>
+			<fa-icon mat-list-icon icon="user"></fa-icon>
+			<div class="mat-list-text">
+				<strong mat-line>Jens Klußmann</strong>
+				<p mat-line>
+					<slot i18n="@@projectSupport">Projektbegleitung</slot>
 				</p>
 			</div>
 		</mat-list-item>
@@ -366,16 +366,6 @@
 
 		<mat-list-item>
 			<p class="hyphenate">
-				<em>Änderung unserer Datenschutzbestimmungen</em>
-				Wir behalten uns vor, diese Datenschutzerklärung jederzeit anzupassen,
-				damit stets allen aktuellen rechtlichen Anforderungen entsprochen wird
-				oder um sie an Funktionserweiterungen dieser Applikation anzupassen.
-				Für Ihren Besuch gilt stets die aktuellste Datenschutzerklärung.
-			</p>
-		</mat-list-item>
-
-		<mat-list-item>
-			<p class="hyphenate">
 				<em>Nutzerrechte</em>
 				Als Nutzende unserer Webseite haben Sie jederzeit die Möglichkeit uns
 				gegenüber die Ihnen durch den Gesetzgeber zugesicherten Rechte geltend
@@ -409,6 +399,16 @@
 				weitere Informationen und Beratung konsultieren Sie bitte die
 				Dienststelle der Bundesbeauftragten für den Datenschutz und die
 				Informationsfreiheit.
+			</p>
+		</mat-list-item>
+
+		<mat-list-item>
+			<p class="hyphenate">
+				<em>Änderung unserer Datenschutzbestimmungen</em>
+				Wir behalten uns vor, diese Datenschutzerklärung jederzeit anzupassen,
+				damit stets allen aktuellen rechtlichen Anforderungen entsprochen wird
+				oder um sie an Funktionserweiterungen dieser Applikation anzupassen.
+				Für Ihren Besuch gilt stets die aktuellste Datenschutzerklärung.
 			</p>
 		</mat-list-item>
 	</ng-container>

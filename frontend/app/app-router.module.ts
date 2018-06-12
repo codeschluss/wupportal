@@ -14,9 +14,13 @@ import { AddressTableComponent } from 'app/views/admin/addresses/address.table';
 import { AddressFormComponent } from 'app/views/admin/addresses/address.form';
 import { OrganisationsTableComponent } from 'app/views/admin/organisations/organisation.table';
 import { ConfigFormComponent } from 'app/views/admin/configs/config.form';
+import { TagFormComponent } from 'app/views/admin/configs/tag.form';
 import { RegisterFormComponent } from 'app/views/admin/users/register.form';
 import { AuthGuardService } from './services/authguard.service';
 import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.password';
+import { CategoryFormComponent } from './views/admin/configs/category.form';
+import { TargetGroup } from './models/target-group';
+import { TargetGroupFormComponent } from './views/admin/configs/targetgroup.form';
 
 @NgModule({
 	imports: [RouterModule.forRoot([
@@ -36,7 +40,10 @@ import { ForgottenPasswordFormComponent } from './views/admin/users/forgotten.pa
 				{ path: 'account', component: UserFormComponent, outlet: 'table' },
 				{ path: 'activity-edit/:id', component: ActivityFormComponent, canActivate: [AuthGuardService], outlet: 'table' },
 				{ path: 'organisation-edit/:id', component: OrganisationFormComponent, canActivate: [AuthGuardService], outlet: 'table' },
-				{ path: 'address-edit/:id', component: AddressFormComponent, canActivate: [AuthGuardService], outlet: 'table' }
+				{ path: 'address-edit/:id', component: AddressFormComponent, canActivate: [AuthGuardService], outlet: 'table' },
+				{ path: 'tag-edit/:id', component: TagFormComponent, canActivate: [AuthGuardService], outlet: 'table' },
+				{ path: 'category-edit/:id', component: CategoryFormComponent, canActivate: [AuthGuardService], outlet: 'table' },
+				{ path: 'targetgroup-edit/:id', component: TargetGroupFormComponent, canActivate: [AuthGuardService], outlet: 'table' }
 			]
 		},
 		{ path: '**', redirectTo: '/', pathMatch: 'full' }

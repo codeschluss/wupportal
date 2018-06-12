@@ -12,9 +12,11 @@ import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 	selector: 'delete-action',
 	styleUrls: ['../../../app.component.css'],
 	template: `
+	<mat-card>
 		<button mat-button color="warn" type="button" (click)="openDialog()">
 			<fa-icon [icon]="faTrashAlt"></fa-icon>
 		</button>
+	</mat-card>
 	`
 })
 

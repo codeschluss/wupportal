@@ -1,79 +1,58 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModel, NgForm } from '@angular/forms';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
-import { TargetGroupService } from 'app/services/data.service.factory';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { TargetGroup } from '../../../models/target-group';
 import { Constants } from 'app/services/constants';
 import { DataService } from 'app/services/data.service';
-import { DataServiceFactory } from '../../../services/data.service.factory';
-import { TargetGroup } from '../../../models/target-group';
-
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
-
-// @Author: Pseipel
+import { DataServiceFactory, TargetGroupService } from '../../../services/data.service.factory';
+import { TranslatableConfigComponent } from './translatable.config';
 
 @Component({
-	selector: 'targetgroup-form',
+	selector: 'targetgroup-edit',
 	templateUrl: 'targetgroup.form.html',
 	styleUrls: ['../../../app.component.css', '../admin.area.css']
 })
 
-export class TargetGroupComponent implements OnInit {
+export class TargetGroupFormComponent {
 
-	public targetGroups: TargetGroup[];
 	private loading: boolean = true;
-	public newTargetGroupName: string = '';
-	private targeGroupsToDelte: TargetGroup[] = [];
-	private faTrashAlt: IconDefinition = faTrashAlt;
+	targetGroup: TargetGroup;
+	@ViewChild('translatableConfigComponent') translatableConfigComponent: TranslatableConfigComponent;
 
 	constructor(
 		private location: Location,
 		public constants: Constants,
+		public route: ActivatedRoute,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
 	) {
+		this.route.paramMap
+			.switchMap((params: ParamMap) => {
+				if (params.get('id') === 'new') {
+					return new Observable(observer => observer.next(new TargetGroup({})));
+				} else {
+					return this.targetGroupService.get(params.get('id'));
+				}
+			})
+			.subscribe(targetGroup => {
+				this.targetGroup = new TargetGroup(targetGroup);
+			});
 	}
 
-	ngOnInit(): void {
-		this.targetGroupService.getAll().subscribe(
-			targetgroups => { this.targetGroups = targetgroups; },
-			null,
-			() => this.loading = false);
-	}
-
-	mergeTargetGroups(): Observable<any[]> {
-		const observableTargetGroupArray: Observable<any>[] = [];
-		this.targetGroups.map(targetGroup => {
-			if (targetGroup.id) {
-				observableTargetGroupArray.push(this.targetGroupService.edit(targetGroup));
-			} else {
-				observableTargetGroupArray.push(this.targetGroupService.add(targetGroup));
-			}
-		});
-		this.targeGroupsToDelte.map(targetGroupToDelete =>
-			observableTargetGroupArray.push(this.targetGroupService.delete(targetGroupToDelete.id))
-		);
-		return Observable.forkJoin(observableTargetGroupArray);
-	}
-
-	addTargetGroup(): void {
-		const newTargetGroup = new TargetGroup();
-		newTargetGroup.name = this.newTargetGroupName;
-		this.targetGroups.push(newTargetGroup);
-		this.newTargetGroupName = '';
-	}
-
-	deleteTargetGroup(tg: TargetGroup): void {
-		console.log('tg: ', tg);
-		console.log('tg.name: ', tg.name);
-		this.targeGroupsToDelte.push(tg);
-		this.targetGroups = this.targetGroups.filter(item => item !== tg);
+	delete(): void {
+		this.targetGroupService.delete(this.targetGroup.id).subscribe(() => this.back());
 	}
 
 	onSubmit(): void {
-		this.mergeTargetGroups().subscribe(() => this.back());
+		this.translatableConfigComponent.saveTranslations();
+		if (this.targetGroup.id) {
+			this.targetGroupService.edit(this.targetGroup).subscribe(() => this.back());
+		} else {
+			this.targetGroupService.add(this.targetGroup).subscribe(() => this.back());
+		}
 	}
 
 	back(): void {
@@ -81,3 +60,6 @@ export class TargetGroupComponent implements OnInit {
 	}
 
 }
+
+
+

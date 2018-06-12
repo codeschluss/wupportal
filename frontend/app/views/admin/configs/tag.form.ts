@@ -1,77 +1,58 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModel, NgForm } from '@angular/forms';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
-import { TagService } from 'app/services/data.service.factory';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Tag } from '../../../models/tag';
 import { Constants } from 'app/services/constants';
 import { DataService } from 'app/services/data.service';
-import { DataServiceFactory } from '../../../services/data.service.factory';
-import { Tag } from '../../../models/tag';
-
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
-
-// @Author: Pseipel
+import { DataServiceFactory, TagService } from '../../../services/data.service.factory';
+import { TranslatableConfigComponent } from './translatable.config';
 
 @Component({
-	selector: 'tag-form',
+	selector: 'tag-edit',
 	templateUrl: 'tag.form.html',
 	styleUrls: ['../../../app.component.css', '../admin.area.css']
 })
 
-export class TagComponent implements OnInit {
+export class TagFormComponent {
 
-	public tags: Tag[];
 	private loading: boolean = true;
-	public newTagName: string = '';
-	private targeGroupsToDelte: Tag[] = [];
-	private faTrashAlt: IconDefinition = faTrashAlt;
+	tag: Tag;
+	@ViewChild('translatableConfigComponent') translatableConfigComponent: TranslatableConfigComponent;
 
 	constructor(
 		private location: Location,
 		public constants: Constants,
+		public route: ActivatedRoute,
 		@Inject(TagService) private tagService: DataService,
 	) {
+		this.route.paramMap
+			.switchMap((params: ParamMap) => {
+				if (params.get('id') === 'new') {
+					return new Observable(observer => observer.next(new Tag({})));
+				} else {
+					return this.tagService.get(params.get('id'));
+				}
+			})
+			.subscribe(tag => {
+				this.tag = new Tag(tag);
+			});
 	}
 
-	ngOnInit(): void {
-		this.tagService.getAll().subscribe(
-			targetgroups => { this.tags = targetgroups; },
-			null,
-			() => this.loading = false);
-	}
-
-	mergeTags(): Observable<any[]> {
-		const observableTagArray: Observable<any>[] = [];
-		this.tags.map(tag => {
-			if (tag.id) {
-				observableTagArray.push(this.tagService.edit(tag));
-			} else {
-				observableTagArray.push(this.tagService.add(tag));
-			}
-		});
-		this.targeGroupsToDelte.map(tagToDelete =>
-			observableTagArray.push(this.tagService.delete(tagToDelete.id))
-		);
-		return Observable.forkJoin(observableTagArray);
-	}
-
-	addTag(): void {
-		const newTag = new Tag();
-		newTag.name = this.newTagName;
-		this.tags.push(newTag);
-		this.newTagName = '';
-	}
-
-	deleteTag(tag: Tag): void {
-		this.targeGroupsToDelte.push(tag);
-		this.tags = this.tags.filter(item => item !== tag);
+	delete(): void {
+		this.tagService.delete(this.tag.id).subscribe(() => this.back());
 	}
 
 	onSubmit(): void {
-		this.mergeTags().subscribe(() => this.back());
+		this.translatableConfigComponent.saveTranslations();
+		if (this.tag.id) {
+			this.tagService.edit(this.tag).subscribe(() => this.back());
+		} else {
+			this.tagService.add(this.tag).subscribe(() => this.back());
+		}
 	}
 
 	back(): void {
@@ -79,3 +60,6 @@ export class TagComponent implements OnInit {
 	}
 
 }
+
+
+

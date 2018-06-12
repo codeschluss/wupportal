@@ -1,35 +1,7 @@
-<mat-card class="edit-container gray-card">
-	<div class="loadingOverlay" *ngIf="!targetGroups">
-		<mat-spinner></mat-spinner>
-	</div>
-	<h2>{{ constants.targetGroups }}
-	</h2>
-	<form #targetgroupsForm="ngForm" (ngSubmit)="onSubmit()">
-		<mat-grid-list cols="3" rowHeight="100px">
-			<div *ngFor="let targetGroup of targetGroups;let i = index">
-				<mat-grid-tile colspan="1" rowspan="1">
-					<mat-form-field class="form-full-width">
-						<input matInput type="text" name="targetGroup{{i}}.name" [(ngModel)]=targetGroup.name/>
-					</mat-form-field>
-					<span>
-						<button mat-button type="button" color="warn">
-							<fa-icon (click)="deleteTargetGroup(targetGroup)" [icon]="faTrashAlt">
-							</fa-icon>
-						</button>
-					</span>
-				</mat-grid-tile>
-			</div>
-		</mat-grid-list>
-		<mat-card>
-			<form>
-				<h3>{{ constants.newEntry }}</h3>
-				<mat-form-field class="form-full-width">
-					<input matInput type="text" name="new" placeholder="{{constants.targetGroup}}" [(ngModel)]="newTargetGroupName" />
-				</mat-form-field>
-				<button mat-button type="button" (click)="addTargetGroup()">{{constants.newEntry}}</button>
-			</form>
-		</mat-card>
-		<button mat-button type="button" (click)="back()">{{constants.back}}</button>
-		<button mat-button color="primary" type="submit">{{constants.save}}</button>
-	</form>
-</mat-card>
+<div *ngIf="targetGroup">
+	<translatable-config #translatableConfigComponent [multiLingualObject]="targetGroup" [translatableAttributes]="['name']">
+	</translatable-config>
+	<button mat-button color="primary" type="button" (click)="onSubmit()">{{constants.save}}</button>
+	<button mat-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
+	<button *ngIf="targetGroup.id" mat-button color="warn" type="button" (click)="delete()">{{constants.delete}}</button>
+</div>

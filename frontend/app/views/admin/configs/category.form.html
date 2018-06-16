@@ -1,7 +1,17 @@
-<div *ngIf="category">
-	<translatable-config #translatableConfigComponent [multiLingualObject]="category" [translatableAttributes]="['name']">
-	</translatable-config>
-	<button mat-button color="primary" type="button" (click)="onSubmit()">{{constants.save}}</button>
-	<button mat-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
-	<button *ngIf="category.id" mat-button color="warn" type="button" (click)="delete()">{{constants.delete}}</button>
-</div>
+<mat-card *ngIf="category">
+	<mat-card-header>
+		<mat-card-title>{{category.name}}</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<div>
+			<mat-form-field class="form-full-width">
+				<input matInput type=text [(ngModel)]="category.name" name="[attribute]" id="[attribute]" placeholder={{constants.defaultLanguage}}>
+			</mat-form-field>
+		</div>
+		<translatable-form #translatableCategoryFieldsComponent [multiLingualObject]="category" [translatableAttributes]="['name']">
+		</translatable-form>
+		<button mat-button color="primary" type="button" (click)="onSubmit()">{{constants.save}}</button>
+		<button mat-button color="warn" type="button" (click)="back()">{{constants.cancel}}</button>
+		<button *ngIf="category.id" mat-button color="warn" type="button" (click)="delete()">{{constants.delete}}</button>
+	</mat-card-content>
+</mat-card>

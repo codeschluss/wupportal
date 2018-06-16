@@ -1,15 +1,12 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { NgModel, NgForm } from '@angular/forms';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TargetGroup } from '../../../models/target-group';
 import { Constants } from 'app/services/constants';
 import { DataService } from 'app/services/data.service';
-import { DataServiceFactory, TargetGroupService } from '../../../services/data.service.factory';
-import { TranslatableConfigComponent } from './translatable.config';
+import { TargetGroupService } from '../../../services/data.service.factory';
+import { TranslatableFieldsComponent } from '../translations/translatable.form';
 
 @Component({
 	selector: 'targetgroup-edit',
@@ -19,9 +16,8 @@ import { TranslatableConfigComponent } from './translatable.config';
 
 export class TargetGroupFormComponent {
 
-	private loading: boolean = true;
 	targetGroup: TargetGroup;
-	@ViewChild('translatableConfigComponent') translatableConfigComponent: TranslatableConfigComponent;
+	@ViewChild('translatableTargetGroupFieldsComponent') translatableFieldsComponent: TranslatableFieldsComponent;
 
 	constructor(
 		private location: Location,
@@ -47,7 +43,7 @@ export class TargetGroupFormComponent {
 	}
 
 	onSubmit(): void {
-		this.translatableConfigComponent.saveTranslations();
+		this.translatableFieldsComponent.saveTranslations();
 		if (this.targetGroup.id) {
 			this.targetGroupService.edit(this.targetGroup).subscribe(() => this.back());
 		} else {

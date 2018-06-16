@@ -1,11 +1,9 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { NgForm, FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MatDialog, MatChipInputEvent, MatIconModule } from '@angular/material';
+import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -21,11 +19,9 @@ import { Provider } from 'app/models/provider';
 
 import {
 	AddressService,
-	DataServiceFactory,
 	TagService,
 	TargetGroupService,
 	CategoryService,
-	OrganisationService
 } from 'app/services/data.service.factory';
 import { ValidationService } from 'app/services/validation.service';
 import { DataService } from 'app/services/data.service';
@@ -34,16 +30,12 @@ import { ProviderService } from 'app/services/provider.service';
 
 import { AddressAutocompleteComponent } from 'app/views/admin/addresses/address.autocomplete';
 import { SchedulerComponent } from 'app/views/admin/schedules/scheduler.component';
-import { ActivityDetailComponent } from 'app/views/admin/activities/activity.detail';
 import { ActivityService } from 'app/services/activity.service';
 import { Constants } from 'app/services/constants';
-import { Subscription } from 'rxjs/Subscription';
-import { generate } from 'rxjs/observable/generate';
 import { faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-free-solid';
 import { TranslatableFieldsComponent } from 'app/views/admin/translations/translatable.form';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { TranslationService } from 'app/services/translation.service';
 
 // @Author: Pseipel
 
@@ -66,6 +58,7 @@ export class ActivityFormComponent implements OnInit {
 	user: User;
 	faCheck: IconDefinition = faCheck;
 	faTrashAlt: IconDefinition = faTrashAlt;
+	newTags: Tag[] = [];
 
 	separatorKeysCodes: any[] = [ENTER, COMMA];
 
@@ -81,12 +74,11 @@ export class ActivityFormComponent implements OnInit {
 		@Inject(TagService) private tagService: DataService,
 		@Inject(TargetGroupService) private targetGroupService: DataService,
 		@Inject(CategoryService) private categoriesService: DataService,
-		private translationService: TranslationService,
+		public translatableTagsFieldsComponent: TranslatableFieldsComponent,
 		private location: Location,
 		public route: ActivatedRoute,
 		public constants: Constants,
-		private _formBuilder: FormBuilder,
-		public validation: ValidationService,
+		public validation: ValidationService
 	) {
 		this.targetGroupService.getAll().subscribe((targetGroups) => this.targetGroups = targetGroups);
 		this.categoriesService.getAll().subscribe((categories) => this.categories = categories);
@@ -208,9 +200,9 @@ export class ActivityFormComponent implements OnInit {
 
 	handleTags(): Observable<any[]> {
 		const observableTagArray: Observable<any>[] = [];
-		this.activity.tags.forEach(currTag => {
-			observableTagArray.push(this.tagService.add(currTag));
-		});
+		this.activity.tags.forEach(currTag => observableTagArray.push(
+			this.tagService.add(currTag)
+		));
 		this.activity.tags = [];
 		return Observable.forkJoin(observableTagArray);
 	}
@@ -234,31 +226,9 @@ export class ActivityFormComponent implements OnInit {
 
 	stepperValueChange(event: StepperSelectionEvent): void {
 		if (event.selectedIndex === 4) {
-			this.saveTranslations();
-		}
-	}
-
-	saveTranslations(): void {
-		const translationsSubscriber = this.translatableFieldsComponent.getTranslations();
-		if (translationsSubscriber) {
-			translationsSubscriber.subscribe(translationsRetrieved => {
-				// if empty cake returns an empty array
-				if (Array.isArray(this.activity._translations)) {
-					this.activity._translations = {};
-				}
-				for (const languageCode of Object.keys(this.activity._translations)) {
-					if (!this.activity._translations[languageCode]) {
-						this.activity._translations[languageCode] = translationsRetrieved[languageCode];
-					} else {
-						for (const attribute of Object.keys(this.activity._translations[languageCode])) {
-							if (!this.activity._translations[languageCode][attribute]) {
-								if (translationsRetrieved[languageCode][attribute]) {
-									this.activity._translations[languageCode][attribute] = translationsRetrieved[languageCode][attribute];
-								}
-							}
-						}
-					}
-				}
+			this.translatableFieldsComponent.saveTranslations();
+			this.activity.tags.forEach(currTag => {
+				this.translatableTagsFieldsComponent.init(currTag, ['name']);
 			});
 		}
 	}

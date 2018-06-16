@@ -1,15 +1,12 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { NgModel, NgForm } from '@angular/forms';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Constants } from 'app/services/constants';
 import { DataService } from 'app/services/data.service';
-import { DataServiceFactory, CategoryService } from '../../../services/data.service.factory';
-import { TranslatableConfigComponent } from './translatable.config';
+import { CategoryService } from '../../../services/data.service.factory';
 import { Category } from '../../../models/category';
+import { TranslatableFieldsComponent } from '../translations/translatable.form';
 
 @Component({
 	selector: 'category-edit',
@@ -19,9 +16,8 @@ import { Category } from '../../../models/category';
 
 export class CategoryFormComponent {
 
-	private loading: boolean = true;
 	category: Category;
-	@ViewChild('translatableConfigComponent') translatableConfigComponent: TranslatableConfigComponent;
+	@ViewChild('translatableCategoryFieldsComponent') translatableFieldsComponent: TranslatableFieldsComponent;
 
 	constructor(
 		private location: Location,
@@ -47,7 +43,7 @@ export class CategoryFormComponent {
 	}
 
 	onSubmit(): void {
-		this.translatableConfigComponent.saveTranslations();
+		this.translatableFieldsComponent.saveTranslations();
 		if (this.category.id) {
 			this.categoryService.edit(this.category).subscribe(() => this.back());
 		} else {

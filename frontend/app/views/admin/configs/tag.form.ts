@@ -1,15 +1,12 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { NgModel, NgForm } from '@angular/forms';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Tag } from '../../../models/tag';
 import { Constants } from 'app/services/constants';
 import { DataService } from 'app/services/data.service';
-import { DataServiceFactory, TagService } from '../../../services/data.service.factory';
-import { TranslatableConfigComponent } from './translatable.config';
+import { TagService } from '../../../services/data.service.factory';
+import { TranslatableFieldsComponent } from '../translations/translatable.form';
 
 @Component({
 	selector: 'tag-edit',
@@ -19,9 +16,8 @@ import { TranslatableConfigComponent } from './translatable.config';
 
 export class TagFormComponent {
 
-	private loading: boolean = true;
 	tag: Tag;
-	@ViewChild('translatableConfigComponent') translatableConfigComponent: TranslatableConfigComponent;
+	@ViewChild('translatableTagFieldsComponent') translatableFieldsComponent: TranslatableFieldsComponent;
 
 	constructor(
 		private location: Location,
@@ -47,7 +43,7 @@ export class TagFormComponent {
 	}
 
 	onSubmit(): void {
-		this.translatableConfigComponent.saveTranslations();
+		this.translatableFieldsComponent.saveTranslations();
 		if (this.tag.id) {
 			this.tagService.edit(this.tag).subscribe(() => this.back());
 		} else {

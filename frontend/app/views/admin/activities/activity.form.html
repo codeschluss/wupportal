@@ -70,6 +70,11 @@
 				<mat-step>
 					<ng-template matStepLabel>{{constants.translations}}</ng-template>
 					<translatable-form #translatableFieldsComponent [multiLingualObject]="activity" [translatableAttributes]="['name', 'description']"></translatable-form>
+					<!-- <div *ngFor="let newTag of newTags">
+						<div>{{newTag.name}}</div>
+						<translatable-form #translatableTagsFieldsComponent [multiLingualObject]="newTag" [translatableAttributes]="['name']">
+						</translatable-form>
+					</div> -->
 					<div>
 						<button mat-button type="button" matStepperPrevious>{{constants.previous}}</button>
 						<button mat-button type="button" color="primary" matStepperNext>{{constants.next}}</button>
@@ -117,7 +122,8 @@
 							</div>
 						</mat-tab>
 						<mat-tab label="{{constants.translations}}">
-							<translatable-form [multiLingualObject]="activity" [translatableAttributes]="['name', 'description']" [disabled]="true"></translatable-form>
+							<translatable-form #translatableFieldsComponent [multiLingualObject]="activity" [translatableAttributes]="['name', 'description']"
+							 [disabled]="true"></translatable-form>
 						</mat-tab>
 					</mat-tab-group>
 				</mat-step>

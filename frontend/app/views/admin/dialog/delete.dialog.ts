@@ -6,11 +6,13 @@ import { Constants } from 'app/services/constants';
 
 @Component({
 	template: `
-	<div>{{data.message}}</div>
-	<h3> {{data.name}} </h3>
-	<button mat-button color="warn"
-  	(click)="onDelete()">{{constants.delete}}</button>
-	<button mat-button (click)="onCancel()">{{constants.cancel}}</button>`,
+	<mat-card>
+		<div>{{data.message}}</div>
+		<h3> {{data.name}} </h3>
+		<button mat-button color="warn"
+  		(click)="onDelete()">{{constants.delete}}</button>
+		<button mat-button (click)="onCancel()">{{constants.cancel}}</button>
+	</mat-card>`,
 	styleUrls: ['../../../app.component.css']
 })
 

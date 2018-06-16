@@ -1,11 +1,9 @@
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 
 import { NgModule } from '@angular/core';
-import { Inject } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 // HttpModule is deprecated
 import { HttpModule } from '@angular/http';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +22,6 @@ import {
 	MatExpansionModule,
 	MatIconModule,
 	MatTabsModule,
-	MatRippleModule,
 	MatSelectModule,
 	MatPaginatorModule,
 	MatFormFieldModule,
@@ -98,7 +95,7 @@ import { TagListComponent } from './views/admin/configs/tag.list';
 import { TagFormComponent } from './views/admin/configs/tag.form';
 import { CategoryListComponent } from './views/admin/configs/category.list';
 import { CategoryFormComponent } from './views/admin/configs/category.form';
-import { TranslatableConfigComponent } from './views/admin/configs/translatable.config';
+// import { TranslatableConfigComponent } from './views/admin/configs/translatable.config';
 
 import { DeleteDialogComponent } from 'app/views/admin/dialog/delete.dialog';
 import { DeleteActionComponent } from 'app/views/admin/actions/delete.action';
@@ -159,7 +156,6 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		DeleteActionComponent,
 		OrganisationSelectionComponent,
 		TranslatableFieldsComponent,
-		TranslatableConfigComponent,
 		NewScheduleDialogComponent
 	],
 	imports: [
@@ -212,6 +208,7 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		LocationService,
 		NominatimService,
 		TranslationService,
+		TranslatableFieldsComponent,
 		Constants,
 		ValidationService,
 		{ provide: MatPaginatorIntl, useClass: PaginatorLabels },

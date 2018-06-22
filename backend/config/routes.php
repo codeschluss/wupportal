@@ -87,7 +87,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 				'method' => 'POST',
 				'path' => '/translate'
 			],
-			'translate' => [
+			'translateAll' => [
 				'action' => 'translateAll',
 				'method' => 'POST',
 				'path' => '/translateAll'

@@ -116,3 +116,11 @@ mat-chip {
 	vertical-align: sub;
 	margin-right: -5px;
 }
+
+.dot {
+	height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}

@@ -5,9 +5,18 @@
 	<mat-card-content>
 		<div>
 			<mat-form-field class="form-full-width">
-				<input matInput type=text [(ngModel)]="category.name" name="[attribute]" id="[attribute]" placeholder={{constants.defaultLanguage}}>
+				<input matInput type=text [(ngModel)]="category.name" placeholder={{constants.defaultLanguage}}>
 			</mat-form-field>
 		</div>
+		<mat-form-field class="form-full-width">
+			<mat-select required placeholder={{constants.color}} name="categoryColor" [(ngModel)]="category.color">
+				<mat-option *ngFor="let color of colors" [ngStyle]="{'backgroundColor': color}" [value]="color">
+					{{color}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<span class="dot" *ngIf="category.color" [ngStyle]="{'backgroundColor': category.color}"></span>
+		<span class="form-full-width" class="form-half-width" *ngIf="!category.color">{{constants.color + ' ' + constants.select}}</span>
 		<translatable-form #translatableCategoryFieldsComponent [multiLingualObject]="category" [translatableAttributes]="['name']">
 		</translatable-form>
 		<button mat-button color="primary" type="button" (click)="onSubmit()">{{constants.save}}</button>

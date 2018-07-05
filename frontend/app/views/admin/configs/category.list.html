@@ -4,7 +4,7 @@
 	</div>
 	<h2>{{ constants.categories }}
 	</h2>
-	<form #categoriesForm="ngForm" (ngSubmit)="onSubmit()">
+	<form #categoriesForm="ngForm">
 		<mat-grid-list cols="3" rowHeight="100px">
 			<div *ngFor="let category of categories">
 				<mat-grid-tile colspan="1" rowspan="1">
@@ -19,6 +19,5 @@
 			<button mat-button type="button" color="primary" [routerLink]="['/admin', { outlets: { table: ['category-edit', 'new'] } }]">{{constants.newEntry}}</button>
 		</mat-grid-list>
 		<button mat-button type="button" (click)="back()">{{constants.back}}</button>
-		<button mat-button color="primary" type="submit">{{constants.save}}</button>
 	</form>
 </mat-card>

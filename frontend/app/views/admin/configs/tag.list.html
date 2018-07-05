@@ -4,21 +4,18 @@
 	</div>
 	<h2>{{ constants.tags }}
 	</h2>
-	<form #tagsForm="ngForm" (ngSubmit)="onSubmit()">
-		<mat-grid-list cols="3" rowHeight="100px">
-			<div *ngFor="let tag of tags">
-				<mat-grid-tile colspan="1" rowspan="1">
-					<div>{{ tag.name }}</div>
-					<span>
-						<button mat-button color="primary" [routerLink]="['/admin', { outlets: { table: ['tag-edit', tag.id] } }]">
-							<fa-icon [icon]="faPencilAlt"></fa-icon>
-						</button>
-					</span>
-				</mat-grid-tile>
-			</div>
-			<button mat-button type="button" color="primary" [routerLink]="['/admin', { outlets: { table: ['tag-edit', 'new'] } }]">{{constants.newEntry}}</button>
-		</mat-grid-list>
-		<button mat-button type="button" (click)="back()">{{constants.back}}</button>
-		<button mat-button color="primary" type="submit">{{constants.save}}</button>
-	</form>
+	<mat-grid-list cols="3" rowHeight="100px">
+		<div *ngFor="let tag of tags">
+			<mat-grid-tile colspan="1" rowspan="1">
+				<div>{{ tag.name }}</div>
+				<span>
+					<button mat-button color="primary" [routerLink]="['/admin', { outlets: { table: ['tag-edit', tag.id] } }]">
+						<fa-icon [icon]="faPencilAlt"></fa-icon>
+					</button>
+				</span>
+			</mat-grid-tile>
+		</div>
+		<button mat-button type="button" color="primary" [routerLink]="['/admin', { outlets: { table: ['tag-edit', 'new'] } }]">{{constants.newEntry}}</button>
+	</mat-grid-list>
+	<button mat-button type="button" (click)="back()">{{constants.back}}</button>
 </mat-card>

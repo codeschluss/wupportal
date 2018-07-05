@@ -43,39 +43,6 @@ export class TargetGroupListComponent implements OnInit {
 			() => this.loading = false);
 	}
 
-	mergeTargetGroups(): Observable<any[]> {
-		const observableTargetGroupArray: Observable<any>[] = [];
-		this.targetGroups.map(targetGroup => {
-			if (targetGroup.id) {
-				observableTargetGroupArray.push(this.targetGroupService.edit(targetGroup));
-			} else {
-				observableTargetGroupArray.push(this.targetGroupService.add(targetGroup));
-			}
-		});
-		this.targeGroupsToDelte.map(targetGroupToDelete =>
-			observableTargetGroupArray.push(this.targetGroupService.delete(targetGroupToDelete.id))
-		);
-		return Observable.forkJoin(observableTargetGroupArray);
-	}
-
-	addTargetGroup(): void {
-		const newTargetGroup = new TargetGroup();
-		newTargetGroup.name = this.newTargetGroupName;
-		this.targetGroups.push(newTargetGroup);
-		this.newTargetGroupName = '';
-	}
-
-	deleteTargetGroup(tg: TargetGroup): void {
-		console.log('tg: ', tg);
-		console.log('tg.name: ', tg.name);
-		this.targeGroupsToDelte.push(tg);
-		this.targetGroups = this.targetGroups.filter(item => item !== tg);
-	}
-
-	onSubmit(): void {
-		this.mergeTargetGroups().subscribe(() => this.back());
-	}
-
 	back(): void {
 		this.location.back();
 	}

@@ -53,6 +53,30 @@ export class Constants {
 	public chooseLanguage: string = 'Sprachauswahl';
 	public translations: string = 'Übersetzungen';
 
+	public cssColorNames: String[] = [
+		'black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple',
+		'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua',
+		'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond',
+		'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate',
+		'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan',
+		'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta',
+		'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen',
+		'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink',
+		'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen',
+		'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink',
+		'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon',
+		'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey',
+		'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey',
+		'lightsteelblue', 'lightyellow', 'limegreen', 'linen', 'magenta', 'mediumaquamarine', 'mediumblue',
+		'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise',
+		'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'oldlace', 'olivedrab',
+		'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff',
+		'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown',
+		'seagreen', 'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow',
+		'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen', 'rebeccapurple'
+	];
+
+
 
 	public back: string = 'Zurück';
 	public newElement: string = 'Neu';
@@ -184,6 +208,7 @@ export class Constants {
 	public infos: string = 'Infos';
 	public warning: string = 'Achtung!';
 	public outOfOrder: string = 'Funktioniert nicht. Wird derzeit entwickelt!';
+	public color: string = 'Farbe';
 
 	public configWarning: string = 'Durch Veränderungen in diesem Bereich verändern Sie die öffentliche Darstellung dieses Portals!';
 	public mapcenterLongitude: string = 'Längengrad für Kartenmittelpunkt';

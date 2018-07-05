@@ -43,37 +43,6 @@ export class CategoryListComponent implements OnInit {
 			() => this.loading = false);
 	}
 
-	mergeCategories(): Observable<any[]> {
-		const observableCategoryArray: Observable<any>[] = [];
-		this.categories.map(category => {
-			if (category.id) {
-				observableCategoryArray.push(this.categoryService.edit(category));
-			} else {
-				observableCategoryArray.push(this.categoryService.add(category));
-			}
-		});
-		this.targeGroupsToDelte.map(categoryToDelete =>
-			observableCategoryArray.push(this.categoryService.delete(categoryToDelete.id))
-		);
-		return Observable.forkJoin(observableCategoryArray);
-	}
-
-	addCategory(): void {
-		const newCategory = new Category();
-		newCategory.name = this.newCategoryName;
-		this.categories.push(newCategory);
-		this.newCategoryName = '';
-	}
-
-	deleteCategory(category: Category): void {
-		this.targeGroupsToDelte.push(category);
-		this.categories = this.categories.filter(item => item !== category);
-	}
-
-	onSubmit(): void {
-		this.mergeCategories().subscribe(() => this.back());
-	}
-
 	back(): void {
 		this.location.back();
 	}

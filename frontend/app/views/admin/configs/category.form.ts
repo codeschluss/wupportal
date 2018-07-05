@@ -19,6 +19,8 @@ export class CategoryFormComponent {
 	category: Category;
 	@ViewChild('translatableCategoryFieldsComponent') translatableFieldsComponent: TranslatableFieldsComponent;
 
+	colors: String[];
+
 	constructor(
 		private location: Location,
 		public constants: Constants,
@@ -36,6 +38,7 @@ export class CategoryFormComponent {
 			.subscribe(category => {
 				this.category = new Category(category);
 			});
+		this.colors = this.constants.cssColorNames;
 	}
 
 	delete(): void {

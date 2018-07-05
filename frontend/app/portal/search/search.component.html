@@ -150,9 +150,11 @@
 									<slot i18n="@@schedule">Nächster Termin</slot>
 								</strong>
 								<p mat-line>
-									{{ i.schedules[0].start_date | date:'dd.MM.yyyy, HH:mm' }}
-									&ndash;
-									{{ i.schedules[0].end_date | date:'dd.MM.yyyy, HH:mm' }}
+									{{
+										i.schedules[0].start_date | date:'dd.MM.yyyy, HH:mm':'UTC'
+									}} &ndash; {{
+										i.schedules[0].end_date | date:'dd.MM.yyyy, HH:mm':'UTC'
+									}}
 								</p>
 							</div>
 						</mat-list-item>

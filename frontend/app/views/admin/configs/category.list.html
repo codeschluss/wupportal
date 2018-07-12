@@ -8,6 +8,7 @@
 		<mat-grid-list cols="3" rowHeight="100px">
 			<div *ngFor="let category of categories">
 				<mat-grid-tile colspan="1" rowspan="1">
+					<span class="dot" *ngIf="category.color" [ngStyle]="{'backgroundColor': category.color}"></span>
 					<div>{{ category.name }}</div>
 					<span>
 						<button mat-button color="primary" [routerLink]="['/admin', { outlets: { table: ['category-edit', category.id] } }]">

@@ -1,183 +1,248 @@
 <h3>{{constants.dateTimeQuestion}}</h3>
 
-<div *ngIf="!schedules.length">
-	<form #formDir="ngForm" id="form-group" [formGroup]="formGroup">
-		<div class="row">
-			<!-- col for entering data -->
-			<div class="col">
-				<!-- row 1: Time of day -->
-				<div class="row">
-					<div class="col">
-						{{constants.timeOfDay}}:
+<div class="row" *ngIf="!schedules.length">
+	<div class="col">
+		<form #formDir="ngForm" id="form-group" [formGroup]="formGroup">
+			<mat-accordion class="scheduler-headers-align">
+				<mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{constants.timeOfDay}}
+						</mat-panel-title>
+						<mat-panel-description>
+							{{constants.timeQuestion}}
+							<fa-icon [icon]="clockIcon"></fa-icon>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+					<div class="row">
+						<div class="col">
+							<!-- Hour to start -->
+							{{constants.startTime}}:
+							<mat-form-field class="form-small">
+								<input matInput required type="number" pattern="([01]?[0-9]|2[0-3])" placeholder={{constants.hours}} formControlName="startTimeHourCtrl"
+								 name="start_time_hour" id="start_time_hour">
+								<span matSuffix>:</span>
+							</mat-form-field>
+							<!-- Minutes start -->
+							<mat-form-field required class="form-small">
+								<input matInput type="number" pattern="[0-5]?[0-9]" placeholder={{constants.minutes}} formControlName="startTimeMinuteCtrl"
+								 name="start_time_minute" id="start_time_minute">
+							</mat-form-field>
+						</div>
+						<div class="col">
+							<!-- hour end -->
+							{{constants.endTime}}:
+							<mat-form-field class="form-small">
+								<input matInput required type="number" pattern="([01]?[0-9]|2[0-3])" placeholder={{constants.hours}} formControlName="endTimeHourCtrl"
+								 name="end_time_hour" id="end_time_hour">
+								<span matSuffix>:</span>
+							</mat-form-field>
+							<!-- minutes end -->
+							<mat-form-field class="form-small">
+								<input matInput required type="number" pattern="[0-5]?[0-9]" placeholder={{constants.minutes}} formControlName="endTimeMinuteCtrl"
+								 name="end_time_minute" id="end_time_minute">
+							</mat-form-field>
+						</div>
 					</div>
-					<div class="col">
-						<!-- Hour to start -->
-						{{constants.from}}:
-						<mat-form-field class="form-small">
-							<input matInput required type="number" pattern="([01]?[0-9]|2[0-3])" placeholder={{constants.hours}} formControlName="startTimeHourCtrl"
-							 name="start_time_hour" id="start_time_hour">
-							<span matSuffix>:</span>
-						</mat-form-field>
-						<!-- Minutes start -->
-						<mat-form-field required class="form-small">
-							<input matInput type="number" pattern="[0-5]?[0-9]" placeholder={{constants.minutes}} formControlName="startTimeMinuteCtrl"
-							 name="start_time_minute" id="start_time_minute">
-						</mat-form-field>
-					</div>
-					<div class="col">
-						<!-- hour end -->
-						{{constants.to}}:
-						<mat-form-field class="form-small">
-							<input matInput required type="number" pattern="([01]?[0-9]|2[0-3])" placeholder={{constants.hours}} formControlName="endTimeHourCtrl"
-							 name="end_time_hour" id="end_time_hour">
-							<span matSuffix>:</span>
-						</mat-form-field>
-						<!-- minutes end -->
-						<mat-form-field class="form-small">
-							<input matInput required type="number" pattern="[0-5]?[0-9]" placeholder={{constants.minutes}} formControlName="endTimeMinuteCtrl"
-							 name="end_time_minute" id="end_time_minute">
-						</mat-form-field>
-					</div>
-				</div>
-				<!-- row 2: date (day) -->
-				<div class="row">
-					<div class="col">
-						{{constants.dateTime}}:
-					</div>
-					<div class="col">
-						<mat-form-field>
-							<input matInput required [matDatepicker]="pickerStartDate" formControlName="startDateCtrl" placeholder={{constants.begin}}
-							 name="schedule_start_by" readonly>
-							<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-							<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
-						</mat-form-field>
-					</div>
-					<div class="col">
-						<mat-form-field>
-							<input matInput required [matDatepicker]="pickerEndDate" formControlName="endDateCtrl" placeholder={{constants.end}} name="schedule_end_by"
-							 readonly>
-							<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-							<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
-						</mat-form-field>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col align-self-start col-lg-2">
-						<mat-form-field>
-							<mat-select formControlName="rythmUnitCtrl">
-								<mat-option value="unique">
-									{{constants.unique}}
-								</mat-option>
-								<mat-option value="days">
-									{{constants.daily}}
-								</mat-option>
-								<mat-option value="weeks">
-									{{constants.weekly}}
-								</mat-option>
-								<mat-option value="months">
-									{{constants.monthly}}
-								</mat-option>
-								<mat-option value="years">{{constants.yearly}}</mat-option>
-							</mat-select>
-						</mat-form-field>
-					</div>
+					<mat-action-row>
+						<button mat-button (click)="setStep(-1)">{{constants.help}}</button>
+						<button mat-button color="primary" (click)="nextStep()">{{constants.next}}</button>
+					</mat-action-row>
+				</mat-expansion-panel>
 
-					<div class="col">
-						<!-- if rythm is not unique this area appears-->
-						<mat-card *ngIf="formGroup.controls.rythmUnitCtrl.value != 'unique'">
-							<div class="row">
-								<!-- prefix -->
-								<div class="col col-md-auto">
-									<mat-form-field>
-										<mat-select formControlName="rythmPeriodCtrl">
-											<mat-option *ngFor="let rythm of [1,2,3,4,5,6,7,8,9,10,11,12,13,14]" [value]="rythm">
-												{{rythm == 1 ? constants.every + ' ' : constants.every + ' ' + rythm + constants.suffixAmount}}
-											</mat-option>
-										</mat-select>
-										<span matSuffix>
-											<span [ngSwitch]="formGroup.controls.rythmUnitCtrl.value">
-												<span *ngSwitchCase="'days'">
-													{{constants.day}}
+				<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{constants.dateTime}}
+						</mat-panel-title>
+						<mat-panel-description>
+							{{constants.calendarQuestion}}
+							<fa-icon [icon]="calendarIcon"></fa-icon>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+
+					{{constants.begin}}:
+					<mat-form-field>
+						<input matInput required [matDatepicker]="pickerStartDate" formControlName="startDateCtrl" placeholder={{constants.dateTime}}
+						 name="schedule_start_by" readonly>
+						<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+						<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
+					</mat-form-field>
+					{{constants.end}}:
+					<mat-form-field>
+						<input matInput required [matDatepicker]="pickerEndDate" formControlName="endDateCtrl" placeholder={{constants.dateTime}}
+						 name="schedule_end_by" readonly>
+						<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+						<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
+					</mat-form-field>
+
+					<mat-action-row>
+						<button mat-button (click)="setStep(-1)">{{constants.help}}</button>
+						<button mat-button color="warn" (click)="prevStep()">{{constants.previous}}</button>
+						<button mat-button color="primary" (click)="nextStep()">{{constants.next}}</button>
+					</mat-action-row>
+				</mat-expansion-panel>
+
+				<mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{constants.rythm}}
+						</mat-panel-title>
+						<mat-panel-description>
+							{{constants.recurrenceQuestion}}
+							<fa-icon [icon]="redoIcon"></fa-icon>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+					<div class="row">
+						<div class="col align-self-start col-lg-2">
+							<mat-form-field>
+								<mat-select formControlName="rythmUnitCtrl">
+									<mat-option value="unique">
+										{{constants.unique}}
+									</mat-option>
+									<mat-option value="days">
+										{{constants.daily}}
+									</mat-option>
+									<mat-option value="workdays">
+										{{constants.workdays}}
+									</mat-option>
+									<mat-option value="weeks">
+										{{constants.weekly}}
+									</mat-option>
+									<mat-option value="months">
+										{{constants.monthly}}
+									</mat-option>
+									<mat-option value="years">{{constants.yearly}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+
+						<div class="col">
+							<!-- if rythm is not unique this area appears-->
+							<mat-card *ngIf="formGroup.controls.rythmUnitCtrl.value == 'unique'">
+								{{constants.noRecurrentActivity}}
+							</mat-card>
+							<mat-card *ngIf="formGroup.controls.rythmUnitCtrl.value != 'unique'">
+								<div class="row">
+									<!-- prefix -->
+									<div class="col col-md-auto">
+										<mat-form-field>
+											<mat-select formControlName="rythmPeriodCtrl">
+												<mat-option *ngFor="let rythm of [1,2,3,4,5,6,7,8,9,10,11,12,13,14]" [value]="rythm">
+													{{rythm == 1 ? constants.every + ' ' : constants.every + ' ' + rythm + constants.suffixAmount}}
+												</mat-option>
+											</mat-select>
+											<span matSuffix>
+												<span [ngSwitch]="formGroup.controls.rythmUnitCtrl.value">
+													<span *ngSwitchCase="'days'">
+														{{constants.day}}
+													</span>
+													<span *ngSwitchCase="'weeks'">
+														{{constants.week}}
+													</span>
+													<span *ngSwitchCase="'workdays'">
+														{{constants.week + ' ' + constants.workdays}}
+													</span>
+													<span *ngSwitchCase="'months'">
+														{{constants.month}}
+													</span>
+													<span *ngSwitchCase="'years'">{{constants.year}}</span>
 												</span>
-												<span *ngSwitchCase="'weeks'">
-													{{constants.week}}
-												</span>
-												<span *ngSwitchCase="'months'">
-													{{constants.month}}
-												</span>
-												<span *ngSwitchCase="'years'">{{constants.year}}</span>
 											</span>
-										</span>
-									</mat-form-field>
-								</div>
-								<!-- rythm specific area -->
-								<div class="col col-md-auto">
-									<div [ngSwitch]="formGroup.controls.rythmUnitCtrl.value">
-										<div *ngSwitchCase="'weeks'">
-											<mat-form-field>
-												<span matPrefix>{{constants.followingWeekdays}}: </span>
-												<mat-select placeholder={{constants.weekdays}} formControlName="weekdaysCtrl" multiple>
-													<mat-option *ngFor="let weekDayIndex of [0,1,2,3,4,5,6]" [value]="weekDayIndex">
-														{{constants.weekDaysArray[weekDayIndex]}}
-													</mat-option>
-												</mat-select>
-											</mat-form-field>
-										</div>
-										<div class="row" *ngSwitchCase="'months'">
-											<div class="col">
-												<mat-radio-group formControlName="monthlyRecurrenceCtrl">
-													<mat-radio-button class="col" value="monthDate">{{constants.at}}
-														<mat-select formControlName="monthDateCtrl">
-															<mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]" [value]="day">
-																{{day}}{{constants.suffixNumber}}
-															</mat-option>
-														</mat-select>
-														{{constants.everyMonth}}
-													</mat-radio-button>
-													<mat-radio-button class="col" value="weekDay">
-														{{constants.every}}
-														<mat-select formControlName="weekdayNumberCtrl">
-															<mat-option *ngFor="let day of [1,2,3,4,5]" [value]="day">
-																{{day == 5 ? constants.last : day + constants.suffixNumber}}
-															</mat-option>
-														</mat-select>
-														<mat-select placeholder={{constants.weekDaysArray[0]}} formControlName="weekdaysCtrl" multiple>
-															<mat-option *ngFor="let weekDayIndex of [0,1,2,3,4,5,6]" [value]="weekDayIndex">
-																{{constants.weekDaysArray[weekDayIndex]}}
-															</mat-option>
-														</mat-select>
-													</mat-radio-button>
-												</mat-radio-group>
+										</mat-form-field>
+									</div>
+									<!-- rythm specific area -->
+									<div class="col col-md-auto">
+										<div [ngSwitch]="formGroup.controls.rythmUnitCtrl.value">
+											<div *ngSwitchCase="'weeks'">
+												<mat-form-field>
+													<span matPrefix>{{constants.followingWeekdays}}: </span>
+													<mat-select placeholder={{constants.weekdays}} formControlName="weekdaysCtrl" multiple>
+														<mat-option *ngFor="let weekDayIndex of [0,1,2,3,4,5,6]" [value]="weekDayIndex">
+															{{constants.weekDaysArray[weekDayIndex]}}
+														</mat-option>
+													</mat-select>
+												</mat-form-field>
+											</div>
+											<div class="row" *ngSwitchCase="'months'">
+												<div class="col">
+													<mat-radio-group formControlName="monthlyRecurrenceCtrl">
+														<mat-radio-button class="col" value="monthDate">{{constants.at}}
+															<mat-select formControlName="monthDateCtrl">
+																<mat-option *ngFor="let day of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]" [value]="day">
+																	{{day}}{{constants.suffixNumber}}
+																</mat-option>
+															</mat-select>
+															{{constants.everyMonth}}
+														</mat-radio-button>
+														<mat-radio-button class="col" value="weekDay">
+															{{constants.every}}
+															<mat-select formControlName="weekdayNumberCtrl">
+																<mat-option *ngFor="let day of [1,2,3,4,5]" [value]="day">
+																	{{day == 5 ? constants.last : day + constants.suffixNumber}}
+																</mat-option>
+															</mat-select>
+															<mat-select placeholder={{constants.weekDaysArray[0]}} formControlName="weekdaysCtrl" multiple>
+																<mat-option *ngFor="let weekDayIndex of [0,1,2,3,4,5,6]" [value]="weekDayIndex">
+																	{{constants.weekDaysArray[weekDayIndex]}}
+																</mat-option>
+															</mat-select>
+														</mat-radio-button>
+													</mat-radio-group>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</mat-card>
+							</mat-card>
+						</div>
 					</div>
-				</div>
-			</div>
-			<!-- explenation col -->
-			<div class="col col-lg-2">
-				{{constants.scheduleInfo}}
-			</div>
-			<!-- row main content -->
-		</div>
-		<div class="row">
-			<div class="col align-self-start">
-				<button mat-button color="primary" type="button" [disabled]="formGroup.invalid" (click)="generateSchedules()">{{constants.create}} {{constants.dates}}</button>
-			</div>
-		</div>
-		<mat-error *ngIf=formGroup.invalid>
-			<div *ngIf="formGroup.invalid && !formGroup.errors">
-				{{constants.isRequiredMessage}}
-			</div>
-			<div *ngIf="formGroup.errors && formGroup.errors.endBeforeStart">
-				{{constants.endBeforeStartError}}
-			</div>
-		</mat-error>
-	</form>
+					<mat-action-row>
+						<button mat-button (click)="setStep(-1)">{{constants.help}}</button>
+						<button mat-button color="warn" (click)="prevStep()">{{constants.previous}}</button>
+						<button mat-button color="primary" type="button" [disabled]="formGroup.invalid" (click)="generateSchedules()">{{constants.create}} {{constants.dates}}</button>
+					</mat-action-row>
+				</mat-expansion-panel>
+				<mat-expansion-panel [expanded]="step === -1" (opened)="setStep(-1)" hideToggle>
+					<mat-expansion-panel-header>
+						<mat-panel-title [ngStyle]="formGroup.invalid ? {'color': 'red'} : {'color': 'green'}">
+							{{constants.help}}
+						</mat-panel-title>
+						<mat-panel-description>
+							<fa-icon [icon]="helpIcon" [ngStyle]="formGroup.invalid ? {'color': 'red'} : {'color': 'green'}"></fa-icon>
+							<mat-error *ngIf=formGroup.invalid>
+								<div *ngIf="formGroup.invalid && !formGroup.errors">
+									{{constants.isRequiredMessage}}
+								</div>
+								<div *ngIf="formGroup.errors && formGroup.errors.endBeforeStart">
+									{{constants.endBeforeStartError}}
+								</div>
+							</mat-error>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+					<mat-error *ngIf=formGroup.invalid>
+						<div *ngIf="formGroup.invalid && !formGroup.errors">
+							{{constants.isRequiredMessageLong}}
+						</div>
+						<div *ngIf="formGroup.errors && formGroup.errors.endBeforeStart">
+							{{constants.endBeforeStartErrorLong}}
+						</div>
+					</mat-error>
+
+					<p>{{constants.scheduleInfo}}</p>
+					<div *ngFor="let info of constants.rythmInfo">
+						<p>{{info}}</p>
+					</div>
+					<mat-action-row>
+						<button mat-button color="primary" (click)="nextStep()">{{constants.next}}</button>
+					</mat-action-row>
+				</mat-expansion-panel>
+			</mat-accordion>
+			<button mat-button color="primary" type="button" [disabled]="formGroup.invalid" (click)="generateSchedules()">{{constants.create}} {{constants.dates}}</button>
+		</form>
+	</div>
 </div>
+
 <div *ngIf="schedules.length" style="overflow: hidden;">
 	<div style="overflow-y: scroll; height: 400px;">
 		<h3>{{constants.pleaseControl}} {{constants.scheduleListExplanation}}

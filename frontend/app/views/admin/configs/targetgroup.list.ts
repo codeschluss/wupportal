@@ -26,7 +26,6 @@ export class TargetGroupListComponent implements OnInit {
 	public targetGroups: TargetGroup[];
 	private loading: boolean = true;
 	public newTargetGroupName: string = '';
-	private targeGroupsToDelte: TargetGroup[] = [];
 	private faPencilAlt: IconDefinition = faPencilAlt;
 
 	constructor(

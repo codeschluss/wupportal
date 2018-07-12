@@ -53,3 +53,13 @@
 mat-sidenav {
 	min-width: 30%;
 }
+
+.scheduler-headers-align .mat-expansion-panel-header-title,
+.scheduler-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.scheduler-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}

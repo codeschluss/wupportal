@@ -23,6 +23,8 @@ import { NewScheduleDialogComponent } from '../dialog/scheduler.new.entry';
 import { DataService } from 'app/services/data.service';
 import { Constants } from 'app/services/constants';
 import { ValidationService } from '../../../services/validation.service';
+import { faClock, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faRedo, faInfo } from '@fortawesome/fontawesome-free-solid';
 
 
 @Component({
@@ -58,6 +60,12 @@ export class SchedulerComponent implements OnInit {
 	schedulesCtrl: FormControl;
 	panelNumber: number;
 	toDeleteSchedules: Schedule[];
+	step: number = 0;
+
+	private clockIcon: IconDefinition = faClock;
+	private calendarIcon: IconDefinition = faCalendarAlt;
+	private redoIcon: IconDefinition = faRedo;
+	private helpIcon: IconDefinition = faInfo;
 
 	constructor(
 		public constants: Constants,
@@ -67,6 +75,18 @@ export class SchedulerComponent implements OnInit {
 		public currValidation: ValidationService,
 		@Inject(ScheduleService) private scheduleService: DataService,
 	) {
+	}
+
+	setStep(index: number): void {
+		this.step = index;
+	}
+
+	nextStep(): void {
+		this.step++;
+	}
+
+	prevStep(): void {
+		this.step--;
 	}
 
 	ngOnInit(): void {
@@ -212,6 +232,16 @@ export class SchedulerComponent implements OnInit {
 						}
 						break;
 					case 'weeks':
+						rule = new RRule({
+							freq: RRule.WEEKLY,
+							interval: this.formGroup.get('rythmPeriodCtrl').value,
+							byweekday: this.formGroup.get('weekdaysCtrl').value,
+							dtstart: startDate.toDate(),
+							until: endDate.toDate()
+						});
+						break;
+					case 'workdays':
+						this.formGroup.get('weekdaysCtrl').setValue([0, 1, 2, 3, 4]);
 						rule = new RRule({
 							freq: RRule.WEEKLY,
 							interval: this.formGroup.get('rythmPeriodCtrl').value,

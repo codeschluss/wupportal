@@ -39,6 +39,14 @@ export class Constants {
 	public to: string = 'bis';
 	public at: string = 'am';
 	public unique: string = 'einmalig';
+	public noRecurrentActivity: string = 'Ihre Veranstaltung ist keine wiederholende Veranstaltung';
+	public rythmInfo: string[] = ['Beispiele zu den Rythmen',
+		'Täglich: Im Abstand von 3 Tagen finden Veranstaltungen statt.',
+		'Werktags: Die Veranstaltung soll jede Woche an Werktagen stattfinden.',
+		'Wöchentlich: Die Veranstaltung findet immer Mittwochs und Donnerstags im Abstand von 2 Wochen statt.',
+		'Monatlich 1: Die Veranstaltung findet alle 2 Monate am letzten Mittwoch des Monats statt.',
+		'Monatlich 2: Die Veranstaltung findet jeden zweiten Monat am 12ten Tag des Monats statt.',
+		'Jährlich: Die Veranstaltung findet jedes Jahr am 1. März statt'];
 	public day: string = 'Tag';
 	public week: string = 'Woche';
 	public month: string = 'Monat';
@@ -126,6 +134,7 @@ export class Constants {
 
 	public deleteMessage: string = 'Möchten Sie den folgenden Eintrag wirklich löschen?';
 	public isRequiredMessage: string = 'Feld darf nicht leer sein';
+	public isRequiredMessageLong: string = 'Mindestens eins der vorhandenen Felder dieser Ansicht ist leer, obwohl es das nicht sein dar.';
 	public emailFormatMessage: string = 'Feld muss Email Format haben';
 	public notSamePasswordMessage: string = 'Passwörter stimmen nicht überein';
 	public forgottenPassword: string = 'Passwort vergessen?';
@@ -133,8 +142,14 @@ export class Constants {
 	public resetPassword: string = 'Passwort zurück setzen';
 	public orAreEmptyMessage: string = 'oder sind leer';
 	public endBeforeStartError: string = 'Ende liegt vor Beginn';
+	public endBeforeStartErrorLong: string = 'Die eingegebene Endzeit (Datum oder Uhrzeit) liegt vor der Startzeit (Datum oder Uhrzeit)';
+	public timeQuestion: string = 'Zu welcher Uhrzeit beginnt und endet die Veranstaltung?';
+	public calendarQuestion: string = 'An welchem Tag beginnt bzw. endet die Veranstaltung?';
+	public recurrenceQuestion: string = 'In welchem Rythmus wiederholt sich die Veranstaltung?';
 	public begin: string = 'Anfang';
 	public end: string = 'Ende';
+	public startTime: string = 'Startzeit';
+	public endTime: string = 'Endzeit';
 	public last: string = 'letzten';
 	public deleteFromOrganisation: string = 'Aus Organisation entfernen';
 	public multipleOrganisationMessage: string = 'Sie sind Administrator für mehere Organisationen';
@@ -150,10 +165,11 @@ export class Constants {
 	public tagsHint: string = 'Schlagworte bitte mit Komma trennen';
 	public scheduleInfo: string =
 		'Bei eintägigen Veranstaltungen bitte zwei mal ' +
-		'das gleiche Datum angeben.Für regelmäßige Veranstaltungen bitte das Datum	des ersten und des ' +
+		'das gleiche Datum angeben. Für regelmäßige Veranstaltungen bitte das Datum	des ersten und des ' +
 		'letzten Termins angeben.Sie können die Termine anschließend noch einmal kontrollieren und verändern.';
 	public followingWeekdays: string = 'an folgenden Wochentagen';
 	public everyMonth: string = 'eines jeden Monats';
+	public workdays: string = 'werktags';
 	public every: string = 'Jede(n/s)';
 	public suffixAmount: string = 'te(n/s)';
 	public suffixNumber: string = 'ten';
@@ -206,6 +222,7 @@ export class Constants {
 	public done: string = 'Erledigt';
 	public summary: string = 'Zusammenfassung';
 	public infos: string = 'Infos';
+	public help: string = 'Hilfe';
 	public warning: string = 'Achtung!';
 	public outOfOrder: string = 'Funktioniert nicht. Wird derzeit entwickelt!';
 	public color: string = 'Farbe';

@@ -1,89 +1,13 @@
 <h3>{{constants.dateTimeQuestion}}</h3>
 
+<!-- If no schedules, the generation form is shown -->
 <div class="row" *ngIf="!schedules.length">
 	<div class="col">
 		<form #formDir="ngForm" id="form-group" [formGroup]="formGroup">
 			<mat-accordion class="scheduler-headers-align">
+
+				<!-- start rythm panel -->
 				<mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-					<mat-expansion-panel-header>
-						<mat-panel-title>
-							{{constants.timeOfDay}}
-						</mat-panel-title>
-						<mat-panel-description>
-							{{constants.timeQuestion}}
-							<fa-icon [icon]="clockIcon"></fa-icon>
-						</mat-panel-description>
-					</mat-expansion-panel-header>
-					<div class="row">
-						<div class="col">
-							<!-- Hour to start -->
-							{{constants.startTime}}:
-							<mat-form-field class="form-small">
-								<input matInput required type="number" pattern="([01]?[0-9]|2[0-3])" placeholder={{constants.hours}} formControlName="startTimeHourCtrl"
-								 name="start_time_hour" id="start_time_hour">
-								<span matSuffix>:</span>
-							</mat-form-field>
-							<!-- Minutes start -->
-							<mat-form-field required class="form-small">
-								<input matInput type="number" pattern="[0-5]?[0-9]" placeholder={{constants.minutes}} formControlName="startTimeMinuteCtrl"
-								 name="start_time_minute" id="start_time_minute">
-							</mat-form-field>
-						</div>
-						<div class="col">
-							<!-- hour end -->
-							{{constants.endTime}}:
-							<mat-form-field class="form-small">
-								<input matInput required type="number" pattern="([01]?[0-9]|2[0-3])" placeholder={{constants.hours}} formControlName="endTimeHourCtrl"
-								 name="end_time_hour" id="end_time_hour">
-								<span matSuffix>:</span>
-							</mat-form-field>
-							<!-- minutes end -->
-							<mat-form-field class="form-small">
-								<input matInput required type="number" pattern="[0-5]?[0-9]" placeholder={{constants.minutes}} formControlName="endTimeMinuteCtrl"
-								 name="end_time_minute" id="end_time_minute">
-							</mat-form-field>
-						</div>
-					</div>
-					<mat-action-row>
-						<button mat-button (click)="setStep(-1)">{{constants.help}}</button>
-						<button mat-button color="primary" (click)="nextStep()">{{constants.next}}</button>
-					</mat-action-row>
-				</mat-expansion-panel>
-
-				<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
-					<mat-expansion-panel-header>
-						<mat-panel-title>
-							{{constants.dateTime}}
-						</mat-panel-title>
-						<mat-panel-description>
-							{{constants.calendarQuestion}}
-							<fa-icon [icon]="calendarIcon"></fa-icon>
-						</mat-panel-description>
-					</mat-expansion-panel-header>
-
-					{{constants.begin}}:
-					<mat-form-field>
-						<input matInput required [matDatepicker]="pickerStartDate" formControlName="startDateCtrl" placeholder={{constants.dateTime}}
-						 name="schedule_start_by" readonly>
-						<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
-						<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
-					</mat-form-field>
-					{{constants.end}}:
-					<mat-form-field>
-						<input matInput required [matDatepicker]="pickerEndDate" formControlName="endDateCtrl" placeholder={{constants.dateTime}}
-						 name="schedule_end_by" readonly>
-						<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
-						<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
-					</mat-form-field>
-
-					<mat-action-row>
-						<button mat-button (click)="setStep(-1)">{{constants.help}}</button>
-						<button mat-button color="warn" (click)="prevStep()">{{constants.previous}}</button>
-						<button mat-button color="primary" (click)="nextStep()">{{constants.next}}</button>
-					</mat-action-row>
-				</mat-expansion-panel>
-
-				<mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
 					<mat-expansion-panel-header>
 						<mat-panel-title>
 							{{constants.rythm}}
@@ -116,7 +40,6 @@
 								</mat-select>
 							</mat-form-field>
 						</div>
-
 						<div class="col">
 							<!-- if rythm is not unique this area appears-->
 							<mat-card *ngIf="formGroup.controls.rythmUnitCtrl.value == 'unique'">
@@ -199,10 +122,94 @@
 					</div>
 					<mat-action-row>
 						<button mat-button (click)="setStep(-1)">{{constants.help}}</button>
+						<button mat-button color="primary" (click)="nextStep()">{{constants.next}}</button>
+					</mat-action-row>
+				</mat-expansion-panel>
+				<!-- end rythm panel -->
+
+				<!-- start calendar date panel -->
+				<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{constants.dateTime}}
+						</mat-panel-title>
+						<mat-panel-description>
+							{{constants.calendarQuestion}}
+							<fa-icon [icon]="calendarIcon"></fa-icon>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+					{{constants.begin}}:
+					<mat-form-field>
+						<input matInput required [matDatepicker]="pickerStartDate" formControlName="startDateCtrl" placeholder={{constants.dateTime}}
+						 name="schedule_start_by" readonly>
+						<mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+						<mat-datepicker #pickerStartDate disabled="false"></mat-datepicker>
+					</mat-form-field>
+					{{constants.end}}:
+					<mat-form-field>
+						<input matInput required [matDatepicker]="pickerEndDate" formControlName="endDateCtrl" placeholder={{constants.dateTime}}
+						 name="schedule_end_by" readonly>
+						<mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+						<mat-datepicker #pickerEndDate disabled="false"></mat-datepicker>
+					</mat-form-field>
+					<mat-action-row>
+						<button mat-button (click)="setStep(-1)">{{constants.help}}</button>
+						<button mat-button color="warn" (click)="prevStep()">{{constants.previous}}</button>
+						<button mat-button color="primary" (click)="nextStep()">{{constants.next}}</button>
+					</mat-action-row>
+				</mat-expansion-panel>
+				<!-- end calendar date panel -->
+
+				<!-- start datetime panel -->
+				<mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{constants.timeOfDay}}
+						</mat-panel-title>
+						<mat-panel-description>
+							{{constants.timeQuestion}}
+							<fa-icon [icon]="clockIcon"></fa-icon>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+					<div class="row">
+						<div class="col">
+							<!-- Hour to start -->
+							{{constants.startTime}}:
+							<mat-form-field class="form-small">
+								<input matInput required type="number" pattern="([01]?[0-9]|2[0-3])" placeholder={{constants.hours}} formControlName="startTimeHourCtrl"
+								 name="start_time_hour" id="start_time_hour">
+								<span matSuffix>:</span>
+							</mat-form-field>
+							<!-- Minutes start -->
+							<mat-form-field required class="form-small">
+								<input matInput type="number" pattern="[0-5]?[0-9]" placeholder={{constants.minutes}} formControlName="startTimeMinuteCtrl"
+								 name="start_time_minute" id="start_time_minute">
+							</mat-form-field>
+						</div>
+						<div class="col">
+							<!-- hour end -->
+							{{constants.endTime}}:
+							<mat-form-field class="form-small">
+								<input matInput required type="number" pattern="([01]?[0-9]|2[0-3])" placeholder={{constants.hours}} formControlName="endTimeHourCtrl"
+								 name="end_time_hour" id="end_time_hour">
+								<span matSuffix>:</span>
+							</mat-form-field>
+							<!-- minutes end -->
+							<mat-form-field class="form-small">
+								<input matInput required type="number" pattern="[0-5]?[0-9]" placeholder={{constants.minutes}} formControlName="endTimeMinuteCtrl"
+								 name="end_time_minute" id="end_time_minute">
+							</mat-form-field>
+						</div>
+					</div>
+					<mat-action-row>
+						<button mat-button (click)="setStep(-1)">{{constants.help}}</button>
 						<button mat-button color="warn" (click)="prevStep()">{{constants.previous}}</button>
 						<button mat-button color="primary" type="button" [disabled]="formGroup.invalid" (click)="generateSchedules()">{{constants.create}} {{constants.dates}}</button>
 					</mat-action-row>
 				</mat-expansion-panel>
+				<!-- end datetime panel -->
+
+				<!-- start help panel -->
 				<mat-expansion-panel [expanded]="step === -1" (opened)="setStep(-1)" hideToggle>
 					<mat-expansion-panel-header>
 						<mat-panel-title [ngStyle]="formGroup.invalid ? {'color': 'red'} : {'color': 'green'}">
@@ -228,27 +235,31 @@
 							{{constants.endBeforeStartErrorLong}}
 						</div>
 					</mat-error>
-
 					<p>{{constants.scheduleInfo}}</p>
 					<div *ngFor="let info of constants.rythmInfo">
 						<p>{{info}}</p>
 					</div>
 					<mat-action-row>
-						<button mat-button color="primary" (click)="nextStep()">{{constants.next}}</button>
+						<button mat-button color="primary" (click)="prevStep()">{{constants.previous}}</button>
 					</mat-action-row>
 				</mat-expansion-panel>
+				<!-- end help panel -->
+
 			</mat-accordion>
 			<button mat-button color="primary" type="button" [disabled]="formGroup.invalid" (click)="generateSchedules()">{{constants.create}} {{constants.dates}}</button>
 		</form>
 	</div>
 </div>
+<!-- end generating form -->
 
+<!-- start schedules list edit view -->
 <div *ngIf="schedules.length" style="overflow: hidden;">
 	<div style="overflow-y: scroll; height: 400px;">
 		<h3>{{constants.pleaseControl}} {{constants.scheduleListExplanation}}
 		</h3>
 		<mat-accordion>
 			<div *ngFor="let schedule of schedules; index as i">
+				<!-- start edit selected entry -->
 				<mat-expansion-panel [expanded]="panelNumber === i" (opened)="declerateDateForms(i)" hideToggle="true">
 					<mat-expansion-panel-header>
 						<mat-panel-title>
@@ -311,12 +322,15 @@
 						</div>
 					</form>
 				</mat-expansion-panel>
+				<!-- end edit selected entry -->
 			</div>
 		</mat-accordion>
 	</div>
 
 	<div>
 		<button mat-button color="warn" type="button" (click)="removeCompleteSchedule()">{{constants.deleteAll}}</button>
+		<!-- the new entry view is component NewScheduleDialogComponent -->
 		<button mat-button color="primary" type="button" (click)="newEntry()">{{constants.create + ' ' + constants.additional + ' ' + constants.date}}</button>
 	</div>
 </div>
+<!-- end schedules list edit view -->

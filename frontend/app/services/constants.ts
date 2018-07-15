@@ -144,7 +144,7 @@ export class Constants {
 	public endBeforeStartError: string = 'Ende liegt vor Beginn';
 	public endBeforeStartErrorLong: string = 'Die eingegebene Endzeit (Datum oder Uhrzeit) liegt vor der Startzeit (Datum oder Uhrzeit)';
 	public timeQuestion: string = 'Zu welcher Uhrzeit beginnt und endet die Veranstaltung?';
-	public calendarQuestion: string = 'An welchem Tag beginnt bzw. endet die Veranstaltung?';
+	public calendarQuestion: string = 'An welchem Tag beginnt bzw. endet die Veranstaltung(sreihe)?';
 	public recurrenceQuestion: string = 'In welchem Rythmus wiederholt sich die Veranstaltung?';
 	public begin: string = 'Anfang';
 	public end: string = 'Ende';

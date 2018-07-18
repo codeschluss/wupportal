@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject } from 'rxjs/Subject';
 
 import { Activity } from 'app/models/activity';
 import { Address } from 'app/models/address';

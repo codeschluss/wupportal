@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="aboutWupportal" datatype="html">
+				<target>Über das Wupportal</target>
+      </trans-unit>
+      <trans-unit id="publicAgencies" datatype="html">
+				<target>Öffentliche Träger</target>
+      </trans-unit>
+      <trans-unit id="website" datatype="html">
+				<target>Internetpräsenz</target>
+      </trans-unit>
+      <trans-unit id="contactPhone" datatype="html">
+				<target>Telefon-Kontakt</target>
+      </trans-unit>
+      <trans-unit id="contactMail" datatype="html">
+				<target>E-Mail-Kontakt</target>
+      </trans-unit>
+      <trans-unit id="orgaRealisation" datatype="html">
+				<target>Organisatorische Umsetzung</target>
+      </trans-unit>
+      <trans-unit id="municipalSupport" datatype="html">
+				<target>Städtische Betreuung</target>
+      </trans-unit>
+      <trans-unit id="academicSupport" datatype="html">
+				<target>Akademische Betreuung</target>
+      </trans-unit>
+      <trans-unit id="techRealisation" datatype="html">
+				<target>Technische Umsetzung</target>
+      </trans-unit>
+      <trans-unit id="specialThanks" datatype="html">
+				<target>Besonderer Dank</target>
+      </trans-unit>
+      <trans-unit id="academicPatronage" datatype="html">
+				<target>Akademische Schirmherrschaft</target>
+      </trans-unit>
+      <trans-unit id="projectSupport" datatype="html">
+				<target>Projektbegleitung</target>
+      </trans-unit>
+      <trans-unit id="activityProviders" datatype="html">
+				<target>Kooperationspartner</target>
+      </trans-unit>
+      <trans-unit id="legalNotices" datatype="html">
+				<target>Rechtliche Hinweise</target>
+      </trans-unit>
+      <trans-unit id="aboutActivity" datatype="html">
+				<target>Aktivitäts-Details</target>
+      </trans-unit>
+      <trans-unit id="general" datatype="html">
+				<target>Allgemein</target>
+      </trans-unit>
+      <trans-unit id="schedules" datatype="html">
+				<target>Alle Termine</target>
+      </trans-unit>
+      <trans-unit id="schedule" datatype="html">
+				<target>Nächster Termin</target>
+      </trans-unit>
+      <trans-unit id="classification" datatype="html">
+				<target>Einordnung</target>
+      </trans-unit>
+      <trans-unit id="category" datatype="html">
+				<target>Kategorie</target>
+      </trans-unit>
+      <trans-unit id="organisation" datatype="html">
+				<target>Organisation</target>
+      </trans-unit>
+      <trans-unit id="targetGroups" datatype="html">
+				<target>Zielgruppen</target>
+      </trans-unit>
+      <trans-unit id="tags" datatype="html">
+				<target>Tags</target>
+      </trans-unit>
+      <trans-unit id="person" datatype="html">
+				<target>Person</target>
+      </trans-unit>
+      <trans-unit id="created" datatype="html">
+				<target>Aktiv seit</target>
+      </trans-unit>
+      <trans-unit id="aboutOrganisation" datatype="html">
+				<target>Organisations-Details</target>
+      </trans-unit>
+      <trans-unit id="contact" datatype="html">
+				<target>Kontakt</target>
+      </trans-unit>
+      <trans-unit id="selectActivity" datatype="html">
+				<target>Aktivität wählen</target>
+      </trans-unit>
+      <trans-unit id="selectLanguage" datatype="html">
+				<target>Sprache wählen</target>
+      </trans-unit>
+      <trans-unit id="query" datatype="html">
+				<target>durchsuchen</target>
+      </trans-unit>
+      <trans-unit id="results" datatype="html">
+				<target>Ergebnisse</target>
+      </trans-unit>
+      <trans-unit id="filters" datatype="html">
+				<target>Filter</target>
+      </trans-unit>
+      <trans-unit id="search" datatype="html">
+				<target>Suchen</target>
+      </trans-unit>
+      <trans-unit id="categories" datatype="html">
+				<target>Kategorien</target>
+      </trans-unit>
+      <trans-unit id="organisations" datatype="html">
+				<target>Organisationen</target>
+      </trans-unit>
+      <trans-unit id="suburbs" datatype="html">
+				<target>Quartiere</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

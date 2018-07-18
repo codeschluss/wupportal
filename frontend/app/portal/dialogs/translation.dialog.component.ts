@@ -9,7 +9,7 @@ import { Translation } from 'app/models/translation';
 	],
 	template: `
 		<h4 mat-dialog-title>
-			<slot i18n="@@selectLanguage">Sprache wählen</slot>
+			<i18n i18n="@@selectLanguage">selectLanguage</i18n>
 		</h4>
 		<mat-divider></mat-divider>
 		<mat-dialog-content>
@@ -28,7 +28,7 @@ export class TranslationDialogComponent {
 		@Inject(MAT_DIALOG_DATA)
 		public translations: Translation[],
 
-		private dialog: MatDialogRef<TranslationDialogComponent>,
+		private dialog: MatDialogRef<TranslationDialogComponent>
 	) { }
 
 }

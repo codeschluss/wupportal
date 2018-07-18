@@ -1,5 +1,5 @@
 <ng-template #header>
-	<slot i18n="@@aboutActivity">Aktivitäts-Details</slot>
+	<i18n i18n="@@aboutActivity">aboutActivity</i18n>
 </ng-template>
 
 <mat-list>
@@ -14,7 +14,7 @@
 	<mat-divider></mat-divider>
 
 	<h4 mat-subheader>
-		<slot i18n="@@general">Allgemein</slot>
+		<i18n i18n="@@general">general</i18n>
 	</h4>
 
 	<mat-list-item>
@@ -39,7 +39,7 @@
 			<div class="mat-list-text">
 				<ng-container *ngIf="viewSchedules">
 					<strong mat-line>
-						<slot i18n="@@schedules">Alle Termine</slot>
+						<i18n i18n="@@schedules">schedules</i18n>
 					</strong>
 					<ng-container *ngFor="let i of item.schedules">
 						<p mat-line>
@@ -52,7 +52,7 @@
 
 				<ng-container *ngIf="!viewSchedules">
 					<strong mat-line>
-						<slot i18n="@@schedule">Nächster Termin</slot>
+						<i18n i18n="@@schedule">schedule</i18n>
 					</strong>
 					<p mat-line>
 						{{ item.schedules[0].start_date | date:'dd.MM.yyyy, HH:mm':'UTC' }}
@@ -67,7 +67,7 @@
 	<mat-divider></mat-divider>
 
 	<h4 mat-subheader>
-		<slot i18n="@@classification">Einordnung</slot>
+		<i18n i18n="@@classification">classification</i18n>
 	</h4>
 
 	<mat-list-item>
@@ -75,7 +75,7 @@
 		</fa-icon>
 		<div class="mat-list-text">
 			<strong mat-line>
-				<slot i18n="@@category">Kategorie</slot>
+				<i18n i18n="@@category">category</i18n>
 			</strong>
 			<p mat-line>{{ item.category.name }}</p>
 		</div>
@@ -87,7 +87,7 @@
 			<fa-icon mat-list-icon icon="home"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>
-					<slot i18n="@@organisation">Organisation</slot>
+					<i18n i18n="@@organisation">organisation</i18n>
 				</strong>
 				<p mat-line>{{ item.provider.organisation.name }}</p>
 			</div>
@@ -99,7 +99,7 @@
 			<fa-icon mat-list-icon icon="chart-pie"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>
-					<slot i18n="@@targetGroups">Zielgruppen</slot>
+					<i18n i18n="@@targetGroups">targetGroups</i18n>
 				</strong>
 				<p mat-line>
 					<ng-container *ngFor="let i of item.target_groups">
@@ -115,7 +115,7 @@
 			<fa-icon mat-list-icon icon="tags"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>
-					<slot i18n="@@tags">Tags</slot>
+					<i18n i18n="@@tags">tags</i18n>
 				</strong>
 				<p mat-line>
 					<ng-container *ngFor="let i of item.tags">
@@ -130,7 +130,7 @@
 		<mat-divider></mat-divider>
 
 		<h4 mat-subheader>
-			<slot i18n="@@person">Person</slot>
+			<i18n i18n="@@person">person</i18n>
 		</h4>
 
 		<mat-list-item>
@@ -138,7 +138,7 @@
 			<div class="mat-list-text">
 				<strong mat-line>{{ item.provider.user.fullname }}</strong>
 				<p mat-line>
-					<slot i18n="@@created">Aktiv seit</slot>
+					<i18n i18n="@@created">created</i18n>
 					{{ item.provider.user.created | date:'dd.MM.yyyy' }}
 				</p>
 			</div>
@@ -150,7 +150,7 @@
 				<fa-icon mat-list-icon icon="envelope"></fa-icon>
 				<div class="mat-list-text">
 					<strong mat-line>
-						<slot i18n="@@contactMail">E-Mail-Kontakt</slot>
+						<i18n i18n="@@contactMail">contactMail</i18n>
 					</strong>
 					<p mat-line>{{ item.provider.user.username }}</p>
 				</div>
@@ -164,7 +164,7 @@
 					<fa-icon mat-list-icon icon="phone"></fa-icon>
 					<div class="mat-list-text">
 						<strong mat-line>
-							<slot i18n="@@contactPhone">Telefon-Kontakt</slot>
+							<i18n i18n="@@contactPhone">contactPhone</i18n>
 						</strong>
 						<p mat-line>{{ item.provider.user.phone }}</p>
 					</div>

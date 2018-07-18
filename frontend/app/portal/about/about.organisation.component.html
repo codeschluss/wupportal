@@ -1,5 +1,5 @@
 <ng-template #header>
-	<slot i18n="@@aboutOrganisation">Organisations-Details</slot>
+	<i18n i18n="@@aboutOrganisation">aboutOrganisation</i18n>
 </ng-template>
 
 <mat-list>
@@ -14,7 +14,7 @@
 	<mat-divider></mat-divider>
 
 	<h4 mat-subheader>
-		<slot i18n="@@general">Allgemein</slot>
+		<i18n i18n="@@general">general</i18n>
 	</h4>
 
 	<ng-container *ngIf="item.address">
@@ -41,7 +41,7 @@
 				<fa-icon mat-list-icon icon="star"></fa-icon>
 				<div class="mat-list-text">
 					<strong mat-line>
-						<slot i18n="@@website">Internetpräsenz</slot>
+						<i18n i18n="@@website">website</i18n>
 					</strong>
 					<p mat-line>{{ item.website }}</p>
 				</div>
@@ -53,7 +53,7 @@
 		<mat-divider></mat-divider>
 
 		<h4 mat-subheader>
-			<slot i18n="@@contact">Kontakt</slot>
+			<i18n i18n="@@contact">contact</i18n>
 		</h4>
 
 		<ng-container *ngIf="item.mail">
@@ -63,7 +63,7 @@
 					<fa-icon mat-list-icon icon="envelope"></fa-icon>
 					<div class="mat-list-text">
 						<strong mat-line>
-							<slot i18n="@@contactMail">E-Mail-Kontakt</slot>
+							<i18n i18n="@@contactMail">contactMail</i18n>
 						</strong>
 						<p mat-line>{{ item.mail }}</p>
 					</div>
@@ -78,7 +78,7 @@
 					<fa-icon mat-list-icon icon="phone"></fa-icon>
 					<div class="mat-list-text">
 						<strong mat-line>
-							<slot i18n="@@contactPhone">Telefon-Kontakt</slot>
+							<i18n i18n="@@contactPhone">contactPhone</i18n>
 						</strong>
 						<p mat-line>{{ item.phone }}</p>
 					</div>

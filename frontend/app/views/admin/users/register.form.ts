@@ -51,7 +51,8 @@ export class RegisterFormComponent implements OnInit {
 			.subscribe(() => {
 				this.isClicked = false;
 				this.userService.redirectToLogin();
-			});
+			}, () => this.isClicked = false
+			);
 	}
 
 	passwordInvalid(): string {

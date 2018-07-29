@@ -5,27 +5,27 @@
 
 			<mat-placeholder>
 				<mat-icon svgIcon="wuppertal"></mat-icon><b>upportal</b>
-				<b><slot i18n="@@query">durchsuchen</slot></b>
+				<b><i18n i18n="@@query">query</i18n></b>
 			</mat-placeholder>
 
 			<mat-hint align="start">
 				<button mat-button [color]="(selectables | async).length && 'primary'"
 					(click)="viewResults = !viewResults">
 					{{ (selectables | async).length }}
-					<slot i18n="@@results">Ergebnisse</slot>
+					<i18n i18n="@@results">results</i18n>
 					<fa-icon [icon]="viewResults ? 'angle-up' : 'angle-down'"></fa-icon>
 				</button>
 				<button mat-button [color]="filter.size && 'primary'"
 					(click)="viewFilters = !viewFilters">
 					{{ filter.size }}
-					<slot i18n="@@filters">Filter</slot>
+					<i18n i18n="@@filters">filters</i18n>
 					<fa-icon [icon]="viewFilters ? 'angle-up' : 'angle-down'"></fa-icon>
 				</button>
 			</mat-hint>
 
 			<mat-hint align="end">
 				<button mat-button color="primary" (click)="onSearch()">
-					<slot i18n="@@search">Suchen</slot>
+					<i18n i18n="@@search">search</i18n>
 					<fa-icon icon="long-arrow-alt-right"></fa-icon>
 				</button>
 			</mat-hint>
@@ -42,35 +42,35 @@
 			<mat-tab-group>
 				<mat-tab>
 					<ng-template mat-tab-label>
-						<slot i18n="@@categories">Kategorien</slot>
+						<i18n i18n="@@categories">categories</i18n>
 					</ng-template>
 					<search-filter field="Categories" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
 				<mat-tab>
 					<ng-template mat-tab-label>
-						<slot i18n="@@organisations">Organisationen</slot>
+						<i18n i18n="@@organisations">organisations</i18n>
 					</ng-template>
 					<search-filter field="Organisations" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
 				<mat-tab>
 					<ng-template mat-tab-label>
-						<slot i18n="@@suburbs">Quartiere</slot>
+						<i18n i18n="@@suburbs">suburbs</i18n>
 					</ng-template>
 					<search-filter field="Suburbs" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
 				<mat-tab>
 					<ng-template mat-tab-label>
-						<slot i18n="@@targetGroups">Zielgruppen</slot>
+						<i18n i18n="@@targetGroups">targetGroups</i18n>
 					</ng-template>
 					<search-filter field="TargetGroups" (filter)="onFilter($event)">
 					</search-filter>
 				</mat-tab>
 				<mat-tab>
 					<ng-template mat-tab-label>
-						<slot i18n="@@tags">Tags</slot>
+						<i18n i18n="@@tags">tags</i18n>
 					</ng-template>
 					<search-filter field="Tags" (filter)="onFilter($event)">
 					</search-filter>
@@ -124,7 +124,7 @@
 								<fa-icon mat-list-icon icon="home"></fa-icon>
 								<div class="mat-list-text">
 									<strong mat-line>
-										<slot i18n="@@organisation">Organisation</slot>
+										<i18n i18n="@@organisation">organisation</i18n>
 									</strong>
 									<p mat-line>{{ i.provider.organisation.name }}</p>
 								</div>
@@ -136,7 +136,7 @@
 								<fa-icon mat-list-icon icon="user"></fa-icon>
 								<div class="mat-list-text">
 									<strong mat-line>
-										<slot i18n="@@person">Person</slot>
+										<i18n i18n="@@person">person</i18n>
 									</strong>
 									<p mat-line>{{ i.provider.user.fullname }}</p>
 								</div>
@@ -147,7 +147,7 @@
 							<fa-icon mat-list-icon icon="calendar-alt"></fa-icon>
 							<div class="mat-list-text">
 								<strong mat-line>
-									<slot i18n="@@schedule">Nächster Termin</slot>
+									<i18n i18n="@@schedule">schedule</i18n>
 								</strong>
 								<p mat-line>
 									{{

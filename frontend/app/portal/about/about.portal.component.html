@@ -1,10 +1,10 @@
 <ng-template #header>
-	<slot i18n="@@aboutWupportal">Über das Wupportal</slot>
+	<i18n i18n="@@aboutWupportal">aboutWupportal</i18n>
 </ng-template>
 
 <mat-list>
 	<mat-list-item>
-		<h3><slot i18n="@@publicAgencies">Öffentliche Träger</slot></h3>
+		<h3><i18n i18n="@@publicAgencies">publicAgencies</i18n></h3>
 	</mat-list-item>
 
 	<h4 mat-subheader>Zentrum für Integration, Bildung u. kulturelle Vielfalt</h4>
@@ -28,7 +28,7 @@
 			<fa-icon mat-list-icon icon="star"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>
-					<slot i18n="@@website">Internetpräsenz</slot>
+					<i18n i18n="@@website">website</i18n>
 				</strong>
 				<p mat-line>www.integration-in-wuppertal.de</p>
 			</div>
@@ -41,7 +41,7 @@
 			<fa-icon mat-list-icon icon="phone"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>
-					<slot i18n="@@contactPhone">Telefon-Kontakt</slot>
+					<i18n i18n="@@contactPhone">contactPhone</i18n>
 				</strong>
 				<p mat-line>(+49) 202 5632750</p>
 			</div>
@@ -70,7 +70,7 @@
 			<fa-icon mat-list-icon icon="star"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>
-					<slot i18n="@@website">Internetpräsenz</slot>
+					<i18n i18n="@@website">website</i18n>
 				</strong>
 				<p mat-line>www.transzent.uni-wuppertal.de</p>
 			</div>
@@ -83,7 +83,7 @@
 			<fa-icon mat-list-icon icon="envelope"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>
-					<slot i18n="@@contactMail">E-Mail-Kontakt</slot>
+					<i18n i18n="@@contactMail">contactMail</i18n>
 				</strong>
 				<p mat-line>transzent@uni-wuppertal.de</p>
 			</div>
@@ -96,7 +96,7 @@
 			<fa-icon mat-list-icon icon="phone"></fa-icon>
 			<div class="mat-list-text">
 				<strong mat-line>
-					<slot i18n="@@contactPhone">Telefon-Kontakt</slot>
+					<i18n i18n="@@contactPhone">contactPhone</i18n>
 				</strong>
 				<p mat-line>(+49) 202 74746440</p>
 			</div>
@@ -106,7 +106,7 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h3><slot i18n="@@orgaRealisation">Organisatorische Umsetzung</slot></h3>
+		<h3><i18n i18n="@@orgaRealisation">orgaRealisation</i18n></h3>
 	</mat-list-item>
 
 	<mat-list-item>
@@ -123,7 +123,7 @@
 			<div class="mat-list-text">
 				<strong mat-line>Sonja Noderer</strong>
 				<p mat-line>
-					<slot i18n="@@municipalSupport">Städtische Betreuung</slot>
+					<i18n i18n="@@municipalSupport">municipalSupport</i18n>
 				</p>
 			</div>
 		</mat-list-item>
@@ -136,7 +136,7 @@
 			<div class="mat-list-text">
 				<strong mat-line>Dr. Laura Mathiaszyk</strong>
 				<p mat-line>
-					<slot i18n="@@academicSupport">Akademische Betreuung</slot>
+					<i18n i18n="@@academicSupport">academicSupport</i18n>
 				</p>
 			</div>
 		</mat-list-item>
@@ -145,7 +145,7 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h3><slot i18n="@@techRealisation">Technische Umsetzung</slot></h3>
+		<h3><i18n i18n="@@techRealisation">techRealisation</i18n></h3>
 	</mat-list-item>
 
 	<mat-list-item>
@@ -200,7 +200,7 @@
 	</a>
 
 	<mat-list-item>
-		<h3><slot i18n="@@specialThanks">Besonderer Dank</slot></h3>
+		<h3><i18n i18n="@@specialThanks">specialThanks</i18n></h3>
 	</mat-list-item>
 
 	<mat-list-item>
@@ -218,7 +218,7 @@
 			<div class="mat-list-text">
 				<strong mat-line>Prof. Dr. Øyvind Eide</strong>
 				<p mat-line>
-					<slot i18n="@@academicPatronage">Akademische Schirmherrschaft</slot>
+					<i18n i18n="@@academicPatronage">academicPatronage</i18n>
 				</p>
 			</div>
 		</mat-list-item>
@@ -231,7 +231,7 @@
 			<div class="mat-list-text">
 				<strong mat-line>Jens Klußmann</strong>
 				<p mat-line>
-					<slot i18n="@@projectSupport">Projektbegleitung</slot>
+					<i18n i18n="@@projectSupport">projectSupport</i18n>
 				</p>
 			</div>
 		</mat-list-item>
@@ -240,7 +240,7 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h3><slot i18n="@@activityProviders">Kooperationspartner</slot></h3>
+		<h3><i18n i18n="@@activityProviders">activityProviders</i18n></h3>
 	</mat-list-item>
 
 	<mat-list-item>
@@ -264,7 +264,7 @@
 	<mat-divider></mat-divider>
 
 	<mat-list-item>
-		<h3><slot i18n="@@legalNotices">Rechtliche Hinweise</slot></h3>
+		<h3><i18n i18n="@@legalNotices">legalNotices</i18n></h3>
 	</mat-list-item>
 
 	<ng-container *ngIf="!showLegal">

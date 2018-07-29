@@ -22,6 +22,7 @@ import * as fas from '@fortawesome/free-solid-svg-icons';
 
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 
+import { I18nComponent } from 'app/portal/i18n.component';
 import { PortalRouterModule } from 'app/portal/portal-router.module';
 import {
 	ActivityDialogComponent
@@ -72,6 +73,8 @@ fontawesome.add(
 
 @NgModule({
 	declarations: [
+		I18nComponent,
+
 		MappingComponent,
 		PortalComponent,
 		SearchComponent,

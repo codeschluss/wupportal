@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { ActivityService } from 'app/services/activity.service';
+import { I18nResolver } from 'app/services/i18n.resolver';
 import { TranslationService } from 'app/services/translation.service';
 import {
 	CategoryService,
@@ -46,6 +47,7 @@ import {
 					activities: ActivityResolver,
 					categories: CategoryResolver,
 					configuration: ConfigurationResolver,
+					locale: I18nResolver,
 					organisations: OrganisationResolver,
 					suburbs: SuburbResolver,
 					tags: TagResolver,
@@ -76,6 +78,7 @@ import {
 		])
 	],
 	providers: [
+		I18nResolver,
 		{
 			provide: ActivityResolver,
 			deps: [ActivityService],

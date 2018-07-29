@@ -152,7 +152,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 		const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
 		const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
 
-		let icon = {
+		const icon = {
 			anchor: [.5, 1],
 			color: '#' + colorConvert.rgb.hex(r, g, b),
 			scale: 0.9 + colors.length / 10,

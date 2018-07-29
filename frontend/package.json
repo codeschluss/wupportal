@@ -7,7 +7,7 @@
 		"build": "ng build -d=js -nc -oh=none -vc=true",
 		"start": "ng build -d=js -nc -oh=none -vc=true --watch",
 		"strip": "ng build -d=js -nc -oh=none -vc=true --prod",
-		"lang": "ng xi18n --locale=de --out-file=strings.xlf --output-path=locales",
+		"lang": "ng xi18n -l=root -of=strings.xlf -op=../backend/webroot/i18n",
 		"lint": "ng lint"
 	},
 	"dependencies": {
@@ -24,9 +24,10 @@
 		"@angular/platform-browser-dynamic": "5.2.10",
 		"@angular/router": "5.2.10",
 		"@fortawesome/angular-fontawesome": "0.1.0-9",
-		"@fortawesome/free-solid-svg-icons": "5.1.0-8",
 		"@fortawesome/fontawesome-free-solid": "5.0.11",
 		"@fortawesome/fontawesome-svg-core": "1.2.0-11",
+		"@fortawesome/free-solid-svg-icons": "5.1.0-8",
+		"@ngx-translate/i18n-polyfill": "0.2.0",
 		"bootstrap": "4.1.1",
 		"classlist.js": "1.1.20150312",
 		"core-js": "2.5.5",

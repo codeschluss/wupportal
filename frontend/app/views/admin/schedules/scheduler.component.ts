@@ -77,6 +77,7 @@ export class SchedulerComponent implements OnInit {
 	) {
 	}
 
+	// stepper for generate view
 	setStep(index: number): void {
 		this.step = index;
 	}
@@ -183,9 +184,6 @@ export class SchedulerComponent implements OnInit {
 					case 'months':
 						if (this.formGroup.get('monthlyRecurrenceCtrl').value === 'monthDate') {
 							startDate.set({ 'date': this.formGroup.get('monthDateCtrl').value });
-							// if (startDate.date() !== this.formGroup.get('monthDateCtrl').value) {
-							// 	startDate.add(this.formGroup.get('rythmPeriodCtrl').value, 'month');
-							// }
 							rule = new RRule({
 								freq: RRule.MONTHLY,
 								interval: this.formGroup.get('rythmPeriodCtrl').value,

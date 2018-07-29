@@ -11,7 +11,7 @@ import { Activity } from 'app/models/activity';
 	],
 	template: `
 		<h4 mat-dialog-title>
-			<slot i18n="@@selectActivity">Aktivität wählen</slot>
+			<i18n i18n="@@selectActivity">selectActivity</i18n>
 		</h4>
 		<mat-divider></mat-divider>
 		<mat-dialog-content>

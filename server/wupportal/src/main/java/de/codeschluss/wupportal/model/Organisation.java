@@ -14,10 +14,6 @@ import javax.persistence.*;
 public class Organisation extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
-
 	@Lob
 	private String description;
 
@@ -31,8 +27,7 @@ public class Organisation extends BaseEntity implements Serializable {
 	private String phone;
 
 	private String website;
-
-	// bi-directional many-to-one association to Address
+	
 	@ManyToOne
 	private Address address;
 
@@ -41,15 +36,7 @@ public class Organisation extends BaseEntity implements Serializable {
 
 	public Organisation() {
 	}
-
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
+	
 	public String getDescription() {
 		return this.description;
 	}

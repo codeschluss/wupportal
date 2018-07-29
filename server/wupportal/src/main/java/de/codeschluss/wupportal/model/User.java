@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the users database table.
  * 
@@ -17,6 +19,7 @@ public class User extends BaseEntity implements Serializable {
 
 	private String fullname;
 
+	@JsonIgnore
 	private String password;
 
 	private String phone;

@@ -10,3 +10,7 @@ frontend/*.log
 frontend/dist
 frontend/node_modules
 frontend/package-lock.json
+server/.metadata/
+server/wupportal/target/
+/server/.recommenders
+/server/RemoteSystemsTempFiles

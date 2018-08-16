@@ -24,11 +24,11 @@
 			</div>
 		</div>
 		<mat-card class="address-card" *ngIf="organisation.address">
-			<div *ngIf="!organisation.address.isValid">
+			<mat-error *ngIf="!organisation.address.isValid">
 				{{constants.address + ' ' + constants.required}}
 				<address-autocomplete-form #addressAutocompleteComponent [initialAddress]="organisation.address"></address-autocomplete-form>
 				<button mat-button color="primary" type="button" (click)="addressSubmit()">{{constants.ok}}</button>
-			</div>
+			</mat-error>
 			<div *ngIf="organisation.address.isValid">
 				{{organisation.address.toString}}
 				<button mat-button color="primary" type="warn" class="btn btn-primary" (click)="resetAddress()">{{constants.change}}</button>

@@ -13,8 +13,6 @@ import de.codeschluss.wupportal.model.Activity;
 @RepositoryRestResource(collectionResourceRel = "activities", path = "activities")
 public interface IActivityRepository extends JpaRepository<Activity, String> {
 	
-	Optional<List<Activity>> findByProviderIdIn(@Param("providerId") List<String> providerId);
-	
 	Optional<List<Activity>> findPagedByProviderIdIn(@Param("providerId") List<String> providerId, Pageable page);
 
 }

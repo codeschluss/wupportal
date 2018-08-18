@@ -13,10 +13,6 @@ import de.codeschluss.wupportal.model.Provider;
 @RepositoryRestResource(collectionResourceRel = "providers", path = "providers")
 public interface IProviderRepository extends JpaRepository<Provider, String> {
 	
-	Optional<List<Provider>> findByOrganisationId(@Param("organisationId") String organisationId);
-	
 	Optional<List<Provider>> findPagedByOrganisationId(@Param("organisationId") String organisationId, Pageable page);
-	
-	Optional<List<Provider>> findByUserId(@Param("userId") String userId);
 
 }

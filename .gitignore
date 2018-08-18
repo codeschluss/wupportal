@@ -1,12 +1,12 @@
-backend/config/.env
+backend/bin
 backend/config/app.php
-backend/webroot/js
 backend/composer.lock
-backend/logs
+backend/logs/*.log
+backend/tests
 backend/tmp
 backend/vendor
+backend/webroot/js
 
-frontend/*.log
-frontend/dist
 frontend/node_modules
+frontend/npm-debug.log
 frontend/package-lock.json

@@ -17,6 +17,7 @@ public class Translation extends BaseEntity implements Serializable {
 	private String name;
 
 	public Translation() {
+		super();
 	}
 
 	public String getLocale() {

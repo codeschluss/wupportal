@@ -24,6 +24,7 @@ public class TargetGroup extends BaseEntity implements Serializable {
 	private List<Activity> activities;
 
 	public TargetGroup() {
+		super();
 	}
 
 	public String getDescription() {

@@ -39,6 +39,7 @@ public class Address extends BaseEntity implements Serializable {
 	private List<Organisation> organisations;
 
 	public Address() {
+		super();
 	}
 
 	public String getHouseNumber() {

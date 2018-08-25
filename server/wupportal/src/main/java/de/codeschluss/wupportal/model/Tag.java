@@ -24,6 +24,7 @@ public class Tag extends BaseEntity implements Serializable {
 	private List<Activity> activities;
 
 	public Tag() {
+		super();
 	}
 
 	public String getDescription() {

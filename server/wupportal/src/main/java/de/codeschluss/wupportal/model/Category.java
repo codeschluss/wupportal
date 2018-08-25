@@ -26,6 +26,7 @@ public class Category extends BaseEntity implements Serializable {
 	private List<Activity> activities;
 
 	public Category() {
+		super();
 	}
 
 	public String getColor() {

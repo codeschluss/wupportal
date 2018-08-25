@@ -18,6 +18,7 @@ public class Configuration extends BaseEntity implements Serializable {
 	private String value;
 
 	public Configuration() {
+		super();
 	}
 
 	public String getItem() {

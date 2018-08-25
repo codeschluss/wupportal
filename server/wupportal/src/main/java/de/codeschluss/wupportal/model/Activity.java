@@ -50,6 +50,7 @@ public class Activity extends BaseEntity implements Serializable {
 	private List<Schedule> schedules;
 
 	public Activity() {
+		super();
 	}
 
 	public String getDescription() {

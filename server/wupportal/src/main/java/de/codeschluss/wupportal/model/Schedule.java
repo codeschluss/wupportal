@@ -27,6 +27,7 @@ public class Schedule extends BaseEntity implements Serializable {
 	private Date startDate;
 
 	public Schedule() {
+		super();
 	}
 
 	public Activity getActivity() {

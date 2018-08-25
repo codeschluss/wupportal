@@ -21,6 +21,7 @@ public class Suburb extends BaseEntity implements Serializable {
 	private List<Address> addresses;
 
 	public Suburb() {
+		super();
 	}
 
 	public String getName() {

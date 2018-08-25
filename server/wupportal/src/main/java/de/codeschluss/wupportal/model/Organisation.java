@@ -35,6 +35,7 @@ public class Organisation extends BaseEntity implements Serializable {
 	private List<Provider> providers;
 
 	public Organisation() {
+		super();
 	}
 	
 	public String getDescription() {

@@ -32,6 +32,7 @@ public class Provider extends BaseEntity implements Serializable {
 	private User user;
 
 	public Provider() {
+		super();
 	}
 
 	public boolean getAdmin() {

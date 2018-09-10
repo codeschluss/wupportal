@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import de.codeschluss.wupportal.model.Organisation;
 
-public interface IOrganisationRepository extends JpaRepository<Organisation, String>{
+public interface OrganisationRepository extends JpaRepository<Organisation, String>{
 
 }

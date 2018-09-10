@@ -5,16 +5,31 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.hateoas.core.Relation;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.codeschluss.wupportal.model.Activity;
 import de.codeschluss.wupportal.model.BaseEntity;
 import de.codeschluss.wupportal.model.Organisation;
+import de.codeschluss.wupportal.users.UserEntity;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * The persistent class for the providers database table.
  * 
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Entity
 @Table(name = "providers")
+@Relation(collectionRelation = "data")
 public class Provider extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,56 +38,14 @@ public class Provider extends BaseEntity implements Serializable {
 	private boolean approved;
 
 	@OneToMany(mappedBy = "provider")
+	@JsonIgnore
 	private List<Activity> activities;
 
 	@ManyToOne
+	@JsonIgnore
 	private Organisation organisation;
 
 	@ManyToOne
-	private User user;
-
-	public Provider() {
-		super();
-	}
-
-	public boolean getAdmin() {
-		return this.admin;
-	}
-
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
-
-	public boolean getApproved() {
-		return this.approved;
-	}
-
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
-
-	public List<Activity> getActivities() {
-		return this.activities;
-	}
-
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
-	}
-
-	public Organisation getOrganisation() {
-		return this.organisation;
-	}
-
-	public void setOrganisation(Organisation organisation) {
-		this.organisation = organisation;
-	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
+	@JsonIgnore
+	private UserEntity user;
 }

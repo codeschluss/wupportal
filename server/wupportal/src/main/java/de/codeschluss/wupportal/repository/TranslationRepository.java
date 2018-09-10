@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import de.codeschluss.wupportal.model.Translation;
 
-public interface ITranslationRepository extends JpaRepository<Translation, String> {
+public interface TranslationRepository extends JpaRepository<Translation, String> {
 
 }

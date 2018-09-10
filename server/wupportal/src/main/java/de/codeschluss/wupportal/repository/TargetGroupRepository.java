@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import de.codeschluss.wupportal.model.TargetGroup;
 
-public interface ITargetGroupRepository extends JpaRepository<TargetGroup, String>{
+public interface TargetGroupRepository extends JpaRepository<TargetGroup, String>{
 
 }

@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import de.codeschluss.wupportal.model.Category;
 
-public interface ICategoryRepository extends JpaRepository<Category, String>{
+public interface CategoryRepository extends JpaRepository<Category, String>{
 
 }

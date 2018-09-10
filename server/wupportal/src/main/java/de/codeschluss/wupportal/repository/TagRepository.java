@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import de.codeschluss.wupportal.model.Tag;
 
-public interface ITagRepository extends JpaRepository<Tag, String> {
+public interface TagRepository extends JpaRepository<Tag, String> {
 
 }

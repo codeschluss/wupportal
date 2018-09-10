@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import de.codeschluss.wupportal.model.Address;
 
-public interface IAddressRepository extends JpaRepository<Address, String> {
+public interface AddressRepository extends JpaRepository<Address, String> {
 	
 
 }

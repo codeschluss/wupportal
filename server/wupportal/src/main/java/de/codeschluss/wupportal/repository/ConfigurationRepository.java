@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import de.codeschluss.wupportal.model.Configuration;
 
-public interface IConfigurationRepository extends JpaRepository<Configuration, String>{
+public interface ConfigurationRepository extends JpaRepository<Configuration, String>{
 
 }

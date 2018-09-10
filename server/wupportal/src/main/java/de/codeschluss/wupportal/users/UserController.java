@@ -2,17 +2,12 @@ package de.codeschluss.wupportal.users;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
-import org.springframework.http.ResponseEntity.HeadersBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,16 +24,13 @@ import de.codeschluss.wupportal.repository.ProviderRepository;
 @RestController
 public class UserController {
 
-	private final UserRepository userRepo;
 	private final UserService userService;
 	private final ProviderRepository providerRepo;
 	private final UserResourceAssembler assembler;
 
-	public UserController(UserRepository userRepository, 
+	public UserController(UserService userService,
 			ProviderRepository providerRepo,
-			UserResourceAssembler userAssembler,
-			UserService userService) {
-		this.userRepo = userRepository;
+			UserResourceAssembler userAssembler) {
 		this.providerRepo = providerRepo;
 		this.assembler = userAssembler;
 		this.userService = userService;
@@ -76,7 +68,7 @@ public class UserController {
 
 	@GetMapping("/users/{id}/providers")
 	public Resources<Provider> findProvidersByUser(@PathVariable String id) {
-		UserEntity user = userRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
+		UserEntity user = userService.getById(id);
 		return assembler.toProviderResources(id,
 				providerRepo.findByUser(user).orElseThrow(() -> new NotFoundException(id)));
 	}

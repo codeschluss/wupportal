@@ -2,7 +2,6 @@ package de.codeschluss.wupportal.user;
 
 import java.net.URISyntaxException;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.core.DummyInvocationUtils;
@@ -13,13 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.wupportal.base.CrudController;
 import de.codeschluss.wupportal.base.PagingAndSortingAssembler;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import de.codeschluss.wupportal.provider.ProviderService;
+import de.codeschluss.wupportal.utils.FilterSortPaginate;
 
 @RestController
 public class UserController extends CrudController<UserEntity, PagingAndSortingAssembler<UserEntity>, UserService>{
@@ -34,12 +33,8 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@GetMapping("/users")
-	public ResponseEntity<?> findAll(@RequestParam(required = false) String filter,
-			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size,
-			@RequestParam(value = "order", defaultValue = "ASC", required = false) Sort.Direction direction,
-			@RequestParam(value = "sort", defaultValue = "username", required = false) String... sortProperties) {
-		return super.findAll(filter, page, size, direction, sortProperties);
+	public ResponseEntity<?> findAll(FilterSortPaginate params) {
+		return super.findAll(params);
 	}
 
 	@GetMapping("/users/{id}")

@@ -11,49 +11,46 @@ import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import de.codeschluss.wupportal.user.UserEntity;
+import de.codeschluss.wupportal.utils.FilterSortPaginate;
 
 public abstract class CrudController<E extends BaseEntity, A extends PagingAndSortingAssembler<E>, S extends DataService<E>> {
 	
 	protected final S service;
 	protected final A assembler;
 	
+	protected final String DEFAULT_SORT_PROP = "id";
+	
 	public CrudController(S service, A assembler) {
 		this.assembler = assembler;
 		this.service = service;
 	}
 
-	public ResponseEntity<?> findAll(@RequestParam(required = false) String filter,
-			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size,
-			@RequestParam(value = "order", defaultValue = "ASC", required = false) Sort.Direction direction,
-			@RequestParam(value = "sort", defaultValue = "default", required = false) String... sortProperties) {
+	public ResponseEntity<?> findAll(FilterSortPaginate params) {
 		
-		if (!isPaginationValid(page, size)) {
+		if (!isPaginationValid(params.getPage(), params.getSize())) {
 			//TODO: Error Objects with proper message
-			return ResponseEntity.badRequest().body("either bith size and page are null or both contain values");
+			return ResponseEntity.badRequest().body("either both size and page are null or both contain values");
 		}
 		
-		if (!isSortingValid(sortProperties)) {
+		if (!isSortingValid(params.getSort())) {
 			//TODO: Error Objects with proper message
 			return ResponseEntity.badRequest().body("sort property does not exist");
 		}
 		
-		Sort sort = new Sort(direction, sortProperties);
-		if (page == null && size == null) {
+		Sort sort = params.createSort(DEFAULT_SORT_PROP);
+		if (params.getPage() == null && params.getSize() == null) {
 			return ResponseEntity.ok(
 					assembler.toListResource(
-							service.getSorted(filter, sort),
+							service.getSorted(params.getFilter(), sort),
 							getFindAllMethodOn()));
 		}
 		
-		PageRequest pageRequest = PageRequest.of(page, size, sort);
+		PageRequest pageRequest = PageRequest.of(params.getPage(), params.getSize(), sort);
 		return ResponseEntity.ok(
-				assembler.toPageResource(
-						service.getPaged(filter, pageRequest),
-						getFindAllMethodOn()));
+				assembler.toPageResource(params,
+						service.getPaged(params.getFilter(), pageRequest)));
 	}
 
 	public Resource<E> findOne(@PathVariable String id) {
@@ -81,13 +78,13 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 	}
 	
 	
-	private boolean isSortingValid(String[] sortProperties) {
-		return Arrays
+	private boolean isSortingValid(String sortProp) {
+		return sortProp == null || Arrays
 				.stream(UserEntity.class.getDeclaredFields())
-				.anyMatch(f -> Arrays.asList(sortProperties).contains(f.getName()));
+				.anyMatch(f -> f.getName().equals(sortProp));
 	}
 
 	private ResponseEntity<?> getFindAllMethodOn() {
-		return DummyInvocationUtils.methodOn(this.getClass()).findAll(null,null,null,null);
+		return DummyInvocationUtils.methodOn(this.getClass()).findAll(null);
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import de.codeschluss.wupportal.users.UserEntity;
+import de.codeschluss.wupportal.user.UserEntity;
 
 @Component
 public class AuthorizationService {

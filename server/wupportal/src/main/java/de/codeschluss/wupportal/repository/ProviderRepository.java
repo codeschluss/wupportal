@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 import de.codeschluss.wupportal.model.Provider;
-import de.codeschluss.wupportal.users.UserEntity;
+import de.codeschluss.wupportal.user.UserEntity;
 
 public interface ProviderRepository extends JpaRepository<Provider, String> {
 	

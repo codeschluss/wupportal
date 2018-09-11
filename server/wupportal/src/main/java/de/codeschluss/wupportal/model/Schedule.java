@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import de.codeschluss.wupportal.base.BaseEntity;
+
 /**
  * The persistent class for the schedules database table.
  * 

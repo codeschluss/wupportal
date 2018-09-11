@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import de.codeschluss.wupportal.users.UserRepository;
+import de.codeschluss.wupportal.user.UserRepository;
 
 //@Component
 //public class UserDetailService implements UserDetailsService {

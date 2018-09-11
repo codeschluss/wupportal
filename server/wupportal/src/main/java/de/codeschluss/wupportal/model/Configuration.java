@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import de.codeschluss.wupportal.base.BaseEntity;
+
 /**
  * The persistent class for the configurations database table.
  * 

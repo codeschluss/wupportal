@@ -3,6 +3,8 @@ package de.codeschluss.wupportal.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import de.codeschluss.wupportal.base.BaseEntity;
+
 /**
  * The persistent class for the translations database table.
  * 

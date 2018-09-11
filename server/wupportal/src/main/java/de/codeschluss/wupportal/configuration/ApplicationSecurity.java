@@ -9,8 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 
-//import de.codeschluss.wupportal.services.UserDetailService;
-import de.codeschluss.wupportal.users.UserEntity;
+import de.codeschluss.wupportal.user.UserEntity;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)

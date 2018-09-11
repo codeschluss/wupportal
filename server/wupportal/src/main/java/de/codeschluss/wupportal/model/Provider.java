@@ -9,10 +9,10 @@ import org.springframework.hateoas.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.codeschluss.wupportal.base.BaseEntity;
 import de.codeschluss.wupportal.model.Activity;
-import de.codeschluss.wupportal.model.BaseEntity;
 import de.codeschluss.wupportal.model.Organisation;
-import de.codeschluss.wupportal.users.UserEntity;
+import de.codeschluss.wupportal.user.UserEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

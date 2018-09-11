@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import de.codeschluss.wupportal.base.BaseEntity;
+
 /**
  * The persistent class for the tags database table.
  * 

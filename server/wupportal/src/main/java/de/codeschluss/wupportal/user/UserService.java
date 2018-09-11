@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.users;
+package de.codeschluss.wupportal.user;
 
 import java.util.List;
 
@@ -7,10 +7,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import de.codeschluss.wupportal.base.DataService;
 import de.codeschluss.wupportal.exception.NotFoundException;
 
 @Service
-public class UserService {
+public class UserService implements DataService<UserEntity> {
 	
 	private final UserRepository userRepo;
 	
@@ -18,16 +19,16 @@ public class UserService {
 		this.userRepo = userRepo;
 	}
 	
-	public List<UserEntity> getSortedUsers(String filter, Sort sort) {
+	public List<UserEntity> getSorted(String filter, Sort sort) {
 		return filter == null
-				? userRepo.findFiltered(filter, sort)
-				: userRepo.findAll();
+				? userRepo.findAll()
+				: userRepo.findFiltered(filter, sort).orElseThrow(() -> new NotFoundException(filter));
 	}
 	
-	public Page<UserEntity> getPagedUsers(String filter, PageRequest pageRequest) {
+	public Page<UserEntity> getPaged(String filter, PageRequest pageRequest) {
 		return filter == null 
 				? userRepo.findAll(pageRequest)
-				: userRepo.findFiltered(filter, pageRequest);
+				: userRepo.findFiltered(filter, pageRequest).orElseThrow(() -> new NotFoundException(filter));
 	}
 	
 	public UserEntity getById(String id) {
@@ -38,7 +39,7 @@ public class UserService {
 		return userRepo.save(newUser);
 	}
 
-	public UserEntity updateUser(String id, UserEntity newUser) {
+	public UserEntity update(String id, UserEntity newUser) {
 		return userRepo.findById(id).map(user -> {
 			user.setUsername(newUser.getUsername());
 			user.setFullname(newUser.getFullname());

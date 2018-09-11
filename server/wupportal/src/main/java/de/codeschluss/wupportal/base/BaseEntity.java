@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.model;
+package de.codeschluss.wupportal.base;
 
 import java.io.Serializable;
 import java.util.Date;

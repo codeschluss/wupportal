@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.users;
+package de.codeschluss.wupportal.user;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import de.codeschluss.wupportal.model.BaseEntity;
+import de.codeschluss.wupportal.base.BaseEntity;
 import de.codeschluss.wupportal.model.Provider;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

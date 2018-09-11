@@ -43,7 +43,7 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements
 		if (entitiesPaged.hasPrevious()) {
 			links.add(PaginationLinkBuilder.createPrevLink(params, entitiesPaged.previousPageable()));
 		}
-		links.add(PaginationLinkBuilder.createFirstLink(params));
+		links.add(PaginationLinkBuilder.createSelfLink(params));
 		if (entitiesPaged.hasNext()) {
 			links.add(PaginationLinkBuilder.createNextLink(params, entitiesPaged.nextPageable()));
 		}

@@ -20,6 +20,17 @@ public class PaginationLinkBuilder {
 			
 		return new Link(baseUri.toUriString(), Link.REL_FIRST);
 	}
+	
+	public static Link createSelfLink(FilterSortPaginate params) {
+		ServletUriComponentsBuilder baseUri = ServletUriComponentsBuilder.fromCurrentRequestUri();
+		
+		addBaseParams(baseUri, params);
+		baseUri.queryParam("page", getValueOf("page", params));
+		baseUri.queryParam("size", getValueOf("size", params));
+			
+		return new Link(baseUri.toUriString()).withSelfRel();
+	}
+
 
 	public static Link createPrevLink(FilterSortPaginate params, Pageable previousPageable) {
 		ServletUriComponentsBuilder baseUri = ServletUriComponentsBuilder.fromCurrentRequestUri();

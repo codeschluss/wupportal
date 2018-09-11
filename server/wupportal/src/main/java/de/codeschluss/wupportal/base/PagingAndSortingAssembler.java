@@ -32,7 +32,7 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements
 				linkTo(responseEntity).withSelfRel());
 	}
 	
-	public <S extends BaseEntity> Resources<S> toSubResources(String id, List<S> subEntities, Resources<S> resources) {
+	public <S extends BaseEntity> Resources<S> toSubResource(List<S> subEntities, Resources<S> resources) {
 		return new Resources<>(subEntities,
 				linkTo(resources).withSelfRel());
 	}

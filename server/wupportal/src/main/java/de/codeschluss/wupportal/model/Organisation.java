@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import de.codeschluss.wupportal.base.BaseEntity;
+import de.codeschluss.wupportal.provider.ProviderEntity;
 
 /**
  * The persistent class for the organisations database table.
@@ -34,7 +35,7 @@ public class Organisation extends BaseEntity implements Serializable {
 	private Address address;
 
 	@OneToMany(mappedBy = "organisation")
-	private List<Provider> providers;
+	private List<ProviderEntity> providerEntities;
 
 	public Organisation() {
 		super();
@@ -96,12 +97,12 @@ public class Organisation extends BaseEntity implements Serializable {
 		this.address = address;
 	}
 
-	public List<Provider> getProviders() {
-		return this.providers;
+	public List<ProviderEntity> getProviders() {
+		return this.providerEntities;
 	}
 
-	public void setProviders(List<Provider> providers) {
-		this.providers = providers;
+	public void setProviders(List<ProviderEntity> providerEntities) {
+		this.providerEntities = providerEntities;
 	}
 
 }

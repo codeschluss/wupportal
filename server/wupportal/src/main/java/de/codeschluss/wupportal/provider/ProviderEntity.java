@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.model;
+package de.codeschluss.wupportal.provider;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "providers")
 @Relation(collectionRelation = "data")
-public class Provider extends BaseEntity implements Serializable {
+public class ProviderEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private boolean admin;

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.codeschluss.wupportal.base.BaseEntity;
-import de.codeschluss.wupportal.model.Provider;
+import de.codeschluss.wupportal.provider.ProviderEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -50,7 +50,7 @@ public class UserEntity extends BaseEntity {
 
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
-	private List<Provider> providers;
+	private List<ProviderEntity> providerEntities;
 	
 	@JsonIgnore
 	public String getPassword() {

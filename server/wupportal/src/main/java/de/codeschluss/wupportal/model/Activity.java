@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import de.codeschluss.wupportal.base.BaseEntity;
+import de.codeschluss.wupportal.provider.ProviderEntity;
 
 /**
  * The persistent class for the activities database table.
@@ -32,7 +33,7 @@ public class Activity extends BaseEntity implements Serializable {
 	private Category category;
 
 	@ManyToOne
-	private Provider provider;
+	private ProviderEntity provider;
 
 	@ManyToMany()
 	@JoinTable(
@@ -95,12 +96,12 @@ public class Activity extends BaseEntity implements Serializable {
 		this.category = category;
 	}
 
-	public Provider getProvider() {
+	public ProviderEntity getProvider() {
 		return this.provider;
 	}
 
-	public void setProvider(Provider provider) {
-		this.provider = provider;
+	public void setProvider(ProviderEntity providerEntity) {
+		this.provider = providerEntity;
 	}
 
 	public List<Tag> getTags() {

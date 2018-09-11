@@ -18,20 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.wupportal.base.CrudController;
 import de.codeschluss.wupportal.base.PagingAndSortingAssembler;
-import de.codeschluss.wupportal.exception.NotFoundException;
-import de.codeschluss.wupportal.model.Provider;
-import de.codeschluss.wupportal.repository.ProviderRepository;
+import de.codeschluss.wupportal.provider.ProviderEntity;
+import de.codeschluss.wupportal.provider.ProviderService;
 
 @RestController
 public class UserController extends CrudController<UserEntity, PagingAndSortingAssembler<UserEntity>, UserService>{
 
-	private final ProviderRepository providerRepo;
+	private final ProviderService providerService;
 
 	public UserController(UserService userService,
-			ProviderRepository providerRepo,
+			ProviderService providerService,
 			UserResourceAssembler userAssembler) {
 		super(userService, userAssembler);
-		this.providerRepo = providerRepo;
+		this.providerService = providerService;
 	}
 	
 	@GetMapping("/users")
@@ -64,9 +63,9 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@GetMapping("/users/{id}/providers")
-	public Resources<Provider> findProvidersByUser(@PathVariable String id) {
-		return assembler.toSubResources(id,
-				providerRepo.findByUser(service.getById(id)).orElseThrow(() -> new NotFoundException(id)), 
+	public Resources<ProviderEntity> findProvidersByUser(@PathVariable String id) {
+		return assembler.toSubResource(
+				providerService.getProvidersByUser(service.getById(id)), 
 				DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id));
 	}
 }

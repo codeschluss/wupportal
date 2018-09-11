@@ -30,7 +30,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	public UserController(UserService userService,
 			ProviderRepository providerRepo,
 			UserResourceAssembler userAssembler) {
-		super(userService, userAssembler, "username");
+		super(userService, userAssembler);
 		this.providerRepo = providerRepo;
 	}
 	
@@ -39,7 +39,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "order", defaultValue = "ASC", required = false) Sort.Direction direction,
-			@RequestParam(value = "sort", defaultValue ="username", required = false) String... sortProperties) {
+			@RequestParam(value = "sort", defaultValue = "username", required = false) String... sortProperties) {
 		return super.findAll(filter, page, size, direction, sortProperties);
 	}
 
@@ -49,13 +49,13 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<?> add(@RequestBody UserEntity newEntity) throws URISyntaxException {
-		return super.add(newEntity);
+	public ResponseEntity<?> add(@RequestBody UserEntity newUser) throws URISyntaxException {
+		return super.add(newUser);
 	}
 	
 	@PutMapping("/users/{id}")
-	public ResponseEntity<?> update(@RequestBody UserEntity newEntity, @PathVariable String id) throws URISyntaxException {
-		return super.update(newEntity, id);
+	public ResponseEntity<?> update(@RequestBody UserEntity newUser, @PathVariable String id) throws URISyntaxException {
+		return super.update(newUser, id);
 	}
 	
 	@DeleteMapping("/users/{id}")
@@ -64,7 +64,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@GetMapping("/users/{id}/providers")
-	public Resources<Provider> findProvidersByUser(@PathVariable String id) throws NotFoundException, NoSuchMethodException, SecurityException {
+	public Resources<Provider> findProvidersByUser(@PathVariable String id) {
 		return assembler.toSubResources(id,
 				providerRepo.findByUser(service.getById(id)).orElseThrow(() -> new NotFoundException(id)), 
 				DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id));

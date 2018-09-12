@@ -19,7 +19,7 @@ public class Schedule extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	private ActivityEntity activityEntity;
+	private ActivityEntity activity;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_date")
@@ -28,33 +28,5 @@ public class Schedule extends BaseEntity implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_date")
 	private Date startDate;
-
-	public Schedule() {
-		super();
-	}
-
-	public ActivityEntity getActivity() {
-		return this.activityEntity;
-	}
-
-	public void setActivity(ActivityEntity activityEntity) {
-		this.activityEntity = activityEntity;
-	}
-
-	public Date getEndDate() {
-		return this.endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public Date getStartDate() {
-		return this.startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
 
 }

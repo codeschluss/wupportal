@@ -2,8 +2,9 @@ package de.codeschluss.wupportal.provider;
 
 import java.net.URISyntaxException;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,8 +26,9 @@ public class ProviderController extends CrudController<ProviderEntity, ProviderR
 	public ProviderController(
 			ProviderService service, 
 			ProviderResourceAssembler assembler,
-			ActivityService activityService) {
-		super(service, assembler);
+			ActivityService activityService
+			) {
+		super(service, assembler, ProviderEntity.class);
 		this.activityService = activityService;
 	}
 	
@@ -55,11 +57,23 @@ public class ProviderController extends CrudController<ProviderEntity, ProviderR
 		return super.delete(id);
 	}
 	
-	@GetMapping("/users/{id}/activities")
-	public Resources<ActivityEntity> findActivitiesByProvider(@PathVariable String id) {
-		return assembler.toSubResource(
-				activityService.getActivitiesByProviderId(id), 
-				DummyInvocationUtils.methodOn(this.getClass()).findActivitiesByProvider(id));
+	@GetMapping("/providers/{id}/activities")
+	public ResponseEntity<?> findActivitiesByProvider(@PathVariable String id, FilterSortPaginate params) {
+		ResponseEntity<String> badRequest = validateRequest(params, ActivityEntity.class);
+		if (badRequest != null) return badRequest;
+		
+		Sort sort = params.createSort("id");
+		if (params.getPage() == null && params.getSize() == null) {
+			return ResponseEntity.ok(
+					assembler.toSubResource(
+							activityService.getActivitiesByProviderId(sort, id),
+							DummyInvocationUtils.methodOn(this.getClass()).findActivitiesByProvider(id, params)));
+		}
+		
+		PageRequest pageRequest = PageRequest.of(params.getPage(), params.getSize(), sort);
+		return ResponseEntity.ok(
+				assembler.toPagedSubResource(params,
+						activityService.getPagedActivitiesByProviderId(pageRequest, id)));
 	}
 
 }

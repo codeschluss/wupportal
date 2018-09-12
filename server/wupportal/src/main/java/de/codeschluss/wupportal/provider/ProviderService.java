@@ -2,6 +2,10 @@ package de.codeschluss.wupportal.provider;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.wupportal.base.DataService;
@@ -28,8 +32,11 @@ public class ProviderService extends DataService<ProviderEntity> {
 		});
 	}
 	
-	public List<ProviderEntity> getProvidersByUser(UserEntity user) {
-		return ((ProviderRepository) repo).findByUser(user).orElseThrow(() -> new NotFoundException(user.getId()));
+	public Page<ProviderEntity> getPagedProvidersByUser(UserEntity user, PageRequest page) {
+		return ((ProviderRepository) repo).findByUser(user, page).orElseThrow(() -> new NotFoundException(user.getId()));
 	}
-
+	
+	public List<ProviderEntity> getProvidersByUser(UserEntity user, Sort sort) {
+		return ((ProviderRepository) repo).findByUser(user, sort).orElseThrow(() -> new NotFoundException(user.getId()));
+	}
 }

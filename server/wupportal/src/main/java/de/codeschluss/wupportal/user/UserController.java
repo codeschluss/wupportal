@@ -2,8 +2,9 @@ package de.codeschluss.wupportal.user;
 
 import java.net.URISyntaxException;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +31,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	public UserController(UserService userService,
 			ProviderService providerService,
 			UserResourceAssembler userAssembler) {
-		super(userService, userAssembler);
+		super(userService, userAssembler, UserEntity.class);
 		this.providerService = providerService;
 	}
 	
@@ -60,9 +61,21 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@GetMapping("/users/{id}/providers")
-	public Resources<ProviderEntity> findProvidersByUser(@PathVariable String id) {
-		return assembler.toSubResource(
-				providerService.getProvidersByUser(service.getById(id)), 
-				DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id));
+	public ResponseEntity<?> findProvidersByUser(@PathVariable String id, FilterSortPaginate params) {
+		ResponseEntity<String> badRequest = validateRequest(params, ProviderEntity.class);
+		if (badRequest != null) return badRequest;
+		
+		Sort sort = params.createSort("id");
+		if (params.getPage() == null && params.getSize() == null) {
+			return ResponseEntity.ok(
+					assembler.toSubResource(
+							providerService.getProvidersByUser(service.getById(id), sort),
+							DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id, params)));
+		}
+		
+		PageRequest pageRequest = PageRequest.of(params.getPage(), params.getSize(), sort);
+		return ResponseEntity.ok(
+				assembler.toPagedSubResource(params,
+						providerService.getPagedProvidersByUser(service.getById(id), pageRequest)));
 	}
 }

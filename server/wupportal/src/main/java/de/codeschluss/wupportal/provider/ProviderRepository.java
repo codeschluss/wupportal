@@ -13,9 +13,13 @@ import de.codeschluss.wupportal.user.UserEntity;
 
 public interface ProviderRepository extends FilteredJpaRepository<ProviderEntity, String> {
 	
-	Optional<List<ProviderEntity>> findByUser(UserEntity user);
+	Optional<Page<ProviderEntity>> findByUser(UserEntity user, Pageable page);
+	
+	Optional<List<ProviderEntity>> findByUser(UserEntity user, Sort sort);
 		
-	Optional<List<ProviderEntity>> findPagedByOrganisationId(String organisationId, Pageable page);
+	Optional<Page<ProviderEntity>> findByOrganisationId(String organisationId, Pageable page);
+	
+	Optional<List<ProviderEntity>> findByOrganisationId(String organisationId, Sort sort);
 
 	@Query("Select p from ProviderEntity p where p.user.username like %?1% or p.user.fullname like %?1% or p.user.phone like %?1%")
 	Optional<List<ProviderEntity>> findFiltered(String filter, Sort sort);

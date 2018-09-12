@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.model;
+package de.codeschluss.wupportal.activity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,6 +6,11 @@ import java.util.List;
 import javax.persistence.*;
 
 import de.codeschluss.wupportal.base.BaseEntity;
+import de.codeschluss.wupportal.model.Address;
+import de.codeschluss.wupportal.model.Category;
+import de.codeschluss.wupportal.model.Schedule;
+import de.codeschluss.wupportal.model.Tag;
+import de.codeschluss.wupportal.model.TargetGroup;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 
 /**
@@ -14,7 +19,7 @@ import de.codeschluss.wupportal.provider.ProviderEntity;
  */
 @Entity
 @Table(name="activities")
-public class Activity extends BaseEntity implements Serializable {
+public class ActivityEntity extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,7 +57,7 @@ public class Activity extends BaseEntity implements Serializable {
 	@OneToMany(mappedBy = "activity")
 	private List<Schedule> schedules;
 
-	public Activity() {
+	public ActivityEntity() {
 		super();
 	}
 

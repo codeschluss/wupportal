@@ -9,8 +9,8 @@ import org.springframework.hateoas.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.codeschluss.wupportal.activity.ActivityEntity;
 import de.codeschluss.wupportal.base.BaseEntity;
-import de.codeschluss.wupportal.model.Activity;
 import de.codeschluss.wupportal.model.Organisation;
 import de.codeschluss.wupportal.user.UserEntity;
 import lombok.AccessLevel;
@@ -39,7 +39,7 @@ public class ProviderEntity extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "provider")
 	@JsonIgnore
-	private List<Activity> activities;
+	private List<ActivityEntity> activityEntities;
 
 	@ManyToOne
 	@JsonIgnore

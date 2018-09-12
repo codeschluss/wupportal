@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import de.codeschluss.wupportal.activity.ActivityEntity;
 import de.codeschluss.wupportal.base.BaseEntity;
 
 /**
@@ -18,7 +19,7 @@ public class Schedule extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	private Activity activity;
+	private ActivityEntity activityEntity;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_date")
@@ -32,12 +33,12 @@ public class Schedule extends BaseEntity implements Serializable {
 		super();
 	}
 
-	public Activity getActivity() {
-		return this.activity;
+	public ActivityEntity getActivity() {
+		return this.activityEntity;
 	}
 
-	public void setActivity(Activity activity) {
-		this.activity = activity;
+	public void setActivity(ActivityEntity activityEntity) {
+		this.activityEntity = activityEntity;
 	}
 
 	public Date getEndDate() {

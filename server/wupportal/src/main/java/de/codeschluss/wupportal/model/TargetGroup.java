@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import de.codeschluss.wupportal.activity.ActivityEntity;
 import de.codeschluss.wupportal.base.BaseEntity;
 
 /**
@@ -23,7 +24,7 @@ public class TargetGroup extends BaseEntity implements Serializable {
 	private String name;
 
 	@OneToMany(mappedBy = "targetGroups")
-	private List<Activity> activities;
+	private List<ActivityEntity> activityEntities;
 
 	public TargetGroup() {
 		super();
@@ -45,12 +46,12 @@ public class TargetGroup extends BaseEntity implements Serializable {
 		this.name = name;
 	}
 
-	public List<Activity> getActivities() {
-		return this.activities;
+	public List<ActivityEntity> getActivities() {
+		return this.activityEntities;
 	}
 
-	public void setActivitiesTargetGroups(List<Activity> activities) {
-		this.activities = activities;
+	public void setActivitiesTargetGroups(List<ActivityEntity> activityEntities) {
+		this.activityEntities = activityEntities;
 	}
 
 }

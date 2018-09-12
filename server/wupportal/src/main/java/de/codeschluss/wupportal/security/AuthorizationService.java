@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.services;
+package de.codeschluss.wupportal.security;
 
 import javax.servlet.http.HttpServletRequest;
 

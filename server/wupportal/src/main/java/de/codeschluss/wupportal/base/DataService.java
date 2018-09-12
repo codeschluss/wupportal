@@ -6,18 +6,49 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-public interface DataService<E extends BaseEntity> {
+import de.codeschluss.wupportal.exception.NotFoundException;
+
+public abstract class DataService<E extends BaseEntity> {
 	
-	public List<E> getSorted(String filter, Sort sort);
+	protected final FilteredJpaRepository<E, String> repo;
 	
-	public Page<E> getPaged(String filter, PageRequest page);
+	public DataService(FilteredJpaRepository<E, String> repo) {
+		this.repo = repo;
+	}
 	
-	public E getById(String id);
+	public List<E> getSorted(String filter, Sort sort) {
+		return filter == null
+				? repo.findAll()
+				: repo.findFiltered(filter, sort).orElseThrow(() -> new NotFoundException(filter));
+	}
 	
-	public E add(E newEntity);
+	public Page<E> getPaged(String filter, PageRequest page) {
+		return filter == null 
+				? repo.findAll(page)
+				: repo.findFiltered(filter, page).orElseThrow(() -> new NotFoundException(filter));
+	}
 	
-	public E update(String id, E updatedEntity);
+	public E getById(String id) {
+		return repo.findById(id).orElseThrow(() -> new NotFoundException(id));
+	}
 	
-	public void delete(String id);
+	public E add(E newEntity) {
+		return repo.save(newEntity);
+	}
+	
+	public E update(String id, E updatedEntity) {
+		return repo.findById(id).map(entity -> {
+			//TODO: save all fields except id
+			entity = updatedEntity;
+			return repo.save(entity);
+		}).orElseGet(() -> {
+			updatedEntity.setId(id);
+			return add(updatedEntity);
+		});
+	}
+	
+	public void delete(String id) {
+		repo.deleteById(id);
+	}
 
 }

@@ -24,6 +24,8 @@ import de.codeschluss.wupportal.utils.FilterSortPaginate;
 public class UserController extends CrudController<UserEntity, PagingAndSortingAssembler<UserEntity>, UserService>{
 
 	private final ProviderService providerService;
+	
+	protected final String DEFAULT_SORT_PROP = "username";
 
 	public UserController(UserService userService,
 			ProviderService providerService,

@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.configuration;
+package de.codeschluss.wupportal.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

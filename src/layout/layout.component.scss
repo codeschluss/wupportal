@@ -1,0 +1,85 @@
+mat-expansion-panel {
+  box-shadow: none !important;
+
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0;
+  }
+}
+
+mat-sidenav-container {
+  height: 100%;
+
+  > mat-sidenav {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    > mat-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    > navitem-component {
+      font-family: sans-serif;
+      font-size: 16px;
+      height: 48px;
+
+      ::ng-deep .mat-button-wrapper {
+        display: block;
+        text-align: left;
+      }
+    }
+  }
+
+  > mat-sidenav-content {
+    > mat-accordion mat-expansion-panel {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    > mapping-component {
+      bottom: 0;
+      left: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+
+      filter: grayscale(.5);
+      pointer-events: none;
+    }
+
+    > main {
+      margin: 12px;
+    }
+  }
+
+  mat-toolbar {
+    flex-shrink: 0;
+
+    > mat-divider {
+      display: none;
+    }
+
+    > navitem-component {
+      height: 100%;
+      color: rgba(255, 255, 255, 0.75);
+
+      input {
+        border: 0;
+        box-sizing: border-box;
+        font: inherit;
+        padding: 0 6px;
+        position: relative;
+        width: 100%;
+        z-index: 1;
+      }
+
+      ::ng-deep button[disabled] {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+}

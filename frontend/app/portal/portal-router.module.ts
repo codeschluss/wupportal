@@ -33,6 +33,9 @@ import {
 import {
 	AboutOrganisationComponent
 } from 'app/portal/about/about.organisation.component';
+import {
+	AboutProjectComponent
+} from 'app/portal/about/about.project.component';
 
 @NgModule({
 	exports: [
@@ -55,6 +58,10 @@ import {
 					translations: TranslationResolver
 				},
 				children: [
+					{
+						path: 'home',
+						component: AboutProjectComponent
+					},
 					{
 						path: 'about',
 						component: AboutPortalComponent

@@ -12,25 +12,26 @@
 	</mat-sidenav>
 
 	<mat-sidenav-content>
+		<mat-toolbar color="primary">
+			<button mat-button color routerLink="/home">
+				<fa-icon icon="home"></fa-icon>
+			</button>
+			<button mat-button color routerLink="/about">
+				<fa-icon icon="info"></fa-icon>
+			</button>
+			<div [style.flexGrow]="1"></div>
+			<button mat-button color (click)="onTracking()">
+				<fa-icon icon="location-arrow"></fa-icon>
+			</button>
+			<button mat-button color (click)="onTranslate()">
+				<fa-icon icon="comments"></fa-icon>
+			</button>
+		</mat-toolbar>
+
 		<mapping-component [activities]="selectables | async">
 		</mapping-component>
 
 		<search-component [selectables]="selectables">
 		</search-component>
-
-		<nav class="fab-dial" [class.view]="viewFabdial">
-			<button mat-fab color (click)="viewFabdial = !viewFabdial">
-				<fa-icon icon="plus"></fa-icon>
-			</button>
-			<button mat-fab color="primary" (click)="onTranslate()">
-				<fa-icon icon="comments"></fa-icon>
-			</button>
-			<button mat-fab color="primary" (click)="onTracking()">
-				<fa-icon icon="location-arrow"></fa-icon>
-			</button>
-			<button mat-fab color="primary" routerLink="/about">
-				<fa-icon icon="info"></fa-icon>
-			</button>
-		</nav>
 	</mat-sidenav-content>
 </mat-sidenav-container>

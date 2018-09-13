@@ -12,6 +12,18 @@ mat-sidenav {
 mat-sidenav-content::-webkit-scrollbar {
 	width: 0;
 }
+mat-sidenav-content > mat-toolbar {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+}
+mat-sidenav-content > mat-toolbar button {
+	font-size: 18px;
+	height: 100%;
+}
+mat-sidenav-content > mat-toolbar button fa-icon {
+	font-size: 100%;
+}
 mat-toolbar {
 	justify-content: space-between;
 }

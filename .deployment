@@ -1,8 +1,6 @@
-# Staging
-DOCKER_UPDATE=wupportal-test
-
-# Dockerfile
-DOCKER_DEPLOY<<'EOF'
+DOCKERFILE<<'EOF'
+#
+# codeschluss/wupportal
 FROM alpine:latest
 LABEL maintainer info@codeschluss.de
 COPY backend /tmp/backend
@@ -68,9 +66,11 @@ CMD \
   nginx -c /conf/nginx.conf -g 'daemon off;'
 EOF
 
-# .dockerignore
-DOCKER_IGNORE<<'EOF'
+DOCKERIGNORE<<'EOF'
 .git*
+.deployment
+.dockerignore
+Dockerfile
 
 backend/bin
 backend/config/app.php
@@ -84,5 +84,4 @@ backend/webroot/js
 frontend/node_modules
 frontend/npm-debug.log
 frontend/package-lock.json
-
 EOF

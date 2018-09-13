@@ -1,0 +1,81 @@
+<ng-template #top>
+  <mat-divider></mat-divider>
+  <navitem-component href="/home">
+    <branding-component></branding-component>
+  </navitem-component>
+  <mat-divider></mat-divider>
+  <navitem-component hide="lt-md" href="/search" icon="search">
+    <i18n i18n="@@Search">Search</i18n>
+  </navitem-component>
+  <mat-divider></mat-divider>
+  <navitem-component hide="lt-md" href="/activities" icon="map-marker-alt">
+    <i18n i18n="@@Activities">Activities</i18n>
+  </navitem-component>
+  <mat-divider></mat-divider>
+  <navitem-component hide="lt-md" href="/organisations" icon="handshake">
+    <i18n i18n="@@Organisations">Organisations</i18n>
+  </navitem-component>
+  <mat-divider></mat-divider>
+</ng-template>
+
+<ng-template #sub>
+<!--
+  <mat-divider></mat-divider>
+  <navitem-component hide="lt-md" href="/settings" icon="cogs">
+    <i18n i18n="@@Settings">Settings</i18n>
+  </navitem-component>
+-->
+  <mat-divider></mat-divider>
+  <navitem-component hide="lt-md" href="/about" icon="info-circle">
+    <i18n i18n="@@About">About</i18n>
+  </navitem-component>
+  <mat-divider></mat-divider>
+  <navitem-component hide="lt-md" href="/login" icon="user-circle">
+    <i18n i18n="@@Login">Login</i18n>
+  </navitem-component>
+  <mat-divider></mat-divider>
+  <navitem-component hide="lt-md" href="/user" icon="user-circle">
+    <i18n i18n="@@Account">Account</i18n>
+  </navitem-component>
+  <mat-divider></mat-divider>
+</ng-template>
+
+<mat-sidenav-container>
+  <mat-sidenav mode="push" position="end">
+    <mat-toolbar color="primary">
+      <strong><i18n>Navigation</i18n></strong>
+      <div [style.flexGrow]="1"></div>
+      <navitem-component icon="times" (click)="sidenav.close()">
+      </navitem-component>
+    </mat-toolbar>
+    <ng-container *ngTemplateOutlet="top"></ng-container>
+    <div [style.flexGrow]="1"></div>
+    <ng-container *ngTemplateOutlet="sub"></ng-container>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mapping-component></mapping-component>
+    <mat-accordion displayMode="flat">
+      <mat-expansion-panel #finder>
+        <mat-toolbar color="primary">
+          <navitem-component [style.flexGrow]="1" (click)="query.focus()">
+            <form (onsubmit)="alert('search')"><input #query></form>
+          </navitem-component>
+          <navitem-component icon="times" (click)="navbar.open()">
+          </navitem-component>
+        </mat-toolbar>
+      </mat-expansion-panel>
+      <mat-expansion-panel #navbar>
+        <mat-toolbar color="primary">
+          <ng-container *ngTemplateOutlet="top"></ng-container>
+          <div [style.flexGrow]="1"></div>
+          <ng-container *ngTemplateOutlet="sub"></ng-container>
+          <navitem-component hide="gt-sm" icon="bars" (click)="sidenav.open()">
+          </navitem-component>
+        </mat-toolbar>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <main><router-outlet></router-outlet></main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

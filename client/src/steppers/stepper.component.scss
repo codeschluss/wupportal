@@ -1,0 +1,36 @@
+mat-horizontal-stepper {
+  background-color: transparent;
+  width: 100%;
+
+  mat-list-item {
+    small,
+    fa-icon {
+      color: rgba(0, 0, 0, 0.54);
+    }
+  }
+
+  ::ng-deep {
+    .mat-horizontal-stepper-header-container {
+      margin-bottom: 24px;
+
+      > mat-step-header {
+        height: 36px;
+        padding: 0 12px;
+
+        .mat-step-icon {
+          align-items: center;
+          display: flex;
+          justify-content: center;
+        }
+
+        .mat-step-label {
+          min-width: 0;
+        }
+      }
+    }
+
+    .mat-horizontal-content-container {
+      padding: 0;
+    }
+  }
+}

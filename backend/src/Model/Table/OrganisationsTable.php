@@ -88,9 +88,6 @@ class OrganisationsTable extends Table
 			->scalar('phone')
 			->allowEmpty('phone');
 
-		$validator
-			->allowEmpty('image');
-
 		return $validator;
 	}
 

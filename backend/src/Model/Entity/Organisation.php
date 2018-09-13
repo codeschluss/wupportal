@@ -13,7 +13,6 @@ use Cake\ORM\Behavior\Translate\TranslateTrait;
  * @property string $website
  * @property string $mail
  * @property string $phone
- * @property string|resource $image
  * @property string $address_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified

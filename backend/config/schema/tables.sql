@@ -116,7 +116,6 @@ CREATE TABLE `organisations` (
 	`website` VARCHAR(255),
 	`mail` VARCHAR(255),
 	`phone` VARCHAR(255),
-	`image` MEDIUMBLOB,
 	`address_id` CHAR(36),
 
 	`created` DATETIME NOT NULL DEFAULT NOW(),
@@ -215,4 +214,18 @@ CREATE TABLE `i18n` (
 
 	UNIQUE INDEX I18N_LOCALE_FIELD(`locale`, `model`, `foreign_key`, `field`),
 	INDEX I18N_FIELD(`model`, `foreign_key`, `field`)
+);
+
+CREATE TABLE `images` (
+	`id` CHAR(36) NOT NULL PRIMARY KEY,
+	`image` MEDIUMBLOB NOT NULL,
+	`mime_type` TEXT,
+	`organisation_id` CHAR(36),
+
+	`created` DATETIME NOT NULL DEFAULT NOW(),
+	`modified` DATETIME NOT NULL DEFAULT NOW(),
+
+	CONSTRAINT `fkey_image_organisation`
+		FOREIGN KEY (`organisation_id`) REFERENCES `organisations` (`id`)
+		ON DELETE CASCADE
 );

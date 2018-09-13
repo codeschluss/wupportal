@@ -1,7 +1,7 @@
 backend/bin
 backend/config/app.php
 backend/composer.lock
-backend/logs/*.log
+backend/logs/*.log*
 backend/tests
 backend/tmp
 backend/vendor
@@ -10,3 +10,8 @@ backend/webroot/js
 frontend/node_modules
 frontend/npm-debug.log
 frontend/package-lock.json
+
+server/.metadata/*
+server/.recommenders/
+server/wupportal/target/*
+server/RemoteSystemsTempFiles/*

@@ -148,26 +148,40 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 				|| colorConvert.hex.rgb(activity.category.color);
 		});
 
+		const multi = colors.length > 1;
 		const r = colors.reduce((i, j) => i + j[0], 0) / colors.length;
 		const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
 		const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
+		const fontColor = { color: r + g + b > 382 ? '#000' : '#FFF' };
 
 		const icon = {
 			anchor: [.5, 1],
 			color: '#' + colorConvert.rgb.hex(r, g, b),
-			scale: 0.9 + colors.length / 10,
-			src: '/imgs/mapmarker.svg'
+			src: `/imgs/map${multi ? 'cluster' : 'marker'}.svg`
+// 			scale: 0.9 + colors.length / 10,
+		};
+
+		const text = {
+			fill: new style.Fill(fontColor),
+			offsetY: -22.5,
+			scale: 1.5,
+			stroke: new style.Stroke(fontColor),
+			text: colors.length + ''
 		};
 
 		if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
 			Object.assign(icon, {
 				imgSize: [60, 96],
-				scale: icon.scale / 3,
-				src: '/imgs/mapmarker.png'
+				scale: 1 / 3,
+				src: `/imgs/map${multi ? 'cluster' : 'marker'}.png`
+// 				scale: icon.scale / 3,
 			});
 		}
 
-		return new style.Style({ image: new style.Icon(icon) });
+		return new style.Style({
+			image: new style.Icon(icon),
+			text: multi && new style.Text(text)
+		});
 	}
 
 	private onClick(event: MapBrowserEvent): void {

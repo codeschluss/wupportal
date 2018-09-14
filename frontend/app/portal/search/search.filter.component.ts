@@ -10,7 +10,8 @@ import { Model } from 'app/models/model';
 	styles: [
 		'mat-icon { padding-right: 8px !important; }',
 		'mat-icon::ng-deep path { stroke: black; stroke-width: 24px; }',
-		'::ng-deep .mat-list-text {align-items: center; flex-flow: row !important;}'
+		'mat-list-option::ng-deep .mat-list-text { align-items: center; }',
+		'mat-list-option::ng-deep .mat-list-text { flex-flow: row !important;}'
 	],
 	template: `
 		<mat-selection-list (selectionChange)="onChange($event)">

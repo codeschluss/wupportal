@@ -12,7 +12,7 @@ const imports = [
   selector: 'nesting-component',
   styles: [
     ':host { display: block; margin: 0 auto; }',
-    'mat-card { background-color: rgba(255, 255, 255, .97); }',
+    'mat-card { background-color: rgba(255, 255, 255, .93); }',
     'mat-card-actions { text-align: right; }'
   ],
   template: `

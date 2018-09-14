@@ -1,4 +1,4 @@
-<form #form="ngForm" (submit)="onSubmit">
+<form #form="ngForm" (ngSubmit)="onSubmit">
   <nesting-component flex="strech" flow="column" size="xs">
     <ng-template #content>
       <mat-form-field fxFlex>
@@ -12,7 +12,7 @@
     </ng-template>
 
     <ng-template #actions>
-      <button mat-button color="primary">
+      <button mat-button type="submit" color="primary">
         <i18n i18n="@@Login">Login</i18n>
       </button>
       <button mat-button routerLink="/user">

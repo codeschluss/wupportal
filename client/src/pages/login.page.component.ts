@@ -21,7 +21,7 @@ export class LoginPageComponent {
   public password: string;
 
   public onSubmit(): boolean {
-    alert('login: ' + this.username + ':' + this.password);
+    console.log('login: ' + this.username + ':' + this.password);
     return false;
   }
 

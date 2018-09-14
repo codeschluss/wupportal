@@ -20,7 +20,9 @@
         <ng-template matStepLabel>
           <i18n fxHide.lt-sm i18n="@@Account">Account</i18n>
         </ng-template>
-        <form #step1="ngForm" fxLayout="column" fxLayoutAlign="strech">
+        <form #step1="ngForm" (submit)="true"
+          fxLayout="column" fxLayoutAlign="strech">
+          <button fxHide></button>
           <mat-form-field fxFlex>
             <input matInput required type="email" [(ngModel)]="username"
               i18n-placeholder="@@E-Mail" placeholder="E-Mail" name="_">
@@ -36,7 +38,8 @@
         <ng-template matStepLabel>
           <i18n fxHide.lt-sm i18n="@@Userdata">Userdata</i18n>
         </ng-template>
-        <form #step2="ngForm" fxLayout="column" fxLayoutAlign="strech">
+        <form #step2="ngForm" (submit)="next.click()"
+          fxLayout="column" fxLayoutAlign="strech">
           <mat-form-field fxFlex>
             <input matInput required type="text" [(ngModel)]="fullname"
               i18n-placeholder="@@Full name" placeholder="Full name" name="_">
@@ -52,39 +55,43 @@
         <ng-template matStepLabel>
           <i18n fxHide.lt-sm i18n="@@Register">Register</i18n>
         </ng-template>
-        <mat-list>
-          <i18n mat-subheader i18n="@@Account">Account</i18n>
-          <mat-divider></mat-divider>
-          <mat-list-item>
-            <fa-icon mat-list-icon icon="at"></fa-icon>
-            <strong mat-line>{{ username }}</strong>
-            <small mat-line>
-              <i18n i18n="@@E-Mail">E-Mail</i18n>
-            </small>
-          </mat-list-item>
-          <mat-list-item>
-            <fa-icon mat-list-icon icon="key"></fa-icon>
-            <strong mat-line>••••••••</strong>
-            <small mat-line>
-              <i18n mat-line i18n="@@Password">Password</i18n>
-            </small>
-          </mat-list-item>
-          <i18n mat-subheader i18n="@@Userdata">Userdata</i18n>
-          <mat-divider></mat-divider>
-          <mat-list-item>
-            <fa-icon mat-list-icon icon="id-card"></fa-icon>
-            <strong mat-line>{{ fullname }}</strong>
-            <small mat-line>
-              <i18n mat-line i18n="@@Full name">Full name</i18n>
-            </small>
-          </mat-list-item>
-          <mat-list-item>
-            <fa-icon mat-list-icon icon="phone"></fa-icon>
-            <strong mat-line>{{ phone }}</strong>
-            <small mat-line>
-              <i18n mat-line i18n="@@Phone">Phone</i18n>
-            </small>
-          </mat-list-item>
+        <mat-list fxLayout="row">
+          <div fxFlex="50%">
+            <i18n mat-subheader i18n="@@Account">Account</i18n>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <fa-icon mat-list-icon icon="at"></fa-icon>
+              <strong mat-line>{{ username }}</strong>
+              <small mat-line>
+                <i18n i18n="@@E-Mail">E-Mail</i18n>
+              </small>
+            </mat-list-item>
+            <mat-list-item>
+              <fa-icon mat-list-icon icon="key"></fa-icon>
+              <strong mat-line>••••••••</strong>
+              <small mat-line>
+                <i18n mat-line i18n="@@Password">Password</i18n>
+              </small>
+            </mat-list-item>
+          </div>
+          <div fxFlex="50%">
+            <i18n mat-subheader i18n="@@Userdata">Userdata</i18n>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <fa-icon mat-list-icon icon="id-card"></fa-icon>
+              <strong mat-line>{{ fullname }}</strong>
+              <small mat-line>
+                <i18n mat-line i18n="@@Full name">Full name</i18n>
+              </small>
+            </mat-list-item>
+            <mat-list-item>
+              <fa-icon mat-list-icon icon="phone"></fa-icon>
+              <strong mat-line>{{ phone }}</strong>
+              <small mat-line>
+                <i18n mat-line i18n="@@Phone">Phone</i18n>
+              </small>
+            </mat-list-item>
+          </div>
         </mat-list>
       </mat-step>
     </mat-horizontal-stepper>

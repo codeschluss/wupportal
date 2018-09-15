@@ -13,7 +13,8 @@ import {
 	MatProgressBarModule,
 	MatSidenavModule,
 	MatTabsModule,
-	MatToolbarModule
+	MatToolbarModule,
+	MatGridListModule
 } from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -113,7 +114,8 @@ fontawesome.add(
 		MatProgressBarModule,
 		MatSidenavModule,
 		MatTabsModule,
-		MatToolbarModule
+		MatToolbarModule,
+		MatGridListModule
 	]
 })
 

@@ -46,7 +46,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ngOnInit(): void {
     // TODO: move to db
-    this.clusterspan = 10;
+    this.clusterspan = 5;
 
     for (const item of this.route.snapshot.data.configuration) {
       switch (item.item) {
@@ -72,7 +72,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void {
     (<ol.layer.Vector> this.aolLayer.instance)
-      .setStyle((feature: Feature) => this.clusterStyle(feature));
+      .setStyle((feature: Feature) => this.featureStyle(feature));
 
     this.aolMap.loadTilesWhileAnimating = true;
     this.aolMap.loadTilesWhileInteracting = true;
@@ -114,13 +114,9 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
     // }
   }
 
-  private clusterStyle(feature: Feature): style.Style {
-    const colors = feature.get('features').map(i => {
-      // TODO: ngx-openlayers async id binding bug
-      // const activity = this.activities.find(j => i.getId() === j.id);
-      const id = i.getStyle().getText().getText();
-      const activity = this.activities.find(j => id === j.id);
-      // ENDTODO
+  private featureStyle(feature: Feature): style.Style {
+    const colors = feature.get('features').map((i) => {
+      const activity = this.activities.find(j => i.getId() === j.id);
 
       return colorConvert.keyword.rgb(activity.category.color)
         || colorConvert.hex.rgb(activity.category.color);
@@ -130,22 +126,41 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
     const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
     const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
 
-    const icon = {
+    return new style.Style({ image: new style.Icon({
       anchor: [.5, 1],
       color: '#' + colorConvert.rgb.hex(r, g, b),
-      scale: 0.9 + colors.length / 10,
-      src: '/imgs/mapmarker.svg'
-    };
+      imgSize: [60, 96],
+      scale: 1 / (colors.length > 1 ? 2 : 3),
+      src: `${colors.length > 1 ? '/imgs/mapcluster' : '/imgs/mapmarker'}.png`
+    }) });
 
-    if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
-      Object.assign(icon, {
-        imgSize: [60, 96],
-        scale: icon.scale / 3,
-        src: '/imgs/mapmarker.png'
-      });
-    }
+    // const colors = feature.get('features').map(i => {
+    //   const activity = this.activities.find(j => i.getId() === j.id);
 
-    return new style.Style({ image: new style.Icon(icon) });
+    //   return colorConvert.keyword.rgb(activity.category.color)
+    //     || colorConvert.hex.rgb(activity.category.color);
+    // });
+
+    // const r = colors.reduce((i, j) => i + j[0], 0) / colors.length;
+    // const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
+    // const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
+
+    // const icon = {
+    //   anchor: [.5, 1],
+    //   color: '#' + colorConvert.rgb.hex(r, g, b),
+    //   scale: 0.9 + colors.length / 10,
+    //   src: '/imgs/mapmarker.svg'
+    // };
+
+    // if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
+    //   Object.assign(icon, {
+    //     imgSize: [60, 96],
+    //     scale: icon.scale / 3,
+    //     src: '/imgs/mapmarker.png'
+    //   });
+    // }
+
+    // return new style.Style({ image: new style.Icon(icon) });
   }
 
   private onClick(event: MapBrowserEvent): void {
@@ -157,13 +172,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
         this.router.navigate(['/']);
         break;
       case 1:
-        // TODO: ngx-openlayers async id binding bug
-        // this.router.navigate(['/activity', feats[0].getId()]);
-        this.router.navigate([
-          '/activity',
-          feats[0].getStyle().getText().getText()]
-        );
-        // ENDTODO
+        this.router.navigate(['/activity', feats[0].getId()]);
         break;
       default:
         // this.router.navigate(['/']).then(() => {

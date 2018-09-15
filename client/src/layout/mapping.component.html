@@ -17,10 +17,7 @@
 			<aol-source-cluster [distance]="clusterspan">
 				<aol-source-vector [overlaps]="true">
 					<ng-container *ngFor="let i of activities">
-						<!-- TODO: ngx-openlayers async id binding bug -->
-						<!-- <aol-feature [id]="i.id"> -->
-						<aol-feature>
-						<!-- ENDTODO -->
+						<aol-feature [id]="i.id">
 							<aol-geometry-point>
 								<aol-coordinate
 									[srid]="projection"
@@ -28,12 +25,6 @@
 									[y]="i.address.latitude">
 								</aol-coordinate>
 							</aol-geometry-point>
-							<!-- TODO: ngx-openlayers async id binding bug -->
-							<aol-style>
-								<aol-style-text [text]="i.id">
-								</aol-style-text>
-							</aol-style>
-							<!-- ENDTODO -->
 						</aol-feature>
 					</ng-container>
 				</aol-source-vector>

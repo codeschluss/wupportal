@@ -44,3 +44,29 @@ mat-list p.hyphenate {
 .comma:last-of-type::after {
   content: none;
 }
+
+.mat-grid-tile{
+	font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.landingpageCard{
+	width: 75%;
+	height: auto;
+	margin: 0 auto;
+	line-height: 2;
+	text-align: center;
+}
+
+.landingpageImage{
+	transition: transform .2s;
+	height:100%;
+	width:auto;
+}
+
+.landingpageImage:hover {
+    transform: scale(1.1);
+}
+
+.mat-grid-tile{
+	border-bottom: 1px solid #b7c7d9;
+}

@@ -163,10 +163,11 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 		const text = {
 			fill: new style.Fill(fontColor),
-			offsetY: -22.5,
-			scale: 1.5,
+			offsetY: -17.5,
+			scale: 1.25,
 			stroke: new style.Stroke(fontColor),
-			text: colors.length + ''
+			text: colors.length + '',
+			textAlign: 'center'
 		};
 
 		if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {

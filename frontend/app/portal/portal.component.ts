@@ -54,7 +54,9 @@ export class PortalComponent implements OnInit, OnDestroy {
 		this.selectables = new BehaviorSubject<Activity[]>(
 			this.route.snapshot.data.activities || []);
 
-		this.router.navigate(['/home']);
+		if (location.pathname === '/') {
+			this.router.navigate(['/home']);
+		}
 	}
 
 	public ngOnDestroy(): void {

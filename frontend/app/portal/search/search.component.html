@@ -4,19 +4,19 @@
 			<input matInput (change)="onInput($event)" (keyup.enter)="onSearch()">
 
 			<mat-placeholder>
-				<b>Wupportal</b>
-				<b><i18n i18n="@@query">query</i18n></b>
+				<b>{{portalName}}</b>
+				<b>
+					<i18n i18n="@@query">query</i18n>
+				</b>
 			</mat-placeholder>
 
 			<mat-hint align="start">
-				<button mat-button [color]="(selectables | async).length && 'primary'"
-					(click)="viewResults = !viewResults">
+				<button mat-button [color]="(selectables | async).length && 'primary'" (click)="viewResults = !viewResults">
 					{{ (selectables | async).length }}
 					<i18n i18n="@@results">results</i18n>
 					<fa-icon [icon]="viewResults ? 'angle-up' : 'angle-down'"></fa-icon>
 				</button>
-				<button mat-button [color]="filter.size && 'primary'"
-					(click)="viewFilters = !viewFilters">
+				<button mat-button [color]="filter.size && 'primary'" (click)="viewFilters = !viewFilters">
 					{{ filter.size }}
 					<i18n i18n="@@filters">filters</i18n>
 					<fa-icon [icon]="viewFilters ? 'angle-up' : 'angle-down'"></fa-icon>
@@ -100,8 +100,7 @@
 					<mat-divider></mat-divider>
 
 					<mat-list>
-						<a mat-button color="primary" tabindex="-1"
-							[routerLink]="['/activity', i.id]">
+						<a mat-button color="primary" tabindex="-1" [routerLink]="['/activity', i.id]">
 							<mat-list-item>
 								<fa-icon mat-list-icon icon="map-marker-alt"></fa-icon>
 								<div class="mat-list-text">
@@ -118,8 +117,7 @@
 							</mat-list-item>
 						</a>
 
-						<a mat-button color="primary" tabindex="-1"
-							[routerLink]="['/organisation', i.provider.organisation.id]">
+						<a mat-button color="primary" tabindex="-1" [routerLink]="['/organisation', i.provider.organisation.id]">
 							<mat-list-item>
 								<fa-icon mat-list-icon icon="home"></fa-icon>
 								<div class="mat-list-text">
@@ -151,14 +149,14 @@
 								</strong>
 								<p mat-line>
 									{{
-										i.schedules[0].start_date | date:'dd.MM.yyyy, HH:mm':'UTC'
+									i.schedules[0].start_date | date:'dd.MM.yyyy, HH:mm':'UTC'
 									}} &ndash; {{
-										i.schedules[0].end_date | date:'dd.MM.yyyy, HH:mm':'UTC'
+									i.schedules[0].end_date | date:'dd.MM.yyyy, HH:mm':'UTC'
 									}}
 								</p>
 							</div>
 						</mat-list-item>
-<!--
+						<!--
 
 						<mat-list-item>
 							<fa-icon mat-list-icon icon="building"></fa-icon>
@@ -170,7 +168,7 @@
 							</div>
 						</mat-list-item>
 -->
-<!--
+						<!--
 						<mat-list-item>
 							<fa-icon mat-list-icon icon="tags"></fa-icon>
 							<div class="mat-list-text">

@@ -10,6 +10,9 @@ import { Model } from 'app/models/model';
 
 import { ActivityService } from 'app/services/activity.service';
 
+import { ConfigurationService } from 'app/services/data.service.factory';
+import { DataService } from 'app/services/data.service';
+
 import {
 	SearchFilterComponent
 } from 'app/portal/search/search.filter.component';
@@ -28,6 +31,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
 	public filter: any;
 	public input: string;
+	public portalName: string;
 
 	public viewFilters: boolean;
 	public viewLoading: boolean;
@@ -38,13 +42,16 @@ export class SearchComponent implements OnInit, OnDestroy {
 	constructor(
 		@Inject(ActivityService)
 		private activityService: ActivityService,
-
 		private domSanitizer: DomSanitizer,
-		private iconRegistry: MatIconRegistry
-	) { }
+		private iconRegistry: MatIconRegistry,
+		@Inject(ConfigurationService) private configurationService: DataService) {
+		this.configurationService.getAll().subscribe(
+			items => { this.portalName = items.find(item => item.item === 'portalName').value; }
+		);
+	}
 
 	public ngOnInit(): void {
-		this.filter = { };
+		this.filter = {};
 		this.input = '';
 
 		Object.defineProperty(this.filter, 'size', {
@@ -62,7 +69,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 	}
 
 	public onInput(event: Event): void {
-		this.input = (<HTMLInputElement> event.target).value;
+		this.input = (<HTMLInputElement>event.target).value;
 	}
 
 	public onFilter(event: [string, Model[]]): void {
@@ -70,7 +77,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 	}
 
 	public onSearch(): void {
-		const search = { };
+		const search = {};
 		if (this.filter.size) { Object.assign(search, { advanced: this.filter }); }
 		if (this.input.length) { Object.assign(search, { filter: this.input }); }
 

@@ -20,7 +20,6 @@ export class AppComponent {
 	}
 
 	public setTitle(newTitle: string): void {
-		console.log('newTitle: ', newTitle);
 		this.titleService.setTitle(newTitle);
 	}
 

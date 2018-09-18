@@ -28,7 +28,7 @@ public class ProviderController extends CrudController<ProviderEntity, ProviderR
 			ProviderResourceAssembler assembler,
 			ActivityService activityService
 			) {
-		super(service, assembler, ProviderEntity.class);
+		super(service, assembler);
 		this.activityService = activityService;
 	}
 	

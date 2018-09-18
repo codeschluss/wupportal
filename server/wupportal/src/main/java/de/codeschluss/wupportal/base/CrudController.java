@@ -1,11 +1,7 @@
 package de.codeschluss.wupportal.base;
 
-import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,14 +17,12 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 	
 	protected final S service;
 	protected final A assembler;
-	protected final Class<E> entityClass;
 	
 	protected final String DEFAULT_SORT_PROP = "id";
 	
-	public CrudController(S service, A assembler, Class<E> entityClass) {
+	public CrudController(S service, A assembler) {
 		this.assembler = assembler;
 		this.service = service;
-		this.entityClass = entityClass;
 	}
 
 	public ResponseEntity<?> findAll(FilterSortPaginate params) {
@@ -74,10 +68,7 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 			//TODO: Error Objects with proper message
 			return ResponseEntity.badRequest().body("either both size and page are null or both contain values");
 		}
-		if (!isSortingValid(params.getSort(), entityClass)) {
-			//TODO: Error Objects with proper message
-			return ResponseEntity.badRequest().body("sort property does not exist");
-		}
+
 		return null;
 	}
 	
@@ -85,27 +76,6 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 		return (page != null && size != null) || (page == null && size == null);
 	}
 	
-	private boolean isSortingValid(String sortProp, Class<?> entityClass) {
-		Class<?> entityToCheck = getEntityClass(entityClass);
-		return sortProp != null && Arrays
-				.stream(getAllFields(entityToCheck))
-				.anyMatch(f -> f.getName().equals(sortProp));
-	}
-
-	private Class<?> getEntityClass(Class<?> entityClass) {
-		return entityClass == null
-				? this.entityClass
-				: entityClass;
-	}
-	
-	private Field[] getAllFields(Class<?> entityToCheck) {
-		List<Field> allFields = new ArrayList<Field>();
-		
-		allFields.addAll(Arrays.asList(entityToCheck.getDeclaredFields()));
-		allFields.addAll(Arrays.asList(entityToCheck.getSuperclass().getDeclaredFields()));
-		
-		return allFields.toArray(new Field[allFields.size()]);
-	}
 
 	private ResponseEntity<?> getFindAllMethodOn() {
 		return DummyInvocationUtils.methodOn(this.getClass()).findAll(null);

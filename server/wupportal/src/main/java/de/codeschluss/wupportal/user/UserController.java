@@ -31,7 +31,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	public UserController(UserService userService,
 			ProviderService providerService,
 			UserResourceAssembler userAssembler) {
-		super(userService, userAssembler, UserEntity.class);
+		super(userService, userAssembler);
 		this.providerService = providerService;
 	}
 	

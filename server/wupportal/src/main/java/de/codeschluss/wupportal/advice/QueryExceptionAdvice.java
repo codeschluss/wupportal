@@ -1,20 +1,20 @@
 package de.codeschluss.wupportal.advice;
 
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import de.codeschluss.wupportal.exception.NotFoundException;
-
 @ControllerAdvice
-public class NotFoundAdvice {
-	
+public class QueryExceptionAdvice {
+
 	@ResponseBody
-	@ExceptionHandler(NotFoundException.class)
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
-	String notFoundHandler(NotFoundException ex) {
-		return ex.getMessage();
+	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	String invalidApiAccessHandler(InvalidDataAccessApiUsageException ex) {
+		//TODO: Error Objects with proper message
+		return "Invalid API params";
 	}
 }

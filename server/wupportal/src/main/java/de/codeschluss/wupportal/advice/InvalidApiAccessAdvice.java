@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class QueryExceptionAdvice {
+public class InvalidApiAccessAdvice {
 
 	@ResponseBody
 	@ExceptionHandler(InvalidDataAccessApiUsageException.class)

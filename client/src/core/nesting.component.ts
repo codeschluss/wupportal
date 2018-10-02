@@ -2,12 +2,6 @@ import { Component, ContentChild, ElementRef, Input, OnInit, TemplateRef } from 
 import { DEFAULT_BREAKPOINTS, FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule, MatDividerModule } from '@angular/material';
 
-const imports = [
-  FlexLayoutModule,
-  MatCardModule,
-  MatDividerModule
-];
-
 @Component({
   selector: 'nesting-component',
   styles: [
@@ -30,6 +24,12 @@ const imports = [
 
 export class NestingComponent implements OnInit {
 
+  public static readonly imports = [
+    FlexLayoutModule,
+    MatCardModule,
+    MatDividerModule
+  ];
+
   @ContentChild('actions')
   public actions: TemplateRef<any>;
 
@@ -45,7 +45,7 @@ export class NestingComponent implements OnInit {
   @Input()
   public size: string;
 
-  constructor(
+  public constructor(
     private host: ElementRef
   ) { }
 
@@ -59,5 +59,3 @@ export class NestingComponent implements OnInit {
   }
 
 }
-
-Object.assign(NestingComponent, { imports: imports });

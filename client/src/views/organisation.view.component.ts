@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 
 export class OrganisationViewComponent {
 
+  public static readonly imports = [];
+
 }

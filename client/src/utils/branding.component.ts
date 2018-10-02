@@ -2,10 +2,6 @@ import { Component } from '@angular/core';
 import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
-const imports = [
-  MatIconModule
-];
-
 @Component({
   selector: 'branding-component',
   styles: [
@@ -17,7 +13,11 @@ const imports = [
 
 export class BrandingComponent {
 
-  constructor(
+  public static readonly imports = [
+    MatIconModule
+  ];
+
+  public constructor(
     private domSanitizer: DomSanitizer,
     private iconRegistry: MatIconRegistry
   ) {
@@ -26,5 +26,3 @@ export class BrandingComponent {
   }
 
 }
-
-Object.assign(BrandingComponent, { imports: imports });

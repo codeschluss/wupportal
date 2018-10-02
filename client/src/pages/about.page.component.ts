@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 
 export class AboutPageComponent {
 
+  public static readonly imports = [];
+
 }

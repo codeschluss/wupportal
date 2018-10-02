@@ -1,10 +1,10 @@
-<ng-template #top>
+<ng-template #main>
   <mat-divider></mat-divider>
   <navitem-component href="/home">
     <branding-component></branding-component>
   </navitem-component>
   <mat-divider></mat-divider>
-  <navitem-component hide="lt-md" href="/search" icon="search">
+  <navitem-component hide="lt-md" icon="search" (click)="finder.open()">
     <i18n i18n="@@Search">Search</i18n>
   </navitem-component>
   <mat-divider></mat-divider>
@@ -18,16 +18,10 @@
   <mat-divider></mat-divider>
 </ng-template>
 
-<ng-template #sub>
-<!--
+<ng-template #misc>
   <mat-divider></mat-divider>
-  <navitem-component hide="lt-md" href="/settings" icon="cogs">
+  <navitem-component hide="lt-md" href="/ngsw/state" icon="cogs">
     <i18n i18n="@@Settings">Settings</i18n>
-  </navitem-component>
--->
-  <mat-divider></mat-divider>
-  <navitem-component hide="lt-md" href="/about" icon="info-circle">
-    <i18n i18n="@@About">About</i18n>
   </navitem-component>
   <mat-divider></mat-divider>
   <navitem-component hide="lt-md" href="/login" icon="user-circle">
@@ -40,6 +34,14 @@
   <mat-divider></mat-divider>
 </ng-template>
 
+<ng-template #page>
+  <mat-divider></mat-divider>
+  <navitem-component hide="lt-md" icon="th-large" (click)="paging.open()">
+    <i18n i18n="@@Pages">Pages</i18n>
+  </navitem-component>
+  <mat-divider></mat-divider>
+</ng-template>
+
 <mat-sidenav-container>
   <mat-sidenav mode="push" position="end">
     <mat-toolbar color="primary">
@@ -48,9 +50,15 @@
       <navitem-component icon="times" (click)="sidenav.close()">
       </navitem-component>
     </mat-toolbar>
-    <ng-container *ngTemplateOutlet="top"></ng-container>
-    <div [style.flexGrow]="1"></div>
-    <ng-container *ngTemplateOutlet="sub"></ng-container>
+    <ng-container *ngTemplateOutlet="main"></ng-container>
+    <div [style.flexGrow]="1" [style.minHeight]="'48px'"></div>
+    <ng-container *ngFor="let i of route.snapshot.data.pages">
+      <mat-divider></mat-divider>
+      <navitem-component [icon]="i.icon" [href]="'/pages/' + i.href">
+        {{ i.title }}
+      </navitem-component>
+    </ng-container>
+    <ng-container *ngTemplateOutlet="misc"></ng-container>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -59,17 +67,31 @@
       <mat-expansion-panel #finder>
         <mat-toolbar color="primary">
           <navitem-component [style.flexGrow]="1" (click)="query.focus()">
-            <form (onsubmit)="alert('search')"><input #query></form>
+            <form><input #query></form>
           </navitem-component>
           <navitem-component icon="times" (click)="navbar.open()">
           </navitem-component>
         </mat-toolbar>
       </mat-expansion-panel>
-      <mat-expansion-panel #navbar>
-        <mat-toolbar color="primary">
-          <ng-container *ngTemplateOutlet="top"></ng-container>
+      <mat-expansion-panel #paging>
+        <mat-toolbar color="primary" [style.overflow]="'hidden'">
+          <ng-container *ngFor="let i of route.snapshot.data.pages">
+            <navitem-component [icon]="i.icon" [href]="'/pages/' + i.href">
+              {{ i.title }}
+            </navitem-component>
+          </ng-container>
           <div [style.flexGrow]="1"></div>
-          <ng-container *ngTemplateOutlet="sub"></ng-container>
+          <navitem-component icon="times" (click)="navbar.open()">
+          </navitem-component>
+        </mat-toolbar>
+      </mat-expansion-panel>
+      <mat-expansion-panel #navbar [expanded]="true">
+        <mat-toolbar color="primary">
+          <ng-container *ngTemplateOutlet="main"></ng-container>
+          <div [style.flexGrow]="1"></div>
+          <mat-divider></mat-divider>
+          <ng-container *ngTemplateOutlet="page"></ng-container>
+          <ng-container *ngTemplateOutlet="misc"></ng-container>
           <navitem-component hide="gt-sm" icon="bars" (click)="sidenav.open()">
           </navitem-component>
         </mat-toolbar>

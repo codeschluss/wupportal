@@ -11,6 +11,7 @@
 			</ng-template>
 
 			<mat-step [label]="constants.coreData" [stepControl]="baseDataFormGroup">
+<!--
         <form [formGroup]="baseDataFormGroup">
           <mat-grid-list cols="2" rowHeight="100px">
             <mat-grid-tile>
@@ -98,7 +99,8 @@
 							{{ constants.next }}
 						</button>
 					</mat-grid-tile>
-				</mat-grid-list>
+        </mat-grid-list>
+-->
 			</mat-step>
 <!--
 				<mat-step [stepControl]="baseDataFormGroup">
@@ -191,6 +193,7 @@
 				</mat-step>
 -->
 			<mat-step [label]="constants.address" [stepControl]="addressFormGroup">
+<!--
 				<mat-grid-list cols="2" rowHeight="100px">
 					<mat-grid-tile>
 						<form [formGroup]="addressFormGroup" style="width: 100%;">
@@ -233,7 +236,8 @@
 							{{ constants.next }}
 						</button>
 					</mat-grid-tile>
-				</mat-grid-list>
+        </mat-grid-list>
+-->
 			</mat-step>
 <!--
 				<mat-step [stepControl]="addressFormGroup">

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-	styleUrls: ['about.component.css'],
+	styleUrls: ['about.component.css', '../../app.component.css'],
 	templateUrl: 'about.project.component.html'
 })
 

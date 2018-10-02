@@ -21,7 +21,7 @@ $this->layout = false;
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<base href="/">
-	<title>Wupportal</title>
+	<title>...loading</title>
 
 	<link rel="manifest" href="manifest.json">
 	<link rel="stylesheet" href="css/spinner.css">

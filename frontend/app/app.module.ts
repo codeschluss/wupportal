@@ -5,7 +5,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 // HttpModule is deprecated
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -207,6 +207,7 @@ import { TranslatableFieldsComponent } from './views/admin/translations/translat
 		UserService,
 		LocationService,
 		NominatimService,
+		Title,
 		TranslationService,
 		TranslatableFieldsComponent,
 		Constants,

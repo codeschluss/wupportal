@@ -1,0 +1,74 @@
+{
+  "index": "/",
+  "assetGroups": [
+    {
+      "name": "client",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/",
+          "/manifest.json",
+          "/css/*.css",
+          "/js/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/i18n/**",
+          "/imgs/**"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "activities",
+      "urls": [
+        "/api/activities/**"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout":"30s",
+        "maxAge": "1d"
+      }
+    },
+    {
+      "name": "configurations",
+      "urls": [
+        "/api/configurations/**"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout":"30s",
+        "maxAge": "1d"
+      }
+    },
+    {
+      "name": "organisations",
+      "urls": [
+        "/api/organisations/**"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout":"30s",
+        "maxAge": "1d"
+      }
+    },
+    {
+      "name": "pages",
+      "urls": [
+        "/api.pages.json"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout":"30s",
+        "maxAge": "1d"
+      }
+    }
+  ]
+}

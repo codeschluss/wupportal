@@ -16,8 +16,3 @@ export class AccountService {
   }
 
 }
-
-@Injectable()
-export class FinderService {
-
-}

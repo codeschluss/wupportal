@@ -5,30 +5,32 @@
     "client": {
       "prefix": "",
       "projectType": "application",
-      "root": ".",
+      "root": "",
       "sourceRoot": "src",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
+            "extractCss": true,
+            "extractLicenses": false,
             "main": "src/client.ts",
+            "namedChunks": false,
+            "ngswConfigPath": "service.json",
             "index": "src/utils/entrypoint.html",
             "polyfills": "src/utils/polyfills.ts",
+            "outputHashing": "none",
             "outputPath": "../backend/webroot/js",
-            "tsConfig": "tsconfig.json"
+            "serviceWorker": true,
+            "tsConfig": "tsconfig.json",
+            "vendorChunk": true
           },
           "configurations": {
             "production": {
+              "buildOptimizer": true,
               "optimization": true,
-              "outputHashing": "none",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": false,
-              "vendorChunk": true,
-              "buildOptimizer": true
+              "sourceMap": false
             }
           }
         },
@@ -41,8 +43,12 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["tsconfig.json"],
-            "exclude": ["**/node_modules/**"]
+            "tsConfig": [
+              "tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

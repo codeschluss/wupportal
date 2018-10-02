@@ -4,12 +4,8 @@ import * as colorConvert from 'color-convert';
 import { AngularOpenlayersModule, LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import { Subject } from 'rxjs';
-import { Activity } from 'src/models/activity';
-import { Address } from 'src/models/address';
-
-const imports = [
-  AngularOpenlayersModule
-];
+import { ActivityModel } from 'src/models/activity.model';
+import { AddressModel } from 'src/models/address.model';
 
 @Component({
   selector: 'mapping-component',
@@ -18,8 +14,12 @@ const imports = [
 
 export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  public static readonly imports = [
+    AngularOpenlayersModule
+  ];
+
   @Input()
-  public activities: Activity[];
+  public activities: ActivityModel[];
 
   public clusterspan: number;
   public latitude: number;
@@ -38,7 +38,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
-  constructor(
+  public constructor(
     // private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
@@ -91,7 +91,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  public centerAddress(address: Address): void {
+  public centerAddress(address: AddressModel): void {
     if (address.longitude && address.latitude) {
       this.aolView.instance.animate({
         center: proj.fromLonLat([address.longitude, address.latitude]),
@@ -153,7 +153,7 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
     // };
 
     // if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
-    //   Object.assign(icon, {
+    //   Object.defineProperty(icon, {
     //     imgSize: [60, 96],
     //     scale: icon.scale / 3,
     //     src: '/imgs/mapmarker.png'
@@ -189,5 +189,3 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 }
-
-Object.assign(MappingComponent, { imports: imports });

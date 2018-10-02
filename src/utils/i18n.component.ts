@@ -2,6 +2,9 @@ import { AfterViewInit, Component, ElementRef, TRANSLATIONS, TRANSLATIONS_FORMAT
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { I18nResolver } from 'src/services/resolvers';
 
+export function TRANSLATIONS_FACTORY(i18n: I18nResolver) {
+  return i18n.translation;
+}
 
 @Component({
   providers: [
@@ -9,7 +12,7 @@ import { I18nResolver } from 'src/services/resolvers';
     {
       deps: [I18nResolver],
       provide: TRANSLATIONS,
-      useFactory: (i18n: I18nResolver) => i18n.translation
+      useFactory: TRANSLATIONS_FACTORY
     },
     {
       provide: TRANSLATIONS_FORMAT,
@@ -23,12 +26,18 @@ import { I18nResolver } from 'src/services/resolvers';
 
 export class I18nComponent implements AfterViewInit {
 
-  @ViewChild('text')
-  text: ElementRef;
+  public static readonly imports = [];
 
-  constructor(
+  @ViewChild('text')
+  private text: ElementRef;
+
+  public constructor(
     private i18n: I18n
   ) { }
+
+  public get value(): string {
+    return this.text.nativeElement.innerHTML;
+  }
 
   public ngAfterViewInit(): void {
     const text = this.text.nativeElement.innerHTML;

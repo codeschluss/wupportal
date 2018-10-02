@@ -1,5 +1,4 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": ".",
     "declaration": false,
@@ -12,5 +11,6 @@
     "sourceMap": false,
     "target": "es5",
     "typeRoots": ["node_modules/@types"]
-  }
+  },
+  "compileOnSave": false
 }

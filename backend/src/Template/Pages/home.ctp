@@ -17,29 +17,20 @@ $this->layout = false;
 <!doctype html>
 <html lang="en" style="height: 100%">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
 	<base href="/">
-	<title>...loading</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
 	<link rel="manifest" href="manifest.json">
-	<link rel="stylesheet" href="css/spinner.css">
 	<link rel="stylesheet" href="css/deeppurple-amber.css">
 	<link rel="icon" href="imgs/appicon.png" type="image/png">
 </head>
 
 <body style="height: 100%; margin: 0;">
-	<app-root>
-		<div class="mat-progress-spinner">
-			<svg viewBox="0 0 100 100">
-				<circle cx="50%" cy="50%" r="45"></circle>
-			</svg>
-		</div>
-	</app-root>
-	<script src="js/inline.bundle.js"></script>
-	<script src="js/polyfills.bundle.js"></script>
-	<script src="js/vendor.bundle.js"></script>
-	<script src="js/main.bundle.js"></script>
+	<client-component></client-component>
+	<script type="text/javascript" src="runtime.js"></script>
+	<script type="text/javascript" src="polyfills.js"></script>
+	<script type="text/javascript" src="vendor.js"></script>
+	<script type="text/javascript" src="main.js"></script>
 </body>
 </html>

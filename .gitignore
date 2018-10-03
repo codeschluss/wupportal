@@ -5,7 +5,8 @@ backend/logs/*.log*
 backend/tests
 backend/tmp
 backend/vendor
-backend/webroot/js
+backend/webroot
+!backend/webroot/index.php
 
 client/node_modules
 client/package-lock.json

@@ -13,6 +13,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
+            "deleteOutputPath": false,
             "extractCss": true,
             "extractLicenses": false,
             "main": "src/client.ts",
@@ -21,10 +22,32 @@
             "index": "src/utils/entrypoint.html",
             "polyfills": "src/utils/polyfills.ts",
             "outputHashing": "none",
-            "outputPath": "../backend/webroot/js",
+            "outputPath": "../backend/webroot",
             "serviceWorker": true,
             "tsConfig": "tsconfig.json",
-            "vendorChunk": true
+            "vendorChunk": true,
+            "assets": [
+              {
+                "glob": "manifest.json",
+                "input": "",
+                "output": "/"
+              },
+              {
+                "glob": "deeppurple-amber.css",
+                "input": "node_modules/@angular/material/prebuilt-themes",
+                "output": "/css"
+              },
+              {
+                "glob": "*.xlf",
+                "input": "i18n",
+                "output": "/i18n"
+              },
+              {
+                "glob": "**/*",
+                "input": "imgs",
+                "output": "/imgs"
+              }
+            ]
           },
           "configurations": {
             "production": {

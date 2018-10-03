@@ -27,41 +27,9 @@
   ],
   "dataGroups": [
     {
-      "name": "activities",
+      "name": "api",
       "urls": [
-        "/api/activities/**"
-      ],
-      "cacheConfig": {
-        "strategy": "freshness",
-        "timeout":"30s",
-        "maxAge": "1d"
-      }
-    },
-    {
-      "name": "configurations",
-      "urls": [
-        "/api/configurations/**"
-      ],
-      "cacheConfig": {
-        "strategy": "freshness",
-        "timeout":"30s",
-        "maxAge": "1d"
-      }
-    },
-    {
-      "name": "organisations",
-      "urls": [
-        "/api/organisations/**"
-      ],
-      "cacheConfig": {
-        "strategy": "freshness",
-        "timeout":"30s",
-        "maxAge": "1d"
-      }
-    },
-    {
-      "name": "pages",
-      "urls": [
+        "/api/**",
         "/api.pages.json"
       ],
       "cacheConfig": {

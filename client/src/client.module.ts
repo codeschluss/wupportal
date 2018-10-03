@@ -108,7 +108,7 @@ fontawesome.add(fas);
     ClientImports,
     HttpClientModule,
 
-    ServiceWorkerModule.register('js/ngsw-worker.js')
+    ServiceWorkerModule.register('/ngsw-worker.js')
   ],
   providers: ClientProviders,
   entryComponents: [],

@@ -1,10 +1,11 @@
-import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule, MatDividerModule, MatExpansionModule, MatExpansionPanel, MatSidenav, MatSidenavModule, MatToolbarModule } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { publicRoutes } from 'src/client.router';
 
 @Component({
   styleUrls: ['layout.component.scss'],
@@ -23,42 +24,63 @@ export class LayoutComponent implements OnInit, OnDestroy {
     MatToolbarModule
   ];
 
-  @ViewChild('finder')
-  public finder: MatExpansionPanel;
-
-  @ViewChild('navbar')
-  public navbar: MatExpansionPanel;
-
-  @ViewChild('paging')
-  public paging: MatExpansionPanel;
+  @ViewChild('query')
+  public query: ElementRef;
 
   @ViewChild(MatSidenav)
   public sidenav: MatSidenav;
 
+  public defaultRoute: string;
+
+  @ViewChild('finder')
+  private finder: MatExpansionPanel;
+
+  @ViewChild('navbar')
+  private navbar: MatExpansionPanel;
+
+  @ViewChild('paging')
+  private paging: MatExpansionPanel;
+
   private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
   public constructor(
-    public location: Location,
     public route: ActivatedRoute,
     public router: Router
   ) { }
 
   public ngOnInit(): void {
-    // this.router.events.pipe(takeUntil(this.ngUnsubscribe))
-    //   .pipe(filter((i: RouterEvent) => i instanceof NavigationEnd))
-    //   .pipe(map((i: NavigationEnd) => i.urlAfterRedirects))
-    //   .pipe(startWith(window.location.pathname))
-    //   .subscribe((i) => {
-    //     this.sidenav.close();
-    //     i.startsWith('/search')
-    //       ? this.finder.open()
-    //       : this.navbar.open();
-    //   });
+    this.defaultRoute = publicRoutes.find((i) => i.path === '**').redirectTo;
+
+    this.router.events
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(filter((i: RouterEvent) => i instanceof NavigationEnd))
+      .subscribe(() => this.sidenav.close());
+
+    fromEvent(this.query.nativeElement, 'keyup')
+      .pipe(map((i: Event) => (<HTMLInputElement>i.target).value.trim()))
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(distinctUntilChanged())
+      .pipe(debounceTime(1000))
+      .subscribe((i) => this.search(i));
   }
 
   public ngOnDestroy(): void {
     this.ngUnsubscribe.next(null);
     this.ngUnsubscribe.complete();
+  }
+
+  public open(menu: string): void {
+    switch (menu) {
+      case 'finder': this.finder.open(); break;
+      case 'navbar': this.navbar.open(); break;
+      case 'paging': this.paging.open(); break;
+    }
+
+    this.sidenav.close();
+  }
+
+  public search(query: string): void {
+    alert(query);
   }
 
 }

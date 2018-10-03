@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="root" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="aboutWupportal" datatype="html">
+        <source>aboutWupportal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="publicAgencies" datatype="html">
+        <source>publicAgencies</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="website" datatype="html">
+        <source>website</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.organisation.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contactPhone" datatype="html">
+        <source>contactPhone</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.organisation.component.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contactMail" datatype="html">
+        <source>contactMail</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.organisation.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="orgaRealisation" datatype="html">
+        <source>orgaRealisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="municipalSupport" datatype="html">
+        <source>municipalSupport</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="academicSupport" datatype="html">
+        <source>academicSupport</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="techRealisation" datatype="html">
+        <source>techRealisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="specialThanks" datatype="html">
+        <source>specialThanks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">203</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="academicPatronage" datatype="html">
+        <source>academicPatronage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="projectSupport" datatype="html">
+        <source>projectSupport</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">234</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="activityProviders" datatype="html">
+        <source>activityProviders</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">243</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="legalNotices" datatype="html">
+        <source>legalNotices</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.portal.component.ts</context>
+          <context context-type="linenumber">267</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aboutActivity" datatype="html">
+        <source>aboutActivity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="general" datatype="html">
+        <source>general</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.organisation.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="schedules" datatype="html">
+        <source>schedules</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="schedule" datatype="html">
+        <source>schedule</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="classification" datatype="html">
+        <source>classification</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category" datatype="html">
+        <source>category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="organisation" datatype="html">
+        <source>organisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="targetGroups" datatype="html">
+        <source>targetGroups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tags" datatype="html">
+        <source>tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="person" datatype="html">
+        <source>person</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="created" datatype="html">
+        <source>created</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.activity.component.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aboutOrganisation" datatype="html">
+        <source>aboutOrganisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.organisation.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contact" datatype="html">
+        <source>contact</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/about/about.organisation.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="selectActivity" datatype="html">
+        <source>selectActivity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/dialogs/activity.dialog.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="selectLanguage" datatype="html">
+        <source>selectLanguage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/dialogs/translation.dialog.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="query" datatype="html">
+        <source>query</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="results" datatype="html">
+        <source>results</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="filters" datatype="html">
+        <source>filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="search" datatype="html">
+        <source>search</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="organisations" datatype="html">
+        <source>organisations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="suburbs" datatype="html">
+        <source>suburbs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/portal/search/search.component.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

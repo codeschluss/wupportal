@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { ConfigurationModel } from 'src/models/configuration.model';
 import { OrganisationModel } from 'src/models/organisation.model';
 import { PageModel } from 'src/models/page.model';
-import { AccountService } from 'src/services/services';
+import { UserService } from 'src/services/services';
 
 @Injectable()
 export class I18nResolver implements Resolve<any> {
@@ -13,7 +13,7 @@ export class I18nResolver implements Resolve<any> {
 
   public constructor(
     private http: HttpClient,
-    private user: AccountService
+    private user: UserService
   ) { }
 
   public async resolve(): Promise<string> {

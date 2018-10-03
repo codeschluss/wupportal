@@ -5,7 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/rou
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Subject } from 'rxjs';
 import { filter, map, startWith, takeUntil } from 'rxjs/operators';
-import { I18nComponent } from 'src/utils/i18n.component';
+import { I18nComponent } from 'src/core/i18n.component';
 
 @Component({
   selector: 'navitem-component',
@@ -38,12 +38,14 @@ export class NavitemComponent implements AfterViewInit, OnDestroy {
   @Input()
   public icon: string;
 
-  @ContentChild(I18nComponent)
-  private i18n: I18nComponent;
-
   public match: boolean;
   public scale: boolean;
   public small: boolean;
+
+  @ContentChild(I18nComponent)
+  private i18n: I18nComponent;
+
+  private title: string;
 
   private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
@@ -55,12 +57,11 @@ export class NavitemComponent implements AfterViewInit, OnDestroy {
   ) { }
 
   public ngAfterViewInit(): void {
-    const title = (this.i18n ? this.i18n.value + ' | ' : '') +
-      this.route.snapshot.data.configuration
-        .find((i) => i.item === 'portalName').value;
-
     this.scale = !!this.hide && 'MAT-TOOLBAR' ===
       this.host.nativeElement.parentElement.tagName;
+
+    this.title = this.route.snapshot.data.configuration
+      .find((i) => i.item === 'portalName').value;
 
     this.media.asObservable()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -73,13 +74,18 @@ export class NavitemComponent implements AfterViewInit, OnDestroy {
       .pipe(filter((i: RouterEvent) => i instanceof NavigationEnd))
       .pipe(map((i: NavigationEnd) => i.urlAfterRedirects))
       .pipe(startWith(window.location.pathname))
-      .pipe(map((i) => i.startsWith(this.href)))
-      .subscribe((i) => { if (this.match = i) { document.title = title; } });
+      .subscribe((i) => this.navigate(i));
   }
 
   public ngOnDestroy(): void {
     this.ngUnsubscribe.next(null);
     this.ngUnsubscribe.complete();
+  }
+
+  private navigate(href: string): void {
+    if ((this.match = href.startsWith(this.href)) && this.i18n) {
+      document.title = `${this.i18n.value} | ${this.title}`;
+    }
   }
 
 }

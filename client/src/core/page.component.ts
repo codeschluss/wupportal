@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDividerModule } from '@angular/material';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { NgxMdModule } from 'ngx-md';
 import { Subject } from 'rxjs';
@@ -8,9 +9,10 @@ import { PageModel } from 'src/models/page.model';
 @Component({
   template: `
     <nesting-component flow="column" size="md">
-      <ng-template #content>
+      <ng-template #heading>
         <h1>{{ page.title }}</h1>
-        <ngx-md>---</ngx-md>
+      </ng-template>
+      <ng-template #content>
         <ngx-md [data]="page.content"></ngx-md>
       </ng-template>
     </nesting-component>
@@ -20,10 +22,13 @@ import { PageModel } from 'src/models/page.model';
 export class PageComponent implements OnInit, OnDestroy {
 
   public static readonly imports = [
+    MatDividerModule,
     NgxMdModule.forRoot()
   ];
 
   public page: PageModel;
+
+  private title: string;
 
   private readonly ngUnsubscribe: Subject<null> = new Subject<null>();
 
@@ -33,7 +38,9 @@ export class PageComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.route.data.subscribe((i) => console.log(i));
+    this.title = this.route.snapshot.parent.parent.data.configuration
+      .find((i) => i.item === 'portalName').value;
+
     this.router.events
       .pipe(takeUntil(this.ngUnsubscribe))
       .pipe(filter((i: RouterEvent) => i instanceof NavigationEnd))
@@ -47,12 +54,10 @@ export class PageComponent implements OnInit, OnDestroy {
   }
 
   private navigate(): void {
-    const title = this.route.snapshot.parent.parent.data.configuration
-      .find((i) => i.item === 'portalName').value;
-
     this.page = this.route.snapshot.parent.parent.data.pages
       .find((i) => i.href === this.route.snapshot.paramMap.get('page'));
-    document.title = `${this.page.title} | ${title}`;
+
+    document.title = `${this.page.title} | ${this.title}`;
   }
 
 }

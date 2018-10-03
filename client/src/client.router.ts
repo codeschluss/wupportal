@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LayoutComponent } from 'src/core/layout.component';
 import { PageComponent } from 'src/core/page.component';
-import { AboutPageComponent } from 'src/pages/about.page.component';
-import { HomePageComponent } from 'src/pages/home.page.component';
 import { LoginPageComponent } from 'src/pages/login.page.component';
 import { ActivityResolver, ConfigurationResolver, I18nResolver, OrganisationResolver, PageResolver } from 'src/services/resolvers';
 import { UserStepperComponent } from 'src/steppers/user.stepper.component';
@@ -14,7 +12,7 @@ import { ResultViewComponent } from 'src/views/result.view.component';
 /*
  * Resolvers for root
  */
-const ClientResolvers = {
+const resolvers = {
   I18nResolver,
 
   activities: ActivityResolver,
@@ -26,7 +24,7 @@ const ClientResolvers = {
 /*
  * Providers for root
  */
-const ClientProviders = [
+const providers = [
   I18nResolver,
 
   ActivityResolver,
@@ -36,19 +34,11 @@ const ClientProviders = [
 ];
 
 /*
- * Routes under root
+ * Public routes
  */
-const ClientRoutes = [
+export const publicRoutes = [
 
   // Pages
-  {
-    path: 'about',
-    component: AboutPageComponent
-  },
-  {
-    path: 'home',
-    component: HomePageComponent
-  },
   {
     path: 'login',
     component: LoginPageComponent
@@ -94,7 +84,7 @@ const ClientRoutes = [
   // catchall
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: '/pages/home'
   }
 ];
 
@@ -102,11 +92,11 @@ const ClientRoutes = [
   exports: [RouterModule],
   imports: [RouterModule.forRoot([{
     path: '',
-    children: ClientRoutes,
+    children: publicRoutes,
     component: LayoutComponent,
-    resolve: ClientResolvers,
+    resolve: resolvers,
   }])],
-  providers: ClientProviders
+  providers: providers
 })
 
 export class ClientRouter { }

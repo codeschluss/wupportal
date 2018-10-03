@@ -11,6 +11,10 @@ import { MatCardModule, MatDividerModule } from '@angular/material';
   ],
   template: `
     <mat-card>
+      <mat-card-header *ngIf="heading">
+        <ng-container [ngTemplateOutlet]="heading"></ng-container>
+      </mat-card-header>
+      <mat-divider *ngIf="heading"></mat-divider>
       <mat-card-content [fxLayout]="flow" [fxLayoutAlign]="flex">
         <ng-container [ngTemplateOutlet]="content"></ng-container>
       </mat-card-content>
@@ -35,6 +39,9 @@ export class NestingComponent implements OnInit {
 
   @ContentChild('content')
   public content: TemplateRef<any>;
+
+  @ContentChild('heading')
+  public heading: TemplateRef<any>;
 
   @Input()
   public flex: string;

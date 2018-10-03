@@ -3,15 +3,15 @@ import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'branding-component',
+  selector: 'logo-component',
   styles: [
     ':host { font-family: sans-serif; font-weight: bold; }',
     'mat-icon { vertical-align: sub; width: 3.3em; }'
   ],
-  template: `<mat-icon svgIcon="branding"></mat-icon>upportal`
+  template: `<mat-icon svgIcon="logo"></mat-icon>upportal`
 })
 
-export class BrandingComponent {
+export class LogoComponent {
 
   public static readonly imports = [
     MatIconModule
@@ -21,7 +21,7 @@ export class BrandingComponent {
     private domSanitizer: DomSanitizer,
     private iconRegistry: MatIconRegistry
   ) {
-    this.iconRegistry.addSvgIcon('branding', this.domSanitizer
+    this.iconRegistry.addSvgIcon('logo', this.domSanitizer
       .bypassSecurityTrustResourceUrl('/imgs/wuppertal.svg'));
   }
 

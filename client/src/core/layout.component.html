@@ -1,10 +1,6 @@
 <ng-template #main>
   <mat-divider></mat-divider>
-  <navitem-component href="/home">
-    <branding-component></branding-component>
-  </navitem-component>
-  <mat-divider></mat-divider>
-  <navitem-component hide="lt-md" icon="search" (click)="finder.open()">
+  <navitem-component hide="lt-md" icon="search" (click)="open('finder')">
     <i18n i18n="@@Search">Search</i18n>
   </navitem-component>
   <mat-divider></mat-divider>
@@ -20,14 +16,6 @@
 
 <ng-template #misc>
   <mat-divider></mat-divider>
-  <navitem-component hide="lt-md" href="/ngsw/state" icon="cogs">
-    <i18n i18n="@@Settings">Settings</i18n>
-  </navitem-component>
-  <mat-divider></mat-divider>
-  <navitem-component hide="lt-md" href="/login" icon="user-circle">
-    <i18n i18n="@@Login">Login</i18n>
-  </navitem-component>
-  <mat-divider></mat-divider>
   <navitem-component hide="lt-md" href="/user" icon="user-circle">
     <i18n i18n="@@Account">Account</i18n>
   </navitem-component>
@@ -36,7 +24,7 @@
 
 <ng-template #page>
   <mat-divider></mat-divider>
-  <navitem-component hide="lt-md" icon="th-large" (click)="paging.open()">
+  <navitem-component hide="lt-md" icon="th-large" (click)="open('paging')">
     <i18n i18n="@@Pages">Pages</i18n>
   </navitem-component>
   <mat-divider></mat-divider>
@@ -67,9 +55,9 @@
       <mat-expansion-panel #finder>
         <mat-toolbar color="primary">
           <navitem-component [style.flexGrow]="1" (click)="query.focus()">
-            <form><input #query></form>
+            <input #query>
           </navitem-component>
-          <navitem-component icon="times" (click)="navbar.open()">
+          <navitem-component icon="times" (click)="open('navbar')">
           </navitem-component>
         </mat-toolbar>
       </mat-expansion-panel>
@@ -81,15 +69,17 @@
             </navitem-component>
           </ng-container>
           <div [style.flexGrow]="1"></div>
-          <navitem-component icon="times" (click)="navbar.open()">
+          <navitem-component icon="times" (click)="open('navbar')">
           </navitem-component>
         </mat-toolbar>
       </mat-expansion-panel>
       <mat-expansion-panel #navbar [expanded]="true">
         <mat-toolbar color="primary">
+          <navitem-component [href]="defaultRoute">
+            <logo-component></logo-component>
+          </navitem-component>
           <ng-container *ngTemplateOutlet="main"></ng-container>
           <div [style.flexGrow]="1"></div>
-          <mat-divider></mat-divider>
           <ng-container *ngTemplateOutlet="page"></ng-container>
           <ng-container *ngTemplateOutlet="misc"></ng-container>
           <navitem-component hide="gt-sm" icon="bars" (click)="sidenav.open()">

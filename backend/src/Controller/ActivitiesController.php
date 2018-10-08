@@ -4,6 +4,7 @@ namespace App\Controller;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\Time;
 use App\Controller\AppController;
+use \Datetime;
 
 /**
  * Activities Controller
@@ -74,7 +75,7 @@ class ActivitiesController extends AppController
 			:	$this->setFreetextFilter($query, $emptyEntities);
 
 		$result = $query->all()->toArray();
-		$this->prepareResult($result);
+		$this->prepareResult($result, true);
 
 		return $this->ResponseHandler->isNotFoundError($result)
 			? $this->ResponseHandler->responseNotFoundError($this->name)
@@ -202,6 +203,8 @@ class ActivitiesController extends AppController
 		$result = $this->paginate($query)->toArray();
 		$this->prepareResult($result);
 
+		$this->excludePastSchedules();
+
 		return $this->ResponseHandler->isNotFoundError($result)
 			? $this->ResponseHandler->responseNotFoundError($this->name)
 			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $result));
@@ -260,13 +263,20 @@ class ActivitiesController extends AppController
 		}]);
 	}
 
-	private function prepareResult($result)
+	private function prepareResult($result, $excludePast = false)
 	{
 		foreach ($result as $activity) {
 			if (!$activity->show_user) {
 				unset($activity->provider->user);
 				unset($activity->provider->user_id);
 			}
+
+			if ($excludePast) {
+				$activity->schedules = array_filter($activity->schedules, function ($schedule) {
+					return ($schedule->start_date >= new Datetime());
+				});
+			}
+
 			usort($activity->schedules, function ($schedule1, $schedule2) {
 				return strtotime($schedule1->start_date) - strtotime($schedule2->start_date);
 			});

@@ -267,6 +267,9 @@ class ActivitiesController extends AppController
 				unset($activity->provider->user);
 				unset($activity->provider->user_id);
 			}
+			usort($activity->schedules, function ($schedule1, $schedule2) {
+				return strtotime($schedule1->start_date) - strtotime($schedule2->start_date);
+			});
 		}
 	}
 

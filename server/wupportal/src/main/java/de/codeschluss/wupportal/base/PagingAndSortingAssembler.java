@@ -30,8 +30,12 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements
 		return new Resources<Resource<E>>(entityResources, linkTo(responseEntity).withSelfRel());
 	}
 
-	public <S extends BaseEntity> Resources<S> toSubResource(List<S> subEntities, ResponseEntity<?> responseEntity) {
+	public <S extends BaseEntity> Resources<S> toListSubResource(List<S> subEntities, ResponseEntity<?> responseEntity) {
 		return new Resources<>(subEntities, linkTo(responseEntity).withSelfRel());
+	}
+	
+	public <S extends BaseEntity> Resource<S> toSubResource(S subEntity, ResponseEntity<?> responseEntity) {
+		return new Resource<>(subEntity, linkTo(responseEntity).withSelfRel());
 	}
 	
 	public PagedResources<Resource<E>> toPageResource(FilterSortPaginate params, Page<E> entitiesPaged) {

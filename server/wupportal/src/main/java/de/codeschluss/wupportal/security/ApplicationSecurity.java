@@ -7,7 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import de.codeschluss.wupportal.user.UserEntity;
 
@@ -15,33 +16,35 @@ import de.codeschluss.wupportal.user.UserEntity;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
+
+	private UserDetailService userDetailsService;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-//	@Autowired
-//	private UserDetailService userDetailsService;
-//
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth
-//			.userDetailsService(this.userDetailsService)
-//			.passwordEncoder(UserEntity.PASSWORD_ENCODER);
-//	}
+	public ApplicationSecurity(UserDetailService userDetailService, BCryptPasswordEncoder encoder) {
+		this.userDetailsService = userDetailService;
+		this.bCryptPasswordEncoder = encoder;
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth
+			.userDetailsService(this.userDetailsService)
+			.passwordEncoder(bCryptPasswordEncoder);
+	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-//		http
-//		.authorizeRequests()
-//			.antMatchers("/built/**", "/main.css").permitAll()
-//			.anyRequest().authenticated()
-//			.and()
-//		.formLogin()
-//			.permitAll()
-//			.and()
-//		.httpBasic()
-//			.and()
-//		.csrf().disable()
-//		.logout()
-//			.logoutSuccessUrl("/");
-		
-
+		http
+		.httpBasic()
+			.and()
+		.csrf().disable()
+		.authorizeRequests()
+			.antMatchers("/users").permitAll()
+        	.anyRequest().authenticated()
+        .and()
+        .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+        .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+        // this disables session creation on Spring Security
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 }

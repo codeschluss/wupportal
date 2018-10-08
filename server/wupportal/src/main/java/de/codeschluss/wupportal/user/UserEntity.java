@@ -1,12 +1,16 @@
 package de.codeschluss.wupportal.user;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.hateoas.core.Relation;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -32,10 +36,8 @@ import lombok.AllArgsConstructor;
 @Entity
 @Table(name = "users")
 @Relation(collectionRelation = "data")
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseEntity implements UserDetails {
 	
-	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
-
 	private static final long serialVersionUID = 1L;
 
 	private String fullname;
@@ -51,15 +53,34 @@ public class UserEntity extends BaseEntity {
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	private List<ProviderEntity> providerEntities;
-	
-	@JsonIgnore
-	public String getPassword() {
-		return this.password;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@JsonProperty
-	public void setPassword(String password) {
-		this.password = PASSWORD_ENCODER.encode(password);
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

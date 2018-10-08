@@ -14,8 +14,7 @@ public class UserResourceAssembler extends PagingAndSortingAssembler<UserEntity>
 	public Resource<UserEntity> toResource(UserEntity user) {
 		return new Resource<>(user,
 				linkTo(methodOn(UserController.class).findOne(user.getId())).withSelfRel(),
-				linkTo(methodOn(UserController.class).findProvidersByUser(user.getId(), null)).withRel("providers")
-				);
+				linkTo(methodOn(UserController.class).findProvidersByUser(user.getId(), null)).withRel("providers"));
 	}
 
 

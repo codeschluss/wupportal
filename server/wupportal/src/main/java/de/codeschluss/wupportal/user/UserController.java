@@ -68,7 +68,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 		Sort sort = params.createSort("id");
 		if (params.getPage() == null && params.getSize() == null) {
 			return ResponseEntity.ok(
-					assembler.toSubResource(
+					assembler.toListSubResource(
 							providerService.getProvidersByUser(service.getById(id), sort),
 							DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id, params)));
 		}

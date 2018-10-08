@@ -65,7 +65,7 @@ public class ProviderController extends CrudController<ProviderEntity, ProviderR
 		Sort sort = params.createSort("id");
 		if (params.getPage() == null && params.getSize() == null) {
 			return ResponseEntity.ok(
-					assembler.toSubResource(
+					assembler.toListSubResource(
 							activityService.getActivitiesByProviderId(sort, id),
 							DummyInvocationUtils.methodOn(this.getClass()).findActivitiesByProvider(id, params)));
 		}

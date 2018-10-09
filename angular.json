@@ -19,8 +19,8 @@
             "main": "src/client.ts",
             "namedChunks": false,
             "ngswConfigPath": "service.json",
-            "index": "src/core/entrypoint.html",
-            "polyfills": "src/core/polyfills.ts",
+            "index": "src/utils/entrypoint.html",
+            "polyfills": "src/utils/polyfills.ts",
             "outputHashing": "none",
             "outputPath": "../backend/webroot",
             "serviceWorker": true,
@@ -60,7 +60,11 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "client:build"
+            "browserTarget": "client:build",
+            "i18nFormat": "xlf",
+            "i18nLocale": "root",
+            "outFile": "strings.xlf",
+            "outputPath": "i18n"
           }
         },
         "lint": {

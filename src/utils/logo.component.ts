@@ -22,7 +22,7 @@ export class LogoComponent {
     private iconRegistry: MatIconRegistry
   ) {
     this.iconRegistry.addSvgIcon('logo', this.domSanitizer
-      .bypassSecurityTrustResourceUrl('/imgs/wuppertal.svg'));
+      .bypassSecurityTrustResourceUrl('/imgs/logo.svg'));
   }
 
 }

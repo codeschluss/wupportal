@@ -3,11 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 @Component({
-  templateUrl: 'login.page.component.html',
-  styleUrls: ['page.component.scss']
+  templateUrl: 'user.login.component.html'
 })
 
-export class LoginPageComponent {
+export class UserAuthComponent {
 
   public static readonly imports = [
     FormsModule,
@@ -21,7 +20,7 @@ export class LoginPageComponent {
   public password: string;
 
   public onSubmit(): boolean {
-    console.log('login: ' + this.username + ':' + this.password);
+    alert('login: ' + this.username + ':' + this.password);
     return false;
   }
 

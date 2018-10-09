@@ -2,109 +2,110 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UrlSerializer } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ClientComponent } from 'src/client.component';
-import { I18nComponent } from 'src/core/i18n.component';
-import { LayoutComponent } from 'src/core/layout.component';
-import { LogoComponent } from 'src/core/logo.component';
-import { MappingComponent } from 'src/core/mapping.component';
-import { NavitemComponent } from 'src/core/navitem.component';
-import { NestingComponent } from 'src/core/nesting.component';
-import { PageComponent } from 'src/core/page.component';
-import { LoginPageComponent } from 'src/pages/login.page.component';
+import { ActivityEditComponent } from 'src/crud/activity/activity.edit.component';
+import { ActivityViewComponent } from 'src/crud/activity/activity.view.component';
+import { OrganisationEditComponent } from 'src/crud/organisation/organisation.edit.component';
+import { OrganisationViewComponent } from 'src/crud/organisation/organisation.view.component';
+import { PageEditComponent } from 'src/crud/page/page.edit.component';
+import { PageViewComponent } from 'src/crud/page/page.view.component';
+import { UserEditComponent } from 'src/crud/user/user.edit.component';
+import { UserAuthComponent } from 'src/crud/user/user.login.component';
+import { UserViewComponent } from 'src/crud/user/user.view.component';
+import { LayoutComponent } from 'src/layout/layout.component';
+import { MappingComponent } from 'src/layout/mapping.component';
+import { NavitemComponent } from 'src/layout/navitem.component';
+import { NestingComponent } from 'src/layout/nesting.component';
 import { UserService } from 'src/services/services';
-import { ActivityStepperComponent } from 'src/steppers/activity.stepper.component';
-import { UserStepperComponent } from 'src/steppers/user.stepper.component';
-import { ActivityViewComponent } from 'src/views/activity.view.component';
-import { OrganisationViewComponent } from 'src/views/organisation.view.component';
-import { ResultViewComponent } from 'src/views/result.view.component';
+import { I18nComponent } from 'src/utils/i18n.component';
+import { LogoComponent } from 'src/utils/logo.component';
+import { ClientUrlSerializer } from 'src/utils/serializer';
+
+/*
+ * Fontawesome icons
+ */
+fontawesome.add(fas);
+
+/*
+ * Providers
+ */
+const providers = [
+  { provide: UserService, useClass: UserService },
+  { provide: UrlSerializer, useClass: ClientUrlSerializer }
+];
 
 /*
  * Module-wide declarations
  */
-const ClientDeclarations = [
+const declarations = [
   ClientComponent,
 
-  // Navigation
+  // crud
+  ActivityEditComponent,
+  ActivityViewComponent,
+  OrganisationEditComponent,
+  OrganisationViewComponent,
+  PageEditComponent,
+  PageViewComponent,
+  UserAuthComponent,
+  UserEditComponent,
+  UserViewComponent,
+
+  // layout
   LayoutComponent,
-  LogoComponent,
   MappingComponent,
   NavitemComponent,
   NestingComponent,
 
-  // Pages
-  PageComponent,
-  LoginPageComponent,
-
-  // Steppers
-  ActivityStepperComponent,
-  UserStepperComponent,
-
-  // Views
-  ActivityViewComponent,
-  OrganisationViewComponent,
-  ResultViewComponent,
-
-  // Utilities
-  I18nComponent
+  // utils
+  I18nComponent,
+  LogoComponent
 ];
 
 /*
  * Module-wide imports
  */
-const ClientImports = [
+const imports = [
   ClientComponent.imports,
 
-  // Navigation
+  // crud
+  ActivityEditComponent.imports,
+  ActivityViewComponent.imports,
+  OrganisationEditComponent.imports,
+  OrganisationViewComponent.imports,
+  PageEditComponent.imports,
+  PageViewComponent.imports,
+  UserAuthComponent.imports,
+  UserEditComponent.imports,
+  UserAuthComponent.imports,
+
+  // layout
   LayoutComponent.imports,
-  LogoComponent.imports,
   MappingComponent.imports,
   NavitemComponent.imports,
   NestingComponent.imports,
 
-  // Pages
-  PageComponent.imports,
-  LoginPageComponent.imports,
-
-  // Steppers
-  ActivityStepperComponent.imports,
-  UserStepperComponent.imports,
-
-  // Views
-  ActivityViewComponent.imports,
-  OrganisationViewComponent.imports,
-  ResultViewComponent.imports,
-
-  // Utilities
-  I18nComponent.imports
+  // utils
+  I18nComponent.imports,
+  LogoComponent.imports
 ];
-
-/*
- * Module-wide providers
- */
-const ClientProviders = [
-  UserService
-];
-
-/*
- * Module-wide fontawesome icons
- */
-fontawesome.add(fas);
 
 @NgModule({
   bootstrap: [ClientComponent],
-  declarations: ClientDeclarations,
+  declarations: declarations,
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ClientImports,
+    imports,
     HttpClientModule,
 
-    ServiceWorkerModule.register('/ngsw-worker.js')
+    ServiceWorkerModule.register('ngsw-worker.js')
   ],
-  providers: ClientProviders,
+  providers: providers,
   entryComponents: [],
   exports: []
 })

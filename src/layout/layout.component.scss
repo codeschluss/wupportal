@@ -1,3 +1,39 @@
+mat-toolbar {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  > mat-divider {
+    display: none;
+  }
+
+  navitem-component {
+    height: 100%;
+    color: rgba(255, 255, 255, 0.75);
+
+    ::ng-deep button[disabled] {
+      color: rgba(255, 255, 255, 1);
+    }
+
+    &#query {
+      width: 100%;
+
+      input {
+        border: 0;
+        box-sizing: border-box;
+        font: inherit;
+        padding: 0 8px;
+        width: 100%;
+      }
+
+      ::ng-deep button {
+        width: 100%;
+      }
+    }
+  }
+}
+
 mat-sidenav-container {
   height: 100%;
 
@@ -7,21 +43,12 @@ mat-sidenav-container {
     flex-direction: column;
     width: 100%;
 
-    > mat-toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-
-    > navitem-component {
+    > navitem-component ::ng-deep button {
       font-family: sans-serif;
       font-size: 16px;
+      text-align: left;
       height: 48px;
-
-      ::ng-deep .mat-button-wrapper {
-        display: block;
-        text-align: left;
-      }
+      width: 100%;
     }
   }
 
@@ -50,33 +77,6 @@ mat-sidenav-container {
 
     > main {
       margin: 12px;
-    }
-  }
-
-  mat-toolbar {
-    flex-shrink: 0;
-
-    > mat-divider {
-      display: none;
-    }
-
-    > navitem-component {
-      height: 100%;
-      color: rgba(255, 255, 255, 0.75);
-
-      input {
-        border: 0;
-        box-sizing: border-box;
-        font: inherit;
-        padding: 0 8px;
-        position: relative;
-        width: 100%;
-        z-index: 1;
-      }
-
-      ::ng-deep button[disabled] {
-        color: rgba(255, 255, 255, 1);
-      }
     }
   }
 }

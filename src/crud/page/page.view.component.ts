@@ -7,19 +7,10 @@ import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { PageModel } from 'src/models/page.model';
 
 @Component({
-  template: `
-    <nesting-component flow="column" size="md">
-      <ng-template #heading>
-        <h1>{{ page.title }}</h1>
-      </ng-template>
-      <ng-template #content>
-        <ngx-md [data]="page.content"></ngx-md>
-      </ng-template>
-    </nesting-component>
-  `
+  templateUrl: 'page.view.component.html'
 })
 
-export class PageComponent implements OnInit, OnDestroy {
+export class PageViewComponent implements OnInit, OnDestroy {
 
   public static readonly imports = [
     MatDividerModule,

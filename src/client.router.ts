@@ -1,90 +1,152 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LayoutComponent } from 'src/core/layout.component';
-import { PageComponent } from 'src/core/page.component';
-import { LoginPageComponent } from 'src/pages/login.page.component';
+import { ActivityEditComponent } from 'src/crud/activity/activity.edit.component';
+import { ActivityViewComponent } from 'src/crud/activity/activity.view.component';
+import { OrganisationEditComponent } from 'src/crud/organisation/organisation.edit.component';
+import { OrganisationViewComponent } from 'src/crud/organisation/organisation.view.component';
+import { PageEditComponent } from 'src/crud/page/page.edit.component';
+import { PageViewComponent } from 'src/crud/page/page.view.component';
+import { UserAuthComponent } from 'src/crud/user/user.login.component';
+import { LayoutComponent } from 'src/layout/layout.component';
+import { AdminGuard, ProviderGuard, SuperAdminGuard, UserGuard } from 'src/services/guards';
 import { ActivityResolver, ConfigurationResolver, I18nResolver, OrganisationResolver, PageResolver } from 'src/services/resolvers';
-import { UserStepperComponent } from 'src/steppers/user.stepper.component';
-import { ActivityViewComponent } from 'src/views/activity.view.component';
-import { OrganisationViewComponent } from 'src/views/organisation.view.component';
-import { ResultViewComponent } from 'src/views/result.view.component';
+import { UserEditComponent } from './crud/user/user.edit.component';
+import { UserViewComponent } from './crud/user/user.view.component';
+
+/*
+ * Default route
+ */
+export const DefaultRoute = '/pages/home';
 
 /*
  * Resolvers for root
  */
 const resolvers = {
-  I18nResolver,
-
   activities: ActivityResolver,
   configuration: ConfigurationResolver,
   organisations: OrganisationResolver,
-  pages: PageResolver
+  pages: PageResolver,
+
+  xlf: I18nResolver
 };
 
 /*
  * Providers for root
  */
 const providers = [
-  I18nResolver,
 
+  // guards
+  UserGuard,
+  ProviderGuard,
+  AdminGuard,
+  SuperAdminGuard,
+
+  // resolvers
   ActivityResolver,
   ConfigurationResolver,
   OrganisationResolver,
-  PageResolver
+  PageResolver,
+
+  // translations
+  I18nResolver
 ];
 
 /*
  * Public routes
  */
-export const publicRoutes = [
+const routes = [
 
-  // Pages
-  {
-    path: 'login',
-    component: LoginPageComponent
-  },
-  {
-    path: 'pages',
-    children: [{
-      path: ':page',
-      component: PageComponent
-    }]
-  },
-
-  // Steppers
-  {
-    path: 'user',
-    component: UserStepperComponent
-  },
-
-  // Views
-  {
-    path: 'search',
-    component: ResultViewComponent
-  },
+  // crud: activities
   {
     path: 'activities',
-    component: ResultViewComponent,
-    children: [{
-      path: ':uuid',
-      component: ActivityViewComponent,
-      resolve: { activity: ActivityResolver }
-    }]
-  },
-  {
-    path: 'organisations',
-    component: ResultViewComponent,
-    children: [{
-      path: ':uuid',
-      component: OrganisationViewComponent,
-      resolve: { organisation: OrganisationResolver }
-    }]
+    // component: ResultViewComponent,
+    children: [
+      {
+        path: ':uuid',
+        component: ActivityViewComponent,
+        resolve: { activity: ActivityResolver }
+      },
+      {
+        path: 'edit/:uuid',
+        canActivate: [SuperAdminGuard, ProviderGuard],
+        component: ActivityEditComponent,
+        resolve: { activity: ActivityResolver }
+      }
+    ]
   },
 
-  // catchall
+  // crud: organisations
+  {
+    path: 'organisations',
+    // component: ResultViewComponent,
+    children: [
+      {
+        path: ':uuid',
+        component: OrganisationViewComponent,
+        resolve: { organisation: OrganisationResolver }
+      },
+      {
+        path: 'edit/:uuid',
+        canActivate: [SuperAdminGuard, AdminGuard],
+        component: OrganisationEditComponent,
+        resolve: { organisation: OrganisationResolver }
+      }
+    ]
+  },
+
+  // crud: pages
+  {
+    path: 'pages',
+    children: [
+      {
+        path: ':page',
+        component: PageViewComponent
+      },
+      {
+        path: 'edit/:page',
+        canActivate: [SuperAdminGuard],
+        component: PageEditComponent
+      }
+    ]
+  },
+
+  // crud: user
+  {
+    path: 'user',
+    component: UserAuthComponent,
+    children: [
+      {
+        path: ':uuid',
+        component: UserViewComponent
+      },
+      {
+        path: 'edit',
+        canActivate: [UserGuard],
+        component: UserEditComponent,
+        children: [
+          {
+            path: ':uuid',
+            canActivate: [SuperAdminGuard],
+            component: UserEditComponent
+          }
+        ]
+      }
+    ]
+  },
+
+  // search
+  // {
+  //   path: 'search',
+  //   children: [{
+  //     path: ':query',
+  //     component: ResultViewComponent
+  //   }]
+  // },
+
+  // default
   {
     path: '**',
-    redirectTo: '/pages/home'
+    redirectTo: DefaultRoute
   }
 ];
 
@@ -92,7 +154,7 @@ export const publicRoutes = [
   exports: [RouterModule],
   imports: [RouterModule.forRoot([{
     path: '',
-    children: publicRoutes,
+    children: routes,
     component: LayoutComponent,
     resolve: resolvers,
   }])],

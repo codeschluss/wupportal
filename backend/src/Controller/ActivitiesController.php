@@ -274,10 +274,6 @@ class ActivitiesController extends AppController
 			if ($excludePast) {
 				$this->excludePast($activity);
 			}
-
-			usort($activity->schedules, function ($schedule1, $schedule2) {
-				return strtotime($schedule1->start_date) - strtotime($schedule2->start_date);
-			});
 		}
 	}
 
@@ -297,7 +293,9 @@ class ActivitiesController extends AppController
 			'Tags',
 			'Categories',
 			'TargetGroups',
-			'Schedules',
+			'Schedules' => [
+        'sort' => ['Schedules.start_date' => 'ASC']
+    ],
 			'Providers.Organisations'
 		];
 	}

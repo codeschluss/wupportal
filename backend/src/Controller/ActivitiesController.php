@@ -58,6 +58,8 @@ class ActivitiesController extends AppController
 			->where([$this->name . '.id' => $id])
 			->first();
 
+		$this->excludePast($result);
+
 		return $this->ResponseHandler->isNotFoundError($result)
 			? $this->ResponseHandler->responseNotFoundError($this->name . '.id')
 			: $this->ResponseHandler->responseSuccess($result);
@@ -203,8 +205,6 @@ class ActivitiesController extends AppController
 		$result = $this->paginate($query)->toArray();
 		$this->prepareResult($result);
 
-		$this->excludePastSchedules();
-
 		return $this->ResponseHandler->isNotFoundError($result)
 			? $this->ResponseHandler->responseNotFoundError($this->name)
 			: $this->ResponseHandler->responseSuccess($this->createListResponse($query, $result));
@@ -272,15 +272,20 @@ class ActivitiesController extends AppController
 			}
 
 			if ($excludePast) {
-				$activity->schedules = array_filter($activity->schedules, function ($schedule) {
-					return ($schedule->start_date >= new Datetime());
-				});
+				$this->excludePast($activity);
 			}
 
 			usort($activity->schedules, function ($schedule1, $schedule2) {
 				return strtotime($schedule1->start_date) - strtotime($schedule2->start_date);
 			});
 		}
+	}
+
+	private function excludePast($activity)
+	{
+		$activity->schedules = array_values(array_filter($activity->schedules, function ($schedule) {
+			return ($schedule->start_date >= new Datetime());
+		}));
 	}
 
 	/** @return array base of associated models */

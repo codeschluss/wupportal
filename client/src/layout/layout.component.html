@@ -48,27 +48,14 @@
     </ng-container>
     <ng-container *ngTemplateOutlet="misc"></ng-container>
   </mat-sidenav>
-
   <mat-sidenav-content>
     <mapping-component></mapping-component>
     <mat-accordion displayMode="flat">
       <mat-expansion-panel #finder>
         <mat-toolbar color="primary">
-          <navitem-component [style.flexGrow]="1" (click)="query.focus()">
+          <navitem-component id="query" (click)="query.focus()">
             <input #query>
           </navitem-component>
-          <navitem-component icon="times" (click)="open('navbar')">
-          </navitem-component>
-        </mat-toolbar>
-      </mat-expansion-panel>
-      <mat-expansion-panel #paging>
-        <mat-toolbar color="primary" [style.overflow]="'hidden'">
-          <ng-container *ngFor="let i of route.snapshot.data.pages">
-            <navitem-component [icon]="i.icon" [href]="'/pages/' + i.href">
-              {{ i.title }}
-            </navitem-component>
-          </ng-container>
-          <div [style.flexGrow]="1"></div>
           <navitem-component icon="times" (click)="open('navbar')">
           </navitem-component>
         </mat-toolbar>
@@ -86,8 +73,19 @@
           </navitem-component>
         </mat-toolbar>
       </mat-expansion-panel>
+      <mat-expansion-panel #paging>
+        <mat-toolbar color="primary">
+          <ng-container *ngFor="let i of route.snapshot.data.pages">
+            <navitem-component hide="lt-md" [icon]="i.icon" [href]="href(i)">
+              {{ i.title }}
+            </navitem-component>
+          </ng-container>
+          <div [style.flexGrow]="1"></div>
+          <navitem-component icon="times" (click)="open('navbar')">
+          </navitem-component>
+        </mat-toolbar>
+      </mat-expansion-panel>
     </mat-accordion>
-
     <main><router-outlet></router-outlet></main>
   </mat-sidenav-content>
 </mat-sidenav-container>

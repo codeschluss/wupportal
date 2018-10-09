@@ -5,12 +5,12 @@ import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/rou
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Subject } from 'rxjs';
 import { filter, map, startWith, takeUntil } from 'rxjs/operators';
-import { I18nComponent } from 'src/core/i18n.component';
+import { I18nComponent } from 'src/utils/i18n.component';
 
 @Component({
   selector: 'navitem-component',
   styles: [
-    'button { color: inherit; font: inherit; height: inherit; width: 100%; }',
+    'button { color: inherit; font: inherit; height: inherit; }',
     'fa-icon { display: inline-block; text-align: center; width: 1.75em; }'
   ],
   template: `

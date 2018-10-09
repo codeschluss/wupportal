@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  templateUrl: 'activity.view.component.html',
-  styleUrls: ['view.component.scss']
+  // styleUrls: ['../view.component.scss'],
+  templateUrl: 'activity.view.component.html'
 })
 
 export class ActivityViewComponent {

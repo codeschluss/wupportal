@@ -1,5 +1,7 @@
 package de.codeschluss.wupportal.provider;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -37,5 +39,13 @@ public class ProviderService extends DataService<ProviderEntity> {
 	
 	public List<ProviderEntity> getProvidersByUser(UserEntity user, Sort sort) {
 		return ((ProviderRepository) repo).findByUser(user, sort).orElseThrow(() -> new NotFoundException(user.getId()));
+	}
+
+	public List<ProviderEntity> getApprovedProviders(UserEntity user) {
+		return ((ProviderRepository) repo).findByUserAndApprovedTrue(user).orElse(Collections.emptyList());
+	}
+
+	public List<ProviderEntity> getOrgaAdminProviders(UserEntity user) {
+		return ((ProviderRepository) repo).findByUserAndAdminTrue(user).orElse(Collections.emptyList());
 	}
 }

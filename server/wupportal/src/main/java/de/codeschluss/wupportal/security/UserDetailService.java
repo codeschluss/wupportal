@@ -1,31 +1,51 @@
 package de.codeschluss.wupportal.security;
 
-import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import de.codeschluss.wupportal.provider.ProviderEntity;
+import de.codeschluss.wupportal.provider.ProviderService;
 import de.codeschluss.wupportal.user.UserEntity;
-import de.codeschluss.wupportal.user.UserRepository;
+import de.codeschluss.wupportal.user.UserService;
 
 @Component
 public class UserDetailService implements UserDetailsService {
 
-	private UserRepository userRepository;
+	private UserService userService;
+	private ProviderService providerService;
 
-	public UserDetailService(UserRepository repository, HttpServletRequest request) {
-		this.userRepository = repository;
+	public UserDetailService(UserService service, ProviderService providerService, HttpServletRequest request) {
+		this.userService = service;
+		this.providerService = providerService;
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserEntity user = this.userRepository.findByUsername(username);
-		return new User(user.getUsername(), user.getPassword(), Collections.emptyList());
+	public JWTUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserEntity user = this.userService.getUser(username);
+		String[] approvedProviderIds = getApprovedProviders(user);
+		String[] orgaAdminIds = getOrgaAdminProviders(user);
+		return new JWTUserDetails(user, approvedProviderIds, orgaAdminIds);
+	}
+
+	private String[] getApprovedProviders(UserEntity user) {
+		List<ProviderEntity> providers = this.providerService.getApprovedProviders(user);
+		
+		return providers == null || providers.isEmpty()
+				? new String[0]
+				: (String[]) providers.stream().map(provider -> provider.getId()).toArray(String[]::new);
+	}
+	
+	private String[] getOrgaAdminProviders(UserEntity user) {
+		List<ProviderEntity> providers = this.providerService.getOrgaAdminProviders(user);
+		
+		return providers == null || providers.isEmpty()
+				? new String[0]
+				: (String[]) providers.stream().map(provider -> provider.getOrganisation().getId()).toArray(String[]::new);
 	}
 
 }

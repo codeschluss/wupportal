@@ -4,6 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.wupportal.base.DataService;
+import de.codeschluss.wupportal.exception.NotFoundException;
 
 @Service
 public class UserService extends DataService<UserEntity> {
@@ -31,5 +32,9 @@ public class UserService extends DataService<UserEntity> {
 			newUser.setId(id);
 			return add(newUser);
 		});
+	}
+	
+	public UserEntity getUser(String username) {
+		return ((UserRepository) this.repo).findByUsername(username).orElseThrow(() -> new NotFoundException(username));
 	}
 }

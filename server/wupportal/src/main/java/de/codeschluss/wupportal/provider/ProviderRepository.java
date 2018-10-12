@@ -20,11 +20,14 @@ public interface ProviderRepository extends FilteredJpaRepository<ProviderEntity
 	Optional<Page<ProviderEntity>> findByOrganisationId(String organisationId, Pageable page);
 	
 	Optional<List<ProviderEntity>> findByOrganisationId(String organisationId, Sort sort);
+	
+	Optional<List<ProviderEntity>> findByUserAndApprovedTrue(UserEntity user);
+	
+	Optional<List<ProviderEntity>> findByUserAndAdminTrue(UserEntity user);
 
 	@Query("Select p from ProviderEntity p where p.user.username like %?1% or p.user.fullname like %?1% or p.user.phone like %?1%")
 	Optional<List<ProviderEntity>> findFiltered(String filter, Sort sort);
 	
 	@Query("Select p from ProviderEntity p where p.user.username like %?1% or p.user.fullname like %?1% or p.user.phone like %?1%")
 	Optional<Page<ProviderEntity>> findFiltered(String filter, Pageable pageable);
-
 }

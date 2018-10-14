@@ -9,7 +9,7 @@
           "/",
           "/manifest.json",
           "/css/*.css",
-          "/js/*.js"
+          "/*.js"
         ]
       }
     },

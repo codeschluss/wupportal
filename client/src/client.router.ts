@@ -16,7 +16,7 @@ import { UserViewComponent } from './crud/user/user.view.component';
 /*
  * Default route
  */
-export const DefaultRoute = '/pages/home';
+export const DefaultRoute = '/pages/view/home';
 
 /*
  * Resolvers for root
@@ -62,13 +62,13 @@ const routes = [
     // component: ResultViewComponent,
     children: [
       {
-        path: ':uuid',
+        path: 'view/:uuid',
         component: ActivityViewComponent,
         resolve: { activity: ActivityResolver }
       },
       {
         path: 'edit/:uuid',
-        canActivate: [SuperAdminGuard, ProviderGuard],
+        canActivate: [SuperAdminGuard, AdminGuard, ProviderGuard],
         component: ActivityEditComponent,
         resolve: { activity: ActivityResolver }
       }
@@ -81,7 +81,7 @@ const routes = [
     // component: ResultViewComponent,
     children: [
       {
-        path: ':uuid',
+        path: 'view/:uuid',
         component: OrganisationViewComponent,
         resolve: { organisation: OrganisationResolver }
       },
@@ -99,7 +99,7 @@ const routes = [
     path: 'pages',
     children: [
       {
-        path: ':page',
+        path: 'view/:page',
         component: PageViewComponent
       },
       {
@@ -116,7 +116,7 @@ const routes = [
     component: UserAuthComponent,
     children: [
       {
-        path: ':uuid',
+        path: 'view/:uuid',
         component: UserViewComponent
       },
       {
@@ -135,13 +135,13 @@ const routes = [
   },
 
   // search
-  // {
-  //   path: 'search',
-  //   children: [{
-  //     path: ':query',
-  //     component: ResultViewComponent
-  //   }]
-  // },
+  {
+    path: 'search',
+    children: [{
+      path: ':query',
+      children: []
+    }]
+  },
 
   // default
   {

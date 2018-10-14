@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { UserService } from 'src/services/services';
 
@@ -8,7 +8,7 @@ abstract class AccountGuard implements CanActivate {
   protected abstract claimed(): boolean;
 
   public constructor(
-    @Inject(UserService) protected userService: UserService
+    protected userService: UserService
   ) { }
 
   public canActivate(): boolean {

@@ -1,7 +1,7 @@
 package de.codeschluss.wupportal.security;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.servlet.FilterChain;
@@ -24,9 +24,13 @@ import de.codeschluss.wupportal.user.UserEntity;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     
 	private AuthenticationManager authenticationManager;
+    private JWTConfiguration securityConfig;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(
+    		AuthenticationManager authenticationManager,
+    		JWTConfiguration securityConfig) {
         this.authenticationManager = authenticationManager;
+        this.securityConfig = securityConfig;
     }
 
     @Override
@@ -38,9 +42,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            creds.getUsername(),
-                            creds.getPassword(),
-                            new ArrayList<>())
+                    		creds.getUsername(),
+                    		creds.getPassword(),
+                    		Collections.emptyList())
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -55,11 +59,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     	JWTUserDetails jwtUserDetails = (JWTUserDetails) auth.getPrincipal();
         String token = JWT.create()
                 .withSubject(jwtUserDetails.getUsername())
-                .withClaim("superuser", jwtUserDetails.isSuperUser())
-                .withArrayClaim("providers", jwtUserDetails.getApprovedProviders())
-                .withArrayClaim("adminOrgas", jwtUserDetails.getOrgasWhereAdmin())
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
-        res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
+                .withClaim(securityConfig.getClaimSuperuser(), jwtUserDetails.isSuperUser())
+                .withArrayClaim(securityConfig.getClaimProviders(), jwtUserDetails.getApprovedProviders())
+                .withArrayClaim(securityConfig.getClaimAdminOrgas(), jwtUserDetails.getAdminOrgas())
+                .withExpiresAt(new Date(System.currentTimeMillis() + securityConfig.getExpirationTime().toMillis()))
+                .sign(Algorithm.HMAC512(securityConfig.getSecret()));
+        res.addHeader("Authorization", "Bearer " + token);
     }
 }

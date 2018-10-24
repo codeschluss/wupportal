@@ -1,14 +1,10 @@
 package de.codeschluss.wupportal.security;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import de.codeschluss.wupportal.user.UserEntity;
 
-@Component
+@Service
 public class AuthorizationService {
 	
 //	public boolean isSuperUser(Authentication authentication) {
@@ -23,7 +19,11 @@ public class AuthorizationService {
 //		return isSuperUser(authentication) || isOwnUser(authentication, userId);
 //	}
 //	
-//	public boolean isOwnUserOrNew(Authentication authentication, HttpServletRequest request) {
-//		return request.getMethod() == HttpMethod.PUT.toString();
-//	}
+	public boolean isSuperUser(Authentication authentication) {
+		if (authentication.getPrincipal() instanceof JWTUserDetails) {
+			JWTUserDetails jwtUserDetails = (JWTUserDetails) authentication.getPrincipal();
+			return jwtUserDetails.isSuperUser();
+		}
+		return false;
+	}
 }

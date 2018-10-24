@@ -1,7 +1,7 @@
 package de.codeschluss.wupportal.security;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,18 +17,26 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+	
+	private JWTUserDetailService userDetailService;
+    private JWTConfiguration securityConfig;
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager) {
-        super(authManager);
+    public JWTAuthorizationFilter(
+    		AuthenticationManager authManager,
+    		JWTUserDetailService userDetailService,
+    		JWTConfiguration securityConfig) {
+    	super(authManager);
+    	this.userDetailService = userDetailService;
+    	this.securityConfig = securityConfig;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
                                     FilterChain chain) throws IOException, ServletException {
-        String header = req.getHeader(SecurityConstants.HEADER_STRING);
-
-        if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+    	
+        String header = req.getHeader("Authorization");
+        if (header == null || !header.startsWith("Bearer ")) {
             chain.doFilter(req, res);
             return;
         }
@@ -40,18 +48,21 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(SecurityConstants.HEADER_STRING);
+        String token = request.getHeader("Authorization");
         if (token != null) {
-            String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
-                    .build()
-                    .verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
-                    .getSubject();
-
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+        	String username = getUsername(token);
+        	
+            if (username != null) {
+                return new UsernamePasswordAuthenticationToken(userDetailService.loadUserByUsername(username), null, Collections.emptyList());
             }
-            return null;
         }
         return null;
     }
+    
+	private String getUsername(String token) {
+		return JWT.require(Algorithm.HMAC512(securityConfig.getSecret()))
+	        .build()
+	        .verify(token.replace("Bearer ", ""))
+	        .getSubject();
+	}
 }

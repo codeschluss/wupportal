@@ -14,12 +14,12 @@ import de.codeschluss.wupportal.user.UserEntity;
 import de.codeschluss.wupportal.user.UserService;
 
 @Component
-public class UserDetailService implements UserDetailsService {
+public class JWTUserDetailService implements UserDetailsService {
 
 	private UserService userService;
 	private ProviderService providerService;
 
-	public UserDetailService(UserService service, ProviderService providerService, HttpServletRequest request) {
+	public JWTUserDetailService(UserService service, ProviderService providerService, HttpServletRequest request) {
 		this.userService = service;
 		this.providerService = providerService;
 	}

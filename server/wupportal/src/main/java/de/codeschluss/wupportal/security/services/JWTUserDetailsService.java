@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.security;
+package de.codeschluss.wupportal.security.services;
 
 import java.util.List;
 
@@ -6,20 +6,21 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import de.codeschluss.wupportal.provider.ProviderService;
+import de.codeschluss.wupportal.security.jwt.JWTUserDetails;
 import de.codeschluss.wupportal.user.UserEntity;
 import de.codeschluss.wupportal.user.UserService;
 
-@Component
-public class JWTUserDetailService implements UserDetailsService {
+@Service
+public class JWTUserDetailsService implements UserDetailsService {
 
 	private UserService userService;
 	private ProviderService providerService;
 
-	public JWTUserDetailService(UserService service, ProviderService providerService, HttpServletRequest request) {
+	public JWTUserDetailsService(UserService service, ProviderService providerService, HttpServletRequest request) {
 		this.userService = service;
 		this.providerService = providerService;
 	}

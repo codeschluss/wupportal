@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.security;
+package de.codeschluss.wupportal.security.jwt;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -16,17 +16,19 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
+import de.codeschluss.wupportal.security.services.JWTUserDetailsService;
+
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	
-	private JWTUserDetailService userDetailService;
+	private JWTUserDetailsService jWTUserDetailsService;
     private JWTConfiguration securityConfig;
 
     public JWTAuthorizationFilter(
     		AuthenticationManager authManager,
-    		JWTUserDetailService userDetailService,
+    		JWTUserDetailsService jWTUserDetailsService,
     		JWTConfiguration securityConfig) {
     	super(authManager);
-    	this.userDetailService = userDetailService;
+    	this.jWTUserDetailsService = jWTUserDetailsService;
     	this.securityConfig = securityConfig;
     }
 
@@ -53,7 +55,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         	String username = getUsername(token);
         	
             if (username != null) {
-                return new UsernamePasswordAuthenticationToken(userDetailService.loadUserByUsername(username), null, Collections.emptyList());
+                return new UsernamePasswordAuthenticationToken(jWTUserDetailsService.loadUserByUsername(username), null, Collections.emptyList());
             }
         }
         return null;

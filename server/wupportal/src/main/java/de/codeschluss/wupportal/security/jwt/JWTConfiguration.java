@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.security;
+package de.codeschluss.wupportal.security.jwt;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;

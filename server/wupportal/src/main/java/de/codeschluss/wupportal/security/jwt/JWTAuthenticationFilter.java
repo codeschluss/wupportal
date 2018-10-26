@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.security;
+package de.codeschluss.wupportal.security.jwt;
 
 import java.io.IOException;
 import java.util.Collections;

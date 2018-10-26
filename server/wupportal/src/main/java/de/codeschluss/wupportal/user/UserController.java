@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +19,9 @@ import de.codeschluss.wupportal.base.CrudController;
 import de.codeschluss.wupportal.base.PagingAndSortingAssembler;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import de.codeschluss.wupportal.provider.ProviderService;
+import de.codeschluss.wupportal.security.permissions.OwnOrSuperUserPermission;
+import de.codeschluss.wupportal.security.permissions.OwnUserPermission;
+import de.codeschluss.wupportal.security.permissions.SuperUserPermission;
 import de.codeschluss.wupportal.utils.FilterSortPaginate;
 
 @RestController
@@ -37,12 +39,13 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@GetMapping("/users")
-	@PreAuthorize("@authorizationService.isSuperUser(authentication)")
+	@SuperUserPermission
 	public ResponseEntity<?> findAll(FilterSortPaginate params) {
 		return super.findAll(params);
 	}
 
 	@GetMapping("/users/{id}")
+	@OwnOrSuperUserPermission
 	public Resource<UserEntity> findOne(@PathVariable String id) {
 		return super.findOne(id);
 	}
@@ -53,11 +56,13 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@PutMapping("/users/{id}")
+	@OwnUserPermission
 	public ResponseEntity<?> update(@RequestBody UserEntity newUser, @PathVariable String id) throws URISyntaxException {
 		return super.update(newUser, id);
 	}
 	
 	@DeleteMapping("/users/{id}")
+	@OwnOrSuperUserPermission
 	public ResponseEntity<?> delete(@PathVariable String id) {
 		return super.delete(id);
 	}

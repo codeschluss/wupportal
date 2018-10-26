@@ -9,20 +9,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import de.codeschluss.wupportal.security.jwt.JWTAuthenticationFilter;
+import de.codeschluss.wupportal.security.jwt.JWTAuthorizationFilter;
+import de.codeschluss.wupportal.security.jwt.JWTConfiguration;
+import de.codeschluss.wupportal.security.services.JWTUserDetailsService;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
 
-	private JWTUserDetailService userDetailsService;
+	private JWTUserDetailsService userDetailsService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	private JWTConfiguration jwtConfig;
 	
 	public ApplicationSecurity(
-			JWTUserDetailService jWTUserDetailService, 
+			JWTUserDetailsService jWTUserDetailsService, 
 			BCryptPasswordEncoder encoder,
 			JWTConfiguration jwtConfig) {
-		this.userDetailsService = jWTUserDetailService;
+		this.userDetailsService = jWTUserDetailsService;
 		this.bCryptPasswordEncoder = encoder;
 		this.jwtConfig = jwtConfig;
 	}

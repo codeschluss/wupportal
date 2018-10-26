@@ -37,4 +37,10 @@ public class UserService extends DataService<UserEntity> {
 	public UserEntity getUser(String username) {
 		return ((UserRepository) this.repo).findByUsername(username).orElseThrow(() -> new NotFoundException(username));
 	}
+
+	public void grantSuperUser(String id, boolean isSuperuser) {
+		UserEntity user = repo.findById(id).orElseThrow(() -> new NotFoundException(id));
+		user.setSuperuser(isSuperuser);
+		repo.save(user);
+	}
 }

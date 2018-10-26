@@ -34,7 +34,9 @@ INSERT INTO `users` (`id`, `superuser`, `username`, `password`, `fullname`, `pho
 ('00000000-0000-0000-0004-600000000000', 0, 'todelete@user', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'deleteuser', '09876543210'),
 ('00000000-0000-0000-0004-700000000000', 0, 'owndelete@user', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'deleteuser', '09876543210'),
 ('00000000-0000-0000-0004-800000000000', 0, 'provider3@user', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'provider3user', '09876543210'),
-('00000000-0000-0000-0004-900000000000', 1, 'milli@codeschluss.de', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'provider3user', '09876543210');
+('00000000-0000-0000-0004-900000000000', 1, 'milli@codeschluss.de', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'provider3user', '09876543210'),
+('00000000-0000-0000-0004-110000000000', 0, 'grantsuper@user.de', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'grantsuper@user.de', '09876543210'),
+('00000000-0000-0000-0004-120000000000', 1, 'takesuper@user.de', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'takesuper@user.de', '09876543210');
 
 INSERT INTO `suburbs` (`id`, `name`) VALUES
 ('00000000-0000-0000-0005-100000000000', 'suburb1'),

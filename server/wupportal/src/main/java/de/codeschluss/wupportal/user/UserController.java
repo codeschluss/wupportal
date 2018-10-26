@@ -1,5 +1,6 @@
 package de.codeschluss.wupportal.user;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.wupportal.base.CrudController;
 import de.codeschluss.wupportal.base.PagingAndSortingAssembler;
+import de.codeschluss.wupportal.exception.NotFoundException;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import de.codeschluss.wupportal.provider.ProviderService;
 import de.codeschluss.wupportal.security.permissions.OwnOrSuperUserPermission;
@@ -65,6 +67,18 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	@OwnOrSuperUserPermission
 	public ResponseEntity<?> delete(@PathVariable String id) {
 		return super.delete(id);
+	}
+	
+	@PutMapping("/users/{id}/superuser")
+	@SuperUserPermission
+	public ResponseEntity<?> grantSuperuser(@RequestBody boolean isSuperuser, @PathVariable String id) {
+		try {
+			this.service.grantSuperUser(id, isSuperuser);
+			return ResponseEntity.noContent().build();
+		} catch(NotFoundException e) {
+			//TODO: Error Objects with proper message
+			return ResponseEntity.badRequest().body("User with given ID does not exist!");
+		}
 	}
 	
 	@GetMapping("/users/{id}/providers")

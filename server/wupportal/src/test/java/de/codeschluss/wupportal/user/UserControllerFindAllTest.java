@@ -4,7 +4,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,12 +23,40 @@ public class UserControllerFindAllTest {
     @Autowired
     private UserController controller;
     
-    private FilterSortPaginate params = new FilterSortPaginate("test", 1, 5, "username", "asc");
+    private FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "username", "asc");
 	
 	@Test
 	@WithUserDetails("super@user")
-	public void findAllWithSuperUserOK() {
-		assertThat(controller.findAll(params).getStatusCode()).isEqualTo(HttpStatus.OK);
+	public void findAllWithoutPaginationSuperUserOK() {
+		FilterSortPaginate params = new FilterSortPaginate(null, null, null, "username", "asc");
+		
+		Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+		
+		assertThat(result.getContent()).isNotEmpty();
+	}
+	
+	@Test
+	@WithUserDetails("super@user")
+	public void findAllEmptyParamsSuperUserOK() {
+		FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
+		
+		Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+		
+		assertThat(result.getContent()).isNotEmpty();
+	}
+    
+	@Test
+	@WithUserDetails("super@user")
+	public void findAllWithPaginationSuperUserOK() {
+		PagedResources<?> result = (PagedResources<?>) controller.findAll(params).getBody();
+		assertThat(result.getContent()).isNotEmpty();
+	}
+	
+	@Test(expected = InvalidDataAccessApiUsageException.class)
+	@WithUserDetails("super@user")
+	public void findAllWrongParamsSuperUser() {
+		FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "blablabla123", "wrong");
+		controller.findAll(params);
 	}
 	
 	@Test(expected = AccessDeniedException.class)

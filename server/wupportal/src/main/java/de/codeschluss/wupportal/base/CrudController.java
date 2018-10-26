@@ -55,7 +55,6 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 	public ResponseEntity<?> update(@RequestBody E newEntity, @PathVariable String id) throws URISyntaxException {
 		Resource<E> resource = assembler.toResource(service.update(id, newEntity));
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
-
 	}
 	
 	public ResponseEntity<?> delete(@PathVariable String id) {

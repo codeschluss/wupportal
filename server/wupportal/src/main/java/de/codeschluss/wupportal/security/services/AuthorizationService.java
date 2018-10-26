@@ -12,7 +12,7 @@ public class AuthorizationService {
 	public boolean isOwnUser(Authentication authentication, String userId) {
 		if (authentication.getPrincipal() instanceof JWTUserDetails) {
 			JWTUserDetails jwtUserDetails = (JWTUserDetails) authentication.getPrincipal();
-			return jwtUserDetails.getUser().getId() == userId;
+			return jwtUserDetails.getUser().getId().equals(userId);
 		}
 		return false;
 		

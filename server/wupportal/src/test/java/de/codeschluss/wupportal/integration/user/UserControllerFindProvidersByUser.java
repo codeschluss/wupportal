@@ -1,15 +1,15 @@
-package de.codeschluss.wupportal.user;
+package de.codeschluss.wupportal.integration.user;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.wupportal.user.UserController;
 import de.codeschluss.wupportal.utils.FilterSortPaginate;
 
 import org.springframework.security.access.AccessDeniedException;
@@ -18,67 +18,54 @@ import org.springframework.security.test.context.support.WithUserDetails;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerFindAllTest {
+public class UserControllerFindProvidersByUser {
 	
     @Autowired
     private UserController controller;
     
-    private FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "username", "asc");
+    private FilterSortPaginate params = new FilterSortPaginate("user", 0, 5, "id", "asc");
 	
 	@Test
 	@WithUserDetails("super@user")
-	public void findAllWithoutPaginationSuperUserOK() {
-		FilterSortPaginate params = new FilterSortPaginate(null, null, null, "username", "asc");
+	public void findProvidersByUserWithoutPaginationSuperUserOK() {
+		FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, "asc");
 		
-		Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+		Resources<?> result = (Resources<?>) controller.findProvidersByUser("00000000-0000-0000-0004-300000000000", params).getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}
 	
 	@Test
 	@WithUserDetails("super@user")
-	public void findAllEmptyParamsSuperUserOK() {
+	public void findProvidersByUserEmptyParamsSuperUserOK() {
 		FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
 		
-		Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+		Resources<?> result = (Resources<?>) controller.findProvidersByUser("00000000-0000-0000-0004-300000000000", params).getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}
     
 	@Test
 	@WithUserDetails("super@user")
-	public void findAllWithPaginationSuperUserOK() {
-		PagedResources<?> result = (PagedResources<?>) controller.findAll(params).getBody();
+	public void findProvidersByUserWithPaginationSuperUserOK() {
+		PagedResources<?> result = (PagedResources<?>) controller.findProvidersByUser("00000000-0000-0000-0004-300000000000", params).getBody();
 		assertThat(result.getContent()).isNotEmpty();
-	}
-	
-	@Test(expected = InvalidDataAccessApiUsageException.class)
-	@WithUserDetails("super@user")
-	public void findAllWrongParamsSuperUser() {
-		FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "blablabla123", "wrong");
-		controller.findAll(params);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("admin@user")
 	public void findAllWithAdminUserDenied() {
-		controller.findAll(params);
+		controller.findProvidersByUser("00000000-0000-0000-0004-300000000000", params);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("provider1@user")
 	public void findAllWithProviderUserDenied() {
-		controller.findAll(params);
-	}
-	
-	@Test(expected = AccessDeniedException.class)
-	@WithUserDetails("new@user")
-	public void findAllWithNotApprovedUserUserDenied() {
-		controller.findAll(params);
+		controller.findProvidersByUser("00000000-0000-0000-0004-400000000000", params);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
 	public void findAllWithNoUserUserUserDenied() {
-		controller.findAll(params);
+		controller.findProvidersByUser("00000000-0000-0000-0004-400000000000", params);
 	}
 }

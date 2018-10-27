@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.user;
+package de.codeschluss.wupportal.integration.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,6 +11,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import de.codeschluss.wupportal.user.UserController;
+import de.codeschluss.wupportal.user.UserEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

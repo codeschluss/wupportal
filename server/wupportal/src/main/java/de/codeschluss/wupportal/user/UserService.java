@@ -43,4 +43,15 @@ public class UserService extends DataService<UserEntity> {
 		user.setSuperuser(isSuperuser);
 		repo.save(user);
 	}
+
+	public boolean userExists(String username) {
+		UserEntity user;
+		try {
+			user = getUser(username);
+		} catch(NotFoundException e) {
+			return false;
+		}
+		
+		return user != null;
+	}
 }

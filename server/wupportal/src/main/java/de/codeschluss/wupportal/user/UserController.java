@@ -1,12 +1,12 @@
 package de.codeschluss.wupportal.user;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.core.DummyInvocationUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +54,11 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	
 	@PostMapping("/users")
 	public ResponseEntity<?> add(@RequestBody UserEntity newUser) throws URISyntaxException {
+		if (service.userExists(newUser.getUsername())) {
+			//TODO: Error Objects with proper message
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists!");
+		}
+	
 		return super.add(newUser);
 	}
 	
@@ -82,6 +87,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@GetMapping("/users/{id}/providers")
+	@OwnOrSuperUserPermission
 	public ResponseEntity<?> findProvidersByUser(@PathVariable String id, FilterSortPaginate params) {
 		ResponseEntity<String> badRequest = validateRequest(params, ProviderEntity.class);
 		if (badRequest != null) return badRequest;

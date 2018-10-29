@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.codeschluss.wupportal.activity.ActivityEntity;
 import de.codeschluss.wupportal.base.BaseEntity;
 import de.codeschluss.wupportal.organisation.OrganisationEntity;
@@ -30,6 +32,7 @@ public class Address extends BaseEntity implements Serializable {
 	private String street;
 
 	@ManyToOne
+	@JsonIgnore
 	private Suburb suburb;
 
 	private float latitude;
@@ -37,9 +40,11 @@ public class Address extends BaseEntity implements Serializable {
 	private float longitude;
 
 	@OneToMany(mappedBy = "address")
+	@JsonIgnore
 	private List<ActivityEntity> activities;
 
 	@OneToMany(mappedBy = "address")
+	@JsonIgnore
 	private List<OrganisationEntity> organisations;
 
 	public Address() {

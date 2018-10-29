@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.codeschluss.wupportal.base.BaseEntity;
 import de.codeschluss.wupportal.model.Address;
 import de.codeschluss.wupportal.model.Category;
@@ -32,15 +34,19 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	private boolean showUser;
 
 	@ManyToOne
+	@JsonIgnore
 	private Address address;
 
 	@ManyToOne
+	@JsonIgnore
 	private Category category;
 
 	@ManyToOne
+	@JsonIgnore
 	private ProviderEntity provider;
 
 	@ManyToMany()
+	@JsonIgnore
 	@JoinTable(
 			name = "activities_tags",
 			joinColumns = @JoinColumn(name = "activity_id"),
@@ -48,6 +54,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	private List<Tag> tags;
 
 	@ManyToMany()
+	@JsonIgnore
 	@JoinTable(
 			name = "activities_target_groups",
 			joinColumns = @JoinColumn(name = "activity_id"),
@@ -55,6 +62,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	private List<TargetGroup> targetGroups;
 	
 	@OneToMany(mappedBy = "activity")
+	@JsonIgnore
 	private List<Schedule> schedules;
 
 	public ActivityEntity() {

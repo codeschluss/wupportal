@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import de.codeschluss.wupportal.exception.BadParamsException;
 import de.codeschluss.wupportal.utils.FilterSortPaginate;
 
 public abstract class CrudController<E extends BaseEntity, A extends PagingAndSortingAssembler<E>, S extends DataService<E>> {
@@ -26,8 +27,7 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 	}
 
 	public ResponseEntity<?> findAll(FilterSortPaginate params) {
-		ResponseEntity<String> badRequest = validateRequest(params, null);
-		if (badRequest != null) return badRequest;
+		validateRequest(params);
 		
 		Sort sort = params.createSort(DEFAULT_SORT_PROP);
 		if (params.getPage() == null && params.getSize() == null) {
@@ -62,13 +62,11 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 		return ResponseEntity.noContent().build();
 	}
 	
-	protected ResponseEntity<String> validateRequest(FilterSortPaginate params, Class<?> entityClass) {
-		if (!isPaginationValid(params.getPage(), params.getSize())) {
+	protected void validateRequest(FilterSortPaginate params) {
+		if (params != null && !isPaginationValid(params.getPage(), params.getSize())) {
 			//TODO: Error Objects with proper message
-			return ResponseEntity.badRequest().body("either both size and page are null or both contain values");
+			throw new BadParamsException("param size or page is null");
 		}
-
-		return null;
 	}
 	
 	private boolean isPaginationValid(Integer page, Integer size) {

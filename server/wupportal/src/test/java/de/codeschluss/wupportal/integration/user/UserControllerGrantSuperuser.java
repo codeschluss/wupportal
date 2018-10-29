@@ -12,6 +12,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import de.codeschluss.wupportal.exception.BadParamsException;
 import de.codeschluss.wupportal.user.UserController;
 
 @RunWith(SpringRunner.class)
@@ -27,7 +28,7 @@ public class UserControllerGrantSuperuser {
 	public void GrantSuperuserOK() {
 		String otherUserId = "00000000-0000-0000-0004-110000000000";
 		
-		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuser(true, otherUserId);
+		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuser(otherUserId, true);
 		
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 		assertThat(controller.findOne(otherUserId).getContent().isSuperuser()).isTrue();
@@ -38,20 +39,18 @@ public class UserControllerGrantSuperuser {
 	public void TakeSuperuserOK() {
 		String otherUserId = "00000000-0000-0000-0004-120000000000";
 		
-		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuser(false, otherUserId);
+		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuser(otherUserId, false);
 		
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 		assertThat(controller.findOne(otherUserId).getContent().isSuperuser()).isFalse();
 	}
 	
-	@Test
+	@Test(expected = BadParamsException.class)
 	@WithUserDetails("super@user")
 	public void TakeSuperuserBadRequest() {
 		String notExistingUserId = "12345678-0000-0000-0004-XX0000000000";
 		
-		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuser(false, notExistingUserId);
-		
-		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+		controller.grantSuperuser(notExistingUserId, false);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -59,7 +58,7 @@ public class UserControllerGrantSuperuser {
 	public void GrantSuperuserDenied() {
 		String otherUserId = "00000000-0000-0000-0004-200000000000";
 		
-		controller.grantSuperuser(true, otherUserId);
+		controller.grantSuperuser(otherUserId, true);
 	}
     
 }

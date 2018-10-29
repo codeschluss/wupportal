@@ -63,19 +63,27 @@ public class ProviderService extends DataService<ProviderEntity> {
 	}
 
 	public List<ProviderEntity> mapForUser(ProviderTO[] transferObjects, UserEntity user) {
-		return Arrays.asList(transferObjects).stream().map(transferObject -> {
-			OrganisationEntity organisation = orgaService.getById(transferObject.getOrganisationId());
-			return createProvider(organisation, user);
+		return Arrays.asList(transferObjects).stream().map(to -> {
+			validate(to.getOrganisationId());
+			return createProvider(
+					orgaService.getById(to.getOrganisationId()), 
+					user);
+		}).collect(Collectors.toList());
+	}
+
+	public List<ProviderEntity> mapForOrganisation(ProviderTO[] transferObjects, OrganisationEntity organisation) {
+		return Arrays.asList(transferObjects).stream().map(to -> {
+			validate(to.getUserId());
+			return createProvider(
+					organisation, 
+					userService.getById(to.getUserId()));
 		}).collect(Collectors.toList());
 	}
 	
-	public List<ProviderEntity> mapForUser(ProviderTO[] transferObjects, OrganisationEntity organisation) {
-		return Arrays.asList(transferObjects).stream().map(transferObject -> {
-			UserEntity user = userService.getById(transferObject.getUserId());
-			return createProvider(organisation, user);
-		}).collect(Collectors.toList());
+	private void validate(String id) {
+		if (id == null || id.isEmpty()) throw new NullPointerException("id is null or empty");
 	}
-	
+
 	private ProviderEntity createProvider(OrganisationEntity orga, UserEntity user) {
 		return new ProviderEntity(false, false, null, orga, user);
 	}

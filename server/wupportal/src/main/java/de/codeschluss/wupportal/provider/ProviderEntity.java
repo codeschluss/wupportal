@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * The persistent class for the providers database table.
@@ -40,14 +41,17 @@ public class ProviderEntity extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "provider")
 	@JsonIgnore
+	@ToString.Exclude
 	private List<ActivityEntity> activityEntities;
 
 	@ManyToOne
 	@JsonIgnore
+	@ToString.Exclude
 	private OrganisationEntity organisation;
 
 	@ManyToOne
 	@JsonIgnore
+	@ToString.Exclude
 	private UserEntity user;
 	
 	@JsonProperty

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import de.codeschluss.wupportal.activity.ActivityEntity;
 import de.codeschluss.wupportal.activity.ActivityService;
 import de.codeschluss.wupportal.base.CrudController;
 import de.codeschluss.wupportal.utils.FilterSortPaginate;
@@ -59,8 +58,7 @@ public class ProviderController extends CrudController<ProviderEntity, ProviderR
 	
 	@GetMapping("/providers/{id}/activities")
 	public ResponseEntity<?> findActivitiesByProvider(@PathVariable String id, FilterSortPaginate params) {
-		ResponseEntity<String> badRequest = validateRequest(params, ActivityEntity.class);
-		if (badRequest != null) return badRequest;
+		validateRequest(params);
 		
 		Sort sort = params.createSort("id");
 		if (params.getPage() == null && params.getSize() == null) {

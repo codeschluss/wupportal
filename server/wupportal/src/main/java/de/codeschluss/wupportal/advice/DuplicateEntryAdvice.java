@@ -8,22 +8,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import de.codeschluss.wupportal.exception.BadParamsException;
+import de.codeschluss.wupportal.exception.DuplicateEntryException;
 
 @ControllerAdvice
-public class InvalidApiAccessAdvice {
+public class DuplicateEntryAdvice {
 
 	@ResponseBody
-	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(DuplicateEntryException.class)
+	@ResponseStatus(code = HttpStatus.CONFLICT)
 	public String invalidApiAccessHandler(InvalidDataAccessApiUsageException ex) {
-		//TODO: Error Objects with proper message
-		return "Invalid API params";
-	}
-	
-	@ResponseBody
-	@ExceptionHandler(BadParamsException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public String badParamsAccessHandler(Exception ex) {
 		//TODO: Error Objects with proper message
 		return ex.getMessage();
 	}

@@ -12,9 +12,9 @@ import de.codeschluss.wupportal.base.FilteredJpaRepository;
 
 public interface OrganisationRepository extends FilteredJpaRepository<OrganisationEntity, String> {
 
-	@Query("Select o from OrganisationEntity o where o.mail like %?1% or o.name like %?1% or o.phone like %?1% or o.website like %?1% or o.address.houseNumber like %?1% or o.place like %?1% or o.suburb like %?1%")
+	@Query("Select o from OrganisationEntity o where o.mail like %?1% or o.name like %?1% or o.phone like %?1% or o.website like %?1% or o.address.houseNumber like %?1% or o.address.place like %?1% or o.address.place like %?1%")
 	Optional<List<OrganisationEntity>> findFiltered(String filter, Sort sort);
 	
-	@Query("Select o from OrganisationEntity o where o.mail like %?1% or o.name like %?1% or o.phone like %?1% or o.website like %?1% or o.address.houseNumber like %?1% or o.place like %?1% or o.suburb like %?1%")
+	@Query("Select o from OrganisationEntity o where o.mail like %?1% or o.name like %?1% or o.phone like %?1% or o.website like %?1% or o.address.houseNumber like %?1% or o.address.place like %?1% or o.address.suburb like %?1%")
 	Optional<Page<OrganisationEntity>> findFiltered(String filter, Pageable pageable);
 }

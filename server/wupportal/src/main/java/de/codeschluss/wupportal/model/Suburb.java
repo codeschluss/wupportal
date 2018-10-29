@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.codeschluss.wupportal.base.BaseEntity;
 
 /**
@@ -20,6 +22,7 @@ public class Suburb extends BaseEntity implements Serializable {
 	private String name;
 
 	@OneToMany(mappedBy = "suburb")
+	@JsonIgnore
 	private List<Address> addresses;
 
 	public Suburb() {

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.codeschluss.wupportal.base.BaseEntity;
 import de.codeschluss.wupportal.model.Address;
 import de.codeschluss.wupportal.provider.ProviderEntity;
@@ -36,6 +38,7 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
 	private Address address;
 
 	@OneToMany(mappedBy = "organisation")
+	@JsonIgnore
 	private List<ProviderEntity> providerEntities;
 
 	public OrganisationEntity() {

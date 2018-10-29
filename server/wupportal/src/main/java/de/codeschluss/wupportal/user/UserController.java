@@ -1,18 +1,12 @@
 package de.codeschluss.wupportal.user;
 
 import java.net.URISyntaxException;
-import java.security.Provider;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.core.DummyInvocationUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.wupportal.base.CrudController;
 import de.codeschluss.wupportal.base.PagingAndSortingAssembler;
+import de.codeschluss.wupportal.exception.BadParamsException;
+import de.codeschluss.wupportal.exception.DuplicateEntryException;
 import de.codeschluss.wupportal.exception.NotFoundException;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import de.codeschluss.wupportal.provider.ProviderService;
@@ -63,7 +59,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	public ResponseEntity<?> add(@RequestBody UserEntity newUser) throws URISyntaxException {
 		if (service.userExists(newUser.getUsername())) {
 			//TODO: Error Objects with proper message
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists!");
+			throw new DuplicateEntryException("Username already exists!");
 		}
 		return super.add(newUser);
 	}
@@ -82,13 +78,13 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	
 	@PutMapping("/users/{id}/superuser")
 	@SuperUserPermission
-	public ResponseEntity<?> grantSuperuser(@RequestBody boolean isSuperuser, @PathVariable String id) {
+	public ResponseEntity<?> grantSuperuser(@PathVariable String id, @RequestBody boolean isSuperuser) {
 		try {
 			this.service.grantSuperUser(id, isSuperuser);
 			return ResponseEntity.noContent().build();
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
-			return ResponseEntity.badRequest().body("User with given ID does not exist!");
+			throw new BadParamsException("User with given ID does not exist!");
 		}
 	}
 	
@@ -102,17 +98,16 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 					assembler.toListSubResource(
 						providerService.addAll(providers),
 						DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id, null)));
-		} catch (NotFoundException e) {
+		} catch (NotFoundException | NullPointerException e) {
 			//TODO: Error Objects with proper message
-			return ResponseEntity.badRequest().body("User with given ID does not exist!");
+			throw new BadParamsException("User or Organisation are null or do not exist!");
 		}
 	}
 	
 	@GetMapping("/users/{id}/providers")
 	@OwnOrSuperUserPermission
 	public ResponseEntity<?> findProvidersByUser(@PathVariable String id, FilterSortPaginate params) {
-		ResponseEntity<String> badRequest = validateRequest(params, ProviderEntity.class);
-		if (badRequest != null) return badRequest;
+		validateRequest(params);
 		
 		Sort sort = params.createSort("id");
 		if (params.getPage() == null && params.getSize() == null) {
@@ -126,5 +121,12 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 		return ResponseEntity.ok(
 				assembler.toPagedSubResource(params,
 						providerService.getPagedProvidersByUser(service.getById(id), pageRequest)));
+	}
+	
+	@DeleteMapping("/users/{id}/providers/{providerId}")
+	@OwnOrSuperUserPermission
+	public ResponseEntity<?> deleteProviderforUser(@PathVariable String id, @PathVariable String providerId) {
+		providerService.delete(providerId);
+		return ResponseEntity.noContent().build();
 	}
 }

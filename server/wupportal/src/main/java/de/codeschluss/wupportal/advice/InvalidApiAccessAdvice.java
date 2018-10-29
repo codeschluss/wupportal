@@ -23,7 +23,7 @@ public class InvalidApiAccessAdvice {
 	@ResponseBody
 	@ExceptionHandler(BadParamsException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public String badParamsAccessHandler(Exception ex) {
+	public String badParamsAccessHandler(BadParamsException ex) {
 		//TODO: Error Objects with proper message
 		return ex.getMessage();
 	}

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.codeschluss.wupportal.activity.ActivityService;
 import de.codeschluss.wupportal.base.CrudController;
 import de.codeschluss.wupportal.base.PagingAndSortingAssembler;
 import de.codeschluss.wupportal.exception.BadParamsException;
@@ -33,14 +34,17 @@ import de.codeschluss.wupportal.utils.FilterSortPaginate;
 public class UserController extends CrudController<UserEntity, PagingAndSortingAssembler<UserEntity>, UserService>{
 
 	private final ProviderService providerService;
+	private final ActivityService activityService;
 	
 	protected final String DEFAULT_SORT_PROP = "username";
 
 	public UserController(UserService userService,
 			ProviderService providerService,
-			UserResourceAssembler userAssembler) {
+			UserResourceAssembler userAssembler,
+			ActivityService activityService) {
 		super(userService, userAssembler);
 		this.providerService = providerService;
+		this.activityService = activityService;
 	}
 	
 	@GetMapping("/users")
@@ -49,10 +53,10 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 		return super.findAll(params);
 	}
 
-	@GetMapping("/users/{id}")
+	@GetMapping("/users/{userId}")
 	@OwnOrSuperUserPermission
-	public Resource<UserEntity> findOne(@PathVariable String id) {
-		return super.findOne(id);
+	public Resource<UserEntity> findOne(@PathVariable String userId) {
+		return super.findOne(userId);
 	}
 	
 	@PostMapping("/users")
@@ -64,23 +68,23 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 		return super.add(newUser);
 	}
 	
-	@PutMapping("/users/{id}")
+	@PutMapping("/users/{userId}")
 	@OwnUserPermission
-	public ResponseEntity<?> update(@RequestBody UserEntity newUser, @PathVariable String id) throws URISyntaxException {
-		return super.update(newUser, id);
+	public ResponseEntity<?> update(@RequestBody UserEntity newUser, @PathVariable String userId) throws URISyntaxException {
+		return super.update(newUser, userId);
 	}
 	
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("/users/{userId}")
 	@OwnOrSuperUserPermission
-	public ResponseEntity<?> delete(@PathVariable String id) {
-		return super.delete(id);
+	public ResponseEntity<?> delete(@PathVariable String userId) {
+		return super.delete(userId);
 	}
 	
-	@PutMapping("/users/{id}/superuser")
+	@PutMapping("/users/{userId}/superuser")
 	@SuperUserPermission
-	public ResponseEntity<?> grantSuperuser(@PathVariable String id, @RequestBody boolean isSuperuser) {
+	public ResponseEntity<?> grantSuperuser(@PathVariable String userId, @RequestBody boolean isSuperuser) {
 		try {
-			this.service.grantSuperUser(id, isSuperuser);
+			this.service.grantSuperUser(userId, isSuperuser);
 			return ResponseEntity.noContent().build();
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
@@ -88,45 +92,81 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 		}
 	}
 	
-	@PostMapping("/users/{id}/providers")
+	@PostMapping("/users/{userId}/providers")
 	@OwnOrSuperUserPermission
-	public ResponseEntity<?> addProvidersforUser(@PathVariable String id, ProviderTO... providerTOs) {
+	public ResponseEntity<?> addProvidersforUser(@PathVariable String userId, ProviderTO... providerTOs) {
 		try {
-			List<ProviderEntity> providers = providerService.mapForUser(providerTOs, service.getById(id));
+			List<ProviderEntity> providers = providerService.mapForUser(providerTOs, service.getById(userId));
 			
 			return ResponseEntity.ok(
 					assembler.toListSubResource(
 						providerService.addAll(providers),
-						DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id, null)));
+						DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(userId, null)));
 		} catch (NotFoundException | NullPointerException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("User or Organisation are null or do not exist!");
 		}
 	}
 	
-	@GetMapping("/users/{id}/providers")
+	@GetMapping("/users/{userId}/providers")
 	@OwnOrSuperUserPermission
-	public ResponseEntity<?> findProvidersByUser(@PathVariable String id, FilterSortPaginate params) {
+	public ResponseEntity<?> findProvidersByUser(@PathVariable String userId, FilterSortPaginate params) {
 		validateRequest(params);
 		
 		Sort sort = params.createSort("id");
 		if (params.getPage() == null && params.getSize() == null) {
 			return ResponseEntity.ok(
 					assembler.toListSubResource(
-							providerService.getProvidersByUser(service.getById(id), sort),
-							DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id, params)));
+							providerService.getProvidersByUser(service.getById(userId), sort),
+							DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(userId, params)));
 		}
 		
 		PageRequest pageRequest = PageRequest.of(params.getPage(), params.getSize(), sort);
 		return ResponseEntity.ok(
 				assembler.toPagedSubResource(params,
-						providerService.getPagedProvidersByUser(service.getById(id), pageRequest)));
+						providerService.getPagedProvidersByUser(service.getById(userId), pageRequest)));
 	}
 	
-	@DeleteMapping("/users/{id}/providers/{providerId}")
+	@DeleteMapping("/users/{userId}/providers/{providerId}")
 	@OwnOrSuperUserPermission
-	public ResponseEntity<?> deleteProviderforUser(@PathVariable String id, @PathVariable String providerId) {
-		providerService.delete(providerId);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<?> deleteProviderforUser(@PathVariable String userId, @PathVariable String providerId) {
+		if (providerService.isProviderForUser(userId, providerId)) {
+			providerService.delete(providerId);
+			return ResponseEntity.noContent().build();
+		} else {
+			throw new BadParamsException("Provider does not match given user!");
+		}
 	}
+	
+	@GetMapping("/users/{userId}/activities")
+	//TODO: Visible for all?
+	public ResponseEntity<?> findActivitiesByUser(@PathVariable String userId, FilterSortPaginate params) {
+		validateRequest(params);
+		
+		List<ProviderEntity> providers = providerService.getProvidersByUser(service.getById(userId), null);
+		
+		Sort sort = params.createSort("id");
+		if (params.getPage() == null && params.getSize() == null) {
+			return ResponseEntity.ok(
+					assembler.toListSubResource(
+							activityService.getActivitiesByProviders(sort, providers),
+							DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(userId, params)));
+		}
+		
+		PageRequest pageRequest = PageRequest.of(params.getPage(), params.getSize(), sort);
+		return ResponseEntity.ok(
+				assembler.toPagedSubResource(params,
+						activityService.getPagedActivitiesByProviders(pageRequest, providers)));
+	}
+	
+	@DeleteMapping("/users/{userId}/activities/{activityId}")
+	public ResponseEntity<?> deleteActivityByUser(@PathVariable String userId, @PathVariable String activityId) {
+		if (activityService.isActivityForProvider(userId, providerService.getProvidersByUser(userId, null))) {
+			activityService.delete(activityId);
+			return ResponseEntity.noContent().build();
+		} else {
+			throw new BadParamsException("Activity does not match given user!");
+		}
+	}
+	
 }

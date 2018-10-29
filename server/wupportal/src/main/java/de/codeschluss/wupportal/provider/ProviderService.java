@@ -53,6 +53,14 @@ public class ProviderService extends DataService<ProviderEntity> {
 	public List<ProviderEntity> getProvidersByUser(UserEntity user, Sort sort) {
 		return getRepo().findByUser(user, sort).orElseThrow(() -> new NotFoundException(user.getId()));
 	}
+	
+	public List<ProviderEntity> getProvidersByUser(String userId, Sort sort) {
+		return getRepo().findByUserid(userId, sort).orElseThrow(() -> new NotFoundException(userId));
+	}
+	
+	public List<ProviderEntity> getProvidersByUser(String userId) {
+		return getRepo().findByUserid(userId).orElseThrow(() -> new NotFoundException(userId));
+	}
 
 	public List<ProviderEntity> getApprovedProviders(UserEntity user) {
 		return getRepo().findByUserAndApprovedTrue(user).orElse(Collections.emptyList());
@@ -64,7 +72,7 @@ public class ProviderService extends DataService<ProviderEntity> {
 
 	public List<ProviderEntity> mapForUser(ProviderTO[] transferObjects, UserEntity user) {
 		return Arrays.asList(transferObjects).stream().map(to -> {
-			validate(to.getOrganisationId());
+			checkIfNullOrEmpty(to.getOrganisationId());
 			return createProvider(
 					orgaService.getById(to.getOrganisationId()), 
 					user);
@@ -73,19 +81,23 @@ public class ProviderService extends DataService<ProviderEntity> {
 
 	public List<ProviderEntity> mapForOrganisation(ProviderTO[] transferObjects, OrganisationEntity organisation) {
 		return Arrays.asList(transferObjects).stream().map(to -> {
-			validate(to.getUserId());
+			checkIfNullOrEmpty(to.getUserId());
 			return createProvider(
 					organisation, 
 					userService.getById(to.getUserId()));
 		}).collect(Collectors.toList());
 	}
 	
-	private void validate(String id) {
+	private void checkIfNullOrEmpty(String id) {
 		if (id == null || id.isEmpty()) throw new NullPointerException("id is null or empty");
 	}
 
 	private ProviderEntity createProvider(OrganisationEntity orga, UserEntity user) {
 		return new ProviderEntity(false, false, null, orga, user);
+	}
+	
+	public boolean isProviderForUser(String userId, String providerId) {
+		return getById(providerId).getUser().getId().equals(userId);
 	}
 	
 	public ProviderRepository getRepo() {
@@ -95,4 +107,6 @@ public class ProviderService extends DataService<ProviderEntity> {
 			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + ProviderRepository.class.getName());
 		}
 	}
+
+
 }

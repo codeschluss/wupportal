@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import de.codeschluss.wupportal.activity.ActivityService;
 import de.codeschluss.wupportal.base.CrudController;
+import de.codeschluss.wupportal.exception.MethodNotAllowedException;
+import de.codeschluss.wupportal.security.permissions.SuperUserPermission;
 import de.codeschluss.wupportal.utils.FilterSortPaginate;
+import io.swagger.models.HttpMethod;
 
 public class ProviderController extends CrudController<ProviderEntity, ProviderResourceAssembler, ProviderService>{
 
@@ -32,28 +35,17 @@ public class ProviderController extends CrudController<ProviderEntity, ProviderR
 	}
 	
 	@GetMapping("/providers")
+	@SuperUserPermission
 	public ResponseEntity<?> findAll(FilterSortPaginate params) {
+		//TODO: Is this function really necessary? Method not allowed instead?
 		return super.findAll(params);
 	}
 
 	@GetMapping("/providers/{id}")
+	@SuperUserPermission
 	public Resource<ProviderEntity> findOne(@PathVariable String id) {
+		//TODO: Is this function really necessary? Method not allowed instead?
 		return super.findOne(id);
-	}
-	
-	@PostMapping("/providers")
-	public ResponseEntity<?> add(@RequestBody ProviderEntity newProvider) throws URISyntaxException {
-		return super.add(newProvider);
-	}
-	
-	@PutMapping("/providers/{id}")
-	public ResponseEntity<?> update(@RequestBody ProviderEntity newProvider, @PathVariable String id) throws URISyntaxException {
-		return super.update(newProvider, id);
-	}
-	
-	@DeleteMapping("/providers/{id}")
-	public ResponseEntity<?> delete(@PathVariable String id) {
-		return super.delete(id);
 	}
 	
 	@GetMapping("/providers/{id}/activities")
@@ -72,6 +64,24 @@ public class ProviderController extends CrudController<ProviderEntity, ProviderR
 		return ResponseEntity.ok(
 				assembler.toPagedSubResource(params,
 						activityService.getPagedActivitiesByProviderId(pageRequest, id)));
+	}
+	
+	
+	// ########## Not allowed methods ##########
+	
+	@PostMapping("/providers")
+	public ResponseEntity<?> add(@RequestBody ProviderEntity newProvider) throws URISyntaxException {
+		throw new MethodNotAllowedException("Method " + HttpMethod.POST.toString() + " is not allowed on Providers. Use Users resources instead");
+	}
+	
+	@PutMapping("/providers/{id}")
+	public ResponseEntity<?> update(@RequestBody ProviderEntity newProvider, @PathVariable String id) throws URISyntaxException {
+		throw new MethodNotAllowedException("Method " + HttpMethod.PUT.toString() + " is not allowed on Providers");
+	}
+	
+	@DeleteMapping("/providers/{id}")
+	public ResponseEntity<?> delete(@PathVariable String id) {
+		throw new MethodNotAllowedException("Method " + HttpMethod.DELETE.toString() + " is not allowed on Providers. Use Users or Organisations resources instead");
 	}
 
 }

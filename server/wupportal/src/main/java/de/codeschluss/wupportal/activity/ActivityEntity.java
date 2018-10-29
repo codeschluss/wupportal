@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.hateoas.core.Relation;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.wupportal.base.BaseEntity;
@@ -21,6 +23,7 @@ import de.codeschluss.wupportal.provider.ProviderEntity;
  */
 @Entity
 @Table(name="activities")
+@Relation(collectionRelation = "data")
 public class ActivityEntity extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;

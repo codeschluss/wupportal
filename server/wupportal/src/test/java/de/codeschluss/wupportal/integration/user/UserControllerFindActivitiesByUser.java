@@ -18,7 +18,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerFindProvidersByUser {
+public class UserControllerFindActivitiesByUser {
 	
     @Autowired
     private UserController controller;
@@ -26,46 +26,28 @@ public class UserControllerFindProvidersByUser {
     private FilterSortPaginate params = new FilterSortPaginate(null, 0, 5, "id", "asc");
 	
 	@Test
-	@WithUserDetails("super@user")
-	public void findProvidersByUserWithoutPaginationSuperUserOK() {
+	public void findActivitiesByUserWithoutPaginationSuperUserOK() {
 		FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, "asc");
 		
-		Resources<?> result = (Resources<?>) controller.findProvidersByUser("00000000-0000-0000-0004-300000000000", params).getBody();
+		Resources<?> result = (Resources<?>) controller.findActivitiesByUser("00000000-0000-0000-0004-300000000000", params).getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}
 	
 	@Test
-	@WithUserDetails("super@user")
 	public void findProvidersByUserEmptyParamsSuperUserOK() {
 		FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
 		
-		Resources<?> result = (Resources<?>) controller.findProvidersByUser("00000000-0000-0000-0004-300000000000", params).getBody();
+		Resources<?> result = (Resources<?>) controller.findActivitiesByUser("00000000-0000-0000-0004-300000000000", params).getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}
     
 	@Test
-	@WithUserDetails("super@user")
 	public void findProvidersByUserWithPaginationSuperUserOK() {
-		PagedResources<?> result = (PagedResources<?>) controller.findProvidersByUser("00000000-0000-0000-0004-300000000000", params).getBody();
+		PagedResources<?> result = (PagedResources<?>) controller.findActivitiesByUser("00000000-0000-0000-0004-300000000000", params).getBody();
 		assertThat(result.getContent()).isNotEmpty();
 	}
 	
-	@Test(expected = AccessDeniedException.class)
-	@WithUserDetails("admin@user")
-	public void findAllWithAdminUserDenied() {
-		controller.findProvidersByUser("00000000-0000-0000-0004-300000000000", params);
-	}
-	
-	@Test(expected = AccessDeniedException.class)
-	@WithUserDetails("provider1@user")
-	public void findAllWithProviderUserDenied() {
-		controller.findProvidersByUser("00000000-0000-0000-0004-400000000000", params);
-	}
-	
-	@Test(expected = AuthenticationCredentialsNotFoundException.class)
-	public void findAllWithNoUserUserUserDenied() {
-		controller.findProvidersByUser("00000000-0000-0000-0004-400000000000", params);
-	}
+
 }

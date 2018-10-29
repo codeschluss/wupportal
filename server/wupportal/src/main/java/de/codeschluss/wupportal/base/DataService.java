@@ -1,5 +1,6 @@
 package de.codeschluss.wupportal.base;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -34,6 +35,10 @@ public abstract class DataService<E extends BaseEntity> {
 	
 	public E add(E newEntity) {
 		return repo.save(newEntity);
+	}
+	
+	public List<E> addAll(Collection<E> newEntities) {
+		return repo.saveAll(newEntities);
 	}
 	
 	public E update(String id, E updatedEntity) {

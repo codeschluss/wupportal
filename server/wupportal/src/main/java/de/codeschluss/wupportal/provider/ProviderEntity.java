@@ -8,10 +8,11 @@ import javax.persistence.*;
 import org.springframework.hateoas.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.codeschluss.wupportal.activity.ActivityEntity;
 import de.codeschluss.wupportal.base.BaseEntity;
-import de.codeschluss.wupportal.model.Organisation;
+import de.codeschluss.wupportal.organisation.OrganisationEntity;
 import de.codeschluss.wupportal.user.UserEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
 @Table(name = "providers")
@@ -43,9 +44,29 @@ public class ProviderEntity extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	@JsonIgnore
-	private Organisation organisation;
+	private OrganisationEntity organisation;
 
 	@ManyToOne
 	@JsonIgnore
 	private UserEntity user;
+	
+	@JsonProperty
+	public boolean isAdmin() {
+		return this.admin;
+	}
+	
+	@JsonIgnore
+	public void setAdmin(boolean isAdmin) {
+		this.admin = isAdmin;
+	}
+	
+	@JsonProperty
+	public boolean isApproved() {
+		return this.approved;
+	}
+	
+	@JsonIgnore
+	public void setApproved(boolean isApproved) {
+		this.approved = isApproved;
+	}
 }

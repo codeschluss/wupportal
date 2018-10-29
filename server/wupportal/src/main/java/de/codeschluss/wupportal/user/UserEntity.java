@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
 @Table(name = "users")

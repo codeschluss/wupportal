@@ -1,4 +1,4 @@
-package de.codeschluss.wupportal.model;
+package de.codeschluss.wupportal.organisation;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import de.codeschluss.wupportal.base.BaseEntity;
+import de.codeschluss.wupportal.model.Address;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 
 /**
@@ -14,7 +15,7 @@ import de.codeschluss.wupportal.provider.ProviderEntity;
  */
 @Entity
 @Table(name = "organisations")
-public class Organisation extends BaseEntity implements Serializable {
+public class OrganisationEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Lob
@@ -37,7 +38,7 @@ public class Organisation extends BaseEntity implements Serializable {
 	@OneToMany(mappedBy = "organisation")
 	private List<ProviderEntity> providerEntities;
 
-	public Organisation() {
+	public OrganisationEntity() {
 		super();
 	}
 	

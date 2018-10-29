@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import de.codeschluss.wupportal.activity.ActivityEntity;
 import de.codeschluss.wupportal.base.BaseEntity;
+import de.codeschluss.wupportal.organisation.OrganisationEntity;
 
 /**
  * The persistent class for the addresses database table.
@@ -36,10 +37,10 @@ public class Address extends BaseEntity implements Serializable {
 	private float longitude;
 
 	@OneToMany(mappedBy = "address")
-	private List<ActivityEntity> activityEntities;
+	private List<ActivityEntity> activities;
 
 	@OneToMany(mappedBy = "address")
-	private List<Organisation> organisations;
+	private List<OrganisationEntity> organisations;
 
 	public Address() {
 		super();
@@ -94,11 +95,11 @@ public class Address extends BaseEntity implements Serializable {
 	}
 
 	public List<ActivityEntity> getActivities() {
-		return this.activityEntities;
+		return this.activities;
 	}
 
 	public void setActivities(List<ActivityEntity> activityEntities) {
-		this.activityEntities = activityEntities;
+		this.activities = activityEntities;
 	}
 
 	public Suburb getSuburb() {
@@ -109,12 +110,12 @@ public class Address extends BaseEntity implements Serializable {
 		this.suburb = suburb;
 	}
 
-	public List<Organisation> getOrganisations() {
+	public List<OrganisationEntity> getOrganisations() {
 		return this.organisations;
 	}
 
-	public void setOrganisations(List<Organisation> organisations) {
-		this.organisations = organisations;
+	public void setOrganisations(List<OrganisationEntity> organisationEntities) {
+		this.organisations = organisationEntities;
 	}
 
 }

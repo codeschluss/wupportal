@@ -1,8 +1,9 @@
 package de.codeschluss.wupportal.provider;
 
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,41 +12,79 @@ import org.springframework.stereotype.Service;
 
 import de.codeschluss.wupportal.base.DataService;
 import de.codeschluss.wupportal.exception.NotFoundException;
+import de.codeschluss.wupportal.organisation.OrganisationEntity;
+import de.codeschluss.wupportal.organisation.OrganisationService;
 import de.codeschluss.wupportal.user.UserEntity;
+import de.codeschluss.wupportal.user.UserService;
 
 @Service
 public class ProviderService extends DataService<ProviderEntity> {
 	
-	public ProviderService(ProviderRepository providerRepo) {
+	private OrganisationService orgaService;
+	private UserService userService;
+	
+	public ProviderService(
+			ProviderRepository providerRepo,
+			OrganisationService orgaService,
+			UserService userService) {
 		super(providerRepo);
+		this.orgaService = orgaService;
+		this.userService = userService;
 	}
 	
-	public ProviderEntity update(String id, ProviderEntity newProvider) {
-		return repo.findById(id).map(provider -> {
-			provider.setUser(newProvider.getUser());
-			provider.setOrganisation(newProvider.getOrganisation());
-			provider.setAdmin(newProvider.isAdmin());
-			provider.setApproved(newProvider.isApproved());
-			return repo.save(provider);
+	public ProviderEntity update(String id, ProviderTO newProviderTO) {
+		return getRepo().findById(id).map(provider -> {
+			provider.setUser(userService.getById(newProviderTO.getUserId()));
+			provider.setOrganisation(orgaService.getById(newProviderTO.getOrganisationId()));
+			return getRepo().save(provider);
 		}).orElseGet(() -> {
-			newProvider.setId(id);
-			return add(newProvider);
+			ProviderEntity provider = createProvider(
+					orgaService.getById(newProviderTO.getOrganisationId()),
+					userService.getById(newProviderTO.getUserId()));
+			provider.setId(id);
+			return add(provider);
 		});
 	}
 	
 	public Page<ProviderEntity> getPagedProvidersByUser(UserEntity user, PageRequest page) {
-		return ((ProviderRepository) repo).findByUser(user, page).orElseThrow(() -> new NotFoundException(user.getId()));
+		return getRepo().findByUser(user, page).orElseThrow(() -> new NotFoundException(user.getId()));
 	}
 	
 	public List<ProviderEntity> getProvidersByUser(UserEntity user, Sort sort) {
-		return ((ProviderRepository) repo).findByUser(user, sort).orElseThrow(() -> new NotFoundException(user.getId()));
+		return getRepo().findByUser(user, sort).orElseThrow(() -> new NotFoundException(user.getId()));
 	}
 
 	public List<ProviderEntity> getApprovedProviders(UserEntity user) {
-		return ((ProviderRepository) repo).findByUserAndApprovedTrue(user).orElse(Collections.emptyList());
+		return getRepo().findByUserAndApprovedTrue(user).orElse(Collections.emptyList());
 	}
 
 	public List<ProviderEntity> getOrgaAdminProviders(UserEntity user) {
-		return ((ProviderRepository) repo).findByUserAndAdminTrue(user).orElse(Collections.emptyList());
+		return getRepo().findByUserAndAdminTrue(user).orElse(Collections.emptyList());
+	}
+
+	public List<ProviderEntity> mapForUser(ProviderTO[] transferObjects, UserEntity user) {
+		return Arrays.asList(transferObjects).stream().map(transferObject -> {
+			OrganisationEntity organisation = orgaService.getById(transferObject.getOrganisationId());
+			return createProvider(organisation, user);
+		}).collect(Collectors.toList());
+	}
+	
+	public List<ProviderEntity> mapForUser(ProviderTO[] transferObjects, OrganisationEntity organisation) {
+		return Arrays.asList(transferObjects).stream().map(transferObject -> {
+			UserEntity user = userService.getById(transferObject.getUserId());
+			return createProvider(organisation, user);
+		}).collect(Collectors.toList());
+	}
+	
+	private ProviderEntity createProvider(OrganisationEntity orga, UserEntity user) {
+		return new ProviderEntity(false, false, null, orga, user);
+	}
+	
+	public ProviderRepository getRepo() {
+		if (repo instanceof ProviderRepository) {
+			return (ProviderRepository) repo;
+		} else {
+			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + ProviderRepository.class.getName());
+		}
 	}
 }

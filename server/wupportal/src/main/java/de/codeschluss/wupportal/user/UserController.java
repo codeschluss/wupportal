@@ -1,6 +1,12 @@
 package de.codeschluss.wupportal.user;
 
 import java.net.URISyntaxException;
+import java.security.Provider;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,6 +27,7 @@ import de.codeschluss.wupportal.base.PagingAndSortingAssembler;
 import de.codeschluss.wupportal.exception.NotFoundException;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import de.codeschluss.wupportal.provider.ProviderService;
+import de.codeschluss.wupportal.provider.ProviderTO;
 import de.codeschluss.wupportal.security.permissions.OwnOrSuperUserPermission;
 import de.codeschluss.wupportal.security.permissions.OwnUserPermission;
 import de.codeschluss.wupportal.security.permissions.SuperUserPermission;
@@ -58,7 +65,6 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 			//TODO: Error Objects with proper message
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists!");
 		}
-	
 		return super.add(newUser);
 	}
 	
@@ -81,6 +87,22 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 			this.service.grantSuperUser(id, isSuperuser);
 			return ResponseEntity.noContent().build();
 		} catch(NotFoundException e) {
+			//TODO: Error Objects with proper message
+			return ResponseEntity.badRequest().body("User with given ID does not exist!");
+		}
+	}
+	
+	@PostMapping("/users/{id}/providers")
+	@OwnOrSuperUserPermission
+	public ResponseEntity<?> addProvidersforUser(@PathVariable String id, ProviderTO... providerTOs) {
+		try {
+			List<ProviderEntity> providers = providerService.mapForUser(providerTOs, service.getById(id));
+			
+			return ResponseEntity.ok(
+					assembler.toListSubResource(
+						providerService.addAll(providers),
+						DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(id, null)));
+		} catch (NotFoundException e) {
 			//TODO: Error Objects with proper message
 			return ResponseEntity.badRequest().body("User with given ID does not exist!");
 		}

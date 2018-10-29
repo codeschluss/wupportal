@@ -129,7 +129,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	
 	@DeleteMapping("/users/{userId}/providers/{providerId}")
 	@OwnOrSuperUserPermission
-	public ResponseEntity<?> deleteProviderforUser(@PathVariable String userId, @PathVariable String providerId) {
+	public ResponseEntity<?> deleteProviderForUser(@PathVariable String userId, @PathVariable String providerId) {
 		if (providerService.isProviderForUser(userId, providerId)) {
 			providerService.delete(providerId);
 			return ResponseEntity.noContent().build();
@@ -160,8 +160,9 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	}
 	
 	@DeleteMapping("/users/{userId}/activities/{activityId}")
-	public ResponseEntity<?> deleteActivityByUser(@PathVariable String userId, @PathVariable String activityId) {
-		if (activityService.isActivityForProvider(userId, providerService.getProvidersByUser(userId, null))) {
+	@OwnOrSuperUserPermission
+	public ResponseEntity<?> deleteActivityForUser(@PathVariable String userId, @PathVariable String activityId) {
+		if (activityService.isActivityForProvider(activityId, providerService.getProvidersByUser(userId, null))) {
 			activityService.delete(activityId);
 			return ResponseEntity.noContent().build();
 		} else {

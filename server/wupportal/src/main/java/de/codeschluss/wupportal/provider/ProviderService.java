@@ -55,11 +55,11 @@ public class ProviderService extends DataService<ProviderEntity> {
 	}
 	
 	public List<ProviderEntity> getProvidersByUser(String userId, Sort sort) {
-		return getRepo().findByUserid(userId, sort).orElseThrow(() -> new NotFoundException(userId));
+		return getRepo().findByUserId(userId, sort).orElseThrow(() -> new NotFoundException(userId));
 	}
 	
 	public List<ProviderEntity> getProvidersByUser(String userId) {
-		return getRepo().findByUserid(userId).orElseThrow(() -> new NotFoundException(userId));
+		return getRepo().findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
 	}
 
 	public List<ProviderEntity> getApprovedProviders(UserEntity user) {

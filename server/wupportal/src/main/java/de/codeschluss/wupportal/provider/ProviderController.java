@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.wupportal.activity.ActivityService;
 import de.codeschluss.wupportal.base.CrudController;
@@ -21,6 +22,7 @@ import de.codeschluss.wupportal.security.permissions.SuperUserPermission;
 import de.codeschluss.wupportal.utils.FilterSortPaginate;
 import io.swagger.models.HttpMethod;
 
+@RestController
 public class ProviderController extends CrudController<ProviderEntity, ProviderResourceAssembler, ProviderService>{
 
 	private final ActivityService activityService;

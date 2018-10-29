@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("@authorizationService.isOwnUser(authentication, #id)")
+@PreAuthorize("@authorizationService.isOwnUser(authentication, #userId)")
 public @interface OwnUserPermission {
 
 }

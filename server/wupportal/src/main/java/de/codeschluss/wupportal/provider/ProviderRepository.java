@@ -17,9 +17,9 @@ public interface ProviderRepository extends FilteredJpaRepository<ProviderEntity
 	
 	Optional<List<ProviderEntity>> findByUser(UserEntity user, Sort sort);
 	
-	Optional<List<ProviderEntity>> findByUserid(String userId, Sort sort);
+	Optional<List<ProviderEntity>> findByUserId(String userId, Sort sort);
 	
-	Optional<List<ProviderEntity>> findByUserid(String userId);
+	Optional<List<ProviderEntity>> findByUserId(String userId);
 		
 	Optional<Page<ProviderEntity>> findByOrganisationId(String organisationId, Pageable page);
 	

@@ -14,6 +14,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.codeschluss.wupportal.exception.BadParamsException;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import de.codeschluss.wupportal.user.UserController;
 import de.codeschluss.wupportal.utils.FilterSortPaginate;
@@ -21,7 +22,7 @@ import de.codeschluss.wupportal.utils.FilterSortPaginate;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class UserControllerDeleteProvidersforUserTest {
+public class UserControllerDeleteProvidersForUserTest {
 
 	@Autowired
     private UserController controller;
@@ -35,7 +36,7 @@ public class UserControllerDeleteProvidersforUserTest {
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getId().equals(providerId), "provider exists"));
 		
-		controller.deleteProviderforUser(userId, providerId);
+		controller.deleteProviderForUser(userId, providerId);
 		
 		result = (Resources<ProviderEntity>) controller.findProvidersByUser(userId, new FilterSortPaginate()).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getId().equals(providerId));
@@ -50,10 +51,19 @@ public class UserControllerDeleteProvidersforUserTest {
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getId().equals(providerId), "provider exists"));
 		
-		controller.deleteProviderforUser(userId, providerId);
+		controller.deleteProviderForUser(userId, providerId);
 		
 		result = (Resources<ProviderEntity>) controller.findProvidersByUser(userId, new FilterSortPaginate()).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getId().equals(providerId));
+	}
+	
+	@Test(expected = BadParamsException.class)
+	@WithUserDetails("provider1@user")
+	public void deleteProviderForNotMatchingIdsDenied() {
+		String userId = "00000000-0000-0000-0004-300000000000";
+		String providerId = "00000000-0000-0000-0009-900000000000";
+		
+		controller.deleteProviderForUser(userId, providerId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -62,7 +72,7 @@ public class UserControllerDeleteProvidersforUserTest {
 		String userId = "00000000-0000-0000-0004-800000000000";
 		String providerId = "00000000-0000-0000-0009-800000000000";
 		
-		controller.deleteProviderforUser(userId, providerId);
+		controller.deleteProviderForUser(userId, providerId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -70,6 +80,6 @@ public class UserControllerDeleteProvidersforUserTest {
 		String userId = "00000000-0000-0000-0004-800000000000";
 		String providerId = "00000000-0000-0000-0009-800000000000";
 		
-		controller.deleteProviderforUser(userId, providerId);
+		controller.deleteProviderForUser(userId, providerId);
 	}
 }

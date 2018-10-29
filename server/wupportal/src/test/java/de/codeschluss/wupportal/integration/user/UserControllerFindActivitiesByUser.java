@@ -12,10 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.wupportal.user.UserController;
 import de.codeschluss.wupportal.utils.FilterSortPaginate;
 
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.test.context.support.WithUserDetails;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserControllerFindActivitiesByUser {

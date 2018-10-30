@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -15,47 +13,21 @@ import de.codeschluss.wupportal.exception.NotFoundException;
 import de.codeschluss.wupportal.organisation.OrganisationEntity;
 import de.codeschluss.wupportal.organisation.OrganisationService;
 import de.codeschluss.wupportal.user.UserEntity;
-import de.codeschluss.wupportal.user.UserService;
 
 @Service
 public class ProviderService extends DataService<ProviderEntity> {
 	
 	private OrganisationService orgaService;
-	private UserService userService;
 	
 	public ProviderService(
 			ProviderRepository providerRepo,
-			OrganisationService orgaService,
-			UserService userService) {
+			OrganisationService orgaService) {
 		super(providerRepo);
 		this.orgaService = orgaService;
-		this.userService = userService;
-	}
-	
-	public ProviderEntity update(String id, ProviderTO newProviderTO) {
-		return getRepo().findById(id).map(provider -> {
-			provider.setUser(userService.getById(newProviderTO.getUserId()));
-			provider.setOrganisation(orgaService.getById(newProviderTO.getOrganisationId()));
-			return getRepo().save(provider);
-		}).orElseGet(() -> {
-			ProviderEntity provider = createProvider(
-					orgaService.getById(newProviderTO.getOrganisationId()),
-					userService.getById(newProviderTO.getUserId()));
-			provider.setId(id);
-			return add(provider);
-		});
-	}
-	
-	public Page<ProviderEntity> getPagedProvidersByUser(UserEntity user, PageRequest page) {
-		return getRepo().findByUser(user, page).orElseThrow(() -> new NotFoundException(user.getId()));
 	}
 	
 	public List<ProviderEntity> getProvidersByUser(UserEntity user, Sort sort) {
 		return getRepo().findByUser(user, sort).orElseThrow(() -> new NotFoundException(user.getId()));
-	}
-	
-	public List<ProviderEntity> getProvidersByUser(String userId, Sort sort) {
-		return getRepo().findByUserId(userId, sort).orElseThrow(() -> new NotFoundException(userId));
 	}
 	
 	public List<ProviderEntity> getProvidersByUser(String userId) {
@@ -70,21 +42,12 @@ public class ProviderService extends DataService<ProviderEntity> {
 		return getRepo().findByUserAndAdminTrue(user).orElse(Collections.emptyList());
 	}
 
-	public List<ProviderEntity> mapForUser(ProviderTO[] transferObjects, UserEntity user) {
-		return Arrays.asList(transferObjects).stream().map(to -> {
-			checkIfNullOrEmpty(to.getOrganisationId());
+	public List<ProviderEntity> createProviders(UserEntity user, String... organisationIds) {
+		return Arrays.asList(organisationIds).stream().map(orgaId -> {
+			checkIfNullOrEmpty(orgaId);
 			return createProvider(
-					orgaService.getById(to.getOrganisationId()), 
+					orgaService.getById(orgaId), 
 					user);
-		}).collect(Collectors.toList());
-	}
-
-	public List<ProviderEntity> mapForOrganisation(ProviderTO[] transferObjects, OrganisationEntity organisation) {
-		return Arrays.asList(transferObjects).stream().map(to -> {
-			checkIfNullOrEmpty(to.getUserId());
-			return createProvider(
-					organisation, 
-					userService.getById(to.getUserId()));
 		}).collect(Collectors.toList());
 	}
 	
@@ -96,8 +59,12 @@ public class ProviderService extends DataService<ProviderEntity> {
 		return new ProviderEntity(false, false, null, orga, user);
 	}
 	
-	public boolean isProviderForUser(String userId, String providerId) {
-		return getById(providerId).getUser().getId().equals(userId);
+	public void deleteForUserAndOrga(String userId, String orgaId) {
+		repo.delete(getProviderByUserAndOrga(userId, orgaId));
+	}
+	
+	public ProviderEntity getProviderByUserAndOrga(String userId, String orgaId) {
+		return getRepo().findByUserIdAndOrganisationId(userId, orgaId).orElseThrow(() -> new NotFoundException(userId + " and " + orgaId ));
 	}
 	
 	public ProviderRepository getRepo() {

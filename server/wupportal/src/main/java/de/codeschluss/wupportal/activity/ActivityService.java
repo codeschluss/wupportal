@@ -28,7 +28,7 @@ public class ActivityService extends DataService<ActivityEntity> {
 		return getRepo().findByProviderIdIn(Arrays.asList(providerId), page).orElseThrow(() -> new NotFoundException(providerId.toString()));
 	}
 	
-	public List<ActivityEntity> getActivitiesByProviders(Sort sort, List<ProviderEntity> providers) {
+	public List<ActivityEntity> getActivitiesByProviders(List<ProviderEntity> providers, Sort sort) {
 		return getRepo().findByProviderIn(providers, sort).orElseThrow(() -> new NotFoundException(providers.toString()));
 	}
 	

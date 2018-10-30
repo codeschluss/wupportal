@@ -130,7 +130,7 @@ CREATE TABLE `organisations` (
 CREATE TABLE `providers` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`admin` BOOLEAN DEFAULT FALSE,
-    `approved` BOOLEAN DEFAULT FALSE,
+  `approved` BOOLEAN DEFAULT FALSE,
 	`organisation_id` CHAR(36) NOT NULL,
 	`user_id` CHAR(36) NOT NULL,
 
@@ -143,7 +143,9 @@ CREATE TABLE `providers` (
 
 	CONSTRAINT `fkey_provider_user`
 		FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-		ON UPDATE CASCADE ON DELETE CASCADE
+		ON UPDATE CASCADE ON DELETE CASCADE,
+
+	UNIQUE KEY `organisation_user_key` (`organisation_id`,`user_id`)
 );
 
 CREATE TABLE `activities` (

@@ -39,7 +39,7 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "organisation")
 	@JsonIgnore
-	private List<ProviderEntity> providerEntities;
+	private List<ProviderEntity> providers;
 
 	public OrganisationEntity() {
 		super();
@@ -102,11 +102,11 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
 	}
 
 	public List<ProviderEntity> getProviders() {
-		return this.providerEntities;
+		return this.providers;
 	}
 
 	public void setProviders(List<ProviderEntity> providerEntities) {
-		this.providerEntities = providerEntities;
+		this.providers = providerEntities;
 	}
 
 }

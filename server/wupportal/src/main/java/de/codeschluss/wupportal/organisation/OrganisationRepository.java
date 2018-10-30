@@ -9,9 +9,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 
 import de.codeschluss.wupportal.base.FilteredJpaRepository;
+import de.codeschluss.wupportal.provider.ProviderEntity;
 
 public interface OrganisationRepository extends FilteredJpaRepository<OrganisationEntity, String> {
 
+	Optional<Page<OrganisationEntity>> findByProvidersIn(List<ProviderEntity> providers, Pageable page);
+	
+	Optional<List<OrganisationEntity>> findByProvidersIn(List<ProviderEntity> providers, Sort sort);
+	
+	Optional<List<OrganisationEntity>> findByProvidersIn(List<ProviderEntity> providers);
+	
 	@Query("Select o from OrganisationEntity o where o.mail like %?1% or o.name like %?1% or o.phone like %?1% or o.website like %?1% or o.address.houseNumber like %?1% or o.address.place like %?1% or o.address.place like %?1%")
 	Optional<List<OrganisationEntity>> findFiltered(String filter, Sort sort);
 	

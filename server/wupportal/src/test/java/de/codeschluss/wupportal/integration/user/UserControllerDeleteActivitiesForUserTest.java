@@ -36,7 +36,7 @@ public class UserControllerDeleteActivitiesForUserTest {
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getId().equals(activityId), "activity exists"));
 		
-		controller.deleteProviderForUser(userId, activityId);
+		controller.deleteActivityForUser(userId, activityId);
 		
 		result = (Resources<ActivityEntity>) controller.findActivitiesByUser(userId, new FilterSortPaginate()).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getId().equals(activityId));

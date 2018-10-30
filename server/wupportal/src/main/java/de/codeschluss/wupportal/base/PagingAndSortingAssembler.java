@@ -30,7 +30,7 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements
 		return new Resources<Resource<E>>(entityResources, linkTo(responseEntity).withSelfRel());
 	}
 
-	public <S extends BaseEntity> Resources<S> toListSubResource(List<S> subEntities, ResponseEntity<?> responseEntity) {
+	public Resources<?> toListSubResource(List<?> subEntities, ResponseEntity<?> responseEntity) {
 		return new Resources<>(subEntities, linkTo(responseEntity).withSelfRel());
 	}
 	
@@ -47,10 +47,10 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements
 				links);
 	}
 
-	public <S extends BaseEntity> PagedResources<Resource<S>> toPagedSubResource(FilterSortPaginate params, Page<S> subEntitiesPaged) {
-		List<Resource<S>> subEntities = subEntitiesPaged.stream().map(entity -> new Resource<S>(entity)).collect(Collectors.toList());
+	public PagedResources<Resource<?>> toPagedSubResource(FilterSortPaginate params, Page<?> subEntitiesPaged) {
+		List<Resource<?>> subEntities = subEntitiesPaged.stream().map(entity -> new Resource<>(entity)).collect(Collectors.toList());
 		List<Link> links = createPagingLinks(params, subEntitiesPaged);
-		return new PagedResources<Resource<S>>(subEntities,
+		return new PagedResources<Resource<?>>(subEntities,
 				new PageMetadata(subEntitiesPaged.getSize(), subEntitiesPaged.getPageable().getPageNumber(),
 						subEntitiesPaged.getTotalElements(), subEntitiesPaged.getTotalPages()),
 				links);

@@ -22,9 +22,9 @@ import de.codeschluss.wupportal.base.PagingAndSortingAssembler;
 import de.codeschluss.wupportal.exception.BadParamsException;
 import de.codeschluss.wupportal.exception.DuplicateEntryException;
 import de.codeschluss.wupportal.exception.NotFoundException;
+import de.codeschluss.wupportal.organisation.OrganisationService;
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import de.codeschluss.wupportal.provider.ProviderService;
-import de.codeschluss.wupportal.provider.ProviderTO;
 import de.codeschluss.wupportal.security.permissions.OwnOrSuperUserPermission;
 import de.codeschluss.wupportal.security.permissions.OwnUserPermission;
 import de.codeschluss.wupportal.security.permissions.SuperUserPermission;
@@ -35,16 +35,19 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 
 	private final ProviderService providerService;
 	private final ActivityService activityService;
+	private final OrganisationService organisationService;
 	
 	protected final String DEFAULT_SORT_PROP = "username";
 
 	public UserController(UserService userService,
 			ProviderService providerService,
 			UserResourceAssembler userAssembler,
-			ActivityService activityService) {
+			ActivityService activityService,
+			OrganisationService organisationService) {
 		super(userService, userAssembler);
 		this.providerService = providerService;
 		this.activityService = activityService;
+		this.organisationService = organisationService;
 	}
 	
 	@GetMapping("/users")
@@ -82,59 +85,60 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	
 	@PutMapping("/users/{userId}/superuser")
 	@SuperUserPermission
-	public ResponseEntity<?> grantSuperuser(@PathVariable String userId, @RequestBody boolean isSuperuser) {
+	public ResponseEntity<?> grantSuperuserRight(@PathVariable String userId, @RequestBody boolean isSuperuser) {
 		try {
 			this.service.grantSuperUser(userId, isSuperuser);
-			return ResponseEntity.noContent().build();
+			return super.respondNoContent();
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("User with given ID does not exist!");
 		}
 	}
 	
-	@PostMapping("/users/{userId}/providers")
+	@PostMapping("/users/{userId}/organisations")
 	@OwnOrSuperUserPermission
-	public ResponseEntity<?> addProvidersforUser(@PathVariable String userId, ProviderTO... providerTOs) {
+	public ResponseEntity<?> addOrganisationforUser(@PathVariable String userId, @RequestBody String... organisation) {
 		try {
-			List<ProviderEntity> providers = providerService.mapForUser(providerTOs, service.getById(userId));
-			
+			List<ProviderEntity> providers = providerService.addAll(providerService.createProviders(service.getById(userId), organisation));
 			return ResponseEntity.ok(
 					assembler.toListSubResource(
-						providerService.addAll(providers),
-						DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(userId, null)));
+						organisationService.getOrganisationsByProviders(providers),
+						DummyInvocationUtils.methodOn(this.getClass()).findOrganisationsByUser(userId, null)));
 		} catch (NotFoundException | NullPointerException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("User or Organisation are null or do not exist!");
 		}
 	}
 	
-	@GetMapping("/users/{userId}/providers")
+	@GetMapping("/users/{userId}/organisations")
 	@OwnOrSuperUserPermission
-	public ResponseEntity<?> findProvidersByUser(@PathVariable String userId, FilterSortPaginate params) {
+	public ResponseEntity<?> findOrganisationsByUser(@PathVariable String userId, FilterSortPaginate params) {
 		validateRequest(params);
+		
+		List<ProviderEntity> providers = providerService.getProvidersByUser(service.getById(userId), null);
 		
 		Sort sort = params.createSort("id");
 		if (params.getPage() == null && params.getSize() == null) {
 			return ResponseEntity.ok(
 					assembler.toListSubResource(
-							providerService.getProvidersByUser(service.getById(userId), sort),
-							DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(userId, params)));
+							organisationService.getOrganisationsByProviders(providers,sort),
+							DummyInvocationUtils.methodOn(this.getClass()).findOrganisationsByUser(userId, params)));
 		}
 		
 		PageRequest pageRequest = PageRequest.of(params.getPage(), params.getSize(), sort);
 		return ResponseEntity.ok(
 				assembler.toPagedSubResource(params,
-						providerService.getPagedProvidersByUser(service.getById(userId), pageRequest)));
+						organisationService.getPagedOrganisationsByProviders(providers, pageRequest)));
 	}
 	
-	@DeleteMapping("/users/{userId}/providers/{providerId}")
+	@DeleteMapping("/users/{userId}/organisations/{orgaId}")
 	@OwnOrSuperUserPermission
-	public ResponseEntity<?> deleteProviderForUser(@PathVariable String userId, @PathVariable String providerId) {
-		if (providerService.isProviderForUser(userId, providerId)) {
-			providerService.delete(providerId);
-			return ResponseEntity.noContent().build();
-		} else {
-			throw new BadParamsException("Provider does not match given user!");
+	public ResponseEntity<?> deleteOrganisationForUser(@PathVariable String userId, @PathVariable String orgaId) {
+		try {
+			providerService.deleteForUserAndOrga(userId, orgaId);
+			return super.respondNoContent();
+		} catch (NotFoundException e) {
+			return super.respondNoContent();
 		}
 	}
 	
@@ -149,8 +153,8 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 		if (params.getPage() == null && params.getSize() == null) {
 			return ResponseEntity.ok(
 					assembler.toListSubResource(
-							activityService.getActivitiesByProviders(sort, providers),
-							DummyInvocationUtils.methodOn(this.getClass()).findProvidersByUser(userId, params)));
+							activityService.getActivitiesByProviders(providers, sort),
+							DummyInvocationUtils.methodOn(this.getClass()).findActivitiesByUser(userId, params)));
 		}
 		
 		PageRequest pageRequest = PageRequest.of(params.getPage(), params.getSize(), sort);
@@ -162,9 +166,9 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	@DeleteMapping("/users/{userId}/activities/{activityId}")
 	@OwnOrSuperUserPermission
 	public ResponseEntity<?> deleteActivityForUser(@PathVariable String userId, @PathVariable String activityId) {
-		if (activityService.isActivityForProvider(activityId, providerService.getProvidersByUser(userId, null))) {
+		if (activityService.isActivityForProvider(activityId, providerService.getProvidersByUser(userId))) {
 			activityService.delete(activityId);
-			return ResponseEntity.noContent().build();
+			return respondNoContent();
 		} else {
 			throw new BadParamsException("Activity does not match given user!");
 		}

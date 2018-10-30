@@ -17,7 +17,7 @@ import de.codeschluss.wupportal.user.UserController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerGrantSuperuser {
+public class UserControllerGrantSuperuserRight {
 
     @Autowired
     private UserController controller;
@@ -28,7 +28,7 @@ public class UserControllerGrantSuperuser {
 	public void GrantSuperuserOK() {
 		String otherUserId = "00000000-0000-0000-0004-110000000000";
 		
-		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuser(otherUserId, true);
+		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuserRight(otherUserId, true);
 		
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 		assertThat(controller.findOne(otherUserId).getContent().isSuperuser()).isTrue();
@@ -39,7 +39,7 @@ public class UserControllerGrantSuperuser {
 	public void TakeSuperuserOK() {
 		String otherUserId = "00000000-0000-0000-0004-120000000000";
 		
-		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuser(otherUserId, false);
+		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantSuperuserRight(otherUserId, false);
 		
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 		assertThat(controller.findOne(otherUserId).getContent().isSuperuser()).isFalse();
@@ -50,7 +50,7 @@ public class UserControllerGrantSuperuser {
 	public void TakeSuperuserBadRequest() {
 		String notExistingUserId = "12345678-0000-0000-0004-XX0000000000";
 		
-		controller.grantSuperuser(notExistingUserId, false);
+		controller.grantSuperuserRight(notExistingUserId, false);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -58,7 +58,7 @@ public class UserControllerGrantSuperuser {
 	public void GrantSuperuserDenied() {
 		String otherUserId = "00000000-0000-0000-0004-200000000000";
 		
-		controller.grantSuperuser(otherUserId, true);
+		controller.grantSuperuserRight(otherUserId, true);
 	}
     
 }

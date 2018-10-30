@@ -13,17 +13,11 @@ import de.codeschluss.wupportal.user.UserEntity;
 
 public interface ProviderRepository extends FilteredJpaRepository<ProviderEntity, String> {
 	
-	Optional<Page<ProviderEntity>> findByUser(UserEntity user, Pageable page);
-	
 	Optional<List<ProviderEntity>> findByUser(UserEntity user, Sort sort);
 	
-	Optional<List<ProviderEntity>> findByUserId(String userId, Sort sort);
-	
 	Optional<List<ProviderEntity>> findByUserId(String userId);
-		
-	Optional<Page<ProviderEntity>> findByOrganisationId(String organisationId, Pageable page);
 	
-	Optional<List<ProviderEntity>> findByOrganisationId(String organisationId, Sort sort);
+	Optional<ProviderEntity> findByUserIdAndOrganisationId(String userId, String orgaId);
 	
 	Optional<List<ProviderEntity>> findByUserAndApprovedTrue(UserEntity user);
 	

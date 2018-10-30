@@ -25,4 +25,12 @@ public class AuthorizationService {
 		}
 		return false;
 	}
+	
+//	public boolean isOrgaAdmin(Authentication authentication, String providerId) {
+//		if (authentication.getPrincipal() instanceof JWTUserDetails) {
+//			JWTUserDetails jwtUserDetails = (JWTUserDetails) authentication.getPrincipal();
+//			return jwtUserDetails.getUser().getId().equals(userId);
+//		}
+//		return false;
+//	}
 }

@@ -5,18 +5,30 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.hateoas.core.Relation;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.wupportal.base.BaseEntity;
 import de.codeschluss.wupportal.model.Address;
 import de.codeschluss.wupportal.provider.ProviderEntity;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * The persistent class for the organisations database table.
  * 
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 @Entity
 @Table(name = "organisations")
+@Relation(collectionRelation = "data")
 public class OrganisationEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +39,7 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
 	private byte[] image;
 
 	private String mail;
-
+	
 	private String name;
 
 	private String phone;
@@ -35,78 +47,10 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
 	private String website;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Address address;
 
 	@OneToMany(mappedBy = "organisation")
 	@JsonIgnore
 	private List<ProviderEntity> providers;
-
-	public OrganisationEntity() {
-		super();
-	}
-	
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public byte[] getImage() {
-		return this.image;
-	}
-
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
-
-	public String getMail() {
-		return this.mail;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getWebsite() {
-		return this.website;
-	}
-
-	public void setWebsite(String website) {
-		this.website = website;
-	}
-
-	public Address getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public List<ProviderEntity> getProviders() {
-		return this.providers;
-	}
-
-	public void setProviders(List<ProviderEntity> providerEntities) {
-		this.providers = providerEntities;
-	}
-
 }

@@ -19,6 +19,6 @@ public class JWTConfiguration {
 	
 	private String secret;
 	private String claimSuperuser;
-	private String claimProviders;
+	private String claimApprovedOrgas;
 	private String claimAdminOrgas;
 }

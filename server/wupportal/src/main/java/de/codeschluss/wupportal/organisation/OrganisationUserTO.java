@@ -1,14 +1,15 @@
 package de.codeschluss.wupportal.organisation;
 
+import org.springframework.hateoas.core.Relation;
+
 import de.codeschluss.wupportal.provider.ProviderEntity;
 import lombok.Data;
 
 @Data
+@Relation(collectionRelation = "data")
 public class OrganisationUserTO {
 	
 	private String id;
-	
-	private String userId;
 	
 	private String description;
 
@@ -22,9 +23,11 @@ public class OrganisationUserTO {
 
 	private String website;
 	
+	private String userId;
+	
 	private boolean admin;
 	
-	private boolean approved;
+	private boolean approved;	
 	
 	public OrganisationUserTO(OrganisationEntity orga, ProviderEntity provider) {
 		id = orga.getId();

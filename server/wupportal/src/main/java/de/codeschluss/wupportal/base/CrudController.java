@@ -59,7 +59,7 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 	
 	public ResponseEntity<?> delete(@PathVariable String id) {
 		service.delete(id);
-		return respondNoContent();
+		return noContent();
 	}
 	
 	protected void validateRequest(FilterSortPaginate params) {
@@ -73,12 +73,11 @@ public abstract class CrudController<E extends BaseEntity, A extends PagingAndSo
 		return (page != null && size != null) || (page == null && size == null);
 	}
 	
-
 	private ResponseEntity<?> getFindAllMethodOn() {
 		return DummyInvocationUtils.methodOn(this.getClass()).findAll(null);
 	}
 
-	public ResponseEntity<?> respondNoContent() {
+	public ResponseEntity<?> noContent() {
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -18,16 +18,16 @@ public class UserService extends DataService<UserEntity> {
 	
 	public UserEntity add(UserEntity newUser) {
 		newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-		return repo.save(newUser);
+		return getRepo().save(newUser);
 	}
 
 	public UserEntity update(String id, UserEntity newUser) {
-		return repo.findById(id).map(user -> {
+		return getRepo().findById(id).map(user -> {
 			user.setUsername(newUser.getUsername());
 			user.setFullname(newUser.getFullname());
 			user.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
 			user.setPhone(newUser.getPhone());
-			return repo.save(user);
+			return getRepo().save(user);
 		}).orElseGet(() -> {
 			newUser.setId(id);
 			return add(newUser);
@@ -35,11 +35,11 @@ public class UserService extends DataService<UserEntity> {
 	}
 	
 	public UserEntity getUser(String username) {
-		return ((UserRepository) this.repo).findByUsername(username).orElseThrow(() -> new NotFoundException(username));
+		return getRepo().findByUsername(username).orElseThrow(() -> new NotFoundException(username));
 	}
 
 	public void grantSuperUser(String id, boolean isSuperuser) {
-		UserEntity user = repo.findById(id).orElseThrow(() -> new NotFoundException(id));
+		UserEntity user = getRepo().findById(id).orElseThrow(() -> new NotFoundException(id));
 		user.setSuperuser(isSuperuser);
 		repo.save(user);
 	}
@@ -53,5 +53,13 @@ public class UserService extends DataService<UserEntity> {
 		}
 		
 		return user != null;
+	}
+	
+	public UserRepository getRepo() {
+		if (repo instanceof UserRepository) {
+			return (UserRepository) repo;
+		} else {
+			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + UserRepository.class.getName());
+		}
 	}
 }

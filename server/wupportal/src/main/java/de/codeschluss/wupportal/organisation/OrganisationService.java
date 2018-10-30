@@ -21,6 +21,9 @@ public class OrganisationService extends DataService<OrganisationEntity> {
 		super(orgaRepo);
 	}
 	
+	public boolean organisationExists(String name) {
+		return getRepo().existsByName(name);
+	}
 	
 	public List<OrganisationUserTO> getOrganisationsByProviders(List<ProviderEntity> providers, Sort sort) {
 		List<OrganisationEntity> orgas =  getRepo().findByProvidersIn(providers, sort).orElseThrow(() -> new NotFoundException(""));
@@ -34,7 +37,6 @@ public class OrganisationService extends DataService<OrganisationEntity> {
 	
 	public Page<OrganisationUserTO> getPagedOrganisationsByProviders(List<ProviderEntity> providers, PageRequest pageRequest) {
 		Page<OrganisationEntity> orgas =  getRepo().findByProvidersIn(providers, pageRequest).orElseThrow(() -> new NotFoundException(""));
-		
 		return orgas.map(orga -> {
 			return new OrganisationUserTO(orga, getProvider(providers, orga.getId()));
 		});

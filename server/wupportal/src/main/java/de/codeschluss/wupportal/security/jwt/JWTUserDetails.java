@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 public class JWTUserDetails extends User {
 	
 	private UserEntity user;
-	private String[] approvedProviders;
+	private String[] approvedOrganisations;
 	private String[] adminOrgas;
 	
 	/**
@@ -20,10 +20,10 @@ public class JWTUserDetails extends User {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public JWTUserDetails(UserEntity user, String[] approvedProviders, String[] adminOrgas) {
+	public JWTUserDetails(UserEntity user, String[] approvedOrgas, String[] adminOrgas) {
 		super(user.getUsername(), user.getPassword(), Collections.emptyList());
 		this.user = user;
-		this.approvedProviders = approvedProviders;
+		this.approvedOrganisations = approvedOrgas;
 		this.adminOrgas = adminOrgas;
 	}
 	

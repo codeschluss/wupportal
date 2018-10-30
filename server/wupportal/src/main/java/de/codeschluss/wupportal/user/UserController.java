@@ -88,7 +88,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	public ResponseEntity<?> grantSuperuserRight(@PathVariable String userId, @RequestBody boolean isSuperuser) {
 		try {
 			this.service.grantSuperUser(userId, isSuperuser);
-			return super.respondNoContent();
+			return super.noContent();
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("User with given ID does not exist!");
@@ -136,9 +136,9 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	public ResponseEntity<?> deleteOrganisationForUser(@PathVariable String userId, @PathVariable String orgaId) {
 		try {
 			providerService.deleteForUserAndOrga(userId, orgaId);
-			return super.respondNoContent();
+			return super.noContent();
 		} catch (NotFoundException e) {
-			return super.respondNoContent();
+			return super.noContent();
 		}
 	}
 	
@@ -168,7 +168,7 @@ public class UserController extends CrudController<UserEntity, PagingAndSortingA
 	public ResponseEntity<?> deleteActivityForUser(@PathVariable String userId, @PathVariable String activityId) {
 		if (activityService.isActivityForProvider(activityId, providerService.getProvidersByUser(userId))) {
 			activityService.delete(activityId);
-			return respondNoContent();
+			return noContent();
 		} else {
 			throw new BadParamsException("Activity does not match given user!");
 		}

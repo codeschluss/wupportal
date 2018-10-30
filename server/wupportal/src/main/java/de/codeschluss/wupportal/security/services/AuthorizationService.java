@@ -1,5 +1,7 @@
 package de.codeschluss.wupportal.security.services;
 
+import java.util.Arrays;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +28,11 @@ public class AuthorizationService {
 		return false;
 	}
 	
-//	public boolean isOrgaAdmin(Authentication authentication, String providerId) {
-//		if (authentication.getPrincipal() instanceof JWTUserDetails) {
-//			JWTUserDetails jwtUserDetails = (JWTUserDetails) authentication.getPrincipal();
-//			return jwtUserDetails.getUser().getId().equals(userId);
-//		}
-//		return false;
-//	}
+	public boolean isOrgaAdmin(Authentication authentication, String organisationId) {
+		if (authentication.getPrincipal() instanceof JWTUserDetails) {
+			JWTUserDetails jwtUserDetails = (JWTUserDetails) authentication.getPrincipal();
+			return Arrays.asList(jwtUserDetails.getAdminOrgas()).contains(organisationId);
+		}
+		return false;
+	}
 }

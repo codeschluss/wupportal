@@ -34,16 +34,15 @@ public class JWTUserDetailsService implements UserDetailsService {
 	}
 
 	private String[] getApprovedProviders(UserEntity user) {
-		List<ProviderEntity> providers = this.providerService.getApprovedProviders(user);
-		
-		return providers == null || providers.isEmpty()
-				? new String[0]
-				: (String[]) providers.stream().map(provider -> provider.getId()).toArray(String[]::new);
+		return mapToOrgas(
+				this.providerService.getApprovedProviders(user));
+	}
+
+	private String[] getOrgaAdminProviders(UserEntity user) {
+		return mapToOrgas(this.providerService.getOrgaAdminProviders(user));
 	}
 	
-	private String[] getOrgaAdminProviders(UserEntity user) {
-		List<ProviderEntity> providers = this.providerService.getOrgaAdminProviders(user);
-		
+	private String[] mapToOrgas(List<ProviderEntity> providers) {
 		return providers == null || providers.isEmpty()
 				? new String[0]
 				: (String[]) providers.stream().map(provider -> provider.getOrganisation().getId()).toArray(String[]::new);

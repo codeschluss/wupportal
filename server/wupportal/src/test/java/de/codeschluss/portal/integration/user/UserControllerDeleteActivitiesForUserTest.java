@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -17,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import de.codeschluss.portal.activity.ActivityEntity;
 import de.codeschluss.portal.exception.BadParamsException;
 import de.codeschluss.portal.user.UserController;
-import de.codeschluss.portal.utils.FilterSortPaginate;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,14 +32,14 @@ public class UserControllerDeleteActivitiesForUserTest {
 	public void deleteForOtherUserSuperUserOK() {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String activityId = "00000000-0000-0000-0010-400000000000";
-		Resources<ActivityEntity> result = (Resources<ActivityEntity>) controller.findActivitiesByUser(userId, new FilterSortPaginate()).getBody();
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByUser(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getId().equals(activityId), "activity exists"));
+				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
 		
 		controller.deleteActivityForUser(userId, activityId);
 		
-		result = (Resources<ActivityEntity>) controller.findActivitiesByUser(userId, new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).noneMatch(p -> p.getId().equals(activityId));
+		result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByUser(userId).getBody();
+		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
 	}
 	
 	@Test
@@ -48,14 +48,14 @@ public class UserControllerDeleteActivitiesForUserTest {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String activityId = "00000000-0000-0000-0010-500000000000";
 		
-		Resources<ActivityEntity> result = (Resources<ActivityEntity>) controller.findActivitiesByUser(userId, new FilterSortPaginate()).getBody();
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByUser(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getId().equals(activityId), "activity exists"));
+				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
 		
 		controller.deleteActivityForUser(userId, activityId);
 		
-		result = (Resources<ActivityEntity>) controller.findActivitiesByUser(userId, new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).noneMatch(p -> p.getId().equals(activityId));
+		result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByUser(userId).getBody();
+		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
 	}
 	
 	@Test(expected = BadParamsException.class)

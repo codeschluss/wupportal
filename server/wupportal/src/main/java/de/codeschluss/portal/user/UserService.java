@@ -1,5 +1,6 @@
 package de.codeschluss.portal.user;
 
+import org.springframework.hateoas.Resource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +10,18 @@ import de.codeschluss.portal.exception.NotFoundException;
 @Service
 public class UserService extends DataService<UserEntity> {
 	
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	public UserService(UserRepository userRepo, BCryptPasswordEncoder encoder) {
-		super(userRepo);
+	public UserService(
+			UserRepository repo,
+			UserResourceAssembler assembler,
+			BCryptPasswordEncoder encoder) {
+		super(repo, assembler);
 		this.bCryptPasswordEncoder = encoder;
+	}
+	
+	public Resource<UserEntity> addResource(UserEntity newUser) {
+		return assembler.toResource(add(newUser));
 	}
 	
 	public UserEntity add(UserEntity newUser) {
@@ -21,6 +29,10 @@ public class UserService extends DataService<UserEntity> {
 		return getRepo().save(newUser);
 	}
 
+	public Resource<UserEntity> updateResource(String id, UserEntity newUser) {
+		return assembler.toResource(update(id, newUser));
+	}
+	
 	public UserEntity update(String id, UserEntity newUser) {
 		return getRepo().findById(id).map(user -> {
 			user.setUsername(newUser.getUsername());
@@ -30,7 +42,7 @@ public class UserService extends DataService<UserEntity> {
 			return getRepo().save(user);
 		}).orElseGet(() -> {
 			newUser.setId(id);
-			return add(newUser);
+			return getRepo().save(newUser);
 		});
 	}
 	

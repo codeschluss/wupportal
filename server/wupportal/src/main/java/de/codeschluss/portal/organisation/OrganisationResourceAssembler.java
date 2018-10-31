@@ -1,8 +1,12 @@
 package de.codeschluss.portal.organisation;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-import org.springframework.hateoas.Resource;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.base.PagingAndSortingAssembler;
@@ -13,8 +17,14 @@ public class OrganisationResourceAssembler extends PagingAndSortingAssembler<Org
 	@Override
 	public Resource<OrganisationEntity> toResource(OrganisationEntity organisation) {
 		return new Resource<>(organisation,
-				linkTo(methodOn(OrganisationController.class).findOne(organisation.getId())).withSelfRel());
+				createLinks(organisation));
 	}
-
-
+	
+	private List<Link> createLinks(OrganisationEntity organisation) {
+		List<Link> links = new ArrayList<Link>();
+		
+		links.add(linkTo(methodOn(OrganisationController.class).findOne(organisation.getId())).withSelfRel());
+		
+		return links;
+	}
 }

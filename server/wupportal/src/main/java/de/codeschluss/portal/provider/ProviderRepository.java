@@ -13,8 +13,6 @@ import de.codeschluss.portal.user.UserEntity;
 
 public interface ProviderRepository extends FilteredJpaRepository<ProviderEntity, String> {
 	
-	Optional<List<ProviderEntity>> findByUser(UserEntity user, Sort sort);
-	
 	Optional<List<ProviderEntity>> findByUserId(String userId);
 	
 	Optional<ProviderEntity> findByUserIdAndOrganisationId(String userId, String orgaId);

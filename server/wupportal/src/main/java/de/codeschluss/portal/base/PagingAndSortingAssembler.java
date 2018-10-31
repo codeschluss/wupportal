@@ -3,6 +3,7 @@ package de.codeschluss.portal.base;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,45 +17,52 @@ import org.springframework.http.ResponseEntity;
 
 import de.codeschluss.portal.utils.FilterSortPaginate;
 import de.codeschluss.portal.utils.PaginationLinkBuilder;
+import de.codeschluss.portal.utils.ResourceWithEmbeddable;
 import de.codeschluss.portal.utils.SortPaginate;
 
 import org.springframework.hateoas.PagedResources.PageMetadata;
+import org.springframework.hateoas.core.EmbeddedWrapper;
+import org.springframework.hateoas.core.EmbeddedWrappers;
 
 public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements ResourceAssembler<E, Resource<E>> {
 
 	public Resource<E> toResource(E entity) {
-		return new Resource<>(entity);
-	}
-
-	public Resources<Resource<E>> toListResource(List<E> entities, ResponseEntity<?> responseEntity) {
-		List<Resource<E>> entityResources = entities.stream().map(this::toResource).collect(Collectors.toList());
-		return new Resources<Resource<E>>(entityResources, linkTo(responseEntity).withSelfRel());
-	}
-
-	public Resources<?> toListSubResource(List<?> subEntities, ResponseEntity<?> responseEntity) {
-		return new Resources<>(subEntities, linkTo(responseEntity).withSelfRel());
+		return new Resource<>(entity, createResourceLinks(entity));
 	}
 	
-	public <S extends BaseEntity> Resource<S> toSubResource(S subEntity, ResponseEntity<?> responseEntity) {
-		return new Resource<>(subEntity, linkTo(responseEntity).withSelfRel());
+	public ResourceWithEmbeddable<E> toResourceWithEmbedabble(E entity, Object embeddable, String relationName) {
+		EmbeddedWrapper embedding = relationName == null || relationName.isEmpty()
+				? new EmbeddedWrappers(false).wrap(embeddable)
+				: new EmbeddedWrappers(false).wrap(embeddable, relationName);
+
+		return new ResourceWithEmbeddable<E>(entity, Arrays.asList(embedding), createResourceLinks(entity));
+	}
+
+	public Resources<?> entitiesToResources(List<E> entities, ResponseEntity<?> responseEntity) {
+		List<Resource<?>> entityResources = entities.stream().map(this::toResource).collect(Collectors.toList());
+		return toListResources(entityResources, responseEntity);
+	}
+
+	public Resources<?> toListResources(List<? extends Resource<?>> content, ResponseEntity<?> responseEntity) {
+		return new Resources<>(content, linkTo(responseEntity).withSelfRel());
 	}
 	
-	public PagedResources<Resource<E>> toPageResource(FilterSortPaginate params, Page<E> entitiesPaged) {
+	public PagedResources<Resource<E>> entitiesToPagedResources(Page<E> entitiesPaged, FilterSortPaginate params) {
 		List<Resource<E>> entities = entitiesPaged.stream().map(this::toResource).collect(Collectors.toList());
 		List<Link> links = createPagingLinks(params, entitiesPaged);
+		return toPagedResources(entities, entitiesPaged, links);
+	}
+	
+	public PagedResources<Resource<E>> toPagedResources(List<Resource<E>> entities, Page<E> entitiesPaged, List<Link> links) {
 		return new PagedResources<Resource<E>>(entities,
 				new PageMetadata(entitiesPaged.getSize(), entitiesPaged.getPageable().getPageNumber(),
 						entitiesPaged.getTotalElements(), entitiesPaged.getTotalPages()),
 				links);
 	}
-
-	public PagedResources<Resource<?>> toPagedSubResource(SortPaginate params, Page<?> subEntitiesPaged) {
-		List<Resource<?>> subEntities = subEntitiesPaged.stream().map(entity -> new Resource<>(entity)).collect(Collectors.toList());
-		List<Link> links = createPagingLinks(params, subEntitiesPaged);
-		return new PagedResources<Resource<?>>(subEntities,
-				new PageMetadata(subEntitiesPaged.getSize(), subEntitiesPaged.getPageable().getPageNumber(),
-						subEntitiesPaged.getTotalElements(), subEntitiesPaged.getTotalPages()),
-				links);
+	
+	private List<Link> createResourceLinks(E entity) {
+		List<Link> links = new ArrayList<Link>();
+		return links;
 	}
 	
 	private List<Link> createPagingLinks(SortPaginate params, Page<?> entitiesPaged) {

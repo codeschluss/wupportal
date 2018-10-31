@@ -3,55 +3,36 @@ package de.codeschluss.portal.organisation;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.base.DataService;
-import de.codeschluss.portal.exception.NotFoundException;
 import de.codeschluss.portal.organisation.OrganisationEntity;
 import de.codeschluss.portal.provider.ProviderEntity;
+import de.codeschluss.portal.utils.ResourceWithEmbeddable;
 
 @Service
 public class OrganisationService extends DataService<OrganisationEntity> {
 	
 	public OrganisationService(
-			OrganisationRepository orgaRepo) {
-		super(orgaRepo);
+			OrganisationRepository repo,
+			OrganisationResourceAssembler assembler) {
+		super(repo, assembler);
 	}
 	
 	public boolean organisationExists(String name) {
 		return getRepo().existsByName(name);
 	}
 	
-	public List<OrganisationUserTO> getOrganisationsByProviders(List<ProviderEntity> providers, Sort sort) {
-		List<OrganisationEntity> orgas =  getRepo().findByProvidersIn(providers, sort).orElseThrow(() -> new NotFoundException(""));
-		return mapOrgasTO(orgas, providers);
-	}
-	
-	public List<OrganisationUserTO> getOrganisationsByProviders(List<ProviderEntity> providers) {
-		List<OrganisationEntity> orgas =  getRepo().findByProvidersIn(providers).orElseThrow(() -> new NotFoundException(""));
-		return mapOrgasTO(orgas, providers);
-	}
-	
-	public Page<OrganisationUserTO> getPagedOrganisationsByProviders(List<ProviderEntity> providers, PageRequest pageRequest) {
-		Page<OrganisationEntity> orgas =  getRepo().findByProvidersIn(providers, pageRequest).orElseThrow(() -> new NotFoundException(""));
-		return orgas.map(orga -> {
-			return new OrganisationUserTO(orga, getProvider(providers, orga.getId()));
-		});
-	}
-	
-	private List<OrganisationUserTO> mapOrgasTO(List<OrganisationEntity> orgas, List<ProviderEntity> providers) {
-		return orgas.stream().map(orga -> {
-			return new OrganisationUserTO(orga, getProvider(providers, orga.getId()));
+	public Resources<?> getEmbeddedListResources(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
+		List<ResourceWithEmbeddable<OrganisationEntity>> result = providers.stream().map(provider -> {
+			return assembler.toResourceWithEmbedabble(provider.getOrganisation(), provider, "provider");
 		}).collect(Collectors.toList());
+		
+		return assembler.toListResources(result, responseEntity);
 	}
-
-	private ProviderEntity getProvider(List<ProviderEntity> providers, String orgaId) {
-		return providers.stream().filter(p -> p.getOrganisation().getId().equals(orgaId)).findFirst().orElseThrow(() -> new NotFoundException(""));
-	}
-
+	
 	public OrganisationRepository getRepo() {
 		if (repo instanceof OrganisationRepository) {
 			return (OrganisationRepository) repo;

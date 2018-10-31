@@ -17,7 +17,7 @@ public interface ActivityRepository extends FilteredJpaRepository<ActivityEntity
 	
 	public boolean existsByIdAndProviderIn(String id, List<ProviderEntity> provider);
 	
-	public Optional<List<ActivityEntity>> findByProviderIn(List<ProviderEntity> provider, Sort sort);
+	public Optional<List<ActivityEntity>> findByProviderIn(List<ProviderEntity> provider);
 	
 	public Optional<Page<ActivityEntity>> findByProviderIdIn(List<String> providerId, Pageable page);
 	

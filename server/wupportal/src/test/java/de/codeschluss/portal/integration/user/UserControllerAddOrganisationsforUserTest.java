@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -15,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import de.codeschluss.portal.exception.BadParamsException;
 import de.codeschluss.portal.exception.DuplicateEntryException;
-import de.codeschluss.portal.organisation.OrganisationUserTO;
+import de.codeschluss.portal.organisation.OrganisationEntity;
 import de.codeschluss.portal.user.UserController;
 
 @RunWith(SpringRunner.class)
@@ -31,10 +32,10 @@ public class UserControllerAddOrganisationsforUserTest {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String orgaId = "00000000-0000-0000-0008-200000000000";
 		
-		Resources<OrganisationUserTO> result = (Resources<OrganisationUserTO>) controller.addOrganisationforUser(userId, orgaId).getBody();
+		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.addOrganisationforUser(userId, orgaId).getBody();
 		
 		assertThat(result.getContent()).haveExactly(1, new Condition<>(
-				p -> p.getId().equals(orgaId), "new organisation with given orga exists"));
+				p -> p.getContent().getId().equals(orgaId), "new organisation with given orga exists"));
 	}
 	
 	@Test
@@ -47,13 +48,13 @@ public class UserControllerAddOrganisationsforUserTest {
 		requestBody[0] = orgaId1;
 		requestBody[1] = orgaId2;
 		
-		Resources<OrganisationUserTO> result = (Resources<OrganisationUserTO>) controller.addOrganisationforUser(userId, requestBody).getBody();
+		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.addOrganisationforUser(userId, requestBody).getBody();
 		
 		assertThat(result.getContent()).haveExactly(1, new Condition<>(
-				p -> p.getId().equals(orgaId1), "new organisation with given orga1 exists"));
+				p -> p.getContent().getId().equals(orgaId1), "new organisation with given orga1 exists"));
 		
 		assertThat(result.getContent()).haveExactly(1, new Condition<>(
-				p -> p.getId().equals(orgaId2), "new organisation with given orga2 exists"));
+				p -> p.getContent().getId().equals(orgaId2), "new organisation with given orga2 exists"));
 	}
 	
 	@Test
@@ -66,10 +67,10 @@ public class UserControllerAddOrganisationsforUserTest {
 		requestBody[0] = orgaId1;
 		requestBody[1] = orgaId2;
 		
-		Resources<OrganisationUserTO> result = (Resources<OrganisationUserTO>) controller.addOrganisationforUser(userId, requestBody).getBody();
+		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.addOrganisationforUser(userId, requestBody).getBody();
 		
 		assertThat(result.getContent()).haveExactly(1, new Condition<>(
-				p -> p.getId().equals(orgaId1), "new organisation with given orga1 exists"));
+				p -> p.getContent().getId().equals(orgaId1), "new organisation with given orga1 exists"));
 	}
 	
 	@Test(expected = DuplicateEntryException.class)

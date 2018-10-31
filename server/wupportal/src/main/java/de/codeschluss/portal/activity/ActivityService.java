@@ -1,11 +1,9 @@
 package de.codeschluss.portal.activity;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.base.DataService;
@@ -15,25 +13,16 @@ import de.codeschluss.portal.provider.ProviderEntity;
 @Service
 public class ActivityService extends DataService<ActivityEntity> {
 
-	public ActivityService(ActivityRepository repo) {
-		super(repo);
+	public ActivityService(
+			ActivityRepository repo,
+			ActivityResourceAssembler assembler) {
+		super(repo, assembler);
 		// TODO Auto-generated constructor stub
 	}
-
-	public List<ActivityEntity> getActivitiesByProviderId(Sort sort, String... providerId) {
-		return getRepo().findByProviderIdIn(Arrays.asList(providerId), sort).orElseThrow(() -> new NotFoundException(providerId.toString()));
-	}
 	
-	public Page<ActivityEntity> getPagedActivitiesByProviderId(PageRequest page, String... providerId) {
-		return getRepo().findByProviderIdIn(Arrays.asList(providerId), page).orElseThrow(() -> new NotFoundException(providerId.toString()));
-	}
-	
-	public List<ActivityEntity> getActivitiesByProviders(List<ProviderEntity> providers, Sort sort) {
-		return getRepo().findByProviderIn(providers, sort).orElseThrow(() -> new NotFoundException(providers.toString()));
-	}
-	
-	public Page<ActivityEntity> getPagedActivitiesByProviders(PageRequest page, List<ProviderEntity> providers) {
-		return getRepo().findByProviderIn(providers, page).orElseThrow(() -> new NotFoundException(providers.toString()));
+	public Resources<?> getResourcesByProviders(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
+		List<ActivityEntity> result = getRepo().findByProviderIn(providers).orElseThrow(() -> new NotFoundException(providers.toString()));
+		return assembler.entitiesToResources(result, responseEntity);
 	}
 
 	public boolean isActivityForProvider(String activityId, List<ProviderEntity> providers) {

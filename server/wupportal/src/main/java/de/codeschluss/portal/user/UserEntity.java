@@ -16,6 +16,7 @@ import de.codeschluss.portal.provider.ProviderEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -46,6 +47,7 @@ public class UserEntity extends BaseEntity {
 
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
+	@ToString.Exclude
 	private List<ProviderEntity> providerEntities;
 	
 	@JsonIgnore

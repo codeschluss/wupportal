@@ -1,0 +1,83 @@
+package de.codeschluss.portal.provider;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import de.codeschluss.portal.base.DataService;
+import de.codeschluss.portal.exception.NotFoundException;
+import de.codeschluss.portal.organisation.OrganisationEntity;
+import de.codeschluss.portal.organisation.OrganisationService;
+import de.codeschluss.portal.user.UserEntity;
+
+@Service
+public class ProviderService extends DataService<ProviderEntity> {
+	
+	private OrganisationService orgaService;
+	
+	public ProviderService(
+			ProviderRepository providerRepo,
+			OrganisationService orgaService) {
+		super(providerRepo);
+		this.orgaService = orgaService;
+	}
+	
+	public List<ProviderEntity> getProvidersByUser(UserEntity user, Sort sort) {
+		return getRepo().findByUser(user, sort).orElseThrow(() -> new NotFoundException(user.getId()));
+	}
+	
+	public List<ProviderEntity> getProvidersByUser(String userId) {
+		return getRepo().findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
+	}
+
+	public List<ProviderEntity> getApprovedProviders(UserEntity user) {
+		return getRepo().findByUserAndApprovedTrue(user).orElse(Collections.emptyList());
+	}
+
+	public List<ProviderEntity> getOrgaAdminProviders(UserEntity user) {
+		return getRepo().findByUserAndAdminTrue(user).orElse(Collections.emptyList());
+	}
+
+	public List<ProviderEntity> createProviders(UserEntity user, List<String> organisationIds) {
+		return organisationIds.stream().map(orgaId -> {
+			checkIfNullOrEmpty(orgaId);
+			return createProvider(
+					orgaService.getById(orgaId), 
+					user);
+		}).collect(Collectors.toList());
+	}
+	
+	private void checkIfNullOrEmpty(String id) {
+		if (id == null || id.isEmpty()) throw new NullPointerException("id is null or empty");
+	}
+
+	private ProviderEntity createProvider(OrganisationEntity orga, UserEntity user) {
+		return new ProviderEntity(false, false, null, orga, user);
+	}
+	
+	public void deleteForUserAndOrga(String userId, String orgaId) {
+		getRepo().delete(getProviderByUserAndOrga(userId, orgaId));
+	}
+	
+	public ProviderEntity getProviderByUserAndOrga(String userId, String orgaId) {
+		return getRepo().findByUserIdAndOrganisationId(userId, orgaId).orElseThrow(() -> new NotFoundException(userId + " and " + orgaId ));
+	}
+	
+	public boolean isDuplicate(String userId, List<String> orgaIds) {
+		return getRepo().existsByUserIdAndOrganisationIdIn(userId, orgaIds);
+	}
+	
+	public ProviderRepository getRepo() {
+		if (repo instanceof ProviderRepository) {
+			return (ProviderRepository) repo;
+		} else {
+			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + ProviderRepository.class.getName());
+		}
+	}
+
+
+}

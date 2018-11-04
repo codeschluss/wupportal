@@ -1,19 +1,10 @@
-DROP TABLE IF EXISTS `i18n`;
-DROP TABLE IF EXISTS `activities_translations`;
-DROP TABLE IF EXISTS `activities_target_groups`;
-DROP TABLE IF EXISTS `activities_tags`;
-DROP TABLE IF EXISTS `activities`;
-DROP TABLE IF EXISTS `schedules`;
-DROP TABLE IF EXISTS `providers`;
-DROP TABLE IF EXISTS `organisations`;
-DROP TABLE IF EXISTS `users`;
-DROP TABLE IF EXISTS `addresses`;
-DROP TABLE IF EXISTS `suburbs`;
-DROP TABLE IF EXISTS `target_groups`;
-DROP TABLE IF EXISTS `tags`;
-DROP TABLE IF EXISTS `categories`;
-DROP TABLE IF EXISTS `translations`;
-DROP TABLE IF EXISTS `configurations`;
+DROP DATABASE IF EXISTS `wupportal`;
+
+CREATE DATABASE `wupportal`
+  CHARACTER SET `utf8`
+  COLLATE `utf8_general_ci`;
+
+USE `wupportal`;
 
 CREATE TABLE `configurations` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,

@@ -1,9 +1,0 @@
-<mat-card>
-	{{data.message}}
-	<mat-form-field>
-		<mat-select name="suburb" placeholder={{constants.quarter}} [(ngModel)]="suburb" [(value)]="suburb">
-			<mat-option *ngFor="let suburb of suburbs" [value]="suburb">{{suburb.name}}</mat-option>
-		</mat-select>
-	</mat-form-field>
-</mat-card>
-<button mat-button color="primary" (click)="onSubmit()">ok</button>

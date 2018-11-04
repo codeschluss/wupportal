@@ -3,6 +3,6 @@ client/package-lock.json
 
 server/.metadata
 server/.recommenders
-server/wupportal/bin
-server/wupportal/src/main/resources
-server/wupportal/target
+server/bin
+server/src/main/resources
+server/target

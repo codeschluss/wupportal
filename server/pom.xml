@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>wupportal</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Wupportal backend server</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

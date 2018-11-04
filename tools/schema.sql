@@ -1,8 +1,8 @@
 DROP DATABASE IF EXISTS `wupportal`;
 
 CREATE DATABASE `wupportal`
-  CHARACTER SET `utf8`
-  COLLATE `utf8_general_ci`;
+	CHARACTER SET `utf8`
+	COLLATE `utf8_general_ci`;
 
 USE `wupportal`;
 
@@ -47,10 +47,14 @@ CREATE TABLE `schedules` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`start_date` DATETIME,
 	`end_date` DATETIME,
-  `activity_id` CHAR(36),
+	`activity_id` CHAR(36),
 
 	`created` DATETIME NOT NULL DEFAULT NOW(),
-	`modified` DATETIME NOT NULL DEFAULT NOW()
+	`modified` DATETIME NOT NULL DEFAULT NOW(),
+
+  CONSTRAINT `fkey_schedule_activity`
+		FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`)
+		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `target_groups` (
@@ -120,7 +124,7 @@ CREATE TABLE `organisations` (
 CREATE TABLE `providers` (
 	`id` CHAR(36) NOT NULL PRIMARY KEY,
 	`admin` BOOLEAN DEFAULT FALSE,
-    `approved` BOOLEAN DEFAULT FALSE,
+	`approved` BOOLEAN DEFAULT FALSE,
 	`organisation_id` CHAR(36) NOT NULL,
 	`user_id` CHAR(36) NOT NULL,
 

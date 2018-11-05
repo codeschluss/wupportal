@@ -13,9 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.codeschluss.portal.user.UserController;
-import de.codeschluss.portal.user.UserEntity;
-import de.codeschluss.portal.user.UserService;
+import de.codeschluss.portal.functional.user.UserController;
+import de.codeschluss.portal.functional.user.UserEntity;
+import de.codeschluss.portal.functional.user.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

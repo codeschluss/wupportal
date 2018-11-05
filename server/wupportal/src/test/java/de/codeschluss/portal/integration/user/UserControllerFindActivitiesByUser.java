@@ -7,8 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.exception.NotFoundException;
-import de.codeschluss.portal.user.UserController;
+import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.functional.user.UserController;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

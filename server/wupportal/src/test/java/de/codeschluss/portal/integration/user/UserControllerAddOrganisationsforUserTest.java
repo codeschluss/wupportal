@@ -14,10 +14,10 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.exception.BadParamsException;
-import de.codeschluss.portal.exception.DuplicateEntryException;
-import de.codeschluss.portal.organisation.OrganisationEntity;
-import de.codeschluss.portal.user.UserController;
+import de.codeschluss.portal.common.exception.BadParamsException;
+import de.codeschluss.portal.common.exception.DuplicateEntryException;
+import de.codeschluss.portal.functional.organisation.OrganisationEntity;
+import de.codeschluss.portal.functional.user.UserController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 
 import de.codeschluss.portal.utils.FilterSortPaginate;
 import de.codeschluss.portal.utils.PaginationLinkBuilder;
-import de.codeschluss.portal.utils.ResourceWithEmbeddable;
 import de.codeschluss.portal.utils.SortPaginate;
 
 import org.springframework.hateoas.PagedResources.PageMetadata;

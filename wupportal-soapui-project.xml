@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <con:soapui-project id="67c1cf1d-21c4-47d8-aa38-2210d78d4a61" activeEnvironment="Default" name="wupportal" resourceRoot="" soapui-version="5.4.0" abortOnError="false" runType="SEQUENTIAL" defaultScriptLanguage="Groovy" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="db8dc969-dbf0-49e9-831f-d4ac2fed577e" name="users"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="45ab4434-3371-4f49-9296-3b4822fac476" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="list" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="superuser" id="605cf48e-1af3-4f1d-b42b-e1f809666e69"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="f404facf-5b24-4ebf-be69-7e3a91aafc16" name="superuser" postQueryString="false" mediaType="application/json" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
-  &lt;con:entry key="Authorization" value="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhcHByb3ZlZE9yZ2FzIjpbXSwic3ViIjoic3VwZXJAdXNlciIsImFkbWluT3JnYXMiOltdLCJleHAiOjE1NDA5Nzc3NTMsInN1cGVydXNlciI6dHJ1ZX0.YdddEKAuNy_g2hNQe38ovwja6XghVCgKboopBJJTTrnZCAyvIR9-nyoZz2o37EbG2bmHH1YsOnVPySS6IfMP_w"/>
+  &lt;con:entry key="Authorization" value="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhcHByb3ZlZE9yZ2FzIjpbXSwic3ViIjoic3VwZXJAdXNlciIsImFkbWluT3JnYXMiOltdLCJleHAiOjE1NDEwNDY0MzAsInN1cGVydXNlciI6dHJ1ZX0.RPQiKcTyCunw7OfEcJmXbW6resWYbZ_LVVjTVy_QdaiCDHNXL6Z_wQCY6k6wEf5V6E8YHDWeTZRiC_xdu_0isA"/>
   &lt;con:entry key="Accept" value="application/json, text/plain, */*"/>
   &lt;con:entry key="Content-Type" value="text/plain"/>
-&lt;/xml-fragment></con:setting></con:settings><con:endpoint>http://localhost:8080/api/users/00000000-0000-0000-0004-300000000000/organisations</con:endpoint><con:request>{
+&lt;/xml-fragment></con:setting></con:settings><con:endpoint>http://localhost:8080/api/users/00000000-0000-0000-0004-300000000000/activities</con:endpoint><con:request>{
 	${#Project#listParams}
 }
 

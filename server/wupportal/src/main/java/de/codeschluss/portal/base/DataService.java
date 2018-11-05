@@ -64,10 +64,6 @@ public abstract class DataService<E extends BaseEntity> {
 		return repo.save(newEntity);
 	}
 	
-	public List<E> addAll(Collection<E> newEntities) {
-		return repo.saveAll(newEntities);
-	}
-	
 	public Resource<E> updateResource(String id, E updatedEntity) {
 		return assembler.toResource(update(id, updatedEntity));
 	}

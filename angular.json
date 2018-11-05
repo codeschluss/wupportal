@@ -22,7 +22,7 @@
             "index": "src/utils/entrypoint.html",
             "polyfills": "src/utils/polyfills.ts",
             "outputHashing": "none",
-            "outputPath": "../backend/webroot",
+            "outputPath": "target",
             "serviceWorker": true,
             "tsConfig": "tsconfig.json",
             "vendorChunk": true,

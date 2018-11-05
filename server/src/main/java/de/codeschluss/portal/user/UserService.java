@@ -1,6 +1,5 @@
 package de.codeschluss.portal.user;
 
-import org.springframework.hateoas.Resource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +19,9 @@ public class UserService extends DataService<UserEntity> {
 		this.bCryptPasswordEncoder = encoder;
 	}
 	
-	public Resource<UserEntity> addResource(UserEntity newUser) {
-		return assembler.toResource(add(newUser));
-	}
-	
 	public UserEntity add(UserEntity newUser) {
 		newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
 		return getRepo().save(newUser);
-	}
-
-	public Resource<UserEntity> updateResource(String id, UserEntity newUser) {
-		return assembler.toResource(update(id, newUser));
 	}
 	
 	public UserEntity update(String id, UserEntity newUser) {
@@ -53,18 +44,11 @@ public class UserService extends DataService<UserEntity> {
 	public void grantSuperUser(String id, boolean isSuperuser) {
 		UserEntity user = getRepo().findById(id).orElseThrow(() -> new NotFoundException(id));
 		user.setSuperuser(isSuperuser);
-		repo.save(user);
+		getRepo().save(user);
 	}
 
 	public boolean userExists(String username) {
-		UserEntity user;
-		try {
-			user = getUser(username);
-		} catch(NotFoundException e) {
-			return false;
-		}
-		
-		return user != null;
+		return getRepo().existsByUsername(username);
 	}
 	
 	public UserRepository getRepo() {

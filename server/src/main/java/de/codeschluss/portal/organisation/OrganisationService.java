@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.base.DataService;
+import de.codeschluss.portal.base.ResourceWithEmbeddable;
 import de.codeschluss.portal.organisation.OrganisationEntity;
 import de.codeschluss.portal.provider.ProviderEntity;
-import de.codeschluss.portal.utils.ResourceWithEmbeddable;
 
 @Service
 public class OrganisationService extends DataService<OrganisationEntity> {
@@ -25,7 +25,7 @@ public class OrganisationService extends DataService<OrganisationEntity> {
 		return getRepo().existsByName(name);
 	}
 	
-	public Resources<?> getEmbeddedListResources(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
+	public Resources<?> convertToResourcesWithEmbeddable(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
 		List<ResourceWithEmbeddable<OrganisationEntity>> result = providers.stream().map(provider -> {
 			return assembler.toResourceWithEmbedabble(provider.getOrganisation(), provider, "provider");
 		}).collect(Collectors.toList());

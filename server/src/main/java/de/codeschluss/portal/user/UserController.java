@@ -105,7 +105,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 		
 		try {
 			List<ProviderEntity> providers = providerService.addAll(providerService.createProviders(service.getById(userId), distinctOrgas));
-			return ok(organisationService.getEmbeddedListResources(
+			return ok(organisationService.convertToResourcesWithEmbeddable(
 					providers,
 					DummyInvocationUtils.methodOn(this.getClass()).findOrganisationsByUser(userId)));
 		} catch (NotFoundException | NullPointerException e) {
@@ -118,7 +118,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	@OwnOrSuperUserPermission
 	public ResponseEntity<?> findOrganisationsByUser(@PathVariable String userId) {
 		List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
-		return ok(organisationService.getEmbeddedListResources(
+		return ok(organisationService.convertToResourcesWithEmbeddable(
 				providers,
 				DummyInvocationUtils.methodOn(this.getClass()).findOrganisationsByUser(userId)));
 	}

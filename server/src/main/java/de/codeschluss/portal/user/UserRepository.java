@@ -12,12 +12,14 @@ import de.codeschluss.portal.base.FilteredJpaRepository;
 
 public interface UserRepository extends FilteredJpaRepository<UserEntity, String>{
 	
-	Optional<UserEntity> findByUsername(String userName);
-
 	@Query("Select u from UserEntity u where u.username like %?1% or u.fullname like %?1% or u.phone like %?1%")
 	Optional<List<UserEntity>> findFiltered(String filter, Sort sort);
 	
 	@Query("Select u from UserEntity u where u.username like %?1% or u.fullname like %?1% or u.phone like %?1%")
 	Optional<Page<UserEntity>> findFiltered(String filter, Pageable pageable);
+
+	boolean existsByUsername(String username);
+	
+	Optional<UserEntity> findByUsername(String userName);
 }
 

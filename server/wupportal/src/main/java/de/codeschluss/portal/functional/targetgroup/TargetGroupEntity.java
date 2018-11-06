@@ -1,12 +1,16 @@
-package de.codeschluss.portal.functional.configuration;
+package de.codeschluss.portal.functional.targetgroup;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
 import org.springframework.hateoas.core.Relation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.codeschluss.portal.common.base.BaseEntity;
+import de.codeschluss.portal.functional.activity.ActivityEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * The persistent class for the configurations database table.
+ * The persistent class for the target_groups database table.
  * 
  */
 @Data
@@ -22,12 +26,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@Table(name = "configurations")
+@Table(name = "target_groups")
 @Relation(collectionRelation = "data")
-public class ConfigurationEntity extends BaseEntity implements Serializable {
+public class TargetGroupEntity extends BaseEntity implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-	private String item;
+	@Lob
+	private String description;
 
-	private String value;
+	private String name;
+
+	@OneToMany(mappedBy = "targetGroups")
+	@JsonIgnore
+	private List<ActivityEntity> activityEntities;
 }

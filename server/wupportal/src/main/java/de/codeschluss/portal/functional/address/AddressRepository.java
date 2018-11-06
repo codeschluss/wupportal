@@ -7,9 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import de.codeschluss.portal.common.base.FilteredJpaRepository;
 
+@Repository
 public interface AddressRepository extends FilteredJpaRepository<AddressEntity, String> {
 	
 	@Query("Select a from AddressEntity a where a.houseNumber like %?1% or a.place like %?1% or a.postalCode like %?1% or a.street like %?1% or a.suburb.name like %?1% or a.longitude like %?1% or a.latitude like %?1%")
@@ -18,6 +20,6 @@ public interface AddressRepository extends FilteredJpaRepository<AddressEntity, 
 	@Query("Select a from AddressEntity a where a.houseNumber like %?1% or a.place like %?1% or a.postalCode like %?1% or a.street like %?1% or a.suburb.name like %?1% or a.longitude like %?1% or a.latitude like %?1%")
 	Optional<Page<AddressEntity>> findFiltered(String filter, Pageable pageable);
 
-	Optional<List<AddressEntity>> findByOrganisationId(String orgaId);
+	Optional<List<AddressEntity>> findByOrganisationsId(String orgaId);
 
 }

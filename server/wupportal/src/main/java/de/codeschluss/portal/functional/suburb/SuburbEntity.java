@@ -5,18 +5,30 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.hateoas.core.Relation;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.portal.common.base.BaseEntity;
 import de.codeschluss.portal.functional.address.AddressEntity;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * The persistent class for the suburbs database table.
  * 
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor
 @Entity
 @Table(name = "suburbs")
-public class Suburb extends BaseEntity implements Serializable {
+@Relation(collectionRelation = "data")
+public class SuburbEntity extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,25 +37,5 @@ public class Suburb extends BaseEntity implements Serializable {
 	@OneToMany(mappedBy = "suburb")
 	@JsonIgnore
 	private List<AddressEntity> addresses;
-
-	public Suburb() {
-		super();
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<AddressEntity> getAddresses() {
-		return this.addresses;
-	}
-
-	public void setAddresses(List<AddressEntity> addresses) {
-		this.addresses = addresses;
-	}
 
 }

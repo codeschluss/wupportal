@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.hateoas.core.Relation;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.portal.common.base.BaseEntity;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
-import de.codeschluss.portal.functional.suburb.Suburb;
+import de.codeschluss.portal.functional.suburb.SuburbEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +29,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "addresses")
+@Relation(collectionRelation = "data")
 public class AddressEntity extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -43,7 +46,7 @@ public class AddressEntity extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	@JsonIgnore
-	private Suburb suburb;
+	private SuburbEntity suburb;
 
 	private float latitude;
 

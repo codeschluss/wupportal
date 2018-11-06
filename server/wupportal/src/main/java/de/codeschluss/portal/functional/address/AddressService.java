@@ -34,8 +34,8 @@ public class AddressService extends DataService<AddressEntity>{
 		});
 	}
 	
-	public Resources<?> getResourcesByOrganisation(String orgaId, ResponseEntity<?> responseEntity) {
-		List<AddressEntity> addresses = getRepo().findByOrganisationId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
+	public Resources<?> getResourcesWithProvidersByOrganisation(String orgaId, ResponseEntity<?> responseEntity) {
+		List<AddressEntity> addresses = getRepo().findByOrganisationsId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
 		
 		List<ResourceWithEmbeddable<AddressEntity>> result = addresses.stream().map(address -> {
 			return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");

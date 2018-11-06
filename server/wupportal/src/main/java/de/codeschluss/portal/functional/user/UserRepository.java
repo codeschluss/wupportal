@@ -7,9 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import de.codeschluss.portal.common.base.FilteredJpaRepository;
 
+@Repository
 public interface UserRepository extends FilteredJpaRepository<UserEntity, String>{
 	
 	@Query("Select u from UserEntity u where u.username like %?1% or u.fullname like %?1% or u.phone like %?1%")

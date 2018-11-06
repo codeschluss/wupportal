@@ -1,4 +1,4 @@
-package de.codeschluss.portal.functional.configuration;
+package de.codeschluss.portal.functional.translation;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * The persistent class for the configurations database table.
+ * The persistent class for the translations database table.
  * 
  */
 @Data
@@ -22,12 +22,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@Table(name = "configurations")
+@Table(name = "translations")
 @Relation(collectionRelation = "data")
-public class ConfigurationEntity extends BaseEntity implements Serializable {
+public class TranslationEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String item;
+	private String locale;
 
-	private String value;
+	private String name;
 }

@@ -13,9 +13,9 @@ import de.codeschluss.portal.common.base.BaseEntity;
 import de.codeschluss.portal.functional.address.AddressEntity;
 import de.codeschluss.portal.functional.category.CategoryEntity;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
-import de.codeschluss.portal.functional.schedule.Schedule;
-import de.codeschluss.portal.functional.tag.Tag;
-import de.codeschluss.portal.functional.targetgroup.TargetGroup;
+import de.codeschluss.portal.functional.schedule.ScheduleEntity;
+import de.codeschluss.portal.functional.tag.TagEntity;
+import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,7 +63,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 			name = "activities_tags",
 			joinColumns = @JoinColumn(name = "activity_id"),
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	private List<Tag> tags;
+	private List<TagEntity> tags;
 
 	@ManyToMany
 	@JsonIgnore
@@ -71,9 +71,9 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 			name = "activities_target_groups",
 			joinColumns = @JoinColumn(name = "activity_id"),
 			inverseJoinColumns = @JoinColumn(name = "target_group_id"))
-	private List<TargetGroup> targetGroups;
+	private List<TargetGroupEntity> targetGroups;
 	
 	@OneToMany(mappedBy = "activity")
 	@JsonIgnore
-	private List<Schedule> schedules;
+	private List<ScheduleEntity> schedules;
 }

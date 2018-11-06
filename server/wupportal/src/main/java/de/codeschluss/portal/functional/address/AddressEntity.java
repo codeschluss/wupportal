@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * The persistent class for the addresses database table.
@@ -54,9 +55,11 @@ public class AddressEntity extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "address")
 	@JsonIgnore
+	@ToString.Exclude
 	private List<ActivityEntity> activities;
 
 	@OneToMany(mappedBy = "address")
 	@JsonIgnore
+	@ToString.Exclude
 	private List<OrganisationEntity> organisations;
 }

@@ -21,7 +21,7 @@ import de.codeschluss.portal.functional.user.UserService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class UserControllerUpdate {
+public class UserControllerUpdateTest {
 	
 	@Autowired
     private UserController controller;

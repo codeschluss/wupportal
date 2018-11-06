@@ -1,4 +1,4 @@
-package de.codeschluss.portal.integration.user;
+package de.codeschluss.portal.integration.organisation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,51 +15,51 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
-import de.codeschluss.portal.functional.user.UserController;
+import de.codeschluss.portal.functional.organisation.OrganisationController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class UserControllerDelete {
+public class OrganisationControllerDeleteTest {
 	
 	@Autowired
-    private UserController controller;
+    private OrganisationController controller;
 	
 	@Test(expected = NotFoundException.class)
 	@WithUserDetails("super@user")
-	public void deleteOtherSuperUserOK() throws URISyntaxException {
-		String userId = "00000000-0000-0000-0004-600000000000"; 
-		assertThat(controller.findOne(userId)).isNotNull();
+	public void deleteOtherSuperOrganisationOK() throws URISyntaxException {
+		String organisationId = "00000000-0000-0000-0008-400000000000"; 
+		assertThat(controller.findOne(organisationId)).isNotNull();
 		
-		controller.delete(userId);
+		controller.delete(organisationId);
 		
-		controller.findOne(userId);
+		controller.findOne(organisationId);
 	}
 		
 	@Test(expected = NotFoundException.class)
-	@WithUserDetails("owndelete@user")
-	public void deleteOwnUserOK() throws URISyntaxException {
-		String userId = "00000000-0000-0000-0004-700000000000"; 
-		assertThat(controller.findOne(userId)).isNotNull();
+	@WithUserDetails("admin@user")
+	public void deleteOwnOrganisationOK() throws URISyntaxException {
+		String organisationId = "00000000-0000-0000-0008-500000000000"; 
+		assertThat(controller.findOne(organisationId)).isNotNull();
 		
-		controller.delete(userId);
+		controller.delete(organisationId);
 		
-		controller.findOne(userId);
+		controller.findOne(organisationId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("provider1@user")
-	public void deleteOtherUserDenied() throws URISyntaxException {
-		String userId = "00000000-0000-0000-0004-100000000000"; 
+	public void deleteOtherOrganisationDenied() throws URISyntaxException {
+		String organisationId = "00000000-0000-0000-0008-100000000000"; 
 		
-		controller.delete(userId);
+		controller.delete(organisationId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
 	public void deleteOtherNotRegisteredDenied() {
-		String otherUserId = "00000000-0000-0000-0004-100000000000";
+		String otherOrganisationId = "00000000-0000-0000-0008-100000000000";
 		
-		controller.delete(otherUserId);
+		controller.delete(otherOrganisationId);
 	}
 
 

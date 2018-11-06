@@ -28,7 +28,7 @@ public class ProviderService {
 		return getRepo().findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
 	}
 	
-	public List<ProviderEntity> getProvidersByOrga(String orgaId) {
+	public List<ProviderEntity> getProvidersByOrganisation(String orgaId) {
 		return getRepo().findByOrganisationId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
 	}
 
@@ -40,7 +40,7 @@ public class ProviderService {
 		return getRepo().findByUserAndAdminTrue(user).orElse(Collections.emptyList());
 	}
 	
-	public ProviderEntity getProviderByUserAndOrga(String userId, String orgaId) {
+	public ProviderEntity getProviderByUserAndOrganisation(String userId, String orgaId) {
 		return getRepo().findByUserIdAndOrganisationId(userId, orgaId).orElseThrow(() -> new NotFoundException(userId + " and " + orgaId ));
 	}
 
@@ -62,7 +62,7 @@ public class ProviderService {
 	}
 	
 	public void deleteForUserAndOrga(String userId, String orgaId) {
-		repo.delete(getProviderByUserAndOrga(userId, orgaId));
+		repo.delete(getProviderByUserAndOrganisation(userId, orgaId));
 	}
 	
 	public boolean isDuplicate(String userId, List<String> orgaIds) {
@@ -74,13 +74,13 @@ public class ProviderService {
 	}
 
 	public void setApprovedByUserAndOrga(String userId, String orgaId, boolean isApproved) {
-		ProviderEntity provider = getProviderByUserAndOrga(userId, orgaId);
+		ProviderEntity provider = getProviderByUserAndOrganisation(userId, orgaId);
 		provider.setApproved(isApproved);
 		getRepo().save(provider);
 	}
 	
 	public void setAdminByUserAndOrga(String userId, String orgaId, Boolean isAdmin) {
-		ProviderEntity provider = getProviderByUserAndOrga(userId, orgaId);
+		ProviderEntity provider = getProviderByUserAndOrganisation(userId, orgaId);
 		provider.setAdmin(isAdmin);
 		getRepo().save(provider);
 	}
@@ -92,7 +92,4 @@ public class ProviderService {
 			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + ProviderRepository.class.getName());
 		}
 	}
-
-
-
 }

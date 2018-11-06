@@ -19,6 +19,10 @@ public class AddressService extends DataService<AddressEntity>{
 		super(repo, assembler);
 	}
 	
+	public boolean existsById(String addressId) {
+		return getRepo().existsById(addressId);
+	}
+	
 	public AddressEntity update(String id, AddressEntity newAddress) {
 		return getRepo().findById(id).map(address -> {
 			address.setHouseNumber(newAddress.getHouseNumber());

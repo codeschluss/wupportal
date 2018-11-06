@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * The persistent class for the activities database table.
@@ -47,18 +48,22 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	@JsonIgnore
+	@ToString.Exclude
 	private AddressEntity address;
 
 	@ManyToOne
 	@JsonIgnore
+	@ToString.Exclude
 	private CategoryEntity category;
 
 	@ManyToOne
 	@JsonIgnore
+	@ToString.Exclude
 	private ProviderEntity provider;
 
 	@ManyToMany
 	@JsonIgnore
+	@ToString.Exclude
 	@JoinTable(
 			name = "activities_tags",
 			joinColumns = @JoinColumn(name = "activity_id"),
@@ -67,6 +72,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 
 	@ManyToMany
 	@JsonIgnore
+	@ToString.Exclude
 	@JoinTable(
 			name = "activities_target_groups",
 			joinColumns = @JoinColumn(name = "activity_id"),
@@ -75,5 +81,6 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	
 	@OneToMany(mappedBy = "activity")
 	@JsonIgnore
+	@ToString.Exclude
 	private List<ScheduleEntity> schedules;
 }

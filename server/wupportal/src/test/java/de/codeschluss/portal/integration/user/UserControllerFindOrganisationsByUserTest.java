@@ -17,7 +17,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerFindOrganisationsByUser {
+public class UserControllerFindOrganisationsByUserTest {
 	
     @Autowired
     private UserController controller;

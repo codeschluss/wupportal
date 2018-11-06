@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.exception.BadParamsException;
@@ -23,25 +24,30 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.common.security.permissions.OrgaAdminOrSuperUserPermission;
 import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
+import de.codeschluss.portal.functional.activity.ActivityService;
 import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 import de.codeschluss.portal.functional.provider.ProviderService;
 import de.codeschluss.portal.functional.user.UserService;
 
+@RestController
 public class OrganisationController extends CrudController<OrganisationEntity, OrganisationService> {
 
 	private final ProviderService providerService;
 	private final UserService userService;
 	private final AddressService addressService;
+	private final ActivityService activityService;
 	
 	public OrganisationController(OrganisationService service,
 			ProviderService providerService,
 			UserService userService,
-			AddressService addressService) {
+			AddressService addressService,
+			ActivityService activityService) {
 		super(service);
 		this.providerService = providerService;
 		this.userService = userService;
 		this.addressService = addressService;
+		this.activityService = activityService;
 	}
 	
 	@Override
@@ -73,21 +79,53 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	@Override
 	@DeleteMapping("/organisations/{organisationId}")
 	@OrgaAdminOrSuperUserPermission
-	public ResponseEntity<?> delete(@PathVariable String orgaId) {
-		return super.delete(orgaId);
+	public ResponseEntity<?> delete(@PathVariable String organisationId) {
+		return super.delete(organisationId);
 	}
 	
 	@GetMapping("/organisations/{organisationId}/address")
 	public ResponseEntity<?> findAddressByOrganisation(@PathVariable String organisationId) {
 		return ok(addressService.getResourcesWithProvidersByOrganisation(
 				organisationId,
-				DummyInvocationUtils.methodOn(this.getClass()).findUsersByOrganisation(organisationId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findAddressByOrganisation(organisationId)));
+		
+	}
+	
+	@PutMapping("/organisations/{organisationId}/address")
+	@OrgaAdminOrSuperUserPermission
+	public ResponseEntity<?> updateAddressForOrganisation(@PathVariable String organisationId, @RequestBody String addressId) {
+		if (addressService.existsById(addressId) && service.existsById(organisationId)) {
+			service.updateAddress(organisationId, addressId);
+			return ok(findAddressByOrganisation(organisationId));
+		} else {
+			//TODO: Error Objects with proper message
+			throw new BadParamsException("Organisation or Address with given ID do not exist!");
+		}		
+	}
+	
+	@GetMapping("/organisations/{organisationId}/activities")
+	public ResponseEntity<?> findActivitiesByOrganisation(@PathVariable String organisationId) {
+		List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
+		return ok(activityService.getResourcesByProviders(
+				providers,
+				DummyInvocationUtils.methodOn(this.getClass()).findActivitiesByOrganisation(organisationId)));
+	}
+	
+	@DeleteMapping("/organisations/{organisationId}/activities/{activityId}")
+	@OrgaAdminOrSuperUserPermission
+	public ResponseEntity<?> deleteActivityForOrganisation(@PathVariable String organisationId, @PathVariable String activityId) {
+		if (activityService.isActivityForProvider(activityId, providerService.getProvidersByOrganisation(organisationId))) {
+			activityService.delete(activityId);
+			return noContent().build();
+		} else {
+			throw new BadParamsException("Activity does not match given organisation!");
+		}
 	}
 	
 	@GetMapping("/organisations/{organisationId}/users")
 	@OrgaAdminOrSuperUserPermission	
 	public ResponseEntity<?> findUsersByOrganisation(@PathVariable String organisationId) {
-		List<ProviderEntity> providers = providerService.getProvidersByOrga(organisationId);
+		List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
 		return ok(userService.convertToResourcesWithProviders(
 				providers,
 				DummyInvocationUtils.methodOn(this.getClass()).findUsersByOrganisation(organisationId)));
@@ -117,9 +155,20 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 		}
 	}
 	
+	@DeleteMapping("/organisations/{organisationId}/users/{userId}")
+	@OrgaAdminOrSuperUserPermission
+	public ResponseEntity<?> deleteUserForOrganisation(@PathVariable String organisationId, @PathVariable String userId) {
+		try {
+			providerService.deleteForUserAndOrga(userId, organisationId);
+			return noContent().build();
+		} catch (NotFoundException e) {
+			return noContent().build();
+		}
+	}
+	
 	@Override
 	protected void checkForDuplicates(OrganisationEntity orga) {
-		if (service.organisationExists(orga.getName())) {
+		if (service.existsByName(orga.getName())) {
 			//TODO: Error Objects with proper message
 			throw new DuplicateEntryException("Organisation name already exists!");
 		}

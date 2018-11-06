@@ -17,7 +17,7 @@ import de.codeschluss.portal.functional.user.UserController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerGrantSuperuserRight {
+public class UserControllerGrantSuperuserRightTest {
 
     @Autowired
     private UserController controller;

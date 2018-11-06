@@ -20,7 +20,7 @@ import de.codeschluss.portal.functional.user.UserService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class UserControllerAdd {
+public class UserControllerAddTest {
 	
 	@Autowired
     private UserController controller;
@@ -34,7 +34,7 @@ public class UserControllerAdd {
 		
 		controller.add(user);
 		
-		assertThat(service.getUser(user.getUsername()).getUsername()).isEqualTo(user.getUsername());
+		assertThat(service.userExists(user.getUsername())).isTrue();
 	}
 	
 

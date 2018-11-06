@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * The persistent class for the organisations database table.
@@ -48,9 +49,11 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
 	
 	@ManyToOne
 	@JsonIgnore
+	@ToString.Exclude
 	private AddressEntity address;
 
 	@OneToMany(mappedBy = "organisation")
 	@JsonIgnore
+	@ToString.Exclude
 	private List<ProviderEntity> providers;
 }

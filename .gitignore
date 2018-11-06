@@ -4,6 +4,7 @@ client/target
 
 server/.metadata
 server/.recommenders
+server/.settings
 server/bin
 server/src/main/resources
 server/target

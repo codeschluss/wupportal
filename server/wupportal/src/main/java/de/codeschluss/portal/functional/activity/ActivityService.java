@@ -11,7 +11,7 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 
 @Service
-public class ActivityService extends DataService<ActivityEntity> {
+public class ActivityService extends DataService<ActivityEntity, ActivityRepository> {
 
 	public ActivityService(
 			ActivityRepository repo,
@@ -21,20 +21,11 @@ public class ActivityService extends DataService<ActivityEntity> {
 	}
 	
 	public Resources<?> getResourcesByProviders(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
-		List<ActivityEntity> result = getRepo().findByProviderIn(providers).orElseThrow(() -> new NotFoundException(providers.toString()));
+		List<ActivityEntity> result = repo.findByProviderIn(providers).orElseThrow(() -> new NotFoundException(providers.toString()));
 		return assembler.entitiesToResources(result, responseEntity);
 	}
 
 	public boolean isActivityForProvider(String activityId, List<ProviderEntity> providers) {
-		return getRepo().existsByIdAndProviderIn(activityId, providers);
+		return repo.existsByIdAndProviderIn(activityId, providers);
 	}
-	
-	public ActivityRepository getRepo() {
-		if (repo instanceof ActivityRepository) {
-			return (ActivityRepository) repo;
-		} else {
-			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + ActivityRepository.class.getName());
-		}
-	}
-
 }

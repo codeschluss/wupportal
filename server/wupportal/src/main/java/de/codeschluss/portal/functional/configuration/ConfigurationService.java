@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import de.codeschluss.portal.common.base.DataService;
 
 @Service
-public class ConfigurationService extends DataService<ConfigurationEntity>{
+public class ConfigurationService extends DataService<ConfigurationEntity, ConfigurationRepository>{
 
 	public ConfigurationService(ConfigurationRepository repo,
 			ConfigurationResourceAssembler assembler) {

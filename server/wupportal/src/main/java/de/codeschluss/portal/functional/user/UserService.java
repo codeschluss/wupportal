@@ -14,7 +14,7 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 
 @Service
-public class UserService extends DataService<UserEntity> {
+public class UserService extends DataService<UserEntity, UserRepository> {
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -27,35 +27,35 @@ public class UserService extends DataService<UserEntity> {
 	}
 	
 	public boolean userExists(String username) {
-		return getRepo().existsByUsername(username);
+		return repo.existsByUsername(username);
 	}
 	
 	public UserEntity getUser(String username) {
-		return getRepo().findByUsername(username).orElseThrow(() -> new NotFoundException(username));
+		return repo.findByUsername(username).orElseThrow(() -> new NotFoundException(username));
 	}
 	
 	public UserEntity add(UserEntity newUser) {
 		newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-		return getRepo().save(newUser);
+		return repo.save(newUser);
 	}
 	
 	public UserEntity update(String id, UserEntity newUser) {
-		return getRepo().findById(id).map(user -> {
+		return repo.findById(id).map(user -> {
 			user.setUsername(newUser.getUsername());
 			user.setFullname(newUser.getFullname());
 			user.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
 			user.setPhone(newUser.getPhone());
-			return getRepo().save(user);
+			return repo.save(user);
 		}).orElseGet(() -> {
 			newUser.setId(id);
-			return getRepo().save(newUser);
+			return repo.save(newUser);
 		});
 	}
 
 	public void grantSuperUser(String id, Boolean isSuperuser) {
-		UserEntity user = getRepo().findById(id).orElseThrow(() -> new NotFoundException(id));
+		UserEntity user = repo.findById(id).orElseThrow(() -> new NotFoundException(id));
 		user.setSuperuser(isSuperuser);
-		getRepo().save(user);
+		repo.save(user);
 	}
 	
 	public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
@@ -64,13 +64,5 @@ public class UserService extends DataService<UserEntity> {
 		}).collect(Collectors.toList());
 		
 		return assembler.toListResources(result, responseEntity);
-	}
-	
-	public UserRepository getRepo() {
-		if (repo instanceof UserRepository) {
-			return (UserRepository) repo;
-		} else {
-			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + UserRepository.class.getName());
-		}
 	}
 }

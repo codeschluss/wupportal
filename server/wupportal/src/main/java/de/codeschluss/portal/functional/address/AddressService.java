@@ -10,7 +10,7 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.suburb.SuburbEntity;
 
 @Service
-public class AddressService extends DataService<AddressEntity>{
+public class AddressService extends DataService<AddressEntity, AddressRepository> {
 
 	public AddressService(AddressRepository repo,
 			AddressResourceAssembler assembler) {
@@ -24,37 +24,29 @@ public class AddressService extends DataService<AddressEntity>{
 	}
 	
 	public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) {
-		AddressEntity address = getRepo().findByOrganisationsId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
+		AddressEntity address = repo.findByOrganisationsId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
 		return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
 	}
 	
 	public AddressEntity update(String id, AddressEntity newAddress) {
-		return getRepo().findById(id).map(address -> {
+		return repo.findById(id).map(address -> {
 			address.setHouseNumber(newAddress.getHouseNumber());
 			address.setLatitude(newAddress.getLatitude());
 			address.setLongitude(newAddress.getLongitude());
 			address.setPlace(newAddress.getPlace());
 			address.setPostalCode(newAddress.getPostalCode());
 			address.setStreet(newAddress.getStreet());
-			return getRepo().save(address);
+			return repo.save(address);
 		}).orElseGet(() -> {
 			newAddress.setId(id);
-			return getRepo().save(newAddress);
+			return repo.save(newAddress);
 		});
 	}
 	
 	public AddressEntity updateSuburb(String addressId, SuburbEntity suburb) {		
-		AddressEntity address = getRepo().findById(addressId).orElseThrow(() -> new NotFoundException(addressId));
+		AddressEntity address = repo.findById(addressId).orElseThrow(() -> new NotFoundException(addressId));
 		address.setSuburb(suburb);
-		return getRepo().save(address);
+		return repo.save(address);
 		
-	}
-	
-	public AddressRepository getRepo() {
-		if (repo instanceof AddressRepository) {
-			return (AddressRepository) repo;
-		} else {
-			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + AddressRepository.class.getName());
-		}
 	}	
 }

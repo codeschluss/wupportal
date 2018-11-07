@@ -16,7 +16,7 @@ import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 
 @Service
-public class OrganisationService extends DataService<OrganisationEntity> {
+public class OrganisationService extends DataService<OrganisationEntity, OrganisationRepository> {
 	
 	public OrganisationService(
 			OrganisationRepository repo,
@@ -26,32 +26,32 @@ public class OrganisationService extends DataService<OrganisationEntity> {
 	}
 	
 	public boolean existsByName(String name) {
-		return getRepo().existsByName(name);
+		return repo.existsByName(name);
 	}
 	
 	public boolean existsById(String organisationId) {
-		return getRepo().existsById(organisationId);
+		return repo.existsById(organisationId);
 	}
 	
 	public OrganisationEntity update(String id, OrganisationEntity newOrga) {
-		return getRepo().findById(id).map(orga -> {
+		return repo.findById(id).map(orga -> {
 			orga.setDescription(newOrga.getDescription());
 			orga.setImage(newOrga.getImage());
 			orga.setMail(newOrga.getMail());
 			orga.setName(newOrga.getName());
 			orga.setPhone(newOrga.getPhone());
 			orga.setWebsite(newOrga.getWebsite());
-			return getRepo().save(orga);
+			return repo.save(orga);
 		}).orElseGet(() -> {
 			newOrga.setId(id);
-			return getRepo().save(newOrga);
+			return repo.save(newOrga);
 		});
 	}
 	
 	public OrganisationEntity updateAddress(String organisationId, AddressEntity address) {
-		OrganisationEntity orga = getRepo().findById(organisationId).orElseThrow(() -> new NotFoundException(organisationId));
+		OrganisationEntity orga = repo.findById(organisationId).orElseThrow(() -> new NotFoundException(organisationId));
 		orga.setAddress(address);
-		return getRepo().save(orga);
+		return repo.save(orga);
 	}
 	
 	public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
@@ -60,13 +60,5 @@ public class OrganisationService extends DataService<OrganisationEntity> {
 		}).collect(Collectors.toList());
 		
 		return assembler.toListResources(result, responseEntity);
-	}
-	
-	public OrganisationRepository getRepo() {
-		if (repo instanceof OrganisationRepository) {
-			return (OrganisationRepository) repo;
-		} else {
-			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + OrganisationRepository.class.getName());
-		}
 	}
 }

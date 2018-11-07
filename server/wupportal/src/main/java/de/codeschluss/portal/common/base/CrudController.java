@@ -17,7 +17,7 @@ import de.codeschluss.portal.common.exception.DuplicateEntryException;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.common.utils.SortPaginate;
 
-public abstract class CrudController<E extends BaseEntity, S extends DataService<E>> {
+public abstract class CrudController<E extends BaseEntity, S extends DataService<E, ?>> {
 	
 	protected final S service;
 	

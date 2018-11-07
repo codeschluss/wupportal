@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import de.codeschluss.portal.common.base.DataService;
 
 @Service
-public class CategoryService extends DataService<CategoryEntity>{
+public class CategoryService extends DataService<CategoryEntity, CategoryRepository>{
 
 	public CategoryService(CategoryRepository repo,
 			 CategoryResourceAssembler assembler) {

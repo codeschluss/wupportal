@@ -14,15 +14,15 @@ import org.springframework.http.ResponseEntity;
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
 
-public abstract class DataService<E extends BaseEntity> {
+public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRepository<E, String>> {
 	
-	protected final FilteredJpaRepository<E, String> repo;
+	protected final R repo;
 	protected final PagingAndSortingAssembler<E> assembler;
 	
 	protected final String DEFAULT_SORT_PROP = "id";
 	
 	public DataService(
-			FilteredJpaRepository<E, String> repo,
+			R repo,
 			PagingAndSortingAssembler<E> assembler) {
 		this.repo = repo;
 		this.assembler = assembler;

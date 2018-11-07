@@ -6,10 +6,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.security.jwt.JWTUserDetails;
+import de.codeschluss.portal.functional.activity.ActivityService;
 
 
 @Service
 public class AuthorizationService {
+	
+	private final ActivityService actitivityService;
+	
+	public AuthorizationService(ActivityService actitivityService) {
+		this.actitivityService = actitivityService;
+	}
 	
 	public boolean isOwnUser(Authentication authentication, String userId) {
 		if (authentication.getPrincipal() instanceof JWTUserDetails) {
@@ -42,5 +49,26 @@ public class AuthorizationService {
 			return jwtUserDetails.getApprovedOrganisations() != null && jwtUserDetails.getApprovedOrganisations().length > 0; 
 		}
 		return false;
+	}
+	
+	public boolean isOwnActivity(Authentication authentication, String activityId) {
+		if (authentication.getPrincipal() instanceof JWTUserDetails) {
+			JWTUserDetails jwtUserDetails = (JWTUserDetails) authentication.getPrincipal();
+			return Arrays.asList(jwtUserDetails.getCreatedActivities()).contains(activityId);
+		}
+		return false;
+	}
+	
+	public boolean isOrgaActivity(Authentication authentication, String activityId) {
+		if (authentication.getPrincipal() instanceof JWTUserDetails) {
+			JWTUserDetails jwtUserDetails = (JWTUserDetails) authentication.getPrincipal();
+			String orgaId = actitivityService.getById(activityId).getProvider().getOrganisation().getId();
+			return Arrays.asList(jwtUserDetails.getAdminOrgas()).contains(orgaId);
+		}
+		return false;
+	}
+	
+	public boolean showUser(String activityId) {
+		return actitivityService.getById(activityId).isShowUser();
 	}
 }

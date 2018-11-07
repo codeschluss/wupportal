@@ -73,4 +73,8 @@ public class UserService extends DataService<UserEntity, UserRepository> {
 		
 		return assembler.toListResources(result, responseEntity);
 	}
+
+	public Object getResourceByProvider(ProviderEntity provider) {
+		return assembler.toResource(provider.getUser());
+	}
 }

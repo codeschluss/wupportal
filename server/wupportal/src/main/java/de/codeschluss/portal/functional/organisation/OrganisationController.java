@@ -143,7 +143,7 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	@OrgaAdminOrSuperUserPermission	
 	public ResponseEntity<?> grantAdminRightForOrganisation(@PathVariable String organisationId, @PathVariable String userId, @RequestBody Boolean isAdmin) {
 		try {
-			this.providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);
+			this.providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);			
 			return noContent().build();
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message

@@ -24,24 +24,32 @@ public class ProviderService {
 		this.orgaService = orgaService;
 	}
 	
+	public boolean isDuplicate(String userId, List<String> orgaIds) {
+		return repo.existsByUserIdAndOrganisationIdIn(userId, orgaIds);
+	}
+	
 	public List<ProviderEntity> getProvidersByUser(String userId) {
-		return getRepo().findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
+		return repo.findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
 	}
 	
 	public List<ProviderEntity> getProvidersByOrganisation(String orgaId) {
-		return getRepo().findByOrganisationId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
+		return repo.findByOrganisationId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
+	}
+	
+	public ProviderEntity getProvidersByActivity(String activityId) {
+		return repo.findByActivitiesId(activityId).orElseThrow(() -> new NotFoundException(activityId));
 	}
 
 	public List<ProviderEntity> getApprovedProviders(UserEntity user) {
-		return getRepo().findByUserAndApprovedTrue(user).orElse(Collections.emptyList());
+		return repo.findByUserAndApprovedTrue(user).orElse(Collections.emptyList());
 	}
 
 	public List<ProviderEntity> getOrgaAdminProviders(UserEntity user) {
-		return getRepo().findByUserAndAdminTrue(user).orElse(Collections.emptyList());
+		return repo.findByUserAndAdminTrue(user).orElse(Collections.emptyList());
 	}
 	
 	public ProviderEntity getProviderByUserAndOrganisation(String userId, String orgaId) {
-		return getRepo().findByUserIdAndOrganisationId(userId, orgaId).orElseThrow(() -> new NotFoundException(userId + " and " + orgaId ));
+		return repo.findByUserIdAndOrganisationId(userId, orgaId).orElseThrow(() -> new NotFoundException(userId + " and " + orgaId ));
 	}
 
 	public List<ProviderEntity> createProviders(UserEntity user, List<String> organisationIds) {
@@ -64,10 +72,6 @@ public class ProviderService {
 	public void deleteForUserAndOrga(String userId, String orgaId) {
 		repo.delete(getProviderByUserAndOrganisation(userId, orgaId));
 	}
-	
-	public boolean isDuplicate(String userId, List<String> orgaIds) {
-		return repo.existsByUserIdAndOrganisationIdIn(userId, orgaIds);
-	}
 
 	public List<ProviderEntity> addAll(List<ProviderEntity> providers) {
 		return repo.saveAll(providers);
@@ -76,20 +80,22 @@ public class ProviderService {
 	public void setApprovedByUserAndOrga(String userId, String orgaId, boolean isApproved) {
 		ProviderEntity provider = getProviderByUserAndOrganisation(userId, orgaId);
 		provider.setApproved(isApproved);
-		getRepo().save(provider);
+		
+		if(!isApproved) {
+			provider.setAdmin(false);
+		}
+		
+		repo.save(provider);
 	}
 	
 	public void setAdminByUserAndOrga(String userId, String orgaId, Boolean isAdmin) {
 		ProviderEntity provider = getProviderByUserAndOrganisation(userId, orgaId);
 		provider.setAdmin(isAdmin);
-		getRepo().save(provider);
-	}
-	
-	public ProviderRepository getRepo() {
-		if (repo instanceof ProviderRepository) {
-			return (ProviderRepository) repo;
-		} else {
-			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + ProviderRepository.class.getName());
+		
+		if(isAdmin) {
+			provider.setApproved(true);
 		}
+		
+		repo.save(provider);
 	}
 }

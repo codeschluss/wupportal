@@ -60,6 +60,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = JWT.create()
                 .withSubject(jwtUserDetails.getUsername())
                 .withClaim(securityConfig.getClaimSuperuser(), jwtUserDetails.isSuperUser())
+                .withArrayClaim(securityConfig.getClaimCreatedActivities(), jwtUserDetails.getCreatedActivities())
                 .withArrayClaim(securityConfig.getClaimApprovedOrgas(), jwtUserDetails.getApprovedOrganisations())
                 .withArrayClaim(securityConfig.getClaimAdminOrgas(), jwtUserDetails.getAdminOrgas())
                 .withExpiresAt(new Date(System.currentTimeMillis() + securityConfig.getExpirationTime().toMillis()))

@@ -1,8 +1,10 @@
 package de.codeschluss.portal.functional.category;
 
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.base.DataService;
+import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.category.CategoryEntity;
 
 @Service
@@ -15,6 +17,11 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
 	
 	public CategoryEntity getDuplicate(CategoryEntity newCategory) {
 		return repo.findByName(newCategory.getName()).orElse(null);
+	}
+	
+	public Resource<CategoryEntity> getResourceByActivity(String activityId) {
+		CategoryEntity category = repo.findByActivitiesId(activityId).orElseThrow(() -> new NotFoundException(activityId));
+		return assembler.toResource(category);
 	}
 	
 	public CategoryEntity update(String id, CategoryEntity newCategory) {

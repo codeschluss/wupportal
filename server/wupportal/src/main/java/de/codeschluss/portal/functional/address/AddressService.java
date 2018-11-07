@@ -28,6 +28,11 @@ public class AddressService extends DataService<AddressEntity, AddressRepository
 		return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
 	}
 	
+	public Resource<?> getResourcesWithSuburbsByActivity(String activityId) {
+		AddressEntity address = repo.findByActivitiesId(activityId).orElseThrow(() -> new NotFoundException(activityId));
+		return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
+	}
+	
 	public AddressEntity update(String id, AddressEntity newAddress) {
 		return repo.findById(id).map(address -> {
 			address.setHouseNumber(newAddress.getHouseNumber());

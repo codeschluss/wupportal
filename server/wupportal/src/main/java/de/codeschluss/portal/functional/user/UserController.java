@@ -22,7 +22,7 @@ import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.exception.BadParamsException;
 import de.codeschluss.portal.common.exception.DuplicateEntryException;
 import de.codeschluss.portal.common.exception.NotFoundException;
-import de.codeschluss.portal.common.security.permissions.OwnOrSuperUserPermission;
+import de.codeschluss.portal.common.security.permissions.OwnUserOrSuperUserPermission;
 import de.codeschluss.portal.common.security.permissions.OwnUserPermission;
 import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
@@ -57,7 +57,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 
 	@Override
 	@GetMapping("/users/{userId}")
-	@OwnOrSuperUserPermission
+	@OwnUserOrSuperUserPermission
 	public Resource<UserEntity> findOne(@PathVariable String userId) {
 		return super.findOne(userId);
 	}
@@ -77,7 +77,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	
 	@Override
 	@DeleteMapping("/users/{userId}")
-	@OwnOrSuperUserPermission
+	@OwnUserOrSuperUserPermission
 	public ResponseEntity<?> delete(@PathVariable String userId) {
 		return super.delete(userId);
 	}
@@ -95,7 +95,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	}
 	
 	@GetMapping("/users/{userId}/organisations")
-	@OwnOrSuperUserPermission
+	@OwnUserOrSuperUserPermission
 	public ResponseEntity<?> findOrganisationsByUser(@PathVariable String userId) {
 		List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
 		return ok(organisationService.convertToResourcesWithProviders(
@@ -104,13 +104,13 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	}
 	
 	@PostMapping("/users/{userId}/organisations")
-	@OwnOrSuperUserPermission
+	@OwnUserOrSuperUserPermission
 	public ResponseEntity<?> addOrganisationforUser(@PathVariable String userId, @RequestBody String... organisationParam) {
 		List<String> distinctOrgas = Arrays.asList(organisationParam).stream().distinct().collect(Collectors.toList());
 		
 		if (providerService.isDuplicate(userId, distinctOrgas)) {
 			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("User with given one or more Organisations already exists");
+			throw new DuplicateEntryException("User with one or more Organisations already exists");
 		}
 		
 		try {
@@ -125,7 +125,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	}
 	
 	@DeleteMapping("/users/{userId}/organisations/{orgaId}")
-	@OwnOrSuperUserPermission
+	@OwnUserOrSuperUserPermission
 	public ResponseEntity<?> deleteOrganisationForUser(@PathVariable String userId, @PathVariable String orgaId) {
 		try {
 			providerService.deleteForUserAndOrga(userId, orgaId);
@@ -145,7 +145,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	}
 	
 	@DeleteMapping("/users/{userId}/activities/{activityId}")
-	@OwnOrSuperUserPermission
+	@OwnUserOrSuperUserPermission
 	public ResponseEntity<?> deleteActivityForUser(@PathVariable String userId, @PathVariable String activityId) {
 		if (activityService.isActivityForProvider(activityId, providerService.getProvidersByUser(userId))) {
 			activityService.delete(activityId);

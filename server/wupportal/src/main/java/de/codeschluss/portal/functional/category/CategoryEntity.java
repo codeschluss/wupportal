@@ -35,6 +35,6 @@ public class CategoryEntity extends BaseEntity implements Serializable {
 	private String name;
 
 	@OneToMany(mappedBy = "category")
-	private List<ActivityEntity> activityEntities;
+	private List<ActivityEntity> activities;
 
 }

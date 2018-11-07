@@ -21,6 +21,10 @@ public interface AddressRepository extends FilteredJpaRepository<AddressEntity, 
 	Optional<Page<AddressEntity>> findFiltered(String filter, Pageable pageable);
 
 	Optional<AddressEntity> findByOrganisationsId(String orgaId);
+	
+	Optional<AddressEntity> findByActivitiesId(String activityId);
 
 	Optional<AddressEntity> findByHouseNumberAndPlaceAndPostalCodeAndStreet(String houseNumber, String place, String postalCode, String street);
+
+
 }

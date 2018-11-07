@@ -25,6 +25,8 @@ public interface ProviderRepository extends FilteredJpaRepository<ProviderEntity
 	
 	Optional<List<ProviderEntity>> findByOrganisationId(String orgaId);
 	
+	Optional<ProviderEntity> findByActivitiesId(String activityId);
+	
 	Optional<ProviderEntity> findByUserIdAndOrganisationId(String userId, String orgaId);
 	
 	boolean existsByUserIdAndOrganisationIdIn(String userId, List<String> organisationId);

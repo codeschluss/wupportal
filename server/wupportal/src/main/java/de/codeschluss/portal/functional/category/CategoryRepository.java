@@ -22,5 +22,7 @@ public interface CategoryRepository extends FilteredJpaRepository<CategoryEntity
 	Optional<Page<CategoryEntity>> findFiltered(String filter, Pageable pageable);
 
 	Optional<CategoryEntity> findByName(String name);
+
+	Optional<CategoryEntity> findByActivitiesId(String activityId);
 	
 }

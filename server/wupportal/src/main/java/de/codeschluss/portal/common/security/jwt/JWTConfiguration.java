@@ -21,4 +21,5 @@ public class JWTConfiguration {
 	private String claimSuperuser;
 	private String claimApprovedOrgas;
 	private String claimAdminOrgas;
+	private String claimCreatedActivities;
 }

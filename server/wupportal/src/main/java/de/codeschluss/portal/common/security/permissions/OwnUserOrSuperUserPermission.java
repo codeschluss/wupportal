@@ -7,6 +7,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Retention(RetentionPolicy.RUNTIME)
 @PreAuthorize("@authorizationService.isOwnUser(authentication, #userId) or @authorizationService.isSuperUser(authentication)")
-public @interface OwnOrSuperUserPermission {
+public @interface OwnUserOrSuperUserPermission {
 
 }

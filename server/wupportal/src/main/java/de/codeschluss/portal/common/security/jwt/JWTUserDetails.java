@@ -12,20 +12,25 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class JWTUserDetails extends User {
 	
-	private UserEntity user;
-	private String[] approvedOrganisations;
-	private String[] adminOrgas;
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private UserEntity user;
+	private String[] approvedOrganisations;
+	private String[] adminOrgas;
+	private String[] createdActivities;
 
-	public JWTUserDetails(UserEntity user, String[] approvedOrgas, String[] adminOrgas) {
+	public JWTUserDetails(UserEntity user, 
+			String[] approvedOrgas, 
+			String[] adminOrgas,
+			String[] createdActivities) {
 		super(user.getUsername(), user.getPassword(), Collections.emptyList());
 		this.user = user;
 		this.approvedOrganisations = approvedOrgas;
 		this.adminOrgas = adminOrgas;
+		this.createdActivities = createdActivities;
 	}
 	
 	public JWTUserDetails(UserEntity user) {

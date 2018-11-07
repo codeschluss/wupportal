@@ -19,4 +19,10 @@ public interface TagRepository extends FilteredJpaRepository<TagEntity, String> 
 	
 	@Query("Select t from TagEntity t where t.name like %?1% or t.description like %?1%")
 	Optional<Page<TagEntity>> findFiltered(String filter, Pageable pageable);
+
+	Optional<TagEntity> findByName(String name);
+
+	Optional<List<TagEntity>> findByActivitiesId(String activityId);
+
+	Optional<List<TagEntity>> findByIdIn(List<String> tagIds);
 }

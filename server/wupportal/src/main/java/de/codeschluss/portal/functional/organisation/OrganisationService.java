@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.base.DataService;
 import de.codeschluss.portal.common.base.ResourceWithEmbeddable;
-import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.address.AddressEntity;
 import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
@@ -53,7 +52,7 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
 	}
 	
 	public OrganisationEntity updateAddress(String organisationId, AddressEntity address) {
-		OrganisationEntity orga = repo.findById(organisationId).orElseThrow(() -> new NotFoundException(organisationId));
+		OrganisationEntity orga = getById(organisationId);
 		orga.setAddress(address);
 		return repo.save(orga);
 	}

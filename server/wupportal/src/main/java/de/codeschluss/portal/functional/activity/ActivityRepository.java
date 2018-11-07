@@ -21,6 +21,8 @@ public interface ActivityRepository extends FilteredJpaRepository<ActivityEntity
 	@Query("Select a from ActivityEntity a where a.name like %?1%")
 	Optional<Page<ActivityEntity>> findFiltered(String filter, Pageable pageable);
 	
+	Optional<ActivityEntity> findByName(String name);
+	
 	public Optional<List<ActivityEntity>> findByProviderIdIn(List<String> providerId, Sort sort);
 	
 	public boolean existsByIdAndProviderIn(String id, List<ProviderEntity> provider);
@@ -30,5 +32,7 @@ public interface ActivityRepository extends FilteredJpaRepository<ActivityEntity
 	public Optional<Page<ActivityEntity>> findByProviderIdIn(List<String> providerId, Pageable page);
 	
 	public Optional<Page<ActivityEntity>> findByProviderIn(List<ProviderEntity> provider, Pageable page);
+
+
 
 }

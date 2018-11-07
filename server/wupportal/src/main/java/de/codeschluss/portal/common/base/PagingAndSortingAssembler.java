@@ -59,12 +59,12 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements
 				links);
 	}
 	
-	private List<Link> createResourceLinks(E entity) {
+	protected List<Link> createResourceLinks(E entity) {
 		List<Link> links = new ArrayList<Link>();
 		return links;
 	}
 	
-	private List<Link> createPagingLinks(SortPaginate params, Page<?> entitiesPaged) {
+	protected List<Link> createPagingLinks(SortPaginate params, Page<?> entitiesPaged) {
 		List<Link> links = new ArrayList<>();
 
 		links.add(PaginationLinkBuilder.createFirstLink(params));

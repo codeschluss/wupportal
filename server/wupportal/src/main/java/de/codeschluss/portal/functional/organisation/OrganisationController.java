@@ -85,17 +85,14 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	
 	@GetMapping("/organisations/{organisationId}/address")
 	public ResponseEntity<?> findAddressByOrganisation(@PathVariable String organisationId) {
-		return ok(addressService.getResourcesWithProvidersByOrganisation(
-				organisationId,
-				DummyInvocationUtils.methodOn(this.getClass()).findAddressByOrganisation(organisationId)));
-		
+		return ok(addressService.getResourcesWithSuburbsByOrganisation(organisationId));
 	}
 	
 	@PutMapping("/organisations/{organisationId}/address")
 	@OrgaAdminOrSuperUserPermission
 	public ResponseEntity<?> updateAddressForOrganisation(@PathVariable String organisationId, @RequestBody String addressId) {
 		if (addressService.existsById(addressId) && service.existsById(organisationId)) {
-			service.updateAddress(organisationId, addressId);
+			service.updateAddress(organisationId, addressService.getById(addressId));
 			return ok(findAddressByOrganisation(organisationId));
 		} else {
 			//TODO: Error Objects with proper message

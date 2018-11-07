@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import de.codeschluss.portal.common.base.DataService;
 import de.codeschluss.portal.common.base.ResourceWithEmbeddable;
 import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.functional.address.AddressEntity;
 import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
@@ -17,14 +18,11 @@ import de.codeschluss.portal.functional.provider.ProviderEntity;
 @Service
 public class OrganisationService extends DataService<OrganisationEntity> {
 	
-	private final AddressService addressService;
-	
 	public OrganisationService(
 			OrganisationRepository repo,
 			OrganisationResourceAssembler assembler,
 			AddressService addressService) {
 		super(repo, assembler);
-		this.addressService = addressService;
 	}
 	
 	public boolean existsByName(String name) {
@@ -50,9 +48,9 @@ public class OrganisationService extends DataService<OrganisationEntity> {
 		});
 	}
 	
-	public OrganisationEntity updateAddress(String organisationId, String addressId) {
+	public OrganisationEntity updateAddress(String organisationId, AddressEntity address) {
 		OrganisationEntity orga = getRepo().findById(organisationId).orElseThrow(() -> new NotFoundException(organisationId));
-		orga.setAddress(addressService.getById(addressId));
+		orga.setAddress(address);
 		return getRepo().save(orga);
 	}
 	

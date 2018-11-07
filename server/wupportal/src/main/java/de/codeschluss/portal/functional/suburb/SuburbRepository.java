@@ -19,4 +19,6 @@ public interface SuburbRepository extends FilteredJpaRepository<SuburbEntity, St
 	
 	@Query("Select s from SuburbEntity s where s.name like %?1%")
 	Optional<Page<SuburbEntity>> findFiltered(String filter, Pageable pageable);
+
+	Optional<SuburbEntity> findByAddressesId(String addressId);
 }

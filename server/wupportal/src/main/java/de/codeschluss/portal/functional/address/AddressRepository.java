@@ -20,6 +20,5 @@ public interface AddressRepository extends FilteredJpaRepository<AddressEntity, 
 	@Query("Select a from AddressEntity a where a.houseNumber like %?1% or a.place like %?1% or a.postalCode like %?1% or a.street like %?1% or a.suburb.name like %?1% or a.longitude like %?1% or a.latitude like %?1%")
 	Optional<Page<AddressEntity>> findFiltered(String filter, Pageable pageable);
 
-	Optional<List<AddressEntity>> findByOrganisationsId(String orgaId);
-
+	Optional<AddressEntity> findByOrganisationsId(String orgaId);
 }

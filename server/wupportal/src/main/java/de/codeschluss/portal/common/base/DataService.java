@@ -32,6 +32,10 @@ public abstract class DataService<E extends BaseEntity> {
 		return repo.exists(example);
 	}
 	
+	public boolean existsById(String addressId) {
+		return repo.existsById(addressId);
+	}
+	
 	public Resource<E> getResourceById(String id) {
 		return assembler.toResource(getById(id));
 	}

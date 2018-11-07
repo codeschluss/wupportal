@@ -1,15 +1,11 @@
 package de.codeschluss.portal.functional.address;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.base.DataService;
-import de.codeschluss.portal.common.base.ResourceWithEmbeddable;
 import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.functional.suburb.SuburbEntity;
 
 @Service
 public class AddressService extends DataService<AddressEntity>{
@@ -19,8 +15,9 @@ public class AddressService extends DataService<AddressEntity>{
 		super(repo, assembler);
 	}
 	
-	public boolean existsById(String addressId) {
-		return getRepo().existsById(addressId);
+	public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) {
+		AddressEntity address = getRepo().findByOrganisationsId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
+		return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
 	}
 	
 	public AddressEntity update(String id, AddressEntity newAddress) {
@@ -38,14 +35,11 @@ public class AddressService extends DataService<AddressEntity>{
 		});
 	}
 	
-	public Resources<?> getResourcesWithProvidersByOrganisation(String orgaId, ResponseEntity<?> responseEntity) {
-		List<AddressEntity> addresses = getRepo().findByOrganisationsId(orgaId).orElseThrow(() -> new NotFoundException(orgaId));
+	public AddressEntity updateSuburb(String addressId, SuburbEntity suburb) {		
+		AddressEntity address = getRepo().findById(addressId).orElseThrow(() -> new NotFoundException(addressId));
+		address.setSuburb(suburb);
+		return getRepo().save(address);
 		
-		List<ResourceWithEmbeddable<AddressEntity>> result = addresses.stream().map(address -> {
-			return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
-		}).collect(Collectors.toList());
-		
-		return assembler.toListResources(result, responseEntity);
 	}
 	
 	public AddressRepository getRepo() {
@@ -54,6 +48,5 @@ public class AddressService extends DataService<AddressEntity>{
 		} else {
 			throw new RuntimeException("repository is type of " + repo.getClass().getName() + " instead of " + AddressRepository.class.getName());
 		}
-	}
-	
+	}	
 }

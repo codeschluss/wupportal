@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
@@ -21,15 +21,19 @@ public class OrganisationControllerFindAddressByOrganisationTest {
     
     @Test
     public void findAddressByOrganisationOK() {
-    	Resources<?> result = (Resources<?>) controller.findAddressByOrganisation("00000000-0000-0000-0008-200000000000").getBody();
+    	String orgaId = "00000000-0000-0000-0008-200000000000";
     	
-		assertThat(result.getContent()).isNotEmpty();
+    	Resource<?> result = (Resource<?>) controller.findAddressByOrganisation(orgaId).getBody();
+    	
+		assertThat(result.getContent()).isNotNull();
     }
     
     @Test(expected = NotFoundException.class)
 	public void findAddressByOrganisationNotFound() {
-		Resources<?> result = (Resources<?>) controller.findAddressByOrganisation("00000000-0000-0000-0008-XX0000000000").getBody();
+    	String orgaId = "00000000-0000-0000-0008-XX0000000000";
+    	
+		Resource<?> result = (Resource<?>) controller.findAddressByOrganisation(orgaId).getBody();
 		
-		assertThat(result.getContent()).isNotEmpty();
+		assertThat(result.getContent()).isNotNull();
 	}
 }

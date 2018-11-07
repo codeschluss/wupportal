@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.base.PagingAndSortingAssembler;
@@ -15,16 +14,16 @@ import de.codeschluss.portal.common.base.PagingAndSortingAssembler;
 public class OrganisationResourceAssembler extends PagingAndSortingAssembler<OrganisationEntity> {
 	
 	@Override
-	public Resource<OrganisationEntity> toResource(OrganisationEntity organisation) {
-		return new Resource<>(organisation,
-				createLinks(organisation));
-	}
-	
-	private List<Link> createLinks(OrganisationEntity organisation) {
+	protected List<Link> createResourceLinks(OrganisationEntity organisation) {
 		List<Link> links = new ArrayList<Link>();
 		
 		links.add(linkTo(methodOn(OrganisationController.class).findOne(organisation.getId())).withSelfRel());
+		links.add(linkTo(methodOn(OrganisationController.class).findActivitiesByOrganisation(organisation.getId())).withRel("activities"));
+		links.add(linkTo(methodOn(OrganisationController.class).findUsersByOrganisation(organisation.getId())).withRel("users"));
+		links.add(linkTo(methodOn(OrganisationController.class).findAddressByOrganisation(organisation.getId())).withRel("address"));
 		
 		return links;
 	}
+	
+
 }

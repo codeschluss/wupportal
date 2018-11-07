@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.exception.BadParamsException;
-import de.codeschluss.portal.common.exception.DuplicateEntryException;
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.common.security.permissions.OrgaAdminOrSuperUserPermission;
 import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
@@ -162,13 +161,4 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 			return noContent().build();
 		}
 	}
-	
-	@Override
-	protected void checkForDuplicates(OrganisationEntity orga) {
-		if (service.existsByName(orga.getName())) {
-			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("Organisation name already exists!");
-		}
-	}
-
 }

@@ -1,7 +1,5 @@
 package de.codeschluss.portal.functional.address;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +15,12 @@ public class AddressService extends DataService<AddressEntity, AddressRepository
 		super(repo, assembler);
 	}
 	
-	public boolean exists(AddressEntity address) {		
-		ExampleMatcher matcher = ExampleMatcher.matching()     
-				  .withIgnorePaths("suburb", "latitude", "longitude", "activities", "organisations", "id");
-		return exists(Example.of(address, matcher));
+	public AddressEntity getDuplicate(AddressEntity address) {
+		return repo.findByHouseNumberAndPlaceAndPostalCodeAndStreet(
+				address.getHouseNumber(), 
+				address.getPlace(),
+				address.getPostalCode(),
+				address.getStreet()).orElse(null);
 	}
 	
 	public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) {

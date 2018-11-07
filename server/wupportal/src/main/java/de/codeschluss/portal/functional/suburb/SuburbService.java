@@ -15,8 +15,8 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
 		super(repo, assembler);
 	}
 	
-	public boolean existsByName(String suburbName) {
-		return repo.existsByName(suburbName);
+	public SuburbEntity getDuplicate(SuburbEntity suburb) {
+		return repo.findByName(suburb.getName()).orElse(null);
 	}
 	
 	public Resource<SuburbEntity> getResourceByAddress(String addressId) {

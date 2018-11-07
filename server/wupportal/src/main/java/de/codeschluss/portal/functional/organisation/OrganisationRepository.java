@@ -21,6 +21,8 @@ public interface OrganisationRepository extends FilteredJpaRepository<Organisati
 	Optional<Page<OrganisationEntity>> findFiltered(String filter, Pageable pageable);
 	
 	boolean existsByName(String name);
+
+	Optional<OrganisationEntity> findByName(String name);
 	
 
 }

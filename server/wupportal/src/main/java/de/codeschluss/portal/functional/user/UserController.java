@@ -154,13 +154,4 @@ public class UserController extends CrudController<UserEntity, UserService>{
 			throw new BadParamsException("Activity does not match given user!");
 		}
 	}
-	
-	@Override
-	protected void checkForDuplicates(UserEntity user) {
-		if (service.userExists(user.getUsername())) {
-			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("Username already exists!");
-		}
-	}
-	
 }

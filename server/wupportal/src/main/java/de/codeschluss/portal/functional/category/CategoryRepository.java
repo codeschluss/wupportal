@@ -20,5 +20,7 @@ public interface CategoryRepository extends FilteredJpaRepository<CategoryEntity
 	
 	@Query("Select c from CategoryEntity c where c.name like %?1% or c.description like %?1%")
 	Optional<Page<CategoryEntity>> findFiltered(String filter, Pageable pageable);
+
+	Optional<CategoryEntity> findByName(String name);
 	
 }

@@ -42,7 +42,7 @@ public class OrganisationControllerUpdateTest {
 	@Test
 	@WithUserDetails("admin@user")
 	public void updateOwnOrganisationOK() throws URISyntaxException {
-		OrganisationEntity organisation = new OrganisationEntity("updateOwnOrganisationOK", null, "updateOwnOrganisationOK", "updateOwnOrganisationOK", "123456789", "updateOwnOrganisationOK", null, null);
+		OrganisationEntity organisation = new OrganisationEntity("updateOwnOrganisationOK", null, "updateOwnOrganisationOK", "organisation1", "123456789", "updateOwnOrganisationOK", null, null);
 		
 		controller.update(organisation, "00000000-0000-0000-0008-100000000000");
 		

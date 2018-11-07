@@ -22,5 +22,5 @@ public interface SuburbRepository extends FilteredJpaRepository<SuburbEntity, St
 
 	Optional<SuburbEntity> findByAddressesId(String addressId);
 
-	boolean existsByName(String name);
+	Optional<SuburbEntity> findByName(String name);
 }

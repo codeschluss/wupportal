@@ -33,6 +33,10 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
 		return repo.existsById(organisationId);
 	}
 	
+	public OrganisationEntity getDuplicate(OrganisationEntity orga) {
+		return repo.findByName(orga.getName()).orElse(null);
+	}
+
 	public OrganisationEntity update(String id, OrganisationEntity newOrga) {
 		return repo.findById(id).map(orga -> {
 			orga.setDescription(newOrga.getDescription());

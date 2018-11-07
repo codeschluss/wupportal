@@ -3,7 +3,6 @@ package de.codeschluss.portal.common.base;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.springframework.data.domain.Example;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
@@ -42,14 +41,19 @@ public abstract class CrudController<E extends BaseEntity, S extends DataService
 	}
 	
 	public ResponseEntity<?> add(@RequestBody E newEntity) throws URISyntaxException {
-		checkForDuplicates(newEntity);
+		if (service.getDuplicate(newEntity) != null) {
+			throw new DuplicateEntryException("Entity already exists!");
+		}
 		
 		Resource<E> resource = service.addResource(newEntity);
 		return created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
 	public ResponseEntity<?> update(@RequestBody E newEntity, @PathVariable String id) throws URISyntaxException {
-		checkForDuplicates(newEntity);
+		E duplicate = service.getDuplicate(newEntity);
+		if (duplicate != null && !duplicate.getId().equals(id)) {
+			throw new DuplicateEntryException("Entity already exists!");
+		}
 		
 		Resource<E> resource = service.updateResource(id, newEntity);
 		return created(new URI(resource.getId().expand().getHref())).body(resource);
@@ -58,13 +62,6 @@ public abstract class CrudController<E extends BaseEntity, S extends DataService
 	public ResponseEntity<?> delete(@PathVariable String id) {
 		service.delete(id);
 		return noContent().build();
-	}
-	
-	protected void checkForDuplicates(E newEntity) {
-		if (service.exists(Example.of(newEntity))) {
-			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("Entity already exists!");
-		}
 	}
 	
 	protected void validateRequest(SortPaginate params) {

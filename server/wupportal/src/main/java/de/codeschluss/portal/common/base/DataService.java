@@ -36,6 +36,15 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 		return repo.existsById(addressId);
 	}
 	
+	public E getDuplicate(E newEntity) {
+		try {
+			E duplicate = getById(newEntity.getId());
+			return duplicate;
+		} catch (NotFoundException e) {
+			return null;
+		}
+	}
+	
 	public Resource<E> getResourceById(String id) {
 		return assembler.toResource(getById(id));
 	}

@@ -1,4 +1,4 @@
-package de.codeschluss.portal.functional.suburb;
+package de.codeschluss.portal.functional.category;
 
 import java.net.URISyntaxException;
 
@@ -15,43 +15,45 @@ import org.springframework.web.bind.annotation.RestController;
 import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
-@RestController
-public class SuburbController extends CrudController<SuburbEntity, SuburbService> {
+import de.codeschluss.portal.functional.category.CategoryEntity;
 
-	public SuburbController(SuburbService service) {
+@RestController
+public class CategoryController extends CrudController<CategoryEntity, CategoryService>{
+	
+	public CategoryController(CategoryService service) {
 		super(service);
 	}
-	
+
 	@Override
-	@GetMapping("/suburbs")
+	@GetMapping("/categories")
 	public ResponseEntity<?> findAll(FilterSortPaginate params) {
 		return super.findAll(params);
 	}
 
 	@Override
-	@GetMapping("/suburbs/{surburbId}")
-	public Resource<SuburbEntity> findOne(@PathVariable String surburbId) {
-		return super.findOne(surburbId);
+	@GetMapping("/categories/{categoryId}")
+	public Resource<CategoryEntity> findOne(@PathVariable String categoryId) {
+		return super.findOne(categoryId);
 	}
 	
 	@Override
-	@PostMapping("/suburbs")
+	@PostMapping("/categories")
 	@SuperUserPermission
-	public ResponseEntity<?> add(@RequestBody SuburbEntity newSuburb) throws URISyntaxException {
-		return super.add(newSuburb);
+	public ResponseEntity<?> add(@RequestBody CategoryEntity newCategory) throws URISyntaxException {
+		return super.add(newCategory);
 	}
 	
 	@Override
-	@PutMapping("/suburbs/{surburbId}")
+	@PutMapping("/categories/{categoryId}")
 	@SuperUserPermission
-	public ResponseEntity<?> update(@RequestBody SuburbEntity newSuburb, @PathVariable String surburbId) throws URISyntaxException {
-		return super.update(newSuburb, surburbId);
+	public ResponseEntity<?> update(@RequestBody CategoryEntity newCategory, @PathVariable String categoryId) throws URISyntaxException {
+		return super.update(newCategory, categoryId);
 	}
 	
 	@Override
-	@DeleteMapping("/suburbs/{surburbId}")
+	@DeleteMapping("/categories/{categoryId}")
 	@SuperUserPermission
-	public ResponseEntity<?> delete(@PathVariable String surburbId) {
-		return super.delete(surburbId);
+	public ResponseEntity<?> delete(@PathVariable String categoryId) {
+		return super.delete(categoryId);
 	}
 }

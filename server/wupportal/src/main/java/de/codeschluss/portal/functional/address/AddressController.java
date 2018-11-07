@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.exception.BadParamsException;
-import de.codeschluss.portal.common.exception.DuplicateEntryException;
 import de.codeschluss.portal.common.security.permissions.ProviderOrSuperUserPermission;
 import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
@@ -81,14 +80,6 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Address or Suburb with given ID do not exist!");
 		}	
-	}
-	
-	@Override
-	protected void checkForDuplicates(AddressEntity newAddress) {
-		if (service.exists(newAddress)) {
-			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("Address already exists!");
-		}
 	}
 
 }

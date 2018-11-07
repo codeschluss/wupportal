@@ -33,9 +33,7 @@ public class OrganisationControllerFindOneTest {
 	public void findOneNotFound() {
 		String otherOrganisationId = "00000000-0000-0000-0008-XX0000000000";
 		
-		Resource<OrganisationEntity> result = (Resource<OrganisationEntity>) controller.findOne(otherOrganisationId);
-		
-		assertThat(result.getContent().getId()).isEqualTo(otherOrganisationId);
+		controller.findOne(otherOrganisationId);
 	}
 
 }

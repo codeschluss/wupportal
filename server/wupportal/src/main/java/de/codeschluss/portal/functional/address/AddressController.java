@@ -4,7 +4,6 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import java.net.URISyntaxException;
 
-import org.springframework.data.domain.Example;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.exception.BadParamsException;
@@ -22,6 +22,7 @@ import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.suburb.SuburbService;
 
+@RestController
 public class AddressController extends CrudController<AddressEntity, AddressService> {
 
 	private final SuburbService suburbService;
@@ -34,7 +35,6 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
 	
 	@Override
 	@GetMapping("/addresses")
-	@SuperUserPermission
 	public ResponseEntity<?> findAll(FilterSortPaginate params) {
 		return super.findAll(params);
 	}
@@ -72,8 +72,9 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
 	}
 	
 	@PutMapping("/addresses/{addressId}/suburb")
+	@SuperUserPermission
 	public ResponseEntity<Resource<?>> updateSuburb(@PathVariable String addressId, @RequestBody String suburbId) {
-		if (suburbService.existsById(addressId) && service.existsById(addressId)) {
+		if (service.existsById(addressId) && suburbService.existsById(suburbId)) {
 			service.updateSuburb(addressId, suburbService.getById(suburbId));
 			return ok(suburbService.getResourceByAddress(addressId));
 		} else {
@@ -84,13 +85,7 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
 	
 	@Override
 	protected void checkForDuplicates(AddressEntity newAddress) {
-		AddressEntity example = new AddressEntity();
-		example.setHouseNumber(newAddress.getHouseNumber());
-		example.setPlace(newAddress.getPlace());
-		example.setPostalCode(newAddress.getPostalCode());
-		example.setStreet(newAddress.getStreet());
-		
-		if (service.exists(Example.of(example))) {
+		if (service.exists(newAddress)) {
 			//TODO: Error Objects with proper message
 			throw new DuplicateEntryException("Address already exists!");
 		}

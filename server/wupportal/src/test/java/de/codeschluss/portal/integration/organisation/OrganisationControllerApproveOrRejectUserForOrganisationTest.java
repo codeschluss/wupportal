@@ -19,7 +19,7 @@ import de.codeschluss.portal.functional.provider.ProviderService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrganisationControllerApproveOrRejectUserForOrganisation {
+public class OrganisationControllerApproveOrRejectUserForOrganisationTest {
 
     @Autowired
     private OrganisationController controller;

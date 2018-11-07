@@ -1,4 +1,4 @@
-package de.codeschluss.portal.integration.organisation;
+package de.codeschluss.portal.integration.address;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,55 +12,41 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
-import de.codeschluss.portal.functional.organisation.OrganisationController;
+import de.codeschluss.portal.functional.address.AddressController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
-public class OrganisationControllerDeleteTest {
+public class AddressControllerDeleteTest {
 	
 	@Autowired
-    private OrganisationController controller;
+	private AddressController controller;
 	
 	@Test(expected = NotFoundException.class)
 	@WithUserDetails("super@user")
 	public void deleteOtherSuperUserOK() throws URISyntaxException {
-		String organisationId = "00000000-0000-0000-0008-400000000000"; 
-		assertThat(controller.findOne(organisationId)).isNotNull();
+		String addressId = "00000000-0000-0000-0006-30000000000"; 
+		assertThat(controller.findOne(addressId)).isNotNull();
 		
-		controller.delete(organisationId);
+		controller.delete(addressId);
 		
-		controller.findOne(organisationId);
-	}
-		
-	@Test(expected = NotFoundException.class)
-	@WithUserDetails("admin@user")
-	public void deleteOwnUserOK() throws URISyntaxException {
-		String organisationId = "00000000-0000-0000-0008-500000000000"; 
-		assertThat(controller.findOne(organisationId)).isNotNull();
-		
-		controller.delete(organisationId);
-		
-		controller.findOne(organisationId);
+		controller.findOne(addressId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("provider1@user")
 	public void deleteOtherUserDenied() throws URISyntaxException {
-		String organisationId = "00000000-0000-0000-0008-100000000000"; 
+		String addressId = "00000000-0000-0000-0006-10000000000"; 
 		
-		controller.delete(organisationId);
+		controller.delete(addressId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
 	public void deleteOtherNotRegisteredDenied() {
-		String otherOrganisationId = "00000000-0000-0000-0008-100000000000";
+		String addressId = "00000000-0000-0000-0006-10000000000";
 		
-		controller.delete(otherOrganisationId);
+		controller.delete(addressId);
 	}
-
 
 }

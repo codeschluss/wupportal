@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.base.DataService;
 import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.functional.suburb.SuburbEntity;
 
 @Service
 public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
@@ -14,8 +15,22 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
 		super(repo, assembler);
 	}
 	
+	public boolean existsByName(String suburbName) {
+		return repo.existsByName(suburbName);
+	}
+	
 	public Resource<SuburbEntity> getResourceByAddress(String addressId) {
 		SuburbEntity suburb = repo.findByAddressesId(addressId).orElseThrow(() -> new NotFoundException(addressId));
 		return assembler.toResource(suburb);
+	}
+	
+	public SuburbEntity update(String id, SuburbEntity newSuburb) {
+		return repo.findById(id).map(suburb -> {
+			suburb.setName(newSuburb.getName());
+			return repo.save(suburb);
+		}).orElseGet(() -> {
+			newSuburb.setId(id);
+			return repo.save(newSuburb);
+		});
 	}
 }

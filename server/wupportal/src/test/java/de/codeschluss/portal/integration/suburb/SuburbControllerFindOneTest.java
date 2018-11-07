@@ -1,4 +1,4 @@
-package de.codeschluss.portal.integration.address;
+package de.codeschluss.portal.integration.suburb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,29 +10,29 @@ import org.springframework.hateoas.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
-import de.codeschluss.portal.functional.address.AddressController;
+import de.codeschluss.portal.functional.suburb.SuburbController;
 import de.codeschluss.portal.functional.suburb.SuburbEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AddressControllerFindSuburbTest {
+public class SuburbControllerFindOneTest {
 
 	@Autowired
-	private AddressController controller;
+	private SuburbController controller;
 	
 	@Test
-	public void findSuburbOK() {
-		String addressId = "00000000-0000-0000-0006-100000000000";
+	public void findOneOK() {
+		String suburbId = "00000000-0000-0000-0005-100000000000";
 		
-		Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.findSuburb(addressId).getBody();
+		Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.findOne(suburbId);
 		
 		assertThat(result.getContent()).isNotNull();
 	}
 	
 	@Test(expected = NotFoundException.class)
 	public void findSuburbNotFound() {
-		String addressId = "00000000-0000-0000-0006-XX0000000000";
+		String suburbId = "00000000-0000-0000-0005-XX0000000000";
 		
-		controller.findSuburb(addressId);
+		controller.findOne(suburbId);
 	}
 }

@@ -1,4 +1,4 @@
-package de.codeschluss.portal.integration.address;
+package de.codeschluss.portal.integration.suburb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,39 +14,39 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
-import de.codeschluss.portal.functional.address.AddressController;
+import de.codeschluss.portal.functional.suburb.SuburbController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AddressControllerDeleteTest {
+public class SuburbControllerDeleteTest {
 	
 	@Autowired
-	private AddressController controller;
+	private SuburbController controller;
 	
 	@Test(expected = NotFoundException.class)
 	@WithUserDetails("super@user")
 	public void deleteSuperUserOK() throws URISyntaxException {
-		String addressId = "00000000-0000-0000-0006-30000000000"; 
-		assertThat(controller.findOne(addressId)).isNotNull();
+		String suburbId = "00000000-0000-0000-0005-30000000000"; 
+		assertThat(controller.findOne(suburbId)).isNotNull();
 		
-		controller.delete(addressId);
+		controller.delete(suburbId);
 		
-		controller.findOne(addressId);
+		controller.findOne(suburbId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("provider1@user")
 	public void deleteProviderUserDenied() throws URISyntaxException {
-		String addressId = "00000000-0000-0000-0006-10000000000"; 
+		String suburbId = "00000000-0000-0000-0005-10000000000"; 
 		
-		controller.delete(addressId);
+		controller.delete(suburbId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
-	public void deleteNotRegisteredDenied() {
-		String addressId = "00000000-0000-0000-0006-10000000000";
+	public void deleteOtherNotRegisteredDenied() {
+		String suburbId = "00000000-0000-0000-0005-10000000000";
 		
-		controller.delete(addressId);
+		controller.delete(suburbId);
 	}
 
 }

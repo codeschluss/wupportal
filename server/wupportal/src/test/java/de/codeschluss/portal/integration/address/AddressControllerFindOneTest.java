@@ -11,12 +11,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.address.AddressController;
-import de.codeschluss.portal.functional.suburb.SuburbEntity;
+import de.codeschluss.portal.functional.address.AddressEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AddressControllerFindOneTest {
-
+	
 	@Autowired
 	private AddressController controller;
 	
@@ -24,15 +24,16 @@ public class AddressControllerFindOneTest {
 	public void findOneOK() {
 		String addressId = "00000000-0000-0000-0006-100000000000";
 		
-		Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.findSuburb(addressId).getBody();
+		Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findOne(addressId);
 		
-		assertThat(result.getContent()).isNotNull();
+		assertThat(result.getContent().getId()).isEqualTo(addressId);
 	}
 	
 	@Test(expected = NotFoundException.class)
-	public void findSuburbNotFound() {
+	public void findOneNotFound() {
 		String addressId = "00000000-0000-0000-0006-XX0000000000";
 		
-		controller.findSuburb(addressId);
+		controller.findOne(addressId);
 	}
+
 }

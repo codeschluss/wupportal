@@ -12,4 +12,16 @@ public class TagService extends DataService<TagEntity, TagRepository> {
 		super(repo, assembler);
 	}
 
+	@Override
+	public TagEntity getDuplicate(TagEntity newEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TagEntity update(String id, TagEntity updatedEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

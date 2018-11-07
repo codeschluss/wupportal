@@ -19,4 +19,6 @@ public interface ConfigurationRepository extends FilteredJpaRepository<Configura
 	
 	@Query("Select c from ConfigurationEntity c where c.item like %?1%")
 	Optional<Page<ConfigurationEntity>> findFiltered(String filter, Pageable pageable);
+	
+	Optional<ConfigurationEntity> findByItem(String item);
 }

@@ -10,7 +10,17 @@ public class TranslationService extends DataService<TranslationEntity, Translati
 	public TranslationService(TranslationRepository repo,
 			TranslationResourceAssembler assembler) {
 		super(repo, assembler);
-		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public TranslationEntity getDuplicate(TranslationEntity newEntity) {
+		return null;
+	}
+
+	@Override
+	public TranslationEntity update(String id, TranslationEntity updatedEntity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

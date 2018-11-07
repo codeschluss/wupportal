@@ -28,4 +28,16 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 	public boolean isActivityForProvider(String activityId, List<ProviderEntity> providers) {
 		return repo.existsByIdAndProviderIn(activityId, providers);
 	}
+
+	@Override
+	public ActivityEntity getDuplicate(ActivityEntity newEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ActivityEntity update(String id, ActivityEntity updatedEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

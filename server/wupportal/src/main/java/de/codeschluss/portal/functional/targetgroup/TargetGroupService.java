@@ -12,4 +12,16 @@ public class TargetGroupService extends DataService<TargetGroupEntity, TargetGro
 		super(repo, assembler);
 	}
 
+	@Override
+	public TargetGroupEntity getDuplicate(TargetGroupEntity newEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TargetGroupEntity update(String id, TargetGroupEntity updatedEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

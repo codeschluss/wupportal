@@ -7,7 +7,11 @@ INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
 ('00000000-0000-0000-0001-000000000004', 'mapProjection', 'EPSG:4326'),
 ('00000000-0000-0000-0001-000000000005', 'portalName', 'Wupportal'),
 ('00000000-0000-0000-0001-000000000006', 'portalSubtitle', 'Integrationsportal'),
-('00000000-0000-0000-0001-000000000007', 'portalMail', 'milli@codeschluss.de');
+('00000000-0000-0000-0001-000000000007', 'portalMail', 'milli@codeschluss.de'),
+('00000000-0000-0000-0001-000000000008', 'configuration1', 'configuration1'),
+('00000000-0000-0000-0001-000000000009', 'configuration2', 'configuration1'),
+('00000000-0000-0000-0001-000000000011', 'configurationToDelete', 'configuration1');
+
 
 INSERT INTO `tags` (`id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0002-100000000000', 'tag1', 'tag1'),

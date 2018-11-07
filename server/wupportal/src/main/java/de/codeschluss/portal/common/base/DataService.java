@@ -36,14 +36,7 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 		return repo.existsById(addressId);
 	}
 	
-	public E getDuplicate(E newEntity) {
-		try {
-			E duplicate = getById(newEntity.getId());
-			return duplicate;
-		} catch (NotFoundException e) {
-			return null;
-		}
-	}
+	public abstract E getDuplicate(E newEntity);
 	
 	public Resource<E> getResourceById(String id) {
 		return assembler.toResource(getById(id));
@@ -65,16 +58,7 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 		return assembler.toResource(update(id, updatedEntity));
 	}
 	
-	public E update(String id, E updatedEntity) {
-		return repo.findById(id).map(entity -> {
-			//TODO: save all fields except id
-			entity = updatedEntity;
-			return add(entity);
-		}).orElseGet(() -> {
-			updatedEntity.setId(id);
-			return add(updatedEntity);
-		});
-	}
+	public abstract E update(String id, E updatedEntity);
 	
 	public void delete(String id) {
 		repo.deleteById(id);

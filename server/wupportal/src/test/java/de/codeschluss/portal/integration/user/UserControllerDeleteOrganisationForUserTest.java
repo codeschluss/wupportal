@@ -29,8 +29,8 @@ public class UserControllerDeleteOrganisationForUserTest {
 	@Test
 	@WithUserDetails("super@user")
 	public void deleteForOtherUserSuperUserOK() {
-		String userId = "00000000-0000-0000-0004-800000000000";
-		String orgaId = "00000000-0000-0000-0008-100000000000";
+		String userId = "00000000-0000-0000-0004-900000000000";
+		String orgaId = "00000000-0000-0000-0008-800000000000";
 		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisationsByUser(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(orgaId), "organisation exists"));

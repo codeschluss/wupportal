@@ -3,6 +3,7 @@ package de.codeschluss.portal.functional.user;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -45,7 +46,7 @@ public class UserEntity extends BaseEntity {
 
 	private String username;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	@JsonIgnore
 	@ToString.Exclude
 	private List<ProviderEntity> providerEntities;

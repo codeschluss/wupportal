@@ -14,6 +14,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.common.utils.PaginationLinkBuilder;
@@ -23,6 +24,7 @@ import org.springframework.hateoas.PagedResources.PageMetadata;
 import org.springframework.hateoas.core.EmbeddedWrapper;
 import org.springframework.hateoas.core.EmbeddedWrappers;
 
+@Service
 public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements ResourceAssembler<E, Resource<E>> {
 
 	public Resource<E> toResource(E entity) {

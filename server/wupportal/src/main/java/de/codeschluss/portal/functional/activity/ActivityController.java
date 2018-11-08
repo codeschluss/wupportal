@@ -138,6 +138,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	@PostMapping("/activities/{activityId}/tags")
+	@OwnOrOrgaActivityOrSuperUserPermission
 	public ResponseEntity<?> addTagsByActivity(@PathVariable String activityId, @RequestBody String... tagId) {
 		List<String> distinctTags = Arrays.asList(tagId).stream().distinct().collect(Collectors.toList());
 		
@@ -147,7 +148,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 		}
 		service.addTags(activityId, tagService.getByIds(Arrays.asList(tagId)));
 		return ok(findTagsByActivity(activityId));
-		
 	}
 	
 	@DeleteMapping("/activities/{activityId}/tags/{tagId}")

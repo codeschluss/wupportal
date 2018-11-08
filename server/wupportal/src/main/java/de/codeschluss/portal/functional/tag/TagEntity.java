@@ -39,6 +39,6 @@ public class TagEntity extends BaseEntity implements Serializable {
 
 	@ManyToMany(mappedBy = "tags")
 	@JsonIgnore
-	private List<ActivityEntity> activityEntities;
+	private List<ActivityEntity> activities;
 
 }

@@ -3,6 +3,7 @@ package de.codeschluss.portal.functional.organisation;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,10 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
 		OrganisationEntity orga = getById(organisationId);
 		orga.setAddress(address);
 		return repo.save(orga);
+	}
+	
+	public Resource<OrganisationEntity> convertToResource(ProviderEntity provider) {
+		return assembler.toResource(provider.getOrganisation());
 	}
 	
 	public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {

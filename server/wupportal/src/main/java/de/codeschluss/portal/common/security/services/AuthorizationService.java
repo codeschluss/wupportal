@@ -3,10 +3,12 @@ package de.codeschluss.portal.common.security.services;
 import java.util.Arrays;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.security.jwt.JWTUserDetails;
 import de.codeschluss.portal.functional.activity.ActivityService;
+import de.codeschluss.portal.functional.user.UserEntity;
 
 
 @Service
@@ -70,5 +72,13 @@ public class AuthorizationService {
 	
 	public boolean showUser(String activityId) {
 		return actitivityService.getById(activityId).isShowUser();
+	}
+
+	public UserEntity getCurrentUser() {
+		if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof JWTUserDetails) {
+			JWTUserDetails jwtUserDetails = (JWTUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			return jwtUserDetails.getUser();
+		}
+		throw new RuntimeException("Something went wrong. UserDetails are configured wrongly");
 	}
 }

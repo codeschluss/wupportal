@@ -1,6 +1,7 @@
 package de.codeschluss.portal.common.base;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -55,7 +56,19 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 	}
 	
 	public E add(E newEntity) {
-		return repo.save(newEntity);
+		E duplicate = getDuplicate(newEntity);
+		return duplicate != null
+				? duplicate 
+				: repo.save(newEntity);
+	}
+	
+	public List<E> addAll(List<E> newEntities) {
+		return newEntities.stream().map(entity -> {
+			E duplicate = getDuplicate(entity);
+			return duplicate != null
+					? duplicate 
+					: repo.save(entity);
+		}).collect(Collectors.toList());
 	}
 	
 	public Resource<E> updateResource(String id, E updatedEntity) {

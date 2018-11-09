@@ -65,6 +65,12 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 		activity.setCategory(category);
 		return repo.save(activity);	
 	}
+	
+	public ActivityEntity updateProvider(String activityId, ProviderEntity provider) {
+		ActivityEntity activity = getById(activityId);
+		activity.setProvider(provider);
+		return repo.save(activity);	
+	}
 
 	public boolean isTagDuplicate(String activityId, List<String> tagIds) {
 		ActivityEntity activity = getById(activityId);

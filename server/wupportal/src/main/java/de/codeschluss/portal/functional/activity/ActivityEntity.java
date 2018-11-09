@@ -47,22 +47,22 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	private boolean showUser;
 
 	@ManyToOne
-	@JsonIgnore
 	@ToString.Exclude
 	private AddressEntity address;
 
 	@ManyToOne
-	@JsonIgnore
 	@ToString.Exclude
 	private CategoryEntity category;
 
 	@ManyToOne
-	@JsonIgnore
 	@ToString.Exclude
+	@JsonIgnore
 	private ProviderEntity provider;
+	
+	@Transient
+	private String organisationId;
 
 	@ManyToMany
-	@JsonIgnore
 	@ToString.Exclude
 	@JoinTable(
 			name = "activities_tags",
@@ -71,7 +71,6 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	private List<TagEntity> tags;
 
 	@ManyToMany
-	@JsonIgnore
 	@ToString.Exclude
 	@JoinTable(
 			name = "activities_target_groups",
@@ -80,7 +79,6 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	private List<TargetGroupEntity> targetGroups;
 	
 	@OneToMany(mappedBy = "activity")
-	@JsonIgnore
 	@ToString.Exclude
 	private List<ScheduleEntity> schedules;
 }

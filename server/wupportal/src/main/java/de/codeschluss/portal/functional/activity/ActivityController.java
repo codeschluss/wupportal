@@ -1,8 +1,10 @@
 package de.codeschluss.portal.functional.activity;
 
+import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
@@ -26,10 +28,12 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.common.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.common.security.permissions.ProviderOrSuperUserPermission;
 import de.codeschluss.portal.common.security.permissions.ShowUserOrSuperUserPermission;
+import de.codeschluss.portal.common.security.services.AuthorizationService;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.category.CategoryService;
+import de.codeschluss.portal.functional.organisation.OrganisationService;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 import de.codeschluss.portal.functional.provider.ProviderService;
 import de.codeschluss.portal.functional.schedule.ScheduleService;
@@ -47,6 +51,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	private final TagService tagService;
 	private final TargetGroupService targetGroupService;
 	private final ScheduleService scheduleService;
+	private final OrganisationService organisationService;
+	private final AuthorizationService authService;
 	
 	public ActivityController(ActivityService service,
 			AddressService addressService,
@@ -55,7 +61,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			UserService userService,
 			TagService tagService,
 			TargetGroupService targetGroupService,
-			ScheduleService scheduleService) {
+			ScheduleService scheduleService,
+			OrganisationService organisationService,
+			AuthorizationService authService) {
 		super(service);
 		this.addressService = addressService;
 		this.categoryService = categoryService;
@@ -64,6 +72,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 		this.tagService = tagService;
 		this.targetGroupService = targetGroupService;
 		this.scheduleService = scheduleService;
+		this.organisationService = organisationService;
+		this.authService = authService;
 	}
 	
 	@Override
@@ -82,9 +92,21 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	@PostMapping("/activities")
 	@ProviderOrSuperUserPermission
 	public ResponseEntity<?> add(@RequestBody ActivityEntity newActivity) throws URISyntaxException {
-		return super.add(newActivity);
+		if (service.getDuplicate(newActivity) != null) {
+			throw new DuplicateEntryException("Activity already exists!");
+		}
+		
+		newActivity.setProvider(getProvider(newActivity.getOrganisationId()));
+		newActivity.setAddress(addressService.add(newActivity.getAddress()));
+		newActivity.setCategory(categoryService.add(newActivity.getCategory()));
+		newActivity.setSchedules(scheduleService.addAll(newActivity.getSchedules()));
+		newActivity.setTags(tagService.addAll(newActivity.getTags()));
+		newActivity.setTargetGroups(targetGroupService.addAll(newActivity.getTargetGroups()));
+		
+		Resource<ActivityEntity> resource = service.addResource(newActivity);
+		return created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
-	
+
 	@Override
 	@PutMapping("/activities/{activityId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
@@ -130,6 +152,24 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Category with given ID do not exist!");
+		}		
+	}
+	
+	@GetMapping("/activities/{activityId}/organisation")
+	public ResponseEntity<?> findOrganisationByActivity(@PathVariable String activityId) {
+		ProviderEntity provider = providerService.getProvidersByActivity(activityId);
+		return ok(organisationService.convertToResource(provider));
+	}
+	
+	@PutMapping("/activities/{activityId}/organisation")
+	@OwnOrOrgaActivityOrSuperUserPermission
+	public ResponseEntity<?> updateOrganisationForActivity(@PathVariable String activityId, @RequestBody String organisationId) {
+		if (service.existsById(activityId) && organisationService.existsById(organisationId)) {
+			service.updateProvider(activityId, getProvider(organisationId));
+			return ok(findCategoryByActivity(activityId));
+		} else {
+			//TODO: Error Objects with proper message
+			throw new BadParamsException("Activity or Organisation with given ID do not exist!");
 		}		
 	}
 	
@@ -230,6 +270,14 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			return noContent().build();
 		} catch (NotFoundException e) {
 			return noContent().build();
+		}
+	}
+	
+	private ProviderEntity getProvider(String organisationId) {
+		try {
+			return providerService.getProviderByUserAndOrganisation(authService.getCurrentUser().getId(), organisationId);
+		} catch(NotFoundException e) {
+			throw new BadParamsException("User does not exist with given Organisation!");
 		}
 	}
 }

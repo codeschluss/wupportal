@@ -20,4 +20,5 @@ public interface ScheduleRepository extends FilteredJpaRepository<ScheduleEntity
 	@Query("Select s from ScheduleEntity s where s.activity.name like %?1% or s.startDate = ?1 or s.endDate = ?1")
 	Optional<Page<ScheduleEntity>> findFiltered(String filter, Pageable pageable);
 
+	Optional<List<ScheduleEntity>> findByActivityId(String activityId);
 }

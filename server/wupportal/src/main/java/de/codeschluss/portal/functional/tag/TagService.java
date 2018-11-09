@@ -22,10 +22,6 @@ public class TagService extends DataService<TagEntity, TagRepository> {
 		return repo.findByName(newTag.getName()).orElse(null);
 	}
 	
-	public List<TagEntity> getByIds(List<String> tagIds) {
-		return repo.findByIdIn(tagIds).orElseThrow(() -> new NotFoundException(tagIds.toString()));
-	}
-	
 	public Resources<?> getResourceByActivity(String activityId, ResponseEntity<?> responseEntity) {
 		List<TagEntity> tags = repo.findByActivitiesId(activityId).orElseThrow(() -> new NotFoundException(activityId));
 		return assembler.entitiesToResources(tags, responseEntity);

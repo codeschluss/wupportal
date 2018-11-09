@@ -11,7 +11,9 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.address.AddressEntity;
 import de.codeschluss.portal.functional.category.CategoryEntity;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
+import de.codeschluss.portal.functional.schedule.ScheduleEntity;
 import de.codeschluss.portal.functional.tag.TagEntity;
+import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 
 @Service
 public class ActivityService extends DataService<ActivityEntity, ActivityRepository> {
@@ -64,20 +66,54 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 		return repo.save(activity);	
 	}
 
+	public boolean isTagDuplicate(String activityId, List<String> tagIds) {
+		ActivityEntity activity = getById(activityId);
+		return activity.getTags().stream().anyMatch(tag -> tagIds.contains(tag.getId()));
+	}
+
+	public List<TagEntity> addTags(String activityId, List<TagEntity> tags) {
+		ActivityEntity activity = getById(activityId);
+		activity.getTags().addAll(tags);
+		return repo.save(activity).getTags();
+	}
+	
 	public void deleteTag(String activityId, String tagId) {
 		ActivityEntity activity = getById(activityId);
 		activity.getTags().removeIf(tag -> tag.getId().equals(tagId));
 		repo.save(activity);	
 	}
 
-	public boolean isTagDuplicate(String activityId, List<String> tags) {
+	public boolean isTargetGroupDuplicate(String activityId, List<String> targetGroupIds) {
 		ActivityEntity activity = getById(activityId);
-		return activity.getTags().stream().anyMatch(tag -> tags.contains(tag.getId()));
+		return activity.getTargetGroups().stream().anyMatch(targetGroup -> targetGroupIds.contains(targetGroup.getId()));
 	}
 
-	public List<TagEntity> addTags(String activityId, List<TagEntity> tagId) {
+	public List<TargetGroupEntity> addTargetGroups(String activityId, List<TargetGroupEntity> targetGroups) {
 		ActivityEntity activity = getById(activityId);
-		activity.getTags().addAll(tagId);
-		return repo.save(activity).getTags();
+		activity.getTargetGroups().addAll(targetGroups);
+		return repo.save(activity).getTargetGroups();
+	}
+
+	public void deleteTargetGroup(String activityId, String targetGroupId) {
+		ActivityEntity activity = getById(activityId);
+		activity.getTargetGroups().removeIf(targetGroup -> targetGroup.getId().equals(targetGroupId));
+		repo.save(activity);	
+	}
+
+	public boolean isScheduleDuplicate(String activityId, List<String> scheduleIds) {
+		ActivityEntity activity = getById(activityId);
+		return activity.getSchedules().stream().anyMatch(schedule -> scheduleIds.contains(schedule.getId()));
+	}
+
+	public List<ScheduleEntity> addSchedules(String activityId, List<ScheduleEntity> schedules) {
+		ActivityEntity activity = getById(activityId);
+		activity.getSchedules().addAll(schedules);
+		return repo.save(activity).getSchedules();
+	}
+
+	public void deleteSchedule(String activityId, String scheduleId) {
+		ActivityEntity activity = getById(activityId);
+		activity.getSchedules().removeIf(schedule -> schedule.getId().equals(scheduleId));
+		repo.save(activity);
 	}
 }

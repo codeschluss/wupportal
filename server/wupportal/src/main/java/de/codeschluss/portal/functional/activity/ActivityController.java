@@ -32,7 +32,9 @@ import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.category.CategoryService;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 import de.codeschluss.portal.functional.provider.ProviderService;
+import de.codeschluss.portal.functional.schedule.ScheduleService;
 import de.codeschluss.portal.functional.tag.TagService;
+import de.codeschluss.portal.functional.targetgroup.TargetGroupService;
 import de.codeschluss.portal.functional.user.UserService;
 
 @RestController
@@ -43,19 +45,25 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	private final ProviderService providerService;
 	private final UserService userService;
 	private final TagService tagService;
+	private final TargetGroupService targetGroupService;
+	private final ScheduleService scheduleService;
 	
 	public ActivityController(ActivityService service,
 			AddressService addressService,
 			CategoryService categoryService,
 			ProviderService providerService,
 			UserService userService,
-			TagService tagService) {
+			TagService tagService,
+			TargetGroupService targetGroupService,
+			ScheduleService scheduleService) {
 		super(service);
 		this.addressService = addressService;
 		this.categoryService = categoryService;
 		this.providerService = providerService;
 		this.userService = userService;
 		this.tagService = tagService;
+		this.targetGroupService = targetGroupService;
+		this.scheduleService = scheduleService;
 	}
 	
 	@Override
@@ -154,9 +162,71 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@DeleteMapping("/activities/{activityId}/tags/{tagId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteTagByActivity(@PathVariable String activityId, @PathVariable String tagId) {
+	public ResponseEntity<?> deleteTagForActivity(@PathVariable String activityId, @PathVariable String tagId) {
 		try {
 			service.deleteTag(activityId, tagId);
+			return noContent().build();
+		} catch (NotFoundException e) {
+			return noContent().build();
+		}
+	}
+	
+	@GetMapping("/activities/{activityId}/targetgroups")
+	public ResponseEntity<?> findTargetGroupsByActivity(@PathVariable String activityId) {
+		return ok(targetGroupService.getResourceByActivity(
+				activityId,
+				DummyInvocationUtils.methodOn(this.getClass()).findTagsByActivity(activityId)));
+	}
+	
+	@PostMapping("/activities/{activityId}/targetgroups")
+	@OwnOrOrgaActivityOrSuperUserPermission
+	public ResponseEntity<?> addTargetGroupsByActivity(@PathVariable String activityId, @RequestBody String... targetGroupId) {
+		List<String> distinctTargetGroups = Arrays.asList(targetGroupId).stream().distinct().collect(Collectors.toList());
+		
+		if (service.isTargetGroupDuplicate(activityId, distinctTargetGroups)) {
+			//TODO: Error Objects with proper message
+			throw new DuplicateEntryException("Activity with one or more Target Group already exists");
+		}
+		service.addTargetGroups(activityId, targetGroupService.getByIds(Arrays.asList(targetGroupId)));
+		return ok(findTagsByActivity(activityId));
+	}
+	
+	@DeleteMapping("/activities/{activityId}/targetgroups/{targetGroupId}")
+	@OwnOrOrgaActivityOrSuperUserPermission
+	public ResponseEntity<?> deleteTargetGroupForActivity(@PathVariable String activityId, @PathVariable String targetGroupId) {
+		try {
+			service.deleteTargetGroup(activityId, targetGroupId);
+			return noContent().build();
+		} catch (NotFoundException e) {
+			return noContent().build();
+		}
+	}
+	
+	@GetMapping("/activities/{activityId}/schedules")
+	public ResponseEntity<?> findSchedulesByActivity(@PathVariable String activityId) {
+		return ok(scheduleService.getResourceByActivity(
+				activityId,
+				DummyInvocationUtils.methodOn(this.getClass()).findTagsByActivity(activityId)));
+	}
+	
+	@PostMapping("/activities/{activityId}/schedules")
+	@OwnOrOrgaActivityOrSuperUserPermission
+	public ResponseEntity<?> addSchedulesActivity(@PathVariable String activityId, @RequestBody String... scheduleId) {
+		List<String> distinctSchedules = Arrays.asList(scheduleId).stream().distinct().collect(Collectors.toList());
+		
+		if (service.isScheduleDuplicate(activityId, distinctSchedules)) {
+			//TODO: Error Objects with proper message
+			throw new DuplicateEntryException("Activity with one or more Schedules already exists");
+		}
+		service.addSchedules(activityId, scheduleService.getByIds(Arrays.asList(scheduleId)));
+		return ok(findTagsByActivity(activityId));
+	}
+	
+	@DeleteMapping("/activities/{activityId}/schedules/{scheduleId}")
+	@OwnOrOrgaActivityOrSuperUserPermission
+	public ResponseEntity<?> deleteScheduleForActivity(@PathVariable String activityId, @PathVariable String scheduleId) {
+		try {
+			service.deleteSchedule(activityId, scheduleId);
 			return noContent().build();
 		} catch (NotFoundException e) {
 			return noContent().build();

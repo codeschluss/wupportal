@@ -46,6 +46,10 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 		return repo.findById(id).orElseThrow(() -> new NotFoundException(id));
 	}
 	
+	public List<E> getByIds(List<String> entityIds) {
+		return repo.findByIdIn(entityIds).orElseThrow(() -> new NotFoundException(entityIds.toString()));
+	}
+	
 	public Resource<E> addResource(E newEntity) {
 		return assembler.toResource(add(newEntity));
 	}

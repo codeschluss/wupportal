@@ -23,6 +23,4 @@ public interface TagRepository extends FilteredJpaRepository<TagEntity, String> 
 	Optional<TagEntity> findByName(String name);
 
 	Optional<List<TagEntity>> findByActivitiesId(String activityId);
-
-	Optional<List<TagEntity>> findByIdIn(List<String> tagIds);
 }

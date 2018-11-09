@@ -39,5 +39,5 @@ public class TargetGroupEntity extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "targetGroups")
 	@JsonIgnore
-	private List<ActivityEntity> activityEntities;
+	private List<ActivityEntity> activities;
 }

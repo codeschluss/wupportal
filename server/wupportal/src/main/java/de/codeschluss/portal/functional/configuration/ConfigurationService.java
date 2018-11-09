@@ -28,6 +28,4 @@ public class ConfigurationService extends DataService<ConfigurationEntity, Confi
 			return repo.save(newConfiguration);
 		});
 	}
-
-	
 }

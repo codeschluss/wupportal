@@ -25,8 +25,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-@Entity
 @Table(name = "tags")
+@Entity
 @Relation(collectionRelation = "data")
 public class TagEntity extends BaseEntity implements Serializable {
 

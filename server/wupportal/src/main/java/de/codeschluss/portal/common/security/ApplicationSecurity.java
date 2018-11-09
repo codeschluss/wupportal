@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import de.codeschluss.portal.common.appconfig.JWTConfiguration;
 import de.codeschluss.portal.common.security.jwt.JWTAuthenticationFilter;
 import de.codeschluss.portal.common.security.jwt.JWTAuthorizationFilter;
-import de.codeschluss.portal.common.security.jwt.JWTConfiguration;
 import de.codeschluss.portal.common.security.services.JWTUserDetailsService;
 
 @Configuration

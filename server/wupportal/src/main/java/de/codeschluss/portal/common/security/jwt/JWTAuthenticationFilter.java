@@ -19,6 +19,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.codeschluss.portal.common.appconfig.JWTConfiguration;
 import de.codeschluss.portal.functional.user.UserEntity;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {

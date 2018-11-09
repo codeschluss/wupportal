@@ -1,4 +1,4 @@
-package de.codeschluss.portal.common.security.jwt;
+package de.codeschluss.portal.common.appconfig;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;

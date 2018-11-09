@@ -46,9 +46,9 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 			.antMatchers(HttpMethod.POST, "/users").permitAll()
 			.and()
-		.authorizeRequests()
-        	.anyRequest().authenticated()
-        .and()
+//		.authorizeRequests()
+//        	.anyRequest().authenticated()
+//			.and()
         .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtConfig))
         .addFilter(new JWTAuthorizationFilter(authenticationManager(), userDetailsService, jwtConfig))
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

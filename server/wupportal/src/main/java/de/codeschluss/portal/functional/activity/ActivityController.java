@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.exception.BadParamsException;
@@ -34,6 +35,7 @@ import de.codeschluss.portal.functional.provider.ProviderService;
 import de.codeschluss.portal.functional.tag.TagService;
 import de.codeschluss.portal.functional.user.UserService;
 
+@RestController
 public class ActivityController extends CrudController<ActivityEntity, ActivityService> {
 
 	private final AddressService addressService;

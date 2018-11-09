@@ -1,7 +1,6 @@
 package de.codeschluss.portal.common.security;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,12 +42,6 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.csrf().disable()
-		.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/users").permitAll()
-			.and()
-//		.authorizeRequests()
-//        	.anyRequest().authenticated()
-//			.and()
         .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtConfig))
         .addFilter(new JWTAuthorizationFilter(authenticationManager(), userDetailsService, jwtConfig))
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

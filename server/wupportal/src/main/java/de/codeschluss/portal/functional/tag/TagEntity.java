@@ -33,6 +33,7 @@ public class TagEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 	private String name;

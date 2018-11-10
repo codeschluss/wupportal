@@ -30,6 +30,7 @@ public class CategoryEntity extends BaseEntity implements Serializable {
 	private String color;
 
 	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 	private String name;

@@ -41,6 +41,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	private String name;
 	
 	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 	@Column(name="show_user")

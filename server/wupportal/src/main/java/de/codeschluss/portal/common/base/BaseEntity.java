@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -27,6 +28,7 @@ public abstract class BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(columnDefinition = "CHAR")
 	protected String id;
 	
 	@Temporal(TemporalType.TIMESTAMP)

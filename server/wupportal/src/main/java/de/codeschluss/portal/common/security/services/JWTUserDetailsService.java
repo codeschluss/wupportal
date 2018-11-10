@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.common.security.jwt.JWTUserDetails;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import de.codeschluss.portal.functional.activity.ActivityService;
@@ -46,10 +47,14 @@ public class JWTUserDetailsService implements UserDetailsService {
 	}
 	
 	private String[] getCreatedActivities(List<ProviderEntity> providers) {
-		List<ActivityEntity> activities = this.activityService.getByProviders(providers);
-		return activities == null || activities.isEmpty()
-				? new String[0]
-				: (String[]) activities.stream().map(activity -> activity.getId()).toArray(String[]::new);
+		try {
+			List<ActivityEntity> activities = this.activityService.getByProviders(providers);
+			return activities == null || activities.isEmpty()
+					? new String[0]
+					: (String[]) activities.stream().map(activity -> activity.getId()).toArray(String[]::new);
+		} catch(NotFoundException e) {
+			return new String[0];
+		}
 	}
 
 	private String[] getApprovedProviders(List<ProviderEntity> providers) {

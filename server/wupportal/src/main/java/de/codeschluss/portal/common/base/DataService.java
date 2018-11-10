@@ -37,8 +37,6 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 		return repo.existsById(addressId);
 	}
 	
-	public abstract E getDuplicate(E newEntity);
-	
 	public Resource<E> getResourceById(String id) {
 		return assembler.toResource(getById(id));
 	}
@@ -56,7 +54,7 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 	}
 	
 	public E add(E newEntity) {
-		E duplicate = getDuplicate(newEntity);
+		E duplicate = getExisting(newEntity);
 		return duplicate != null
 				? duplicate 
 				: repo.save(newEntity);
@@ -64,12 +62,14 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 	
 	public List<E> addAll(List<E> newEntities) {
 		return newEntities.stream().map(entity -> {
-			E duplicate = getDuplicate(entity);
+			E duplicate = getExisting(entity);
 			return duplicate != null
 					? duplicate 
 					: repo.save(entity);
 		}).collect(Collectors.toList());
 	}
+	
+	public abstract E getExisting(E newEntity);
 	
 	public Resource<E> updateResource(String id, E updatedEntity) {
 		return assembler.toResource(update(id, updatedEntity));

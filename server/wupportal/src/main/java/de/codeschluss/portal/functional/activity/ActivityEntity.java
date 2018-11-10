@@ -50,18 +50,25 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	@ManyToOne
 	@ToString.Exclude
 	private AddressEntity address;
+	
+	@Transient
+	private String categoryId;
 
 	@ManyToOne
 	@ToString.Exclude
 	private CategoryEntity category;
 
+	@Transient
+	private String organisationId;
+	
 	@ManyToOne
 	@ToString.Exclude
 	@JsonIgnore
 	private ProviderEntity provider;
 	
-	@Transient
-	private String organisationId;
+	@OneToMany(mappedBy = "activity")
+	@ToString.Exclude
+	private List<ScheduleEntity> schedules;
 
 	@ManyToMany
 	@ToString.Exclude
@@ -71,6 +78,9 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private List<TagEntity> tags;
 
+	@Transient
+	private List<String> targetGroupIds;
+	
 	@ManyToMany
 	@ToString.Exclude
 	@JoinTable(
@@ -79,7 +89,19 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "target_group_id"))
 	private List<TargetGroupEntity> targetGroups;
 	
-	@OneToMany(mappedBy = "activity")
-	@ToString.Exclude
-	private List<ScheduleEntity> schedules;
+	@JsonIgnore
+	public AddressEntity getAddress() {
+		return this.address;
+	}
+	
+	@JsonIgnore
+	public List<TagEntity> getTags() {
+		return this.tags;
+	}
+	
+	@JsonIgnore
+	public List<ScheduleEntity> getSchedules() {
+		return this.schedules;
+	}
+	
 }

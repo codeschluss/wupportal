@@ -15,7 +15,7 @@ public class AddressService extends DataService<AddressEntity, AddressRepository
 		super(repo, assembler);
 	}
 	
-	public AddressEntity getDuplicate(AddressEntity address) {
+	public AddressEntity getExisting(AddressEntity address) {
 		return repo.findByHouseNumberAndPlaceAndPostalCodeAndStreet(
 				address.getHouseNumber(), 
 				address.getPlace(),

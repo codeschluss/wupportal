@@ -30,7 +30,7 @@ public class UserService extends DataService<UserEntity, UserRepository> {
 		return repo.existsByUsername(username);
 	}
 	
-	public UserEntity getDuplicate(UserEntity user) {
+	public UserEntity getExisting(UserEntity user) {
 		try {
 			return getUser(user.getUsername());
 		} catch(NotFoundException e) {

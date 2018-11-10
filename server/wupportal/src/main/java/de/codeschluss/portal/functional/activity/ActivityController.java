@@ -26,7 +26,7 @@ import de.codeschluss.portal.common.exception.BadParamsException;
 import de.codeschluss.portal.common.exception.DuplicateEntryException;
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.common.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
-import de.codeschluss.portal.common.security.permissions.ProviderOrSuperUserPermission;
+import de.codeschluss.portal.common.security.permissions.ProviderPermission;
 import de.codeschluss.portal.common.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.common.security.services.AuthorizationService;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
@@ -90,19 +90,27 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@Override
 	@PostMapping("/activities")
-	@ProviderOrSuperUserPermission
+	@ProviderPermission
 	public ResponseEntity<?> add(@RequestBody ActivityEntity newActivity) throws URISyntaxException {
-		if (service.getDuplicate(newActivity) != null) {
+		if (service.getExisting(newActivity) != null) {
 			throw new DuplicateEntryException("Activity already exists!");
 		}
 		
+		// Take only existing
 		newActivity.setProvider(getProvider(newActivity.getOrganisationId()));
+		try {
+			newActivity.setCategory(categoryService.getById(newActivity.getCategoryId()));
+			newActivity.setTargetGroups(targetGroupService.getByIds(newActivity.getTargetGroupIds()));
+		} catch(NotFoundException e) {
+			//TODO: Error Objects with proper message
+			throw new BadParamsException("Need existing TargetGroup or Category");
+		}
+		
+		// Create newly if not existing
 		newActivity.setAddress(addressService.add(newActivity.getAddress()));
-		newActivity.setCategory(categoryService.add(newActivity.getCategory()));
 		newActivity.setSchedules(scheduleService.addAll(newActivity.getSchedules()));
 		newActivity.setTags(tagService.addAll(newActivity.getTags()));
-		newActivity.setTargetGroups(targetGroupService.addAll(newActivity.getTargetGroups()));
-		
+
 		Resource<ActivityEntity> resource = service.addResource(newActivity);
 		return created(new URI(resource.getId().expand().getHref())).body(resource);
 	}

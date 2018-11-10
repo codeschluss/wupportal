@@ -15,7 +15,7 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
 		super(repo, assembler);
 	}
 	
-	public CategoryEntity getDuplicate(CategoryEntity newCategory) {
+	public CategoryEntity getExisting(CategoryEntity newCategory) {
 		return repo.findByName(newCategory.getName()).orElse(null);
 	}
 	

@@ -13,7 +13,7 @@ public class TranslationService extends DataService<TranslationEntity, Translati
 	}
 
 	@Override
-	public TranslationEntity getDuplicate(TranslationEntity newEntity) {
+	public TranslationEntity getExisting(TranslationEntity newEntity) {
 		return null;
 	}
 

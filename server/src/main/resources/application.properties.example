@@ -1,4 +1,4 @@
-spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.hibernate.ddl-auto=update
 spring.datasource.url=jdbc:mysql://localhost:3306/wupportal
 spring.datasource.username=root
 spring.datasource.password=
@@ -8,5 +8,12 @@ server.servlet.context-path=/api
 jwt.expiration-time=12h
 jwt.secret=SECRET
 jwt.claim-superuser=superuser
-jwt.claim-approvedOrgas=approvedOrgas
-jwt.claim-adminOrgas=adminOrgas
+jwt.claim-approved-orgas=approvedOrgas
+jwt.claim-admin-orgas=adminOrgas
+jwt.claim-created-activities=createdActivities
+
+info.api-title=Wupportal API
+info.api-description=API for Wupportal: An informative portal for new citizens in Wuppertal
+info.api-version=1.0
+info.contact-name=Wupportal Team
+info.contact-mail=info@codeschluss.de

@@ -15,8 +15,8 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.codeschluss.portal.organisation.OrganisationEntity;
-import de.codeschluss.portal.user.UserController;
+import de.codeschluss.portal.functional.organisation.OrganisationEntity;
+import de.codeschluss.portal.functional.user.UserController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,8 +29,8 @@ public class UserControllerDeleteOrganisationForUserTest {
 	@Test
 	@WithUserDetails("super@user")
 	public void deleteForOtherUserSuperUserOK() {
-		String userId = "00000000-0000-0000-0004-800000000000";
-		String orgaId = "00000000-0000-0000-0008-100000000000";
+		String userId = "00000000-0000-0000-0004-900000000000";
+		String orgaId = "00000000-0000-0000-0008-800000000000";
 		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisationsByUser(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(orgaId), "organisation exists"));

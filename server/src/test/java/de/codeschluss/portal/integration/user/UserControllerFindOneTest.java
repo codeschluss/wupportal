@@ -12,8 +12,8 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.user.UserController;
-import de.codeschluss.portal.user.UserEntity;
+import de.codeschluss.portal.functional.user.UserController;
+import de.codeschluss.portal.functional.user.UserEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

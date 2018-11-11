@@ -23,63 +23,80 @@ import de.codeschluss.portal.functional.activity.ActivityEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ActivityControllerAddTest {
-
+public class ActivityControllerUpdateTest {
+	
 	@Autowired
 	private ActivityController controller;
 	
 	@Test
-	@WithUserDetails("provider1@user")
-	public void addProviderOK() throws URISyntaxException {
-		ActivityEntity activity = createActivity("addProviderOK");
+	@WithUserDetails("super@user")
+	public void updateSuperUserOK() throws URISyntaxException {
+		ActivityEntity activity = createActivity("updateSuperUserOK");
+		String activityId = "00000000-0000-0000-0010-100000000000";
 		
-		controller.add(activity);
+		controller.update(activity, activityId);
 		
 		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
 	}
-
+	
+	@Test
+	@WithUserDetails("provider1@user")
+	public void updateProviderOK() throws URISyntaxException {
+		ActivityEntity activity = createActivity("updateProviderOK");
+		String activityId = "00000000-0000-0000-0010-200000000000";
+		
+		controller.update(activity, activityId);
+		
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
+		assertThat(result.getContent()).haveAtLeastOne(
+				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
+	}
+	
+	@Test
+	@WithUserDetails("admin@user")
+	public void updateAdminOK() throws URISyntaxException {
+		ActivityEntity activity = createActivity("updateAdminOK");
+		String activityId = "00000000-0000-0000-0010-200000000000";
+		
+		controller.update(activity, activityId);
+		
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
+		assertThat(result.getContent()).haveAtLeastOne(
+				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
+	}
+	
 	@Test(expected = DuplicateEntryException.class)
 	@WithUserDetails("provider1@user")
-	public void addProviderDuplicated() throws URISyntaxException {
+	public void updateProviderDuplicated() throws URISyntaxException {
 		ActivityEntity activity = createActivity("activity1");
+		String activityId = "00000000-0000-0000-0010-200000000000";
 		
-		controller.add(activity);
+		controller.update(activity, activityId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
-	@WithUserDetails("super@user")
-	public void addSuperUserIsNoProviderDenied() throws URISyntaxException {
-		ActivityEntity activity = createActivity("addSuperUserOK");
+	@WithUserDetails("provider1@user")
+	public void updateOtherProviderDenied() throws URISyntaxException {
+		ActivityEntity activity = createActivity("updateOtherProviderDenied");
+		String activityId = "00000000-0000-0000-0010-300000000000";
 		
-		controller.add(activity);
-		
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
-	}
-	
-	@Test(expected = AccessDeniedException.class)
-	@WithUserDetails("new@user")
-	public void addNotApprovedDenied() throws URISyntaxException {
-		ActivityEntity activity = createActivity("addNotApprovedDenied");
-		
-		controller.add(activity);
+		controller.update(activity, activityId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
-	public void addNoUserDenied() throws URISyntaxException {
-		ActivityEntity activity = createActivity("addNoUserDenied");
+	public void updateNoUserDenied() throws URISyntaxException {
+		ActivityEntity activity = createActivity("updateNoUserDenied");
+		String activityId = "00000000-0000-0000-0010-300000000000";
 		
-		controller.add(activity);
+		controller.update(activity, activityId);
 	}
 	
 	private ActivityEntity createActivity(String name) {
 		String categoryId = "00000000-0000-0000-0007-100000000000";
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String addressId = "00000000-0000-0000-0006-100000000000";
-		
 		return new ActivityEntity(name, "createActivity",true,addressId,null,categoryId,null,organisationId,null,null,null,null);
 	}
 }

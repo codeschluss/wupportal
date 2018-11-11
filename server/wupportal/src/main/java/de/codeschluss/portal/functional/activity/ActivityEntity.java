@@ -46,9 +46,13 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 
 	@Column(name="show_user")
 	private boolean showUser;
+	
+	@Transient
+	private String addressId;
 
 	@ManyToOne
 	@ToString.Exclude
+	@JsonIgnore
 	private AddressEntity address;
 	
 	@Transient
@@ -56,6 +60,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 
 	@ManyToOne
 	@ToString.Exclude
+	@JsonIgnore
 	private CategoryEntity category;
 
 	@Transient
@@ -68,40 +73,24 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	
 	@OneToMany(mappedBy = "activity")
 	@ToString.Exclude
+	@JsonIgnore
 	private List<ScheduleEntity> schedules;
 
 	@ManyToMany
 	@ToString.Exclude
+	@JsonIgnore
 	@JoinTable(
 			name = "activities_tags",
 			joinColumns = @JoinColumn(name = "activity_id"),
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private List<TagEntity> tags;
-
-	@Transient
-	private List<String> targetGroupIds;
 	
 	@ManyToMany
 	@ToString.Exclude
+	@JsonIgnore
 	@JoinTable(
 			name = "activities_target_groups",
 			joinColumns = @JoinColumn(name = "activity_id"),
 			inverseJoinColumns = @JoinColumn(name = "target_group_id"))
-	private List<TargetGroupEntity> targetGroups;
-	
-	@JsonIgnore
-	public AddressEntity getAddress() {
-		return this.address;
-	}
-	
-	@JsonIgnore
-	public List<TagEntity> getTags() {
-		return this.tags;
-	}
-	
-	@JsonIgnore
-	public List<ScheduleEntity> getSchedules() {
-		return this.schedules;
-	}
-	
+	private List<TargetGroupEntity> targetGroups;	
 }

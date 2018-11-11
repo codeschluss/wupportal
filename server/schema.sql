@@ -158,7 +158,7 @@ CREATE TABLE `activities` (
   `created` DATETIME NOT NULL DEFAULT NOW(),
   `modified` DATETIME NOT NULL DEFAULT NOW(),
 
-  `address_id` CHAR(36),
+  `address_id` CHAR(36) NOT NULL,
   `category_id` CHAR(36) NOT NULL,
   `provider_id` CHAR(36) NOT NULL,
 
@@ -176,7 +176,7 @@ CREATE TABLE `activities` (
 );
 
 CREATE TABLE `activities_tags` (
-  `id` CHAR(36) NOT NULL PRIMARY KEY,
+  -- `id` CHAR(36) NOT NULL PRIMARY KEY,
 
   `activity_id` CHAR(36) NOT NULL,
   `tag_id` CHAR(36) NOT NULL,
@@ -194,7 +194,7 @@ CREATE TABLE `activities_tags` (
 );
 
 CREATE TABLE `activities_target_groups` (
-  `id` CHAR(36) NOT NULL PRIMARY KEY,
+  -- `id` CHAR(36) NOT NULL PRIMARY KEY,
 
   `activity_id` CHAR(36) NOT NULL,
   `target_group_id` CHAR(36) NOT NULL,

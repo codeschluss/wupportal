@@ -96,20 +96,14 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			throw new DuplicateEntryException("Activity already exists!");
 		}
 		
-		// Take only existing
-		newActivity.setProvider(getProvider(newActivity.getOrganisationId()));
 		try {
+			newActivity.setProvider(getProvider(newActivity.getOrganisationId()));
 			newActivity.setCategory(categoryService.getById(newActivity.getCategoryId()));
-			newActivity.setTargetGroups(targetGroupService.getByIds(newActivity.getTargetGroupIds()));
+			newActivity.setAddress(addressService.getById(newActivity.getAddressId()));
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
-			throw new BadParamsException("Need existing TargetGroup or Category");
+			throw new BadParamsException("Need existing Provider, Category or Address");
 		}
-		
-		// Create newly if not existing
-		newActivity.setAddress(addressService.add(newActivity.getAddress()));
-		newActivity.setSchedules(scheduleService.addAll(newActivity.getSchedules()));
-		newActivity.setTags(tagService.addAll(newActivity.getTags()));
 
 		Resource<ActivityEntity> resource = service.addResource(newActivity);
 		return created(new URI(resource.getId().expand().getHref())).body(resource);
@@ -282,10 +276,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	private ProviderEntity getProvider(String organisationId) {
-		try {
-			return providerService.getProviderByUserAndOrganisation(authService.getCurrentUser().getId(), organisationId);
-		} catch(NotFoundException e) {
-			throw new BadParamsException("User does not exist with given Organisation!");
-		}
+		return providerService.getProviderByUserAndOrganisation(authService.getCurrentUser().getId(), organisationId);
 	}
 }

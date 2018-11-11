@@ -17,7 +17,7 @@ import de.codeschluss.portal.functional.organisation.OrganisationController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrganisationControllerFindUsersByOrganisationTest {
+public class OrganisationControllerFindUsersTest {
 	
 	@Autowired
 	private OrganisationController controller;

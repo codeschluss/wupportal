@@ -14,21 +14,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrganisationControllerFindActivitiesByOrganisationTest {
+public class OrganisationControllerFindActivitiesTest {
 	
     @Autowired
     private OrganisationController controller;
 	
 	@Test
 	public void findActivitiesByOrganisationOK() {
-		Resources<?> result = (Resources<?>) controller.findActivitiesByOrganisation("00000000-0000-0000-0008-100000000000").getBody();
+		Resources<?> result = (Resources<?>) controller.findActivities("00000000-0000-0000-0008-100000000000").getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}
 	
 	@Test(expected = NotFoundException.class)
 	public void findActivitiesByOrganisationNotFound() {
-		Resources<?> result = (Resources<?>) controller.findActivitiesByOrganisation("00000000-0000-0000-0008-XX0000000000").getBody();
+		Resources<?> result = (Resources<?>) controller.findActivities("00000000-0000-0000-0008-XX0000000000").getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}

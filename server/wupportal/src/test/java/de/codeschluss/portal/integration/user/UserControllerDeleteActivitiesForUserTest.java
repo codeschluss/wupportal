@@ -32,13 +32,13 @@ public class UserControllerDeleteActivitiesForUserTest {
 	public void deleteForOtherUserSuperUserOK() {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String activityId = "00000000-0000-0000-0010-400000000000";
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByUser(userId).getBody();
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
 		
-		controller.deleteActivityForUser(userId, activityId);
+		controller.deleteActivity(userId, activityId);
 		
-		result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByUser(userId).getBody();
+		result = (Resources<Resource<ActivityEntity>>) controller.findActivities(userId).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
 	}
 	
@@ -48,13 +48,13 @@ public class UserControllerDeleteActivitiesForUserTest {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String activityId = "00000000-0000-0000-0010-500000000000";
 		
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByUser(userId).getBody();
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
 		
-		controller.deleteActivityForUser(userId, activityId);
+		controller.deleteActivity(userId, activityId);
 		
-		result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByUser(userId).getBody();
+		result = (Resources<Resource<ActivityEntity>>) controller.findActivities(userId).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
 	}
 	
@@ -64,7 +64,7 @@ public class UserControllerDeleteActivitiesForUserTest {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String activityId = "00000000-0000-0000-0010-100000000000";
 		
-		controller.deleteActivityForUser(userId, activityId);
+		controller.deleteActivity(userId, activityId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -73,7 +73,7 @@ public class UserControllerDeleteActivitiesForUserTest {
 		String userId = "00000000-0000-0000-0004-200000000000";
 		String ActivityId = "00000000-0000-0000-0010-100000000000";
 		
-		controller.deleteActivityForUser(userId, ActivityId);
+		controller.deleteActivity(userId, ActivityId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -81,6 +81,6 @@ public class UserControllerDeleteActivitiesForUserTest {
 		String userId = "00000000-0000-0000-0004-800000000000";
 		String activityId = "00000000-0000-0000-0010-800000000000";
 		
-		controller.deleteActivityForUser(userId, activityId);
+		controller.deleteActivity(userId, activityId);
 	}
 }

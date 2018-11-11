@@ -19,12 +19,12 @@ public class ActivityResourceAssembler extends PagingAndSortingAssembler<Activit
 		List<Link> links = new ArrayList<Link>();
 		
 		links.add(linkTo(methodOn(ActivityController.class).findOne(activity.getId())).withSelfRel());
-		links.add(linkTo(methodOn(ActivityController.class).findOrganisationByActivity(activity.getId())).withRel("organisation"));
-		links.add(linkTo(methodOn(ActivityController.class).findUserByActivity(activity.getId())).withRel("user"));
-		links.add(linkTo(methodOn(ActivityController.class).findCategoryByActivity(activity.getId())).withRel("category"));
-		links.add(linkTo(methodOn(ActivityController.class).findSchedulesByActivity(activity.getId())).withRel("schedules"));
-		links.add(linkTo(methodOn(ActivityController.class).findTagsByActivity(activity.getId())).withRel("tags"));
-		links.add(linkTo(methodOn(ActivityController.class).findTargetGroupsByActivity(activity.getId())).withRel("targetgroups"));
+		links.add(linkTo(methodOn(ActivityController.class).findOrganisation(activity.getId())).withRel("organisation"));
+		links.add(linkTo(methodOn(ActivityController.class).findUser(activity.getId())).withRel("user"));
+		links.add(linkTo(methodOn(ActivityController.class).findCategory(activity.getId())).withRel("category"));
+		links.add(linkTo(methodOn(ActivityController.class).findSchedules(activity.getId())).withRel("schedules"));
+		links.add(linkTo(methodOn(ActivityController.class).findTags(activity.getId())).withRel("tags"));
+		links.add(linkTo(methodOn(ActivityController.class).findTargetGroups(activity.getId())).withRel("targetgroups"));
 		
 		return links;
 	}

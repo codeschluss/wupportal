@@ -19,7 +19,7 @@ import de.codeschluss.portal.functional.provider.ProviderService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrganisationControllerDeleteUserForOrganisationTest {
+public class OrganisationControllerDeleteUserTest {
 	
 	@Autowired
 	private OrganisationController controller;
@@ -35,7 +35,7 @@ public class OrganisationControllerDeleteUserForOrganisationTest {
 
 		assertThat(providerService.getProviderByUserAndOrganisation(userId, orgaId)).isNotNull();
 		
-		controller.deleteUserForOrganisation(orgaId, userId);
+		controller.deleteUser(orgaId, userId);
 		
 		providerService.getProviderByUserAndOrganisation(userId, orgaId);
 	}
@@ -48,7 +48,7 @@ public class OrganisationControllerDeleteUserForOrganisationTest {
 
 		assertThat(providerService.getProviderByUserAndOrganisation(userId, orgaId)).isNotNull();
 		
-		controller.deleteUserForOrganisation(orgaId, userId);
+		controller.deleteUser(orgaId, userId);
 		
 		providerService.getProviderByUserAndOrganisation(userId, orgaId);
 	}
@@ -59,7 +59,7 @@ public class OrganisationControllerDeleteUserForOrganisationTest {
 		String orgaId = "00000000-0000-0000-0008-100000000000";
 		String userId = "00000000-0000-0000-0004-400000000000";
 		
-		controller.deleteUserForOrganisation(orgaId, userId);
+		controller.deleteUser(orgaId, userId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -67,7 +67,7 @@ public class OrganisationControllerDeleteUserForOrganisationTest {
 		String orgaId = "00000000-0000-0000-0008-100000000000";
 		String userId = "00000000-0000-0000-0004-400000000000";
 		
-		controller.deleteUserForOrganisation(orgaId, userId);
+		controller.deleteUser(orgaId, userId);
 	}
 
 }

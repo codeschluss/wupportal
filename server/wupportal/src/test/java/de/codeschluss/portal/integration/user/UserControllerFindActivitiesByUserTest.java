@@ -22,7 +22,7 @@ public class UserControllerFindActivitiesByUserTest {
 	@Test
 	public void findActivitiesByUserOK() {
 		
-		Resources<?> result = (Resources<?>) controller.findActivitiesByUser("00000000-0000-0000-0004-300000000000").getBody();
+		Resources<?> result = (Resources<?>) controller.findActivities("00000000-0000-0000-0004-300000000000").getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}
@@ -30,7 +30,7 @@ public class UserControllerFindActivitiesByUserTest {
 	@Test(expected = NotFoundException.class)
 	public void findActivitiesByUserNotFound() {
 		
-		Resources<?> result = (Resources<?>) controller.findActivitiesByUser("00000000-0000-0000-0004-XX0000000000").getBody();
+		Resources<?> result = (Resources<?>) controller.findActivities("00000000-0000-0000-0004-XX0000000000").getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}

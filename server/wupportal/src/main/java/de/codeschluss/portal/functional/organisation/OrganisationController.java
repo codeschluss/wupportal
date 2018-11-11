@@ -83,16 +83,16 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	}
 	
 	@GetMapping("/organisations/{organisationId}/address")
-	public ResponseEntity<?> findAddressByOrganisation(@PathVariable String organisationId) {
+	public ResponseEntity<?> findAddress(@PathVariable String organisationId) {
 		return ok(addressService.getResourcesWithSuburbsByOrganisation(organisationId));
 	}
 	
 	@PutMapping("/organisations/{organisationId}/address")
 	@OrgaAdminOrSuperUserPermission
-	public ResponseEntity<?> updateAddressForOrganisation(@PathVariable String organisationId, @RequestBody String addressId) {
+	public ResponseEntity<?> updateAddress(@PathVariable String organisationId, @RequestBody String addressId) {
 		if (addressService.existsById(addressId) && service.existsById(organisationId)) {
 			service.updateAddress(organisationId, addressService.getById(addressId));
-			return ok(findAddressByOrganisation(organisationId));
+			return ok(findAddress(organisationId));
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Organisation or Address with given ID do not exist!");
@@ -100,16 +100,16 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	}
 	
 	@GetMapping("/organisations/{organisationId}/activities")
-	public ResponseEntity<?> findActivitiesByOrganisation(@PathVariable String organisationId) {
+	public ResponseEntity<?> findActivities(@PathVariable String organisationId) {
 		List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
 		return ok(activityService.getResourcesByProviders(
 				providers,
-				DummyInvocationUtils.methodOn(this.getClass()).findActivitiesByOrganisation(organisationId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findActivities(organisationId)));
 	}
 	
 	@DeleteMapping("/organisations/{organisationId}/activities/{activityId}")
 	@OrgaAdminOrSuperUserPermission
-	public ResponseEntity<?> deleteActivityForOrganisation(@PathVariable String organisationId, @PathVariable String activityId) {
+	public ResponseEntity<?> deleteActivity(@PathVariable String organisationId, @PathVariable String activityId) {
 		if (activityService.isActivityForProvider(activityId, providerService.getProvidersByOrganisation(organisationId))) {
 			activityService.delete(activityId);
 			return noContent().build();
@@ -129,7 +129,7 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	
 	@PutMapping("/organisations/{organisationId}/users/{userId}/approve")
 	@OrgaAdminOrSuperUserPermission	
-	public ResponseEntity<?> approveOrRejectUserForOrganisation(@PathVariable String organisationId, @PathVariable String userId, @RequestBody Boolean isApproved) {
+	public ResponseEntity<?> approveOrRejectUser(@PathVariable String organisationId, @PathVariable String userId, @RequestBody Boolean isApproved) {
 		try {
 			this.providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved);
 			return noContent().build();
@@ -141,7 +141,7 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	
 	@PutMapping("/organisations/{organisationId}/users/{userId}/admin")
 	@OrgaAdminOrSuperUserPermission	
-	public ResponseEntity<?> grantAdminRightForOrganisation(@PathVariable String organisationId, @PathVariable String userId, @RequestBody Boolean isAdmin) {
+	public ResponseEntity<?> grantAdminRight(@PathVariable String organisationId, @PathVariable String userId, @RequestBody Boolean isAdmin) {
 		try {
 			this.providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);			
 			return noContent().build();
@@ -153,7 +153,7 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	
 	@DeleteMapping("/organisations/{organisationId}/users/{userId}")
 	@OrgaAdminOrSuperUserPermission
-	public ResponseEntity<?> deleteUserForOrganisation(@PathVariable String organisationId, @PathVariable String userId) {
+	public ResponseEntity<?> deleteUser(@PathVariable String organisationId, @PathVariable String userId) {
 		try {
 			providerService.deleteForUserAndOrga(userId, organisationId);
 			return noContent().build();

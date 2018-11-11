@@ -14,7 +14,7 @@ import de.codeschluss.portal.functional.organisation.OrganisationController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrganisationControllerFindAddressByOrganisationTest {
+public class OrganisationControllerFindAddressTest {
 	
     @Autowired
     private OrganisationController controller;
@@ -23,7 +23,7 @@ public class OrganisationControllerFindAddressByOrganisationTest {
     public void findAddressByOrganisationOK() {
     	String orgaId = "00000000-0000-0000-0008-200000000000";
     	
-    	Resource<?> result = (Resource<?>) controller.findAddressByOrganisation(orgaId).getBody();
+    	Resource<?> result = (Resource<?>) controller.findAddress(orgaId).getBody();
     	
 		assertThat(result.getContent()).isNotNull();
     }
@@ -32,7 +32,7 @@ public class OrganisationControllerFindAddressByOrganisationTest {
 	public void findAddressByOrganisationNotFound() {
     	String orgaId = "00000000-0000-0000-0008-XX0000000000";
     	
-		Resource<?> result = (Resource<?>) controller.findAddressByOrganisation(orgaId).getBody();
+		Resource<?> result = (Resource<?>) controller.findAddress(orgaId).getBody();
 		
 		assertThat(result.getContent()).isNotNull();
 	}

@@ -96,16 +96,16 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	
 	@GetMapping("/users/{userId}/organisations")
 	@OwnUserOrSuperUserPermission
-	public ResponseEntity<?> findOrganisationsByUser(@PathVariable String userId) {
+	public ResponseEntity<?> findOrganisations(@PathVariable String userId) {
 		List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
 		return ok(organisationService.convertToResourcesWithProviders(
 				providers,
-				DummyInvocationUtils.methodOn(this.getClass()).findOrganisationsByUser(userId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findOrganisations(userId)));
 	}
 	
 	@PostMapping("/users/{userId}/organisations")
 	@OwnUserOrSuperUserPermission
-	public ResponseEntity<?> addOrganisationforUser(@PathVariable String userId, @RequestBody String... organisationParam) {
+	public ResponseEntity<?> addOrganisation(@PathVariable String userId, @RequestBody String... organisationParam) {
 		List<String> distinctOrgas = Arrays.asList(organisationParam).stream().distinct().collect(Collectors.toList());
 		
 		if (providerService.isDuplicate(userId, distinctOrgas)) {
@@ -117,7 +117,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 			List<ProviderEntity> providers = providerService.addAll(providerService.createProviders(service.getById(userId), distinctOrgas));
 			return ok(organisationService.convertToResourcesWithProviders(
 					providers,
-					DummyInvocationUtils.methodOn(this.getClass()).findOrganisationsByUser(userId)));
+					DummyInvocationUtils.methodOn(this.getClass()).findOrganisations(userId)));
 		} catch (NotFoundException | NullPointerException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("User or Organisation are null or do not exist!");
@@ -126,7 +126,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	
 	@DeleteMapping("/users/{userId}/organisations/{orgaId}")
 	@OwnUserOrSuperUserPermission
-	public ResponseEntity<?> deleteOrganisationForUser(@PathVariable String userId, @PathVariable String orgaId) {
+	public ResponseEntity<?> deleteOrganisation(@PathVariable String userId, @PathVariable String orgaId) {
 		try {
 			providerService.deleteForUserAndOrga(userId, orgaId);
 			return noContent().build();
@@ -137,16 +137,16 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	
 	@GetMapping("/users/{userId}/activities")
 	//TODO: Visible for all?
-	public ResponseEntity<?> findActivitiesByUser(@PathVariable String userId) {		
+	public ResponseEntity<?> findActivities(@PathVariable String userId) {		
 		List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
 		return ok(activityService.getResourcesByProviders(
 				providers,
-				DummyInvocationUtils.methodOn(this.getClass()).findActivitiesByUser(userId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findActivities(userId)));
 	}
 	
 	@DeleteMapping("/users/{userId}/activities/{activityId}")
 	@OwnUserOrSuperUserPermission
-	public ResponseEntity<?> deleteActivityForUser(@PathVariable String userId, @PathVariable String activityId) {
+	public ResponseEntity<?> deleteActivity(@PathVariable String userId, @PathVariable String activityId) {
 		if (activityService.isActivityForProvider(activityId, providerService.getProvidersByUser(userId))) {
 			activityService.delete(activityId);
 			return noContent().build();

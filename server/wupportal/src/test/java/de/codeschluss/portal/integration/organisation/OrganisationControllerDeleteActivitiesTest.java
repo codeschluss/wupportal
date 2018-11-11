@@ -22,7 +22,7 @@ import de.codeschluss.portal.functional.organisation.OrganisationController;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class OrganisationControllerDeleteActivitiesForOrganisationTest {
+public class OrganisationControllerDeleteActivitiesTest {
 
 	@Autowired
     private OrganisationController controller;
@@ -32,13 +32,13 @@ public class OrganisationControllerDeleteActivitiesForOrganisationTest {
 	public void deleteForOtherSuperUserOK() {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String activityId = "00000000-0000-0000-0010-190000000000";
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByOrganisation(organisationId).getBody();
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
 		
-		controller.deleteActivityForOrganisation(organisationId, activityId);
+		controller.deleteActivity(organisationId, activityId);
 		
-		result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByOrganisation(organisationId).getBody();
+		result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
 	}
 	
@@ -48,13 +48,13 @@ public class OrganisationControllerDeleteActivitiesForOrganisationTest {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String activityId = "00000000-0000-0000-0010-600000000000";
 		
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByOrganisation(organisationId).getBody();
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
 		
-		controller.deleteActivityForOrganisation(organisationId, activityId);
+		controller.deleteActivity(organisationId, activityId);
 		
-		result = (Resources<Resource<ActivityEntity>>) controller.findActivitiesByOrganisation(organisationId).getBody();
+		result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
 	}
 	
@@ -64,7 +64,7 @@ public class OrganisationControllerDeleteActivitiesForOrganisationTest {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String activityId = "00000000-0000-0000-0010-900000000000";
 		
-		controller.deleteActivityForOrganisation(organisationId, activityId);
+		controller.deleteActivity(organisationId, activityId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -73,7 +73,7 @@ public class OrganisationControllerDeleteActivitiesForOrganisationTest {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
-		controller.deleteActivityForOrganisation(organisationId, activityId);
+		controller.deleteActivity(organisationId, activityId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -81,6 +81,6 @@ public class OrganisationControllerDeleteActivitiesForOrganisationTest {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
-		controller.deleteActivityForOrganisation(organisationId, activityId);
+		controller.deleteActivity(organisationId, activityId);
 	}
 }

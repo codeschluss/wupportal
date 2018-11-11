@@ -19,65 +19,65 @@ import de.codeschluss.portal.functional.provider.ProviderService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrganisationControllerGrantAdminRightForOrganisationTest {
+public class OrganisationControllerApproveOrRejectUserTest {
 
-	@Autowired
-	OrganisationController controller;
-	
+    @Autowired
+    private OrganisationController controller;
+    
     @Autowired
     private ProviderService providerService;
     
     
 	@Test
 	@WithUserDetails("super@user")
-	public void GrantAdminRightsSuperUserOK() {
+	public void ApproveSuperUserOK() {
 		String organisationId = "00000000-0000-0000-0008-200000000000";
-		String userId = "00000000-0000-0000-0004-400000000000";
-		assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isAdmin()).isFalse();
+		String userId = "00000000-0000-0000-0004-800000000000";
+		assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isApproved()).isFalse();
 		
-		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantAdminRightForOrganisation(organisationId, userId, true);
+		ResponseEntity<?> result = (ResponseEntity<?>) controller.approveOrRejectUser(organisationId, userId, true);
 		
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-		assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isAdmin()).isTrue();
+		assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isApproved()).isTrue();
 	}
 	
 	@Test
 	@WithUserDetails("admin@user")
-	public void GrantAdminRightsOwnAdminOK() {
+	public void RejectOwnAdminOK() {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String userId = "00000000-0000-0000-0004-400000000000";
-		assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isAdmin()).isFalse();
+		assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isApproved()).isTrue();
 		
-		ResponseEntity<?> result = (ResponseEntity<?>) controller.grantAdminRightForOrganisation(organisationId, userId, true);
+		ResponseEntity<?> result = (ResponseEntity<?>) controller.approveOrRejectUser(organisationId, userId, false);
 		
 		assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-		assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isAdmin()).isTrue();
+		assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isApproved()).isFalse();
 	}
 	
 	@Test(expected = BadParamsException.class)
 	@WithUserDetails("super@user")
-	public void TakeAdminRightsSupeUserBadRequest() {
+	public void RejectSupeUserBadRequest() {
 		String notExistingOrganisationId = "12345678-0000-0000-0004-XX0000000000";
 		String userId = "00000000-0000-0000-0004-400000000000";
 		
-		controller.grantAdminRightForOrganisation(notExistingOrganisationId, userId, false);
+		controller.approveOrRejectUser(notExistingOrganisationId, userId, false);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("new@user")
-	public void TakeAdminRightsProviderUserDenied() {
+	public void ApproveProviderUserDenied() {
 		String orgaId = "00000000-0000-0000-0004-300000000000";
 		String userId = "00000000-0000-0000-0004-500000000000";
 		
-		controller.grantAdminRightForOrganisation(orgaId, userId, true);
+		controller.approveOrRejectUser(orgaId, userId, true);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
-	public void TakeAdminRightsNoUserDenied() {
+	public void ApproveNoUserDenied() {
 		String orgaId = "00000000-0000-0000-0004-300000000000";
 		String userId = "00000000-0000-0000-0004-500000000000";
 		
-		controller.grantAdminRightForOrganisation(orgaId, userId, true);
+		controller.approveOrRejectUser(orgaId, userId, true);
 	}
-	
+    
 }

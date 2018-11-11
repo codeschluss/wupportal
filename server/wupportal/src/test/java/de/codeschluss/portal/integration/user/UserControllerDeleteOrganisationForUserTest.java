@@ -31,13 +31,13 @@ public class UserControllerDeleteOrganisationForUserTest {
 	public void deleteForOtherUserSuperUserOK() {
 		String userId = "00000000-0000-0000-0004-900000000000";
 		String orgaId = "00000000-0000-0000-0008-800000000000";
-		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisationsByUser(userId).getBody();
+		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(orgaId), "organisation exists"));
 		
-		controller.deleteOrganisationForUser(userId, orgaId);
+		controller.deleteOrganisation(userId, orgaId);
 		
-		result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisationsByUser(userId).getBody();
+		result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(orgaId));
 	}
 	
@@ -46,13 +46,13 @@ public class UserControllerDeleteOrganisationForUserTest {
 	public void deleteOrganisationForOwnUserOK() {
 		String userId = "00000000-0000-0000-0004-800000000000";
 		String orgaId = "00000000-0000-0000-0008-200000000000";
-		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisationsByUser(userId).getBody();
+		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(orgaId), "organisation exists"));
 		
-		controller.deleteOrganisationForUser(userId, orgaId);
+		controller.deleteOrganisation(userId, orgaId);
 		
-		result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisationsByUser(userId).getBody();
+		result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(orgaId));
 	}
 	
@@ -62,7 +62,7 @@ public class UserControllerDeleteOrganisationForUserTest {
 		String userId = "00000000-0000-0000-0004-800000000000";
 		String providerId = "00000000-0000-0000-0008-300000000000";
 		
-		controller.deleteOrganisationForUser(userId, providerId);
+		controller.deleteOrganisation(userId, providerId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -70,6 +70,6 @@ public class UserControllerDeleteOrganisationForUserTest {
 		String userId = "00000000-0000-0000-0004-800000000000";
 		String providerId = "00000000-0000-0000-0008-300000000000";
 		
-		controller.deleteOrganisationForUser(userId, providerId);
+		controller.deleteOrganisation(userId, providerId);
 	}
 }

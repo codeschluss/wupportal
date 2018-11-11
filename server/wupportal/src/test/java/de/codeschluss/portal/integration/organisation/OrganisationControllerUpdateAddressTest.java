@@ -17,7 +17,7 @@ import de.codeschluss.portal.functional.organisation.OrganisationService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrganisationControllerUpdateAddressForOrganisationTest {
+public class OrganisationControllerUpdateAddressTest {
 	
 	@Autowired
     private OrganisationController controller;
@@ -31,7 +31,7 @@ public class OrganisationControllerUpdateAddressForOrganisationTest {
 		String orgaId = "00000000-0000-0000-0008-300000000000";
 		String addressId = "00000000-0000-0000-0006-100000000000";
 		
-		controller.updateAddressForOrganisation(orgaId, addressId);
+		controller.updateAddress(orgaId, addressId);
 		
 		assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId);
 	}
@@ -42,7 +42,7 @@ public class OrganisationControllerUpdateAddressForOrganisationTest {
 		String orgaId = "00000000-0000-0000-0008-100000000000";
 		String addressId = "00000000-0000-0000-0006-400000000000";
 		
-		controller.updateAddressForOrganisation(orgaId, addressId);
+		controller.updateAddress(orgaId, addressId);
 		
 		assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId);
 	}
@@ -53,7 +53,7 @@ public class OrganisationControllerUpdateAddressForOrganisationTest {
 		String orgaId = "00000000-0000-0000-0008-XX0000000000";
 		String addressId = "00000000-0000-0000-0006-100000000000";
 		
-		controller.updateAddressForOrganisation(orgaId, addressId);
+		controller.updateAddress(orgaId, addressId);
 	}
 	
 	@Test(expected = BadParamsException.class)
@@ -62,7 +62,7 @@ public class OrganisationControllerUpdateAddressForOrganisationTest {
 		String orgaId = "00000000-0000-0000-0008-100000000000";
 		String addressId = "00000000-0000-0000-0006-XX0000000000";
 		
-		controller.updateAddressForOrganisation(orgaId, addressId);
+		controller.updateAddress(orgaId, addressId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -71,7 +71,7 @@ public class OrganisationControllerUpdateAddressForOrganisationTest {
 		String orgaId = "00000000-0000-0000-0008-300000000000";
 		String addressId = "00000000-0000-0000-0006-400000000000";
 		
-		controller.updateAddressForOrganisation(orgaId, addressId);
+		controller.updateAddress(orgaId, addressId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -79,7 +79,7 @@ public class OrganisationControllerUpdateAddressForOrganisationTest {
 		String orgaId = "00000000-0000-0000-0008-300000000000";
 		String addressId = "00000000-0000-0000-0006-400000000000";
 		
-		controller.updateAddressForOrganisation(orgaId, addressId);
+		controller.updateAddress(orgaId, addressId);
 	}
 	
 }

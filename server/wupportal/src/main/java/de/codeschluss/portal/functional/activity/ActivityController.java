@@ -25,6 +25,7 @@ import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.exception.BadParamsException;
 import de.codeschluss.portal.common.exception.DuplicateEntryException;
 import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.common.security.permissions.OwnActivityPermission;
 import de.codeschluss.portal.common.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.common.security.permissions.ProviderPermission;
 import de.codeschluss.portal.common.security.permissions.ShowUserOrSuperUserPermission;
@@ -124,7 +125,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	@GetMapping("/activities/{activityId}/address")
-	public ResponseEntity<?> findAddressByActivity(@PathVariable String activityId) {
+	public ResponseEntity<?> findAddress(@PathVariable String activityId) {
 		return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
 	}
 	
@@ -133,7 +134,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> updateAddress(@PathVariable String activityId, @RequestBody String addressId) {
 		if (addressService.existsById(addressId) && service.existsById(activityId)) {
 			service.updateAddress(activityId, addressService.getById(addressId));
-			return ok(findAddressByActivity(activityId));
+			return ok(findAddress(activityId));
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Address with given ID do not exist!");
@@ -164,15 +165,15 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	@PutMapping("/activities/{activityId}/organisation")
-	@OwnOrOrgaActivityOrSuperUserPermission
+	@OwnActivityPermission
 	public ResponseEntity<?> updateOrganisation(@PathVariable String activityId, @RequestBody String organisationId) {
-		if (service.existsById(activityId) && organisationService.existsById(organisationId)) {
+		try {
 			service.updateProvider(activityId, getProvider(organisationId));
-			return ok(findCategory(activityId));
-		} else {
+			return ok(findOrganisation(activityId));
+		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
-			throw new BadParamsException("Activity or Organisation with given ID do not exist!");
-		}		
+			throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");
+		}
 	}
 	
 	@GetMapping("/activities/{activityId}/user")

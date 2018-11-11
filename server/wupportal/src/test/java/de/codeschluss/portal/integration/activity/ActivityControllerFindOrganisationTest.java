@@ -11,26 +11,26 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.activity.ActivityController;
-import de.codeschluss.portal.functional.activity.ActivityEntity;
+import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ActivityControllerFindOneTest {
+public class ActivityControllerFindOrganisationTest {
 
 	@Autowired
 	private ActivityController controller;
 	
 	@Test
-	public void findOneOK() {
+	public void findOrganisationOK() {
 		String activityId = "00000000-0000-0000-0010-100000000000";
 		
-		Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+		Resource<OrganisationEntity> result = (Resource<OrganisationEntity>) controller.findOrganisation(activityId).getBody();
 		
 		assertThat(result.getContent()).isNotNull();
 	}
 	
 	@Test(expected = NotFoundException.class)
-	public void findOneNotFound() {
+	public void findOrganisationNotFound() {
 		String activityId = "00000000-0000-0000-0010-XX0000000000";
 		
 		controller.findOne(activityId);

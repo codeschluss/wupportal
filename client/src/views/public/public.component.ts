@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   template: `<router-outlet></router-outlet>`
 })
 
-export class PublicClientComponent {
+export class PublicComponent {
 
   public static readonly imports = [
   ];

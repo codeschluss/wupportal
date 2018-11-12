@@ -1,0 +1,3 @@
+.gitignore
+.swagger-codegen
+git_push.sh

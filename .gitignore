@@ -1,5 +1,7 @@
 client/node_modules
 client/package-lock.json
+client/src/core/swagger/.swagger-codegen
+client/src/core/swagger/**/*.ts
 client/target
 
 server/.metadata

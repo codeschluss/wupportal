@@ -7,6 +7,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.base.DataService;
 import de.codeschluss.portal.common.base.ResourceWithEmbeddable;
@@ -14,6 +15,7 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 
 @Service
+@Transactional
 public class UserService extends DataService<UserEntity, UserRepository> {
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;

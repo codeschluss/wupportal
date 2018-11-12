@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.base.DataService;
 import de.codeschluss.portal.common.exception.NotFoundException;
@@ -16,6 +17,7 @@ import de.codeschluss.portal.functional.tag.TagEntity;
 import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 
 @Service
+@Transactional
 public class ActivityService extends DataService<ActivityEntity, ActivityRepository> {
 
 	public ActivityService(
@@ -72,20 +74,19 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 		return repo.save(activity);	
 	}
 
-	public boolean isTagDuplicate(String activityId, List<String> tagIds) {
-		ActivityEntity activity = getById(activityId);
-		return activity.getTags().stream().anyMatch(tag -> tagIds.contains(tag.getId()));
-	}
-
 	public List<TagEntity> addTags(String activityId, List<TagEntity> tags) {
 		ActivityEntity activity = getById(activityId);
-		activity.getTags().addAll(tags);
+		tags.stream().forEach(tagToAdd -> {
+			if (activity.getTags().stream().noneMatch(tag -> tag.getId().equals(tagToAdd.getId()))) {
+				activity.getTags().add(tagToAdd);
+			}
+		});
 		return repo.save(activity).getTags();
 	}
 	
-	public void deleteTag(String activityId, String tagId) {
+	public void deleteTags(String activityId, List<String> tagId) {
 		ActivityEntity activity = getById(activityId);
-		activity.getTags().removeIf(tag -> tag.getId().equals(tagId));
+		activity.getTags().removeIf(tag -> tagId.contains(tag.getId()));
 		repo.save(activity);	
 	}
 

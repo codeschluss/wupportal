@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
@@ -12,6 +13,7 @@ import de.codeschluss.portal.functional.organisation.OrganisationService;
 import de.codeschluss.portal.functional.user.UserEntity;
 
 @Service
+@Transactional
 public class ProviderService {
 	
 	private final OrganisationService orgaService;

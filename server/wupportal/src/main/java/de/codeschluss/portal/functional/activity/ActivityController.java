@@ -193,21 +193,21 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	@PostMapping("/activities/{activityId}/tags")
 	@OwnOrOrgaActivityOrSuperUserPermission
 	public ResponseEntity<?> addTags(@PathVariable String activityId, @RequestBody String... tagId) {
-		List<String> distinctTags = Arrays.asList(tagId).stream().distinct().collect(Collectors.toList());
-		
-		if (service.isTagDuplicate(activityId, distinctTags)) {
+		try {
+			List<String> distinctTags = Arrays.asList(tagId).stream().distinct().collect(Collectors.toList());
+			service.addTags(activityId, tagService.getByIds(distinctTags));
+			return ok(findTags(activityId));
+		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("Activity with one or more Tags already exists");
+			throw new BadParamsException("Given Tags or Activity do not exist");
 		}
-		service.addTags(activityId, tagService.getByIds(Arrays.asList(tagId)));
-		return ok(findTags(activityId));
 	}
 	
 	@DeleteMapping("/activities/{activityId}/tags/{tagId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteTag(@PathVariable String activityId, @PathVariable String tagId) {
+	public ResponseEntity<?> deleteTags(@PathVariable String activityId, @PathVariable String... tagId) {
 		try {
-			service.deleteTag(activityId, tagId);
+			service.deleteTags(activityId, Arrays.asList(tagId));
 			return noContent().build();
 		} catch (NotFoundException e) {
 			return noContent().build();

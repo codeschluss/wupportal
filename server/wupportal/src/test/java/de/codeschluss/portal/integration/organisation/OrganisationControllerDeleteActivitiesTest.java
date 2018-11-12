@@ -46,7 +46,7 @@ public class OrganisationControllerDeleteActivitiesTest {
 	@WithUserDetails("admin@user")
 	public void deleteOwnOrganisationOK() {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
-		String activityId = "00000000-0000-0000-0010-600000000000";
+		String activityId = "00000000-0000-0000-0010-210000000000";
 		
 		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(

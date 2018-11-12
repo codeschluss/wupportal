@@ -1,19 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ClientComponent } from './client.component';
-import { AdminGuard, ProviderGuard, SuperAdminGuard, UserGuard } from './core/services/guards';
-import { ActivityResolver, ConfigurationResolver, I18nResolver, OrganisationResolver } from './core/services/resolvers';
+import { I18nResolver } from './core/services/resolvers';
 
 const ClientProviders = [
-  UserGuard,
-  ProviderGuard,
-  AdminGuard,
-  SuperAdminGuard,
-
-  ActivityResolver,
-  ConfigurationResolver,
-  OrganisationResolver,
-
   I18nResolver
 ];
 
@@ -24,23 +13,17 @@ const ClientResolvers = {
 const ClientRoutes = [
   {
     path: '',
-    component: ClientComponent,
-    resolvers: ClientResolvers,
+    resolve: ClientResolvers,
     children: [
       {
         path: '',
-        loadChildren: 'src/views/public/public.client.module#PublicClientModule'
+        loadChildren: './views/public/public.module#PublicModule'
       },
       {
         path: 'admin',
-        loadChildren: 'src/views/admin/admin.client.module#AdminClientModule'
+        loadChildren: './views/admin/admin.module#AdminModule'
       }
     ]
-  },
-  {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: '/'
   }
 ];
 

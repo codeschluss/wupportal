@@ -11,8 +11,8 @@ const AdminResolvers = {
 const AdminRoutes = [
   {
     path: '',
-    component: AdminComponent,
     resolve: AdminResolvers,
+    component: AdminComponent,
     children: []
   },
   {

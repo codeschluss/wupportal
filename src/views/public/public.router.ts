@@ -11,8 +11,8 @@ const PublicResolvers = {
 const PublicRoutes = [
   {
     path: '',
-    component: PublicComponent,
     resolve: PublicResolvers,
+    component: PublicComponent,
     children: []
   },
   {

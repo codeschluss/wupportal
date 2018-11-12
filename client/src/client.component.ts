@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { ClientRouter } from 'src/client.router';
 
 @Component({
   selector: 'client-component',
@@ -10,8 +8,6 @@ import { ClientRouter } from 'src/client.router';
 export class ClientComponent {
 
   public static readonly imports = [
-    ClientRouter,
-    ServiceWorkerModule.register('ngsw-worker.js')
   ];
 
 }

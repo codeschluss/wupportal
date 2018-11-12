@@ -25,7 +25,7 @@ public class UserControllerFindOrganisationsByUserTest {
 	@Test
 	@WithUserDetails("super@user")
 	public void findProvidersByUserSuperUserOK() {		
-		Resources<?> result = (Resources<?>) controller.findOrganisationsByUser("00000000-0000-0000-0004-300000000000").getBody();
+		Resources<?> result = (Resources<?>) controller.findOrganisations("00000000-0000-0000-0004-300000000000").getBody();
 		
 		assertThat(result.getContent()).isNotEmpty();
 	}
@@ -33,17 +33,17 @@ public class UserControllerFindOrganisationsByUserTest {
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("admin@user")
 	public void findAllWithAdminUserDenied() {
-		controller.findOrganisationsByUser("00000000-0000-0000-0004-300000000000");
+		controller.findOrganisations("00000000-0000-0000-0004-300000000000");
 	}
 	
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("provider1@user")
 	public void findAllWithProviderUserDenied() {
-		controller.findOrganisationsByUser("00000000-0000-0000-0004-400000000000");
+		controller.findOrganisations("00000000-0000-0000-0004-400000000000");
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
 	public void findAllWithNoUserUserUserDenied() {
-		controller.findOrganisationsByUser("00000000-0000-0000-0004-400000000000");
+		controller.findOrganisations("00000000-0000-0000-0004-400000000000");
 	}
 }

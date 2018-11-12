@@ -41,7 +41,7 @@ public abstract class CrudController<E extends BaseEntity, S extends DataService
 	}
 	
 	public ResponseEntity<?> add(@RequestBody E newEntity) throws URISyntaxException {
-		if (service.getDuplicate(newEntity) != null) {
+		if (service.getExisting(newEntity) != null) {
 			throw new DuplicateEntryException("Entity already exists!");
 		}
 		
@@ -50,7 +50,7 @@ public abstract class CrudController<E extends BaseEntity, S extends DataService
 	}
 
 	public ResponseEntity<?> update(@RequestBody E newEntity, @PathVariable String id) throws URISyntaxException {
-		E duplicate = service.getDuplicate(newEntity);
+		E duplicate = service.getExisting(newEntity);
 		if (duplicate != null && !duplicate.getId().equals(id)) {
 			throw new DuplicateEntryException("Entity already exists!");
 		}

@@ -1,7 +1,6 @@
 package de.codeschluss.portal.functional.targetgroup;
 
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ public class TargetGroupService extends DataService<TargetGroupEntity, TargetGro
 	}
 
 	@Override
-	public TargetGroupEntity getDuplicate(TargetGroupEntity newTargetGroup) {
+	public TargetGroupEntity getExisting(TargetGroupEntity newTargetGroup) {
 		return repo.findByName(newTargetGroup.getName()).orElse(null);
 	}
 	

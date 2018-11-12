@@ -25,8 +25,9 @@ import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.exception.BadParamsException;
 import de.codeschluss.portal.common.exception.DuplicateEntryException;
 import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.common.security.permissions.OwnActivityPermission;
 import de.codeschluss.portal.common.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
-import de.codeschluss.portal.common.security.permissions.ProviderOrSuperUserPermission;
+import de.codeschluss.portal.common.security.permissions.ProviderPermission;
 import de.codeschluss.portal.common.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.common.security.services.AuthorizationService;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
@@ -90,19 +91,21 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@Override
 	@PostMapping("/activities")
-	@ProviderOrSuperUserPermission
+	@ProviderPermission
 	public ResponseEntity<?> add(@RequestBody ActivityEntity newActivity) throws URISyntaxException {
-		if (service.getDuplicate(newActivity) != null) {
+		if (service.getExisting(newActivity) != null) {
 			throw new DuplicateEntryException("Activity already exists!");
 		}
 		
-		newActivity.setProvider(getProvider(newActivity.getOrganisationId()));
-		newActivity.setAddress(addressService.add(newActivity.getAddress()));
-		newActivity.setCategory(categoryService.add(newActivity.getCategory()));
-		newActivity.setSchedules(scheduleService.addAll(newActivity.getSchedules()));
-		newActivity.setTags(tagService.addAll(newActivity.getTags()));
-		newActivity.setTargetGroups(targetGroupService.addAll(newActivity.getTargetGroups()));
-		
+		try {
+			newActivity.setProvider(getProvider(newActivity.getOrganisationId()));
+			newActivity.setCategory(categoryService.getById(newActivity.getCategoryId()));
+			newActivity.setAddress(addressService.getById(newActivity.getAddressId()));
+		} catch(NotFoundException e) {
+			//TODO: Error Objects with proper message
+			throw new BadParamsException("Need existing Provider, Category or Address");
+		}
+
 		Resource<ActivityEntity> resource = service.addResource(newActivity);
 		return created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -122,16 +125,16 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	@GetMapping("/activities/{activityId}/address")
-	public ResponseEntity<?> findAddressByActivity(@PathVariable String activityId) {
+	public ResponseEntity<?> findAddress(@PathVariable String activityId) {
 		return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
 	}
 	
 	@PutMapping("/activities/{activityId}/address")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> updateAddressForActivity(@PathVariable String activityId, @RequestBody String addressId) {
+	public ResponseEntity<?> updateAddress(@PathVariable String activityId, @RequestBody String addressId) {
 		if (addressService.existsById(addressId) && service.existsById(activityId)) {
 			service.updateAddress(activityId, addressService.getById(addressId));
-			return ok(findAddressByActivity(activityId));
+			return ok(findAddress(activityId));
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Address with given ID do not exist!");
@@ -139,16 +142,16 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	@GetMapping("/activities/{activityId}/category")
-	public ResponseEntity<?> findCategoryByActivity(@PathVariable String activityId) {
+	public ResponseEntity<?> findCategory(@PathVariable String activityId) {
 		return ok(categoryService.getResourceByActivity(activityId));
 	}
 	
 	@PutMapping("/activities/{activityId}/category")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> updateCategoryForActivity(@PathVariable String activityId, @RequestBody String categoryId) {
+	public ResponseEntity<?> updateCategory(@PathVariable String activityId, @RequestBody String categoryId) {
 		if (service.existsById(activityId) && categoryService.existsById(categoryId)) {
 			service.updateCategory(activityId, categoryService.getById(categoryId));
-			return ok(findCategoryByActivity(activityId));
+			return ok(findCategory(activityId));
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Category with given ID do not exist!");
@@ -156,40 +159,40 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	@GetMapping("/activities/{activityId}/organisation")
-	public ResponseEntity<?> findOrganisationByActivity(@PathVariable String activityId) {
+	public ResponseEntity<?> findOrganisation(@PathVariable String activityId) {
 		ProviderEntity provider = providerService.getProvidersByActivity(activityId);
 		return ok(organisationService.convertToResource(provider));
 	}
 	
 	@PutMapping("/activities/{activityId}/organisation")
-	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> updateOrganisationForActivity(@PathVariable String activityId, @RequestBody String organisationId) {
-		if (service.existsById(activityId) && organisationService.existsById(organisationId)) {
+	@OwnActivityPermission
+	public ResponseEntity<?> updateOrganisation(@PathVariable String activityId, @RequestBody String organisationId) {
+		try {
 			service.updateProvider(activityId, getProvider(organisationId));
-			return ok(findCategoryByActivity(activityId));
-		} else {
+			return ok(findOrganisation(activityId));
+		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
-			throw new BadParamsException("Activity or Organisation with given ID do not exist!");
-		}		
+			throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");
+		}
 	}
 	
 	@GetMapping("/activities/{activityId}/user")
 	@ShowUserOrSuperUserPermission
-	public ResponseEntity<?> findUserByActivity(@PathVariable String activityId) {
+	public ResponseEntity<?> findUser(@PathVariable String activityId) {
 		ProviderEntity provider = providerService.getProvidersByActivity(activityId);
 		return ok(userService.getResourceByProvider(provider));
 	}
 	
 	@GetMapping("/activities/{activityId}/tags")
-	public ResponseEntity<?> findTagsByActivity(@PathVariable String activityId) {
+	public ResponseEntity<?> findTags(@PathVariable String activityId) {
 		return ok(tagService.getResourceByActivity(
 				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTagsByActivity(activityId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findTags(activityId)));
 	}
 	
 	@PostMapping("/activities/{activityId}/tags")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> addTagsByActivity(@PathVariable String activityId, @RequestBody String... tagId) {
+	public ResponseEntity<?> addTags(@PathVariable String activityId, @RequestBody String... tagId) {
 		List<String> distinctTags = Arrays.asList(tagId).stream().distinct().collect(Collectors.toList());
 		
 		if (service.isTagDuplicate(activityId, distinctTags)) {
@@ -197,12 +200,12 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			throw new DuplicateEntryException("Activity with one or more Tags already exists");
 		}
 		service.addTags(activityId, tagService.getByIds(Arrays.asList(tagId)));
-		return ok(findTagsByActivity(activityId));
+		return ok(findTags(activityId));
 	}
 	
 	@DeleteMapping("/activities/{activityId}/tags/{tagId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteTagForActivity(@PathVariable String activityId, @PathVariable String tagId) {
+	public ResponseEntity<?> deleteTag(@PathVariable String activityId, @PathVariable String tagId) {
 		try {
 			service.deleteTag(activityId, tagId);
 			return noContent().build();
@@ -212,15 +215,15 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	@GetMapping("/activities/{activityId}/targetgroups")
-	public ResponseEntity<?> findTargetGroupsByActivity(@PathVariable String activityId) {
+	public ResponseEntity<?> findTargetGroups(@PathVariable String activityId) {
 		return ok(targetGroupService.getResourceByActivity(
 				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTagsByActivity(activityId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findTags(activityId)));
 	}
 	
 	@PostMapping("/activities/{activityId}/targetgroups")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> addTargetGroupsByActivity(@PathVariable String activityId, @RequestBody String... targetGroupId) {
+	public ResponseEntity<?> addTargetGroups(@PathVariable String activityId, @RequestBody String... targetGroupId) {
 		List<String> distinctTargetGroups = Arrays.asList(targetGroupId).stream().distinct().collect(Collectors.toList());
 		
 		if (service.isTargetGroupDuplicate(activityId, distinctTargetGroups)) {
@@ -228,12 +231,12 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			throw new DuplicateEntryException("Activity with one or more Target Group already exists");
 		}
 		service.addTargetGroups(activityId, targetGroupService.getByIds(Arrays.asList(targetGroupId)));
-		return ok(findTagsByActivity(activityId));
+		return ok(findTags(activityId));
 	}
 	
 	@DeleteMapping("/activities/{activityId}/targetgroups/{targetGroupId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteTargetGroupForActivity(@PathVariable String activityId, @PathVariable String targetGroupId) {
+	public ResponseEntity<?> deleteTargetGroup(@PathVariable String activityId, @PathVariable String targetGroupId) {
 		try {
 			service.deleteTargetGroup(activityId, targetGroupId);
 			return noContent().build();
@@ -243,15 +246,15 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	@GetMapping("/activities/{activityId}/schedules")
-	public ResponseEntity<?> findSchedulesByActivity(@PathVariable String activityId) {
+	public ResponseEntity<?> findSchedules(@PathVariable String activityId) {
 		return ok(scheduleService.getResourceByActivity(
 				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTagsByActivity(activityId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findTags(activityId)));
 	}
 	
 	@PostMapping("/activities/{activityId}/schedules")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> addSchedulesActivity(@PathVariable String activityId, @RequestBody String... scheduleId) {
+	public ResponseEntity<?> addSchedules(@PathVariable String activityId, @RequestBody String... scheduleId) {
 		List<String> distinctSchedules = Arrays.asList(scheduleId).stream().distinct().collect(Collectors.toList());
 		
 		if (service.isScheduleDuplicate(activityId, distinctSchedules)) {
@@ -259,12 +262,12 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			throw new DuplicateEntryException("Activity with one or more Schedules already exists");
 		}
 		service.addSchedules(activityId, scheduleService.getByIds(Arrays.asList(scheduleId)));
-		return ok(findTagsByActivity(activityId));
+		return ok(findTags(activityId));
 	}
 	
 	@DeleteMapping("/activities/{activityId}/schedules/{scheduleId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteScheduleForActivity(@PathVariable String activityId, @PathVariable String scheduleId) {
+	public ResponseEntity<?> deleteSchedule(@PathVariable String activityId, @PathVariable String scheduleId) {
 		try {
 			service.deleteSchedule(activityId, scheduleId);
 			return noContent().build();
@@ -274,10 +277,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	}
 	
 	private ProviderEntity getProvider(String organisationId) {
-		try {
-			return providerService.getProviderByUserAndOrganisation(authService.getCurrentUser().getId(), organisationId);
-		} catch(NotFoundException e) {
-			throw new BadParamsException("User does not exist with given Organisation!");
-		}
+		return providerService.getProviderByUserAndOrganisation(authService.getCurrentUser().getId(), organisationId);
 	}
 }

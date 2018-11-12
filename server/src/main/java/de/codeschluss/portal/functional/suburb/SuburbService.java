@@ -15,7 +15,7 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
 		super(repo, assembler);
 	}
 	
-	public SuburbEntity getDuplicate(SuburbEntity suburb) {
+	public SuburbEntity getExisting(SuburbEntity suburb) {
 		return repo.findByName(suburb.getName()).orElse(null);
 	}
 	

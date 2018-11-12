@@ -18,7 +18,7 @@ public class TagService extends DataService<TagEntity, TagRepository> {
 	}
 
 	@Override
-	public TagEntity getDuplicate(TagEntity newTag) {
+	public TagEntity getExisting(TagEntity newTag) {
 		return repo.findByName(newTag.getName()).orElse(null);
 	}
 	

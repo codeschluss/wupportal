@@ -46,40 +46,51 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 
 	@Column(name="show_user")
 	private boolean showUser;
+	
+	@Transient
+	private String addressId;
 
 	@ManyToOne
 	@ToString.Exclude
+	@JsonIgnore
 	private AddressEntity address;
+	
+	@Transient
+	private String categoryId;
 
 	@ManyToOne
 	@ToString.Exclude
+	@JsonIgnore
 	private CategoryEntity category;
 
+	@Transient
+	private String organisationId;
+	
 	@ManyToOne
 	@ToString.Exclude
 	@JsonIgnore
 	private ProviderEntity provider;
 	
-	@Transient
-	private String organisationId;
+	@OneToMany(mappedBy = "activity")
+	@ToString.Exclude
+	@JsonIgnore
+	private List<ScheduleEntity> schedules;
 
 	@ManyToMany
 	@ToString.Exclude
+	@JsonIgnore
 	@JoinTable(
 			name = "activities_tags",
 			joinColumns = @JoinColumn(name = "activity_id"),
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private List<TagEntity> tags;
-
+	
 	@ManyToMany
 	@ToString.Exclude
+	@JsonIgnore
 	@JoinTable(
 			name = "activities_target_groups",
 			joinColumns = @JoinColumn(name = "activity_id"),
 			inverseJoinColumns = @JoinColumn(name = "target_group_id"))
-	private List<TargetGroupEntity> targetGroups;
-	
-	@OneToMany(mappedBy = "activity")
-	@ToString.Exclude
-	private List<ScheduleEntity> schedules;
+	private List<TargetGroupEntity> targetGroups;	
 }

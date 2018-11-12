@@ -16,7 +16,7 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
 	}
 
 	@Override
-	public ScheduleEntity getDuplicate(ScheduleEntity newSchedule) {
+	public ScheduleEntity getExisting(ScheduleEntity newSchedule) {
 		return repo.findById(newSchedule.getId()).orElse(null);
 	}
 	

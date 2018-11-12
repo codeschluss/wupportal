@@ -13,7 +13,7 @@ public class ConfigurationService extends DataService<ConfigurationEntity, Confi
 	}
 
 	@Override
-	public ConfigurationEntity getDuplicate(ConfigurationEntity newConfiguration) {
+	public ConfigurationEntity getExisting(ConfigurationEntity newConfiguration) {
 		return repo.findByItem(newConfiguration.getItem()).orElse(null);
 	}
 

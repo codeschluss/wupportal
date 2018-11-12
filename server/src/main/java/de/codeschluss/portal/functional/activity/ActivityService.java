@@ -25,7 +25,7 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 	}
 	
 	@Override
-	public ActivityEntity getDuplicate(ActivityEntity activity) {
+	public ActivityEntity getExisting(ActivityEntity activity) {
 		return repo.findByName(activity.getName()).orElse(null);
 	}
 	

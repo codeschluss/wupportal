@@ -16,14 +16,19 @@ const ClientRoutes = [
     resolve: ClientResolvers,
     children: [
       {
-        path: '',
-        loadChildren: './views/public/public.module#PublicModule'
-      },
-      {
         path: 'admin',
         loadChildren: './views/admin/admin.module#AdminModule'
+      },
+      {
+        path: 'public',
+        loadChildren: './views/public/public.module#PublicModule'
       }
     ]
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'public'
   }
 ];
 

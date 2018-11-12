@@ -6,8 +6,9 @@ export class UserEntity extends AbstractEntity {
   public fullname: String;
   public password: String;
   public phone: String;
-  public providers: ProviderEntity[];
   public superuser: Boolean;
   public username: String;
+
+  public providers: ProviderEntity[];
 
 }

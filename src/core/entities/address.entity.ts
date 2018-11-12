@@ -9,7 +9,7 @@ export class AddressEntity extends AbstractEntity {
   public place: string;
   public postal_code: string;
   public street: string;
+
   public suburb: SuburbEntity;
-  // public suburb_id: string;
 
 }

@@ -2,7 +2,7 @@ export abstract class AbstractEntity {
 
   public id: string;
 
-  public created: string;
-  public modified: string;
+  public created: Date;
+  public modified: Date;
 
 }

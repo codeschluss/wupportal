@@ -1,3 +1,5 @@
+/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `configurations` (
   `id` CHAR(36) NOT NULL PRIMARY KEY,
 
@@ -160,7 +162,7 @@ CREATE TABLE `activities` (
 );
 
 CREATE TABLE `activities_tags` (
-  -- `id` CHAR(36) NOT NULL PRIMARY KEY,
+  `id` CHAR(36) NOT NULL PRIMARY KEY,
 
   `activity_id` CHAR(36) NOT NULL,
   `tag_id` CHAR(36) NOT NULL,
@@ -178,7 +180,7 @@ CREATE TABLE `activities_tags` (
 );
 
 CREATE TABLE `activities_target_groups` (
-  -- `id` CHAR(36) NOT NULL PRIMARY KEY,
+  `id` CHAR(36) NOT NULL PRIMARY KEY,
 
   `activity_id` CHAR(36) NOT NULL,
   `target_group_id` CHAR(36) NOT NULL,
@@ -236,12 +238,12 @@ CREATE TABLE `images` (
 CREATE TABLE `i18n` (
   `id` CHAR(36) NOT NULL PRIMARY KEY,
 
-  `content` text,
+  `content` TEXT,
   `field` VARCHAR(255) NOT NULL,
   `foreign_key` CHAR(36) NOT NULL,
   `locale` VARCHAR(6) NOT NULL,
   `model` VARCHAR(255) NOT NULL,
 
-  UNIQUE INDEX I18N_LOCALE_FIELD(`locale`, `model`, `foreign_key`, `field`),
-  INDEX I18N_FIELD(`model`, `foreign_key`, `field`)
+  KEY `I18N_FIELD` (`model`, `foreign_key`, `field`),
+  UNIQUE KEY `I18N_LOCALE_FIELD` (`locale`, `model`, `foreign_key`, `field`)
 );

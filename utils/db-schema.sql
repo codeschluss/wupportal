@@ -1,19 +1,3 @@
-/*
- * Database
- */
-
-DROP DATABASE IF EXISTS `wupportal`;
-
-CREATE DATABASE `wupportal`
-  CHARACTER SET `utf8`
-  COLLATE `utf8_general_ci`;
-
-USE `wupportal`;
-
-/*
- * Tables
- */
-
 CREATE TABLE `configurations` (
   `id` CHAR(36) NOT NULL PRIMARY KEY,
 
@@ -78,8 +62,8 @@ CREATE TABLE `addresses` (
   `id` CHAR(36) NOT NULL PRIMARY KEY,
 
   `house_number` VARCHAR(8),
-  `latitude` Float(16, 10),
-  `longitude` Float(16, 10),
+  `latitude` FLOAT(16),
+  `longitude` FLOAT(16),
   `place` VARCHAR(255),
   `postal_code` VARCHAR(8),
   `street` VARCHAR(255),
@@ -176,7 +160,7 @@ CREATE TABLE `activities` (
 );
 
 CREATE TABLE `activities_tags` (
-  `id` CHAR(36) NOT NULL PRIMARY KEY,
+  -- `id` CHAR(36) NOT NULL PRIMARY KEY,
 
   `activity_id` CHAR(36) NOT NULL,
   `tag_id` CHAR(36) NOT NULL,
@@ -194,7 +178,7 @@ CREATE TABLE `activities_tags` (
 );
 
 CREATE TABLE `activities_target_groups` (
-  `id` CHAR(36) NOT NULL PRIMARY KEY,
+  -- `id` CHAR(36) NOT NULL PRIMARY KEY,
 
   `activity_id` CHAR(36) NOT NULL,
   `target_group_id` CHAR(36) NOT NULL,

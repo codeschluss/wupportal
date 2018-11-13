@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.portal.common.base.CrudController;
+import de.codeschluss.portal.common.security.permissions.ProviderOrSuperUserPermission;
 import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.tag.TagEntity;
@@ -38,7 +39,7 @@ public class TagController extends CrudController<TagEntity, TagService> {
 	
 	@Override
 	@PostMapping("/tags")
-	@SuperUserPermission
+	@ProviderOrSuperUserPermission
 	public ResponseEntity<?> add(@RequestBody TagEntity newTag) throws URISyntaxException {
 		return super.add(newTag);
 	}

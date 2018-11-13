@@ -31,7 +31,9 @@ INSERT INTO `target_groups` (`id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0003-300000000000', 'targetTranslateRead', 'targetTranslateRead'),
 ('00000000-0000-0000-0003-400000000000', 'targetTranslateEdit', 'targetTranslateEdit'),
 ('00000000-0000-0000-0003-500000000000', 'mapfilter', 'mapfilter'),
-('00000000-0000-0000-0003-600000000000', 'mapfilterAllWithoutFree', 'mapfilterAllWithoutFree');
+('00000000-0000-0000-0003-600000000000', 'mapfilterAllWithoutFree', 'mapfilterAllWithoutFree'),
+('00000000-0000-0000-0003-700000000000', 'targetDelete', 'targetDelete'),
+('00000000-0000-0000-0003-800000000000', 'targetUpdate', 'targetUpdate');
 
 INSERT INTO `users` (`id`, `superuser`, `username`, `password`, `fullname`, `phone`) VALUES
 ('00000000-0000-0000-0004-100000000000', 1, 'super@user', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'superuser', '01234567890'),

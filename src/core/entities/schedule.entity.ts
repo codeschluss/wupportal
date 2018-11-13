@@ -3,8 +3,8 @@ import { ActivityEntity } from './activity.entity';
 
 export class ScheduleEntity extends AbstractEntity {
 
-  public end_date: Date;
-  public start_date: Date;
+  public end_date: string;
+  public start_date: string;
 
   public activity: ActivityEntity;
 

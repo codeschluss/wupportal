@@ -1,7 +1,9 @@
+import { ResourceOrganisationEntity } from '../api/models/resource-organisation-entity';
 import { AbstractEntity } from './abstract.entity';
 import { AddressEntity } from './address.entity';
 
-export class OrganisationEntity extends AbstractEntity {
+export class OrganisationEntity extends AbstractEntity
+  implements ResourceOrganisationEntity {
 
   public description: string;
   public image: any;

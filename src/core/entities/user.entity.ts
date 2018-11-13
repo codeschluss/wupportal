@@ -1,13 +1,15 @@
+import { ResourceUserEntity } from '../api/models/resource-user-entity';
 import { AbstractEntity } from './abstract.entity';
 import { ProviderEntity } from './provider.entity';
 
-export class UserEntity extends AbstractEntity {
+export class UserEntity extends AbstractEntity
+  implements ResourceUserEntity {
 
-  public fullname: String;
-  public password: String;
-  public phone: String;
-  public superuser: Boolean;
-  public username: String;
+  public fullname: string;
+  public password: string;
+  public phone: string;
+  public superuser: boolean;
+  public username: string;
 
   public providers: ProviderEntity[];
 

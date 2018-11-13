@@ -6,6 +6,7 @@ import { UrlSerializer } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
+import { ApiModule } from './core/api/api.module';
 import { UserService } from './core/services/services';
 import { I18nComponent } from './utils/i18n.component';
 import { LogoComponent } from './utils/logo.component';
@@ -32,6 +33,7 @@ const ClientProviders = [
   bootstrap: [ClientComponent],
   declarations: ClientDeclarations,
   imports: [
+    ApiModule,
     BrowserModule,
     BrowserAnimationsModule,
     ClientImports,

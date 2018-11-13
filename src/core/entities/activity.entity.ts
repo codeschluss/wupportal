@@ -1,3 +1,4 @@
+import { ResourceActivityEntity } from '../api/models/resource-activity-entity';
 import { AbstractEntity } from './abstract.entity';
 import { AddressEntity } from './address.entity';
 import { CategoryEntity } from './category.entity';
@@ -6,7 +7,8 @@ import { ScheduleEntity } from './schedule.entity';
 import { TagEntity } from './tag.entity';
 import { TargetGroupEntity } from './targetgroup.entity';
 
-export class ActivityEntity extends AbstractEntity {
+export class ActivityEntity extends AbstractEntity
+  implements ResourceActivityEntity {
 
   public description: string;
   public name: string;

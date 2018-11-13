@@ -1,4 +1,9 @@
 {
+  "linterOptions": {
+    "exclude": [
+      "src/core/server/**"
+    ]
+  },
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],

@@ -7,32 +7,35 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.activity.ActivityController;
-import de.codeschluss.portal.functional.category.CategoryEntity;
+import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ActivityControllerFindCategoryTest {
+@Transactional
+public class ActivityControllerFindTargetGroupsTest {
 
 	@Autowired
 	private ActivityController controller;
 	
 	@Test
-	public void findCategoryOK() {
+	public void findTargetGroupsOK() {
 		String activityId = "00000000-0000-0000-0010-100000000000";
 		
-		Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId).getBody();
+		Resources<Resource<TargetGroupEntity>> result = (Resources<Resource<TargetGroupEntity>>) controller.findTargetGroups(activityId).getBody();
 		
 		assertThat(result.getContent()).isNotNull();
 	}
 	
 	@Test(expected = NotFoundException.class)
-	public void findCategoryNotFound() {
+	public void findTargetGroupNotFound() {
 		String activityId = "00000000-0000-0000-0010-XX0000000000";
 		
-		controller.findCategory(activityId);
+		controller.findTargetGroups(activityId);
 	}
 }

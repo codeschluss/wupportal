@@ -7,32 +7,33 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.functional.activity.ActivityController;
-import de.codeschluss.portal.functional.category.CategoryEntity;
+import de.codeschluss.portal.functional.schedule.ScheduleEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ActivityControllerFindCategoryTest {
+public class ActivityControllerFindSchedulesTest {
 
 	@Autowired
 	private ActivityController controller;
 	
 	@Test
-	public void findCategoryOK() {
+	public void findSchedulesOK() {
 		String activityId = "00000000-0000-0000-0010-100000000000";
 		
-		Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId).getBody();
+		Resources<Resource<ScheduleEntity>> result = (Resources<Resource<ScheduleEntity>>) controller.findSchedules(activityId).getBody();
 		
 		assertThat(result.getContent()).isNotNull();
 	}
 	
 	@Test(expected = NotFoundException.class)
-	public void findCategoryNotFound() {
+	public void findScheduleNotFound() {
 		String activityId = "00000000-0000-0000-0010-XX0000000000";
 		
-		controller.findCategory(activityId);
+		controller.findSchedules(activityId);
 	}
 }

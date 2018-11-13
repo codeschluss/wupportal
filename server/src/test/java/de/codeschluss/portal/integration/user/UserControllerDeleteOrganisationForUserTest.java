@@ -31,29 +31,25 @@ public class UserControllerDeleteOrganisationForUserTest {
 	public void deleteForOtherUserSuperUserOK() {
 		String userId = "00000000-0000-0000-0004-900000000000";
 		String orgaId = "00000000-0000-0000-0008-800000000000";
-		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getId().equals(orgaId), "organisation exists"));
+		
+		assertContaining(userId, orgaId);
 		
 		controller.deleteOrganisation(userId, orgaId);
 		
-		result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
-		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(orgaId));
+		assertNotContaining(userId, orgaId);
 	}
-	
+
 	@Test
 	@WithUserDetails("provider3@user")
 	public void deleteOrganisationForOwnUserOK() {
 		String userId = "00000000-0000-0000-0004-800000000000";
 		String orgaId = "00000000-0000-0000-0008-200000000000";
-		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getId().equals(orgaId), "organisation exists"));
+		
+		assertContaining(userId, orgaId);
 		
 		controller.deleteOrganisation(userId, orgaId);
 		
-		result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
-		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(orgaId));
+		assertNotContaining(userId, orgaId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -71,5 +67,16 @@ public class UserControllerDeleteOrganisationForUserTest {
 		String providerId = "00000000-0000-0000-0008-300000000000";
 		
 		controller.deleteOrganisation(userId, providerId);
+	}
+	
+	private void assertContaining(String userId, String orgaId) {
+		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
+		assertThat(result.getContent()).haveAtLeastOne(
+				new Condition<>(p -> p.getContent().getId().equals(orgaId), "organisation exists"));		
+	}
+
+	private void assertNotContaining(String userId, String orgaId) {
+		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.findOrganisations(userId).getBody();
+		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(orgaId));
 	}
 }

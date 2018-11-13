@@ -33,10 +33,9 @@ public class ActivityControllerUpdateAddressTest {
 		
 		controller.updateAddress(activityId, addressId);
 		
-		Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findAddress(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(addressId);
+		assertContaining(activityId, addressId);
 	}
-	
+
 	@Test
 	@WithUserDetails("provider1@user")
 	public void updateProviderOK() throws URISyntaxException {
@@ -45,8 +44,7 @@ public class ActivityControllerUpdateAddressTest {
 		
 		controller.updateAddress(activityId, addressId);
 		
-		Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findAddress(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(addressId);
+		assertContaining(activityId, addressId);
 	}
 	
 	@Test
@@ -57,8 +55,7 @@ public class ActivityControllerUpdateAddressTest {
 		
 		controller.updateAddress(activityId, addressId);
 		
-		Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findAddress(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(addressId);
+		assertContaining(activityId, addressId);
 	}
 	
 	@Test(expected = BadParamsException.class)
@@ -68,9 +65,6 @@ public class ActivityControllerUpdateAddressTest {
 		String activityId = "00000000-0000-0000-0010-XX0000000000";
 		
 		controller.updateAddress(activityId, addressId);
-		
-		Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findAddress(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(addressId);
 	}
 	
 	@Test(expected = BadParamsException.class)
@@ -80,9 +74,6 @@ public class ActivityControllerUpdateAddressTest {
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		controller.updateAddress(activityId, addressId);
-		
-		Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findAddress(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(addressId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -100,5 +91,10 @@ public class ActivityControllerUpdateAddressTest {
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		controller.updateAddress(activityId, addressId);
+	}
+	
+	private void assertContaining(String activityId, String addressId) {
+		Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findAddress(activityId).getBody();
+		assertThat(result.getContent().getId()).isEqualTo(addressId);
 	}
 }

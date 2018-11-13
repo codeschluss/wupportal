@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.base.DataService;
 import de.codeschluss.portal.common.exception.NotFoundException;
@@ -16,6 +17,7 @@ import de.codeschluss.portal.functional.tag.TagEntity;
 import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 
 @Service
+@Transactional
 public class ActivityService extends DataService<ActivityEntity, ActivityRepository> {
 
 	public ActivityService(
@@ -54,10 +56,10 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 		});
 	}
 
-	public ActivityEntity updateAddress(String activityId, AddressEntity address) {
+	public AddressEntity updateAddress(String activityId, AddressEntity address) {
 		ActivityEntity activity = getById(activityId);
 		activity.setAddress(address);
-		return repo.save(activity);		
+		return repo.save(activity).getAddress();		
 	}
 
 	public ActivityEntity updateCategory(String activityId, CategoryEntity category) {
@@ -72,54 +74,52 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 		return repo.save(activity);	
 	}
 
-	public boolean isTagDuplicate(String activityId, List<String> tagIds) {
-		ActivityEntity activity = getById(activityId);
-		return activity.getTags().stream().anyMatch(tag -> tagIds.contains(tag.getId()));
-	}
-
 	public List<TagEntity> addTags(String activityId, List<TagEntity> tags) {
 		ActivityEntity activity = getById(activityId);
-		activity.getTags().addAll(tags);
+		tags.stream().forEach(tagToAdd -> {
+			if (activity.getTags().stream().noneMatch(tag -> tag.getId().equals(tagToAdd.getId()))) {
+				activity.getTags().add(tagToAdd);
+			}
+		});
 		return repo.save(activity).getTags();
 	}
 	
-	public void deleteTag(String activityId, String tagId) {
+	public void deleteTags(String activityId, List<String> tagIds) {
 		ActivityEntity activity = getById(activityId);
-		activity.getTags().removeIf(tag -> tag.getId().equals(tagId));
+		activity.getTags().removeIf(tag -> tagIds.contains(tag.getId()));
 		repo.save(activity);	
-	}
-
-	public boolean isTargetGroupDuplicate(String activityId, List<String> targetGroupIds) {
-		ActivityEntity activity = getById(activityId);
-		return activity.getTargetGroups().stream().anyMatch(targetGroup -> targetGroupIds.contains(targetGroup.getId()));
 	}
 
 	public List<TargetGroupEntity> addTargetGroups(String activityId, List<TargetGroupEntity> targetGroups) {
 		ActivityEntity activity = getById(activityId);
-		activity.getTargetGroups().addAll(targetGroups);
+		targetGroups.stream().forEach(targetGroupToAdd -> {
+			if (activity.getTargetGroups().stream().noneMatch(targetGroup -> targetGroup.getId().equals(targetGroupToAdd.getId()))) {
+				activity.getTargetGroups().add(targetGroupToAdd);
+			}
+		});
 		return repo.save(activity).getTargetGroups();
 	}
 
-	public void deleteTargetGroup(String activityId, String targetGroupId) {
+	public void deleteTargetGroup(String activityId, List<String> targetGroupIds) {
 		ActivityEntity activity = getById(activityId);
-		activity.getTargetGroups().removeIf(targetGroup -> targetGroup.getId().equals(targetGroupId));
+		activity.getTargetGroups().removeIf(targetGroup -> targetGroupIds.contains(targetGroup.getId()));
+		//TODO: Check if target groups are nullable and throw exception if last target group is deleted
 		repo.save(activity);	
-	}
-
-	public boolean isScheduleDuplicate(String activityId, List<String> scheduleIds) {
-		ActivityEntity activity = getById(activityId);
-		return activity.getSchedules().stream().anyMatch(schedule -> scheduleIds.contains(schedule.getId()));
 	}
 
 	public List<ScheduleEntity> addSchedules(String activityId, List<ScheduleEntity> schedules) {
 		ActivityEntity activity = getById(activityId);
-		activity.getSchedules().addAll(schedules);
+		schedules.stream().forEach(scheduleToAdd -> {
+			if (activity.getSchedules().stream().noneMatch(schedule -> schedule.getId().equals(scheduleToAdd.getId()))) {
+				activity.getSchedules().add(scheduleToAdd);
+			}
+		});
 		return repo.save(activity).getSchedules();
 	}
 
-	public void deleteSchedule(String activityId, String scheduleId) {
+	public void deleteSchedule(String activityId, List<String> scheduleIds) {
 		ActivityEntity activity = getById(activityId);
-		activity.getSchedules().removeIf(schedule -> schedule.getId().equals(scheduleId));
+		activity.getSchedules().removeIf(schedule -> scheduleIds.contains(schedule.getId()));
 		repo.save(activity);
 	}
 }

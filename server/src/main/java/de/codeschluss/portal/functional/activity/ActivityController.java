@@ -37,7 +37,9 @@ import de.codeschluss.portal.functional.category.CategoryService;
 import de.codeschluss.portal.functional.organisation.OrganisationService;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 import de.codeschluss.portal.functional.provider.ProviderService;
+import de.codeschluss.portal.functional.schedule.ScheduleEntity;
 import de.codeschluss.portal.functional.schedule.ScheduleService;
+import de.codeschluss.portal.functional.tag.TagEntity;
 import de.codeschluss.portal.functional.tag.TagService;
 import de.codeschluss.portal.functional.targetgroup.TargetGroupService;
 import de.codeschluss.portal.functional.user.UserService;
@@ -101,6 +103,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			newActivity.setProvider(getProvider(newActivity.getOrganisationId()));
 			newActivity.setCategory(categoryService.getById(newActivity.getCategoryId()));
 			newActivity.setAddress(addressService.getById(newActivity.getAddressId()));
+			//TODO: Check if target groups are nullable!
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Need existing Provider, Category or Address");
@@ -134,7 +137,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> updateAddress(@PathVariable String activityId, @RequestBody String addressId) {
 		if (addressService.existsById(addressId) && service.existsById(activityId)) {
 			service.updateAddress(activityId, addressService.getById(addressId));
-			return ok(findAddress(activityId));
+			return findAddress(activityId);
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Address with given ID do not exist!");
@@ -151,7 +154,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> updateCategory(@PathVariable String activityId, @RequestBody String categoryId) {
 		if (service.existsById(activityId) && categoryService.existsById(categoryId)) {
 			service.updateCategory(activityId, categoryService.getById(categoryId));
-			return ok(findCategory(activityId));
+			return findCategory(activityId);
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Category with given ID do not exist!");
@@ -169,7 +172,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> updateOrganisation(@PathVariable String activityId, @RequestBody String organisationId) {
 		try {
 			service.updateProvider(activityId, getProvider(organisationId));
-			return ok(findOrganisation(activityId));
+			return findOrganisation(activityId);
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");
@@ -192,25 +195,25 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@PostMapping("/activities/{activityId}/tags")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> addTags(@PathVariable String activityId, @RequestBody String... tagId) {
-		List<String> distinctTags = Arrays.asList(tagId).stream().distinct().collect(Collectors.toList());
-		
-		if (service.isTagDuplicate(activityId, distinctTags)) {
+	public ResponseEntity<?> addTags(@PathVariable String activityId, @RequestBody TagEntity... tags) {
+		try {
+			service.addTags(activityId, tagService.addAll(Arrays.asList(tags)));
+			return findTags(activityId);
+		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("Activity with one or more Tags already exists");
+			throw new BadParamsException("Given Activity does not exist");
 		}
-		service.addTags(activityId, tagService.getByIds(Arrays.asList(tagId)));
-		return ok(findTags(activityId));
 	}
 	
 	@DeleteMapping("/activities/{activityId}/tags/{tagId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteTag(@PathVariable String activityId, @PathVariable String tagId) {
+	public ResponseEntity<?> deleteTags(@PathVariable String activityId, @PathVariable String... tagIds) {
 		try {
-			service.deleteTag(activityId, tagId);
+			service.deleteTags(activityId, Arrays.asList(tagIds));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			return noContent().build();
+			//TODO: Error Objects with proper message
+			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
 	
@@ -218,30 +221,31 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> findTargetGroups(@PathVariable String activityId) {
 		return ok(targetGroupService.getResourceByActivity(
 				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTags(activityId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findTargetGroups(activityId)));
 	}
 	
 	@PostMapping("/activities/{activityId}/targetgroups")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> addTargetGroups(@PathVariable String activityId, @RequestBody String... targetGroupId) {
-		List<String> distinctTargetGroups = Arrays.asList(targetGroupId).stream().distinct().collect(Collectors.toList());
-		
-		if (service.isTargetGroupDuplicate(activityId, distinctTargetGroups)) {
+	public ResponseEntity<?> addTargetGroups(@PathVariable String activityId, @RequestBody String... targetGroupIds) {
+		try {
+			List<String> distinctTargetGroups = Arrays.asList(targetGroupIds).stream().distinct().collect(Collectors.toList());
+			service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups));
+			return findTargetGroups(activityId);
+		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("Activity with one or more Target Group already exists");
+			throw new BadParamsException("Given Target Group or Activity do not exist");
 		}
-		service.addTargetGroups(activityId, targetGroupService.getByIds(Arrays.asList(targetGroupId)));
-		return ok(findTags(activityId));
 	}
 	
 	@DeleteMapping("/activities/{activityId}/targetgroups/{targetGroupId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteTargetGroup(@PathVariable String activityId, @PathVariable String targetGroupId) {
+	public ResponseEntity<?> deleteTargetGroups(@PathVariable String activityId, @PathVariable String... targetGroupIds) {
 		try {
-			service.deleteTargetGroup(activityId, targetGroupId);
+			service.deleteTargetGroup(activityId, Arrays.asList(targetGroupIds));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			return noContent().build();
+			//TODO: Error Objects with proper message
+			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
 	
@@ -249,30 +253,30 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> findSchedules(@PathVariable String activityId) {
 		return ok(scheduleService.getResourceByActivity(
 				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTags(activityId)));
+				DummyInvocationUtils.methodOn(this.getClass()).findSchedules(activityId)));
 	}
 	
 	@PostMapping("/activities/{activityId}/schedules")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> addSchedules(@PathVariable String activityId, @RequestBody String... scheduleId) {
-		List<String> distinctSchedules = Arrays.asList(scheduleId).stream().distinct().collect(Collectors.toList());
-		
-		if (service.isScheduleDuplicate(activityId, distinctSchedules)) {
+	public ResponseEntity<?> addSchedules(@PathVariable String activityId, @RequestBody ScheduleEntity... schedules) {
+		try {
+			service.addSchedules(activityId, scheduleService.addAll(Arrays.asList(schedules)));
+			return findSchedules(activityId);
+		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
-			throw new DuplicateEntryException("Activity with one or more Schedules already exists");
+			throw new BadParamsException("Given Activity does not exist");
 		}
-		service.addSchedules(activityId, scheduleService.getByIds(Arrays.asList(scheduleId)));
-		return ok(findTags(activityId));
 	}
 	
 	@DeleteMapping("/activities/{activityId}/schedules/{scheduleId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteSchedule(@PathVariable String activityId, @PathVariable String scheduleId) {
+	public ResponseEntity<?> deleteSchedules(@PathVariable String activityId, @PathVariable String... scheduleIds) {
 		try {
-			service.deleteSchedule(activityId, scheduleId);
+			service.deleteSchedule(activityId, Arrays.asList(scheduleIds));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			return noContent().build();
+			//TODO: Error Objects with proper message
+			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
 	

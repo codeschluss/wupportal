@@ -33,10 +33,9 @@ public class ActivityControllerUpdateOrganisationTest {
 		
 		controller.updateOrganisation(activityId, organisationId);
 		
-		Resource<OrganisationEntity> result = (Resource<OrganisationEntity>) controller.findOrganisation(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(organisationId);
+		assertContaing(activityId,organisationId);
 	}
-	
+
 	@Test(expected = BadParamsException.class)
 	@WithUserDetails("provider1@user")
 	public void updateProviderOrganisationBadParam() throws URISyntaxException {
@@ -44,9 +43,6 @@ public class ActivityControllerUpdateOrganisationTest {
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		controller.updateOrganisation(activityId, organisationId);
-		
-		Resource<OrganisationEntity> result = (Resource<OrganisationEntity>) controller.findOrganisation(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(organisationId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -56,9 +52,6 @@ public class ActivityControllerUpdateOrganisationTest {
 		String activityId = "00000000-0000-0000-0010-XX0000000000";
 		
 		controller.updateOrganisation(activityId, organisationId);
-		
-		Resource<OrganisationEntity> result = (Resource<OrganisationEntity>) controller.findOrganisation(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(organisationId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -67,5 +60,10 @@ public class ActivityControllerUpdateOrganisationTest {
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		controller.updateOrganisation(activityId, organisationId);
+	}
+	
+	private void assertContaing(String activityId, String organisationId) {
+		Resource<OrganisationEntity> result = (Resource<OrganisationEntity>) controller.findOrganisation(activityId).getBody();
+		assertThat(result.getContent().getId()).isEqualTo(organisationId);
 	}
 }

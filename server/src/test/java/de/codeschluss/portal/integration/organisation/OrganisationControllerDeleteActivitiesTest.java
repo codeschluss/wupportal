@@ -32,30 +32,25 @@ public class OrganisationControllerDeleteActivitiesTest {
 	public void deleteForOtherSuperUserOK() {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String activityId = "00000000-0000-0000-0010-190000000000";
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
+		
+		assertContaining(organisationId, activityId);
 		
 		controller.deleteActivity(organisationId, activityId);
 		
-		result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
-		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
+		assertNotContaining(organisationId, activityId);
 	}
-	
+
 	@Test
 	@WithUserDetails("admin@user")
 	public void deleteOwnOrganisationOK() {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
-		String activityId = "00000000-0000-0000-0010-600000000000";
+		String activityId = "00000000-0000-0000-0010-210000000000";
 		
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
+		assertContaining(organisationId, activityId);
 		
 		controller.deleteActivity(organisationId, activityId);
 		
-		result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
-		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
+		assertNotContaining(organisationId, activityId);
 	}
 	
 	@Test(expected = BadParamsException.class)
@@ -82,5 +77,16 @@ public class OrganisationControllerDeleteActivitiesTest {
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		controller.deleteActivity(organisationId, activityId);
+	}
+	
+	private void assertContaining(String organisationId, String activityId) {
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
+		assertThat(result.getContent()).haveAtLeastOne(
+				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
+	}
+	
+	private void assertNotContaining(String organisationId, String activityId) {
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(organisationId).getBody();
+		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));
 	}
 }

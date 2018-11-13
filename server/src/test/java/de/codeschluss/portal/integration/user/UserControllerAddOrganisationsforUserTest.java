@@ -34,10 +34,9 @@ public class UserControllerAddOrganisationsforUserTest {
 		
 		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.addOrganisation(userId, orgaId).getBody();
 		
-		assertThat(result.getContent()).haveExactly(1, new Condition<>(
-				p -> p.getContent().getId().equals(orgaId), "new organisation with given orga exists"));
+		assertContaining(result, userId,orgaId);
 	}
-	
+
 	@Test
 	@WithUserDetails("provider1@user")
 	public void addMultipleOrganisationForOwnUserOK() {
@@ -50,11 +49,8 @@ public class UserControllerAddOrganisationsforUserTest {
 		
 		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.addOrganisation(userId, requestBody).getBody();
 		
-		assertThat(result.getContent()).haveExactly(1, new Condition<>(
-				p -> p.getContent().getId().equals(orgaId1), "new organisation with given orga1 exists"));
-		
-		assertThat(result.getContent()).haveExactly(1, new Condition<>(
-				p -> p.getContent().getId().equals(orgaId2), "new organisation with given orga2 exists"));
+		assertContaining(result, userId,orgaId1);
+		assertContaining(result, userId,orgaId2);
 	}
 	
 	@Test
@@ -69,8 +65,7 @@ public class UserControllerAddOrganisationsforUserTest {
 		
 		Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) controller.addOrganisation(userId, requestBody).getBody();
 		
-		assertThat(result.getContent()).haveExactly(1, new Condition<>(
-				p -> p.getContent().getId().equals(orgaId1), "new organisation with given orga1 exists"));
+		assertContaining(result, userId,orgaId1);
 	}
 	
 	@Test(expected = DuplicateEntryException.class)
@@ -115,5 +110,10 @@ public class UserControllerAddOrganisationsforUserTest {
 		String orgaId = "12345678-0000-0000-0008-XX0000000000";
 		
 		controller.addOrganisation(userId, orgaId);
+	}
+	
+	private void assertContaining(Resources<Resource<OrganisationEntity>> result, String userId, String orgaId) {
+		assertThat(result.getContent()).haveExactly(1, new Condition<>(
+				p -> p.getContent().getId().equals(orgaId), "new organisation with given orga exists"));
 	}
 }

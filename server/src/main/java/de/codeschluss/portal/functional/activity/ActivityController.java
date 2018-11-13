@@ -207,9 +207,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@DeleteMapping("/activities/{activityId}/tags/{tagId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteTags(@PathVariable String activityId, @PathVariable String... tagIds) {
+	public ResponseEntity<?> deleteTags(@PathVariable String activityId, @PathVariable String... tagId) {
 		try {
-			service.deleteTags(activityId, Arrays.asList(tagIds));
+			service.deleteTags(activityId, Arrays.asList(tagId));
 			return noContent().build();
 		} catch (NotFoundException e) {
 			//TODO: Error Objects with proper message
@@ -239,9 +239,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@DeleteMapping("/activities/{activityId}/targetgroups/{targetGroupId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteTargetGroups(@PathVariable String activityId, @PathVariable String... targetGroupIds) {
+	public ResponseEntity<?> deleteTargetGroups(@PathVariable String activityId, @PathVariable String... targetGroupId) {
 		try {
-			service.deleteTargetGroup(activityId, Arrays.asList(targetGroupIds));
+			service.deleteTargetGroup(activityId, Arrays.asList(targetGroupId));
 			return noContent().build();
 		} catch (NotFoundException e) {
 			//TODO: Error Objects with proper message
@@ -270,9 +270,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@DeleteMapping("/activities/{activityId}/schedules/{scheduleId}")
 	@OwnOrOrgaActivityOrSuperUserPermission
-	public ResponseEntity<?> deleteSchedules(@PathVariable String activityId, @PathVariable String... scheduleIds) {
+	public ResponseEntity<?> deleteSchedules(@PathVariable String activityId, @PathVariable String... scheduleId) {
 		try {
-			service.deleteSchedule(activityId, Arrays.asList(scheduleIds));
+			service.deleteSchedule(activityId, Arrays.asList(scheduleId));
 			return noContent().build();
 		} catch (NotFoundException e) {
 			//TODO: Error Objects with proper message

@@ -1,7 +1,9 @@
+import { ResourceAddressEntity } from '../api/models/resource-address-entity';
 import { AbstractEntity } from './abstract.entity';
 import { SuburbEntity } from './suburb.entity';
 
-export class AddressEntity extends AbstractEntity {
+export class AddressEntity extends AbstractEntity
+  implements ResourceAddressEntity {
 
   public house_number: string;
   public latitude: number;

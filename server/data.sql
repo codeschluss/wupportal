@@ -1,5 +1,3 @@
-SET character_set_client = utf8;
-
 INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
 ('00000000-0000-0000-0001-000000000001', 'mapcenterLongitude', '7.1756'),
 ('00000000-0000-0000-0001-000000000002', 'mapcenterLatitude', '51.2640'),

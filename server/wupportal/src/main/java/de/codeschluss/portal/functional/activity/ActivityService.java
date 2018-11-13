@@ -56,10 +56,10 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 		});
 	}
 
-	public ActivityEntity updateAddress(String activityId, AddressEntity address) {
+	public AddressEntity updateAddress(String activityId, AddressEntity address) {
 		ActivityEntity activity = getById(activityId);
 		activity.setAddress(address);
-		return repo.save(activity);		
+		return repo.save(activity).getAddress();		
 	}
 
 	public ActivityEntity updateCategory(String activityId, CategoryEntity category) {

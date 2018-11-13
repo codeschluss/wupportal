@@ -10,17 +10,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.codeschluss.portal.common.base.CrudController;
 import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 
+@RestController
 public class TargetGroupController extends CrudController<TargetGroupEntity, TargetGroupService>{
 
 	public TargetGroupController(TargetGroupService service) {
 		super(service);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

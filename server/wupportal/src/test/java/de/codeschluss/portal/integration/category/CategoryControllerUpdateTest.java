@@ -50,7 +50,7 @@ public class CategoryControllerUpdateTest {
 	@WithUserDetails("provider1@user")
 	public void updateProviderUserDenied() throws URISyntaxException {
 		CategoryEntity category = new CategoryEntity("updateProviderUserDenied", "updateProviderUserDenied", "updateProviderUserDenied", null);		
-		String categoryId = "00000000-0000-0000-0005-100000000000";
+		String categoryId = "00000000-0000-0000-0007-100000000000";
 		
 		controller.update(category, categoryId);
 	}
@@ -58,7 +58,7 @@ public class CategoryControllerUpdateTest {
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
 	public void updateNoUserDenied() throws URISyntaxException {
 		CategoryEntity category = new CategoryEntity("updateNoUserDenied", "updateNoUserDenied", "updateNoUserDenied", null);			
-		String categoryId = "00000000-0000-0000-0005-100000000000";
+		String categoryId = "00000000-0000-0000-0007-100000000000";
 		
 		controller.update(category, categoryId);
 	}

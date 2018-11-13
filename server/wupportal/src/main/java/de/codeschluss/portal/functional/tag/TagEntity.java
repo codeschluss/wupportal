@@ -41,5 +41,10 @@ public class TagEntity extends BaseEntity implements Serializable {
 	@ManyToMany(mappedBy = "tags")
 	@JsonIgnore
 	private List<ActivityEntity> activities;
+	
+	public void setName(String name) {
+		//TODO: More preparations
+		this.name = name.trim();
+	}
 
 }

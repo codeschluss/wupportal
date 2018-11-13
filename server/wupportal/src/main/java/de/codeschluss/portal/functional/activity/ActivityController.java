@@ -137,7 +137,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> updateAddress(@PathVariable String activityId, @RequestBody String addressId) {
 		if (addressService.existsById(addressId) && service.existsById(activityId)) {
 			service.updateAddress(activityId, addressService.getById(addressId));
-			return ok(findAddress(activityId));
+			return findAddress(activityId);
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Address with given ID do not exist!");
@@ -154,7 +154,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> updateCategory(@PathVariable String activityId, @RequestBody String categoryId) {
 		if (service.existsById(activityId) && categoryService.existsById(categoryId)) {
 			service.updateCategory(activityId, categoryService.getById(categoryId));
-			return ok(findCategory(activityId));
+			return findCategory(activityId);
 		} else {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Category with given ID do not exist!");
@@ -172,7 +172,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> updateOrganisation(@PathVariable String activityId, @RequestBody String organisationId) {
 		try {
 			service.updateProvider(activityId, getProvider(organisationId));
-			return ok(findOrganisation(activityId));
+			return findOrganisation(activityId);
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");
@@ -198,7 +198,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> addTags(@PathVariable String activityId, @RequestBody TagEntity... tags) {
 		try {
 			service.addTags(activityId, tagService.addAll(Arrays.asList(tags)));
-			return ok(findTags(activityId));
+			return findTags(activityId);
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
@@ -230,7 +230,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 		try {
 			List<String> distinctTargetGroups = Arrays.asList(targetGroupIds).stream().distinct().collect(Collectors.toList());
 			service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups));
-			return ok(findTargetGroups(activityId));
+			return findTargetGroups(activityId);
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Target Group or Activity do not exist");
@@ -261,7 +261,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	public ResponseEntity<?> addSchedules(@PathVariable String activityId, @RequestBody ScheduleEntity... schedules) {
 		try {
 			service.addSchedules(activityId, scheduleService.addAll(Arrays.asList(schedules)));
-			return ok(findTags(activityId));
+			return findSchedules(activityId);
 		} catch(NotFoundException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");

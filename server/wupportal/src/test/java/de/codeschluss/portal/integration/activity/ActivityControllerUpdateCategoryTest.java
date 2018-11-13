@@ -33,8 +33,7 @@ public class ActivityControllerUpdateCategoryTest {
 		
 		controller.updateCategory(activityId, categoryId);
 		
-		Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(categoryId);
+		assertContaining(activityId, categoryId);
 	}
 	
 	@Test
@@ -45,10 +44,9 @@ public class ActivityControllerUpdateCategoryTest {
 		
 		controller.updateCategory(activityId, categoryId);
 		
-		Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(categoryId);
+		assertContaining(activityId, categoryId);
 	}
-	
+
 	@Test
 	@WithUserDetails("admin@user")
 	public void updateAdminOK() throws URISyntaxException {
@@ -57,8 +55,7 @@ public class ActivityControllerUpdateCategoryTest {
 		
 		controller.updateCategory(activityId, categoryId);
 		
-		Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(categoryId);
+		assertContaining(activityId, categoryId);
 	}
 	
 	@Test(expected = BadParamsException.class)
@@ -68,9 +65,6 @@ public class ActivityControllerUpdateCategoryTest {
 		String activityId = "00000000-0000-0000-0010-XX0000000000";
 		
 		controller.updateCategory(activityId, categoryId);
-		
-		Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(categoryId);
 	}
 	
 	@Test(expected = BadParamsException.class)
@@ -80,9 +74,6 @@ public class ActivityControllerUpdateCategoryTest {
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		controller.updateCategory(activityId, categoryId);
-		
-		Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId).getBody();
-		assertThat(result.getContent().getId()).isEqualTo(categoryId);
 	}
 	
 	@Test(expected = AccessDeniedException.class)
@@ -100,5 +91,10 @@ public class ActivityControllerUpdateCategoryTest {
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		controller.updateCategory(activityId, categoryId);
+	}
+	
+	private void assertContaining(String activityId, String categoryId) {
+		Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId).getBody();
+		assertThat(result.getContent().getId()).isEqualTo(categoryId);
 	}
 }

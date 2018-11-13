@@ -22,81 +22,81 @@ import de.codeschluss.portal.functional.activity.ActivityEntity;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class ActivityControllerDeleteTagsTest {
+public class ActivityControllerDeleteSchedulesTest {
 
 	@Autowired
 	private ActivityController controller;
 	
 	@Test
 	@WithUserDetails("super@user")
-	public void deleteTagsSuperUserOK() throws URISyntaxException {
-		String tagId = "00000000-0000-0000-0002-700000000000";
+	public void deleteSchedulesSuperUserOK() throws URISyntaxException {
+		String scheduleId = "00000000-0000-0000-0011-160000000000";
 		String activityId = "00000000-0000-0000-0010-100000000000";
 		
-		assertContaining(activityId, tagId);
+		assertContaining(activityId, scheduleId);
 		
-		controller.deleteTags(activityId, tagId);
+		controller.deleteSchedules(activityId, scheduleId);
 		
-		assertNotContaining(activityId, tagId);
+		assertNotContaining(activityId, scheduleId);
 	}
 
 	@Test
 	@WithUserDetails("provider1@user")
-	public void deleteTagsProviderOK() throws URISyntaxException {
-		String tagId = "00000000-0000-0000-0002-700000000000";
+	public void deleteSchedulesProviderOK() throws URISyntaxException {
+		String scheduleId = "00000000-0000-0000-0011-170000000000";
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
-		assertThat(result.getContent().getTags()).haveAtLeastOne(
-				new Condition<>(t -> t.getId().equals(tagId), "tag exists"));
+		assertThat(result.getContent().getSchedules()).haveAtLeastOne(
+				new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
 		
-		controller.deleteTags(activityId, tagId);
+		controller.deleteSchedules(activityId, scheduleId);
 		
 		result = (Resource<ActivityEntity>) controller.findOne(activityId);
-		assertThat(result.getContent().getTags()).noneMatch(t -> t.getId().equals(tagId));
+		assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
 	}
 	
 	@Test
 	@WithUserDetails("admin@user")
-	public void deleteTagsAdminOK() throws URISyntaxException {
-		String tagId = "00000000-0000-0000-0002-800000000000";
+	public void deleteSchedulesAdminOK() throws URISyntaxException {
+		String scheduleId = "00000000-0000-0000-0011-180000000000";
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		
 		Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
-		assertThat(result.getContent().getTags()).haveAtLeastOne(
-				new Condition<>(t -> t.getId().equals(tagId), "tag exists"));
+		assertThat(result.getContent().getSchedules()).haveAtLeastOne(
+				new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
 		
-		controller.deleteTags(activityId, tagId);
+		controller.deleteSchedules(activityId, scheduleId);
 		
 		result = (Resource<ActivityEntity>) controller.findOne(activityId);
-		assertThat(result.getContent().getTags()).noneMatch(t -> t.getId().equals(tagId));
+		assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
 	}
 	
 	@Test(expected = AccessDeniedException.class)
 	@WithUserDetails("provider1@user")
-	public void deleteTagsOtherProviderDenied() throws URISyntaxException {
-		String tagId = "00000000-0000-0000-0002-300000000000";
+	public void deleteSchedulesOtherProviderDenied() throws URISyntaxException {
+		String scheduleId = "00000000-0000-0000-0011-100000000000";
 		String activityId = "00000000-0000-0000-0010-300000000000";
 		
-		controller.deleteTags(activityId, tagId);
+		controller.deleteSchedules(activityId, scheduleId);
 	}
 	
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
-	public void deleteTagsNoUserDenied() throws URISyntaxException {
-		String tagId = "00000000-0000-0000-0002-300000000000";
+	public void deleteSchedulesNoUserDenied() throws URISyntaxException {
+		String scheduleId = "00000000-0000-0000-0011-100000000000";
 		String activityId = "00000000-0000-0000-0010-300000000000";
 		
-		controller.deleteTags(activityId, tagId);
+		controller.deleteSchedules(activityId, scheduleId);
 	}
 	
-	private void assertContaining(String activityId, String tagId) {
+	private void assertContaining(String activityId, String scheduleId) {
 		Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
-		assertThat(result.getContent().getTags()).haveAtLeastOne(
-				new Condition<>(t -> t.getId().equals(tagId), "tag exists"));
+		assertThat(result.getContent().getSchedules()).haveAtLeastOne(
+				new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
 	}
 	
-	private void assertNotContaining(String activityId, String tagId) {
+	private void assertNotContaining(String activityId, String scheduleId) {
 		Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
-		assertThat(result.getContent().getTags()).noneMatch(t -> t.getId().equals(tagId));
+		assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
 	}
 }

@@ -35,11 +35,9 @@ public class AddressControllerAddTest {
 		
 		controller.add(address);
 		
-		Resources<Resource<AddressEntity>> result = (Resources<Resource<AddressEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getStreet().equals(address.getStreet()),"address exists"));
+		assertContaining(address);
 	}
-	
+
 	@Test
 	@WithUserDetails("provider1@user")
 	public void addProviderUserOK() throws URISyntaxException {
@@ -47,9 +45,7 @@ public class AddressControllerAddTest {
 		
 		controller.add(address);
 		
-		Resources<Resource<AddressEntity>> result = (Resources<Resource<AddressEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getStreet().equals(address.getStreet()),"address exists"));
+		assertContaining(address);
 	}
 	
 	@Test(expected = DuplicateEntryException.class)
@@ -73,5 +69,11 @@ public class AddressControllerAddTest {
 		AddressEntity address = new AddressEntity("1", "addNoUserDenied", "1111", "addNoUserDenied", null, 1, 1, null, null);
 		
 		controller.add(address);
+	}
+	
+	private void assertContaining(AddressEntity address) {
+		Resources<Resource<AddressEntity>> result = (Resources<Resource<AddressEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
+		assertThat(result.getContent()).haveAtLeastOne(
+				new Condition<>(p -> p.getContent().getStreet().equals(address.getStreet()),"address exists"));
 	}
 }

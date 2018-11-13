@@ -36,11 +36,9 @@ public class ActivityControllerUpdateTest {
 		
 		controller.update(activity, activityId);
 		
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
+		assertContaining(activity);
 	}
-	
+
 	@Test
 	@WithUserDetails("provider1@user")
 	public void updateProviderOK() throws URISyntaxException {
@@ -49,9 +47,7 @@ public class ActivityControllerUpdateTest {
 		
 		controller.update(activity, activityId);
 		
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
+		assertContaining(activity);
 	}
 	
 	@Test
@@ -62,9 +58,7 @@ public class ActivityControllerUpdateTest {
 		
 		controller.update(activity, activityId);
 		
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
+		assertContaining(activity);
 	}
 	
 	@Test(expected = DuplicateEntryException.class)
@@ -98,5 +92,11 @@ public class ActivityControllerUpdateTest {
 		String organisationId = "00000000-0000-0000-0008-100000000000";
 		String addressId = "00000000-0000-0000-0006-100000000000";
 		return new ActivityEntity(name, "createActivity",true,addressId,null,categoryId,null,organisationId,null,null,null,null);
+	}
+	
+	private void assertContaining(ActivityEntity activity) {
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
+		assertThat(result.getContent()).haveAtLeastOne(
+				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
 	}
 }

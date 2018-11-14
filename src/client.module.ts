@@ -7,7 +7,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { ApiModule } from './core/api/api.module';
-import { UserService } from './core/services/services';
 import { I18nComponent } from './utils/i18n.component';
 import { LogoComponent } from './utils/logo.component';
 import { ClientUrlSerializer } from './utils/serializer';
@@ -25,7 +24,6 @@ const ClientImports = [
 ];
 
 const ClientProviders = [
-  { provide: UserService, useClass: UserService },
   { provide: UrlSerializer, useClass: ClientUrlSerializer }
 ];
 

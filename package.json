@@ -43,7 +43,7 @@
     "@angular/cli": "7.0.5",
     "@angular/compiler-cli": "7.0.3",
     "@angular/language-service": "7.0.3",
-    "@types/node": "10.12.6",
+    "@types/node": "10.12.7",
     "codelyzer": "4.5.0",
     "ng-swagger-gen": "1.4.1",
     "ts-node": "7.0.1",

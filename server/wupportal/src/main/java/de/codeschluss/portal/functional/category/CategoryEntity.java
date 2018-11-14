@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.codeschluss.portal.common.base.BaseEntity;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import lombok.AccessLevel;
@@ -36,6 +38,7 @@ public class CategoryEntity extends BaseEntity implements Serializable {
 	private String name;
 
 	@OneToMany(mappedBy = "category")
+	@JsonIgnore
 	private List<ActivityEntity> activities;
 
 }

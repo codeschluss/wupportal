@@ -10,6 +10,8 @@ import de.codeschluss.portal.functional.category.CategoryEntity;
 @Service
 public class CategoryService extends DataService<CategoryEntity, CategoryRepository>{
 
+	protected final String DEFAULT_SORT_PROP = "name";
+	
 	public CategoryService(CategoryRepository repo,
 			 CategoryResourceAssembler assembler) {
 		super(repo, assembler);

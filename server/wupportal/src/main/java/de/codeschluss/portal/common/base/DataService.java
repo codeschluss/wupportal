@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
 
 import de.codeschluss.portal.common.exception.NotFoundException;
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
@@ -81,13 +80,13 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 		repo.deleteById(id);
 	}
 	
-	public Resources<?> getSortedListResources(FilterSortPaginate params, ResponseEntity<?> responseEntity) {
+	public Resources<?> getSortedListResources(FilterSortPaginate params) {
 		String filter = params.getFilter();
 		List<E> result =  filter == null
-				? repo.findAll()
+				? repo.findAll(getSort(params))
 				: repo.findFiltered(filter, getSort(params)).orElseThrow(() -> new NotFoundException(filter));
 				
-		return assembler.entitiesToResources(result, responseEntity);
+		return assembler.entitiesToResources(result, params);
 	}
 
 	public PagedResources<Resource<E>> getPagedResources(FilterSortPaginate params) {
@@ -101,7 +100,7 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 		return assembler.entitiesToPagedResources(result, params);
 	}
 	
-	private Sort getSort(FilterSortPaginate params) {
+	protected Sort getSort(FilterSortPaginate params) {
 		return params.createSort(DEFAULT_SORT_PROP);
 	}
 

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -98,9 +97,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	@OwnUserOrSuperUserPermission
 	public ResponseEntity<?> findOrganisations(@PathVariable String userId) {
 		List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
-		return ok(organisationService.convertToResourcesWithProviders(
-				providers,
-				DummyInvocationUtils.methodOn(this.getClass()).findOrganisations(userId)));
+		return ok(organisationService.convertToResourcesWithProviders(providers));
 	}
 	
 	@PostMapping("/users/{userId}/organisations")
@@ -115,9 +112,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 		
 		try {
 			List<ProviderEntity> providers = providerService.addAll(providerService.createProviders(service.getById(userId), distinctOrgas));
-			return ok(organisationService.convertToResourcesWithProviders(
-					providers,
-					DummyInvocationUtils.methodOn(this.getClass()).findOrganisations(userId)));
+			return ok(organisationService.convertToResourcesWithProviders(providers));
 		} catch (NotFoundException | NullPointerException e) {
 			//TODO: Error Objects with proper message
 			throw new BadParamsException("User or Organisation are null or do not exist!");
@@ -139,9 +134,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	//TODO: Visible for all?
 	public ResponseEntity<?> findActivities(@PathVariable String userId) {		
 		List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
-		return ok(activityService.getResourcesByProviders(
-				providers,
-				DummyInvocationUtils.methodOn(this.getClass()).findActivities(userId)));
+		return ok(activityService.getResourcesByProviders(providers));
 	}
 	
 	@DeleteMapping("/users/{userId}/activities/{activityId}")

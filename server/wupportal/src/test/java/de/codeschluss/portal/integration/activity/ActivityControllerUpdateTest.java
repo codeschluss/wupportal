@@ -17,9 +17,9 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.codeschluss.portal.common.exception.DuplicateEntryException;
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.activity.ActivityController;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
+import de.codeschluss.portal.functional.activity.FilterSortPaginateCurrent;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -95,7 +95,7 @@ public class ActivityControllerUpdateTest {
 	}
 	
 	private void assertContaining(ActivityEntity activity) {
-		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
+		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginateCurrent()).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getName().equals(activity.getName()),"activity exists"));
 	}

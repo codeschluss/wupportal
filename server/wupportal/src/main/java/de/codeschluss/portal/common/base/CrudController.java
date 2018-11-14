@@ -4,7 +4,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -28,10 +27,7 @@ public abstract class CrudController<E extends BaseEntity, S extends DataService
 		validateRequest(params);
 	
 		if (params.getPage() == null && params.getSize() == null) {
-			return ok(
-					service.getSortedListResources(
-							params, 
-							DummyInvocationUtils.methodOn(this.getClass()).findAll(null)));
+			return ok(service.getSortedListResources(params));
 		}
 		return ok(service.getPagedResources(params));
 	}

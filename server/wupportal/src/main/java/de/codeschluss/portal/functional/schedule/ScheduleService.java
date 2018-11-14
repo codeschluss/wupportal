@@ -2,7 +2,6 @@ package de.codeschluss.portal.functional.schedule;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.base.DataService;
@@ -11,6 +10,8 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 @Service
 public class ScheduleService extends DataService<ScheduleEntity, ScheduleRepository>{
 
+	protected final String DEFAULT_SORT_PROP = "startDate";
+	
 	public ScheduleService(ScheduleRepository repo, ScheduleResourceAssembler assembler) {
 		super(repo, assembler);
 	}
@@ -20,9 +21,9 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
 		return repo.findById(newSchedule.getId()).orElse(null);
 	}
 	
-	public Object getResourceByActivity(String activityId, ResponseEntity<?> responseEntity) {
+	public Object getResourceByActivity(String activityId) {
 		List<ScheduleEntity> schedules = repo.findByActivityId(activityId).orElseThrow(() -> new NotFoundException(activityId));
-		return assembler.entitiesToResources(schedules, responseEntity);
+		return assembler.entitiesToResources(schedules, null);
 	}
 	
 	@Override

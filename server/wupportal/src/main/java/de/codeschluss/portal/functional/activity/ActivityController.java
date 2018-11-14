@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +29,6 @@ import de.codeschluss.portal.common.security.permissions.OwnOrOrgaActivityOrSupe
 import de.codeschluss.portal.common.security.permissions.ProviderPermission;
 import de.codeschluss.portal.common.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.common.security.services.AuthorizationService;
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.category.CategoryService;
@@ -78,10 +76,10 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 		this.organisationService = organisationService;
 		this.authService = authService;
 	}
-	
-	@Override
+
 	@GetMapping("/activities")
-	public ResponseEntity<?> findAll(FilterSortPaginate params) {
+	public ResponseEntity<?> findAll(
+			FilterSortPaginateCurrent params) {
 		return super.findAll(params);
 	}
 
@@ -188,9 +186,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@GetMapping("/activities/{activityId}/tags")
 	public ResponseEntity<?> findTags(@PathVariable String activityId) {
-		return ok(tagService.getResourceByActivity(
-				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTags(activityId)));
+		return ok(tagService.getResourceByActivity(activityId));
 	}
 	
 	@PostMapping("/activities/{activityId}/tags")
@@ -219,9 +215,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@GetMapping("/activities/{activityId}/targetgroups")
 	public ResponseEntity<?> findTargetGroups(@PathVariable String activityId) {
-		return ok(targetGroupService.getResourceByActivity(
-				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTargetGroups(activityId)));
+		return ok(targetGroupService.getResourceByActivity(activityId));
 	}
 	
 	@PostMapping("/activities/{activityId}/targetgroups")
@@ -251,9 +245,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@GetMapping("/activities/{activityId}/schedules")
 	public ResponseEntity<?> findSchedules(@PathVariable String activityId) {
-		return ok(scheduleService.getResourceByActivity(
-				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findSchedules(activityId)));
+		return ok(scheduleService.getResourceByActivity(activityId));
 	}
 	
 	@PostMapping("/activities/{activityId}/schedules")

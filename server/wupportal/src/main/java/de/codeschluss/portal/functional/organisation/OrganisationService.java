@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +18,8 @@ import de.codeschluss.portal.functional.provider.ProviderEntity;
 @Service
 @Transactional
 public class OrganisationService extends DataService<OrganisationEntity, OrganisationRepository> {
+	
+	protected final String DEFAULT_SORT_PROP = "name";
 	
 	public OrganisationService(
 			OrganisationRepository repo,
@@ -64,11 +65,11 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
 		return assembler.toResource(provider.getOrganisation());
 	}
 	
-	public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
+	public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers) {
 		List<ResourceWithEmbeddable<OrganisationEntity>> result = providers.stream().map(provider -> {
 			return assembler.toResourceWithEmbedabble(provider.getOrganisation(), provider, "provider");
 		}).collect(Collectors.toList());
 		
-		return assembler.toListResources(result, responseEntity);
+		return assembler.toListResources(result, null);
 	}
 }

@@ -3,7 +3,6 @@ package de.codeschluss.portal.functional.activity;
 import java.util.List;
 
 import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +19,22 @@ import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 @Transactional
 public class ActivityService extends DataService<ActivityEntity, ActivityRepository> {
 
+	protected final String DEFAULT_SORT_PROP = "name";
+	
 	public ActivityService(
 			ActivityRepository repo,
 			ActivityResourceAssembler assembler) {
 		super(repo, assembler);
 	}
 	
+	
 	@Override
 	public ActivityEntity getExisting(ActivityEntity activity) {
 		return repo.findByName(activity.getName()).orElse(null);
 	}
 	
-	public Resources<?> getResourcesByProviders(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
-		return assembler.entitiesToResources(getByProviders(providers), responseEntity);
+	public Resources<?> getResourcesByProviders(List<ProviderEntity> providers) {
+		return assembler.entitiesToResources(getByProviders(providers), null);
 	}
 	
 	public List<ActivityEntity> getByProviders(List<ProviderEntity> providers) {

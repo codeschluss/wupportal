@@ -1,7 +1,5 @@
 package de.codeschluss.portal.common.base;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +11,6 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
@@ -39,13 +36,13 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity> implements
 		return new ResourceWithEmbeddable<E>(entity, Arrays.asList(embedding), createResourceLinks(entity));
 	}
 
-	public Resources<?> entitiesToResources(List<E> entities, ResponseEntity<?> responseEntity) {
+	public <P extends SortPaginate> Resources<?> entitiesToResources(List<E> entities, P params) {
 		List<Resource<?>> entityResources = entities.stream().map(this::toResource).collect(Collectors.toList());
-		return toListResources(entityResources, responseEntity);
+		return toListResources(entityResources, params);
 	}
 
-	public Resources<?> toListResources(List<? extends Resource<?>> content, ResponseEntity<?> responseEntity) {
-		return new Resources<>(content, linkTo(responseEntity).withSelfRel());
+	public <P extends SortPaginate> Resources<?> toListResources(List<? extends Resource<?>> content, P params) {
+		return new Resources<>(content, PaginationLinkBuilder.createSelfLink(params));
 	}
 	
 	public PagedResources<Resource<E>> entitiesToPagedResources(Page<E> entitiesPaged, FilterSortPaginate params) {

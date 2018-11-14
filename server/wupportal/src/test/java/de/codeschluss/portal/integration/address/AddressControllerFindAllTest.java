@@ -25,7 +25,7 @@ public class AddressControllerFindAllTest {
 	
 	@Test
 	public void findAllWithoutPaginationOK() {
-		FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc");
+		FilterSortPaginate params = new FilterSortPaginate(null, null, null, "street", "asc");
 		
 		Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
 		

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.SQLInsert;
 import org.springframework.hateoas.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -83,6 +84,8 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 			name = "activities_tags",
 			joinColumns = @JoinColumn(name = "activity_id"),
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	@SQLInsert(sql = "insert into activities_tags "
+			+ "(id, activity_id, tag_id) values (UUID(), ?, ?)")
 	private List<TagEntity> tags;
 	
 	@ManyToMany
@@ -92,5 +95,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 			name = "activities_target_groups",
 			joinColumns = @JoinColumn(name = "activity_id"),
 			inverseJoinColumns = @JoinColumn(name = "target_group_id"))
+	@SQLInsert(sql = "insert into activities_target_groups "
+			+ "(id, activity_id, target_group_id) values (UUID(), ?, ?)")
 	private List<TargetGroupEntity> targetGroups;	
 }

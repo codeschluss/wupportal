@@ -2,12 +2,18 @@ package de.codeschluss.portal.functional.activity;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.base.DataService;
 import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.address.AddressEntity;
 import de.codeschluss.portal.functional.category.CategoryEntity;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
@@ -27,6 +33,45 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 		super(repo, assembler);
 	}
 	
+	@Override
+	public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P p) {
+		validateParams(p);
+		
+		FilterSortPaginateCurrent params = (FilterSortPaginateCurrent) p; 
+		String filter = params.getFilter(); 
+		Sort sort = getSort(params);
+		
+		List<ActivityEntity> result = params.getCurrent() == null || !params.getCurrent()
+				? getSortedList(filter, sort)
+				: getCurrentSortedList(filter, sort);
+		return assembler.entitiesToResources(result, params);	
+	}
+
+	private List<ActivityEntity> getCurrentSortedList(String filter, Sort sort) {
+		return filter == null
+				? repo.findCurrent(sort)
+				: repo.findCurrentFiltered(filter, sort).orElseThrow(() -> new NotFoundException(filter));
+	}
+
+	@Override
+	public <P extends FilterSortPaginate> PagedResources<Resource<ActivityEntity>> getPagedResources(P p) {
+		validateParams(p);
+		
+		FilterSortPaginateCurrent params = (FilterSortPaginateCurrent) p; 
+		String filter = params.getFilter();
+		PageRequest page = PageRequest.of(params.getPage(), params.getSize(), getSort(params));
+		
+		Page<ActivityEntity> result = params.getCurrent()
+				? getCurrentPaged(filter, page)
+				: getPaged(filter, page);
+		return assembler.entitiesToPagedResources(result, params);
+	}
+	
+	public Page<ActivityEntity> getCurrentPaged(String filter, PageRequest page) {
+		return filter == null 
+			? repo.findCurrent(page)
+			: repo.findFiltered(filter, page).orElseThrow(() -> new NotFoundException(filter));
+	}
 	
 	@Override
 	public ActivityEntity getExisting(ActivityEntity activity) {
@@ -123,5 +168,11 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
 		ActivityEntity activity = getById(activityId);
 		activity.getSchedules().removeIf(schedule -> scheduleIds.contains(schedule.getId()));
 		repo.save(activity);
+	}
+	
+	private <P extends FilterSortPaginate> void validateParams(P p) {
+		if (!(p instanceof FilterSortPaginateCurrent)) {
+			throw new RuntimeException("Must be of type " + FilterSortPaginateCurrent.class + " but is " + p.getClass());
+		}
 	}
 }

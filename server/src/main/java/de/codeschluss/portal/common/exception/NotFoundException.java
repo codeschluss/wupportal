@@ -7,7 +7,7 @@ public class NotFoundException extends RuntimeException {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public NotFoundException(String id) {
-		super("Could not find data for id: " + id);
+	public NotFoundException(String param) {
+		super("Could not find data for param: " + param);
 	}
 }

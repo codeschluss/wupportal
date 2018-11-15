@@ -1,4 +1,4 @@
-package de.codeschluss.portal.common.base;
+package de.codeschluss.portal.common.utils;
 
 import java.util.List;
 

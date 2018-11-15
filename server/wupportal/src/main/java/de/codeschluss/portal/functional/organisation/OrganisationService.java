@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.base.DataService;
-import de.codeschluss.portal.common.base.ResourceWithEmbeddable;
+import de.codeschluss.portal.common.utils.ResourceWithEmbeddable;
 import de.codeschluss.portal.functional.address.AddressEntity;
 import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;

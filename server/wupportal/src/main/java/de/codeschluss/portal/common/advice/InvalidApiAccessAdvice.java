@@ -2,27 +2,29 @@ package de.codeschluss.portal.common.advice;
 
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import de.codeschluss.portal.common.exception.BadParamsException;
+import de.codeschluss.portal.common.utils.ApiError;
 
 @ControllerAdvice
-public class InvalidApiAccessAdvice {
+public class InvalidApiAccessAdvice extends ResponseEntityExceptionHandler {
 
-	@ResponseBody
 	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public String invalidApiAccessHandler(InvalidDataAccessApiUsageException ex) {
-		return "Invalid API params";
+	public ResponseEntity<ApiError> invalidApiAccessHandler(InvalidDataAccessApiUsageException ex) {
+		return handleResponse("Invalid API params");
+	}
+
+	@ExceptionHandler(BadParamsException.class)
+	public ResponseEntity<ApiError> badParamsAccessHandler(BadParamsException ex) {
+		return handleResponse(ex.getMessage());
 	}
 	
-	@ResponseBody
-	@ExceptionHandler(BadParamsException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public String badParamsAccessHandler(BadParamsException ex) {
-		return ex.getMessage();
+	private ResponseEntity<ApiError> handleResponse(String message) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		return new ResponseEntity<ApiError>(new ApiError(status, "Bad Request", message), status);
 	}
 }

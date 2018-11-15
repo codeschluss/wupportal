@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.common.utils.PaginationLinkBuilder;
+import de.codeschluss.portal.common.utils.ResourceWithEmbeddable;
 import de.codeschluss.portal.common.utils.SortPaginate;
 
 import org.springframework.hateoas.PagedResources.PageMetadata;

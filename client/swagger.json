@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/ng-swagger-gen/ng-swagger-gen-schema.json",
+  "swagger": "../utils/api-docs.json",
+  "output": "src/core/api",
+  "prefix": "api",
+  "ignoreUnusedModels": false,
+  "minParamsForContainer": 9,
+  "sortParams": "none",
+  "defaultTag": "api",
+  "removeStaleFiles": false,
+  "modelIndex": false,
+  "serviceIndex": false,
+  "apiModule": true,
+  "enumModule": true,
+  "generateExamples": false
+}

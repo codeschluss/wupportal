@@ -1,17 +1,9 @@
-backend/bin
-backend/config/app.php
-backend/composer.lock
-backend/logs/*.log*
-backend/tests
-backend/tmp
-backend/vendor
-backend/webroot/js
+client/node_modules
+client/package-lock.json
+client/target
 
-frontend/node_modules
-frontend/npm-debug.log
-frontend/package-lock.json
-
-server/.metadata/*
-server/.recommenders/
-server/wupportal/target/*
-server/RemoteSystemsTempFiles/*
+server/.metadata
+server/.recommenders
+server/.settings
+server/bin
+server/target

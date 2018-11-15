@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -7,6 +7,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { ApiModule } from './core/api/api.module';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AbstractProvider } from './core/providers/abstract.provider';
 import { I18nComponent } from './utils/i18n.component';
 import { LogoComponent } from './utils/logo.component';
@@ -26,6 +27,7 @@ const ClientImports = [
 ];
 
 const ClientProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   { provide: UrlSerializer, useClass: ClientUrlSerializer }
 ];
 

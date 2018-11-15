@@ -103,7 +103,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			newActivity.setAddress(addressService.getById(newActivity.getAddressId()));
 			//TODO: Check if target groups are nullable!
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Need existing Provider, Category or Address");
 		}
 
@@ -137,7 +136,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.updateAddress(activityId, addressService.getById(addressId));
 			return findAddress(activityId);
 		} else {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Address with given ID do not exist!");
 		}		
 	}
@@ -154,7 +152,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.updateCategory(activityId, categoryService.getById(categoryId));
 			return findCategory(activityId);
 		} else {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Category with given ID do not exist!");
 		}		
 	}
@@ -172,7 +169,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.updateProvider(activityId, getProvider(organisationId));
 			return findOrganisation(activityId);
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");
 		}
 	}
@@ -196,7 +192,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.addTags(activityId, tagService.addAll(Arrays.asList(tags)));
 			return findTags(activityId);
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
@@ -208,7 +203,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.deleteTags(activityId, Arrays.asList(tagId));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
@@ -226,7 +220,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups));
 			return findTargetGroups(activityId);
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Target Group or Activity do not exist");
 		}
 	}
@@ -238,7 +231,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.deleteTargetGroup(activityId, Arrays.asList(targetGroupId));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
@@ -255,7 +247,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.addSchedules(activityId, scheduleService.addAll(Arrays.asList(schedules)));
 			return findSchedules(activityId);
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
@@ -267,7 +258,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.deleteSchedule(activityId, Arrays.asList(scheduleId));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}

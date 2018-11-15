@@ -88,7 +88,6 @@ public class UserController extends CrudController<UserEntity, UserService>{
 			this.service.grantSuperUser(userId, isSuperuser);
 			return noContent().build();
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("User with given ID does not exist!");
 		}
 	}
@@ -106,7 +105,6 @@ public class UserController extends CrudController<UserEntity, UserService>{
 		List<String> distinctOrgas = Arrays.asList(organisationParam).stream().distinct().collect(Collectors.toList());
 		
 		if (providerService.isDuplicate(userId, distinctOrgas)) {
-			//TODO: Error Objects with proper message
 			throw new DuplicateEntryException("User with one or more Organisations already exists");
 		}
 		
@@ -114,7 +112,6 @@ public class UserController extends CrudController<UserEntity, UserService>{
 			List<ProviderEntity> providers = providerService.addAll(providerService.createProviders(service.getById(userId), distinctOrgas));
 			return ok(organisationService.convertToResourcesWithProviders(providers));
 		} catch (NotFoundException | NullPointerException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("User or Organisation are null or do not exist!");
 		}
 	}

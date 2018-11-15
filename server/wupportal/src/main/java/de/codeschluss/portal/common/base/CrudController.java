@@ -62,7 +62,6 @@ public abstract class CrudController<E extends BaseEntity, S extends DataService
 	
 	protected void validateRequest(SortPaginate params) {
 		if (params != null && !isPaginationValid(params.getPage(), params.getSize())) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("param size or page is null");
 		}
 	}

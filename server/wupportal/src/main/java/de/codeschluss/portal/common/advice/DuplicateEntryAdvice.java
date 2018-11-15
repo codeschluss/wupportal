@@ -15,7 +15,6 @@ public class DuplicateEntryAdvice {
 	@ExceptionHandler(DuplicateEntryException.class)
 	@ResponseStatus(code = HttpStatus.CONFLICT)
 	public String invalidApiAccessHandler(DuplicateEntryException ex) {
-		//TODO: Error Objects with proper message
 		return ex.getMessage();
 	}
 }

@@ -77,7 +77,6 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
 			service.updateSuburb(addressId, suburbService.getById(suburbId));
 			return ok(suburbService.getResourceByAddress(addressId));
 		} else {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Address or Suburb with given ID do not exist!");
 		}	
 	}

@@ -16,7 +16,6 @@ public class InvalidApiAccessAdvice {
 	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public String invalidApiAccessHandler(InvalidDataAccessApiUsageException ex) {
-		//TODO: Error Objects with proper message
 		return "Invalid API params";
 	}
 	
@@ -24,7 +23,6 @@ public class InvalidApiAccessAdvice {
 	@ExceptionHandler(BadParamsException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public String badParamsAccessHandler(BadParamsException ex) {
-		//TODO: Error Objects with proper message
 		return ex.getMessage();
 	}
 }

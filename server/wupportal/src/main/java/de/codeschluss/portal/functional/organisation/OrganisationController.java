@@ -93,7 +93,6 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 			service.updateAddress(organisationId, addressService.getById(addressId));
 			return ok(findAddress(organisationId));
 		} else {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Organisation or Address with given ID do not exist!");
 		}		
 	}
@@ -129,7 +128,6 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 			this.providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved);
 			return noContent().build();
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("User with given ID does not exist in given Organisation!");
 		}
 	}
@@ -141,7 +139,6 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 			this.providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);			
 			return noContent().build();
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("User with given ID does not exist in given Organisation!");
 		}
 	}

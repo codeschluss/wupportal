@@ -30,17 +30,23 @@ export abstract class AbstractProvider
   protected abstract snackbar: MatSnackBar;
 
   public async findAll(
-    dir?: string, filter?: string, page?: number, size?: number, sort?: string
+    current?: boolean,
+    dir?: string,
+    filter?: string,
+    page?: number,
+    size?: number,
+    sort?: string
   ): Promise<Model[]> {
-    return this.call(this.mapping.findAll, dir, filter, page, size, sort)
-      .pipe(map((response) => this.multi(response)))
-      .pipe(map((response) => response.map((object) => this.typed(object))))
+    const args = [current, dir, filter, page, size, sort];
+    return this.call(this.mapping.findAll, ...args)
+      .pipe(map((res) => this.multi(res)))
+      .pipe(map((res) => res.map((object) => this.typed(object))))
       .toPromise();
   }
 
   public async findOne(id: string): Promise<Model> {
     return this.call(this.mapping.findOne, id)
-      .pipe(map((response) => this.typed(response)))
+      .pipe(map((res) => this.typed(res)))
       .toPromise();
   }
 
@@ -72,21 +78,19 @@ export abstract class AbstractProvider
 
   protected call(method: Function, ...args: any[]): Observable<object> {
     return method.call(this.service, ...args)
-      .pipe(map((response: StrictHttpResponse<object>) => {
-        return response.body;
-      }))
-      .pipe(catchError((response: HttpErrorResponse) => {
-        this.snackbar.open(response.error.message, '×');
-        return throwError(response.error);
+      .pipe(map((res: StrictHttpResponse<object>) => res.body))
+      .pipe(catchError((res: HttpErrorResponse) => {
+        this.snackbar.open(`${res.error.error}: ${res.error.message}`, '×');
+        return throwError(res.error);
       }));
   }
 
-  protected multi(response: object): object[] {
-    return response['_embedded']['data'];
+  protected multi(res: object): object[] {
+    return res['_embedded']['data'];
   }
 
-  protected typed(response: object): Model {
-    return Object.assign(new this.model(), response);
+  protected typed(res: object): Model {
+    return Object.assign(new this.model(), res);
   }
 
 }

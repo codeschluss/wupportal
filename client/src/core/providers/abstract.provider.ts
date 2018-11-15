@@ -29,8 +29,10 @@ export abstract class AbstractProvider
 
   protected abstract snackbar: MatSnackBar;
 
-  public async findAll(): Promise<Model[]> {
-    return this.call(this.mapping.findAll)
+  public async findAll(
+    dir?: string, filter?: string, page?: number, size?: number, sort?: string
+  ): Promise<Model[]> {
+    return this.call(this.mapping.findAll, dir, filter, page, size, sort)
       .pipe(map((response) => this.multi(response)))
       .pipe(map((response) => response.map((object) => this.typed(object))))
       .toPromise();

@@ -4,7 +4,7 @@
   "output": "src/core/api",
   "prefix": "api",
   "ignoreUnusedModels": false,
-  "minParamsForContainer": 4,
+  "minParamsForContainer": 9,
   "sortParams": "none",
   "defaultTag": "api",
   "removeStaleFiles": false,

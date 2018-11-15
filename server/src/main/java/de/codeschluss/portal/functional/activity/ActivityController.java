@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +29,6 @@ import de.codeschluss.portal.common.security.permissions.OwnOrOrgaActivityOrSupe
 import de.codeschluss.portal.common.security.permissions.ProviderPermission;
 import de.codeschluss.portal.common.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.common.security.services.AuthorizationService;
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.category.CategoryService;
@@ -78,10 +76,10 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 		this.organisationService = organisationService;
 		this.authService = authService;
 	}
-	
-	@Override
+
 	@GetMapping("/activities")
-	public ResponseEntity<?> findAll(FilterSortPaginate params) {
+	public ResponseEntity<?> findAll(
+			FilterSortPaginateCurrent params) {
 		return super.findAll(params);
 	}
 
@@ -105,7 +103,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			newActivity.setAddress(addressService.getById(newActivity.getAddressId()));
 			//TODO: Check if target groups are nullable!
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Need existing Provider, Category or Address");
 		}
 
@@ -139,7 +136,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.updateAddress(activityId, addressService.getById(addressId));
 			return findAddress(activityId);
 		} else {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Address with given ID do not exist!");
 		}		
 	}
@@ -156,7 +152,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.updateCategory(activityId, categoryService.getById(categoryId));
 			return findCategory(activityId);
 		} else {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Activity or Category with given ID do not exist!");
 		}		
 	}
@@ -174,7 +169,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.updateProvider(activityId, getProvider(organisationId));
 			return findOrganisation(activityId);
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");
 		}
 	}
@@ -188,9 +182,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 	
 	@GetMapping("/activities/{activityId}/tags")
 	public ResponseEntity<?> findTags(@PathVariable String activityId) {
-		return ok(tagService.getResourceByActivity(
-				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTags(activityId)));
+		return ok(tagService.getResourceByActivity(activityId));
 	}
 	
 	@PostMapping("/activities/{activityId}/tags")
@@ -200,7 +192,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.addTags(activityId, tagService.addAll(Arrays.asList(tags)));
 			return findTags(activityId);
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
@@ -212,16 +203,13 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.deleteTags(activityId, Arrays.asList(tagId));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
 	
 	@GetMapping("/activities/{activityId}/targetgroups")
 	public ResponseEntity<?> findTargetGroups(@PathVariable String activityId) {
-		return ok(targetGroupService.getResourceByActivity(
-				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findTargetGroups(activityId)));
+		return ok(targetGroupService.getResourceByActivity(activityId));
 	}
 	
 	@PostMapping("/activities/{activityId}/targetgroups")
@@ -232,7 +220,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups));
 			return findTargetGroups(activityId);
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Target Group or Activity do not exist");
 		}
 	}
@@ -244,16 +231,13 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.deleteTargetGroup(activityId, Arrays.asList(targetGroupId));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
 	
 	@GetMapping("/activities/{activityId}/schedules")
 	public ResponseEntity<?> findSchedules(@PathVariable String activityId) {
-		return ok(scheduleService.getResourceByActivity(
-				activityId,
-				DummyInvocationUtils.methodOn(this.getClass()).findSchedules(activityId)));
+		return ok(scheduleService.getResourceByActivity(activityId));
 	}
 	
 	@PostMapping("/activities/{activityId}/schedules")
@@ -263,7 +247,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.addSchedules(activityId, scheduleService.addAll(Arrays.asList(schedules)));
 			return findSchedules(activityId);
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}
@@ -275,7 +258,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 			service.deleteSchedule(activityId, Arrays.asList(scheduleId));
 			return noContent().build();
 		} catch (NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Given Activity does not exist");
 		}
 	}

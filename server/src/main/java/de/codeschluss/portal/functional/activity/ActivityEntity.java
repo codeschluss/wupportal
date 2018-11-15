@@ -98,4 +98,19 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 	@SQLInsert(sql = "insert into activities_target_groups "
 			+ "(id, activity_id, target_group_id) values (UUID(), ?, ?)")
 	private List<TargetGroupEntity> targetGroups;	
+	
+	@JsonIgnore
+	public String getAddressId() {
+		return this.addressId;
+	}
+	
+	@JsonIgnore
+	public String getCategoryId() {
+		return this.categoryId;
+	}
+	
+	@JsonIgnore
+	public String getOrganisationId() {
+		return this.organisationId;
+	}
 }

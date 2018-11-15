@@ -7,7 +7,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.core.DummyInvocationUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,7 +93,6 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 			service.updateAddress(organisationId, addressService.getById(addressId));
 			return ok(findAddress(organisationId));
 		} else {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("Organisation or Address with given ID do not exist!");
 		}		
 	}
@@ -102,9 +100,7 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	@GetMapping("/organisations/{organisationId}/activities")
 	public ResponseEntity<?> findActivities(@PathVariable String organisationId) {
 		List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
-		return ok(activityService.getResourcesByProviders(
-				providers,
-				DummyInvocationUtils.methodOn(this.getClass()).findActivities(organisationId)));
+		return ok(activityService.getResourcesByProviders(providers));
 	}
 	
 	@DeleteMapping("/organisations/{organisationId}/activities/{activityId}")
@@ -122,9 +118,7 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 	@OrgaAdminOrSuperUserPermission	
 	public ResponseEntity<?> findUsersByOrganisation(@PathVariable String organisationId) {
 		List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
-		return ok(userService.convertToResourcesWithProviders(
-				providers,
-				DummyInvocationUtils.methodOn(this.getClass()).findUsersByOrganisation(organisationId)));
+		return ok(userService.convertToResourcesWithProviders(providers));
 	}
 	
 	@PutMapping("/organisations/{organisationId}/users/{userId}/approve")
@@ -134,7 +128,6 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 			this.providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved);
 			return noContent().build();
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("User with given ID does not exist in given Organisation!");
 		}
 	}
@@ -146,7 +139,6 @@ public class OrganisationController extends CrudController<OrganisationEntity, O
 			this.providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);			
 			return noContent().build();
 		} catch(NotFoundException e) {
-			//TODO: Error Objects with proper message
 			throw new BadParamsException("User with given ID does not exist in given Organisation!");
 		}
 	}

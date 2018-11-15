@@ -4,19 +4,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.common.base.DataService;
-import de.codeschluss.portal.common.base.ResourceWithEmbeddable;
 import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.common.utils.ResourceWithEmbeddable;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 
 @Service
 @Transactional
 public class UserService extends DataService<UserEntity, UserRepository> {
+	
+	protected final String DEFAULT_SORT_PROP = "username";
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -68,12 +69,12 @@ public class UserService extends DataService<UserEntity, UserRepository> {
 		repo.save(user);
 	}
 	
-	public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers, ResponseEntity<?> responseEntity) {
+	public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers) {
 		List<ResourceWithEmbeddable<UserEntity>> result = providers.stream().map(provider -> {
 			return assembler.toResourceWithEmbedabble(provider.getUser(), provider, "provider");
 		}).collect(Collectors.toList());
 		
-		return assembler.toListResources(result, responseEntity);
+		return assembler.toListResources(result, null);
 	}
 
 	public Object getResourceByProvider(ProviderEntity provider) {

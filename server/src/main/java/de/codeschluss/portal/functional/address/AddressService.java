@@ -10,6 +10,8 @@ import de.codeschluss.portal.functional.suburb.SuburbEntity;
 @Service
 public class AddressService extends DataService<AddressEntity, AddressRepository> {
 
+	protected final String DEFAULT_SORT_PROP = "street";
+	
 	public AddressService(AddressRepository repo,
 			AddressResourceAssembler assembler) {
 		super(repo, assembler);

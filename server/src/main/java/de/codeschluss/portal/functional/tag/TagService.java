@@ -3,7 +3,6 @@ package de.codeschluss.portal.functional.tag;
 import java.util.List;
 
 import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.base.DataService;
@@ -12,6 +11,8 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 @Service
 public class TagService extends DataService<TagEntity, TagRepository> {
 
+	protected final String DEFAULT_SORT_PROP = "name";
+	
 	public TagService(TagRepository repo, 
 			TagResourceAssembler assembler) {
 		super(repo, assembler);
@@ -22,9 +23,9 @@ public class TagService extends DataService<TagEntity, TagRepository> {
 		return repo.findByName(newTag.getName()).orElse(null);
 	}
 	
-	public Resources<?> getResourceByActivity(String activityId, ResponseEntity<?> responseEntity) {
+	public Resources<?> getResourceByActivity(String activityId) {
 		List<TagEntity> tags = repo.findByActivitiesId(activityId).orElseThrow(() -> new NotFoundException(activityId));
-		return assembler.entitiesToResources(tags, responseEntity);
+		return assembler.entitiesToResources(tags, null);
 	}
 
 	@Override

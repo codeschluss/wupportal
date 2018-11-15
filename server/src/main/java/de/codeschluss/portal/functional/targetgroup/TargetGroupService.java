@@ -1,7 +1,6 @@
 package de.codeschluss.portal.functional.targetgroup;
 
 import java.util.List;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import de.codeschluss.portal.common.base.DataService;
@@ -10,6 +9,8 @@ import de.codeschluss.portal.common.exception.NotFoundException;
 @Service
 public class TargetGroupService extends DataService<TargetGroupEntity, TargetGroupRepository> {
 
+	protected final String DEFAULT_SORT_PROP = "name";
+	
 	public TargetGroupService(TargetGroupRepository repo,
 			TargetGroupResourceAssembler assembler) {
 		super(repo, assembler);
@@ -21,9 +22,9 @@ public class TargetGroupService extends DataService<TargetGroupEntity, TargetGro
 	}
 	
 
-	public Object getResourceByActivity(String activityId, ResponseEntity<?> responseEntity) {
+	public Object getResourceByActivity(String activityId) {
 		List<TargetGroupEntity> targetGroups = repo.findByActivitiesId(activityId).orElseThrow(() -> new NotFoundException(activityId));
-		return assembler.entitiesToResources(targetGroups, responseEntity);
+		return assembler.entitiesToResources(targetGroups, null);
 	}
 
 	@Override

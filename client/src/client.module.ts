@@ -7,6 +7,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { ApiModule } from './core/api/api.module';
+import { AbstractProvider } from './core/providers/abstract.provider';
 import { I18nComponent } from './utils/i18n.component';
 import { LogoComponent } from './utils/logo.component';
 import { ClientUrlSerializer } from './utils/serializer';
@@ -18,6 +19,7 @@ const ClientDeclarations = [
 ];
 
 const ClientImports = [
+  AbstractProvider.imports,
   ClientComponent.imports,
   I18nComponent.imports,
   LogoComponent.imports

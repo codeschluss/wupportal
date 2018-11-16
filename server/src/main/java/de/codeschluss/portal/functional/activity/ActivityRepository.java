@@ -22,6 +22,33 @@ public interface ActivityRepository extends FilteredJpaRepository<ActivityEntity
 	@Query("Select a from ActivityEntity a where a.name like %?1% or a.description like %?1%")
 	public Optional<Page<ActivityEntity>> findFiltered(String filter, Pageable pageable);
 	
+	
+	@Query("Select distinct a from ActivityEntity a "
+			+ "join a.schedules s "
+			+ "where "
+			+ "s.startDate > current_date and (a.name like %?1% or a.description like %?1%)")
+	public Optional<List<ActivityEntity>> findCurrentFiltered(String filter, Sort sort);
+	
+	@Query("Select distinct a from ActivityEntity a "
+			+ "join a.schedules s "
+			+ "where "
+			+ "s.startDate > current_date and (a.name like %?1% or a.description like %?1%)")
+	public Optional<Page<ActivityEntity>> findCurrentFiltered(String filter, Pageable pageable);
+	
+	@Query("Select distinct a from ActivityEntity a "
+			+ "join a.schedules s "
+			+ "where "
+			+ "s.startDate > current_date")
+	public List<ActivityEntity> findCurrent(Sort sort);
+	
+	
+	@Query("Select distinct a from ActivityEntity a "
+			+ "join a.schedules s "
+			+ "where "
+			+ "s.startDate > current_date")
+	public Page<ActivityEntity> findCurrent(Pageable pageable);
+	
+	
 	public Optional<ActivityEntity> findByName(String name);
 	
 	public Optional<List<ActivityEntity>> findByProviderIdIn(List<String> providerId, Sort sort);
@@ -33,7 +60,4 @@ public interface ActivityRepository extends FilteredJpaRepository<ActivityEntity
 	public Optional<Page<ActivityEntity>> findByProviderIdIn(List<String> providerId, Pageable page);
 	
 	public Optional<Page<ActivityEntity>> findByProviderIn(List<ProviderEntity> provider, Pageable page);
-
-
-
 }

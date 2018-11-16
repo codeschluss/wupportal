@@ -80,28 +80,30 @@ public abstract class DataService<E extends BaseEntity, R extends FilteredJpaRep
 		repo.deleteById(id);
 	}
 	
-	public Resources<?> getSortedListResources(FilterSortPaginate params) {
-		String filter = params.getFilter();
-		List<E> result =  filter == null
-				? repo.findAll(getSort(params))
-				: repo.findFiltered(filter, getSort(params)).orElseThrow(() -> new NotFoundException(filter));
-				
+	public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P params) {
+		List<E> result = getSortedList(params.getFilter(), getSort(params));
 		return assembler.entitiesToResources(result, params);
 	}
 
-	public PagedResources<Resource<E>> getPagedResources(FilterSortPaginate params) {
+	public List<E> getSortedList(String filter, Sort sort) {
+		return filter == null
+				? repo.findAll(sort)
+				: repo.findFiltered(filter, sort).orElseThrow(() -> new NotFoundException(filter));
+	}
+
+	public <P extends FilterSortPaginate> PagedResources<Resource<E>> getPagedResources(P params) {
 		String filter = params.getFilter();
 		PageRequest page = PageRequest.of(params.getPage(), params.getSize(), getSort(params));
-		
-		Page<E> result = filter == null 
-				? repo.findAll(page)
-				: repo.findFiltered(filter, page).orElseThrow(() -> new NotFoundException(filter));
-		
-		return assembler.entitiesToPagedResources(result, params);
+		return assembler.entitiesToPagedResources(getPaged(filter, page), params);
 	}
 	
+	public Page<E> getPaged(String filter, PageRequest page) {		
+		return filter == null 
+				? repo.findAll(page)
+				: repo.findFiltered(filter, page).orElseThrow(() -> new NotFoundException(filter));
+	}
+
 	protected Sort getSort(FilterSortPaginate params) {
 		return params.createSort(DEFAULT_SORT_PROP);
 	}
-
 }

@@ -68,7 +68,9 @@ public class PaginationLinkBuilder {
 					value = getValueForLast(field, params, (Page<?>) page);
 					break;
 				}
-				uri.queryParam(field.getName(), value);
+				if (value != null) {
+					uri.queryParam(field.getName(), value);
+				}
 			}
 			
 			if (clazz.getSuperclass() != null) {

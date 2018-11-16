@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { SuburbControllerService } from '../api/services/suburb-controller.service';
+import { BaseProvider } from '../base/base.provider';
 import { SuburbModel } from '../models/suburb.model';
-import { AbstractProvider } from './abstract.provider';
 
 @Injectable({ providedIn: 'root' })
 export class SuburbProvider
-  extends AbstractProvider<SuburbControllerService, SuburbModel> {
+  extends BaseProvider<SuburbControllerService, SuburbModel> {
 
-  protected mapping = {
+  protected methods = {
     findAll: this.service.suburbControllerFindAllResponse,
     findOne: this.service.suburbControllerFindOneResponse,
     add: this.service.suburbControllerAddResponse,

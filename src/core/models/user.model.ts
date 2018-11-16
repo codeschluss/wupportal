@@ -1,7 +1,7 @@
 import { UserEntity } from '../api/models/user-entity';
-import { AbstractModel } from './abstract.model';
+import { BaseModel } from '../base/base.model';
 
-export class UserModel extends AbstractModel implements UserEntity {
+export class UserModel extends BaseModel implements UserEntity {
 
   public fullname: string;
   public password: string;

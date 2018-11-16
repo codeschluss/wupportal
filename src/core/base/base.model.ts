@@ -1,4 +1,4 @@
-export abstract class AbstractModel {
+export abstract class BaseModel {
 
   public id: string;
 

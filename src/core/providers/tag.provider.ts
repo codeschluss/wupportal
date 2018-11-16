@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { TagControllerService } from '../api/services/tag-controller.service';
+import { BaseProvider } from '../base/base.provider';
 import { TagModel } from '../models/tag.model';
-import { AbstractProvider } from './abstract.provider';
 
 @Injectable({ providedIn: 'root' })
 export class TagProvider
-  extends AbstractProvider<TagControllerService, TagModel> {
+  extends BaseProvider<TagControllerService, TagModel> {
 
-  protected mapping = {
+  protected methods = {
     findAll: this.service.tagControllerFindAllResponse,
     findOne: this.service.tagControllerFindOneResponse,
     add: this.service.tagControllerAddResponse,

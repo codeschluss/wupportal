@@ -25,6 +25,7 @@ public class ActivityControllerFindUserTest {
 	
 	@Test
 	@WithAnonymousUser
+	@SuppressWarnings("unchecked")
 	public void findUserOK() {
 		String activityId = "00000000-0000-0000-0010-100000000000";
 		
@@ -35,6 +36,7 @@ public class ActivityControllerFindUserTest {
 	
 	@Test
 	@WithUserDetails("super@user")
+	@SuppressWarnings("unchecked")
 	public void findUserSuperUserShowUserFalseOK() {
 		String activityId = "00000000-0000-0000-0010-200000000000";
 		

@@ -30,6 +30,7 @@ public class CategoryControllerAddTest {
 	
 	@Test
 	@WithUserDetails("super@user")
+	@SuppressWarnings("unchecked")
 	public void addSuperUserOK() throws URISyntaxException {
 		CategoryEntity category = new CategoryEntity("addSuperUserOK", "addSuperUserOK", "addSuperUserOK", null);		
 		

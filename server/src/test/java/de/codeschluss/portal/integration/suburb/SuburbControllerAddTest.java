@@ -30,6 +30,7 @@ public class SuburbControllerAddTest {
 	
 	@Test
 	@WithUserDetails("super@user")
+	@SuppressWarnings("unchecked")
 	public void addSuperUserOK() throws URISyntaxException {
 		SuburbEntity suburb = new SuburbEntity("addSuperUserOK", null);		
 		

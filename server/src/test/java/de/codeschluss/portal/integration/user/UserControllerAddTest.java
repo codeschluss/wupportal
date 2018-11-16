@@ -38,6 +38,7 @@ public class UserControllerAddTest {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	public void addWithoutSecurityDuplicated() throws URISyntaxException {
 		UserEntity user = new UserEntity("provider1@user", "test", "12345678", true, "addWithoutSecurityDuplicated", null);
 		

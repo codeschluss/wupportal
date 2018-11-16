@@ -22,6 +22,7 @@ public class ActivityControllerFindSchedulesTest {
 	private ActivityController controller;
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void findSchedulesOK() {
 		String activityId = "00000000-0000-0000-0010-100000000000";
 		

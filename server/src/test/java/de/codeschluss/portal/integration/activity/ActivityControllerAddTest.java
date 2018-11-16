@@ -77,6 +77,7 @@ public class ActivityControllerAddTest {
 		return new ActivityEntity(name, "createActivity",true,addressId,null,categoryId,null,organisationId,null,null,null,null);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void assertContaining(ActivityEntity activity) {
 		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findAll(new FilterSortPaginateCurrent()).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(

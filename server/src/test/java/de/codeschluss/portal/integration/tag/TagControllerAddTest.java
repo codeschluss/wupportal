@@ -71,6 +71,7 @@ public class TagControllerAddTest {
 		controller.add(tag);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void assertContaining(TagEntity tag) {
 		Resources<Resource<TagEntity>> result = (Resources<Resource<TagEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(

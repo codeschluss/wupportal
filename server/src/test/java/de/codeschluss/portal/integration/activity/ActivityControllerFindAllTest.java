@@ -51,6 +51,7 @@ public class ActivityControllerFindAllTest {
 	}
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void findAllCurrentTrueOK() {
 		FilterSortPaginateCurrent params = new FilterSortPaginateCurrent(null, null, null, null, null, true);
 		String noFutureActivityId = "00000000-0000-0000-0010-180000000000";
@@ -61,6 +62,7 @@ public class ActivityControllerFindAllTest {
 	}
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void findAllCurrentFalseOK() {
 		FilterSortPaginateCurrent params = new FilterSortPaginateCurrent(null, null, null, null, null, false);
 		String noFutureActivityId = "00000000-0000-0000-0010-180000000000";

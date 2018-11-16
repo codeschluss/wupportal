@@ -1,8 +1,8 @@
 import { AddressEntity } from '../api/models/address-entity';
-import { AbstractModel } from './abstract.model';
+import { BaseModel } from '../base/base.model';
 import { SuburbModel } from './suburb.model';
 
-export class AddressModel extends AbstractModel implements AddressEntity {
+export class AddressModel extends BaseModel implements AddressEntity {
 
   public houseNumber: string;
   public latitude: number;

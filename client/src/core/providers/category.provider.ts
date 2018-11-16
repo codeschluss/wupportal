@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { CategoryControllerService } from '../api/services/category-controller.service';
+import { BaseProvider } from '../base/base.provider';
 import { CategoryModel } from '../models/category.model';
-import { AbstractProvider } from './abstract.provider';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryProvider
-  extends AbstractProvider<CategoryControllerService, CategoryModel> {
+  extends BaseProvider<CategoryControllerService, CategoryModel> {
 
-  protected mapping = {
+  protected methods = {
     findAll: this.service.categoryControllerFindAllResponse,
     findOne: this.service.categoryControllerFindOneResponse,
     add: this.service.categoryControllerAddResponse,

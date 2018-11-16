@@ -1,7 +1,7 @@
 import { CategoryEntity } from '../api/models/category-entity';
-import { AbstractModel } from './abstract.model';
+import { BaseModel } from '../base/base.model';
 
-export class CategoryModel extends AbstractModel implements CategoryEntity {
+export class CategoryModel extends BaseModel implements CategoryEntity {
 
   public color: string;
   public description: string;

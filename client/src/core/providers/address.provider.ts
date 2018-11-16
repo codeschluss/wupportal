@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { AddressControllerService } from '../api/services/address-controller.service';
+import { BaseProvider } from '../base/base.provider';
 import { AddressModel } from '../models/address.model';
-import { AbstractProvider } from './abstract.provider';
 
 @Injectable({ providedIn: 'root' })
 export class AddressProvider
-  extends AbstractProvider<AddressControllerService, AddressModel> {
+  extends BaseProvider<AddressControllerService, AddressModel> {
 
-  protected mapping = {
+  protected methods = {
     findAll: this.service.addressControllerFindAllResponse,
     findOne: this.service.addressControllerFindOneResponse,
     add: this.service.addressControllerAddResponse,

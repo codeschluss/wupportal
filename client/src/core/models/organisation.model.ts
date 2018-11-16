@@ -1,8 +1,8 @@
 import { OrganisationEntity } from '../api/models/organisation-entity';
-import { AbstractModel } from './abstract.model';
+import { BaseModel } from '../base/base.model';
 import { AddressModel } from './address.model';
 
-export class OrganisationModel extends AbstractModel
+export class OrganisationModel extends BaseModel
   implements OrganisationEntity {
 
   public description: string;

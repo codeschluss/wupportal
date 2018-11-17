@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivityControllerService } from '../api/services/activity-controller.service';
+import { BaseProvider } from '../base/base.provider';
 import { ActivityModel } from '../models/activity.model';
-import { AbstractProvider } from './abstract.provider';
 
 @Injectable({ providedIn: 'root' })
 export class ActivityProvider
-  extends AbstractProvider<ActivityControllerService, ActivityModel> {
+  extends BaseProvider<ActivityControllerService, ActivityModel> {
 
-    protected mapping = {
+    protected methods = {
       findAll: this.service.activityControllerFindAllResponse,
       findOne: this.service.activityControllerFindOneResponse,
       add: this.service.activityControllerAddResponse,

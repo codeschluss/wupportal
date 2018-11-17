@@ -62,6 +62,7 @@ public class ActivityControllerUpdateOrganisationTest {
 		controller.updateOrganisation(activityId, organisationId);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void assertContaing(String activityId, String organisationId) {
 		Resource<OrganisationEntity> result = (Resource<OrganisationEntity>) controller.findOrganisation(activityId).getBody();
 		assertThat(result.getContent().getId()).isEqualTo(organisationId);

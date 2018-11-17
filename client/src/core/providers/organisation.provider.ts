@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { OrganisationControllerService } from '../api/services/organisation-controller.service';
+import { BaseProvider } from '../base/base.provider';
 import { OrganisationModel } from '../models/organisation.model';
-import { AbstractProvider } from './abstract.provider';
 
 @Injectable({ providedIn: 'root' })
 export class OrganisationProvider
-  extends AbstractProvider<OrganisationControllerService, OrganisationModel> {
+  extends BaseProvider<OrganisationControllerService, OrganisationModel> {
 
-  protected mapping = {
+  protected methods = {
     findAll: this.service.organisationControllerFindAllResponse,
     findOne: this.service.organisationControllerFindOneResponse,
     add: this.service.organisationControllerAddResponse,

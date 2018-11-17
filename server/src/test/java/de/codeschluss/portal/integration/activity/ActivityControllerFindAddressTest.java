@@ -20,6 +20,7 @@ public class ActivityControllerFindAddressTest {
 	@Autowired
 	private ActivityController controller;
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void findAddressOK() {
 		String activityId = "00000000-0000-0000-0010-100000000000";

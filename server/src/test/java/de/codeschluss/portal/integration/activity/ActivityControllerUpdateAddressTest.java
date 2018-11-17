@@ -93,6 +93,7 @@ public class ActivityControllerUpdateAddressTest {
 		controller.updateAddress(activityId, addressId);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void assertContaining(String activityId, String addressId) {
 		Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findAddress(activityId).getBody();
 		assertThat(result.getContent().getId()).isEqualTo(addressId);

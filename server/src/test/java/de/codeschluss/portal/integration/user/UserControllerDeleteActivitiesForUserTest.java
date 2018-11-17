@@ -79,12 +79,14 @@ public class UserControllerDeleteActivitiesForUserTest {
 		controller.deleteActivity(userId, activityId);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void assertContaining(String userId, String activityId) {
 		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(userId).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(
 				new Condition<>(p -> p.getContent().getId().equals(activityId), "activity exists"));
 	}
 
+	@SuppressWarnings("unchecked")
 	private void assertNotContaining(String userId, String activityId) {
 		Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller.findActivities(userId).getBody();
 		assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(activityId));

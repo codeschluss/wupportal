@@ -30,6 +30,7 @@ public class TargetGroupControllerAddTest {
 	
 	@Test
 	@WithUserDetails("super@user")
+	@SuppressWarnings("unchecked")
 	public void addSuperUserOK() throws URISyntaxException {
 		TargetGroupEntity targetGroup = new TargetGroupEntity("addSuperUserOK", "addSuperUserOK", null);		
 		

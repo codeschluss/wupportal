@@ -1,7 +1,7 @@
 import { SuburbEntity } from '../api/models/suburb-entity';
-import { AbstractModel } from './abstract.model';
+import { BaseModel } from '../base/base.model';
 
-export class SuburbModel extends AbstractModel implements SuburbEntity {
+export class SuburbModel extends BaseModel implements SuburbEntity {
 
   public name: string;
 

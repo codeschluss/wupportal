@@ -1,7 +1,7 @@
 import { TargetGroupEntity } from '../api/models/target-group-entity';
-import { AbstractModel } from './abstract.model';
+import { BaseModel } from '../base/base.model';
 
-export class TargetGroupModel extends AbstractModel
+export class TargetGroupModel extends BaseModel
   implements TargetGroupEntity {
 
   public description: string;

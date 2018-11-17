@@ -71,6 +71,7 @@ public class AddressControllerAddTest {
 		controller.add(address);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void assertContaining(AddressEntity address) {
 		Resources<Resource<AddressEntity>> result = (Resources<Resource<AddressEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
 		assertThat(result.getContent()).haveAtLeastOne(

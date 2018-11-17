@@ -21,6 +21,7 @@ public class AddressControllerFindSuburbTest {
 	private AddressController controller;
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void findSuburbOK() {
 		String addressId = "00000000-0000-0000-0006-100000000000";
 		

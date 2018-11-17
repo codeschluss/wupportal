@@ -27,6 +27,7 @@ class ActivityControllerService extends BaseService {
   }
 
   /**
+   * @param current undefined
    * @param dir undefined
    * @param filter undefined
    * @param page undefined
@@ -34,7 +35,8 @@ class ActivityControllerService extends BaseService {
    * @param sort undefined
    * @return OK
    */
-  activityControllerFindAllResponse(dir?: string,
+  activityControllerFindAllResponse(current?: boolean,
+    dir?: string,
     filter?: string,
     page?: number,
     size?: number,
@@ -42,6 +44,7 @@ class ActivityControllerService extends BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    if (current != null) __params = __params.set('current', current.toString());
     if (dir != null) __params = __params.set('dir', dir.toString());
     if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
@@ -65,6 +68,7 @@ class ActivityControllerService extends BaseService {
     );
   }
   /**
+   * @param current undefined
    * @param dir undefined
    * @param filter undefined
    * @param page undefined
@@ -72,12 +76,13 @@ class ActivityControllerService extends BaseService {
    * @param sort undefined
    * @return OK
    */
-  activityControllerFindAll(dir?: string,
+  activityControllerFindAll(current?: boolean,
+    dir?: string,
     filter?: string,
     page?: number,
     size?: number,
     sort?: string): Observable<{}> {
-    return this.activityControllerFindAllResponse(dir, filter, page, size, sort).pipe(
+    return this.activityControllerFindAllResponse(current, dir, filter, page, size, sort).pipe(
       __map(_r => _r.body as {})
     );
   }

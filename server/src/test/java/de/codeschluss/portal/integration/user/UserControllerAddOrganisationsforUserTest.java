@@ -26,8 +26,10 @@ public class UserControllerAddOrganisationsforUserTest {
 	@Autowired
     private UserController controller;
 	
+
 	@Test
 	@WithUserDetails("super@user")
+	@SuppressWarnings("unchecked")
 	public void addSingleOrganisationForOtherUserSuperUserOK() {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String orgaId = "00000000-0000-0000-0008-200000000000";
@@ -39,6 +41,7 @@ public class UserControllerAddOrganisationsforUserTest {
 
 	@Test
 	@WithUserDetails("provider1@user")
+	@SuppressWarnings("unchecked")
 	public void addMultipleOrganisationForOwnUserOK() {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String orgaId1 = "00000000-0000-0000-0008-300000000000";
@@ -55,6 +58,7 @@ public class UserControllerAddOrganisationsforUserTest {
 	
 	@Test
 	@WithUserDetails("provider1@user")
+	@SuppressWarnings("unchecked")
 	public void addOrganisationFilterDuplicateOrgasForOwnUserOK() {
 		String userId = "00000000-0000-0000-0004-300000000000";
 		String orgaId1 = "00000000-0000-0000-0008-500000000000";

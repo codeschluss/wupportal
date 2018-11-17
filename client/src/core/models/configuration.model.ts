@@ -1,7 +1,7 @@
 import { ConfigurationEntity } from '../api/models/configuration-entity';
-import { AbstractModel } from './abstract.model';
+import { BaseModel } from '../base/base.model';
 
-export class ConfigurationModel extends AbstractModel
+export class ConfigurationModel extends BaseModel
   implements ConfigurationEntity {
 
   public item: string;

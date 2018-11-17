@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { I18nResolver } from './core/base/i18n.resolver';
 import { SessionResolver } from './core/session/session.resolver';
 
 const ClientProviders = [
@@ -7,7 +8,7 @@ const ClientProviders = [
 
 const ClientResolvers = {
   session: SessionResolver,
-  // xlf: I18nResolver
+  xlf: I18nResolver
 };
 
 const ClientRoutes = [

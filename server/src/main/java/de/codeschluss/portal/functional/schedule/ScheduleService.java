@@ -22,7 +22,7 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
 	}
 	
 	public Object getResourceByActivity(String activityId) {
-		List<ScheduleEntity> schedules = repo.findByActivityId(activityId).orElseThrow(() -> new NotFoundException(activityId));
+		List<ScheduleEntity> schedules = repo.findByActivityIdAndFutureOnly(activityId).orElseThrow(() -> new NotFoundException(activityId));
 		return assembler.entitiesToResources(schedules, null);
 	}
 	

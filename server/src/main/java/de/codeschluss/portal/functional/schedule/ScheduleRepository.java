@@ -21,4 +21,7 @@ public interface ScheduleRepository extends FilteredJpaRepository<ScheduleEntity
 	Optional<Page<ScheduleEntity>> findFiltered(String filter, Pageable pageable);
 
 	Optional<List<ScheduleEntity>> findByActivityId(String activityId);
+
+	@Query("Select s from ScheduleEntity s where s.activity.id = ?1 and s.startDate >= current_date")
+	Optional<List<ScheduleEntity>> findByActivityIdAndFutureOnly(String activityId);
 }

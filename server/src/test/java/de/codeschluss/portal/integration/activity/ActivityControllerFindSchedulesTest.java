@@ -24,11 +24,12 @@ public class ActivityControllerFindSchedulesTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void findSchedulesOK() {
-		String activityId = "00000000-0000-0000-0010-100000000000";
+		String activityId = "00000000-0000-0000-0010-300000000000";
 		
 		Resources<Resource<ScheduleEntity>> result = (Resources<Resource<ScheduleEntity>>) controller.findSchedules(activityId).getBody();
 		
 		assertThat(result.getContent()).isNotNull();
+		assertThat(result.getContent()).allMatch(schedule -> schedule.getContent().getStartDate().getTime() >= System.currentTimeMillis());
 	}
 	
 	@Test(expected = NotFoundException.class)

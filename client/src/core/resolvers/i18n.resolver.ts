@@ -7,10 +7,10 @@ export class I18nResolver implements Resolve<any> {
 
   public translation: string;
 
-  private user = { getLanguage: () => 'en' }
+  private user = { getLanguage: () => 'en' };
 
   public constructor(
-    private http: HttpClient,
+    private http: HttpClient
     // private user: UserService
   ) { }
 

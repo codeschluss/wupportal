@@ -12,7 +12,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.common.exception.BadParamsException;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.functional.user.UserController;
 
 @RunWith(SpringRunner.class)

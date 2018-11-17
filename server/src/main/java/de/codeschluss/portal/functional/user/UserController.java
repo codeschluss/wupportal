@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.ResponseEntity.*;
 
-import de.codeschluss.portal.common.base.CrudController;
-import de.codeschluss.portal.common.exception.BadParamsException;
-import de.codeschluss.portal.common.exception.DuplicateEntryException;
-import de.codeschluss.portal.common.exception.NotFoundException;
-import de.codeschluss.portal.common.security.permissions.OwnUserOrSuperUserPermission;
-import de.codeschluss.portal.common.security.permissions.OwnUserPermission;
-import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.exception.BadParamsException;
+import de.codeschluss.portal.core.exception.DuplicateEntryException;
+import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.security.permissions.OwnUserOrSuperUserPermission;
+import de.codeschluss.portal.core.security.permissions.OwnUserPermission;
+import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.activity.ActivityService;
 import de.codeschluss.portal.functional.organisation.OrganisationService;
 import de.codeschluss.portal.functional.provider.ProviderEntity;

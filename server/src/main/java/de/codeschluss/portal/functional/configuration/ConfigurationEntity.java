@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import org.springframework.hateoas.core.Relation;
 
-import de.codeschluss.portal.common.base.BaseEntity;
+import de.codeschluss.portal.core.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

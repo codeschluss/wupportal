@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 
-import de.codeschluss.portal.common.base.DataService;
-import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.exception.NotFoundException;
 
 @Service
 public class TagService extends DataService<TagEntity, TagRepository> {

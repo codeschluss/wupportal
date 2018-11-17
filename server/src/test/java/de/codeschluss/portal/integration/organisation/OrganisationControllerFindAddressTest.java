@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.functional.organisation.OrganisationController;
 
 @RunWith(SpringRunner.class)

@@ -2,7 +2,7 @@ package de.codeschluss.portal.functional.translation;
 
 import org.springframework.stereotype.Service;
 
-import de.codeschluss.portal.common.base.DataService;
+import de.codeschluss.portal.core.common.DataService;
 
 @Service
 public class TranslationService extends DataService<TranslationEntity, TranslationRepository> {

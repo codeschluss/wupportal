@@ -10,7 +10,7 @@ import org.springframework.hateoas.core.Relation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import de.codeschluss.portal.common.base.BaseEntity;
+import de.codeschluss.portal.core.common.BaseEntity;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 import de.codeschluss.portal.functional.user.UserEntity;

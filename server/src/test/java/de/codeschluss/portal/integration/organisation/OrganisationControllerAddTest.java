@@ -14,7 +14,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.codeschluss.portal.common.exception.DuplicateEntryException;
+import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.functional.organisation.OrganisationController;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 import de.codeschluss.portal.functional.organisation.OrganisationService;

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { TargetGroupControllerService } from '../api/services/target-group-controller.service';
+import { BaseProvider } from '../base/base.provider';
 import { TargetGroupModel } from '../models/target-group.model';
-import { AbstractProvider } from './abstract.provider';
 
 @Injectable({ providedIn: 'root' })
 export class TargetGroupProvider
-  extends AbstractProvider<TargetGroupControllerService, TargetGroupModel> {
+  extends BaseProvider<TargetGroupControllerService, TargetGroupModel> {
 
-  protected mapping = {
+  protected methods = {
     findAll: this.service.targetGroupControllerFindAllResponse,
     findOne: this.service.targetGroupControllerFindOneResponse,
     add: this.service.targetGroupControllerAddResponse,

@@ -1,22 +1,19 @@
-<div *ngIf="item" id="activityDetail">
+<div *ngIf="activity" id="activityDetail">
   <mat-card>
     <mat-card-content>
       <div fxLayout="column" fxLayoutGap="20px">
         <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
           <div fxFlex="50" fxLayout="column">
-            <div>{{ item.category.name }}</div>
-            <h3>{{ item.name }}</h3>
-            <p class="hyphenate">{{ item.description }}</p>
+            <div>{{ activity.category.name }}</div>
+            <h3>{{ activity.name }}</h3>
+            <p class="hyphenate">{{ activity.description }}</p>
             <div>
-              <span *ngFor="let targetGroup of item.target_groups">{{targetGroup.name}}</span>
+              <span *ngFor="let targetGroup of activity.target_groups">{{targetGroup.name}}</span>
             </div>
             <div>
               <span>
-                <!-- <fa-icon icon="heart"></fa-icon> 137 -->
+                <fa-icon icon="heart"></fa-icon> 137
               </span>
-              <!-- <span>
-                <fa-icon icon="facebook"></fa-icon>
-              </span> -->
             </div>
           </div>
           <div fxFlex="50" fxLayout="column" id="actDateTimePanel">
@@ -25,22 +22,22 @@
                 <div fxLayout="row" fxLayoutAlign="space-evenly stretch">
                   <div fxLayout="column">
                     <div fxLayout="row">
-                      <!-- <fa-icon mat-list-icon icon="calendar-alt" (click)="openBottomSheetSchedules()"></fa-icon> -->
+                      <fa-icon mat-list-icon icon="calendar-alt" (click)="openBottomSheetSchedules()"></fa-icon>
                       <span>nächster Termin:</span>
                     </div>
                     <div>
-                      {{item.schedules[0].start_date}}
+                      {{activity.schedules[0].start_date}}
                     </div>
                     <div>
                       <div>
                         <p mat-line>
-                          {{ item.address.street }}
-                          {{ item.address.house_number }}
+                          {{ activity.address.street }}
+                          {{ activity.address.house_number }}
                         </p>
                         <p mat-line>
-                          {{ item.address.postal_code }}
-                          {{ item.address.place }}
-                          {{ item.address.suburb?.name }}
+                          {{ activity.address.postal_code }}
+                          {{ activity.address.place }}
+                          {{ activity.address.suburb?.name }}
                         </p>
                       </div>
                     </div>

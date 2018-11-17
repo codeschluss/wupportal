@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivityModel } from '../../../core/models/activity.model';
 
-
 @Component({
   selector: 'activity-card',
   styleUrls: ['activity.card.component.css', '../main.css'],

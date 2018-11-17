@@ -15,7 +15,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { BottomSheetScheduleComponent } from './activity.bottom.sheet.component';
-import { BottomSheetMapComponent } from './activity.map.component';
+import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 
 
 @Component({
@@ -35,9 +35,8 @@ import { BottomSheetMapComponent } from './activity.map.component';
 export class ActivityViewComponent implements OnInit {
 
   public static readonly imports = [];
-  public item: ActivityModel;
+  public activity: ActivityModel;
   public viewSchedules: boolean;
-  public selectables: ActivityModel[] = [];
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
@@ -48,9 +47,9 @@ export class ActivityViewComponent implements OnInit {
     // route: ActivatedRoute,
     // private activityService: ActivityService,
   ) {
-    this.item = new ActivityModel;
-    this.item.name = 'FakeActivity';
-    this.item.description = 'This is just a FakeActivity to show'
+    this.activity = new ActivityModel;
+    this.activity.name = 'FakeActivity';
+    this.activity.description = 'This is just a FakeActivity to show'
       + 'how this could look like.';
 
     const testAddress = new AddressModel();
@@ -65,20 +64,20 @@ export class ActivityViewComponent implements OnInit {
     testAddress.place = 'SampleCity';
     testAddress.suburb.id = '1';
 
-    this.item.address = testAddress;
+    this.activity.address = testAddress;
 
     const category = new CategoryModel;
     category.name = 'party';
-    this.item.category = category;
+    this.activity.category = category;
 
     const target_group = new TargetGroupModel;
     target_group.name = 'youth';
-    this.item.targetGroups = [target_group];
+    this.activity.targetGroups = [target_group];
 
     const schedule = new ScheduleModel;
     schedule.startDate = new Date().toUTCString();
     schedule.endDate = new Date().toUTCString();
-    this.item.schedules = [schedule];
+    this.activity.schedules = [schedule];
 
     const organisation = new OrganisationModel;
     organisation.name = 'testOrganisation';
@@ -94,10 +93,8 @@ export class ActivityViewComponent implements OnInit {
     secondDate.endDate =
       new Date(new Date(secondDate.startDate).getDate() + 1).toISOString();
 
-    this.item.schedules.push(firstDate);
-    this.item.schedules.push(secondDate);
-
-    this.selectables.push(this.item);
+    this.activity.schedules.push(firstDate);
+    this.activity.schedules.push(secondDate);
   }
 
   public ngOnInit(): void {
@@ -112,12 +109,12 @@ export class ActivityViewComponent implements OnInit {
 
   openBottomSheetSchedules(): void {
     this.bottomSheet.open(BottomSheetScheduleComponent,
-      { data: { schedules: this.item.schedules } });
+      { data: { schedules: this.activity.schedules } });
   }
 
   openBottomSheetMap(): void {
     this.bottomSheet.open(BottomSheetMapComponent,
-      { data: { activities: this.selectables } });
+      { data: { activities: [this.activity] } });
   }
 
 }

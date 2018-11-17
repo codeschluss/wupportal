@@ -7,7 +7,7 @@ import { ActivityModel } from '../../../core/models/activity.model';
   template: '<div id="largeMap"><mapping-component ' +
     '[activities] = activities> ' +
     '</mapping-component></div>',
-  styleUrls: ['activity.map.component.css']
+  styleUrls: ['map.bottomsheet.component.css']
 })
 export class BottomSheetMapComponent {
   activities: ActivityModel[];

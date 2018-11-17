@@ -14,24 +14,20 @@ import { LogoComponent } from './utils/logo.component';
 import { ClientUrlSerializer } from './utils/serializer';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import 'hammerjs';
 
-/*
- * Fontawesome icons
- */
 fontawesome.add(fas);
 
 const ClientDeclarations = [
   ClientComponent,
   I18nComponent,
-  LogoComponent
+  LogoComponent,
 ];
 
 const ClientImports = [
   BaseProvider.imports,
   ClientComponent.imports,
   I18nComponent.imports,
-  LogoComponent.imports
+  LogoComponent.imports,
 ];
 
 const ClientProviders = [

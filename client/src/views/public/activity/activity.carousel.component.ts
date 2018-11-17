@@ -1,6 +1,5 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { ActivityModel } from '../../../core/models/activity.model';
-import 'hammerjs';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 
 @Component({
@@ -13,7 +12,9 @@ import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 
 export class ActivityCarouselComponent implements AfterViewInit {
 
-  public static readonly imports =[NgxHmCarouselModule];
+  public static readonly imports =[
+    NgxHmCarouselModule
+  ];
 
   @Input()
   public activities: ActivityModel[];

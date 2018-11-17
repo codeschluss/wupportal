@@ -1,6 +1,7 @@
 @media only screen and (min-width: 960px){
   #largeMap {
     width: 70vw;
+    height: 70vh;
   }
 }
 

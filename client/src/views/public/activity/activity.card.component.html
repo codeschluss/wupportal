@@ -1,0 +1,13 @@
+<mat-card [ngStyle]="{'background-color': activity.category.color}" class="activityCardSmall">
+  <mat-card-content>
+    <div fxLayout="row" fxLayoutAlign="space-around end" fxLayoutGap="5px">
+      <div class="smallText">
+        {{getDate()}}
+        {{activity.address.suburb.name}}
+      </div><img src="https://de.wikipedia.org/static/images/project-logos/dewiki.png">
+    </div>
+    <div class="activityCardContent">
+      {{activity.name}}
+    </div>
+  </mat-card-content>
+</mat-card>

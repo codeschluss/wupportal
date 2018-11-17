@@ -1,0 +1,85 @@
+$transition_time:.2s;
+
+
+.transition {
+  transition: all $transition_time ease-in-out;
+}
+
+.carousel {
+  .content {
+    display: flex;
+
+    .item {
+      width: 100%;
+      display: block;
+      // fade
+      opacity: 0;
+
+      // using delay to prevent left change show error
+      &.fade_animation {
+        transition: opacity 0.295s linear $transition_time;
+      }
+
+      &.fade_animation_0 {
+        transition: opacity 0.295s linear;
+      }
+
+      &.visible {
+        opacity: 1;
+      }
+
+      &:last-child,
+      &:first-child,
+      {
+        opacity: 0;
+      }
+
+      &.visible_important {
+        opacity: 1;
+      }
+
+      .img {
+        width: 100%;
+        display: block;
+        background-size: cover;
+        background-position: center;
+        // height: 0;
+        // padding-bottom: 50%;
+      }
+    }
+
+
+  }
+
+  .ball {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: black;
+    border: 2px solid;
+    opacity: 0.5;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #ff5252;
+  }
+
+  .click-area {
+    width: 50px;
+    text-align: center;
+    color: #DD574A;
+
+    i {
+      font-size: 3em;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+<aol-map>
+	<aol-interaction-default>
+	</aol-interaction-default>
+
+	<aol-view enableRotation [zoom]="zoomfactor">
+		<aol-coordinate [srid]="projection" [x]="longitude" [y]="latitude">
+		</aol-coordinate>
+	</aol-view>
+
+	<aol-layer-tile>
+		<aol-source-osm>
+		</aol-source-osm>
+	</aol-layer-tile>
+
+	<aol-layer-vector>
+		<ng-container *ngIf="!!activities.length">
+			<aol-source-cluster [distance]="clusterspan">
+				<aol-source-vector [overlaps]="true">
+					<ng-container *ngFor="let i of activities">
+						<aol-feature [id]="i.id">
+							<aol-geometry-point>
+								<aol-coordinate
+									[srid]="projection"
+									[x]="i.address.longitude"
+									[y]="i.address.latitude">
+								</aol-coordinate>
+							</aol-geometry-point>
+						</aol-feature>
+					</ng-container>
+				</aol-source-vector>
+			</aol-source-cluster>
+		</ng-container>
+	</aol-layer-vector>
+</aol-map>

@@ -1,0 +1,58 @@
+<!-- 
+<ngx-hm-carousel *ngIf="clusteredActivities.length" id="bigCarousel" [(ngModel)]="index" [autoplay-speed]="speed"
+  [autoplay]="autoplay" [autoplay-direction]="direction" [infinite]="infinite" [between-delay]="2000" class="carousel c-accent"
+  fxHide.lt-md="true">
+
+  <section ngx-hm-carousel-container class="content">
+    <article class="item cursor-pointer visible_important" ngx-hm-carousel-item *ngFor="let activity of clusteredActivities; let i = index">
+      <div class="img" fxLayout="row" fxLayoutAlign="space-evenly center">
+        <div fxFlex="20" *ngFor="let act of activity">
+          <activity-card [activity]="act"></activity-card>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <ng-template #carouselPrev>
+    <div class="click-area">
+      <i class="material-icons">&lt;</i>
+    </div>
+  </ng-template>
+  <ng-template #carouselNext>
+    <div class="click-area">
+      <i class="material-icons">&gt;</i>
+    </div>
+  </ng-template>
+
+  <ng-template #carouselDot let-model>
+    <div class="ball bg-accent" [class.visible]="model.index === model.currentIndex"></div>
+  </ng-template>
+</ngx-hm-carousel>
+
+<ngx-hm-carousel id="smallCarousel" *ngIf="activities.length" [(ngModel)]="index" [autoplay-speed]="speed" [autoplay]="autoplay"
+  [autoplay-direction]="direction" [infinite]="infinite" [between-delay]="2000" class="carousel c-accent" fxHide.gt-sm="true">
+
+  <section ngx-hm-carousel-container class="content">
+    <article class="item cursor-pointer visible_important" ngx-hm-carousel-item *ngFor="let activity of activities; let i = index">
+      <div class="img" fxLayout="row" fxLayoutAlign="space-evenly center">
+        <activity-card [activity]="activity"></activity-card>
+      </div>
+    </article>
+  </section>
+
+  <ng-template #carouselPrev>
+    <div class="click-area">
+      <i class="material-icons">&lt;</i>
+    </div>
+  </ng-template>
+  <ng-template #carouselNext>
+    <div class="click-area">
+      <i class="material-icons">&gt;</i>
+    </div>
+  </ng-template>
+
+  <ng-template #carouselDot let-model>
+    <div class="ball bg-accent" [class.visible]="model.index === model.currentIndex"></div>
+  </ng-template>
+
+</ngx-hm-carousel> -->

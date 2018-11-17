@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+* {
+  font-family: Open Sans, Regular;
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 35px;
+}
+
+.activityCardContent {
+  font-size: 25px;
+  font-family: Open Sans, Bold;
+}
+
+.smallText{
+  font-size: 11px;
+}

@@ -2,9 +2,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
+import { ActivityEditComponent } from './activity/activity.edit.component';
+import { OrganisationEditComponent } from './organisation/organisation.edit.component';
+
 
 const AdminDeclarations = [
-  AdminComponent
+  AdminComponent,
+  ActivityEditComponent,
+  OrganisationEditComponent
 ];
 
 const AdminImports = [

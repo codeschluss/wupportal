@@ -1,0 +1,104 @@
+<div *ngIf="item" id="activityDetail">
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutGap="20px">
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+          <div fxFlex="50" fxLayout="column">
+            <div>{{ item.category.name }}</div>
+            <h3>{{ item.name }}</h3>
+            <p class="hyphenate">{{ item.description }}</p>
+            <div>
+              <span *ngFor="let targetGroup of item.target_groups">{{targetGroup.name}}</span>
+            </div>
+            <div>
+              <span>
+                <!-- <fa-icon icon="heart"></fa-icon> 137 -->
+              </span>
+              <!-- <span>
+                <fa-icon icon="facebook"></fa-icon>
+              </span> -->
+            </div>
+          </div>
+          <div fxFlex="50" fxLayout="column" id="actDateTimePanel">
+            <mat-card>
+              <mat-card-content>
+                <div fxLayout="row" fxLayoutAlign="space-evenly stretch">
+                  <div fxLayout="column">
+                    <div fxLayout="row">
+                      <!-- <fa-icon mat-list-icon icon="calendar-alt" (click)="openBottomSheetSchedules()"></fa-icon> -->
+                      <span>nächster Termin:</span>
+                    </div>
+                    <div>
+                      {{item.schedules[0].start_date}}
+                    </div>
+                    <div>
+                      <div>
+                        <p mat-line>
+                          {{ item.address.street }}
+                          {{ item.address.house_number }}
+                        </p>
+                        <p mat-line>
+                          {{ item.address.postal_code }}
+                          {{ item.address.place }}
+                          {{ item.address.suburb?.name }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <mapping-component (click)="openBottomSheetMap()" [activities]="selectables">
+                    </mapping-component>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+          <div fxFlex="50" fxLayout="column">
+            <div>
+              <div>
+                <h4>Organisation Beispiel</h4>
+              </div>
+              <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et
+                dolore
+                magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo
+                consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                pariatur.
+                Excepteur
+                sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+            </div>
+          </div>
+          <div fxFlex="50" fxLayout="column">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>
+                  <h4>Blogbeiträge</h4>
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et
+                dolore
+                magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo
+                consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                pariatur.
+                Excepteur
+                sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

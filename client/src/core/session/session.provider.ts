@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../api/strict-http-response';
-import { AuthInterceptor } from '../auth/auth.interceptor';
 import { AuthService } from '../auth/auth.service';
 import { TokenModel } from '../auth/token.model';
 import { SessionModel } from './session.model';
@@ -15,14 +14,12 @@ export class SessionProvider {
   private session: BehaviorSubject<SessionModel>;
 
   public constructor(
-    private interceptor: AuthInterceptor,
     private resolver: SessionResolver,
     private service: AuthService,
     private storage: LocalStorage
   ) {
-    (this.session = new BehaviorSubject<SessionModel>(this.resolver.status()))
-      .subscribe((session) => this.storage.setItem('session', session)
-        .subscribe(() => this.interceptor.bearer = session.bearer));
+    (this.session = new BehaviorSubject<SessionModel>(this.resolver.session))
+      .subscribe((next) => this.storage.setItemSubscribe('session', next));
   }
 
   public login(username: string, password: string): Promise<void> {
@@ -38,8 +35,8 @@ export class SessionProvider {
     })).pipe(map(() => null)).toPromise();
   }
 
-  public status(): Observable<SessionModel> {
-    return this.session.asObservable();
+  public subscribe(next?: (value: SessionModel) => void): Subscription {
+    return this.session.asObservable().subscribe(next);
   }
 
   private decode(response: StrictHttpResponse<object>): void {

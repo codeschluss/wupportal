@@ -7,7 +7,7 @@ import { SessionModel, SessionModelSchema } from './session.model';
 @Injectable({ providedIn: 'root' })
 export class SessionResolver implements Resolve<any> {
 
-  private session: SessionModel;
+  public session: SessionModel;
 
   public constructor(
     private storage: LocalStorage
@@ -19,10 +19,6 @@ export class SessionResolver implements Resolve<any> {
       map((session) => this.refresh(session)),
       tap((session) => this.session = session)
     ).toPromise();
-  }
-
-  public status(): SessionModel {
-    return this.session;
   }
 
   private refresh(session: SessionModel): SessionModel {

@@ -47,7 +47,8 @@ INSERT INTO `users` (`id`, `superuser`, `username`, `password`, `fullname`, `pho
 ('00000000-0000-0000-0004-900000000000', 1, 'super2@user', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'super2@user', '09876543210'),
 ('00000000-0000-0000-0004-110000000000', 0, 'grantsuper@user.de', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'grantsuper@user.de', '09876543210'),
 ('00000000-0000-0000-0004-120000000000', 1, 'takesuper@user.de', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'takesuper@user.de', '09876543210'),
-('00000000-0000-0000-0004-130000000000', 0, 'admin2@user', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'admin2@user.de', '09876543210');
+('00000000-0000-0000-0004-130000000000', 0, 'admin2@user', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'admin2@user.de', '09876543210'),
+('00000000-0000-0000-0004-140000000000', 1, 'milli@codeschluss.de', '$2a$10$0pLpBHF8gWe9UFz1eJzAHOwwUHMIjfkaImWTP1BX9wAmWLdcOvbNW', 'milli@codeschluss', '09876543210');
 
 INSERT INTO `suburbs` (`id`, `name`) VALUES
 ('00000000-0000-0000-0005-100000000000', 'suburb1'),
@@ -80,7 +81,7 @@ INSERT INTO `organisations` (`id`, `name`, `description`, `website`, `mail`, `ph
 ('00000000-0000-0000-0008-400000000000', 'organisationToDeleteSuperUser', 'organisationToDelete', 'www.organisationDelete.com', 'organisation@Delete.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-500000000000', 'organisationToDeleteOrgaAdmin', 'organisationToDelete', 'www.organisationDelete.com', 'organisation@Delete.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-600000000000', 'orgaTranslate', 'übersetze Organisation', 'www.organisationTranslate.com', 'organisation@translate.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
-('00000000-0000-0000-0008-700000000000', 'orgaWithoutProvider', 'kein Provider', 'www.keinProvider.com', 'organisation@noprovider.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
+('00000000-0000-0000-0008-700000000000', 'orgaWithoutAdmin', 'kein Admin', 'www.keinAdmin.com', 'organisation@noadmin.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-800000000000', 'orgaMail', 'orgaMail', 'www.orgaMail.com', 'orgaMail@orgaMail.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-900000000000', 'orgaMap', 'orgaMap', 'www.orgaMap.com', 'orgaMap@orgaMap.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-110000000000', 'mapfilterAllWithoutFree', 'mapfilterAllWithoutFree', 'www.mapfilterAllWithoutFree.com', 'orgaMap@mapfilterAllWithoutFree.com', '09876543210', null, '00000000-0000-0000-0006-100000000000');
@@ -99,7 +100,8 @@ INSERT INTO `providers` (`id`, `organisation_id`, `user_id`, `admin`, `approved`
 ('00000000-0000-0000-0009-120000000000', '00000000-0000-0000-0008-800000000000', '00000000-0000-0000-0004-900000000000', 1, 1),
 ('00000000-0000-0000-0009-130000000000', '00000000-0000-0000-0008-900000000000', '00000000-0000-0000-0004-900000000000', 1, 1),
 ('00000000-0000-0000-0009-140000000000', '00000000-0000-0000-0008-110000000000', '00000000-0000-0000-0004-900000000000', 1, 1),
-('00000000-0000-0000-0009-150000000000', '00000000-0000-0000-0008-200000000000', '00000000-0000-0000-0004-130000000000', 1, 1);
+('00000000-0000-0000-0009-150000000000', '00000000-0000-0000-0008-200000000000', '00000000-0000-0000-0004-130000000000', 1, 1),
+('00000000-0000-0000-0009-160000000000', '00000000-0000-0000-0008-700000000000', '00000000-0000-0000-0004-140000000000', 0, 0);
 
 INSERT INTO `activities` (`id`, `name`, `description`, `show_user`, `address_id`, `provider_id`, `category_id`) VALUES
 ('00000000-0000-0000-0010-100000000000', 'activity1', 'activity1', 1, '00000000-0000-0000-0006-100000000000', '00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0007-100000000000'),

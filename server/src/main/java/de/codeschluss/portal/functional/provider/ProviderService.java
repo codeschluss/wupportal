@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.mail.MailService;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 import de.codeschluss.portal.functional.organisation.OrganisationService;
 import de.codeschluss.portal.functional.user.UserEntity;
+import de.codeschluss.portal.functional.user.UserService;
 
 @Service
 @Transactional
@@ -18,12 +20,18 @@ public class ProviderService {
 	
 	private final OrganisationService orgaService;
 	private final ProviderRepository repo;
+	private final MailService mailService;
+	private final UserService userService;
 	
 	public ProviderService(
 			ProviderRepository providerRepo,
-			OrganisationService orgaService) {
+			OrganisationService orgaService,
+			MailService mailService,
+			UserService userService) {
 		this.repo = providerRepo;
 		this.orgaService = orgaService;
+		this.mailService = mailService;
+		this.userService = userService;
 	}
 	
 	public boolean isDuplicate(String userId, List<String> orgaIds) {
@@ -76,7 +84,23 @@ public class ProviderService {
 	}
 
 	public List<ProviderEntity> addAll(List<ProviderEntity> providers) {
-		return repo.saveAll(providers);
+		return providers.stream().map(provider -> {
+			provider = repo.save(provider);
+			sendApplicationMail(provider);
+			return provider;
+		}).collect(Collectors.toList());
+	}
+	
+	private void sendApplicationMail(ProviderEntity provider) {
+		List<ProviderEntity> adminProviders = getAdminUsers(provider.getOrganisation());
+		List<String> toMails = adminProviders == null || adminProviders.isEmpty()
+				? userService.getSuperUserMails()
+				: userService.getMailsByProviders(adminProviders);
+		mailService.sendApplicationUserMail(provider, toMails);	
+	}
+
+	public List<ProviderEntity> getAdminUsers(OrganisationEntity organisation) {
+		return repo.findByOrganisationAndAdminTrue(organisation).orElse(null);
 	}
 
 	public void setApprovedByUserAndOrga(String userId, String orgaId, boolean isApproved) {
@@ -85,11 +109,13 @@ public class ProviderService {
 		
 		if(!isApproved) {
 			provider.setAdmin(false);
+		} else {
+			mailService.sendApprovedUserMail(provider);
 		}
-		
+
 		repo.save(provider);
 	}
-	
+
 	public void setAdminByUserAndOrga(String userId, String orgaId, Boolean isAdmin) {
 		ProviderEntity provider = getProviderByUserAndOrganisation(userId, orgaId);
 		provider.setAdmin(isAdmin);

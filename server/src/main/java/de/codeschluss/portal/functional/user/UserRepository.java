@@ -23,5 +23,7 @@ public interface UserRepository extends FilteredJpaRepository<UserEntity, String
 	boolean existsByUsername(String username);
 	
 	Optional<UserEntity> findByUsername(String userName);
+
+	List<UserEntity> findBySuperuserTrue();
 }
 

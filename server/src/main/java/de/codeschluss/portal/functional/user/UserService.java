@@ -3,6 +3,7 @@ package de.codeschluss.portal.functional.user;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.hateoas.Resources;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.mail.MailService;
 import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 
@@ -20,13 +22,16 @@ public class UserService extends DataService<UserEntity, UserRepository> {
 	protected final String DEFAULT_SORT_PROP = "username";
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final MailService mailService;
 	
 	public UserService(
 			UserRepository repo,
 			UserResourceAssembler assembler,
-			BCryptPasswordEncoder encoder) {
+			BCryptPasswordEncoder encoder,
+			MailService mailService) {
 		super(repo, assembler);
 		this.bCryptPasswordEncoder = encoder;
+		this.mailService = mailService;
 	}
 	
 	public boolean userExists(String username) {
@@ -69,6 +74,19 @@ public class UserService extends DataService<UserEntity, UserRepository> {
 		repo.save(user);
 	}
 	
+	public boolean resetPassword(String username) {
+		String newPwd = RandomStringUtils.randomAlphanumeric(16);
+		UserEntity user = getUser(username);
+		user.setPassword(bCryptPasswordEncoder.encode(newPwd));
+		
+		if (mailService.sendResetPasswordMail(user, newPwd)) {
+			repo.save(user);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers) {
 		List<ResourceWithEmbeddable<UserEntity>> result = providers.stream().map(provider -> {
 			return assembler.toResourceWithEmbedabble(provider.getUser(), provider, "provider");
@@ -79,5 +97,17 @@ public class UserService extends DataService<UserEntity, UserRepository> {
 
 	public Object getResourceByProvider(ProviderEntity provider) {
 		return assembler.toResource(provider.getUser());
+	}
+
+	public List<String> getSuperUserMails() {
+		return getSuperUsers().stream().map(user -> user.getUsername()).collect(Collectors.toList());
+	}
+	
+	public List<UserEntity> getSuperUsers() {
+		return repo.findBySuperuserTrue();
+	}
+
+	public List<String> getMailsByProviders(List<ProviderEntity> adminProviders) {
+		return adminProviders.stream().map(provider -> provider.getUser().getUsername()).collect(Collectors.toList());
 	}
 }

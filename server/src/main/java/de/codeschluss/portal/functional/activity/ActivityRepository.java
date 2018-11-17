@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import de.codeschluss.portal.common.base.FilteredJpaRepository;
+import de.codeschluss.portal.core.common.FilteredJpaRepository;
 import de.codeschluss.portal.functional.provider.ProviderEntity;
 
 @Repository

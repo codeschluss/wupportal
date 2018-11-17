@@ -12,7 +12,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.functional.organisation.OrganisationController;
 
 @RunWith(SpringRunner.class)

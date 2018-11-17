@@ -11,7 +11,7 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.tag.TagController;
 
 @RunWith(SpringRunner.class)

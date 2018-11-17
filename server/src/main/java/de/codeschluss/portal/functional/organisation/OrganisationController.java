@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.codeschluss.portal.common.base.CrudController;
-import de.codeschluss.portal.common.exception.BadParamsException;
-import de.codeschluss.portal.common.exception.NotFoundException;
-import de.codeschluss.portal.common.security.permissions.OrgaAdminOrSuperUserPermission;
-import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.exception.BadParamsException;
+import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.security.permissions.OrgaAdminOrSuperUserPermission;
+import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.activity.ActivityService;
 import de.codeschluss.portal.functional.address.AddressService;
 import de.codeschluss.portal.functional.provider.ProviderEntity;

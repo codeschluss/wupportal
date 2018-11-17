@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StrictHttpResponse } from '../api/strict-http-response';
 import { AuthService } from '../auth/auth.service';
 import { TokenModel } from '../auth/token.model';
 import { SessionModel } from './session.model';
@@ -24,25 +23,22 @@ export class SessionProvider {
 
   public login(username: string, password: string): Promise<void> {
     return this.service.authLoginResponse(username, password).pipe(
-      map((response) => this.decode(response))
-    ).toPromise();
+      map((response) => this.session.next(Object.assign(this.session.value, {
+        bearer: response.statusText,
+        token: response.body
+      })
+    ))).toPromise();
   }
 
-  public logout(): Promise<void> {
-    return this.storage.setItem('session', Object.assign(this.session.value, {
+  public logout(): void {
+    return this.session.next(Object.assign(this.session.value, {
       bearer: '',
       token: TokenModel.new()
-    })).pipe(map(() => null)).toPromise();
+    }));
   }
 
   public subscribe(next?: (value: SessionModel) => void): Subscription {
-    return this.session.asObservable().subscribe(next);
-  }
-
-  private decode(response: StrictHttpResponse<object>): void {
-    const bearer = response.headers.get('authorization').split(' ')[1];
-    const token = JSON.parse(atob(bearer.split('.')[1]));
-    this.session.next(Object.assign(this.session.value, { bearer, token }));
+    return this.session.subscribe((value) => next(value));
   }
 
 }

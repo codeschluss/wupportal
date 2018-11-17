@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { Observable, throwError } from 'rxjs';
@@ -6,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
 import { BaseModel } from '../base/base.model';
+import { ErrorModel } from './error.model';
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseProvider
@@ -72,13 +72,13 @@ export abstract class BaseProvider
     Observable<StrictHttpResponse<object>> {
 
     return method.call(this.service, ...args).pipe(
-      catchError((response) => this.catch(response))
+      catchError((response) => this.catch(response.error))
     );
   }
 
-  protected catch(response: HttpErrorResponse): Observable<never> {
-    this.snackbar.open(response.error.message, '×');
-    return throwError(response.error);
+  protected catch(error: ErrorModel): Observable<never> {
+    this.snackbar.open(error.message, '×');
+    return throwError(error);
   }
 
   protected multiple(response: StrictHttpResponse<object>): object[] {

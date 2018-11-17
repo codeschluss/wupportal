@@ -27,7 +27,7 @@ const ClientImports = [
 ];
 
 const ClientProviders = [
-  { provide: HTTP_INTERCEPTORS, useExisting: AuthInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   { provide: UrlSerializer, useClass: ClientUrlSerializer }
 ];
 

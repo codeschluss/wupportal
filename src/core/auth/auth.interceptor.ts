@@ -5,11 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
 
-  intercept(req: HttpRequest<any>, next: HttpHandler):
+  public bearer: string;
+
+  public intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    return next.handle(req.clone({
-      setHeaders: { 'TestHeader': 'someRandomString' }
+    return next.handle(!this.bearer ? req : req.clone({
+      setHeaders: { 'Authorization': `Bearer ${this.bearer}` }
     }));
   }
 

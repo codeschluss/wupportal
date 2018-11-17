@@ -10,41 +10,33 @@ import { StrictHttpResponse } from '../api/strict-http-response';
 export class AuthService extends BaseService {
 
   public constructor(
-    config: ApiConfiguration,
-    http: HttpClient
+    apiConfiguration: ApiConfiguration,
+    httpClient: HttpClient
   ) {
-    super(config, http);
+    super(apiConfiguration, httpClient);
   }
 
-  public authEndpointLoginResponse(username: string, password: string):
+  public authLoginResponse(username: string, password: string):
     Observable<StrictHttpResponse<object>> {
 
-    const params = this.newParams();
-    const headers = new HttpHeaders();
-    const body = {
-      username: username,
-      password: password
-    };
-
-    const req = new HttpRequest<any>(
+    const request = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/login`,
-      body,
+      this.rootUrl + '/login',
       {
-        headers: headers,
-        params: params,
+        username: username,
+        password: password
+      },
+      {
+        headers: new HttpHeaders(),
+        params: this.newParams(),
         responseType: 'json'
       }
     );
 
-    return this.http.request<any>(req).pipe(
-      filter((res) => res instanceof HttpResponse),
-      map((res) => res as StrictHttpResponse<object>)
+    return this.http.request<any>(request).pipe(
+      filter((response) => response instanceof HttpResponse),
+      map((response) => response as StrictHttpResponse<object>)
     );
-  }
-
-  public logout(): void {
-
   }
 
 }

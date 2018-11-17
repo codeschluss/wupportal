@@ -10,7 +10,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.codeschluss.portal.common.base.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
 import de.codeschluss.portal.functional.activity.ActivityController;
 
 @Service

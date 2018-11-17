@@ -9,7 +9,7 @@ import org.springframework.hateoas.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.codeschluss.portal.common.base.BaseEntity;
+import de.codeschluss.portal.core.common.BaseEntity;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

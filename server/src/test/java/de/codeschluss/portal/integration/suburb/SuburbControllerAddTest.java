@@ -16,8 +16,8 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.common.exception.DuplicateEntryException;
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.exception.DuplicateEntryException;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.suburb.SuburbController;
 import de.codeschluss.portal.functional.suburb.SuburbEntity;
 

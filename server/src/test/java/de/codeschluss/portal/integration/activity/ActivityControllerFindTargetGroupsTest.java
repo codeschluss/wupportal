@@ -11,7 +11,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.functional.activity.ActivityController;
 import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 

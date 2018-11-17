@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
-import de.codeschluss.portal.common.base.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
 
 @Service
 public class OrganisationResourceAssembler extends PagingAndSortingAssembler<OrganisationEntity> {

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.codeschluss.portal.common.base.CrudController;
-import de.codeschluss.portal.common.security.permissions.ProviderOrSuperUserPermission;
-import de.codeschluss.portal.common.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
+import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 import de.codeschluss.portal.functional.tag.TagEntity;
 
 @RestController

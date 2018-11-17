@@ -8,13 +8,13 @@ import { ActivityModel } from '../models/activity.model';
 export class ActivityProvider
   extends BaseProvider<ActivityControllerService, ActivityModel> {
 
-    protected methods = {
-      findAll: this.service.activityControllerFindAllResponse,
-      findOne: this.service.activityControllerFindOneResponse,
-      add: this.service.activityControllerAddResponse,
-      update: this.service.activityControllerUpdateResponse,
-      delete: this.service.activityControllerDeleteResponse
-    };
+  protected methods = {
+    findAll: this.service.activityControllerFindAllResponse,
+    findOne: this.service.activityControllerFindOneResponse,
+    add: this.service.activityControllerAddResponse,
+    update: this.service.activityControllerUpdateResponse,
+    delete: this.service.activityControllerDeleteResponse
+  };
 
   protected model = ActivityModel;
 

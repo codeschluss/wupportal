@@ -3,8 +3,8 @@ package de.codeschluss.portal.functional.category;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
-import de.codeschluss.portal.common.base.DataService;
-import de.codeschluss.portal.common.exception.NotFoundException;
+import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.functional.category.CategoryEntity;
 
 @Service

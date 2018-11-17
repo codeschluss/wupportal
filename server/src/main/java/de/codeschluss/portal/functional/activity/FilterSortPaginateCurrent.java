@@ -1,6 +1,6 @@
 package de.codeschluss.portal.functional.activity;
 
-import de.codeschluss.portal.common.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

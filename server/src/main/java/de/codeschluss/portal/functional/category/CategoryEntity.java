@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.hateoas.core.Relation;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.portal.core.common.BaseEntity;
@@ -25,6 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "categories")
+@Relation(collectionRelation = "data")
 public class CategoryEntity extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

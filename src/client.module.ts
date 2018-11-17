@@ -11,6 +11,14 @@ import { AbstractProvider } from './core/providers/abstract.provider';
 import { I18nComponent } from './utils/i18n.component';
 import { LogoComponent } from './utils/logo.component';
 import { ClientUrlSerializer } from './utils/serializer';
+import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import 'hammerjs';
+
+/*
+ * Fontawesome icons
+ */
+fontawesome.add(fas);
 
 const ClientDeclarations = [
   ClientComponent,

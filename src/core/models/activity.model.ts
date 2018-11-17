@@ -6,7 +6,8 @@ import { BaseModel } from '../base/base.model';
 import { AddressModel } from './address.model';
 import { CategoryModel } from './category.model';
 
-export class ActivityModel extends BaseModel implements ActivityEntity {
+export class ActivityModel extends BaseModel
+  implements ActivityEntity {
 
   public description: string;
   public name: string;
@@ -14,7 +15,6 @@ export class ActivityModel extends BaseModel implements ActivityEntity {
 
   public address: AddressModel;
   public category: CategoryModel;
-  // public provider: ProviderModel;
   public schedules: ScheduleEntity[];
   public tags: TagEntity[];
   public targetGroups: TargetGroupEntity[];

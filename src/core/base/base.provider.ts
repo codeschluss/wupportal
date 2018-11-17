@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { Observable, throwError } from 'rxjs';
@@ -6,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
 import { BaseModel } from '../base/base.model';
+import { ErrorModel } from './error.model';
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseProvider
@@ -23,13 +23,13 @@ export abstract class BaseProvider
     delete: Function
   };
 
+  protected abstract snackbar: MatSnackBar;
+
   protected abstract model: new() => Model;
 
   protected abstract service: Service;
 
-  protected abstract snackbar: MatSnackBar;
-
-  public async findAll(
+  public findAll(
     current?: boolean,
     dir?: string,
     filter?: string,
@@ -37,63 +37,60 @@ export abstract class BaseProvider
     size?: number,
     sort?: string
   ): Promise<Model[]> {
-    const args = [current, dir, filter, page, size, sort];
-    return this.call(this.methods.findAll, ...args).pipe(
-      map((res) => this.eject(res)),
-      map((res) => res.map((object) => this.typed(object)))
+    return this.call(this.methods.findAll, ...Array.from(arguments)).pipe(
+      map((response) => this.multiple(response)),
+      map((records) => records.map((record) => this.typecast(record)))
     ).toPromise();
   }
 
-  public async findOne(id: string): Promise<Model> {
+  public findOne(id: string): Promise<Model> {
     return this.call(this.methods.findOne, id).pipe(
-      map((res) => this.typed(res))
+      map((response) => this.singular(response)),
+      map((record) => this.typecast(record))
     ).toPromise();
   }
 
-  public async add(record: Model): Promise<boolean> {
+  public add(record: Model): Promise<void> {
     return this.call(this.methods.add, record).pipe(
-      map(() => true)
+      map(() => null)
     ).toPromise();
   }
 
-  public async update(id: string, record: Model): Promise<boolean> {
+  public update(id: string, record: Model): Promise<void> {
     return this.call(this.methods.update, id, record).pipe(
-      map(() => true)
+      map(() => null)
     ).toPromise();
   }
 
-  public async delete(id: string): Promise<boolean> {
+  public delete(id: string): Promise<void> {
     return this.call(this.methods.delete, id).pipe(
-      map(() => true)
+      map(() => null)
     ).toPromise();
   }
 
-  // protected async findOneEmbedded(model: Model): Promise<Model> {
-  //   return null;
-  // }
+  protected call(method: Function, ...args: any[]):
+    Observable<StrictHttpResponse<object>> {
 
-  // protected async findAllEmbedded(model: Model): Promise<Model[]> {
-  //   return null;
-  // }
-
-  protected call(method: Function, ...args: any[]): Observable<object> {
     return method.call(this.service, ...args).pipe(
-      map((res: StrictHttpResponse<object>) => res.body),
-      catchError((res: HttpErrorResponse) => this.catch(res))
+      catchError((response) => this.catch(response.error))
     );
   }
 
-  protected catch(res: HttpErrorResponse): Observable<never> {
-    this.snackbar.open(`${res.error.error}: ${res.error.message}`, '×');
-    return throwError(res.error);
+  protected catch(error: ErrorModel): Observable<never> {
+    this.snackbar.open(error.message, '×');
+    return throwError(error);
   }
 
-  protected eject(res: object): object[] {
-    return res['_embedded']['data'];
+  protected multiple(response: StrictHttpResponse<object>): object[] {
+    return response.body['_embedded']['data'];
   }
 
-  protected typed(res: object): Model {
-    return Object.assign(new this.model(), res);
+  protected singular(response: StrictHttpResponse<object>): object {
+    return response.body;
+  }
+
+  protected typecast(model: object): Model {
+    return Object.assign(new this.model(), model);
   }
 
 }

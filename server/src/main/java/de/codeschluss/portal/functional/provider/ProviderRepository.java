@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import de.codeschluss.portal.core.common.FilteredJpaRepository;
+import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 import de.codeschluss.portal.functional.user.UserEntity;
 
 @Repository
@@ -34,4 +35,6 @@ public interface ProviderRepository extends FilteredJpaRepository<ProviderEntity
 	Optional<List<ProviderEntity>> findByUserAndApprovedTrue(UserEntity user);
 	
 	Optional<List<ProviderEntity>> findByUserAndAdminTrue(UserEntity user);
+
+	Optional<List<ProviderEntity>> findByOrganisationAndAdminTrue(OrganisationEntity organisation);
 }

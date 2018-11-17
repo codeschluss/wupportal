@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
+
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -85,7 +87,7 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	@SuperUserPermission
 	public ResponseEntity<?> grantSuperuserRight(@PathVariable String userId, @RequestBody Boolean isSuperuser) {
 		try {
-			this.service.grantSuperUser(userId, isSuperuser);
+			service.grantSuperUser(userId, isSuperuser);
 			return noContent().build();
 		} catch(NotFoundException e) {
 			throw new BadParamsException("User with given ID does not exist!");
@@ -121,10 +123,9 @@ public class UserController extends CrudController<UserEntity, UserService>{
 	public ResponseEntity<?> deleteOrganisation(@PathVariable String userId, @PathVariable String orgaId) {
 		try {
 			providerService.deleteForUserAndOrga(userId, orgaId);
-			return noContent().build();
-		} catch (NotFoundException e) {
-			return noContent().build();
-		}
+		} catch (NotFoundException e) {}
+		
+		return noContent().build();
 	}
 	
 	@GetMapping("/users/{userId}/activities")
@@ -142,6 +143,15 @@ public class UserController extends CrudController<UserEntity, UserService>{
 			return noContent().build();
 		} else {
 			throw new BadParamsException("Activity does not match given user!");
+		}
+	}
+	
+	@PutMapping("/users/resetpassword")
+	public ResponseEntity<?> resetPassword(@RequestBody String username) throws MessagingException {
+		if (service.resetPassword(username)) {
+			return noContent().build();
+		} else {
+			throw new BadParamsException("Password is not reset. User does not exist or Mail is mistyped");
 		}
 	}
 }

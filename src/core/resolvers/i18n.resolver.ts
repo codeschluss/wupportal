@@ -17,10 +17,10 @@ export class I18nResolver implements Resolve<any> {
     this.session.subscribe((next) => this.language = next.language);
   }
 
-  public async resolve(): Promise<string> {
+  public resolve(): Promise<string> {
     const url = `/i18n/strings.${this.language}.xlf`;
     const request = this.httpClient.get(url, { responseType: 'text' });
-    return this.translation = await request.toPromise();
+    return request.toPromise().then((response) => this.translation = response);
   }
 
 }

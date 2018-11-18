@@ -18,27 +18,34 @@ export class SessionProvider {
     private storage: LocalStorage
   ) {
     (this.session = new BehaviorSubject<SessionModel>(this.resolver.session))
-      .subscribe((next) => this.storage.setItemSubscribe('session', next));
+      .subscribe(session => this.storage.setItemSubscribe('session', session));
   }
 
   public login(username: string, password: string): Promise<void> {
     return this.service.authLoginResponse(username, password).pipe(
-      map((response) => this.session.next(Object.assign(this.session.value, {
-        bearer: response.statusText,
-        token: response.body
-      })
-    ))).toPromise();
+      map((response) => this.update(response.statusText, response.body))
+    ).toPromise();
   }
 
   public logout(): void {
-    return this.session.next(Object.assign(this.session.value, {
-      bearer: '',
-      token: TokenModel.new()
-    }));
+    this.update('', TokenModel.new());
+  }
+
+  public refresh(): Promise<void> {
+    return this.service.authRefreshResponse(this.session.value.token).pipe(
+      map((response) => this.update(response.statusText, response.body))
+    ).toPromise();
   }
 
   public subscribe(next?: (value: SessionModel) => void): Subscription {
     return this.session.subscribe((value) => next(value));
+  }
+
+  private update(bearer: string, token: TokenModel): void {
+    this.session.next(Object.assign(this.session.value, {
+      bearer: bearer,
+      token: token
+    }));
   }
 
 }

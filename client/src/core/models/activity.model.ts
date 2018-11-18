@@ -1,22 +1,26 @@
 import { ActivityEntity } from '../api/models/activity-entity';
-import { ScheduleEntity } from '../api/models/schedule-entity';
-import { TagEntity } from '../api/models/tag-entity';
-import { TargetGroupEntity } from '../api/models/target-group-entity';
 import { BaseModel } from '../base/base.model';
 import { AddressModel } from './address.model';
 import { CategoryModel } from './category.model';
+import { OrganisationModel } from './organisation.model';
+import { ScheduleModel } from './schedule.model';
+import { TagModel } from './tag.model';
+import { TargetGroupModel } from './target-group.model';
+import { UserModel } from './user.model';
 
-export class ActivityModel extends BaseModel
-  implements ActivityEntity {
+export class ActivityModel
+  extends BaseModel implements ActivityEntity {
 
   public description: string;
   public name: string;
   public showUser: boolean;
 
-  public address: AddressModel;
-  public category: CategoryModel;
-  public schedules: ScheduleEntity[];
-  public tags: TagEntity[];
-  public targetGroups: TargetGroupEntity[];
+  public address: Promise<AddressModel>;
+  public category: Promise<CategoryModel>;
+  public organisation: Promise<OrganisationModel>;
+  public schedules: Promise<ScheduleModel[]>;
+  public tags: Promise<TagModel[]>;
+  public targetGroups: Promise<TargetGroupModel[]>;
+  public user: Promise<UserModel>;
 
 }

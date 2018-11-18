@@ -8,6 +8,8 @@ import { CategoryModel } from '../models/category.model';
 export class CategoryProvider
   extends BaseProvider<CategoryControllerService, CategoryModel> {
 
+  protected linked = [];
+
   protected methods = {
     findAll: this.service.categoryControllerFindAllResponse,
     findOne: this.service.categoryControllerFindOneResponse,

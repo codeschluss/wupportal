@@ -8,6 +8,8 @@ import { SuburbModel } from '../models/suburb.model';
 export class SuburbProvider
   extends BaseProvider<SuburbControllerService, SuburbModel> {
 
+  protected linked = [];
+
   protected methods = {
     findAll: this.service.suburbControllerFindAllResponse,
     findOne: this.service.suburbControllerFindOneResponse,

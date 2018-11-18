@@ -2,9 +2,10 @@ client/node_modules
 client/package-lock.json
 client/target
 
+server/.gitignore
 server/.metadata
 server/.recommenders
 server/.settings
 server/bin
-server/target
 server/src/main/resources/application-default.properties
+server/target

@@ -8,6 +8,8 @@ import { ConfigurationModel } from '../models/configuration.model';
 export class ConfigurationProvider
   extends BaseProvider<ConfigurationControllerService, ConfigurationModel> {
 
+  protected linked = [];
+
   protected methods = {
     findAll: this.service.configurationControllerFindAllResponse,
     findOne: this.service.configurationControllerFindOneResponse,

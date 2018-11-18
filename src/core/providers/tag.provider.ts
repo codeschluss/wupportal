@@ -8,6 +8,8 @@ import { TagModel } from '../models/tag.model';
 export class TagProvider
   extends BaseProvider<TagControllerService, TagModel> {
 
+  protected linked = [];
+
   protected methods = {
     findAll: this.service.tagControllerFindAllResponse,
     findOne: this.service.tagControllerFindOneResponse,

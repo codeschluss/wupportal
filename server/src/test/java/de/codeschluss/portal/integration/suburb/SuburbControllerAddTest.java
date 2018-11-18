@@ -2,6 +2,11 @@ package de.codeschluss.portal.integration.suburb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.core.exception.DuplicateEntryException;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.functional.suburb.SuburbController;
+import de.codeschluss.portal.functional.suburb.SuburbEntity;
+
 import java.net.URISyntaxException;
 
 import org.assertj.core.api.Condition;
@@ -16,51 +21,47 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.core.exception.DuplicateEntryException;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
-import de.codeschluss.portal.functional.suburb.SuburbController;
-import de.codeschluss.portal.functional.suburb.SuburbEntity;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SuburbControllerAddTest {
 
-	@Autowired
-	private SuburbController controller;
-	
-	@Test
-	@WithUserDetails("super@user")
-	@SuppressWarnings("unchecked")
-	public void addSuperUserOK() throws URISyntaxException {
-		SuburbEntity suburb = new SuburbEntity("addSuperUserOK", null);		
-		
-		controller.add(suburb);
-		
-		Resources<Resource<SuburbEntity>> result = (Resources<Resource<SuburbEntity>>) controller.findAll(new FilterSortPaginate()).getBody();
-		assertThat(result.getContent()).haveAtLeastOne(
-				new Condition<>(p -> p.getContent().getName().equals(suburb.getName()),"suburb exists"));
-	}
-	
-	@Test(expected = DuplicateEntryException.class)
-	@WithUserDetails("super@user")
-	public void addSuperUserDuplicated() throws URISyntaxException {
-		SuburbEntity suburb = new SuburbEntity("suburb1", null);
-		
-		controller.add(suburb);
-	}
-	
-	@Test(expected = AccessDeniedException.class)
-	@WithUserDetails("provider1@user")
-	public void addProviderDenied() throws URISyntaxException {
-		SuburbEntity suburb = new SuburbEntity("addProviderDenied", null);
-		
-		controller.add(suburb);
-	}
-	
-	@Test(expected = AuthenticationCredentialsNotFoundException.class)
-	public void addNoUserDenied() throws URISyntaxException {
-		SuburbEntity suburb = new SuburbEntity("addNoUserDenied", null);
-		
-		controller.add(suburb);
-	}
+  @Autowired
+  private SuburbController controller;
+
+  @Test
+  @WithUserDetails("super@user")
+  @SuppressWarnings("unchecked")
+  public void addSuperUserOk() throws URISyntaxException {
+    SuburbEntity suburb = new SuburbEntity("addSuperUserOk", null);
+
+    controller.add(suburb);
+
+    Resources<Resource<SuburbEntity>> result = (Resources<Resource<SuburbEntity>>) controller
+        .findAll(new FilterSortPaginate()).getBody();
+    assertThat(result.getContent()).haveAtLeastOne(
+        new Condition<>(p -> p.getContent().getName().equals(suburb.getName()), "suburb exists"));
+  }
+
+  @Test(expected = DuplicateEntryException.class)
+  @WithUserDetails("super@user")
+  public void addSuperUserDuplicated() throws URISyntaxException {
+    SuburbEntity suburb = new SuburbEntity("suburb1", null);
+
+    controller.add(suburb);
+  }
+
+  @Test(expected = AccessDeniedException.class)
+  @WithUserDetails("provider1@user")
+  public void addProviderDenied() throws URISyntaxException {
+    SuburbEntity suburb = new SuburbEntity("addProviderDenied", null);
+
+    controller.add(suburb);
+  }
+
+  @Test(expected = AuthenticationCredentialsNotFoundException.class)
+  public void addNoUserDenied() throws URISyntaxException {
+    SuburbEntity suburb = new SuburbEntity("addNoUserDenied", null);
+
+    controller.add(suburb);
+  }
 }

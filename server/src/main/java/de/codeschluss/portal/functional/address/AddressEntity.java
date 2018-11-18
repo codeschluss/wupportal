@@ -1,24 +1,29 @@
 package de.codeschluss.portal.functional.address;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.*;
-
-import org.springframework.hateoas.core.Relation;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.portal.core.common.BaseEntity;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 import de.codeschluss.portal.functional.suburb.SuburbEntity;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import org.springframework.hateoas.core.Relation;
 
 /**
  * The persistent class for the addresses database table.
@@ -32,34 +37,34 @@ import lombok.ToString;
 @Table(name = "addresses")
 @Relation(collectionRelation = "data")
 public class AddressEntity extends BaseEntity implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 
-	@Column(name = "house_number")
-	private String houseNumber;
+  private static final long serialVersionUID = 1L;
 
-	private String place;
+  @Column(name = "house_number")
+  private String houseNumber;
 
-	@Column(name = "postal_code")
-	private String postalCode;
+  private String place;
 
-	private String street;
+  @Column(name = "postal_code")
+  private String postalCode;
 
-	@ManyToOne
-	@JsonIgnore
-	private SuburbEntity suburb;
+  private String street;
 
-	private float latitude;
+  @ManyToOne
+  @JsonIgnore
+  private SuburbEntity suburb;
 
-	private float longitude;
+  private float latitude;
 
-	@OneToMany(mappedBy = "address")
-	@JsonIgnore
-	@ToString.Exclude
-	private List<ActivityEntity> activities;
+  private float longitude;
 
-	@OneToMany(mappedBy = "address")
-	@JsonIgnore
-	@ToString.Exclude
-	private List<OrganisationEntity> organisations;
+  @OneToMany(mappedBy = "address")
+  @JsonIgnore
+  @ToString.Exclude
+  private List<ActivityEntity> activities;
+
+  @OneToMany(mappedBy = "address")
+  @JsonIgnore
+  @ToString.Exclude
+  private List<OrganisationEntity> organisations;
 }

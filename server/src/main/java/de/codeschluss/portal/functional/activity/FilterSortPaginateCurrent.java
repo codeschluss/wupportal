@@ -12,11 +12,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class FilterSortPaginateCurrent extends FilterSortPaginate {
-	
-	private Boolean current;
-	
-	public FilterSortPaginateCurrent(String filter, Integer page, Integer size, String sort, String dir, Boolean current) {
-		super(filter, page, size, sort, dir);
-		this.current = current;
-	}
+
+  private Boolean current;
+
+  public FilterSortPaginateCurrent(
+      String filter, 
+      Integer page, 
+      Integer size, 
+      String sort,
+      String dir, 
+      Boolean current) {
+    super(filter, page, size, sort, dir);
+    this.current = current;
+  }
 }

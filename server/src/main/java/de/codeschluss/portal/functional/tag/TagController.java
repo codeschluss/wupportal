@@ -1,5 +1,11 @@
 package de.codeschluss.portal.functional.tag;
 
+import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
+import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.functional.tag.TagEntity;
+
 import java.net.URISyntaxException;
 
 import org.springframework.hateoas.Resource;
@@ -12,50 +18,45 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.codeschluss.portal.core.common.CrudController;
-import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
-import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
-import de.codeschluss.portal.functional.tag.TagEntity;
-
 @RestController
 public class TagController extends CrudController<TagEntity, TagService> {
 
-	public TagController(TagService service) {
-		super(service);
-	}
-	
-	@Override
-	@GetMapping("/tags")
-	public ResponseEntity<?> findAll(FilterSortPaginate params) {
-		return super.findAll(params);
-	}
+  public TagController(TagService service) {
+    super(service);
+  }
 
-	@Override
-	@GetMapping("/tags/{tagId}")
-	public Resource<TagEntity> findOne(@PathVariable String tagId) {
-		return super.findOne(tagId);
-	}
-	
-	@Override
-	@PostMapping("/tags")
-	@ProviderOrSuperUserPermission
-	public ResponseEntity<?> add(@RequestBody TagEntity newTag) throws URISyntaxException {
-		return super.add(newTag);
-	}
-	
-	@Override
-	@PutMapping("/tags/{tagId}")
-	@SuperUserPermission
-	public ResponseEntity<?> update(@RequestBody TagEntity newTag, @PathVariable String tagId) throws URISyntaxException {
-		return super.update(newTag, tagId);
-	}
-	
-	@Override
-	@DeleteMapping("/tags/{tagId}")
-	@SuperUserPermission
-	public ResponseEntity<?> delete(@PathVariable String tagId) {
-		return super.delete(tagId);
-	}
+  @Override
+  @GetMapping("/tags")
+  public ResponseEntity<?> findAll(FilterSortPaginate params) {
+    return super.findAll(params);
+  }
+
+  @Override
+  @GetMapping("/tags/{tagId}")
+  public Resource<TagEntity> findOne(@PathVariable String tagId) {
+    return super.findOne(tagId);
+  }
+
+  @Override
+  @PostMapping("/tags")
+  @ProviderOrSuperUserPermission
+  public ResponseEntity<?> add(@RequestBody TagEntity newTag) throws URISyntaxException {
+    return super.add(newTag);
+  }
+
+  @Override
+  @PutMapping("/tags/{tagId}")
+  @SuperUserPermission
+  public ResponseEntity<?> update(@RequestBody TagEntity newTag, @PathVariable String tagId)
+      throws URISyntaxException {
+    return super.update(newTag, tagId);
+  }
+
+  @Override
+  @DeleteMapping("/tags/{tagId}")
+  @SuperUserPermission
+  public ResponseEntity<?> delete(@PathVariable String tagId) {
+    return super.delete(tagId);
+  }
 
 }

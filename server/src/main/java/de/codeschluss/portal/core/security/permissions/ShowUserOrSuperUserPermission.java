@@ -6,7 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("@authorizationService.showUser(#activityId) or @authorizationService.isSuperUser(authentication)")
+@PreAuthorize("@authorizationService.showUser(#activityId) "
+    + "or @authorizationService.isSuperUser(authentication)")
 public @interface ShowUserOrSuperUserPermission {
 
 }

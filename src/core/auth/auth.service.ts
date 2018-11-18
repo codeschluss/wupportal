@@ -37,6 +37,29 @@ export class AuthService extends BaseService {
       }
     );
 
+    return this.call(request);
+  }
+
+  public authRefreshResponse(token: TokenModel):
+    Observable<StrictHttpResponse<TokenModel>> {
+
+    const request = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + '/refresh',
+      token,
+      {
+        headers: new HttpHeaders(),
+        params: this.newParams(),
+        responseType: 'json'
+      }
+    );
+
+    return this.call(request);
+  }
+
+  private call(request: HttpRequest<any>):
+    Observable<StrictHttpResponse<TokenModel>> {
+
     return this.http.request<any>(request).pipe(
       filter((response) => response instanceof HttpResponse),
       map((response) => response as StrictHttpResponse<object>),

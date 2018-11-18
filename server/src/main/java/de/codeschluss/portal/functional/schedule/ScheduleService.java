@@ -5,6 +5,8 @@ import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
@@ -49,7 +51,8 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
    * @return the resource by activity
    */
   public Object getResourceByActivity(String activityId) {
-    List<ScheduleEntity> schedules = repo.findByActivityIdAndFutureOnly(activityId)
+    List<ScheduleEntity> schedules = repo
+        .findByActivityIdAndFutureOnly(activityId, new Sort(Direction.ASC, defaultSortProp))
         .orElseThrow(() -> new NotFoundException(activityId));
     return assembler.entitiesToResources(schedules, null);
   }

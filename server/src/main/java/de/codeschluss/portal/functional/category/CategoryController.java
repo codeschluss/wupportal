@@ -1,5 +1,10 @@
 package de.codeschluss.portal.functional.category;
 
+import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.functional.category.CategoryEntity;
+
 import java.net.URISyntaxException;
 
 import org.springframework.hateoas.Resource;
@@ -12,48 +17,44 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.codeschluss.portal.core.common.CrudController;
-import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
-import de.codeschluss.portal.functional.category.CategoryEntity;
-
 @RestController
-public class CategoryController extends CrudController<CategoryEntity, CategoryService>{
-	
-	public CategoryController(CategoryService service) {
-		super(service);
-	}
+public class CategoryController extends CrudController<CategoryEntity, CategoryService> {
 
-	@Override
-	@GetMapping("/categories")
-	public ResponseEntity<?> findAll(FilterSortPaginate params) {
-		return super.findAll(params);
-	}
+  public CategoryController(CategoryService service) {
+    super(service);
+  }
 
-	@Override
-	@GetMapping("/categories/{categoryId}")
-	public Resource<CategoryEntity> findOne(@PathVariable String categoryId) {
-		return super.findOne(categoryId);
-	}
-	
-	@Override
-	@PostMapping("/categories")
-	@SuperUserPermission
-	public ResponseEntity<?> add(@RequestBody CategoryEntity newCategory) throws URISyntaxException {
-		return super.add(newCategory);
-	}
-	
-	@Override
-	@PutMapping("/categories/{categoryId}")
-	@SuperUserPermission
-	public ResponseEntity<?> update(@RequestBody CategoryEntity newCategory, @PathVariable String categoryId) throws URISyntaxException {
-		return super.update(newCategory, categoryId);
-	}
-	
-	@Override
-	@DeleteMapping("/categories/{categoryId}")
-	@SuperUserPermission
-	public ResponseEntity<?> delete(@PathVariable String categoryId) {
-		return super.delete(categoryId);
-	}
+  @Override
+  @GetMapping("/categories")
+  public ResponseEntity<?> findAll(FilterSortPaginate params) {
+    return super.findAll(params);
+  }
+
+  @Override
+  @GetMapping("/categories/{categoryId}")
+  public Resource<CategoryEntity> findOne(@PathVariable String categoryId) {
+    return super.findOne(categoryId);
+  }
+
+  @Override
+  @PostMapping("/categories")
+  @SuperUserPermission
+  public ResponseEntity<?> add(@RequestBody CategoryEntity newCategory) throws URISyntaxException {
+    return super.add(newCategory);
+  }
+
+  @Override
+  @PutMapping("/categories/{categoryId}")
+  @SuperUserPermission
+  public ResponseEntity<?> update(@RequestBody CategoryEntity newCategory,
+      @PathVariable String categoryId) throws URISyntaxException {
+    return super.update(newCategory, categoryId);
+  }
+
+  @Override
+  @DeleteMapping("/categories/{categoryId}")
+  @SuperUserPermission
+  public ResponseEntity<?> delete(@PathVariable String categoryId) {
+    return super.delete(categoryId);
+  }
 }

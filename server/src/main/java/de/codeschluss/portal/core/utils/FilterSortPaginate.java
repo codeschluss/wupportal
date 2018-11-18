@@ -11,11 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class FilterSortPaginate extends SortPaginate {
-	
-	private String filter;
-	
-	public FilterSortPaginate(String filter, Integer page, Integer size, String sort, String dir) {
-		super(page, size, sort, dir);
-		this.filter = filter;
-	}
+
+  private String filter;
+
+  public FilterSortPaginate(
+      String filter, 
+      Integer page, 
+      Integer size, 
+      String sort, 
+      String dir) {
+    super(page, size, sort, dir);
+    this.filter = filter;
+  }
 }

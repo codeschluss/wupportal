@@ -14,20 +14,18 @@ import springfox.documentation.swagger.common.SwaggerPluginSupport;
 @Component
 public class OperationIdBuilder implements OperationBuilderPlugin {
 
-	@Override
-	public void apply(OperationContext ctx) {
-		String call = StringUtils.capitalize(ctx.getName());
-		String tag = Arrays.stream(ctx.getGroupName().split("-"))
-				.map(StringUtils::capitalize)
-				.collect(Collectors.joining());
+  @Override
+  public void apply(OperationContext ctx) {
+    String call = StringUtils.capitalize(ctx.getName());
+    String tag = Arrays.stream(ctx.getGroupName().split("-")).map(StringUtils::capitalize)
+        .collect(Collectors.joining());
 
-		ctx.operationBuilder()
-				.codegenMethodNameStem(StringUtils.uncapitalize(tag + call));
-	}
+    ctx.operationBuilder().codegenMethodNameStem(StringUtils.uncapitalize(tag + call));
+  }
 
-	@Override
-	public boolean supports(DocumentationType delimiter) {
-		return SwaggerPluginSupport.pluginDoesApply(delimiter);
-	}
+  @Override
+  public boolean supports(DocumentationType delimiter) {
+    return SwaggerPluginSupport.pluginDoesApply(delimiter);
+  }
 
 }

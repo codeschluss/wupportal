@@ -1,17 +1,19 @@
 package de.codeschluss.portal.functional.configuration;
 
+import de.codeschluss.portal.core.common.BaseEntity;
+
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import org.springframework.hateoas.core.Relation;
-
-import de.codeschluss.portal.core.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import org.springframework.hateoas.core.Relation;
 
 /**
  * The persistent class for the configurations database table.
@@ -25,9 +27,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "configurations")
 @Relation(collectionRelation = "data")
 public class ConfigurationEntity extends BaseEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+  
+  private static final long serialVersionUID = 1L;
 
-	private String item;
+  private String item;
 
-	private String value;
+  private String value;
 }

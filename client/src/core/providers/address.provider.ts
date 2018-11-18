@@ -3,10 +3,20 @@ import { MatSnackBar } from '@angular/material';
 import { AddressControllerService } from '../api/services/address-controller.service';
 import { BaseProvider } from '../base/base.provider';
 import { AddressModel } from '../models/address.model';
+import { SuburbModel } from '../models/suburb.model';
 
 @Injectable({ providedIn: 'root' })
 export class AddressProvider
   extends BaseProvider<AddressControllerService, AddressModel> {
+
+  protected linked = [
+    {
+      field: 'suburb',
+      method: this.service.addressControllerFindSuburb,
+      model: SuburbModel,
+      multi: false
+    }
+  ];
 
   protected methods = {
     findAll: this.service.addressControllerFindAllResponse,

@@ -8,6 +8,8 @@ import { TargetGroupModel } from '../models/target-group.model';
 export class TargetGroupProvider
   extends BaseProvider<TargetGroupControllerService, TargetGroupModel> {
 
+  protected linked = [];
+
   protected methods = {
     findAll: this.service.targetGroupControllerFindAllResponse,
     findOne: this.service.targetGroupControllerFindOneResponse,

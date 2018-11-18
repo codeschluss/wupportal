@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-
-import { AddressModel } from 'src/core/models/address.model';
-import { OrganisationProvider } from 'src/core/providers/organisation.provider';
-import { OrganisationModel } from 'src/core/models/organisation.model';
 import { MatExpansionModule } from '@angular/material';
+import { AddressModel } from 'src/core/models/address.model';
+import { OrganisationModel } from 'src/core/models/organisation.model';
 import { SuburbModel } from 'src/core/models/suburb.model';
+import { OrganisationProvider } from 'src/core/providers/organisation.provider';
+
 
 @Component({
   styleUrls: ['organisation.component.css'],
@@ -23,21 +23,21 @@ export class OrganisationListComponent {
     organisationProvider.findAll().then((i) => {
       i.forEach(act => {
         // just for testing
-        const address = new AddressModel;
+        const address: any = new AddressModel;
         address.latitude = longlat;
         address.longitude = longlat;
-        address.place = "Wuppertal";
-        address.postalCode = "20400";
-        address.houseNumber = "2b";
-        address.street = "strassenname";
+        address.place = 'Wuppertal';
+        address.postalCode = '20400';
+        address.houseNumber = '2b';
+        address.street = 'strassenname';
 
-        const suburb = new SuburbModel;
-        suburb.name = "Elberfeld";
+        const suburb: any = new SuburbModel;
+        suburb.name = 'Elberfeld';
         address.suburb = suburb;
         act.address = address;
         this.organisations.push(act);
         longlat++;
-      })
+      });
     });
   }
 

@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as colorConvert from 'color-convert';
 import { AngularOpenlayersModule, LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import { Subject } from 'rxjs';
@@ -44,36 +43,43 @@ export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
     private router: Router
   ) { }
 
-  public ngOnInit(): void{
-        // TODO: move to db
-        this.clusterspan = 5;
+  public ngOnInit(): void {
+    this.activities[0].address.then((address) => {
+      this.latitude = address.latitude;
+      this.longitude = address.longitude;
+      this.zoomfactor = 14;
+      this.projection = 'EPSG:4326';
+    });
 
-        // if (this.activities.length === 1) {
-          this.latitude = this.activities[0].address.latitude;
-          this.longitude = this.activities[0].address.longitude;
-          this.zoomfactor = 14;
-          this.projection = 'EPSG:4326';
-        // } else {
-        //   for (const item of this.route.snapshot.data.configuration) {
-        //     switch (item.item) {
-        //       case 'mapcenterLatitude':
-        //         this.latitude = this.activities[0].address.latitude;
-        //         break;
-        //       case 'mapcenterLongitude':
-        //         this.longitude = this.activities[0].address.longitude;
-        //         break;
-        //       case 'mapProjection':
-        //         this.projection = 'EPSG:4326';
-        //         break;
-        //       case 'zoomfactor':
-        //         this.zoomfactor = 14;
-        //         break;
-        //     }
-        //   }
-        // }
-        // TODO: redo
-        // this.activities = this.route.snapshot.data
-        //   .activities.filter((i) => i.address);
+    // TODO: move to db
+    this.clusterspan = 5;
+
+    // if (this.activities.length === 1) {
+    //   this.latitude = this.activities[0].address.latitude;
+    //   this.longitude = this.activities[0].address.longitude;
+    //   this.zoomfactor = 14;
+    //   this.projection = 'EPSG:4326';
+    // } else {
+    //   for (const item of this.route.snapshot.data.configuration) {
+    //     switch (item.item) {
+    //       case 'mapcenterLatitude':
+    //         this.latitude = this.activities[0].address.latitude;
+    //         break;
+    //       case 'mapcenterLongitude':
+    //         this.longitude = this.activities[0].address.longitude;
+    //         break;
+    //       case 'mapProjection':
+    //         this.projection = 'EPSG:4326';
+    //         break;
+    //       case 'zoomfactor':
+    //         this.zoomfactor = 14;
+    //         break;
+    //     }
+    //   }
+    // }
+    // TODO: redo
+    // this.activities = this.route.snapshot.data
+    //   .activities.filter((i) => i.address);
   }
 
   public ngAfterViewInit(): void {
@@ -121,21 +127,24 @@ export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   private featureStyle(feature: Feature): style.Style {
-    const colors = feature.get('features').map((i) => {
-      const activity = this.activities.find(j => i.getId() === j.id);
+    // const colors = feature.get('features').map((i) => {
+    //   const activity = this.activities.find(j => i.getId() === j.id);
 
-      return colorConvert.keyword.rgb(activity.category.color)
-        || colorConvert.hex.rgb(activity.category.color);
-    });
+    //   return colorConvert.keyword.rgb(activity.category.color)
+    //     || colorConvert.hex.rgb(activity.category.color);
+    // });
 
-    const r = colors.reduce((i, j) => i + j[0], 0) / colors.length;
-    const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
-    const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
+    // const r = colors.reduce((i, j) => i + j[0], 0) / colors.length;
+    // const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
+    // const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
+
+    const colors = { length: 1 };
 
     return new style.Style({
       image: new style.Icon({
         anchor: [.5, 1],
-        color: '#' + colorConvert.rgb.hex(r, g, b),
+        // color: '#' + colorConvert.rgb.hex(r, g, b),
+        color: 'blue',
         imgSize: [60, 96],
         scale: 1 / (colors.length > 1 ? 2 : 3),
         src: `${colors.length > 1 ? '/imgs/mapcluster' : '/imgs/mapmarker'}.png`

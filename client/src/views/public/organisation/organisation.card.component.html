@@ -5,11 +5,11 @@
 
     <div fxFlex="60" fxLayout="column" fxLayoutGap="10px grid">
         <div fxLayout="column">
-            <div>{{organisation.address.suburb.name}}</div>
-            <div>{{organisation.address.street}}</div>
-            <div>{{organisation.address.houseNumber}}</div>
-            <div>{{organisation.address.postalCode}}</div>
-            <div>{{organisation.address.place}}</div>
+            <div>{{(organisation.address | async).suburb.name}}</div>
+            <div>{{(organisation.address | async).street}}</div>
+            <div>{{(organisation.address | async).houseNumber}}</div>
+            <div>{{(organisation.address | async).postalCode}}</div>
+            <div>{{(organisation.address | async).place}}</div>
         </div>
         <div fxLayout="column">
             <div>{{'T:' + organisation?.phone}}</div>

@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-
-
 import { ActivityModel } from '../../../core/models/activity.model';
 import { AddressModel } from '../../../core/models/address.model';
-import { SuburbModel } from '../../../core/models/suburb.model';
 import { CategoryModel } from '../../../core/models/category.model';
-import { TargetGroupModel } from '../../../core/models/target-group.model';
 import { ScheduleModel } from '../../../core/models/schedule.model';
-import { OrganisationModel } from '../../../core/models/organisation.model';
+import { SuburbModel } from '../../../core/models/suburb.model';
+import { TargetGroupModel } from '../../../core/models/target-group.model';
+
+
 
 
 @Component({
@@ -35,18 +34,18 @@ export class AboutComponent {
 
   buildTestActions(): ActivityModel {
 
-    const actOne = new ActivityModel;
+    const actOne: any = new ActivityModel;
     actOne.name = 'FakeActivity';
     actOne.description = 'This is just a FakeActivity to show'
       + 'how this could look like.';
 
-    const testAddress = new AddressModel();
+    const testAddress: any = new AddressModel();
     testAddress.street = 'samplestreet';
     testAddress.houseNumber = '42a';
     testAddress.latitude = 51.00;
     testAddress.longitude = 7.00;
     testAddress.postalCode = '63628';
-    const testSubUrb = new SuburbModel();
+    const testSubUrb: any = new SuburbModel();
     testSubUrb.name = 'Elberfeld';
     testAddress.suburb = testSubUrb;
     testAddress.place = 'SampleCity';
@@ -54,16 +53,16 @@ export class AboutComponent {
 
     actOne.address = testAddress;
 
-    const category = new CategoryModel;
+    const category: any = new CategoryModel;
     category.name = 'party';
     category.color = 'green';
     actOne.category = category;
 
-    const target_group = new TargetGroupModel;
+    const target_group: any = new TargetGroupModel;
     target_group.name = 'youth';
     actOne.targetGroups = [target_group];
 
-    const schedule = new ScheduleModel;
+    const schedule: any = new ScheduleModel;
     schedule.startDate = new Date().toUTCString();
     schedule.endDate = new Date().toUTCString();
     actOne.schedules = [schedule];

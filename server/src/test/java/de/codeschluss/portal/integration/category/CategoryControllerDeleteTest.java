@@ -2,6 +2,9 @@ package de.codeschluss.portal.integration.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.functional.category.CategoryController;
+
 import java.net.URISyntaxException;
 
 import org.junit.Test;
@@ -13,40 +16,37 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.functional.category.CategoryController;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CategoryControllerDeleteTest {
-	
-	@Autowired
-	private CategoryController controller;
-	
-	@Test(expected = NotFoundException.class)
-	@WithUserDetails("super@user")
-	public void deleteSuperUserOK() throws URISyntaxException {
-		String categoryId = "00000000-0000-0000-0007-400000000000"; 
-		assertThat(controller.findOne(categoryId)).isNotNull();
-		
-		controller.delete(categoryId);
-		
-		controller.findOne(categoryId);
-	}
-	
-	@Test(expected = AccessDeniedException.class)
-	@WithUserDetails("provider1@user")
-	public void deleteProviderUserDenied() throws URISyntaxException {
-		String categoryId = "00000000-0000-0000-0007-100000000000"; 
-		
-		controller.delete(categoryId);
-	}
-	
-	@Test(expected = AuthenticationCredentialsNotFoundException.class)
-	public void deleteOtherNotRegisteredDenied() {
-		String categoryId = "00000000-0000-0000-0007-100000000000";
-		
-		controller.delete(categoryId);
-	}
+
+  @Autowired
+  private CategoryController controller;
+
+  @Test(expected = NotFoundException.class)
+  @WithUserDetails("super@user")
+  public void deleteSuperUserOk() throws URISyntaxException {
+    String categoryId = "00000000-0000-0000-0007-400000000000";
+    assertThat(controller.findOne(categoryId)).isNotNull();
+
+    controller.delete(categoryId);
+
+    controller.findOne(categoryId);
+  }
+
+  @Test(expected = AccessDeniedException.class)
+  @WithUserDetails("provider1@user")
+  public void deleteProviderUserDenied() throws URISyntaxException {
+    String categoryId = "00000000-0000-0000-0007-100000000000";
+
+    controller.delete(categoryId);
+  }
+
+  @Test(expected = AuthenticationCredentialsNotFoundException.class)
+  public void deleteOtherNotRegisteredDenied() {
+    String categoryId = "00000000-0000-0000-0007-100000000000";
+
+    controller.delete(categoryId);
+  }
 
 }

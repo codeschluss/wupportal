@@ -6,7 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("@authorizationService.isOrgaAdmin(authentication, #organisationId) or @authorizationService.isSuperUser(authentication)")
+@PreAuthorize("@authorizationService.isOrgaAdmin(authentication, #organisationId) "
+    + "or @authorizationService.isSuperUser(authentication)")
 public @interface OrgaAdminOrSuperUserPermission {
 
 }

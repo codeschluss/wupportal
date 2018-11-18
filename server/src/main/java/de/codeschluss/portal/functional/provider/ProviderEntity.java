@@ -1,12 +1,5 @@
 package de.codeschluss.portal.functional.provider;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.*;
-
-import org.springframework.hateoas.core.Relation;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,12 +7,23 @@ import de.codeschluss.portal.core.common.BaseEntity;
 import de.codeschluss.portal.functional.activity.ActivityEntity;
 import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 import de.codeschluss.portal.functional.user.UserEntity;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import org.springframework.hateoas.core.Relation;
 
 /**
  * The persistent class for the providers database table.
@@ -33,44 +37,44 @@ import lombok.ToString;
 @Table(name = "providers")
 @Relation(collectionRelation = "data")
 public class ProviderEntity extends BaseEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private boolean admin;
+  private boolean admin;
 
-	private boolean approved;
+  private boolean approved;
 
-	@OneToMany(mappedBy = "provider")
-	@JsonIgnore
-	@ToString.Exclude
-	private List<ActivityEntity> activities;
+  @OneToMany(mappedBy = "provider")
+  @JsonIgnore
+  @ToString.Exclude
+  private List<ActivityEntity> activities;
 
-	@ManyToOne
-	@JsonIgnore
-	@ToString.Exclude
-	private OrganisationEntity organisation;
+  @ManyToOne
+  @JsonIgnore
+  @ToString.Exclude
+  private OrganisationEntity organisation;
 
-	@ManyToOne
-	@JsonIgnore
-	@ToString.Exclude
-	private UserEntity user;
-	
-	@JsonProperty
-	public boolean isAdmin() {
-		return this.admin;
-	}
-	
-	@JsonIgnore
-	public void setAdmin(boolean isAdmin) {
-		this.admin = isAdmin;
-	}
-	
-	@JsonProperty
-	public boolean isApproved() {
-		return this.approved;
-	}
-	
-	@JsonIgnore
-	public void setApproved(boolean isApproved) {
-		this.approved = isApproved;
-	}
+  @ManyToOne
+  @JsonIgnore
+  @ToString.Exclude
+  private UserEntity user;
+
+  @JsonProperty
+  public boolean isAdmin() {
+    return this.admin;
+  }
+
+  @JsonIgnore
+  public void setAdmin(boolean isAdmin) {
+    this.admin = isAdmin;
+  }
+
+  @JsonProperty
+  public boolean isApproved() {
+    return this.approved;
+  }
+
+  @JsonIgnore
+  public void setApproved(boolean isApproved) {
+    this.approved = isApproved;
+  }
 }

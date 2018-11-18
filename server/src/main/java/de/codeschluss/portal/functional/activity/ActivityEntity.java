@@ -35,8 +35,6 @@ import org.hibernate.annotations.SQLInsert;
 
 import org.springframework.hateoas.core.Relation;
 
-
-
 /**
  * The persistent class for the activities database table.
  * 

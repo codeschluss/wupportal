@@ -32,6 +32,8 @@ public class ActivityResourceAssembler extends PagingAndSortingAssembler<Activit
         .findTags(activity.getId())).withRel("tags"));
     links.add(linkTo(methodOn(ActivityController.class)
         .findTargetGroups(activity.getId())).withRel("targetgroups"));
+    links.add(linkTo(methodOn(ActivityController.class)
+        .findAddress(activity.getId())).withRel("address"));
 
     return links;
   }

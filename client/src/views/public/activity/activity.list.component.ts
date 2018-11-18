@@ -1,4 +1,4 @@
-import { Component, ViewChild} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { ActivityModel } from '../../../core/models/activity.model';
 import { SuburbModel } from '../../../core/models/suburb.model';
@@ -14,19 +14,18 @@ import { MatBottomSheet } from '@angular/material';
 import { AddressModel } from 'src/core/models/address.model';
 
 @Component({
-  styleUrls: ['activity.list.component.css', '../main.css'],
+  styleUrls: ['activity.list.component.css'],
   templateUrl: 'activity.list.component.html'
 })
 
 export class ActivityListComponent {
 
   public static readonly imports = [];
-  public activities: Promise<ActivityModel[]>;
+  public activities: ActivityModel[] = [];
 
   public suburbs: Promise<SuburbModel[]>;
   public categories: Promise<CategoryModel[]>;
   public target_groups: Promise<TargetGroupModel[]>;
-  public testMapActivity: ActivityModel;
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
@@ -40,22 +39,28 @@ export class ActivityListComponent {
   ) {
     this.suburbs = suburbProvider.findAll();
     this.target_groups = targetGroupsProvider.findAll();
-    this.activities = activityProvider.findAll();
-    // this.categories = categoryProvider.findAll().then();
-    this.testMapActivity = new ActivityModel;
-    const testAddress = new AddressModel;
-    testAddress.latitude = 0;
-    testAddress.longitude = 0;
-    this.testMapActivity.address = testAddress;
-    const testCategory = new CategoryModel;
-    testCategory.color = 'blue';
-    testCategory.name = 'Sport';
-    this.testMapActivity.category = testCategory;
+    let longlat = 0;
+    activityProvider.findAll().then((i) => {
+      i.forEach(act => {
+        // just for testing
+        const address = new AddressModel;
+        address.latitude = longlat;
+        address.longitude = longlat;     
+        act.address = address;
+        const category = new CategoryModel;
+        category.color = 'red';
+        category.name = 'Sport';
+        act.category = category;
+        this.activities.push(act);
+        longlat++;
+      })
+    });
+    this.categories = categoryProvider.findAll();
   }
 
   openBottomSheetMap(): void {
     this.bottomSheet.open(BottomSheetMapComponent,
-      { data: { activities: [this.testMapActivity] } });
+      { data: { activities: this.activities } });
   }
 
 }

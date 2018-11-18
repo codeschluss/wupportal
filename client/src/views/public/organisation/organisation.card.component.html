@@ -1,0 +1,19 @@
+<mat-card organisation-cardfxLayout="row" fxFlex="100" fxLayoutAlign="space-between" fxLayoutGap="20px grid">
+    <div fxFlex="20">
+        <img src="https://de.wikipedia.org/static/images/project-logos/dewiki.png">
+    </div>
+
+    <div fxFlex="60" fxLayout="column" fxLayoutGap="10px grid">
+        <div fxLayout="column">
+            <div>{{organisation.address.suburb.name}}</div>
+            <div>{{organisation.address.street}}</div>
+            <div>{{organisation.address.houseNumber}}</div>
+            <div>{{organisation.address.postalCode}}</div>
+            <div>{{organisation.address.place}}</div>
+        </div>
+        <div fxLayout="column">
+            <div>{{'T:' + organisation?.phone}}</div>
+            <div>{{'E:' + organisation?.mail}}</div>
+        </div>
+    </div>
+</mat-card>

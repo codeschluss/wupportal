@@ -4,11 +4,11 @@
       <div fxLayout="column" fxLayoutGap="20px">
         <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
           <div fxFlex="50" fxLayout="column">
-            <div>{{ activity.category.name }}</div>
+            <div>{{ placeHolderActivity.category.name }}</div>
             <h3>{{ activity.name }}</h3>
-            <p class="hyphenate">{{ activity.description }}</p>
+            <p class="hyphenate">{{ activity.description}}</p>
             <div>
-              <span *ngFor="let targetGroup of activity.target_groups">{{targetGroup.name}}</span>
+              <span *ngFor="let targetGroup of activity.targetGroups ">{{targetGroup.name}}</span>
             </div>
             <div>
               <span>
@@ -26,24 +26,24 @@
                       <span>nächster Termin:</span>
                     </div>
                     <div>
-                      {{activity.schedules[0].start_date}}
+                      {{placeHolderActivity.schedules[0].startDate}}
                     </div>
                     <div>
                       <div>
                         <p mat-line>
-                          {{ activity.address.street }}
-                          {{ activity.address.house_number }}
+                          {{ placeHolderActivity.address.street }}
+                          {{ placeHolderActivity.address.houseNumber }}
                         </p>
                         <p mat-line>
-                          {{ activity.address.postal_code }}
-                          {{ activity.address.place }}
-                          {{ activity.address.suburb?.name }}
+                          {{ placeHolderActivity.address.postalCode }}
+                          {{ placeHolderActivity.address.place }}
+                          {{ placeHolderActivity.address.suburb?.name }}
                         </p>
                       </div>
                     </div>
                   </div>
                   <div>
-                    <mapping-component (click)="openBottomSheetMap()" [activities]="selectables">
+                    <mapping-component (click)="openBottomSheetMap()" [activities]="[placeHolderActivity]">
                     </mapping-component>
                   </div>
                 </div>

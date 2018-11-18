@@ -19,12 +19,15 @@ import { AboutComponent } from './layout/about.component';
 import { MappingComponent } from './mapping/mapping.component';
 
 import { BottomSheetMapComponent } from './mapping/map.bottomsheet.component';
-import { BottomSheetScheduleComponent } from './activity/activity.bottom.sheet.component';
+import { BottomSheetScheduleComponent } from './activity/schedules.bottom.sheet.component';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { LayoutComponent } from '../layout/layout.component';
+import { OrganisationListComponent } from './organisation/organisation.list.component';
+import { OrganisationCardComponent } from './organisation/organisation.card.component';
 
 fontawesome.add(fas);
 
@@ -37,9 +40,12 @@ const PublicDeclarations = [
   ActivityCarouselComponent,
   ActivityCardComponent,
   ActivityListComponent,
+  OrganisationListComponent,
   OrganisationViewComponent,
+  OrganisationCardComponent,
   AboutComponent,
   MappingComponent,
+  LayoutComponent
 ];
 
 const PublicImports = [
@@ -56,6 +62,8 @@ const PublicImports = [
   MappingComponent.imports,
   FlexLayoutModule,
   FontAwesomeModule,
+  LayoutComponent.imports,
+  OrganisationListComponent.imports
 ];
 
 const PublicProviders = [
@@ -69,7 +77,7 @@ const PublicProviders = [
     PublicRouter
   ],
   providers: PublicProviders,
-  entryComponents: [BottomSheetMapComponent],
+  entryComponents: [BottomSheetMapComponent, BottomSheetScheduleComponent],
   exports: []
 })
 

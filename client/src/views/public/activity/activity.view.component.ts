@@ -1,9 +1,5 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, Output } from '@angular/core';
-
-// import { ActivatedRoute, ParamMap } from '@angular/router';
-
+import { Component, ViewChild } from '@angular/core';
 import { ActivityModel } from '../../../core/models/activity.model';
-// import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { AddressModel } from '../../../core/models/address.model';
 import { SuburbModel } from '../../../core/models/suburb.model';
 import { CategoryModel } from '../../../core/models/category.model';
@@ -14,8 +10,11 @@ import { MappingComponent } from '../mapping/mapping.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { BottomSheetScheduleComponent } from './activity.bottom.sheet.component';
+import { BottomSheetScheduleComponent } from './schedules.bottom.sheet.component';
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
+import { ActivityProvider } from 'src/core/providers/activity.provider';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -32,24 +31,31 @@ import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
   ]
 })
 
-export class ActivityViewComponent implements OnInit {
+export class ActivityViewComponent {
 
   public static readonly imports = [];
-  public activity: ActivityModel;
+  public placeHolderActivity: ActivityModel;
   public viewSchedules: boolean;
+  public activity: ActivityModel;
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
 
   constructor(
     private bottomSheet: MatBottomSheet,
-    private adapter: DateAdapter<any>
-    // route: ActivatedRoute,
-    // private activityService: ActivityService,
+    private adapter: DateAdapter<any>,
+    private activityProvider: ActivityProvider,
+    route: ActivatedRoute,
   ) {
-    this.activity = new ActivityModel;
-    this.activity.name = 'FakeActivity';
-    this.activity.description = 'This is just a FakeActivity to show'
+    const id  = route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+      activityProvider.findOne(params.get('id')).then(act => this.activity = act))
+      ).subscribe();
+
+    
+    this.placeHolderActivity = new ActivityModel;
+    this.placeHolderActivity.name = 'FakeActivity';
+    this.placeHolderActivity.description = 'This is just a FakeActivity to show'
       + 'how this could look like.';
 
     const testAddress = new AddressModel();
@@ -64,20 +70,21 @@ export class ActivityViewComponent implements OnInit {
     testAddress.place = 'SampleCity';
     testAddress.suburb.id = '1';
 
-    this.activity.address = testAddress;
+    this.placeHolderActivity.address = testAddress;
 
     const category = new CategoryModel;
     category.name = 'party';
-    this.activity.category = category;
+    category.color = 'red';
+    this.placeHolderActivity.category = category;
 
     const target_group = new TargetGroupModel;
     target_group.name = 'youth';
-    this.activity.targetGroups = [target_group];
+    this.placeHolderActivity.targetGroups = [target_group];
 
     const schedule = new ScheduleModel;
     schedule.startDate = new Date().toUTCString();
     schedule.endDate = new Date().toUTCString();
-    this.activity.schedules = [schedule];
+    this.placeHolderActivity.schedules = [schedule];
 
     const organisation = new OrganisationModel;
     organisation.name = 'testOrganisation';
@@ -93,28 +100,18 @@ export class ActivityViewComponent implements OnInit {
     secondDate.endDate =
       new Date(new Date(secondDate.startDate).getDate() + 1).toISOString();
 
-    this.activity.schedules.push(firstDate);
-    this.activity.schedules.push(secondDate);
-  }
-
-  public ngOnInit(): void {
-    // this.route.paramMap
-    //   .switchMap((params: ParamMap) => {
-    //     return this.activityService.get(params.get('uuid'));
-    //   })
-    //   .subscribe(activity => {
-    //     this.item = activity;
-    //   });
+    this.placeHolderActivity.schedules.push(firstDate);
+    this.placeHolderActivity.schedules.push(secondDate);
   }
 
   openBottomSheetSchedules(): void {
     this.bottomSheet.open(BottomSheetScheduleComponent,
-      { data: { schedules: this.activity.schedules } });
+      { data: { schedules: this.placeHolderActivity.schedules } });
   }
 
   openBottomSheetMap(): void {
     this.bottomSheet.open(BottomSheetMapComponent,
-      { data: { activities: [this.activity] } });
+      { data: { activities: [this.placeHolderActivity] } });
   }
 
 }

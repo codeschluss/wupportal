@@ -5,8 +5,7 @@ import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 @Component({
   selector: 'activity-carousel-component',
   styleUrls: [
-    'activity.carousel.component.scss', '../main.css'
-  ],
+    'activity.carousel.component.scss'],
   templateUrl: 'activity.carousel.component.html'
 })
 

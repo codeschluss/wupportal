@@ -12,7 +12,7 @@ import { AddressModel } from '../../../core/models/address.model';
   templateUrl: 'mapping.component.html',
 })
 
-export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
 
   public static readonly imports = [
     AngularOpenlayersModule
@@ -44,36 +44,36 @@ export class MappingComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router
   ) { }
 
-  public ngOnInit(): void {
-    // TODO: move to db
-    this.clusterspan = 5;
+  public ngOnInit(): void{
+        // TODO: move to db
+        this.clusterspan = 5;
 
-    if (this.activities.length === 1) {
-      this.latitude = this.activities[0].address.latitude;
-      this.longitude = this.activities[0].address.longitude;
-      this.zoomfactor = 14;
-      this.projection = 'EPSG:4326';
-    } else {
-      for (const item of this.route.snapshot.data.configuration) {
-        switch (item.item) {
-          case 'mapcenterLatitude':
-            this.latitude = parseFloat(item.value);
-            break;
-          case 'mapcenterLongitude':
-            this.longitude = parseFloat(item.value);
-            break;
-          case 'mapProjection':
-            this.projection = item.value;
-            break;
-          case 'zoomfactor':
-            this.zoomfactor = parseFloat(item.value);
-            break;
-        }
-      }
-    }
-    // TODO: redo
-    // this.activities = this.route.snapshot.data
-    //   .activities.filter((i) => i.address);
+        // if (this.activities.length === 1) {
+          this.latitude = this.activities[0].address.latitude;
+          this.longitude = this.activities[0].address.longitude;
+          this.zoomfactor = 14;
+          this.projection = 'EPSG:4326';
+        // } else {
+        //   for (const item of this.route.snapshot.data.configuration) {
+        //     switch (item.item) {
+        //       case 'mapcenterLatitude':
+        //         this.latitude = this.activities[0].address.latitude;
+        //         break;
+        //       case 'mapcenterLongitude':
+        //         this.longitude = this.activities[0].address.longitude;
+        //         break;
+        //       case 'mapProjection':
+        //         this.projection = 'EPSG:4326';
+        //         break;
+        //       case 'zoomfactor':
+        //         this.zoomfactor = 14;
+        //         break;
+        //     }
+        //   }
+        // }
+        // TODO: redo
+        // this.activities = this.route.snapshot.data
+        //   .activities.filter((i) => i.address);
   }
 
   public ngAfterViewInit(): void {

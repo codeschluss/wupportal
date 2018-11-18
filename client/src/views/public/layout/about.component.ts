@@ -11,9 +11,7 @@ import { OrganisationModel } from '../../../core/models/organisation.model';
 
 
 @Component({
-  styleUrls: [
-    'about.component.css', '../main.css'
-  ],
+  styleUrls: ['about.component.css'],
   templateUrl: 'about.component.html'
 })
 

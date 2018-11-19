@@ -1,10 +1,6 @@
 import { AfterViewInit, Component, ElementRef, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { I18nResolver } from 'src/core/base/i18n.resolver';
-
-export function TRANSLATIONS_FACTORY(i18n: I18nResolver) {
-  return i18n.translation;
-}
+import { I18nResolver } from './i18n.resolver';
 
 @Component({
   providers: [
@@ -12,7 +8,7 @@ export function TRANSLATIONS_FACTORY(i18n: I18nResolver) {
     {
       deps: [I18nResolver],
       provide: TRANSLATIONS,
-      useFactory: TRANSLATIONS_FACTORY
+      useFactory: (i18n: I18nResolver) => i18n.translation
     },
     {
       provide: TRANSLATIONS_FORMAT,

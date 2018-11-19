@@ -1,8 +1,7 @@
 import { JSONSchemaObject } from '@ngx-pwa/local-storage';
 import { TokenModel, TokenModelSchema } from '../auth/token.model';
-import { BaseModel } from '../base/base.model';
 
-export class SessionModel extends BaseModel {
+export class SessionModel {
 
   public bearer: string;
   public language: string;

@@ -1,9 +1,12 @@
 import { AddressEntity } from '../api/models/address-entity';
 import { BaseModel } from '../base/base.model';
+import { AddressProvider } from '../providers/address.provider';
 import { SuburbModel } from './suburb.model';
 
 export class AddressModel
   extends BaseModel implements AddressEntity {
+
+  public provider = AddressProvider.prototype;
 
   public houseNumber: string;
   public latitude: number;

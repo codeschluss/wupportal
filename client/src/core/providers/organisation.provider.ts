@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { OrganisationControllerService } from '../api/services/organisation-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -42,10 +42,9 @@ export class OrganisationProvider
   protected model = OrganisationModel;
 
   public constructor(
+    protected injector: Injector,
     protected service: OrganisationControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

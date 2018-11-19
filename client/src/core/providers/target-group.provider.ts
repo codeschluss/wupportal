@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { TargetGroupControllerService } from '../api/services/target-group-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -21,10 +21,9 @@ export class TargetGroupProvider
   protected model = TargetGroupModel;
 
   public constructor(
+    protected injector: Injector,
     protected service: TargetGroupControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

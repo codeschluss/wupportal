@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { CategoryControllerService } from '../api/services/category-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -21,10 +21,9 @@ export class CategoryProvider
   protected model = CategoryModel;
 
   public constructor(
+    protected injector: Injector,
     protected service: CategoryControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

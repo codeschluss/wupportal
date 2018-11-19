@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.suburb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.suburb.SuburbController;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
-import de.codeschluss.portal.functional.suburb.SuburbController;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

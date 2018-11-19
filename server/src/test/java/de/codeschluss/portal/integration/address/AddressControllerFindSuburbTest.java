@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.address;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.address.AddressController;
+import de.codeschluss.portal.components.suburb.SuburbEntity;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.functional.address.AddressController;
-import de.codeschluss.portal.functional.suburb.SuburbEntity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

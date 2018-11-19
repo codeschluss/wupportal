@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.configuration.ConfigurationController;
+import de.codeschluss.portal.components.configuration.ConfigurationEntity;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.functional.configuration.ConfigurationController;
-import de.codeschluss.portal.functional.configuration.ConfigurationEntity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

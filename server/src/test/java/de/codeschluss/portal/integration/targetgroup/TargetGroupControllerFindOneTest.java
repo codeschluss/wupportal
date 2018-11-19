@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.targetgroup;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.targetgroup.TargetGroupController;
+import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.functional.targetgroup.TargetGroupController;
-import de.codeschluss.portal.functional.targetgroup.TargetGroupEntity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

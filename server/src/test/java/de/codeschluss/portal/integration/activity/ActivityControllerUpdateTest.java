@@ -2,10 +2,10 @@ package de.codeschluss.portal.integration.activity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.activity.ActivityController;
+import de.codeschluss.portal.components.activity.ActivityEntity;
+import de.codeschluss.portal.components.activity.FilterSortPaginateCurrent;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
-import de.codeschluss.portal.functional.activity.ActivityController;
-import de.codeschluss.portal.functional.activity.ActivityEntity;
-import de.codeschluss.portal.functional.activity.FilterSortPaginateCurrent;
 
 import java.net.URISyntaxException;
 

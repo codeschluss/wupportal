@@ -1,0 +1,62 @@
+package de.codeschluss.portal.components.tag;
+
+import de.codeschluss.portal.components.tag.TagEntity;
+import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
+import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
+
+import java.net.URISyntaxException;
+
+import org.springframework.hateoas.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class TagController extends CrudController<TagEntity, TagService> {
+
+  public TagController(TagService service) {
+    super(service);
+  }
+
+  @Override
+  @GetMapping("/tags")
+  public ResponseEntity<?> findAll(FilterSortPaginate params) {
+    return super.findAll(params);
+  }
+
+  @Override
+  @GetMapping("/tags/{tagId}")
+  public Resource<TagEntity> findOne(@PathVariable String tagId) {
+    return super.findOne(tagId);
+  }
+
+  @Override
+  @PostMapping("/tags")
+  @ProviderOrSuperUserPermission
+  public ResponseEntity<?> add(@RequestBody TagEntity newTag) throws URISyntaxException {
+    return super.add(newTag);
+  }
+
+  @Override
+  @PutMapping("/tags/{tagId}")
+  @SuperUserPermission
+  public ResponseEntity<?> update(@RequestBody TagEntity newTag, @PathVariable String tagId)
+      throws URISyntaxException {
+    return super.update(newTag, tagId);
+  }
+
+  @Override
+  @DeleteMapping("/tags/{tagId}")
+  @SuperUserPermission
+  public ResponseEntity<?> delete(@PathVariable String tagId) {
+    return super.delete(tagId);
+  }
+
+}

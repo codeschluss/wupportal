@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.tag.TagController;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.functional.tag.TagController;
 
 import java.net.URISyntaxException;
 

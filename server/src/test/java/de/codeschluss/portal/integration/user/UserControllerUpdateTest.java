@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.functional.user.UserController;
-import de.codeschluss.portal.functional.user.UserEntity;
-import de.codeschluss.portal.functional.user.UserService;
+import de.codeschluss.portal.components.user.UserController;
+import de.codeschluss.portal.components.user.UserEntity;
+import de.codeschluss.portal.components.user.UserService;
 
 import java.net.URISyntaxException;
 

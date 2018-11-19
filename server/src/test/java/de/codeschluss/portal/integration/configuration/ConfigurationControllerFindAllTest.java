@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.configuration.ConfigurationController;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
-import de.codeschluss.portal.functional.configuration.ConfigurationController;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

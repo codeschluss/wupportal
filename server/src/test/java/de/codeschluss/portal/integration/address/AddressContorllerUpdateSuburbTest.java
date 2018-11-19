@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.address;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.address.AddressController;
+import de.codeschluss.portal.components.address.AddressService;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.functional.address.AddressController;
-import de.codeschluss.portal.functional.address.AddressService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.address;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.address.AddressController;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.functional.address.AddressController;
 
 import java.net.URISyntaxException;
 

@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.activity.ActivityEntity;
+import de.codeschluss.portal.components.user.UserController;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.functional.activity.ActivityEntity;
-import de.codeschluss.portal.functional.user.UserController;
 
 import org.assertj.core.api.Condition;
 import org.junit.Test;

@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.tag.TagController;
+import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
-import de.codeschluss.portal.functional.tag.TagController;
-import de.codeschluss.portal.functional.tag.TagEntity;
 
 import java.net.URISyntaxException;
 

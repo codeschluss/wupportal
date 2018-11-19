@@ -1,6 +1,6 @@
 package de.codeschluss.portal.core.security.jwt;
 
-import de.codeschluss.portal.functional.user.UserEntity;
+import de.codeschluss.portal.components.user.UserEntity;
 
 import java.util.Collections;
 

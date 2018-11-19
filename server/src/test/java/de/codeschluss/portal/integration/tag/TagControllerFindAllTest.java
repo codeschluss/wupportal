@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.tag.TagController;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
-import de.codeschluss.portal.functional.tag.TagController;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.activity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.functional.activity.ActivityController;
-import de.codeschluss.portal.functional.activity.ActivityEntity;
-import de.codeschluss.portal.functional.activity.FilterSortPaginateCurrent;
+import de.codeschluss.portal.components.activity.ActivityController;
+import de.codeschluss.portal.components.activity.ActivityEntity;
+import de.codeschluss.portal.components.activity.FilterSortPaginateCurrent;
 
 import org.assertj.core.api.Condition;
 import org.junit.Test;

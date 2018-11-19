@@ -1,9 +1,9 @@
 package de.codeschluss.portal.core.security.services;
 
+import de.codeschluss.portal.components.activity.ActivityService;
+import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.security.jwt.JwtUserDetails;
-import de.codeschluss.portal.functional.activity.ActivityService;
-import de.codeschluss.portal.functional.user.UserEntity;
 
 import java.util.Arrays;
 

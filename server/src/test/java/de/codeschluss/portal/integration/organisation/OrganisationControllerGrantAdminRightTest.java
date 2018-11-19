@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.organisation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.organisation.OrganisationController;
+import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.functional.organisation.OrganisationController;
-import de.codeschluss.portal.functional.provider.ProviderService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

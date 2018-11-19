@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.category.CategoryController;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.functional.category.CategoryController;
 
 import java.net.URISyntaxException;
 

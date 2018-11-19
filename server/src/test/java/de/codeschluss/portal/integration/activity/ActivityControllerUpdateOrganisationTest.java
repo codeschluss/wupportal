@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.activity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.components.activity.ActivityController;
+import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.functional.activity.ActivityController;
-import de.codeschluss.portal.functional.organisation.OrganisationEntity;
 
 import java.net.URISyntaxException;
 

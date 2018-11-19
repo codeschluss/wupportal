@@ -2,9 +2,9 @@ package de.codeschluss.portal.integration.organisation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.functional.organisation.OrganisationController;
-import de.codeschluss.portal.functional.organisation.OrganisationEntity;
-import de.codeschluss.portal.functional.organisation.OrganisationService;
+import de.codeschluss.portal.components.organisation.OrganisationController;
+import de.codeschluss.portal.components.organisation.OrganisationEntity;
+import de.codeschluss.portal.components.organisation.OrganisationService;
 
 import java.net.URISyntaxException;
 

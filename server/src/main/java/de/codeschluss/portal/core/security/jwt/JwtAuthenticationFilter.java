@@ -4,8 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.appconfig.JwtConfiguration;
-import de.codeschluss.portal.functional.user.UserEntity;
 
 import java.io.IOException;
 import java.util.Collections;

@@ -12,9 +12,9 @@ export class ClientComponent {
   ];
 
   public constructor(
-    private apiConfiguration: ApiConfiguration
+    apiConfiguration: ApiConfiguration
   ) {
-    this.apiConfiguration.rootUrl = '/api';
+    apiConfiguration.rootUrl = '/api';
   }
 
 }

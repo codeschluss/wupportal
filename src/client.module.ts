@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UrlSerializer } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { ApiModule } from './core/api/api.module';
@@ -12,8 +14,6 @@ import { BaseProvider } from './core/base/base.provider';
 import { I18nComponent } from './utils/i18n.component';
 import { LogoComponent } from './utils/logo.component';
 import { ClientUrlSerializer } from './utils/serializer';
-import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 
 fontawesome.add(fas);
 

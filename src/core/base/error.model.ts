@@ -1,6 +1,4 @@
-import { BaseModel } from '../base/base.model';
-
-export class ErrorModel extends BaseModel {
+export class ErrorModel {
 
   public error: string;
   public message: string;

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { AddressControllerService } from '../api/services/address-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -29,10 +29,9 @@ export class AddressProvider
   protected model = AddressModel;
 
   public constructor(
+    protected injector: Injector,
     protected service: AddressControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

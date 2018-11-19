@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { UserControllerService } from '../api/services/user-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -36,10 +36,9 @@ export class UserProvider
   protected model = UserModel;
 
   public constructor(
+    protected injector: Injector,
     protected service: UserControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

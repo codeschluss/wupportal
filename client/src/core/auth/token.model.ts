@@ -1,7 +1,6 @@
 import { JSONSchemaObject } from '@ngx-pwa/local-storage';
-import { BaseModel } from '../base/base.model';
 
-export class TokenModel extends BaseModel {
+export class TokenModel {
 
   public sub: string;
   public exp: number;

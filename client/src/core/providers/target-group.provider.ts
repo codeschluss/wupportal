@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { TargetGroupControllerService } from '../api/services/target-group-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -18,13 +18,12 @@ export class TargetGroupProvider
     delete: this.service.targetGroupControllerDeleteResponse
   };
 
-  protected model = TargetGroupModel;
+  protected model = this.provide(TargetGroupModel);
 
   public constructor(
+    protected injector: Injector,
     protected service: TargetGroupControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

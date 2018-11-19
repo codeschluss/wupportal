@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { SuburbControllerService } from '../api/services/suburb-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -18,13 +18,12 @@ export class SuburbProvider
     delete: this.service.suburbControllerDeleteResponse
   };
 
-  protected model = SuburbModel;
+  protected model = this.provide(SuburbModel);
 
   public constructor(
+    protected injector: Injector,
     protected service: SuburbControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

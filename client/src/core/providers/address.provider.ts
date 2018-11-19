@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { AddressControllerService } from '../api/services/address-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -13,8 +13,7 @@ export class AddressProvider
     {
       field: 'suburb',
       method: this.service.addressControllerFindSuburb,
-      model: SuburbModel,
-      multi: false
+      model: SuburbModel
     }
   ];
 
@@ -26,13 +25,12 @@ export class AddressProvider
     delete: this.service.addressControllerDeleteResponse
   };
 
-  protected model = AddressModel;
+  protected model = this.provide(AddressModel);
 
   public constructor(
+    protected injector: Injector,
     protected service: AddressControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

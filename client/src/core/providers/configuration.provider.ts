@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ConfigurationControllerService } from '../api/services/configuration-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -18,13 +18,12 @@ export class ConfigurationProvider
     delete: this.service.configurationControllerDeleteResponse
   };
 
-  protected model = ConfigurationModel;
+  protected model = this.provide(ConfigurationModel);
 
   public constructor(
+    protected injector: Injector,
     protected service: ConfigurationControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

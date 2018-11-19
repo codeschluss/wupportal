@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivityControllerService } from '../api/services/activity-controller.service';
 import { BaseProvider } from '../base/base.provider';
@@ -19,44 +19,37 @@ export class ActivityProvider
     {
       field: 'address',
       method: this.service.activityControllerFindAddressResponse,
-      model: AddressModel,
-      multi: false
+      model: AddressModel
     },
     {
       field: 'category',
       method: this.service.activityControllerFindCategoryResponse,
-      model: CategoryModel,
-      multi: false
+      model: CategoryModel
     },
     {
       field: 'organisation',
       method: this.service.activityControllerFindOrganisationResponse,
-      model: OrganisationModel,
-      multi: false
+      model: OrganisationModel
     },
     {
       field: 'schedules',
       method: this.service.activityControllerFindSchedulesResponse,
-      model: ScheduleModel,
-      multi: true
+      model: ScheduleModel
     },
     {
       field: 'tags',
       method: this.service.activityControllerFindTagsResponse,
-      model: TagModel,
-      multi: true
+      model: TagModel
     },
     {
       field: 'targetGroups',
       method: this.service.activityControllerFindTargetGroupsResponse,
-      model: TargetGroupModel,
-      multi: true
+      model: TargetGroupModel
     },
     {
       field: 'user',
       method: this.service.activityControllerFindUserResponse,
-      model: UserModel,
-      multi: false
+      model: UserModel
     },
   ];
 
@@ -68,13 +61,12 @@ export class ActivityProvider
     delete: this.service.activityControllerDeleteResponse
   };
 
-  protected model = ActivityModel;
+  protected model = this.provide(ActivityModel);
 
   public constructor(
+    protected injector: Injector,
     protected service: ActivityControllerService,
     protected snackbar: MatSnackBar
-  ) {
-    super();
-  }
+  ) { super(); }
 
 }

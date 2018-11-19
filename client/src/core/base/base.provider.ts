@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
-import { BaseModel, ModelType } from '../base/base.model';
+import { BaseModel, ModelLink, ModelType } from '../base/base.model';
 import { ErrorModel } from './error.model';
+
+export type ProviderType = new() => ({
+  constructor: { prototype: BaseProvider<BaseService, BaseModel> }
+}) & BaseProvider<BaseService, BaseModel>;
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseProvider
@@ -15,12 +19,9 @@ export abstract class BaseProvider
     MatSnackBarModule
   ];
 
-  protected abstract linked: {
-    field: string,
-    method: Function,
-    model: ModelType,
-    multi: boolean
-  }[];
+  protected abstract injector: Injector;
+
+  protected abstract linked: ModelLink[];
 
   protected abstract methods: {
     findAll: Function,
@@ -30,11 +31,11 @@ export abstract class BaseProvider
     delete: Function
   };
 
-  protected abstract snackbar: MatSnackBar;
-
-  protected abstract model: new() => Model;
+  protected abstract model: ModelType;
 
   protected abstract service: Service;
+
+  protected abstract snackbar: MatSnackBar;
 
   public create(model: Model): Promise<void> {
     return this.call(this.methods.add, model).pipe(
@@ -98,13 +99,10 @@ export abstract class BaseProvider
   protected links(input: Model | Model[]): Model | Model[] {
     const links = (model) => this.linked.forEach((link) => {
       const data = (model._embedded || {})[link.field];
-      const call = () => !data ? this.call(link.method, model.id).pipe(
-        map((response) => this.cast<any>(response, link.model)),
-        map((response) => this.links(response)),
-        map((response) => this.purge(response))
-      ).toPromise() : Promise.resolve(data);
-
-      Object.defineProperty(model, link.field, { get: call });
+      Object.defineProperty(model, link.field, { get: () => data
+        ? Promise.resolve(Object.assign(new link.model(), data))
+        : this.resolve(link, model)
+      });
     });
 
     Array.isArray(input) ? input.map((model) => links(model)) : links(input);
@@ -124,28 +122,18 @@ export abstract class BaseProvider
     return input;
   }
 
+  protected provide(model: ModelType): ModelType {
+    Object.defineProperty(model, 'provider', { value: this.constructor });
+    return model;
+  }
+
+  protected resolve(link: ModelLink, model: Model): Promise<any> {
+    const provider = this.injector.get((link.model as any).provider);
+    return this.call.apply(provider, [link.method, model.id]).pipe(
+      map((response) => this.cast.apply(provider, [response, link.model])),
+      map((response) => this.links.apply(provider, [response])),
+      map((response) => this.purge.apply(provider, [response]))
+    ).toPromise();
+  }
+
 }
-
-
-
-
-
-  // protected typecast<T>(model: object, type?: new() => T): T;
-  // protected typecast<T>(models: object[], type?: new() => T): T[];
-  // protected typecast<T>(input: any, type?: new() => T): T | T[] {
-// const cast = (model) => Object.assign(new (type || this.model)(), model);
-// return Array.isArray(input) ? input.map(model => cast(model)) : cast(input);
-  // }
-
-
-  // protected multi(response: StrictHttpResponse<object>): object[] {
-  //   return response.body['_embedded']['data'];
-  // }
-
-  // protected plain(response: StrictHttpResponse<object>): object {
-  //   return response.body;
-  // }
-
-        // link.multi
-        //   ? map((response) => this.multi(response))
-        //   : map((response) => this.plain(response)),

@@ -117,6 +117,42 @@ class UserControllerService extends BaseService {
   }
 
   /**
+   * @param username username
+   * @return OK
+   */
+  userControllerResetPasswordResponse(username: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = username;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/users/resetpassword`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param username username
+   * @return OK
+   */
+  userControllerResetPassword(username: string): Observable<{}> {
+    return this.userControllerResetPasswordResponse(username).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
    * @param userId userId
    * @return OK
    */

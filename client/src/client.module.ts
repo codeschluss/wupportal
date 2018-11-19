@@ -25,7 +25,6 @@ const ClientDeclarations = [
 
 const ClientImports = [
   BaseProvider.imports,
-  ClientComponent.imports,
   I18nComponent.imports,
   LogoComponent.imports,
 ];

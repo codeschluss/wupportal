@@ -13,8 +13,7 @@ export class AddressProvider
     {
       field: 'suburb',
       method: this.service.addressControllerFindSuburb,
-      model: SuburbModel,
-      multi: false
+      model: SuburbModel
     }
   ];
 
@@ -26,7 +25,7 @@ export class AddressProvider
     delete: this.service.addressControllerDeleteResponse
   };
 
-  protected model = AddressModel;
+  protected model = this.provide(AddressModel);
 
   public constructor(
     protected injector: Injector,

@@ -4,13 +4,12 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
-import { BaseModel, ModelLink } from '../base/base.model';
+import { BaseModel, ModelLink, ModelType } from '../base/base.model';
 import { ErrorModel } from './error.model';
 
-export type ProviderType = any;
-// export type ProviderType = new() => ({
-//   constructor: { prototype: BaseProvider<BaseService, BaseModel> }
-// }) & BaseProvider<BaseService, BaseModel>;
+export type ProviderType = new() => ({
+  constructor: { prototype: BaseProvider<BaseService, BaseModel> }
+}) & BaseProvider<BaseService, BaseModel>;
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseProvider
@@ -32,7 +31,7 @@ export abstract class BaseProvider
     delete: Function
   };
 
-  protected abstract model: new() => Model;
+  protected abstract model: ModelType;
 
   protected abstract service: Service;
 
@@ -123,8 +122,13 @@ export abstract class BaseProvider
     return input;
   }
 
-  private resolve(link: ModelLink, model: Model): Promise<any> {
-    const provider = this.injector.get(new link.model().provider);
+  protected provide(model: ModelType): ModelType {
+    Object.defineProperty(model, 'provider', { value: this.constructor });
+    return model;
+  }
+
+  protected resolve(link: ModelLink, model: Model): Promise<any> {
+    const provider = this.injector.get((link.model as any).provider);
     return this.call.apply(provider, [link.method, model.id]).pipe(
       map((response) => this.cast.apply(provider, [response, link.model])),
       map((response) => this.links.apply(provider, [response])),

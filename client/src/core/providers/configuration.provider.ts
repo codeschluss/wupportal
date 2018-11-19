@@ -18,7 +18,7 @@ export class ConfigurationProvider
     delete: this.service.configurationControllerDeleteResponse
   };
 
-  protected model = ConfigurationModel;
+  protected model = this.provide(ConfigurationModel);
 
   public constructor(
     protected injector: Injector,

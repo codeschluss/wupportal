@@ -1,6 +1,5 @@
 import { ActivityEntity } from '../api/models/activity-entity';
 import { BaseModel } from '../base/base.model';
-import { ActivityProvider } from '../providers/activity.provider';
 import { AddressModel } from './address.model';
 import { CategoryModel } from './category.model';
 import { OrganisationModel } from './organisation.model';
@@ -11,8 +10,6 @@ import { UserModel } from './user.model';
 
 export class ActivityModel
   extends BaseModel implements ActivityEntity {
-
-  public provider = ActivityProvider;
 
   public description: string;
   public name: string;

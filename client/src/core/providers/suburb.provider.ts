@@ -18,7 +18,7 @@ export class SuburbProvider
     delete: this.service.suburbControllerDeleteResponse
   };
 
-  protected model = SuburbModel;
+  protected model = this.provide(SuburbModel);
 
   public constructor(
     protected injector: Injector,

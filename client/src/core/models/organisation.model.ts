@@ -1,14 +1,11 @@
 import { OrganisationEntity } from '../api/models/organisation-entity';
 import { BaseModel } from '../base/base.model';
-import { OrganisationProvider } from '../providers/organisation.provider';
 import { ActivityModel } from './activity.model';
 import { AddressModel } from './address.model';
 import { UserModel } from './user.model';
 
 export class OrganisationModel
   extends BaseModel implements OrganisationEntity {
-
-  public provider = OrganisationProvider;
 
   public description: string;
   public image: any;

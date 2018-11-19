@@ -18,7 +18,7 @@ export class CategoryProvider
     delete: this.service.categoryControllerDeleteResponse
   };
 
-  protected model = CategoryModel;
+  protected model = this.provide(CategoryModel);
 
   public constructor(
     protected injector: Injector,

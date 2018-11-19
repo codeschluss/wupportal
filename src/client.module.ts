@@ -11,22 +11,19 @@ import { ClientRouter } from './client.router';
 import { ApiModule } from './core/api/api.module';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { BaseProvider } from './core/base/base.provider';
-import { I18nComponent } from './utils/i18n.component';
-import { LogoComponent } from './utils/logo.component';
-import { ClientUrlSerializer } from './utils/serializer';
+import { ClientUrlSerializer } from './core/base/serializer';
+import { I18nComponent } from './core/i18n/i18n.component';
 
 fontawesome.add(fas);
 
 const ClientDeclarations = [
   ClientComponent,
-  I18nComponent,
-  LogoComponent,
+  I18nComponent
 ];
 
 const ClientImports = [
   BaseProvider.imports,
-  I18nComponent.imports,
-  LogoComponent.imports,
+  I18nComponent.imports
 ];
 
 const ClientProviders = [

@@ -29,8 +29,7 @@
     {
       "name": "api",
       "urls": [
-        "/api/**",
-        "/api.pages.json"
+        "/api/**"
       ],
       "cacheConfig": {
         "strategy": "freshness",

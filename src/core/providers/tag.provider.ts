@@ -18,7 +18,7 @@ export class TagProvider
     delete: this.service.tagControllerDeleteResponse
   };
 
-  protected model = TagModel;
+  protected model = this.provide(TagModel);
 
   public constructor(
     protected injector: Injector,

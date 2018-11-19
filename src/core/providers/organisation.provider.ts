@@ -14,20 +14,17 @@ export class OrganisationProvider
     {
       field: 'activities',
       method: this.service.organisationControllerFindActivitiesResponse,
-      model: OrganisationModel,
-      multi: true
+      model: OrganisationModel
     },
     {
       field: 'address',
       method: this.service.organisationControllerFindAddress,
-      model: AddressModel,
-      multi: false
+      model: AddressModel
     },
     {
       field: 'users',
       method: this.service.organisationControllerFindUsersByOrganisationResponse,
-      model: UserModel,
-      multi: false
+      model: UserModel
     }
   ];
 
@@ -39,7 +36,7 @@ export class OrganisationProvider
     delete: this.service.organisationControllerDeleteResponse
   };
 
-  protected model = OrganisationModel;
+  protected model = this.provide(OrganisationModel);
 
   public constructor(
     protected injector: Injector,

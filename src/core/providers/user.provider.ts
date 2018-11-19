@@ -14,14 +14,12 @@ export class UserProvider
     {
       field: 'activities',
       method: this.service.userControllerFindActivitiesResponse,
-      model: ActivityModel,
-      multi: true
+      model: ActivityModel
     },
     {
       field: 'organisations',
       method: this.service.userControllerFindOrganisationsResponse,
-      model: OrganisationModel,
-      multi: true
+      model: OrganisationModel
     }
   ];
 
@@ -33,7 +31,7 @@ export class UserProvider
     delete: this.service.userControllerDeleteResponse
   };
 
-  protected model = UserModel;
+  protected model = this.provide(UserModel);
 
   public constructor(
     protected injector: Injector,

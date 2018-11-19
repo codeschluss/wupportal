@@ -18,7 +18,7 @@ export class TargetGroupProvider
     delete: this.service.targetGroupControllerDeleteResponse
   };
 
-  protected model = TargetGroupModel;
+  protected model = this.provide(TargetGroupModel);
 
   public constructor(
     protected injector: Injector,

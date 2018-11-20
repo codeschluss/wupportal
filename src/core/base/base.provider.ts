@@ -1,15 +1,11 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, Type } from '@angular/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
-import { BaseModel, ModelLink, ModelType } from '../base/base.model';
+import { BaseModel, ModelLink } from '../base/base.model';
 import { ErrorModel } from './error.model';
-
-// export type ProviderType = new() => ({
-//   constructor: { prototype: BaseProvider<BaseService, BaseModel> }
-// }) & BaseProvider<BaseService, BaseModel>;
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseProvider
@@ -29,7 +25,7 @@ export abstract class BaseProvider
     update: (model: Model, id: string) => Observable<StrictHttpResponse<object>>
   };
 
-  protected abstract model: ModelType;
+  protected abstract model: Type<Model>;
 
   protected abstract service: Service;
 
@@ -70,7 +66,7 @@ export abstract class BaseProvider
     ).toPromise();
   }
 
-  protected based(model: ModelType): ModelType {
+  protected based(model: Type<Model>): Type<Model> {
     Object.defineProperty(model, 'provider', { value: this.constructor });
     return model;
   }

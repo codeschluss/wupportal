@@ -1,6 +1,5 @@
 package de.codeschluss.portal.core.security.jwt;
 
-import de.codeschluss.portal.core.exception.InvalidTokenException;
 import de.codeschluss.portal.core.security.services.JwtTokenService;
 import de.codeschluss.portal.core.security.services.JwtUserDetailsService;
 

@@ -1,15 +1,14 @@
 package de.codeschluss.portal.core.security.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.codeschluss.portal.components.user.UserEntity;
-import de.codeschluss.portal.core.appconfig.JwtConfiguration;
+import de.codeschluss.portal.core.security.services.JwtTokenService;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,13 +23,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-  private AuthenticationManager authenticationManager;
-  private JwtConfiguration securityConfig;
+  private final AuthenticationManager authenticationManager;
+  private final JwtTokenService tokenService;
 
   public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
-      JwtConfiguration securityConfig) {
+      JwtTokenService tokenService) {
     this.authenticationManager = authenticationManager;
-    this.securityConfig = securityConfig;
+    this.tokenService = tokenService;
   }
 
   @Override
@@ -47,19 +46,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   }
 
   @Override
-  protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res,
-      FilterChain chain, Authentication auth) throws IOException, ServletException {
-    JwtUserDetails jwtUserDetails = (JwtUserDetails) auth.getPrincipal();
-    String token = JWT.create().withSubject(jwtUserDetails.getUsername())
-        .withClaim(securityConfig.getClaimSuperuser(), jwtUserDetails.isSuperUser())
-        .withArrayClaim(securityConfig.getClaimCreatedActivities(),
-            jwtUserDetails.getCreatedActivities())
-        .withArrayClaim(securityConfig.getClaimApprovedOrgas(),
-            jwtUserDetails.getApprovedOrganisations())
-        .withArrayClaim(securityConfig.getClaimAdminOrgas(), jwtUserDetails.getAdminOrgas())
-        .withExpiresAt(
-            new Date(System.currentTimeMillis() + securityConfig.getExpirationTime().toMillis()))
-        .sign(Algorithm.HMAC512(securityConfig.getSecret()));
-    res.addHeader("Authorization", "Bearer " + token);
+  protected void successfulAuthentication(
+      HttpServletRequest req, 
+      HttpServletResponse res,
+      FilterChain chain, 
+      Authentication auth) throws IOException, ServletException {
+    res.setContentType("application/json");
+    ObjectMapper objectMapper = new ObjectMapper();    
+    
+    Map<String, String> tokenMap = new HashMap<String, String>();
+    tokenMap.put("access", tokenService.createAccessToken(auth));
+    tokenMap.put("refresh", tokenService.createRefreshToken(auth));
+    
+    objectMapper.writeValue(res.getWriter(), tokenMap);
   }
 }

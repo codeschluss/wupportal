@@ -87,7 +87,6 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
-
 		<dependency>
 			<scope>test</scope>
 			<groupId>org.springframework.boot</groupId>

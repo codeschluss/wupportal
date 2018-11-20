@@ -15,7 +15,10 @@ import org.springframework.context.annotation.Configuration;
 public class JwtConfiguration {
 
   @DurationUnit(ChronoUnit.HOURS)
-  private Duration expirationTime = Duration.ofHours(12);
+  private Duration expirationTimeAccess = Duration.ofHours(12);
+  
+  @DurationUnit(ChronoUnit.HOURS)
+  private Duration expirationTimeRefresh = Duration.ofHours(12);
 
   private String secret;
   private String claimSuperuser;

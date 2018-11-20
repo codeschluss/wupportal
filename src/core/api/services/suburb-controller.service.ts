@@ -25,26 +25,29 @@ class SuburbControllerService extends BaseService {
   }
 
   /**
-   * @param page undefined
-   * @param size undefined
-   * @param sort undefined
-   * @param dir undefined
-   * @param filter undefined
+   * @param params The `SuburbControllerService.SuburbControllerFindAllParams` containing the following parameters:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `filter`:
+   *
    * @return OK
    */
-  suburbControllerFindAllResponse(page?: number,
-    size?: number,
-    sort?: string,
-    dir?: string,
-    filter?: string): Observable<StrictHttpResponse<{}>> {
+  suburbControllerFindAllResponse(params: SuburbControllerService.SuburbControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (page != null) __params = __params.set('page', page.toString());
-    if (size != null) __params = __params.set('size', size.toString());
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.sort != null) __params = __params.set('sort', params.sort.toString());
+    if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/suburbs`,
@@ -63,19 +66,22 @@ class SuburbControllerService extends BaseService {
     );
   }
   /**
-   * @param page undefined
-   * @param size undefined
-   * @param sort undefined
-   * @param dir undefined
-   * @param filter undefined
+   * @param params The `SuburbControllerService.SuburbControllerFindAllParams` containing the following parameters:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `filter`:
+   *
    * @return OK
    */
-  suburbControllerFindAll(page?: number,
-    size?: number,
-    sort?: string,
-    dir?: string,
-    filter?: string): Observable<{}> {
-    return this.suburbControllerFindAllResponse(page, size, sort, dir, filter).pipe(
+  suburbControllerFindAll(params: SuburbControllerService.SuburbControllerFindAllParams): Observable<{}> {
+    return this.suburbControllerFindAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -231,6 +237,17 @@ class SuburbControllerService extends BaseService {
 }
 
 module SuburbControllerService {
+
+  /**
+   * Parameters for suburbControllerFindAll
+   */
+  export interface SuburbControllerFindAllParams {
+    page?: number;
+    size?: number;
+    sort?: string;
+    dir?: string;
+    filter?: string;
+  }
 }
 
 export { SuburbControllerService }

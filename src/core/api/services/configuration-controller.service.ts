@@ -25,26 +25,29 @@ class ConfigurationControllerService extends BaseService {
   }
 
   /**
-   * @param page undefined
-   * @param size undefined
-   * @param sort undefined
-   * @param dir undefined
-   * @param filter undefined
+   * @param params The `ConfigurationControllerService.ConfigurationControllerFindAllParams` containing the following parameters:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `filter`:
+   *
    * @return OK
    */
-  configurationControllerFindAllResponse(page?: number,
-    size?: number,
-    sort?: string,
-    dir?: string,
-    filter?: string): Observable<StrictHttpResponse<{}>> {
+  configurationControllerFindAllResponse(params: ConfigurationControllerService.ConfigurationControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (page != null) __params = __params.set('page', page.toString());
-    if (size != null) __params = __params.set('size', size.toString());
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.sort != null) __params = __params.set('sort', params.sort.toString());
+    if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/configurations`,
@@ -63,19 +66,22 @@ class ConfigurationControllerService extends BaseService {
     );
   }
   /**
-   * @param page undefined
-   * @param size undefined
-   * @param sort undefined
-   * @param dir undefined
-   * @param filter undefined
+   * @param params The `ConfigurationControllerService.ConfigurationControllerFindAllParams` containing the following parameters:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `filter`:
+   *
    * @return OK
    */
-  configurationControllerFindAll(page?: number,
-    size?: number,
-    sort?: string,
-    dir?: string,
-    filter?: string): Observable<{}> {
-    return this.configurationControllerFindAllResponse(page, size, sort, dir, filter).pipe(
+  configurationControllerFindAll(params: ConfigurationControllerService.ConfigurationControllerFindAllParams): Observable<{}> {
+    return this.configurationControllerFindAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -231,6 +237,17 @@ class ConfigurationControllerService extends BaseService {
 }
 
 module ConfigurationControllerService {
+
+  /**
+   * Parameters for configurationControllerFindAll
+   */
+  export interface ConfigurationControllerFindAllParams {
+    page?: number;
+    size?: number;
+    sort?: string;
+    dir?: string;
+    filter?: string;
+  }
 }
 
 export { ConfigurationControllerService }

@@ -8,6 +8,17 @@ import { TagModel } from '../models/tag.model';
 export class TagProvider
   extends BaseProvider<TagControllerService, TagModel> {
 
+  public create: (model: TagModel) => Promise<any>;
+
+  public update: (id: string, model: TagModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<TagModel>;
+
+  public findAll: (params: TagControllerService
+    .TagControllerFindAllParams) => Promise<TagModel[]>;
+
   protected linked = [];
 
   protected methods = {

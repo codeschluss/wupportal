@@ -7,9 +7,9 @@ import { StrictHttpResponse } from '../api/strict-http-response';
 import { BaseModel, ModelLink, ModelType } from '../base/base.model';
 import { ErrorModel } from './error.model';
 
-export type ProviderType = new() => ({
-  constructor: { prototype: BaseProvider<BaseService, BaseModel> }
-}) & BaseProvider<BaseService, BaseModel>;
+// export type ProviderType = new() => ({
+//   constructor: { prototype: BaseProvider<BaseService, BaseModel> }
+// }) & BaseProvider<BaseService, BaseModel>;
 
 @Injectable({ providedIn: 'root' })
 export abstract class BaseProvider
@@ -24,7 +24,7 @@ export abstract class BaseProvider
   protected abstract methods: {
     create: (model: Model) => Observable<StrictHttpResponse<object>>,
     delete: (id: string) => Observable<StrictHttpResponse<object>>
-    findAll: (...args: any) => Observable<StrictHttpResponse<object>>,
+    findAll: (params: object) => Observable<StrictHttpResponse<object>>,
     findOne: (id: string) => Observable<StrictHttpResponse<object>>,
     update: (model: Model, id: string) => Observable<StrictHttpResponse<object>>
   };
@@ -34,6 +34,13 @@ export abstract class BaseProvider
   protected abstract service: Service;
 
   protected abstract snackbar: MatSnackBar;
+
+  public apply(method:
+    (...args: any) => Observable<StrictHttpResponse<object>>):
+    (...args: any) => Promise<StrictHttpResponse<object>> {
+
+    return (...args: any) => this.call(method, ...args).toPromise();
+  }
 
   public create(model: Model): Promise<any> {
     return this.call(this.methods.create, model).toPromise();
@@ -55,16 +62,12 @@ export abstract class BaseProvider
     ).toPromise();
   }
 
-  public findAll(...args: any): Promise<Model[]> {
-    return this.call(this.methods.findAll, ...args).pipe(
+  public findAll(params: object): Promise<Model[]> {
+    return this.call(this.methods.findAll, params).pipe(
       map((response) => this.cast<Model[]>(response)),
       tap((response) => this.links(response)),
       tap((response) => this.purge(response))
     ).toPromise();
-  }
-
-  protected apply(method: Function) {
-    return (...args: any) => this.call(method, ...args).toPromise();
   }
 
   protected based(model: ModelType): ModelType {

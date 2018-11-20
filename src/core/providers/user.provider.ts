@@ -39,4 +39,27 @@ export class UserProvider
     protected snackbar: MatSnackBar
   ) { super(); }
 
+  public create: (model: UserModel) => Promise<any>;
+
+  public update: (id: string, model: UserModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<UserModel>;
+
+  public findAll: (params: UserControllerService
+    .UserControllerFindAllParams) => Promise<UserModel[]>;
+
+  public linkOrganisations:
+    (id: string, organisationIds: string[]) => Promise<any> =
+      this.apply(this.service.userControllerAddOrganisationResponse);
+
+  public unlinkActivity:
+    (id: string, activityId: string) => Promise<any> =
+      this.apply(this.service.userControllerDeleteActivityResponse);
+
+  public unlinkOrganisation:
+    (id: string, organisationId) => Promise<any> =
+      this.apply(this.service.userControllerDeleteOrganisationResponse);
+
 }

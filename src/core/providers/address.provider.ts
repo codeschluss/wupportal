@@ -12,8 +12,8 @@ export class AddressProvider
   protected linked = [
     {
       field: 'suburb',
-      method: this.service.addressControllerFindSuburb,
-      model: SuburbModel
+      method: this.service.addressControllerFindSuburbResponse,
+      model: SuburbModel,
     }
   ];
 
@@ -32,5 +32,20 @@ export class AddressProvider
     protected service: AddressControllerService,
     protected snackbar: MatSnackBar
   ) { super(); }
+
+  public create: (model: AddressModel) => Promise<any>;
+
+  public update: (id: string, model: AddressModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<AddressModel>;
+
+  public findAll: (params: AddressControllerService
+    .AddressControllerFindAllParams) => Promise<AddressModel[]>;
+
+  public relinkSuburb:
+    (id: string, suburbId: string) => Promise<any> =
+      this.apply(this.service.addressControllerUpdateSuburbResponse);
 
 }

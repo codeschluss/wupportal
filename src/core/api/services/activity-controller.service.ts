@@ -27,29 +27,32 @@ class ActivityControllerService extends BaseService {
   }
 
   /**
-   * @param page undefined
-   * @param size undefined
-   * @param sort undefined
-   * @param dir undefined
-   * @param filter undefined
-   * @param current undefined
+   * @param params The `ActivityControllerService.ActivityControllerFindAllParams` containing the following parameters:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `filter`:
+   *
+   * - `current`:
+   *
    * @return OK
    */
-  activityControllerFindAllResponse(page?: number,
-    size?: number,
-    sort?: string,
-    dir?: string,
-    filter?: string,
-    current?: boolean): Observable<StrictHttpResponse<{}>> {
+  activityControllerFindAllResponse(params: ActivityControllerService.ActivityControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (page != null) __params = __params.set('page', page.toString());
-    if (size != null) __params = __params.set('size', size.toString());
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
-    if (current != null) __params = __params.set('current', current.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.sort != null) __params = __params.set('sort', params.sort.toString());
+    if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.filter != null) __params = __params.set('filter', params.filter.toString());
+    if (params.current != null) __params = __params.set('current', params.current.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/activities`,
@@ -68,21 +71,24 @@ class ActivityControllerService extends BaseService {
     );
   }
   /**
-   * @param page undefined
-   * @param size undefined
-   * @param sort undefined
-   * @param dir undefined
-   * @param filter undefined
-   * @param current undefined
+   * @param params The `ActivityControllerService.ActivityControllerFindAllParams` containing the following parameters:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `filter`:
+   *
+   * - `current`:
+   *
    * @return OK
    */
-  activityControllerFindAll(page?: number,
-    size?: number,
-    sort?: string,
-    dir?: string,
-    filter?: string,
-    current?: boolean): Observable<{}> {
-    return this.activityControllerFindAllResponse(page, size, sort, dir, filter, current).pipe(
+  activityControllerFindAll(params: ActivityControllerService.ActivityControllerFindAllParams): Observable<{}> {
+    return this.activityControllerFindAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -859,6 +865,18 @@ class ActivityControllerService extends BaseService {
 }
 
 module ActivityControllerService {
+
+  /**
+   * Parameters for activityControllerFindAll
+   */
+  export interface ActivityControllerFindAllParams {
+    page?: number;
+    size?: number;
+    sort?: string;
+    dir?: string;
+    filter?: string;
+    current?: boolean;
+  }
 }
 
 export { ActivityControllerService }

@@ -25,26 +25,29 @@ class CategoryControllerService extends BaseService {
   }
 
   /**
-   * @param page undefined
-   * @param size undefined
-   * @param sort undefined
-   * @param dir undefined
-   * @param filter undefined
+   * @param params The `CategoryControllerService.CategoryControllerFindAllParams` containing the following parameters:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `filter`:
+   *
    * @return OK
    */
-  categoryControllerFindAllResponse(page?: number,
-    size?: number,
-    sort?: string,
-    dir?: string,
-    filter?: string): Observable<StrictHttpResponse<{}>> {
+  categoryControllerFindAllResponse(params: CategoryControllerService.CategoryControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (page != null) __params = __params.set('page', page.toString());
-    if (size != null) __params = __params.set('size', size.toString());
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.sort != null) __params = __params.set('sort', params.sort.toString());
+    if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/categories`,
@@ -63,19 +66,22 @@ class CategoryControllerService extends BaseService {
     );
   }
   /**
-   * @param page undefined
-   * @param size undefined
-   * @param sort undefined
-   * @param dir undefined
-   * @param filter undefined
+   * @param params The `CategoryControllerService.CategoryControllerFindAllParams` containing the following parameters:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `filter`:
+   *
    * @return OK
    */
-  categoryControllerFindAll(page?: number,
-    size?: number,
-    sort?: string,
-    dir?: string,
-    filter?: string): Observable<{}> {
-    return this.categoryControllerFindAllResponse(page, size, sort, dir, filter).pipe(
+  categoryControllerFindAll(params: CategoryControllerService.CategoryControllerFindAllParams): Observable<{}> {
+    return this.categoryControllerFindAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -231,6 +237,17 @@ class CategoryControllerService extends BaseService {
 }
 
 module CategoryControllerService {
+
+  /**
+   * Parameters for categoryControllerFindAll
+   */
+  export interface CategoryControllerFindAllParams {
+    page?: number;
+    size?: number;
+    sort?: string;
+    dir?: string;
+    filter?: string;
+  }
 }
 
 export { CategoryControllerService }

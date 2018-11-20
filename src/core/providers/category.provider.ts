@@ -8,6 +8,17 @@ import { CategoryModel } from '../models/category.model';
 export class CategoryProvider
   extends BaseProvider<CategoryControllerService, CategoryModel> {
 
+  public create: (model: CategoryModel) => Promise<any>;
+
+  public update: (id: string, model: CategoryModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<CategoryModel>;
+
+  public findAll: (params: CategoryControllerService
+    .CategoryControllerFindAllParams) => Promise<CategoryModel[]>;
+
   protected linked = [];
 
   protected methods = {

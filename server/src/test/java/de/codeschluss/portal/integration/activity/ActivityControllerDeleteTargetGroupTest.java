@@ -72,7 +72,7 @@ public class ActivityControllerDeleteTargetGroupTest {
   @WithUserDetails("provider2@user")
   public void deleteTargetGroupsOtherProviderDenied() throws URISyntaxException {
     String targetGroupId = "00000000-0000-0000-0003-100000000000";
-    String activityId = "00000000-0000-0000-0010-200000000000";
+    String activityId = "00000000-0000-0000-0010-900000000000";
 
     controller.deleteTargetGroups(activityId, targetGroupId);
   }

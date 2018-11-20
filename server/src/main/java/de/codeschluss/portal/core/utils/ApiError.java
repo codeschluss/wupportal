@@ -34,7 +34,7 @@ public class ApiError {
    */
   public ApiError(HttpStatus status, String error, String message) {
     this.status = status.value();
-    this.error = message;
+    this.error = error;
     this.message = message;
     this.timestamp = LocalDateTime.now();
   }

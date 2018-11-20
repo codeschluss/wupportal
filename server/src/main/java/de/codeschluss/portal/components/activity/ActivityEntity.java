@@ -1,6 +1,7 @@
 package de.codeschluss.portal.components.activity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
@@ -60,6 +61,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   private boolean showUser;
 
   @Transient
+  @JsonDeserialize
   private String addressId;
 
   @ManyToOne
@@ -68,6 +70,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   private AddressEntity address;
 
   @Transient
+  @JsonDeserialize
   private String categoryId;
 
   @ManyToOne
@@ -76,6 +79,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   private CategoryEntity category;
 
   @Transient
+  @JsonDeserialize
   private String organisationId;
 
   @ManyToOne

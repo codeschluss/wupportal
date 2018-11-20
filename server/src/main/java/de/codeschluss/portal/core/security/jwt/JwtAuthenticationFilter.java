@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -51,12 +52,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       HttpServletResponse res,
       FilterChain chain, 
       Authentication auth) throws IOException, ServletException {
-    res.setContentType("application/json");
+    res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+    JwtUserDetails jwtUserDetails = (JwtUserDetails) auth.getPrincipal();
     ObjectMapper objectMapper = new ObjectMapper();    
-    
+
     Map<String, String> tokenMap = new HashMap<String, String>();
-    tokenMap.put("access", tokenService.createAccessToken(auth));
-    tokenMap.put("refresh", tokenService.createRefreshToken(auth));
+    tokenMap.put("access", tokenService.createAccessToken(jwtUserDetails));
+    tokenMap.put("refresh", tokenService.createRefreshToken(jwtUserDetails));
     
     objectMapper.writeValue(res.getWriter(), tokenMap);
   }

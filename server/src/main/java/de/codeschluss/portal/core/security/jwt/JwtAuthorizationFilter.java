@@ -1,5 +1,6 @@
 package de.codeschluss.portal.core.security.jwt;
 
+import de.codeschluss.portal.core.exception.InvalidTokenException;
 import de.codeschluss.portal.core.security.services.JwtTokenService;
 import de.codeschluss.portal.core.security.services.JwtUserDetailsService;
 
@@ -77,7 +78,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
   private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
     String token = request.getHeader("Authorization");
     if (token != null) {
-      String username = tokenService.verifyAndExtractUsername(token);
+      try {
+        tokenService.verifyAccess(token);
+      } catch (Exception e) {
+        return null;
+      }
+      
+      String username = tokenService.extractUsername(token);
 
       if (username != null) {
         return new UsernamePasswordAuthenticationToken(

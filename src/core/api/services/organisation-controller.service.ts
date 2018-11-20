@@ -25,26 +25,26 @@ class OrganisationControllerService extends BaseService {
   }
 
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  organisationControllerFindAllResponse(dir?: string,
-    filter?: string,
-    page?: number,
+  organisationControllerFindAllResponse(page?: number,
     size?: number,
-    sort?: string): Observable<StrictHttpResponse<{}>> {
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
     if (size != null) __params = __params.set('size', size.toString());
     if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (filter != null) __params = __params.set('filter', filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/organisations`,
@@ -63,19 +63,19 @@ class OrganisationControllerService extends BaseService {
     );
   }
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  organisationControllerFindAll(dir?: string,
-    filter?: string,
-    page?: number,
+  organisationControllerFindAll(page?: number,
     size?: number,
-    sort?: string): Observable<{}> {
-    return this.organisationControllerFindAllResponse(dir, filter, page, size, sort).pipe(
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<{}> {
+    return this.organisationControllerFindAllResponse(page, size, sort, dir, filter).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -266,12 +266,12 @@ class OrganisationControllerService extends BaseService {
   }
 
   /**
-   * @param activityId activityId
    * @param organisationId organisationId
+   * @param activityId activityId
    * @return OK
    */
-  organisationControllerDeleteActivityResponse(activityId: string,
-    organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerDeleteActivityResponse(organisationId: string,
+    activityId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -295,13 +295,13 @@ class OrganisationControllerService extends BaseService {
     );
   }
   /**
-   * @param activityId activityId
    * @param organisationId organisationId
+   * @param activityId activityId
    * @return OK
    */
-  organisationControllerDeleteActivity(activityId: string,
-    organisationId: string): Observable<{}> {
-    return this.organisationControllerDeleteActivityResponse(activityId, organisationId).pipe(
+  organisationControllerDeleteActivity(organisationId: string,
+    activityId: string): Observable<{}> {
+    return this.organisationControllerDeleteActivityResponse(organisationId, activityId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -343,17 +343,17 @@ class OrganisationControllerService extends BaseService {
   }
 
   /**
-   * @param addressId addressId
    * @param organisationId organisationId
+   * @param addressId addressId
    * @return OK
    */
-  organisationControllerUpdateAddressResponse(addressId: string,
-    organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerUpdateAddressResponse(organisationId: string,
+    addressId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = addressId;
 
+    __body = addressId;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/organisations/${organisationId}/address`,
@@ -372,13 +372,13 @@ class OrganisationControllerService extends BaseService {
     );
   }
   /**
-   * @param addressId addressId
    * @param organisationId organisationId
+   * @param addressId addressId
    * @return OK
    */
-  organisationControllerUpdateAddress(addressId: string,
-    organisationId: string): Observable<{}> {
-    return this.organisationControllerUpdateAddressResponse(addressId, organisationId).pipe(
+  organisationControllerUpdateAddress(organisationId: string,
+    addressId: string): Observable<{}> {
+    return this.organisationControllerUpdateAddressResponse(organisationId, addressId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -387,7 +387,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindUsersByOrganisationResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerFindUsersResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -413,8 +413,8 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindUsersByOrganisation(organisationId: string): Observable<{}> {
-    return this.organisationControllerFindUsersByOrganisationResponse(organisationId).pipe(
+  organisationControllerFindUsers(organisationId: string): Observable<{}> {
+    return this.organisationControllerFindUsersResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -461,20 +461,20 @@ class OrganisationControllerService extends BaseService {
   }
 
   /**
-   * @param isAdmin isAdmin
    * @param organisationId organisationId
    * @param userId userId
+   * @param isAdmin isAdmin
    * @return OK
    */
-  organisationControllerGrantAdminRightResponse(isAdmin: boolean,
-    organisationId: string,
-    userId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerGrantAdminRightResponse(organisationId: string,
+    userId: string,
+    isAdmin: boolean): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+
+
     __body = isAdmin;
-
-
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/organisations/${organisationId}/users/${userId}/admin`,
@@ -493,34 +493,34 @@ class OrganisationControllerService extends BaseService {
     );
   }
   /**
-   * @param isAdmin isAdmin
    * @param organisationId organisationId
    * @param userId userId
+   * @param isAdmin isAdmin
    * @return OK
    */
-  organisationControllerGrantAdminRight(isAdmin: boolean,
-    organisationId: string,
-    userId: string): Observable<{}> {
-    return this.organisationControllerGrantAdminRightResponse(isAdmin, organisationId, userId).pipe(
+  organisationControllerGrantAdminRight(organisationId: string,
+    userId: string,
+    isAdmin: boolean): Observable<{}> {
+    return this.organisationControllerGrantAdminRightResponse(organisationId, userId, isAdmin).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
-   * @param isApproved isApproved
    * @param organisationId organisationId
    * @param userId userId
+   * @param isApproved isApproved
    * @return OK
    */
-  organisationControllerApproveOrRejectUserResponse(isApproved: boolean,
-    organisationId: string,
-    userId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerApproveOrRejectUserResponse(organisationId: string,
+    userId: string,
+    isApproved: boolean): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+
+
     __body = isApproved;
-
-
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/organisations/${organisationId}/users/${userId}/approve`,
@@ -539,15 +539,15 @@ class OrganisationControllerService extends BaseService {
     );
   }
   /**
-   * @param isApproved isApproved
    * @param organisationId organisationId
    * @param userId userId
+   * @param isApproved isApproved
    * @return OK
    */
-  organisationControllerApproveOrRejectUser(isApproved: boolean,
-    organisationId: string,
-    userId: string): Observable<{}> {
-    return this.organisationControllerApproveOrRejectUserResponse(isApproved, organisationId, userId).pipe(
+  organisationControllerApproveOrRejectUser(organisationId: string,
+    userId: string,
+    isApproved: boolean): Observable<{}> {
+    return this.organisationControllerApproveOrRejectUserResponse(organisationId, userId, isApproved).pipe(
       __map(_r => _r.body as {})
     );
   }

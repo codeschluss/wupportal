@@ -15,6 +15,42 @@ import { UserModel } from '../models/user.model';
 export class ActivityProvider
   extends BaseProvider<ActivityControllerService, ActivityModel> {
 
+  public createSchedules:
+    (id: string, schedules: ScheduleModel[]) => Promise<any> =
+      this.apply(this.service.activityControllerAddSchedulesResponse);
+
+  public createTags:
+    (id: string, tags: TagModel[]) => Promise<any> =
+      this.apply(this.service.activityControllerAddTagsResponse);
+
+  public createTargetGroups:
+    (id: string, targetGroupIds: string[]) => Promise<any> =
+      this.apply(this.service.activityControllerAddTargetGroupsResponse);
+
+  public updateAddress:
+    (id: string, addressId: string) => Promise<any> =
+      this.apply(this.service.activityControllerUpdateAddressResponse);
+
+  public updateCategory:
+    (id: string, categoryId: string) => Promise<any> =
+      this.apply(this.service.activityControllerUpdateCategoryResponse);
+
+  public updateOrganisation:
+    (id: string, organisationId: string) => Promise<any> =
+      this.apply(this.service.activityControllerUpdateOrganisationResponse);
+
+  public deleteSchedule:
+    (id: string, scheduleId: string) => Promise<any> =
+      this.apply(this.service.activityControllerDeleteSchedulesResponse);
+
+  public deleteTags:
+    (id: string, organisationId: string) => Promise<any> =
+      this.apply(this.service.activityControllerDeleteTagsResponse);
+
+  public deleteTargetGroups:
+    (id: string, organisationId: string) => Promise<any> =
+      this.apply(this.service.activityControllerDeleteTargetGroupsResponse);
+
   protected linked = [
     {
       field: 'address',
@@ -54,14 +90,14 @@ export class ActivityProvider
   ];
 
   protected methods = {
+    create: this.service.activityControllerAddResponse,
+    delete: this.service.activityControllerDeleteResponse,
     findAll: this.service.activityControllerFindAllResponse,
     findOne: this.service.activityControllerFindOneResponse,
-    add: this.service.activityControllerAddResponse,
-    update: this.service.activityControllerUpdateResponse,
-    delete: this.service.activityControllerDeleteResponse
+    update: this.service.activityControllerUpdateResponse
   };
 
-  protected model = this.provide(ActivityModel);
+  protected model = this.based(ActivityModel);
 
   public constructor(
     protected injector: Injector,

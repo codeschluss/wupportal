@@ -11,14 +11,14 @@ export class TagProvider
   protected linked = [];
 
   protected methods = {
+    create: this.service.tagControllerAddResponse,
+    delete: this.service.tagControllerDeleteResponse,
     findAll: this.service.tagControllerFindAllResponse,
     findOne: this.service.tagControllerFindOneResponse,
-    add: this.service.tagControllerAddResponse,
-    update: this.service.tagControllerUpdateResponse,
-    delete: this.service.tagControllerDeleteResponse
+    update: this.service.tagControllerUpdateResponse
   };
 
-  protected model = this.provide(TagModel);
+  protected model = this.based(TagModel);
 
   public constructor(
     protected injector: Injector,

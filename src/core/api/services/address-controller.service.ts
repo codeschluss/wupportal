@@ -26,26 +26,26 @@ class AddressControllerService extends BaseService {
   }
 
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  addressControllerFindAllResponse(dir?: string,
-    filter?: string,
-    page?: number,
+  addressControllerFindAllResponse(page?: number,
     size?: number,
-    sort?: string): Observable<StrictHttpResponse<{}>> {
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
     if (size != null) __params = __params.set('size', size.toString());
     if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (filter != null) __params = __params.set('filter', filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/addresses`,
@@ -64,19 +64,19 @@ class AddressControllerService extends BaseService {
     );
   }
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  addressControllerFindAll(dir?: string,
-    filter?: string,
-    page?: number,
+  addressControllerFindAll(page?: number,
     size?: number,
-    sort?: string): Observable<{}> {
-    return this.addressControllerFindAllResponse(dir, filter, page, size, sort).pipe(
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<{}> {
+    return this.addressControllerFindAllResponse(page, size, sort, dir, filter).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -154,17 +154,17 @@ class AddressControllerService extends BaseService {
   }
 
   /**
-   * @param addressId addressId
    * @param newAddress newAddress
+   * @param addressId addressId
    * @return OK
    */
-  addressControllerUpdateResponse(addressId: string,
-    newAddress: AddressEntity): Observable<StrictHttpResponse<{}>> {
+  addressControllerUpdateResponse(newAddress: AddressEntity,
+    addressId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-
     __body = newAddress;
+
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/addresses/${addressId}`,
@@ -183,13 +183,13 @@ class AddressControllerService extends BaseService {
     );
   }
   /**
-   * @param addressId addressId
    * @param newAddress newAddress
+   * @param addressId addressId
    * @return OK
    */
-  addressControllerUpdate(addressId: string,
-    newAddress: AddressEntity): Observable<{}> {
-    return this.addressControllerUpdateResponse(addressId, newAddress).pipe(
+  addressControllerUpdate(newAddress: AddressEntity,
+    addressId: string): Observable<{}> {
+    return this.addressControllerUpdateResponse(newAddress, addressId).pipe(
       __map(_r => _r.body as {})
     );
   }

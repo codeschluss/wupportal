@@ -11,14 +11,14 @@ export class SuburbProvider
   protected linked = [];
 
   protected methods = {
+    create: this.service.suburbControllerAddResponse,
+    delete: this.service.suburbControllerDeleteResponse,
     findAll: this.service.suburbControllerFindAllResponse,
     findOne: this.service.suburbControllerFindOneResponse,
-    add: this.service.suburbControllerAddResponse,
-    update: this.service.suburbControllerUpdateResponse,
-    delete: this.service.suburbControllerDeleteResponse
+    update: this.service.suburbControllerUpdateResponse
   };
 
-  protected model = this.provide(SuburbModel);
+  protected model = this.based(SuburbModel);
 
   public constructor(
     protected injector: Injector,

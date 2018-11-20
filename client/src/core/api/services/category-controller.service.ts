@@ -25,26 +25,26 @@ class CategoryControllerService extends BaseService {
   }
 
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  categoryControllerFindAllResponse(dir?: string,
-    filter?: string,
-    page?: number,
+  categoryControllerFindAllResponse(page?: number,
     size?: number,
-    sort?: string): Observable<StrictHttpResponse<{}>> {
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
     if (size != null) __params = __params.set('size', size.toString());
     if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (filter != null) __params = __params.set('filter', filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/categories`,
@@ -63,19 +63,19 @@ class CategoryControllerService extends BaseService {
     );
   }
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  categoryControllerFindAll(dir?: string,
-    filter?: string,
-    page?: number,
+  categoryControllerFindAll(page?: number,
     size?: number,
-    sort?: string): Observable<{}> {
-    return this.categoryControllerFindAllResponse(dir, filter, page, size, sort).pipe(
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<{}> {
+    return this.categoryControllerFindAllResponse(page, size, sort, dir, filter).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -153,17 +153,17 @@ class CategoryControllerService extends BaseService {
   }
 
   /**
-   * @param categoryId categoryId
    * @param newCategory newCategory
+   * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerUpdateResponse(categoryId: string,
-    newCategory: CategoryEntity): Observable<StrictHttpResponse<{}>> {
+  categoryControllerUpdateResponse(newCategory: CategoryEntity,
+    categoryId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-
     __body = newCategory;
+
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/categories/${categoryId}`,
@@ -182,13 +182,13 @@ class CategoryControllerService extends BaseService {
     );
   }
   /**
-   * @param categoryId categoryId
    * @param newCategory newCategory
+   * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerUpdate(categoryId: string,
-    newCategory: CategoryEntity): Observable<{}> {
-    return this.categoryControllerUpdateResponse(categoryId, newCategory).pipe(
+  categoryControllerUpdate(newCategory: CategoryEntity,
+    categoryId: string): Observable<{}> {
+    return this.categoryControllerUpdateResponse(newCategory, categoryId).pipe(
       __map(_r => _r.body as {})
     );
   }

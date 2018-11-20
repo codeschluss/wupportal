@@ -25,26 +25,26 @@ class UserControllerService extends BaseService {
   }
 
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  userControllerFindAllResponse(dir?: string,
-    filter?: string,
-    page?: number,
+  userControllerFindAllResponse(page?: number,
     size?: number,
-    sort?: string): Observable<StrictHttpResponse<{}>> {
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
     if (size != null) __params = __params.set('size', size.toString());
     if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (filter != null) __params = __params.set('filter', filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/users`,
@@ -63,19 +63,19 @@ class UserControllerService extends BaseService {
     );
   }
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  userControllerFindAll(dir?: string,
-    filter?: string,
-    page?: number,
+  userControllerFindAll(page?: number,
     size?: number,
-    sort?: string): Observable<{}> {
-    return this.userControllerFindAllResponse(dir, filter, page, size, sort).pipe(
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<{}> {
+    return this.userControllerFindAllResponse(page, size, sort, dir, filter).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -302,12 +302,12 @@ class UserControllerService extends BaseService {
   }
 
   /**
-   * @param activityId activityId
    * @param userId userId
+   * @param activityId activityId
    * @return OK
    */
-  userControllerDeleteActivityResponse(activityId: string,
-    userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerDeleteActivityResponse(userId: string,
+    activityId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -331,13 +331,13 @@ class UserControllerService extends BaseService {
     );
   }
   /**
-   * @param activityId activityId
    * @param userId userId
+   * @param activityId activityId
    * @return OK
    */
-  userControllerDeleteActivity(activityId: string,
-    userId: string): Observable<{}> {
-    return this.userControllerDeleteActivityResponse(activityId, userId).pipe(
+  userControllerDeleteActivity(userId: string,
+    activityId: string): Observable<{}> {
+    return this.userControllerDeleteActivityResponse(userId, activityId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -379,17 +379,17 @@ class UserControllerService extends BaseService {
   }
 
   /**
-   * @param organisationParam organisationParam
    * @param userId userId
+   * @param organisationParam organisationParam
    * @return OK
    */
-  userControllerAddOrganisationResponse(organisationParam: Array<string>,
-    userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerAddOrganisationResponse(userId: string,
+    organisationParam: Array<string>): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = organisationParam;
 
+    __body = organisationParam;
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/users/${userId}/organisations`,
@@ -408,24 +408,24 @@ class UserControllerService extends BaseService {
     );
   }
   /**
-   * @param organisationParam organisationParam
    * @param userId userId
+   * @param organisationParam organisationParam
    * @return OK
    */
-  userControllerAddOrganisation(organisationParam: Array<string>,
-    userId: string): Observable<{}> {
-    return this.userControllerAddOrganisationResponse(organisationParam, userId).pipe(
+  userControllerAddOrganisation(userId: string,
+    organisationParam: Array<string>): Observable<{}> {
+    return this.userControllerAddOrganisationResponse(userId, organisationParam).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
-   * @param orgaId orgaId
    * @param userId userId
+   * @param orgaId orgaId
    * @return OK
    */
-  userControllerDeleteOrganisationResponse(orgaId: string,
-    userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerDeleteOrganisationResponse(userId: string,
+    orgaId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -449,29 +449,29 @@ class UserControllerService extends BaseService {
     );
   }
   /**
-   * @param orgaId orgaId
    * @param userId userId
+   * @param orgaId orgaId
    * @return OK
    */
-  userControllerDeleteOrganisation(orgaId: string,
-    userId: string): Observable<{}> {
-    return this.userControllerDeleteOrganisationResponse(orgaId, userId).pipe(
+  userControllerDeleteOrganisation(userId: string,
+    orgaId: string): Observable<{}> {
+    return this.userControllerDeleteOrganisationResponse(userId, orgaId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
-   * @param isSuperuser isSuperuser
    * @param userId userId
+   * @param isSuperuser isSuperuser
    * @return OK
    */
-  userControllerGrantSuperuserRightResponse(isSuperuser: boolean,
-    userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerGrantSuperuserRightResponse(userId: string,
+    isSuperuser: boolean): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = isSuperuser;
 
+    __body = isSuperuser;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/users/${userId}/superuser`,
@@ -490,13 +490,13 @@ class UserControllerService extends BaseService {
     );
   }
   /**
-   * @param isSuperuser isSuperuser
    * @param userId userId
+   * @param isSuperuser isSuperuser
    * @return OK
    */
-  userControllerGrantSuperuserRight(isSuperuser: boolean,
-    userId: string): Observable<{}> {
-    return this.userControllerGrantSuperuserRightResponse(isSuperuser, userId).pipe(
+  userControllerGrantSuperuserRight(userId: string,
+    isSuperuser: boolean): Observable<{}> {
+    return this.userControllerGrantSuperuserRightResponse(userId, isSuperuser).pipe(
       __map(_r => _r.body as {})
     );
   }

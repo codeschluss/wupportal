@@ -11,14 +11,14 @@ export class CategoryProvider
   protected linked = [];
 
   protected methods = {
+    create: this.service.categoryControllerAddResponse,
+    delete: this.service.categoryControllerDeleteResponse,
     findAll: this.service.categoryControllerFindAllResponse,
     findOne: this.service.categoryControllerFindOneResponse,
-    add: this.service.categoryControllerAddResponse,
-    update: this.service.categoryControllerUpdateResponse,
-    delete: this.service.categoryControllerDeleteResponse
+    update: this.service.categoryControllerUpdateResponse
   };
 
-  protected model = this.provide(CategoryModel);
+  protected model = this.based(CategoryModel);
 
   public constructor(
     protected injector: Injector,

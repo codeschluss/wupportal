@@ -27,29 +27,29 @@ class ActivityControllerService extends BaseService {
   }
 
   /**
-   * @param current undefined
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
+   * @param current undefined
    * @return OK
    */
-  activityControllerFindAllResponse(current?: boolean,
+  activityControllerFindAllResponse(page?: number,
+    size?: number,
+    sort?: string,
     dir?: string,
     filter?: string,
-    page?: number,
-    size?: number,
-    sort?: string): Observable<StrictHttpResponse<{}>> {
+    current?: boolean): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (current != null) __params = __params.set('current', current.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
     if (size != null) __params = __params.set('size', size.toString());
     if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (filter != null) __params = __params.set('filter', filter.toString());
+    if (current != null) __params = __params.set('current', current.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/activities`,
@@ -68,21 +68,21 @@ class ActivityControllerService extends BaseService {
     );
   }
   /**
-   * @param current undefined
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
+   * @param current undefined
    * @return OK
    */
-  activityControllerFindAll(current?: boolean,
+  activityControllerFindAll(page?: number,
+    size?: number,
+    sort?: string,
     dir?: string,
     filter?: string,
-    page?: number,
-    size?: number,
-    sort?: string): Observable<{}> {
-    return this.activityControllerFindAllResponse(current, dir, filter, page, size, sort).pipe(
+    current?: boolean): Observable<{}> {
+    return this.activityControllerFindAllResponse(page, size, sort, dir, filter, current).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -160,17 +160,17 @@ class ActivityControllerService extends BaseService {
   }
 
   /**
-   * @param activityId activityId
    * @param newActivity newActivity
+   * @param activityId activityId
    * @return OK
    */
-  activityControllerUpdateResponse(activityId: string,
-    newActivity: ActivityEntity): Observable<StrictHttpResponse<{}>> {
+  activityControllerUpdateResponse(newActivity: ActivityEntity,
+    activityId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-
     __body = newActivity;
+
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/activities/${activityId}`,
@@ -189,13 +189,13 @@ class ActivityControllerService extends BaseService {
     );
   }
   /**
-   * @param activityId activityId
    * @param newActivity newActivity
+   * @param activityId activityId
    * @return OK
    */
-  activityControllerUpdate(activityId: string,
-    newActivity: ActivityEntity): Observable<{}> {
-    return this.activityControllerUpdateResponse(activityId, newActivity).pipe(
+  activityControllerUpdate(newActivity: ActivityEntity,
+    activityId: string): Observable<{}> {
+    return this.activityControllerUpdateResponse(newActivity, activityId).pipe(
       __map(_r => _r.body as {})
     );
   }

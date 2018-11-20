@@ -25,26 +25,26 @@ class SuburbControllerService extends BaseService {
   }
 
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  suburbControllerFindAllResponse(dir?: string,
-    filter?: string,
-    page?: number,
+  suburbControllerFindAllResponse(page?: number,
     size?: number,
-    sort?: string): Observable<StrictHttpResponse<{}>> {
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
     if (size != null) __params = __params.set('size', size.toString());
     if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (filter != null) __params = __params.set('filter', filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/suburbs`,
@@ -63,19 +63,19 @@ class SuburbControllerService extends BaseService {
     );
   }
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  suburbControllerFindAll(dir?: string,
-    filter?: string,
-    page?: number,
+  suburbControllerFindAll(page?: number,
     size?: number,
-    sort?: string): Observable<{}> {
-    return this.suburbControllerFindAllResponse(dir, filter, page, size, sort).pipe(
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<{}> {
+    return this.suburbControllerFindAllResponse(page, size, sort, dir, filter).pipe(
       __map(_r => _r.body as {})
     );
   }

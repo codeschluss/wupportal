@@ -21,7 +21,7 @@ export class SessionProvider {
       .subscribe(session => this.storage.setItemSubscribe('session', session));
   }
 
-  public login(username: string, password: string): Promise<void> {
+  public login(username: string, password: string): Promise<any> {
     return this.service.authLoginResponse(username, password).pipe(
       map((response) => this.update(response.statusText, response.body))
     ).toPromise();
@@ -31,7 +31,7 @@ export class SessionProvider {
     this.update('', TokenModel.new());
   }
 
-  public refresh(): Promise<void> {
+  public refresh(): Promise<any> {
     return this.service.authRefreshResponse(this.session.value.token).pipe(
       map((response) => this.update(response.statusText, response.body))
     ).toPromise();

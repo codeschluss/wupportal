@@ -18,14 +18,14 @@ export class AddressProvider
   ];
 
   protected methods = {
+    create: this.service.addressControllerAddResponse,
+    delete: this.service.addressControllerDeleteResponse,
     findAll: this.service.addressControllerFindAllResponse,
     findOne: this.service.addressControllerFindOneResponse,
-    add: this.service.addressControllerAddResponse,
-    update: this.service.addressControllerUpdateResponse,
-    delete: this.service.addressControllerDeleteResponse
+    update: this.service.addressControllerUpdateResponse
   };
 
-  protected model = this.provide(AddressModel);
+  protected model = this.based(AddressModel);
 
   public constructor(
     protected injector: Injector,

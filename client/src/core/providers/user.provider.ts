@@ -24,14 +24,14 @@ export class UserProvider
   ];
 
   protected methods = {
+    create: this.service.userControllerAddResponse,
+    delete: this.service.userControllerDeleteResponse,
     findAll: this.service.userControllerFindAllResponse,
     findOne: this.service.userControllerFindOneResponse,
-    add: this.service.userControllerAddResponse,
-    update: this.service.userControllerUpdateResponse,
-    delete: this.service.userControllerDeleteResponse
+    update: this.service.userControllerUpdateResponse
   };
 
-  protected model = this.provide(UserModel);
+  protected model = this.based(UserModel);
 
   public constructor(
     protected injector: Injector,

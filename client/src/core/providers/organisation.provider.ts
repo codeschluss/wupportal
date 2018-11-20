@@ -23,20 +23,20 @@ export class OrganisationProvider
     },
     {
       field: 'users',
-      method: this.service.organisationControllerFindUsersByOrganisationResponse,
+      method: this.service.organisationControllerFindUsersResponse,
       model: UserModel
     }
   ];
 
   protected methods = {
+    create: this.service.organisationControllerAddResponse,
+    delete: this.service.organisationControllerDeleteResponse,
     findAll: this.service.organisationControllerFindAllResponse,
     findOne: this.service.organisationControllerFindOneResponse,
-    add: this.service.organisationControllerAddResponse,
-    update: this.service.organisationControllerUpdateResponse,
-    delete: this.service.organisationControllerDeleteResponse
+    update: this.service.organisationControllerUpdateResponse
   };
 
-  protected model = this.provide(OrganisationModel);
+  protected model = this.based(OrganisationModel);
 
   public constructor(
     protected injector: Injector,

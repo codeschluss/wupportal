@@ -11,14 +11,14 @@ export class ConfigurationProvider
   protected linked = [];
 
   protected methods = {
+    create: this.service.configurationControllerAddResponse,
+    delete: this.service.configurationControllerDeleteResponse,
     findAll: this.service.configurationControllerFindAllResponse,
     findOne: this.service.configurationControllerFindOneResponse,
-    add: this.service.configurationControllerAddResponse,
-    update: this.service.configurationControllerUpdateResponse,
-    delete: this.service.configurationControllerDeleteResponse
+    update: this.service.configurationControllerUpdateResponse
   };
 
-  protected model = this.provide(ConfigurationModel);
+  protected model = this.based(ConfigurationModel);
 
   public constructor(
     protected injector: Injector,

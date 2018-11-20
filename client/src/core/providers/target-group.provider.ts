@@ -11,14 +11,14 @@ export class TargetGroupProvider
   protected linked = [];
 
   protected methods = {
+    create: this.service.targetGroupControllerAddResponse,
+    delete: this.service.targetGroupControllerDeleteResponse,
     findAll: this.service.targetGroupControllerFindAllResponse,
     findOne: this.service.targetGroupControllerFindOneResponse,
-    add: this.service.targetGroupControllerAddResponse,
-    update: this.service.targetGroupControllerUpdateResponse,
-    delete: this.service.targetGroupControllerDeleteResponse
+    update: this.service.targetGroupControllerUpdateResponse
   };
 
-  protected model = this.provide(TargetGroupModel);
+  protected model = this.based(TargetGroupModel);
 
   public constructor(
     protected injector: Injector,

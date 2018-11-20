@@ -25,26 +25,26 @@ class ConfigurationControllerService extends BaseService {
   }
 
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  configurationControllerFindAllResponse(dir?: string,
-    filter?: string,
-    page?: number,
+  configurationControllerFindAllResponse(page?: number,
     size?: number,
-    sort?: string): Observable<StrictHttpResponse<{}>> {
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
     if (size != null) __params = __params.set('size', size.toString());
     if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (filter != null) __params = __params.set('filter', filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/configurations`,
@@ -63,19 +63,19 @@ class ConfigurationControllerService extends BaseService {
     );
   }
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  configurationControllerFindAll(dir?: string,
-    filter?: string,
-    page?: number,
+  configurationControllerFindAll(page?: number,
     size?: number,
-    sort?: string): Observable<{}> {
-    return this.configurationControllerFindAllResponse(dir, filter, page, size, sort).pipe(
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<{}> {
+    return this.configurationControllerFindAllResponse(page, size, sort, dir, filter).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -153,17 +153,17 @@ class ConfigurationControllerService extends BaseService {
   }
 
   /**
-   * @param configurationId configurationId
    * @param newConfiguration newConfiguration
+   * @param configurationId configurationId
    * @return OK
    */
-  configurationControllerUpdateResponse(configurationId: string,
-    newConfiguration: ConfigurationEntity): Observable<StrictHttpResponse<{}>> {
+  configurationControllerUpdateResponse(newConfiguration: ConfigurationEntity,
+    configurationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-
     __body = newConfiguration;
+
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/configurations/${configurationId}`,
@@ -182,13 +182,13 @@ class ConfigurationControllerService extends BaseService {
     );
   }
   /**
-   * @param configurationId configurationId
    * @param newConfiguration newConfiguration
+   * @param configurationId configurationId
    * @return OK
    */
-  configurationControllerUpdate(configurationId: string,
-    newConfiguration: ConfigurationEntity): Observable<{}> {
-    return this.configurationControllerUpdateResponse(configurationId, newConfiguration).pipe(
+  configurationControllerUpdate(newConfiguration: ConfigurationEntity,
+    configurationId: string): Observable<{}> {
+    return this.configurationControllerUpdateResponse(newConfiguration, configurationId).pipe(
       __map(_r => _r.body as {})
     );
   }

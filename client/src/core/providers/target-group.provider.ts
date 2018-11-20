@@ -8,6 +8,17 @@ import { TargetGroupModel } from '../models/target-group.model';
 export class TargetGroupProvider
   extends BaseProvider<TargetGroupControllerService, TargetGroupModel> {
 
+  public create: (model: TargetGroupModel) => Promise<any>;
+
+  public update: (id: string, model: TargetGroupModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<TargetGroupModel>;
+
+  public findAll: (params: TargetGroupControllerService
+    .TargetGroupControllerFindAllParams) => Promise<TargetGroupModel[]>;
+
   protected linked = [];
 
   protected methods = {

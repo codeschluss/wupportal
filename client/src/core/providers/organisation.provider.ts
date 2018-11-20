@@ -44,4 +44,27 @@ export class OrganisationProvider
     protected snackbar: MatSnackBar
   ) { super(); }
 
+  public create: (model: OrganisationModel) => Promise<any>;
+
+  public update: (id: string, model: OrganisationModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<OrganisationModel>;
+
+  public findAll: (params: OrganisationControllerService
+    .OrganisationControllerFindAllParams) => Promise<OrganisationModel[]>;
+
+  public relinkAddress:
+    (id: string, addressId: string) => Promise<any> =
+      this.apply(this.service.organisationControllerUpdateAddressResponse);
+
+  public unlinkActivity:
+    (id: string, activityId: string) => Promise<any> =
+      this.apply(this.service.organisationControllerDeleteActivityResponse);
+
+  public unlinkUser:
+    (id: string, userId: string) => Promise<any> =
+      this.apply(this.service.organisationControllerDeleteUserResponse);
+
 }

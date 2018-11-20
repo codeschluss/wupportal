@@ -8,6 +8,17 @@ import { ConfigurationModel } from '../models/configuration.model';
 export class ConfigurationProvider
   extends BaseProvider<ConfigurationControllerService, ConfigurationModel> {
 
+  public create: (model: ConfigurationModel) => Promise<any>;
+
+  public update: (id: string, model: ConfigurationModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<ConfigurationModel>;
+
+  public findAll: (params: ConfigurationControllerService
+    .ConfigurationControllerFindAllParams) => Promise<ConfigurationModel[]>;
+
   protected linked = [];
 
   protected methods = {

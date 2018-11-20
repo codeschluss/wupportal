@@ -8,6 +8,17 @@ import { SuburbModel } from '../models/suburb.model';
 export class SuburbProvider
   extends BaseProvider<SuburbControllerService, SuburbModel> {
 
+  public create: (model: SuburbModel) => Promise<any>;
+
+  public update: (id: string, model: SuburbModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<SuburbModel>;
+
+  public findAll: (params: SuburbControllerService
+    .SuburbControllerFindAllParams) => Promise<SuburbModel[]>;
+
   protected linked = [];
 
   protected methods = {

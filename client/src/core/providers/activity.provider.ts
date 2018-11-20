@@ -15,42 +15,6 @@ import { UserModel } from '../models/user.model';
 export class ActivityProvider
   extends BaseProvider<ActivityControllerService, ActivityModel> {
 
-  public createSchedules:
-    (id: string, schedules: ScheduleModel[]) => Promise<any> =
-      this.apply(this.service.activityControllerAddSchedulesResponse);
-
-  public createTags:
-    (id: string, tags: TagModel[]) => Promise<any> =
-      this.apply(this.service.activityControllerAddTagsResponse);
-
-  public createTargetGroups:
-    (id: string, targetGroupIds: string[]) => Promise<any> =
-      this.apply(this.service.activityControllerAddTargetGroupsResponse);
-
-  public updateAddress:
-    (id: string, addressId: string) => Promise<any> =
-      this.apply(this.service.activityControllerUpdateAddressResponse);
-
-  public updateCategory:
-    (id: string, categoryId: string) => Promise<any> =
-      this.apply(this.service.activityControllerUpdateCategoryResponse);
-
-  public updateOrganisation:
-    (id: string, organisationId: string) => Promise<any> =
-      this.apply(this.service.activityControllerUpdateOrganisationResponse);
-
-  public deleteSchedule:
-    (id: string, scheduleId: string) => Promise<any> =
-      this.apply(this.service.activityControllerDeleteSchedulesResponse);
-
-  public deleteTags:
-    (id: string, organisationId: string) => Promise<any> =
-      this.apply(this.service.activityControllerDeleteTagsResponse);
-
-  public deleteTargetGroups:
-    (id: string, organisationId: string) => Promise<any> =
-      this.apply(this.service.activityControllerDeleteTargetGroupsResponse);
-
   protected linked = [
     {
       field: 'address',
@@ -104,5 +68,52 @@ export class ActivityProvider
     protected service: ActivityControllerService,
     protected snackbar: MatSnackBar
   ) { super(); }
+
+  public create: (model: ActivityModel) => Promise<any>;
+
+  public update: (id: string, model: ActivityModel) => Promise<any>;
+
+  public delete: (id: string) => Promise<any>;
+
+  public findOne: (id: string) => Promise<ActivityModel>;
+
+  public findAll: (params: ActivityControllerService
+    .ActivityControllerFindAllParams) => Promise<ActivityModel[]>;
+
+  public linkTargetGroups:
+    (id: string, targetGroupIds: string[]) => Promise<any> =
+      this.apply(this.service.activityControllerAddTargetGroupsResponse);
+
+  public pasteSchedules:
+    (id: string, schedules: ScheduleModel[]) => Promise<any> =
+      this.apply(this.service.activityControllerAddSchedulesResponse);
+
+  public pasteTags:
+    (id: string, tags: TagModel[]) => Promise<any> =
+      this.apply(this.service.activityControllerAddTagsResponse);
+
+  public relinkAddress:
+    (id: string, addressId: string) => Promise<any> =
+      this.apply(this.service.activityControllerUpdateAddressResponse);
+
+  public relinkCategory:
+    (id: string, categoryId: string) => Promise<any> =
+      this.apply(this.service.activityControllerUpdateCategoryResponse);
+
+  public relinkOrganisation:
+    (id: string, organisationId: string) => Promise<any> =
+      this.apply(this.service.activityControllerUpdateOrganisationResponse);
+
+  public unlinkSchedule:
+    (id: string, scheduleId: string) => Promise<any> =
+      this.apply(this.service.activityControllerDeleteSchedulesResponse);
+
+  public unlinkTag:
+    (id: string, tagId: string) => Promise<any> =
+      this.apply(this.service.activityControllerDeleteTagsResponse);
+
+  public unlinkTargetGroup:
+    (id: string, targetGroupId: string) => Promise<any> =
+      this.apply(this.service.activityControllerDeleteTargetGroupsResponse);
 
 }

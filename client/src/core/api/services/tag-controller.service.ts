@@ -25,26 +25,26 @@ class TagControllerService extends BaseService {
   }
 
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  tagControllerFindAllResponse(dir?: string,
-    filter?: string,
-    page?: number,
+  tagControllerFindAllResponse(page?: number,
     size?: number,
-    sort?: string): Observable<StrictHttpResponse<{}>> {
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (filter != null) __params = __params.set('filter', filter.toString());
     if (page != null) __params = __params.set('page', page.toString());
     if (size != null) __params = __params.set('size', size.toString());
     if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (filter != null) __params = __params.set('filter', filter.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/tags`,
@@ -63,19 +63,19 @@ class TagControllerService extends BaseService {
     );
   }
   /**
-   * @param dir undefined
-   * @param filter undefined
    * @param page undefined
    * @param size undefined
    * @param sort undefined
+   * @param dir undefined
+   * @param filter undefined
    * @return OK
    */
-  tagControllerFindAll(dir?: string,
-    filter?: string,
-    page?: number,
+  tagControllerFindAll(page?: number,
     size?: number,
-    sort?: string): Observable<{}> {
-    return this.tagControllerFindAllResponse(dir, filter, page, size, sort).pipe(
+    sort?: string,
+    dir?: string,
+    filter?: string): Observable<{}> {
+    return this.tagControllerFindAllResponse(page, size, sort, dir, filter).pipe(
       __map(_r => _r.body as {})
     );
   }

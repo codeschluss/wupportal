@@ -1,9 +1,6 @@
 package de.codeschluss.portal.core.security.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-
-import de.codeschluss.portal.core.appconfig.JwtConfiguration;
+import de.codeschluss.portal.core.security.services.JwtTokenService;
 import de.codeschluss.portal.core.security.services.JwtUserDetailsService;
 
 import java.io.IOException;
@@ -26,28 +23,24 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
   /** The jwt user details service. */
-  private JwtUserDetailsService jwtUserDetailsService;
+  private final JwtUserDetailsService jwtUserDetailsService;
 
-  /** The security config. */
-  private JwtConfiguration securityConfig;
-
+  private final JwtTokenService tokenService;
+  
   /**
    * Instantiates a new jwt authorization filter.
    *
-   * @param authManager
-   *          the auth manager
-   * @param jwtUserDetailsService
-   *          the JWT user details service
-   * @param securityConfig
-   *          the security config
+   * @param authManager the auth manager
+   * @param jwtUserDetailsService the jwt user details service
+   * @param tokenService the token service
    */
   public JwtAuthorizationFilter(
       AuthenticationManager authManager,
       JwtUserDetailsService jwtUserDetailsService, 
-      JwtConfiguration securityConfig) {
+      JwtTokenService tokenService) {
     super(authManager);
     this.jwtUserDetailsService = jwtUserDetailsService;
-    this.securityConfig = securityConfig;
+    this.tokenService = tokenService;
   }
 
   /*
@@ -84,7 +77,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
   private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
     String token = request.getHeader("Authorization");
     if (token != null) {
-      String username = getUsername(token);
+      try {
+        tokenService.verifyAccess(token);
+      } catch (Exception e) {
+        return null;
+      }
+      
+      String username = tokenService.extractUsername(token);
 
       if (username != null) {
         return new UsernamePasswordAuthenticationToken(
@@ -92,17 +91,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
       }
     }
     return null;
-  }
-
-  /**
-   * Gets the username.
-   *
-   * @param token
-   *          the token
-   * @return the username
-   */
-  private String getUsername(String token) {
-    return JWT.require(Algorithm.HMAC512(securityConfig.getSecret())).build()
-        .verify(token.replace("Bearer ", "")).getSubject();
   }
 }

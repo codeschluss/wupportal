@@ -1,8 +1,8 @@
 package de.codeschluss.portal.core.security;
 
-import de.codeschluss.portal.core.appconfig.JwtConfiguration;
 import de.codeschluss.portal.core.security.jwt.JwtAuthenticationFilter;
 import de.codeschluss.portal.core.security.jwt.JwtAuthorizationFilter;
+import de.codeschluss.portal.core.security.services.JwtTokenService;
 import de.codeschluss.portal.core.security.services.JwtUserDetailsService;
 
 import org.springframework.context.annotation.Configuration;
@@ -22,27 +22,28 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
   /** The user details service. */
-  private JwtUserDetailsService userDetailsService;
+  private final JwtUserDetailsService userDetailsService;
   
   /** The bcrypt password encoder. */
-  private BCryptPasswordEncoder bcryptPasswordEncoder;
+  private final BCryptPasswordEncoder bcryptPasswordEncoder;
   
-  /** The jwt config. */
-  private JwtConfiguration jwtConfig;
+  /** The token service. */
+  private final JwtTokenService tokenService;
 
   /**
    * Instantiates a new application security.
    *
    * @param jwtUserDetailsService the jwt user details service
    * @param encoder the encoder
-   * @param jwtConfig the jwt config
+   * @param tokenService the token service
    */
   public ApplicationSecurity(
       JwtUserDetailsService jwtUserDetailsService,
-      BCryptPasswordEncoder encoder, JwtConfiguration jwtConfig) {
+      BCryptPasswordEncoder encoder, 
+      JwtTokenService tokenService) {
     this.userDetailsService = jwtUserDetailsService;
     this.bcryptPasswordEncoder = encoder;
-    this.jwtConfig = jwtConfig;
+    this.tokenService = tokenService;
   }
 
   /*
@@ -67,9 +68,33 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable()
-        .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtConfig))
-        .addFilter(
-            new JwtAuthorizationFilter(authenticationManager(), userDetailsService, jwtConfig))
+        .addFilter(jwtAuthenticationFilter())
+        .addFilter(jwtAuthorizationFilter())
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+  }
+  
+  /**
+   * Jwt authentication filter.
+   *
+   * @return the jwt authentication filter
+   * @throws Exception the exception
+   */
+  public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+    return new JwtAuthenticationFilter(
+        authenticationManager(), 
+        tokenService);
+  }
+  
+  /**
+   * Jwt authorization filter.
+   *
+   * @return the jwt authorization filter
+   * @throws Exception the exception
+   */
+  public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
+    return new JwtAuthorizationFilter(
+        authenticationManager(), 
+        userDetailsService, 
+        tokenService);
   }
 }

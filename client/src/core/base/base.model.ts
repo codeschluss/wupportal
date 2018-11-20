@@ -1,8 +1,5 @@
+import { Type } from '@angular/core';
 import { Link } from '../api/models/link';
-
-export type ModelType = new() => ({
-  constructor: { prototype: BaseModel }
-}) & BaseModel;
 
 export abstract class BaseModel {
 
@@ -19,5 +16,5 @@ export abstract class BaseModel {
 export interface ModelLink {
   field: string;
   method: Function;
-  model: ModelType;
+  model: Type<BaseModel>;
 }

@@ -206,7 +206,7 @@ public class OrganisationController
   }
 
   /**
-   * Find users by organisation.
+   * Find users.
    *
    * @param organisationId
    *          the organisation id
@@ -214,7 +214,7 @@ public class OrganisationController
    */
   @GetMapping("/organisations/{organisationId}/users")
   @OrgaAdminOrSuperUserPermission
-  public ResponseEntity<?> findUsersByOrganisation(@PathVariable String organisationId) {
+  public ResponseEntity<?> findUsers(@PathVariable String organisationId) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
     return ok(userService.convertToResourcesWithProviders(providers));
   }

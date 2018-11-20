@@ -33,7 +33,7 @@
                 "output": "/"
               },
               {
-                "glob": "theme.css",
+                "glob": "*.css",
                 "input": "res",
                 "output": "/css"
               },

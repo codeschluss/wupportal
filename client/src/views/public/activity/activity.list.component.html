@@ -1,6 +1,6 @@
 <div fxFill id="activityList" *ngIf="activities && activities.length">
   <div fxFill>
-    <div fxLayout="column" fxLayoutAlign="space-around center">
+    <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px grid">
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
         <mat-chip-list fxFlex="50">
           <mat-chip *ngFor="let category of categories | async" [ngStyle]="{'background-color': category.color}">

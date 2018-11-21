@@ -44,12 +44,17 @@ export class MappingComponent implements AfterViewInit, OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.activities[0].address.then((address) => {
-      this.latitude = address.latitude;
-      this.longitude = address.longitude;
-      this.zoomfactor = 14;
-      this.projection = 'EPSG:4326';
-    });
+    this.latitude = 41;
+    this.longitude = 7;
+    this.zoomfactor = 14;
+    this.projection = 'EPSG:4326';
+
+    // this.activities[0].address.then((address) => {
+    //   this.latitude = address.latitude;
+    //   this.longitude = address.longitude;
+    //   this.zoomfactor = 14;
+    //   this.projection = 'EPSG:4326';
+    // });
 
     // TODO: move to db
     this.clusterspan = 5;

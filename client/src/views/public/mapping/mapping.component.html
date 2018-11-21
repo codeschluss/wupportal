@@ -1,4 +1,4 @@
-<aol-map>
+<aol-map *ngIf="activities && activities.length && projection && longitude !== 0 && latitude !== 0">
 	<aol-interaction-default>
 	</aol-interaction-default>
 
@@ -12,8 +12,8 @@
 		</aol-source-osm>
 	</aol-layer-tile>
 
-	<aol-layer-vector>
-		<ng-container *ngIf="!!activities.length">
+	<aol-layer-vector *ngIf="activities.length">
+		<ng-container>
 			<aol-source-cluster [distance]="clusterspan">
 				<aol-source-vector [overlaps]="true">
 					<ng-container *ngFor="let i of activities">

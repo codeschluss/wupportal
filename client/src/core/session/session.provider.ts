@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthService } from '../auth/auth.service';
-import { TokenModel } from '../auth/token.model';
+import { AccessTokenModel } from '../auth/access-token.model';
+import { TokenService } from '../auth/token.service';
 import { SessionModel } from './session.model';
 import { SessionResolver } from './session.resolver';
 
@@ -14,7 +14,7 @@ export class SessionProvider {
 
   public constructor(
     private resolver: SessionResolver,
-    private service: AuthService,
+    private service: TokenService,
     private storage: LocalStorage
   ) {
     (this.session = new BehaviorSubject<SessionModel>(this.resolver.session))
@@ -28,11 +28,11 @@ export class SessionProvider {
   }
 
   public logout(): void {
-    this.update('', TokenModel.new());
+    this.update('', new AccessTokenModel());
   }
 
   public refresh(): Promise<any> {
-    return this.service.authRefreshResponse(this.session.value.token).pipe(
+    return this.service.authRefreshResponse().pipe(
       map((response) => this.update(response.statusText, response.body))
     ).toPromise();
   }
@@ -41,7 +41,7 @@ export class SessionProvider {
     return this.session.subscribe((value) => next(value));
   }
 
-  private update(bearer: string, token: TokenModel): void {
+  private update(bearer: string, token: AccessTokenModel): void {
     this.session.next(Object.assign(this.session.value, {
       bearer: bearer,
       token: token

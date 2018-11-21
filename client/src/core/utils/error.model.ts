@@ -4,6 +4,6 @@ export class ErrorModel {
   public message: string;
   public path?: string;
   public status: number;
-  public timestamp: string;
+  public timestamp: string = new Date().toISOString();
 
 }

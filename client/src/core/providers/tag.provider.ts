@@ -1,12 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { TagControllerService } from '../api/services/tag-controller.service';
-import { BaseProvider } from '../base/base.provider';
+import { CrudService } from '../crud/crud.provider';
 import { TagModel } from '../models/tag.model';
 
 @Injectable({ providedIn: 'root' })
 export class TagProvider
-  extends BaseProvider<TagControllerService, TagModel> {
+  extends CrudService<TagControllerService, TagModel> {
 
   public create: (model: TagModel) => Promise<any>;
 
@@ -16,7 +16,7 @@ export class TagProvider
 
   public findOne: (id: string) => Promise<TagModel>;
 
-  public findAll: (params: TagControllerService
+  public findAll: (params?: TagControllerService
     .TagControllerFindAllParams) => Promise<TagModel[]>;
 
   protected linked = [];

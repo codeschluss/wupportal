@@ -1,8 +1,8 @@
 import { ConfigurationEntity } from '../api/models/configuration-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 
 export class ConfigurationModel
-  extends BaseModel implements ConfigurationEntity {
+  extends CrudModel implements ConfigurationEntity {
 
   public item: string;
   public value: string;

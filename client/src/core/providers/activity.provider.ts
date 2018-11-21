@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivityControllerService } from '../api/services/activity-controller.service';
-import { BaseProvider } from '../base/base.provider';
+import { CrudService } from '../crud/crud.provider';
 import { ActivityModel } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
 import { CategoryModel } from '../models/category.model';
@@ -13,7 +13,7 @@ import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class ActivityProvider
-  extends BaseProvider<ActivityControllerService, ActivityModel> {
+  extends CrudService<ActivityControllerService, ActivityModel> {
 
   protected linked = [
     {
@@ -77,7 +77,7 @@ export class ActivityProvider
 
   public findOne: (id: string) => Promise<ActivityModel>;
 
-  public findAll: (params: ActivityControllerService
+  public findAll: (params?: ActivityControllerService
     .ActivityControllerFindAllParams) => Promise<ActivityModel[]>;
 
   public linkTargetGroups:

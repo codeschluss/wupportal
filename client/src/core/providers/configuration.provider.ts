@@ -1,12 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ConfigurationControllerService } from '../api/services/configuration-controller.service';
-import { BaseProvider } from '../base/base.provider';
+import { CrudService } from '../crud/crud.provider';
 import { ConfigurationModel } from '../models/configuration.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationProvider
-  extends BaseProvider<ConfigurationControllerService, ConfigurationModel> {
+  extends CrudService<ConfigurationControllerService, ConfigurationModel> {
 
   public create: (model: ConfigurationModel) => Promise<any>;
 
@@ -16,7 +16,7 @@ export class ConfigurationProvider
 
   public findOne: (id: string) => Promise<ConfigurationModel>;
 
-  public findAll: (params: ConfigurationControllerService
+  public findAll: (params?: ConfigurationControllerService
     .ConfigurationControllerFindAllParams) => Promise<ConfigurationModel[]>;
 
   protected linked = [];

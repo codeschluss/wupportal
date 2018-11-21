@@ -6,11 +6,17 @@ import { filter, map, tap } from 'rxjs/operators';
 import { ApiConfiguration } from '../api/api-configuration';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
-import { ErrorModel } from '../base/error.model';
-import { TokenModel, TokenModelSchema } from './token.model';
+import { ErrorModel } from '../utils/error.model';
+import { AccessTokenModel } from './access-token.model';
+
+export interface TokenModel {
+  sub: string;
+  exp: number;
+  scopes: string[];
+}
 
 @Injectable({ providedIn: 'root' })
-export class AuthService extends BaseService {
+export class TokenService extends BaseService {
 
   public constructor(
     apiConfiguration: ApiConfiguration,
@@ -21,7 +27,7 @@ export class AuthService extends BaseService {
   }
 
   public authLoginResponse(username: string, password: string):
-    Observable<StrictHttpResponse<TokenModel>> {
+    Observable<StrictHttpResponse<AccessTokenModel>> {
 
     const request = new HttpRequest<any>(
       'POST',
@@ -37,28 +43,27 @@ export class AuthService extends BaseService {
       }
     );
 
-    return this.call(request);
+    return this.http.request<any>(request).pipe(
+      filter((response) => response instanceof HttpResponse),
+      map((response) => response as StrictHttpResponse<object>),
+      map((response) => this.decode(response)),
+      tap((response) => this.validate(response.body))
+    );
   }
 
-  public authRefreshResponse(token: TokenModel):
-    Observable<StrictHttpResponse<TokenModel>> {
+  public authRefreshResponse():
+    Observable<StrictHttpResponse<AccessTokenModel>> {
 
     const request = new HttpRequest<any>(
       'POST',
       this.rootUrl + '/refresh',
-      token,
+      null,
       {
         headers: new HttpHeaders(),
         params: this.newParams(),
         responseType: 'json'
       }
     );
-
-    return this.call(request);
-  }
-
-  private call(request: HttpRequest<any>):
-    Observable<StrictHttpResponse<TokenModel>> {
 
     return this.http.request<any>(request).pipe(
       filter((response) => response instanceof HttpResponse),
@@ -68,18 +73,28 @@ export class AuthService extends BaseService {
     );
   }
 
+  // private call(request: HttpRequest<any>):
+  //   Observable<StrictHttpResponse<TokenModel>> {
+
+  //   return this.http.request<any>(request).pipe(
+  //     filter((response) => response instanceof HttpResponse),
+  //     map((response) => response as StrictHttpResponse<object>),
+  //     map((response) => this.decode(response)),
+  //     tap((response) => this.validate(response.body))
+  //   );
+  // }
+
   private decode(response: StrictHttpResponse<object>):
-    StrictHttpResponse<TokenModel> {
+    StrictHttpResponse<AccessTokenModel> {
 
     const bearer = response.headers.get('authorization').split(' ')[1];
     const token = JSON.parse(atob(bearer.split('.')[1]));
-    return response.clone<TokenModel>({ body: token, statusText: bearer });
+    return response.clone<AccessTokenModel>({ body: token, statusText: bearer });
   }
 
-  private validate(token: TokenModel): void {
-    if (!this.jsonValidator.validate(token, TokenModelSchema)) {
+  private validate(token: AccessTokenModel): void {
+    if (!this.jsonValidator.validate(token, AccessTokenModel.schema)) {
       throw Object.assign(new ErrorModel, {
-        timestamp: new Date().toISOString(),
         status: 401,
         error: 'JSON Web Token invalid',
         message: 'JSON Web Token did not pass JSON schema validation',

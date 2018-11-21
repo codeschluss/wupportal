@@ -1,9 +1,9 @@
 import { AddressEntity } from '../api/models/address-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 import { SuburbModel } from './suburb.model';
 
 export class AddressModel
-  extends BaseModel implements AddressEntity {
+  extends CrudModel implements AddressEntity {
 
   public houseNumber: string;
   public latitude: number;

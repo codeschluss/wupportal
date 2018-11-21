@@ -1,27 +1,20 @@
 import { JSONSchemaObject } from '@ngx-pwa/local-storage';
-import { TokenModel, TokenModelSchema } from '../auth/token.model';
+import { AccessTokenModel } from '../auth/access-token.model';
 
 export class SessionModel {
 
-  public bearer: string;
-  public language: string;
-  public likes: string[];
-  public token: TokenModel;
+  public static readonly schema: JSONSchemaObject = {
+    properties: {
+      bearer: { type: 'string' },
+      language: { type: 'string' },
+      likes: { items: { type: 'string' } },
+      token: AccessTokenModel.schema
+    }
+  };
 
-  public static new = () => Object.assign(new SessionModel, {
-    bearer: '',
-    language: navigator.language.substr(0, 2),
-    likes: [],
-    token: TokenModel.new()
-  })
+  public bearer: string = '';
+  public language: string = navigator.language.substr(0, 2);
+  public likes: string[] = [];
+  public token: AccessTokenModel = new AccessTokenModel();
 
 }
-
-export const SessionModelSchema = {
-  properties: {
-    bearer: { type: 'string' },
-    language: { type: 'string' },
-    likes: { items: { type: 'string' } },
-    token: TokenModelSchema
-  }
-} as JSONSchemaObject;

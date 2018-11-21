@@ -1,8 +1,8 @@
 import { CategoryEntity } from '../api/models/category-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 
 export class CategoryModel
-  extends BaseModel implements CategoryEntity {
+  extends CrudModel implements CategoryEntity {
 
   public color: string;
   public description: string;

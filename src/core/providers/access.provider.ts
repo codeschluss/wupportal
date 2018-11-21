@@ -5,7 +5,7 @@ import { OrganisationProvider } from '../providers/organisation.provider';
 import { UserProvider } from '../providers/user.provider';
 
 @Injectable({ providedIn: 'root' })
-export class AuthProvider {
+export class AccessProvider {
 
   public constructor(
     private organisationProvider: OrganisationProvider,
@@ -14,13 +14,13 @@ export class AuthProvider {
     private userService: UserControllerService
   ) { }
 
-  public grantOrgaAdmin:
+  public grantOrganisationAdmin:
     (organisationId: string, userId: string, grant: boolean) => Promise<any> =
       this.organisationProvider.apply(this.organisationService
         .organisationControllerGrantAdminRightResponse);
 
-  public grantOrgaUser:
-    (id: string, userId: string, grant: boolean) => Promise<any> =
+  public grantOrganisationUser:
+    (organisationId: string, userId: string, grant: boolean) => Promise<any> =
       this.organisationProvider.apply(this.organisationService
         .organisationControllerApproveOrRejectUserResponse);
 

@@ -1,8 +1,8 @@
 import { TargetGroupEntity } from '../api/models/target-group-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 
 export class TargetGroupModel
-  extends BaseModel implements TargetGroupEntity {
+  extends CrudModel implements TargetGroupEntity {
 
   public description: string;
   public name: string;

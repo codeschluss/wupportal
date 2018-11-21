@@ -1,12 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { CategoryControllerService } from '../api/services/category-controller.service';
-import { BaseProvider } from '../base/base.provider';
+import { CrudService } from '../crud/crud.provider';
 import { CategoryModel } from '../models/category.model';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryProvider
-  extends BaseProvider<CategoryControllerService, CategoryModel> {
+  extends CrudService<CategoryControllerService, CategoryModel> {
 
   public create: (model: CategoryModel) => Promise<any>;
 
@@ -16,7 +16,7 @@ export class CategoryProvider
 
   public findOne: (id: string) => Promise<CategoryModel>;
 
-  public findAll: (params: CategoryControllerService
+  public findAll: (params?: CategoryControllerService
     .CategoryControllerFindAllParams) => Promise<CategoryModel[]>;
 
   protected linked = [];

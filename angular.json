@@ -20,7 +20,7 @@
             "namedChunks": false,
             "ngswConfigPath": "service.json",
             "index": "res/index.html",
-            "polyfills": "src/core/base/polyfills.ts",
+            "polyfills": "src/core/utils/polyfills.ts",
             "outputHashing": "none",
             "outputPath": "target",
             "serviceWorker": true,

@@ -8,7 +8,7 @@ import { I18nResolver } from './i18n.resolver';
     {
       deps: [I18nResolver],
       provide: TRANSLATIONS,
-      useFactory: (i18n: I18nResolver) => i18n.translation
+      useFactory: (i18n: I18nResolver) => i18n.xlf
     },
     {
       provide: TRANSLATIONS_FORMAT,
@@ -21,8 +21,6 @@ import { I18nResolver } from './i18n.resolver';
 })
 
 export class I18nComponent implements AfterViewInit {
-
-  public static readonly imports = [];
 
   @ViewChild('text')
   private text: ElementRef;

@@ -1,5 +1,5 @@
 import { ActivityEntity } from '../api/models/activity-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 import { AddressModel } from './address.model';
 import { CategoryModel } from './category.model';
 import { OrganisationModel } from './organisation.model';
@@ -9,7 +9,7 @@ import { TargetGroupModel } from './target-group.model';
 import { UserModel } from './user.model';
 
 export class ActivityModel
-  extends BaseModel implements ActivityEntity {
+  extends CrudModel implements ActivityEntity {
 
   public description: string;
   public name: string;

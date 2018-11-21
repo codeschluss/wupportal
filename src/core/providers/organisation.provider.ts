@@ -1,14 +1,14 @@
 import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { OrganisationControllerService } from '../api/services/organisation-controller.service';
-import { BaseProvider } from '../base/base.provider';
+import { CrudService } from '../crud/crud.provider';
 import { AddressModel } from '../models/address.model';
 import { OrganisationModel } from '../models/organisation.model';
 import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrganisationProvider
-  extends BaseProvider<OrganisationControllerService, OrganisationModel> {
+  extends CrudService<OrganisationControllerService, OrganisationModel> {
 
   protected linked = [
     {
@@ -52,7 +52,7 @@ export class OrganisationProvider
 
   public findOne: (id: string) => Promise<OrganisationModel>;
 
-  public findAll: (params: OrganisationControllerService
+  public findAll: (params?: OrganisationControllerService
     .OrganisationControllerFindAllParams) => Promise<OrganisationModel[]>;
 
   public relinkAddress:

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SessionProvider } from '../session/session.provider';
 
 @Injectable({ providedIn: 'root' })
-export class AuthInterceptor implements HttpInterceptor {
+export class AccessTokenInterceptor implements HttpInterceptor {
 
   public bearer: string;
 
@@ -14,10 +14,10 @@ export class AuthInterceptor implements HttpInterceptor {
     this.session.subscribe((next) => this.bearer = next.bearer);
   }
 
-  public intercept(req: HttpRequest<any>, next: HttpHandler):
+  public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    return next.handle(!this.bearer ? req : req.clone({
+    return next.handle(!this.bearer ? request : request.clone({
       setHeaders: { 'Authorization': `Bearer ${this.bearer}` }
     }));
   }

@@ -4,12 +4,18 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
-import { BaseModel, ModelLink } from '../base/base.model';
-import { ErrorModel } from './error.model';
+import { ErrorModel } from '../utils/error.model';
+import { CrudModel } from './crud.model';
+
+interface ModelLink {
+  field: string;
+  method: Function;
+  model: Type<CrudModel>;
+}
 
 @Injectable({ providedIn: 'root' })
-export abstract class BaseProvider
-  <Service extends BaseService, Model extends BaseModel> {
+export abstract class CrudService
+  <Service extends BaseService, Model extends CrudModel> {
 
   public static readonly imports = [MatSnackBarModule];
 
@@ -20,7 +26,7 @@ export abstract class BaseProvider
   protected abstract methods: {
     create: (model: Model) => Observable<StrictHttpResponse<object>>,
     delete: (id: string) => Observable<StrictHttpResponse<object>>
-    findAll: (params: object) => Observable<StrictHttpResponse<object>>,
+    findAll: (params?: object) => Observable<StrictHttpResponse<object>>,
     findOne: (id: string) => Observable<StrictHttpResponse<object>>,
     update: (model: Model, id: string) => Observable<StrictHttpResponse<object>>
   };

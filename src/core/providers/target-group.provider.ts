@@ -1,12 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { TargetGroupControllerService } from '../api/services/target-group-controller.service';
-import { BaseProvider } from '../base/base.provider';
+import { CrudService } from '../crud/crud.provider';
 import { TargetGroupModel } from '../models/target-group.model';
 
 @Injectable({ providedIn: 'root' })
 export class TargetGroupProvider
-  extends BaseProvider<TargetGroupControllerService, TargetGroupModel> {
+  extends CrudService<TargetGroupControllerService, TargetGroupModel> {
 
   public create: (model: TargetGroupModel) => Promise<any>;
 
@@ -16,7 +16,7 @@ export class TargetGroupProvider
 
   public findOne: (id: string) => Promise<TargetGroupModel>;
 
-  public findAll: (params: TargetGroupControllerService
+  public findAll: (params?: TargetGroupControllerService
     .TargetGroupControllerFindAllParams) => Promise<TargetGroupModel[]>;
 
   protected linked = [];

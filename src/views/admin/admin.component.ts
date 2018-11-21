@@ -10,7 +10,7 @@ export class AdminComponent {
   public constructor(
     conf: ConfigurationProvider
   ) {
-    conf.findAll().then((i) => console.log(i));
+    conf.findAll({}).then((i) => console.log(i));
   }
 
   public static readonly imports = [

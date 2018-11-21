@@ -8,12 +8,7 @@ import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
 import { ErrorModel } from '../utils/error.model';
 import { AccessTokenModel } from './access-token.model';
-
-export interface TokenModel {
-  sub: string;
-  exp: number;
-  scopes: string[];
-}
+import { RefreshTokenModel } from './refresh-token.model';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService extends BaseService {
@@ -26,10 +21,10 @@ export class TokenService extends BaseService {
     super(apiConfiguration, httpClient);
   }
 
-  public authLoginResponse(username: string, password: string):
-    Observable<StrictHttpResponse<AccessTokenModel>> {
+  public apiLoginResponse(username: string, password: string):
+    Observable<StrictHttpResponse<object>> {
 
-    const request = new HttpRequest<any>(
+    return this.call(new HttpRequest<any>(
       'POST',
       this.rootUrl + '/login',
       {
@@ -41,21 +36,12 @@ export class TokenService extends BaseService {
         params: this.newParams(),
         responseType: 'json'
       }
-    );
-
-    return this.http.request<any>(request).pipe(
-      filter((response) => response instanceof HttpResponse),
-      map((response) => response as StrictHttpResponse<object>),
-      map((response) => this.decode(response)),
-      tap((response) => this.validate(response.body))
-    );
+    ));
   }
 
-  public authRefreshResponse():
-    Observable<StrictHttpResponse<AccessTokenModel>> {
-
-    const request = new HttpRequest<any>(
-      'POST',
+  public apiRefreshResponse(): Observable<StrictHttpResponse<object>> {
+    return this.call(new HttpRequest<any>(
+      'GET',
       this.rootUrl + '/refresh',
       null,
       {
@@ -63,44 +49,48 @@ export class TokenService extends BaseService {
         params: this.newParams(),
         responseType: 'json'
       }
-    );
+    ));
+  }
+
+  private call(request: HttpRequest<any>):
+    Observable<StrictHttpResponse<object>> {
 
     return this.http.request<any>(request).pipe(
       filter((response) => response instanceof HttpResponse),
       map((response) => response as StrictHttpResponse<object>),
-      map((response) => this.decode(response)),
-      tap((response) => this.validate(response.body))
+      map((response) => this.tokenize(response)),
+      tap((response) => this.validate(response))
     );
   }
 
-  // private call(request: HttpRequest<any>):
-  //   Observable<StrictHttpResponse<TokenModel>> {
+  private tokenize(response: StrictHttpResponse<object>):
+    StrictHttpResponse<object> {
 
-  //   return this.http.request<any>(request).pipe(
-  //     filter((response) => response instanceof HttpResponse),
-  //     map((response) => response as StrictHttpResponse<object>),
-  //     map((response) => this.decode(response)),
-  //     tap((response) => this.validate(response.body))
-  //   );
-  // }
+    Object.keys(response.body).forEach((type) => {
+      const token = JSON.parse(atob(response.body[type].split('.')[1]));
+      let model; switch (type) {
+        case 'access': model = new AccessTokenModel(); break;
+        case 'refresh': model = new RefreshTokenModel(); break;
+      }
 
-  private decode(response: StrictHttpResponse<object>):
-    StrictHttpResponse<AccessTokenModel> {
+      token.raw = response.body[type];
+      response.body[type] = Object.assign(model, token);
+    });
 
-    const bearer = response.headers.get('authorization').split(' ')[1];
-    const token = JSON.parse(atob(bearer.split('.')[1]));
-    return response.clone<AccessTokenModel>({ body: token, statusText: bearer });
+    return response.clone<object>({ body: response.body });
   }
 
-  private validate(token: AccessTokenModel): void {
-    if (!this.jsonValidator.validate(token, AccessTokenModel.schema)) {
-      throw Object.assign(new ErrorModel, {
-        status: 401,
-        error: 'JSON Web Token invalid',
-        message: 'JSON Web Token did not pass JSON schema validation',
-        path: '/api/login'
-      });
-    }
+  private validate(response: StrictHttpResponse<object>): void {
+    Object.values(response.body).forEach((token) => {
+      if (!this.jsonValidator.validate(token, token.constructor.schema)) {
+        throw Object.assign(new ErrorModel, {
+          status: 412,
+          error: token.constructor.name,
+          message: 'JSON Web Token did not pass JSON schema validation',
+          path: response.url
+        });
+      }
+    });
   }
 
 }

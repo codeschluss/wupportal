@@ -1,13 +1,13 @@
 import { JSONSchemaObject } from '@ngx-pwa/local-storage';
-import { TokenModel } from './token.service';
 
-export class AccessTokenModel implements TokenModel {
+export class AccessTokenModel {
 
   public static readonly schema: JSONSchemaObject = {
     properties: {
-      sub: { type: 'string' },
       exp: { type: 'integer' },
-      scopes: { items: { type: 'string' } },
+      raw: { type: 'string' },
+      scopes: { items: { const: 'access' } },
+      sub: { type: 'string' },
 
       adminOrgas: { items: { type: 'string' } },
       approvedOrgas: { items: { type: 'string' } },
@@ -16,9 +16,10 @@ export class AccessTokenModel implements TokenModel {
     }
   };
 
-  public sub: string = '';
   public exp: number = 0;
+  public raw: string = '';
   public scopes: string[] = ['access'];
+  public sub: string = '';
 
   public adminOrgas: string[] = [];
   public approvedOrgas: string[] = [];

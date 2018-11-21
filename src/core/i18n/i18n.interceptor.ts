@@ -6,19 +6,19 @@ import { SessionProvider } from '../session/session.provider';
 @Injectable({ providedIn: 'root' })
 export class I18nInterceptor implements HttpInterceptor {
 
-  public language: string;
+  public header: string;
 
   public constructor(
     private session: SessionProvider
   ) {
-    this.session.subscribe((next) => this.language = next.language);
+    this.session.subscribe((next) => this.header = next.language);
   }
 
   public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    return next.handle(!this.language ? request : request.clone({
-      setHeaders: { 'Accept-Language': this.language }
+    return next.handle(!this.header ? request : request.clone({
+      setHeaders: { 'Accept-Language': this.header }
     }));
   }
 

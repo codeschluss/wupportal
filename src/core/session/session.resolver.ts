@@ -20,18 +20,9 @@ export class SessionResolver implements Resolve<SessionModel> {
   private async resource(): Promise<SessionModel> {
     const schema = { schema: SessionModel.schema };
     return this.storage.getItem<SessionModel>('session', schema).pipe(
-      map((session) => this.validate(session)),
+      map((session) => session || new SessionModel()),
       tap((session) => this.session = session)
     ).toPromise();
-  }
-
-  private validate(session: SessionModel): SessionModel {
-    const created = new SessionModel();
-    const expired = session && session.token.exp < Date.now() / 1000;
-    return !session ? created : Object.assign(session, {
-      bearer: expired ? created.bearer : session.bearer,
-      token: expired ? created.token : session.token
-    });
   }
 
 }

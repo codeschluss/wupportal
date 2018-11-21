@@ -12,6 +12,7 @@ export class ActivityCardComponent {
 
   @Input()
   public activity: ActivityModel;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -24,6 +25,11 @@ export class ActivityCardComponent {
   openActivityView(): void {
     console.log('openActivityView()');
     this.router.navigate(['/public/activities/view/', this.activity.id]);
+  }
+
+  getImageURI(): string {
+    // TODO: replace after upload is done
+    return 'https://de.wikipedia.org/static/images/project-logos/dewiki.png';
   }
 
 }

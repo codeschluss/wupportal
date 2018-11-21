@@ -28,6 +28,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { LayoutComponent } from '../layout/layout.component';
 import { OrganisationListComponent } from './organisation/organisation.list.component';
 import { OrganisationCardComponent } from './organisation/organisation.card.component';
+import { FormsModule } from '@angular/forms';
 
 fontawesome.add(fas);
 
@@ -63,7 +64,8 @@ const PublicImports = [
   FlexLayoutModule,
   FontAwesomeModule,
   LayoutComponent.imports,
-  OrganisationListComponent.imports
+  OrganisationListComponent.imports,
+  FormsModule
 ];
 
 const PublicProviders = [

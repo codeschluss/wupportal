@@ -1,14 +1,21 @@
-<mat-card  class="activityCardSmall" (click)="openActivityView()">
-  <!-- [ngStyle]="{'background-color': activity.category.color}" -->
-<mat-card-content>
+<mat-card class="activityCardSmall" (click)="openActivityView()" *ngIf="activity.category | async as category" [ngStyle]="{'background-image' : 'linear-gradient(to bottom right, ' + category?.color + ', white)'}">
+  <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="space-around end" fxLayoutGap="5px">
       <div class="smallText">
-        <!-- {{getDate()}} -->
-        <!-- {{activity.address.suburb.name | async}} -->
-      </div><img src="https://de.wikipedia.org/static/images/project-logos/dewiki.png">
+          <div *ngIf="activity.schedules | async as schedules; else loading">
+              {{ schedules[0]?.startDate}}
+          </div>
+          <div  *ngIf="activity.address | async as address; else loading">
+            {{ (address.suburb | async)?.name }}
+          </div>
+          <ng-template #loading>
+              Loading ...
+          </ng-template>
+      </div>
+      <img src={{getImageURI()}}>
     </div>
     <div class="activityCardContent">
-      {{activity.name}}
+      {{ activity.name }}
     </div>
   </mat-card-content>
 </mat-card>

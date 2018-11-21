@@ -1,6 +1,7 @@
 package de.codeschluss.portal.components.suburb;
 
-import de.codeschluss.portal.components.suburb.SuburbEntity;
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
  * The Class SuburbService.
  */
 @Service
-public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
+public class SuburbService extends DataService<SuburbEntity, QSuburbEntity> {
 
   /**
    * Instantiates a new suburb service.
@@ -22,8 +23,10 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
    * @param assembler
    *          the assembler
    */
-  public SuburbService(SuburbRepository repo, SuburbResourceAssembler assembler) {
-    super(repo, assembler);
+  public SuburbService(
+      SuburbRepository repo, 
+      SuburbResourceAssembler assembler) {
+    super(repo, assembler, QSuburbEntity.suburbEntity);
   }
 
   /*
@@ -34,7 +37,7 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
    * portal.core.common.BaseEntity)
    */
   public SuburbEntity getExisting(SuburbEntity suburb) {
-    return repo.findByName(suburb.getName()).orElse(null);
+    return repo.findOne(query.name.eq(suburb.getName())).orElse(null);
   }
 
   /**
@@ -45,7 +48,7 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
    * @return the resource by address
    */
   public Resource<SuburbEntity> getResourceByAddress(String addressId) {
-    SuburbEntity suburb = repo.findByAddressesId(addressId)
+    SuburbEntity suburb = repo.findOne(query.addresses.any().id.eq(addressId))
         .orElseThrow(() -> new NotFoundException(addressId));
     return assembler.toResource(suburb);
   }
@@ -65,5 +68,10 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
       newSuburb.setId(id);
       return repo.save(newSuburb);
     });
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    return query.name.likeIgnoreCase(filter);
   }
 }

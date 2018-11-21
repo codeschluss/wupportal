@@ -1,5 +1,9 @@
 package de.codeschluss.portal.components.activity;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
@@ -27,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ActivityService extends DataService<ActivityEntity, ActivityRepository> {
+public class ActivityService extends DataService<ActivityEntity, QActivityEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
@@ -40,8 +44,10 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
    * @param assembler
    *          the assembler
    */
-  public ActivityService(ActivityRepository repo, ActivityResourceAssembler assembler) {
-    super(repo, assembler);
+  public ActivityService(
+      ActivityRepository repo, 
+      ActivityResourceAssembler assembler) {
+    super(repo, assembler, QActivityEntity.activityEntity);
   }
 
   /*
@@ -74,8 +80,15 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
    * @return the current sorted list
    */
   private List<ActivityEntity> getCurrentSortedList(String filter, Sort sort) {
-    return filter == null ? repo.findCurrent(sort)
-        : repo.findCurrentFiltered(filter, sort).orElseThrow(() -> new NotFoundException(filter));
+    List<ActivityEntity> activities = filter == null 
+        ? repo.findAll(isCurrent(), sort)
+        : repo.findAll(isCurrent().and(getFilteredPredicate(filter)), sort);
+        
+    if (activities == null || activities.isEmpty()) {
+      throw new NotFoundException(filter);
+    }
+    
+    return activities;
   }
 
   /*
@@ -85,15 +98,16 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
    * codeschluss.portal.core.utils.FilterSortPaginate)
    */
   @Override
-  public <P extends FilterSortPaginate> PagedResources<Resource<ActivityEntity>> getPagedResources(
-      P p) {
+  public <P extends FilterSortPaginate> PagedResources<Resource<ActivityEntity>> 
+      getPagedResources(P p) {
     validateParams(p);
 
     FilterSortPaginateCurrent params = (FilterSortPaginateCurrent) p;
     String filter = params.getFilter();
     PageRequest page = PageRequest.of(params.getPage(), params.getSize(), getSort(params));
 
-    Page<ActivityEntity> result = params.getCurrent() ? getCurrentPaged(filter, page)
+    Page<ActivityEntity> result = params.getCurrent() 
+        ? getCurrentPaged(filter, page)
         : getPaged(filter, page);
     return assembler.entitiesToPagedResources(result, params);
   }
@@ -108,8 +122,15 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
    * @return the current paged
    */
   public Page<ActivityEntity> getCurrentPaged(String filter, PageRequest page) {
-    return filter == null ? repo.findCurrent(page)
-        : repo.findFiltered(filter, page).orElseThrow(() -> new NotFoundException(filter));
+    Page<ActivityEntity> result = filter == null 
+        ? repo.findAll(isCurrent(), page)
+        : repo.findAll(getFilteredPredicate(filter), page);
+        
+    if (result == null || result.isEmpty()) {
+      throw new NotFoundException(filter);
+    }
+    
+    return result;
   }
 
   /*
@@ -121,7 +142,7 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
    */
   @Override
   public ActivityEntity getExisting(ActivityEntity activity) {
-    return repo.findByName(activity.getName()).orElse(null);
+    return repo.findOne(query.id.eq(activity.getId())).orElse(null);
   }
 
   /**
@@ -143,8 +164,12 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
    * @return the by providers
    */
   public List<ActivityEntity> getByProviders(List<ProviderEntity> providers) {
-    return repo.findByProviderIn(providers)
-        .orElseThrow(() -> new NotFoundException(providers.toString()));
+    List<ActivityEntity> result = repo.findAll(query.provider.in(providers));
+    
+    if (result == null || result.isEmpty()) {
+      throw new NotFoundException(providers.toString());
+    }
+    return result;
   }
 
   /**
@@ -157,7 +182,7 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
    * @return true, if is activity for provider
    */
   public boolean isActivityForProvider(String activityId, List<ProviderEntity> providers) {
-    return repo.existsByIdAndProviderIn(activityId, providers);
+    return repo.exists(query.id.eq(activityId).and(query.provider.in(providers)));
   }
 
   /*
@@ -342,5 +367,23 @@ public class ActivityService extends DataService<ActivityEntity, ActivityReposit
       throw new RuntimeException(
           "Must be of type " + FilterSortPaginateCurrent.class + " but is " + p.getClass());
     }
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    return query.name.likeIgnoreCase(filter)
+        .or(query.description.likeIgnoreCase(filter))
+        .or(query.address.street.likeIgnoreCase(filter))
+        .or(query.address.place.likeIgnoreCase(filter))
+        .or(query.address.houseNumber.likeIgnoreCase(filter))
+        .or(query.address.postalCode.likeIgnoreCase(filter))
+        .or(query.address.suburb.name.likeIgnoreCase(filter))
+        .or(query.tags.any().name.likeIgnoreCase(filter))
+        .or(query.targetGroups.any().name.likeIgnoreCase(filter))
+        .or(query.category.name.likeIgnoreCase(filter));
+  }
+  
+  private BooleanExpression isCurrent() {
+    return query.schedules.any().startDate.after(Expressions.currentTimestamp());
   }
 }

@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.activity.FilterSortPaginateCurrent;
-import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
 
@@ -61,15 +60,6 @@ public class ActivityControllerUpdateTest {
     controller.update(activity, activityId);
 
     assertContaining(activity);
-  }
-
-  @Test(expected = DuplicateEntryException.class)
-  @WithUserDetails("provider1@user")
-  public void updateProviderDuplicated() throws URISyntaxException {
-    ActivityEntity activity = createActivity("activity1");
-    String activityId = "00000000-0000-0000-0010-200000000000";
-
-    controller.update(activity, activityId);
   }
 
   @Test(expected = AccessDeniedException.class)

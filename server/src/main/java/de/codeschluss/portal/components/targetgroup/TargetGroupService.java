@@ -1,9 +1,12 @@
 package de.codeschluss.portal.components.targetgroup;
 
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Service;
  * The Class TargetGroupService.
  */
 @Service
-public class TargetGroupService extends DataService<TargetGroupEntity, TargetGroupRepository> {
+public class TargetGroupService extends DataService<TargetGroupEntity, QTargetGroupEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
@@ -24,8 +27,10 @@ public class TargetGroupService extends DataService<TargetGroupEntity, TargetGro
    * @param assembler
    *          the assembler
    */
-  public TargetGroupService(TargetGroupRepository repo, TargetGroupResourceAssembler assembler) {
-    super(repo, assembler);
+  public TargetGroupService(
+      TargetGroupRepository repo, 
+      TargetGroupResourceAssembler assembler) {
+    super(repo, assembler, QTargetGroupEntity.targetGroupEntity);
   }
 
   /*
@@ -37,7 +42,7 @@ public class TargetGroupService extends DataService<TargetGroupEntity, TargetGro
    */
   @Override
   public TargetGroupEntity getExisting(TargetGroupEntity newTargetGroup) {
-    return repo.findByName(newTargetGroup.getName()).orElse(null);
+    return repo.findOne(query.name.eq(newTargetGroup.getName())).orElse(null);
   }
 
   /**
@@ -48,8 +53,12 @@ public class TargetGroupService extends DataService<TargetGroupEntity, TargetGro
    * @return the resource by activity
    */
   public Object getResourceByActivity(String activityId) {
-    List<TargetGroupEntity> targetGroups = repo.findByActivitiesId(activityId)
-        .orElseThrow(() -> new NotFoundException(activityId));
+    List<TargetGroupEntity> targetGroups = repo.findAll(query.activities.any().id.eq(activityId));
+    
+    if (targetGroups == null || targetGroups.isEmpty()) {
+      throw new NotFoundException(activityId);
+    }
+    
     return assembler.entitiesToResources(targetGroups, null);
   }
 
@@ -69,5 +78,11 @@ public class TargetGroupService extends DataService<TargetGroupEntity, TargetGro
       newTargetGroup.setId(id);
       return repo.save(newTargetGroup);
     });
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    return query.name.likeIgnoreCase(filter)
+        .or(query.description.likeIgnoreCase(filter));
   }
 }

@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -81,7 +81,7 @@ public class ActivityControllerFindAllTest {
         new Condition<>(a -> a.getContent().getId().equals(noFutureActivityId), "activity exists"));
   }
 
-  @Test(expected = InvalidDataAccessApiUsageException.class)
+  @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
     FilterSortPaginateCurrent params = new FilterSortPaginateCurrent("activity", 1, 5,
         "blablabla123", "wrong", true);

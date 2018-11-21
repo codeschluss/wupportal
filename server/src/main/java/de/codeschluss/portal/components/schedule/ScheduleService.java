@@ -1,12 +1,16 @@
 package de.codeschluss.portal.components.schedule;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
@@ -14,7 +18,7 @@ import org.springframework.stereotype.Service;
  * The Class ScheduleService.
  */
 @Service
-public class ScheduleService extends DataService<ScheduleEntity, ScheduleRepository> {
+public class ScheduleService extends DataService<ScheduleEntity, QScheduleEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "startDate";
@@ -27,8 +31,11 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
    * @param assembler
    *          the assembler
    */
-  public ScheduleService(ScheduleRepository repo, ScheduleResourceAssembler assembler) {
-    super(repo, assembler);
+  @Autowired
+  public ScheduleService(
+      ScheduleRepository repo, 
+      ScheduleResourceAssembler assembler) {
+    super(repo, assembler, QScheduleEntity.scheduleEntity);
   }
 
   /*
@@ -50,10 +57,16 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
    *          the activity id
    * @return the resource by activity
    */
-  public Object getResourceByActivity(String activityId) {
-    List<ScheduleEntity> schedules = repo
-        .findByActivityIdAndFutureOnly(activityId, new Sort(Direction.ASC, defaultSortProp))
-        .orElseThrow(() -> new NotFoundException(activityId));
+  public Resources<?> getResourceByActivity(String activityId) {
+    BooleanExpression predicate = query
+        .activity.id.eq(activityId)
+        .and(query.startDate.after(Expressions.currentTimestamp()));
+ 
+    List<ScheduleEntity> schedules = repo.findAll(predicate);
+    if (schedules == null || schedules.isEmpty()) {
+      throw new NotFoundException(activityId);
+    }
+    
     return assembler.entitiesToResources(schedules, null);
   }
 
@@ -73,5 +86,10 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
       newSchedule.setId(id);
       return repo.save(newSchedule);
     });
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    return query.activity.name.eq(filter);
   }
 }

@@ -319,7 +319,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @GetMapping("/activities/{activityId}/tags")
   public ResponseEntity<?> findTags(@PathVariable String activityId) {
-    return ok(tagService.getResourceByActivity(activityId));
+    return ok(tagService.getResourcesByActivity(activityId));
   }
 
   /**

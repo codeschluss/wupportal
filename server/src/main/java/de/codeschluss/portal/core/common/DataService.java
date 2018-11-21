@@ -1,5 +1,8 @@
 package de.codeschluss.portal.core.common;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.EntityPathBase;
+
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
@@ -23,14 +26,15 @@ import org.springframework.hateoas.Resources;
  * @param <R>
  *          the generic type
  */
-public abstract class DataService<E extends BaseEntity, 
-    R extends FilteredJpaRepository<E, String>> {
+public abstract class DataService<E extends BaseEntity, Q extends EntityPathBase<E>> {
 
   /** The repo. */
-  protected final R repo;
+  protected final DataRepository<E> repo;
 
   /** The assembler. */
   protected final PagingAndSortingAssembler<E> assembler;
+  
+  protected final Q query;
 
   /** The default sort prop. */
   protected final String defaultSortProp = "id";
@@ -43,9 +47,13 @@ public abstract class DataService<E extends BaseEntity,
    * @param assembler
    *          the assembler
    */
-  public DataService(R repo, PagingAndSortingAssembler<E> assembler) {
+  public DataService(
+      DataRepository<E> repo, 
+      PagingAndSortingAssembler<E> assembler,
+      Q query) {
     this.repo = repo;
     this.assembler = assembler;
+    this.query = query;
   }
 
   /**
@@ -62,12 +70,12 @@ public abstract class DataService<E extends BaseEntity,
   /**
    * Exists by id.
    *
-   * @param addressId
+   * @param id
    *          the address id
    * @return true, if successful
    */
-  public boolean existsById(String addressId) {
-    return repo.existsById(addressId);
+  public boolean existsById(String id) {
+    return repo.existsById(id);
   }
 
   /**
@@ -208,8 +216,15 @@ public abstract class DataService<E extends BaseEntity,
    * @return the sorted list
    */
   public List<E> getSortedList(String filter, Sort sort) {
-    return filter == null ? repo.findAll(sort)
-        : repo.findFiltered(filter, sort).orElseThrow(() -> new NotFoundException(filter));
+    List<E> result =  filter == null 
+        ? repo.findAll(sort)
+        : repo.findAll(getFilteredPredicate(filter), sort);
+    
+    if (result == null || result.isEmpty()) {
+      throw new NotFoundException(filter);
+    }
+    
+    return result;
   }
 
   /**
@@ -237,8 +252,14 @@ public abstract class DataService<E extends BaseEntity,
    * @return the paged
    */
   public Page<E> getPaged(String filter, PageRequest page) {
-    return filter == null ? repo.findAll(page)
-        : repo.findFiltered(filter, page).orElseThrow(() -> new NotFoundException(filter));
+    Page<E> paged = filter == null ? repo.findAll(page)
+        : repo.findAll(getFilteredPredicate(filter), page);
+    
+    if (paged == null || paged.isEmpty()) {
+      throw new NotFoundException(filter);
+    }
+    
+    return paged;
   }
 
   /**
@@ -250,5 +271,11 @@ public abstract class DataService<E extends BaseEntity,
    */
   protected Sort getSort(FilterSortPaginate params) {
     return params.createSort(defaultSortProp);
+  }
+
+  protected abstract Predicate getFilteredPredicate(String filter);
+  
+  protected String prepareFilter(String filter) {
+    return "%" + filter + "%"; 
   }
 }

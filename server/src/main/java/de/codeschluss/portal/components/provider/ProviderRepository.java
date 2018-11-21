@@ -2,7 +2,7 @@ package de.codeschluss.portal.components.provider;
 
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.user.UserEntity;
-import de.codeschluss.portal.core.common.FilteredJpaRepository;
+import de.codeschluss.portal.core.common.DataRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProviderRepository extends FilteredJpaRepository<ProviderEntity, String> {
+public interface ProviderRepository extends DataRepository<ProviderEntity> {
 
   @Query("Select p from ProviderEntity p where "
       + "p.user.username like %?1% "

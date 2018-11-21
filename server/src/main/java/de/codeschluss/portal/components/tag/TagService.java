@@ -1,5 +1,7 @@
 package de.codeschluss.portal.components.tag;
 
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
  * The Class TagService.
  */
 @Service
-public class TagService extends DataService<TagEntity, TagRepository> {
+public class TagService extends DataService<TagEntity, QTagEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
@@ -26,8 +28,10 @@ public class TagService extends DataService<TagEntity, TagRepository> {
    * @param assembler
    *          the assembler
    */
-  public TagService(TagRepository repo, TagResourceAssembler assembler) {
-    super(repo, assembler);
+  public TagService(
+      TagRepository repo, 
+      TagResourceAssembler assembler) {
+    super(repo, assembler, QTagEntity.tagEntity);
   }
 
   /*
@@ -39,7 +43,7 @@ public class TagService extends DataService<TagEntity, TagRepository> {
    */
   @Override
   public TagEntity getExisting(TagEntity newTag) {
-    return repo.findByName(newTag.getName()).orElse(null);
+    return repo.findOne(query.name.eq(newTag.getName())).orElse(null);
   }
 
   /**
@@ -49,9 +53,12 @@ public class TagService extends DataService<TagEntity, TagRepository> {
    *          the activity id
    * @return the resource by activity
    */
-  public Resources<?> getResourceByActivity(String activityId) {
-    List<TagEntity> tags = repo.findByActivitiesId(activityId)
-        .orElseThrow(() -> new NotFoundException(activityId));
+  public Resources<?> getResourcesByActivity(String activityId) {
+    List<TagEntity> tags = repo.findAll(query.activities.any().id.eq(activityId));
+    
+    if (tags == null || tags.isEmpty()) {
+      throw new NotFoundException(activityId);
+    }
     return assembler.entitiesToResources(tags, null);
   }
 
@@ -71,6 +78,12 @@ public class TagService extends DataService<TagEntity, TagRepository> {
       newTag.setId(id);
       return repo.save(newTag);
     });
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    return query.name.likeIgnoreCase(filter)
+        .or(query.description.likeIgnoreCase(filter));
   }
 
 }

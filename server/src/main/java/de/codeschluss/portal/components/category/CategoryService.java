@@ -1,6 +1,7 @@
 package de.codeschluss.portal.components.category;
 
-import de.codeschluss.portal.components.category.CategoryEntity;
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
  * The Class CategoryService.
  */
 @Service
-public class CategoryService extends DataService<CategoryEntity, CategoryRepository> {
+public class CategoryService extends DataService<CategoryEntity, QCategoryEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
@@ -25,8 +26,10 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
    * @param assembler
    *          the assembler
    */
-  public CategoryService(CategoryRepository repo, CategoryResourceAssembler assembler) {
-    super(repo, assembler);
+  public CategoryService(
+      CategoryRepository repo, 
+      CategoryResourceAssembler assembler) {
+    super(repo, assembler, QCategoryEntity.categoryEntity);
   }
 
   /*
@@ -37,7 +40,7 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
    * portal.core.common.BaseEntity)
    */
   public CategoryEntity getExisting(CategoryEntity newCategory) {
-    return repo.findByName(newCategory.getName()).orElse(null);
+    return repo.findOne(query.name.eq(newCategory.getName())).orElse(null);
   }
 
   /**
@@ -48,7 +51,7 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
    * @return the resource by activity
    */
   public Resource<CategoryEntity> getResourceByActivity(String activityId) {
-    CategoryEntity category = repo.findByActivitiesId(activityId)
+    CategoryEntity category = repo.findOne(query.activities.any().id.eq(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
     return assembler.toResource(category);
   }
@@ -70,5 +73,11 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
       newCategory.setId(id);
       return repo.save(newCategory);
     });
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    return query.name.likeIgnoreCase(filter)
+        .or(query.description.likeIgnoreCase(filter));
   }
 }

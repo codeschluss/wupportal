@@ -1,5 +1,7 @@
 package de.codeschluss.portal.components.user;
 
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
@@ -21,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserService extends DataService<UserEntity, UserRepository> {
+public class UserService extends DataService<UserEntity, QUserEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "username";
@@ -44,9 +46,12 @@ public class UserService extends DataService<UserEntity, UserRepository> {
    * @param mailService
    *          the mail service
    */
-  public UserService(UserRepository repo, UserResourceAssembler assembler,
-      BCryptPasswordEncoder encoder, MailService mailService) {
-    super(repo, assembler);
+  public UserService(
+      UserRepository repo, 
+      UserResourceAssembler assembler,
+      BCryptPasswordEncoder encoder, 
+      MailService mailService) {
+    super(repo, assembler, QUserEntity.userEntity);
     this.bcryptPasswordEncoder = encoder;
     this.mailService = mailService;
   }
@@ -59,7 +64,7 @@ public class UserService extends DataService<UserEntity, UserRepository> {
    * @return true, if successful
    */
   public boolean userExists(String username) {
-    return repo.existsByUsername(username);
+    return repo.exists(query.username.eq(username));
   }
 
   /*
@@ -86,7 +91,8 @@ public class UserService extends DataService<UserEntity, UserRepository> {
    * @return the user
    */
   public UserEntity getUser(String username) {
-    return repo.findByUsername(username).orElseThrow(() -> new NotFoundException(username));
+    return repo.findOne(query.username.eq(username))
+        .orElseThrow(() -> new NotFoundException(username));
   }
 
   /*
@@ -197,7 +203,7 @@ public class UserService extends DataService<UserEntity, UserRepository> {
    * @return the super users
    */
   public List<UserEntity> getSuperUsers() {
-    return repo.findBySuperuserTrue();
+    return repo.findAll(query.superuser.eq(true));
   }
 
   /**
@@ -210,5 +216,12 @@ public class UserService extends DataService<UserEntity, UserRepository> {
   public List<String> getMailsByProviders(List<ProviderEntity> adminProviders) {
     return adminProviders.stream().map(provider -> provider.getUser().getUsername())
         .collect(Collectors.toList());
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    return query.fullname.likeIgnoreCase(prepareFilter(filter))
+        .or(query.username.likeIgnoreCase(prepareFilter(filter)))
+        .or(query.phone.likeIgnoreCase(prepareFilter(filter)));
   }
 }

@@ -1,8 +1,9 @@
 package de.codeschluss.portal.components.organisation;
 
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
-import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class OrganisationService extends DataService<OrganisationEntity, OrganisationRepository> {
+public class OrganisationService extends DataService<OrganisationEntity, QOrganisationEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
@@ -36,9 +37,11 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
    * @param addressService
    *          the address service
    */
-  public OrganisationService(OrganisationRepository repo, OrganisationResourceAssembler assembler,
+  public OrganisationService(
+      OrganisationRepository repo, 
+      OrganisationResourceAssembler assembler,
       AddressService addressService) {
-    super(repo, assembler);
+    super(repo, assembler, QOrganisationEntity.organisationEntity);
   }
 
   /**
@@ -49,18 +52,7 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
    * @return true, if successful
    */
   public boolean existsByName(String name) {
-    return repo.existsByName(name);
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.DataService#existsById(java.lang.String)
-   */
-  @Override
-  public boolean existsById(String organisationId) {
-    return repo.existsById(organisationId);
+    return repo.exists(query.name.eq(name));
   }
 
   /*
@@ -72,7 +64,7 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
    */
   @Override
   public OrganisationEntity getExisting(OrganisationEntity orga) {
-    return repo.findByName(orga.getName()).orElse(null);
+    return repo.findOne(query.name.eq(orga.getName())).orElse(null);
   }
 
   /*
@@ -136,5 +128,16 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
     }).collect(Collectors.toList());
 
     return assembler.toListResources(result, null);
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    return query.name.likeIgnoreCase(filter)
+        .or(query.mail.likeIgnoreCase(filter))
+        .or(query.phone.likeIgnoreCase(filter))
+        .or(query.website.likeIgnoreCase(filter))
+        .or(query.address.houseNumber.likeIgnoreCase(filter))
+        .or(query.address.place.likeIgnoreCase(filter))
+        .or(query.address.street.likeIgnoreCase(filter));
   }
 }

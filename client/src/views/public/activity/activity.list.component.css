@@ -1,19 +1,18 @@
 #activitiesContainer{
+  position: relative;
   overflow-y: scroll;
-  height: 80vh;
-}
-
-mapping-component {
-  height:80vh;
 }
 
 html, body{
   position:relative;
   margin:0;
   padding:0;
-  height:90vh;
 }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+#activityListContent {
+  height: 100vh;
 }

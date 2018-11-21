@@ -1,8 +1,8 @@
 <div fxFill id="activityList" *ngIf="activities && activities.length">
   <div fxFill>
     <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px grid">
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-        <mat-chip-list fxFlex="50">
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+        <mat-chip-list fxFlex="70">
           <mat-chip *ngFor="let category of categories | async" [ngStyle]="{'background-color': category.color}">
             {{category.name}}
           </mat-chip>
@@ -24,7 +24,7 @@
         <mat-chip fxHide fxFlex="10" (click)="openBottomSheetMap()" fxShow.lt-md="true">MAP</mat-chip>
       </div>
 
-      <div fxLayout="row" id="content" fxLayoutAlign="space-between">
+      <div fxLayout="row" id="activityListContent" fxLayoutAlign="space-between">
         <div id="activitiesContainer" fxFlex="66" fxLayoutGap="20px grid" fxLayout="row wrap" fxFlex.lt-md="100">
           <div class="activityCard" fxLayoutAlign="space-around" fxFlex.xs="100" *ngFor="let activity of activities">
             <activity-card [activity]="activity"></activity-card>

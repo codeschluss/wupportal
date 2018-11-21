@@ -30,7 +30,6 @@ export class AboutComponent {
     }
   }
 
-
   buildTestActivity(): ActivityModel {
     const actOne = new ActivityModel;
     actOne.id="testActivity";

@@ -14,9 +14,10 @@ import { RefreshTokenModel } from './refresh-token.model';
 export class TokenService extends BaseService {
 
   public constructor(
-    apiConfiguration: ApiConfiguration,
-    httpClient: HttpClient,
-    private jsonValidator: JSONValidator
+    private apiConfiguration: ApiConfiguration,
+    private jsonValidator: JSONValidator,
+
+    httpClient: HttpClient
   ) {
     super(apiConfiguration, httpClient);
   }
@@ -26,7 +27,7 @@ export class TokenService extends BaseService {
 
     return this.call(new HttpRequest<any>(
       'POST',
-      this.rootUrl + '/login',
+      this.apiConfiguration['authUrl'],
       {
         username: username,
         password: password
@@ -42,7 +43,7 @@ export class TokenService extends BaseService {
   public apiRefreshResponse(): Observable<StrictHttpResponse<object>> {
     return this.call(new HttpRequest<any>(
       'GET',
-      this.rootUrl + '/refresh',
+      this.apiConfiguration['refreshUrl'],
       null,
       {
         headers: new HttpHeaders(),
@@ -73,6 +74,7 @@ export class TokenService extends BaseService {
         case 'refresh': model = new RefreshTokenModel(); break;
       }
 
+      token.exp = token.exp - 5;
       token.raw = response.body[type];
       response.body[type] = Object.assign(model, token);
     });

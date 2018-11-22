@@ -52,13 +52,12 @@ public class ProviderService {
       ProviderRepository providerRepo, 
       OrganisationService orgaService,
       UserService userService,
-      MailService mailService, 
-      QProviderEntity query) {
+      MailService mailService) {
     this.repo = providerRepo;
     this.orgaService = orgaService;
     this.mailService = mailService;
     this.userService = userService;
-    this.query = query;
+    this.query = QProviderEntity.providerEntity;
   }
 
   /**

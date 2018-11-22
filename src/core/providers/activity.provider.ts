@@ -67,7 +67,9 @@ export class ActivityProvider
     protected injector: Injector,
     protected service: ActivityControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
   public create: (model: ActivityModel) => Promise<any>;
 

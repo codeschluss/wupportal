@@ -35,6 +35,8 @@ export class TagProvider
     protected injector: Injector,
     protected service: TagControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
 }

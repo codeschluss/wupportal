@@ -35,6 +35,8 @@ export class ConfigurationProvider
     protected injector: Injector,
     protected service: ConfigurationControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
 }

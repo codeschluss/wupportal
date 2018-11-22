@@ -1,5 +1,4 @@
 import { Injectable, Injector } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { SuburbControllerService } from '../api/services/suburb-controller.service';
 import { CrudService } from '../crud/crud.provider';
 import { SuburbModel } from '../models/suburb.model';
@@ -33,8 +32,7 @@ export class SuburbProvider
 
   public constructor(
     protected injector: Injector,
-    protected service: SuburbControllerService,
-    protected snackbar: MatSnackBar
+    protected service: SuburbControllerService
   ) {
     super();
   }

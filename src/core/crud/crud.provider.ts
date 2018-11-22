@@ -1,10 +1,8 @@
 import { Injectable, Injector, Type } from '@angular/core';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
-import { ErrorModel } from '../utils/error.model';
 import { CrudModel } from './crud.model';
 
 interface ModelLink {
@@ -16,8 +14,6 @@ interface ModelLink {
 @Injectable({ providedIn: 'root' })
 export abstract class CrudService
   <Service extends BaseService, Model extends CrudModel> {
-
-  public static readonly imports = [MatSnackBarModule];
 
   protected abstract injector: Injector;
 
@@ -34,15 +30,6 @@ export abstract class CrudService
   protected abstract model: Type<Model>;
 
   protected abstract service: Service;
-
-  protected abstract snackbar: MatSnackBar;
-
-  public apply(method:
-    (...args: any) => Observable<StrictHttpResponse<object>>):
-    (...args: any) => Promise<StrictHttpResponse<object>> {
-
-    return (...args: any) => this.call(method, ...args).toPromise();
-  }
 
   public create(model: Model): Promise<any> {
     return this.call(this.methods.create, model).toPromise();
@@ -72,6 +59,13 @@ export abstract class CrudService
     ).toPromise();
   }
 
+  public apply(method:
+    (...args: any) => Observable<StrictHttpResponse<object>>):
+    (...args: any) => Promise<StrictHttpResponse<object>> {
+
+    return (...args: any) => method.call(this.service, ...args).toPromise();
+  }
+
   protected based(model: Type<Model>): Type<Model> {
     return Object.defineProperty(model, 'provider', {
       value: this.constructor
@@ -81,11 +75,7 @@ export abstract class CrudService
   protected call(method: Function, ...args: any[]):
     Observable<StrictHttpResponse<object>> {
 
-    return method.call(this.service, ...args).pipe(catchError((response) => {
-      const error = Object.assign(new ErrorModel(), response.error);
-      this.snackbar.open(error.message, '×');
-      return throwError(error);
-    }));
+    return method.call(this.service, ...args);
   }
 
   protected cast<T>(response: StrictHttpResponse<object>, type?): T {

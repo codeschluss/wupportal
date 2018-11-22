@@ -9,7 +9,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { ApiModule } from './core/api/api.module';
-import { AccessTokenInterceptor } from './core/auth/access-token.interceptor';
+import { TokenInterceptor } from './core/auth/token.interceptor';
 import { CrudService } from './core/crud/crud.provider';
 import { I18nComponent } from './core/i18n/i18n.component';
 import { I18nInterceptor } from './core/i18n/i18n.interceptor';
@@ -27,7 +27,7 @@ const ClientImports = [
 ];
 
 const ClientProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: AccessTokenInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
   { provide: UrlSerializer, useClass: ClientUrlSerializer }
 ];

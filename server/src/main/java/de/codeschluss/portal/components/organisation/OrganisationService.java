@@ -22,10 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class OrganisationService extends DataService<OrganisationEntity, QOrganisationEntity> {
+public class OrganisationService extends DataService<OrganisationEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
+  
+  private final OrganisationQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new organisation service.
@@ -40,8 +42,10 @@ public class OrganisationService extends DataService<OrganisationEntity, QOrgani
   public OrganisationService(
       OrganisationRepository repo, 
       OrganisationResourceAssembler assembler,
-      AddressService addressService) {
-    super(repo, assembler, QOrganisationEntity.organisationEntity);
+      AddressService addressService,
+      OrganisationQueryBuilder queryBuilder) {
+    super(repo, assembler);
+    this.queryBuilder = queryBuilder;
   }
 
   /**
@@ -52,7 +56,7 @@ public class OrganisationService extends DataService<OrganisationEntity, QOrgani
    * @return true, if successful
    */
   public boolean existsByName(String name) {
-    return repo.exists(query.name.eq(name));
+    return repo.exists(queryBuilder.isName(name));
   }
 
   /*
@@ -64,7 +68,7 @@ public class OrganisationService extends DataService<OrganisationEntity, QOrgani
    */
   @Override
   public OrganisationEntity getExisting(OrganisationEntity orga) {
-    return repo.findOne(query.name.eq(orga.getName())).orElse(null);
+    return repo.findOne(queryBuilder.isName(orga.getName())).orElse(null);
   }
 
   /*
@@ -133,12 +137,6 @@ public class OrganisationService extends DataService<OrganisationEntity, QOrgani
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.name.likeIgnoreCase(filter)
-        .or(query.mail.likeIgnoreCase(filter))
-        .or(query.phone.likeIgnoreCase(filter))
-        .or(query.website.likeIgnoreCase(filter))
-        .or(query.address.houseNumber.likeIgnoreCase(filter))
-        .or(query.address.place.likeIgnoreCase(filter))
-        .or(query.address.street.likeIgnoreCase(filter));
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
  * The Class TargetGroupService.
  */
 @Service
-public class TargetGroupService extends DataService<TargetGroupEntity, QTargetGroupEntity> {
+public class TargetGroupService extends DataService<TargetGroupEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
+  
+  private final TargetGroupQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new target group service.
@@ -29,8 +31,10 @@ public class TargetGroupService extends DataService<TargetGroupEntity, QTargetGr
    */
   public TargetGroupService(
       TargetGroupRepository repo, 
-      TargetGroupResourceAssembler assembler) {
-    super(repo, assembler, QTargetGroupEntity.targetGroupEntity);
+      TargetGroupResourceAssembler assembler,
+      TargetGroupQueryBuilder queryBuilder) {
+    super(repo, assembler);
+    this.queryBuilder = queryBuilder;
   }
 
   /*
@@ -42,7 +46,7 @@ public class TargetGroupService extends DataService<TargetGroupEntity, QTargetGr
    */
   @Override
   public TargetGroupEntity getExisting(TargetGroupEntity newTargetGroup) {
-    return repo.findOne(query.name.eq(newTargetGroup.getName())).orElse(null);
+    return repo.findOne(queryBuilder.isName(newTargetGroup.getName())).orElse(null);
   }
 
   /**
@@ -53,7 +57,7 @@ public class TargetGroupService extends DataService<TargetGroupEntity, QTargetGr
    * @return the resource by activity
    */
   public Object getResourceByActivity(String activityId) {
-    List<TargetGroupEntity> targetGroups = repo.findAll(query.activities.any().id.eq(activityId));
+    List<TargetGroupEntity> targetGroups = repo.findAll(queryBuilder.anyActivityId(activityId));
     
     if (targetGroups == null || targetGroups.isEmpty()) {
       throw new NotFoundException(activityId);
@@ -83,7 +87,6 @@ public class TargetGroupService extends DataService<TargetGroupEntity, QTargetGr
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.name.likeIgnoreCase(filter)
-        .or(query.description.likeIgnoreCase(filter));
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

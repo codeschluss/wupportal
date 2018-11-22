@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserService extends DataService<UserEntity, QUserEntity> {
+public class UserService extends DataService<UserEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "username";
@@ -33,6 +33,8 @@ public class UserService extends DataService<UserEntity, QUserEntity> {
 
   /** The mail service. */
   private final MailService mailService;
+  
+  private final UserQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new user service.
@@ -50,10 +52,12 @@ public class UserService extends DataService<UserEntity, QUserEntity> {
       UserRepository repo, 
       UserResourceAssembler assembler,
       BCryptPasswordEncoder encoder, 
-      MailService mailService) {
-    super(repo, assembler, QUserEntity.userEntity);
+      MailService mailService,
+      UserQueryBuilder queryBuilder) {
+    super(repo, assembler);
     this.bcryptPasswordEncoder = encoder;
     this.mailService = mailService;
+    this.queryBuilder = queryBuilder;
   }
 
   /**
@@ -64,7 +68,7 @@ public class UserService extends DataService<UserEntity, QUserEntity> {
    * @return true, if successful
    */
   public boolean userExists(String username) {
-    return repo.exists(query.username.eq(username));
+    return repo.exists(queryBuilder.isUsername(username));
   }
 
   /*
@@ -91,7 +95,7 @@ public class UserService extends DataService<UserEntity, QUserEntity> {
    * @return the user
    */
   public UserEntity getUser(String username) {
-    return repo.findOne(query.username.eq(username))
+    return repo.findOne(queryBuilder.isUsername(username))
         .orElseThrow(() -> new NotFoundException(username));
   }
 
@@ -203,7 +207,7 @@ public class UserService extends DataService<UserEntity, QUserEntity> {
    * @return the super users
    */
   public List<UserEntity> getSuperUsers() {
-    return repo.findAll(query.superuser.eq(true));
+    return repo.findAll(queryBuilder.isSuperuser());
   }
 
   /**
@@ -221,8 +225,6 @@ public class UserService extends DataService<UserEntity, QUserEntity> {
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.fullname.likeIgnoreCase(filter)
-        .or(query.username.likeIgnoreCase(filter))
-        .or(query.phone.likeIgnoreCase(filter));
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

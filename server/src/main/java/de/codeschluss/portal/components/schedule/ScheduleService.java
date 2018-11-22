@@ -1,8 +1,6 @@
 package de.codeschluss.portal.components.schedule;
 
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
@@ -18,10 +16,12 @@ import org.springframework.stereotype.Service;
  * The Class ScheduleService.
  */
 @Service
-public class ScheduleService extends DataService<ScheduleEntity, QScheduleEntity> {
+public class ScheduleService extends DataService<ScheduleEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "startDate";
+  
+  private final ScheduleQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new schedule service.
@@ -34,8 +34,10 @@ public class ScheduleService extends DataService<ScheduleEntity, QScheduleEntity
   @Autowired
   public ScheduleService(
       ScheduleRepository repo, 
-      ScheduleResourceAssembler assembler) {
-    super(repo, assembler, QScheduleEntity.scheduleEntity);
+      ScheduleResourceAssembler assembler,
+      ScheduleQueryBuilder queryBuilder) {
+    super(repo, assembler);
+    this.queryBuilder = queryBuilder;
   }
 
   /*
@@ -58,11 +60,8 @@ public class ScheduleService extends DataService<ScheduleEntity, QScheduleEntity
    * @return the resource by activity
    */
   public Resources<?> getResourceByActivity(String activityId) {
-    BooleanExpression predicate = query
-        .activity.id.eq(activityId)
-        .and(query.startDate.after(Expressions.currentTimestamp()));
- 
-    List<ScheduleEntity> schedules = repo.findAll(predicate);
+    List<ScheduleEntity> schedules = repo.findAll(
+        queryBuilder.isCurrentScheduleForActivity(activityId));
     if (schedules == null || schedules.isEmpty()) {
       throw new NotFoundException(activityId);
     }
@@ -91,6 +90,6 @@ public class ScheduleService extends DataService<ScheduleEntity, QScheduleEntity
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.activity.name.eq(filter);
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

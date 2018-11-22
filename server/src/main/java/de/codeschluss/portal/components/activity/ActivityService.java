@@ -1,8 +1,6 @@
 package de.codeschluss.portal.components.activity;
 
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
@@ -31,10 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ActivityService extends DataService<ActivityEntity, QActivityEntity> {
+public class ActivityService extends DataService<ActivityEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
+  
+  private final ActivityQueryBuilder queryBuilder; 
 
   /**
    * Instantiates a new activity service.
@@ -46,8 +46,10 @@ public class ActivityService extends DataService<ActivityEntity, QActivityEntity
    */
   public ActivityService(
       ActivityRepository repo, 
-      ActivityResourceAssembler assembler) {
-    super(repo, assembler, QActivityEntity.activityEntity);
+      ActivityResourceAssembler assembler,
+      ActivityQueryBuilder queryBuilder) {
+    super(repo, assembler);
+    this.queryBuilder = queryBuilder;
   }
 
   /*
@@ -81,8 +83,8 @@ public class ActivityService extends DataService<ActivityEntity, QActivityEntity
    */
   private List<ActivityEntity> getCurrentSortedList(String filter, Sort sort) {
     List<ActivityEntity> activities = filter == null 
-        ? repo.findAll(isCurrent(), sort)
-        : repo.findAll(isCurrent().and(getFilteredPredicate(filter)), sort);
+        ? repo.findAll(queryBuilder.isCurrent(), sort)
+        : repo.findAll(queryBuilder.isCurrentFuzzySearch(filter), sort);
         
     if (activities == null || activities.isEmpty()) {
       throw new NotFoundException(filter);
@@ -123,7 +125,7 @@ public class ActivityService extends DataService<ActivityEntity, QActivityEntity
    */
   public Page<ActivityEntity> getCurrentPaged(String filter, PageRequest page) {
     Page<ActivityEntity> result = filter == null 
-        ? repo.findAll(isCurrent(), page)
+        ? repo.findAll(queryBuilder.isCurrent(), page)
         : repo.findAll(getFilteredPredicate(filter), page);
         
     if (result == null || result.isEmpty()) {
@@ -142,7 +144,7 @@ public class ActivityService extends DataService<ActivityEntity, QActivityEntity
    */
   @Override
   public ActivityEntity getExisting(ActivityEntity activity) {
-    return repo.findOne(query.id.eq(activity.getId())).orElse(null);
+    return repo.findOne(queryBuilder.isId(activity.getId())).orElse(null);
   }
 
   /**
@@ -164,7 +166,7 @@ public class ActivityService extends DataService<ActivityEntity, QActivityEntity
    * @return the by providers
    */
   public List<ActivityEntity> getByProviders(List<ProviderEntity> providers) {
-    List<ActivityEntity> result = repo.findAll(query.provider.in(providers));
+    List<ActivityEntity> result = repo.findAll(queryBuilder.anyProvider(providers));
     
     if (result == null || result.isEmpty()) {
       throw new NotFoundException(providers.toString());
@@ -182,7 +184,7 @@ public class ActivityService extends DataService<ActivityEntity, QActivityEntity
    * @return true, if is activity for provider
    */
   public boolean isActivityForProvider(String activityId, List<ProviderEntity> providers) {
-    return repo.exists(query.id.eq(activityId).and(query.provider.in(providers)));
+    return repo.exists(queryBuilder.isActivityForProvider(activityId, providers));
   }
 
   /*
@@ -372,19 +374,6 @@ public class ActivityService extends DataService<ActivityEntity, QActivityEntity
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.name.likeIgnoreCase(filter)
-        .or(query.description.likeIgnoreCase(filter))
-        .or(query.address.street.likeIgnoreCase(filter))
-        .or(query.address.place.likeIgnoreCase(filter))
-        .or(query.address.houseNumber.likeIgnoreCase(filter))
-        .or(query.address.postalCode.likeIgnoreCase(filter))
-        .or(query.address.suburb.name.likeIgnoreCase(filter))
-        .or(query.tags.any().name.likeIgnoreCase(filter))
-        .or(query.targetGroups.any().name.likeIgnoreCase(filter))
-        .or(query.category.name.likeIgnoreCase(filter));
-  }
-  
-  private BooleanExpression isCurrent() {
-    return query.schedules.any().startDate.after(Expressions.currentTimestamp());
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

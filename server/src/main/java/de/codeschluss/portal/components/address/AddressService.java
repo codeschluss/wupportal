@@ -1,7 +1,6 @@
 package de.codeschluss.portal.components.address;
 
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.components.suburb.SuburbEntity;
 import de.codeschluss.portal.core.common.DataService;
@@ -15,10 +14,12 @@ import org.springframework.stereotype.Service;
  * The Class AddressService.
  */
 @Service
-public class AddressService extends DataService<AddressEntity, QAddressEntity> {
+public class AddressService extends DataService<AddressEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "street";
+  
+  private final AddressQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new address service.
@@ -30,23 +31,15 @@ public class AddressService extends DataService<AddressEntity, QAddressEntity> {
    */
   public AddressService(
       AddressRepository repo, 
-      AddressResourceAssembler assembler) {
-    super(repo, assembler, QAddressEntity.addressEntity);
+      AddressResourceAssembler assembler,
+      AddressQueryBuilder queryBuilder) {
+    super(repo, assembler);
+    this.queryBuilder = queryBuilder;
   }
 
-
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
-   * .DataService#getExisting(de.codeschluss.portal.core.common.BaseEntity)
-   */
   @Override
   public AddressEntity getExisting(AddressEntity address) {
-    BooleanExpression isHousnumber = query.houseNumber.eq(address.getHouseNumber());
-    BooleanExpression isPlace = query.place.eq(address.getPlace());
-    BooleanExpression isPostalCode = query.postalCode.eq(address.getPostalCode());
-    BooleanExpression isStreet = query.street.eq(address.getStreet());
-
-    return repo.findOne(isHousnumber.and(isPlace).and(isPostalCode).and(isStreet)).orElse(null);
+    return repo.findOne(queryBuilder.isAddress(address)).orElse(null);
   }
 
   /**
@@ -57,7 +50,7 @@ public class AddressService extends DataService<AddressEntity, QAddressEntity> {
    * @return the resources with suburbs by organisation
    */
   public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) {
-    AddressEntity address = repo.findOne(query.organisations.any().id.eq(orgaId))
+    AddressEntity address = repo.findOne(queryBuilder.anyOrganisationId(orgaId))
         .orElseThrow(() -> new NotFoundException(orgaId));
     return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
   }
@@ -70,7 +63,7 @@ public class AddressService extends DataService<AddressEntity, QAddressEntity> {
    * @return the resources with suburbs by activity
    */
   public Resource<?> getResourcesWithSuburbsByActivity(String activityId) {
-    AddressEntity address = repo.findOne(query.activities.any().id.eq(activityId))
+    AddressEntity address = repo.findOne(queryBuilder.anyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
     return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
   }
@@ -120,9 +113,6 @@ public class AddressService extends DataService<AddressEntity, QAddressEntity> {
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.houseNumber.likeIgnoreCase(filter)
-        .or(query.place.likeIgnoreCase(filter))
-        .or(query.postalCode.likeIgnoreCase(filter))
-        .or(query.street.likeIgnoreCase(filter));
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

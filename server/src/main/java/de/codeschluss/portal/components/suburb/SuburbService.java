@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
  * The Class SuburbService.
  */
 @Service
-public class SuburbService extends DataService<SuburbEntity, QSuburbEntity> {
+public class SuburbService extends DataService<SuburbEntity> {
+  
+  private final SuburbQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new suburb service.
@@ -25,8 +27,10 @@ public class SuburbService extends DataService<SuburbEntity, QSuburbEntity> {
    */
   public SuburbService(
       SuburbRepository repo, 
-      SuburbResourceAssembler assembler) {
-    super(repo, assembler, QSuburbEntity.suburbEntity);
+      SuburbResourceAssembler assembler,
+      SuburbQueryBuilder queryBuilder) {
+    super(repo, assembler);
+    this.queryBuilder = queryBuilder;
   }
 
   /*
@@ -37,7 +41,7 @@ public class SuburbService extends DataService<SuburbEntity, QSuburbEntity> {
    * portal.core.common.BaseEntity)
    */
   public SuburbEntity getExisting(SuburbEntity suburb) {
-    return repo.findOne(query.name.eq(suburb.getName())).orElse(null);
+    return repo.findOne(queryBuilder.isName(suburb.getName())).orElse(null);
   }
 
   /**
@@ -48,7 +52,7 @@ public class SuburbService extends DataService<SuburbEntity, QSuburbEntity> {
    * @return the resource by address
    */
   public Resource<SuburbEntity> getResourceByAddress(String addressId) {
-    SuburbEntity suburb = repo.findOne(query.addresses.any().id.eq(addressId))
+    SuburbEntity suburb = repo.findOne(queryBuilder.anyAddressId(addressId))
         .orElseThrow(() -> new NotFoundException(addressId));
     return assembler.toResource(suburb);
   }
@@ -73,6 +77,6 @@ public class SuburbService extends DataService<SuburbEntity, QSuburbEntity> {
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.name.likeIgnoreCase(filter);
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

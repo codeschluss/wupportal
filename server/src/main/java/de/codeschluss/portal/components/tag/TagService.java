@@ -15,10 +15,12 @@ import org.springframework.stereotype.Service;
  * The Class TagService.
  */
 @Service
-public class TagService extends DataService<TagEntity, QTagEntity> {
+public class TagService extends DataService<TagEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
+  
+  private TagQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new tag service.
@@ -30,8 +32,10 @@ public class TagService extends DataService<TagEntity, QTagEntity> {
    */
   public TagService(
       TagRepository repo, 
-      TagResourceAssembler assembler) {
-    super(repo, assembler, QTagEntity.tagEntity);
+      TagResourceAssembler assembler,
+      TagQueryBuilder queryBuilder) {
+    super(repo, assembler);
+    this.queryBuilder = queryBuilder;
   }
 
   /*
@@ -43,7 +47,7 @@ public class TagService extends DataService<TagEntity, QTagEntity> {
    */
   @Override
   public TagEntity getExisting(TagEntity newTag) {
-    return repo.findOne(query.name.eq(newTag.getName())).orElse(null);
+    return repo.findOne(queryBuilder.isName(newTag.getName())).orElse(null);
   }
 
   /**
@@ -54,7 +58,7 @@ public class TagService extends DataService<TagEntity, QTagEntity> {
    * @return the resource by activity
    */
   public Resources<?> getResourcesByActivity(String activityId) {
-    List<TagEntity> tags = repo.findAll(query.activities.any().id.eq(activityId));
+    List<TagEntity> tags = repo.findAll(queryBuilder.anyActivityId(activityId));
     
     if (tags == null || tags.isEmpty()) {
       throw new NotFoundException(activityId);
@@ -83,8 +87,7 @@ public class TagService extends DataService<TagEntity, QTagEntity> {
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.name.likeIgnoreCase(filter)
-        .or(query.description.likeIgnoreCase(filter));
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 
 }

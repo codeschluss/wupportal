@@ -1,7 +1,6 @@
 package de.codeschluss.portal.core.common;
 
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.EntityPathBase;
 
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
@@ -26,15 +25,13 @@ import org.springframework.hateoas.Resources;
  * @param <R>
  *          the generic type
  */
-public abstract class DataService<E extends BaseEntity, Q extends EntityPathBase<E>> {
+public abstract class DataService<E extends BaseEntity> {
 
   /** The repo. */
   protected final DataRepository<E> repo;
 
   /** The assembler. */
   protected final PagingAndSortingAssembler<E> assembler;
-  
-  protected final Q query;
 
   /** The default sort prop. */
   protected final String defaultSortProp = "id";
@@ -49,11 +46,9 @@ public abstract class DataService<E extends BaseEntity, Q extends EntityPathBase
    */
   public DataService(
       DataRepository<E> repo, 
-      PagingAndSortingAssembler<E> assembler,
-      Q query) {
+      PagingAndSortingAssembler<E> assembler) {
     this.repo = repo;
     this.assembler = assembler;
-    this.query = query;
   }
 
   /**

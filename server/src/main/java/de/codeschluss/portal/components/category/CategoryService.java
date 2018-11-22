@@ -5,6 +5,7 @@ import com.querydsl.core.types.Predicate;
 import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
+import org.springframework.data.querydsl.binding.QuerydslPredicateBuilder;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Service;
  * The Class CategoryService.
  */
 @Service
-public class CategoryService extends DataService<CategoryEntity, QCategoryEntity> {
+public class CategoryService extends DataService<CategoryEntity> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
+  
+  private final CategoryQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new category service.
@@ -28,8 +31,10 @@ public class CategoryService extends DataService<CategoryEntity, QCategoryEntity
    */
   public CategoryService(
       CategoryRepository repo, 
-      CategoryResourceAssembler assembler) {
-    super(repo, assembler, QCategoryEntity.categoryEntity);
+      CategoryResourceAssembler assembler,
+      CategoryQueryBuilder queryBuilder) {
+    super(repo, assembler);
+    this.queryBuilder = queryBuilder;
   }
 
   /*
@@ -40,7 +45,7 @@ public class CategoryService extends DataService<CategoryEntity, QCategoryEntity
    * portal.core.common.BaseEntity)
    */
   public CategoryEntity getExisting(CategoryEntity newCategory) {
-    return repo.findOne(query.name.eq(newCategory.getName())).orElse(null);
+    return repo.findOne(queryBuilder.isName(newCategory.getName())).orElse(null);
   }
 
   /**
@@ -51,7 +56,7 @@ public class CategoryService extends DataService<CategoryEntity, QCategoryEntity
    * @return the resource by activity
    */
   public Resource<CategoryEntity> getResourceByActivity(String activityId) {
-    CategoryEntity category = repo.findOne(query.activities.any().id.eq(activityId))
+    CategoryEntity category = repo.findOne(queryBuilder.anyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
     return assembler.toResource(category);
   }
@@ -78,7 +83,6 @@ public class CategoryService extends DataService<CategoryEntity, QCategoryEntity
   @Override
   protected Predicate getFilteredPredicate(String filter) {
     filter = prepareFilter(filter);
-    return query.name.likeIgnoreCase(filter)
-        .or(query.description.likeIgnoreCase(filter));
+    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

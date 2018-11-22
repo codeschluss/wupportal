@@ -7,12 +7,12 @@ import de.codeschluss.portal.core.common.DataService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TranslationService extends DataService<TranslationEntity, QTranslationEntity> {
+public class TranslationService extends DataService<TranslationEntity> {
 
   public TranslationService(
       TranslationRepository repo, 
       TranslationResourceAssembler assembler) {
-    super(repo, assembler, QTranslationEntity.translationEntity);
+    super(repo, assembler);
   }
 
   @Override

@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -47,7 +47,7 @@ public class TagControllerFindAllTest {
     assertThat(result.getContent()).isNotEmpty();
   }
 
-  @Test(expected = InvalidDataAccessApiUsageException.class)
+  @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
     FilterSortPaginate params = new FilterSortPaginate("tag", 1, 5, "blablabla123", "wrong");
     controller.findAll(params);

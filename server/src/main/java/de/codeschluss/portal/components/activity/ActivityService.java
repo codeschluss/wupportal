@@ -371,6 +371,7 @@ public class ActivityService extends DataService<ActivityEntity, QActivityEntity
 
   @Override
   protected Predicate getFilteredPredicate(String filter) {
+    filter = prepareFilter(filter);
     return query.name.likeIgnoreCase(filter)
         .or(query.description.likeIgnoreCase(filter))
         .or(query.address.street.likeIgnoreCase(filter))

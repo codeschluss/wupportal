@@ -90,6 +90,7 @@ public class ScheduleService extends DataService<ScheduleEntity, QScheduleEntity
 
   @Override
   protected Predicate getFilteredPredicate(String filter) {
+    filter = prepareFilter(filter);
     return query.activity.name.eq(filter);
   }
 }

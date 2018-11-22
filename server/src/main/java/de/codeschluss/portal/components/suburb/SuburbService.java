@@ -72,6 +72,7 @@ public class SuburbService extends DataService<SuburbEntity, QSuburbEntity> {
 
   @Override
   protected Predicate getFilteredPredicate(String filter) {
+    filter = prepareFilter(filter);
     return query.name.likeIgnoreCase(filter);
   }
 }

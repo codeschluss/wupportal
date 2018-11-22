@@ -132,6 +132,7 @@ public class OrganisationService extends DataService<OrganisationEntity, QOrgani
 
   @Override
   protected Predicate getFilteredPredicate(String filter) {
+    filter = prepareFilter(filter);
     return query.name.likeIgnoreCase(filter)
         .or(query.mail.likeIgnoreCase(filter))
         .or(query.phone.likeIgnoreCase(filter))

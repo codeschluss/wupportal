@@ -118,7 +118,8 @@ public class AddressService extends DataService<AddressEntity, QAddressEntity> {
    * @see de.codeschluss.portal.core.common.DataService#getFilteredPredicate(java.lang.String)
    */
   @Override
-  protected Predicate getFilteredPredicate(String filter) { 
+  protected Predicate getFilteredPredicate(String filter) {
+    filter = prepareFilter(filter);
     return query.houseNumber.likeIgnoreCase(filter)
         .or(query.place.likeIgnoreCase(filter))
         .or(query.postalCode.likeIgnoreCase(filter))

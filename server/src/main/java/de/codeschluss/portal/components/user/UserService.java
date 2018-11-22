@@ -220,8 +220,9 @@ public class UserService extends DataService<UserEntity, QUserEntity> {
 
   @Override
   protected Predicate getFilteredPredicate(String filter) {
-    return query.fullname.likeIgnoreCase(prepareFilter(filter))
-        .or(query.username.likeIgnoreCase(prepareFilter(filter)))
-        .or(query.phone.likeIgnoreCase(prepareFilter(filter)));
+    filter = prepareFilter(filter);
+    return query.fullname.likeIgnoreCase(filter)
+        .or(query.username.likeIgnoreCase(filter))
+        .or(query.phone.likeIgnoreCase(filter));
   }
 }

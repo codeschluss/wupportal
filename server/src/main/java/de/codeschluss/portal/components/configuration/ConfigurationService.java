@@ -35,6 +35,7 @@ public class ConfigurationService
 
   @Override
   protected Predicate getFilteredPredicate(String filter) {
-    return query.item.equalsIgnoreCase(filter);
+    filter = prepareFilter(filter);
+    return query.item.likeIgnoreCase(filter);
   }
 }

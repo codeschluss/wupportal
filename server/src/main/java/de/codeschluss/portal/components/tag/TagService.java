@@ -82,6 +82,7 @@ public class TagService extends DataService<TagEntity, QTagEntity> {
 
   @Override
   protected Predicate getFilteredPredicate(String filter) {
+    filter = prepareFilter(filter);
     return query.name.likeIgnoreCase(filter)
         .or(query.description.likeIgnoreCase(filter));
   }

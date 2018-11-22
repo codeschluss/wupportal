@@ -82,6 +82,7 @@ public class TargetGroupService extends DataService<TargetGroupEntity, QTargetGr
 
   @Override
   protected Predicate getFilteredPredicate(String filter) {
+    filter = prepareFilter(filter);
     return query.name.likeIgnoreCase(filter)
         .or(query.description.likeIgnoreCase(filter));
   }

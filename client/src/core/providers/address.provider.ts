@@ -31,7 +31,9 @@ export class AddressProvider
     protected injector: Injector,
     protected service: AddressControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
   public create: (model: AddressModel) => Promise<any>;
 

@@ -35,6 +35,8 @@ export class SuburbProvider
     protected injector: Injector,
     protected service: SuburbControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
 }

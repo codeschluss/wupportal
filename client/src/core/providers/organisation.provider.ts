@@ -42,7 +42,9 @@ export class OrganisationProvider
     protected injector: Injector,
     protected service: OrganisationControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
   public create: (model: OrganisationModel) => Promise<any>;
 

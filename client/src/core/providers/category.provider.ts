@@ -35,6 +35,8 @@ export class CategoryProvider
     protected injector: Injector,
     protected service: CategoryControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
 }

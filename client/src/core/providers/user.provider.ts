@@ -37,7 +37,9 @@ export class UserProvider
     protected injector: Injector,
     protected service: UserControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
   public create: (model: UserModel) => Promise<any>;
 

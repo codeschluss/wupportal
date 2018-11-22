@@ -35,6 +35,8 @@ export class TargetGroupProvider
     protected injector: Injector,
     protected service: TargetGroupControllerService,
     protected snackbar: MatSnackBar
-  ) { super(); }
+  ) {
+    super();
+  }
 
 }

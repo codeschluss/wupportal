@@ -1,5 +1,4 @@
 import { Injectable, Injector } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { ActivityControllerService } from '../api/services/activity-controller.service';
 import { CrudService } from '../crud/crud.provider';
 import { ActivityModel } from '../models/activity.model';
@@ -65,8 +64,7 @@ export class ActivityProvider
 
   public constructor(
     protected injector: Injector,
-    protected service: ActivityControllerService,
-    protected snackbar: MatSnackBar
+    protected service: ActivityControllerService
   ) {
     super();
   }

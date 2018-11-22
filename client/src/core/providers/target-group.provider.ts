@@ -1,5 +1,4 @@
 import { Injectable, Injector } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { TargetGroupControllerService } from '../api/services/target-group-controller.service';
 import { CrudService } from '../crud/crud.provider';
 import { TargetGroupModel } from '../models/target-group.model';
@@ -33,8 +32,7 @@ export class TargetGroupProvider
 
   public constructor(
     protected injector: Injector,
-    protected service: TargetGroupControllerService,
-    protected snackbar: MatSnackBar
+    protected service: TargetGroupControllerService
   ) {
     super();
   }

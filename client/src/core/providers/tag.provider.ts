@@ -1,5 +1,4 @@
 import { Injectable, Injector } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { TagControllerService } from '../api/services/tag-controller.service';
 import { CrudService } from '../crud/crud.provider';
 import { TagModel } from '../models/tag.model';
@@ -33,8 +32,7 @@ export class TagProvider
 
   public constructor(
     protected injector: Injector,
-    protected service: TagControllerService,
-    protected snackbar: MatSnackBar
+    protected service: TagControllerService
   ) {
     super();
   }

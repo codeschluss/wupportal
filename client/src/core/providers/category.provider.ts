@@ -1,5 +1,4 @@
 import { Injectable, Injector } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { CategoryControllerService } from '../api/services/category-controller.service';
 import { CrudService } from '../crud/crud.provider';
 import { CategoryModel } from '../models/category.model';
@@ -33,8 +32,7 @@ export class CategoryProvider
 
   public constructor(
     protected injector: Injector,
-    protected service: CategoryControllerService,
-    protected snackbar: MatSnackBar
+    protected service: CategoryControllerService
   ) {
     super();
   }

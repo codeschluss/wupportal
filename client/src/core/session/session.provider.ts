@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, empty, Subscription, timer } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 import { AccessTokenModel } from '../auth/access-token.model';
 import { RefreshTokenModel } from '../auth/refresh-token.model';
 import { TokenService } from '../auth/token.service';
@@ -13,7 +13,7 @@ export class SessionProvider {
 
   private session: BehaviorSubject<SessionModel>;
 
-  private timeout: NodeJS.Timeout;
+  private timeout: Subscription = empty().subscribe();
 
   public constructor(
     private service: TokenService,
@@ -23,6 +23,12 @@ export class SessionProvider {
   ) {
     (this.session = new BehaviorSubject<SessionModel>(resolver.session))
       .subscribe(session => this.storage.setItemSubscribe('session', session));
+
+    this.session.pipe(take(1)).subscribe(() => this.worker());
+  }
+
+  public get current(): SessionModel {
+    return this.session.value;
   }
 
   public like(id: string): void {
@@ -41,6 +47,7 @@ export class SessionProvider {
   }
 
   public logout(): void {
+    this.timeout.unsubscribe();
     this.update({
       access: new AccessTokenModel(),
       refresh: new RefreshTokenModel()
@@ -52,10 +59,6 @@ export class SessionProvider {
       tap((response) => this.update(response.body)),
       tap(() => this.worker())
     ).toPromise();
-  }
-
-  public status(): SessionModel {
-    return this.session.value;
   }
 
   public subscribe(next: (value: SessionModel) => void): Subscription {
@@ -73,9 +76,9 @@ export class SessionProvider {
     const refresh = this.session.value.refreshToken.exp * 1000 - Date.now();
     const worktime = this.session.value.accessToken.exp * 1000 - Date.now();
 
-    !this.timeout && refresh > 0
-      ? this.timeout = setTimeout(() => this.refresh(), worktime)
-      : this.timeout = this.logout() as any;
+    this.timeout.closed && refresh > 0
+      ? this.timeout = timer(worktime).subscribe(() => this.refresh())
+      : this.logout();
   }
 
 }

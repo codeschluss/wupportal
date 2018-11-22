@@ -1,11 +1,11 @@
 import { OrganisationEntity } from '../api/models/organisation-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 import { ActivityModel } from './activity.model';
 import { AddressModel } from './address.model';
 import { UserModel } from './user.model';
 
 export class OrganisationModel
-  extends BaseModel implements OrganisationEntity {
+  extends CrudModel implements OrganisationEntity {
 
   public description: string;
   public image: any;

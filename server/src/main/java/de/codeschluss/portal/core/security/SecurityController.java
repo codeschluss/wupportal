@@ -2,6 +2,9 @@ package de.codeschluss.portal.core.security;
 
 import static org.springframework.http.ResponseEntity.ok;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.codeschluss.portal.core.exception.InvalidTokenException;
 import de.codeschluss.portal.core.security.services.JwtTokenService;
 import de.codeschluss.portal.core.security.services.JwtUserDetailsService;
@@ -11,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -47,11 +52,17 @@ public class SecurityController {
    */
   @GetMapping("/refresh")
   public ResponseEntity<String> refreshToken(HttpServletRequest req) throws Exception {
-    String token = req.getHeader("Authorization");
-    tokenService.verifyRefresh(token);
+    String refreshToken = req.getHeader("Authorization");
+    tokenService.verifyRefresh(refreshToken);
+
+    String username = tokenService.extractUsername(refreshToken);
+    String accessToken = tokenService.createAccessToken(userDetailService.loadUserByUsername(username));
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    Map<String, String> tokenMap = new HashMap<String, String>();
+    tokenMap.put("access", accessToken);
     
-    String username = tokenService.extractUsername(token);
-    return ok(tokenService.createAccessToken(userDetailService.loadUserByUsername(username)));
+    return ok(objectMapper.writeValueAsString(tokenMap));
   }
 
 }

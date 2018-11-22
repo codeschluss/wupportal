@@ -1,10 +1,10 @@
 import { UserEntity } from '../api/models/user-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 import { ActivityModel } from './activity.model';
 import { OrganisationModel } from './organisation.model';
 
 export class UserModel
-  extends BaseModel implements UserEntity {
+  extends CrudModel implements UserEntity {
 
   public fullname: string;
   public password: string;

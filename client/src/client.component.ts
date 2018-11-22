@@ -31,6 +31,8 @@ export class ClientComponent {
     _userProvider: UserProvider
   ) {
     apiConfiguration.rootUrl = '/api';
+    apiConfiguration['authUrl'] = '/api/login';
+    apiConfiguration['refreshUrl'] = '/api/refresh';
   }
 
 }

@@ -1,12 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { SuburbControllerService } from '../api/services/suburb-controller.service';
-import { BaseProvider } from '../base/base.provider';
+import { CrudService } from '../crud/crud.provider';
 import { SuburbModel } from '../models/suburb.model';
 
 @Injectable({ providedIn: 'root' })
 export class SuburbProvider
-  extends BaseProvider<SuburbControllerService, SuburbModel> {
+  extends CrudService<SuburbControllerService, SuburbModel> {
 
   public create: (model: SuburbModel) => Promise<any>;
 
@@ -16,7 +16,7 @@ export class SuburbProvider
 
   public findOne: (id: string) => Promise<SuburbModel>;
 
-  public findAll: (params: SuburbControllerService
+  public findAll: (params?: SuburbControllerService
     .SuburbControllerFindAllParams) => Promise<SuburbModel[]>;
 
   protected linked = [];

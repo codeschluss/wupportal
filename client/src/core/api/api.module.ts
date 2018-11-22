@@ -8,6 +8,7 @@ import { AddressControllerService } from './services/address-controller.service'
 import { CategoryControllerService } from './services/category-controller.service';
 import { ConfigurationControllerService } from './services/configuration-controller.service';
 import { OrganisationControllerService } from './services/organisation-controller.service';
+import { SecurityControllerService } from './services/security-controller.service';
 import { SuburbControllerService } from './services/suburb-controller.service';
 import { TagControllerService } from './services/tag-controller.service';
 import { TargetGroupControllerService } from './services/target-group-controller.service';
@@ -31,6 +32,7 @@ import { UserControllerService } from './services/user-controller.service';
     CategoryControllerService,
     ConfigurationControllerService,
     OrganisationControllerService,
+    SecurityControllerService,
     SuburbControllerService,
     TagControllerService,
     TargetGroupControllerService,

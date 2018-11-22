@@ -1,8 +1,8 @@
 import { ScheduleEntity } from '../api/models/schedule-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 
 export class ScheduleModel
-  extends BaseModel implements ScheduleEntity {
+  extends CrudModel implements ScheduleEntity {
 
   public endDate: string;
   public startDate: string;

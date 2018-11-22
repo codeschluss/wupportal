@@ -1,13 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { AddressControllerService } from '../api/services/address-controller.service';
-import { BaseProvider } from '../base/base.provider';
+import { CrudService } from '../crud/crud.provider';
 import { AddressModel } from '../models/address.model';
 import { SuburbModel } from '../models/suburb.model';
 
 @Injectable({ providedIn: 'root' })
 export class AddressProvider
-  extends BaseProvider<AddressControllerService, AddressModel> {
+  extends CrudService<AddressControllerService, AddressModel> {
 
   protected linked = [
     {
@@ -41,7 +41,7 @@ export class AddressProvider
 
   public findOne: (id: string) => Promise<AddressModel>;
 
-  public findAll: (params: AddressControllerService
+  public findAll: (params?: AddressControllerService
     .AddressControllerFindAllParams) => Promise<AddressModel[]>;
 
   public relinkSuburb:

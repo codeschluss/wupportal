@@ -1,8 +1,8 @@
 import { TagEntity } from '../api/models/tag-entity';
-import { BaseModel } from '../base/base.model';
+import { CrudModel } from '../crud/crud.model';
 
 export class TagModel
-  extends BaseModel implements TagEntity {
+  extends CrudModel implements TagEntity {
 
   public description: string;
   public name: string;

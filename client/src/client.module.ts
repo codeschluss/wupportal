@@ -9,10 +9,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { ApiModule } from './core/api/api.module';
-import { AuthInterceptor } from './core/auth/auth.interceptor';
-import { BaseProvider } from './core/base/base.provider';
-import { ClientUrlSerializer } from './core/base/serializer';
+import { TokenInterceptor } from './core/auth/token.interceptor';
+import { CrudService } from './core/crud/crud.provider';
 import { I18nComponent } from './core/i18n/i18n.component';
+import { I18nInterceptor } from './core/i18n/i18n.interceptor';
+import { ClientUrlSerializer } from './core/utils/serializer';
 
 fontawesome.add(fas);
 
@@ -22,12 +23,12 @@ const ClientDeclarations = [
 ];
 
 const ClientImports = [
-  BaseProvider.imports,
-  I18nComponent.imports
+  CrudService.imports
 ];
 
 const ClientProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
   { provide: UrlSerializer, useClass: ClientUrlSerializer }
 ];
 

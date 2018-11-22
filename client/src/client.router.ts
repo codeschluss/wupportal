@@ -3,9 +3,6 @@ import { RouterModule } from '@angular/router';
 import { I18nResolver } from './core/i18n/i18n.resolver';
 import { SessionResolver } from './core/session/session.resolver';
 
-const ClientProviders = [
-];
-
 const ClientResolvers = {
   session: SessionResolver,
   xlf: I18nResolver
@@ -35,8 +32,7 @@ const ClientRoutes = [
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forRoot(ClientRoutes)],
-  providers: ClientProviders,
+  imports: [RouterModule.forRoot(ClientRoutes)]
 })
 
 export class ClientRouter { }

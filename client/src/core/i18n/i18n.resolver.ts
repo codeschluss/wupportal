@@ -6,7 +6,7 @@ import { SessionResolver } from '../session/session.resolver';
 @Injectable({ providedIn: 'root' })
 export class I18nResolver implements Resolve<string> {
 
-  public translation: string;
+  public xlf: string;
 
   public constructor(
     private httpClient: HttpClient,
@@ -14,16 +14,14 @@ export class I18nResolver implements Resolve<string> {
   ) { }
 
   public resolve(): Promise<string> {
-    return this.translation
-      ? Promise.resolve(this.translation)
-      : this.resource();
+    return this.xlf ? Promise.resolve(this.xlf) : this.resource();
   }
 
   private async resource(): Promise<string> {
     const session = await this.session.resolve();
     const url = `/i18n/strings.${session.language}.xlf`;
     const request = this.httpClient.get(url, { responseType: 'text' });
-    return this.translation = await request.toPromise();
+    return this.xlf = await request.toPromise();
   }
 
 }

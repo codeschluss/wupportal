@@ -26,7 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    if (this.accessToken.exp && this.refreshToken.exp) {
+    if (this.accessToken.raw && this.refreshToken.raw) {
       switch (request.url) {
         case this.apiConfiguration['authUrl']: request = request.clone({
           setHeaders: { 'Authorization': `Bearer ${this.accessToken.raw}` }
@@ -37,7 +37,6 @@ export class TokenInterceptor implements HttpInterceptor {
         }); break;
       }
     }
-
 
     return next.handle(request);
   }

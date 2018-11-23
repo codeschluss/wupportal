@@ -104,10 +104,17 @@ h2 {
   opacity: 1 !important;
 }
 
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  z-index: -1 !important;
+  background-color: #dd574a !important;
+}
+
+.mat-ink-bar {
+  height: 50px !important;
+}
+
 .mat-tab-label-active{
-  background-color: mat-color($custom-primary) !important;
-  color: #ffffff !important;
-  opacity: 1 !important;
+  color: mat-color($custom-primary, default-contrast) !important;
 }
 
 .mat-tab-label,
@@ -120,135 +127,23 @@ h2 {
     }
   }
 
+// Stepper styles
+.mat-step-label-selected {
+  color: mat-color($custom-primary, default-contrast) !important;
+}
 
-// @mixin _mat-tabs-background($background-color) {
-//   // Set background color for the tab group
-//   .mat-tab-header, .mat-tab-links {
-//     background-color: mat-color($background-color) !important;
-//   }
+.mat-step-header{
+  margin-right: 5px;
+  border: 1px solid mat-color($custom-primary) !important;
+  opacity: 1 !important;
+}
 
-//   // Set labels to contrast against background
-//   .mat-tab-label, .mat-tab-link {
-//     color: mat-color($background-color, default-contrast) !important;
+.mat-step-header[aria-selected=true]{
+  background-color: mat-color($custom-primary) !important;
+}
 
-//     &.mat-tab-disabled {
-//       color: mat-color($background-color, default-contrast) !important;
-//     }
-//   }
+.mat-step-header .mat-step-icon {
+  display: none;
+}
 
-//   // Set pagination chevrons to contrast background
-//   .mat-tab-header-pagination-chevron {
-//     border-color: mat-color($background-color, default-contrast) !important;
-//   }
-
-//   .mat-tab-header-pagination-disabled .mat-tab-header-pagination-chevron {
-//     border-color: mat-color($background-color, default-contrast) !important;
-//   }
-
-//   // Set ripples color to be the contrast color of the new background. Otherwise the ripple
-//   // color will be based on the app background color.
-//   .mat-ripple-element {
-//     background-color: mat-color($background-color) !important;
-//   }
-// }
-
-
-// @mixin _mat-ink-bar($color, $hue: default) {
-//   .mat-ink-bar {
-//     background-color: mat-color($color) !important;
-//   }
-// }
-
-// @mixin _mat-tab-label-focus($tab-focus-color) {
-//   .mat-tab-label,
-//   .mat-tab-link {
-//     &.cdk-keyboard-focused,
-//     &.cdk-program-focused {
-//       &:not(.mat-tab-disabled) {
-//         background-color: mat-color($tab-focus-color) !important;
-//       }
-//     }
-//   }
-// }
-
-
-
-// @mixin custom-mat-tabs-theme($theme) {
-//   $primary: map-get($theme, primary);
-//   $accent: map-get($theme, accent);
-//   $warn: map-get($theme, warn);
-//   $background: $primary;
-//   $foreground: map-get($theme, foreground);
-//   $header-border: 1px solid mat-color($foreground, divider);
-
-//   .mat-tab-nav-bar,
-//   .mat-tab-header {
-//     border: $header-border !important;
-//   }
-
-//   .mat-tab-group-inverted-header {
-//     .mat-tab-nav-bar,
-//     .mat-tab-header {
-//       border-top: $header-border !important;
-//       border-bottom: none !important;
-//     }
-//   }
-
-//   .mat-tab-label, .mat-tab-link {
-//     color: mat-color($foreground, text) !important;
-
-//     &.mat-tab-disabled {
-//       color: mat-color($foreground, disabled-text) !important;
-//     }
-//   }
-
-//   .mat-tab-header-pagination-chevron {
-//     border-color: mat-color($foreground, text) !important;
-//   }
-
-//   .mat-tab-header-pagination-disabled .mat-tab-header-pagination-chevron {
-//     border-color: mat-color($foreground, disabled-text) !important;
-//   }
-
-//   // Remove header border when there is a background color
-//   .mat-tab-group[class*='mat-background-'] .mat-tab-header,
-//   .mat-tab-nav-bar[class*='mat-background-'] {
-//     border: mat-color($primary) solid !important;
-//     // border-bottom: none;
-//     // border-top: none;
-//   }
-
-//   .mat-tab-group, .mat-tab-nav-bar {
-//     $theme-colors: (
-//       primary: $primary,
-//       accent: $accent,
-//       warn: $warn
-//     );
-
-//     @each $name, $color in $theme-colors {
-//       // Set the foreground color of the tabs
-//       &.mat-#{$name} {
-//         @include _mat-tab-label-focus($primary);
-//         @include _mat-ink-bar($primary);
-
-//         // Override ink bar when background color is the same
-//         &.mat-background-#{$name} {
-//           @include _mat-ink-bar($primary);
-//         }
-//       }
-//     }
-
-//     @each $name, $color in $theme-colors {
-//       // Set background color of the tabs and override focus color
-//       &.mat-background-#{$name} {
-//         @include _mat-tab-label-focus($primary);
-//         @include _mat-tabs-background($primary);
-//       }
-//     }
-//   }
-// }
-
-
-
-// @include custom-mat-tabs-theme($custom-theme);
-  
+// todo marging

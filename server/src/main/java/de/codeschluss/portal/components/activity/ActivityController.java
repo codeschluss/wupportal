@@ -124,7 +124,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities")
-  public ResponseEntity<?> findAll(FilterSortPaginateCurrent params) {
+  public ResponseEntity<?> findAll(ActivityQueryParam params) {
     return super.findAll(params);
   }
 

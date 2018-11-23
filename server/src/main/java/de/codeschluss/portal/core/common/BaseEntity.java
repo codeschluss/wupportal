@@ -1,7 +1,6 @@
 package de.codeschluss.portal.core.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -52,11 +51,11 @@ public abstract class BaseEntity implements Serializable {
     return this.created;
   }
 
+  @JsonIgnore
   public void setCreated(Date created) {
     this.created = created;
   }
 
-  @JsonProperty
   public Date getModified() {
     return this.modified;
   }

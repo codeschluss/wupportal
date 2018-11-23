@@ -3,6 +3,7 @@ package de.codeschluss.portal.components.organisation;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
  * The Class OrganisationQueryBuilder.
  */
 @Service
-public class OrganisationQueryBuilder implements QueryBuilder {
+public class OrganisationQueryBuilder extends QueryBuilder {
 
   /** The query. */
   private final QOrganisationEntity query;
@@ -33,13 +34,13 @@ public class OrganisationQueryBuilder implements QueryBuilder {
     return query.name.eq(name);
   }
 
-  /**
-   * Fuzzy search.
-   *
-   * @param filter the filter
-   * @return the boolean expression
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.common.
+   * QueryBuilder#fuzzySearch(de.codeschluss.portal.core.utils.FilterSortPaginate)
    */
-  public BooleanExpression fuzzySearch(String filter) {
+  @Override
+  public BooleanExpression search(FilterSortPaginate params) {
+    String filter = prepareFilter(params.getFilter());
     return query.name.likeIgnoreCase(filter)
     .or(query.mail.likeIgnoreCase(filter))
     .or(query.phone.likeIgnoreCase(filter))

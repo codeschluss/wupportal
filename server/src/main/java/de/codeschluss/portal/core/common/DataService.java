@@ -1,7 +1,5 @@
 package de.codeschluss.portal.core.common;
 
-import com.querydsl.core.types.Predicate;
-
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
@@ -16,10 +14,8 @@ import org.springframework.data.domain.Sort;
 /**
  * The Class DataService.
  *
- * @param <E>
- *          the element type
- * @param <R>
- *          the generic type
+ * @param <E>          the element type
+ * @param <B> the generic type
  */
 public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> {
 
@@ -29,13 +25,14 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> 
   /** The default sort prop. */
   protected final String defaultSortProp = "id";
   
+  /** The entities. */
   protected final B entities;
 
   /**
    * Instantiates a new data service.
    *
-   * @param repo
-   *          the repo
+   * @param repo          the repo
+   * @param entities the entities
    */
   public DataService(
       DataRepository<E> repo,
@@ -139,19 +136,18 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> 
   /**
    * Gets the sorted list.
    *
-   * @param filter
-   *          the filter
-   * @param sort
-   *          the sort
+   * @param <P> the generic type
+   * @param params the params
    * @return the sorted list
    */
-  public List<E> getSortedList(String filter, Sort sort) {
-    List<E> result =  filter == null 
+  public <P extends FilterSortPaginate> List<E> getSortedList(P params) {
+    Sort sort = params.createSort(defaultSortProp);
+    List<E> result = params.isEmptyQuery()
         ? repo.findAll(sort)
-        : repo.findAll(getFilteredPredicate(filter), sort);
+        : repo.findAll(entities.search(params), sort);
     
     if (result == null || result.isEmpty()) {
-      throw new NotFoundException(filter);
+      throw new NotFoundException(params.toString());
     }
     
     return result;
@@ -160,39 +156,22 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> 
   /**
    * Gets the paged.
    *
-   * @param filter
-   *          the filter
-   * @param page
-   *          the page
+   * @param <P> the generic type
+   * @param params the params
    * @return the paged
    */
-  public Page<E> getPaged(String filter, PageRequest page) {
-    Page<E> paged = filter == null ? repo.findAll(page)
-        : repo.findAll(getFilteredPredicate(filter), page);
+  public <P extends FilterSortPaginate> Page<E> getPaged(P params) {
+    PageRequest page = PageRequest.of(
+        params.getPage(), params.getSize(), params.createSort(defaultSortProp));
+    
+    Page<E> paged = params.isEmptyQuery()
+        ? repo.findAll(page)
+        : repo.findAll(entities.search(params), page);
     
     if (paged == null || paged.isEmpty()) {
-      throw new NotFoundException(filter);
+      throw new NotFoundException(params.toString());
     }
     
     return paged;
-  }
-
-  /**
-   * Gets the sort.
-   *
-   * @param params
-   *          the params
-   * @return the sort
-   */
-  protected Sort getSort(FilterSortPaginate params) {
-    return params.createSort(defaultSortProp);
-  }
-
-  protected Predicate getFilteredPredicate(String filter) {
-    return this.entities.fuzzySearch(prepareFilter(filter));
-  }
-  
-  protected String prepareFilter(String filter) {
-    return "%" + filter + "%"; 
   }
 }

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
-import de.codeschluss.portal.components.activity.FilterSortPaginateCurrent;
+import de.codeschluss.portal.components.activity.ActivityQueryParam;
 
 import org.assertj.core.api.Condition;
 import org.junit.Test;
@@ -24,13 +24,13 @@ public class ActivityControllerFindAllTest {
   @Autowired
   private ActivityController controller;
 
-  private FilterSortPaginateCurrent params = new FilterSortPaginateCurrent("activity", 0, 5, "name",
-      "asc", true);
+  private ActivityQueryParam params = new ActivityQueryParam(
+      "activity", 0, 5, "name","asc", true, null, null, null);
 
   @Test
   public void findAllWithoutPaginationOk() {
-    FilterSortPaginateCurrent params = new FilterSortPaginateCurrent(null, null, null, "name",
-        "asc", true);
+    ActivityQueryParam params = new ActivityQueryParam(
+        null, null, null, "name", "asc", true, null, null, null);
 
     Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
 
@@ -39,8 +39,8 @@ public class ActivityControllerFindAllTest {
 
   @Test
   public void findAllEmptyParamsOk() {
-    FilterSortPaginateCurrent params = new FilterSortPaginateCurrent(null, null, null, null, null,
-        null);
+    ActivityQueryParam params = new ActivityQueryParam(
+        null, null, null, null, null, null, null, null, null);
 
     Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
 
@@ -56,8 +56,9 @@ public class ActivityControllerFindAllTest {
   @Test
   @SuppressWarnings("unchecked")
   public void findAllCurrentTrueOk() {
-    FilterSortPaginateCurrent params = new FilterSortPaginateCurrent(null, null, null, null, null,
-        true);
+    ActivityQueryParam params = new ActivityQueryParam(
+        null, null, null, null, null, true, null, null, null);
+    
     String noFutureActivityId = "00000000-0000-0000-0010-180000000000";
 
     Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller
@@ -70,8 +71,8 @@ public class ActivityControllerFindAllTest {
   @Test
   @SuppressWarnings("unchecked")
   public void findAllCurrentFalseOk() {
-    FilterSortPaginateCurrent params = new FilterSortPaginateCurrent(null, null, null, null, null,
-        false);
+    ActivityQueryParam params = new ActivityQueryParam(
+        null, null, null, null, null, false, null, null, null);
     String noFutureActivityId = "00000000-0000-0000-0010-180000000000";
 
     Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller
@@ -83,8 +84,8 @@ public class ActivityControllerFindAllTest {
 
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
-    FilterSortPaginateCurrent params = new FilterSortPaginateCurrent("activity", 1, 5,
-        "blablabla123", "wrong", true);
+    ActivityQueryParam params = new ActivityQueryParam(
+        "activity", 1, 5, "blablabla123", "wrong", true, null, null, null);
     controller.findAll(params);
   }
 }

@@ -1,7 +1,5 @@
 package de.codeschluss.portal.components.schedule;
 
-import com.querydsl.core.types.Predicate;
-
 import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
@@ -82,11 +80,5 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
       newSchedule.setId(id);
       return repo.save(newSchedule);
     });
-  }
-
-  @Override
-  protected Predicate getFilteredPredicate(String filter) {
-    filter = prepareFilter(filter);
-    return entities.fuzzySearch(filter);
   }
 }

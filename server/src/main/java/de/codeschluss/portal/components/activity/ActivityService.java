@@ -8,15 +8,9 @@ import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
 import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,99 +29,15 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   /**
    * Instantiates a new activity service.
    *
-   * @param repo
-   *          the repo
-   * @param assembler
-   *          the assembler
+   * @param repo          the repo
+   * @param entities the entities
+   * @param assembler          the assembler
    */
   public ActivityService(
       ActivityRepository repo, 
       ActivityQueryBuilder entities,
       ActivityResourceAssembler assembler) {
     super(repo, entities, assembler);
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.DataService#getSortedListResources(de.
-   * codeschluss.portal.core.utils.FilterSortPaginate)
-   */
-  @Override
-  public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P p) {
-    validateParams(p);
-
-    FilterSortPaginateCurrent params = (FilterSortPaginateCurrent) p;
-    String filter = params.getFilter();
-    Sort sort = getSort(params);
-
-    List<ActivityEntity> result = params.getCurrent() == null || !params.getCurrent()
-        ? getSortedList(filter, sort)
-        : getCurrentSortedList(filter, sort);
-    return assembler.entitiesToResources(result, params);
-  }
-
-  /**
-   * Gets the current sorted list.
-   *
-   * @param filter
-   *          the filter
-   * @param sort
-   *          the sort
-   * @return the current sorted list
-   */
-  private List<ActivityEntity> getCurrentSortedList(String filter, Sort sort) {
-    List<ActivityEntity> activities = filter == null 
-        ? repo.findAll(entities.withCurrentSchedulesOnly(), sort)
-        : repo.findAll(entities.fuzzyWithCurrentSchedulesOnly(filter), sort);
-        
-    if (activities == null || activities.isEmpty()) {
-      throw new NotFoundException(filter);
-    }
-    
-    return activities;
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.common.DataService#getPagedResources(de.
-   * codeschluss.portal.core.utils.FilterSortPaginate)
-   */
-  @Override
-  public <P extends FilterSortPaginate> PagedResources<Resource<ActivityEntity>> 
-      getPagedResources(P p) {
-    validateParams(p);
-
-    FilterSortPaginateCurrent params = (FilterSortPaginateCurrent) p;
-    String filter = params.getFilter();
-    PageRequest page = PageRequest.of(params.getPage(), params.getSize(), getSort(params));
-
-    Page<ActivityEntity> result = params.getCurrent() 
-        ? getCurrentPaged(filter, page)
-        : getPaged(filter, page);
-    return assembler.entitiesToPagedResources(result, params);
-  }
-
-  /**
-   * Gets the current paged.
-   *
-   * @param filter
-   *          the filter
-   * @param page
-   *          the page
-   * @return the current paged
-   */
-  public Page<ActivityEntity> getCurrentPaged(String filter, PageRequest page) {
-    Page<ActivityEntity> result = filter == null 
-        ? repo.findAll(entities.withCurrentSchedulesOnly(), page)
-        : repo.findAll(getFilteredPredicate(filter), page);
-        
-    if (result == null || result.isEmpty()) {
-      throw new NotFoundException(filter);
-    }
-    
-    return result;
   }
 
   /*
@@ -161,7 +71,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    * @return the by providers
    */
   public List<ActivityEntity> getByProviders(List<ProviderEntity> providers) {
-    List<ActivityEntity> result = repo.findAll(entities.withAnyOf(providers));
+    List<ActivityEntity> result = repo.findAll(entities.withAnyOfProviders(providers));
     
     if (result == null || result.isEmpty()) {
       throw new NotFoundException(providers.toString());
@@ -179,7 +89,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    * @return true, if is activity for provider
    */
   public boolean isActivityForProvider(String activityId, List<ProviderEntity> providers) {
-    return repo.exists(entities.forIdWithAnyOf(activityId, providers));
+    return repo.exists(entities.forIdWithAnyOfProviders(activityId, providers));
   }
 
   /*
@@ -349,20 +259,5 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
     ActivityEntity activity = getById(activityId);
     activity.getSchedules().removeIf(schedule -> scheduleIds.contains(schedule.getId()));
     repo.save(activity);
-  }
-
-  /**
-   * Validate params.
-   *
-   * @param <P>
-   *          the generic type
-   * @param p
-   *          the p
-   */
-  private <P extends FilterSortPaginate> void validateParams(P p) {
-    if (!(p instanceof FilterSortPaginateCurrent)) {
-      throw new RuntimeException(
-          "Must be of type " + FilterSortPaginateCurrent.class + " but is " + p.getClass());
-    }
   }
 }

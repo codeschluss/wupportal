@@ -3,6 +3,7 @@ package de.codeschluss.portal.components.provider;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
  * The Class ProviderQueryBuilder.
  */
 @Service
-public class ProviderQueryBuilder implements QueryBuilder {
+public class ProviderQueryBuilder extends QueryBuilder {
   
   /** The query. */
   private final QProviderEntity query;
@@ -120,7 +121,8 @@ public class ProviderQueryBuilder implements QueryBuilder {
    * @see de.codeschluss.portal.core.common.QueryBuilder#fuzzySearch(java.lang.String)
    */
   @Override
-  public BooleanExpression fuzzySearch(String filter) {
+  public BooleanExpression search(FilterSortPaginate params) {
+    String filter = prepareFilter(params.getFilter());
     return query.activities.any().name.likeIgnoreCase(filter)
         .or(query.organisation.name.likeIgnoreCase(filter))
         .or(query.user.username.likeIgnoreCase(filter));

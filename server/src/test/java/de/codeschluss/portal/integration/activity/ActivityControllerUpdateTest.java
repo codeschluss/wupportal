@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
-import de.codeschluss.portal.components.activity.FilterSortPaginateCurrent;
+import de.codeschluss.portal.components.activity.ActivityQueryParam;
 
 import java.net.URISyntaxException;
 
@@ -90,7 +90,7 @@ public class ActivityControllerUpdateTest {
   @SuppressWarnings("unchecked")
   private void assertContaining(ActivityEntity activity) {
     Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller
-        .findAll(new FilterSortPaginateCurrent()).getBody();
+        .findAll(new ActivityQueryParam()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getName().equals(activity.getName()), "activity exists"));
   }

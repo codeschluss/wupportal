@@ -15,6 +15,7 @@ import { I18nInterceptor } from './core/i18n/i18n.interceptor';
 import { ClientErrorComponent } from './core/utils/error.component';
 import { ClientErrorHandler } from './core/utils/error.handler';
 import { ClientUrlSerializer } from './core/utils/serializer';
+import { LayoutComponent } from './views/layout/layout.component';
 
 fontawesome.add(freeicons);
 
@@ -37,7 +38,8 @@ const ClientDeclarations = [
 
 const ClientImports = [
   ClientErrorHandler.imports,
-  ClientErrorComponent.imports
+  ClientErrorComponent.imports,
+  LayoutComponent.imports
 ];
 
 @NgModule({

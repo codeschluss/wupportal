@@ -97,6 +97,14 @@ h2 {
   font-size: 11px;
 }
 
+.background-color-primary {
+  background-color: mat-color($custom-primary) !important;
+}
+
+.background-color-secondary {
+  background-color: mat-color($custom-secondary) !important;
+}
+
 // Tabs styles
 .mat-tab-label{
   margin-right: 5px;

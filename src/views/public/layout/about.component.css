@@ -1,7 +1,6 @@
 .roundPin {
   padding: 1% auto;
   position: absolute;
-  background-color: #DD574A;
   color:#fff;
   margin: 5px auto;
   width: 200px;
@@ -28,13 +27,11 @@
 
 .header {
   position: relative;
-  background-color: #FDF6E1;
   width: 100%;
   margin-top: 60px;
 }
 
 #activity-carousel {
-  background-color: #FDF6E1;
   height: 350px;
   padding-top: 20px;
 }

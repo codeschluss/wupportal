@@ -2,20 +2,20 @@ package de.codeschluss.portal.core.security;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.codeschluss.portal.core.exception.InvalidTokenException;
 import de.codeschluss.portal.core.security.services.JwtTokenService;
 import de.codeschluss.portal.core.security.services.JwtUserDetailsService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 // TODO: Auto-generated Javadoc
 /**

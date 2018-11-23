@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resources;
 import org.springframework.security.access.AccessDeniedException;
@@ -53,7 +53,7 @@ public class UserControllerFindAllTest {
     assertThat(result.getContent()).isNotEmpty();
   }
 
-  @Test(expected = InvalidDataAccessApiUsageException.class)
+  @Test(expected = PropertyReferenceException.class)
   @WithUserDetails("super@user")
   public void findAllWrongParamsSuperUser() {
     FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "blablabla123", "wrong");

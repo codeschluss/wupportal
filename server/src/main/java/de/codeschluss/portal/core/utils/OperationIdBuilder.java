@@ -1,4 +1,4 @@
-package de.codeschluss.portal.core.common;
+package de.codeschluss.portal.core.utils;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

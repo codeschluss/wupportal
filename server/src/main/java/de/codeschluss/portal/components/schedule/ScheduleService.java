@@ -1,12 +1,14 @@
 package de.codeschluss.portal.components.schedule;
 
-import de.codeschluss.portal.core.common.DataService;
+import com.querydsl.core.types.Predicate;
+
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service;
  * The Class ScheduleService.
  */
 @Service
-public class ScheduleService extends DataService<ScheduleEntity, ScheduleRepository> {
+public class ScheduleService extends ResourceDataService<ScheduleEntity, ScheduleQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "startDate";
@@ -27,15 +29,19 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
    * @param assembler
    *          the assembler
    */
-  public ScheduleService(ScheduleRepository repo, ScheduleResourceAssembler assembler) {
-    super(repo, assembler);
+  @Autowired
+  public ScheduleService(
+      ScheduleRepository repo, 
+      ScheduleQueryBuilder entities,
+      ScheduleResourceAssembler assembler) {
+    super(repo, entities, assembler);
   }
 
   /*
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
@@ -50,17 +56,20 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
    *          the activity id
    * @return the resource by activity
    */
-  public Object getResourceByActivity(String activityId) {
-    List<ScheduleEntity> schedules = repo
-        .findByActivityIdAndFutureOnly(activityId, new Sort(Direction.ASC, defaultSortProp))
-        .orElseThrow(() -> new NotFoundException(activityId));
+  public Resources<?> getResourceByActivity(String activityId) {
+    List<ScheduleEntity> schedules = repo.findAll(
+        entities.forActivityAndCurrentOnly(activityId));
+    if (schedules == null || schedules.isEmpty()) {
+      throw new NotFoundException(activityId);
+    }
+    
     return assembler.entitiesToResources(schedules, null);
   }
 
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
+   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
    * de.codeschluss.portal.core.common.BaseEntity)
    */
   @Override
@@ -73,5 +82,11 @@ public class ScheduleService extends DataService<ScheduleEntity, ScheduleReposit
       newSchedule.setId(id);
       return repo.save(newSchedule);
     });
+  }
+
+  @Override
+  protected Predicate getFilteredPredicate(String filter) {
+    filter = prepareFilter(filter);
+    return entities.fuzzySearch(filter);
   }
 }

@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.tag;
 
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * The Class TagService.
  */
 @Service
-public class TagService extends DataService<TagEntity, TagRepository> {
+public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
@@ -26,20 +26,23 @@ public class TagService extends DataService<TagEntity, TagRepository> {
    * @param assembler
    *          the assembler
    */
-  public TagService(TagRepository repo, TagResourceAssembler assembler) {
-    super(repo, assembler);
+  public TagService(
+      TagRepository repo, 
+      TagResourceAssembler assembler,
+      TagQueryBuilder entities) {
+    super(repo, entities, assembler);
   }
 
   /*
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
   public TagEntity getExisting(TagEntity newTag) {
-    return repo.findByName(newTag.getName()).orElse(null);
+    return repo.findOne(entities.withName(newTag.getName())).orElse(null);
   }
 
   /**
@@ -49,16 +52,19 @@ public class TagService extends DataService<TagEntity, TagRepository> {
    *          the activity id
    * @return the resource by activity
    */
-  public Resources<?> getResourceByActivity(String activityId) {
-    List<TagEntity> tags = repo.findByActivitiesId(activityId)
-        .orElseThrow(() -> new NotFoundException(activityId));
+  public Resources<?> getResourcesByActivity(String activityId) {
+    List<TagEntity> tags = repo.findAll(entities.withAnyActivityId(activityId));
+    
+    if (tags == null || tags.isEmpty()) {
+      throw new NotFoundException(activityId);
+    }
     return assembler.entitiesToResources(tags, null);
   }
 
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
+   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
    * de.codeschluss.portal.core.common.BaseEntity)
    */
   @Override
@@ -72,5 +78,4 @@ public class TagService extends DataService<TagEntity, TagRepository> {
       return repo.save(newTag);
     });
   }
-
 }

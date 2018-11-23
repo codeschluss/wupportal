@@ -1,7 +1,7 @@
 package de.codeschluss.portal.components.address;
 
 import de.codeschluss.portal.components.suburb.SuburbEntity;
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.springframework.hateoas.Resource;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * The Class AddressService.
  */
 @Service
-public class AddressService extends DataService<AddressEntity, AddressRepository> {
+public class AddressService extends ResourceDataService<AddressEntity, AddressQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "street";
@@ -25,20 +25,16 @@ public class AddressService extends DataService<AddressEntity, AddressRepository
    * @param assembler
    *          the assembler
    */
-  public AddressService(AddressRepository repo, AddressResourceAssembler assembler) {
-    super(repo, assembler);
+  public AddressService(
+      AddressRepository repo, 
+      AddressQueryBuilder entities,
+      AddressResourceAssembler assembler) {
+    super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
+  @Override
   public AddressEntity getExisting(AddressEntity address) {
-    return repo.findByHouseNumberAndPlaceAndPostalCodeAndStreet(address.getHouseNumber(),
-        address.getPlace(), address.getPostalCode(), address.getStreet()).orElse(null);
+    return repo.findOne(entities.withAddress(address)).orElse(null);
   }
 
   /**
@@ -49,7 +45,7 @@ public class AddressService extends DataService<AddressEntity, AddressRepository
    * @return the resources with suburbs by organisation
    */
   public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) {
-    AddressEntity address = repo.findByOrganisationsId(orgaId)
+    AddressEntity address = repo.findOne(entities.withAnyOrganisationId(orgaId))
         .orElseThrow(() -> new NotFoundException(orgaId));
     return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
   }
@@ -62,7 +58,7 @@ public class AddressService extends DataService<AddressEntity, AddressRepository
    * @return the resources with suburbs by activity
    */
   public Resource<?> getResourcesWithSuburbsByActivity(String activityId) {
-    AddressEntity address = repo.findByActivitiesId(activityId)
+    AddressEntity address = repo.findOne(entities.withAnyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
     return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
   }
@@ -70,7 +66,7 @@ public class AddressService extends DataService<AddressEntity, AddressRepository
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
+   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
    * de.codeschluss.portal.core.common.BaseEntity)
    */
   @Override
@@ -89,7 +85,7 @@ public class AddressService extends DataService<AddressEntity, AddressRepository
     });
   }
 
-  /**
+  /**<
    * Update suburb.
    *
    * @param addressId

@@ -1,18 +1,16 @@
 package de.codeschluss.portal.core.common;
 
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,63 +21,48 @@ import org.springframework.hateoas.Resources;
  * @param <R>
  *          the generic type
  */
-public abstract class DataService<E extends BaseEntity, 
-    R extends FilteredJpaRepository<E, String>> {
+public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> {
 
   /** The repo. */
-  protected final R repo;
-
-  /** The assembler. */
-  protected final PagingAndSortingAssembler<E> assembler;
+  protected final DataRepository<E> repo;
 
   /** The default sort prop. */
   protected final String defaultSortProp = "id";
+  
+  protected final B entities;
 
   /**
    * Instantiates a new data service.
    *
    * @param repo
    *          the repo
-   * @param assembler
-   *          the assembler
    */
-  public DataService(R repo, PagingAndSortingAssembler<E> assembler) {
+  public DataService(
+      DataRepository<E> repo,
+      B entities) {
     this.repo = repo;
-    this.assembler = assembler;
-  }
-
-  /**
-   * Exists.
-   *
-   * @param example
-   *          the example
-   * @return true, if successful
-   */
-  public boolean exists(Example<E> example) {
-    return repo.exists(example);
+    this.entities = entities;
   }
 
   /**
    * Exists by id.
    *
-   * @param addressId
+   * @param id
    *          the address id
    * @return true, if successful
    */
-  public boolean existsById(String addressId) {
-    return repo.existsById(addressId);
+  public boolean existsById(String id) {
+    return repo.existsById(id);
   }
-
+  
   /**
-   * Gets the resource by id.
+   * Gets the existing.
    *
-   * @param id
-   *          the id
-   * @return the resource by id
+   * @param newEntity
+   *          the new entity
+   * @return the existing
    */
-  public Resource<E> getResourceById(String id) {
-    return assembler.toResource(getById(id));
-  }
+  public abstract E getExisting(E newEntity);
 
   /**
    * Gets the by id.
@@ -104,16 +87,7 @@ public abstract class DataService<E extends BaseEntity,
         .orElseThrow(() -> new NotFoundException(entityIds.toString()));
   }
 
-  /**
-   * Adds the resource.
-   *
-   * @param newEntity
-   *          the new entity
-   * @return the resource
-   */
-  public Resource<E> addResource(E newEntity) {
-    return assembler.toResource(add(newEntity));
-  }
+
 
   /**
    * Adds the.
@@ -142,28 +116,6 @@ public abstract class DataService<E extends BaseEntity,
   }
 
   /**
-   * Gets the existing.
-   *
-   * @param newEntity
-   *          the new entity
-   * @return the existing
-   */
-  public abstract E getExisting(E newEntity);
-
-  /**
-   * Update resource.
-   *
-   * @param id
-   *          the id
-   * @param updatedEntity
-   *          the updated entity
-   * @return the resource
-   */
-  public Resource<E> updateResource(String id, E updatedEntity) {
-    return assembler.toResource(update(id, updatedEntity));
-  }
-
-  /**
    * Update.
    *
    * @param id
@@ -185,20 +137,6 @@ public abstract class DataService<E extends BaseEntity,
   }
 
   /**
-   * Gets the sorted list resources.
-   *
-   * @param <P>
-   *          the generic type
-   * @param params
-   *          the params
-   * @return the sorted list resources
-   */
-  public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P params) {
-    List<E> result = getSortedList(params.getFilter(), getSort(params));
-    return assembler.entitiesToResources(result, params);
-  }
-
-  /**
    * Gets the sorted list.
    *
    * @param filter
@@ -208,23 +146,15 @@ public abstract class DataService<E extends BaseEntity,
    * @return the sorted list
    */
   public List<E> getSortedList(String filter, Sort sort) {
-    return filter == null ? repo.findAll(sort)
-        : repo.findFiltered(filter, sort).orElseThrow(() -> new NotFoundException(filter));
-  }
-
-  /**
-   * Gets the paged resources.
-   *
-   * @param <P>
-   *          the generic type
-   * @param params
-   *          the params
-   * @return the paged resources
-   */
-  public <P extends FilterSortPaginate> PagedResources<Resource<E>> getPagedResources(P params) {
-    String filter = params.getFilter();
-    PageRequest page = PageRequest.of(params.getPage(), params.getSize(), getSort(params));
-    return assembler.entitiesToPagedResources(getPaged(filter, page), params);
+    List<E> result =  filter == null 
+        ? repo.findAll(sort)
+        : repo.findAll(getFilteredPredicate(filter), sort);
+    
+    if (result == null || result.isEmpty()) {
+      throw new NotFoundException(filter);
+    }
+    
+    return result;
   }
 
   /**
@@ -237,8 +167,14 @@ public abstract class DataService<E extends BaseEntity,
    * @return the paged
    */
   public Page<E> getPaged(String filter, PageRequest page) {
-    return filter == null ? repo.findAll(page)
-        : repo.findFiltered(filter, page).orElseThrow(() -> new NotFoundException(filter));
+    Page<E> paged = filter == null ? repo.findAll(page)
+        : repo.findAll(getFilteredPredicate(filter), page);
+    
+    if (paged == null || paged.isEmpty()) {
+      throw new NotFoundException(filter);
+    }
+    
+    return paged;
   }
 
   /**
@@ -250,5 +186,13 @@ public abstract class DataService<E extends BaseEntity,
    */
   protected Sort getSort(FilterSortPaginate params) {
     return params.createSort(defaultSortProp);
+  }
+
+  protected Predicate getFilteredPredicate(String filter) {
+    return this.entities.fuzzySearch(prepareFilter(filter));
+  }
+  
+  protected String prepareFilter(String filter) {
+    return "%" + filter + "%"; 
   }
 }

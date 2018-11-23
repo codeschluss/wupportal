@@ -271,7 +271,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @GetMapping("/activities/{activityId}/organisation")
   public ResponseEntity<?> findOrganisation(@PathVariable String activityId) {
-    ProviderEntity provider = providerService.getProvidersByActivity(activityId);
+    ProviderEntity provider = providerService.getProviderByActivity(activityId);
     return ok(organisationService.convertToResource(provider));
   }
 
@@ -306,7 +306,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @GetMapping("/activities/{activityId}/user")
   @ShowUserOrSuperUserPermission
   public ResponseEntity<?> findUser(@PathVariable String activityId) {
-    ProviderEntity provider = providerService.getProvidersByActivity(activityId);
+    ProviderEntity provider = providerService.getProviderByActivity(activityId);
     return ok(userService.getResourceByProvider(provider));
   }
 
@@ -319,7 +319,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @GetMapping("/activities/{activityId}/tags")
   public ResponseEntity<?> findTags(@PathVariable String activityId) {
-    return ok(tagService.getResourceByActivity(activityId));
+    return ok(tagService.getResourcesByActivity(activityId));
   }
 
   /**

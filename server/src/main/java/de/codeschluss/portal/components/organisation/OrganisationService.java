@@ -2,9 +2,8 @@ package de.codeschluss.portal.components.organisation;
 
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
-import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
 
 import java.util.List;
@@ -21,7 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class OrganisationService extends DataService<OrganisationEntity, OrganisationRepository> {
+public class OrganisationService 
+    extends ResourceDataService<OrganisationEntity, OrganisationQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
@@ -36,9 +36,12 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
    * @param addressService
    *          the address service
    */
-  public OrganisationService(OrganisationRepository repo, OrganisationResourceAssembler assembler,
+  public OrganisationService(
+      OrganisationRepository repo, 
+      OrganisationQueryBuilder entities,
+      OrganisationResourceAssembler assembler,
       AddressService addressService) {
-    super(repo, assembler);
+    super(repo, entities, assembler);
   }
 
   /**
@@ -49,18 +52,7 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
    * @return true, if successful
    */
   public boolean existsByName(String name) {
-    return repo.existsByName(name);
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.common.DataService#existsById(java.lang.String)
-   */
-  @Override
-  public boolean existsById(String organisationId) {
-    return repo.existsById(organisationId);
+    return repo.exists(entities.withName(name));
   }
 
   /*
@@ -72,7 +64,7 @@ public class OrganisationService extends DataService<OrganisationEntity, Organis
    */
   @Override
   public OrganisationEntity getExisting(OrganisationEntity orga) {
-    return repo.findByName(orga.getName()).orElse(null);
+    return repo.findOne(entities.withName(orga.getName())).orElse(null);
   }
 
   /*

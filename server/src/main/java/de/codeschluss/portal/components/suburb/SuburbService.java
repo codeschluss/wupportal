@@ -1,7 +1,6 @@
 package de.codeschluss.portal.components.suburb;
 
-import de.codeschluss.portal.components.suburb.SuburbEntity;
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.springframework.hateoas.Resource;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
  * The Class SuburbService.
  */
 @Service
-public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
+public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQueryBuilder> {
 
   /**
    * Instantiates a new suburb service.
@@ -22,19 +21,22 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
    * @param assembler
    *          the assembler
    */
-  public SuburbService(SuburbRepository repo, SuburbResourceAssembler assembler) {
-    super(repo, assembler);
+  public SuburbService(
+      SuburbRepository repo, 
+      SuburbQueryBuilder entities,
+      SuburbResourceAssembler assembler) {
+    super(repo, entities, assembler);
   }
 
   /*
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   public SuburbEntity getExisting(SuburbEntity suburb) {
-    return repo.findByName(suburb.getName()).orElse(null);
+    return repo.findOne(entities.withName(suburb.getName())).orElse(null);
   }
 
   /**
@@ -45,7 +47,7 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
    * @return the resource by address
    */
   public Resource<SuburbEntity> getResourceByAddress(String addressId) {
-    SuburbEntity suburb = repo.findByAddressesId(addressId)
+    SuburbEntity suburb = repo.findOne(entities.withAnyAddressId(addressId))
         .orElseThrow(() -> new NotFoundException(addressId));
     return assembler.toResource(suburb);
   }
@@ -53,7 +55,7 @@ public class SuburbService extends DataService<SuburbEntity, SuburbRepository> {
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
+   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
    * de.codeschluss.portal.core.common.BaseEntity)
    */
   @Override

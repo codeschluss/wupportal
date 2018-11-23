@@ -1,21 +1,23 @@
 package de.codeschluss.portal.components.configuration;
 
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class ConfigurationService
-    extends DataService<ConfigurationEntity, ConfigurationRepository> {
+    extends ResourceDataService<ConfigurationEntity, ConfigurationQueryBuilder> {
 
-  public ConfigurationService(ConfigurationRepository repo,
+  public ConfigurationService(
+      ConfigurationRepository repo,
+      ConfigurationQueryBuilder entities,
       ConfigurationResourceAssembler assembler) {
-    super(repo, assembler);
+    super(repo, entities, assembler);
   }
 
   @Override
   public ConfigurationEntity getExisting(ConfigurationEntity newConfiguration) {
-    return repo.findByItem(newConfiguration.getItem()).orElse(null);
+    return repo.findOne(entities.withItem(newConfiguration.getItem())).orElse(null);
   }
 
   @Override

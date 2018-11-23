@@ -1,7 +1,6 @@
 package de.codeschluss.portal.components.category;
 
-import de.codeschluss.portal.components.category.CategoryEntity;
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.springframework.hateoas.Resource;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
  * The Class CategoryService.
  */
 @Service
-public class CategoryService extends DataService<CategoryEntity, CategoryRepository> {
+public class CategoryService extends ResourceDataService<CategoryEntity, CategoryQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
@@ -25,19 +24,22 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
    * @param assembler
    *          the assembler
    */
-  public CategoryService(CategoryRepository repo, CategoryResourceAssembler assembler) {
-    super(repo, assembler);
+  public CategoryService(
+      CategoryRepository repo, 
+      CategoryResourceAssembler assembler,
+      CategoryQueryBuilder entities) {
+    super(repo, entities, assembler);
   }
 
   /*
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   public CategoryEntity getExisting(CategoryEntity newCategory) {
-    return repo.findByName(newCategory.getName()).orElse(null);
+    return repo.findOne(entities.withName(newCategory.getName())).orElse(null);
   }
 
   /**
@@ -48,7 +50,7 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
    * @return the resource by activity
    */
   public Resource<CategoryEntity> getResourceByActivity(String activityId) {
-    CategoryEntity category = repo.findByActivitiesId(activityId)
+    CategoryEntity category = repo.findOne(entities.withAnyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
     return assembler.toResource(category);
   }
@@ -56,7 +58,7 @@ public class CategoryService extends DataService<CategoryEntity, CategoryReposit
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
+   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
    * de.codeschluss.portal.core.common.BaseEntity)
    */
   @Override

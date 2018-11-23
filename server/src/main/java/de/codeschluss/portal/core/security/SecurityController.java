@@ -56,7 +56,8 @@ public class SecurityController {
     tokenService.verifyRefresh(refreshToken);
 
     String username = tokenService.extractUsername(refreshToken);
-    String accessToken = tokenService.createAccessToken(userDetailService.loadUserByUsername(username));
+    String accessToken = tokenService
+        .createAccessToken(userDetailService.loadUserByUsername(username));
 
     ObjectMapper objectMapper = new ObjectMapper();
     Map<String, String> tokenMap = new HashMap<String, String>();

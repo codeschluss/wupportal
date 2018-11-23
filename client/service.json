@@ -8,7 +8,7 @@
         "files": [
           "/",
           "/manifest.json",
-          "/css/*.css",
+          "/css/*.scss",
           "/*.js"
         ]
       }

@@ -33,7 +33,7 @@
                 "output": "/"
               },
               {
-                "glob": "*.css",
+                "glob": "*.scss",
                 "input": "res",
                 "output": "/css"
               },
@@ -47,6 +47,9 @@
                 "input": "imgs",
                 "output": "/imgs"
               }
+            ],
+            "styles": [
+              "res/theme.scss"
             ]
           },
           "configurations": {

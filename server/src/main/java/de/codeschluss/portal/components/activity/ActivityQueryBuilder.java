@@ -5,37 +5,77 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
+import de.codeschluss.portal.core.common.QueryBuilder;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ActivityQueryBuilder.
+ */
 @Service
-public class ActivityQueryBuilder {
+public class ActivityQueryBuilder implements QueryBuilder {
   
+  /** The query. */
   private final QActivityEntity query;
   
+  /**
+   * Instantiates a new activity query builder.
+   */
   public ActivityQueryBuilder() {
     this.query = QActivityEntity.activityEntity;
   }
 
-  public Predicate isId(String id) {
+  /**
+   * With id.
+   *
+   * @param id the id
+   * @return the predicate
+   */
+  public Predicate withId(String id) {
     return query.id.eq(id);
   }
 
-  public Predicate anyProvider(List<ProviderEntity> providers) {
+  /**
+   * With any of.
+   *
+   * @param providers the providers
+   * @return the predicate
+   */
+  public Predicate withAnyOf(List<ProviderEntity> providers) {
     return query.provider.in(providers);
   }
 
-  public Predicate isActivityForProvider(String activityId, List<ProviderEntity> providers) {
+  /**
+   * For id with any of.
+   *
+   * @param activityId the activity id
+   * @param providers the providers
+   * @return the predicate
+   */
+  public Predicate forIdWithAnyOf(String activityId, List<ProviderEntity> providers) {
     return query.id.eq(activityId).and(query.provider.in(providers));
   }
   
-  public Predicate isCurrentFuzzySearch(String filter) {
-    return isCurrent().and(fuzzySearchQuery(filter));
+  /**
+   * Fuzzy with current schedules only.
+   *
+   * @param filter the filter
+   * @return the predicate
+   */
+  public Predicate fuzzyWithCurrentSchedulesOnly(String filter) {
+    return withCurrentSchedulesOnly().and(fuzzySearch(filter));
   }
 
-  public Predicate fuzzySearchQuery(String filter) {
+  /**
+   * Fuzzy search.
+   *
+   * @param filter the filter
+   * @return the predicate
+   */
+  public BooleanExpression fuzzySearch(String filter) {
     return query.name.likeIgnoreCase(filter)
         .or(query.description.likeIgnoreCase(filter))
         .or(query.address.street.likeIgnoreCase(filter))
@@ -48,7 +88,12 @@ public class ActivityQueryBuilder {
         .or(query.category.name.likeIgnoreCase(filter));
   }
   
-  public BooleanExpression isCurrent() {
+  /**
+   * With current schedules only.
+   *
+   * @return the boolean expression
+   */
+  public BooleanExpression withCurrentSchedulesOnly() {
     return query.schedules.any().startDate.after(Expressions.currentTimestamp());
   }
 

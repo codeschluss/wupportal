@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @param <S>
  *          the generic type
  */
-public abstract class CrudController<E extends BaseEntity, S extends DataService<E>> {
+public abstract class CrudController<E extends BaseEntity, S extends ResourceDataService<E, ?>> {
 
   /** The service. */
   protected final S service;

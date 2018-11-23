@@ -1,28 +1,23 @@
 package de.codeschluss.portal.components.configuration;
 
-import com.querydsl.core.types.Predicate;
-
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class ConfigurationService
-    extends DataService<ConfigurationEntity> {
-  
-  private final ConfigurationQueryBuilder queryBuilder;
+    extends ResourceDataService<ConfigurationEntity, ConfigurationQueryBuilder> {
 
   public ConfigurationService(
       ConfigurationRepository repo,
-      ConfigurationResourceAssembler assembler,
-      ConfigurationQueryBuilder queryBuilder) {
-    super(repo, assembler);
-    this.queryBuilder = queryBuilder;
+      ConfigurationQueryBuilder entities,
+      ConfigurationResourceAssembler assembler) {
+    super(repo, entities, assembler);
   }
 
   @Override
   public ConfigurationEntity getExisting(ConfigurationEntity newConfiguration) {
-    return repo.findOne(queryBuilder.isItem(newConfiguration.getItem())).orElse(null);
+    return repo.findOne(entities.withItem(newConfiguration.getItem())).orElse(null);
   }
 
   @Override
@@ -35,11 +30,5 @@ public class ConfigurationService
       newConfiguration.setId(id);
       return repo.save(newConfiguration);
     });
-  }
-
-  @Override
-  protected Predicate getFilteredPredicate(String filter) {
-    filter = prepareFilter(filter);
-    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

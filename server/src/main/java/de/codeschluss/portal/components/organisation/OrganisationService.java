@@ -1,11 +1,9 @@
 package de.codeschluss.portal.components.organisation;
 
-import com.querydsl.core.types.Predicate;
-
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
 
 import java.util.List;
@@ -22,12 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class OrganisationService extends DataService<OrganisationEntity> {
+public class OrganisationService 
+    extends ResourceDataService<OrganisationEntity, OrganisationQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
-  
-  private final OrganisationQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new organisation service.
@@ -41,11 +38,10 @@ public class OrganisationService extends DataService<OrganisationEntity> {
    */
   public OrganisationService(
       OrganisationRepository repo, 
+      OrganisationQueryBuilder entities,
       OrganisationResourceAssembler assembler,
-      AddressService addressService,
-      OrganisationQueryBuilder queryBuilder) {
-    super(repo, assembler);
-    this.queryBuilder = queryBuilder;
+      AddressService addressService) {
+    super(repo, entities, assembler);
   }
 
   /**
@@ -56,7 +52,7 @@ public class OrganisationService extends DataService<OrganisationEntity> {
    * @return true, if successful
    */
   public boolean existsByName(String name) {
-    return repo.exists(queryBuilder.isName(name));
+    return repo.exists(entities.withName(name));
   }
 
   /*
@@ -68,7 +64,7 @@ public class OrganisationService extends DataService<OrganisationEntity> {
    */
   @Override
   public OrganisationEntity getExisting(OrganisationEntity orga) {
-    return repo.findOne(queryBuilder.isName(orga.getName())).orElse(null);
+    return repo.findOne(entities.withName(orga.getName())).orElse(null);
   }
 
   /*
@@ -132,11 +128,5 @@ public class OrganisationService extends DataService<OrganisationEntity> {
     }).collect(Collectors.toList());
 
     return assembler.toListResources(result, null);
-  }
-
-  @Override
-  protected Predicate getFilteredPredicate(String filter) {
-    filter = prepareFilter(filter);
-    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

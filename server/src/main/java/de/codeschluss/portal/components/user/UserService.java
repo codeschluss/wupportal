@@ -1,9 +1,7 @@
 package de.codeschluss.portal.components.user;
 
-import com.querydsl.core.types.Predicate;
-
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
 import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
@@ -23,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserService extends DataService<UserEntity> {
+public class UserService extends ResourceDataService<UserEntity, UserQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "username";
@@ -33,8 +31,6 @@ public class UserService extends DataService<UserEntity> {
 
   /** The mail service. */
   private final MailService mailService;
-  
-  private final UserQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new user service.
@@ -53,11 +49,10 @@ public class UserService extends DataService<UserEntity> {
       UserResourceAssembler assembler,
       BCryptPasswordEncoder encoder, 
       MailService mailService,
-      UserQueryBuilder queryBuilder) {
-    super(repo, assembler);
+      UserQueryBuilder entities) {
+    super(repo, entities, assembler);
     this.bcryptPasswordEncoder = encoder;
     this.mailService = mailService;
-    this.queryBuilder = queryBuilder;
   }
 
   /**
@@ -68,14 +63,14 @@ public class UserService extends DataService<UserEntity> {
    * @return true, if successful
    */
   public boolean userExists(String username) {
-    return repo.exists(queryBuilder.isUsername(username));
+    return repo.exists(entities.withUsername(username));
   }
 
   /*
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
@@ -95,7 +90,7 @@ public class UserService extends DataService<UserEntity> {
    * @return the user
    */
   public UserEntity getUser(String username) {
-    return repo.findOne(queryBuilder.isUsername(username))
+    return repo.findOne(entities.withUsername(username))
         .orElseThrow(() -> new NotFoundException(username));
   }
 
@@ -103,7 +98,7 @@ public class UserService extends DataService<UserEntity> {
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#add(de.codeschluss.portal.core.
+   * de.codeschluss.portal.core.common.ResourceDataService#add(de.codeschluss.portal.core.
    * common.BaseEntity)
    */
   @Override
@@ -115,7 +110,7 @@ public class UserService extends DataService<UserEntity> {
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
+   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
    * de.codeschluss.portal.core.common.BaseEntity)
    */
   @Override
@@ -207,7 +202,7 @@ public class UserService extends DataService<UserEntity> {
    * @return the super users
    */
   public List<UserEntity> getSuperUsers() {
-    return repo.findAll(queryBuilder.isSuperuser());
+    return repo.findAll(entities.asSuperuser());
   }
 
   /**
@@ -220,11 +215,5 @@ public class UserService extends DataService<UserEntity> {
   public List<String> getMailsByProviders(List<ProviderEntity> adminProviders) {
     return adminProviders.stream().map(provider -> provider.getUser().getUsername())
         .collect(Collectors.toList());
-  }
-
-  @Override
-  protected Predicate getFilteredPredicate(String filter) {
-    filter = prepareFilter(filter);
-    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

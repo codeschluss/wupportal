@@ -7,4 +7,8 @@ public class NotFoundException extends RuntimeException {
   public NotFoundException(String param) {
     super("Could not find data for param: " + param);
   }
+  
+  public NotFoundException() {
+    super("Could not find data for param");
+  }
 }

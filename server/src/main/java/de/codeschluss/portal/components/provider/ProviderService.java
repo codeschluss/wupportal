@@ -4,6 +4,7 @@ import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.components.user.UserService;
+import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
 
@@ -11,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,26 +22,21 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ProviderService {
+public class ProviderService extends DataService<ProviderEntity, ProviderQueryBuilder> {
 
   /** The orga service. */
   private final OrganisationService orgaService;
-
-  /** The repo. */
-  private final ProviderRepository repo;
 
   /** The mail service. */
   private final MailService mailService;
 
   /** The user service. */
   private final UserService userService;
-  
-  private final QProviderEntity query;
 
   /**
    * Instantiates a new provider service.
    *
-   * @param providerRepo
+   * @param repo
    *          the provider repo
    * @param orgaService
    *          the orga service
@@ -49,15 +46,30 @@ public class ProviderService {
    *          the user service
    */
   public ProviderService(
-      ProviderRepository providerRepo, 
+      ProviderRepository repo, 
+      ProviderQueryBuilder entities,
       OrganisationService orgaService,
       UserService userService,
       MailService mailService) {
-    this.repo = providerRepo;
+    super(repo, entities);
     this.orgaService = orgaService;
     this.mailService = mailService;
     this.userService = userService;
-    this.query = QProviderEntity.providerEntity;
+  }
+  
+  @Override
+  public ProviderEntity getExisting(ProviderEntity provider) {
+    String userId = provider.getUser().getId();
+    String orgaId = provider.getOrganisation().getId();
+    
+    return repo
+        .findOne(entities.withUserIdAndOrgaId(userId, orgaId))
+        .orElseThrow(() -> new NotFoundException(userId + " and " + orgaId));
+  }
+
+  @Override
+  public ProviderEntity update(String id, ProviderEntity updatedEntity) {
+    throw new NotImplementedException("For security reasons");
   }
 
   /**
@@ -70,8 +82,7 @@ public class ProviderService {
    * @return true, if is duplicate
    */
   public boolean isDuplicate(String userId, List<String> orgaIds) {
-    return repo.exists(
-        query.user.id.eq(userId).and(query.organisation.id.in(orgaIds)));
+    return repo.exists(entities.withUserIdAndAnyOfOrgaIds(userId, orgaIds));
   }
 
   /**
@@ -82,7 +93,7 @@ public class ProviderService {
    * @return the providers by user
    */
   public List<ProviderEntity> getProvidersByUser(String userId) {
-    List<ProviderEntity> result = repo.findAll(query.user.id.eq(userId));
+    List<ProviderEntity> result = repo.findAll(entities.withUserId(userId));
     
     if (result == null || result.isEmpty()) {
       throw new NotFoundException(userId);
@@ -99,7 +110,7 @@ public class ProviderService {
    * @return the providers by organisation
    */
   public List<ProviderEntity> getProvidersByOrganisation(String orgaId) {
-    List<ProviderEntity> result = repo.findAll(query.organisation.id.eq(orgaId));
+    List<ProviderEntity> result = repo.findAll(entities.withOrgaId(orgaId));
     
     if (result == null || result.isEmpty()) {
       throw new NotFoundException(orgaId);
@@ -116,7 +127,7 @@ public class ProviderService {
    * @return the approved providers
    */
   public List<ProviderEntity> getApprovedProviders(UserEntity user) {
-    List<ProviderEntity> result = repo.findAll(query.user.eq(user).and(query.approved.isTrue()));
+    List<ProviderEntity> result = repo.findAll(entities.withApprovedUserId(user.getId()));
     
     if (result == null || result.isEmpty()) {
       return Collections.emptyList();
@@ -133,7 +144,7 @@ public class ProviderService {
    * @return the orga admin providers
    */
   public List<ProviderEntity> getOrgaAdminProviders(UserEntity user) {
-    List<ProviderEntity> result = repo.findAll(query.user.eq(user).and(query.admin.isTrue()));
+    List<ProviderEntity> result = repo.findAll(entities.asOrgaAdmins(user.getId()));
     
     if (result == null || result.isEmpty()) {
       return Collections.emptyList();
@@ -150,7 +161,7 @@ public class ProviderService {
   * @return the admin users
   */
   public List<ProviderEntity> getOrgaAdminProviders(OrganisationEntity organisation) {
-    return repo.findAll(query.organisation.eq(organisation).and(query.admin.isTrue()));
+    return repo.findAll(entities.adminsforOrga(organisation.getId()));
   }
 
   /**
@@ -161,7 +172,7 @@ public class ProviderService {
    * @return the providers by activity
    */
   public ProviderEntity getProviderByActivity(String activityId) {
-    return repo.findOne(query.activities.any().id.eq(activityId))
+    return repo.findOne(entities.withAnyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
   }
 
@@ -175,7 +186,7 @@ public class ProviderService {
    * @return the provider by user and organisation
    */
   public ProviderEntity getProviderByUserAndOrganisation(String userId, String orgaId) {
-    return repo.findOne(query.user.id.eq(userId).and(query.organisation.id.eq(orgaId)))
+    return repo.findOne(entities.withUserIdAndOrgaId(userId, orgaId))
         .orElseThrow(() -> new NotFoundException(userId + " and " + orgaId));        
   }
 
@@ -304,4 +315,6 @@ public class ProviderService {
 
     repo.save(provider);
   }
+
+
 }

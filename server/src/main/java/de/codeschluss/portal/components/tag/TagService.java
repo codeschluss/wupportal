@@ -1,8 +1,6 @@
 package de.codeschluss.portal.components.tag;
 
-import com.querydsl.core.types.Predicate;
-
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
@@ -15,12 +13,10 @@ import org.springframework.stereotype.Service;
  * The Class TagService.
  */
 @Service
-public class TagService extends DataService<TagEntity> {
+public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
-  
-  private TagQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new tag service.
@@ -33,21 +29,20 @@ public class TagService extends DataService<TagEntity> {
   public TagService(
       TagRepository repo, 
       TagResourceAssembler assembler,
-      TagQueryBuilder queryBuilder) {
-    super(repo, assembler);
-    this.queryBuilder = queryBuilder;
+      TagQueryBuilder entities) {
+    super(repo, entities, assembler);
   }
 
   /*
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
   public TagEntity getExisting(TagEntity newTag) {
-    return repo.findOne(queryBuilder.isName(newTag.getName())).orElse(null);
+    return repo.findOne(entities.withName(newTag.getName())).orElse(null);
   }
 
   /**
@@ -58,7 +53,7 @@ public class TagService extends DataService<TagEntity> {
    * @return the resource by activity
    */
   public Resources<?> getResourcesByActivity(String activityId) {
-    List<TagEntity> tags = repo.findAll(queryBuilder.anyActivityId(activityId));
+    List<TagEntity> tags = repo.findAll(entities.withAnyActivityId(activityId));
     
     if (tags == null || tags.isEmpty()) {
       throw new NotFoundException(activityId);
@@ -69,7 +64,7 @@ public class TagService extends DataService<TagEntity> {
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
+   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
    * de.codeschluss.portal.core.common.BaseEntity)
    */
   @Override
@@ -83,11 +78,4 @@ public class TagService extends DataService<TagEntity> {
       return repo.save(newTag);
     });
   }
-
-  @Override
-  protected Predicate getFilteredPredicate(String filter) {
-    filter = prepareFilter(filter);
-    return queryBuilder.fuzzySearchQuery(filter);
-  }
-
 }

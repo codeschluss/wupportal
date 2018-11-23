@@ -1,14 +1,12 @@
 package de.codeschluss.portal.components.activity;
 
-import com.querydsl.core.types.Predicate;
-
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
@@ -29,12 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ActivityService extends DataService<ActivityEntity> {
+public class ActivityService extends ResourceDataService<ActivityEntity, ActivityQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
-  
-  private final ActivityQueryBuilder queryBuilder; 
 
   /**
    * Instantiates a new activity service.
@@ -46,10 +42,9 @@ public class ActivityService extends DataService<ActivityEntity> {
    */
   public ActivityService(
       ActivityRepository repo, 
-      ActivityResourceAssembler assembler,
-      ActivityQueryBuilder queryBuilder) {
-    super(repo, assembler);
-    this.queryBuilder = queryBuilder;
+      ActivityQueryBuilder entities,
+      ActivityResourceAssembler assembler) {
+    super(repo, entities, assembler);
   }
 
   /*
@@ -83,8 +78,8 @@ public class ActivityService extends DataService<ActivityEntity> {
    */
   private List<ActivityEntity> getCurrentSortedList(String filter, Sort sort) {
     List<ActivityEntity> activities = filter == null 
-        ? repo.findAll(queryBuilder.isCurrent(), sort)
-        : repo.findAll(queryBuilder.isCurrentFuzzySearch(filter), sort);
+        ? repo.findAll(entities.withCurrentSchedulesOnly(), sort)
+        : repo.findAll(entities.fuzzyWithCurrentSchedulesOnly(filter), sort);
         
     if (activities == null || activities.isEmpty()) {
       throw new NotFoundException(filter);
@@ -125,7 +120,7 @@ public class ActivityService extends DataService<ActivityEntity> {
    */
   public Page<ActivityEntity> getCurrentPaged(String filter, PageRequest page) {
     Page<ActivityEntity> result = filter == null 
-        ? repo.findAll(queryBuilder.isCurrent(), page)
+        ? repo.findAll(entities.withCurrentSchedulesOnly(), page)
         : repo.findAll(getFilteredPredicate(filter), page);
         
     if (result == null || result.isEmpty()) {
@@ -144,7 +139,7 @@ public class ActivityService extends DataService<ActivityEntity> {
    */
   @Override
   public ActivityEntity getExisting(ActivityEntity activity) {
-    return repo.findOne(queryBuilder.isId(activity.getId())).orElse(null);
+    return repo.findOne(entities.withId(activity.getId())).orElse(null);
   }
 
   /**
@@ -166,7 +161,7 @@ public class ActivityService extends DataService<ActivityEntity> {
    * @return the by providers
    */
   public List<ActivityEntity> getByProviders(List<ProviderEntity> providers) {
-    List<ActivityEntity> result = repo.findAll(queryBuilder.anyProvider(providers));
+    List<ActivityEntity> result = repo.findAll(entities.withAnyOf(providers));
     
     if (result == null || result.isEmpty()) {
       throw new NotFoundException(providers.toString());
@@ -184,7 +179,7 @@ public class ActivityService extends DataService<ActivityEntity> {
    * @return true, if is activity for provider
    */
   public boolean isActivityForProvider(String activityId, List<ProviderEntity> providers) {
-    return repo.exists(queryBuilder.isActivityForProvider(activityId, providers));
+    return repo.exists(entities.forIdWithAnyOf(activityId, providers));
   }
 
   /*
@@ -369,11 +364,5 @@ public class ActivityService extends DataService<ActivityEntity> {
       throw new RuntimeException(
           "Must be of type " + FilterSortPaginateCurrent.class + " but is " + p.getClass());
     }
-  }
-
-  @Override
-  protected Predicate getFilteredPredicate(String filter) {
-    filter = prepareFilter(filter);
-    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

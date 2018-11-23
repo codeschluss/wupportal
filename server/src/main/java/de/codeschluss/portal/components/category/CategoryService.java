@@ -1,11 +1,8 @@
 package de.codeschluss.portal.components.category;
 
-import com.querydsl.core.types.Predicate;
-
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
-import org.springframework.data.querydsl.binding.QuerydslPredicateBuilder;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +11,10 @@ import org.springframework.stereotype.Service;
  * The Class CategoryService.
  */
 @Service
-public class CategoryService extends DataService<CategoryEntity> {
+public class CategoryService extends ResourceDataService<CategoryEntity, CategoryQueryBuilder> {
 
   /** The default sort prop. */
   protected final String defaultSortProp = "name";
-  
-  private final CategoryQueryBuilder queryBuilder;
 
   /**
    * Instantiates a new category service.
@@ -32,20 +27,19 @@ public class CategoryService extends DataService<CategoryEntity> {
   public CategoryService(
       CategoryRepository repo, 
       CategoryResourceAssembler assembler,
-      CategoryQueryBuilder queryBuilder) {
-    super(repo, assembler);
-    this.queryBuilder = queryBuilder;
+      CategoryQueryBuilder entities) {
+    super(repo, entities, assembler);
   }
 
   /*
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   public CategoryEntity getExisting(CategoryEntity newCategory) {
-    return repo.findOne(queryBuilder.isName(newCategory.getName())).orElse(null);
+    return repo.findOne(entities.withName(newCategory.getName())).orElse(null);
   }
 
   /**
@@ -56,7 +50,7 @@ public class CategoryService extends DataService<CategoryEntity> {
    * @return the resource by activity
    */
   public Resource<CategoryEntity> getResourceByActivity(String activityId) {
-    CategoryEntity category = repo.findOne(queryBuilder.anyActivityId(activityId))
+    CategoryEntity category = repo.findOne(entities.withAnyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
     return assembler.toResource(category);
   }
@@ -64,7 +58,7 @@ public class CategoryService extends DataService<CategoryEntity> {
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
+   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
    * de.codeschluss.portal.core.common.BaseEntity)
    */
   @Override
@@ -78,11 +72,5 @@ public class CategoryService extends DataService<CategoryEntity> {
       newCategory.setId(id);
       return repo.save(newCategory);
     });
-  }
-
-  @Override
-  protected Predicate getFilteredPredicate(String filter) {
-    filter = prepareFilter(filter);
-    return queryBuilder.fuzzySearchQuery(filter);
   }
 }

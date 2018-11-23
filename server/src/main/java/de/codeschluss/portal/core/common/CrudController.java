@@ -52,10 +52,9 @@ public abstract class CrudController<E extends BaseEntity, S extends ResourceDat
   public ResponseEntity<?> findAll(FilterSortPaginate params) {
     validateRequest(params);
 
-    if (params.getPage() == null && params.getSize() == null) {
-      return ok(service.getSortedListResources(params));
-    }
-    return ok(service.getPagedResources(params));
+    return params.getPage() == null && params.getSize() == null
+        ? ok(service.getSortedListResources(params))
+        : ok(service.getPagedResources(params));
   }
 
   /**

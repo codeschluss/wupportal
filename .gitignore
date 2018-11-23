@@ -7,6 +7,5 @@ server/.metadata
 server/.recommenders
 server/.settings
 server/bin
-server/src/main/resources/application-default.properties
-/server/src/main/resources/application-credentials.properties
+server/src/main/resources/application-credentials.properties
 server/target

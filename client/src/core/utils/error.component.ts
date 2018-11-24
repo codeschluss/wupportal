@@ -11,9 +11,10 @@ import { ErrorModel } from './error.model';
       {{ error.error }}
     </h1>
     <div mat-dialog-content>
+      <pre><strong>Status:</strong><br>{{ error.status }}</pre>
       <pre><strong>Resource:</strong><br>{{ error.path }}</pre>
       <pre><strong>Timestamp:</strong><br>{{ error.timestamp }}</pre>
-      <pre><strong>Stacktrace:</strong><br>{{ error.status }}</pre>
+      <pre><strong>Stacktrace:</strong><br>{{ stacktrace }}</pre>
       <pre><strong>Exception:</strong><br>{{ error.message }}</pre>
     </div>
     <div mat-dialog-actions>
@@ -41,6 +42,8 @@ export class ClientErrorComponent {
   ];
 
   public issueUrl: string = require('../../../package.json').bugs.url;
+
+  public stacktrace: string = new Error().stack;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)

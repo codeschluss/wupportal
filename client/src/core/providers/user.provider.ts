@@ -1,13 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { UserControllerService } from '../api/services/user-controller.service';
-import { CrudService } from '../crud/crud.provider';
+import { CrudProvider } from '../crud/crud.provider';
 import { ActivityModel } from '../models/activity.model';
 import { OrganisationModel } from '../models/organisation.model';
 import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserProvider
-  extends CrudService<UserControllerService, UserModel> {
+  extends CrudProvider<UserControllerService, UserModel> {
 
   protected linked = [
     {

@@ -1,11 +1,11 @@
 import { Injectable, Injector } from '@angular/core';
 import { ConfigurationControllerService } from '../api/services/configuration-controller.service';
-import { CrudService } from '../crud/crud.provider';
+import { CrudProvider } from '../crud/crud.provider';
 import { ConfigurationModel } from '../models/configuration.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationProvider
-  extends CrudService<ConfigurationControllerService, ConfigurationModel> {
+  extends CrudProvider<ConfigurationControllerService, ConfigurationModel> {
 
   public create: (model: ConfigurationModel) => Promise<any>;
 

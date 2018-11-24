@@ -1,11 +1,11 @@
 import { Injectable, Injector } from '@angular/core';
 import { SuburbControllerService } from '../api/services/suburb-controller.service';
-import { CrudService } from '../crud/crud.provider';
+import { CrudProvider } from '../crud/crud.provider';
 import { SuburbModel } from '../models/suburb.model';
 
 @Injectable({ providedIn: 'root' })
 export class SuburbProvider
-  extends CrudService<SuburbControllerService, SuburbModel> {
+  extends CrudProvider<SuburbControllerService, SuburbModel> {
 
   public create: (model: SuburbModel) => Promise<any>;
 

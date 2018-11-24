@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { ActivityControllerService } from '../api/services/activity-controller.service';
-import { CrudService } from '../crud/crud.provider';
+import { CrudProvider } from '../crud/crud.provider';
 import { ActivityModel } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
 import { CategoryModel } from '../models/category.model';
@@ -12,7 +12,7 @@ import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class ActivityProvider
-  extends CrudService<ActivityControllerService, ActivityModel> {
+  extends CrudProvider<ActivityControllerService, ActivityModel> {
 
   protected linked = [
     {

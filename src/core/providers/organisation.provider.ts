@@ -1,13 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { OrganisationControllerService } from '../api/services/organisation-controller.service';
-import { CrudService } from '../crud/crud.provider';
+import { CrudProvider } from '../crud/crud.provider';
 import { AddressModel } from '../models/address.model';
 import { OrganisationModel } from '../models/organisation.model';
 import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrganisationProvider
-  extends CrudService<OrganisationControllerService, OrganisationModel> {
+  extends CrudProvider<OrganisationControllerService, OrganisationModel> {
 
   protected linked = [
     {

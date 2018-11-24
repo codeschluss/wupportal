@@ -5,27 +5,29 @@ import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
 import { CrudModel } from './crud.model';
 
-interface ModelLink {
+interface CrudLink {
   field: string;
   method: Function;
   model: Type<CrudModel>;
 }
 
+interface CrudMethods {
+  create: (model: CrudModel) => Observable<StrictHttpResponse<object>>;
+  update: (model: CrudModel, id: string) => Observable<StrictHttpResponse<{}>>;
+  delete: (id: string) => Observable<StrictHttpResponse<object>>;
+  findAll: (params?: object) => Observable<StrictHttpResponse<object>>;
+  findOne: (id: string) => Observable<StrictHttpResponse<object>>;
+}
+
 @Injectable({ providedIn: 'root' })
-export abstract class CrudService
+export abstract class CrudProvider
   <Service extends BaseService, Model extends CrudModel> {
 
   protected abstract injector: Injector;
 
-  protected abstract linked: ModelLink[];
+  protected abstract linked: CrudLink[];
 
-  protected abstract methods: {
-    create: (model: Model) => Observable<StrictHttpResponse<object>>,
-    update: (model: Model, id: string) => Observable<StrictHttpResponse<{}>>,
-    delete: (id: string) => Observable<StrictHttpResponse<object>>
-    findAll: (params?: object) => Observable<StrictHttpResponse<object>>,
-    findOne: (id: string) => Observable<StrictHttpResponse<object>>
-  };
+  protected abstract methods: CrudMethods;
 
   protected abstract model: Type<Model>;
 
@@ -78,22 +80,23 @@ export abstract class CrudService
     return method.call(this.service, ...args);
   }
 
-  protected cast<T>(response: StrictHttpResponse<object>, type?): T {
-    const cast = (model) => Object.assign(new (type || this.model)(), model);
+  protected cast<T>(response: StrictHttpResponse<object>, t?: Type<Model>): T {
+    const caster = (model) => Object.assign(new (t || this.model)(), model);
     const data = (response.body['_embedded'] || {})['data'] || response.body;
 
     return Array.isArray(data)
-      ? data.map((model) => cast(model))
-      : cast(data);
+      ? data.map((model) => caster(model))
+      : caster(data);
   }
 
   protected link(input: Model | Model[]): void {
     const linker = (model) => this.linked.forEach((link) => {
-      const embedded = (model._embedded || {})[link.field];
-      Object.defineProperty(model, link.field, { get: () => embedded
-        ? Promise.resolve(Object.assign(new link.model(), embedded))
-        : this.walker(link, model)
-      });
+      const data = (model._embedded || {})[link.field];
+      const getter = () => data
+        ? Promise.resolve(Object.assign(new link.model(), data))
+        : this.walker(link, model);
+
+      Object.defineProperty(model, link.field, { get: getter });
     });
 
     Array.isArray(input)
@@ -102,19 +105,19 @@ export abstract class CrudService
   }
 
   protected purge(input: Model | Model[]): void {
-    const purge = (model) => {
+    const purger = (model) => {
       delete model._embedded;
       delete model._links;
       return model;
     };
 
     Array.isArray(input)
-      ? input.forEach((model) => purge(model))
-      : purge(input);
+      ? input.forEach((model) => purger(model))
+      : purger(input);
   }
 
-  private walker(link: ModelLink, model: Model): Promise<any> {
-    const provider = this.injector.get((link.model as any).provider);
+  private walker(link: CrudLink, model: Model): Promise<any> {
+    const provider = this.injector.get(link.model['provider']);
     return this.call.apply(provider, [link.method, model.id]).pipe(
       map((response) => this.cast.apply(provider, [response, link.model])),
       tap((response) => this.link.apply(provider, [response])),

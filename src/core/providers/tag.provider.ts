@@ -1,11 +1,11 @@
 import { Injectable, Injector } from '@angular/core';
 import { TagControllerService } from '../api/services/tag-controller.service';
-import { CrudService } from '../crud/crud.provider';
+import { CrudProvider } from '../crud/crud.provider';
 import { TagModel } from '../models/tag.model';
 
 @Injectable({ providedIn: 'root' })
 export class TagProvider
-  extends CrudService<TagControllerService, TagModel> {
+  extends CrudProvider<TagControllerService, TagModel> {
 
   public create: (model: TagModel) => Promise<any>;
 

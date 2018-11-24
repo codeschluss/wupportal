@@ -1,11 +1,11 @@
 import { Injectable, Injector } from '@angular/core';
 import { TargetGroupControllerService } from '../api/services/target-group-controller.service';
-import { CrudService } from '../crud/crud.provider';
+import { CrudProvider } from '../crud/crud.provider';
 import { TargetGroupModel } from '../models/target-group.model';
 
 @Injectable({ providedIn: 'root' })
 export class TargetGroupProvider
-  extends CrudService<TargetGroupControllerService, TargetGroupModel> {
+  extends CrudProvider<TargetGroupControllerService, TargetGroupModel> {
 
   public create: (model: TargetGroupModel) => Promise<any>;
 

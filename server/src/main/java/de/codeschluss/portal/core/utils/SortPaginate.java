@@ -14,28 +14,28 @@ import org.springframework.data.domain.Sort;
 public class SortPaginate {
 
   /** The page. */
-  private Integer page;
+  protected Integer page;
   
   /** The size. */
-  private Integer size;
+  protected Integer size;
   
   /** The sort. */
-  private String sort;
+  protected String sort;
   
   /** The dir. */
-  private String dir;
+  protected String dir;
 
   /**
    * Creates the sort.
    *
-   * @param defaultValue the default value
+   * @param defaultSortProp the default sort prop
    * @return the sort
    */
-  public Sort createSort(String defaultValue) {
+  public Sort createSort(String defaultSortProp) {
     Sort.Direction direction = dir == null || dir.equals(Sort.Direction.ASC.toString())
         ? Sort.Direction.ASC
         : Sort.Direction.DESC;
-    sort = sort == null || sort.isEmpty() ? defaultValue : sort;
+    sort = sort == null || sort.isEmpty() ? defaultSortProp : sort;
 
     return new Sort(direction, sort);
   }

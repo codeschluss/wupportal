@@ -1,9 +1,15 @@
 package de.codeschluss.portal.core.common;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.Predicate;
 
-public interface QueryBuilder {
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
+
+public abstract class QueryBuilder {
   
-  public BooleanExpression fuzzySearch(String filter);
+  public abstract <P extends FilterSortPaginate> Predicate search(P params);
+  
+  protected String prepareFilter(String filter) {
+    return "%" + filter + "%"; 
+  }
 
 }

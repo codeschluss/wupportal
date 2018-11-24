@@ -4,7 +4,6 @@ import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.util.List;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -68,7 +67,7 @@ public abstract class ResourceDataService<E extends BaseEntity, B extends QueryB
    * @return the sorted list resources
    */
   public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P params) {
-    List<E> result = getSortedList(params.getFilter(), getSort(params));
+    List<E> result = getSortedList(params);
     return assembler.entitiesToResources(result, params);
   }
   
@@ -82,9 +81,7 @@ public abstract class ResourceDataService<E extends BaseEntity, B extends QueryB
    * @return the paged resources
    */
   public <P extends FilterSortPaginate> PagedResources<Resource<E>> getPagedResources(P params) {
-    String filter = params.getFilter();
-    PageRequest page = PageRequest.of(params.getPage(), params.getSize(), getSort(params));
-    return assembler.entitiesToPagedResources(getPaged(filter, page), params);
+    return assembler.entitiesToPagedResources(getPaged(params), params);
   }
 
 }

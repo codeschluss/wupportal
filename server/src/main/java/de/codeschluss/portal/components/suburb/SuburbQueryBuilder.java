@@ -5,11 +5,12 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.components.suburb.QSuburbEntity;
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class SuburbQueryBuilder implements QueryBuilder {
+public class SuburbQueryBuilder extends QueryBuilder {
 
   private final QSuburbEntity query;
   
@@ -25,7 +26,8 @@ public class SuburbQueryBuilder implements QueryBuilder {
     return query.addresses.any().id.eq(activityId);
   }
   
-  public BooleanExpression fuzzySearch(String filter) {
+  public BooleanExpression search(FilterSortPaginate params) {
+    String filter = prepareFilter(params.getFilter());
     return query.name.likeIgnoreCase(filter);
   }
 }

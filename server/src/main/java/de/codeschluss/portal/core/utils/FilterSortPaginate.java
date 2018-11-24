@@ -1,18 +1,16 @@
 package de.codeschluss.portal.core.utils;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class FilterSortPaginate extends SortPaginate {
 
-  private String filter;
+  protected String filter;
 
   public FilterSortPaginate(
       String filter, 
@@ -22,5 +20,9 @@ public class FilterSortPaginate extends SortPaginate {
       String dir) {
     super(page, size, sort, dir);
     this.filter = filter;
+  }
+  
+  public boolean isEmptyQuery() {
+    return filter == null || filter.isEmpty();
   }
 }

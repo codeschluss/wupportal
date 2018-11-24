@@ -3,6 +3,7 @@ package de.codeschluss.portal.components.address;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
  * The Class AddressQueryBuilder.
  */
 @Service
-public class AddressQueryBuilder implements QueryBuilder {
+public class AddressQueryBuilder extends QueryBuilder {
   
   /** The query. */
   private final QAddressEntity query;
@@ -64,10 +65,11 @@ public class AddressQueryBuilder implements QueryBuilder {
   /**
    * Fuzzy search.
    *
-   * @param filter the filter
+   * @param params the params
    * @return the predicate
    */
-  public BooleanExpression fuzzySearch(String filter) {
+  public BooleanExpression search(FilterSortPaginate params) {
+    String filter = prepareFilter(params.getFilter());
     return query.houseNumber.likeIgnoreCase(filter)
         .or(query.place.likeIgnoreCase(filter))
         .or(query.postalCode.likeIgnoreCase(filter))

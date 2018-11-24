@@ -22,7 +22,6 @@ export class ClientErrorHandler implements ErrorHandler {
       error: error.constructor.name,
       message: inspect(error),
       path: window.location.pathname,
-      status: error.stack
     }));
   }
 
@@ -31,7 +30,6 @@ export class ClientErrorHandler implements ErrorHandler {
       error: rejection.reason.constructor.name,
       message: inspect(rejection.reason),
       path: window.location.pathname,
-      status: rejection.reason.stack
     }));
   }
 

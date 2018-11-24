@@ -30,9 +30,7 @@ export class ClientComponent {
     _targetGroupProvider: TargetGroupProvider,
     _userProvider: UserProvider
   ) {
-    apiConfiguration.rootUrl = '/api';
-    apiConfiguration['authUrl'] = '/api/login';
-    apiConfiguration['refreshUrl'] = '/api/refresh';
+    apiConfiguration.rootUrl = require('../package.json').config.apiRootUrl;
   }
 
 }

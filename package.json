@@ -14,6 +14,11 @@
     "email": "info@codeschluss.de",
     "url": "https://github.com/codeschluss/wupportal/issues"
   },
+  "config": {
+    "apiRootUrl": "/api",
+    "apiAuthUrl": "/api/login",
+    "apiRefreshUrl": "/api/refresh"
+  },
   "scripts": {
     "build": "ng build",
     "start": "ng build --watch",

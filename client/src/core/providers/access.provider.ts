@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { OrganisationControllerService } from '../api/services/organisation-controller.service';
-import { UserControllerService } from '../api/services/user-controller.service';
 import { OrganisationProvider } from '../providers/organisation.provider';
 import { UserProvider } from '../providers/user.provider';
 
@@ -14,22 +12,22 @@ export class AccessProvider {
 
   public grantOrganisationAdmin:
     (organisationId: string, userId: string, grant: boolean) => Promise<any> =
-      this.organisationProvider.system.apply(OrganisationControllerService
-        .prototype.organisationControllerGrantAdminRightResponse);
+      this.organisationProvider.system.apply(this.organisationProvider.system
+        .service.organisationControllerGrantAdminRightResponse);
 
   public grantOrganisationUser:
     (organisationId: string, userId: string, grant: boolean) => Promise<any> =
-      this.organisationProvider.system.apply(OrganisationControllerService
-        .prototype.organisationControllerApproveOrRejectUserResponse);
+      this.organisationProvider.system.apply(this.organisationProvider.system
+        .service.organisationControllerApproveOrRejectUserResponse);
 
   public grantSuperUser:
     (userId: string, grant: boolean) => Promise<any> =
-      this.userProvider.system.apply(UserControllerService
-        .prototype.userControllerGrantSuperuserRightResponse);
+      this.userProvider.system.apply(this.userProvider.system
+        .service.userControllerGrantSuperuserRightResponse);
 
   public resetPassword:
     (username: string) => Promise<any> =
-      this.userProvider.system.apply(UserControllerService
-        .prototype.userControllerResetPasswordResponse);
+      this.userProvider.system.apply(this.userProvider.system
+        .service.userControllerResetPasswordResponse);
 
 }

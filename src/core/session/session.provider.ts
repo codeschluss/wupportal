@@ -21,10 +21,9 @@ export class SessionProvider {
 
     resolver: SessionResolver
   ) {
-    (this.session = new BehaviorSubject<SessionModel>(resolver.session))
-      .subscribe(session => this.storage.setItemSubscribe('session', session));
-
-    this.session.pipe(take(1)).subscribe(() => this.worker());
+    this.session = new BehaviorSubject<SessionModel>(resolver.session);
+    this.session.pipe(take(1)).subscribe((session) => this.worker(session));
+    this.session.subscribe((session) => this.writer(session));
   }
 
   public get current(): SessionModel {
@@ -42,7 +41,7 @@ export class SessionProvider {
   public login(username: string, password: string): Promise<any> {
     return this.service.apiLoginResponse(username, password).pipe(
       tap((response) => this.update(response.body)),
-      tap(() => this.worker())
+      tap(() => this.worker(this.session.value))
     ).toPromise();
   }
 
@@ -57,7 +56,7 @@ export class SessionProvider {
   public refresh(): Promise<any> {
     return this.service.apiRefreshResponse().pipe(
       tap((response) => this.update(response.body)),
-      tap(() => this.worker())
+      tap(() => this.worker(this.session.value))
     ).toPromise();
   }
 
@@ -72,13 +71,20 @@ export class SessionProvider {
     }));
   }
 
-  private worker(): void {
-    const refresh = this.session.value.refreshToken.exp * 1000 - Date.now();
-    const worktime = this.session.value.accessToken.exp * 1000 - Date.now();
+  private worker(session: SessionModel): void {
+    if (session.refreshToken.raw) {
+      const accessExp = session.accessToken.exp * 1000 - Date.now();
+      const refreshExp = session.refreshToken.exp * 1000 - Date.now();
+      this.timeout.unsubscribe();
 
-    this.timeout.closed && refresh > 0
-      ? this.timeout = timer(worktime).subscribe(() => this.refresh())
-      : this.logout();
+      this.timeout = refreshExp > accessExp
+        ? timer(accessExp).subscribe(() => this.refresh())
+        : timer(refreshExp).subscribe(() => this.logout());
+    }
+  }
+
+  private writer(session: SessionModel): void {
+    this.storage.setItemSubscribe('session', session);
   }
 
 }

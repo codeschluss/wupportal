@@ -1,12 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
 import { AddressControllerService } from '../api/services/address-controller.service';
-import { CrudService } from '../crud/crud.provider';
+import { CrudProvider } from '../crud/crud.provider';
 import { AddressModel } from '../models/address.model';
 import { SuburbModel } from '../models/suburb.model';
 
 @Injectable({ providedIn: 'root' })
 export class AddressProvider
-  extends CrudService<AddressControllerService, AddressModel> {
+  extends CrudProvider<AddressControllerService, AddressModel> {
 
   protected linked = [
     {

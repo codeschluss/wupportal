@@ -1,8 +1,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiConfiguration } from '../api/api-configuration';
 import { SessionProvider } from '../session/session.provider';
+import { ClientPackage } from '../utils/package';
 import { AccessTokenModel } from './access-token.model';
 import { RefreshTokenModel } from './refresh-token.model';
 
@@ -14,7 +14,7 @@ export class TokenInterceptor implements HttpInterceptor {
   private refreshToken: RefreshTokenModel;
 
   public constructor(
-    private apiConfiguration: ApiConfiguration,
+    private clientPackage: ClientPackage,
     private session: SessionProvider
   ) {
     this.session.subscribe((next) => {
@@ -28,11 +28,11 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if (this.accessToken.raw && this.refreshToken.raw) {
       switch (request.url) {
-        case this.apiConfiguration['authUrl']: request = request.clone({
+        case this.clientPackage.config.apiAuthUrl: request = request.clone({
           setHeaders: { 'Authorization': `Bearer ${this.accessToken.raw}` }
         }); break;
 
-        case this.apiConfiguration['refreshUrl']: request = request.clone({
+        case this.clientPackage.config.apiRefreshUrl: request = request.clone({
             setHeaders: { 'Authorization': `Bearer ${this.refreshToken.raw}` }
         }); break;
       }

@@ -9,6 +9,7 @@ import { SuburbProvider } from './core/providers/suburb.provider';
 import { TagProvider } from './core/providers/tag.provider';
 import { TargetGroupProvider } from './core/providers/target-group.provider';
 import { UserProvider } from './core/providers/user.provider';
+import { ClientPackage } from './core/utils/package';
 
 @Component({
   selector: 'client-component',
@@ -19,6 +20,7 @@ export class ClientComponent {
 
   public constructor(
     apiConfiguration: ApiConfiguration,
+    clientPackage: ClientPackage,
 
     _activityProvider: ActivityProvider,
     _addressProvider: AddressProvider,
@@ -30,9 +32,7 @@ export class ClientComponent {
     _targetGroupProvider: TargetGroupProvider,
     _userProvider: UserProvider
   ) {
-    apiConfiguration.rootUrl = '/api';
-    apiConfiguration['authUrl'] = '/api/login';
-    apiConfiguration['refreshUrl'] = '/api/refresh';
+    apiConfiguration.rootUrl = clientPackage.config.apiRootUrl;
   }
 
 }

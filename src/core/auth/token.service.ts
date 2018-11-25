@@ -7,6 +7,7 @@ import { ApiConfiguration } from '../api/api-configuration';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
 import { ErrorModel } from '../utils/error.model';
+import { ClientPackage } from '../utils/package';
 import { AccessTokenModel } from './access-token.model';
 import { RefreshTokenModel } from './refresh-token.model';
 
@@ -14,9 +15,10 @@ import { RefreshTokenModel } from './refresh-token.model';
 export class TokenService extends BaseService {
 
   public constructor(
-    private apiConfiguration: ApiConfiguration,
+    private clientPackage: ClientPackage,
     private jsonValidator: JSONValidator,
 
+    apiConfiguration: ApiConfiguration,
     httpClient: HttpClient
   ) {
     super(apiConfiguration, httpClient);
@@ -27,7 +29,7 @@ export class TokenService extends BaseService {
 
     return this.call(new HttpRequest<any>(
       'POST',
-      this.apiConfiguration['authUrl'],
+      this.clientPackage.config.apiAuthUrl,
       {
         username: username,
         password: password
@@ -43,7 +45,7 @@ export class TokenService extends BaseService {
   public apiRefreshResponse(): Observable<StrictHttpResponse<object>> {
     return this.call(new HttpRequest<any>(
       'GET',
-      this.apiConfiguration['refreshUrl'],
+      this.clientPackage.config.apiRefreshUrl,
       null,
       {
         headers: new HttpHeaders(),
@@ -85,7 +87,7 @@ export class TokenService extends BaseService {
   private validate(response: StrictHttpResponse<object>): void {
     Object.values(response.body).forEach((token) => {
       if (!this.jsonValidator.validate(token, token.constructor.schema)) {
-        throw Object.assign(new ErrorModel, {
+        throw Object.assign(new ErrorModel(), {
           status: 412,
           error: token.constructor.name,
           message: 'JSON Web Token did not pass JSON schema validation',

@@ -13,11 +13,11 @@ export class SessionResolver implements Resolve<SessionModel> {
     private storage: LocalStorage
   ) { }
 
-  public resolve(): Promise<SessionModel> {
-    return this.session ? Promise.resolve(this.session) : this.resource();
+  public async resolve(): Promise<SessionModel> {
+    return this.session ? Promise.resolve(this.session) : this.resolver();
   }
 
-  private async resource(): Promise<SessionModel> {
+  private async resolver(): Promise<SessionModel> {
     const schema = { schema: SessionModel.schema };
     return this.storage.getItem<SessionModel>('session', schema).pipe(
       map((session) => session || new SessionModel()),

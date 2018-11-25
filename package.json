@@ -6,13 +6,18 @@
   "author": {
     "name": "Wupportal Team"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/codeschluss/wupportal"
-  },
   "bugs": {
     "email": "info@codeschluss.de",
     "url": "https://github.com/codeschluss/wupportal/issues"
+  },
+  "config": {
+    "apiRootUrl": "/api",
+    "apiAuthUrl": "/api/login",
+    "apiRefreshUrl": "/api/refresh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codeschluss/wupportal"
   },
   "scripts": {
     "build": "ng build",

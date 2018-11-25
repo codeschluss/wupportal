@@ -32,9 +32,10 @@ export abstract class CrudProvider
     purge: this.purge.bind(this),
 
     _self: this,
-    get linked() { return this._self.linked; },
-    get methods() { return this._self.methods; },
-    get model() { return this._self.model; }
+    get linked(): CrudLink[] { return this._self.linked; },
+    get methods(): CrudMethods { return this._self.methods; },
+    get model(): Type<Model> { return this._self.model; },
+    get service(): Service { return this._self.service; }
   });
 
   protected abstract injector: Injector;

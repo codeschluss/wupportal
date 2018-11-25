@@ -17,7 +17,7 @@ export class OrganisationProvider
     },
     {
       field: 'address',
-      method: this.service.organisationControllerFindAddress,
+      method: this.service.organisationControllerFindAddressResponse,
       model: AddressModel
     },
     {

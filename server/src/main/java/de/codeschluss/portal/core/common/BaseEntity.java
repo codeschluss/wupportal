@@ -1,7 +1,7 @@
 package de.codeschluss.portal.core.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -48,7 +48,7 @@ public abstract class BaseEntity implements Serializable {
     this.id = id;
   }
 
-  @JsonDeserialize
+  @JsonSerialize
   public Date getCreated() {
     return this.created;
   }
@@ -58,7 +58,7 @@ public abstract class BaseEntity implements Serializable {
     this.created = created;
   }
 
-  @JsonDeserialize
+  @JsonSerialize
   public Date getModified() {
     return this.modified;
   }

@@ -4,6 +4,7 @@ import { CrudProvider } from '../crud/crud.provider';
 import { ActivityModel } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
 import { OrganisationModel } from '../models/organisation.model';
+import { ProviderModel } from '../models/provider.model';
 import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +21,11 @@ export class OrganisationProvider
       field: 'address',
       method: this.service.organisationControllerFindAddressResponse,
       model: AddressModel
+    },
+    {
+      field: 'provider',
+      method: null,
+      model: ProviderModel
     },
     {
       field: 'users',

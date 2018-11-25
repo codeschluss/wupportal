@@ -133,6 +133,7 @@ export abstract class CrudProvider
   }
 
   private walker(link: CrudLink, model: Model): Promise<any> {
+    if (!link.model['provider']) { return Promise.resolve(); }
     const provider = this.injector.get(link.model['provider']);
     return this.call.apply(provider, [link.method, model.id]).pipe(
       map((response) => this.cast.apply(provider, [response, link.model])),

@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { OrganisationControllerService } from '../api/services/organisation-controller.service';
 import { CrudProvider } from '../crud/crud.provider';
+import { ActivityModel } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
 import { OrganisationModel } from '../models/organisation.model';
 import { UserModel } from '../models/user.model';
@@ -13,7 +14,7 @@ export class OrganisationProvider
     {
       field: 'activities',
       method: this.service.organisationControllerFindActivitiesResponse,
-      model: OrganisationModel
+      model: ActivityModel
     },
     {
       field: 'address',

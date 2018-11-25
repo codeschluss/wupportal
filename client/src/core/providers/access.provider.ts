@@ -9,29 +9,27 @@ export class AccessProvider {
 
   public constructor(
     private organisationProvider: OrganisationProvider,
-    private organisationService: OrganisationControllerService,
-    private userProvider: UserProvider,
-    private userService: UserControllerService
+    private userProvider: UserProvider
   ) { }
 
   public grantOrganisationAdmin:
     (organisationId: string, userId: string, grant: boolean) => Promise<any> =
-      this.organisationProvider.apply(this.organisationService
-        .organisationControllerGrantAdminRightResponse);
+      this.organisationProvider.system.apply(OrganisationControllerService
+        .prototype.organisationControllerGrantAdminRightResponse);
 
   public grantOrganisationUser:
     (organisationId: string, userId: string, grant: boolean) => Promise<any> =
-      this.organisationProvider.apply(this.organisationService
-        .organisationControllerApproveOrRejectUserResponse);
+      this.organisationProvider.system.apply(OrganisationControllerService
+        .prototype.organisationControllerApproveOrRejectUserResponse);
 
   public grantSuperUser:
     (userId: string, grant: boolean) => Promise<any> =
-      this.userProvider.apply(this.userService
-        .userControllerGrantSuperuserRightResponse);
+      this.userProvider.system.apply(UserControllerService
+        .prototype.userControllerGrantSuperuserRightResponse);
 
   public resetPassword:
     (username: string) => Promise<any> =
-      this.userProvider.apply(this.userService
-        .userControllerResetPasswordResponse);
+      this.userProvider.system.apply(UserControllerService
+        .prototype.userControllerResetPasswordResponse);
 
 }

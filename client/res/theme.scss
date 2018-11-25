@@ -164,7 +164,8 @@ h2 {
   opacity: 1 !important;
 }
 
-.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
   z-index: -1 !important;
   background-color: mat-color($custom-primary) !important;
 }
@@ -173,32 +174,32 @@ h2 {
   height: 50px !important;
 }
 
-.mat-tab-label-active{
+.mat-tab-label-active {
   color: mat-color($custom-primary, default-contrast) !important;
 }
 
 .mat-tab-label,
-  .mat-tab-link {
-    &.cdk-keyboard-focused,
-    &.cdk-program-focused {
-      &:not(.mat-tab-disabled) {
-        background-color: mat-color($custom-primary) !important;
-      }
+.mat-tab-link {
+  &.cdk-keyboard-focused,
+  &.cdk-program-focused {
+    &:not(.mat-tab-disabled) {
+      background-color: mat-color($custom-primary) !important;
     }
   }
+}
 
 // Stepper styles
 .mat-step-label-selected {
   color: mat-color($custom-primary, default-contrast) !important;
 }
 
-.mat-step-header{
+.mat-step-header {
   margin-right: 5px;
   border: 1px solid mat-color($custom-primary) !important;
   opacity: 1 !important;
 }
 
-.mat-step-header[aria-selected=true]{
+.mat-step-header[aria-selected=true] {
   background-color: mat-color($custom-primary) !important;
 }
 

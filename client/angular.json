@@ -33,7 +33,7 @@
                 "output": "/"
               },
               {
-                "glob": "*.scss",
+                "glob": "*.css",
                 "input": "res",
                 "output": "/css"
               },
@@ -49,7 +49,10 @@
               }
             ],
             "styles": [
-              "res/theme.scss"
+              {
+                "input": "res/theme.scss",
+                "bundleName": "css/theme"
+              }
             ]
           },
           "configurations": {

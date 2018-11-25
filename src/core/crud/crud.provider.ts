@@ -5,13 +5,13 @@ import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
 import { CrudModel } from './crud.model';
 
-interface CrudLink {
+export interface CrudLink {
   field: string;
-  method: Function;
+  method: (...args: any) => Observable<StrictHttpResponse<object>>;
   model: Type<CrudModel>;
 }
 
-interface CrudMethods {
+export interface CrudMethods {
   create: (model: CrudModel) => Observable<StrictHttpResponse<object>>;
   update: (model: CrudModel, id: string) => Observable<StrictHttpResponse<{}>>;
   delete: (id: string) => Observable<StrictHttpResponse<object>>;
@@ -22,6 +22,20 @@ interface CrudMethods {
 @Injectable({ providedIn: 'root' })
 export abstract class CrudProvider
   <Service extends BaseService, Model extends CrudModel> {
+
+  public system = Object.freeze({
+    apply: this.apply.bind(this),
+    based: this.based.bind(this),
+    call: this.call.bind(this),
+    cast: this.cast.bind(this),
+    link: this.link.bind(this),
+    purge: this.purge.bind(this),
+
+    _self: this,
+    get linked() { return this._self.linked; },
+    get methods() { return this._self.methods; },
+    get model() { return this._self.model; }
+  });
 
   protected abstract injector: Injector;
 
@@ -53,15 +67,15 @@ export abstract class CrudProvider
     ).toPromise();
   }
 
-  public findAll(params: object): Promise<Model[]> {
-    return this.call(this.methods.findAll, params).pipe(
+  public findAll(params?: object): Promise<Model[]> {
+    return this.call(this.methods.findAll, params || { }).pipe(
       map((response) => this.cast<Model[]>(response)),
       tap((response) => this.link(response)),
       tap((response) => this.purge(response))
     ).toPromise();
   }
 
-  public apply(method:
+  protected apply(method:
     (...args: any) => Observable<StrictHttpResponse<object>>):
     (...args: any) => Promise<StrictHttpResponse<object>> {
 
@@ -74,7 +88,8 @@ export abstract class CrudProvider
     });
   }
 
-  protected call(method: Function, ...args: any[]):
+  protected call(method:
+    (...args: any) => Observable<StrictHttpResponse<object>>, ...args: any[]):
     Observable<StrictHttpResponse<object>> {
 
     return method.call(this.service, ...args);
@@ -82,7 +97,7 @@ export abstract class CrudProvider
 
   protected cast<T>(response: StrictHttpResponse<object>, t?: Type<Model>): T {
     const caster = (model) => Object.assign(new (t || this.model)(), model);
-    const data = (response.body['_embedded'] || {})['data'] || response.body;
+    const data = (response.body['_embedded'] || { })['data'] || response.body;
 
     return Array.isArray(data)
       ? data.map((model) => caster(model))
@@ -91,7 +106,7 @@ export abstract class CrudProvider
 
   protected link(input: Model | Model[]): void {
     const linker = (model) => this.linked.forEach((link) => {
-      const data = (model._embedded || {})[link.field];
+      const data = (model._embedded || { })[link.field];
       const getter = () => data
         ? Promise.resolve(Object.assign(new link.model(), data))
         : this.walker(link, model);

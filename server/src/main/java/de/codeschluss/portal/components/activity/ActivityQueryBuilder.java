@@ -59,7 +59,7 @@ public class ActivityQueryBuilder extends QueryBuilder {
    */
   public Predicate fuzzyTextSearch(ActivityQueryParam params, BooleanBuilder search) {
     String filter = prepareFilter(params.getFilter());
-    BooleanExpression texSearch = query.name.likeIgnoreCase(filter)
+    BooleanExpression textSearch = query.name.likeIgnoreCase(filter)
         .or(query.description.likeIgnoreCase(filter))
         .or(query.address.street.likeIgnoreCase(filter))
         .or(query.address.place.likeIgnoreCase(filter))
@@ -69,7 +69,7 @@ public class ActivityQueryBuilder extends QueryBuilder {
         .or(query.tags.any().name.likeIgnoreCase(filter))
         .or(query.targetGroups.any().name.likeIgnoreCase(filter))
         .or(query.category.name.likeIgnoreCase(filter));
-    return search.and(texSearch).getValue();
+    return search.and(textSearch).getValue();
   }
   
   /**

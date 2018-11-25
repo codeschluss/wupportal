@@ -231,8 +231,8 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @OwnUserOrSuperUserPermission
   public ResponseEntity<?> deleteActivity(@PathVariable String userId,
       @PathVariable String activityId) {
-    if (activityService.isActivityForProvider(activityId,
-        providerService.getProvidersByUser(userId))) {
+    if (activityService.isActivityForProvider(
+        activityId, providerService.getProvidersByUser(userId))) {
       activityService.delete(activityId);
       return noContent().build();
     } else {

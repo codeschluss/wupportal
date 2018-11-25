@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatButtonModule, MAT_DIALOG_DATA } from '@angular/material';
 import { ErrorModel } from './error.model';
+import { ClientPackage } from './package';
 
 @Component({
   template: `
@@ -8,17 +9,17 @@ import { ErrorModel } from './error.model';
       <!-- <i18n i18n="@@unhandledError">unhandledError</i18n>: -->
       Unhandled Error:
       <!-- <?i18n> -->
-      {{ error.error }}
+      {{ data.error.error }}
     </h1>
     <div mat-dialog-content>
-      <pre><strong>Status:</strong><br>{{ error.status }}</pre>
-      <pre><strong>Resource:</strong><br>{{ error.path }}</pre>
-      <pre><strong>Timestamp:</strong><br>{{ error.timestamp }}</pre>
-      <pre><strong>Stacktrace:</strong><br>{{ stacktrace }}</pre>
-      <pre><strong>Exception:</strong><br>{{ error.message }}</pre>
+      <pre><strong>Status:</strong><br>{{ data.error.status }}</pre>
+      <pre><strong>Resource:</strong><br>{{ data.error.path }}</pre>
+      <pre><strong>Timestamp:</strong><br>{{ data.error.timestamp }}</pre>
+      <pre><strong>Stacktrace:</strong><br>{{ data.stacktrace }}</pre>
+      <pre><strong>Exception:</strong><br>{{ data.error.message }}</pre>
     </div>
     <div mat-dialog-actions>
-      <a mat-button href="{{ issueUrl }}" target="_blank">
+      <a mat-button href="{{ clientPackage.bugs.url }}" target="_blank">
         <!-- <i18n i18n="@@reportIssue">reportIssue</i18n> -->
         Report Issue
         <!-- <?i18n> -->
@@ -41,13 +42,14 @@ export class ClientErrorComponent {
     MatButtonModule
   ];
 
-  public issueUrl: string = require('../../../package.json').bugs.url;
-
-  public stacktrace: string = new Error().stack;
-
   constructor(
+    public clientPackage: ClientPackage,
+
     @Inject(MAT_DIALOG_DATA)
-    public error: ErrorModel
+    public data: {
+      error: ErrorModel,
+      stacktrace?: string
+    }
   ) { }
 
 }

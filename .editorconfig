@@ -16,7 +16,7 @@ quote_type = single
 tab_width = 2
 
 [server/**]
-indent_style = tab
+indent_style = space
 tab_width = 4
 
 [*.md]

@@ -11,9 +11,17 @@
     "url": "https://github.com/codeschluss/wupportal/issues"
   },
   "config": {
-    "apiRootUrl": "/api",
-    "apiAuthUrl": "/api/login",
-    "apiRefreshUrl": "/api/refresh"
+    "api": {
+      "rootUrl": "/api",
+      "authUrl": "/api/login",
+      "refreshUrl": "/api/refresh"
+    },
+    "jwt": {
+      "claimAdminOrgas": "adminOrgas",
+      "claimApprovedOrgas": "approvedOrgas",
+      "claimCreatedActivities": "createdActivities",
+      "claimSuperUser": "superuser"
+    }
   },
   "repository": {
     "type": "git",

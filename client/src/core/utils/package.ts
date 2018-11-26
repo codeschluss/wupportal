@@ -13,9 +13,17 @@ export class ClientPackage {
   }
 
   public get config(): {
-    apiRootUrl: string,
-    apiAuthUrl: string,
-    apiRefreshUrl: string
+    api: {
+      rootUrl: string,
+      authUrl: string,
+      refreshUrl: string
+    },
+    jwt: {
+      claimAdminOrgas: string,
+      claimApprovedOrgas: string,
+      claimCreatedActivities: string,
+      claimSuperUser: string
+    }
   } {
     return this.packageJson.config;
   }

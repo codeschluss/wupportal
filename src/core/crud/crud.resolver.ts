@@ -14,47 +14,44 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
   public async resolve(route: ActivatedRouteSnapshot):
     Promise<CrudModel | CrudModel[]> {
 
-    const join = route.data[Object.keys(route.routeConfig.resolve)
+    const crudJoin = route.data[Object.keys(route.routeConfig.resolve)
       .find((key) => route.routeConfig.resolve[key] === this.constructor)];
-
-    const provider = this.injector.get(join.graph.model['provider']);
-
+    const provider = this.injector.get(crudJoin.graph.model['provider']);
     const response = route.params.uuid
       ? await provider.findOne(route.params.uuid)
       : await provider.findAll();
 
     if (Array.isArray(response)) {
       for (const model of response) {
-        await this.resolver(model, join.graph.nodes);
+        await this.resolver(model, crudJoin.graph.nodes);
       }
     } else {
-      await this.resolver(response, join.graph.nodes);
+      await this.resolver(response, crudJoin.graph.nodes);
     }
 
     return response;
   }
 
   private async resolver(model: CrudModel, nodes: CrudGraph[]): Promise<any> {
+    if (!model.constructor['provider']) { return; }
     const provider = this.injector.get(model.constructor['provider']);
 
     for (const node of nodes) {
-      const reference = provider.system.linked
+      const crudLink = provider.system.linked
         .find((link) => link.model === node.model);
 
-      let value = null; try {
-        value = await provider.system.call(reference.method, model.id).pipe(
-          map((response) => provider.system.cast(response, reference.model)),
+      let value; try {
+        value = await provider.system.call(crudLink.method, model.id).pipe(
+          map((response) => provider.system.cast(response, crudLink.model)),
           tap((response) => provider.system.purge(response))
         ).toPromise();
-      } catch (error) {
-        value = undefined;
-      }
+      } catch (error) { }
 
       if (value && node.nodes && node.nodes.length) {
         await this.resolver(value, node.nodes);
       }
 
-      Object.defineProperty(model, reference.field, { value: value });
+      Object.defineProperty(model, crudLink.field, { value: value });
     }
   }
 

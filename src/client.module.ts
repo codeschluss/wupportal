@@ -4,20 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UrlSerializer } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
-import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { ApiModule } from './core/api/api.module';
 import { TokenInterceptor } from './core/auth/token.interceptor';
+import { ErrorDialogComponent } from './core/error/error.dialog';
+import { ClientErrorHandler } from './core/error/error.handler';
 import { I18nComponent } from './core/i18n/i18n.component';
 import { I18nInterceptor } from './core/i18n/i18n.interceptor';
-import { ClientErrorComponent } from './core/utils/error.component';
-import { ClientErrorHandler } from './core/utils/error.handler';
 import { ClientUrlSerializer } from './core/utils/serializer';
 import { LayoutComponent } from './views/layout/layout.component';
-
-fontawesome.add(freeicons);
 
 const ClientProviders = [
   { provide: ErrorHandler, useClass: ClientErrorHandler },
@@ -28,7 +24,7 @@ const ClientProviders = [
 ];
 
 const ClientEntryComponents = [
-  ClientErrorComponent
+  ErrorDialogComponent
 ];
 
 const ClientDeclarations = [
@@ -38,7 +34,8 @@ const ClientDeclarations = [
 
 const ClientImports = [
   ClientErrorHandler.imports,
-  ClientErrorComponent.imports
+  ErrorDialogComponent.imports,
+  LayoutComponent.imports
 ];
 
 @NgModule({

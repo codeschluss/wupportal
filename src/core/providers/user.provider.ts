@@ -3,6 +3,7 @@ import { UserControllerService } from '../api/services/user-controller.service';
 import { CrudProvider } from '../crud/crud.provider';
 import { ActivityModel } from '../models/activity.model';
 import { OrganisationModel } from '../models/organisation.model';
+import { ProviderModel } from '../models/provider.model';
 import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -19,6 +20,11 @@ export class UserProvider
       field: 'organisations',
       method: this.service.userControllerFindOrganisationsResponse,
       model: OrganisationModel
+    },
+    {
+      field: 'provider',
+      method: null,
+      model: ProviderModel
     }
   ];
 

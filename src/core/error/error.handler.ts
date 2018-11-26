@@ -1,7 +1,7 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material';
 import { inspect } from 'util';
-import { ClientErrorComponent } from './error.component';
+import { ErrorDialogComponent } from './error.dialog';
 import { ErrorModel } from './error.model';
 
 @Injectable({ providedIn: 'root' })
@@ -37,7 +37,7 @@ export class ClientErrorHandler implements ErrorHandler {
   }
 
   public throwError(error: ErrorModel, stacktrace?: string): void {
-    this.dialog.open(ClientErrorComponent, {
+    this.dialog.open(ErrorDialogComponent, {
       data: {
         error: error,
         stacktrace: stacktrace || null

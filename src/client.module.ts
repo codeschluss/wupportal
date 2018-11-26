@@ -38,8 +38,7 @@ const ClientDeclarations = [
 
 const ClientImports = [
   ClientErrorHandler.imports,
-  ClientErrorComponent.imports,
-  LayoutComponent.imports
+  ClientErrorComponent.imports
 ];
 
 @NgModule({

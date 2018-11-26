@@ -9,24 +9,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+//TODO: Auto-generated Javadoc
 /**
- * The Class ActivityQueryParam.
- */
-// TODO: Auto-generated Javadoc
-
-/* (non-Javadoc)
- * @see de.codeschluss.portal.core.utils.FilterSortPaginate#toString()
- */
+* The Class ActivityQueryParam.
+* 
+* @author Valmir Etemi
+*
+*/
 @Data
-
-/* (non-Javadoc)
- * @see de.codeschluss.portal.core.utils.FilterSortPaginate#hashCode()
- */
 @EqualsAndHashCode(callSuper = true)
-
-/**
- * Instantiates a new activity query param.
- */
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class ActivityQueryParam extends FilterSortPaginate {
 

@@ -5,6 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * The Class FilterSortPaginate.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)

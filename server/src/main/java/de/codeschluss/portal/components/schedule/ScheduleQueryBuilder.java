@@ -9,6 +9,12 @@ import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class ScheduleQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class ScheduleQueryBuilder extends QueryBuilder {
   
@@ -23,6 +29,7 @@ public class ScheduleQueryBuilder extends QueryBuilder {
     .and(query.startDate.after(Expressions.currentTimestamp()));
   }
   
+  @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
     return query.activity.name.likeIgnoreCase(filter);

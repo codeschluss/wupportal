@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class AuthorizationService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class AuthorizationService {

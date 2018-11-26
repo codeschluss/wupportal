@@ -11,6 +11,12 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
+/**
+* The Class ActivityResourceAssembler.
+* 
+* @author Valmir Etemi
+*
+*/
 @Service
 public class ActivityResourceAssembler extends PagingAndSortingAssembler<ActivityEntity> {
 

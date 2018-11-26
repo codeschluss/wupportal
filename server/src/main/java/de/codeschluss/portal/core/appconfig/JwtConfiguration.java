@@ -9,6 +9,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.convert.DurationUnit;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The Class JwtConfiguration.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Data
 @ConfigurationProperties(prefix = "jwt")
 @Configuration

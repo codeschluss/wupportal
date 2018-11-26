@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * The Class DuplicateEntryAdvice.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @ControllerAdvice
 public class DuplicateEntryAdvice extends ResponseEntityExceptionHandler {
 

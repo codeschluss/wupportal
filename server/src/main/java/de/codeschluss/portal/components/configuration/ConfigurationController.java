@@ -20,6 +20,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The Class ConfigurationController.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @RestController
 public class ConfigurationController
     extends CrudController<ConfigurationEntity, ConfigurationService> {

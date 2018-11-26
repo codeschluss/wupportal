@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class OrganisationQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class OrganisationQueryBuilder extends QueryBuilder {

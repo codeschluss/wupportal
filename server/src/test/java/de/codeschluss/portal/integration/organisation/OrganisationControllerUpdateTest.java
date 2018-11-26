@@ -34,7 +34,7 @@ public class OrganisationControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("updateSuperUserOk", null,
+    OrganisationEntity organisation = new OrganisationEntity("updateSuperUserOk",
         "updateSuperUserOk", "updateSuperUserOk", "123456789", "updateSuperUserOk", null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-300000000000");
@@ -45,7 +45,7 @@ public class OrganisationControllerUpdateTest {
   @Test
   @WithUserDetails("admin@user")
   public void updateOwnOrganisationOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("updateOwnOrganisationOk", null,
+    OrganisationEntity organisation = new OrganisationEntity("updateOwnOrganisationOk",
         "updateOwnOrganisationOk", "organisation1", "123456789", "updateOwnOrganisationOk", null,
         null);
 
@@ -57,7 +57,7 @@ public class OrganisationControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateOtherOrganisationDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied", null,
+    OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied",
         "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", "123456789",
         "updateOtherOrganisationDenied", null, null);
 
@@ -66,7 +66,7 @@ public class OrganisationControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateOtherNotRegisteredOrganisationDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied", null,
+    OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied",
         "organisation1", "organisation1", "123456789", "organisation1", null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");

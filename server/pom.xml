@@ -89,6 +89,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.querydsl</groupId>
@@ -98,6 +99,15 @@
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-maven-plugin</artifactId>
+			<version>3.6.2</version>
 		</dependency>
 
 		<dependency>
@@ -151,6 +161,31 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>3.5.3</version>
+				<configuration>
+					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.liquibase.ext</groupId>
+						<artifactId>liquibase-hibernate5</artifactId>
+						<version>3.6</version>
+					</dependency>
+					<dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-data-jpa</artifactId>
+						<version>2.0.0.RELEASE</version>
+					</dependency>
+					<dependency>
+						<groupId>javax.validation</groupId>
+						<artifactId>validation-api</artifactId>
+						<version>2.0.1.Final</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

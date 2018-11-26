@@ -1,0 +1,71 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="vetemi (generated)" id="1543273382787-1">
+        <addUniqueConstraint columnNames="password" constraintName="UC_USERSPASSWORD_COL" tableName="users"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-2">
+        <addForeignKeyConstraint baseColumnNames="activity_id" baseTableName="schedules" constraintName="FK3tyc3usongts2dlum3e6c5in4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activities"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-3">
+        <dropForeignKeyConstraint baseTableName="images" constraintName="fkey_image_organisation"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-4">
+        <dropUniqueConstraint constraintName="I18N_LOCALE_FIELD" tableName="i18n"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-5">
+        <dropUniqueConstraint constraintName="locale" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-6">
+        <dropUniqueConstraint constraintName="name" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-7">
+        <dropUniqueConstraint constraintName="uniq_activity_tag" tableName="activities_tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-8">
+        <dropUniqueConstraint constraintName="uniq_activity_target_group" tableName="activities_target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-9">
+        <dropTable tableName="i18n"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-10">
+        <dropTable tableName="images"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-11">
+        <dropPrimaryKey constraintName="PRIMARY" tableName="activities_tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-12">
+        <dropPrimaryKey constraintName="PRIMARY" tableName="activities_target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-13">
+        <dropColumn columnName="id" tableName="activities_tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-14">
+        <dropColumn columnName="id" tableName="activities_target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-15">
+        <dropDefaultValue columnDataType="default 'FALSE'" columnName="admin" tableName="providers"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-16">
+        <dropDefaultValue columnDataType="default 'FALSE'" columnName="approved" tableName="providers"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-17">
+        <addNotNullConstraint columnDataType="float" columnName="latitude" tableName="addresses"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-18">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="locale" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-19">
+        <addNotNullConstraint columnDataType="float" columnName="longitude" tableName="addresses"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-20">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="name" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-21">
+        <dropNotNullConstraint columnDataType="default '0'" columnName="show_user" tableName="activities"/>
+        <dropDefaultValue columnDataType="default '0'" columnName="show_user" tableName="activities"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543273382787-22">
+        <addNotNullConstraint columnDataType="boolean" columnName="superuser" tableName="users"/>
+        <dropDefaultValue columnDataType="boolean" columnName="superuser" tableName="users"/>
+    </changeSet>
+</databaseChangeLog>

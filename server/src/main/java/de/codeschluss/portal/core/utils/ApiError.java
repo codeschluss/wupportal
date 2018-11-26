@@ -9,6 +9,12 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 // TODO: Auto-generated Javadoc
+/**
+ * The Class ApiError.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Data
 public class ApiError {
 

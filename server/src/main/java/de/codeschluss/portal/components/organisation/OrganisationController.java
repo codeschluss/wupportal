@@ -31,6 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 // TODO: Auto-generated Javadoc
 /**
  * The Class OrganisationController.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @RestController
 public class OrganisationController

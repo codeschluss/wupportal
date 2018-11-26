@@ -17,6 +17,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The Class CategoryController.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @RestController
 public class CategoryController extends CrudController<CategoryEntity, CategoryService> {
 

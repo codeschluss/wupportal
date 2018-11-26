@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class TargetGroupService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class TargetGroupService 

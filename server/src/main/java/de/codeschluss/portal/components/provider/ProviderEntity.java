@@ -11,7 +11,9 @@ import de.codeschluss.portal.core.common.BaseEntity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,6 +30,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the providers database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -39,8 +43,10 @@ import org.springframework.hateoas.core.Relation;
 public class ProviderEntity extends BaseEntity implements Serializable {
   private static final long serialVersionUID = 1L;
 
+  @Column(columnDefinition = "default 'FALSE'")
   private boolean admin;
 
+  @Column(columnDefinition = "default 'FALSE'")
   private boolean approved;
 
   @OneToMany(mappedBy = "provider")
@@ -51,11 +57,13 @@ public class ProviderEntity extends BaseEntity implements Serializable {
   @ManyToOne
   @JsonIgnore
   @ToString.Exclude
+  @JoinColumn(nullable = false)
   private OrganisationEntity organisation;
 
   @ManyToOne
   @JsonIgnore
   @ToString.Exclude
+  @JoinColumn(nullable = false)
   private UserEntity user;
 
   @JsonProperty

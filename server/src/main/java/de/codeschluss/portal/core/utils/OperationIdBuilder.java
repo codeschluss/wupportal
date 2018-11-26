@@ -11,6 +11,10 @@ import springfox.documentation.spi.service.OperationBuilderPlugin;
 import springfox.documentation.spi.service.contexts.OperationContext;
 import springfox.documentation.swagger.common.SwaggerPluginSupport;
 
+/**
+ * The Class FilterSortPaginate.
+ *
+ */
 @Component
 public class OperationIdBuilder implements OperationBuilderPlugin {
 

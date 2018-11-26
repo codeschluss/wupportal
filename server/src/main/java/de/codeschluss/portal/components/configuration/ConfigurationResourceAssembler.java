@@ -13,6 +13,12 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class ConfigurationResourceAssembler.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class ConfigurationResourceAssembler extends PagingAndSortingAssembler<ConfigurationEntity> {
 

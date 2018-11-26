@@ -7,6 +7,12 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class TranslationResourceAssembler.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class TranslationResourceAssembler extends PagingAndSortingAssembler<TranslationEntity> {
 

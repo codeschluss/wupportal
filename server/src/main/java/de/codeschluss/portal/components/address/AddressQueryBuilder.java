@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class AddressQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class AddressQueryBuilder extends QueryBuilder {
@@ -68,6 +71,7 @@ public class AddressQueryBuilder extends QueryBuilder {
    * @param params the params
    * @return the predicate
    */
+  @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
     return query.houseNumber.likeIgnoreCase(filter)

@@ -11,6 +11,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 // TODO: Auto-generated Javadoc
 /**
  * The Class PaginationLinkBuilder.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Component
 public class PaginationLinkBuilder {

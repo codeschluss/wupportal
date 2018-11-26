@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class UserQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class UserQueryBuilder extends QueryBuilder {
@@ -49,6 +52,7 @@ public class UserQueryBuilder extends QueryBuilder {
    * @param params the params
    * @return the boolean expression
    */
+  @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
     return query.fullname.likeIgnoreCase(filter)

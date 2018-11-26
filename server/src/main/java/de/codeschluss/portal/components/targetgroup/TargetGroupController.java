@@ -17,6 +17,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The Class TargetGroupController.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @RestController
 public class TargetGroupController extends CrudController<TargetGroupEntity, TargetGroupService> {
 

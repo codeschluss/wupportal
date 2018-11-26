@@ -36,6 +36,9 @@ import org.springframework.web.bind.annotation.RestController;
 // TODO: Auto-generated Javadoc
 /**
  * The Class UserController.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @RestController
 public class UserController extends CrudController<UserEntity, UserService> {

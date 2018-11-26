@@ -8,6 +8,7 @@ import de.codeschluss.portal.core.common.BaseEntity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -25,6 +26,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the users database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -39,12 +42,14 @@ public class UserEntity extends BaseEntity {
 
   private String fullname;
 
+  @Column(unique = true, nullable = false)
   private String password;
 
   private String phone;
 
   private boolean superuser;
 
+  @Column(unique = true, nullable = false)
   private String username;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")

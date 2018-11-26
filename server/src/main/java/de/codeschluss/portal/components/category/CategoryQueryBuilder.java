@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class CategoryQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class CategoryQueryBuilder extends QueryBuilder {

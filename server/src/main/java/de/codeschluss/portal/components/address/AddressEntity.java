@@ -28,6 +28,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the addresses database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

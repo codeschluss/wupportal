@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * The Class InvalidApiAccessAdvice.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @ControllerAdvice
 public class InvalidApiAccessAdvice extends ResponseEntityExceptionHandler {
 

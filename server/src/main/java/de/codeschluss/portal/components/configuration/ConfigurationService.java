@@ -4,6 +4,12 @@ import de.codeschluss.portal.core.common.ResourceDataService;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class ConfigurationService.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class ConfigurationService
     extends ResourceDataService<ConfigurationEntity, ConfigurationQueryBuilder> {

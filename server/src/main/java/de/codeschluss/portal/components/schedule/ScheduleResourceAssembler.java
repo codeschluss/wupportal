@@ -13,6 +13,12 @@ import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The Class ScheduleResourceAssembler.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 @Transactional
 public class ScheduleResourceAssembler extends PagingAndSortingAssembler<ScheduleEntity> {

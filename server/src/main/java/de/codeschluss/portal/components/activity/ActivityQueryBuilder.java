@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class ActivityQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class ActivityQueryBuilder extends QueryBuilder {

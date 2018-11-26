@@ -18,6 +18,12 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+/**
+ * The Class BaseEntity.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity implements Serializable {
@@ -30,10 +36,12 @@ public abstract class BaseEntity implements Serializable {
 
   @Temporal(TemporalType.TIMESTAMP)
   @LastModifiedDate
+  @Column(nullable = false, columnDefinition = "default 'NOW()'")
   protected Date modified;
 
   @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
+  @Column(nullable = false, columnDefinition = "default 'NOW()'")
   protected Date created;
 
   public String getId() {

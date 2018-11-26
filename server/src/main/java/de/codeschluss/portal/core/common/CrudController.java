@@ -21,11 +21,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 // TODO: Auto-generated Javadoc
 /**
  * The Class CrudController.
+ * 
+ * @author Valmir Etemi
  *
  * @param <E>
  *          the element type
  * @param <S>
  *          the generic type
+ * 
  */
 public abstract class CrudController<E extends BaseEntity, S extends ResourceDataService<E, ?>> {
 

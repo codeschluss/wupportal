@@ -24,6 +24,9 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 // TODO: Auto-generated Javadoc
 /**
  * The Class MailService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class MailService {

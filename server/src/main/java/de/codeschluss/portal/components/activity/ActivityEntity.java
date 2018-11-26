@@ -39,6 +39,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the activities database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -51,13 +53,14 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @Column(nullable = false)
   private String name;
 
   @Lob
   @Column(columnDefinition = "TEXT")
   private String description;
 
-  @Column(name = "show_user")
+  @Column(name = "show_user", columnDefinition = "default '0'")
   private boolean showUser;
 
   @Transient
@@ -76,6 +79,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @ManyToOne
   @ToString.Exclude
   @JsonIgnore
+  @JoinColumn(nullable = false)
   private CategoryEntity category;
 
   @Transient
@@ -85,6 +89,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @ManyToOne
   @ToString.Exclude
   @JsonIgnore
+  @JoinColumn(nullable = false)
   private ProviderEntity provider;
 
   @OneToMany(mappedBy = "activity")

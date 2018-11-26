@@ -9,6 +9,12 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.core.EmbeddedWrapper;
 
+/**
+ * The Class ResourceWithEmbeddable.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 public class ResourceWithEmbeddable<E> extends Resource<E> {
 
   @JsonUnwrapped

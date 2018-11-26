@@ -14,6 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * The Class InvalidTokenAdvice.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @ControllerAdvice
 public class InvalidTokenAdvice {
 

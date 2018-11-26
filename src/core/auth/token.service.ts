@@ -29,7 +29,7 @@ export class TokenService extends BaseService {
 
     return this.call(new HttpRequest<any>(
       'POST',
-      this.clientPackage.config.apiAuthUrl,
+      this.clientPackage.config.api.authUrl,
       {
         username: username,
         password: password
@@ -45,7 +45,7 @@ export class TokenService extends BaseService {
   public apiRefreshResponse(): Observable<StrictHttpResponse<object>> {
     return this.call(new HttpRequest<any>(
       'GET',
-      this.clientPackage.config.apiRefreshUrl,
+      this.clientPackage.config.api.refreshUrl,
       null,
       {
         headers: new HttpHeaders(),

@@ -43,10 +43,10 @@ import org.springframework.hateoas.core.Relation;
 public class ProviderEntity extends BaseEntity implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @Column(columnDefinition = "default 'FALSE'")
+  @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean admin;
 
-  @Column(columnDefinition = "default 'FALSE'")
+  @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean approved;
 
   @OneToMany(mappedBy = "provider")

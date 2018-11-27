@@ -103,6 +103,7 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.liquibase</groupId>
@@ -167,7 +168,7 @@
 				<artifactId>liquibase-maven-plugin</artifactId>
 				<version>3.5.3</version>
 				<configuration>
-					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
+					<propertyFile>src/main/resources/application-${project.activeProfiles[0].id}.properties</propertyFile>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -189,4 +190,15 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>dev</id>
+		</profile>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
 </project>

@@ -56,8 +56,10 @@ public class AddressEntity extends BaseEntity implements Serializable {
   @JsonIgnore
   private SuburbEntity suburb;
 
+  @Column(nullable = true)
   private float latitude;
 
+  @Column(nullable = true)
   private float longitude;
 
   @OneToMany(mappedBy = "address")

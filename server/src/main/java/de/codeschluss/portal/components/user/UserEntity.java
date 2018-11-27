@@ -42,11 +42,12 @@ public class UserEntity extends BaseEntity {
 
   private String fullname;
 
-  @Column(unique = true, nullable = false)
+  @Column(nullable = false)
   private String password;
 
   private String phone;
 
+  @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean superuser;
 
   @Column(unique = true, nullable = false)

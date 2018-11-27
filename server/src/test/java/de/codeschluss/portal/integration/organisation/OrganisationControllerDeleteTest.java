@@ -30,7 +30,7 @@ public class OrganisationControllerDeleteTest {
   @Test(expected = NotFoundException.class)
   @WithUserDetails("super@user")
   public void deleteOtherSuperUserOk() throws URISyntaxException {
-    String organisationId = "00000000-0000-0000-0008-400000000000";
+    String organisationId = "00000000-0000-0000-0008-120000000000";
     assertThat(controller.findOne(organisationId)).isNotNull();
 
     controller.delete(organisationId);

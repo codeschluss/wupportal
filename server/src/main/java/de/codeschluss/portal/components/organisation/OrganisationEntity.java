@@ -45,6 +45,10 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
   @Lob
   @Column(columnDefinition = "TEXT")
   private String description;
+  
+  @Lob
+  @Column(columnDefinition = "MEDIUMBLOB")
+  private byte[] image;
 
   private String mail;
 

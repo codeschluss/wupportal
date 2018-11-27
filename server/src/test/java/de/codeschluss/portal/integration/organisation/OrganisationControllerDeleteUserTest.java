@@ -32,7 +32,7 @@ public class OrganisationControllerDeleteUserTest {
   @Test(expected = NotFoundException.class)
   @WithUserDetails("super@user")
   public void deleteSuperUserOk() throws URISyntaxException {
-    String orgaId = "00000000-0000-0000-0008-600000000000";
+    String orgaId = "00000000-0000-0000-0008-120000000000";
     String userId = "00000000-0000-0000-0004-200000000000";
 
     assertThat(providerService.getProviderByUserAndOrganisation(userId, orgaId)).isNotNull();

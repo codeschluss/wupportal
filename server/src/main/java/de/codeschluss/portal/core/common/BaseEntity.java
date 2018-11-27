@@ -36,12 +36,12 @@ public abstract class BaseEntity implements Serializable {
 
   @Temporal(TemporalType.TIMESTAMP)
   @LastModifiedDate
-  @Column(nullable = false, columnDefinition = "default 'NOW()'")
+  @Column(nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
   protected Date modified;
 
   @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
-  @Column(nullable = false, columnDefinition = "default 'NOW()'")
+  @Column(nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
   protected Date created;
 
   public String getId() {

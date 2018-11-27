@@ -1,0 +1,859 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="vetemi (generated)" id="1543332961634-1">
+        <createTable tableName="activities">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column defaultValueBoolean="false" name="show_user" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_id" type="CHAR(36)"/>
+            <column name="provider_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-2">
+        <createTable tableName="addresses">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude" type="FLOAT(16, 10)"/>
+            <column name="longitude" type="FLOAT(16, 10)"/>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="house_number" type="VARCHAR(8)"/>
+            <column name="postal_code" type="VARCHAR(8)"/>
+            <column name="place" type="VARCHAR(255)"/>
+            <column name="suburb_id" type="CHAR(36)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-3">
+        <createTable tableName="categories">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="color" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-4">
+        <createTable tableName="configurations">
+            <column name="id" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-5">
+        <createTable tableName="i18n">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="locale" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="foreign_key" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-6">
+        <createTable tableName="organisations">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="website" type="VARCHAR(255)"/>
+            <column name="mail" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="image" type="MEDIUMBLOB"/>
+            <column name="address_id" type="CHAR(36)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-7">
+        <createTable tableName="providers">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="admin" type="BIT(1)"/>
+            <column defaultValueBoolean="false" name="approved" type="BIT(1)"/>
+            <column name="organisation_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-8">
+        <createTable tableName="schedules">
+            <column name="id" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="datetime"/>
+            <column name="start_date" type="datetime"/>
+            <column name="activity_id" type="CHAR(1)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-9">
+        <createTable tableName="suburbs">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-10">
+        <createTable tableName="tags">
+            <column name="id" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-11">
+        <createTable tableName="target_groups">
+            <column name="id" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-12">
+        <createTable tableName="translations">
+            <column name="id" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="locale" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-13">
+        <createTable tableName="users">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="superuser" type="BIT(1)"/>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fullname" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-14">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="activities"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-15">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="addresses"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-16">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-17">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="configurations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-18">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="i18n"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-19">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="organisations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-20">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="providers"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-21">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="schedules"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-22">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="suburbs"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-23">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-24">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-25">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-26">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="users"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-27">
+        <addUniqueConstraint columnNames="locale, model, foreign_key, field" constraintName="I18N_LOCALE_FIELD" tableName="i18n"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-28">
+        <addUniqueConstraint columnNames="color" constraintName="UK_8740yfu8t0w4xolu8ntendb11" tableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-29">
+        <addUniqueConstraint columnNames="name" constraintName="UK_ajh4csvqdnpmrsc903qpfqhde" tableName="suburbs"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-30">
+        <addUniqueConstraint columnNames="name" constraintName="UK_aydkxwnf6jw0dl8kdwsen634s" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-31">
+        <addUniqueConstraint columnNames="locale" constraintName="UK_fwc4gkru0m9hyth5jqncywaa7" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-32">
+        <addUniqueConstraint columnNames="name" constraintName="UK_k8bgkvt6kahddpji5n33onm0p" tableName="target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-33">
+        <addUniqueConstraint columnNames="name" constraintName="UK_kl9j7yfh8wyijpxig7f1nd6oa" tableName="organisations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-34">
+        <addUniqueConstraint columnNames="username" constraintName="UK_r43af9ap4edm43mmtq01oddj6" tableName="users"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-35">
+        <addUniqueConstraint columnNames="name" constraintName="UK_t48xdq560gs3gap9g7jg36kgc" tableName="tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-36">
+        <addUniqueConstraint columnNames="name" constraintName="UK_t8o6pivur7nn124jehx7cygw5" tableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-37">
+        <addUniqueConstraint columnNames="color" constraintName="color" tableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-38">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-39">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="organisations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-40">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="suburbs"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-41">
+        <addUniqueConstraint columnNames="username" constraintName="username" tableName="users"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-42">
+        <createIndex indexName="FK3tyc3usongts2dlum3e6c5in4" tableName="schedules">
+            <column name="activity_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-43">
+        <createIndex indexName="I18N_FIELD" tableName="i18n">
+            <column name="model"/>
+            <column name="foreign_key"/>
+            <column name="field"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-44">
+        <createIndex indexName="fkey_activity_address" tableName="activities">
+            <column name="address_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-45">
+        <createIndex indexName="fkey_activity_category" tableName="activities">
+            <column name="category_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-46">
+        <createIndex indexName="fkey_activity_provider" tableName="activities">
+            <column name="provider_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-47">
+        <createIndex indexName="fkey_address_suburb" tableName="addresses">
+            <column name="suburb_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-48">
+        <createIndex indexName="fkey_organisation_address" tableName="organisations">
+            <column name="address_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-49">
+        <createIndex indexName="fkey_provider_organisation" tableName="providers">
+            <column name="organisation_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-50">
+        <createIndex indexName="fkey_provider_user" tableName="providers">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-51">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="activities" constraintName="FKbkdf7cnl974utrinro7goxeon" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="addresses"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-52">
+        <addForeignKeyConstraint baseColumnNames="provider_id" baseTableName="activities" constraintName="FKjk4bkojabyv3loiomnn73cyv3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="providers"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-53">
+        <addForeignKeyConstraint baseColumnNames="suburb_id" baseTableName="addresses" constraintName="FKmccpbd062822m6n7rw780svwy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="suburbs"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-54">
+        <addForeignKeyConstraint baseColumnNames="organisation_id" baseTableName="providers" constraintName="FKrcwb03wnd8qgt9a1a6e47afn7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="organisations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-55">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="organisations" constraintName="FKt1nrgbfbgcrtn7a5nbkm7f2y2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="addresses"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-56">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="activities" constraintName="fkey_activity_category" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543332961634-57">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="providers" constraintName="fkey_provider_user" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-1">
+        <createTable tableName="activities">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column defaultValueBoolean="false" name="show_user" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_id" type="CHAR(36)"/>
+            <column name="provider_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-2">
+        <createTable tableName="activities_tags">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activity_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-3">
+        <createTable tableName="activities_target_groups">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activity_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_group_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-4">
+        <createTable tableName="addresses">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude" type="FLOAT(16, 10)"/>
+            <column name="longitude" type="FLOAT(16, 10)"/>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="house_number" type="VARCHAR(8)"/>
+            <column name="postal_code" type="VARCHAR(8)"/>
+            <column name="place" type="VARCHAR(255)"/>
+            <column name="suburb_id" type="CHAR(36)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-5">
+        <createTable tableName="categories">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="color" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-6">
+        <createTable tableName="configurations">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-7">
+        <createTable tableName="i18n">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="locale" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="foreign_key" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-8">
+        <createTable tableName="organisations">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="website" type="VARCHAR(255)"/>
+            <column name="mail" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="image" type="MEDIUMBLOB"/>
+            <column name="address_id" type="CHAR(36)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-9">
+        <createTable tableName="providers">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="admin" type="BIT(1)"/>
+            <column defaultValueBoolean="false" name="approved" type="BIT(1)"/>
+            <column name="organisation_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-10">
+        <createTable tableName="schedules">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="datetime"/>
+            <column name="end_date" type="datetime"/>
+            <column name="activity_id" type="CHAR(36)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-11">
+        <createTable tableName="suburbs">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-12">
+        <createTable tableName="tags">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-13">
+        <createTable tableName="target_groups">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-14">
+        <createTable tableName="translations">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="locale" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-15">
+        <createTable tableName="users">
+            <column name="id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="superuser" type="BIT(1)"/>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fullname" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="modified" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-16">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="activities"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-17">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="activities_tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-18">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="activities_target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-19">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="addresses"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-20">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-21">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="configurations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-22">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="i18n"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-23">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="organisations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-24">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="providers"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-25">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="schedules"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-26">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="suburbs"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-27">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-28">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-29">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-30">
+        <addPrimaryKey columnNames="id" constraintName="PRIMARY" tableName="users"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-31">
+        <addUniqueConstraint columnNames="locale, model, foreign_key, field" constraintName="I18N_LOCALE_FIELD" tableName="i18n"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-32">
+        <addUniqueConstraint columnNames="color" constraintName="color" tableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-33">
+        <addUniqueConstraint columnNames="locale" constraintName="locale" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-34">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-35">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="organisations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-36">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="suburbs"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-37">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-38">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-39">
+        <addUniqueConstraint columnNames="name" constraintName="name" tableName="translations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-40">
+        <addUniqueConstraint columnNames="activity_id, tag_id" constraintName="uniq_activity_tag" tableName="activities_tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-41">
+        <addUniqueConstraint columnNames="activity_id, target_group_id" constraintName="uniq_activity_target_group" tableName="activities_target_groups"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-42">
+        <addUniqueConstraint columnNames="username" constraintName="username" tableName="users"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-43">
+        <createIndex indexName="I18N_FIELD" tableName="i18n">
+            <column name="model"/>
+            <column name="foreign_key"/>
+            <column name="field"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-44">
+        <createIndex indexName="fkey_activity_address" tableName="activities">
+            <column name="address_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-45">
+        <createIndex indexName="fkey_activity_category" tableName="activities">
+            <column name="category_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-46">
+        <createIndex indexName="fkey_activity_provider" tableName="activities">
+            <column name="provider_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-47">
+        <createIndex indexName="fkey_address_suburb" tableName="addresses">
+            <column name="suburb_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-48">
+        <createIndex indexName="fkey_organisation_address" tableName="organisations">
+            <column name="address_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-49">
+        <createIndex indexName="fkey_provider_organisation" tableName="providers">
+            <column name="organisation_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-50">
+        <createIndex indexName="fkey_provider_user" tableName="providers">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-51">
+        <createIndex indexName="fkey_tag_activity" tableName="activities_tags">
+            <column name="tag_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-52">
+        <createIndex indexName="fkey_target_group_activity" tableName="activities_target_groups">
+            <column name="target_group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-53">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="activities" constraintName="fkey_activity_address" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="addresses"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-54">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="activities" constraintName="fkey_activity_category" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="categories"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-55">
+        <addForeignKeyConstraint baseColumnNames="provider_id" baseTableName="activities" constraintName="fkey_activity_provider" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="providers"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-56">
+        <addForeignKeyConstraint baseColumnNames="activity_id" baseTableName="activities_tags" constraintName="fkey_activity_tag" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="activities"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-57">
+        <addForeignKeyConstraint baseColumnNames="activity_id" baseTableName="activities_target_groups" constraintName="fkey_activity_target_group" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="activities"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-58">
+        <addForeignKeyConstraint baseColumnNames="suburb_id" baseTableName="addresses" constraintName="fkey_address_suburb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="suburbs"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-59">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="organisations" constraintName="fkey_organisation_address" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="addresses"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-60">
+        <addForeignKeyConstraint baseColumnNames="organisation_id" baseTableName="providers" constraintName="fkey_provider_organisation" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="organisations"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-61">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="providers" constraintName="fkey_provider_user" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-62">
+        <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="activities_tags" constraintName="fkey_tag_activity" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="tags"/>
+    </changeSet>
+    <changeSet author="vetemi (generated)" id="1543333144207-63">
+        <addForeignKeyConstraint baseColumnNames="target_group_id" baseTableName="activities_target_groups" constraintName="fkey_target_group_activity" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="target_groups"/>
+    </changeSet>
+</databaseChangeLog>

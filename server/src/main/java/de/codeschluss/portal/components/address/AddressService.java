@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class AddressService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class AddressService extends ResourceDataService<AddressEntity, AddressQueryBuilder> {

@@ -25,6 +25,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the target_groups database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -41,6 +43,7 @@ public class TargetGroupEntity extends BaseEntity implements Serializable {
   @Column(columnDefinition = "TEXT")
   private String description;
 
+  @Column(unique = true, nullable = false)
   private String name;
 
   @ManyToMany(mappedBy = "targetGroups")

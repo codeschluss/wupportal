@@ -11,8 +11,12 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
-
-
+/**
+ * The Class OrganisationResourceAssembler.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class OrganisationResourceAssembler extends PagingAndSortingAssembler<OrganisationEntity> {
 

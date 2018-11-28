@@ -9,6 +9,12 @@ import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class SuburbQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class SuburbQueryBuilder extends QueryBuilder {
 
@@ -26,6 +32,7 @@ public class SuburbQueryBuilder extends QueryBuilder {
     return query.addresses.any().id.eq(activityId);
   }
   
+  @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
     return query.name.likeIgnoreCase(filter);

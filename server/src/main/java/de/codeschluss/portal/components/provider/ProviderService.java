@@ -19,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProviderService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 @Transactional

@@ -12,6 +12,12 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class SuburbResourceAssembler.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class SuburbResourceAssembler extends PagingAndSortingAssembler<SuburbEntity> {
 

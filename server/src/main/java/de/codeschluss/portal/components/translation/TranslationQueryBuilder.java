@@ -7,6 +7,12 @@ import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class TranslationQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class TranslationQueryBuilder extends QueryBuilder {
 

@@ -24,7 +24,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class PagingAndSortingAssembler.
- *
+ * 
+ * @author Valmir Etemi
+ * 
  * @param <E> the element type
  */
 @Service
@@ -34,6 +36,7 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity>
   /* (non-Javadoc)
    * @see org.springframework.hateoas.ResourceAssembler#toResource(java.lang.Object)
    */
+  @Override
   public Resource<E> toResource(E entity) {
     return new Resource<>(entity, createResourceLinks(entity));
   }

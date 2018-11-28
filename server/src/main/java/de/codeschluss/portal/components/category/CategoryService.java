@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class CategoryService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class CategoryService extends ResourceDataService<CategoryEntity, CategoryQueryBuilder> {
@@ -38,6 +41,7 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
    * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
+  @Override
   public CategoryEntity getExisting(CategoryEntity newCategory) {
     return repo.findOne(entities.withName(newCategory.getName())).orElse(null);
   }

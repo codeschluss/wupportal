@@ -28,6 +28,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the organisations database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -43,13 +45,14 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
   @Lob
   @Column(columnDefinition = "TEXT")
   private String description;
-
+  
   @Lob
   @Column(columnDefinition = "MEDIUMBLOB")
   private byte[] image;
 
   private String mail;
 
+  @Column(unique = true, nullable = false)
   private String name;
 
   private String phone;

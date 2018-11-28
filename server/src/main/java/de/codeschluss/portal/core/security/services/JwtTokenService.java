@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class JwtTokenService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class JwtTokenService {

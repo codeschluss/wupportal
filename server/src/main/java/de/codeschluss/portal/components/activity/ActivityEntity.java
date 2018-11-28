@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,13 +33,16 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import org.hibernate.annotations.SQLInsert;
-
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.springframework.hateoas.core.Relation;
 
 /**
  * The persistent class for the activities database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -51,13 +55,14 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @Column(nullable = false)
   private String name;
 
   @Lob
   @Column(columnDefinition = "TEXT")
   private String description;
 
-  @Column(name = "show_user")
+  @Column(name = "show_user", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean showUser;
 
   @Transient
@@ -76,6 +81,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @ManyToOne
   @ToString.Exclude
   @JsonIgnore
+  @JoinColumn(nullable = false)
   private CategoryEntity category;
 
   @Transient
@@ -85,6 +91,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @ManyToOne
   @ToString.Exclude
   @JsonIgnore
+  @JoinColumn(nullable = false)
   private ProviderEntity provider;
 
   @OneToMany(mappedBy = "activity")
@@ -97,10 +104,20 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonIgnore
   @JoinTable(
       name = "activities_tags", 
-      joinColumns = @JoinColumn(name = "activity_id"), 
-      inverseJoinColumns = @JoinColumn(name = "tag_id"))
-  @SQLInsert(
-      sql = "insert into activities_tags " + "(id, activity_id, tag_id) values (UUID(), ?, ?)")
+      joinColumns = @JoinColumn(name = "activity_id"),
+      inverseJoinColumns = @JoinColumn(name = "tag_id"),
+      uniqueConstraints = {
+          @UniqueConstraint(columnNames = { "activity_id", "tag_id" })
+      })
+  @GenericGenerator(
+      name = "UUID",
+      strategy = "org.hibernate.id.UUIDGenerator"
+  )
+  @CollectionId(
+      columns = @Column(name = "id"), 
+      type = @Type(type = "uuid-char"),
+      generator = "UUID"
+  )
   private List<TagEntity> tags;
 
   @ManyToMany
@@ -108,11 +125,20 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonIgnore
   @JoinTable(
       name = "activities_target_groups", 
-      joinColumns = @JoinColumn(name = "activity_id"), 
-      inverseJoinColumns = @JoinColumn(name = "target_group_id"))
-  @SQLInsert(
-      sql = "insert into activities_target_groups " 
-            + "(id, activity_id, target_group_id) values (UUID(), ?, ?)")
+      joinColumns = @JoinColumn(name = "activity_id"),
+      inverseJoinColumns = @JoinColumn(name = "target_group_id"),
+      uniqueConstraints = {
+          @UniqueConstraint(columnNames = { "activity_id", "target_group_id" })
+      })
+  @GenericGenerator(
+      name = "UUID",
+      strategy = "org.hibernate.id.UUIDGenerator"
+  )
+  @CollectionId(
+      columns = @Column(name = "id"), 
+      type = @Type(type = "uuid-char"),
+      generator = "UUID"
+  )
   private List<TargetGroupEntity> targetGroups;
 
   @JsonIgnore

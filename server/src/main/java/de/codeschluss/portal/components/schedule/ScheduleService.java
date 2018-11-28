@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class ScheduleService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class ScheduleService extends ResourceDataService<ScheduleEntity, ScheduleQueryBuilder> {

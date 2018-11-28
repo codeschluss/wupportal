@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class SuburbService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQueryBuilder> {
@@ -35,6 +38,7 @@ public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQuery
    * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
+  @Override
   public SuburbEntity getExisting(SuburbEntity suburb) {
     return repo.findOne(entities.withName(suburb.getName())).orElse(null);
   }

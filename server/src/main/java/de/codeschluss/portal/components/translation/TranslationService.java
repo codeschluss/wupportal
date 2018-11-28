@@ -4,6 +4,12 @@ import de.codeschluss.portal.core.common.DataService;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class TranslationService.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class TranslationService extends DataService<TranslationEntity, TranslationQueryBuilder> {
 

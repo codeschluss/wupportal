@@ -18,6 +18,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The Class TagController.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @RestController
 public class TagController extends CrudController<TagEntity, TagService> {
 

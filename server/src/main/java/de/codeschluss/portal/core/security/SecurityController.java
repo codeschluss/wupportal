@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 // TODO: Auto-generated Javadoc
 /**
  * The Class SecurityController.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @RestController
 public class SecurityController {

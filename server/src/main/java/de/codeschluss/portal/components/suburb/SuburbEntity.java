@@ -8,6 +8,7 @@ import de.codeschluss.portal.core.common.BaseEntity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,6 +24,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the suburbs database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -35,6 +38,7 @@ public class SuburbEntity extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @Column(unique = true, nullable = false)
   private String name;
 
   @OneToMany(mappedBy = "suburb")

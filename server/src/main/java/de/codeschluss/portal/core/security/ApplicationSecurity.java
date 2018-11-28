@@ -16,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // TODO: Auto-generated Javadoc
 /**
  * The Class ApplicationSecurity.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)

@@ -10,6 +10,12 @@ import lombok.EqualsAndHashCode;
 import org.springframework.security.core.userdetails.User;
 
 // TODO: Auto-generated Javadoc
+/**
+ * The Class JwtUserDetails.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class JwtUserDetails extends User {

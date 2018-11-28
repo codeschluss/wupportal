@@ -28,6 +28,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the addresses database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -54,8 +56,10 @@ public class AddressEntity extends BaseEntity implements Serializable {
   @JsonIgnore
   private SuburbEntity suburb;
 
+  @Column(nullable = true)
   private float latitude;
 
+  @Column(nullable = true)
   private float longitude;
 
   @OneToMany(mappedBy = "address")

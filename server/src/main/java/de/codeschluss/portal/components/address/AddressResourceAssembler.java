@@ -11,6 +11,12 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class AdressResourceAssembler.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class AddressResourceAssembler extends PagingAndSortingAssembler<AddressEntity> {
 

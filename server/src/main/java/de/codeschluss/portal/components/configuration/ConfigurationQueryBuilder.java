@@ -7,6 +7,12 @@ import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class ConfigurationQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Service
 public class ConfigurationQueryBuilder extends QueryBuilder {
 
@@ -20,6 +26,7 @@ public class ConfigurationQueryBuilder extends QueryBuilder {
     return query.item.eq(item);
   }
 
+  @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
     return query.item.likeIgnoreCase(filter);

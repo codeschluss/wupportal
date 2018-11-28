@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Sort;
 
 // TODO: Auto-generated Javadoc
+/**
+ * The Class SortPaginate.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)

@@ -14,6 +14,8 @@ import org.springframework.data.domain.Sort;
 /**
  * The Class DataService.
  *
+ * @author Valmir Etemi
+ * 
  * @param <E>          the element type
  * @param <B> the generic type
  */

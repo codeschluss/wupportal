@@ -25,6 +25,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the categories database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -37,12 +39,14 @@ public class CategoryEntity extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @Column(unique = true, nullable = false)
   private String color;
 
   @Lob
   @Column(columnDefinition = "TEXT")
   private String description;
 
+  @Column(unique = true, nullable = false)
   private String name;
 
   @OneToMany(mappedBy = "category")

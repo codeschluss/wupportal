@@ -4,6 +4,7 @@ import de.codeschluss.portal.core.common.BaseEntity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -18,6 +19,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the translations database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -30,7 +33,9 @@ public class TranslationEntity extends BaseEntity implements Serializable {
   
   private static final long serialVersionUID = 1L;
 
+  @Column(nullable = false, unique = true)
   private String locale;
 
+  @Column(nullable = false, unique = true)
   private String name;
 }

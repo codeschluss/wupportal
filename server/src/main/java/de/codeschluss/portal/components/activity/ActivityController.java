@@ -45,6 +45,9 @@ import org.springframework.web.bind.annotation.RestController;
 // TODO: Auto-generated Javadoc
 /**
  * The Class ActivityController.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @RestController
 public class ActivityController extends CrudController<ActivityEntity, ActivityService> {

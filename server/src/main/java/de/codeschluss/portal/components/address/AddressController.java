@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 // TODO: Auto-generated Javadoc
 /**
  * The Class AddressController.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @RestController
 public class AddressController extends CrudController<AddressEntity, AddressService> {

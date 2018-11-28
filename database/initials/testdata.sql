@@ -84,7 +84,9 @@ INSERT INTO `organisations` (`id`, `name`, `description`, `website`, `mail`, `ph
 ('00000000-0000-0000-0008-700000000000', 'orgaWithoutAdmin', 'kein Admin', 'www.keinAdmin.com', 'organisation@noadmin.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-800000000000', 'orgaMail', 'orgaMail', 'www.orgaMail.com', 'orgaMail@orgaMail.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-900000000000', 'orgaMap', 'orgaMap', 'www.orgaMap.com', 'orgaMap@orgaMap.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
-('00000000-0000-0000-0008-110000000000', 'mapfilterAllWithoutFree', 'mapfilterAllWithoutFree', 'www.mapfilterAllWithoutFree.com', 'orgaMap@mapfilterAllWithoutFree.com', '09876543210', null, '00000000-0000-0000-0006-100000000000');
+('00000000-0000-0000-0008-110000000000', 'mapfilterAllWithoutFree', 'mapfilterAllWithoutFree', 'www.mapfilterAllWithoutFree.com', 'orgaMap@mapfilterAllWithoutFree.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
+('00000000-0000-0000-0008-120000000000', 'organisationToDeleteSuperUser2', 'organisationToDeleteSuperUser2', 'www.organisationToDeleteSuperUser2.com', 'organisationToDeleteSuperUser2@organisationToDeleteSuperUser2.com', '09876543210', null, null),
+('00000000-0000-0000-0008-130000000000', 'organisationToDeleteOrgaAdmin2', 'organisationToDeleteOrgaAdmin2', 'www.organisationToDeleteOrgaAdmin2.com', 'organisationToDeleteOrgaAdmin2@Delete.com', '09876543210', null, null);
 
 INSERT INTO `providers` (`id`, `organisation_id`, `user_id`, `admin`, `approved`) VALUES
 ('00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0008-100000000000', '00000000-0000-0000-0004-200000000000', 1, 1),
@@ -101,7 +103,8 @@ INSERT INTO `providers` (`id`, `organisation_id`, `user_id`, `admin`, `approved`
 ('00000000-0000-0000-0009-130000000000', '00000000-0000-0000-0008-900000000000', '00000000-0000-0000-0004-900000000000', 1, 1),
 ('00000000-0000-0000-0009-140000000000', '00000000-0000-0000-0008-110000000000', '00000000-0000-0000-0004-900000000000', 1, 1),
 ('00000000-0000-0000-0009-150000000000', '00000000-0000-0000-0008-200000000000', '00000000-0000-0000-0004-130000000000', 1, 1),
-('00000000-0000-0000-0009-160000000000', '00000000-0000-0000-0008-700000000000', '00000000-0000-0000-0004-140000000000', 0, 0);
+('00000000-0000-0000-0009-160000000000', '00000000-0000-0000-0008-700000000000', '00000000-0000-0000-0004-140000000000', 0, 0),
+('00000000-0000-0000-0009-170000000000', '00000000-0000-0000-0008-120000000000', '00000000-0000-0000-0004-200000000000', 0, 1);
 
 INSERT INTO `activities` (`id`, `name`, `description`, `show_user`, `address_id`, `provider_id`, `category_id`) VALUES
 ('00000000-0000-0000-0010-100000000000', 'activity1', 'activity1', 1, '00000000-0000-0000-0006-100000000000', '00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0007-100000000000'),
@@ -168,36 +171,36 @@ INSERT INTO `schedules` (`id`, `start_date`, `end_date`, `activity_id`) VALUES
 ('00000000-0000-0000-0011-180000000000', '2000-04-21 14:00:00', '2000-04-22 16:00:00', '00000000-0000-0000-0010-200000000000');
 
 
-INSERT INTO `i18n` (`id`, `locale`, `model`, `foreign_key`, `field`, `content`) VALUES
-('00000000-0000-0000-0012-100000000000', 'es', 'Organisations', '00000000-0000-0000-0008-600000000000', 'description', 'tracudir organización'),
-('00000000-0000-0000-0012-200000000000', 'fr', 'Organisations', '00000000-0000-0000-0008-600000000000', 'description', 'traduire organisation'),
-('00000000-0000-0000-0012-300000000000', 'es', 'Activities', '00000000-0000-0000-0010-800000000000', 'name', 'actividad'),
-('00000000-0000-0000-0012-400000000000', 'fr', 'Activities', '00000000-0000-0000-0010-800000000000', 'name', 'activité'),
-('00000000-0000-0000-0012-500000000000', 'es', 'Activities', '00000000-0000-0000-0010-900000000000', 'name', 'Aktivität2_name_übersetzt_es'),
-('00000000-0000-0000-0012-600000000000', 'fr', 'Activities', '00000000-0000-0000-0010-900000000000', 'name', 'Aktivität2_name_übersetzt_fr'),
-('00000000-0000-0000-0012-700000000000', 'es', 'Activities', '00000000-0000-0000-0010-800000000000', 'description', 'tracudir actividad'),
-('00000000-0000-0000-0012-800000000000', 'fr', 'Activities', '00000000-0000-0000-0010-800000000000', 'description', 'traduire activité'),
-('00000000-0000-0000-0012-900000000000', 'es', 'Activities', '00000000-0000-0000-0010-900000000000', 'description', 'Aktivität2_description_übersetzt_es'),
-('00000000-0000-0000-0012-110000000000', 'fr', 'Activities', '00000000-0000-0000-0010-900000000000', 'description', 'Aktivität2_description_übersetzt_fr'),
-('00000000-0000-0000-0012-120000000000', 'es', 'Tags', '00000000-0000-0000-0002-300000000000', 'name', 'tag_tagTranslateRead_es'),
-('00000000-0000-0000-0012-130000000000', 'fr', 'Tags', '00000000-0000-0000-0002-300000000000', 'name', 'tag_tagTranslateRead_fr'),
-('00000000-0000-0000-0012-140000000000', 'es', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_es'),
-('00000000-0000-0000-0012-150000000000', 'fr', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_fr'),
-('00000000-0000-0000-0012-160000000000', 'es', 'TargetGroups', '00000000-0000-0000-0003-300000000000', 'name', 'target_TranslateRead_es'),
-('00000000-0000-0000-0012-170000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-300000000000', 'name', 'target_TranslateRead_fr'),
-('00000000-0000-0000-0012-180000000000', 'es', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_es'),
-('00000000-0000-0000-0012-190000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_fr'),
-('00000000-0000-0000-0012-210000000000', 'en', 'TargetGroups', '00000000-0000-0000-0003-100000000000', 'name', 'target_TranslateDelete_en'),
-('00000000-0000-0000-0012-220000000000', 'es', 'Categories', '00000000-0000-0000-0007-500000000000', 'name', 'category_TranslateRead_es'),
-('00000000-0000-0000-0012-230000000000', 'fr', 'Categories', '00000000-0000-0000-0007-500000000000', 'name', 'category_TranslateRead_fr'),
-('00000000-0000-0000-0012-240000000000', 'es', 'Categories', '00000000-0000-0000-0007-600000000000', 'name', 'category_TranslateEdit_es'),
-('00000000-0000-0000-0012-250000000000', 'fr', 'Categories', '00000000-0000-0000-0007-600000000000', 'name', 'category_TranslateEdit_fr'),
-('00000000-0000-0000-0012-260000000000', 'en', 'Categories', '00000000-0000-0000-0007-100000000000', 'name', 'category_TranslateDelete_en'),
-('00000000-0000-0000-0012-270000000000', 'es', 'Translations', '00000000-0000-0000-0013-100000000000', 'name', 'translations_read_es'),
-('00000000-0000-0000-0012-280000000000', 'fr', 'Translations', '00000000-0000-0000-0013-100000000000', 'name', 'translations_read_fr'),
-('00000000-0000-0000-0012-290000000000', 'es', 'Translations', '00000000-0000-0000-0013-200000000000', 'name', 'translations_edit_es'),
-('00000000-0000-0000-0012-310000000000', 'fr', 'Translations', '00000000-0000-0000-0013-300000000000', 'name', 'translations_edit_fr'),
-('00000000-0000-0000-0012-320000000000', 'es', 'Activities', '00000000-0000-0000-0010-160000000000', 'name', 'mapAllWithoutFree_Translated');
+-- INSERT INTO `i18n` (`id`, `locale`, `model`, `foreign_key`, `field`, `content`) VALUES
+-- ('00000000-0000-0000-0012-100000000000', 'es', 'Organisations', '00000000-0000-0000-0008-600000000000', 'description', 'tracudir organización'),
+-- ('00000000-0000-0000-0012-200000000000', 'fr', 'Organisations', '00000000-0000-0000-0008-600000000000', 'description', 'traduire organisation'),
+-- ('00000000-0000-0000-0012-300000000000', 'es', 'Activities', '00000000-0000-0000-0010-800000000000', 'name', 'actividad'),
+-- ('00000000-0000-0000-0012-400000000000', 'fr', 'Activities', '00000000-0000-0000-0010-800000000000', 'name', 'activité'),
+-- ('00000000-0000-0000-0012-500000000000', 'es', 'Activities', '00000000-0000-0000-0010-900000000000', 'name', 'Aktivität2_name_übersetzt_es'),
+-- ('00000000-0000-0000-0012-600000000000', 'fr', 'Activities', '00000000-0000-0000-0010-900000000000', 'name', 'Aktivität2_name_übersetzt_fr'),
+-- ('00000000-0000-0000-0012-700000000000', 'es', 'Activities', '00000000-0000-0000-0010-800000000000', 'description', 'tracudir actividad'),
+-- ('00000000-0000-0000-0012-800000000000', 'fr', 'Activities', '00000000-0000-0000-0010-800000000000', 'description', 'traduire activité'),
+-- ('00000000-0000-0000-0012-900000000000', 'es', 'Activities', '00000000-0000-0000-0010-900000000000', 'description', 'Aktivität2_description_übersetzt_es'),
+-- ('00000000-0000-0000-0012-110000000000', 'fr', 'Activities', '00000000-0000-0000-0010-900000000000', 'description', 'Aktivität2_description_übersetzt_fr'),
+-- ('00000000-0000-0000-0012-120000000000', 'es', 'Tags', '00000000-0000-0000-0002-300000000000', 'name', 'tag_tagTranslateRead_es'),
+-- ('00000000-0000-0000-0012-130000000000', 'fr', 'Tags', '00000000-0000-0000-0002-300000000000', 'name', 'tag_tagTranslateRead_fr'),
+-- ('00000000-0000-0000-0012-140000000000', 'es', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_es'),
+-- ('00000000-0000-0000-0012-150000000000', 'fr', 'Tags', '00000000-0000-0000-0002-400000000000', 'name', 'tag_tagTranslateEdit_fr'),
+-- ('00000000-0000-0000-0012-160000000000', 'es', 'TargetGroups', '00000000-0000-0000-0003-300000000000', 'name', 'target_TranslateRead_es'),
+-- ('00000000-0000-0000-0012-170000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-300000000000', 'name', 'target_TranslateRead_fr'),
+-- ('00000000-0000-0000-0012-180000000000', 'es', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_es'),
+-- ('00000000-0000-0000-0012-190000000000', 'fr', 'TargetGroups', '00000000-0000-0000-0003-400000000000', 'name', 'target_TranslateEdit_fr'),
+-- ('00000000-0000-0000-0012-210000000000', 'en', 'TargetGroups', '00000000-0000-0000-0003-100000000000', 'name', 'target_TranslateDelete_en'),
+-- ('00000000-0000-0000-0012-220000000000', 'es', 'Categories', '00000000-0000-0000-0007-500000000000', 'name', 'category_TranslateRead_es'),
+-- ('00000000-0000-0000-0012-230000000000', 'fr', 'Categories', '00000000-0000-0000-0007-500000000000', 'name', 'category_TranslateRead_fr'),
+-- ('00000000-0000-0000-0012-240000000000', 'es', 'Categories', '00000000-0000-0000-0007-600000000000', 'name', 'category_TranslateEdit_es'),
+-- ('00000000-0000-0000-0012-250000000000', 'fr', 'Categories', '00000000-0000-0000-0007-600000000000', 'name', 'category_TranslateEdit_fr'),
+-- ('00000000-0000-0000-0012-260000000000', 'en', 'Categories', '00000000-0000-0000-0007-100000000000', 'name', 'category_TranslateDelete_en'),
+-- ('00000000-0000-0000-0012-270000000000', 'es', 'Translations', '00000000-0000-0000-0013-100000000000', 'name', 'translations_read_es'),
+-- ('00000000-0000-0000-0012-280000000000', 'fr', 'Translations', '00000000-0000-0000-0013-100000000000', 'name', 'translations_read_fr'),
+-- ('00000000-0000-0000-0012-290000000000', 'es', 'Translations', '00000000-0000-0000-0013-200000000000', 'name', 'translations_edit_es'),
+-- ('00000000-0000-0000-0012-310000000000', 'fr', 'Translations', '00000000-0000-0000-0013-300000000000', 'name', 'translations_edit_fr'),
+-- ('00000000-0000-0000-0012-320000000000', 'es', 'Activities', '00000000-0000-0000-0010-160000000000', 'name', 'mapAllWithoutFree_Translated');
 
 INSERT INTO `translations` (`id`, `locale`, `name`) VALUES
 ('00000000-0000-0000-0013-100000000000', 'es', 'ToRead'),

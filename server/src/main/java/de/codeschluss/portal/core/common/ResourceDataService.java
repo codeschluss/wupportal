@@ -8,6 +8,12 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 
+/**
+ * The Class ResourceDataService.
+ * 
+ * @author Valmir Etemi
+ *
+ */
 public abstract class ResourceDataService<E extends BaseEntity, B extends QueryBuilder> 
     extends DataService<E, B> {
 

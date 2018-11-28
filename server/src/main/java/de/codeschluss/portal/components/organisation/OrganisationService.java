@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 // TODO: Auto-generated Javadoc
 /**
  * The Class OrganisationService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 @Transactional
@@ -77,7 +80,6 @@ public class OrganisationService
   public OrganisationEntity update(String id, OrganisationEntity newOrga) {
     return repo.findById(id).map(orga -> {
       orga.setDescription(newOrga.getDescription());
-      orga.setImage(newOrga.getImage());
       orga.setMail(newOrga.getMail());
       orga.setName(newOrga.getName());
       orga.setPhone(newOrga.getPhone());

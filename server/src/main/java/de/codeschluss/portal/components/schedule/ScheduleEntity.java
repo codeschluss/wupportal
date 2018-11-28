@@ -26,6 +26,8 @@ import org.springframework.hateoas.core.Relation;
 /**
  * The persistent class for the schedules database table.
  * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

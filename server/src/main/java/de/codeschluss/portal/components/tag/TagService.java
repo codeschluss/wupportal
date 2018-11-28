@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class TagService.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> {

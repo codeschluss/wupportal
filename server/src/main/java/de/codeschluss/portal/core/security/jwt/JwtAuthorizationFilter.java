@@ -19,6 +19,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 // TODO: Auto-generated Javadoc
 /**
  * The Class JwtAuthorizationFilter.
+ * 
+ * @author Valmir Etemi
+ *
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 

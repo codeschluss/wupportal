@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class TargetGroupQueryBuilder.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Service
 public class TargetGroupQueryBuilder extends QueryBuilder {

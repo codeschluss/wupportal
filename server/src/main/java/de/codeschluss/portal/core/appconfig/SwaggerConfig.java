@@ -18,6 +18,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 // TODO: Auto-generated Javadoc
 /**
  * Instantiates a new swagger config.
+ * 
+ * @author Valmir Etemi
+ *
  */
 @Data
 @Configuration

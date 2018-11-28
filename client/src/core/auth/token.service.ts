@@ -6,7 +6,7 @@ import { filter, map, tap } from 'rxjs/operators';
 import { ApiConfiguration } from '../api/api-configuration';
 import { BaseService } from '../api/base-service';
 import { StrictHttpResponse } from '../api/strict-http-response';
-import { ErrorModel } from '../utils/error.model';
+import { ErrorModel } from '../error/error.model';
 import { ClientPackage } from '../utils/package';
 import { AccessTokenModel } from './access-token.model';
 import { RefreshTokenModel } from './refresh-token.model';

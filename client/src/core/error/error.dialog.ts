@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatButtonModule, MAT_DIALOG_DATA } from '@angular/material';
+import { ClientPackage } from '../utils/package';
 import { ErrorModel } from './error.model';
-import { ClientPackage } from './package';
 
 @Component({
   template: `
@@ -36,7 +36,7 @@ import { ClientPackage } from './package';
   ]
 })
 
-export class ClientErrorComponent {
+export class ErrorDialogComponent {
 
   public static readonly imports = [
     MatButtonModule

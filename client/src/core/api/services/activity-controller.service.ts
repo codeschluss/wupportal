@@ -29,6 +29,12 @@ class ActivityControllerService extends BaseService {
   /**
    * @param params The `ActivityControllerService.ActivityControllerFindAllParams` containing the following parameters:
    *
+   * - `categories`:
+   *
+   * - `suburbs`:
+   *
+   * - `targetgroups`:
+   *
    * - `page`:
    *
    * - `size`:
@@ -47,6 +53,9 @@ class ActivityControllerService extends BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    (params.categories || []).forEach(val => {if (val != null) __params = __params.append('categories', val.toString())});
+    (params.suburbs || []).forEach(val => {if (val != null) __params = __params.append('suburbs', val.toString())});
+    (params.targetgroups || []).forEach(val => {if (val != null) __params = __params.append('targetgroups', val.toString())});
     if (params.page != null) __params = __params.set('page', params.page.toString());
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
@@ -72,6 +81,12 @@ class ActivityControllerService extends BaseService {
   }
   /**
    * @param params The `ActivityControllerService.ActivityControllerFindAllParams` containing the following parameters:
+   *
+   * - `categories`:
+   *
+   * - `suburbs`:
+   *
+   * - `targetgroups`:
    *
    * - `page`:
    *
@@ -870,6 +885,9 @@ module ActivityControllerService {
    * Parameters for activityControllerFindAll
    */
   export interface ActivityControllerFindAllParams {
+    categories?: Array<string>;
+    suburbs?: Array<string>;
+    targetgroups?: Array<string>;
     page?: number;
     size?: number;
     sort?: string;

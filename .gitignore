@@ -8,4 +8,8 @@ server/.recommenders
 server/.settings
 server/bin
 server/src/main/resources/application-credentials.properties
+server/src/main/resources/application-existing.properties
+server/src/main/resources/db/output/*.yaml
+server/src/main/resources/db/output/*.xml
 server/target
+

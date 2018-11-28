@@ -1,0 +1,847 @@
+databaseChangeLog:
+- changeSet:
+    id: 1543409395575-1
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            name: description
+            type: CLOB
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            defaultValueBoolean: false
+            name: show_user
+            type: BOOLEAN
+        - column:
+            name: address_id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            name: category_id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            name: provider_id
+            type: CHAR
+        tableName: activities
+- changeSet:
+    id: 1543409395575-2
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: activity_id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            name: tag_id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: VARCHAR(255)
+        tableName: activities_tags
+- changeSet:
+    id: 1543409395575-3
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: activity_id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            name: target_group_id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: VARCHAR(255)
+        tableName: activities_target_groups
+- changeSet:
+    id: 1543409395575-4
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            name: house_number
+            type: VARCHAR(255)
+        - column:
+            name: latitude
+            type: FLOAT
+        - column:
+            name: longitude
+            type: FLOAT
+        - column:
+            name: place
+            type: VARCHAR(255)
+        - column:
+            name: postal_code
+            type: VARCHAR(255)
+        - column:
+            name: street
+            type: VARCHAR(255)
+        - column:
+            name: suburb_id
+            type: CHAR
+        tableName: addresses
+- changeSet:
+    id: 1543409395575-5
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            name: color
+            type: VARCHAR(255)
+        - column:
+            name: description
+            type: CLOB
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: categories
+- changeSet:
+    id: 1543409395575-6
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            name: item
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: value
+            type: VARCHAR(255)
+        tableName: configurations
+- changeSet:
+    id: 1543409395575-7
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            name: description
+            type: CLOB
+        - column:
+            name: image
+            type: BLOB
+        - column:
+            name: mail
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: phone
+            type: VARCHAR(255)
+        - column:
+            name: website
+            type: VARCHAR(255)
+        - column:
+            name: address_id
+            type: CHAR
+        tableName: organisations
+- changeSet:
+    id: 1543409395575-8
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            defaultValueBoolean: false
+            name: admin
+            type: BOOLEAN
+        - column:
+            defaultValueBoolean: false
+            name: approved
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: organisation_id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: CHAR
+        tableName: providers
+- changeSet:
+    id: 1543409395575-9
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            name: end_date
+            type: TIMESTAMP
+        - column:
+            name: start_date
+            type: TIMESTAMP
+        - column:
+            name: activity_id
+            type: CHAR
+        tableName: schedules
+- changeSet:
+    id: 1543409395575-10
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: suburbs
+- changeSet:
+    id: 1543409395575-11
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            name: description
+            type: CLOB
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: tags
+- changeSet:
+    id: 1543409395575-12
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            name: description
+            type: CLOB
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: target_groups
+- changeSet:
+    id: 1543409395575-13
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            name: locale
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: translations
+- changeSet:
+    id: 1543409395575-14
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            name: fullname
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: password
+            type: VARCHAR(255)
+        - column:
+            name: phone
+            type: VARCHAR(255)
+        - column:
+            defaultValueBoolean: false
+            name: superuser
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: username
+            type: VARCHAR(255)
+        tableName: users
+- changeSet:
+    id: 1543409395575-15
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        tableName: activities_tags
+- changeSet:
+    id: 1543409395575-16
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        tableName: activities_target_groups
+- changeSet:
+    id: 1543409395575-17
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: activitiesPK
+        tableName: activities
+- changeSet:
+    id: 1543409395575-18
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: addressesPK
+        tableName: addresses
+- changeSet:
+    id: 1543409395575-19
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: categoriesPK
+        tableName: categories
+- changeSet:
+    id: 1543409395575-20
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: configurationsPK
+        tableName: configurations
+- changeSet:
+    id: 1543409395575-21
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: organisationsPK
+        tableName: organisations
+- changeSet:
+    id: 1543409395575-22
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: providersPK
+        tableName: providers
+- changeSet:
+    id: 1543409395575-23
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: schedulesPK
+        tableName: schedules
+- changeSet:
+    id: 1543409395575-24
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: suburbsPK
+        tableName: suburbs
+- changeSet:
+    id: 1543409395575-25
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: tagsPK
+        tableName: tags
+- changeSet:
+    id: 1543409395575-26
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: target_groupsPK
+        tableName: target_groups
+- changeSet:
+    id: 1543409395575-27
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: translationsPK
+        tableName: translations
+- changeSet:
+    id: 1543409395575-28
+    author: vetemi (generated)
+    changes:
+    - addPrimaryKey:
+        columnNames: id
+        constraintName: usersPK
+        tableName: users
+- changeSet:
+    id: 1543409395575-29
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: color
+        constraintName: UC_CATEGORIESCOLOR_COL
+        tableName: categories
+- changeSet:
+    id: 1543409395575-30
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UC_CATEGORIESNAME_COL
+        tableName: categories
+- changeSet:
+    id: 1543409395575-31
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UC_ORGANISATIONSNAME_COL
+        tableName: organisations
+- changeSet:
+    id: 1543409395575-32
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UC_SUBURBSNAME_COL
+        tableName: suburbs
+- changeSet:
+    id: 1543409395575-33
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UC_TAGSNAME_COL
+        tableName: tags
+- changeSet:
+    id: 1543409395575-34
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UC_TARGET_GROUPSNAME_COL
+        tableName: target_groups
+- changeSet:
+    id: 1543409395575-35
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: locale
+        constraintName: UC_TRANSLATIONSLOCALE_COL
+        tableName: translations
+- changeSet:
+    id: 1543409395575-36
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: UC_TRANSLATIONSNAME_COL
+        tableName: translations
+- changeSet:
+    id: 1543409395575-37
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: username
+        constraintName: UC_USERSUSERNAME_COL
+        tableName: users
+- changeSet:
+    id: 1543409395575-38
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: activity_id, target_group_id
+        constraintName: UKkjqoui7f8ede4bs22fovg44e6
+        tableName: activities_target_groups
+- changeSet:
+    id: 1543409395575-39
+    author: vetemi (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: activity_id, tag_id
+        constraintName: UKsqhb71tj8rwi6riheq015cjcy
+        tableName: activities_tags
+- changeSet:
+    id: 1543409395575-40
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: target_group_id
+        baseTableName: activities_target_groups
+        constraintName: FK2ex96cup3o0g4rp41v2lyjcat
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: target_groups
+- changeSet:
+    id: 1543409395575-41
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: activity_id
+        baseTableName: schedules
+        constraintName: FK3tyc3usongts2dlum3e6c5in4
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: activities
+- changeSet:
+    id: 1543409395575-42
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: address_id
+        baseTableName: activities
+        constraintName: FKbkdf7cnl974utrinro7goxeon
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: addresses
+- changeSet:
+    id: 1543409395575-43
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: provider_id
+        baseTableName: activities
+        constraintName: FKjk4bkojabyv3loiomnn73cyv3
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: providers
+- changeSet:
+    id: 1543409395575-44
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: providers
+        constraintName: FKlymp42tvombik3t66um6ocsba
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: users
+- changeSet:
+    id: 1543409395575-45
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: suburb_id
+        baseTableName: addresses
+        constraintName: FKmccpbd062822m6n7rw780svwy
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: suburbs
+- changeSet:
+    id: 1543409395575-46
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: activity_id
+        baseTableName: activities_tags
+        constraintName: FKnitbx3853ryroywn1j1g86aob
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: activities
+- changeSet:
+    id: 1543409395575-47
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: activity_id
+        baseTableName: activities_target_groups
+        constraintName: FKnp55lepyd48w0lxoqvh7nb3rf
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: activities
+- changeSet:
+    id: 1543409395575-48
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: category_id
+        baseTableName: activities
+        constraintName: FKop5fy6liunnty8edw5q842b2n
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: categories
+- changeSet:
+    id: 1543409395575-49
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: tag_id
+        baseTableName: activities_tags
+        constraintName: FKpxtw6v5nck4pk6fc2wl4t283w
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: tags
+- changeSet:
+    id: 1543409395575-50
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisation_id
+        baseTableName: providers
+        constraintName: FKrcwb03wnd8qgt9a1a6e47afn7
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: organisations
+- changeSet:
+    id: 1543409395575-51
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: address_id
+        baseTableName: organisations
+        constraintName: FKt1nrgbfbgcrtn7a5nbkm7f2y2
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: addresses

@@ -195,6 +195,9 @@
 			<id>dev</id>
 		</profile>
 		<profile>
+			<id>existing</id>
+		</profile>
+		<profile>
 			<id>default</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>

@@ -1,4 +1,5 @@
-changeSet:
+databaseChangeLog:
+- changeSet:
     id: dev.initialdata
     author: vetemi
     changes:
@@ -6,7 +7,7 @@ changeSet:
         dbms: h2, mysql
         encoding: utf8
         endDelimiter: \nGO
-        path: ../../initials/testdata.sql
+        path: ../data/test.sql
         relativeToChangelogFile: true
         splitStatements: true
         stripComments: true

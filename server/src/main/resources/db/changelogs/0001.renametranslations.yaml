@@ -1,0 +1,10 @@
+
+databaseChangeLog:
+- changeSet:
+    id: 0001.renametranslations
+    author: vetemi
+    changes:
+    - renameTable:
+        newTableName: languages
+        oldTableName: translations
+

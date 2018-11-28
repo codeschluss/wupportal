@@ -1,3 +1,5 @@
 databaseChangeLog:
     - include:
         file: classpath:db/changelogs/default.intialdb.yaml
+    - include:
+        file: classpath:db/changelogs/0001.renametranslations.yaml

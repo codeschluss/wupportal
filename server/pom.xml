@@ -166,7 +166,7 @@
 			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>3.5.3</version>
+				<version>3.6.2</version>
 				<configuration>
 					<propertyFile>src/main/resources/application-${project.activeProfiles[0].id}.properties</propertyFile>
 				</configuration>

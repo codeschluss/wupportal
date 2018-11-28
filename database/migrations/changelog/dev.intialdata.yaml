@@ -1,0 +1,14 @@
+changeSet:
+    id: dev.initialdata
+    author: vetemi
+    changes:
+    - sqlFile:
+        dbms: h2, mysql
+        encoding: utf8
+        endDelimiter: \nGO
+        path: ../../initials/testdata.sql
+        relativeToChangelogFile: true
+        splitStatements: true
+        stripComments: true
+
+

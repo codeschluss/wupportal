@@ -1,0 +1,5 @@
+databaseChangeLog:
+    - include:
+        file: ../changelog/dev.intialdb.yaml
+    - include:
+        file: ../changelog/dev.intialdata.yaml

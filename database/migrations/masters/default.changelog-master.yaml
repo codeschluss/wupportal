@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - changeset:
+      id: 1
+      author: vetemi

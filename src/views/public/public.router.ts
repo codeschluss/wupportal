@@ -6,6 +6,7 @@ import { ActivityViewComponent } from './activity/activity.view.component';
 import { LayoutComponent } from '../layout/layout.component';
 import { OrganisationListComponent } from './organisation/organisation.list.component';
 import { OrganisationViewComponent } from './organisation/organisation.view.component';
+import { BlogListComponent } from './blog/blog.list.component';
 
 const PublicProviders = [
 ];
@@ -26,28 +27,29 @@ const PublicRoutes = [
         component: ActivityViewComponent
       },
       {
-        path: 'list', 
+        path: 'list',
         component: ActivityListComponent,
       },
       {
-        path: '', 
+        path: '',
         component: ActivityListComponent,
-      } 
+      }
     ]
-  },
-
-  {
+  }, {
   path: 'organisations',
   children: [
       {
-        path: 'list', 
+        path: 'list',
         component: OrganisationListComponent,
-      },{
+      }, {
         path: 'view/:id',
         component: OrganisationViewComponent
       }
     ]
-  },
+  }, {
+    path: 'blog',
+    component: BlogListComponent,
+    },
   // {
   //   path: '',
   //   component: AboutComponent,
@@ -66,7 +68,7 @@ const PublicRoutes = [
     children: PublicRoutes,
     resolve: PublicResolvers,
     component: LayoutComponent
-  }])], 
+  }])],
   providers: PublicProviders
 })
 

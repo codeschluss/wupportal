@@ -6,26 +6,24 @@ import { MatToolbarModule, MatFormFieldModule, MatInputModule, MatMenuModule, Ma
   templateUrl: 'layout.component.html'
 })
 
-export class LayoutComponent 
-{
-
-  public routeLinks: any[] = [];
-
-  public static readonly imports = [
+export class LayoutComponent {
+	public static readonly imports = [
 		MatToolbarModule,
 		MatFormFieldModule,
 		MatInputModule,
 		MatMenuModule,
 		MatDialogModule,
 		MatExpansionModule
-  ];
-  
+	];
+
+  public routeLinks: any[] = [];
+
   public constructor(
-  ) { 
+  ) {
 		this.initGlobalTabs();
   }
 
-  initGlobalTabs() : void {
+  initGlobalTabs(): void {
 		this.routeLinks.push(
 		{
 			label: 'Wupp\'n\'go',

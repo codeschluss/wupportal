@@ -21,7 +21,7 @@ import { MappingComponent } from './mapping/mapping.component';
 import { BottomSheetMapComponent } from './mapping/map.bottomsheet.component';
 import { BottomSheetScheduleComponent } from './activity/schedules.bottom.sheet.component';
 
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +29,7 @@ import { LayoutComponent } from '../layout/layout.component';
 import { OrganisationListComponent } from './organisation/organisation.list.component';
 import { OrganisationCardComponent } from './organisation/organisation.card.component';
 import { FormsModule } from '@angular/forms';
-import { BlogListComponent } from './Blog/blog.list.component';
+import { BlogListComponent } from './blog/blog.list.component';
 import { SearchResultListComponent } from './search/searchresult..list.component';
 
 fontawesome.add(fas);
@@ -56,7 +56,7 @@ const PublicDeclarations = [
 const PublicImports = [
   PublicComponent.imports,
   MatSelectModule,
-  MatChipsModule, 
+  MatChipsModule,
   MatListModule,
   MatCardModule,
   MatBottomSheetModule,

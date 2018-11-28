@@ -8,6 +8,7 @@ export class BlogModel
   public title: string;
   public author: string;
   public postText: string;
+  public creationDate: string;
 
   public activity: Promise<ActivityModel>;
 

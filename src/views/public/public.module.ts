@@ -29,6 +29,8 @@ import { LayoutComponent } from '../layout/layout.component';
 import { OrganisationListComponent } from './organisation/organisation.list.component';
 import { OrganisationCardComponent } from './organisation/organisation.card.component';
 import { FormsModule } from '@angular/forms';
+import { BlogListComponent } from './Blog/blog.list.component';
+import { SearchResultListComponent } from './search/searchresult..list.component';
 
 fontawesome.add(fas);
 
@@ -46,7 +48,9 @@ const PublicDeclarations = [
   OrganisationCardComponent,
   AboutComponent,
   MappingComponent,
-  LayoutComponent
+  LayoutComponent,
+  BlogListComponent,
+  SearchResultListComponent
 ];
 
 const PublicImports = [

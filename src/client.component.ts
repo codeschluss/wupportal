@@ -32,7 +32,7 @@ export class ClientComponent {
     _targetGroupProvider: TargetGroupProvider,
     _userProvider: UserProvider
   ) {
-    apiConfiguration.rootUrl = clientPackage.config.apiRootUrl;
+    apiConfiguration.rootUrl = clientPackage.config.api.rootUrl;
   }
 
 }

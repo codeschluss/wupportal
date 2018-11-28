@@ -28,9 +28,9 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if (this.accessToken.raw && this.refreshToken.raw) {
       switch (request.url) {
-        case this.clientPackage.config.apiAuthUrl: break;
+        case this.clientPackage.config.api.authUrl: break;
 
-        case this.clientPackage.config.apiRefreshUrl: request = request.clone({
+        case this.clientPackage.config.api.refreshUrl: request = request.clone({
             setHeaders: { 'Authorization': `Bearer ${this.refreshToken.raw}` }
         }); break;
 

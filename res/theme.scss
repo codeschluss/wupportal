@@ -121,9 +121,12 @@ h2 {
   font-size: 35px;
 }
 
-.activityCardContent {
+h3 {
+  font-size: 30px;
+}
+
+h4 {
   font-size: 25px;
-  font-family: Open Sans, Bold;
 }
 
 .smallText{
@@ -219,7 +222,10 @@ h2 {
   display: none;
 }
 
+// customizing expansion panel
+
 fa-icon.collapsableIndicator {
   position: absolute;
   right: 20px; 
+  top: 10px;
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatToolbarModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule } from '@angular/material';
+import { MatToolbarModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatExpansionModule } from '@angular/material';
 
 @Component({
   styleUrls: ['layout.component.scss'],
@@ -10,12 +10,14 @@ export class LayoutComponent
 {
 
   public routeLinks: any[] = [];
+
   public static readonly imports = [
 		MatToolbarModule,
 		MatFormFieldModule,
 		MatInputModule,
 		MatMenuModule,
-		MatDialogModule
+		MatDialogModule,
+		MatExpansionModule
   ];
   
   public constructor(

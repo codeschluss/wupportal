@@ -30,7 +30,8 @@ import { OrganisationListComponent } from './organisation/organisation.list.comp
 import { OrganisationCardComponent } from './organisation/organisation.card.component';
 import { FormsModule } from '@angular/forms';
 import { BlogListComponent } from './blog/blog.list.component';
-import { SearchResultListComponent } from './search/searchresult..list.component';
+import { SearchResultListComponent } from './search/searchresult.list.component';
+import { BlogListItemComponent } from './blog/blog.listitem.component';
 
 fontawesome.add(fas);
 
@@ -50,6 +51,7 @@ const PublicDeclarations = [
   MappingComponent,
   LayoutComponent,
   BlogListComponent,
+  BlogListItemComponent,
   SearchResultListComponent
 ];
 

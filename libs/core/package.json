@@ -2,13 +2,13 @@
   "name": "@portal/core",
   "version": "0.0.3",
   "description": "Portal Client Core Library",
-  "homepage": "https://github.com/codeschluss/portal-client-core",
+  "homepage": "https://github.com/codeschluss/wupportal",
   "author": {
-    "name": "Codeschluss Team"
+    "name": "Wupportal Team"
   },
   "bugs": {
     "email": "info@codeschluss.de",
-    "url": "https://github.com/codeschluss/portal-client-core/issues"
+    "url": "https://github.com/codeschluss/wupportal/issues"
   },
   "dependencies": {
     "@angular/common": "7.1.1",

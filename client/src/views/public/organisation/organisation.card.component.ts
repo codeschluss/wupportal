@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { OrganisationModel } from 'src/domain/organisation/organisation.model';
 
-import { AddressModel } from 'src/core/models/address.model';
-import { OrganisationProvider } from 'src/core/providers/organisation.provider';
-import { OrganisationModel } from 'src/core/models/organisation.model';
 
 @Component({
     selector: 'organisation-card',

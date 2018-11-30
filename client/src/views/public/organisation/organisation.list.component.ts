@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { MatExpansionModule } from '@angular/material';
-import { AddressModel } from 'src/core/models/address.model';
-import { OrganisationModel } from 'src/core/models/organisation.model';
-import { SuburbModel } from 'src/core/models/suburb.model';
-import { OrganisationProvider } from 'src/core/providers/organisation.provider';
+import { AddressModel } from 'src/domain/address/address.model';
+import { OrganisationModel } from 'src/domain/organisation/organisation.model';
+import { OrganisationProvider } from 'src/domain/organisation/organisation.provider';
+import { SuburbModel } from 'src/domain/suburb/suburb.model';
 
 
 @Component({

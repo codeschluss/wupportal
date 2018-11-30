@@ -1,18 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material';
-import { AddressModel } from 'src/core/models/address.model';
-import { ActivityProvider } from 'src/core/providers/activity.provider';
-import { CategoryProvider } from 'src/core/providers/category.provider';
-import { SuburbProvider } from 'src/core/providers/suburb.provider';
-import { TargetGroupProvider } from 'src/core/providers/target-group.provider';
-import { ActivityModel } from '../../../core/models/activity.model';
-import { CategoryModel } from '../../../core/models/category.model';
-import { SuburbModel } from '../../../core/models/suburb.model';
-import { TargetGroupModel } from '../../../core/models/target-group.model';
+import { ActivityProvider } from 'src/domain/activity/activity.provider';
+import { AddressModel } from 'src/domain/address/address.model';
+import { CategoryProvider } from 'src/domain/category/category.provider';
+import { OrganisationModel } from 'src/domain/organisation/organisation.model';
+import { ScheduleModel } from 'src/domain/schedule/schedule.model';
+import { SuburbProvider } from 'src/domain/suburb/suburb.provider';
+import { TargetGroupProvider } from 'src/domain/target-group/target-group.provider';
+import { ActivityModel } from '../../../domain/activity/activity.model';
+import { CategoryModel } from '../../../domain/category/category.model';
+import { SuburbModel } from '../../../domain/suburb/suburb.model';
+import { TargetGroupModel } from '../../../domain/target-group/target-group.model';
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 import { MappingComponent } from '../mapping/mapping.component';
-import { ScheduleModel } from 'src/core/models/schedule.model';
-import { OrganisationModel } from 'src/core/models/organisation.model';
 
 
 @Component({
@@ -43,7 +43,7 @@ export class ActivityListComponent {
     this.target_groups = targetGroupsProvider.findAll({});
     this.categories = categoryProvider.findAll({});
 
-    
+
     let i = 0;
       for(i; i < 20; i++){
         this.activities.push(this.buildTestActivity());
@@ -80,7 +80,7 @@ export class ActivityListComponent {
       actOne.address = new Promise<AddressModel>((resolve, reject) => {
         resolve(testAddress);
       });
-      
+
       const category = new CategoryModel;
       category.name = 'party';
       category.color = 'blue';
@@ -96,7 +96,7 @@ export class ActivityListComponent {
       actOne.targetGroups = new Promise<TargetGroupModel[]>((resolve, reject) => {
         resolve(targetGroups);
       });
-      
+
       const schedule = new ScheduleModel;
       schedule.startDate = new Date().toUTCString();
       schedule.endDate = new Date().toUTCString();
@@ -114,7 +114,7 @@ export class ActivityListComponent {
 
         schedules.push(firstDate);
       schedules.push(secondDate);
-      
+
       actOne.schedules = new Promise<ScheduleModel[]>((resolve, reject) => {
         resolve(schedules);
       });
@@ -124,7 +124,7 @@ export class ActivityListComponent {
       actOne.organisation = new Promise<OrganisationModel>((resolve, reject) => {
         resolve(organisation);
       });
-      
+
       return actOne;
   }
 

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { OrganisationModel } from 'src/core/models/organisation.model';
+import { OrganisationModel } from 'src/domain/organisation/organisation.model';
 
 @Component({
   selector: 'organisation-view',
@@ -15,8 +15,8 @@ export class OrganisationViewComponent {
   organisation: OrganisationModel
 
   public panelOpenState = false;
-  
-  constructor(){  
+
+  constructor(){
   }
 
 }

@@ -62,6 +62,14 @@ export class OrganisationProvider
   public findAll: (params?: OrganisationControllerService
     .OrganisationControllerFindAllParams) => Promise<OrganisationModel[]>;
 
+  public grantOrganisationAdmin:
+    (organisationId: string, userId: string, grant: boolean) => Promise<any> =
+      this.apply(this.service.organisationControllerGrantAdminRightResponse);
+
+  public grantOrganisationUser:
+    (organisationId: string, userId: string, grant: boolean) => Promise<any> =
+    this.apply(this.service.organisationControllerApproveOrRejectUserResponse);
+
   public relinkAddress:
     (id: string, addressId: string) => Promise<any> =
       this.apply(this.service.organisationControllerUpdateAddressResponse);

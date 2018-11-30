@@ -1,13 +1,4 @@
-interface Link {
-  deprecation?: string;
-  href?: string;
-  hreflang?: string;
-  media?: string;
-  rel?: string;
-  templated?: boolean;
-  title?: string;
-  type?: string;
-}
+import { Link } from '../utils/api';
 
 export abstract class CrudModel {
 

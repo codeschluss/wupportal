@@ -56,6 +56,14 @@ export class UserProvider
   public findAll: (params?: UserControllerService
     .UserControllerFindAllParams) => Promise<UserModel[]>;
 
+  public grantSuperUser:
+    (userId: string, grant: boolean) => Promise<any> =
+      this.apply(this.service.userControllerGrantSuperuserRightResponse);
+
+  public resetPassword:
+    (username: string) => Promise<any> =
+      this.apply(this.service.userControllerResetPasswordResponse);
+
   public linkOrganisations:
     (id: string, organisationIds: string[]) => Promise<any> =
       this.apply(this.service.userControllerAddOrganisationResponse);

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
-import { ActivityModel } from '../../../domain/activity/activity.model';
+import { ActivityModel } from '../../../realm/activity/activity.model';
 
 @Component({
   selector: 'bottom-sheet',

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CorePackage, SessionProvider } from '@portal/core';
-import { ActivityProvider } from 'src/domain/activity/activity.provider';
-import { OrganisationProvider } from 'src/domain/organisation/organisation.provider';
-import { UserProvider } from 'src/domain/user/user.provider';
-import { ClientPackage } from 'src/utils/package';
+import { ActivityProvider } from '../../realm/activity/activity.provider';
+import { OrganisationProvider } from '../../realm/organisation/organisation.provider';
+import { UserProvider } from '../../realm/user/user.provider';
+import { ClientPackage } from '../../utils/package';
 
 @Component({
   template: `<router-outlet></router-outlet>`

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { NgxHmCarouselModule } from 'ngx-hm-carousel';
-import { ActivityModel } from '../../../domain/activity/activity.model';
+import { ActivityModel } from '../../../realm/activity/activity.model';
 
 @Component({
   selector: 'activity-carousel-component',

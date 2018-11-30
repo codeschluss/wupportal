@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { OrganisationModel } from 'src/domain/organisation/organisation.model';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 
 
 @Component({

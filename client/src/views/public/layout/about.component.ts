@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { OrganisationModel } from 'src/domain/organisation/organisation.model';
-import { ActivityModel } from '../../../domain/activity/activity.model';
-import { AddressModel } from '../../../domain/address/address.model';
-import { CategoryModel } from '../../../domain/category/category.model';
-import { ScheduleModel } from '../../../domain/schedule/schedule.model';
-import { SuburbModel } from '../../../domain/suburb/suburb.model';
-import { TargetGroupModel } from '../../../domain/target-group/target-group.model';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { ActivityModel } from '../../../realm/activity/activity.model';
+import { AddressModel } from '../../../realm/address/address.model';
+import { CategoryModel } from '../../../realm/category/category.model';
+import { ScheduleModel } from '../../../realm/schedule/schedule.model';
+import { SuburbModel } from '../../../realm/suburb/suburb.model';
+import { TargetGroupModel } from '../../../realm/target-group/target-group.model';
 
 
 @Component({

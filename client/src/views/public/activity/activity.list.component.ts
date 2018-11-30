@@ -1,16 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material';
-import { ActivityProvider } from 'src/domain/activity/activity.provider';
-import { AddressModel } from 'src/domain/address/address.model';
-import { CategoryProvider } from 'src/domain/category/category.provider';
-import { OrganisationModel } from 'src/domain/organisation/organisation.model';
-import { ScheduleModel } from 'src/domain/schedule/schedule.model';
-import { SuburbProvider } from 'src/domain/suburb/suburb.provider';
-import { TargetGroupProvider } from 'src/domain/target-group/target-group.provider';
-import { ActivityModel } from '../../../domain/activity/activity.model';
-import { CategoryModel } from '../../../domain/category/category.model';
-import { SuburbModel } from '../../../domain/suburb/suburb.model';
-import { TargetGroupModel } from '../../../domain/target-group/target-group.model';
+import { ActivityProvider } from 'src/realm/activity/activity.provider';
+import { AddressModel } from 'src/realm/address/address.model';
+import { CategoryProvider } from 'src/realm/category/category.provider';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { ScheduleModel } from 'src/realm/schedule/schedule.model';
+import { SuburbProvider } from 'src/realm/suburb/suburb.provider';
+import { TargetGroupProvider } from 'src/realm/target-group/target-group.provider';
+import { ActivityModel } from '../../../realm/activity/activity.model';
+import { CategoryModel } from '../../../realm/category/category.model';
+import { SuburbModel } from '../../../realm/suburb/suburb.model';
+import { TargetGroupModel } from '../../../realm/target-group/target-group.model';
 import { BottomSheetMapComponent } from '../mapping/map.bottomsheet.component';
 import { MappingComponent } from '../mapping/mapping.component';
 

@@ -34,9 +34,13 @@ export class I18nComponent implements AfterViewInit {
   ) { }
 
   public ngAfterViewInit(): void {
-    const text = this.text.nativeElement.innerHTML;
-    const i18n = this.i18n({ id: text, value: text });
-    this.text.nativeElement.innerHTML = i18n || text;
+    try {
+      const text = this.text.nativeElement.innerHTML;
+      const i18n = this.i18n({ id: text, value: text });
+      this.text.nativeElement.innerHTML = i18n || text;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
 }

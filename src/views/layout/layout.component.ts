@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { MatToolbarModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatExpansionModule } from '@angular/material';
+import { MatToolbarModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatExpansionModule, MatButtonModule } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   styleUrls: ['layout.component.scss'],
@@ -7,19 +8,21 @@ import { MatToolbarModule, MatFormFieldModule, MatInputModule, MatMenuModule, Ma
 })
 
 export class LayoutComponent {
+
 	public static readonly imports = [
 		MatToolbarModule,
 		MatFormFieldModule,
 		MatInputModule,
 		MatMenuModule,
 		MatDialogModule,
-		MatExpansionModule
+		MatExpansionModule,
+		MatButtonModule
 	];
 
   public routeLinks: any[] = [];
+  public query: string;
 
-  public constructor(
-  ) {
+  public constructor() {
 		this.initGlobalTabs();
   }
 
@@ -46,7 +49,7 @@ export class LayoutComponent {
 		},{
 			label: 'Blog',
 			link: 'blog',
-			index: 3
+			index: 4
 		});
   }
 
@@ -68,5 +71,6 @@ export class LayoutComponent {
 			index: 2
 		}]
 	};
+
 
 }

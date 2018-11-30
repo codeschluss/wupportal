@@ -7,6 +7,13 @@ import { LayoutComponent } from '../layout/layout.component';
 import { OrganisationListComponent } from './organisation/organisation.list.component';
 import { OrganisationViewComponent } from './organisation/organisation.view.component';
 import { BlogListComponent } from './blog/blog.list.component';
+import { SearchResultListComponent } from './search/searchresult.list.component';
+import { resolve } from 'dns';
+import { CrudResolver } from 'src/core/crud/crud.resolver';
+import { CrudJoiner } from 'src/core/crud/crud.joiner';
+import { ActivityModel } from 'src/core/models/activity.model';
+import { AddressModel } from 'src/core/models/address.model';
+import { SuburbModel } from 'src/core/models/suburb.model';
 
 const PublicProviders = [
 ];
@@ -46,14 +53,24 @@ const PublicRoutes = [
         component: OrganisationViewComponent
       }
     ]
-  }, {
+  },
+  {
     path: 'blog',
     component: BlogListComponent,
-    },
-  // {
-  //   path: '',
-  //   component: AboutComponent,
-  // },
+  },
+  {
+    path: 'search',
+    children: [
+      {
+        path: ':query',
+        component: SearchResultListComponent,
+      },
+      {
+        path: '',
+        component: SearchResultListComponent
+      }
+    ]
+  },
   {
     path: '**',
     pathMatch: 'full',

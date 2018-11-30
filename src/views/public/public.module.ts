@@ -32,6 +32,7 @@ import { FormsModule } from '@angular/forms';
 import { BlogListComponent } from './blog/blog.list.component';
 import { SearchResultListComponent } from './search/searchresult.list.component';
 import { BlogListItemComponent } from './blog/blog.listitem.component';
+import { SearchInputComponent } from './search/search.input.component';
 
 fontawesome.add(fas);
 
@@ -52,7 +53,8 @@ const PublicDeclarations = [
   LayoutComponent,
   BlogListComponent,
   BlogListItemComponent,
-  SearchResultListComponent
+  SearchResultListComponent,
+  SearchInputComponent
 ];
 
 const PublicImports = [
@@ -71,6 +73,7 @@ const PublicImports = [
   FontAwesomeModule,
   LayoutComponent.imports,
   OrganisationListComponent.imports,
+  SearchResultListComponent.imports,
   FormsModule
 ];
 

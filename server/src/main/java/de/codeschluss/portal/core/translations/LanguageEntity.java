@@ -1,11 +1,16 @@
-package de.codeschluss.portal.components.translation;
+package de.codeschluss.portal.core.translations;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import de.codeschluss.portal.components.activity.translations.ActivityTranslatablesEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -17,7 +22,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.hateoas.core.Relation;
 
 /**
- * The persistent class for the translations database table.
+ * The persistent class for the languages database table.
  * 
  * @author Valmir Etemi
  *
@@ -27,9 +32,9 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@Table(name = "translations")
+@Table(name = "languages")
 @Relation(collectionRelation = "data")
-public class TranslationEntity extends BaseEntity implements Serializable {
+public class LanguageEntity extends BaseEntity implements Serializable {
   
   private static final long serialVersionUID = 1L;
 
@@ -38,4 +43,8 @@ public class TranslationEntity extends BaseEntity implements Serializable {
 
   @Column(nullable = false, unique = true)
   private String name;
+  
+  @OneToMany(mappedBy = "language")
+  @JsonIgnore
+  private List<ActivityTranslatablesEntity> activityTranslatables;
 }

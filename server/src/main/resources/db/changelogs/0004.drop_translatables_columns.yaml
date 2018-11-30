@@ -1,0 +1,15 @@
+databaseChangeLog:
+- changeSet:
+    id: 1543587900237-18
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: description
+        tableName: activities
+- changeSet:
+    id: 1543587900237-19
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: name
+        tableName: activities

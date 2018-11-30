@@ -70,10 +70,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
    */
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable()
-        .addFilter(jwtAuthenticationFilter())
-        .addFilter(jwtAuthorizationFilter())
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http
+    .csrf().disable()
+    .headers().frameOptions().sameOrigin()
+      .and()
+    .addFilter(jwtAuthenticationFilter())
+    .addFilter(jwtAuthorizationFilter())
+    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
   
   /**

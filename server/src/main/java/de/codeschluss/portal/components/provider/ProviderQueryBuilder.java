@@ -126,7 +126,7 @@ public class ProviderQueryBuilder extends QueryBuilder {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.activities.any().name.likeIgnoreCase(filter)
+    return query.activities.any().translatables.any().name.likeIgnoreCase(filter)
         .or(query.organisation.name.likeIgnoreCase(filter))
         .or(query.user.username.likeIgnoreCase(filter));
   }

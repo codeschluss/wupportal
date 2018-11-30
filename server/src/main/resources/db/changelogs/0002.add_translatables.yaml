@@ -1,0 +1,66 @@
+databaseChangeLog:
+- changeSet:
+    id: 1543586185074-13
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: activity_translatablesPK
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: datetime
+        - column:
+            name: description
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: activity_id
+            type: CHAR
+        - column:
+            name: language_id
+            type: CHAR
+        tableName: activity_translatables
+- changeSet:
+    id: 1543586185074-15
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: language_id
+        baseTableName: activity_translatables
+        constraintName: FKk9kcrwcitgefc6x2ql0tciemb
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: languages
+        validate: true
+- changeSet:
+    id: 1543586185074-16
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: activity_id
+        baseTableName: activity_translatables
+        constraintName: FKpv7ltjc5plygsj8pj1qn758ei
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: activities
+        validate: true

@@ -1,0 +1,17 @@
+databaseChangeLog:
+- changeSet:
+    id: 003.transform_translatable_defaults
+    author: vetemi
+    changes:
+    - sql:
+        comment: transfer all activity translatables into the new table with German default
+        dbms: h2, mysql
+        endDelimiter: \nGO
+        splitStatements: true
+        sql: "
+            insert into activity_translatables (id, name, description, modified, created, language_id, activity_id)
+                select UUID(), activities.name, activities.description, activities.modified, activities.created, languages.id, activities.id
+                from activities, languages
+                where languages.locale = 'de';
+            "
+        stripComments: true

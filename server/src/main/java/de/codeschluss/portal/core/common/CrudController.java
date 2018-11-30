@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * 
  */
 public abstract class CrudController<E extends BaseEntity, S extends ResourceDataService<E, ?>> {
-
+  
   /** The service. */
   protected final S service;
 

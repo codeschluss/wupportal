@@ -32,7 +32,7 @@ public class ScheduleQueryBuilder extends QueryBuilder {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.activity.name.likeIgnoreCase(filter);
+    return query.activity.translatables.any().name.likeIgnoreCase(filter);
   }
 
 }

@@ -4,4 +4,10 @@ databaseChangeLog:
     - include:
         file: classpath:db/changelogs/dev.intialdata.yaml
     - include:
-        file: classpath:db/changelogs/0001.renametranslations.yaml
+        file: classpath:db/changelogs/0001.rename_translations_languages.yaml
+    - include:
+        file: classpath:db/changelogs/0002.add_translatables.yaml
+    - include:
+        file: classpath:db/changelogs/0003.transfrom_translatable_defaults.yaml
+    - include:
+        file: classpath:db/changelogs/0004.drop_translatables_columns.yaml

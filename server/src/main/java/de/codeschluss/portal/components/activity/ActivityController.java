@@ -4,7 +4,6 @@ import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
 
-import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.address.AddressService;
 import de.codeschluss.portal.components.category.CategoryService;
 import de.codeschluss.portal.components.organisation.OrganisationService;

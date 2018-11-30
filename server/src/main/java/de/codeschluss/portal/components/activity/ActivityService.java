@@ -1,5 +1,6 @@
 package de.codeschluss.portal.components.activity;
 
+import de.codeschluss.portal.components.activity.translations.ActivityTranslationService;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
@@ -39,7 +40,8 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   public ActivityService(
       ActivityRepository repo, 
       ActivityQueryBuilder entities,
-      ActivityResourceAssembler assembler) {
+      ActivityResourceAssembler assembler,
+      ActivityTranslationService translationService) {
     super(repo, entities, assembler);
   }
 
@@ -104,8 +106,6 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   @Override
   public ActivityEntity update(String id, ActivityEntity newActivity) {
     return repo.findById(id).map(activity -> {
-      activity.setDescription(newActivity.getDescription());
-      activity.setName(newActivity.getName());
       activity.setShowUser(newActivity.isShowUser());
       return repo.save(activity);
     }).orElseGet(() -> {

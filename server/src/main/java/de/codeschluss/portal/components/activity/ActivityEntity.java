@@ -2,7 +2,9 @@ package de.codeschluss.portal.components.activity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import de.codeschluss.portal.components.activity.translations.ActivityTranslatablesEntity;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
@@ -18,7 +20,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -55,12 +56,18 @@ public class ActivityEntity extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @Column(nullable = false)
+  @Transient
+  @JsonSerialize
   private String name;
 
-  @Lob
-  @Column(columnDefinition = "TEXT")
+  @Transient
+  @JsonSerialize
   private String description;
+  
+  @OneToMany(mappedBy = "activity")
+  @ToString.Exclude
+  @JsonIgnore
+  private List<ActivityTranslatablesEntity> translatables;
 
   @Column(name = "show_user", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean showUser;

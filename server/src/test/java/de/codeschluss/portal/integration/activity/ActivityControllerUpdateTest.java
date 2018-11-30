@@ -83,7 +83,7 @@ public class ActivityControllerUpdateTest {
     String categoryId = "00000000-0000-0000-0007-100000000000";
     String organisationId = "00000000-0000-0000-0008-100000000000";
     String addressId = "00000000-0000-0000-0006-100000000000";
-    return new ActivityEntity(name, "createActivity", true, addressId, null, categoryId, null,
+    return new ActivityEntity(name, "createActivity", null, true, addressId, null, categoryId, null,
         organisationId, null, null, null, null);
   }
 

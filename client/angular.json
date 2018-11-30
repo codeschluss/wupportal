@@ -3,33 +3,6 @@
   "version": 1,
   "defaultProject": "@portal/client",
   "projects": {
-    "@portal/core": {
-      "root": "libs/core",
-      "sourceRoot": "libs/core",
-      "projectType": "library",
-      "prefix": "",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "libs/core/tsconfig.json",
-            "project": "libs/core/ng-package.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.json",
-              "libs/core/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "@portal/client": {
       "prefix": "",
       "projectType": "application",
@@ -94,7 +67,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "client:build",
+            "browserTarget": "@portal/client:build",
             "i18nFormat": "xlf",
             "i18nLocale": "root",
             "outFile": "strings.xlf",
@@ -106,6 +79,33 @@
           "options": {
             "tsConfig": [
               "tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@portal/core": {
+      "root": "libs/core",
+      "sourceRoot": "libs/core",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.json",
+            "project": "libs/core/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json",
+              "libs/core/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"

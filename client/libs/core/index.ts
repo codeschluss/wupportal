@@ -10,6 +10,7 @@ export * from './loading/loading.provider';
 export * from './session/session.model';
 export * from './session/session.provider';
 export * from './session/session.resolver';
+export * from './utils/api';
 export * from './utils/module';
 export * from './utils/package';
 export * from './utils/settings';

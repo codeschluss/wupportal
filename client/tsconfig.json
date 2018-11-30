@@ -7,14 +7,9 @@
     "lib": ["dom", "es2018"],
     "module": "es2015",
     "moduleResolution": "node",
-    "outDir": "dist",
     "sourceMap": false,
     "target": "es2015",
     "typeRoots": ["node_modules/@types"],
-    "paths": {
-      "@portal": ["target/@portal"],
-      "@portal/*": ["target/@portal/*"]
-    }
   },
   "compileOnSave": false
 }

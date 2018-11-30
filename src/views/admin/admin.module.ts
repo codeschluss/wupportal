@@ -1,34 +1,36 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
-import { ActivityEditComponent } from './activity/activity.edit.component';
-import { OrganisationEditComponent } from './organisation/organisation.edit.component';
-
-
-const AdminDeclarations = [
-  AdminComponent,
-  ActivityEditComponent,
-  OrganisationEditComponent
-];
-
-const AdminImports = [
-  AdminComponent.imports
-];
 
 const AdminProviders = [
 ];
 
+const AdminEntryComponents = [
+];
+
+const AdminDeclarations = [
+  AdminComponent,
+];
+
+const AdminImports = [
+];
+
+
 @NgModule({
-  declarations: AdminDeclarations,
-  imports: [
-    CommonModule,
-    AdminImports,
-    AdminRouter
-  ],
   providers: AdminProviders,
-  entryComponents: [],
-  exports: []
+  entryComponents: AdminEntryComponents,
+  declarations: [
+    ...AdminDeclarations,
+    ...AdminEntryComponents
+  ],
+  imports: [
+    AdminImports,
+    AdminRouter,
+    CommonModule,
+    ReactiveFormsModule
+  ]
 })
 
 export class AdminModule { }

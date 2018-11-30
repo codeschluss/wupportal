@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ActivityModel } from '../../../core/models/activity.model';
-import { AddressModel } from '../../../core/models/address.model';
-import { CategoryModel } from '../../../core/models/category.model';
-import { ScheduleModel } from '../../../core/models/schedule.model';
-import { SuburbModel } from '../../../core/models/suburb.model';
-import { TargetGroupModel } from '../../../core/models/target-group.model';
-import { OrganisationModel } from 'src/core/models/organisation.model';
+import { OrganisationModel } from 'src/domain/organisation/organisation.model';
+import { ActivityModel } from '../../../domain/activity/activity.model';
+import { AddressModel } from '../../../domain/address/address.model';
+import { CategoryModel } from '../../../domain/category/category.model';
+import { ScheduleModel } from '../../../domain/schedule/schedule.model';
+import { SuburbModel } from '../../../domain/suburb/suburb.model';
+import { TargetGroupModel } from '../../../domain/target-group/target-group.model';
 
 
 @Component({
@@ -55,7 +55,7 @@ export class AboutComponent {
     actOne.address = new Promise<AddressModel>((resolve, reject) => {
       resolve(testAddress);
     });
-    
+
     const category = new CategoryModel;
     category.name = 'party';
     category.color = 'blue';
@@ -71,7 +71,7 @@ export class AboutComponent {
     actOne.targetGroups = new Promise<TargetGroupModel[]>((resolve, reject) => {
       resolve(targetGroups);
     });
-    
+
     const schedule = new ScheduleModel;
     schedule.startDate = new Date().toUTCString();
     schedule.endDate = new Date().toUTCString();
@@ -89,7 +89,7 @@ export class AboutComponent {
 
       schedules.push(firstDate);
     schedules.push(secondDate);
-    
+
     actOne.schedules = new Promise<ScheduleModel[]>((resolve, reject) => {
       resolve(schedules);
     });
@@ -99,7 +99,7 @@ export class AboutComponent {
     actOne.organisation = new Promise<OrganisationModel>((resolve, reject) => {
       resolve(organisation);
     });
-    
+
     return actOne;
 }
 

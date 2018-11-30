@@ -9,10 +9,8 @@
     "lib": ["dom", "es2018"],
     "module": "es2015",
     "moduleResolution": "node",
-    "outDir": "../../dist",
     "sourceMap": true,
-    "target": "es2015",
-    "types": []
+    "target": "es2015"
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
@@ -21,6 +19,5 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "enableResourceInlining": true
-  },
-  "exclude": []
+  }
 }

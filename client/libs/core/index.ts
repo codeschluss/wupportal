@@ -6,6 +6,7 @@ export * from './error/error.handler';
 export * from './error/error.model';
 export * from './i18n/i18n.component';
 export * from './i18n/i18n.resolver';
+export * from './loading/loading.provider';
 export * from './session/session.model';
 export * from './session/session.provider';
 export * from './session/session.resolver';

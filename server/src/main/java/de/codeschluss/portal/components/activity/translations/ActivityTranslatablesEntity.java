@@ -1,5 +1,7 @@
 package de.codeschluss.portal.components.activity.translations;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 import de.codeschluss.portal.core.translations.LanguageEntity;
@@ -8,6 +10,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -41,10 +44,12 @@ public class ActivityTranslatablesEntity extends BaseEntity implements Serializa
   @Column(columnDefinition = "TEXT")
   private String description;
   
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JsonIgnore
   private LanguageEntity language;
   
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JsonIgnore
   private ActivityEntity activity;
 
 }

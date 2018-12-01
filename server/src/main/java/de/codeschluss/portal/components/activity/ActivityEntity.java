@@ -18,6 +18,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -64,7 +65,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonSerialize
   private String description;
   
-  @OneToMany(mappedBy = "activity")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity")
   @ToString.Exclude
   @JsonIgnore
   private List<ActivityTranslatablesEntity> translatables;
@@ -76,7 +77,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonDeserialize
   private String addressId;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
   @JsonIgnore
   private AddressEntity address;
@@ -85,7 +86,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonDeserialize
   private String categoryId;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
   @JsonIgnore
   @JoinColumn(nullable = false)
@@ -95,18 +96,18 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonDeserialize
   private String organisationId;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
   @JsonIgnore
   @JoinColumn(nullable = false)
   private ProviderEntity provider;
 
-  @OneToMany(mappedBy = "activity")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity")
   @ToString.Exclude
   @JsonIgnore
   private List<ScheduleEntity> schedules;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
@@ -127,7 +128,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   )
   private List<TagEntity> tags;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(

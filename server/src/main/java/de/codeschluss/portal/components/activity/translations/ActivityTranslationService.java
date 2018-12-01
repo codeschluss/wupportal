@@ -3,13 +3,15 @@ package de.codeschluss.portal.components.activity.translations;
 import com.querydsl.core.types.Predicate;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
-import de.codeschluss.portal.core.appconfig.TranslationsConfig;
 import de.codeschluss.portal.core.translations.TranslationService;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ActivityTranslationService.
  * 
@@ -36,20 +38,34 @@ public class ActivityTranslationService extends TranslationService<ActivityEntit
    * @return the localized activity
    */
   public boolean localizeOnLoad(ActivityEntity activity) {
-    String locale = getReadLocale();
-    
-    ActivityTranslatablesEntity translation = getTranslatable(activity, getReadLocale());
-    if (translation == null) {
-      translation = getTranslatable(activity, getDefaultLocale());
+    List<String> locales = getReadLocale();
+    for (String locale : locales) {
+      boolean isTouched = localize(activity, locale);
+      if (isTouched) {
+        return isTouched;
+      }
     }
-    
-    activity.setName(translation.getName());
-    activity.setDescription(translation.getDescription());
-    return true;
+    return localize(activity, getDefaultLocale());
   }
 
-  private ActivityTranslatablesEntity getTranslatable(ActivityEntity activity, String locale) {
-    return null;
+  /**
+   * Localize.
+   *
+   * @param activity the activity
+   * @param locale the locale
+   * @return true, if successful
+   */
+  private boolean localize(ActivityEntity activity, String locale) {
+    ActivityTranslatablesEntity translation = repo
+        .findOne(localizedActivity(activity, locale))
+        .orElseGet(null);
+    
+    if (translation != null) {
+      activity.setName(translation.getName());
+      activity.setDescription(translation.getDescription());
+      return true;
+    }
+    return false;
   }
 
   /**

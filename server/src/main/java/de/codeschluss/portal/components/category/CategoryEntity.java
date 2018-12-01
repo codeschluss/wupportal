@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -35,7 +34,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "categories")
 @Relation(collectionRelation = "data")
-public class CategoryEntity extends BaseEntity implements Serializable {
+public class CategoryEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 

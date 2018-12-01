@@ -6,7 +6,6 @@ import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -38,7 +37,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "organisations")
 @Relation(collectionRelation = "data")
-public class OrganisationEntity extends BaseEntity implements Serializable {
+public class OrganisationEntity extends BaseEntity {
   
   private static final long serialVersionUID = 1L;
 

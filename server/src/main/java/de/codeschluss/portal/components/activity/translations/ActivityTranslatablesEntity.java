@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 import de.codeschluss.portal.core.translations.LanguageEntity;
-
-import java.io.Serializable;
+import de.codeschluss.portal.core.translations.Translatable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,8 +31,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Translatable
 @Table(name = "activity_translatables")
-public class ActivityTranslatablesEntity extends BaseEntity implements Serializable {
+public class ActivityTranslatablesEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class ActivityTranslatablesEntity extends BaseEntity implements Serializa
   @Column(columnDefinition = "TEXT")
   private String description;
   
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JsonIgnore
   private LanguageEntity language;
   

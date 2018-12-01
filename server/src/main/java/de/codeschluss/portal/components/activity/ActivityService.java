@@ -1,6 +1,5 @@
 package de.codeschluss.portal.components.activity;
 
-import de.codeschluss.portal.components.activity.translations.ActivityTranslationService;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
@@ -40,8 +39,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   public ActivityService(
       ActivityRepository repo, 
       ActivityQueryBuilder entities,
-      ActivityResourceAssembler assembler,
-      ActivityTranslationService translationService) {
+      ActivityResourceAssembler assembler) {
     super(repo, entities, assembler);
   }
 

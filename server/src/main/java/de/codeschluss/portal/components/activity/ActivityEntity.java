@@ -12,8 +12,8 @@ import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.translations.Localized;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -51,9 +51,10 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Localized
 @Table(name = "activities")
 @Relation(collectionRelation = "data")
-public class ActivityEntity extends BaseEntity implements Serializable {
+public class ActivityEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 

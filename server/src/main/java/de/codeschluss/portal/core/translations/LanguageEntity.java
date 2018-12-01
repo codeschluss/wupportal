@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -44,7 +45,7 @@ public class LanguageEntity extends BaseEntity implements Serializable {
   @Column(nullable = false, unique = true)
   private String name;
   
-  @OneToMany(mappedBy = "language")
+  @OneToMany(mappedBy = "language", fetch = FetchType.LAZY)
   @JsonIgnore
   private List<ActivityTranslatablesEntity> activityTranslatables;
 }

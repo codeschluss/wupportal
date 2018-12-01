@@ -8,7 +8,6 @@ import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -40,7 +39,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "providers")
 @Relation(collectionRelation = "data")
-public class ProviderEntity extends BaseEntity implements Serializable {
+public class ProviderEntity extends BaseEntity {
   private static final long serialVersionUID = 1L;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")

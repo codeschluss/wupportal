@@ -23,7 +23,7 @@ export interface CrudMethods {
 export abstract class CrudProvider
   <Service extends BaseService, Model extends CrudModel> {
 
-  public system = Object.freeze({
+  public system: any = Object.freeze({
     apply: this.apply.bind(this),
     based: this.based.bind(this),
     call: this.call.bind(this),

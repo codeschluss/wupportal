@@ -33,6 +33,7 @@ import { BlogListComponent } from './blog/blog.list.component';
 import { SearchResultListComponent } from './search/searchresult.list.component';
 import { BlogListItemComponent } from './blog/blog.listitem.component';
 import { SearchInputComponent } from './search/search.input.component';
+import { BlogViewComponent } from './blog/blog.view.component';
 
 fontawesome.add(fas);
 
@@ -53,6 +54,7 @@ const PublicDeclarations = [
   LayoutComponent,
   BlogListComponent,
   BlogListItemComponent,
+  BlogViewComponent,
   SearchResultListComponent,
   SearchInputComponent
 ];

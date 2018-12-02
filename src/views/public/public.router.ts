@@ -14,6 +14,7 @@ import { CrudJoiner } from 'src/core/crud/crud.joiner';
 import { ActivityModel } from 'src/core/models/activity.model';
 import { AddressModel } from 'src/core/models/address.model';
 import { SuburbModel } from 'src/core/models/suburb.model';
+import { BlogViewComponent } from './blog/blog.view.component';
 
 const PublicProviders = [
 ];
@@ -56,7 +57,15 @@ const PublicRoutes = [
   },
   {
     path: 'blog',
-    component: BlogListComponent,
+    children: [
+      {
+        path: '',
+        component: BlogListComponent,
+      }, {
+        path: 'view/:id',
+        component: BlogViewComponent
+      }
+    ]
   },
   {
     path: 'search',

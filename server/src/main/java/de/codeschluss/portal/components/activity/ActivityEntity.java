@@ -16,6 +16,7 @@ import de.codeschluss.portal.core.translations.annotations.Localized;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -68,7 +69,7 @@ public class ActivityEntity extends BaseEntity {
   @Transient
   private String description;
   
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "activity")
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.ALL)
   @ToString.Exclude
   @JsonIgnore
   private List<ActivityTranslatablesEntity> translatables;

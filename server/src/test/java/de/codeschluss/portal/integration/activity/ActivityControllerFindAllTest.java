@@ -33,12 +33,12 @@ public class ActivityControllerFindAllTest {
   private ActivityController controller;
 
   private ActivityQueryParam defaultParams = new ActivityQueryParam(
-      "activity", 0, 5, "name","asc", true, null, null, null);
+      "activity", 0, 5, "id","asc", true, null, null, null);
 
   @Test
   public void findAllWithoutPaginationOk() {
     ActivityQueryParam params = new ActivityQueryParam(
-        null, null, null, "name", "asc", true, null, null, null);
+        null, null, null, "id", "asc", true, null, null, null);
 
     Resources<?> result = (Resources<?>) act(params);
 

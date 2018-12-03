@@ -29,9 +29,13 @@ public class RepositoryService {
     repositories = new Repositories(listableBeanFactory);
   }
 
-  @SuppressWarnings("unchecked")
   public <E extends BaseEntity> DataRepository<E> getRepository(E entity) {
-    return (DataRepository<E>) repositories.getRepositoryFor(entity.getClass()).orElse(null);
+    return getRepository(entity.getClass());
+  }
+  
+  @SuppressWarnings("unchecked")
+  public <E extends BaseEntity> DataRepository<E> getRepository(Class<?> entityClass) {
+    return (DataRepository<E>) repositories.getRepositoryFor(entityClass).orElse(null);
   }
 
   public <E extends BaseEntity> Object save(E entity) {

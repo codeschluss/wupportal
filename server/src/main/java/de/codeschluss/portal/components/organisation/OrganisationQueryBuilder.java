@@ -49,4 +49,8 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
     .or(query.address.place.likeIgnoreCase(filter))
     .or(query.address.street.likeIgnoreCase(filter));
   }
+  
+  public BooleanExpression forActivity(String activityId) {
+    return query.providers.any().activities.any().id.eq(activityId);
+  }
 }

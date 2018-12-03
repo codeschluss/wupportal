@@ -1,9 +1,7 @@
-/*
- * @author Valmir Etemi
- */
 package de.codeschluss.portal.core.translations;
 
 import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.common.DataRepository;
 import de.codeschluss.portal.core.translations.annotations.Localized;
 import de.codeschluss.portal.core.translations.annotations.Translatable;
 import de.codeschluss.portal.core.translations.language.LanguageEntity;
@@ -11,6 +9,7 @@ import de.codeschluss.portal.core.translations.language.LanguageService;
 import de.codeschluss.portal.core.utils.RepositoryService;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -38,22 +37,17 @@ import org.springframework.stereotype.Component;
  *          the element type
  */
 @Component
-@Aspect
+@Aspect 
 public class TranslationService {
   
-  @Pointcut("execution(public * de.codeschluss.portal.core.common.DataRepository.save(..))")
+  @Pointcut("execution(* de.codeschluss.portal.core.common.DataRepository+.save(..))")
   private void save() { }
   
-  @Pointcut("execution(public * de.codeschluss.portal.core.common.DataRepository.findAll(*))")
-  private void findAll() { }
-  
-  @Pointcut("execution("
-      + "public org.springframework.data.domain.Page<?> "
-      + "de.codeschluss.portal.core.common.DataRepository.find*(..))")
-  private void findPaged() { }
-  
-  @Pointcut("execution(public * de.codeschluss.portal.core.common.DataRepository.findOne(..))")
+  @Pointcut("execution(public * de.codeschluss.portal.core.common.DataRepository+.findOne(..))")
   private void findOne() { }
+  
+  @Pointcut("execution(* de.codeschluss.portal.core.common.DataRepository+.findAll(..))")
+  private void findAll() { }
   
   /** The repo service. */
   @Autowired
@@ -70,12 +64,12 @@ public class TranslationService {
    * @return the object
    * @throws Throwable the throwable
    */
-  @Around("findAll() || findPaged()")
+  @Around("findAll()")
   public Object replaceIterableWithTranslations(ProceedingJoinPoint pjp) throws Throwable {
     Object result = pjp.proceed();
     if (result instanceof Iterable<?>) {
       List<?> list = convertToList(result);
-      if (isLocalizable(list.get(0))) {
+      if (!list.isEmpty() && isLocalizable(list.get(0))) {
         List<String> locales = languageService.getCurrentReadLocale();
         for (Object entity : list) {
           localizeOne(entity, locales);
@@ -107,7 +101,7 @@ public class TranslationService {
   @Around("findOne()")
   public Object replaceOneWithTranslation(ProceedingJoinPoint pjp) throws Throwable {
     Object result = pjp.proceed();
-    if (result instanceof Optional<?>) {
+    if (result instanceof Optional<?> && ((Optional<?>) result).isPresent()) {
       Object entity = ((Optional<?>) result).get();
       if (isLocalizable(entity)) {
         localizeOne(entity, languageService.getCurrentReadLocale());
@@ -224,7 +218,8 @@ public class TranslationService {
   @SuppressWarnings("unchecked")
   @Around("save()")
   public <E extends BaseEntity> Object saveTranslation(ProceedingJoinPoint pjp) throws Throwable {
-    Object savedEntity = pjp.proceed();
+    pjp.proceed();
+    Object savedEntity = pjp.getArgs()[0];
     if (isLocalizable(savedEntity)) {
       Class<?> translatableClass = getTranslatableTypeForEntity(savedEntity);
       Object translatableObject = 
@@ -292,11 +287,12 @@ public class TranslationService {
    */
   private Object createTranslatableObject(Class<?> translatableClass, Object savedEntity) 
       throws Throwable {
-    Object translatableObject = translatableClass.newInstance();
+    LanguageEntity lang = languageService.getCurrentWriteLanguage();
+    Object translatableObject = getTranslatableInstance(translatableClass, lang, savedEntity);
     for (Field field : translatableClass.getDeclaredFields()) {
       field.setAccessible(true);
       if (field.getType().isAssignableFrom(LanguageEntity.class)) {
-        field.set(translatableObject, languageService.getCurrentWriteLanguage());
+        field.set(translatableObject, lang);
       }
       if (field.getType().isAssignableFrom(savedEntity.getClass())) {
         field.set(translatableObject, savedEntity);
@@ -310,6 +306,28 @@ public class TranslationService {
     return translatableObject;
   }
   
+
+  private <E extends BaseEntity> Object getTranslatableInstance(
+      Class<?> translatableClass, 
+      LanguageEntity currentWriteLanguage,
+      Object parent) throws Throwable {
+    DataRepository<E> repo = repoService.getRepository(translatableClass);
+    if (repo instanceof TranslationRepository<?>) {
+      TranslationRepository<?> translationRepo = (TranslationRepository<?>) repo;
+      Method method = translationRepo
+          .getClass()
+          .getMethod("findByLanguageAndParent", LanguageEntity.class, parent.getClass());
+      Object existingTranslatable = method.invoke(translationRepo, currentWriteLanguage, parent);
+      
+      return existingTranslatable != null
+          ? existingTranslatable
+          : translatableClass.newInstance();
+    }
+    throw new RuntimeException(
+        "Repository of Translation must inherit from " + TranslationRepository.class);
+    
+  }
+
   /**
    * Checks if is id field.
    *

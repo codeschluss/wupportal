@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ActivityService extends ResourceDataService<ActivityEntity, ActivityQueryBuilder> {
 
   /** The default sort prop. */
-  protected final String defaultSortProp = "name";
+  protected final String defaultSortProp = "id";
 
   /**
    * Instantiates a new activity service.
@@ -104,6 +104,8 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   @Override
   public ActivityEntity update(String id, ActivityEntity newActivity) {
     return repo.findById(id).map(activity -> {
+      activity.setName(newActivity.getName());
+      activity.setDescription(newActivity.getDescription());
       activity.setShowUser(newActivity.isShowUser());
       return repo.save(activity);
     }).orElseGet(() -> {

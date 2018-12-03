@@ -10,6 +10,7 @@ import de.codeschluss.portal.core.translations.language.LanguageEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -50,6 +51,7 @@ public class ActivityTranslatablesEntity extends BaseEntity {
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
-  private ActivityEntity activity;
+  @JoinColumn(name = "parent_id")
+  private ActivityEntity parent;
 
 }

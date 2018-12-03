@@ -23,21 +23,24 @@ public interface DataRepository<T>
     extends JpaRepository<T, String>, QuerydslPredicateExecutor<T> {
   
   @Override
-  <S extends T> S save(S entity);
+  public <S extends T> S save(S entity);
   
   @Override
-  Optional<T> findOne(Predicate predicate);
+  public Optional<T> findOne(Predicate predicate);
   
   @Override
-  List<T> findAll();
+  public List<T> findAll();
   
   @Override
-  List<T> findAll(Predicate predicate, Sort sort);
+  public List<T> findAll(Sort sort);
   
   @Override
-  Page<T> findAll(Predicate predicate, Pageable pageable);
+  public List<T> findAll(Predicate predicate, Sort sort);
   
   @Override
-  List<T> findAll(Predicate predicate);
+  public Page<T> findAll(Predicate predicate, Pageable pageable);
+  
+  @Override
+  public List<T> findAll(Predicate predicate);
   
 }

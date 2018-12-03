@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
-import de.codeschluss.portal.core.translations.LanguageEntity;
-import de.codeschluss.portal.core.translations.Translatable;
+import de.codeschluss.portal.core.translations.annotations.Translatable;
+import de.codeschluss.portal.core.translations.language.LanguageEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

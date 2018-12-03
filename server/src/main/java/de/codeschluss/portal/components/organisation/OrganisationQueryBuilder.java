@@ -15,16 +15,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class OrganisationQueryBuilder extends QueryBuilder {
-
-  /** The query. */
-  private final QOrganisationEntity query;
+public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> {
   
   /**
    * Instantiates a new organisation query builder.
    */
   public OrganisationQueryBuilder() {
-    this.query = QOrganisationEntity.organisationEntity;
+    super(QOrganisationEntity.organisationEntity);
   }
   
   /**

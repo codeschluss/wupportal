@@ -16,12 +16,10 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class SuburbQueryBuilder extends QueryBuilder {
-
-  private final QSuburbEntity query;
+public class SuburbQueryBuilder extends QueryBuilder<QSuburbEntity> {
   
   public SuburbQueryBuilder() {
-    this.query = QSuburbEntity.suburbEntity;
+    super(QSuburbEntity.suburbEntity);
   }
   
   public BooleanExpression withName(String name) {

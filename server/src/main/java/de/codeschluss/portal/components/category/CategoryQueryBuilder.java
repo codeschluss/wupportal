@@ -17,16 +17,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class CategoryQueryBuilder extends QueryBuilder {
-
-  /** The query. */
-  private final QCategoryEntity query;
+public class CategoryQueryBuilder extends QueryBuilder<QCategoryEntity> {
   
   /**
    * Instantiates a new category query builder.
    */
   public CategoryQueryBuilder() {
-    this.query = QCategoryEntity.categoryEntity;
+    super(QCategoryEntity.categoryEntity);
   }
   
   /**

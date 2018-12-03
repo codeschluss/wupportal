@@ -1,4 +1,4 @@
-package de.codeschluss.portal.core.translations;
+package de.codeschluss.portal.core.translations.language;
 
 import lombok.Data;
 

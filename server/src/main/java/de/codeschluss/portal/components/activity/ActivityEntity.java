@@ -12,7 +12,7 @@ import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
-import de.codeschluss.portal.core.translations.Localized;
+import de.codeschluss.portal.core.translations.annotations.Localized;
 
 import java.util.List;
 
@@ -58,15 +58,17 @@ public class ActivityEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 
-  @Transient
   @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String name;
 
-  @Transient
   @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String description;
   
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity")
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "activity")
   @ToString.Exclude
   @JsonIgnore
   private List<ActivityTranslatablesEntity> translatables;

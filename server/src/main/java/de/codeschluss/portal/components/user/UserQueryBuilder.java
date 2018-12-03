@@ -15,16 +15,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class UserQueryBuilder extends QueryBuilder {
-  
-  /** The query. */
-  private final QUserEntity query;
+public class UserQueryBuilder extends QueryBuilder<QUserEntity> {
   
   /**
    * Instantiates a new user query builder.
    */
   public UserQueryBuilder() {
-    query = QUserEntity.userEntity;
+    super(QUserEntity.userEntity);
   }
 
   /**

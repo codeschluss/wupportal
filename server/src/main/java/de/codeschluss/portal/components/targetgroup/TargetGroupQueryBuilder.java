@@ -16,16 +16,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class TargetGroupQueryBuilder extends QueryBuilder {
-
-  /** The query. */
-  private final QTargetGroupEntity query;
+public class TargetGroupQueryBuilder extends QueryBuilder<QTargetGroupEntity> {
   
   /**
    * Instantiates a new target group query builder.
    */
   public TargetGroupQueryBuilder() {
-    this.query = QTargetGroupEntity.targetGroupEntity;
+    super(QTargetGroupEntity.targetGroupEntity);
   }
 
   /**

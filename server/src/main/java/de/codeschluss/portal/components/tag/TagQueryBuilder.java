@@ -17,16 +17,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class TagQueryBuilder extends QueryBuilder {
-
-  /** The query. */
-  private final QTagEntity query;
+public class TagQueryBuilder extends QueryBuilder<QTagEntity> {
   
   /**
    * Instantiates a new tag query builder.
    */
   public TagQueryBuilder() {
-    this.query = QTagEntity.tagEntity;
+    super(QTagEntity.tagEntity);
   }
   
   /**

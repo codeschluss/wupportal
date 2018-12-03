@@ -16,12 +16,10 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ScheduleQueryBuilder extends QueryBuilder {
-  
-  private final QScheduleEntity query;
+public class ScheduleQueryBuilder extends QueryBuilder<QScheduleEntity> {
   
   public ScheduleQueryBuilder() {
-    this.query = QScheduleEntity.scheduleEntity;
+    super(QScheduleEntity.scheduleEntity);
   }
 
   public BooleanExpression forActivityAndCurrentOnly(String activityId) {

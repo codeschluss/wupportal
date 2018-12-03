@@ -1,20 +1,32 @@
+/*
+ * @author Valmir Etemi
+ */
 package de.codeschluss.portal.core.translations;
 
-import com.google.common.net.HttpHeaders;
-
-import de.codeschluss.portal.core.appconfig.TranslationsConfig;
+import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.translations.annotations.Localized;
+import de.codeschluss.portal.core.translations.annotations.Translatable;
+import de.codeschluss.portal.core.translations.language.LanguageEntity;
+import de.codeschluss.portal.core.translations.language.LanguageService;
+import de.codeschluss.portal.core.utils.RepositoryService;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.persistence.Id;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,33 +37,123 @@ import org.springframework.stereotype.Service;
  * @param <E>
  *          the element type
  */
-@Service
+@Component
+@Aspect
 public class TranslationService {
-
-  /** The request. */
+  
+  @Pointcut("execution(public * de.codeschluss.portal.core.common.DataRepository.save(..))")
+  private void save() { }
+  
+  @Pointcut("execution(public * de.codeschluss.portal.core.common.DataRepository.findAll(*))")
+  private void findAll() { }
+  
+  @Pointcut("execution("
+      + "public org.springframework.data.domain.Page<?> "
+      + "de.codeschluss.portal.core.common.DataRepository.find*(..))")
+  private void findPaged() { }
+  
+  @Pointcut("execution(public * de.codeschluss.portal.core.common.DataRepository.findOne(..))")
+  private void findOne() { }
+  
+  /** The repo service. */
   @Autowired
-  protected HttpServletRequest request;
-
-  /** The config. */
+  private RepositoryService repoService;
+  
+  /** The language service. */
   @Autowired
-  protected TranslationsConfig config;
+  private LanguageService languageService; 
 
   /**
-   * Localize on load.
+   * Replace iterable with translations.
    *
-   * @param entity
-   *          the entity
-   * @return true, if successful
+   * @param pjp the pjp
+   * @return the object
+   * @throws Throwable the throwable
    */
-  public boolean localizeOnLoad(Object entity, List<?> translatables) {
-    List<String> locales = getReadLocale();
+  @Around("findAll() || findPaged()")
+  public Object replaceIterableWithTranslations(ProceedingJoinPoint pjp) throws Throwable {
+    Object result = pjp.proceed();
+    if (result instanceof Iterable<?>) {
+      List<?> list = convertToList(result);
+      if (isLocalizable(list.get(0))) {
+        List<String> locales = languageService.getCurrentReadLocale();
+        for (Object entity : list) {
+          localizeOne(entity, locales);
+        }
+      }
+    }
+    return result;
+  }
+  
+  /**
+   * Creates the iterable.
+   *
+   * @param result the result
+   * @return the iterable
+   */
+  private List<?> convertToList(Object result) {
+    return result instanceof Page<?>
+      ? ((Page<?>) result).getContent()
+      : (List<?>) result;
+  }
+
+  /**
+   * Replace one with translation.
+   *
+   * @param pjp the pjp
+   * @return the object
+   * @throws Throwable the throwable
+   */
+  @Around("findOne()")
+  public Object replaceOneWithTranslation(ProceedingJoinPoint pjp) throws Throwable {
+    Object result = pjp.proceed();
+    if (result instanceof Optional<?>) {
+      Object entity = ((Optional<?>) result).get();
+      if (isLocalizable(entity)) {
+        localizeOne(entity, languageService.getCurrentReadLocale());
+        return Optional.of(entity);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Localize one.
+   *
+   * @param entity the entity
+   * @return the optional
+   * @throws Throwable the throwable
+   */
+  private void localizeOne(Object entity, List<String> locales) 
+       throws Throwable {
+    List<?> translatables = getTranslatables(entity);
     for (String locale : locales) {
       boolean isTouched = localize(entity, getTranslations(translatables, locale));
       if (isTouched) {
-        return isTouched;
+        return;
       }
     }
-    return localize(entity, getTranslations(translatables, getDefaultLocale()));
+    localize(entity, getTranslations(translatables, languageService.getDefaultLocale()));
+  }
+
+  /**
+   * Gets the translatables.
+   *
+   * @param entity the entity
+   * @return the translatables
+   * @throws IllegalArgumentException the illegal argument exception
+   * @throws IllegalAccessException the illegal access exception
+   */
+  private List<?> getTranslatables(Object entity) 
+       throws IllegalArgumentException, IllegalAccessException {
+    for (Field field : entity.getClass().getDeclaredFields()) {
+      if (getTranslatableType(field.getGenericType()) != null) {
+        field.setAccessible(true);
+        return (List<?>) field.get(entity);
+      }
+    }
+    throw new RuntimeException(
+        "Missing Translatable Entity for given entity: " + entity.getClass());
   }
 
   /**
@@ -61,29 +163,26 @@ public class TranslationService {
    * @param locale the locale
    * @return the translations
    */
-  private Map<String, String> getTranslations(List<?> translatables, String locale) {
-    try {
-      for (Object translatable : translatables) {
-        Map<String, String> translations = new HashMap<>();
-        boolean matched = false;
-        for (Field field : translatable.getClass().getDeclaredFields()) {
-          field.setAccessible(true);
-          Object fieldValue = field.get(translatable);
-          if (fieldValue instanceof String) {
-            translations.put(field.getName(), fieldValue.toString());
-          }
-          
-          if (fieldValue instanceof LanguageEntity) {
-            LanguageEntity language = (LanguageEntity) fieldValue;
-            matched = language.getLocale().equals(locale);
-          }
+  private Map<String, String> getTranslations(List<?> translatables, String locale)
+      throws Throwable {
+    for (Object translatable : translatables) {
+      Map<String, String> translations = new HashMap<>();
+      boolean matched = false;
+      for (Field field : translatable.getClass().getDeclaredFields()) {
+        field.setAccessible(true);
+        Object fieldValue = field.get(translatable);
+        if (fieldValue instanceof String) {
+          translations.put(field.getName(), fieldValue.toString());
         }
-        if (matched) {
-          return translations;
+        
+        if (fieldValue instanceof LanguageEntity) {
+          LanguageEntity language = (LanguageEntity) fieldValue;
+          matched = language.getLocale().equals(locale);
         }
       }
-    } catch (IllegalArgumentException | IllegalAccessException e) {
-      throw new RuntimeException("Something went wrong during translation mapping");
+      if (matched) {
+        return translations;
+      }
     }
     return null;
   }
@@ -97,69 +196,143 @@ public class TranslationService {
    * @param defaultLocale the default locale
    * @return true, if successful
    */
-  private boolean localize(Object entity, Map<String,String> translations) {
+  private boolean localize(Object entity, Map<String,String> translations) throws Throwable {
     boolean touched = false;
     if (translations == null) {
       return touched;
     }
-    
-    try {
-      for (Field field : entity.getClass().getDeclaredFields()) {
-        field.setAccessible(true);
-        String translation = translations.get(field.getName());
-        if (translation != null) {
-          field.set(entity, translation);
-          touched = true;
-        }
+
+    for (Field field : entity.getClass().getDeclaredFields()) {
+      field.setAccessible(true);
+      String translation = translations.get(field.getName());
+      if (translation != null) {
+        field.set(entity, translation);
+        touched = true;
       }
-    } catch (IllegalArgumentException | IllegalAccessException e) {
-      e.printStackTrace();
     }
     return touched;
   }
 
   /**
-   * Localize on save.
+   * Save localizable.
    *
-   * @param entity
-   *          the entity
-   * @return true, if successful
+   * @param <E> the element type
+   * @param pjp the pjp
+   * @return the object
+   * @throws Throwable the throwable
    */
-  public boolean localizeOnSave(Object entity) {
-    return false;
-
-  }
-
-  /**
-   * Gets the sorted read localed based on q-factor.
-   *
-   * @return the sorted read locales
-   */
-  public List<String> getReadLocale() {
-    String[] extractedLanguages = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE).trim().split(",");
-    List<LanguageHeader> languageHeaders = new ArrayList<LanguageHeader>();
-    for (String unprepared : extractedLanguages) {
-      languageHeaders.add(new LanguageHeader(unprepared));
+  @SuppressWarnings("unchecked")
+  @Around("save()")
+  public <E extends BaseEntity> Object saveTranslation(ProceedingJoinPoint pjp) throws Throwable {
+    Object savedEntity = pjp.proceed();
+    if (isLocalizable(savedEntity)) {
+      Class<?> translatableClass = getTranslatableTypeForEntity(savedEntity);
+      Object translatableObject = 
+          createTranslatableObject(translatableClass, savedEntity);  
+      
+      repoService.save((E) translatableObject);
     }
-    return languageHeaders.stream().sorted().map(header -> header.getLanguage()).distinct()
-        .collect(Collectors.toList());
+    return savedEntity;
   }
+  
+  /**
+   * Checks if is localizable.
+   *
+   * @param entity the entity
+   * @return true, if is localizable
+   */
+  private boolean isLocalizable(Object entity) {
+    return entity != null && entity.getClass().getAnnotation(Localized.class) != null;
+  }
+  
+  /**
+   * Gets the translatable type.
+   *
+   * @param entity the entity
+   * @return the translatable type
+   */
+  private Class<?> getTranslatableTypeForEntity(Object entity) {
+    for (Field field : entity.getClass().getDeclaredFields()) {
+      Class<?> translatableType = getTranslatableType(field.getGenericType());
+      if (translatableType != null) {
+        return translatableType;
+      }
+    }
+    throw new RuntimeException(
+        "Missing Translatable Entity for given entity: " + entity.getClass());
+  }
+  
 
   /**
-   * Gets the write locale.
+   * Gets the translatable type for field.
    *
-   * @return the write locale
+   * @param field the field
+   * @return the translatable type for field
    */
-  public String getWriteLocale() {
-    return HttpHeaders.CONTENT_LANGUAGE.substring(0, 2);
+  private Class<?> getTranslatableType(Type type) {
+    if (type instanceof ParameterizedType) {
+      ParameterizedType pt = (ParameterizedType) type;
+      Class<?> genericType = (Class<?>) pt.getActualTypeArguments()[0];
+      genericType.getAnnotations();
+      if (genericType.getAnnotation(Translatable.class) != null) {
+        return genericType;
+      }
+    }
+    return null;
   }
 
+
   /**
-   * Gets the default locale.
+   * Creates the translatable object.
    *
-   * @return the default locale
+   * @param translatableClass the translatable class
+   * @param savedEntity the saved entity
+   * @return the object
+   * @throws Throwable the throwable
    */
-  public String getDefaultLocale() {
-    return config.getDefaultLocale();
+  private Object createTranslatableObject(Class<?> translatableClass, Object savedEntity) 
+      throws Throwable {
+    Object translatableObject = translatableClass.newInstance();
+    for (Field field : translatableClass.getDeclaredFields()) {
+      field.setAccessible(true);
+      if (field.getType().isAssignableFrom(LanguageEntity.class)) {
+        field.set(translatableObject, languageService.getCurrentWriteLanguage());
+      }
+      if (field.getType().isAssignableFrom(savedEntity.getClass())) {
+        field.set(translatableObject, savedEntity);
+      }
+      if (!isId(field) && field.getType().isAssignableFrom(String.class)) {
+        field.set(
+            translatableObject, 
+            getCurrentTranslationFromEntity(savedEntity, field.getName()));
+      }
+    }
+    return translatableObject;
+  }
+  
+  /**
+   * Checks if is id field.
+   *
+   * @param field the field
+   * @return true, if is id
+   */
+  private boolean isId(Field field) {
+    return field.getAnnotation(Id.class) != null;
+  }
+  
+
+  /**
+   * Gets the current translation from entity.
+   *
+   * @param entity the entity
+   * @param translatableFieldName the translatable field name
+   * @return the current translation from entity
+   * @throws Throwable the throwable
+   */
+  private String getCurrentTranslationFromEntity(Object entity, String translatableFieldName)
+      throws Throwable {
+    Field field = entity.getClass().getDeclaredField(translatableFieldName);
+    field.setAccessible(true);
+    return (String) field.get(entity);
   }
 }

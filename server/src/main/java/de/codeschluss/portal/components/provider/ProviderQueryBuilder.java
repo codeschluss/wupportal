@@ -17,16 +17,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ProviderQueryBuilder extends QueryBuilder {
-  
-  /** The query. */
-  private final QProviderEntity query;
+public class ProviderQueryBuilder extends QueryBuilder<QProviderEntity> {
   
   /**
    * Instantiates a new provider query builder.
    */
   public ProviderQueryBuilder() {
-    this.query = QProviderEntity.providerEntity;
+    super(QProviderEntity.providerEntity);
   }
 
   /**

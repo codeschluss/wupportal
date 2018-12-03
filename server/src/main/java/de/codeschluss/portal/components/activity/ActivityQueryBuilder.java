@@ -21,16 +21,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ActivityQueryBuilder extends QueryBuilder {
-  
-  /** The query. */
-  private final QActivityEntity query;
+public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   
   /**
    * Instantiates a new activity query builder.
    */
   public ActivityQueryBuilder() {
-    this.query = QActivityEntity.activityEntity;
+    super(QActivityEntity.activityEntity);
   }
   
   /**

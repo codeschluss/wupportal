@@ -51,7 +51,17 @@ export class ClientModule {
   public constructor(
     apiConfiguration: ApiConfiguration,
     clientPackage: ClientPackage,
-    coreSettings: CoreSettings
+    coreSettings: CoreSettings,
+
+    _activityProvider: ActivityProvider,
+    _addressProvider: AddressProvider,
+    _categoryProvider: CategoryProvider,
+    _configurationProvider: ConfigurationProvider,
+    _organisationProvider: OrganisationProvider,
+    _suburbProvider: SuburbProvider,
+    _tagProvider: TagProvider,
+    _targetGroupProvider: TargetGroupProvider,
+    _userProvider: UserProvider
   ) {
     apiConfiguration.rootUrl = clientPackage.config.api.rootUrl;
     coreSettings.authUrl = clientPackage.config.api.authUrl;

@@ -34,6 +34,8 @@ import { SearchResultListComponent } from './search/searchresult.list.component'
 import { BlogListItemComponent } from './blog/blog.listitem.component';
 import { SearchInputComponent } from './search/search.input.component';
 import { BlogViewComponent } from './blog/blog.view.component';
+import { NavBarComponent } from '../layout/navbar.component';
+import { FooterComponent } from '../layout/footer.component';
 
 fontawesome.add(fas);
 
@@ -52,6 +54,8 @@ const PublicDeclarations = [
   AboutComponent,
   MappingComponent,
   LayoutComponent,
+  FooterComponent,
+  NavBarComponent,
   BlogListComponent,
   BlogListItemComponent,
   BlogViewComponent,
@@ -74,6 +78,7 @@ const PublicImports = [
   FlexLayoutModule,
   FontAwesomeModule,
   LayoutComponent.imports,
+  NavBarComponent.imports,
   OrganisationListComponent.imports,
   SearchResultListComponent.imports,
   FormsModule

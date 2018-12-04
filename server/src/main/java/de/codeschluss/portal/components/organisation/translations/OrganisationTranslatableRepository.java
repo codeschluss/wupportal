@@ -1,4 +1,4 @@
-package de.codeschluss.portal.components.activity.translations;
+package de.codeschluss.portal.components.organisation.translations;
 
 import de.codeschluss.portal.core.common.DataRepository;
 import de.codeschluss.portal.core.translations.TranslationRepository;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface ActivityTranslatableRepository 
-    extends DataRepository<ActivityTranslatablesEntity>, 
-    TranslationRepository<ActivityTranslatablesEntity> {
+public interface OrganisationTranslatableRepository 
+    extends DataRepository<OrganisationTranslatablesEntity>, 
+    TranslationRepository<OrganisationTranslatablesEntity> {
 }

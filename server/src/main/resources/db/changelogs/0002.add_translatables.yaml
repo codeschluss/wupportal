@@ -67,7 +67,7 @@ databaseChangeLog:
         validate: true
 ########## Category ##########
 - changeSet:
-    id: 1543952911218-7
+    id: 1543956825304-12
     author: vetemi (generated)
     changes:
     - createTable:
@@ -83,13 +83,13 @@ databaseChangeLog:
               nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
-            type: TIMESTAMP
+            type: datetime
         - column:
             constraints:
               nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
-            type: TIMESTAMP
+            type: datetime
         - column:
             constraints:
               nullable: false
@@ -103,7 +103,7 @@ databaseChangeLog:
             type: CHAR
         tableName: category_translatables
 - changeSet:
-    id: 1543952911218-29
+    id: 1543956825304-15
     author: vetemi (generated)
     changes:
     - addForeignKeyConstraint:
@@ -116,13 +116,76 @@ databaseChangeLog:
         referencedTableName: categories
         validate: true
 - changeSet:
-    id: 1543952911218-40
+    id: 1543956825304-20
     author: vetemi (generated)
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: language_id
         baseTableName: category_translatables
         constraintName: FKqu9y5gk7jnppfwp5da6jne08p
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: languages
+        validate: true
+########## Organisation ##########
+- changeSet:
+    id: 1543956825304-13
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: organisation_translatablesPK
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            name: description
+            type: TEXT
+        - column:
+            name: language_id
+            type: CHAR
+        - column:
+            name: parent_id
+            type: CHAR
+        tableName: organisation_translatables
+- changeSet:
+    id: 1543956630247-31
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: parent_id
+        baseTableName: organisation_translatables
+        constraintName: FK83ixvh6hfy2r5mss5pwcbdjsy
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: organisations
+        validate: true
+- changeSet:
+    id: 1543956630247-39
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: language_id
+        baseTableName: organisation_translatables
+        constraintName: FKobhihw1sv00yktugiclc7lbdr
         deferrable: false
         initiallyDeferred: false
         referencedColumnNames: id

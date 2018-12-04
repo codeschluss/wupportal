@@ -1,4 +1,5 @@
 databaseChangeLog:
+########## Activity ##########
 - changeSet:
     id: 003.transform_translatable_defaults_1
     author: vetemi
@@ -15,6 +16,7 @@ databaseChangeLog:
                 where languages.locale = 'de';
             "
         stripComments: true
+########## Category ##########
 - changeSet:
     id: 003.transform_translatable_defaults_2
     author: vetemi
@@ -28,6 +30,23 @@ databaseChangeLog:
             insert into category_translatables (id, name, modified, created, language_id, parent_id)
                 select UUID(), categories.name, categories.modified, categories.created, languages.id, categories.id
                 from categories, languages
+                where languages.locale = 'de';
+            "
+        stripComments: true
+########## Organisation ##########
+- changeSet:
+    id: 003.transform_translatable_defaults_3
+    author: vetemi
+    changes:
+    - sql:
+        comment: transfer all organisation translatables into the new table with German as default
+        dbms: h2, mysql
+        endDelimiter: \nGO
+        splitStatements: true
+        sql: "
+            insert into organisation_translatables (id, description, modified, created, language_id, parent_id)
+                select UUID(), organisations.description, organisations.modified, organisations.created, languages.id, organisations.id
+                from organisations, languages
                 where languages.locale = 'de';
             "
         stripComments: true

@@ -3,7 +3,6 @@ package de.codeschluss.portal.components.category;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
-import de.codeschluss.portal.components.category.QCategoryEntity;
 import de.codeschluss.portal.core.common.QueryBuilder;
 import de.codeschluss.portal.core.translations.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
@@ -59,8 +58,18 @@ public class CategoryQueryBuilder extends QueryBuilder<QCategoryEntity> {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
+    return query.description.likeIgnoreCase(filter)
+        .or(name(filter));
+  }
+
+  /**
+   * Name.
+   *
+   * @param filter the filter
+   * @return the boolean expression
+   */
+  private BooleanExpression name(String filter) {
     return query.translatables.any().name.likeIgnoreCase(filter)
-        .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()))
-        .or(query.description.likeIgnoreCase(filter));
+        .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));
   }
 }

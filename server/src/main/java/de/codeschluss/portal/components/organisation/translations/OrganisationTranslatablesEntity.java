@@ -1,8 +1,8 @@
-package de.codeschluss.portal.components.activity.translations;
+package de.codeschluss.portal.components.organisation.translations;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.codeschluss.portal.components.activity.ActivityEntity;
+import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 import de.codeschluss.portal.core.translations.annotations.Translatable;
 import de.codeschluss.portal.core.translations.language.LanguageEntity;
@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * The persistent class for the activity translatable database table.
+ * The persistent class for the activities database table.
  * 
  * @author Valmir Etemi
  *
@@ -33,16 +33,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Translatable
-@Table(name = "activity_translatables")
-public class ActivityTranslatablesEntity extends BaseEntity {
+@Table(name = "organisation_translatables")
+public class OrganisationTranslatablesEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
-
-  @Column(nullable = false)
-  private String name;
-
+  
   @Lob
-  @Column(columnDefinition = "TEXT")
+  @Column(columnDefinition = "TEXT", nullable = false)
   private String description;
   
   @ManyToOne(fetch = FetchType.EAGER)
@@ -52,6 +49,6 @@ public class ActivityTranslatablesEntity extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   @JoinColumn(name = "parent_id")
-  private ActivityEntity parent;
+  private OrganisationEntity parent;
 
 }

@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * The persistent class for the activities database table.
+ * The persistent class for the category translatables database table.
  * 
  * @author Valmir Etemi
  *

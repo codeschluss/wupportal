@@ -79,13 +79,23 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
         .or(query.address.suburb.name.likeIgnoreCase(filter))
         .or(query.tags.any().name.likeIgnoreCase(filter))
         .or(query.targetGroups.any().name.likeIgnoreCase(filter))
-        .or(
-            query.category.translatables.any().name.likeIgnoreCase(filter)
-            .and(query.category.translatables.any().language.locale.in(locales)));
+        .or(category(filter, locales));
     
     return search.and(textSearch).getValue();
   }
   
+  /**
+   * Category.
+   *
+   * @param filter the filter
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate category(String filter, List<String> locales) {
+    return query.category.translatables.any().name.likeIgnoreCase(filter)
+        .and(query.category.translatables.any().language.locale.in(locales));
+  }
+
   /**
    * Advanced search.
    *

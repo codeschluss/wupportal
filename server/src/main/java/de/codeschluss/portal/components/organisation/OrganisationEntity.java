@@ -1,10 +1,14 @@
 package de.codeschluss.portal.components.organisation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.address.AddressEntity;
+import de.codeschluss.portal.components.organisation.translations.OrganisationTranslatablesEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.translations.annotations.Localized;
 
 import java.util.List;
 
@@ -16,6 +20,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,14 +42,16 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Localized
 @Table(name = "organisations")
 @Relation(collectionRelation = "data")
 public class OrganisationEntity extends BaseEntity {
   
   private static final long serialVersionUID = 1L;
 
-  @Lob
-  @Column(columnDefinition = "TEXT")
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String description;
   
   @Lob
@@ -69,4 +76,9 @@ public class OrganisationEntity extends BaseEntity {
   @JsonIgnore
   @ToString.Exclude
   private List<ProviderEntity> providers;
+  
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
+  @ToString.Exclude
+  @JsonIgnore
+  private List<OrganisationTranslatablesEntity> translatables;
 }

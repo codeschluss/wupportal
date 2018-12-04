@@ -22,3 +22,11 @@ databaseChangeLog:
     - dropColumn:
         columnName: name
         tableName: categories
+########## Category ##########
+- changeSet:
+    id: 1543587900237-21
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: description
+        tableName: organisations

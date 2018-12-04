@@ -1,60 +1,61 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UrlSerializer } from '@angular/router';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { CoreModule, CoreSettings } from '@portal/core';
+import { ApiConfiguration } from './api/api-configuration';
+import { ApiModule } from './api/api.module';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
-import { ApiModule } from './core/api/api.module';
-import { TokenInterceptor } from './core/auth/token.interceptor';
-import { ErrorDialogComponent } from './core/error/error.dialog';
-import { ClientErrorHandler } from './core/error/error.handler';
-import { I18nComponent } from './core/i18n/i18n.component';
-import { I18nInterceptor } from './core/i18n/i18n.interceptor';
-import { ClientUrlSerializer } from './core/utils/serializer';
+import { ActivityProvider } from './realm/activity/activity.provider';
+import { AddressProvider } from './realm/address/address.provider';
+import { CategoryProvider } from './realm/category/category.provider';
+import { ConfigurationProvider } from './realm/configuration/configuration.provider';
+import { OrganisationProvider } from './realm/organisation/organisation.provider';
+import { SuburbProvider } from './realm/suburb/suburb.provider';
+import { TagProvider } from './realm/tag/tag.provider';
+import { TargetGroupProvider } from './realm/target-group/target-group.provider';
+import { UserProvider } from './realm/user/user.provider';
+import { ClientPackage } from './utils/package';
 import { LayoutComponent } from './views/layout/layout.component';
-
-const ClientProviders = [
-  { provide: ErrorHandler, useClass: ClientErrorHandler },
-  { provide: UrlSerializer, useClass: ClientUrlSerializer },
-
-  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true }
-];
-
-const ClientEntryComponents = [
-  ErrorDialogComponent
-];
-
-const ClientDeclarations = [
-  ClientComponent,
-  I18nComponent
-];
-
-const ClientImports = [
-  ClientErrorHandler.imports,
-  ErrorDialogComponent.imports,
-  LayoutComponent.imports
-];
 
 @NgModule({
   bootstrap: [ClientComponent],
-  providers: ClientProviders,
-  entryComponents: ClientEntryComponents,
-  declarations: [
-    ...ClientDeclarations,
-    ...ClientEntryComponents
-  ],
+  declarations: [ClientComponent],
   imports: [
+    // TODO: move
+    LayoutComponent.imports,
+
     ApiModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ClientImports,
     ClientRouter,
+    CoreModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js')
+  ],
+  providers: [
+    ActivityProvider,
+    AddressProvider,
+    CategoryProvider,
+    ConfigurationProvider,
+    OrganisationProvider,
+    SuburbProvider,
+    TagProvider,
+    TargetGroupProvider,
+    UserProvider
   ]
 })
 
-export class ClientModule { }
+export class ClientModule {
+
+  public constructor(
+    apiConfiguration: ApiConfiguration,
+    clientPackage: ClientPackage,
+    coreSettings: CoreSettings
+  ) {
+    apiConfiguration.rootUrl = clientPackage.config.api.rootUrl;
+    coreSettings.authUrl = clientPackage.config.api.authUrl;
+    coreSettings.refreshUrl = clientPackage.config.api.refreshUrl;
+  }
+
+}

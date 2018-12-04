@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActivityModel } from '../../../core/models/activity.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ActivityModel } from '../../../realm/activity/activity.model';
 
 @Component({
   selector: 'activity-card',
@@ -12,7 +12,7 @@ export class ActivityCardComponent {
 
   @Input()
   public activity: ActivityModel;
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,

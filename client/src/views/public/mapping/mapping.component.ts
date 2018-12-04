@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AngularOpenlayersModule, LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserEvent, proj, style } from 'openlayers';
 import { Subject } from 'rxjs';
-import { ActivityModel } from '../../../core/models/activity.model';
-import { AddressModel } from '../../../core/models/address.model';
+import { ActivityModel } from '../../../realm/activity/activity.model';
+import { AddressModel } from '../../../realm/address/address.model';
 
 @Component({
   selector: 'mapping-component',

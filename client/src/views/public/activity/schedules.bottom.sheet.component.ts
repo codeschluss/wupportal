@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
-import { ScheduleModel } from '../../../core/models/schedule.model';
 import * as moment from 'moment';
+import { ScheduleModel } from '../../../realm/schedule/schedule.model';
 
 
 @Component({

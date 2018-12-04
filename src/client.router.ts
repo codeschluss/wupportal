@@ -19,7 +19,7 @@ const ClientRoutes = [
         loadChildren: './views/admin/admin.module#AdminModule'
       },
       {
-        path: 'public',
+        path: '',
         loadChildren: './views/public/public.module#PublicModule'
       },
       {

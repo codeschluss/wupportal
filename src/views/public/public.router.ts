@@ -11,9 +11,6 @@ import { SearchResultListComponent } from './search/searchresult.list.component'
 import { resolve } from 'dns';
 import { CrudResolver } from 'src/core/crud/crud.resolver';
 import { CrudJoiner } from 'src/core/crud/crud.joiner';
-import { ActivityModel } from 'src/core/models/activity.model';
-import { AddressModel } from 'src/core/models/address.model';
-import { SuburbModel } from 'src/core/models/suburb.model';
 import { BlogViewComponent } from './blog/blog.view.component';
 
 const PublicProviders = [
@@ -31,41 +28,70 @@ const PublicRoutes = [
     path: 'activities',
     children: [
       {
-        path: 'view/:id',
-        component: ActivityViewComponent
-      },
-      {
-        path: 'list',
-        component: ActivityListComponent,
-      },
-      {
         path: '',
         component: ActivityListComponent,
-      }
-    ]
-  }, {
-  path: 'organisations',
-  children: [
-      {
-        path: 'list',
-        component: OrganisationListComponent,
-      }, {
-        path: 'view/:id',
-        component: OrganisationViewComponent
       }
     ]
   },
   {
-    path: 'blog',
+    path: 'list/activities',
     children: [
+      {
+        path: '/',
+        component: ActivityListComponent
+      },
+      {
+        path: '',
+        component: ActivityListComponent
+      }
+    ]
+  },
+  {
+    path: 'view/activities/:id',
+    component: ActivityViewComponent
+  },
+  {
+  path: 'organisations',
+  children: [
+      {
+        path: '',
+        component: OrganisationListComponent,
+      }
+    ]
+  },
+  {
+    path: 'list/organisations',
+    children: [
+      {
+        path: '/',
+        component: OrganisationListComponent,
+      },
+      {
+        path: '',
+        component: OrganisationListComponent,
+      }
+    ]
+  },
+  {
+    path: 'view/organisations/:id',
+    component: OrganisationViewComponent
+  },
+  {
+    path: 'list/blogs',
+    children: [
+      {
+        path: '/',
+        component: BlogListComponent,
+      },
       {
         path: '',
         component: BlogListComponent,
-      }, {
-        path: 'view/:id',
-        component: BlogViewComponent
       }
     ]
+  },
+  {
+    path: 'view/blogs/:id',
+    component: BlogViewComponent
   },
   {
     path: 'search',

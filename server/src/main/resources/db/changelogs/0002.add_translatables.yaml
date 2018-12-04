@@ -191,3 +191,66 @@ databaseChangeLog:
         referencedColumnNames: id
         referencedTableName: languages
         validate: true
+########## Tag ##########
+- changeSet:
+    id: 1543960296753-13
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: tag_translatablesPK
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: language_id
+            type: CHAR
+        - column:
+            name: parent_id
+            type: CHAR
+        tableName: tag_translatables
+- changeSet:
+    id: 1543960296753-17
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: parent_id
+        baseTableName: tag_translatables
+        constraintName: FK50sunqusfnj7qhvlspjtch788
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: tags
+        validate: true
+- changeSet:
+    id: 1543960296753-20
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: language_id
+        baseTableName: tag_translatables
+        constraintName: FKk6nh36ilxaj7tp64vlpmc68xj
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: languages
+        validate: true

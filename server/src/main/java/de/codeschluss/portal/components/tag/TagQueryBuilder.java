@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.components.tag.QTagEntity;
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.translations.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
@@ -19,11 +20,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class TagQueryBuilder extends QueryBuilder<QTagEntity> {
   
+  /** The language service. */
+  private final LanguageService languageService;
+  
   /**
    * Instantiates a new tag query builder.
    */
-  public TagQueryBuilder() {
+  public TagQueryBuilder(LanguageService languageService) {
     super(QTagEntity.tagEntity);
+    this.languageService = languageService;
   }
   
   /**
@@ -33,7 +38,8 @@ public class TagQueryBuilder extends QueryBuilder<QTagEntity> {
    * @return the boolean expression
    */
   public BooleanExpression withName(String name) {
-    return query.name.eq(name);
+    return query.translatables.any().language.locale.in(languageService.getCurrentReadLocales())
+        .and(query.translatables.any().name.eq(name));
   }
 
   /**
@@ -53,7 +59,12 @@ public class TagQueryBuilder extends QueryBuilder<QTagEntity> {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.name.likeIgnoreCase(filter)
-        .or(query.description.likeIgnoreCase(filter));
+    return query.description.likeIgnoreCase(filter)
+        .or(name(filter));
+  }
+
+  private BooleanExpression name(String filter) {
+    return query.translatables.any().name.likeIgnoreCase(filter)
+        .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));
   }
 }

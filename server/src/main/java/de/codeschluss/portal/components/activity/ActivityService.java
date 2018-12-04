@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Service
-@Transactional
 public class ActivityService extends ResourceDataService<ActivityEntity, ActivityQueryBuilder> {
 
   /** The default sort prop. */

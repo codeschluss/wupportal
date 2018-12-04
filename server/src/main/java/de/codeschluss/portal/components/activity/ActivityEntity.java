@@ -115,7 +115,7 @@ public class ActivityEntity extends BaseEntity {
   @JsonIgnore
   private List<ScheduleEntity> schedules;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
@@ -132,7 +132,7 @@ public class ActivityEntity extends BaseEntity {
   )
   private List<TagEntity> tags;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(

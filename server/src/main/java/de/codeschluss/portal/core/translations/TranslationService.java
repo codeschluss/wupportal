@@ -141,7 +141,8 @@ public class TranslationService {
   private List<?> getTranslatables(Object entity) 
        throws IllegalArgumentException, IllegalAccessException {
     for (Field field : entity.getClass().getDeclaredFields()) {
-      if (getTranslatableType(field.getGenericType()) != null) {
+      Class<?> type = getTranslatableType(field.getGenericType());
+      if (type != null) {
         field.setAccessible(true);
         return (List<?>) field.get(entity);
       }
@@ -165,6 +166,7 @@ public class TranslationService {
       for (Field field : translatable.getClass().getDeclaredFields()) {
         field.setAccessible(true);
         Object fieldValue = field.get(translatable);
+        
         if (fieldValue instanceof String) {
           translations.put(field.getName(), fieldValue.toString());
         }

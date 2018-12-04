@@ -9,6 +9,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository Service to retrieve Repository.
@@ -38,6 +39,7 @@ public class RepositoryService {
     return (DataRepository<E>) repositories.getRepositoryFor(entityClass).orElse(null);
   }
 
+  @Transactional
   public <E extends BaseEntity> Object save(E entity) {
     return getRepository(entity).save(entity);
   }  

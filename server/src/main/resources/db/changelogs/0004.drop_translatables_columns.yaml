@@ -30,3 +30,11 @@ databaseChangeLog:
     - dropColumn:
         columnName: description
         tableName: organisations
+########## Tag ##########
+- changeSet:
+    id: 1543587900237-22
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: name
+        tableName: tags

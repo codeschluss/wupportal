@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/ng-swagger-gen/ng-swagger-gen-schema.json",
   "swagger": "../utils/api-docs.json",
-  "output": "src/core/api",
+  "output": "src/api",
   "prefix": "api",
   "ignoreUnusedModels": false,
   "minParamsForContainer": 5,

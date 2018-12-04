@@ -1,0 +1,29 @@
+{
+  "name": "@portal/core",
+  "version": "0.0.3",
+  "description": "Portal Client Core Library",
+  "homepage": "https://github.com/codeschluss/wupportal",
+  "author": {
+    "name": "Wupportal Team"
+  },
+  "bugs": {
+    "email": "info@codeschluss.de",
+    "url": "https://github.com/codeschluss/wupportal/issues"
+  },
+  "dependencies": {
+    "@angular/common": "7.1.1",
+    "@angular/core": "7.1.1",
+    "@angular/material": "7.1.0",
+    "@angular/router": "7.1.1",
+    "@angular/service-worker": "7.1.1",
+    "@ngx-pwa/local-storage": "7.2.0",
+    "@ngx-translate/i18n-polyfill": "1.0.0",
+    "rxjs": "6.3.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-ng-packagr": "0.11.0",
+    "ng-packagr": "4.4.0",
+    "tsickle": "0.34.0",
+    "tslib": "1.9.3"
+  }
+}

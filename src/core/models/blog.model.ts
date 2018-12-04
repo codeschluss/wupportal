@@ -1,6 +1,6 @@
-import { CrudModel } from '../crud/crud.model';
-import { ActivityModel } from './activity.model';
 import { BlogEntity } from '../api/models/blog-entity';
+import { CrudModel } from '@portal/core';
+import { ActivityModel } from 'src/realm/activity/activity.model';
 
 export class BlogModel
   extends CrudModel implements BlogEntity {

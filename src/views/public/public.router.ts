@@ -8,9 +8,6 @@ import { OrganisationListComponent } from './organisation/organisation.list.comp
 import { OrganisationViewComponent } from './organisation/organisation.view.component';
 import { BlogListComponent } from './blog/blog.list.component';
 import { SearchResultListComponent } from './search/searchresult.list.component';
-import { resolve } from 'dns';
-import { CrudResolver } from 'src/core/crud/crud.resolver';
-import { CrudJoiner } from 'src/core/crud/crud.joiner';
 import { BlogViewComponent } from './blog/blog.view.component';
 
 const PublicProviders = [

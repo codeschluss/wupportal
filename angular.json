@@ -1,8 +1,9 @@
 {
   "$schema": "node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "defaultProject": "@portal/client",
   "projects": {
-    "client": {
+    "@portal/client": {
       "prefix": "",
       "projectType": "application",
       "root": "",
@@ -20,7 +21,7 @@
             "namedChunks": false,
             "ngswConfigPath": "service.json",
             "index": "res/index.html",
-            "polyfills": "src/core/utils/polyfills.ts",
+            "polyfills": "src/utils/polyfills.ts",
             "outputHashing": "none",
             "outputPath": "target",
             "serviceWorker": true,
@@ -66,7 +67,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "client:build",
+            "browserTarget": "@portal/client:build",
             "i18nFormat": "xlf",
             "i18nLocale": "root",
             "outFile": "strings.xlf",
@@ -85,7 +86,33 @@
           }
         }
       }
+    },
+    "@portal/core": {
+      "root": "libs/core",
+      "sourceRoot": "libs/core",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.json",
+            "project": "libs/core/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json",
+              "libs/core/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
-  },
-  "defaultProject": "client"
+  }
 }

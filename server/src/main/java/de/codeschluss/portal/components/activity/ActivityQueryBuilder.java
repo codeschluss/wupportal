@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.Expressions;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.translations.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.util.List;
@@ -23,11 +24,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   
+  /** The language service. */
+  private final LanguageService languageService;
+  
   /**
    * Instantiates a new activity query builder.
+   *
+   * @param languageService the language service
    */
-  public ActivityQueryBuilder() {
+  public ActivityQueryBuilder(LanguageService languageService) {
     super(QActivityEntity.activityEntity);
+    this.languageService = languageService;
   }
   
   /**
@@ -55,12 +62,16 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    * Fuzzy text search.
    *
    * @param params the params
+   * @param search the search
    * @return the predicate
    */
   public Predicate fuzzyTextSearch(ActivityQueryParam params, BooleanBuilder search) {
+    List<String> locales = languageService.getCurrentReadLocales();
     String filter = prepareFilter(params.getFilter());
-    BooleanExpression textSearch = query.translatables.any().name.likeIgnoreCase(filter)
-        .or(query.translatables.any().description.likeIgnoreCase(filter))
+    BooleanExpression textSearch = query.translatables.any().language.locale.in(locales)
+        .and(
+            query.translatables.any().name.likeIgnoreCase(filter)
+            .or(query.translatables.any().description.likeIgnoreCase(filter)))
         .or(query.address.street.likeIgnoreCase(filter))
         .or(query.address.place.likeIgnoreCase(filter))
         .or(query.address.houseNumber.likeIgnoreCase(filter))
@@ -68,7 +79,9 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
         .or(query.address.suburb.name.likeIgnoreCase(filter))
         .or(query.tags.any().name.likeIgnoreCase(filter))
         .or(query.targetGroups.any().name.likeIgnoreCase(filter))
-        .or(query.category.name.likeIgnoreCase(filter));
+        .or(
+            query.category.translatables.any().name.likeIgnoreCase(filter)
+            .and(query.category.translatables.any().language.locale.in(locales)));
     
     return search.and(textSearch).getValue();
   }
@@ -77,6 +90,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    * Advanced search.
    *
    * @param params the params
+   * @param search the search
    * @return the predicate
    */
   public Predicate advancedSearch(ActivityQueryParam params, BooleanBuilder search) {

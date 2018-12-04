@@ -70,7 +70,7 @@ public class TranslationService {
     if (result instanceof Iterable<?>) {
       List<?> list = convertToList(result);
       if (!list.isEmpty() && isLocalizable(list.get(0))) {
-        List<String> locales = languageService.getCurrentReadLocale();
+        List<String> locales = languageService.getCurrentReadLocales();
         for (Object entity : list) {
           localizeOne(entity, locales);
         }
@@ -104,7 +104,7 @@ public class TranslationService {
     if (result instanceof Optional<?> && ((Optional<?>) result).isPresent()) {
       Object entity = ((Optional<?>) result).get();
       if (isLocalizable(entity)) {
-        localizeOne(entity, languageService.getCurrentReadLocale());
+        localizeOne(entity, languageService.getCurrentReadLocales());
         return Optional.of(entity);
       }
     }

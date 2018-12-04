@@ -1,4 +1,5 @@
 databaseChangeLog:
+########## Activity ##########
 - changeSet:
     id: 1543586185074-13
     author: vetemi (generated)
@@ -39,6 +40,19 @@ databaseChangeLog:
             type: CHAR
         tableName: activity_translatables
 - changeSet:
+    id: 1543586185074-16
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: parent_id
+        baseTableName: activity_translatables
+        constraintName: FKpv7ltjc5plygsj8pj1qn758ei
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: activities
+        validate: true
+- changeSet:
     id: 1543586185074-15
     author: vetemi (generated)
     changes:
@@ -51,16 +65,66 @@ databaseChangeLog:
         referencedColumnNames: id
         referencedTableName: languages
         validate: true
+########## Category ##########
 - changeSet:
-    id: 1543586185074-16
+    id: 1543952911218-7
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: category_translatablesPK
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: TIMESTAMP
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: language_id
+            type: CHAR
+        - column:
+            name: parent_id
+            type: CHAR
+        tableName: category_translatables
+- changeSet:
+    id: 1543952911218-29
     author: vetemi (generated)
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: parent_id
-        baseTableName: activity_translatables
-        constraintName: FKpv7ltjc5plygsj8pj1qn758ei
+        baseTableName: category_translatables
+        constraintName: FK41he71mee2alh2ga9dj9pqwty
         deferrable: false
         initiallyDeferred: false
         referencedColumnNames: id
-        referencedTableName: activities
+        referencedTableName: categories
+        validate: true
+- changeSet:
+    id: 1543952911218-40
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: language_id
+        baseTableName: category_translatables
+        constraintName: FKqu9y5gk7jnppfwp5da6jne08p
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: languages
         validate: true

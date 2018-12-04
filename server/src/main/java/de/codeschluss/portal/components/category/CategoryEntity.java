@@ -1,23 +1,31 @@
 package de.codeschluss.portal.components.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
+import de.codeschluss.portal.components.category.translations.CategoryTranslatablesEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.translations.annotations.Localized;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import org.springframework.hateoas.core.Relation;
 
@@ -32,6 +40,7 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Localized
 @Table(name = "categories")
 @Relation(collectionRelation = "data")
 public class CategoryEntity extends BaseEntity {
@@ -45,10 +54,17 @@ public class CategoryEntity extends BaseEntity {
   @Column(columnDefinition = "TEXT")
   private String description;
 
-  @Column(unique = true, nullable = false)
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String name;
+  
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
+  @ToString.Exclude
+  @JsonIgnore
+  private List<CategoryTranslatablesEntity> translatables;
 
-  @OneToMany(mappedBy = "category")
+  @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
   @JsonIgnore
   private List<ActivityEntity> activities;
 

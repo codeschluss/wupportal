@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.components.category.QCategoryEntity;
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.translations.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
@@ -19,11 +20,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryQueryBuilder extends QueryBuilder<QCategoryEntity> {
   
+  /** The language service. */
+  private final LanguageService languageService;
+  
   /**
    * Instantiates a new category query builder.
    */
-  public CategoryQueryBuilder() {
+  public CategoryQueryBuilder(LanguageService languageService) {
     super(QCategoryEntity.categoryEntity);
+    this.languageService = languageService;
   }
   
   /**
@@ -33,7 +38,8 @@ public class CategoryQueryBuilder extends QueryBuilder<QCategoryEntity> {
    * @return the boolean expression
    */
   public BooleanExpression withName(String name) {
-    return query.name.eq(name);
+    return query.translatables.any().language.locale.in(languageService.getCurrentReadLocales())
+        .and(query.translatables.any().name.eq(name));
   }
 
   /**
@@ -53,7 +59,8 @@ public class CategoryQueryBuilder extends QueryBuilder<QCategoryEntity> {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.name.likeIgnoreCase(filter)
+    return query.translatables.any().name.likeIgnoreCase(filter)
+        .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()))
         .or(query.description.likeIgnoreCase(filter));
   }
 }

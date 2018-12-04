@@ -1,10 +1,10 @@
 databaseChangeLog:
 - changeSet:
-    id: 003.transform_translatable_defaults
+    id: 003.transform_translatable_defaults_1
     author: vetemi
     changes:
     - sql:
-        comment: transfer all activity translatables into the new table with German default
+        comment: transfer all activity translatables into the new table with German as default
         dbms: h2, mysql
         endDelimiter: \nGO
         splitStatements: true
@@ -12,6 +12,22 @@ databaseChangeLog:
             insert into activity_translatables (id, name, description, modified, created, language_id, parent_id)
                 select UUID(), activities.name, activities.description, activities.modified, activities.created, languages.id, activities.id
                 from activities, languages
+                where languages.locale = 'de';
+            "
+        stripComments: true
+- changeSet:
+    id: 003.transform_translatable_defaults_2
+    author: vetemi
+    changes:
+    - sql:
+        comment: transfer all category translatables into the new table with German as default
+        dbms: h2, mysql
+        endDelimiter: \nGO
+        splitStatements: true
+        sql: "
+            insert into category_translatables (id, name, modified, created, language_id, parent_id)
+                select UUID(), categories.name, categories.modified, categories.created, languages.id, categories.id
+                from categories, languages
                 where languages.locale = 'de';
             "
         stripComments: true

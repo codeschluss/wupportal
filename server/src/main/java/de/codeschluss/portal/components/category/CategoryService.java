@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class CategoryService extends ResourceDataService<CategoryEntity, CategoryQueryBuilder> {
 
   /** The default sort prop. */
-  protected final String defaultSortProp = "name";
+  protected final String defaultSortProp = "color";
 
   /**
    * Instantiates a new category service.

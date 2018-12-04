@@ -92,7 +92,7 @@ public class LanguageService extends DataService<LanguageEntity, LanguageQueryBu
    *
    * @return the sorted read locales
    */
-  public List<String> getCurrentReadLocale() {
+  public List<String> getCurrentReadLocales() {
     String header = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
     if (header == null || header.isEmpty()) {
       List<String> defaultHeader = new ArrayList<String>();

@@ -316,7 +316,9 @@ public class TranslationService {
       TranslationRepository<?> translationRepo = (TranslationRepository<?>) repo;
       Method method = translationRepo
           .getClass()
-          .getMethod("findByLanguageAndParent", LanguageEntity.class, parent.getClass());
+          .getMethod("findByLanguageAndParent", 
+              LanguageEntity.class, 
+              parent.getClass().getSuperclass());
       Object existingTranslatable = method.invoke(translationRepo, currentWriteLanguage, parent);
       
       return existingTranslatable != null

@@ -10,6 +10,7 @@ import de.codeschluss.portal.core.common.BaseEntity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -48,7 +49,7 @@ public class ProviderEntity extends BaseEntity {
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean approved;
 
-  @OneToMany(mappedBy = "provider")
+  @OneToMany(mappedBy = "provider", cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
   private List<ActivityEntity> activities;

@@ -14,5 +14,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface TranslationRepository<E extends BaseEntity> {
   
-  E findByLanguageAndParent(LanguageEntity language, E parent);
+  <S extends BaseEntity> S findByLanguageAndParent(LanguageEntity language, E parent);
 }

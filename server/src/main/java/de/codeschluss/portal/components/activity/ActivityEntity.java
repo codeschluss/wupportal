@@ -55,6 +55,10 @@ import org.springframework.hateoas.core.Relation;
 @Localized
 @Table(name = "activities")
 @Relation(collectionRelation = "data")
+@GenericGenerator(
+    name = "UUID",
+    strategy = "org.hibernate.id.UUIDGenerator"
+)
 public class ActivityEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
@@ -69,7 +73,7 @@ public class ActivityEntity extends BaseEntity {
   @Transient
   private String description;
   
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
   private List<ActivityTranslatablesEntity> translatables;
@@ -106,12 +110,12 @@ public class ActivityEntity extends BaseEntity {
   @JoinColumn(nullable = false)
   private ProviderEntity provider;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
   private List<ScheduleEntity> schedules;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
@@ -121,10 +125,6 @@ public class ActivityEntity extends BaseEntity {
       uniqueConstraints = {
           @UniqueConstraint(columnNames = { "activity_id", "tag_id" })
       })
-  @GenericGenerator(
-      name = "UUID",
-      strategy = "org.hibernate.id.UUIDGenerator"
-  )
   @CollectionId(
       columns = @Column(name = "id"), 
       type = @Type(type = "uuid-char"),
@@ -132,7 +132,7 @@ public class ActivityEntity extends BaseEntity {
   )
   private List<TagEntity> tags;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
@@ -142,10 +142,6 @@ public class ActivityEntity extends BaseEntity {
       uniqueConstraints = {
           @UniqueConstraint(columnNames = { "activity_id", "target_group_id" })
       })
-  @GenericGenerator(
-      name = "UUID",
-      strategy = "org.hibernate.id.UUIDGenerator"
-  )
   @CollectionId(
       columns = @Column(name = "id"), 
       type = @Type(type = "uuid-char"),

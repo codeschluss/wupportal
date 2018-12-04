@@ -8,6 +8,7 @@ import de.codeschluss.portal.core.common.BaseEntity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -53,7 +54,7 @@ public class UserEntity extends BaseEntity {
   @Column(unique = true, nullable = false)
   private String username;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
   private List<ProviderEntity> providerEntities;

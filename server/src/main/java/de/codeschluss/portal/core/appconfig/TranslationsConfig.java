@@ -19,5 +19,5 @@ public class TranslationsConfig {
   private String defaultLocale;
   private String defaultAutomaticTranslated;
   private String serviceUrl;
-  private String serviceKey;
+  private String serviceSubscriptionKey;
 }

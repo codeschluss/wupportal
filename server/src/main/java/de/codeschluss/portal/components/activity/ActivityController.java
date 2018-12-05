@@ -19,12 +19,14 @@ import de.codeschluss.portal.core.common.CrudController;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.OwnActivityPermission;
 import de.codeschluss.portal.core.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.ProviderPermission;
 import de.codeschluss.portal.core.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -75,37 +77,32 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /** The organisation service. */
   private final OrganisationService organisationService;
 
+  /** The translation service. */
+  private final TranslationService translationService;
+
   /** The auth service. */
   private final AuthorizationService authService;
 
   /**
-   * Controller for activity domain.
-   * 
-   * @param service
-   *          own domain service
-   * @param addressService
-   *          address domain service
-   * @param categoryService
-   *          category domain service
-   * @param providerService
-   *          provider domain service
-   * @param userService
-   *          user domain service
-   * @param tagService
-   *          tag domain service
-   * @param targetGroupService
-   *          target group domain service
-   * @param scheduleService
-   *          schedule domain service
-   * @param organisationService
-   *          organisation domain service
-   * @param authService
-   *          authorization service
+   * Instantiates a new activity controller.
+   *
+   * @param service the service
+   * @param addressService the address service
+   * @param categoryService the category service
+   * @param providerService the provider service
+   * @param userService the user service
+   * @param tagService the tag service
+   * @param targetGroupService the target group service
+   * @param scheduleService the schedule service
+   * @param organisationService the organisation service
+   * @param translationService the translation service
+   * @param authService the auth service
    */
   public ActivityController(ActivityService service, AddressService addressService,
       CategoryService categoryService, ProviderService providerService, UserService userService,
       TagService tagService, TargetGroupService targetGroupService, ScheduleService scheduleService,
-      OrganisationService organisationService, AuthorizationService authService) {
+      OrganisationService organisationService, TranslationService translationService,
+      AuthorizationService authService) {
     super(service);
     this.addressService = addressService;
     this.categoryService = categoryService;
@@ -115,6 +112,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     this.targetGroupService = targetGroupService;
     this.scheduleService = scheduleService;
     this.organisationService = organisationService;
+    this.translationService = translationService;
     this.authService = authService;
   }
 
@@ -486,5 +484,25 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   private ProviderEntity getProvider(String organisationId) {
     return providerService.getProviderByUserAndOrganisation(authService.getCurrentUser().getId(),
         organisationId);
+  }
+
+  /**
+   * Find translations.
+   *
+   * @param activityId the activity id
+   * @return the response entity
+   * @throws Throwable the throwable
+   */
+  @GetMapping("/activities/{activityId}/translations")
+  public ResponseEntity<?> findTranslations(@PathVariable String activityId) {
+    try {
+      return ok(translationService.getAllTranslations(service.getById(activityId), this));
+    } catch (NoSuchMethodException 
+        | SecurityException 
+        | IllegalAccessException
+        | IllegalArgumentException
+        | InvocationTargetException e) {
+      throw new RuntimeException("Translations are not available");
+    }
   }
 }

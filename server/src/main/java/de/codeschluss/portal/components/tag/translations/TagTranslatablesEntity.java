@@ -13,6 +13,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.springframework.hateoas.core.Relation;
+
 /**
  * The persistent class for the tag translatables database table.
  * 
@@ -25,6 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "tag_translatables")
+@Relation(collectionRelation = "data")
 public class TagTranslatablesEntity extends TranslatableEntity<TagEntity> {
 
   private static final long serialVersionUID = 1L;

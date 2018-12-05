@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Repository Service to retrieve Repository.
+ * Repository Service to retrieve repositories based on given entity types.
  * 
  * @author Valmir Etemi
  *

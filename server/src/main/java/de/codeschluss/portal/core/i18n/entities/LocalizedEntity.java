@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 
 import lombok.ToString;
 
+import org.springframework.hateoas.core.Relation;
+
 /**
  * Base Entity for all localized entities.
  * 
@@ -21,6 +23,7 @@ import lombok.ToString;
  *
  */
 @MappedSuperclass
+@Relation(collectionRelation = "data")
 public class LocalizedEntity<T extends TranslatableEntity<?>> extends BaseEntity {
 
   private static final long serialVersionUID = 1L;

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import org.springframework.hateoas.core.Relation;
+
 /**
  * Base entity for all translatables.
  * 
@@ -17,6 +19,7 @@ import javax.persistence.MappedSuperclass;
  *
  */
 @MappedSuperclass
+@Relation(collectionRelation = "data")
 public class TranslatableEntity<P extends BaseEntity> extends BaseEntity {
 
   private static final long serialVersionUID = 1L;

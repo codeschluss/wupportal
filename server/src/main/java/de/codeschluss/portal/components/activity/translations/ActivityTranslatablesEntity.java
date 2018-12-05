@@ -14,6 +14,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.springframework.hateoas.core.Relation;
+
 /**
  * The persistent class for the activity translatable database table.
  * 
@@ -26,6 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "activity_translatables")
+@Relation(collectionRelation = "data")
 public class ActivityTranslatablesEntity extends TranslatableEntity<ActivityEntity> {
 
   private static final long serialVersionUID = 1L;

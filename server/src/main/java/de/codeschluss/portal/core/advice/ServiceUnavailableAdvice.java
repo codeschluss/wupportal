@@ -1,6 +1,5 @@
 package de.codeschluss.portal.core.advice;
 
-import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.utils.ApiError;
 
 import org.springframework.http.HttpStatus;

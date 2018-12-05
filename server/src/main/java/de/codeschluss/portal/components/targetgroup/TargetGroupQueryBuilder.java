@@ -4,6 +4,7 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
@@ -16,16 +17,17 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class TargetGroupQueryBuilder extends QueryBuilder {
-
-  /** The query. */
-  private final QTargetGroupEntity query;
+public class TargetGroupQueryBuilder extends QueryBuilder<QTargetGroupEntity> {
+  
+  /** The language service. */
+  private final LanguageService languageService;
   
   /**
    * Instantiates a new target group query builder.
    */
-  public TargetGroupQueryBuilder() {
-    this.query = QTargetGroupEntity.targetGroupEntity;
+  public TargetGroupQueryBuilder(LanguageService languageService) {
+    super(QTargetGroupEntity.targetGroupEntity);
+    this.languageService = languageService;
   }
 
   /**
@@ -35,7 +37,8 @@ public class TargetGroupQueryBuilder extends QueryBuilder {
    * @return the boolean expression
    */
   public BooleanExpression withName(String name) {
-    return query.name.eq(name);
+    return query.translatables.any().language.locale.in(languageService.getCurrentReadLocales())
+        .and(query.translatables.any().name.eq(name));
   }
 
   /**
@@ -55,7 +58,12 @@ public class TargetGroupQueryBuilder extends QueryBuilder {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.name.likeIgnoreCase(filter)
-        .or(query.description.likeIgnoreCase(filter));
+    return query.description.likeIgnoreCase(filter)
+        .or(likeName(filter));
+  }
+
+  private BooleanExpression likeName(String filter) {
+    return query.translatables.any().name.likeIgnoreCase(filter)
+        .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));
   }
 }

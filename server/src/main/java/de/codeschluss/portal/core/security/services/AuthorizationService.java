@@ -1,6 +1,7 @@
 package de.codeschluss.portal.core.security.services;
 
 import de.codeschluss.portal.components.activity.ActivityService;
+import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.security.jwt.JwtUserDetails;
@@ -23,14 +24,22 @@ public class AuthorizationService {
 
   /** The actitivity service. */
   private final ActivityService actitivityService;
+  
+  /** The organisation service. */
+  private final OrganisationService organisationService;
+
 
   /**
    * Instantiates a new authorization service.
    *
    * @param actitivityService the actitivity service
+   * @param organisationService the organisation service
    */
-  public AuthorizationService(ActivityService actitivityService) {
+  public AuthorizationService(
+      ActivityService actitivityService,
+      OrganisationService organisationService) {
     this.actitivityService = actitivityService;
+    this.organisationService = organisationService;
   }
 
   /**
@@ -119,8 +128,7 @@ public class AuthorizationService {
     try {
       if (authentication.getPrincipal() instanceof JwtUserDetails) {
         JwtUserDetails jwtUserDetails = (JwtUserDetails) authentication.getPrincipal();
-        String orgaId = actitivityService.getById(activityId).getProvider().getOrganisation()
-            .getId();
+        String orgaId = organisationService.getOrgaActivity(activityId).getId();
         return Arrays.asList(jwtUserDetails.getAdminOrgas()).contains(orgaId);
       }
       return false;

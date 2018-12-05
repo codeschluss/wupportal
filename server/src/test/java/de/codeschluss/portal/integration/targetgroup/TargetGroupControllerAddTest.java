@@ -38,6 +38,7 @@ public class TargetGroupControllerAddTest {
 
     Resources<Resource<TargetGroupEntity>> result = (Resources<Resource<TargetGroupEntity>>) 
         controller.findAll(new FilterSortPaginate()).getBody();
+
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getName().equals(targetGroup.getName()), "targetGroup exists"));
   }

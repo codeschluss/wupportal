@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> {
 
   /** The default sort prop. */
-  protected final String defaultSortProp = "name";
+  protected final String defaultSortProp = "description";
 
   /**
    * Instantiates a new tag service.
@@ -57,7 +57,6 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
    */
   public Resources<?> getResourcesByActivity(String activityId) {
     List<TagEntity> tags = repo.findAll(entities.withAnyActivityId(activityId));
-    
     if (tags == null || tags.isEmpty()) {
       throw new NotFoundException(activityId);
     }

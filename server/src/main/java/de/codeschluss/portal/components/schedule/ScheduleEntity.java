@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,7 +35,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "schedules")
 @Relation(collectionRelation = "data")
-public class ScheduleEntity extends BaseEntity implements Serializable {
+public class ScheduleEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 

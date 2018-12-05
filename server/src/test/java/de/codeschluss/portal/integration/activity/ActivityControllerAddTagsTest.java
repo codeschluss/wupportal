@@ -3,7 +3,6 @@ package de.codeschluss.portal.integration.activity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.activity.ActivityController;
-import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 
 import java.net.URISyntaxException;
@@ -14,15 +13,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
 public class ActivityControllerAddTagsTest {
 
   @Autowired
@@ -78,9 +76,12 @@ public class ActivityControllerAddTagsTest {
     controller.addTags(activityId, tag);
   }
 
+  @SuppressWarnings("unchecked")
   private void assertContaining(TagEntity tag, String activityId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
-    assertThat(result.getContent().getTags())
-        .haveAtLeastOne(new Condition<>(t -> t.getName().equals(tag.getName()), "tag exists"));
+    Resources<Resource<TagEntity>> result = (Resources<Resource<TagEntity>>) controller
+        .findTags(activityId).getBody();
+    
+    assertThat(result.getContent()).haveAtLeastOne(
+        new Condition<>(t -> t.getContent().getName().equals(tag.getName()), "tag exists"));
   }
 }

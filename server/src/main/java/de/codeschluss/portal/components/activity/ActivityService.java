@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,11 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Service
-@Transactional
 public class ActivityService extends ResourceDataService<ActivityEntity, ActivityQueryBuilder> {
 
   /** The default sort prop. */
-  protected final String defaultSortProp = "name";
+  protected final String defaultSortProp = "id";
 
   /**
    * Instantiates a new activity service.
@@ -104,8 +102,8 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   @Override
   public ActivityEntity update(String id, ActivityEntity newActivity) {
     return repo.findById(id).map(activity -> {
-      activity.setDescription(newActivity.getDescription());
       activity.setName(newActivity.getName());
+      activity.setDescription(newActivity.getDescription());
       activity.setShowUser(newActivity.isShowUser());
       return repo.save(activity);
     }).orElseGet(() -> {

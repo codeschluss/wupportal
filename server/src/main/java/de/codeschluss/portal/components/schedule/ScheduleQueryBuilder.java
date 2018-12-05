@@ -16,12 +16,10 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ScheduleQueryBuilder extends QueryBuilder {
-  
-  private final QScheduleEntity query;
+public class ScheduleQueryBuilder extends QueryBuilder<QScheduleEntity> {
   
   public ScheduleQueryBuilder() {
-    this.query = QScheduleEntity.scheduleEntity;
+    super(QScheduleEntity.scheduleEntity);
   }
 
   public BooleanExpression forActivityAndCurrentOnly(String activityId) {
@@ -32,7 +30,7 @@ public class ScheduleQueryBuilder extends QueryBuilder {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.activity.name.likeIgnoreCase(filter);
+    return query.activity.translatables.any().name.likeIgnoreCase(filter);
   }
 
 }

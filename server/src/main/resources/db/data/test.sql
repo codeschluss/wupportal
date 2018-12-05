@@ -170,7 +170,6 @@ INSERT INTO `schedules` (`id`, `start_date`, `end_date`, `activity_id`) VALUES
 ('00000000-0000-0000-0011-170000000000', '2099-04-21 14:00:00', '2099-04-22 16:00:00', '00000000-0000-0000-0010-200000000000'),
 ('00000000-0000-0000-0011-180000000000', '2000-04-21 14:00:00', '2000-04-22 16:00:00', '00000000-0000-0000-0010-200000000000');
 
-
 -- INSERT INTO `i18n` (`id`, `locale`, `model`, `foreign_key`, `field`, `content`) VALUES
 -- ('00000000-0000-0000-0012-100000000000', 'es', 'Organisations', '00000000-0000-0000-0008-600000000000', 'description', 'tracudir organización'),
 -- ('00000000-0000-0000-0012-200000000000', 'fr', 'Organisations', '00000000-0000-0000-0008-600000000000', 'description', 'traduire organisation'),
@@ -205,4 +204,5 @@ INSERT INTO `schedules` (`id`, `start_date`, `end_date`, `activity_id`) VALUES
 INSERT INTO `translations` (`id`, `locale`, `name`) VALUES
 ('00000000-0000-0000-0013-100000000000', 'es', 'ToRead'),
 ('00000000-0000-0000-0013-200000000000', 'fr', 'ToEdit'),
-('00000000-0000-0000-0013-300000000000', 'en', 'ToDelete');
+('00000000-0000-0000-0013-300000000000', 'en', 'ToDelete'),
+('00000000-0000-0000-0013-400000000000', 'de', 'ToDefault');

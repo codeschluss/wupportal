@@ -1,18 +1,22 @@
 package de.codeschluss.portal.components.tag;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.components.tag.translations.TagTranslatablesEntity;
+import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,10 +36,10 @@ import org.springframework.hateoas.core.Relation;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-@Table(name = "tags")
 @Entity
+@Table(name = "tags")
 @Relation(collectionRelation = "data")
-public class TagEntity extends BaseEntity implements Serializable {
+public class TagEntity extends LocalizedEntity<TagTranslatablesEntity> {
 
   private static final long serialVersionUID = 1L;
 
@@ -43,16 +47,13 @@ public class TagEntity extends BaseEntity implements Serializable {
   @Column(columnDefinition = "TEXT")
   private String description;
 
-  @Column(unique = true, nullable = false)
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String name;
 
-  @ManyToMany(mappedBy = "tags")
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
   @JsonIgnore
   private List<ActivityEntity> activities;
-
-  public void setName(String name) {
-    // TODO: More preparations
-    this.name = name.trim();
-  }
 
 }

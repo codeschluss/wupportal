@@ -8,9 +8,9 @@ import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.common.BaseEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -40,7 +40,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "providers")
 @Relation(collectionRelation = "data")
-public class ProviderEntity extends BaseEntity implements Serializable {
+public class ProviderEntity extends BaseEntity {
   private static final long serialVersionUID = 1L;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
@@ -49,7 +49,7 @@ public class ProviderEntity extends BaseEntity implements Serializable {
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean approved;
 
-  @OneToMany(mappedBy = "provider")
+  @OneToMany(mappedBy = "provider", cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
   private List<ActivityEntity> activities;

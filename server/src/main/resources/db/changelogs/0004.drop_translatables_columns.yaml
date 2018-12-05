@@ -1,0 +1,48 @@
+databaseChangeLog:
+########## Activity ##########
+- changeSet:
+    id: 1543587900237-18
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: description
+        tableName: activities
+- changeSet:
+    id: 1543587900237-19
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: name
+        tableName: activities
+########## Category ##########
+- changeSet:
+    id: 1543587900237-20
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: name
+        tableName: categories
+########## Category ##########
+- changeSet:
+    id: 1543587900237-21
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: description
+        tableName: organisations
+########## Tag ##########
+- changeSet:
+    id: 1543587900237-22
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: name
+        tableName: tags
+########## Tag ##########
+- changeSet:
+    id: 1543587900237-23
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: name
+        tableName: target_groups

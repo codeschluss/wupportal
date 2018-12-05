@@ -14,12 +14,10 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ConfigurationQueryBuilder extends QueryBuilder {
-
-  private final QConfigurationEntity query;
+public class ConfigurationQueryBuilder extends QueryBuilder<QConfigurationEntity> {
   
   public ConfigurationQueryBuilder() {
-    this.query = QConfigurationEntity.configurationEntity;
+    super(QConfigurationEntity.configurationEntity);
   }
 
   public BooleanExpression withItem(String item) {

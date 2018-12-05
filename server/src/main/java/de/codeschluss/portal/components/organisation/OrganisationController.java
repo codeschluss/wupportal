@@ -11,10 +11,12 @@ import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.common.CrudController;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.OrgaAdminOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -50,6 +52,9 @@ public class OrganisationController
 
   /** The activity service. */
   private final ActivityService activityService;
+  
+  /** The translation service. */
+  private final TranslationService translationService;
 
   /**
    * Instantiates a new organisation controller.
@@ -66,12 +71,14 @@ public class OrganisationController
    *          the activity service
    */
   public OrganisationController(OrganisationService service, ProviderService providerService,
-      UserService userService, AddressService addressService, ActivityService activityService) {
+      UserService userService, AddressService addressService, ActivityService activityService,
+      TranslationService translationService) {
     super(service);
     this.providerService = providerService;
     this.userService = userService;
     this.addressService = addressService;
     this.activityService = activityService;
+    this.translationService = translationService;
   }
 
   /*
@@ -286,6 +293,25 @@ public class OrganisationController
       return noContent().build();
     } catch (NotFoundException e) {
       return noContent().build();
+    }
+  }
+  
+  /**
+   * Find translations.
+   *
+   * @param organisationId the organisation id
+   * @return the response entity
+   */
+  @GetMapping("/organisations/{organisationId}/translations")
+  public ResponseEntity<?> findTranslations(@PathVariable String organisationId) {
+    try {
+      return ok(translationService.getAllTranslations(service.getById(organisationId), this));
+    } catch (NoSuchMethodException 
+        | SecurityException 
+        | IllegalAccessException
+        | IllegalArgumentException
+        | InvocationTargetException e) {
+      throw new RuntimeException("Translations are not available");
     }
   }
 }

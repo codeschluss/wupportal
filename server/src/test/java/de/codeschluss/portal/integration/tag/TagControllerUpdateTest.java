@@ -51,7 +51,8 @@ public class TagControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("updateProviderUserDenied", "updateProviderUserDenied", null);
+    TagEntity tag = new TagEntity("updateProviderUserDenied", "updateProviderUserDenied",
+        null);
     String tagId = "00000000-0000-0000-0002-100000000000";
 
     controller.update(tag, tagId);

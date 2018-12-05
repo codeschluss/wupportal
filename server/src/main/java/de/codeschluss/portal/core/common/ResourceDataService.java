@@ -14,7 +14,7 @@ import org.springframework.hateoas.Resources;
  * @author Valmir Etemi
  *
  */
-public abstract class ResourceDataService<E extends BaseEntity, B extends QueryBuilder> 
+public abstract class ResourceDataService<E extends BaseEntity, B extends QueryBuilder<?>> 
     extends DataService<E, B> {
 
   /** The assembler. */

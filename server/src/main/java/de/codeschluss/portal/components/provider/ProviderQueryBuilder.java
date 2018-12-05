@@ -17,16 +17,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ProviderQueryBuilder extends QueryBuilder {
-  
-  /** The query. */
-  private final QProviderEntity query;
+public class ProviderQueryBuilder extends QueryBuilder<QProviderEntity> {
   
   /**
    * Instantiates a new provider query builder.
    */
   public ProviderQueryBuilder() {
-    this.query = QProviderEntity.providerEntity;
+    super(QProviderEntity.providerEntity);
   }
 
   /**
@@ -126,7 +123,7 @@ public class ProviderQueryBuilder extends QueryBuilder {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.activities.any().name.likeIgnoreCase(filter)
+    return query.activities.any().translatables.any().name.likeIgnoreCase(filter)
         .or(query.organisation.name.likeIgnoreCase(filter))
         .or(query.user.username.likeIgnoreCase(filter));
   }

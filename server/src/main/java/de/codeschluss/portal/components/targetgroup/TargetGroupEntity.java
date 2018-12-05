@@ -1,18 +1,22 @@
 package de.codeschluss.portal.components.targetgroup;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.components.targetgroup.translations.TargetGroupTranslatablesEntity;
+import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,7 +39,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "target_groups")
 @Relation(collectionRelation = "data")
-public class TargetGroupEntity extends BaseEntity implements Serializable {
+public class TargetGroupEntity extends LocalizedEntity<TargetGroupTranslatablesEntity> {
 
   private static final long serialVersionUID = 1L;
 
@@ -43,10 +47,12 @@ public class TargetGroupEntity extends BaseEntity implements Serializable {
   @Column(columnDefinition = "TEXT")
   private String description;
 
-  @Column(unique = true, nullable = false)
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String name;
 
-  @ManyToMany(mappedBy = "targetGroups")
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "targetGroups")
   @JsonIgnore
   private List<ActivityEntity> activities;
 }

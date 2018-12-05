@@ -12,7 +12,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 /**
- * The Class CategoryResourceAssembler.
+ * The Class LanguageResourceAssembler.
  * 
  * @author Valmir Etemi
  * 
@@ -26,6 +26,8 @@ public class CategoryResourceAssembler extends PagingAndSortingAssembler<Categor
 
     links.add(linkTo(methodOn(CategoryController.class)
         .findOne(category.getId())).withSelfRel());
+    links.add(linkTo(methodOn(CategoryController.class)
+        .findTranslations(category.getId())).withRel("translations"));
 
     return links;
   }

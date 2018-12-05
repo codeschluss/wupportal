@@ -3,8 +3,8 @@ package de.codeschluss.portal.components.category;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
-import de.codeschluss.portal.components.category.QCategoryEntity;
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;
@@ -17,16 +17,17 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class CategoryQueryBuilder extends QueryBuilder {
-
-  /** The query. */
-  private final QCategoryEntity query;
+public class CategoryQueryBuilder extends QueryBuilder<QCategoryEntity> {
+  
+  /** The language service. */
+  private final LanguageService languageService;
   
   /**
    * Instantiates a new category query builder.
    */
-  public CategoryQueryBuilder() {
-    this.query = QCategoryEntity.categoryEntity;
+  public CategoryQueryBuilder(LanguageService languageService) {
+    super(QCategoryEntity.categoryEntity);
+    this.languageService = languageService;
   }
   
   /**
@@ -36,7 +37,8 @@ public class CategoryQueryBuilder extends QueryBuilder {
    * @return the boolean expression
    */
   public BooleanExpression withName(String name) {
-    return query.name.eq(name);
+    return query.translatables.any().language.locale.in(languageService.getCurrentReadLocales())
+        .and(query.translatables.any().name.eq(name));
   }
 
   /**
@@ -56,7 +58,18 @@ public class CategoryQueryBuilder extends QueryBuilder {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.name.likeIgnoreCase(filter)
-        .or(query.description.likeIgnoreCase(filter));
+    return query.description.likeIgnoreCase(filter)
+        .or(name(filter));
+  }
+
+  /**
+   * Name.
+   *
+   * @param filter the filter
+   * @return the boolean expression
+   */
+  private BooleanExpression name(String filter) {
+    return query.translatables.any().name.likeIgnoreCase(filter)
+        .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));
   }
 }

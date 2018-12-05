@@ -63,7 +63,7 @@ public class OrganisationControllerAddTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("addNoUserDenied", null, 
+    OrganisationEntity organisation = new OrganisationEntity("addNoUserDenied", null,
         "addNoUserDenied", "addNoUserDenied", "123456789", "addNoUserDenied", null, null);
 
     controller.add(organisation);

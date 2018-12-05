@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.Expressions;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.util.List;
@@ -16,28 +17,26 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class ActivityQueryBuilder.
- * 
- * @author Valmir Etemi
- *
  */
 @Service
-public class ActivityQueryBuilder extends QueryBuilder {
+public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   
-  /** The query. */
-  private final QActivityEntity query;
+  /** The language service. */
+  private final LanguageService languageService;
   
   /**
    * Instantiates a new activity query builder.
+   *
+   * @param languageService the language service
    */
-  public ActivityQueryBuilder() {
-    this.query = QActivityEntity.activityEntity;
+  public ActivityQueryBuilder(LanguageService languageService) {
+    super(QActivityEntity.activityEntity);
+    this.languageService = languageService;
   }
   
-  /**
-   * Fuzzy search.
-   *
-   * @param p the p
-   * @return the predicate
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.common
+   * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
    */
   @Override
   public Predicate search(FilterSortPaginate p) {
@@ -58,27 +57,69 @@ public class ActivityQueryBuilder extends QueryBuilder {
    * Fuzzy text search.
    *
    * @param params the params
+   * @param search the search
    * @return the predicate
    */
   public Predicate fuzzyTextSearch(ActivityQueryParam params, BooleanBuilder search) {
+    List<String> locales = languageService.getCurrentReadLocales();
     String filter = prepareFilter(params.getFilter());
-    BooleanExpression textSearch = query.name.likeIgnoreCase(filter)
-        .or(query.description.likeIgnoreCase(filter))
+    BooleanExpression textSearch = query.translatables.any().language.locale.in(locales)
+        .and(
+            query.translatables.any().name.likeIgnoreCase(filter)
+            .or(query.translatables.any().description.likeIgnoreCase(filter)))
         .or(query.address.street.likeIgnoreCase(filter))
         .or(query.address.place.likeIgnoreCase(filter))
         .or(query.address.houseNumber.likeIgnoreCase(filter))
         .or(query.address.postalCode.likeIgnoreCase(filter))
         .or(query.address.suburb.name.likeIgnoreCase(filter))
-        .or(query.tags.any().name.likeIgnoreCase(filter))
-        .or(query.targetGroups.any().name.likeIgnoreCase(filter))
-        .or(query.category.name.likeIgnoreCase(filter));
+        .or(likeTags(filter, locales))
+        .or(likeTargetGroups(filter, locales))
+        .or(likeCategory(filter, locales));
+    
     return search.and(textSearch).getValue();
   }
   
   /**
+   * Like target groups.
+   *
+   * @param filter the filter
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate likeTargetGroups(String filter, List<String> locales) {
+    return query.targetGroups.any().translatables.any().name.likeIgnoreCase(filter)
+    .and(query.targetGroups.any().translatables.any().language.locale.in(locales));
+  }
+
+  /**
+   * Like tags.
+   *
+   * @param filter the filter
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate likeTags(String filter, List<String> locales) {
+    return query.tags.any().translatables.any().name.likeIgnoreCase(filter)
+        .and(query.tags.any().translatables.any().language.locale.in(locales));
+  }
+
+  /**
+   * Like category.
+   *
+   * @param filter the filter
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate likeCategory(String filter, List<String> locales) {
+    return query.category.translatables.any().name.likeIgnoreCase(filter)
+        .and(query.category.translatables.any().language.locale.in(locales));
+  }
+
+  /**
    * Advanced search.
    *
    * @param params the params
+   * @param search the search
    * @return the predicate
    */
   public Predicate advancedSearch(ActivityQueryParam params, BooleanBuilder search) {
@@ -126,11 +167,11 @@ public class ActivityQueryBuilder extends QueryBuilder {
   }
   
   /**
-   * For id with any of.
+   * For id with any of providers.
    *
    * @param activityId the activity id
    * @param providers the providers
-   * @return the predicate
+   * @return the boolean expression
    */
   public BooleanExpression forIdWithAnyOfProviders(
       String activityId, List<ProviderEntity> providers) {
@@ -138,20 +179,17 @@ public class ActivityQueryBuilder extends QueryBuilder {
   }
   
   /**
-   * With any of.
+   * With any of providers.
    *
    * @param providers the providers
-   * @return the predicate
+   * @return the boolean expression
    */
   public BooleanExpression withAnyOfProviders(List<ProviderEntity> providers) {
     return query.provider.in(providers);
   }
   
-  /**
-   * With id.
-   *
-   * @param id the id
-   * @return the predicate
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.common.QueryBuilder#withId(java.lang.String)
    */
   public BooleanExpression withId(String id) {
     return query.id.eq(id);
@@ -169,9 +207,9 @@ public class ActivityQueryBuilder extends QueryBuilder {
   /**
    * Validate params.
    *
-   * @param <P>          the generic type
-   * @param p          the p
-   * @return the activity queries
+   * @param <P> the generic type
+   * @param p the p
+   * @return the activity query param
    */
   private <P extends FilterSortPaginate> ActivityQueryParam validateParams(P p) {
     if (p instanceof ActivityQueryParam) {

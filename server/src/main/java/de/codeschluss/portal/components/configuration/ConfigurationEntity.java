@@ -2,8 +2,6 @@ package de.codeschluss.portal.components.configuration;
 
 import de.codeschluss.portal.core.common.BaseEntity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -29,7 +27,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "configurations")
 @Relation(collectionRelation = "data")
-public class ConfigurationEntity extends BaseEntity implements Serializable {
+public class ConfigurationEntity extends BaseEntity {
   
   private static final long serialVersionUID = 1L;
 

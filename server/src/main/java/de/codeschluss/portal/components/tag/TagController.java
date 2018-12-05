@@ -1,11 +1,15 @@
 package de.codeschluss.portal.components.tag;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
 import org.springframework.hateoas.Resource;
@@ -26,9 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class TagController extends CrudController<TagEntity, TagService> {
+  
+  /** The translation service. */
+  private final TranslationService translationService;
 
-  public TagController(TagService service) {
+  public TagController(
+      TagService service,
+      TranslationService translationService) {
     super(service);
+    this.translationService = translationService;
   }
 
   @Override
@@ -64,5 +74,23 @@ public class TagController extends CrudController<TagEntity, TagService> {
   public ResponseEntity<?> delete(@PathVariable String tagId) {
     return super.delete(tagId);
   }
-
+  
+  /**
+   * Find translations.
+   *
+   * @param tagId the tag id
+   * @return the response entity
+   */
+  @GetMapping("/tags/{tagId}/translations")
+  public ResponseEntity<?> findTranslations(@PathVariable String tagId) {
+    try {
+      return ok(translationService.getAllTranslations(service.getById(tagId), this));
+    } catch (NoSuchMethodException 
+        | SecurityException 
+        | IllegalAccessException
+        | IllegalArgumentException
+        | InvocationTargetException e) {
+      throw new RuntimeException("Translations are not available");
+    }
+  }
 }

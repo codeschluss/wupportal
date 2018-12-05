@@ -1,10 +1,14 @@
 package de.codeschluss.portal.components.category;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
 import org.springframework.hateoas.Resource;
@@ -18,16 +22,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * The Class CategoryController.
+ * The Class LanguageController.
  * 
  * @author Valmir Etemi
  *
  */
 @RestController
 public class CategoryController extends CrudController<CategoryEntity, CategoryService> {
+  
+  /** The translation service. */
+  private final TranslationService translationService;
 
-  public CategoryController(CategoryService service) {
+  public CategoryController(
+      CategoryService service,
+      TranslationService translationService) {
     super(service);
+    this.translationService = translationService;
   }
 
   @Override
@@ -62,5 +72,25 @@ public class CategoryController extends CrudController<CategoryEntity, CategoryS
   @SuperUserPermission
   public ResponseEntity<?> delete(@PathVariable String categoryId) {
     return super.delete(categoryId);
+  }
+  
+  /**
+   * Find translations.
+   *
+   * @param categoryId the category id
+   * @return the response entity
+   * @throws Throwable the throwable
+   */
+  @GetMapping("/categories/{categoryId}/translations")
+  public ResponseEntity<?> findTranslations(@PathVariable String categoryId) {
+    try {
+      return ok(translationService.getAllTranslations(service.getById(categoryId), this));
+    } catch (NoSuchMethodException 
+        | SecurityException 
+        | IllegalAccessException
+        | IllegalArgumentException
+        | InvocationTargetException e) {
+      throw new RuntimeException("Translations are not available");
+    }
   }
 }

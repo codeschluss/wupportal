@@ -1,20 +1,25 @@
 package de.codeschluss.portal.components.organisation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.address.AddressEntity;
+import de.codeschluss.portal.components.organisation.translations.OrganisationTranslatablesEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -38,12 +43,13 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "organisations")
 @Relation(collectionRelation = "data")
-public class OrganisationEntity extends BaseEntity implements Serializable {
+public class OrganisationEntity extends LocalizedEntity<OrganisationTranslatablesEntity> {
   
   private static final long serialVersionUID = 1L;
 
-  @Lob
-  @Column(columnDefinition = "TEXT")
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String description;
   
   @Lob
@@ -64,7 +70,7 @@ public class OrganisationEntity extends BaseEntity implements Serializable {
   @ToString.Exclude
   private AddressEntity address;
 
-  @OneToMany(mappedBy = "organisation")
+  @OneToMany(mappedBy = "organisation", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
   private List<ProviderEntity> providers;

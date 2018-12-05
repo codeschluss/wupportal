@@ -1,10 +1,14 @@
 package de.codeschluss.portal.components.targetgroup;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
 import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
 import org.springframework.hateoas.Resource;
@@ -26,8 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TargetGroupController extends CrudController<TargetGroupEntity, TargetGroupService> {
 
-  public TargetGroupController(TargetGroupService service) {
+  /** The translation service. */
+  private final TranslationService translationService;
+  
+  public TargetGroupController(
+      TargetGroupService service,
+      TranslationService translationService) {
     super(service);
+    this.translationService = translationService;
   }
 
   @Override
@@ -64,5 +74,24 @@ public class TargetGroupController extends CrudController<TargetGroupEntity, Tar
   @SuperUserPermission
   public ResponseEntity<?> delete(@PathVariable String targetGroupId) {
     return super.delete(targetGroupId);
+  }
+  
+  /**
+   * Find translations.
+   *
+   * @param targetGroupId the target group id
+   * @return the response entity
+   */
+  @GetMapping("/targetgroups/{targetGroupId}/translations")
+  public ResponseEntity<?> findTranslations(@PathVariable String targetGroupId) {
+    try {
+      return ok(translationService.getAllTranslations(service.getById(targetGroupId), this));
+    } catch (NoSuchMethodException 
+        | SecurityException 
+        | IllegalAccessException
+        | IllegalArgumentException
+        | InvocationTargetException e) {
+      throw new RuntimeException("Translations are not available");
+    }
   }
 }

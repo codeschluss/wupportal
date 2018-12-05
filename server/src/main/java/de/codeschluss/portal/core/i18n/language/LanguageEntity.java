@@ -1,4 +1,4 @@
-package de.codeschluss.portal.components.translation;
+package de.codeschluss.portal.core.i18n.language;
 
 import de.codeschluss.portal.core.common.BaseEntity;
 
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.hateoas.core.Relation;
 
 /**
- * The persistent class for the translations database table.
+ * The persistent class for the languages database table.
  * 
  * @author Valmir Etemi
  *
@@ -27,9 +27,9 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@Table(name = "translations")
+@Table(name = "languages")
 @Relation(collectionRelation = "data")
-public class TranslationEntity extends BaseEntity implements Serializable {
+public class LanguageEntity extends BaseEntity implements Serializable {
   
   private static final long serialVersionUID = 1L;
 

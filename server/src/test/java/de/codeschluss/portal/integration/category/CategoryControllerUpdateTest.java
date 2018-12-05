@@ -30,7 +30,8 @@ public class CategoryControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    CategoryEntity category = new CategoryEntity("green", "updateSuperUserOk", "category2", null);
+    CategoryEntity category = 
+        new CategoryEntity("green", "updateSuperUserOk", "category2", null);
     String categoryId = "00000000-0000-0000-0007-200000000000";
 
     controller.update(category, categoryId);

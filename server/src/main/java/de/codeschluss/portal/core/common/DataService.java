@@ -19,7 +19,7 @@ import org.springframework.data.domain.Sort;
  * @param <E>          the element type
  * @param <B> the generic type
  */
-public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> {
+public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?>> {
 
   /** The repo. */
   protected final DataRepository<E> repo;
@@ -51,7 +51,7 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> 
    * @return true, if successful
    */
   public boolean existsById(String id) {
-    return repo.existsById(id);
+    return repo.exists(entities.withId(id));
   }
   
   /**
@@ -71,7 +71,7 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> 
    * @return the by id
    */
   public E getById(String id) {
-    return repo.findById(id).orElseThrow(() -> new NotFoundException(id));
+    return repo.findOne(entities.withId(id)).orElseThrow(() -> new NotFoundException(id));
   }
 
   /**
@@ -82,8 +82,13 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder> 
    * @return the by ids
    */
   public List<E> getByIds(List<String> entityIds) {
-    return repo.findByIdIn(entityIds)
-        .orElseThrow(() -> new NotFoundException(entityIds.toString()));
+    List<E> result = repo.findAll(entities.withIdsIn(entityIds));
+    
+    if (result == null || result.isEmpty()) {
+      throw new NotFoundException(entityIds.toString());
+    }
+    
+    return result;
   }
 
 

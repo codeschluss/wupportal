@@ -32,6 +32,8 @@ public class OrganisationResourceAssembler extends PagingAndSortingAssembler<Org
         .findUsers(organisation.getId())).withRel("users"));
     links.add(linkTo(methodOn(OrganisationController.class)
         .findAddress(organisation.getId())).withRel("address"));
+    links.add(linkTo(methodOn(OrganisationController.class)
+        .findTranslations(organisation.getId())).withRel("translations"));
 
     return links;
   }

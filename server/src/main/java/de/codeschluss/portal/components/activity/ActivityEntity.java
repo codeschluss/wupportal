@@ -2,23 +2,25 @@ package de.codeschluss.portal.components.activity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import de.codeschluss.portal.components.activity.translations.ActivityTranslatablesEntity;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 
-import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -51,15 +53,22 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "activities")
 @Relation(collectionRelation = "data")
-public class ActivityEntity extends BaseEntity implements Serializable {
+@GenericGenerator(
+    name = "UUID",
+    strategy = "org.hibernate.id.UUIDGenerator"
+)
+public class ActivityEntity extends LocalizedEntity<ActivityTranslatablesEntity> {
 
   private static final long serialVersionUID = 1L;
 
-  @Column(nullable = false)
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String name;
 
-  @Lob
-  @Column(columnDefinition = "TEXT")
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
   private String description;
 
   @Column(name = "show_user", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
@@ -69,7 +78,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonDeserialize
   private String addressId;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
   @JsonIgnore
   private AddressEntity address;
@@ -78,7 +87,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonDeserialize
   private String categoryId;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
   @JsonIgnore
   @JoinColumn(nullable = false)
@@ -88,18 +97,18 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   @JsonDeserialize
   private String organisationId;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
   @JsonIgnore
   @JoinColumn(nullable = false)
   private ProviderEntity provider;
 
-  @OneToMany(mappedBy = "activity")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
   private List<ScheduleEntity> schedules;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
@@ -109,10 +118,6 @@ public class ActivityEntity extends BaseEntity implements Serializable {
       uniqueConstraints = {
           @UniqueConstraint(columnNames = { "activity_id", "tag_id" })
       })
-  @GenericGenerator(
-      name = "UUID",
-      strategy = "org.hibernate.id.UUIDGenerator"
-  )
   @CollectionId(
       columns = @Column(name = "id"), 
       type = @Type(type = "uuid-char"),
@@ -120,7 +125,7 @@ public class ActivityEntity extends BaseEntity implements Serializable {
   )
   private List<TagEntity> tags;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
@@ -130,10 +135,6 @@ public class ActivityEntity extends BaseEntity implements Serializable {
       uniqueConstraints = {
           @UniqueConstraint(columnNames = { "activity_id", "target_group_id" })
       })
-  @GenericGenerator(
-      name = "UUID",
-      strategy = "org.hibernate.id.UUIDGenerator"
-  )
   @CollectionId(
       columns = @Column(name = "id"), 
       type = @Type(type = "uuid-char"),

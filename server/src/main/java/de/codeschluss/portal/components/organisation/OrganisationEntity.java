@@ -62,6 +62,9 @@ public class OrganisationEntity extends LocalizedEntity<OrganisationTranslatable
   private String name;
 
   private String phone;
+  
+  @Column(name = "video_url")
+  private String videoUrl;
 
   private String website;
 

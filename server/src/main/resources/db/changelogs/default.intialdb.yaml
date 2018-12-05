@@ -9,7 +9,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -38,17 +38,17 @@ databaseChangeLog:
             type: BIT(1)
         - column:
             name: address_id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
             name: category_id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
             name: provider_id
-            type: CHAR(1)
+            type: CHAR(36)
         tableName: activities
 - changeSet:
     id: 1543419009409-2
@@ -60,12 +60,12 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: activity_id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
             name: tag_id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               primaryKey: true
@@ -82,12 +82,12 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: activity_id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
             name: target_group_id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               primaryKey: true
@@ -149,7 +149,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -188,7 +188,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -248,42 +248,6 @@ databaseChangeLog:
             type: TEXT
         tableName: i18n
 - changeSet:
-    id: 1543419009409-8
-    author: vetemi (generated)
-    changes:
-    - createTable:
-        columns:
-        - column:
-            constraints:
-              primaryKey: true
-            name: id
-            type: CHAR(36)
-        - column:
-            constraints:
-              nullable: false
-              unique: true
-            name: locale
-            type: VARCHAR(6)
-        - column:
-            constraints:
-              nullable: false
-              unique: true
-            name: name
-            type: VARCHAR(255)
-        - column:
-            constraints:
-              nullable: false
-            defaultValueComputed: CURRENT_TIMESTAMP
-            name: created
-            type: datetime
-        - column:
-            constraints:
-              nullable: false
-            defaultValueComputed: CURRENT_TIMESTAMP
-            name: modified
-            type: datetime
-        tableName: languages
-- changeSet:
     id: 1543419009409-9
     author: vetemi (generated)
     changes:
@@ -341,7 +305,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -366,12 +330,12 @@ databaseChangeLog:
             constraints:
               nullable: false
             name: organisation_id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
             name: user_id
-            type: CHAR(1)
+            type: CHAR(36)
         tableName: providers
 - changeSet:
     id: 1543419009409-11
@@ -383,7 +347,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -404,7 +368,7 @@ databaseChangeLog:
             type: datetime
         - column:
             name: activity_id
-            type: CHAR(1)
+            type: CHAR(36)
         tableName: schedules
 - changeSet:
     id: 1543419009409-12
@@ -446,7 +410,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -479,7 +443,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -512,7 +476,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -548,7 +512,7 @@ databaseChangeLog:
             constraints:
               primaryKey: true
             name: id
-            type: CHAR(1)
+            type: CHAR(36)
         - column:
             constraints:
               nullable: false
@@ -722,32 +686,167 @@ databaseChangeLog:
         indexName: fkey_organisation_address
         tableName: organisations
 - changeSet:
-    id: 1543419009409-31
+    id: 1544051263451-29
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: address_id
+        baseTableName: activities
+        constraintName: fkey_activity_address
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: addresses
+        validate: true
+- changeSet:
+    id: 1544051263451-30
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: category_id
+        baseTableName: activities
+        constraintName: fkey_activity_category
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: categories
+        validate: true
+- changeSet:
+    id: 1544051263451-31
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: provider_id
+        baseTableName: activities
+        constraintName: fkey_activity_provider
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: providers
+        validate: true
+- changeSet:
+    id: 1544051263451-32
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: activity_id
+        baseTableName: activities_tags
+        constraintName: fkey_activity_tag
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: activities
+        validate: true
+- changeSet:
+    id: 1544051263451-33
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: activity_id
+        baseTableName: activities_target_groups
+        constraintName: fkey_activity_target_group
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: activities
+        validate: true
+- changeSet:
+    id: 1544051263451-34
     author: vetemi (generated)
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: suburb_id
         baseTableName: addresses
-        constraintName: FKmccpbd062822m6n7rw780svwy
+        constraintName: fkey_address_suburb
         deferrable: false
         initiallyDeferred: false
         onDelete: NO ACTION
-        onUpdate: NO ACTION
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: suburbs
         validate: true
 - changeSet:
-    id: 1543419009409-32
+    id: 1544051263451-35
     author: vetemi (generated)
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: address_id
         baseTableName: organisations
-        constraintName: FKt1nrgbfbgcrtn7a5nbkm7f2y2
+        constraintName: fkey_organisation_address
         deferrable: false
         initiallyDeferred: false
         onDelete: NO ACTION
-        onUpdate: NO ACTION
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: addresses
+        validate: true
+- changeSet:
+    id: 1544051263451-36
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisation_id
+        baseTableName: providers
+        constraintName: fkey_provider_organisation
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: organisations
+        validate: true
+- changeSet:
+    id: 1544051263451-37
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: providers
+        constraintName: fkey_provider_user
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1544051263451-38
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: tag_id
+        baseTableName: activities_tags
+        constraintName: fkey_tag_activity
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: tags
+        validate: true
+- changeSet:
+    id: 1544051263451-39
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: target_group_id
+        baseTableName: activities_target_groups
+        constraintName: fkey_target_group_activity
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: target_groups
         validate: true

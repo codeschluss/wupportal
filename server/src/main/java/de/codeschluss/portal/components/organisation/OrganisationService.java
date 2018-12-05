@@ -84,6 +84,7 @@ public class OrganisationService
       orga.setMail(newOrga.getMail());
       orga.setName(newOrga.getName());
       orga.setPhone(newOrga.getPhone());
+      orga.setVideoUrl(newOrga.getVideoUrl());
       orga.setWebsite(newOrga.getWebsite());
       return repo.save(orga);
     }).orElseGet(() -> {

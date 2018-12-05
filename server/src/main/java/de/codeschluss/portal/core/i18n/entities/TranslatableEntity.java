@@ -30,7 +30,7 @@ public class TranslatableEntity<P extends BaseEntity> extends BaseEntity {
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
-  @JoinColumn(name = "parent_id")
+  @JoinColumn(name = "parent_id", nullable = false)
   protected P parent;
 
 }

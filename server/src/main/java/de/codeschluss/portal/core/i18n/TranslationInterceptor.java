@@ -1,6 +1,8 @@
-package de.codeschluss.portal.core.i18n.translation;
+package de.codeschluss.portal.core.i18n;
 
 import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
+import de.codeschluss.portal.core.i18n.translation.TranslationHelper;
+import de.codeschluss.portal.core.i18n.translation.TranslationService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +19,6 @@ import org.springframework.stereotype.Component;
  * The Class TranslationInterceptor.
  * 
  * @author Valmir Etemi
- *
- * @param <E>
- *          the element type
  */
 @Component
 @Aspect

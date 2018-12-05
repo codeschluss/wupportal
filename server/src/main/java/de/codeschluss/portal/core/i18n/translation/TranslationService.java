@@ -1,5 +1,6 @@
 package de.codeschluss.portal.core.i18n.translation;
 
+import de.codeschluss.portal.core.appconfig.TranslationsConfig;
 import de.codeschluss.portal.core.common.CrudController;
 import de.codeschluss.portal.core.common.DataRepository;
 import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
@@ -11,11 +12,12 @@ import de.codeschluss.portal.core.utils.RepositoryService;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 import org.aspectj.lang.annotation.Around;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,15 +29,44 @@ import org.springframework.stereotype.Service;
 public class TranslationService {
 
   /** The repo service. */
-  @Autowired
-  private RepositoryService repoService;
+  private final RepositoryService repoService;
 
   /** The language service. */
-  @Autowired
   private LanguageService languageService;
 
-  @Autowired
-  private TranslationResourceAssembler assembler;
+  /** The assembler. */
+  private final TranslationResourceAssembler assembler;
+  
+  private final TranslationsConfig config;
+  
+  /** The translation client. */
+  private WebClient translationClient;
+  
+  /**
+   * Instantiates a new translation service.
+   *
+   * @param repoService the repo service
+   * @param languageService the language service
+   * @param assembler the assembler
+   */
+  public TranslationService(
+      RepositoryService repoService,
+      LanguageService languageService,
+      TranslationResourceAssembler assembler,
+      TranslationsConfig config) {
+    this.repoService = repoService;
+    this.languageService = languageService;
+    this.assembler = assembler;
+    this.config = config;
+    
+    this.translationClient = WebClient
+        .builder()
+          .baseUrl("http://localhost:8080")
+          .defaultCookie("cookieKey", "cookieValue")
+//          .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) 
+//          .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080"))
+        .build(); 
+  }
 
   /**
    * Localize list.
@@ -177,5 +208,14 @@ public class TranslationService {
     }
     throw new RuntimeException(
         "Repository of Translation must inherit from " + TranslationRepository.class);
+  }
+
+  /**
+   * Translate.
+   *
+   * @param params the params
+   * @param labels the labels
+   */
+  public void translate(TranslationQueryParam params, Map<String, String> labels) {
   }
 }

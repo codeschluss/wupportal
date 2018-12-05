@@ -7,6 +7,8 @@ import de.codeschluss.portal.core.common.QueryBuilder;
 import de.codeschluss.portal.core.i18n.language.QLanguageEntity;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -42,6 +44,17 @@ public class LanguageQueryBuilder extends QueryBuilder<QLanguageEntity> {
    */
   public BooleanExpression withLocale(String locale) {
     return query.locale.eq(locale);
+  }
+  
+
+  /**
+   * With locale in.
+   *
+   * @param locales the locales
+   * @return the boolean expression
+   */
+  public BooleanExpression withLocaleIn(List<String> locales) {
+    return query.locale.in(locales);
   }
   
   /**

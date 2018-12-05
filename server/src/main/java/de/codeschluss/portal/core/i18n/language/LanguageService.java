@@ -58,6 +58,14 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
     return repo.findOne(
         entities.withLocaleOrLanguage(newLanguage.getLocale(),newLanguage.getName())).orElse(null);
   }
+  
+  public boolean existsForLocales(List<String> locales) {
+    return repo.exists(entities.withLocaleIn(locales));
+  }
+
+  public boolean existsForLocale(String locale) {
+    return repo.exists(entities.withLocale(locale));
+  }
 
   /* (non-Javadoc)
    * @see de.codeschluss.portal.core.common
@@ -135,5 +143,4 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
   public String getDefaultLocale() {
     return config.getDefaultLocale();
   }
-
 }

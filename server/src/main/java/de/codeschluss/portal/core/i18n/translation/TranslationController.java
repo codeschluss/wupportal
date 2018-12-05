@@ -39,7 +39,7 @@ public class TranslationController {
    * @return the response entity
    */
   @PostMapping("/translations/translate")
-//  @ProviderOrSuperUserPermission
+  @ProviderOrSuperUserPermission
   public ResponseEntity<List<TranslationResult>> translate(
       TranslationQueryParam params, 
       @RequestBody Map<String, String> labels) {

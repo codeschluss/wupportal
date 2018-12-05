@@ -11,40 +11,20 @@ import de.codeschluss.portal.core.utils.RepositoryService;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Optional;
 
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resources;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TranslationService.
  * 
  * @author Valmir Etemi
- *
- * @param <E>
- *          the element type
  */
-@Component
-@Aspect
+@Service
 public class TranslationService {
-
-  @Pointcut("execution(* de.codeschluss.portal.core.common.DataRepository+.save(..))")
-  private void save() {
-  }
-
-  @Pointcut("execution(public * de.codeschluss.portal.core.common.DataRepository+.findOne(..))")
-  private void findOne() {
-  }
-
-  @Pointcut("execution(* de.codeschluss.portal.core.common.DataRepository+.findAll(..))")
-  private void findAll() {
-  }
 
   /** The repo service. */
   @Autowired
@@ -58,61 +38,29 @@ public class TranslationService {
   private TranslationResourceAssembler assembler;
 
   /**
-   * Replace iterable with translations.
+   * Localize list.
    *
-   * @param pjp
-   *          the pjp
-   * @return the object
-   * @throws Throwable
-   *           the throwable
+   * @param list the list
    */
-  @Around("findAll()")
-  public Object replaceIterableWithTranslations(ProceedingJoinPoint pjp) throws Throwable {
-    Object result = pjp.proceed();
-    if (result instanceof Iterable<?>) {
-      List<?> list = TranslationHelper.convertToList(result);
-      if (!list.isEmpty() && TranslationHelper.isLocalizable(list.get(0))) {
-        List<String> locales = languageService.getCurrentReadLocales();
-        for (Object entity : list) {
-          localizeOne(entity, locales);
-        }
-      }
+  public void localizeList(List<?> list) throws Throwable {
+    List<String> locales = languageService.getCurrentReadLocales();
+    for (Object entity : list) {
+      localizeEntity(entity, locales);
     }
-    return result;
   }
 
-  /**
-   * Replace one with translation.
-   *
-   * @param pjp
-   *          the pjp
-   * @return the object
-   * @throws Throwable
-   *           the throwable
-   */
-  @Around("findOne()")
-  public Object replaceOneWithTranslation(ProceedingJoinPoint pjp) throws Throwable {
-    Object result = pjp.proceed();
-    if (result instanceof Optional<?> && ((Optional<?>) result).isPresent()) {
-      Object entity = ((Optional<?>) result).get();
-      if (TranslationHelper.isLocalizable(entity)) {
-        localizeOne(entity, languageService.getCurrentReadLocales());
-        return Optional.of(entity);
-      }
-    }
-    return result;
+  public void localizeSingle(Object entity) throws Throwable {
+    localizeEntity(entity, languageService.getCurrentReadLocales());
   }
-
+  
   /**
-   * Localize one.
+   * Localize entity.
    *
-   * @param entity
-   *          the entity
-   * @return the optional
-   * @throws Throwable
-   *           the throwable
+   * @param entity the entity
+   * @param locales the locales
+   * @throws Throwable the throwable
    */
-  private void localizeOne(Object entity, List<String> locales) throws Throwable {
+  private void localizeEntity(Object entity, List<String> locales) throws Throwable {
     for (String locale : locales) {
       boolean isTouched = TranslationHelper.localize(entity, locale);
       if (isTouched) {
@@ -123,29 +71,19 @@ public class TranslationService {
   }
 
   /**
-   * Save localizable.
+   * Save.
    *
-   * @param <E>
-   *          the element type
-   * @param pjp
-   *          the pjp
-   * @return the object
-   * @throws Throwable
-   *           the throwable
+   * @param <E> the element type
+   * @param savedEntity the saved entity
+   * @throws Throwable the throwable
    */
   @SuppressWarnings("unchecked")
   @Around("save()")
-  public <E extends LocalizedEntity<?>> Object saveTranslation(ProceedingJoinPoint pjp)
+  public <E extends LocalizedEntity<?>> void save(Object savedEntity)
       throws Throwable {
-    pjp.proceed();
-    Object savedEntity = pjp.getArgs()[0];
-    if (TranslationHelper.isLocalizable(savedEntity)) {
-      TranslatableEntity<?> translatableObject = createTranslatableObject((E) savedEntity,
-          languageService.getCurrentWriteLanguage());
-
-      repoService.save(translatableObject);
-    }
-    return savedEntity;
+    TranslatableEntity<?> translatableObject = createTranslatableObject(
+        (E) savedEntity, languageService.getCurrentWriteLanguage());
+    repoService.save(translatableObject);
   }
 
   /**
@@ -211,16 +149,14 @@ public class TranslationService {
   /**
    * Gets the all translations.
    *
-   * @param parent
-   *          the parent
+   * @param parent the parent
+   * @param controller the controller
    * @return the all translations
-   * @throws SecurityException
-   * @throws NoSuchMethodException
-   * @throws InvocationTargetException
-   * @throws IllegalArgumentException
-   * @throws IllegalAccessException
-   * @throws Throwable
-   *           the throwable
+   * @throws NoSuchMethodException the no such method exception
+   * @throws SecurityException the security exception
+   * @throws IllegalAccessException the illegal access exception
+   * @throws IllegalArgumentException the illegal argument exception
+   * @throws InvocationTargetException the invocation target exception
    */
   @SuppressWarnings("unchecked")
   public Resources<?> getAllTranslations(LocalizedEntity<?> parent, CrudController<?, ?> controller)

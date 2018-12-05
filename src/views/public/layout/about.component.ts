@@ -6,6 +6,7 @@ import { CategoryModel } from '../../../realm/category/category.model';
 import { ScheduleModel } from '../../../realm/schedule/schedule.model';
 import { SuburbModel } from '../../../realm/suburb/suburb.model';
 import { TargetGroupModel } from '../../../realm/target-group/target-group.model';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -23,16 +24,19 @@ export class AboutComponent {
   directionToggle = true;
   autoplay = false;
 
-  constructor() {
-    for (let i = 0; i < 12; i++) {
-      this.activities.push(
-        this.buildTestActivity());
-    }
+  constructor(
+    route: ActivatedRoute
+  ) {
+    this.activities = route.snapshot.data.activities;
+    // for (let i = 0; i < 12; i++) {
+    //   this.activities.push(
+    //     this.buildTestActivity());
+    // }
   }
 
   buildTestActivity(): ActivityModel {
     const actOne = new ActivityModel;
-    actOne.id="testActivity";
+    actOne.id = 'testActivity';
     actOne.name = 'FakeActivity';
     actOne.description = 'This is just a FakeActivity to show'
       + 'how this could look like.';

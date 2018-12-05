@@ -9,6 +9,15 @@ import { OrganisationViewComponent } from './organisation/organisation.view.comp
 import { BlogListComponent } from './blog/blog.list.component';
 import { SearchResultListComponent } from './search/searchresult.list.component';
 import { BlogViewComponent } from './blog/blog.view.component';
+import { CrudResolver, CrudJoiner } from '@portal/core';
+import { ActivityModel } from 'src/realm/activity/activity.model';
+import { CategoryModel } from 'src/realm/category/category.model';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { TagModel } from 'src/realm/tag/tag.model';
+import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
+import { AddressModel } from 'src/realm/address/address.model';
+import { SuburbModel } from 'src/realm/suburb/suburb.model';
+import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 
 const PublicProviders = [
 ];
@@ -20,58 +29,82 @@ const PublicRoutes = [
   {
     path: 'home',
     component: AboutComponent,
-  },
-  {
-    path: 'activities',
-    children: [
-      {
-        path: '',
-        component: ActivityListComponent,
-      }
-    ]
+    resolve: {
+      activities: CrudResolver
+    },
+    data: {
+      activities: CrudJoiner.of(ActivityModel)
+        .with(CategoryModel)
+        .with(AddressModel).yield(SuburbModel)
+        .with(ScheduleModel)
+    }
   },
   {
     path: 'list/activities',
     children: [
       {
-        path: '/',
-        component: ActivityListComponent
-      },
-      {
         path: '',
-        component: ActivityListComponent
+        component: ActivityListComponent,
+        resolve: {
+          activities: CrudResolver,
+          targetGroups: CrudResolver,
+          categories: CrudResolver,
+          suburbs: CrudResolver
+        },
+        data: {
+          activities: CrudJoiner.of(ActivityModel)
+            .with(CategoryModel)
+            .with(AddressModel).yield(SuburbModel)
+            .with(ScheduleModel),
+          targetGroups: CrudJoiner.of(TargetGroupModel),
+          categories: CrudJoiner.of(CategoryModel),
+          suburbs: CrudJoiner.of(SuburbModel)
+        }
       }
     ]
   },
   {
-    path: 'view/activities/:id',
-    component: ActivityViewComponent
+    path: 'view/activities/:uuid',
+    component: ActivityViewComponent,
+    resolve: {
+      activity: CrudResolver
+    },
+    data: {
+      activity: CrudJoiner.of(ActivityModel)
+        .with(CategoryModel)
+        .with(OrganisationModel)
+        .with(TargetGroupModel)
+        .with(ScheduleModel)
+        .with(AddressModel).yield(SuburbModel)
+    }
   },
   {
-  path: 'organisations',
+  path: 'list/organisations',
   children: [
       {
         path: '',
         component: OrganisationListComponent,
+        resolve: {
+          organisations: CrudResolver
+        },
+        data: {
+          organisations: CrudJoiner.of(OrganisationModel)
+            .with(AddressModel).yield(SuburbModel)
+        }
       }
     ]
   },
   {
-    path: 'list/organisations',
-    children: [
-      {
-        path: '/',
-        component: OrganisationListComponent,
-      },
-      {
-        path: '',
-        component: OrganisationListComponent,
-      }
-    ]
-  },
-  {
-    path: 'view/organisations/:id',
-    component: OrganisationViewComponent
+    path: 'view/organisations/:uuid',
+    component: OrganisationViewComponent,
+    resolve: {
+      organisation: CrudResolver
+    },
+    data: {
+      organisation: CrudJoiner.of(OrganisationModel)
+        .with(AddressModel).yield(SuburbModel)
+        .with(ActivityModel)
+    }
   },
   {
     path: 'list/blogs',

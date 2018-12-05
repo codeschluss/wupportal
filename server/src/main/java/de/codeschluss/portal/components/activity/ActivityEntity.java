@@ -11,8 +11,7 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
-import de.codeschluss.portal.core.translations.annotations.Localized;
+import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 
 import java.util.List;
 
@@ -52,14 +51,13 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@Localized
 @Table(name = "activities")
 @Relation(collectionRelation = "data")
 @GenericGenerator(
     name = "UUID",
     strategy = "org.hibernate.id.UUIDGenerator"
 )
-public class ActivityEntity extends BaseEntity {
+public class ActivityEntity extends LocalizedEntity<ActivityTranslatablesEntity> {
 
   private static final long serialVersionUID = 1L;
 
@@ -72,11 +70,6 @@ public class ActivityEntity extends BaseEntity {
   @JsonDeserialize
   @Transient
   private String description;
-  
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
-  @ToString.Exclude
-  @JsonIgnore
-  private List<ActivityTranslatablesEntity> translatables;
 
   @Column(name = "show_user", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean showUser;

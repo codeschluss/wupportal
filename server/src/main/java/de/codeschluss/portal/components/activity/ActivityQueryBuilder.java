@@ -7,7 +7,7 @@ import com.querydsl.core.types.dsl.Expressions;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.QueryBuilder;
-import de.codeschluss.portal.core.translations.language.LanguageService;
+import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.util.List;

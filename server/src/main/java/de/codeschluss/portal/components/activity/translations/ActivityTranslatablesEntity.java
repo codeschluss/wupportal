@@ -1,18 +1,11 @@
 package de.codeschluss.portal.components.activity.translations;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import de.codeschluss.portal.components.activity.ActivityEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
-import de.codeschluss.portal.core.translations.annotations.Translatable;
-import de.codeschluss.portal.core.translations.language.LanguageEntity;
+import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -32,9 +25,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@Translatable
 @Table(name = "activity_translatables")
-public class ActivityTranslatablesEntity extends BaseEntity {
+public class ActivityTranslatablesEntity extends TranslatableEntity<ActivityEntity> {
 
   private static final long serialVersionUID = 1L;
 
@@ -44,14 +36,4 @@ public class ActivityTranslatablesEntity extends BaseEntity {
   @Lob
   @Column(columnDefinition = "TEXT")
   private String description;
-  
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JsonIgnore
-  private LanguageEntity language;
-  
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JsonIgnore
-  @JoinColumn(name = "parent_id")
-  private ActivityEntity parent;
-
 }

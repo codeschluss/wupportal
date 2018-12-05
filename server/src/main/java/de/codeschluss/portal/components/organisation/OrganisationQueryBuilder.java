@@ -3,7 +3,7 @@ package de.codeschluss.portal.components.organisation;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.core.common.QueryBuilder;
-import de.codeschluss.portal.core.translations.language.LanguageService;
+import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.springframework.stereotype.Service;

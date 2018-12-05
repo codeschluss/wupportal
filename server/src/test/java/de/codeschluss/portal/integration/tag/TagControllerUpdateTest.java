@@ -30,7 +30,7 @@ public class TagControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("updateSuperUserOk", "updateSuperUserOk", null, null);
+    TagEntity tag = new TagEntity("updateSuperUserOk", "updateSuperUserOk", null);
     String tagId = "00000000-0000-0000-0002-110000000000";
 
     controller.update(tag, tagId);
@@ -42,7 +42,7 @@ public class TagControllerUpdateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedName() throws URISyntaxException {
-    TagEntity tag = new TagEntity("tag1", "tag1", null, null);
+    TagEntity tag = new TagEntity("tag1", "tag1", null);
     String tagId = "00000000-0000-0000-0002-110000000000";
 
     controller.update(tag, tagId);
@@ -51,7 +51,7 @@ public class TagControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("updateProviderUserDenied", "updateProviderUserDenied", null,
+    TagEntity tag = new TagEntity("updateProviderUserDenied", "updateProviderUserDenied",
         null);
     String tagId = "00000000-0000-0000-0002-100000000000";
 
@@ -60,7 +60,7 @@ public class TagControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("updateNoUserDenied", "updateNoUserDenied", null, null);
+    TagEntity tag = new TagEntity("updateNoUserDenied", "updateNoUserDenied", null);
     String tagId = "00000000-0000-0000-0002-100000000000";
 
     controller.update(tag, tagId);

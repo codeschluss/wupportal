@@ -33,7 +33,7 @@ public class CategoryControllerAddTest {
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("addSuperUserOk", "addSuperUserOk",
-        "addSuperUserOk", null, null);
+        "addSuperUserOk", null);
 
     controller.add(category);
 
@@ -47,7 +47,7 @@ public class CategoryControllerAddTest {
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("addSuperUserDuplicatedName",
-        "addSuperUserDuplicatedName", "category1", null, null);
+        "addSuperUserDuplicatedName", "category1", null);
 
     controller.add(category);
   }
@@ -56,7 +56,7 @@ public class CategoryControllerAddTest {
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("addProviderDenied", "addProviderDenied",
-        "addProviderDenied", null, null);
+        "addProviderDenied", null);
 
     controller.add(category);
   }
@@ -64,7 +64,7 @@ public class CategoryControllerAddTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("addNoUserDenied", "addNoUserDenied",
-        "addNoUserDenied", null, null);
+        "addNoUserDenied", null);
 
     controller.add(category);
   }

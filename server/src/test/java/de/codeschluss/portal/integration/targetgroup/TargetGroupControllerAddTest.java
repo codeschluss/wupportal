@@ -32,16 +32,13 @@ public class TargetGroupControllerAddTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("addSuperUserOk", "addSuperUserOk", null,
-        null);
+    TargetGroupEntity targetGroup = new TargetGroupEntity("addSuperUserOk", "addSuperUserOk", null);
 
     controller.add(targetGroup);
 
     Resources<Resource<TargetGroupEntity>> result = (Resources<Resource<TargetGroupEntity>>) 
-        controller
-        .findAll(new FilterSortPaginate())
-        .getBody();
-    
+        controller.findAll(new FilterSortPaginate()).getBody();
+
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getName().equals(targetGroup.getName()), "targetGroup exists"));
   }
@@ -49,7 +46,7 @@ public class TargetGroupControllerAddTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("target1", "target1", null, null);
+    TargetGroupEntity targetGroup = new TargetGroupEntity("target1", "target1", null);
 
     controller.add(targetGroup);
   }
@@ -58,7 +55,7 @@ public class TargetGroupControllerAddTest {
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
     TargetGroupEntity targetGroup = new TargetGroupEntity("addProviderDenied", "addProviderDenied",
-        null, null);
+        null);
 
     controller.add(targetGroup);
   }
@@ -66,7 +63,7 @@ public class TargetGroupControllerAddTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
     TargetGroupEntity targetGroup = new TargetGroupEntity("addNoUserDenied", "addNoUserDenied",
-        null, null);
+        null);
 
     controller.add(targetGroup);
   }

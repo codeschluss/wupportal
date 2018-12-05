@@ -31,7 +31,7 @@ public class TagControllerAddTest {
   @Test
   @WithUserDetails("super@user")
   public void addSuperUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addSuperUserOk", "addSuperUserOk", null, null);
+    TagEntity tag = new TagEntity("addSuperUserOk", "addSuperUserOk", null);
 
     controller.add(tag);
 
@@ -41,7 +41,7 @@ public class TagControllerAddTest {
   @Test
   @WithUserDetails("provider1@user")
   public void addProviderUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addProviderUserOk", "addProviderUserOk", null, null);
+    TagEntity tag = new TagEntity("addProviderUserOk", "addProviderUserOk", null);
 
     controller.add(tag);
 
@@ -51,7 +51,7 @@ public class TagControllerAddTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    TagEntity tag = new TagEntity("tag1", "tag1", null, null);
+    TagEntity tag = new TagEntity("tag1", "tag1", null);
 
     controller.add(tag);
   }
@@ -59,14 +59,14 @@ public class TagControllerAddTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
   public void addNotApprovedDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addNotApprovedDenied", "addNotApprovedDenied", null, null);
+    TagEntity tag = new TagEntity("addNotApprovedDenied", "addNotApprovedDenied", null);
 
     controller.add(tag);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addNoUserDenied", "addNoUserDenied", null, null);
+    TagEntity tag = new TagEntity("addNoUserDenied", "addNoUserDenied", null);
 
     controller.add(tag);
   }

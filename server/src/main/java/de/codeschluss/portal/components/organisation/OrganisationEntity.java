@@ -7,8 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.organisation.translations.OrganisationTranslatablesEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
-import de.codeschluss.portal.core.translations.annotations.Localized;
+import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 
 import java.util.List;
 
@@ -42,10 +41,9 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@Localized
 @Table(name = "organisations")
 @Relation(collectionRelation = "data")
-public class OrganisationEntity extends BaseEntity {
+public class OrganisationEntity extends LocalizedEntity<OrganisationTranslatablesEntity> {
   
   private static final long serialVersionUID = 1L;
 
@@ -76,9 +74,4 @@ public class OrganisationEntity extends BaseEntity {
   @JsonIgnore
   @ToString.Exclude
   private List<ProviderEntity> providers;
-  
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
-  @ToString.Exclude
-  @JsonIgnore
-  private List<OrganisationTranslatablesEntity> translatables;
 }

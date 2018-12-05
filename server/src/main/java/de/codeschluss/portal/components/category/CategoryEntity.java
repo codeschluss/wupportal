@@ -6,12 +6,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.category.translations.CategoryTranslatablesEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
-import de.codeschluss.portal.core.translations.annotations.Localized;
+import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +23,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import org.springframework.hateoas.core.Relation;
 
@@ -40,10 +37,9 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
-@Localized
 @Table(name = "categories")
 @Relation(collectionRelation = "data")
-public class CategoryEntity extends BaseEntity {
+public class CategoryEntity extends LocalizedEntity<CategoryTranslatablesEntity> {
 
   private static final long serialVersionUID = 1L;
 
@@ -58,11 +54,6 @@ public class CategoryEntity extends BaseEntity {
   @JsonDeserialize
   @Transient
   private String name;
-  
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
-  @ToString.Exclude
-  @JsonIgnore
-  private List<CategoryTranslatablesEntity> translatables;
 
   @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
   @JsonIgnore

@@ -35,8 +35,7 @@ public class OrganisationControllerUpdateTest {
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
     OrganisationEntity organisation = new OrganisationEntity("updateSuperUserOk", null,
-        "updateSuperUserOk", "updateSuperUserOk", "123456789", "updateSuperUserOk", null, null,
-        null);
+        "updateSuperUserOk", "updateSuperUserOk", "123456789", "updateSuperUserOk", null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-300000000000");
 
@@ -48,7 +47,7 @@ public class OrganisationControllerUpdateTest {
   public void updateOwnOrganisationOk() throws URISyntaxException {
     OrganisationEntity organisation = new OrganisationEntity("updateOwnOrganisationOk", null,
         "updateOwnOrganisationOk", "organisation1", "123456789", "updateOwnOrganisationOk", null,
-        null, null);
+        null);
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
 
@@ -60,7 +59,7 @@ public class OrganisationControllerUpdateTest {
   public void updateOtherOrganisationDenied() throws URISyntaxException {
     OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied", null,
         "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", "123456789",
-        "updateOtherOrganisationDenied", null, null, null);
+        "updateOtherOrganisationDenied", null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }
@@ -68,7 +67,7 @@ public class OrganisationControllerUpdateTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateOtherNotRegisteredOrganisationDenied() throws URISyntaxException {
     OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied", null,
-        "organisation1", "organisation1", "123456789", "organisation1", null, null, null);
+        "organisation1", "organisation1", "123456789", "organisation1", null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }

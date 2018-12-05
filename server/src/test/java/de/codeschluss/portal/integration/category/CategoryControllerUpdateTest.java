@@ -31,7 +31,7 @@ public class CategoryControllerUpdateTest {
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
     CategoryEntity category = 
-        new CategoryEntity("green", "updateSuperUserOk", "category2", null, null);
+        new CategoryEntity("green", "updateSuperUserOk", "category2", null);
     String categoryId = "00000000-0000-0000-0007-200000000000";
 
     controller.update(category, categoryId);
@@ -44,7 +44,7 @@ public class CategoryControllerUpdateTest {
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedName() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("updateSuperUserDuplicatedName",
-        "updateSuperUserDuplicatedName", "category1", null, null);
+        "updateSuperUserDuplicatedName", "category1", null);
     String categoryId = "00000000-0000-0000-0007-200000000000";
 
     controller.update(category, categoryId);
@@ -54,7 +54,7 @@ public class CategoryControllerUpdateTest {
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("updateProviderUserDenied",
-        "updateProviderUserDenied", "updateProviderUserDenied", null, null);
+        "updateProviderUserDenied", "updateProviderUserDenied", null);
     String categoryId = "00000000-0000-0000-0007-100000000000";
 
     controller.update(category, categoryId);
@@ -63,7 +63,7 @@ public class CategoryControllerUpdateTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
     CategoryEntity category = new CategoryEntity("updateNoUserDenied", "updateNoUserDenied",
-        "updateNoUserDenied", null, null);
+        "updateNoUserDenied", null);
     String categoryId = "00000000-0000-0000-0007-100000000000";
 
     controller.update(category, categoryId);

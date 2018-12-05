@@ -1,4 +1,4 @@
-package de.codeschluss.portal.components.category;
+package de.codeschluss.portal.core.i18n.language;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -18,14 +18,14 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Service
-public class CategoryResourceAssembler extends PagingAndSortingAssembler<CategoryEntity> {
+public class LanguageResourceAssembler extends PagingAndSortingAssembler<LanguageEntity> {
 
   @Override
-  protected List<Link> createResourceLinks(CategoryEntity category) {
+  protected List<Link> createResourceLinks(LanguageEntity language) {
     List<Link> links = new ArrayList<Link>();
 
-    links.add(linkTo(methodOn(CategoryController.class)
-        .findOne(category.getId())).withSelfRel());
+    links.add(linkTo(methodOn(LanguageController.class)
+        .findOne(language.getId())).withSelfRel());
 
     return links;
   }

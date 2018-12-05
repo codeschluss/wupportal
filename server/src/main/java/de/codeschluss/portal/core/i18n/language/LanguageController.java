@@ -1,6 +1,5 @@
-package de.codeschluss.portal.components.category;
+package de.codeschluss.portal.core.i18n.language;
 
-import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.core.common.CrudController;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.core.utils.FilterSortPaginate;
@@ -24,43 +23,43 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-public class CategoryController extends CrudController<CategoryEntity, CategoryService> {
+public class LanguageController extends CrudController<LanguageEntity, LanguageService> {
 
-  public CategoryController(CategoryService service) {
+  public LanguageController(LanguageService service) {
     super(service);
   }
 
   @Override
-  @GetMapping("/categories")
+  @GetMapping("/languages")
   public ResponseEntity<?> findAll(FilterSortPaginate params) {
     return super.findAll(params);
   }
 
   @Override
-  @GetMapping("/categories/{categoryId}")
-  public Resource<CategoryEntity> findOne(@PathVariable String categoryId) {
-    return super.findOne(categoryId);
+  @GetMapping("/languages/{languageId}")
+  public Resource<LanguageEntity> findOne(@PathVariable String languageId) {
+    return super.findOne(languageId);
   }
 
   @Override
-  @PostMapping("/categories")
+  @PostMapping("/languages")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody CategoryEntity newCategory) throws URISyntaxException {
-    return super.add(newCategory);
+  public ResponseEntity<?> add(@RequestBody LanguageEntity newLanguage) throws URISyntaxException {
+    return super.add(newLanguage);
   }
 
   @Override
-  @PutMapping("/categories/{categoryId}")
+  @PutMapping("/languages/{languageId}")
   @SuperUserPermission
-  public ResponseEntity<?> update(@RequestBody CategoryEntity newCategory,
-      @PathVariable String categoryId) throws URISyntaxException {
-    return super.update(newCategory, categoryId);
+  public ResponseEntity<?> update(@RequestBody LanguageEntity newLanguage,
+      @PathVariable String languageId) throws URISyntaxException {
+    return super.update(newLanguage, languageId);
   }
 
   @Override
-  @DeleteMapping("/categories/{categoryId}")
+  @DeleteMapping("/languages/{languageId}")
   @SuperUserPermission
-  public ResponseEntity<?> delete(@PathVariable String categoryId) {
-    return super.delete(categoryId);
+  public ResponseEntity<?> delete(@PathVariable String languageId) {
+    return super.delete(languageId);
   }
 }

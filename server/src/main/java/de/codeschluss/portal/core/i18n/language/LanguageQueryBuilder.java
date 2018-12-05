@@ -22,8 +22,36 @@ public class LanguageQueryBuilder extends QueryBuilder<QLanguageEntity> {
     super(QLanguageEntity.languageEntity);
   }
   
+
+  /**
+   * With locale or language.
+   *
+   * @param locale the locale
+   * @param name the name
+   * @return the boolean expression
+   */
+  public BooleanExpression withLocaleOrLanguage(String locale, String name) {
+    return withLocale(locale).or(withName(name));
+  }
+  
+  /**
+   * With locale.
+   *
+   * @param locale the locale
+   * @return the boolean expression
+   */
   public BooleanExpression withLocale(String locale) {
     return query.locale.eq(locale);
+  }
+  
+  /**
+   * With name.
+   *
+   * @param name the name
+   * @return the boolean expression
+   */
+  public BooleanExpression withName(String name) {
+    return query.name.eq(name);
   }
 
   /* (non-Javadoc)

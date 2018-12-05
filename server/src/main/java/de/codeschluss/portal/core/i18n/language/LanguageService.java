@@ -3,7 +3,7 @@ package de.codeschluss.portal.core.i18n.language;
 import com.google.common.net.HttpHeaders;
 
 import de.codeschluss.portal.core.appconfig.TranslationsConfig;
-import de.codeschluss.portal.core.common.DataService;
+import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
 import java.util.ArrayList;
@@ -21,8 +21,11 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class LanguageService extends DataService<LanguageEntity, LanguageQueryBuilder> {
+public class LanguageService extends ResourceDataService<LanguageEntity, LanguageQueryBuilder> {
 
+  /** The default sort prop. */
+  protected final String defaultSortProp = "name";
+  
   /** The request. */
   protected HttpServletRequest request;
 
@@ -38,9 +41,10 @@ public class LanguageService extends DataService<LanguageEntity, LanguageQueryBu
   public LanguageService(
       LanguageRepository repo, 
       LanguageQueryBuilder entities,
+      LanguageResourceAssembler assembler,
       HttpServletRequest request,
       TranslationsConfig config) {
-    super(repo, entities);
+    super(repo, entities, assembler);
     this.request = request;
     this.config = config;
   }
@@ -51,7 +55,8 @@ public class LanguageService extends DataService<LanguageEntity, LanguageQueryBu
    */
   @Override
   public LanguageEntity getExisting(LanguageEntity newLanguage) {
-    return getForLocale(newLanguage.getLocale());
+    return repo.findOne(
+        entities.withLocaleOrLanguage(newLanguage.getLocale(),newLanguage.getName())).orElse(null);
   }
 
   /* (non-Javadoc)
@@ -76,14 +81,14 @@ public class LanguageService extends DataService<LanguageEntity, LanguageQueryBu
    * @return the current language
    */
   public LanguageEntity getCurrentWriteLanguage() {
-    LanguageEntity lang = getForLocale(getWriteLocale());
+    LanguageEntity lang = findForLocale(getWriteLocale());
     if (lang == null) {
       throw new BadParamsException(HttpHeaders.CONTENT_LANGUAGE + " Header with " + lang);
     }
     return lang;
   }
   
-  public LanguageEntity getForLocale(String locale) {
+  public LanguageEntity findForLocale(String locale) {
     return repo.findOne(entities.withLocale(locale)).orElse(null);
   }
   

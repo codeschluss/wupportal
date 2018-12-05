@@ -254,3 +254,66 @@ databaseChangeLog:
         referencedColumnNames: id
         referencedTableName: languages
         validate: true
+########## TargetGroup ##########
+- changeSet:
+    id: 1543969301045-13
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: target_group_translatablesPK
+            name: id
+            type: CHAR
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: language_id
+            type: CHAR
+        - column:
+            name: parent_id
+            type: CHAR
+        tableName: target_group_translatables
+- changeSet:
+    id: 1543969301045-18
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: parent_id
+        baseTableName: target_group_translatables
+        constraintName: FKidfmy43ne0pta21235adkeebf
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: target_groups
+        validate: true
+- changeSet:
+    id: 1543969301045-19
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: language_id
+        baseTableName: target_group_translatables
+        constraintName: FKjco53xf5a7o1gogivfult1plj
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: languages
+        validate: true

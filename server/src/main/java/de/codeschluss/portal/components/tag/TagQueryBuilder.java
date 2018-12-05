@@ -60,10 +60,10 @@ public class TagQueryBuilder extends QueryBuilder<QTagEntity> {
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
     return query.description.likeIgnoreCase(filter)
-        .or(name(filter));
+        .or(likeName(filter));
   }
 
-  private BooleanExpression name(String filter) {
+  private BooleanExpression likeName(String filter) {
     return query.translatables.any().name.likeIgnoreCase(filter)
         .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));
   }

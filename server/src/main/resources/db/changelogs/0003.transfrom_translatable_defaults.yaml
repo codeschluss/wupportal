@@ -67,3 +67,20 @@ databaseChangeLog:
                 where languages.locale = 'de';
             "
         stripComments: true
+########## Tag ##########
+- changeSet:
+    id: 003.transform_translatable_defaults_5
+    author: vetemi
+    changes:
+    - sql:
+        comment: transfer all target group translatables into the new table with German as default
+        dbms: h2, mysql
+        endDelimiter: \nGO
+        splitStatements: true
+        sql: "
+            insert into target_group_translatables (id, name, modified, created, language_id, parent_id)
+                select UUID(), target_groups.description, target_groups.modified, target_groups.created, languages.id, target_groups.id
+                from target_groups, languages
+                where languages.locale = 'de';
+            "
+        stripComments: true

@@ -49,7 +49,7 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
     return query.name.likeIgnoreCase(filter)
-      .or(description(filter))
+      .or(likeDescription(filter))
       .or(query.mail.likeIgnoreCase(filter))
       .or(query.phone.likeIgnoreCase(filter))
       .or(query.website.likeIgnoreCase(filter))
@@ -64,7 +64,7 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
    * @param filter the filter
    * @return the predicate
    */
-  private BooleanExpression description(String filter) {
+  private BooleanExpression likeDescription(String filter) {
     return 
         query.translatables.any().description.likeIgnoreCase(filter)
         .and(query.translatables.any().language.locale.in(languageService.getCurrentReadLocales()));

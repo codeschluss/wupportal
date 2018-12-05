@@ -6,7 +6,7 @@ import de.codeschluss.portal.core.translations.TranslationRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * The Interface OrganisationTranslatableRepository.
+ * The Interface TagTranslatableRepository.
  * 
  * @author Valmir Etemi
  *

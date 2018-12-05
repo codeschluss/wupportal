@@ -17,9 +17,6 @@ import org.springframework.stereotype.Service;
 // TODO: Auto-generated Javadoc
 /**
  * The Class ActivityQueryBuilder.
- * 
- * @author Valmir Etemi
- *
  */
 @Service
 public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
@@ -37,11 +34,9 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     this.languageService = languageService;
   }
   
-  /**
-   * Fuzzy search.
-   *
-   * @param p the p
-   * @return the predicate
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.common
+   * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
    */
   @Override
   public Predicate search(FilterSortPaginate p) {
@@ -77,33 +72,45 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
         .or(query.address.houseNumber.likeIgnoreCase(filter))
         .or(query.address.postalCode.likeIgnoreCase(filter))
         .or(query.address.suburb.name.likeIgnoreCase(filter))
-        .or(tags(filter, locales))
-        .or(query.targetGroups.any().name.likeIgnoreCase(filter))
-        .or(category(filter, locales));
+        .or(likeTags(filter, locales))
+        .or(likeTargetGroups(filter, locales))
+        .or(likeCategory(filter, locales));
     
     return search.and(textSearch).getValue();
   }
   
   /**
-   * Tags.
+   * Like target groups.
    *
    * @param filter the filter
    * @param locales the locales
    * @return the predicate
    */
-  private Predicate tags(String filter, List<String> locales) {
+  private Predicate likeTargetGroups(String filter, List<String> locales) {
+    return query.targetGroups.any().translatables.any().name.likeIgnoreCase(filter)
+    .and(query.targetGroups.any().translatables.any().language.locale.in(locales));
+  }
+
+  /**
+   * Like tags.
+   *
+   * @param filter the filter
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate likeTags(String filter, List<String> locales) {
     return query.tags.any().translatables.any().name.likeIgnoreCase(filter)
         .and(query.tags.any().translatables.any().language.locale.in(locales));
   }
 
   /**
-   * Category.
+   * Like category.
    *
    * @param filter the filter
    * @param locales the locales
    * @return the predicate
    */
-  private Predicate category(String filter, List<String> locales) {
+  private Predicate likeCategory(String filter, List<String> locales) {
     return query.category.translatables.any().name.likeIgnoreCase(filter)
         .and(query.category.translatables.any().language.locale.in(locales));
   }
@@ -160,11 +167,11 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   }
   
   /**
-   * For id with any of.
+   * For id with any of providers.
    *
    * @param activityId the activity id
    * @param providers the providers
-   * @return the predicate
+   * @return the boolean expression
    */
   public BooleanExpression forIdWithAnyOfProviders(
       String activityId, List<ProviderEntity> providers) {
@@ -172,20 +179,17 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   }
   
   /**
-   * With any of.
+   * With any of providers.
    *
    * @param providers the providers
-   * @return the predicate
+   * @return the boolean expression
    */
   public BooleanExpression withAnyOfProviders(List<ProviderEntity> providers) {
     return query.provider.in(providers);
   }
   
-  /**
-   * With id.
-   *
-   * @param id the id
-   * @return the predicate
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.common.QueryBuilder#withId(java.lang.String)
    */
   public BooleanExpression withId(String id) {
     return query.id.eq(id);
@@ -203,9 +207,9 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   /**
    * Validate params.
    *
-   * @param <P>          the generic type
-   * @param p          the p
-   * @return the activity queries
+   * @param <P> the generic type
+   * @param p the p
+   * @return the activity query param
    */
   private <P extends FilterSortPaginate> ActivityQueryParam validateParams(P p) {
     if (p instanceof ActivityQueryParam) {

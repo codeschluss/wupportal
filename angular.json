@@ -113,6 +113,33 @@
           }
         }
       }
+    },
+    "@portal/mgmt": {
+      "root": "libs/mgmt",
+      "sourceRoot": "libs/mgmt",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/mgmt/tsconfig.json",
+            "project": "libs/mgmt/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json",
+              "libs/mgmt/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   }
 }

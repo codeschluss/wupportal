@@ -4,20 +4,22 @@ import { CrudModel } from './crud.model';
 export interface CrudGraph {
   model: Type<CrudModel>;
   nodes: CrudGraph[];
+  root: boolean;
 }
 
 export class CrudJoiner {
 
   private joinGraph: CrudGraph;
 
-  public static of(model: Type<CrudModel>): CrudJoiner {
-    const root = new this();
-    root.joinGraph = {
+  public static of(model: Type<CrudModel>, root?: boolean): CrudJoiner {
+    const node = new this();
+    node.joinGraph = {
       model: model,
-      nodes: []
+      nodes: [],
+      root: root !== false,
     };
 
-    return root;
+    return node;
   }
 
   public get graph(): CrudGraph {
@@ -27,7 +29,8 @@ export class CrudJoiner {
   public with(model: Type<CrudModel>): CrudJoiner {
     this.joinGraph.nodes.push({
       model: model,
-      nodes: null
+      nodes: null,
+      root: false
     });
 
     return this;
@@ -37,7 +40,7 @@ export class CrudJoiner {
     const filler = (node: CrudGraph) => Object.assign(node, {
       nodes: node.nodes
         ? node.nodes.map((child) => filler(child))
-        : [{ model: model, nodes: null }]
+        : [{ model: model, nodes: null, root: false }]
     });
 
     this.joinGraph.nodes.push(filler(this.joinGraph.nodes.pop()));

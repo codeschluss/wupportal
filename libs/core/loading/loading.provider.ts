@@ -16,7 +16,7 @@ export class LoadingProvider {
 
   public finished(request: HttpRequest<any>): void {
     if (this.requests.includes(request)) {
-      this.requests = this.requests.filter((req) => request !== req);
+      this.requests = this.requests.filter((req) => req !== request);
       this.loads.next(!!this.requests.length);
     }
   }

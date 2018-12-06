@@ -1,11 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
-import { CrudGraph } from './crud.joiner';
+import { CrudGraph, CrudJoiner } from './crud.joiner';
 import { CrudModel } from './crud.model';
 
 @Injectable({ providedIn: 'root' })
 export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
+
+  private resolving: CrudJoiner[] = [];
 
   public constructor(
     private injector: Injector
@@ -14,21 +16,22 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
   public async resolve(route: ActivatedRouteSnapshot):
     Promise<CrudModel | CrudModel[]> {
 
-    const crudJoin = route.data[Object.keys(route.routeConfig.resolve)
-      .find((key) => route.routeConfig.resolve[key] === this.constructor)];
-    const provider = this.injector.get(crudJoin.graph.model['provider']);
-    const response = route.params.uuid
+    const joiner = route.data[Object.keys(route.routeConfig.resolve)
+      .filter((key) => route.routeConfig.resolve[key] === this.constructor)
+      .filter((key) => route.data[key] instanceof CrudJoiner)
+      .find((key) => !this.resolving.includes(route.data[key]))];
+
+    this.resolving.push(joiner);
+    const provider = this.injector.get(joiner.graph.model['provider']);
+    const response = joiner.graph.root && route.params.uuid
       ? await provider.findOne(route.params.uuid)
       : await provider.findAll();
 
-    if (Array.isArray(response)) {
-      for (const model of response) {
-        await this.resolver(model, crudJoin.graph.nodes);
-      }
-    } else {
-      await this.resolver(response, crudJoin.graph.nodes);
-    }
+    Array.isArray(response)
+      ? await response.map((model) => this.resolver(model, joiner.graph.nodes))
+      : await this.resolver(response, joiner.graph.nodes);
 
+    this.resolving.splice(this.resolving.indexOf(joiner), 1);
     return response;
   }
 
@@ -36,7 +39,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     if (!model.constructor['provider']) { return; }
     const provider = this.injector.get(model.constructor['provider']);
 
-    for (const node of nodes) {
+    nodes.forEach(async (node) => {
       const crudLink = provider.system.linked
         .find((link) => link.model === node.model);
 
@@ -52,7 +55,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       }
 
       Object.defineProperty(model, crudLink.field, { value: value });
-    }
+    });
   }
 
 }

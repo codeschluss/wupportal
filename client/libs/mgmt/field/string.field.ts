@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+import { BaseFieldComponent } from '../base/base.field';
+
+@Component({
+  template: BaseFieldComponent.template(`
+    <input matInput [formControlName]="field.name" [type]="field.type">
+  `)
+})
+
+export class StringFieldComponent extends BaseFieldComponent { }

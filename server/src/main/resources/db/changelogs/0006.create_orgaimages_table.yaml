@@ -1,0 +1,62 @@
+databaseChangeLog:
+- changeSet:
+    id: 1544109074608-9
+    author: vetemi (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: organisation_imagesPK
+            name: id
+            type: CHAR(36)
+        - column:
+            constraints:
+                nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created
+            type: datetime
+        - column:
+            constraints:
+                nullable: false
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: modified
+            type: datetime
+        - column:
+            name: caption
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: image
+            type: MEDIUMBLOB
+        - column:
+            constraints:
+                nullable: false
+            name: organisation_id
+            type: CHAR(36)
+        tableName: organisation_images
+- changeSet:
+    id: 1544109074608-10
+    author: vetemi (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: organisation_id
+        indexName: FK7g8ail9k3qemtckcvyfuykhci
+        tableName: organisation_images
+- changeSet:
+    id: 1544109074608-11
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: organisation_id
+        baseTableName: organisation_images
+        constraintName: FK7g8ail9k3qemtckcvyfuykhci
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: organisations
+        validate: true

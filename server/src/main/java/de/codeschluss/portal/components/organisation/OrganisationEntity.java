@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.address.AddressEntity;
+import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.organisation.translations.OrganisationTranslatablesEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
@@ -15,7 +16,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,6 +28,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -43,6 +44,10 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "organisations")
 @Relation(collectionRelation = "data")
+@GenericGenerator(
+    name = "UUID",
+    strategy = "org.hibernate.id.UUIDGenerator"
+)
 public class OrganisationEntity extends LocalizedEntity<OrganisationTranslatablesEntity> {
   
   private static final long serialVersionUID = 1L;
@@ -51,10 +56,6 @@ public class OrganisationEntity extends LocalizedEntity<OrganisationTranslatable
   @JsonDeserialize
   @Transient
   private String description;
-  
-  @Lob
-  @Column(columnDefinition = "MEDIUMBLOB")
-  private byte[] image;
 
   private String mail;
 
@@ -77,4 +78,7 @@ public class OrganisationEntity extends LocalizedEntity<OrganisationTranslatable
   @JsonIgnore
   @ToString.Exclude
   private List<ProviderEntity> providers;
+  
+  @OneToMany(mappedBy = "organisation", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  private List<OrganisationImageEntity> images;
 }

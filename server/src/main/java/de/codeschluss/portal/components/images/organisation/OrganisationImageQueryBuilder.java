@@ -1,0 +1,48 @@
+package de.codeschluss.portal.components.images.organisation;
+
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+
+import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.utils.FilterSortPaginate;
+
+import org.springframework.stereotype.Service;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OrganisationImageQueryBuilder.
+ *
+ * @author Valmir Etemi
+ */
+@Service
+public class OrganisationImageQueryBuilder extends QueryBuilder<QOrganisationImageEntity> {
+
+  /**
+   * Instantiates a new organisation image query builder.
+   *
+   */
+  public OrganisationImageQueryBuilder() {
+    super(QOrganisationImageEntity.organisationImageEntity);
+  }
+
+  /* (non-Javadoc)
+   * @see de.codeschluss.portal.core.common
+   * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
+   */
+  @Override
+  public <P extends FilterSortPaginate> Predicate search(P params) {
+    String filter = prepareFilter(params.getFilter());
+    return query.organisation.name.likeIgnoreCase(filter);
+  }
+
+  /**
+   * For organisation id.
+   *
+   * @param organisationId the organisation id
+   * @return the boolean expression
+   */
+  public BooleanExpression forOrganisationId(String organisationId) {
+    return query.organisation.id.eq(organisationId);
+  }
+
+}

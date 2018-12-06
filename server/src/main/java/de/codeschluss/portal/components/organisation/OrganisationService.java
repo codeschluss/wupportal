@@ -2,6 +2,7 @@ package de.codeschluss.portal.components.organisation;
 
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
+import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.common.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
@@ -144,5 +145,31 @@ public class OrganisationService
     return repo
         .findOne(entities.forActivity(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
+  }
+
+  /**
+   * Adds the image.
+   *
+   * @param organisationId the organisation id
+   * @param image the image
+   * @return the list
+   */
+  public List<OrganisationImageEntity> addImage(
+      String organisationId, OrganisationImageEntity image) {
+    OrganisationEntity organisation = getById(organisationId);
+    organisation.getImages().add(image);
+    return repo.save(organisation).getImages();
+  }
+
+  /**
+   * Delete images.
+   *
+   * @param organisationId the organisation id
+   * @param imagesIds the images ids
+   */
+  public void deleteImages(String organisationId, List<String> imagesIds) {
+    OrganisationEntity organisation = getById(organisationId);
+    organisation.getImages().removeIf(image -> imagesIds.contains(image.getId()));
+    repo.save(organisation);
   }
 }

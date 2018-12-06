@@ -7,18 +7,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
@@ -27,12 +27,12 @@ databaseChangeLog:
             type: TEXT
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: name
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueBoolean: false
             name: show_user
             type: BIT(1)
@@ -41,12 +41,12 @@ databaseChangeLog:
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: category_id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: provider_id
             type: CHAR(36)
         tableName: activities
@@ -58,17 +58,17 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: activity_id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: tag_id
             type: CHAR(36)
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: VARCHAR(255)
         tableName: activities_tags
@@ -80,17 +80,17 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: activity_id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: target_group_id
             type: CHAR(36)
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: VARCHAR(255)
         tableName: activities_target_groups
@@ -102,7 +102,7 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
@@ -128,13 +128,13 @@ databaseChangeLog:
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
@@ -147,25 +147,25 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: color
             type: VARCHAR(255)
         - column:
@@ -173,8 +173,8 @@ databaseChangeLog:
             type: TEXT
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: name
             type: VARCHAR(255)
         tableName: categories
@@ -186,29 +186,29 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: item
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: value
             type: VARCHAR(255)
         tableName: configurations
@@ -220,27 +220,27 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: locale
             type: VARCHAR(6)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: model
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: foreign_key
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: field
             type: VARCHAR(255)
         - column:
@@ -255,13 +255,13 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: name
             type: VARCHAR(255)
         - column:
@@ -284,13 +284,13 @@ databaseChangeLog:
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
@@ -303,18 +303,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
@@ -328,12 +328,12 @@ databaseChangeLog:
             type: BIT(1)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: organisation_id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: user_id
             type: CHAR(36)
         tableName: providers
@@ -345,18 +345,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
@@ -378,13 +378,13 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: name
             type: VARCHAR(255)
         - column:
@@ -395,7 +395,7 @@ databaseChangeLog:
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
@@ -408,18 +408,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
@@ -428,8 +428,8 @@ databaseChangeLog:
             type: TEXT
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: name
             type: VARCHAR(255)
         tableName: tags
@@ -441,12 +441,12 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
@@ -461,8 +461,8 @@ databaseChangeLog:
             type: TEXT
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: name
             type: VARCHAR(255)
         tableName: target_groups
@@ -474,31 +474,31 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: locale
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: name
             type: VARCHAR(255)
         tableName: translations
@@ -510,7 +510,7 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              primaryKey: true
+                primaryKey: true
             name: id
             type: CHAR(36)
         - column:
@@ -521,7 +521,7 @@ databaseChangeLog:
             type: datetime
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: datetime
@@ -530,7 +530,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: password
             type: VARCHAR(255)
         - column:
@@ -542,8 +542,8 @@ databaseChangeLog:
             type: BIT(1)
         - column:
             constraints:
-              nullable: false
-              unique: true
+                nullable: false
+                unique: true
             name: username
             type: VARCHAR(255)
         tableName: users

@@ -6,10 +6,14 @@ databaseChangeLog:
     - include:
         file: classpath:db/changelogs/0001.rename_translations_languages.yaml
     - include:
-        file: classpath:db/changelogs/0002.add_translatables.yaml
+        file: classpath:db/changelogs/0002.create_translatables_tables.yaml
     - include:
-        file: classpath:db/changelogs/0003.transfrom_translatable_defaults.yaml
+        file: classpath:db/changelogs/0003.transfrom_translatable_data.yaml
     - include:
         file: classpath:db/changelogs/0004.drop_translatables_columns.yaml
     - include:
         file: classpath:db/changelogs/0005.add_videourl_column.yaml
+    - include:
+        file: classpath:db/changelogs/0006.create_orgaimages_table.yaml
+    - include:
+        file: classpath:db/changelogs/0007.drop_orgaimages_column.yaml

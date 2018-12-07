@@ -8,7 +8,6 @@ import { ChipListFieldComponent } from '../field/chip-list.field';
 import { DatetimeFieldComponent } from '../field/datetime.field';
 import { SelectFieldComponent } from '../field/select.field';
 import { StringFieldComponent } from '../field/string.field';
-import { TextareaFieldComponent } from '../field/textarea.field';
 
 const ModuleLoop = [
   MatAutocompleteModule,
@@ -30,8 +29,7 @@ const ModuleLoop = [
     ChipListFieldComponent,
     DatetimeFieldComponent,
     SelectFieldComponent,
-    StringFieldComponent,
-    TextareaFieldComponent
+    StringFieldComponent
   ],
   exports: [
     BaseFieldComponent,

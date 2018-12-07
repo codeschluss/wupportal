@@ -5,7 +5,7 @@ import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
   template: BaseFieldComponent.template(`
-    <mat-select [formControl]="select" [multiple]="multiple">
+    <mat-select [formControl]="select" [multiple]="field.multi">
       <ng-container *ngFor="let model of field.options">
         <mat-option [value]="model.id">
           {{ toLabel(model) }}
@@ -17,13 +17,10 @@ import { BaseFieldComponent } from '../base/base.field';
 
 export class SelectFieldComponent extends BaseFieldComponent {
 
-  public multiple: boolean;
-
   public select: FormControl = new FormControl();
 
   protected ngPostInit(): void {
-    this.multiple = Array.isArray(this.value);
-    this.select.setValue(this.toId(this.value));
+    if (this.value) { this.select.setValue(this.toId(this.value)); }
     this.select.valueChanges
       .pipe(map((change) => this.toModel(change)))
       .subscribe((change) => this.value = change);

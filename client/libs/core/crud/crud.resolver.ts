@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { CrudGraph, CrudJoiner } from './crud.joiner';
 import { CrudModel } from './crud.model';
 
@@ -36,26 +36,34 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
   }
 
   private async resolver(model: CrudModel, nodes: CrudGraph[]): Promise<any> {
-    if (!model.constructor['provider']) { return; }
-    const provider = this.injector.get(model.constructor['provider']);
+    if (model.constructor['provider']) {
+      const provider = this.injector.get(model.constructor['provider']);
 
-    nodes.forEach(async (node) => {
-      const crudLink = provider.system.linked
-        .find((link) => link.model === node.model);
+      for (const node of nodes) {
+        const link = provider.system.linked
+          .find((lnk) => lnk.model === node.model);
 
-      let value; try {
-        value = await provider.system.call(crudLink.method, model.id).pipe(
-          map((response) => provider.system.cast(response, crudLink.model)),
-          tap((response) => provider.system.purge(response))
-        ).toPromise();
-      } catch (error) { }
+        let value;
+        if ((model._embedded || { })[link.field]) {
+          value = Object.assign(new link.model(), model._embedded[link.field]);
+        } else {
+          try {
+            value = await provider.system.call(link.method, model.id).pipe(
+              map((response) => provider.system.cast(response, link.model))
+            ).toPromise();
+          } catch (error) { }
+        }
 
-      if (value && node.nodes && node.nodes.length) {
-        await this.resolver(value, node.nodes);
+        if (value) {
+          if (node.nodes.length) {
+            await this.resolver(value, node.nodes);
+          }
+          provider.system.purge(value);
+        }
+
+        Object.defineProperty(model, link.field, { value: value });
       }
-
-      Object.defineProperty(model, crudLink.field, { value: value });
-    });
+    }
   }
 
 }

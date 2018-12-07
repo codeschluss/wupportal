@@ -94,7 +94,7 @@ public class OrganisationImageService
       String caption, 
       OrganisationEntity organisation) throws IOException {
     String mimeType = contentDetector.detect(imageFile.getBytes());
-    byte[] image = imageService.prepare(imageFile);
+    byte[] image = imageService.resize(imageFile);
     OrganisationImageEntity saved = repo.save(new OrganisationImageEntity(
         caption, image, mimeType, organisation));
     return assembler.toResource(saved);

@@ -15,7 +15,6 @@ import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.OrgaAdminOrSuperUserPermission;
-import de.codeschluss.portal.core.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
 import java.io.IOException;
@@ -347,7 +346,7 @@ public class OrganisationController
    * @return the response entity
    */
   @PostMapping("/organisations/{organisationId}/images")
-  @OwnOrOrgaActivityOrSuperUserPermission
+  @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> addImage(@PathVariable String organisationId,
       @RequestParam(name = "caption", required = false) String caption, 
       @RequestParam("file") MultipartFile imageFile) {
@@ -372,7 +371,7 @@ public class OrganisationController
    * @return the response entity
    */
   @DeleteMapping("/organisations/{organisationId}/images/{imageId}")
-  @OwnOrOrgaActivityOrSuperUserPermission
+  @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> deleteImages(@PathVariable String organisationId,
       @PathVariable String... imageId) {
     try {

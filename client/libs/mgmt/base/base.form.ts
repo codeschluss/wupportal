@@ -10,6 +10,7 @@ export interface FormField {
   value: any;
   label?: string;
   model?: Type<CrudModel>;
+  multi?: boolean;
   options?: CrudModel[];
   tests?: ValidatorFn[];
   type?: string;

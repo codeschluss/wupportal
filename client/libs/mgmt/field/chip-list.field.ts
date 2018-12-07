@@ -66,6 +66,7 @@ export class ChipListFieldComponent extends BaseFieldComponent {
   }
 
   protected ngPostInit(): void {
+    if (!this.value) { this.value = []; }
     this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
     this.options = this.search.valueChanges
       .pipe(startWith(''), map((label) => this.optionalize(label)));

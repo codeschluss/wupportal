@@ -375,7 +375,7 @@ public class OrganisationController
   public ResponseEntity<?> deleteImages(@PathVariable String organisationId,
       @PathVariable String... imageId) {
     try {
-      service.deleteImages(organisationId, Arrays.asList(imageId));
+      organisationImageService.deleteAll(Arrays.asList(imageId));
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Organisation does not exist");

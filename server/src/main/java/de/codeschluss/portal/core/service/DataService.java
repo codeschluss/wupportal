@@ -139,6 +139,16 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?
   public void delete(String id) {
     repo.deleteById(id);
   }
+  
+
+  /**
+   * Delete all.
+   *
+   * @param ids the ids
+   */
+  public void deleteAll(List<String> ids) {
+    ids.forEach(id -> repo.deleteById(id));
+  }
 
   /**
    * Gets the sorted list.

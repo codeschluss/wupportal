@@ -2,9 +2,10 @@ package de.codeschluss.portal.core.i18n.language;
 
 import com.google.common.net.HttpHeaders;
 
-import de.codeschluss.portal.core.appconfig.TranslationsConfig;
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.BadParamsException;
+import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.i18n.TranslationsConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
   protected HttpServletRequest request;
 
   /** The config. */
-  protected TranslationsConfig config;
+  protected TranslationsConfiguration config;
   
   /**
    * Instantiates a new language service.
@@ -43,15 +44,15 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
       LanguageQueryBuilder entities,
       LanguageResourceAssembler assembler,
       HttpServletRequest request,
-      TranslationsConfig config) {
+      TranslationsConfiguration config) {
     super(repo, entities, assembler);
     this.request = request;
     this.config = config;
   }
 
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
-   * .DataService#getExisting(de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service
+   * .DataService#getExisting(de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public LanguageEntity getExisting(LanguageEntity newLanguage) {
@@ -59,23 +60,29 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
         entities.withLocaleOrLanguage(newLanguage.getLocale(),newLanguage.getName())).orElse(null);
   }
   
-  public boolean existsForLocales(List<String> locales) {
+  public boolean existsByLocales(List<String> locales) {
     return repo.exists(entities.withLocaleIn(locales));
   }
 
-  public boolean existsForLocale(String locale) {
+  public boolean existsByLocale(String locale) {
     return repo.exists(entities.withLocale(locale));
+  }
+  
+  public LanguageEntity getByLocale(String locale) {
+    return repo.findOne(entities.withLocale(locale))
+        .orElseThrow(() -> new NotFoundException(locale));
   }
 
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
-   * .DataService#update(java.lang.String, de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service
+   * .DataService#update(java.lang.String, de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public LanguageEntity update(String id, LanguageEntity newLanguage) {
     return repo.findById(id).map(language -> {
       language.setName(newLanguage.getName());
       language.setLocale(newLanguage.getLocale());
+      language.setMachineTranslated(newLanguage.getMachineTranslated());
       return repo.save(language);
     }).orElseGet(() -> {
       newLanguage.setId(id);

@@ -5,19 +5,22 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.activity.ActivityService;
 import de.codeschluss.portal.components.address.AddressService;
+import de.codeschluss.portal.components.images.organisation.OrganisationImageService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.components.user.UserService;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.OrgaAdminOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.hateoas.Resource;
@@ -28,7 +31,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -55,6 +60,9 @@ public class OrganisationController
   
   /** The translation service. */
   private final TranslationService translationService;
+  
+  /** The image service. */
+  private final OrganisationImageService organisationImageService;
 
   /**
    * Instantiates a new organisation controller.
@@ -72,19 +80,20 @@ public class OrganisationController
    */
   public OrganisationController(OrganisationService service, ProviderService providerService,
       UserService userService, AddressService addressService, ActivityService activityService,
-      TranslationService translationService) {
+      TranslationService translationService, OrganisationImageService organisationImageService) {
     super(service);
     this.providerService = providerService;
     this.userService = userService;
     this.addressService = addressService;
     this.activityService = activityService;
     this.translationService = translationService;
+    this.organisationImageService = organisationImageService;
   }
 
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.CrudController#findAll(de.codeschluss.
+   * @see de.codeschluss.portal.core.service.CrudController#findAll(de.codeschluss.
    * portal.core.utils.FilterSortPaginate)
    */
   @Override
@@ -97,7 +106,7 @@ public class OrganisationController
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#findOne(java.lang.String)
+   * de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
    */
   @Override
   @GetMapping("/organisations/{organisationId}")
@@ -109,7 +118,7 @@ public class OrganisationController
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#add(de.codeschluss.portal.
+   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
    * core.common.BaseEntity)
    */
   @Override
@@ -123,7 +132,7 @@ public class OrganisationController
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#update(de.codeschluss.portal
+   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
    * .core.common.BaseEntity, java.lang.String)
    */
   @Override
@@ -138,7 +147,7 @@ public class OrganisationController
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#delete(java.lang.String)
+   * de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
    */
   @Override
   @DeleteMapping("/organisations/{organisationId}")
@@ -312,6 +321,64 @@ public class OrganisationController
         | IllegalArgumentException
         | InvocationTargetException e) {
       throw new RuntimeException("Translations are not available");
+    }
+  }
+  
+  /**
+   * Find images.
+   *
+   * @param organisationId
+   *          the organisation id
+   * @return the response entity
+   */
+  @GetMapping("/organisations/{organisationId}/images")
+  public ResponseEntity<?> findImages(@PathVariable String organisationId) {
+    return ok(organisationImageService.getResourcesByOrganisation(organisationId));
+  }
+  
+
+  /**
+   * Adds the image.
+   *
+   * @param organisationId the organisation id
+   * @param caption the caption
+   * @param imageFile the image file
+   * @return the response entity
+   */
+  @PostMapping("/organisations/{organisationId}/images")
+  @OrgaAdminOrSuperUserPermission
+  public ResponseEntity<?> addImage(@PathVariable String organisationId,
+      @RequestParam(name = "caption", required = false) String caption, 
+      @RequestParam("file") MultipartFile imageFile) {
+    try {
+      Resource<?> saved = organisationImageService.addResource(
+          imageFile, caption, service.getById(organisationId));
+      return ok(saved);
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Given Organisation does not exist");
+    } catch (IOException e) {
+      throw new BadParamsException("Image Upload not possible");
+    }
+  }
+
+  /**
+   * Delete images.
+   *
+   * @param organisationId
+   *          the organisation id
+   * @param imageId
+   *          the image id
+   * @return the response entity
+   */
+  @DeleteMapping("/organisations/{organisationId}/images/{imageId}")
+  @OrgaAdminOrSuperUserPermission
+  public ResponseEntity<?> deleteImages(@PathVariable String organisationId,
+      @PathVariable String... imageId) {
+    try {
+      service.deleteImages(organisationId, Arrays.asList(imageId));
+      return noContent().build();
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Given Organisation does not exist");
     }
   }
 }

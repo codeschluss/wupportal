@@ -3,8 +3,8 @@ package de.codeschluss.portal.core.i18n.translation;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import de.codeschluss.portal.core.common.CrudController;
-import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 
 import java.util.ArrayList;
@@ -27,8 +27,8 @@ public class TranslationResourceAssembler
   CrudController<?,?> currentController;
   
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
-   * .PagingAndSortingAssembler#createResourceLinks(de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service
+   * .PagingAndSortingAssembler#createResourceLinks(de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   protected List<Link> createResourceLinks(TranslatableEntity<?> entity) {

@@ -4,7 +4,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import de.codeschluss.portal.components.activity.ActivityController;
-import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 
 import java.util.ArrayList;
 import java.util.List;

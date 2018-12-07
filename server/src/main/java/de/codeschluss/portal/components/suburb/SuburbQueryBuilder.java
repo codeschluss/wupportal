@@ -4,8 +4,8 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.components.suburb.QSuburbEntity;
-import de.codeschluss.portal.core.common.QueryBuilder;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.service.QueryBuilder;
 
 import org.springframework.stereotype.Service;
 

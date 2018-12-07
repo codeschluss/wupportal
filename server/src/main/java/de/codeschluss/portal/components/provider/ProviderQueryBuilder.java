@@ -2,8 +2,8 @@ package de.codeschluss.portal.components.provider;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 
-import de.codeschluss.portal.core.common.QueryBuilder;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.service.QueryBuilder;
 
 import java.util.List;
 
@@ -118,7 +118,7 @@ public class ProviderQueryBuilder extends QueryBuilder<QProviderEntity> {
   }
 
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common.QueryBuilder#fuzzySearch(java.lang.String)
+   * @see de.codeschluss.portal.core.service.QueryBuilder#fuzzySearch(java.lang.String)
    */
   @Override
   public BooleanExpression search(FilterSortPaginate params) {

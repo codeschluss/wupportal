@@ -6,7 +6,7 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.service.DataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
@@ -96,8 +96,8 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service.DataService#update(java.lang.String,
+   * de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public ActivityEntity update(String id, ActivityEntity newActivity) {

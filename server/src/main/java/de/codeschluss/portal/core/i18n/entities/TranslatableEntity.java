@@ -2,8 +2,8 @@ package de.codeschluss.portal.core.i18n.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.codeschluss.portal.core.common.BaseEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;

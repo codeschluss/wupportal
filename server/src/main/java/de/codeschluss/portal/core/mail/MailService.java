@@ -2,7 +2,6 @@ package de.codeschluss.portal.core.mail;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.user.UserEntity;
-import de.codeschluss.portal.core.appconfig.MailConfiguration;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

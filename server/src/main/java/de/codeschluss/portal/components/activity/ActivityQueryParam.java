@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.activity;
 
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 
 import java.util.List;
 

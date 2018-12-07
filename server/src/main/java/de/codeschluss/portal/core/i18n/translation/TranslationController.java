@@ -59,8 +59,8 @@ public class TranslationController {
   private boolean isValid(TranslationQueryParam params, Map<String, String> labels) {
     return params.getSource() != null && !params.getSource().isEmpty()
         && params.getTargets() != null && !params.getTargets().isEmpty()
-        && languageService.existsForLocale(params.getSource()) 
-        && languageService.existsForLocales(params.getTargets())
+        && languageService.existsByLocale(params.getSource()) 
+        && languageService.existsByLocales(params.getTargets())
         && !labels.isEmpty();
   }
 }

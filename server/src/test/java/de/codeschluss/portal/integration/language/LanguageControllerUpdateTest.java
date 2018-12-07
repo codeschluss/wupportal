@@ -30,8 +30,7 @@ public class LanguageControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    LanguageEntity language = 
-        new LanguageEntity("fr", "updateSuperUserOk");
+    LanguageEntity language = new LanguageEntity("fr", "updateSuperUserOk", "updateSuperUserOk");
     String languageId = "00000000-0000-0000-0013-200000000000";
 
     controller.update(language, languageId);
@@ -43,18 +42,18 @@ public class LanguageControllerUpdateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedLocale() throws URISyntaxException {
-    LanguageEntity language = 
-        new LanguageEntity("es", "updateSuperUserDuplicatedLocale");
+    LanguageEntity language = new LanguageEntity("es", "updateSuperUserDuplicatedLocale",
+        "updateSuperUserDuplicatedLocale");
     String languageId = "00000000-0000-0000-0013-200000000000";
 
     controller.update(language, languageId);
   }
-  
+
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedName() throws URISyntaxException {
-    LanguageEntity language = 
-        new LanguageEntity("updateSuperUserDuplicatedName", "ToRead");
+    LanguageEntity language = new LanguageEntity("updateSuperUserDuplicatedName", "ToRead",
+        "updateSuperUserDuplicatedName");
     String languageId = "00000000-0000-0000-0013-200000000000";
 
     controller.update(language, languageId);
@@ -63,8 +62,8 @@ public class LanguageControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    LanguageEntity language = 
-        new LanguageEntity("updateProviderUserDenied", "updateProviderUserDenied");
+    LanguageEntity language = new LanguageEntity("updateProviderUserDenied",
+        "updateProviderUserDenied", "updateProviderUserDenied");
     String languageId = "00000000-0000-0000-0013-100000000000";
 
     controller.update(language, languageId);
@@ -72,8 +71,8 @@ public class LanguageControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    LanguageEntity language = 
-        new LanguageEntity("updateNoUserDenied", "updateNoUserDenied");
+    LanguageEntity language = new LanguageEntity("updateNoUserDenied", "updateNoUserDenied",
+        "updateNoUserDenied");
     String languageId = "00000000-0000-0000-0013-100000000000";
 
     controller.update(language, languageId);

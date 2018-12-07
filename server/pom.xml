@@ -20,6 +20,8 @@
 		<springfoxswagger.version>2.8.0</springfoxswagger.version>
 		<oauth.version>3.4.0</oauth.version>
 		<greenmail.version>1.5.5</greenmail.version>
+		<tika.version>1.19.1</tika.version>
+		<imagesclr.version>4.2</imagesclr.version>
 	</properties>
 
 	<parent>
@@ -116,7 +118,17 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-maven-plugin</artifactId>
-			<version>3.6.2</version>
+			<version>${liquibase.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>${tika.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>${imagesclr.version}</version>
 		</dependency>
 
 		<dependency>

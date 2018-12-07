@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.suburb.SuburbEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 

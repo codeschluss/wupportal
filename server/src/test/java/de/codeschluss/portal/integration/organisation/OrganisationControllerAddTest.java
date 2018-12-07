@@ -35,9 +35,8 @@ public class OrganisationControllerAddTest {
   @Test
   @WithUserDetails("super@user")
   public void addSuperUserOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("addSuperUserOk", null,
-        "add@SuperUserOk", "addSuperUserOk", "123456789", "addSuperUserOk", "addSuperUserOk", null,
-        null);
+    OrganisationEntity organisation = new OrganisationEntity("addSuperUserOk", "add@SuperUserOk",
+        "addSuperUserOk", "123456789", "addSuperUserOk", "addSuperUserOk", null, null, null);
 
     controller.add(organisation);
 
@@ -47,8 +46,8 @@ public class OrganisationControllerAddTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("organisation1", null, "organisation1",
-        "organisation1", "123456789", "organisation1", "organisation1", null, null);
+    OrganisationEntity organisation = new OrganisationEntity("organisation1", "organisation1",
+        "organisation1", "123456789", "organisation1", "organisation1", null, null, null);
 
     controller.add(organisation);
   }
@@ -56,18 +55,17 @@ public class OrganisationControllerAddTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("addProviderDenied", null,
+    OrganisationEntity organisation = new OrganisationEntity("addProviderDenied",
         "addProviderDenied", "addProviderDenied", "123456789", "addProviderDenied",
-        "addProviderDenied", null, null);
+        "addProviderDenied", null, null, null);
 
     controller.add(organisation);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("addNoUserDenied", null,
-        "addNoUserDenied", "addNoUserDenied", "123456789", "addNoUserDenied", "addNoUserDenied",
-        null, null);
+    OrganisationEntity organisation = new OrganisationEntity("addNoUserDenied", "addNoUserDenied",
+        "addNoUserDenied", "123456789", "addNoUserDenied", "addNoUserDenied", null, null, null);
 
     controller.add(organisation);
   }

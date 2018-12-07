@@ -3,8 +3,8 @@ package de.codeschluss.portal.components.address;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
-import de.codeschluss.portal.core.common.QueryBuilder;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.service.QueryBuilder;
 
 import java.util.List;
 
@@ -81,7 +81,7 @@ public class AddressQueryBuilder extends QueryBuilder<QAddressEntity> {
   }
 
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common.QueryBuilder#withIdsIn(java.util.List)
+   * @see de.codeschluss.portal.core.service.QueryBuilder#withIdsIn(java.util.List)
    */
   @Override
   public Predicate withIdsIn(List<String> ids) {

@@ -7,14 +7,14 @@ import de.codeschluss.portal.components.activity.ActivityService;
 import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.security.permissions.OwnUserOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.OwnUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -74,7 +74,7 @@ public class UserController extends CrudController<UserEntity, UserService> {
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.CrudController#findAll(de.codeschluss.
+   * @see de.codeschluss.portal.core.service.CrudController#findAll(de.codeschluss.
    * portal.core.utils.FilterSortPaginate)
    */
   @Override
@@ -85,7 +85,7 @@ public class UserController extends CrudController<UserEntity, UserService> {
   }
 
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common.CrudController#findOne(java.lang.String)
+   * @see de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
    */
   @Override
   @GetMapping("/users/{userId}")
@@ -98,7 +98,7 @@ public class UserController extends CrudController<UserEntity, UserService> {
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#add(de.codeschluss.portal.
+   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
    * core.common.BaseEntity)
    */
   @Override
@@ -111,7 +111,7 @@ public class UserController extends CrudController<UserEntity, UserService> {
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#update(de.codeschluss.portal
+   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
    * .core.common.BaseEntity, java.lang.String)
    */
   @Override
@@ -123,7 +123,7 @@ public class UserController extends CrudController<UserEntity, UserService> {
   }
 
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common.CrudController#delete(java.lang.String)
+   * @see de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
    */
   @Override
   @DeleteMapping("/users/{userId}")

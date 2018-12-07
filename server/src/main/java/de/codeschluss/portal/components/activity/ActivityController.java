@@ -15,7 +15,7 @@ import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.tag.TagService;
 import de.codeschluss.portal.components.targetgroup.TargetGroupService;
 import de.codeschluss.portal.components.user.UserService;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
@@ -132,7 +132,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#findOne(java.lang.String)
+   * de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
    */
   @Override
   @GetMapping("/activities/{activityId}")
@@ -144,7 +144,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#add(de.codeschluss.portal.
+   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
    * core.common.BaseEntity)
    */
   @Override
@@ -172,7 +172,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#update(de.codeschluss.portal
+   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
    * .core.common.BaseEntity, java.lang.String)
    */
   @Override
@@ -187,7 +187,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#delete(java.lang.String)
+   * de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
    */
   @Override
   @DeleteMapping("/activities/{activityId}")

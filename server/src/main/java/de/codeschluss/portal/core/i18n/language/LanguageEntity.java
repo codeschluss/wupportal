@@ -1,6 +1,6 @@
 package de.codeschluss.portal.core.i18n.language;
 
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.io.Serializable;
 
@@ -38,4 +38,6 @@ public class LanguageEntity extends BaseEntity implements Serializable {
 
   @Column(nullable = false, unique = true)
   private String name;
+  
+  private String machineTranslated;
 }

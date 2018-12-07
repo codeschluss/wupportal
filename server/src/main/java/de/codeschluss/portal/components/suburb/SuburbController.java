@@ -1,8 +1,8 @@
 package de.codeschluss.portal.components.suburb;
 
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 

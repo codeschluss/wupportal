@@ -7,18 +7,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -27,12 +27,12 @@ databaseChangeLog:
             type: CLOB
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: name
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueBoolean: false
             name: show_user
             type: BOOLEAN
@@ -41,12 +41,12 @@ databaseChangeLog:
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: category_id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: provider_id
             type: CHAR
         tableName: activities
@@ -58,17 +58,17 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: activity_id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: tag_id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: VARCHAR(255)
         tableName: activities_tags
@@ -80,17 +80,17 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: activity_id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: target_group_id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: VARCHAR(255)
         tableName: activities_target_groups
@@ -102,18 +102,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -147,24 +147,24 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: color
             type: VARCHAR(255)
         - column:
@@ -172,7 +172,7 @@ databaseChangeLog:
             type: CLOB
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: name
             type: VARCHAR(255)
         tableName: categories
@@ -184,18 +184,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -206,7 +206,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: value
             type: VARCHAR(255)
         tableName: configurations
@@ -218,18 +218,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -244,7 +244,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: name
             type: VARCHAR(255)
         - column:
@@ -265,18 +265,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -290,12 +290,12 @@ databaseChangeLog:
             type: BOOLEAN
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: organisation_id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: user_id
             type: CHAR
         tableName: providers
@@ -307,18 +307,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -340,18 +340,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -369,18 +369,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -389,7 +389,7 @@ databaseChangeLog:
             type: CLOB
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: name
             type: VARCHAR(255)
         tableName: tags
@@ -401,18 +401,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -421,7 +421,7 @@ databaseChangeLog:
             type: CLOB
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: name
             type: VARCHAR(255)
         tableName: target_groups
@@ -433,29 +433,29 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: locale
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: name
             type: VARCHAR(255)
         tableName: translations
@@ -467,18 +467,18 @@ databaseChangeLog:
         columns:
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: id
             type: CHAR
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: created
             type: TIMESTAMP
         - column:
             constraints:
-              nullable: false
+                nullable: false
             defaultValueComputed: CURRENT_TIMESTAMP
             name: modified
             type: TIMESTAMP
@@ -487,7 +487,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: password
             type: VARCHAR(255)
         - column:
@@ -499,7 +499,7 @@ databaseChangeLog:
             type: BOOLEAN
         - column:
             constraints:
-              nullable: false
+                nullable: false
             name: username
             type: VARCHAR(255)
         tableName: users

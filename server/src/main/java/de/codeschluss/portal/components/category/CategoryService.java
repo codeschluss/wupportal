@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.category;
 
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import org.springframework.hateoas.Resource;
@@ -38,7 +38,7 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
@@ -62,8 +62,8 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
+   * de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public CategoryEntity update(String id, CategoryEntity newCategory) {

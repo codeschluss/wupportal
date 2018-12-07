@@ -3,7 +3,7 @@ package de.codeschluss.portal.integration.targetgroup;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.targetgroup.TargetGroupController;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

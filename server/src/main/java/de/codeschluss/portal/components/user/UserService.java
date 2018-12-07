@@ -1,10 +1,10 @@
 package de.codeschluss.portal.components.user;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
-import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,7 +73,7 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
@@ -101,7 +101,7 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#add(de.codeschluss.portal.core.
+   * de.codeschluss.portal.core.service.ResourceDataService#add(de.codeschluss.portal.core.
    * common.BaseEntity)
    */
   @Override
@@ -113,8 +113,8 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
+   * de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public UserEntity update(String id, UserEntity newUser) {

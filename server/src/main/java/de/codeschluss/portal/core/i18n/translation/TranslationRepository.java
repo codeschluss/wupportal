@@ -1,9 +1,9 @@
 package de.codeschluss.portal.core.i18n.translation;
 
-import de.codeschluss.portal.core.common.DataRepository;
 import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
+import de.codeschluss.portal.core.service.DataRepository;
 
 import java.util.List;
 

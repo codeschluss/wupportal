@@ -4,8 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import de.codeschluss.portal.core.appconfig.JwtConfiguration;
 import de.codeschluss.portal.core.exception.InvalidTokenException;
+import de.codeschluss.portal.core.security.JwtConfiguration;
 import de.codeschluss.portal.core.security.jwt.JwtUserDetails;
 
 import java.util.Arrays;

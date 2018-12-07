@@ -4,9 +4,9 @@ import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.core.utils.ResourceWithEmbeddable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,7 +64,7 @@ public class OrganisationService
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.DataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.service.DataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
@@ -75,8 +75,8 @@ public class OrganisationService
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.DataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service.DataService#update(java.lang.String,
+   * de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public OrganisationEntity update(String id, OrganisationEntity newOrga) {

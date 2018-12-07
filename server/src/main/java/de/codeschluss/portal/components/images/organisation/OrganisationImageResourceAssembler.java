@@ -4,7 +4,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import de.codeschluss.portal.components.organisation.OrganisationController;
-import de.codeschluss.portal.core.common.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,8 @@ public class OrganisationImageResourceAssembler
     extends PagingAndSortingAssembler<OrganisationImageEntity> {
 
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
-   * .PagingAndSortingAssembler#createResourceLinks(de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service
+   * .PagingAndSortingAssembler#createResourceLinks(de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   protected List<Link> createResourceLinks(OrganisationImageEntity image) {

@@ -1,8 +1,0 @@
-databaseChangeLog:
-- changeSet:
-    id: 007.drop_orgaimages_column
-    author: vetemi
-    changes:
-    - dropColumn:
-        columnName: image
-        tableName: organisations

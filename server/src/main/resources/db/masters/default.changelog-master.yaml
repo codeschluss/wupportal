@@ -2,16 +2,18 @@ databaseChangeLog:
     - include:
         file: classpath:db/changelogs/default.intialdb.yaml
     - include:
-        file: classpath:db/changelogs/0001.rename_translations_languages.yaml
+        file: classpath:db/changelogs/0001.rename_translations_table.yaml
     - include:
-        file: classpath:db/changelogs/0002.create_translatables_tables.yaml
+        file: classpath:db/changelogs/0002.add_machinetranslated_column.yaml
     - include:
-        file: classpath:db/changelogs/0003.transfrom_translatable_data.yaml
+        file: classpath:db/changelogs/0003.create_translatables_tables.yaml
     - include:
-        file: classpath:db/changelogs/0004.drop_translatables_columns.yaml
+        file: classpath:db/changelogs/0004.transfrom_translatable_data.yaml
+    # - include:
+    #     file: classpath:db/changelogs/0005.drop_translatables_columns.yaml
     - include:
-        file: classpath:db/changelogs/0005.add_videourl_column.yaml
+        file: classpath:db/changelogs/0006.add_videourl_column.yaml
     - include:
-        file: classpath:db/changelogs/0006.create_orgaimages_table.yaml
+        file: classpath:db/changelogs/0007.create_orgaimages_table.yaml
     - include:
-        file: classpath:db/changelogs/0007.drop_orgaimages_column.yaml
+        file: classpath:db/changelogs/0008.drop_orgaimages_column.yaml

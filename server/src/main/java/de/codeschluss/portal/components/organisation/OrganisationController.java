@@ -5,19 +5,18 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.activity.ActivityService;
 import de.codeschluss.portal.components.address.AddressService;
-import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.components.user.UserService;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.OrgaAdminOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -95,7 +94,7 @@ public class OrganisationController
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.CrudController#findAll(de.codeschluss.
+   * @see de.codeschluss.portal.core.service.CrudController#findAll(de.codeschluss.
    * portal.core.utils.FilterSortPaginate)
    */
   @Override
@@ -108,7 +107,7 @@ public class OrganisationController
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#findOne(java.lang.String)
+   * de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
    */
   @Override
   @GetMapping("/organisations/{organisationId}")
@@ -120,7 +119,7 @@ public class OrganisationController
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#add(de.codeschluss.portal.
+   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
    * core.common.BaseEntity)
    */
   @Override
@@ -134,7 +133,7 @@ public class OrganisationController
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#update(de.codeschluss.portal
+   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
    * .core.common.BaseEntity, java.lang.String)
    */
   @Override
@@ -149,7 +148,7 @@ public class OrganisationController
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#delete(java.lang.String)
+   * de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
    */
   @Override
   @DeleteMapping("/organisations/{organisationId}")
@@ -350,11 +349,12 @@ public class OrganisationController
   @PostMapping("/organisations/{organisationId}/images")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> addImage(@PathVariable String organisationId,
-      @RequestParam("caption") String caption, @RequestParam("file") MultipartFile imageFile) {
+      @RequestParam(name = "caption", required = false) String caption, 
+      @RequestParam("file") MultipartFile imageFile) {
     try {
-      organisationImageService.add(new OrganisationImageEntity(imageFile.getBytes(), caption,
-          service.getById(organisationId)));
-      return findImages(organisationId);
+      Resource<?> saved = organisationImageService.addResource(
+          imageFile, caption, service.getById(organisationId));
+      return ok(saved);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Organisation does not exist");
     } catch (IOException e) {

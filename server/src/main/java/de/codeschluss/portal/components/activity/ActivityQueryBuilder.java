@@ -6,9 +6,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.QueryBuilder;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
+import de.codeschluss.portal.core.service.QueryBuilder;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   }
   
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
+   * @see de.codeschluss.portal.core.service
    * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
    */
   @Override
@@ -189,7 +189,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   }
   
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common.QueryBuilder#withId(java.lang.String)
+   * @see de.codeschluss.portal.core.service.QueryBuilder#withId(java.lang.String)
    */
   public BooleanExpression withId(String id) {
     return query.id.eq(id);

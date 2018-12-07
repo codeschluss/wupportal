@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.category.CategoryController;
 import de.codeschluss.portal.components.category.CategoryEntity;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 

@@ -4,9 +4,9 @@ import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.components.user.UserService;
-import de.codeschluss.portal.core.common.DataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
+import de.codeschluss.portal.core.service.DataService;
 
 import java.util.Collections;
 import java.util.List;

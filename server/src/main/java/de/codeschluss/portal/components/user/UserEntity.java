@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 

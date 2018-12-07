@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.schedule;
 
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.ResourceDataService#getExisting(de.codeschluss.
+   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
    * portal.core.common.BaseEntity)
    */
   @Override
@@ -70,8 +70,8 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
+   * de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public ScheduleEntity update(String id, ScheduleEntity newSchedule) {

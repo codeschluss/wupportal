@@ -1,14 +1,14 @@
 package de.codeschluss.portal.core.i18n.translation;
 
-import de.codeschluss.portal.core.appconfig.TranslationsConfig;
-import de.codeschluss.portal.core.common.CrudController;
-import de.codeschluss.portal.core.common.DataRepository;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.i18n.TranslationsConfiguration;
 import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslationResult;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
-import de.codeschluss.portal.core.utils.RepositoryService;
+import de.codeschluss.portal.core.service.DataRepository;
+import de.codeschluss.portal.core.service.RepositoryService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -44,7 +44,7 @@ public class TranslationService {
   /** The assembler. */
   private final TranslationResourceAssembler assembler;
 
-  private final TranslationsConfig config;
+  private final TranslationsConfiguration config;
 
   /** The translation client. */
   private WebClient translationClient;
@@ -61,7 +61,7 @@ public class TranslationService {
    */
   @Autowired
   public TranslationService(RepositoryService repoService, LanguageService languageService,
-      TranslationResourceAssembler assembler, TranslationsConfig config) {
+      TranslationResourceAssembler assembler, TranslationsConfiguration config) {
     this.repoService = repoService;
     this.languageService = languageService;
     this.assembler = assembler;
@@ -237,17 +237,38 @@ public class TranslationService {
 
     List<TranslationResult> results = new ArrayList<>();
     params.getTargets().stream().forEach(targetLang -> {
-      TranslationResult translation = new TranslationResult();
+      TranslationResult translationResult = new TranslationResult();
       Map<String, String> translatedLabels = new HashMap<>(labels.size());
+      String machineTranslatedLabel = getMachineTranslatedLabel(targetLang);
+      
       labels.forEach((label, text) -> {
-        translatedLabels.put(label, translate(targetLang, params.getSource(), text));
+        String translation = translate(targetLang, params.getSource(), text);
+        translatedLabels.put(label, addMachineTranslatedTo(translation, machineTranslatedLabel));
       });
       
-      translation.setLang(targetLang);
-      translation.setTranslations(translatedLabels);
-      results.add(translation);
+      translationResult.setLang(targetLang);
+      translationResult.setTranslations(translatedLabels);
+      results.add(translationResult);
     });
     return results;
+  }
+  
+
+  /**
+   * Gets the machine translated label.
+   *
+   * @param targetLang the target lang
+   * @return the machine translated label
+   */
+  private String getMachineTranslatedLabel(String targetLang) {
+    String machineTranslated = languageService.getByLocale(targetLang).getMachineTranslated();
+    
+    if (machineTranslated == null || machineTranslated.isEmpty()) {
+      machineTranslated = translate(targetLang, config.getDefaultLocale(),
+          config.getDefaultAutomaticTranslated());
+    }
+    
+    return machineTranslated;
   }
 
   /**
@@ -267,23 +288,9 @@ public class TranslationService {
         .uri(createUri(target, source, text))
         .header("Ocp-Apim-Subscription-Key", config.getServiceSubscriptionKey()).retrieve()
         .bodyToMono(String.class).block();
-    return prepareReponse(response);
+    return prepareReponse(response, target);
   }
-
-
-  /**
-   * Prepare reponse.
-   *
-   * @param response the response
-   * @return the string
-   */
-  private String prepareReponse(String response) {
-    // TODO: Workaround. Not able to properly extract result.
-    return response
-        .replace("<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">", "")
-        .replace("</string>", "");
-  }
-
+  
   /**
    * Creates the uri.
    *
@@ -298,5 +305,30 @@ public class TranslationService {
   private URI createUri(String target, String source, String text) {
     return UriComponentsBuilder.fromUriString(config.getServiceUrl()).queryParam("to", target)
         .queryParam("from", source).queryParam("text", text).build().encode().toUri();
+  }
+
+  /**
+   * Prepare reponse.
+   *
+   * @param response the response
+   * @return the string
+   */
+  private String prepareReponse(String response, String targetLang) {   
+    // TODO: Workaround. Not able to properly extract result.
+    return response
+        .replace("<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">", "")
+        .replace("</string>", "");
+  }
+  
+
+  /**
+   * Adds the machine translated to.
+   *
+   * @param translation the translation
+   * @param machineTranslated the machine translated
+   * @return the string
+   */
+  private String addMachineTranslatedTo(String translation, String machineTranslated) {    
+    return "(" + machineTranslated + ") " + translation;
   }
 }

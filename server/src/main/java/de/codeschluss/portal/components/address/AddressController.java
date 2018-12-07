@@ -3,11 +3,11 @@ package de.codeschluss.portal.components.address;
 import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.suburb.SuburbService;
-import de.codeschluss.portal.core.common.CrudController;
+import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 
@@ -50,7 +50,7 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.common.CrudController#findAll(de.codeschluss.
+   * @see de.codeschluss.portal.core.service.CrudController#findAll(de.codeschluss.
    * portal.core.utils.FilterSortPaginate)
    */
   @Override
@@ -63,7 +63,7 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#findOne(java.lang.String)
+   * de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
    */
   @Override
   @GetMapping("/addresses/{addressId}")
@@ -75,7 +75,7 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#add(de.codeschluss.portal.
+   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
    * core.common.BaseEntity)
    */
   @Override
@@ -89,7 +89,7 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#update(de.codeschluss.portal
+   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
    * .core.common.BaseEntity, java.lang.String)
    */
   @Override
@@ -104,7 +104,7 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
    * (non-Javadoc)
    * 
    * @see
-   * de.codeschluss.portal.core.common.CrudController#delete(java.lang.String)
+   * de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
    */
   @Override
   @DeleteMapping("/addresses/{addressId}")

@@ -2,10 +2,10 @@ package de.codeschluss.portal.integration.language;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.i18n.language.LanguageController;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import java.net.URISyntaxException;
 
@@ -32,7 +32,8 @@ public class LanguageControllerAddTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("addSuperUserOk", "addSuperUserOk");
+    LanguageEntity language = new LanguageEntity("addSuperUserOk", "addSuperUserOk",
+        "addSuperUserOk");
 
     controller.add(language);
 
@@ -45,15 +46,17 @@ public class LanguageControllerAddTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicatedLocale() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("es", "addSuperUserDuplicatedLocale");
+    LanguageEntity language = new LanguageEntity("es", "addSuperUserDuplicatedLocale",
+        "addSuperUserDuplicatedLocale");
 
     controller.add(language);
   }
-  
+
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicatedName() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("addSuperUserDuplicatedName", "ToRead");
+    LanguageEntity language = new LanguageEntity("addSuperUserDuplicatedName", "ToRead",
+        "addSuperUserDuplicatedName");
 
     controller.add(language);
   }
@@ -61,14 +64,16 @@ public class LanguageControllerAddTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("addProviderDenied", "addProviderDenied");
+    LanguageEntity language = new LanguageEntity("addProviderDenied", "addProviderDenied",
+        "addProviderDenied");
 
     controller.add(language);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("addNoUserDenied", "addNoUserDenied");
+    LanguageEntity language = new LanguageEntity("addNoUserDenied", "addNoUserDenied",
+        "addNoUserDenied");
 
     controller.add(language);
   }

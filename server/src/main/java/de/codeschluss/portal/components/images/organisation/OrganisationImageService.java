@@ -1,27 +1,47 @@
 package de.codeschluss.portal.components.images.organisation;
 
-import de.codeschluss.portal.core.common.ResourceDataService;
+import de.codeschluss.portal.components.organisation.OrganisationEntity;
+import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.image.ImageService;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.tika.Tika;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class OrganisationImageService 
     extends ResourceDataService<OrganisationImageEntity, OrganisationImageQueryBuilder> {
+  
+  private final Tika contentDetector;
+  private final ImageService imageService;
 
+  /**
+   * Instantiates a new organisation image service.
+   *
+   * @param repo the repo
+   * @param entities the entities
+   * @param assembler the assembler
+   * @param imageService the image service
+   */
   public OrganisationImageService(
       OrganisationImageRepository repo, 
       OrganisationImageQueryBuilder entities,
-      OrganisationImageResourceAssembler assembler) {
+      OrganisationImageResourceAssembler assembler,
+      ImageService imageService) {
     super(repo, entities, assembler);
+    this.imageService = imageService;
+    this.contentDetector = new Tika();
   }
   
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
-   * .DataService#getExisting(de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service
+   * .DataService#getExisting(de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public OrganisationImageEntity getExisting(OrganisationImageEntity newEntity) {
@@ -29,8 +49,8 @@ public class OrganisationImageService
   }
 
   /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.common
-   * .DataService#update(java.lang.String, de.codeschluss.portal.core.common.BaseEntity)
+   * @see de.codeschluss.portal.core.service
+   * .DataService#update(java.lang.String, de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public OrganisationImageEntity update(String id, OrganisationImageEntity updatedEntity) {
@@ -58,5 +78,25 @@ public class OrganisationImageService
     }
     
     return assembler.entitiesToResources(images, null);
+  }
+
+  /**
+   * Adds the resource.
+   *
+   * @param imageFile the image file
+   * @param caption the caption
+   * @param organisation the organisation
+   * @return the resource
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  public Resource<?> addResource(
+      MultipartFile imageFile, 
+      String caption, 
+      OrganisationEntity organisation) throws IOException {
+    String mimeType = contentDetector.detect(imageFile.getBytes());
+    byte[] image = imageService.prepare(imageFile);
+    OrganisationImageEntity saved = repo.save(new OrganisationImageEntity(
+        caption, image, mimeType, organisation));
+    return assembler.toResource(saved);
   }
 }

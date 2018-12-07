@@ -3,7 +3,7 @@ package de.codeschluss.portal.components.suburb;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.portal.components.address.AddressEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 

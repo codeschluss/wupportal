@@ -2,8 +2,8 @@ package de.codeschluss.portal.integration.language;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.language.LanguageController;
-import de.codeschluss.portal.core.utils.FilterSortPaginate;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

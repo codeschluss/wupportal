@@ -3,7 +3,7 @@ package de.codeschluss.portal.components.images.organisation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,11 +37,14 @@ public class OrganisationImageEntity extends BaseEntity {
   
   private static final long serialVersionUID = 1L;
   
+  private String caption;
+  
   @Lob
   @Column(columnDefinition = "MEDIUMBLOB", nullable = false)
   private byte[] image;
   
-  private String caption;
+  @Column(name = "mime_type", nullable = false)
+  private String mimeType;
   
   @ManyToOne
   @JsonIgnore

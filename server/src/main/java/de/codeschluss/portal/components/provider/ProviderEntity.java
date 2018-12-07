@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.user.UserEntity;
-import de.codeschluss.portal.core.common.BaseEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 

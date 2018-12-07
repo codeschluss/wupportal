@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
 import de.codeschluss.portal.core.service.BaseEntity;
 
+import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +21,7 @@ import org.springframework.hateoas.core.Relation;
  */
 @MappedSuperclass
 @Relation(collectionRelation = "data")
+@Embeddable
 public class TranslatableEntity<P extends BaseEntity> extends BaseEntity {
 
   private static final long serialVersionUID = 1L;

@@ -24,7 +24,7 @@ public class FilterSortPaginate extends SortPaginate {
       Integer size, 
       String sort, 
       String dir) {
-    super(page, size, sort, dir);
+    super(page, sort, size, dir);
     this.filter = filter;
   }
   

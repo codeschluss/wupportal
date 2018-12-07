@@ -9,8 +9,8 @@ databaseChangeLog:
         dbms: mysql, h2
         splitStatements: true
         sql:
-            insert into `activity_translatables` (`id`, `name`, `modified`, `created`, `language_id`, `parent_id`)
-                select UUID(), activities.name, activities.modified, activities.created, languages.id, activities.id
+            insert into `activity_translatables` (`id`, `name`, `description`, `modified`, `created`, `language_id`, `parent_id`)
+                select UUID(), activities.name, activities.description, activities.modified, activities.created, languages.id, activities.id
                 from activities, languages
                 where languages.locale = 'de'
         stripComments: true

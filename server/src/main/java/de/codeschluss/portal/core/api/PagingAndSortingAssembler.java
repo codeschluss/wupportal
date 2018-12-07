@@ -1,5 +1,6 @@
 package de.codeschluss.portal.core.api;
 
+import de.codeschluss.portal.core.api.dto.CustomSort;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.api.dto.SortPaginate;
@@ -67,7 +68,7 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity>
    * @param params the params
    * @return the resources
    */
-  public <P extends SortPaginate> Resources<?> entitiesToResources(List<E> entities, P params) {
+  public <P extends CustomSort> Resources<?> entitiesToResources(List<E> entities, P params) {
     List<Resource<?>> entityResources = entities.stream().map(this::toResource)
         .collect(Collectors.toList());
     return toListResources(entityResources, params);
@@ -81,7 +82,7 @@ public abstract class PagingAndSortingAssembler<E extends BaseEntity>
    * @param params the params
    * @return the resources
    */
-  public <P extends SortPaginate> Resources<?> toListResources(List<? extends Resource<?>> content,
+  public <P extends CustomSort> Resources<?> toListResources(List<? extends Resource<?>> content,
       P params) {
     return new Resources<>(content, PaginationLinkBuilder.createSelfLink(params));
   }

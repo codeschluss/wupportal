@@ -1,8 +1,8 @@
 package de.codeschluss.portal.core.i18n.translation;
 
-import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 import de.codeschluss.portal.core.service.DataRepository;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface TranslationRepository<T extends TranslatableEntity<?>> 
     extends DataRepository<T> {
  
-  <L extends LocalizedEntity<?>> T findByLanguageAndParent(LanguageEntity language, L parent);
+  <E extends BaseEntity> T findByLanguageAndParent(LanguageEntity language, E parent);
   
-  <L extends LocalizedEntity<?>> List<T> findByParent(L parent);
+  <E extends BaseEntity> List<T> findByParent(E parent);
 }

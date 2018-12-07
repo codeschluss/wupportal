@@ -1,9 +1,9 @@
 package de.codeschluss.portal.core.i18n.translation;
 
-import de.codeschluss.portal.core.i18n.annotations.Translatables;
-import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
+import de.codeschluss.portal.core.i18n.annotations.Localized;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -43,7 +43,7 @@ public class TranslationHelper {
    * @return true, if is localizable
    */
   public static boolean isLocalizable(Object entity) {
-    return entity != null && LocalizedEntity.class.isAssignableFrom(entity.getClass());
+    return entity != null && entity.getClass().getAnnotation(Localized.class) != null;
   }
   
   /**
@@ -82,8 +82,8 @@ public class TranslationHelper {
    */
   public static List<?> getTranslatableProperty(Object entity) 
        throws Throwable {
-    for (Field field : entity.getClass().getSuperclass().getDeclaredFields()) {
-      if (field.getAnnotation(Translatables.class) != null) {
+    for (Field field : entity.getClass().getDeclaredFields()) {
+      if (getTranslatableType(field.getGenericType()) != null) {
         field.setAccessible(true);
         return (List<?>) field.get(entity);
       }
@@ -114,7 +114,6 @@ public class TranslationHelper {
         }
         return translations;
       }
-
     }
     return null;
   }
@@ -145,20 +144,36 @@ public class TranslationHelper {
    * @param entity the entity
    * @return the translatable type
    */
-  @SuppressWarnings("unchecked")
-  public static Class<TranslatableEntity<?>> getTranslatableType(LocalizedEntity<?> entity) {
-    Type translatableType = entity.getClass().getGenericSuperclass();
-    if (translatableType instanceof ParameterizedType) {
-      ParameterizedType pt = (ParameterizedType) translatableType;
-      Class<?> genericType = (Class<?>) pt.getActualTypeArguments()[0];
-      if (TranslatableEntity.class.isAssignableFrom(genericType)) {
-        return (Class<TranslatableEntity<?>>) genericType;
+  public static Class<TranslatableEntity<?>> getTranslatableType(BaseEntity entity) {
+    for (Field field : entity.getClass().getDeclaredFields()) {
+      field.setAccessible(true);
+      Class<TranslatableEntity<?>> translatableClass = 
+          getTranslatableType(field.getGenericType());
+      if (translatableClass != null) {
+        return translatableClass;
       }
     }
     throw new RuntimeException(
         "Missing TranslatableEntity Entity for given entity: " + entity.getClass());
   }
 
+  /**
+   * Gets the translatable type.
+   *
+   * @param fieldType the field type
+   * @return the translatable type
+   */
+  @SuppressWarnings("unchecked")
+  private static Class<TranslatableEntity<?>> getTranslatableType(Type fieldType) {
+    if (fieldType instanceof ParameterizedType) {
+      ParameterizedType pt = (ParameterizedType) fieldType;
+      Class<?> genericType = (Class<?>) pt.getActualTypeArguments()[0];
+      if (TranslatableEntity.class.isAssignableFrom(genericType)) {
+        return (Class<TranslatableEntity<?>>) genericType;
+      }
+    }
+    return null;
+  }
 
   /**
    * Fill translations.
@@ -170,7 +185,7 @@ public class TranslationHelper {
    */
   public static void setTranslations(
       TranslatableEntity<?> translatableObject, 
-      LocalizedEntity<?> savedEntity,
+      BaseEntity savedEntity,
       LanguageEntity lang) throws Throwable {
     setParentProperties(translatableObject, savedEntity, lang);
     setTranslationFields(translatableObject, savedEntity);
@@ -186,7 +201,7 @@ public class TranslationHelper {
    */
   private static void setParentProperties(
       TranslatableEntity<?> translatableObject,
-      LocalizedEntity<?> savedEntity,
+      BaseEntity savedEntity,
       LanguageEntity lang) throws Throwable {
     for (Field field : translatableObject.getClass().getSuperclass().getDeclaredFields()) {
       field.setAccessible(true);
@@ -208,7 +223,7 @@ public class TranslationHelper {
    */
   private static void setTranslationFields(
       TranslatableEntity<?> translatableObject,
-      LocalizedEntity<?> savedEntity) throws Throwable {
+      BaseEntity savedEntity) throws Throwable {
     for (Field field : translatableObject.getClass().getDeclaredFields()) {
       field.setAccessible(true);
       if (!isId(field) && field.getType().isAssignableFrom(String.class)) {

@@ -1,6 +1,9 @@
 package de.codeschluss.portal.components.schedule;
 
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.dto.CustomSort;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.util.List;
@@ -53,18 +56,17 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   /**
    * Gets the resource by activity.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId the activity id
+   * @param params the params
    * @return the resource by activity
    */
-  public Resources<?> getResourceByActivity(String activityId) {
-    List<ScheduleEntity> schedules = repo.findAll(
-        entities.forActivityAndCurrentOnly(activityId));
+  public Resources<?> getResourceByActivity(String activityId, CustomSort params) {
+    Predicate query = entities.forActivityAndCurrentOnly(activityId);
+    List<ScheduleEntity> schedules = repo.findAll(query, params.createSort(defaultSortProp));
     if (schedules == null || schedules.isEmpty()) {
       throw new NotFoundException(activityId);
     }
-    
-    return assembler.entitiesToResources(schedules, null);
+    return assembler.entitiesToResources(schedules, params);
   }
 
   /*

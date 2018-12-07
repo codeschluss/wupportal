@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import de.codeschluss.portal.components.activity.translations.ActivityTranslatablesEntity;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
-import de.codeschluss.portal.components.organisation.translations.OrganisationTranslatablesEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ import org.springframework.hateoas.core.Relation;
     name = "UUID",
     strategy = "org.hibernate.id.UUIDGenerator"
 )
-public class OrganisationEntity extends LocalizedEntity<OrganisationTranslatablesEntity> {
+public class OrganisationEntity extends BaseEntity {
   
   private static final long serialVersionUID = 1L;
 
@@ -81,4 +81,9 @@ public class OrganisationEntity extends LocalizedEntity<OrganisationTranslatable
   
   @OneToMany(mappedBy = "organisation", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   private List<OrganisationImageEntity> images;
+  
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
+  @ToString.Exclude
+  @JsonIgnore
+  protected List<ActivityTranslatablesEntity> translatables;
 }

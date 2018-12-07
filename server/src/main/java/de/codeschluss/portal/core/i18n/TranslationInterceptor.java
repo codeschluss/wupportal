@@ -1,8 +1,8 @@
 package de.codeschluss.portal.core.i18n;
 
-import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 import de.codeschluss.portal.core.i18n.translation.TranslationHelper;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -95,7 +95,7 @@ public class TranslationInterceptor {
    *           the throwable
    */
   @Around("save()")
-  public <E extends LocalizedEntity<?>> Object saveTranslation(ProceedingJoinPoint pjp)
+  public <E extends BaseEntity> Object saveTranslation(ProceedingJoinPoint pjp)
       throws Throwable {
     pjp.proceed();
     Object savedEntity = pjp.getArgs()[0];

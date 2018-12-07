@@ -1,5 +1,6 @@
 package de.codeschluss.portal.core.service;
 
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 
 import java.util.List;
@@ -33,6 +34,9 @@ public interface DataRepository<T>
   
   @Override
   public List<T> findAll(Sort sort);
+  
+  @Override
+  List<T> findAll(OrderSpecifier<?>... orders);
   
   @Override
   public List<T> findAll(Predicate predicate, Sort sort);

@@ -46,7 +46,7 @@ export class AdminComponent {
   }
 
   private async crudTest(id) {
-    const activity = await this.activityProvider.findOne(id);
+    const activity = await this.activityProvider.readOne(id);
     console.log(activity); // ActivityModel { ... }
 
     const address = await activity.address;
@@ -62,15 +62,15 @@ export class AdminComponent {
   }
 
   private async providerTest() {
-    console.log('USERS', await this.userProvider.findAll());
-    for (const user of await this.userProvider.findAll()) {
+    console.log('USERS', await this.userProvider.readAll());
+    for (const user of await this.userProvider.readAll()) {
       try {
         console.log(await user.organisations);
       } catch (error) { }
     }
 
-    console.log('ORGAS', await this.organisationProvider.findAll());
-    for (const organisation of await this.organisationProvider.findAll()) {
+    console.log('ORGAS', await this.organisationProvider.readAll());
+    for (const organisation of await this.organisationProvider.readAll()) {
       try {
         console.log(await organisation.users);
       } catch (error) { }
@@ -80,13 +80,13 @@ export class AdminComponent {
   // private async adminTestMethod(id) {
   //   const tag = { name: 'TAGGIDDY' } as TagModel;
 
-  //   console.log(await (await this.activityProvider.findOne(id)).tags);
+  //   console.log(await (await this.activityProvider.readOne(id)).tags);
   //   await this.sessionProvider.login('super@user', 'test');
   //   await this.testMethod('00000000-0000-0000-0010-100000000000');
   //   await this.sessionProvider.refresh();
   //   await this.activityProvider.pasteTags(id, [tag]);
   //   // await this.sessionProvider.logout();
-  //   console.log(await (await this.activityProvider.findOne(id)).tags);
+  //   console.log(await (await this.activityProvider.readOne(id)).tags);
   // }
 
 }

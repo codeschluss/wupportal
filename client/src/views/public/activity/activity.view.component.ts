@@ -49,7 +49,7 @@ export class ActivityViewComponent {
   ) {
     const id  = route.paramMap.pipe(
       switchMap((params: ParamMap) => activityProvider
-        .findOne(params.get('id')).then(act => this.activity = act))
+        .readOne(params.get('id')).then(act => this.activity = act))
     ).subscribe();
 
 

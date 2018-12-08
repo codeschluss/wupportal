@@ -39,9 +39,9 @@ export class ActivityListComponent {
     private targetGroupsProvider: TargetGroupProvider,
     private suburbProvider: SuburbProvider
   ) {
-    this.suburbs = suburbProvider.findAll({});
-    this.target_groups = targetGroupsProvider.findAll({});
-    this.categories = categoryProvider.findAll({});
+    this.suburbs = suburbProvider.readAll({});
+    this.target_groups = targetGroupsProvider.readAll({});
+    this.categories = categoryProvider.readAll({});
 
 
     let i = 0;

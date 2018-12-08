@@ -20,7 +20,7 @@ export class OrganisationListComponent {
     private organisationProvider: OrganisationProvider,
   ) {
     let longlat = 0;
-    organisationProvider.findAll().then((i) => {
+    organisationProvider.readAll().then((i) => {
       i.forEach(act => {
         // just for testing
         const address: any = new AddressModel;

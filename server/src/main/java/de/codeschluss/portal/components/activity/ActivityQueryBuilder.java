@@ -49,10 +49,6 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     return true;
   }
   
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service
-   * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
-   */
   @Override
   public Predicate search(FilterSortPaginate p) {
     ActivityQueryParam params = validateParams(p);

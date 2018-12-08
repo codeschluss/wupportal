@@ -63,9 +63,6 @@ public class ActivityQueryParam extends FilterSortPaginate {
     this.targetgroups = targetgroups;
   }
   
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.utils.FilterSortPaginate#isEmptyQuery()
-   */
   @Override
   public boolean isEmptyQuery() {
     return (filter == null || filter.isEmpty())

@@ -9,7 +9,7 @@ import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
   template: BaseFieldComponent.template(`
-    <mat-chip-list #chipList>
+    <mat-chip-list #chips>
       <ng-container *ngFor="let model of value" ngProjectAs="mat-chip">
         <mat-chip [selectable]="false" (removed)="delete(model)">
           {{ toLabel(model) }}
@@ -19,10 +19,11 @@ import { BaseFieldComponent } from '../base/base.field';
       <input #input
         [formControl]="search"
         [matAutocomplete]="auto"
-        [matChipInputFor]="chipList"
+        [matChipInputFor]="chips"
         [matChipInputSeparatorKeyCodes]="keys"
         (matChipInputTokenEnd)="insert($event)">
     </mat-chip-list>
+
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
       <ng-container *ngFor="let model of options | async">
         <mat-option [value]="model.id">
@@ -52,10 +53,10 @@ export class ChipListFieldComponent extends BaseFieldComponent {
   }
 
   public insert(event: MatChipInputEvent): void {
-    if (event.value.length >= 3 && !this.includes(event.value)) {
-      this.value = this.value.concat(Object.assign(new this.field.model(), {
-        [this.field.label]: this.sanitize(event.value)
-      }));
+    const label = this.sanitize(event.value);
+    if (label.length >= 3 && !this.find(label)) {
+      this.value = this.value.concat(this.find(label, this.field.options) ||
+        Object.assign(new this.field.model(), { [this.field.label]: label }));
     }
   }
 
@@ -77,8 +78,8 @@ export class ChipListFieldComponent extends BaseFieldComponent {
     this.search.setValue('');
   }
 
-  private includes(label: string = '', models = this.value): boolean {
-    return label && models.some((model) => this.toLabel(model)
+  private find(label: string = '', models = this.value): CrudModel {
+    return label && models.find((model) => this.toLabel(model)
       .localeCompare(label, undefined, { sensitivity: 'accent' }) === 0);
   }
 

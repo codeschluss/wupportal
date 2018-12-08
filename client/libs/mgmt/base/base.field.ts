@@ -58,8 +58,6 @@ export class BaseFieldComponent implements OnInit {
       component.instance.group = this.group;
     } else {
       this.ngPostInit();
-      this.group.get(this.field.name).valueChanges
-        .subscribe((i) => console.log(this.field.name, i));
     }
   }
 

@@ -1,4 +1,5 @@
 export * from './base/base.form';
+export * from './base/base.stepper';
 export * from './field/boolean.field';
 export * from './field/chip-list.field';
 export * from './field/datetime.field';

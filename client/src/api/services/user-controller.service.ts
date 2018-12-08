@@ -275,7 +275,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerFindActivitiesResponse(userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerReadActivitiesResponse(userId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -301,8 +301,8 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerFindActivities(userId: string): Observable<{}> {
-    return this.userControllerFindActivitiesResponse(userId).pipe(
+  userControllerReadActivities(userId: string): Observable<{}> {
+    return this.userControllerReadActivitiesResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -352,7 +352,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerFindOrganisationsResponse(userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerReadOrganisationsResponse(userId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -378,8 +378,8 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerFindOrganisations(userId: string): Observable<{}> {
-    return this.userControllerFindOrganisationsResponse(userId).pipe(
+  userControllerReadOrganisations(userId: string): Observable<{}> {
+    return this.userControllerReadOrganisationsResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
   }

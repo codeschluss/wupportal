@@ -1,7 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
-import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -9,6 +8,7 @@ import { ScheduleModel } from '../schedule/schedule.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
 import { UserModel } from '../user/user.model';
+import { ActivityModel } from './activity.model';
 
 @Injectable({ providedIn: 'root' })
 export class ActivityProvider
@@ -17,37 +17,37 @@ export class ActivityProvider
   protected linked = [
     {
       field: 'address',
-      method: this.service.activityControllerFindAddressResponse,
+      method: this.service.activityControllerReadAddressResponse,
       model: AddressModel
     },
     {
       field: 'category',
-      method: this.service.activityControllerFindCategoryResponse,
+      method: this.service.activityControllerReadCategoryResponse,
       model: CategoryModel
     },
     {
       field: 'organisation',
-      method: this.service.activityControllerFindOrganisationResponse,
+      method: this.service.activityControllerReadOrganisationResponse,
       model: OrganisationModel
     },
     {
       field: 'schedules',
-      method: this.service.activityControllerFindSchedulesResponse,
+      method: this.service.activityControllerReadSchedulesResponse,
       model: ScheduleModel
     },
     {
       field: 'tags',
-      method: this.service.activityControllerFindTagsResponse,
+      method: this.service.activityControllerReadTagsResponse,
       model: TagModel
     },
     {
       field: 'targetGroups',
-      method: this.service.activityControllerFindTargetGroupsResponse,
+      method: this.service.activityControllerReadTargetGroupsResponse,
       model: TargetGroupModel
     },
     {
       field: 'user',
-      method: this.service.activityControllerFindUserResponse,
+      method: this.service.activityControllerReadUserResponse,
       model: UserModel
     },
   ];
@@ -55,8 +55,9 @@ export class ActivityProvider
   protected methods = {
     create: this.service.activityControllerCreateResponse,
     delete: this.service.activityControllerDeleteResponse,
-    findAll: this.service.activityControllerReadAllResponse,
-    findOne: this.service.activityControllerReadOneResponse,
+    readAll: this.service.activityControllerReadAllResponse,
+    readOne: this.service.activityControllerReadOneResponse,
+    translate: this.service.activityControllerReadTranslationsResponse,
     update: this.service.activityControllerUpdateResponse
   };
 
@@ -75,9 +76,9 @@ export class ActivityProvider
 
   public delete: (id: string) => Promise<any>;
 
-  public findOne: (id: string) => Promise<ActivityModel>;
+  public readOne: (id: string) => Promise<ActivityModel>;
 
-  public findAll: (params?: ActivityControllerService
+  public readAll: (params?: ActivityControllerService
     .ActivityControllerReadAllParams) => Promise<ActivityModel[]>;
 
   public linkTargetGroups:

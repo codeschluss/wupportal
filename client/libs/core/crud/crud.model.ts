@@ -1,6 +1,6 @@
-import { Link } from '../utils/api';
+import { Link, ResourceObject } from '../utils/api';
 
-export abstract class CrudModel {
+export abstract class CrudModel implements ResourceObject {
 
   public id: string;
 

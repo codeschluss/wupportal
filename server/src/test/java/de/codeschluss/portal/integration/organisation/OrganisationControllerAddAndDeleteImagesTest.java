@@ -48,7 +48,7 @@ public class OrganisationControllerAddAndDeleteImagesTest {
     controller.deleteImages(organisationId, result.getId());
     
     try {
-      controller.findImages(organisationId);
+      controller.readImages(organisationId);
       assertThat(false).isTrue();
     } catch (NotFoundException e) {
       assertThat(true).isTrue();
@@ -70,7 +70,7 @@ public class OrganisationControllerAddAndDeleteImagesTest {
     controller.deleteImages(organisationId, result.getId());
     
     try {
-      controller.findImages(organisationId);
+      controller.readImages(organisationId);
       assertThat(false).isTrue();
     } catch (NotFoundException e) {
       assertThat(true).isTrue();

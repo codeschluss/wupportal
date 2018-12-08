@@ -167,14 +167,13 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   }
 
   /**
-   * Find address.
+   * Read address.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/address")
-  public ResponseEntity<?> findAddress(@PathVariable String activityId) {
+  public ResponseEntity<?> readAddress(@PathVariable String activityId) {
     return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
   }
 
@@ -193,21 +192,20 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       @RequestBody String addressId) {
     if (addressService.existsById(addressId) && service.existsById(activityId)) {
       service.updateAddress(activityId, addressService.getById(addressId));
-      return findAddress(activityId);
+      return readAddress(activityId);
     } else {
       throw new BadParamsException("Activity or Address with given ID do not exist!");
     }
   }
 
   /**
-   * Find category.
+   * Read category.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/category")
-  public ResponseEntity<?> findCategory(@PathVariable String activityId) {
+  public ResponseEntity<?> readCategory(@PathVariable String activityId) {
     return ok(categoryService.getResourceByActivity(activityId));
   }
 
@@ -226,21 +224,21 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       @RequestBody String categoryId) {
     if (service.existsById(activityId) && categoryService.existsById(categoryId)) {
       service.updateCategory(activityId, categoryService.getById(categoryId));
-      return findCategory(activityId);
+      return readCategory(activityId);
     } else {
       throw new BadParamsException("Activity or Category with given ID do not exist!");
     }
   }
 
+
   /**
-   * Find organisation.
+   * Read organisation.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/organisation")
-  public ResponseEntity<?> findOrganisation(@PathVariable String activityId) {
+  public ResponseEntity<?> readOrganisation(@PathVariable String activityId) {
     ProviderEntity provider = providerService.getProviderByActivity(activityId);
     return ok(organisationService.convertToResource(provider));
   }
@@ -260,14 +258,14 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       @RequestBody String organisationId) {
     try {
       service.updateProvider(activityId, getProvider(organisationId));
-      return findOrganisation(activityId);
+      return readOrganisation(activityId);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");
     }
   }
 
   /**
-   * Find user.
+   * Read user.
    *
    * @param activityId
    *          the activity id
@@ -275,20 +273,20 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @GetMapping("/activities/{activityId}/user")
   @ShowUserOrSuperUserPermission
-  public ResponseEntity<?> findUser(@PathVariable String activityId) {
+  public ResponseEntity<?> readUser(@PathVariable String activityId) {
     ProviderEntity provider = providerService.getProviderByActivity(activityId);
     return ok(userService.getResourceByProvider(provider));
   }
 
   /**
-   * Find tags.
+   * Read tags.
    *
    * @param activityId
    *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/tags")
-  public ResponseEntity<?> findTags(@PathVariable String activityId) {
+  public ResponseEntity<?> readTags(@PathVariable String activityId) {
     return ok(tagService.getResourcesByActivity(activityId));
   }
 
@@ -307,7 +305,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       @RequestBody TagEntity... tags) {
     try {
       service.addTags(activityId, tagService.addAll(Arrays.asList(tags)));
-      return findTags(activityId);
+      return readTags(activityId);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
     }
@@ -335,14 +333,14 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   }
 
   /**
-   * Find target groups.
+   * Read target groups.
    *
    * @param activityId
    *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/targetgroups")
-  public ResponseEntity<?> findTargetGroups(@PathVariable String activityId) {
+  public ResponseEntity<?> readTargetGroups(@PathVariable String activityId) {
     return ok(targetGroupService.getResourceByActivity(activityId));
   }
 
@@ -363,7 +361,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       List<String> distinctTargetGroups = Arrays.asList(targetGroupIds).stream().distinct()
           .collect(Collectors.toList());
       service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups));
-      return findTargetGroups(activityId);
+      return readTargetGroups(activityId);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Target Group or Activity do not exist");
     }
@@ -398,7 +396,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/schedules")
-  public ResponseEntity<?> findSchedules(
+  public ResponseEntity<?> readSchedules(
       @PathVariable String activityId,
       CustomSort params) {
     return ok(scheduleService.getResourceByActivity(activityId, params));
@@ -419,7 +417,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       @RequestBody ScheduleEntity... schedules) {
     try {
       service.addSchedules(activityId, scheduleService.addAll(Arrays.asList(schedules)));
-      return findSchedules(activityId, null);
+      return readSchedules(activityId, null);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
     }
@@ -459,14 +457,14 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   }
 
   /**
-   * Find translations.
+   * Read translations.
    *
    * @param activityId the activity id
    * @return the response entity
    * @throws Throwable the throwable
    */
   @GetMapping("/activities/{activityId}/translations")
-  public ResponseEntity<?> findTranslations(@PathVariable String activityId) {
+  public ResponseEntity<?> readTranslations(@PathVariable String activityId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(activityId), this));
     } catch (NoSuchMethodException 

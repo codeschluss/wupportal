@@ -77,13 +77,13 @@ public class TargetGroupController extends CrudController<TargetGroupEntity, Tar
   }
   
   /**
-   * Find translations.
+   * Read translations.
    *
    * @param targetGroupId the target group id
    * @return the response entity
    */
   @GetMapping("/targetgroups/{targetGroupId}/translations")
-  public ResponseEntity<?> findTranslations(@PathVariable String targetGroupId) {
+  public ResponseEntity<?> readTranslations(@PathVariable String targetGroupId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(targetGroupId), this));
     } catch (NoSuchMethodException 

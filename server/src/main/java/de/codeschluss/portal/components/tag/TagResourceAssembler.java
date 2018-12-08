@@ -25,7 +25,7 @@ public class TagResourceAssembler extends PagingAndSortingAssembler<TagEntity> {
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(TagController.class).readOne(tag.getId())).withSelfRel());
-    links.add(linkTo(methodOn(TagController.class).findTranslations(tag.getId()))
+    links.add(linkTo(methodOn(TagController.class).readTranslations(tag.getId()))
         .withRel("translations"));
 
     return links;

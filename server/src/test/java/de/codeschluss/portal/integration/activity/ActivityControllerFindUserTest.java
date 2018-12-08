@@ -29,7 +29,7 @@ public class ActivityControllerFindUserTest {
   public void findUserOk() {
     String activityId = "00000000-0000-0000-0010-100000000000";
 
-    Resource<UserEntity> result = (Resource<UserEntity>) controller.findUser(activityId).getBody();
+    Resource<UserEntity> result = (Resource<UserEntity>) controller.readUser(activityId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -40,7 +40,7 @@ public class ActivityControllerFindUserTest {
   public void findUserSuperUserShowUserFalseOk() {
     String activityId = "00000000-0000-0000-0010-200000000000";
 
-    Resource<UserEntity> result = (Resource<UserEntity>) controller.findUser(activityId).getBody();
+    Resource<UserEntity> result = (Resource<UserEntity>) controller.readUser(activityId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -50,7 +50,7 @@ public class ActivityControllerFindUserTest {
   public void findUserNotFound() {
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
-    controller.findUser(activityId);
+    controller.readUser(activityId);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -58,6 +58,6 @@ public class ActivityControllerFindUserTest {
   public void findUserShowUserFalseDenied() {
     String activityId = "00000000-0000-0000-0010-200000000000";
 
-    controller.findUser(activityId);
+    controller.readUser(activityId);
   }
 }

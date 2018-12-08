@@ -28,7 +28,7 @@ public class TagControllerTranslationsTest {
 
     Resources<Resource<TagTranslatablesEntity>> result = 
         (Resources<Resource<TagTranslatablesEntity>>) controller
-        .findTranslations(tagId).getBody();
+        .readTranslations(tagId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -37,6 +37,6 @@ public class TagControllerTranslationsTest {
   public void findTranslationsNotFound() {
     String tagId = "00000000-0000-0000-0002-XX0000000000";
 
-    controller.findTranslations(tagId);
+    controller.readTranslations(tagId);
   }
 }

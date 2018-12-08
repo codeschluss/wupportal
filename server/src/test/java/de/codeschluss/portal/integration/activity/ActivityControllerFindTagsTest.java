@@ -27,7 +27,7 @@ public class ActivityControllerFindTagsTest {
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     Resources<Resource<TagEntity>> result = (Resources<Resource<TagEntity>>) controller
-        .findTags(activityId).getBody();
+        .readTags(activityId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -36,6 +36,6 @@ public class ActivityControllerFindTagsTest {
   public void findTagNotFound() {
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
-    controller.findTags(activityId);
+    controller.readTags(activityId);
   }
 }

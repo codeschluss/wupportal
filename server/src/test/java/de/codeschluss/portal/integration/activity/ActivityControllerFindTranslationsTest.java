@@ -28,7 +28,7 @@ public class ActivityControllerFindTranslationsTest {
 
     Resources<Resource<ActivityTranslatablesEntity>> result = 
         (Resources<Resource<ActivityTranslatablesEntity>>) controller
-        .findTranslations(activityId).getBody();
+        .readTranslations(activityId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -37,6 +37,6 @@ public class ActivityControllerFindTranslationsTest {
   public void findTranslationsNotFound() {
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
-    controller.findTranslations(activityId);
+    controller.readTranslations(activityId);
   }
 }

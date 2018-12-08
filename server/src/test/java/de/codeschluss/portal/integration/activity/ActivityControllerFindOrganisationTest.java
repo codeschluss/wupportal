@@ -23,7 +23,7 @@ public class ActivityControllerFindOrganisationTest {
   public void findOrganisationOk() {
     String activityId = "00000000-0000-0000-0010-100000000000";
 
-    Resource<?> result = (Resource<?>) controller.findOrganisation(activityId).getBody();
+    Resource<?> result = (Resource<?>) controller.readOrganisation(activityId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }

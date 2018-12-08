@@ -27,7 +27,7 @@ public class CategoryResourceAssembler extends PagingAndSortingAssembler<Categor
     links.add(linkTo(methodOn(CategoryController.class)
         .readOne(category.getId())).withSelfRel());
     links.add(linkTo(methodOn(CategoryController.class)
-        .findTranslations(category.getId())).withRel("translations"));
+        .readTranslations(category.getId())).withRel("translations"));
 
     return links;
   }

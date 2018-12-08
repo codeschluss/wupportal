@@ -28,7 +28,7 @@ public class ScheduleResourceAssembler extends PagingAndSortingAssembler<Schedul
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(ActivityController.class)
-        .findSchedules(schedule.getActivity().getId(), null)).withSelfRel());
+        .readSchedules(schedule.getActivity().getId(), null)).withSelfRel());
 
     return links;
   }

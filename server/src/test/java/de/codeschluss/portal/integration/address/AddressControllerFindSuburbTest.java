@@ -25,7 +25,7 @@ public class AddressControllerFindSuburbTest {
   public void findSuburbOk() {
     String addressId = "00000000-0000-0000-0006-100000000000";
 
-    Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.findSuburb(addressId)
+    Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.readSuburb(addressId)
         .getBody();
 
     assertThat(result.getContent()).isNotNull();
@@ -35,6 +35,6 @@ public class AddressControllerFindSuburbTest {
   public void findSuburbNotFound() {
     String addressId = "00000000-0000-0000-0006-XX0000000000";
 
-    controller.findSuburb(addressId);
+    controller.readSuburb(addressId);
   }
 }

@@ -29,7 +29,7 @@ public class ActivityControllerFindTargetGroupsTest {
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     Resources<Resource<TargetGroupEntity>> result = 
-        (Resources<Resource<TargetGroupEntity>>) controller.findTargetGroups(activityId).getBody();
+        (Resources<Resource<TargetGroupEntity>>) controller.readTargetGroups(activityId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -38,6 +38,6 @@ public class ActivityControllerFindTargetGroupsTest {
   public void findTargetGroupNotFound() {
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
-    controller.findTargetGroups(activityId);
+    controller.readTargetGroups(activityId);
   }
 }

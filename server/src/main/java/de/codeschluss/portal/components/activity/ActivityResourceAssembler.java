@@ -27,21 +27,21 @@ public class ActivityResourceAssembler extends PagingAndSortingAssembler<Activit
     links.add(linkTo(methodOn(ActivityController.class)
         .readOne(activity.getId())).withSelfRel());
     links.add(linkTo(methodOn(ActivityController.class)
-        .findOrganisation(activity.getId())).withRel("organisation"));
+        .readOrganisation(activity.getId())).withRel("organisation"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .findUser(activity.getId())).withRel("user"));
+        .readUser(activity.getId())).withRel("user"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .findCategory(activity.getId())).withRel("category"));
+        .readCategory(activity.getId())).withRel("category"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .findSchedules(activity.getId(), null)).withRel("schedules"));
+        .readSchedules(activity.getId(), null)).withRel("schedules"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .findTags(activity.getId())).withRel("tags"));
+        .readTags(activity.getId())).withRel("tags"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .findTargetGroups(activity.getId())).withRel("targetgroups"));
+        .readTargetGroups(activity.getId())).withRel("targetgroups"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .findAddress(activity.getId())).withRel("address"));
+        .readAddress(activity.getId())).withRel("address"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .findTranslations(activity.getId())).withRel("translations"));
+        .readTranslations(activity.getId())).withRel("translations"));
 
     return links;
   }

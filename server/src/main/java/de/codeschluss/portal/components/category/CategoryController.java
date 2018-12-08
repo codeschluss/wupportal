@@ -76,14 +76,14 @@ public class CategoryController extends CrudController<CategoryEntity, CategoryS
   }
   
   /**
-   * Find translations.
+   * Read translations.
    *
    * @param categoryId the category id
    * @return the response entity
    * @throws Throwable the throwable
    */
   @GetMapping("/categories/{categoryId}/translations")
-  public ResponseEntity<?> findTranslations(@PathVariable String categoryId) {
+  public ResponseEntity<?> readTranslations(@PathVariable String categoryId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(categoryId), this));
     } catch (NoSuchMethodException 

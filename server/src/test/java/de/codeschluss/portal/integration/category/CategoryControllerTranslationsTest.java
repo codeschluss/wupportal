@@ -28,7 +28,7 @@ public class CategoryControllerTranslationsTest {
 
     Resources<Resource<CategoryTranslatablesEntity>> result = 
         (Resources<Resource<CategoryTranslatablesEntity>>) controller
-        .findTranslations(categoryId).getBody();
+        .readTranslations(categoryId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -37,6 +37,6 @@ public class CategoryControllerTranslationsTest {
   public void findTranslationsNotFound() {
     String categoryId = "00000000-0000-0000-0007-XX0000000000";
 
-    controller.findTranslations(categoryId);
+    controller.readTranslations(categoryId);
   }
 }

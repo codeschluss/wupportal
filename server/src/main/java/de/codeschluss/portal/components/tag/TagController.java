@@ -76,13 +76,13 @@ public class TagController extends CrudController<TagEntity, TagService> {
   }
   
   /**
-   * Find translations.
+   * Read translations.
    *
    * @param tagId the tag id
    * @return the response entity
    */
   @GetMapping("/tags/{tagId}/translations")
-  public ResponseEntity<?> findTranslations(@PathVariable String tagId) {
+  public ResponseEntity<?> readTranslations(@PathVariable String tagId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(tagId), this));
     } catch (NoSuchMethodException 

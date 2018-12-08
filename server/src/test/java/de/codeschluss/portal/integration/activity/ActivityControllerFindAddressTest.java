@@ -25,7 +25,7 @@ public class ActivityControllerFindAddressTest {
   public void findAddressOk() {
     String activityId = "00000000-0000-0000-0010-100000000000";
 
-    Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findAddress(activityId)
+    Resource<AddressEntity> result = (Resource<AddressEntity>) controller.readAddress(activityId)
         .getBody();
 
     assertThat(result.getContent()).isNotNull();

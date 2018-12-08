@@ -126,14 +126,14 @@ public class UserController extends CrudController<UserEntity, UserService> {
   }
 
   /**
-   * Find organisations.
+   * Read organisations.
    *
    * @param userId the user id
    * @return the response entity
    */
   @GetMapping("/users/{userId}/organisations")
   @OwnUserOrSuperUserPermission
-  public ResponseEntity<?> findOrganisations(@PathVariable String userId) {
+  public ResponseEntity<?> readOrganisations(@PathVariable String userId) {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
     return ok(organisationService.convertToResourcesWithProviders(providers));
   }
@@ -185,14 +185,14 @@ public class UserController extends CrudController<UserEntity, UserService> {
   }
 
   /**
-   * Find activities.
+   * Read activities.
    *
    * @param userId the user id
    * @return the response entity
    */
   @GetMapping("/users/{userId}/activities")
   // TODO: Visible for all?
-  public ResponseEntity<?> findActivities(@PathVariable String userId) {
+  public ResponseEntity<?> readActivities(@PathVariable String userId) {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
     return ok(activityService.getResourcesByProviders(providers));
   }

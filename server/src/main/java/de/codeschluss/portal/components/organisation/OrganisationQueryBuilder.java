@@ -1,10 +1,14 @@
 package de.codeschluss.portal.components.organisation;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.service.QueryBuilder;
+
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> {
+  
+  /** The default sort prop. */
+  protected final String defaultSortProp = "name";
   
   /** The language service. */
   private final LanguageService languageService;
@@ -31,6 +38,18 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
     this.languageService = languageService;
   }
   
+  @Override
+  protected String prepareSort(String sortProp) {
+    return sortProp.equals("description")
+        ? "translatables." + sortProp
+        : sortProp;
+  }
+  
+  @Override
+  public boolean localized() {
+    return true;
+  }
+  
   /**
    * With name.
    *
@@ -41,21 +60,43 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
     return query.name.eq(name);
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service.
-   * QueryBuilder#fuzzySearch(de.codeschluss.portal.core.utils.FilterSortPaginate)
-   */
   @Override
-  public BooleanExpression search(FilterSortPaginate params) {
+  public Predicate search(FilterSortPaginate params) {
+    List<String> locales = languageService.getCurrentReadLocales();
+    BooleanBuilder search = new BooleanBuilder(withLocalized(locales));
+    return params.isEmptyQuery()
+        ? search.getValue()
+        : searchFiltered(search, params);
+  }
+  
+  /**
+   * With localized.
+   *
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate withLocalized(List<String> locales) {
+    return query.translatables.any().language.locale.in(locales);
+  }
+  
+  /**
+   * Search filtered.
+   *
+   * @param search the search
+   * @param params the params
+   * @return the predicate
+   */
+  private Predicate searchFiltered(BooleanBuilder search, FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.name.likeIgnoreCase(filter)
-      .or(likeDescription(filter))
-      .or(query.mail.likeIgnoreCase(filter))
-      .or(query.phone.likeIgnoreCase(filter))
-      .or(query.website.likeIgnoreCase(filter))
-      .or(query.address.houseNumber.likeIgnoreCase(filter))
-      .or(query.address.place.likeIgnoreCase(filter))
-      .or(query.address.street.likeIgnoreCase(filter));
+    return search.and(
+        query.name.likeIgnoreCase(filter)
+        .or(likeDescription(filter))
+        .or(query.mail.likeIgnoreCase(filter))
+        .or(query.phone.likeIgnoreCase(filter))
+        .or(query.website.likeIgnoreCase(filter))
+        .or(query.address.houseNumber.likeIgnoreCase(filter))
+        .or(query.address.place.likeIgnoreCase(filter))
+        .or(query.address.street.likeIgnoreCase(filter)));
   }
   
   /**

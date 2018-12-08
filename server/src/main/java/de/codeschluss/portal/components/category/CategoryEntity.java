@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
-import de.codeschluss.portal.components.activity.translations.ActivityTranslatablesEntity;
+import de.codeschluss.portal.components.category.translations.CategoryTranslatablesEntity;
+import de.codeschluss.portal.core.i18n.annotations.Localized;
 import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
@@ -39,6 +40,7 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Localized
 @Table(name = "categories")
 @Relation(collectionRelation = "data")
 public class CategoryEntity extends BaseEntity {
@@ -64,6 +66,6 @@ public class CategoryEntity extends BaseEntity {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
-  protected List<ActivityTranslatablesEntity> translatables;
+  protected List<CategoryTranslatablesEntity> translatables;
 
 }

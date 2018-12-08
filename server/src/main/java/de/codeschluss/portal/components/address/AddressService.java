@@ -17,9 +17,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddressService extends ResourceDataService<AddressEntity, AddressQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "street";
-
   /**
    * Instantiates a new address service.
    *

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import de.codeschluss.portal.components.activity.translations.ActivityTranslatablesEntity;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
+import de.codeschluss.portal.components.organisation.translations.OrganisationTranslatablesEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.service.BaseEntity;
 
@@ -85,5 +85,5 @@ public class OrganisationEntity extends BaseEntity {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
-  protected List<ActivityTranslatablesEntity> translatables;
+  protected List<OrganisationTranslatablesEntity> translatables;
 }

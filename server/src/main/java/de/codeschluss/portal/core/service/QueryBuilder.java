@@ -3,9 +3,13 @@ package de.codeschluss.portal.core.service;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringPath;
 
+import de.codeschluss.portal.core.api.dto.CustomSort;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 
 import java.util.List;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,6 +20,8 @@ import java.util.List;
  *          the generic type
  */
 public abstract class QueryBuilder<T> {
+  
+  protected final String defaultSortProp = "id";
 
   /** The query. */
   protected final T query;
@@ -29,6 +35,68 @@ public abstract class QueryBuilder<T> {
   public QueryBuilder(T query) {
     this.query = query;
   }
+  
+  /**
+   * Creates the sort.
+   *
+   * @param <P> the generic type
+   * @param sortParam the sort param
+   * @return the sort
+   */
+  public <P extends CustomSort> Sort createSort(P sortParam) {
+    Direction direction = getDirection(sortParam);
+    String sort = getSort(sortParam);
+
+    return new Sort(direction, sort);
+  }
+
+  /**
+   * Gets the sort.
+   *
+   * @param <P> the generic type
+   * @param sortParam the sort param
+   * @return the sort
+   */
+  protected <P extends CustomSort> String getSort(P sortParam) {
+    return sortParam == null || sortParam.getSort() == null || sortParam.getSort().isEmpty() 
+        ? defaultSortProp 
+        : prepareSort(sortParam.getSort());
+  }
+
+  /**
+   * Prepare sort.
+   *
+   * @param sort the sort
+   * @return the string
+   */
+  protected String prepareSort(String sort) {
+    return sort;
+  }
+
+  /**
+   * Gets the direction.
+   *
+   * @param <P> the generic type
+   * @param sortParam the sort param
+   * @return the direction
+   */
+  protected <P extends CustomSort> Direction getDirection(P sortParam) {
+    return sortParam == null || sortParam.getDir() == null || isAsc(sortParam)
+        ? Sort.Direction.ASC
+        : Sort.Direction.DESC;
+  }
+
+
+  /**
+   * Checks if is asc.
+   *
+   * @param sortParam the sort param
+   * @return true, if is asc
+   */
+  protected <P extends CustomSort> boolean isAsc(P sortParam) {
+    return sortParam.getDir().trim().toLowerCase().equals(
+        Sort.Direction.ASC.toString().toLowerCase());
+  }
 
   /**
    * Search.
@@ -40,6 +108,10 @@ public abstract class QueryBuilder<T> {
    * @return the predicate
    */
   public abstract <P extends FilterSortPaginate> Predicate search(P params);
+  
+  public boolean localized() {
+    return false;
+  }
 
   /**
    * With id.

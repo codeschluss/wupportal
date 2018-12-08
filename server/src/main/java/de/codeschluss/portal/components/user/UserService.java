@@ -26,9 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserService extends ResourceDataService<UserEntity, UserQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "username";
-
   /** The bcrypt password encoder. */
   private final BCryptPasswordEncoder bcryptPasswordEncoder;
 

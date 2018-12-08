@@ -21,11 +21,11 @@ public class CategoryControllerFindAllTest {
   @Autowired
   private CategoryController controller;
 
-  private FilterSortPaginate params = new FilterSortPaginate("category", 0, 5, "color", "asc");
+  private FilterSortPaginate params = new FilterSortPaginate("category", 0, 5, "name", "asc");
 
   @Test
   public void findAllWithoutPaginationOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "color", "asc");
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc");
 
     Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
 

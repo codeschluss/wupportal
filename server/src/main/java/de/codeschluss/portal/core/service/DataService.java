@@ -23,9 +23,6 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?
 
   /** The repo. */
   protected final DataRepository<E> repo;
-
-  /** The default sort prop. */
-  protected final String defaultSortProp = "id";
   
   /** The entities. */
   protected final B entities;
@@ -158,8 +155,8 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?
    * @return the sorted list
    */
   public <P extends FilterSortPaginate> List<E> getSortedList(P params) {
-    Sort sort = params.createSort(defaultSortProp);
-    List<E> result = params.isEmptyQuery()
+    Sort sort = entities.createSort(params);
+    List<E> result = params.isEmptyQuery() && !entities.localized()
         ? repo.findAll(sort)
         : repo.findAll(entities.search(params), sort);
     
@@ -179,9 +176,9 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?
    */
   public <P extends FilterSortPaginate> Page<E> getPaged(P params) {
     PageRequest page = PageRequest.of(
-        params.getPage(), params.getSize(), params.createSort(defaultSortProp));
+        params.getPage(), params.getSize(), entities.createSort(params));
     
-    Page<E> paged = params.isEmptyQuery()
+    Page<E> paged = params.isEmptyQuery() && !entities.localized()
         ? repo.findAll(page)
         : repo.findAll(entities.search(params), page);
     

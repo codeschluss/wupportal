@@ -22,9 +22,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScheduleService extends ResourceDataService<ScheduleEntity, ScheduleQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "startDate";
-
   /**
    * Instantiates a new schedule service.
    *
@@ -62,7 +59,7 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
    */
   public Resources<?> getResourceByActivity(String activityId, CustomSort params) {
     Predicate query = entities.forActivityAndCurrentOnly(activityId);
-    List<ScheduleEntity> schedules = repo.findAll(query, params.createSort(defaultSortProp));
+    List<ScheduleEntity> schedules = repo.findAll(query, entities.createSort(params));
     if (schedules == null || schedules.isEmpty()) {
       throw new NotFoundException(activityId);
     }

@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrganisationImageQueryBuilder extends QueryBuilder<QOrganisationImageEntity> {
 
+  /** The default sort prop. */
+  protected final String defaultSortProp = "caption";
+  
   /**
    * Instantiates a new organisation image query builder.
    *
@@ -25,10 +28,6 @@ public class OrganisationImageQueryBuilder extends QueryBuilder<QOrganisationIma
     super(QOrganisationImageEntity.organisationImageEntity);
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service
-   * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
-   */
   @Override
   public <P extends FilterSortPaginate> Predicate search(P params) {
     String filter = prepareFilter(params.getFilter());

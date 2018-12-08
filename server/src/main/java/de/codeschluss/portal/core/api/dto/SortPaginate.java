@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import org.springframework.data.domain.Sort;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class SortPaginate.

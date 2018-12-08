@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQueryBuilder> {
-
+  
   /**
    * Instantiates a new suburb service.
    *

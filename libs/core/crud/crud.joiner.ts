@@ -29,7 +29,7 @@ export class CrudJoiner {
   public with(model: Type<CrudModel>): CrudJoiner {
     this.joinGraph.nodes.push({
       model: model,
-      nodes: null,
+      nodes: [],
       root: false
     });
 
@@ -38,9 +38,9 @@ export class CrudJoiner {
 
   public yield(model: Type<CrudModel>): CrudJoiner {
     const filler = (node: CrudGraph) => Object.assign(node, {
-      nodes: node.nodes
+      nodes: node.nodes.length
         ? node.nodes.map((child) => filler(child))
-        : [{ model: model, nodes: null, root: false }]
+        : [{ model: model, nodes: [], root: false }]
     });
 
     this.joinGraph.nodes.push(filler(this.joinGraph.nodes.pop()));

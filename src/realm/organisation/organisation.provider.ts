@@ -35,10 +35,10 @@ export class OrganisationProvider
   ];
 
   protected methods = {
-    create: this.service.organisationControllerAddResponse,
+    create: this.service.organisationControllerCreateResponse,
     delete: this.service.organisationControllerDeleteResponse,
-    findAll: this.service.organisationControllerFindAllResponse,
-    findOne: this.service.organisationControllerFindOneResponse,
+    findAll: this.service.organisationControllerReadAllResponse,
+    findOne: this.service.organisationControllerReadOneResponse,
     update: this.service.organisationControllerUpdateResponse
   };
 
@@ -60,7 +60,7 @@ export class OrganisationProvider
   public findOne: (id: string) => Promise<OrganisationModel>;
 
   public findAll: (params?: OrganisationControllerService
-    .OrganisationControllerFindAllParams) => Promise<OrganisationModel[]>;
+    .OrganisationControllerReadAllParams) => Promise<OrganisationModel[]>;
 
   public grantOrganisationAdmin:
     (organisationId: string, userId: string, grant: boolean) => Promise<any> =

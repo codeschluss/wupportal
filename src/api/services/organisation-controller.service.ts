@@ -25,28 +25,28 @@ class OrganisationControllerService extends BaseService {
   }
 
   /**
-   * @param params The `OrganisationControllerService.OrganisationControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `OrganisationControllerService.OrganisationControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  organisationControllerFindAllResponse(params: OrganisationControllerService.OrganisationControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadAllResponse(params: OrganisationControllerService.OrganisationControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -66,22 +66,22 @@ class OrganisationControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `OrganisationControllerService.OrganisationControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `OrganisationControllerService.OrganisationControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  organisationControllerFindAll(params: OrganisationControllerService.OrganisationControllerFindAllParams): Observable<{}> {
-    return this.organisationControllerFindAllResponse(params).pipe(
+  organisationControllerReadAll(params: OrganisationControllerService.OrganisationControllerReadAllParams): Observable<{}> {
+    return this.organisationControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -90,7 +90,7 @@ class OrganisationControllerService extends BaseService {
    * @param newOrga newOrga
    * @return OK
    */
-  organisationControllerAddResponse(newOrga: OrganisationEntity): Observable<StrictHttpResponse<{}>> {
+  organisationControllerCreateResponse(newOrga: OrganisationEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -116,8 +116,8 @@ class OrganisationControllerService extends BaseService {
    * @param newOrga newOrga
    * @return OK
    */
-  organisationControllerAdd(newOrga: OrganisationEntity): Observable<{}> {
-    return this.organisationControllerAddResponse(newOrga).pipe(
+  organisationControllerCreate(newOrga: OrganisationEntity): Observable<{}> {
+    return this.organisationControllerCreateResponse(newOrga).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -126,7 +126,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindOneResponse(organisationId: string): Observable<StrictHttpResponse<ResourceOrganisationEntity>> {
+  organisationControllerReadOneResponse(organisationId: string): Observable<StrictHttpResponse<ResourceOrganisationEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -152,8 +152,8 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindOne(organisationId: string): Observable<ResourceOrganisationEntity> {
-    return this.organisationControllerFindOneResponse(organisationId).pipe(
+  organisationControllerReadOne(organisationId: string): Observable<ResourceOrganisationEntity> {
+    return this.organisationControllerReadOneResponse(organisationId).pipe(
       __map(_r => _r.body as ResourceOrganisationEntity)
     );
   }
@@ -393,6 +393,168 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
+  organisationControllerFindImagesResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/organisations/${organisationId}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @return OK
+   */
+  organisationControllerFindImages(organisationId: string): Observable<{}> {
+    return this.organisationControllerFindImagesResponse(organisationId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @param file file
+   * @param caption caption
+   * @return OK
+   */
+  organisationControllerAddImageResponse(organisationId: string,
+    file: Blob,
+    caption?: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __headers.append('Content-Type', 'multipart/form-data');
+    let __formData = new FormData();
+    __body = __formData;
+
+   if(file !== null && typeof file !== "undefined") { __formData.append('file', file as string | Blob);}
+    if (caption != null) __params = __params.set('caption', caption.toString());
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/organisations/${organisationId}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @param file file
+   * @param caption caption
+   * @return OK
+   */
+  organisationControllerAddImage(organisationId: string,
+    file: Blob,
+    caption?: string): Observable<{}> {
+    return this.organisationControllerAddImageResponse(organisationId, file, caption).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @param imageId imageId
+   * @return OK
+   */
+  organisationControllerDeleteImagesResponse(organisationId: string,
+    imageId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/organisations/${organisationId}/images/${imageId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @param imageId imageId
+   * @return OK
+   */
+  organisationControllerDeleteImages(organisationId: string,
+    imageId: string): Observable<{}> {
+    return this.organisationControllerDeleteImagesResponse(organisationId, imageId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @return OK
+   */
+  organisationControllerFindTranslationsResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/organisations/${organisationId}/translations`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @return OK
+   */
+  organisationControllerFindTranslations(organisationId: string): Observable<{}> {
+    return this.organisationControllerFindTranslationsResponse(organisationId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @return OK
+   */
   organisationControllerFindUsersResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -562,13 +724,13 @@ class OrganisationControllerService extends BaseService {
 module OrganisationControllerService {
 
   /**
-   * Parameters for organisationControllerFindAll
+   * Parameters for organisationControllerReadAll
    */
-  export interface OrganisationControllerFindAllParams {
-    page?: number;
-    size?: number;
+  export interface OrganisationControllerReadAllParams {
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
   }
 }

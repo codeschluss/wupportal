@@ -16,15 +16,15 @@ export class TargetGroupProvider
   public findOne: (id: string) => Promise<TargetGroupModel>;
 
   public findAll: (params?: TargetGroupControllerService
-    .TargetGroupControllerFindAllParams) => Promise<TargetGroupModel[]>;
+    .TargetGroupControllerReadAllParams) => Promise<TargetGroupModel[]>;
 
   protected linked = [];
 
   protected methods = {
-    create: this.service.targetGroupControllerAddResponse,
+    create: this.service.targetGroupControllerCreateResponse,
     delete: this.service.targetGroupControllerDeleteResponse,
-    findAll: this.service.targetGroupControllerFindAllResponse,
-    findOne: this.service.targetGroupControllerFindOneResponse,
+    findAll: this.service.targetGroupControllerReadAllResponse,
+    findOne: this.service.targetGroupControllerReadOneResponse,
     update: this.service.targetGroupControllerUpdateResponse
   };
 

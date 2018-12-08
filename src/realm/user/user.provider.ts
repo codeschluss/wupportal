@@ -29,10 +29,10 @@ export class UserProvider
   ];
 
   protected methods = {
-    create: this.service.userControllerAddResponse,
+    create: this.service.userControllerCreateResponse,
     delete: this.service.userControllerDeleteResponse,
-    findAll: this.service.userControllerFindAllResponse,
-    findOne: this.service.userControllerFindOneResponse,
+    findAll: this.service.userControllerReadAllResponse,
+    findOne: this.service.userControllerReadOneResponse,
     update: this.service.userControllerUpdateResponse
   };
 
@@ -54,7 +54,7 @@ export class UserProvider
   public findOne: (id: string) => Promise<UserModel>;
 
   public findAll: (params?: UserControllerService
-    .UserControllerFindAllParams) => Promise<UserModel[]>;
+    .UserControllerReadAllParams) => Promise<UserModel[]>;
 
   public grantSuperUser:
     (userId: string, grant: boolean) => Promise<any> =

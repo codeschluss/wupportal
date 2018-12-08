@@ -16,15 +16,15 @@ export class SuburbProvider
   public findOne: (id: string) => Promise<SuburbModel>;
 
   public findAll: (params?: SuburbControllerService
-    .SuburbControllerFindAllParams) => Promise<SuburbModel[]>;
+    .SuburbControllerReadAllParams) => Promise<SuburbModel[]>;
 
   protected linked = [];
 
   protected methods = {
-    create: this.service.suburbControllerAddResponse,
+    create: this.service.suburbControllerCreateResponse,
     delete: this.service.suburbControllerDeleteResponse,
-    findAll: this.service.suburbControllerFindAllResponse,
-    findOne: this.service.suburbControllerFindOneResponse,
+    findAll: this.service.suburbControllerReadAllResponse,
+    findOne: this.service.suburbControllerReadOneResponse,
     update: this.service.suburbControllerUpdateResponse
   };
 

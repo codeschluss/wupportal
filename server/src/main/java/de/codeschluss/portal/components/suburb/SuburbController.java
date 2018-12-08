@@ -31,21 +31,21 @@ public class SuburbController extends CrudController<SuburbEntity, SuburbService
 
   @Override
   @GetMapping("/suburbs")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/suburbs/{surburbId}")
-  public Resource<SuburbEntity> findOne(@PathVariable String surburbId) {
-    return super.findOne(surburbId);
+  public Resource<SuburbEntity> readOne(@PathVariable String surburbId) {
+    return super.readOne(surburbId);
   }
 
   @Override
   @PostMapping("/suburbs")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody SuburbEntity newSuburb) throws URISyntaxException {
-    return super.add(newSuburb);
+  public ResponseEntity<?> create(@RequestBody SuburbEntity newSuburb) throws URISyntaxException {
+    return super.create(newSuburb);
   }
 
   @Override

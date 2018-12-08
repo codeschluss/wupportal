@@ -85,7 +85,7 @@ public class ActivityControllerAddSchedulesTest {
   }
 
   private void assertContaining(ScheduleEntity schedule, String activityId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getSchedules()).haveAtLeastOne(new Condition<>(
         s -> s.getStartDate().getTime() == schedule.getStartDate().getTime(), "schedule exists"));
   }

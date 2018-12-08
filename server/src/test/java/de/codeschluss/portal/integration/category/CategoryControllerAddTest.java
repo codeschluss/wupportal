@@ -35,10 +35,10 @@ public class CategoryControllerAddTest {
     CategoryEntity category = new CategoryEntity("addSuperUserOk", "addSuperUserOk",
         "addSuperUserOk", null, null);
 
-    controller.add(category);
+    controller.create(category);
 
     Resources<Resource<CategoryEntity>> result = (Resources<Resource<CategoryEntity>>) controller
-        .findAll(new FilterSortPaginate()).getBody();
+        .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getName().equals(category.getName()), "category exists"));
   }
@@ -49,7 +49,7 @@ public class CategoryControllerAddTest {
     CategoryEntity category = new CategoryEntity("addSuperUserDuplicatedName",
         "addSuperUserDuplicatedName", "category1", null, null);
 
-    controller.add(category);
+    controller.create(category);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -58,7 +58,7 @@ public class CategoryControllerAddTest {
     CategoryEntity category = new CategoryEntity("addProviderDenied", "addProviderDenied",
         "addProviderDenied", null, null);
 
-    controller.add(category);
+    controller.create(category);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -66,6 +66,6 @@ public class CategoryControllerAddTest {
     CategoryEntity category = new CategoryEntity("addNoUserDenied", "addNoUserDenied",
         "addNoUserDenied", null, null);
 
-    controller.add(category);
+    controller.create(category);
   }
 }

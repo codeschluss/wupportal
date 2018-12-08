@@ -31,22 +31,22 @@ public class OrganisationControllerDeleteTest {
   @WithUserDetails("super@user")
   public void deleteOtherSuperUserOk() throws URISyntaxException {
     String organisationId = "00000000-0000-0000-0008-120000000000";
-    assertThat(controller.findOne(organisationId)).isNotNull();
+    assertThat(controller.readOne(organisationId)).isNotNull();
 
     controller.delete(organisationId);
 
-    controller.findOne(organisationId);
+    controller.readOne(organisationId);
   }
 
   @Test(expected = NotFoundException.class)
   @WithUserDetails("admin@user")
   public void deleteOwnUserOk() throws URISyntaxException {
     String organisationId = "00000000-0000-0000-0008-500000000000";
-    assertThat(controller.findOne(organisationId)).isNotNull();
+    assertThat(controller.readOne(organisationId)).isNotNull();
 
     controller.delete(organisationId);
 
-    controller.findOne(organisationId);
+    controller.readOne(organisationId);
   }
 
   @Test(expected = AccessDeniedException.class)

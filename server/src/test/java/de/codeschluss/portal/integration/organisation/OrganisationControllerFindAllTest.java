@@ -29,7 +29,7 @@ public class OrganisationControllerFindAllTest {
   public void findAllWithoutPaginationOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc");
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -38,14 +38,14 @@ public class OrganisationControllerFindAllTest {
   public void findAllEmptyParamsOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
 
   @Test
   public void findAllWithPaginationOk() {
-    PagedResources<?> result = (PagedResources<?>) controller.findAll(params).getBody();
+    PagedResources<?> result = (PagedResources<?>) controller.readAll(params).getBody();
     assertThat(result.getContent()).isNotEmpty();
   }
 
@@ -53,6 +53,6 @@ public class OrganisationControllerFindAllTest {
   public void findAllWrongParams() {
     FilterSortPaginate params = new FilterSortPaginate("organisation", 1, 5, "blablabla123",
         "wrong");
-    controller.findAll(params);
+    controller.readAll(params);
   }
 }

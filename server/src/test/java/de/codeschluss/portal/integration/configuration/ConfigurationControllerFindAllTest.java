@@ -27,7 +27,7 @@ public class ConfigurationControllerFindAllTest {
   public void findAllWithoutPaginationOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, "item", "asc");
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -36,14 +36,14 @@ public class ConfigurationControllerFindAllTest {
   public void findAllEmptyParamsOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
 
   @Test
   public void findAllWithPaginationOk() {
-    PagedResources<?> result = (PagedResources<?>) controller.findAll(params).getBody();
+    PagedResources<?> result = (PagedResources<?>) controller.readAll(params).getBody();
     assertThat(result.getContent()).isNotEmpty();
   }
 
@@ -51,6 +51,6 @@ public class ConfigurationControllerFindAllTest {
   public void findAllWrongParams() {
     FilterSortPaginate params = new FilterSortPaginate("configuration", 1, 5, "blablabla123",
         "wrong");
-    controller.findAll(params);
+    controller.readAll(params);
   }
 }

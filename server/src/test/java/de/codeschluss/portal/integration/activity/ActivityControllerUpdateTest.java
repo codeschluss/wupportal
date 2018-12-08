@@ -90,7 +90,7 @@ public class ActivityControllerUpdateTest {
   @SuppressWarnings("unchecked")
   private void assertContaining(ActivityEntity activity) {
     Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller
-        .findAll(new ActivityQueryParam()).getBody();
+        .readAll(new ActivityQueryParam()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getName().equals(activity.getName()), "activity exists"));
   }

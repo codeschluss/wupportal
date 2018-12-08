@@ -57,24 +57,11 @@ public class OrganisationService
     return repo.exists(entities.withName(name));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.DataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public OrganisationEntity getExisting(OrganisationEntity orga) {
     return repo.findOne(entities.withName(orga.getName())).orElse(null);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.DataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public OrganisationEntity update(String id, OrganisationEntity newOrga) {
     return repo.findById(id).map(orga -> {

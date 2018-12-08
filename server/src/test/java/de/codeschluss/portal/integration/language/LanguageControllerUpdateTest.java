@@ -35,7 +35,7 @@ public class LanguageControllerUpdateTest {
 
     controller.update(language, languageId);
 
-    Resource<LanguageEntity> result = (Resource<LanguageEntity>) controller.findOne(languageId);
+    Resource<LanguageEntity> result = (Resource<LanguageEntity>) controller.readOne(languageId);
     assertThat(result.getContent().getName()).isEqualTo(language.getName());
   }
 

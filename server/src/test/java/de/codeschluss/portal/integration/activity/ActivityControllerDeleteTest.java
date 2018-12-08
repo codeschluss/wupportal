@@ -29,11 +29,11 @@ public class ActivityControllerDeleteTest {
   @WithUserDetails("super@user")
   public void deleteSuperUserOk() throws URISyntaxException {
     String activityId = "00000000-0000-0000-0010-230000000000";
-    assertThat(controller.findOne(activityId)).isNotNull();
+    assertThat(controller.readOne(activityId)).isNotNull();
 
     controller.delete(activityId);
 
-    controller.findOne(activityId);
+    controller.readOne(activityId);
   }
 
   @Test(expected = NotFoundException.class)
@@ -41,11 +41,11 @@ public class ActivityControllerDeleteTest {
   public void deleteProviderUserOwnOk() throws URISyntaxException {
     String activityId = "00000000-0000-0000-0010-220000000000";
 
-    assertThat(controller.findOne(activityId)).isNotNull();
+    assertThat(controller.readOne(activityId)).isNotNull();
 
     controller.delete(activityId);
 
-    controller.findOne(activityId);
+    controller.readOne(activityId);
   }
 
   @Test(expected = NotFoundException.class)
@@ -53,11 +53,11 @@ public class ActivityControllerDeleteTest {
   public void deleteOrgaAdminUserOwnOk() throws URISyntaxException {
     String activityId = "00000000-0000-0000-0010-600000000000";
 
-    assertThat(controller.findOne(activityId)).isNotNull();
+    assertThat(controller.readOne(activityId)).isNotNull();
 
     controller.delete(activityId);
 
-    controller.findOne(activityId);
+    controller.readOne(activityId);
   }
 
   @Test(expected = AccessDeniedException.class)

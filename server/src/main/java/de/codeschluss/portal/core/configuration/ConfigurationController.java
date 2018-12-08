@@ -35,20 +35,20 @@ public class ConfigurationController
 
   @Override
   @GetMapping("/configurations")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/configurations/{configurationId}")
-  public Resource<ConfigurationEntity> findOne(@PathVariable String configurationId) {
-    return super.findOne(configurationId);
+  public Resource<ConfigurationEntity> readOne(@PathVariable String configurationId) {
+    return super.readOne(configurationId);
   }
 
   @Override
   @PostMapping("/configurations")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody ConfigurationEntity newConfiguration)
+  public ResponseEntity<?> create(@RequestBody ConfigurationEntity newConfiguration)
       throws URISyntaxException {
     return status(HttpStatus.METHOD_NOT_ALLOWED).build();
   }

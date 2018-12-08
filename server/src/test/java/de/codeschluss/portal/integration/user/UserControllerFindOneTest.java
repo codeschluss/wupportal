@@ -27,7 +27,7 @@ public class UserControllerFindOneTest {
   public void findOneOtherSuperUserOk() {
     String otherUserId = "00000000-0000-0000-0004-200000000000";
 
-    Resource<UserEntity> result = (Resource<UserEntity>) controller.findOne(otherUserId);
+    Resource<UserEntity> result = (Resource<UserEntity>) controller.readOne(otherUserId);
 
     assertThat(result.getContent().getId()).isEqualTo(otherUserId);
   }
@@ -37,7 +37,7 @@ public class UserControllerFindOneTest {
   public void findOneOwnUserOk() {
     String otherUserId = "00000000-0000-0000-0004-300000000000";
 
-    Resource<UserEntity> result = (Resource<UserEntity>) controller.findOne(otherUserId);
+    Resource<UserEntity> result = (Resource<UserEntity>) controller.readOne(otherUserId);
 
     assertThat(result.getContent().getId()).isEqualTo(otherUserId);
   }
@@ -47,14 +47,14 @@ public class UserControllerFindOneTest {
   public void findOneOtherUserDenied() {
     String otherUserId = "00000000-0000-0000-0004-300000000000";
 
-    controller.findOne(otherUserId);
+    controller.readOne(otherUserId);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void findOneNotRegisteredDenied() {
     String otherUserId = "00000000-0000-0000-0004-300000000000";
 
-    controller.findOne(otherUserId);
+    controller.readOne(otherUserId);
   }
 
 }

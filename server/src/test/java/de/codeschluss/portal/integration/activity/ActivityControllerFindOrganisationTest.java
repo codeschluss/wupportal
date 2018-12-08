@@ -32,6 +32,6 @@ public class ActivityControllerFindOrganisationTest {
   public void findOrganisationNotFound() {
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
-    controller.findOne(activityId);
+    controller.readOne(activityId);
   }
 }

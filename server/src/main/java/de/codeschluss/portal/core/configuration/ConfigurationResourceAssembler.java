@@ -25,7 +25,7 @@ public class ConfigurationResourceAssembler extends PagingAndSortingAssembler<Co
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(ConfigurationController.class)
-        .findOne(configuration.getId())).withSelfRel());
+        .readOne(configuration.getId())).withSelfRel());
 
     return links;
   }

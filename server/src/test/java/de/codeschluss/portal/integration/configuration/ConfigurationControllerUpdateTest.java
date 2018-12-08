@@ -37,7 +37,7 @@ public class ConfigurationControllerUpdateTest {
     controller.update(configuration, configurationId);
 
     Resource<ConfigurationEntity> result = (Resource<ConfigurationEntity>) controller
-        .findOne(configurationId);
+        .readOne(configurationId);
     assertThat(result.getContent().getItem()).isEqualTo(configuration.getItem());
   }
 

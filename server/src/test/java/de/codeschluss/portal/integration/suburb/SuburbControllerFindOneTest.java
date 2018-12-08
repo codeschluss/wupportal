@@ -24,7 +24,7 @@ public class SuburbControllerFindOneTest {
   public void findOneOk() {
     String suburbId = "00000000-0000-0000-0005-100000000000";
 
-    Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.findOne(suburbId);
+    Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.readOne(suburbId);
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -33,6 +33,6 @@ public class SuburbControllerFindOneTest {
   public void findSuburbNotFound() {
     String suburbId = "00000000-0000-0000-0005-XX0000000000";
 
-    controller.findOne(suburbId);
+    controller.readOne(suburbId);
   }
 }

@@ -36,7 +36,7 @@ public class AddressControllerUpdateTest {
 
     controller.update(address, addressId);
 
-    Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findOne(addressId);
+    Resource<AddressEntity> result = (Resource<AddressEntity>) controller.readOne(addressId);
     assertThat(result.getContent().getStreet()).isEqualTo(address.getStreet());
   }
 

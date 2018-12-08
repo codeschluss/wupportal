@@ -25,7 +25,7 @@ public class TargetGroupResourceAssembler extends PagingAndSortingAssembler<Targ
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(TargetGroupController.class)
-        .findOne(targetGroup.getId())).withSelfRel());
+        .readOne(targetGroup.getId())).withSelfRel());
     links.add(linkTo(methodOn(TargetGroupController.class)
         .findTranslations(targetGroup.getId())).withRel("translations"));
 

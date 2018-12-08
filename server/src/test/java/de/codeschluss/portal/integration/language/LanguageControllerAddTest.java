@@ -35,10 +35,10 @@ public class LanguageControllerAddTest {
     LanguageEntity language = new LanguageEntity("addSuperUserOk", "addSuperUserOk",
         "addSuperUserOk");
 
-    controller.add(language);
+    controller.create(language);
 
     Resources<Resource<LanguageEntity>> result = (Resources<Resource<LanguageEntity>>) controller
-        .findAll(new FilterSortPaginate()).getBody();
+        .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getName().equals(language.getName()), "language exists"));
   }
@@ -49,7 +49,7 @@ public class LanguageControllerAddTest {
     LanguageEntity language = new LanguageEntity("es", "addSuperUserDuplicatedLocale",
         "addSuperUserDuplicatedLocale");
 
-    controller.add(language);
+    controller.create(language);
   }
 
   @Test(expected = DuplicateEntryException.class)
@@ -58,7 +58,7 @@ public class LanguageControllerAddTest {
     LanguageEntity language = new LanguageEntity("addSuperUserDuplicatedName", "ToRead",
         "addSuperUserDuplicatedName");
 
-    controller.add(language);
+    controller.create(language);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -67,7 +67,7 @@ public class LanguageControllerAddTest {
     LanguageEntity language = new LanguageEntity("addProviderDenied", "addProviderDenied",
         "addProviderDenied");
 
-    controller.add(language);
+    controller.create(language);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -75,6 +75,6 @@ public class LanguageControllerAddTest {
     LanguageEntity language = new LanguageEntity("addNoUserDenied", "addNoUserDenied",
         "addNoUserDenied");
 
-    controller.add(language);
+    controller.create(language);
   }
 }

@@ -29,11 +29,11 @@ public class TargetGroupControllerDeleteTest {
   @WithUserDetails("super@user")
   public void deleteSuperUserOk() throws URISyntaxException {
     String targetGroupId = "00000000-0000-0000-0003-700000000000";
-    assertThat(controller.findOne(targetGroupId)).isNotNull();
+    assertThat(controller.readOne(targetGroupId)).isNotNull();
 
     controller.delete(targetGroupId);
 
-    controller.findOne(targetGroupId);
+    controller.readOne(targetGroupId);
   }
 
   @Test(expected = AccessDeniedException.class)

@@ -25,7 +25,7 @@ public class OrganisationResourceAssembler extends PagingAndSortingAssembler<Org
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(OrganisationController.class)
-        .findOne(organisation.getId())).withSelfRel());
+        .readOne(organisation.getId())).withSelfRel());
     links.add(linkTo(methodOn(OrganisationController.class)
         .findActivities(organisation.getId())).withRel("activities"));
     links.add(linkTo(methodOn(OrganisationController.class)

@@ -31,13 +31,6 @@ public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQuery
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public SuburbEntity getExisting(SuburbEntity suburb) {
     return repo.findOne(entities.withName(suburb.getName())).orElse(null);
@@ -56,12 +49,6 @@ public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQuery
     return assembler.toResource(suburb);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public SuburbEntity update(String id, SuburbEntity newSuburb) {
     return repo.findById(id).map(suburb -> {

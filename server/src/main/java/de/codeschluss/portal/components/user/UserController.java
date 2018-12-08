@@ -71,49 +71,26 @@ public class UserController extends CrudController<UserEntity, UserService> {
     this.organisationService = organisationService;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.CrudController#findAll(de.codeschluss.
-   * portal.core.utils.FilterSortPaginate)
-   */
   @Override
   @GetMapping("/users")
   @SuperUserPermission
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
-   */
   @Override
   @GetMapping("/users/{userId}")
   @OwnUserOrSuperUserPermission
-  public Resource<UserEntity> findOne(@PathVariable String userId) {
-    return super.findOne(userId);
+  public Resource<UserEntity> readOne(@PathVariable String userId) {
+    return super.readOne(userId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
-   * core.common.BaseEntity)
-   */
   @Override
   @PostMapping("/users")
-  public ResponseEntity<?> add(@RequestBody UserEntity newUser) throws URISyntaxException {
-    return super.add(newUser);
+  public ResponseEntity<?> create(@RequestBody UserEntity newUser) throws URISyntaxException {
+    return super.create(newUser);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
-   * .core.common.BaseEntity, java.lang.String)
-   */
   @Override
   @PutMapping("/users/{userId}")
   @OwnUserPermission
@@ -122,9 +99,6 @@ public class UserController extends CrudController<UserEntity, UserService> {
     return super.update(newUser, userId);
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
-   */
   @Override
   @DeleteMapping("/users/{userId}")
   @OwnUserOrSuperUserPermission

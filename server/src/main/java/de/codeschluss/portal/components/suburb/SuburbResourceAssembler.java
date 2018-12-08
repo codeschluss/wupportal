@@ -26,7 +26,7 @@ public class SuburbResourceAssembler extends PagingAndSortingAssembler<SuburbEnt
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(AddressController.class)
-        .findOne(suburb.getId())).withSelfRel());
+        .readOne(suburb.getId())).withSelfRel());
 
     return links;
   }

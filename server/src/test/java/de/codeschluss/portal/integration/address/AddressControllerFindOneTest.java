@@ -24,7 +24,7 @@ public class AddressControllerFindOneTest {
   public void findOneOk() {
     String addressId = "00000000-0000-0000-0006-100000000000";
 
-    Resource<AddressEntity> result = (Resource<AddressEntity>) controller.findOne(addressId);
+    Resource<AddressEntity> result = (Resource<AddressEntity>) controller.readOne(addressId);
 
     assertThat(result.getContent().getId()).isEqualTo(addressId);
   }
@@ -33,7 +33,7 @@ public class AddressControllerFindOneTest {
   public void findOneNotFound() {
     String addressId = "00000000-0000-0000-0006-XX0000000000";
 
-    controller.findOne(addressId);
+    controller.readOne(addressId);
   }
 
 }

@@ -25,7 +25,7 @@ public class UserResourceAssembler extends PagingAndSortingAssembler<UserEntity>
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(UserController.class)
-        .findOne(user.getId())).withSelfRel());
+        .readOne(user.getId())).withSelfRel());
     links.add(linkTo(methodOn(UserController.class)
         .findOrganisations(user.getId())).withRel("organisations"));
     links.add(linkTo(methodOn(UserController.class)

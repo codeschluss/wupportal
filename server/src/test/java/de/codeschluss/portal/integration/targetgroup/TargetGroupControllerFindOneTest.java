@@ -25,7 +25,7 @@ public class TargetGroupControllerFindOneTest {
     String targetGroupId = "00000000-0000-0000-0003-100000000000";
 
     Resource<TargetGroupEntity> result = (Resource<TargetGroupEntity>) controller
-        .findOne(targetGroupId);
+        .readOne(targetGroupId);
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -34,6 +34,6 @@ public class TargetGroupControllerFindOneTest {
   public void findTargetGroupNotFound() {
     String targetGroupId = "00000000-0000-0000-0003-XX0000000000";
 
-    controller.findOne(targetGroupId);
+    controller.readOne(targetGroupId);
   }
 }

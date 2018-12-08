@@ -38,7 +38,7 @@ public class OrganisationControllerAddTest {
     OrganisationEntity organisation = new OrganisationEntity("addSuperUserOk", "add@SuperUserOk",
         "addSuperUserOk", "123456789", "addSuperUserOk", "addSuperUserOk", null, null, null, null);
 
-    controller.add(organisation);
+    controller.create(organisation);
 
     assertThat(service.existsByName(organisation.getName())).isTrue();
   }
@@ -49,7 +49,7 @@ public class OrganisationControllerAddTest {
     OrganisationEntity organisation = new OrganisationEntity("organisation1", "organisation1",
         "organisation1", "123456789", "organisation1", "organisation1", null, null, null, null);
 
-    controller.add(organisation);
+    controller.create(organisation);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -59,7 +59,7 @@ public class OrganisationControllerAddTest {
         "addProviderDenied", "addProviderDenied", "123456789", "addProviderDenied",
         "addProviderDenied", null, null, null, null);
 
-    controller.add(organisation);
+    controller.create(organisation);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -68,7 +68,7 @@ public class OrganisationControllerAddTest {
         "addNoUserDenied", "123456789", "addNoUserDenied", "addNoUserDenied", null, null, null,
         null);
 
-    controller.add(organisation);
+    controller.create(organisation);
   }
 
 }

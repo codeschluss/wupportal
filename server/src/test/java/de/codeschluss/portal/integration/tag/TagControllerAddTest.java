@@ -33,7 +33,7 @@ public class TagControllerAddTest {
   public void addSuperUserOk() throws URISyntaxException {
     TagEntity tag = new TagEntity("addSuperUserOk", "addSuperUserOk", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
 
     assertContaining(tag);
   }
@@ -43,7 +43,7 @@ public class TagControllerAddTest {
   public void addProviderUserOk() throws URISyntaxException {
     TagEntity tag = new TagEntity("addProviderUserOk", "addProviderUserOk", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
 
     assertContaining(tag);
   }
@@ -53,7 +53,7 @@ public class TagControllerAddTest {
   public void addSuperUserDuplicated() throws URISyntaxException {
     TagEntity tag = new TagEntity("tag1", "tag1", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -61,20 +61,20 @@ public class TagControllerAddTest {
   public void addNotApprovedDenied() throws URISyntaxException {
     TagEntity tag = new TagEntity("addNotApprovedDenied", "addNotApprovedDenied", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
     TagEntity tag = new TagEntity("addNoUserDenied", "addNoUserDenied", null, null);
 
-    controller.add(tag);
+    controller.create(tag);
   }
 
   @SuppressWarnings("unchecked")
   private void assertContaining(TagEntity tag) {
     Resources<Resource<TagEntity>> result = (Resources<Resource<TagEntity>>) controller
-        .findAll(new FilterSortPaginate()).getBody();
+        .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(
         new Condition<>(p -> p.getContent().getName().equals(tag.getName()), "tag exists"));
   }

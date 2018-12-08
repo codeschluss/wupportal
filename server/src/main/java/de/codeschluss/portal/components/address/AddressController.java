@@ -47,51 +47,25 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
     this.suburbService = suburbService;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.CrudController#findAll(de.codeschluss.
-   * portal.core.utils.FilterSortPaginate)
-   */
   @Override
   @GetMapping("/addresses")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
-   */
   @Override
   @GetMapping("/addresses/{addressId}")
-  public Resource<AddressEntity> findOne(@PathVariable String addressId) {
-    return super.findOne(addressId);
+  public Resource<AddressEntity> readOne(@PathVariable String addressId) {
+    return super.readOne(addressId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
-   * core.common.BaseEntity)
-   */
   @Override
   @PostMapping("/addresses")
   @ProviderOrSuperUserPermission
-  public ResponseEntity<?> add(@RequestBody AddressEntity newAddress) throws URISyntaxException {
-    return super.add(newAddress);
+  public ResponseEntity<?> create(@RequestBody AddressEntity newAddress) throws URISyntaxException {
+    return super.create(newAddress);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
-   * .core.common.BaseEntity, java.lang.String)
-   */
   @Override
   @PutMapping("/addresses/{addressId}")
   @SuperUserPermission
@@ -100,12 +74,6 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
     return super.update(newAddress, addressId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
-   */
   @Override
   @DeleteMapping("/addresses/{addressId}")
   @SuperUserPermission

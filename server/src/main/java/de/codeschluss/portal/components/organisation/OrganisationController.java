@@ -90,51 +90,26 @@ public class OrganisationController
     this.organisationImageService = organisationImageService;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.CrudController#findAll(de.codeschluss.
-   * portal.core.utils.FilterSortPaginate)
-   */
   @Override
   @GetMapping("/organisations")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
-   */
   @Override
   @GetMapping("/organisations/{organisationId}")
-  public Resource<OrganisationEntity> findOne(@PathVariable String organisationId) {
-    return super.findOne(organisationId);
+  public Resource<OrganisationEntity> readOne(@PathVariable String organisationId) {
+    return super.readOne(organisationId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
-   * core.common.BaseEntity)
-   */
   @Override
   @PostMapping("/organisations")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody OrganisationEntity newOrga) throws URISyntaxException {
-    return super.add(newOrga);
+  public ResponseEntity<?> create(@RequestBody OrganisationEntity newOrga) 
+      throws URISyntaxException {
+    return super.create(newOrga);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
-   * .core.common.BaseEntity, java.lang.String)
-   */
   @Override
   @PutMapping("/organisations/{organisationId}")
   @OrgaAdminOrSuperUserPermission
@@ -143,12 +118,6 @@ public class OrganisationController
     return super.update(newOrga, organisationId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
-   */
   @Override
   @DeleteMapping("/organisations/{organisationId}")
   @OrgaAdminOrSuperUserPermission

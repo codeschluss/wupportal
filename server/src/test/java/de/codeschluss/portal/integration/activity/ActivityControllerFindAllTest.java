@@ -57,7 +57,7 @@ public class ActivityControllerFindAllTest {
 
   @Test
   public void findAllWithPaginationOk() {
-    PagedResources<?> result = (PagedResources<?>) controller.findAll(defaultParams).getBody();
+    PagedResources<?> result = (PagedResources<?>) controller.readAll(defaultParams).getBody();
     assertThat(result.getContent()).isNotEmpty();
   }
 
@@ -170,6 +170,6 @@ public class ActivityControllerFindAllTest {
   @SuppressWarnings("unchecked")
   private Resources<Resource<ActivityEntity>> act(ActivityQueryParam params) {
     return (Resources<Resource<ActivityEntity>>) controller
-        .findAll(params).getBody();
+        .readAll(params).getBody();
   }
 }

@@ -47,13 +47,12 @@ public abstract class CrudController<E extends BaseEntity, S extends ResourceDat
   }
 
   /**
-   * Find all.
+   * Read all.
    *
-   * @param params
-   *          the params
+   * @param params the params
    * @return the response entity
    */
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
     validateRequest(params);
 
     return params.getPage() == null && params.getSize() == null
@@ -61,14 +60,14 @@ public abstract class CrudController<E extends BaseEntity, S extends ResourceDat
         : ok(service.getPagedResources(params));
   }
 
+
   /**
-   * Find one.
+   * Read one.
    *
-   * @param id
-   *          the id
+   * @param id the id
    * @return the resource
    */
-  public Resource<E> findOne(@PathVariable String id) {
+  public Resource<E> readOne(@PathVariable String id) {
     return service.getResourceById(id);
   }
 
@@ -81,7 +80,7 @@ public abstract class CrudController<E extends BaseEntity, S extends ResourceDat
    * @throws URISyntaxException
    *           the URI syntax exception
    */
-  public ResponseEntity<?> add(@RequestBody E newEntity) throws URISyntaxException {
+  public ResponseEntity<?> create(@RequestBody E newEntity) throws URISyntaxException {
     if (service.getExisting(newEntity) != null) {
       throw new DuplicateEntryException("Entity already exists!");
     }

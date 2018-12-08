@@ -24,7 +24,7 @@ public class LanguageControllerFindOneTest {
   public void findOneOk() {
     String languagesId = "00000000-0000-0000-0013-100000000000";
 
-    Resource<LanguageEntity> result = (Resource<LanguageEntity>) controller.findOne(languagesId);
+    Resource<LanguageEntity> result = (Resource<LanguageEntity>) controller.readOne(languagesId);
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -33,6 +33,6 @@ public class LanguageControllerFindOneTest {
   public void findLanguageNotFound() {
     String languagesId = "00000000-0000-0000-0013-XX0000000000";
 
-    controller.findOne(languagesId);
+    controller.readOne(languagesId);
   }
 }

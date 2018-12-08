@@ -29,11 +29,11 @@ public class TagControllerDeleteTest {
   @WithUserDetails("super@user")
   public void deleteSuperUserOk() throws URISyntaxException {
     String tagId = "00000000-0000-0000-0002-900000000000";
-    assertThat(controller.findOne(tagId)).isNotNull();
+    assertThat(controller.readOne(tagId)).isNotNull();
 
     controller.delete(tagId);
 
-    controller.findOne(tagId);
+    controller.readOne(tagId);
   }
 
   @Test(expected = AccessDeniedException.class)

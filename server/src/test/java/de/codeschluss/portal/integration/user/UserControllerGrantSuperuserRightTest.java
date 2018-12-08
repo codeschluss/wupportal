@@ -33,7 +33,7 @@ public class UserControllerGrantSuperuserRightTest {
         true);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-    assertThat(controller.findOne(otherUserId).getContent().isSuperuser()).isTrue();
+    assertThat(controller.readOne(otherUserId).getContent().isSuperuser()).isTrue();
   }
 
   @Test
@@ -45,7 +45,7 @@ public class UserControllerGrantSuperuserRightTest {
         false);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-    assertThat(controller.findOne(otherUserId).getContent().isSuperuser()).isFalse();
+    assertThat(controller.readOne(otherUserId).getContent().isSuperuser()).isFalse();
   }
 
   @Test(expected = BadParamsException.class)

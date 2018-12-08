@@ -29,11 +29,11 @@ public class SuburbControllerDeleteTest {
   @WithUserDetails("super@user")
   public void deleteSuperUserOk() throws URISyntaxException {
     String suburbId = "00000000-0000-0000-0005-30000000000";
-    assertThat(controller.findOne(suburbId)).isNotNull();
+    assertThat(controller.readOne(suburbId)).isNotNull();
 
     controller.delete(suburbId);
 
-    controller.findOne(suburbId);
+    controller.readOne(suburbId);
   }
 
   @Test(expected = AccessDeniedException.class)

@@ -40,7 +40,7 @@ public class TranslationResourceAssembler
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(currentController.getClass())
-        .findOne(entity.getId())).withSelfRel());
+        .readOne(entity.getId())).withSelfRel());
 
     return links;
   }

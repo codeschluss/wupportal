@@ -86,13 +86,13 @@ public class ActivityControllerDeleteTargetGroupTest {
   }
 
   private void assertContaining(String activityId, String targetGroupId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTargetGroups()).haveAtLeastOne(
         new Condition<>(t -> t.getId().equals(targetGroupId), "targetGroup exists"));
   }
 
   private void assertNotContaining(String activityId, String targetGroupId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTargetGroups())
         .noneMatch(t -> t.getId().equals(targetGroupId));
   }

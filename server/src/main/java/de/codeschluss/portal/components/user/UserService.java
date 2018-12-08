@@ -66,13 +66,6 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
     return repo.exists(entities.withUsername(username));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public UserEntity getExisting(UserEntity user) {
     try {
@@ -94,25 +87,12 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
         .orElseThrow(() -> new NotFoundException(username));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.ResourceDataService#add(de.codeschluss.portal.core.
-   * common.BaseEntity)
-   */
   @Override
   public UserEntity add(UserEntity newUser) {
     newUser.setPassword(bcryptPasswordEncoder.encode(newUser.getPassword()));
     return repo.save(newUser);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public UserEntity update(String id, UserEntity newUser) {
     return repo.findById(id).map(user -> {

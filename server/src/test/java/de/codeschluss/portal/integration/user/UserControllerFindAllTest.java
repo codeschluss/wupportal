@@ -31,7 +31,7 @@ public class UserControllerFindAllTest {
   public void findAllWithoutPaginationSuperUserOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, "username", "asc");
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -41,7 +41,7 @@ public class UserControllerFindAllTest {
   public void findAllEmptyParamsSuperUserOk() {
     FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
 
-    Resources<?> result = (Resources<?>) controller.findAll(params).getBody();
+    Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -49,7 +49,7 @@ public class UserControllerFindAllTest {
   @Test
   @WithUserDetails("super@user")
   public void findAllWithPaginationSuperUserOk() {
-    PagedResources<?> result = (PagedResources<?>) controller.findAll(params).getBody();
+    PagedResources<?> result = (PagedResources<?>) controller.readAll(params).getBody();
     assertThat(result.getContent()).isNotEmpty();
   }
 
@@ -57,29 +57,29 @@ public class UserControllerFindAllTest {
   @WithUserDetails("super@user")
   public void findAllWrongParamsSuperUser() {
     FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "blablabla123", "wrong");
-    controller.findAll(params);
+    controller.readAll(params);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("admin@user")
   public void findAllWithAdminUserDenied() {
-    controller.findAll(params);
+    controller.readAll(params);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void findAllWithProviderUserDenied() {
-    controller.findAll(params);
+    controller.readAll(params);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
   public void findAllWithNotApprovedUserUserDenied() {
-    controller.findAll(params);
+    controller.readAll(params);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void findAllWithNoUserUserUserDenied() {
-    controller.findAll(params);
+    controller.readAll(params);
   }
 }

@@ -31,13 +31,6 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public CategoryEntity getExisting(CategoryEntity newCategory) {
     return repo.findOne(entities.withName(newCategory.getName())).orElse(null);
@@ -56,12 +49,6 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
     return assembler.toResource(category);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public CategoryEntity update(String id, CategoryEntity newCategory) {
     return repo.findById(id).map(category -> {

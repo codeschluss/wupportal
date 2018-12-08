@@ -24,7 +24,7 @@ public class CategoryControllerFindOneTest {
   public void findOneOk() {
     String categoryId = "00000000-0000-0000-0007-100000000000";
 
-    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findOne(categoryId);
+    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.readOne(categoryId);
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -33,6 +33,6 @@ public class CategoryControllerFindOneTest {
   public void findCategoryNotFound() {
     String categoryId = "00000000-0000-0000-0007-XX0000000000";
 
-    controller.findOne(categoryId);
+    controller.readOne(categoryId);
   }
 }

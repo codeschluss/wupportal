@@ -48,13 +48,13 @@ public class ActivityControllerDeleteSchedulesTest {
     String scheduleId = "00000000-0000-0000-0011-170000000000";
     String activityId = "00000000-0000-0000-0010-200000000000";
 
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getSchedules())
         .haveAtLeastOne(new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
 
     controller.deleteSchedules(activityId, scheduleId);
 
-    result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
   }
 
@@ -64,13 +64,13 @@ public class ActivityControllerDeleteSchedulesTest {
     String scheduleId = "00000000-0000-0000-0011-180000000000";
     String activityId = "00000000-0000-0000-0010-200000000000";
 
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getSchedules())
         .haveAtLeastOne(new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
 
     controller.deleteSchedules(activityId, scheduleId);
 
-    result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
   }
 
@@ -92,13 +92,13 @@ public class ActivityControllerDeleteSchedulesTest {
   }
 
   private void assertContaining(String activityId, String scheduleId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getSchedules())
         .haveAtLeastOne(new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
   }
 
   private void assertNotContaining(String activityId, String scheduleId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
   }
 }

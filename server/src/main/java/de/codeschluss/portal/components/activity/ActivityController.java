@@ -117,41 +117,23 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     this.authService = authService;
   }
 
-  /**
-   * Find all.
-   *
-   * @param params
-   *          the params
-   * @return the response entity
-   */
   @GetMapping("/activities")
-  public ResponseEntity<?> findAll(ActivityQueryParam params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(ActivityQueryParam params) {
+    return super.readAll(params);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#findOne(java.lang.String)
-   */
   @Override
   @GetMapping("/activities/{activityId}")
-  public Resource<ActivityEntity> findOne(@PathVariable String activityId) {
-    return super.findOne(activityId);
+  public Resource<ActivityEntity> readOne(@PathVariable String activityId) {
+    return super.readOne(activityId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#add(de.codeschluss.portal.
-   * core.common.BaseEntity)
-   */
+
   @Override
   @PostMapping("/activities")
   @ProviderPermission
-  public ResponseEntity<?> add(@RequestBody ActivityEntity newActivity) throws URISyntaxException {
+  public ResponseEntity<?> create(@RequestBody ActivityEntity newActivity) 
+      throws URISyntaxException {
     if (service.getExisting(newActivity) != null) {
       throw new DuplicateEntryException("Activity already exists!");
     }
@@ -169,13 +151,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     return created(new URI(resource.getId().expand().getHref())).body(resource);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#update(de.codeschluss.portal
-   * .core.common.BaseEntity, java.lang.String)
-   */
   @Override
   @PutMapping("/activities/{activityId}")
   @OwnOrOrgaActivityOrSuperUserPermission
@@ -184,12 +159,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     return super.update(newActivity, activityId);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.CrudController#delete(java.lang.String)
-   */
   @Override
   @DeleteMapping("/activities/{activityId}")
   @OwnOrOrgaActivityOrSuperUserPermission

@@ -24,7 +24,7 @@ public class TagControllerFindOneTest {
   public void findOneOk() {
     String tagId = "00000000-0000-0000-0002-100000000000";
 
-    Resource<TagEntity> result = (Resource<TagEntity>) controller.findOne(tagId);
+    Resource<TagEntity> result = (Resource<TagEntity>) controller.readOne(tagId);
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -33,6 +33,6 @@ public class TagControllerFindOneTest {
   public void findTagNotFound() {
     String tagId = "00000000-0000-0000-0002-XX0000000000";
 
-    controller.findOne(tagId);
+    controller.readOne(tagId);
   }
 }

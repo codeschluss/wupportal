@@ -43,21 +43,21 @@ public class TagController extends CrudController<TagEntity, TagService> {
 
   @Override
   @GetMapping("/tags")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/tags/{tagId}")
-  public Resource<TagEntity> findOne(@PathVariable String tagId) {
-    return super.findOne(tagId);
+  public Resource<TagEntity> readOne(@PathVariable String tagId) {
+    return super.readOne(tagId);
   }
 
   @Override
   @PostMapping("/tags")
   @ProviderOrSuperUserPermission
-  public ResponseEntity<?> add(@RequestBody TagEntity newTag) throws URISyntaxException {
-    return super.add(newTag);
+  public ResponseEntity<?> create(@RequestBody TagEntity newTag) throws URISyntaxException {
+    return super.create(newTag);
   }
 
   @Override

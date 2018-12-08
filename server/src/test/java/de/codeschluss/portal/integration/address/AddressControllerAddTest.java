@@ -34,7 +34,7 @@ public class AddressControllerAddTest {
     AddressEntity address = new AddressEntity("1", "addSuperUserOk", "1111", "addSuperUserOk", null,
         1, 1, null, null);
 
-    controller.add(address);
+    controller.create(address);
 
     assertContaining(address);
   }
@@ -45,7 +45,7 @@ public class AddressControllerAddTest {
     AddressEntity address = new AddressEntity("1", "addProviderUserOk", "1111", "addProviderUserOk",
         null, 1, 1, null, null);
 
-    controller.add(address);
+    controller.create(address);
 
     assertContaining(address);
   }
@@ -56,7 +56,7 @@ public class AddressControllerAddTest {
     AddressEntity address = new AddressEntity("1", "wuppertal", "42103", "address1", null, 0, 0,
         null, null);
 
-    controller.add(address);
+    controller.create(address);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -65,7 +65,7 @@ public class AddressControllerAddTest {
     AddressEntity address = new AddressEntity("1", "addAdminNoProviderDenied", "1111",
         "addAdminNoProviderDenied", null, 1, 1, null, null);
 
-    controller.add(address);
+    controller.create(address);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -73,13 +73,13 @@ public class AddressControllerAddTest {
     AddressEntity address = new AddressEntity("1", "addNoUserDenied", "1111", "addNoUserDenied",
         null, 1, 1, null, null);
 
-    controller.add(address);
+    controller.create(address);
   }
 
   @SuppressWarnings("unchecked")
   private void assertContaining(AddressEntity address) {
     Resources<Resource<AddressEntity>> result = (Resources<Resource<AddressEntity>>) controller
-        .findAll(new FilterSortPaginate()).getBody();
+        .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getStreet().equals(address.getStreet()), "address exists"));
   }

@@ -25,7 +25,7 @@ public class ActivityResourceAssembler extends PagingAndSortingAssembler<Activit
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(ActivityController.class)
-        .findOne(activity.getId())).withSelfRel());
+        .readOne(activity.getId())).withSelfRel());
     links.add(linkTo(methodOn(ActivityController.class)
         .findOrganisation(activity.getId())).withRel("organisation"));
     links.add(linkTo(methodOn(ActivityController.class)

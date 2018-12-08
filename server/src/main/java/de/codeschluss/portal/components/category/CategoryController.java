@@ -42,21 +42,22 @@ public class CategoryController extends CrudController<CategoryEntity, CategoryS
 
   @Override
   @GetMapping("/categories")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/categories/{categoryId}")
-  public Resource<CategoryEntity> findOne(@PathVariable String categoryId) {
-    return super.findOne(categoryId);
+  public Resource<CategoryEntity> readOne(@PathVariable String categoryId) {
+    return super.readOne(categoryId);
   }
 
   @Override
   @PostMapping("/categories")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody CategoryEntity newCategory) throws URISyntaxException {
-    return super.add(newCategory);
+  public ResponseEntity<?> create(@RequestBody CategoryEntity newCategory) 
+      throws URISyntaxException {
+    return super.create(newCategory);
   }
 
   @Override

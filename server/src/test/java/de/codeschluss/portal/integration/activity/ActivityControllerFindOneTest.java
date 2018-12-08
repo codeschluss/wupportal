@@ -24,7 +24,7 @@ public class ActivityControllerFindOneTest {
   public void findOneOk() {
     String activityId = "00000000-0000-0000-0010-100000000000";
 
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -33,6 +33,6 @@ public class ActivityControllerFindOneTest {
   public void findOneNotFound() {
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
-    controller.findOne(activityId);
+    controller.readOne(activityId);
   }
 }

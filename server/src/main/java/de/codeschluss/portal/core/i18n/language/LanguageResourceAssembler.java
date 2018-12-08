@@ -25,7 +25,7 @@ public class LanguageResourceAssembler extends PagingAndSortingAssembler<Languag
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(LanguageController.class)
-        .findOne(language.getId())).withSelfRel());
+        .readOne(language.getId())).withSelfRel());
 
     return links;
   }

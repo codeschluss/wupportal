@@ -32,7 +32,7 @@ public class UserControllerAddTest {
     UserEntity user = new UserEntity("addWithoutSecurityOk", "test", "12345678", true,
         "addWithoutSecurityOk", null);
 
-    controller.add(user);
+    controller.create(user);
 
     assertThat(service.userExists(user.getUsername())).isTrue();
   }
@@ -41,7 +41,7 @@ public class UserControllerAddTest {
   public void addWithoutSecurityDuplicated() throws URISyntaxException {
     UserEntity user = new UserEntity("test", "test", "12345678", true, "provider1@user", null);
 
-    controller.add(user);
+    controller.create(user);
   }
 
 }

@@ -36,7 +36,7 @@ public class CategoryControllerUpdateTest {
 
     controller.update(category, categoryId);
 
-    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findOne(categoryId);
+    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.readOne(categoryId);
     assertThat(result.getContent().getName()).isEqualTo(category.getName());
   }
 

@@ -38,13 +38,6 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public ScheduleEntity getExisting(ScheduleEntity newSchedule) {
     return repo.findById(newSchedule.getId()).orElse(null);
@@ -66,12 +59,6 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
     return assembler.entitiesToResources(schedules, params);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public ScheduleEntity update(String id, ScheduleEntity newSchedule) {
     return repo.findById(id).map(schedule -> {

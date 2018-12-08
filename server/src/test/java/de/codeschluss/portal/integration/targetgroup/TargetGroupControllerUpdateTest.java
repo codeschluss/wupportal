@@ -37,7 +37,7 @@ public class TargetGroupControllerUpdateTest {
     controller.update(targetGroup, targetGroupId);
 
     Resource<TargetGroupEntity> result = (Resource<TargetGroupEntity>) controller
-        .findOne(targetGroupId);
+        .readOne(targetGroupId);
     assertThat(result.getContent().getName()).isEqualTo(targetGroup.getName());
   }
 

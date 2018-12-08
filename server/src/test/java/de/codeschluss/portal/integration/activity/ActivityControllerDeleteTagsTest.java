@@ -48,13 +48,13 @@ public class ActivityControllerDeleteTagsTest {
     String tagId = "00000000-0000-0000-0002-700000000000";
     String activityId = "00000000-0000-0000-0010-200000000000";
 
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTags())
         .haveAtLeastOne(new Condition<>(t -> t.getId().equals(tagId), "tag exists"));
 
     controller.deleteTags(activityId, tagId);
 
-    result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTags()).noneMatch(t -> t.getId().equals(tagId));
   }
 
@@ -64,13 +64,13 @@ public class ActivityControllerDeleteTagsTest {
     String tagId = "00000000-0000-0000-0002-800000000000";
     String activityId = "00000000-0000-0000-0010-200000000000";
 
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTags())
         .haveAtLeastOne(new Condition<>(t -> t.getId().equals(tagId), "tag exists"));
 
     controller.deleteTags(activityId, tagId);
 
-    result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTags()).noneMatch(t -> t.getId().equals(tagId));
   }
 
@@ -92,13 +92,13 @@ public class ActivityControllerDeleteTagsTest {
   }
 
   private void assertContaining(String activityId, String tagId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTags())
         .haveAtLeastOne(new Condition<>(t -> t.getId().equals(tagId), "tag exists"));
   }
 
   private void assertNotContaining(String activityId, String tagId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.findOne(activityId);
+    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTags()).noneMatch(t -> t.getId().equals(tagId));
   }
 }

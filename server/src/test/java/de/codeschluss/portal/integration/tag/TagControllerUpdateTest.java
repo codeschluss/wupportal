@@ -35,7 +35,7 @@ public class TagControllerUpdateTest {
 
     controller.update(tag, tagId);
 
-    Resource<TagEntity> result = (Resource<TagEntity>) controller.findOne(tagId);
+    Resource<TagEntity> result = (Resource<TagEntity>) controller.readOne(tagId);
     assertThat(result.getContent().getName()).isEqualTo(tag.getName());
   }
 

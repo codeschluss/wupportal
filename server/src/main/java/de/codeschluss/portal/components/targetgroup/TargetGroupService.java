@@ -34,13 +34,6 @@ public class TargetGroupService
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public TargetGroupEntity getExisting(TargetGroupEntity newTargetGroup) {
     return repo.findOne(entities.withName(newTargetGroup.getName())).orElse(null);
@@ -63,12 +56,6 @@ public class TargetGroupService
     return assembler.entitiesToResources(targetGroups, null);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public TargetGroupEntity update(String id, TargetGroupEntity newTargetGroup) {
     return repo.findById(id).map(tag -> {

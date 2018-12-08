@@ -25,7 +25,7 @@ public class ConfigurationControllerFindOneTest {
     String configurationId = "00000000-0000-0000-0001-000000000008";
 
     Resource<ConfigurationEntity> result = (Resource<ConfigurationEntity>) controller
-        .findOne(configurationId);
+        .readOne(configurationId);
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -34,6 +34,6 @@ public class ConfigurationControllerFindOneTest {
   public void findConfigurationNotFound() {
     String configurationId = "00000000-0000-0000-0001-XX0000000000";
 
-    controller.findOne(configurationId);
+    controller.readOne(configurationId);
   }
 }

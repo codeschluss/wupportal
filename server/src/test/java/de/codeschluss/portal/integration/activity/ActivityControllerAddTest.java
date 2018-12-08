@@ -32,7 +32,7 @@ public class ActivityControllerAddTest {
   public void addProviderOk() throws URISyntaxException {
     ActivityEntity activity = createActivity("addProviderOk");
 
-    controller.add(activity);
+    controller.create(activity);
 
     assertContaining(activity);
   }
@@ -42,7 +42,7 @@ public class ActivityControllerAddTest {
   public void addSuperUserIsNoProviderDenied() throws URISyntaxException {
     ActivityEntity activity = createActivity("addSuperUserOk");
 
-    controller.add(activity);
+    controller.create(activity);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -50,14 +50,14 @@ public class ActivityControllerAddTest {
   public void addNotApprovedDenied() throws URISyntaxException {
     ActivityEntity activity = createActivity("addNotApprovedDenied");
 
-    controller.add(activity);
+    controller.create(activity);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
     ActivityEntity activity = createActivity("addNoUserDenied");
 
-    controller.add(activity);
+    controller.create(activity);
   }
 
   private ActivityEntity createActivity(String name) {
@@ -72,7 +72,7 @@ public class ActivityControllerAddTest {
   @SuppressWarnings("unchecked")
   private void assertContaining(ActivityEntity activity) {
     Resources<Resource<ActivityEntity>> result = (Resources<Resource<ActivityEntity>>) controller
-        .findAll(new ActivityQueryParam()).getBody();
+        .readAll(new ActivityQueryParam()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getName().equals(activity.getName()), "activity exists"));
   }

@@ -39,19 +39,11 @@ public class OrganisationImageService
     this.contentDetector = new Tika();
   }
   
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service
-   * .DataService#getExisting(de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public OrganisationImageEntity getExisting(OrganisationImageEntity newEntity) {
     return repo.findOne(entities.withId(newEntity.getId())).orElse(null);
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service
-   * .DataService#update(java.lang.String, de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public OrganisationImageEntity update(String id, OrganisationImageEntity updatedEntity) {
     return repo.findById(id).map(image -> {

@@ -33,13 +33,6 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.ResourceDataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public TagEntity getExisting(TagEntity newTag) {
     return repo.findOne(entities.withName(newTag.getName())).orElse(null);
@@ -60,12 +53,6 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
     return assembler.entitiesToResources(tags, null);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public TagEntity update(String id, TagEntity newTag) {
     return repo.findById(id).map(tag -> {

@@ -35,7 +35,7 @@ public class SuburbControllerUpdateTest {
 
     controller.update(suburb, suburbId);
 
-    Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.findOne(suburbId);
+    Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.readOne(suburbId);
     assertThat(result.getContent().getName()).isEqualTo(suburb.getName());
   }
 

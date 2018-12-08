@@ -42,22 +42,22 @@ public class TargetGroupController extends CrudController<TargetGroupEntity, Tar
 
   @Override
   @GetMapping("/targetgroups")
-  public ResponseEntity<?> findAll(FilterSortPaginate params) {
-    return super.findAll(params);
+  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+    return super.readAll(params);
   }
 
   @Override
   @GetMapping("/targetgroups/{targetGroupId}")
-  public Resource<TargetGroupEntity> findOne(@PathVariable String targetGroupId) {
-    return super.findOne(targetGroupId);
+  public Resource<TargetGroupEntity> readOne(@PathVariable String targetGroupId) {
+    return super.readOne(targetGroupId);
   }
 
   @Override
   @PostMapping("/targetgroups")
   @SuperUserPermission
-  public ResponseEntity<?> add(@RequestBody TargetGroupEntity newTargetGroup)
+  public ResponseEntity<?> create(@RequestBody TargetGroupEntity newTargetGroup)
       throws URISyntaxException {
-    return super.add(newTargetGroup);
+    return super.create(newTargetGroup);
   }
 
   @Override

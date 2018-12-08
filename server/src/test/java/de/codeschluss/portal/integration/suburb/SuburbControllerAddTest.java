@@ -34,10 +34,10 @@ public class SuburbControllerAddTest {
   public void addSuperUserOk() throws URISyntaxException {
     SuburbEntity suburb = new SuburbEntity("addSuperUserOk", null);
 
-    controller.add(suburb);
+    controller.create(suburb);
 
     Resources<Resource<SuburbEntity>> result = (Resources<Resource<SuburbEntity>>) controller
-        .findAll(new FilterSortPaginate()).getBody();
+        .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(
         new Condition<>(p -> p.getContent().getName().equals(suburb.getName()), "suburb exists"));
   }
@@ -47,7 +47,7 @@ public class SuburbControllerAddTest {
   public void addSuperUserDuplicated() throws URISyntaxException {
     SuburbEntity suburb = new SuburbEntity("suburb1", null);
 
-    controller.add(suburb);
+    controller.create(suburb);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -55,13 +55,13 @@ public class SuburbControllerAddTest {
   public void addProviderDenied() throws URISyntaxException {
     SuburbEntity suburb = new SuburbEntity("addProviderDenied", null);
 
-    controller.add(suburb);
+    controller.create(suburb);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
     SuburbEntity suburb = new SuburbEntity("addNoUserDenied", null);
 
-    controller.add(suburb);
+    controller.create(suburb);
   }
 }

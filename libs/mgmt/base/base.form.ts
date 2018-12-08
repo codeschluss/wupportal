@@ -7,22 +7,24 @@ import { BaseFieldComponent } from './base.field';
 export interface FormField {
   name: string;
   input: Type<BaseFieldComponent>;
-  value: any;
   label?: string;
   model?: Type<CrudModel>;
   multi?: boolean;
   options?: CrudModel[];
   tests?: ValidatorFn[];
   type?: string;
+  value?: any;
 }
 
 export abstract class BaseForm
-  <Model extends CrudModel, Provider extends CrudProvider<BaseService, Model>>
+  <Provider extends CrudProvider<BaseService, Model>, Model extends CrudModel>
   implements OnInit {
 
-  public group: FormGroup;
+  public abstract base: string;
 
   public abstract fields: FormField[];
+
+  public group: FormGroup;
 
   protected abstract builder: FormBuilder;
 
@@ -34,21 +36,22 @@ export abstract class BaseForm
 
   protected static template(template: string): string {
     return `
-      <ng-template>
-        ${template}
-      </ng-template>
+      <ng-template>${template}</ng-template>
       <form [formGroup]="group" (ngSubmit)="submit()">
         <ng-container *ngFor="let field of fields">
           <base-field [field]="field" [group]="group"></base-field>
         </ng-container>
-        <button type="submit">TEST</button>
       </form>
     `;
   }
 
   public ngOnInit(): void {
     this.group = this.builder.group({ });
-
+    this.fields = this.fields.map((field) => Object.assign({
+      label: field.label || 'name',
+      options: field.options || this.route.snapshot.data[field.name],
+      value: field.value || this.route.snapshot.data[this.base][field.name],
+    }));
     this.fields.forEach((field) => this.group.addControl(field.name,
       this.builder.control(field.value, field.tests)));
   }

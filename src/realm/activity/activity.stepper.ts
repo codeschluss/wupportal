@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseStepper } from '@portal/mgmt';
+import { BaseStepper } from '@portal/forms';
 import { AddressFormComponent } from '../address/address.form';
 import { ActivityFormComponent } from './activity.form';
 import { ActivityModel } from './activity.model';

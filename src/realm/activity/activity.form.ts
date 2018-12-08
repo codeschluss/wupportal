@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, ResolveData } from '@angular/router';
 import { CrudJoiner, CrudResolver, SessionResolver } from '@portal/core';
-import { BaseForm, BooleanFieldComponent, ChipListFieldComponent, SelectFieldComponent, StringFieldComponent } from '@portal/mgmt';
+import { BaseForm, BooleanFieldComponent, ChipListFieldComponent, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, ResolveData } from '@angular/router';
 import { CrudJoiner, CrudResolver } from '@portal/core';
-import { BaseForm, SelectFieldComponent, StringFieldComponent } from '@portal/mgmt';
+import { BaseForm, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
 import { AddressProvider } from './address.provider';

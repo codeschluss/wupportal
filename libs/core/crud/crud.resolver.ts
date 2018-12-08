@@ -37,28 +37,21 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
 
   private async resolver(model: CrudModel, nodes: CrudGraph[]): Promise<any> {
     if (model.constructor['provider']) {
-      const provider = this.injector.get(model.constructor['provider']);
+      const provider = this.injector.get(model.constructor['provider']).system;
 
       for (const node of nodes) {
-        const link = provider.system.linked
-          .find((lnk) => lnk.model === node.model);
+        const link = provider.linked.find((lnk) => lnk.model === node.model);
 
-        let value;
-        if ((model._embedded || { })[link.field]) {
-          value = Object.assign(new link.model(), model._embedded[link.field]);
-        } else {
-          try {
-            value = await provider.system.call(link.method, model.id).pipe(
-              map((response) => provider.system.cast(response, link.model))
-            ).toPromise();
-          } catch (error) { }
-        }
+        let value; try {
+          value = (model._embedded || { })[link.field]
+            ? Object.assign(new link.model(), model._embedded[link.field])
+            : await provider.call(link.method, model.id).pipe(map(
+              (response) => provider.cast(response, link.model))).toPromise();
+        } catch (error) { }
 
         if (value) {
-          if (node.nodes.length) {
-            await this.resolver(value, node.nodes);
-          }
-          provider.system.purge(value);
+          if (node.nodes.length) { await this.resolver(value, node.nodes); }
+          provider.purge(value);
         }
 
         Object.defineProperty(model, link.field, { value: value });

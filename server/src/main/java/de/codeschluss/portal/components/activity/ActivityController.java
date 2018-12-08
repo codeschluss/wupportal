@@ -16,6 +16,7 @@ import de.codeschluss.portal.components.tag.TagService;
 import de.codeschluss.portal.components.targetgroup.TargetGroupService;
 import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.CustomSort;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
@@ -428,8 +429,10 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/schedules")
-  public ResponseEntity<?> findSchedules(@PathVariable String activityId) {
-    return ok(scheduleService.getResourceByActivity(activityId));
+  public ResponseEntity<?> findSchedules(
+      @PathVariable String activityId,
+      CustomSort params) {
+    return ok(scheduleService.getResourceByActivity(activityId, params));
   }
 
   /**
@@ -447,7 +450,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       @RequestBody ScheduleEntity... schedules) {
     try {
       service.addSchedules(activityId, scheduleService.addAll(Arrays.asList(schedules)));
-      return findSchedules(activityId);
+      return findSchedules(activityId, null);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
     }

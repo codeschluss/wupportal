@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "description";
-
   /**
    * Instantiates a new tag service.
    *

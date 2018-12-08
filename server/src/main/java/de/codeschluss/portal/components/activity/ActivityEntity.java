@@ -11,7 +11,8 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
-import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
+import de.codeschluss.portal.core.i18n.annotations.Localized;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 
@@ -51,13 +52,14 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Localized
 @Table(name = "activities")
 @Relation(collectionRelation = "data")
 @GenericGenerator(
     name = "UUID",
     strategy = "org.hibernate.id.UUIDGenerator"
 )
-public class ActivityEntity extends LocalizedEntity<ActivityTranslatablesEntity> {
+public class ActivityEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -108,7 +110,7 @@ public class ActivityEntity extends LocalizedEntity<ActivityTranslatablesEntity>
   @JsonIgnore
   private List<ScheduleEntity> schedules;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
@@ -125,7 +127,7 @@ public class ActivityEntity extends LocalizedEntity<ActivityTranslatablesEntity>
   )
   private List<TagEntity> tags;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
   @JoinTable(
@@ -141,6 +143,11 @@ public class ActivityEntity extends LocalizedEntity<ActivityTranslatablesEntity>
       generator = "UUID"
   )
   private List<TargetGroupEntity> targetGroups;
+  
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
+  @ToString.Exclude
+  @JsonIgnore
+  protected List<ActivityTranslatablesEntity> translatables;
 
   @JsonIgnore
   public String getAddressId() {

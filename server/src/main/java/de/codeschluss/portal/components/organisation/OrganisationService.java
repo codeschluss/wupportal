@@ -28,9 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrganisationService 
     extends ResourceDataService<OrganisationEntity, OrganisationQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "name";
-
   /**
    * Instantiates a new organisation service.
    *

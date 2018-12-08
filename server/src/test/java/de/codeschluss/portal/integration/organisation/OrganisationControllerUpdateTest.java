@@ -36,7 +36,7 @@ public class OrganisationControllerUpdateTest {
   public void updateSuperUserOk() throws URISyntaxException {
     OrganisationEntity organisation = new OrganisationEntity("updateSuperUserOk",
         "updateSuperUserOk", "updateSuperUserOk", "123456789", "updateSuperUserOk",
-        "updateSuperUserOk", null, null, null);
+        "updateSuperUserOk", null, null, null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-300000000000");
 
@@ -48,7 +48,7 @@ public class OrganisationControllerUpdateTest {
   public void updateOwnOrganisationOk() throws URISyntaxException {
     OrganisationEntity organisation = new OrganisationEntity("updateOwnOrganisationOk",
         "updateOwnOrganisationOk", "organisation1", "123456789", "updateOwnOrganisationOk",
-        "updateOwnOrganisationOk", null, null, null);
+        "updateOwnOrganisationOk", null, null, null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
 
@@ -60,7 +60,7 @@ public class OrganisationControllerUpdateTest {
   public void updateOtherOrganisationDenied() throws URISyntaxException {
     OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied",
         "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", "123456789",
-        "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", null, null, null);
+        "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", null, null, null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }
@@ -69,7 +69,7 @@ public class OrganisationControllerUpdateTest {
   public void updateOtherNotRegisteredOrganisationDenied() throws URISyntaxException {
     OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied",
         "organisation1", "organisation1", "123456789", "organisation1", "organisation1", null, null,
-        null);
+        null, null);
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }

@@ -29,7 +29,7 @@ public class ActivityControllerAddTagsTest {
   @Test
   @WithUserDetails("super@user")
   public void addTagsSuperUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addTagsSuperUserOk", "addTagsSuperUserOk", null);
+    TagEntity tag = new TagEntity("addTagsSuperUserOk", "addTagsSuperUserOk", null, null);
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     controller.addTags(activityId, tag);
@@ -40,7 +40,7 @@ public class ActivityControllerAddTagsTest {
   @Test
   @WithUserDetails("provider1@user")
   public void addTagsProviderOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addTagsProviderOk", "addTagsProviderOk", null);
+    TagEntity tag = new TagEntity("addTagsProviderOk", "addTagsProviderOk", null, null);
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.addTags(activityId, tag);
@@ -51,7 +51,7 @@ public class ActivityControllerAddTagsTest {
   @Test
   @WithUserDetails("admin@user")
   public void addTagsAdminOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addTagsAdminOk", "addTagsAdminOk", null);
+    TagEntity tag = new TagEntity("addTagsAdminOk", "addTagsAdminOk", null, null);
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.addTags(activityId, tag);
@@ -62,7 +62,8 @@ public class ActivityControllerAddTagsTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addTagsOtherProviderDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addTagsOtherProviderDenied", "addTagsOtherProviderDenied", null);
+    TagEntity tag = new TagEntity("addTagsOtherProviderDenied", "addTagsOtherProviderDenied", null,
+        null);
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.addTags(activityId, tag);
@@ -70,7 +71,7 @@ public class ActivityControllerAddTagsTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addTagsNoUserDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addTagsNoUserDenied", "addTagsNoUserDenied", null);
+    TagEntity tag = new TagEntity("addTagsNoUserDenied", "addTagsNoUserDenied", null, null);
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.addTags(activityId, tag);
@@ -80,7 +81,7 @@ public class ActivityControllerAddTagsTest {
   private void assertContaining(TagEntity tag, String activityId) {
     Resources<Resource<TagEntity>> result = (Resources<Resource<TagEntity>>) controller
         .findTags(activityId).getBody();
-    
+
     assertThat(result.getContent()).haveAtLeastOne(
         new Condition<>(t -> t.getContent().getName().equals(tag.getName()), "tag exists"));
   }

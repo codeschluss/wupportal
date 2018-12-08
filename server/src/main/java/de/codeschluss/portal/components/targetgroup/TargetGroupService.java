@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 public class TargetGroupService 
     extends ResourceDataService<TargetGroupEntity, TargetGroupQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "description";
-
   /**
    * Instantiates a new target group service.
    *

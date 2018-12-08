@@ -84,7 +84,7 @@ public class ActivityControllerUpdateTest {
     String organisationId = "00000000-0000-0000-0008-100000000000";
     String addressId = "00000000-0000-0000-0006-100000000000";
     return new ActivityEntity(name, "createActivity", true, addressId, null, categoryId, null,
-        organisationId, null, null, null, null);
+        organisationId, null, null, null, null, null);
   }
 
   @SuppressWarnings("unchecked")

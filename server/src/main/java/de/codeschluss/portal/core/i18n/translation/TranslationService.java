@@ -2,11 +2,11 @@ package de.codeschluss.portal.core.i18n.translation;
 
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.i18n.TranslationsConfiguration;
-import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslationResult;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
+import de.codeschluss.portal.core.service.BaseEntity;
 import de.codeschluss.portal.core.service.DataRepository;
 import de.codeschluss.portal.core.service.RepositoryService;
 
@@ -118,7 +118,7 @@ public class TranslationService {
    */
   @SuppressWarnings("unchecked")
   @Around("save()")
-  public <E extends LocalizedEntity<?>> void save(Object savedEntity) throws Throwable {
+  public <E extends BaseEntity> void save(Object savedEntity) throws Throwable {
     TranslatableEntity<?> translatableObject = createTranslatableObject((E) savedEntity,
         languageService.getCurrentWriteLanguage());
     repoService.save(translatableObject);
@@ -135,7 +135,7 @@ public class TranslationService {
    * @throws Throwable
    *           the throwable
    */
-  private TranslatableEntity<?> createTranslatableObject(LocalizedEntity<?> savedEntity,
+  private TranslatableEntity<?> createTranslatableObject(BaseEntity savedEntity,
       LanguageEntity lang) throws Throwable {
 
     Class<TranslatableEntity<?>> translatableClass = TranslationHelper
@@ -204,7 +204,7 @@ public class TranslationService {
    *           the invocation target exception
    */
   @SuppressWarnings("unchecked")
-  public Resources<?> getAllTranslations(LocalizedEntity<?> parent, CrudController<?, ?> controller)
+  public Resources<?> getAllTranslations(BaseEntity parent, CrudController<?, ?> controller)
       throws NoSuchMethodException, SecurityException, IllegalAccessException,
       IllegalArgumentException, InvocationTargetException {
 

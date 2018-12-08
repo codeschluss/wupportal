@@ -24,9 +24,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivityService extends ResourceDataService<ActivityEntity, ActivityQueryBuilder> {
 
-  /** The default sort prop. */
-  protected final String defaultSortProp = "id";
-
   /**
    * Instantiates a new activity service.
    *

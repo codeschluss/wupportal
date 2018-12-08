@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   
+  /** The default sort prop. */
+  protected final String defaultSortProp = "translatables.name";
+  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -34,6 +37,18 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     this.languageService = languageService;
   }
   
+  @Override
+  protected String prepareSort(String sortProp) {
+    return sortProp.equals("name") || sortProp.equals("description")
+        ? "translatables." + sortProp
+        : sortProp;
+  }
+
+  @Override
+  public boolean localized() {
+    return true;
+  }
+  
   /* (non-Javadoc)
    * @see de.codeschluss.portal.core.service
    * .QueryBuilder#search(de.codeschluss.portal.core.utils.FilterSortPaginate)
@@ -41,18 +56,46 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   @Override
   public Predicate search(FilterSortPaginate p) {
     ActivityQueryParam params = validateParams(p);
+    List<String> locales = languageService.getCurrentReadLocales();
+    BooleanBuilder search = new BooleanBuilder(withLocalized(locales));
     
+    return params.isEmptyQuery()
+        ? search.getValue()
+        : searchFiltered(search, params, locales);
+  }
+  
+  /**
+   * With localized.
+   *
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate withLocalized(List<String> locales) {
+    return query.translatables.any().language.locale.in(locales);
+  }
+
+  /**
+   * Search filtered.
+   *
+   * @param search the search
+   * @param params the params
+   * @param locales the locales
+   * @return the predicate
+   */
+  private Predicate searchFiltered(
+      BooleanBuilder search, 
+      ActivityQueryParam params,
+      List<String> locales) {
     String filter = params.getFilter();
-    BooleanBuilder search = new BooleanBuilder();
     if (params.getCurrent() != null && params.getCurrent()) {
       search.and(withCurrentSchedulesOnly());
     }
     
     return filter != null && !filter.isEmpty()
-        ? fuzzyTextSearch(params, search)
+        ? fuzzyTextSearch(params, search, locales)
         : advancedSearch(params, search);
   }
-  
+
   /**
    * Fuzzy text search.
    *
@@ -60,8 +103,10 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    * @param search the search
    * @return the predicate
    */
-  public Predicate fuzzyTextSearch(ActivityQueryParam params, BooleanBuilder search) {
-    List<String> locales = languageService.getCurrentReadLocales();
+  public Predicate fuzzyTextSearch(
+      ActivityQueryParam params, 
+      BooleanBuilder search,
+      List<String> locales) {
     String filter = prepareFilter(params.getFilter());
     BooleanExpression textSearch = query.translatables.any().language.locale.in(locales)
         .and(

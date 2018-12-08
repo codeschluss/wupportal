@@ -6,13 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to declare an Collection as Translatables.
+ * Annotation to declare an entity as localized.
  * 
  * @author Valmir Etemi
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Translatables {
+@Target(ElementType.TYPE)
+public @interface Localized {
 
 }

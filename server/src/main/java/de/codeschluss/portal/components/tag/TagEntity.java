@@ -6,15 +6,18 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.tag.translations.TagTranslatablesEntity;
-import de.codeschluss.portal.core.i18n.entities.LocalizedEntity;
+import de.codeschluss.portal.core.i18n.annotations.Localized;
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -23,6 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import org.springframework.hateoas.core.Relation;
 
@@ -37,9 +41,10 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Localized
 @Table(name = "tags")
 @Relation(collectionRelation = "data")
-public class TagEntity extends LocalizedEntity<TagTranslatablesEntity> {
+public class TagEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -55,5 +60,10 @@ public class TagEntity extends LocalizedEntity<TagTranslatablesEntity> {
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
   @JsonIgnore
   private List<ActivityEntity> activities;
+  
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
+  @ToString.Exclude
+  @JsonIgnore
+  protected List<TagTranslatablesEntity> translatables;
 
 }

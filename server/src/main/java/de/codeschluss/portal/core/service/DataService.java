@@ -88,13 +88,10 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?
     return result;
   }
 
-
-
   /**
    * Adds the.
    *
-   * @param newEntity
-   *          the new entity
+   * @param newEntity the new entity
    * @return the e
    */
   public E add(E newEntity) {
@@ -107,7 +104,7 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?
    *
    * @param newEntities
    *          the new entities
-   * @return the list
+   * @return the list<
    */
   public List<E> addAll(List<E> newEntities) {
     return newEntities.stream().map(entity -> {

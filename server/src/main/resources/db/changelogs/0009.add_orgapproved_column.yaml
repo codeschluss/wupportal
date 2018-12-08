@@ -1,0 +1,24 @@
+databaseChangeLog:
+- changeSet:
+    id: 0009.add_orgapproved_column_1
+    author: vetemi
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+                nullable: false
+            defaultValueBoolean: false
+            name: approved
+            type: BIT(1)
+        tableName: organisations
+- changeSet:
+    id: 0009.add_orgapproved_column_2
+    changes:
+    - update:
+        columns:
+        - column:
+            name: approved
+            type: BIT(1)
+            value: true
+        tableName: organisations

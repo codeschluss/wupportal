@@ -1,6 +1,7 @@
 package de.codeschluss.portal.components.organisation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -51,6 +52,9 @@ import org.springframework.hateoas.core.Relation;
 public class OrganisationEntity extends BaseEntity {
   
   private static final long serialVersionUID = 1L;
+  
+  @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+  private boolean approved;
 
   @JsonSerialize
   @JsonDeserialize
@@ -88,4 +92,14 @@ public class OrganisationEntity extends BaseEntity {
   @JsonIgnore
   @ToString.Exclude
   protected List<OrganisationTranslatablesEntity> translatables;
+  
+  @JsonProperty
+  public boolean isApproved() {
+    return this.approved;
+  }
+
+  @JsonIgnore
+  public void setApproved(boolean approved) {
+    this.approved = approved;
+  }
 }

@@ -3,7 +3,7 @@ package de.codeschluss.portal.integration.organisation;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.organisation.OrganisationController;
-import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.components.organisation.OrganisationQueryParam;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +14,6 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resources;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class OrganisationControllerReadAllTest {
@@ -23,11 +21,13 @@ public class OrganisationControllerReadAllTest {
   @Autowired
   private OrganisationController controller;
 
-  private FilterSortPaginate params = new FilterSortPaginate("organisation", 1, 5, "name", "asc");
+  private OrganisationQueryParam params = new OrganisationQueryParam("organisation", 1, 5, "name",
+      "asc", null);
 
   @Test
   public void findAllWithoutPaginationOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc");
+    OrganisationQueryParam params = new OrganisationQueryParam(null, null, null, "name", "asc",
+        null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -36,7 +36,7 @@ public class OrganisationControllerReadAllTest {
 
   @Test
   public void findAllEmptyParamsOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
+    OrganisationQueryParam params = new OrganisationQueryParam(null, null, null, null, null, null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -51,8 +51,8 @@ public class OrganisationControllerReadAllTest {
 
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
-    FilterSortPaginate params = new FilterSortPaginate("organisation", 1, 5, "blablabla123",
-        "wrong");
+    OrganisationQueryParam params = new OrganisationQueryParam("organisation", 1, 5, "blablabla123",
+        "wrong", null);
     controller.readAll(params);
   }
 }

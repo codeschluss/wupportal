@@ -156,4 +156,16 @@ public class OrganisationService
     organisation.getImages().removeIf(image -> imagesIds.contains(image.getId()));
     repo.save(organisation);
   }
+
+  /**
+   * Sets the approval.
+   *
+   * @param organisationId the organisation id
+   * @param isApproved the is approved
+   */
+  public void setApproval(String organisationId, Boolean isApproved) {
+    OrganisationEntity organisation = getById(organisationId);
+    organisation.setApproved(isApproved);
+    repo.save(organisation);
+  }
 }

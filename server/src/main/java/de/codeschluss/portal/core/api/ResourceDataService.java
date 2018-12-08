@@ -51,7 +51,17 @@ public abstract class ResourceDataService<E extends BaseEntity, B extends QueryB
    * @return the resource
    */
   public Resource<E> addResource(E newEntity) {
-    return assembler.toResource(add(newEntity));
+    return convertToResource(add(newEntity));
+  }
+  
+  /**
+   * Convert to resource.
+   *
+   * @param newEntity the new entity
+   * @return the resource
+   */
+  public Resource<E> convertToResource(E newEntity) {
+    return assembler.toResource(newEntity);
   }
   
   /**

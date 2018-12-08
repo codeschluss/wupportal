@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 //TODO: Auto-generated Javadoc
 /**
-* The Class ActivityQueryParam.
+* The Class OrganisationQueryParam.
 * 
 * @author Valmir Etemi
 *

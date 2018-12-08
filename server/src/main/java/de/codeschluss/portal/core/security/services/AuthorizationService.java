@@ -8,6 +8,7 @@ import de.codeschluss.portal.core.security.jwt.JwtUserDetails;
 
 import java.util.Arrays;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -157,8 +158,20 @@ public class AuthorizationService {
         .getPrincipal() instanceof JwtUserDetails) {
       JwtUserDetails jwtUserDetails = (JwtUserDetails) SecurityContextHolder.getContext()
           .getAuthentication().getPrincipal();
+      validateUser(jwtUserDetails);
       return jwtUserDetails.getUser();
     }
     throw new RuntimeException("Something went wrong. UserDetails are configured wrongly");
+  }
+  
+  /**
+   * Validate user.
+   *
+   * @param jwtUserDetails the jwt user details
+   */
+  private void validateUser(JwtUserDetails jwtUserDetails) {
+    if (jwtUserDetails == null || jwtUserDetails.getUser() == null) {
+      throw new AccessDeniedException("No authenticated user");
+    }
   }
 }

@@ -53,10 +53,10 @@ export class ActivityProvider
   ];
 
   protected methods = {
-    create: this.service.activityControllerAddResponse,
+    create: this.service.activityControllerCreateResponse,
     delete: this.service.activityControllerDeleteResponse,
-    findAll: this.service.activityControllerFindAllResponse,
-    findOne: this.service.activityControllerFindOneResponse,
+    findAll: this.service.activityControllerReadAllResponse,
+    findOne: this.service.activityControllerReadOneResponse,
     update: this.service.activityControllerUpdateResponse
   };
 
@@ -78,7 +78,7 @@ export class ActivityProvider
   public findOne: (id: string) => Promise<ActivityModel>;
 
   public findAll: (params?: ActivityControllerService
-    .ActivityControllerFindAllParams) => Promise<ActivityModel[]>;
+    .ActivityControllerReadAllParams) => Promise<ActivityModel[]>;
 
   public linkTargetGroups:
     (id: string, targetGroupIds: string[]) => Promise<any> =

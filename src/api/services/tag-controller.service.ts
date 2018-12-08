@@ -25,28 +25,28 @@ class TagControllerService extends BaseService {
   }
 
   /**
-   * @param params The `TagControllerService.TagControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `TagControllerService.TagControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  tagControllerFindAllResponse(params: TagControllerService.TagControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  tagControllerReadAllResponse(params: TagControllerService.TagControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -66,22 +66,22 @@ class TagControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `TagControllerService.TagControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `TagControllerService.TagControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  tagControllerFindAll(params: TagControllerService.TagControllerFindAllParams): Observable<{}> {
-    return this.tagControllerFindAllResponse(params).pipe(
+  tagControllerReadAll(params: TagControllerService.TagControllerReadAllParams): Observable<{}> {
+    return this.tagControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -90,7 +90,7 @@ class TagControllerService extends BaseService {
    * @param newTag newTag
    * @return OK
    */
-  tagControllerAddResponse(newTag: TagEntity): Observable<StrictHttpResponse<{}>> {
+  tagControllerCreateResponse(newTag: TagEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -116,8 +116,8 @@ class TagControllerService extends BaseService {
    * @param newTag newTag
    * @return OK
    */
-  tagControllerAdd(newTag: TagEntity): Observable<{}> {
-    return this.tagControllerAddResponse(newTag).pipe(
+  tagControllerCreate(newTag: TagEntity): Observable<{}> {
+    return this.tagControllerCreateResponse(newTag).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -126,7 +126,7 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerFindOneResponse(tagId: string): Observable<StrictHttpResponse<ResourceTagEntity>> {
+  tagControllerReadOneResponse(tagId: string): Observable<StrictHttpResponse<ResourceTagEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -152,8 +152,8 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerFindOne(tagId: string): Observable<ResourceTagEntity> {
-    return this.tagControllerFindOneResponse(tagId).pipe(
+  tagControllerReadOne(tagId: string): Observable<ResourceTagEntity> {
+    return this.tagControllerReadOneResponse(tagId).pipe(
       __map(_r => _r.body as ResourceTagEntity)
     );
   }
@@ -234,18 +234,54 @@ class TagControllerService extends BaseService {
       __map(_r => _r.body as {})
     );
   }
+
+  /**
+   * @param tagId tagId
+   * @return OK
+   */
+  tagControllerFindTranslationsResponse(tagId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/tags/${tagId}/translations`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param tagId tagId
+   * @return OK
+   */
+  tagControllerFindTranslations(tagId: string): Observable<{}> {
+    return this.tagControllerFindTranslationsResponse(tagId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
 }
 
 module TagControllerService {
 
   /**
-   * Parameters for tagControllerFindAll
+   * Parameters for tagControllerReadAll
    */
-  export interface TagControllerFindAllParams {
-    page?: number;
-    size?: number;
+  export interface TagControllerReadAllParams {
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
   }
 }

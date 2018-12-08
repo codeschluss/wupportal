@@ -16,15 +16,15 @@ export class TagProvider
   public findOne: (id: string) => Promise<TagModel>;
 
   public findAll: (params?: TagControllerService
-    .TagControllerFindAllParams) => Promise<TagModel[]>;
+    .TagControllerReadAllParams) => Promise<TagModel[]>;
 
   protected linked = [];
 
   protected methods = {
-    create: this.service.tagControllerAddResponse,
+    create: this.service.tagControllerCreateResponse,
     delete: this.service.tagControllerDeleteResponse,
-    findAll: this.service.tagControllerFindAllResponse,
-    findOne: this.service.tagControllerFindOneResponse,
+    findAll: this.service.tagControllerReadAllResponse,
+    findOne: this.service.tagControllerReadOneResponse,
     update: this.service.tagControllerUpdateResponse
   };
 

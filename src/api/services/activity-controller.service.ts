@@ -27,7 +27,7 @@ class ActivityControllerService extends BaseService {
   }
 
   /**
-   * @param params The `ActivityControllerService.ActivityControllerFindAllParams` containing the following parameters:
+   * @param params The `ActivityControllerService.ActivityControllerReadAllParams` containing the following parameters:
    *
    * - `categories`:
    *
@@ -35,13 +35,13 @@ class ActivityControllerService extends BaseService {
    *
    * - `targetgroups`:
    *
-   * - `page`:
-   *
-   * - `size`:
-   *
    * - `sort`:
    *
    * - `dir`:
+   *
+   * - `page`:
+   *
+   * - `size`:
    *
    * - `filter`:
    *
@@ -49,17 +49,17 @@ class ActivityControllerService extends BaseService {
    *
    * @return OK
    */
-  activityControllerFindAllResponse(params: ActivityControllerService.ActivityControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  activityControllerReadAllResponse(params: ActivityControllerService.ActivityControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     (params.categories || []).forEach(val => {if (val != null) __params = __params.append('categories', val.toString())});
     (params.suburbs || []).forEach(val => {if (val != null) __params = __params.append('suburbs', val.toString())});
     (params.targetgroups || []).forEach(val => {if (val != null) __params = __params.append('targetgroups', val.toString())});
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     if (params.current != null) __params = __params.set('current', params.current.toString());
     let req = new HttpRequest<any>(
@@ -80,7 +80,7 @@ class ActivityControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `ActivityControllerService.ActivityControllerFindAllParams` containing the following parameters:
+   * @param params The `ActivityControllerService.ActivityControllerReadAllParams` containing the following parameters:
    *
    * - `categories`:
    *
@@ -88,13 +88,13 @@ class ActivityControllerService extends BaseService {
    *
    * - `targetgroups`:
    *
-   * - `page`:
-   *
-   * - `size`:
-   *
    * - `sort`:
    *
    * - `dir`:
+   *
+   * - `page`:
+   *
+   * - `size`:
    *
    * - `filter`:
    *
@@ -102,8 +102,8 @@ class ActivityControllerService extends BaseService {
    *
    * @return OK
    */
-  activityControllerFindAll(params: ActivityControllerService.ActivityControllerFindAllParams): Observable<{}> {
-    return this.activityControllerFindAllResponse(params).pipe(
+  activityControllerReadAll(params: ActivityControllerService.ActivityControllerReadAllParams): Observable<{}> {
+    return this.activityControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -112,7 +112,7 @@ class ActivityControllerService extends BaseService {
    * @param newActivity newActivity
    * @return OK
    */
-  activityControllerAddResponse(newActivity: ActivityEntity): Observable<StrictHttpResponse<{}>> {
+  activityControllerCreateResponse(newActivity: ActivityEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -138,8 +138,8 @@ class ActivityControllerService extends BaseService {
    * @param newActivity newActivity
    * @return OK
    */
-  activityControllerAdd(newActivity: ActivityEntity): Observable<{}> {
-    return this.activityControllerAddResponse(newActivity).pipe(
+  activityControllerCreate(newActivity: ActivityEntity): Observable<{}> {
+    return this.activityControllerCreateResponse(newActivity).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -148,7 +148,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerFindOneResponse(activityId: string): Observable<StrictHttpResponse<ResourceActivityEntity>> {
+  activityControllerReadOneResponse(activityId: string): Observable<StrictHttpResponse<ResourceActivityEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -174,8 +174,8 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerFindOne(activityId: string): Observable<ResourceActivityEntity> {
-    return this.activityControllerFindOneResponse(activityId).pipe(
+  activityControllerReadOne(activityId: string): Observable<ResourceActivityEntity> {
+    return this.activityControllerReadOneResponse(activityId).pipe(
       __map(_r => _r.body as ResourceActivityEntity)
     );
   }
@@ -490,13 +490,19 @@ class ActivityControllerService extends BaseService {
 
   /**
    * @param activityId activityId
+   * @param sort undefined
+   * @param dir undefined
    * @return OK
    */
-  activityControllerFindSchedulesResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerFindSchedulesResponse(activityId: string,
+    sort?: string,
+    dir?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/activities/${activityId}/schedules`,
@@ -516,10 +522,14 @@ class ActivityControllerService extends BaseService {
   }
   /**
    * @param activityId activityId
+   * @param sort undefined
+   * @param dir undefined
    * @return OK
    */
-  activityControllerFindSchedules(activityId: string): Observable<{}> {
-    return this.activityControllerFindSchedulesResponse(activityId).pipe(
+  activityControllerFindSchedules(activityId: string,
+    sort?: string,
+    dir?: string): Observable<{}> {
+    return this.activityControllerFindSchedulesResponse(activityId, sort, dir).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -846,6 +856,42 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
+  activityControllerFindTranslationsResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/${activityId}/translations`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerFindTranslations(activityId: string): Observable<{}> {
+    return this.activityControllerFindTranslationsResponse(activityId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param activityId activityId
+   * @return OK
+   */
   activityControllerFindUserResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -882,16 +928,16 @@ class ActivityControllerService extends BaseService {
 module ActivityControllerService {
 
   /**
-   * Parameters for activityControllerFindAll
+   * Parameters for activityControllerReadAll
    */
-  export interface ActivityControllerFindAllParams {
+  export interface ActivityControllerReadAllParams {
     categories?: Array<string>;
     suburbs?: Array<string>;
     targetgroups?: Array<string>;
-    page?: number;
-    size?: number;
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
     current?: boolean;
   }

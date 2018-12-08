@@ -16,15 +16,15 @@ export class ConfigurationProvider
   public findOne: (id: string) => Promise<ConfigurationModel>;
 
   public findAll: (params?: ConfigurationControllerService
-    .ConfigurationControllerFindAllParams) => Promise<ConfigurationModel[]>;
+    .ConfigurationControllerReadAllParams) => Promise<ConfigurationModel[]>;
 
   protected linked = [];
 
   protected methods = {
-    create: this.service.configurationControllerAddResponse,
+    create: this.service.configurationControllerCreateResponse,
     delete: this.service.configurationControllerDeleteResponse,
-    findAll: this.service.configurationControllerFindAllResponse,
-    findOne: this.service.configurationControllerFindOneResponse,
+    findAll: this.service.configurationControllerReadAllResponse,
+    findOne: this.service.configurationControllerReadOneResponse,
     update: this.service.configurationControllerUpdateResponse
   };
 

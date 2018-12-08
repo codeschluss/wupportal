@@ -25,28 +25,28 @@ class SuburbControllerService extends BaseService {
   }
 
   /**
-   * @param params The `SuburbControllerService.SuburbControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `SuburbControllerService.SuburbControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  suburbControllerFindAllResponse(params: SuburbControllerService.SuburbControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  suburbControllerReadAllResponse(params: SuburbControllerService.SuburbControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -66,22 +66,22 @@ class SuburbControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `SuburbControllerService.SuburbControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `SuburbControllerService.SuburbControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  suburbControllerFindAll(params: SuburbControllerService.SuburbControllerFindAllParams): Observable<{}> {
-    return this.suburbControllerFindAllResponse(params).pipe(
+  suburbControllerReadAll(params: SuburbControllerService.SuburbControllerReadAllParams): Observable<{}> {
+    return this.suburbControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -90,7 +90,7 @@ class SuburbControllerService extends BaseService {
    * @param newSuburb newSuburb
    * @return OK
    */
-  suburbControllerAddResponse(newSuburb: SuburbEntity): Observable<StrictHttpResponse<{}>> {
+  suburbControllerCreateResponse(newSuburb: SuburbEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -116,8 +116,8 @@ class SuburbControllerService extends BaseService {
    * @param newSuburb newSuburb
    * @return OK
    */
-  suburbControllerAdd(newSuburb: SuburbEntity): Observable<{}> {
-    return this.suburbControllerAddResponse(newSuburb).pipe(
+  suburbControllerCreate(newSuburb: SuburbEntity): Observable<{}> {
+    return this.suburbControllerCreateResponse(newSuburb).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -126,7 +126,7 @@ class SuburbControllerService extends BaseService {
    * @param surburbId surburbId
    * @return OK
    */
-  suburbControllerFindOneResponse(surburbId: string): Observable<StrictHttpResponse<ResourceSuburbEntity>> {
+  suburbControllerReadOneResponse(surburbId: string): Observable<StrictHttpResponse<ResourceSuburbEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -152,8 +152,8 @@ class SuburbControllerService extends BaseService {
    * @param surburbId surburbId
    * @return OK
    */
-  suburbControllerFindOne(surburbId: string): Observable<ResourceSuburbEntity> {
-    return this.suburbControllerFindOneResponse(surburbId).pipe(
+  suburbControllerReadOne(surburbId: string): Observable<ResourceSuburbEntity> {
+    return this.suburbControllerReadOneResponse(surburbId).pipe(
       __map(_r => _r.body as ResourceSuburbEntity)
     );
   }
@@ -239,13 +239,13 @@ class SuburbControllerService extends BaseService {
 module SuburbControllerService {
 
   /**
-   * Parameters for suburbControllerFindAll
+   * Parameters for suburbControllerReadAll
    */
-  export interface SuburbControllerFindAllParams {
-    page?: number;
-    size?: number;
+  export interface SuburbControllerReadAllParams {
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
   }
 }

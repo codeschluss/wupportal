@@ -7,11 +7,13 @@ import { ActivityControllerService } from './services/activity-controller.servic
 import { AddressControllerService } from './services/address-controller.service';
 import { CategoryControllerService } from './services/category-controller.service';
 import { ConfigurationControllerService } from './services/configuration-controller.service';
+import { LanguageControllerService } from './services/language-controller.service';
 import { OrganisationControllerService } from './services/organisation-controller.service';
 import { SecurityControllerService } from './services/security-controller.service';
 import { SuburbControllerService } from './services/suburb-controller.service';
 import { TagControllerService } from './services/tag-controller.service';
 import { TargetGroupControllerService } from './services/target-group-controller.service';
+import { TranslationControllerService } from './services/translation-controller.service';
 import { UserControllerService } from './services/user-controller.service';
 
 /**
@@ -31,11 +33,13 @@ import { UserControllerService } from './services/user-controller.service';
     AddressControllerService,
     CategoryControllerService,
     ConfigurationControllerService,
+    LanguageControllerService,
     OrganisationControllerService,
     SecurityControllerService,
     SuburbControllerService,
     TagControllerService,
     TargetGroupControllerService,
+    TranslationControllerService,
     UserControllerService
   ],
 })

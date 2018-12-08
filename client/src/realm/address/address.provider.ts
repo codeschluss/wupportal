@@ -17,10 +17,10 @@ export class AddressProvider
   ];
 
   protected methods = {
-    create: this.service.addressControllerAddResponse,
+    create: this.service.addressControllerCreateResponse,
     delete: this.service.addressControllerDeleteResponse,
-    findAll: this.service.addressControllerFindAllResponse,
-    findOne: this.service.addressControllerFindOneResponse,
+    findAll: this.service.addressControllerReadAllResponse,
+    findOne: this.service.addressControllerReadOneResponse,
     update: this.service.addressControllerUpdateResponse
   };
 
@@ -42,7 +42,7 @@ export class AddressProvider
   public findOne: (id: string) => Promise<AddressModel>;
 
   public findAll: (params?: AddressControllerService
-    .AddressControllerFindAllParams) => Promise<AddressModel[]>;
+    .AddressControllerReadAllParams) => Promise<AddressModel[]>;
 
   public relinkSuburb:
     (id: string, suburbId: string) => Promise<any> =

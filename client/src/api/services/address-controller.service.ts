@@ -26,28 +26,28 @@ class AddressControllerService extends BaseService {
   }
 
   /**
-   * @param params The `AddressControllerService.AddressControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `AddressControllerService.AddressControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  addressControllerFindAllResponse(params: AddressControllerService.AddressControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  addressControllerReadAllResponse(params: AddressControllerService.AddressControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -67,22 +67,22 @@ class AddressControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `AddressControllerService.AddressControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `AddressControllerService.AddressControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  addressControllerFindAll(params: AddressControllerService.AddressControllerFindAllParams): Observable<{}> {
-    return this.addressControllerFindAllResponse(params).pipe(
+  addressControllerReadAll(params: AddressControllerService.AddressControllerReadAllParams): Observable<{}> {
+    return this.addressControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -91,7 +91,7 @@ class AddressControllerService extends BaseService {
    * @param newAddress newAddress
    * @return OK
    */
-  addressControllerAddResponse(newAddress: AddressEntity): Observable<StrictHttpResponse<{}>> {
+  addressControllerCreateResponse(newAddress: AddressEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -117,8 +117,8 @@ class AddressControllerService extends BaseService {
    * @param newAddress newAddress
    * @return OK
    */
-  addressControllerAdd(newAddress: AddressEntity): Observable<{}> {
-    return this.addressControllerAddResponse(newAddress).pipe(
+  addressControllerCreate(newAddress: AddressEntity): Observable<{}> {
+    return this.addressControllerCreateResponse(newAddress).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -127,7 +127,7 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerFindOneResponse(addressId: string): Observable<StrictHttpResponse<ResourceAddressEntity>> {
+  addressControllerReadOneResponse(addressId: string): Observable<StrictHttpResponse<ResourceAddressEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -153,8 +153,8 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerFindOne(addressId: string): Observable<ResourceAddressEntity> {
-    return this.addressControllerFindOneResponse(addressId).pipe(
+  addressControllerReadOne(addressId: string): Observable<ResourceAddressEntity> {
+    return this.addressControllerReadOneResponse(addressId).pipe(
       __map(_r => _r.body as ResourceAddressEntity)
     );
   }
@@ -317,13 +317,13 @@ class AddressControllerService extends BaseService {
 module AddressControllerService {
 
   /**
-   * Parameters for addressControllerFindAll
+   * Parameters for addressControllerReadAll
    */
-  export interface AddressControllerFindAllParams {
-    page?: number;
-    size?: number;
+  export interface AddressControllerReadAllParams {
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
   }
 }

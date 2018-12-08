@@ -25,28 +25,28 @@ class TargetGroupControllerService extends BaseService {
   }
 
   /**
-   * @param params The `TargetGroupControllerService.TargetGroupControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `TargetGroupControllerService.TargetGroupControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  targetGroupControllerFindAllResponse(params: TargetGroupControllerService.TargetGroupControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  targetGroupControllerReadAllResponse(params: TargetGroupControllerService.TargetGroupControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -66,22 +66,22 @@ class TargetGroupControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `TargetGroupControllerService.TargetGroupControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `TargetGroupControllerService.TargetGroupControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  targetGroupControllerFindAll(params: TargetGroupControllerService.TargetGroupControllerFindAllParams): Observable<{}> {
-    return this.targetGroupControllerFindAllResponse(params).pipe(
+  targetGroupControllerReadAll(params: TargetGroupControllerService.TargetGroupControllerReadAllParams): Observable<{}> {
+    return this.targetGroupControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -90,7 +90,7 @@ class TargetGroupControllerService extends BaseService {
    * @param newTargetGroup newTargetGroup
    * @return OK
    */
-  targetGroupControllerAddResponse(newTargetGroup: TargetGroupEntity): Observable<StrictHttpResponse<{}>> {
+  targetGroupControllerCreateResponse(newTargetGroup: TargetGroupEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -116,8 +116,8 @@ class TargetGroupControllerService extends BaseService {
    * @param newTargetGroup newTargetGroup
    * @return OK
    */
-  targetGroupControllerAdd(newTargetGroup: TargetGroupEntity): Observable<{}> {
-    return this.targetGroupControllerAddResponse(newTargetGroup).pipe(
+  targetGroupControllerCreate(newTargetGroup: TargetGroupEntity): Observable<{}> {
+    return this.targetGroupControllerCreateResponse(newTargetGroup).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -126,7 +126,7 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerFindOneResponse(targetGroupId: string): Observable<StrictHttpResponse<ResourceTargetGroupEntity>> {
+  targetGroupControllerReadOneResponse(targetGroupId: string): Observable<StrictHttpResponse<ResourceTargetGroupEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -152,8 +152,8 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerFindOne(targetGroupId: string): Observable<ResourceTargetGroupEntity> {
-    return this.targetGroupControllerFindOneResponse(targetGroupId).pipe(
+  targetGroupControllerReadOne(targetGroupId: string): Observable<ResourceTargetGroupEntity> {
+    return this.targetGroupControllerReadOneResponse(targetGroupId).pipe(
       __map(_r => _r.body as ResourceTargetGroupEntity)
     );
   }
@@ -234,18 +234,54 @@ class TargetGroupControllerService extends BaseService {
       __map(_r => _r.body as {})
     );
   }
+
+  /**
+   * @param targetGroupId targetGroupId
+   * @return OK
+   */
+  targetGroupControllerFindTranslationsResponse(targetGroupId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/targetgroups/${targetGroupId}/translations`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param targetGroupId targetGroupId
+   * @return OK
+   */
+  targetGroupControllerFindTranslations(targetGroupId: string): Observable<{}> {
+    return this.targetGroupControllerFindTranslationsResponse(targetGroupId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
 }
 
 module TargetGroupControllerService {
 
   /**
-   * Parameters for targetGroupControllerFindAll
+   * Parameters for targetGroupControllerReadAll
    */
-  export interface TargetGroupControllerFindAllParams {
-    page?: number;
-    size?: number;
+  export interface TargetGroupControllerReadAllParams {
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
   }
 }

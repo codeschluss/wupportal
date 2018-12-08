@@ -25,28 +25,28 @@ class UserControllerService extends BaseService {
   }
 
   /**
-   * @param params The `UserControllerService.UserControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `UserControllerService.UserControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  userControllerFindAllResponse(params: UserControllerService.UserControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  userControllerReadAllResponse(params: UserControllerService.UserControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -66,22 +66,22 @@ class UserControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `UserControllerService.UserControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `UserControllerService.UserControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  userControllerFindAll(params: UserControllerService.UserControllerFindAllParams): Observable<{}> {
-    return this.userControllerFindAllResponse(params).pipe(
+  userControllerReadAll(params: UserControllerService.UserControllerReadAllParams): Observable<{}> {
+    return this.userControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -90,7 +90,7 @@ class UserControllerService extends BaseService {
    * @param newUser newUser
    * @return OK
    */
-  userControllerAddResponse(newUser: UserEntity): Observable<StrictHttpResponse<{}>> {
+  userControllerCreateResponse(newUser: UserEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -116,8 +116,8 @@ class UserControllerService extends BaseService {
    * @param newUser newUser
    * @return OK
    */
-  userControllerAdd(newUser: UserEntity): Observable<{}> {
-    return this.userControllerAddResponse(newUser).pipe(
+  userControllerCreate(newUser: UserEntity): Observable<{}> {
+    return this.userControllerCreateResponse(newUser).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -162,7 +162,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerFindOneResponse(userId: string): Observable<StrictHttpResponse<ResourceUserEntity>> {
+  userControllerReadOneResponse(userId: string): Observable<StrictHttpResponse<ResourceUserEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -188,8 +188,8 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerFindOne(userId: string): Observable<ResourceUserEntity> {
-    return this.userControllerFindOneResponse(userId).pipe(
+  userControllerReadOne(userId: string): Observable<ResourceUserEntity> {
+    return this.userControllerReadOneResponse(userId).pipe(
       __map(_r => _r.body as ResourceUserEntity)
     );
   }
@@ -511,13 +511,13 @@ class UserControllerService extends BaseService {
 module UserControllerService {
 
   /**
-   * Parameters for userControllerFindAll
+   * Parameters for userControllerReadAll
    */
-  export interface UserControllerFindAllParams {
-    page?: number;
-    size?: number;
+  export interface UserControllerReadAllParams {
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
   }
 }

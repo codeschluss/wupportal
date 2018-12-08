@@ -7,16 +7,16 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import { CategoryEntity } from '../models/category-entity';
-import { ResourceCategoryEntity } from '../models/resource-category-entity';
+import { LanguageEntity } from '../models/language-entity';
+import { ResourceLanguageEntity } from '../models/resource-language-entity';
 
 /**
- * Category Controller
+ * Language Controller
  */
 @Injectable({
   providedIn: 'root',
 })
-class CategoryControllerService extends BaseService {
+class LanguageControllerService extends BaseService {
   constructor(
     config: ApiConfiguration,
     http: HttpClient
@@ -25,7 +25,7 @@ class CategoryControllerService extends BaseService {
   }
 
   /**
-   * @param params The `CategoryControllerService.CategoryControllerReadAllParams` containing the following parameters:
+   * @param params The `LanguageControllerService.LanguageControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
@@ -39,7 +39,7 @@ class CategoryControllerService extends BaseService {
    *
    * @return OK
    */
-  categoryControllerReadAllResponse(params: CategoryControllerService.CategoryControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  languageControllerReadAllResponse(params: LanguageControllerService.LanguageControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -50,7 +50,7 @@ class CategoryControllerService extends BaseService {
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/categories`,
+      this.rootUrl + `/languages`,
       __body,
       {
         headers: __headers,
@@ -66,7 +66,7 @@ class CategoryControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `CategoryControllerService.CategoryControllerReadAllParams` containing the following parameters:
+   * @param params The `LanguageControllerService.LanguageControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
@@ -80,24 +80,24 @@ class CategoryControllerService extends BaseService {
    *
    * @return OK
    */
-  categoryControllerReadAll(params: CategoryControllerService.CategoryControllerReadAllParams): Observable<{}> {
-    return this.categoryControllerReadAllResponse(params).pipe(
+  languageControllerReadAll(params: LanguageControllerService.LanguageControllerReadAllParams): Observable<{}> {
+    return this.languageControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
-   * @param newCategory newCategory
+   * @param newLanguage newLanguage
    * @return OK
    */
-  categoryControllerCreateResponse(newCategory: CategoryEntity): Observable<StrictHttpResponse<{}>> {
+  languageControllerCreateResponse(newLanguage: LanguageEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = newCategory;
+    __body = newLanguage;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/categories`,
+      this.rootUrl + `/languages`,
       __body,
       {
         headers: __headers,
@@ -113,27 +113,27 @@ class CategoryControllerService extends BaseService {
     );
   }
   /**
-   * @param newCategory newCategory
+   * @param newLanguage newLanguage
    * @return OK
    */
-  categoryControllerCreate(newCategory: CategoryEntity): Observable<{}> {
-    return this.categoryControllerCreateResponse(newCategory).pipe(
+  languageControllerCreate(newLanguage: LanguageEntity): Observable<{}> {
+    return this.languageControllerCreateResponse(newLanguage).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
-   * @param categoryId categoryId
+   * @param languageId languageId
    * @return OK
    */
-  categoryControllerReadOneResponse(categoryId: string): Observable<StrictHttpResponse<ResourceCategoryEntity>> {
+  languageControllerReadOneResponse(languageId: string): Observable<StrictHttpResponse<ResourceLanguageEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/categories/${categoryId}`,
+      this.rootUrl + `/languages/${languageId}`,
       __body,
       {
         headers: __headers,
@@ -144,35 +144,35 @@ class CategoryControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceCategoryEntity>;
+        return _r as StrictHttpResponse<ResourceLanguageEntity>;
       })
     );
   }
   /**
-   * @param categoryId categoryId
+   * @param languageId languageId
    * @return OK
    */
-  categoryControllerReadOne(categoryId: string): Observable<ResourceCategoryEntity> {
-    return this.categoryControllerReadOneResponse(categoryId).pipe(
-      __map(_r => _r.body as ResourceCategoryEntity)
+  languageControllerReadOne(languageId: string): Observable<ResourceLanguageEntity> {
+    return this.languageControllerReadOneResponse(languageId).pipe(
+      __map(_r => _r.body as ResourceLanguageEntity)
     );
   }
 
   /**
-   * @param newCategory newCategory
-   * @param categoryId categoryId
+   * @param newLanguage newLanguage
+   * @param languageId languageId
    * @return OK
    */
-  categoryControllerUpdateResponse(newCategory: CategoryEntity,
-    categoryId: string): Observable<StrictHttpResponse<{}>> {
+  languageControllerUpdateResponse(newLanguage: LanguageEntity,
+    languageId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = newCategory;
+    __body = newLanguage;
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/categories/${categoryId}`,
+      this.rootUrl + `/languages/${languageId}`,
       __body,
       {
         headers: __headers,
@@ -188,29 +188,29 @@ class CategoryControllerService extends BaseService {
     );
   }
   /**
-   * @param newCategory newCategory
-   * @param categoryId categoryId
+   * @param newLanguage newLanguage
+   * @param languageId languageId
    * @return OK
    */
-  categoryControllerUpdate(newCategory: CategoryEntity,
-    categoryId: string): Observable<{}> {
-    return this.categoryControllerUpdateResponse(newCategory, categoryId).pipe(
+  languageControllerUpdate(newLanguage: LanguageEntity,
+    languageId: string): Observable<{}> {
+    return this.languageControllerUpdateResponse(newLanguage, languageId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
-   * @param categoryId categoryId
+   * @param languageId languageId
    * @return OK
    */
-  categoryControllerDeleteResponse(categoryId: string): Observable<StrictHttpResponse<{}>> {
+  languageControllerDeleteResponse(languageId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/categories/${categoryId}`,
+      this.rootUrl + `/languages/${languageId}`,
       __body,
       {
         headers: __headers,
@@ -226,58 +226,22 @@ class CategoryControllerService extends BaseService {
     );
   }
   /**
-   * @param categoryId categoryId
+   * @param languageId languageId
    * @return OK
    */
-  categoryControllerDelete(categoryId: string): Observable<{}> {
-    return this.categoryControllerDeleteResponse(categoryId).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
-   * @param categoryId categoryId
-   * @return OK
-   */
-  categoryControllerFindTranslationsResponse(categoryId: string): Observable<StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/categories/${categoryId}/translations`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * @param categoryId categoryId
-   * @return OK
-   */
-  categoryControllerFindTranslations(categoryId: string): Observable<{}> {
-    return this.categoryControllerFindTranslationsResponse(categoryId).pipe(
+  languageControllerDelete(languageId: string): Observable<{}> {
+    return this.languageControllerDeleteResponse(languageId).pipe(
       __map(_r => _r.body as {})
     );
   }
 }
 
-module CategoryControllerService {
+module LanguageControllerService {
 
   /**
-   * Parameters for categoryControllerReadAll
+   * Parameters for languageControllerReadAll
    */
-  export interface CategoryControllerReadAllParams {
+  export interface LanguageControllerReadAllParams {
     sort?: string;
     dir?: string;
     page?: number;
@@ -286,4 +250,4 @@ module CategoryControllerService {
   }
 }
 
-export { CategoryControllerService }
+export { LanguageControllerService }

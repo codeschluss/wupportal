@@ -16,15 +16,15 @@ export class CategoryProvider
   public findOne: (id: string) => Promise<CategoryModel>;
 
   public findAll: (params?: CategoryControllerService
-    .CategoryControllerFindAllParams) => Promise<CategoryModel[]>;
+    .CategoryControllerReadAllParams) => Promise<CategoryModel[]>;
 
   protected linked = [];
 
   protected methods = {
-    create: this.service.categoryControllerAddResponse,
+    create: this.service.categoryControllerCreateResponse,
     delete: this.service.categoryControllerDeleteResponse,
-    findAll: this.service.categoryControllerFindAllResponse,
-    findOne: this.service.categoryControllerFindOneResponse,
+    findAll: this.service.categoryControllerReadAllResponse,
+    findOne: this.service.categoryControllerReadOneResponse,
     update: this.service.categoryControllerUpdateResponse
   };
 

@@ -25,28 +25,28 @@ class ConfigurationControllerService extends BaseService {
   }
 
   /**
-   * @param params The `ConfigurationControllerService.ConfigurationControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `ConfigurationControllerService.ConfigurationControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  configurationControllerFindAllResponse(params: ConfigurationControllerService.ConfigurationControllerFindAllParams): Observable<StrictHttpResponse<{}>> {
+  configurationControllerReadAllResponse(params: ConfigurationControllerService.ConfigurationControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
@@ -66,22 +66,22 @@ class ConfigurationControllerService extends BaseService {
     );
   }
   /**
-   * @param params The `ConfigurationControllerService.ConfigurationControllerFindAllParams` containing the following parameters:
-   *
-   * - `page`:
-   *
-   * - `size`:
+   * @param params The `ConfigurationControllerService.ConfigurationControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
    * - `dir`:
    *
+   * - `page`:
+   *
+   * - `size`:
+   *
    * - `filter`:
    *
    * @return OK
    */
-  configurationControllerFindAll(params: ConfigurationControllerService.ConfigurationControllerFindAllParams): Observable<{}> {
-    return this.configurationControllerFindAllResponse(params).pipe(
+  configurationControllerReadAll(params: ConfigurationControllerService.ConfigurationControllerReadAllParams): Observable<{}> {
+    return this.configurationControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -90,7 +90,7 @@ class ConfigurationControllerService extends BaseService {
    * @param newConfiguration newConfiguration
    * @return OK
    */
-  configurationControllerAddResponse(newConfiguration: ConfigurationEntity): Observable<StrictHttpResponse<{}>> {
+  configurationControllerCreateResponse(newConfiguration: ConfigurationEntity): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -116,8 +116,8 @@ class ConfigurationControllerService extends BaseService {
    * @param newConfiguration newConfiguration
    * @return OK
    */
-  configurationControllerAdd(newConfiguration: ConfigurationEntity): Observable<{}> {
-    return this.configurationControllerAddResponse(newConfiguration).pipe(
+  configurationControllerCreate(newConfiguration: ConfigurationEntity): Observable<{}> {
+    return this.configurationControllerCreateResponse(newConfiguration).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -126,7 +126,7 @@ class ConfigurationControllerService extends BaseService {
    * @param configurationId configurationId
    * @return OK
    */
-  configurationControllerFindOneResponse(configurationId: string): Observable<StrictHttpResponse<ResourceConfigurationEntity>> {
+  configurationControllerReadOneResponse(configurationId: string): Observable<StrictHttpResponse<ResourceConfigurationEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -152,8 +152,8 @@ class ConfigurationControllerService extends BaseService {
    * @param configurationId configurationId
    * @return OK
    */
-  configurationControllerFindOne(configurationId: string): Observable<ResourceConfigurationEntity> {
-    return this.configurationControllerFindOneResponse(configurationId).pipe(
+  configurationControllerReadOne(configurationId: string): Observable<ResourceConfigurationEntity> {
+    return this.configurationControllerReadOneResponse(configurationId).pipe(
       __map(_r => _r.body as ResourceConfigurationEntity)
     );
   }
@@ -239,13 +239,13 @@ class ConfigurationControllerService extends BaseService {
 module ConfigurationControllerService {
 
   /**
-   * Parameters for configurationControllerFindAll
+   * Parameters for configurationControllerReadAll
    */
-  export interface ConfigurationControllerFindAllParams {
-    page?: number;
-    size?: number;
+  export interface ConfigurationControllerReadAllParams {
     sort?: string;
     dir?: string;
+    page?: number;
+    size?: number;
     filter?: string;
   }
 }

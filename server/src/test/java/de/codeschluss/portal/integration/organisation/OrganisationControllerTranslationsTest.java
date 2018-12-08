@@ -28,7 +28,7 @@ public class OrganisationControllerTranslationsTest {
 
     Resources<Resource<OrganisationTranslatablesEntity>> result = 
         (Resources<Resource<OrganisationTranslatablesEntity>>) controller
-        .findTranslations(organisationId).getBody();
+        .readTranslations(organisationId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -37,6 +37,6 @@ public class OrganisationControllerTranslationsTest {
   public void findTranslationsNotFound() {
     String organisationId = "00000000-0000-0000-0008-XX0000000000";
 
-    controller.findTranslations(organisationId);
+    controller.readTranslations(organisationId);
   }
 }

@@ -97,7 +97,7 @@ public class ActivityControllerUpdateCategoryTest {
 
   @SuppressWarnings("unchecked")
   private void assertContaining(String activityId, String categoryId) {
-    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId)
+    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.readCategory(activityId)
         .getBody();
     assertThat(result.getContent().getId()).isEqualTo(categoryId);
   }

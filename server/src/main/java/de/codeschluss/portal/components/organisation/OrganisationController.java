@@ -126,14 +126,14 @@ public class OrganisationController
   }
 
   /**
-   * Find address.
+   * Read address.
    *
    * @param organisationId
    *          the organisation id
    * @return the response entity
    */
   @GetMapping("/organisations/{organisationId}/address")
-  public ResponseEntity<?> findAddress(@PathVariable String organisationId) {
+  public ResponseEntity<?> readAddress(@PathVariable String organisationId) {
     return ok(addressService.getResourcesWithSuburbsByOrganisation(organisationId));
   }
 
@@ -152,21 +152,21 @@ public class OrganisationController
       @RequestBody String addressId) {
     if (addressService.existsById(addressId) && service.existsById(organisationId)) {
       service.updateAddress(organisationId, addressService.getById(addressId));
-      return ok(findAddress(organisationId));
+      return ok(readAddress(organisationId));
     } else {
       throw new BadParamsException("Organisation or Address with given ID do not exist!");
     }
   }
 
   /**
-   * Find activities.
+   * Read activities.
    *
    * @param organisationId
    *          the organisation id
    * @return the response entity
    */
   @GetMapping("/organisations/{organisationId}/activities")
-  public ResponseEntity<?> findActivities(@PathVariable String organisationId) {
+  public ResponseEntity<?> readActivities(@PathVariable String organisationId) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
     return ok(activityService.getResourcesByProviders(providers));
   }
@@ -194,7 +194,7 @@ public class OrganisationController
   }
 
   /**
-   * Find users.
+   * Read users.
    *
    * @param organisationId
    *          the organisation id
@@ -202,7 +202,7 @@ public class OrganisationController
    */
   @GetMapping("/organisations/{organisationId}/users")
   @OrgaAdminOrSuperUserPermission
-  public ResponseEntity<?> findUsers(@PathVariable String organisationId) {
+  public ResponseEntity<?> readUsers(@PathVariable String organisationId) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
     return ok(userService.convertToResourcesWithProviders(providers));
   }
@@ -275,13 +275,13 @@ public class OrganisationController
   }
   
   /**
-   * Find translations.
+   * Read translations.
    *
    * @param organisationId the organisation id
    * @return the response entity
    */
   @GetMapping("/organisations/{organisationId}/translations")
-  public ResponseEntity<?> findTranslations(@PathVariable String organisationId) {
+  public ResponseEntity<?> readTranslations(@PathVariable String organisationId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(organisationId), this));
     } catch (NoSuchMethodException 
@@ -294,14 +294,14 @@ public class OrganisationController
   }
   
   /**
-   * Find images.
+   * Read images.
    *
    * @param organisationId
    *          the organisation id
    * @return the response entity
    */
   @GetMapping("/organisations/{organisationId}/images")
-  public ResponseEntity<?> findImages(@PathVariable String organisationId) {
+  public ResponseEntity<?> readImages(@PathVariable String organisationId) {
     return ok(organisationImageService.getResourcesByOrganisation(organisationId));
   }
   

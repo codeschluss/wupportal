@@ -27,13 +27,13 @@ public class OrganisationResourceAssembler extends PagingAndSortingAssembler<Org
     links.add(linkTo(methodOn(OrganisationController.class)
         .readOne(organisation.getId())).withSelfRel());
     links.add(linkTo(methodOn(OrganisationController.class)
-        .findActivities(organisation.getId())).withRel("activities"));
+        .readActivities(organisation.getId())).withRel("activities"));
     links.add(linkTo(methodOn(OrganisationController.class)
-        .findUsers(organisation.getId())).withRel("users"));
+        .readUsers(organisation.getId())).withRel("users"));
     links.add(linkTo(methodOn(OrganisationController.class)
-        .findAddress(organisation.getId())).withRel("address"));
+        .readAddress(organisation.getId())).withRel("address"));
     links.add(linkTo(methodOn(OrganisationController.class)
-        .findTranslations(organisation.getId())).withRel("translations"));
+        .readTranslations(organisation.getId())).withRel("translations"));
 
     return links;
   }

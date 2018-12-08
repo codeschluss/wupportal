@@ -27,7 +27,7 @@ public class AddressResourceAssembler extends PagingAndSortingAssembler<AddressE
     links.add(linkTo(methodOn(AddressController.class)
         .readOne(address.getId())).withSelfRel());
     links.add(linkTo(methodOn(AddressController.class)
-        .findSuburb(address.getId())).withRel("suburb"));
+        .readSuburb(address.getId())).withRel("suburb"));
 
     return links;
   }

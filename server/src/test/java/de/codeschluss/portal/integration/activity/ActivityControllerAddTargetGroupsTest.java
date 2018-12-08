@@ -79,7 +79,7 @@ public class ActivityControllerAddTargetGroupsTest {
   @SuppressWarnings("unchecked")
   private void assertContaining(String targetGroupId, String activityId) {
     Resources<Resource<TargetGroupEntity>> result = (Resources<Resource<TargetGroupEntity>>) 
-        controller.findTargetGroups(activityId).getBody();
+        controller.readTargetGroups(activityId).getBody();
     
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         t -> t.getContent().getId().equals(targetGroupId), "targetGroup exists"));

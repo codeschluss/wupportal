@@ -25,7 +25,7 @@ public class ActivityControllerFindCategoryTest {
   public void findCategoryOk() {
     String activityId = "00000000-0000-0000-0010-100000000000";
 
-    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.findCategory(activityId)
+    Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.readCategory(activityId)
         .getBody();
 
     assertThat(result.getContent()).isNotNull();
@@ -35,6 +35,6 @@ public class ActivityControllerFindCategoryTest {
   public void findCategoryNotFound() {
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
-    controller.findCategory(activityId);
+    controller.readCategory(activityId);
   }
 }

@@ -27,7 +27,7 @@ public class TargetGroupResourceAssembler extends PagingAndSortingAssembler<Targ
     links.add(linkTo(methodOn(TargetGroupController.class)
         .readOne(targetGroup.getId())).withSelfRel());
     links.add(linkTo(methodOn(TargetGroupController.class)
-        .findTranslations(targetGroup.getId())).withRel("translations"));
+        .readTranslations(targetGroup.getId())).withRel("translations"));
 
     return links;
   }

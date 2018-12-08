@@ -27,7 +27,7 @@ public class ActivityControllerFindSchedulesTest {
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     Resources<Resource<ScheduleEntity>> result = (Resources<Resource<ScheduleEntity>>) controller
-        .findSchedules(activityId, null).getBody();
+        .readSchedules(activityId, null).getBody();
 
     assertThat(result.getContent()).isNotNull();
     assertThat(result.getContent()).allMatch(
@@ -38,6 +38,6 @@ public class ActivityControllerFindSchedulesTest {
   public void findScheduleNotFound() {
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
-    controller.findSchedules(activityId, null);
+    controller.readSchedules(activityId, null);
   }
 }

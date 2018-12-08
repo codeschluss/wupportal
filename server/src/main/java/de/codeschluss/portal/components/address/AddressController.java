@@ -82,14 +82,14 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
   }
 
   /**
-   * Find suburb.
+   * Read suburb.
    *
    * @param addressId
    *          the address id
    * @return the response entity
    */
   @GetMapping("/addresses/{addressId}/suburb")
-  public ResponseEntity<Resource<?>> findSuburb(@PathVariable String addressId) {
+  public ResponseEntity<Resource<?>> readSuburb(@PathVariable String addressId) {
     return ok(suburbService.getResourceByAddress(addressId));
   }
 

@@ -41,7 +41,7 @@ public class OrganisationControllerAddAndFindImagesTest {
     controller.addImage("00000000-0000-0000-0008-100000000000", "test", multipartFile);
     
     Resources<?> result = (Resources<?>) controller
-        .findImages("00000000-0000-0000-0008-100000000000").getBody();
+        .readImages("00000000-0000-0000-0008-100000000000").getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -55,7 +55,7 @@ public class OrganisationControllerAddAndFindImagesTest {
     controller.addImage("00000000-0000-0000-0008-100000000000", "test", multipartFile);
     
     Resources<?> result = (Resources<?>) controller
-        .findImages("00000000-0000-0000-0008-100000000000").getBody();
+        .readImages("00000000-0000-0000-0008-100000000000").getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -78,7 +78,7 @@ public class OrganisationControllerAddAndFindImagesTest {
   @Test(expected = NotFoundException.class)
   public void findImagesByOrganisationNotFound() {
     Resources<?> result = (Resources<?>) controller
-        .findImages("00000000-0000-0000-0008-XX0000000000").getBody();
+        .readImages("00000000-0000-0000-0008-XX0000000000").getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }

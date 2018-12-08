@@ -26,7 +26,7 @@ public class OrganisationControllerFindUsersTest {
   @WithUserDetails("super@user")
   public void findUsersSuperUserOk() {
     Resources<?> result = (Resources<?>) controller
-        .findUsers("00000000-0000-0000-0008-100000000000").getBody();
+        .readUsers("00000000-0000-0000-0008-100000000000").getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -35,7 +35,7 @@ public class OrganisationControllerFindUsersTest {
   @WithUserDetails("admin@user")
   public void findUsersAdminUserOk() {
     Resources<?> result = (Resources<?>) controller
-        .findUsers("00000000-0000-0000-0008-100000000000").getBody();
+        .readUsers("00000000-0000-0000-0008-100000000000").getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -43,17 +43,17 @@ public class OrganisationControllerFindUsersTest {
   @Test(expected = NotFoundException.class)
   @WithUserDetails("super@user")
   public void findUsersNotFound() {
-    controller.findUsers("00000000-0000-0000-0008-XX0000000000");
+    controller.readUsers("00000000-0000-0000-0008-XX0000000000");
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void findUsersProviderUserDenied() {
-    controller.findUsers("00000000-0000-0000-0008-100000000000");
+    controller.readUsers("00000000-0000-0000-0008-100000000000");
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void findUsersNoUserDenied() {
-    controller.findUsers("00000000-0000-0000-0008-100000000000");
+    controller.readUsers("00000000-0000-0000-0008-100000000000");
   }
 }

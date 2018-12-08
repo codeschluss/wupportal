@@ -28,7 +28,7 @@ public class TargetGroupControllerTranslationsTest {
 
     Resources<Resource<TargetGroupTranslatablesEntity>> result = 
         (Resources<Resource<TargetGroupTranslatablesEntity>>) controller
-        .findTranslations(targetGroupId).getBody();
+        .readTranslations(targetGroupId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -37,6 +37,6 @@ public class TargetGroupControllerTranslationsTest {
   public void findTranslationsNotFound() {
     String targetGroupId = "00000000-0000-0000-0003-XX0000000000";
 
-    controller.findTranslations(targetGroupId);
+    controller.readTranslations(targetGroupId);
   }
 }

@@ -31,7 +31,7 @@ public class OrganisationImageResourceAssembler
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(OrganisationController.class)
-        .findImages(image.getOrganisation().getId())).withSelfRel());
+        .readImages(image.getOrganisation().getId())).withSelfRel());
 
     return links;
   }

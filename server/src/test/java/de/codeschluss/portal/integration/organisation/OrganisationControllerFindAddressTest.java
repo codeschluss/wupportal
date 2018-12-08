@@ -23,7 +23,7 @@ public class OrganisationControllerFindAddressTest {
   public void findAddressByOrganisationOk() {
     String orgaId = "00000000-0000-0000-0008-200000000000";
 
-    Resource<?> result = (Resource<?>) controller.findAddress(orgaId).getBody();
+    Resource<?> result = (Resource<?>) controller.readAddress(orgaId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }
@@ -32,7 +32,7 @@ public class OrganisationControllerFindAddressTest {
   public void findAddressByOrganisationNotFound() {
     String orgaId = "00000000-0000-0000-0008-XX0000000000";
 
-    Resource<?> result = (Resource<?>) controller.findAddress(orgaId).getBody();
+    Resource<?> result = (Resource<?>) controller.readAddress(orgaId).getBody();
 
     assertThat(result.getContent()).isNotNull();
   }

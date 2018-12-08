@@ -74,7 +74,7 @@ public class UserControllerDeleteOrganisationForUserTest {
   @SuppressWarnings("unchecked")
   private void assertContaining(String userId, String orgaId) {
     Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) 
-        controller.findOrganisations(userId).getBody();
+        controller.readOrganisations(userId).getBody();
     assertThat(result.getContent()).haveAtLeastOne(
         new Condition<>(p -> p.getContent().getId().equals(orgaId), "organisation exists"));
   }
@@ -82,7 +82,7 @@ public class UserControllerDeleteOrganisationForUserTest {
   @SuppressWarnings("unchecked")
   private void assertNotContaining(String userId, String orgaId) {
     Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) 
-        controller.findOrganisations(userId).getBody();
+        controller.readOrganisations(userId).getBody();
     assertThat(result.getContent()).noneMatch(p -> p.getContent().getId().equals(orgaId));
   }
 }

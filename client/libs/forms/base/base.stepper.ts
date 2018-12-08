@@ -18,7 +18,7 @@ export abstract class BaseStepper
 
   protected abstract steps: FormStep[];
 
-  public static get route(): Route {
+  public static route(): Route {
     let joiner = CrudJoiner.of(this.prototype.model);
     const links = (form) => form.model.provider.system.linked
       .filter((link) => form.fields.some((field) => field.name === link.field));

@@ -1,21 +1,9 @@
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CrudModel } from '@portal/core';
-import { BooleanFieldComponent } from '../field/boolean.field';
-import { ChipListFieldComponent } from '../field/chip-list.field';
-import { DatetimeFieldComponent } from '../field/datetime.field';
-import { SelectFieldComponent } from '../field/select.field';
-import { StringFieldComponent } from '../field/string.field';
 import { FormField } from './base.form';
 
 @Component({
-  entryComponents: [
-    BooleanFieldComponent,
-    ChipListFieldComponent,
-    DatetimeFieldComponent,
-    SelectFieldComponent,
-    StringFieldComponent
-  ],
   selector: 'base-field',
   template: ''
 })

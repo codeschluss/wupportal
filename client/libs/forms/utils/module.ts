@@ -32,6 +32,13 @@ const ModuleLoop = [
     SelectFieldComponent,
     StringFieldComponent
   ],
+  entryComponents: [
+    BooleanFieldComponent,
+    ChipListFieldComponent,
+    DatetimeFieldComponent,
+    SelectFieldComponent,
+    StringFieldComponent
+  ],
   exports: [
     BaseFieldComponent,
     ...ModuleLoop
@@ -42,4 +49,4 @@ const ModuleLoop = [
   ]
 })
 
-export class ManagementModule { }
+export class FormsModule { }

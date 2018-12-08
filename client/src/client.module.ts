@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule, CoreSettings } from '@portal/core';
-import { ManagementModule } from '@portal/mgmt';
+import { FormsModule } from '@portal/forms';
 import { ApiConfiguration } from './api/api-configuration';
 import { ApiModule } from './api/api.module';
 import { ClientComponent } from './client.component';
@@ -32,8 +32,8 @@ import { LayoutComponent } from './views/layout/layout.component';
     BrowserAnimationsModule,
     ClientRouter,
     CoreModule,
-    HttpClientModule,
-    ManagementModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     ActivityProvider,

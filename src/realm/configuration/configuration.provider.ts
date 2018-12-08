@@ -13,9 +13,9 @@ export class ConfigurationProvider
 
   public delete: (id: string) => Promise<any>;
 
-  public findOne: (id: string) => Promise<ConfigurationModel>;
+  public readOne: (id: string) => Promise<ConfigurationModel>;
 
-  public findAll: (params?: ConfigurationControllerService
+  public readAll: (params?: ConfigurationControllerService
     .ConfigurationControllerReadAllParams) => Promise<ConfigurationModel[]>;
 
   protected linked = [];
@@ -23,8 +23,8 @@ export class ConfigurationProvider
   protected methods = {
     create: this.service.configurationControllerCreateResponse,
     delete: this.service.configurationControllerDeleteResponse,
-    findAll: this.service.configurationControllerReadAllResponse,
-    findOne: this.service.configurationControllerReadOneResponse,
+    readAll: this.service.configurationControllerReadAllResponse,
+    readOne: this.service.configurationControllerReadOneResponse,
     update: this.service.configurationControllerUpdateResponse
   };
 

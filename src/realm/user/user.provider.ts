@@ -4,7 +4,7 @@ import { UserControllerService } from '../../api/services/user-controller.servic
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { ProviderModel } from '../provider/provider.model';
-import { UserModel } from '../user/user.model';
+import { UserModel } from './user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserProvider
@@ -13,12 +13,12 @@ export class UserProvider
   protected linked = [
     {
       field: 'activities',
-      method: this.service.userControllerFindActivitiesResponse,
+      method: this.service.userControllerReadActivitiesResponse,
       model: ActivityModel
     },
     {
       field: 'organisations',
-      method: this.service.userControllerFindOrganisationsResponse,
+      method: this.service.userControllerReadOrganisationsResponse,
       model: OrganisationModel
     },
     {
@@ -31,8 +31,8 @@ export class UserProvider
   protected methods = {
     create: this.service.userControllerCreateResponse,
     delete: this.service.userControllerDeleteResponse,
-    findAll: this.service.userControllerReadAllResponse,
-    findOne: this.service.userControllerReadOneResponse,
+    readAll: this.service.userControllerReadAllResponse,
+    readOne: this.service.userControllerReadOneResponse,
     update: this.service.userControllerUpdateResponse
   };
 
@@ -51,9 +51,9 @@ export class UserProvider
 
   public delete: (id: string) => Promise<any>;
 
-  public findOne: (id: string) => Promise<UserModel>;
+  public readOne: (id: string) => Promise<UserModel>;
 
-  public findAll: (params?: UserControllerService
+  public readAll: (params?: UserControllerService
     .UserControllerReadAllParams) => Promise<UserModel[]>;
 
   public grantSuperUser:

@@ -239,7 +239,7 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerFindTranslationsResponse(targetGroupId: string): Observable<StrictHttpResponse<{}>> {
+  targetGroupControllerReadTranslationsResponse(targetGroupId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -265,8 +265,8 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerFindTranslations(targetGroupId: string): Observable<{}> {
-    return this.targetGroupControllerFindTranslationsResponse(targetGroupId).pipe(
+  targetGroupControllerReadTranslations(targetGroupId: string): Observable<{}> {
+    return this.targetGroupControllerReadTranslationsResponse(targetGroupId).pipe(
       __map(_r => _r.body as {})
     );
   }

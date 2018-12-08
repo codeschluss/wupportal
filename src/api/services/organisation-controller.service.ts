@@ -239,7 +239,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindActivitiesResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadActivitiesResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -265,8 +265,8 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindActivities(organisationId: string): Observable<{}> {
-    return this.organisationControllerFindActivitiesResponse(organisationId).pipe(
+  organisationControllerReadActivities(organisationId: string): Observable<{}> {
+    return this.organisationControllerReadActivitiesResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -316,7 +316,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindAddressResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadAddressResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -342,8 +342,8 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindAddress(organisationId: string): Observable<{}> {
-    return this.organisationControllerFindAddressResponse(organisationId).pipe(
+  organisationControllerReadAddress(organisationId: string): Observable<{}> {
+    return this.organisationControllerReadAddressResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -393,7 +393,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindImagesResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadImagesResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -419,8 +419,8 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindImages(organisationId: string): Observable<{}> {
-    return this.organisationControllerFindImagesResponse(organisationId).pipe(
+  organisationControllerReadImages(organisationId: string): Observable<{}> {
+    return this.organisationControllerReadImagesResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -519,7 +519,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindTranslationsResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadTranslationsResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -545,8 +545,8 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindTranslations(organisationId: string): Observable<{}> {
-    return this.organisationControllerFindTranslationsResponse(organisationId).pipe(
+  organisationControllerReadTranslations(organisationId: string): Observable<{}> {
+    return this.organisationControllerReadTranslationsResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -555,7 +555,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindUsersResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadUsersResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -581,8 +581,8 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerFindUsers(organisationId: string): Observable<{}> {
-    return this.organisationControllerFindUsersResponse(organisationId).pipe(
+  organisationControllerReadUsers(organisationId: string): Observable<{}> {
+    return this.organisationControllerReadUsersResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
   }

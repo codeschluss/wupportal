@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { SuburbControllerService } from '../../api/services/suburb-controller.service';
-import { SuburbModel } from '../suburb/suburb.model';
+import { SuburbModel } from './suburb.model';
 
 @Injectable({ providedIn: 'root' })
 export class SuburbProvider
@@ -13,9 +13,9 @@ export class SuburbProvider
 
   public delete: (id: string) => Promise<any>;
 
-  public findOne: (id: string) => Promise<SuburbModel>;
+  public readOne: (id: string) => Promise<SuburbModel>;
 
-  public findAll: (params?: SuburbControllerService
+  public readAll: (params?: SuburbControllerService
     .SuburbControllerReadAllParams) => Promise<SuburbModel[]>;
 
   protected linked = [];
@@ -23,8 +23,8 @@ export class SuburbProvider
   protected methods = {
     create: this.service.suburbControllerCreateResponse,
     delete: this.service.suburbControllerDeleteResponse,
-    findAll: this.service.suburbControllerReadAllResponse,
-    findOne: this.service.suburbControllerReadOneResponse,
+    readAll: this.service.suburbControllerReadAllResponse,
+    readOne: this.service.suburbControllerReadOneResponse,
     update: this.service.suburbControllerUpdateResponse
   };
 

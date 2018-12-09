@@ -64,6 +64,10 @@ public class TargetGroupQueryBuilder extends QueryBuilder<QTargetGroupEntity> {
    * @return the predicate
    */
   private Predicate withLocalized(List<String> locales) {
+    String defaultLang = languageService.getDefaultLocale();
+    if (!locales.contains(defaultLang)) {
+      locales.add(defaultLang);
+    }
     return query.translatables.any().language.locale.in(locales);
   }
   

@@ -21,7 +21,6 @@
 		<oauth.version>3.4.0</oauth.version>
 		<greenmail.version>1.5.5</greenmail.version>
 		<tika.version>1.19.1</tika.version>
-		<imagesclr.version>4.2</imagesclr.version>
 	</properties>
 
 	<parent>
@@ -124,11 +123,6 @@
 			<groupId>org.apache.tika</groupId>
 			<artifactId>tika-core</artifactId>
 			<version>${tika.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.imgscalr</groupId>
-			<artifactId>imgscalr-lib</artifactId>
-			<version>${imagesclr.version}</version>
 		</dependency>
 
 		<dependency>

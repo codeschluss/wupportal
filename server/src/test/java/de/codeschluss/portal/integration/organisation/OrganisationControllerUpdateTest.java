@@ -34,7 +34,7 @@ public class OrganisationControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("updateSuperUserOk",
+    OrganisationEntity organisation = new OrganisationEntity(true, "updateSuperUserOk",
         "updateSuperUserOk", "updateSuperUserOk", "123456789", "updateSuperUserOk",
         "updateSuperUserOk", null, null, null, null);
 
@@ -46,7 +46,7 @@ public class OrganisationControllerUpdateTest {
   @Test
   @WithUserDetails("admin@user")
   public void updateOwnOrganisationOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("updateOwnOrganisationOk",
+    OrganisationEntity organisation = new OrganisationEntity(true, "updateOwnOrganisationOk",
         "updateOwnOrganisationOk", "organisation1", "123456789", "updateOwnOrganisationOk",
         "updateOwnOrganisationOk", null, null, null, null);
 
@@ -58,7 +58,7 @@ public class OrganisationControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateOtherOrganisationDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied",
+    OrganisationEntity organisation = new OrganisationEntity(true, "updateOtherOrganisationDenied",
         "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", "123456789",
         "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", null, null, null, null);
 
@@ -67,7 +67,7 @@ public class OrganisationControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateOtherNotRegisteredOrganisationDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity("updateOtherOrganisationDenied",
+    OrganisationEntity organisation = new OrganisationEntity(true, "updateOtherOrganisationDenied",
         "organisation1", "organisation1", "123456789", "organisation1", "organisation1", null, null,
         null, null);
 

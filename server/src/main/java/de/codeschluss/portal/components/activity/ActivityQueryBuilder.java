@@ -216,7 +216,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    */
   public BooleanExpression forIdWithAnyOfProviders(
       String activityId, List<ProviderEntity> providers) {
-    return withId(activityId).and(withAnyOfProviders(providers));
+    return withAnyOfProviders(providers).and(withId(activityId));
   }
   
   /**
@@ -227,13 +227,6 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    */
   public BooleanExpression withAnyOfProviders(List<ProviderEntity> providers) {
     return query.provider.in(providers);
-  }
-  
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service.QueryBuilder#withId(java.lang.String)
-   */
-  public BooleanExpression withId(String id) {
-    return query.id.eq(id);
   }
 
   /**

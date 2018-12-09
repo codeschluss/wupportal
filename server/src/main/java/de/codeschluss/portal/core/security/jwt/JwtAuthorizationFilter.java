@@ -46,14 +46,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     this.tokenService = tokenService;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * org.springframework.security.web.authentication.www.BasicAuthenticationFilter
-   * #doFilterInternal(javax.servlet.http.HttpServletRequest,
-   * javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
-   */
   @Override
   protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
       FilterChain chain) throws IOException, ServletException {

@@ -50,6 +50,7 @@ public class ConfigurationController
   @SuperUserPermission
   public ResponseEntity<?> create(@RequestBody ConfigurationEntity newConfiguration)
       throws URISyntaxException {
+    super.create(newConfiguration);
     return status(HttpStatus.METHOD_NOT_ALLOWED).build();
   }
 

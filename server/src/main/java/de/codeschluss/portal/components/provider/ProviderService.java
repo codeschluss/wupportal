@@ -67,7 +67,7 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
     
     return repo
         .findOne(entities.withUserIdAndOrgaId(userId, orgaId))
-        .orElseThrow(() -> new NotFoundException(userId + " and " + orgaId));
+        .orElse(null);
   }
 
   @Override

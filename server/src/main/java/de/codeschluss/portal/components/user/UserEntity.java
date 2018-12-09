@@ -69,12 +69,12 @@ public class UserEntity extends BaseEntity {
     this.password = password;
   }
 
-  @JsonIgnore
+  @JsonProperty
   public boolean isSuperuser() {
     return this.superuser;
   }
 
-  @JsonProperty
+  @JsonIgnore
   public void setSuperuser(boolean superuser) {
     this.superuser = superuser;
   }

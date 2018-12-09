@@ -12,7 +12,6 @@ INSERT INTO `configurations` (`id`, `item`, `value`) VALUES
 ('00000000-0000-0000-0001-000000000009', 'configuration2', 'configuration1'),
 ('00000000-0000-0000-0001-000000000011', 'configurationToDelete', 'configuration1');
 
-
 INSERT INTO `tags` (`id`, `name`, `description`) VALUES
 ('00000000-0000-0000-0002-100000000000', 'tag1', 'tag1'),
 ('00000000-0000-0000-0002-200000000000', 'tag2', 'tag2'),

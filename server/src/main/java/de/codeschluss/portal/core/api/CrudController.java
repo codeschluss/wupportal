@@ -53,11 +53,36 @@ public abstract class CrudController<E extends BaseEntity, S extends ResourceDat
    * @return the response entity
    */
   public ResponseEntity<?> readAll(FilterSortPaginate params) {
-    validateRequest(params);
+    validateRead(params);
 
     return params.getPage() == null && params.getSize() == null
         ? ok(service.getSortedListResources(params))
         : ok(service.getPagedResources(params));
+  }
+  
+  /**
+   * Validate request.
+   *
+   * @param params
+   *          the params
+   */
+  protected void validateRead(SortPaginate params) {
+    if (params != null && !isPaginationValid(params.getPage(), params.getSize())) {
+      throw new BadParamsException("param size or page is null");
+    }
+  }
+
+  /**
+   * Checks if is pagination valid.
+   *
+   * @param page
+   *          the page
+   * @param size
+   *          the size
+   * @return true, if is pagination valid
+   */
+  protected boolean isPaginationValid(Integer page, Integer size) {
+    return (page != null && size != null) || (page == null && size == null);
   }
 
 
@@ -81,12 +106,21 @@ public abstract class CrudController<E extends BaseEntity, S extends ResourceDat
    *           the URI syntax exception
    */
   public ResponseEntity<?> create(@RequestBody E newEntity) throws URISyntaxException {
+    validateCreate(newEntity);
+    
+    Resource<E> resource = service.addResource(newEntity);
+    return created(new URI(resource.getId().expand().getHref())).body(resource);
+  }
+
+  /**
+   * Validate create.
+   *
+   * @param newEntity the new entity
+   */
+  protected void validateCreate(E newEntity) {
     if (service.getExisting(newEntity) != null) {
       throw new DuplicateEntryException("Entity already exists!");
     }
-
-    Resource<E> resource = service.addResource(newEntity);
-    return created(new URI(resource.getId().expand().getHref())).body(resource);
   }
 
   /**
@@ -121,30 +155,5 @@ public abstract class CrudController<E extends BaseEntity, S extends ResourceDat
   public ResponseEntity<?> delete(@PathVariable String id) {
     service.delete(id);
     return noContent().build();
-  }
-
-  /**
-   * Validate request.
-   *
-   * @param params
-   *          the params
-   */
-  protected void validateRequest(SortPaginate params) {
-    if (params != null && !isPaginationValid(params.getPage(), params.getSize())) {
-      throw new BadParamsException("param size or page is null");
-    }
-  }
-
-  /**
-   * Checks if is pagination valid.
-   *
-   * @param page
-   *          the page
-   * @param size
-   *          the size
-   * @return true, if is pagination valid
-   */
-  protected boolean isPaginationValid(Integer page, Integer size) {
-    return (page != null && size != null) || (page == null && size == null);
   }
 }

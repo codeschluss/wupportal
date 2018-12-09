@@ -1,5 +1,6 @@
 package de.codeschluss.portal.components.organisation;
 
+import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -10,15 +11,17 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
-import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
+import de.codeschluss.portal.core.security.permissions.Authenticated;
 import de.codeschluss.portal.core.security.permissions.OrgaAdminOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
+import de.codeschluss.portal.core.security.services.AuthorizationService;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
@@ -63,6 +66,9 @@ public class OrganisationController
   
   /** The image service. */
   private final OrganisationImageService organisationImageService;
+  
+  /** The authorization service. */
+  private final AuthorizationService authService;
 
   /**
    * Instantiates a new organisation controller.
@@ -80,7 +86,8 @@ public class OrganisationController
    */
   public OrganisationController(OrganisationService service, ProviderService providerService,
       UserService userService, AddressService addressService, ActivityService activityService,
-      TranslationService translationService, OrganisationImageService organisationImageService) {
+      TranslationService translationService, OrganisationImageService organisationImageService,
+      AuthorizationService authService) {
     super(service);
     this.providerService = providerService;
     this.userService = userService;
@@ -88,11 +95,11 @@ public class OrganisationController
     this.activityService = activityService;
     this.translationService = translationService;
     this.organisationImageService = organisationImageService;
+    this.authService = authService;
   }
 
-  @Override
   @GetMapping("/organisations")
-  public ResponseEntity<?> readAll(FilterSortPaginate params) {
+  public ResponseEntity<?> readAll(OrganisationQueryParam params) {
     return super.readAll(params);
   }
 
@@ -104,10 +111,52 @@ public class OrganisationController
 
   @Override
   @PostMapping("/organisations")
-  @SuperUserPermission
+  @Authenticated
   public ResponseEntity<?> create(@RequestBody OrganisationEntity newOrga) 
       throws URISyntaxException {
-    return super.create(newOrga);
+    validateCreate(newOrga);
+    
+    Resource<OrganisationEntity> resource = service.convertToResource(
+        createOrgaWithAdmin(newOrga));
+    
+    return created(new URI(resource.getId().expand().getHref())).body(resource);
+  }
+
+  /**
+   * Creates the orga with admin.
+   *
+   * @param newOrga the new orga
+   * @return the organisation entity
+   */
+  private OrganisationEntity createOrgaWithAdmin(OrganisationEntity newOrga) {
+    OrganisationEntity orga = service.add(newOrga);
+    ProviderEntity admin = new ProviderEntity(true, true, null, orga, authService.getCurrentUser());
+    providerService.add(admin);
+    return orga;
+  }
+  
+  /**
+   * Grant approval and if isApproved is false, it will delete all existing activities.
+   *
+   * @param organisationId the organisation id
+   * @param isApproved the is approved
+   * @return the response entity
+   */
+  @PutMapping("/organisations/{organisationId}/approve")
+  @SuperUserPermission
+  public ResponseEntity<?> grantApproval(
+      @PathVariable String organisationId,
+      @RequestBody Boolean isApproved) {
+    try {
+      service.setApproval(organisationId, isApproved);
+      if (!isApproved) {
+        List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
+        activityService.deleteAllByProviders(providers);
+      }
+      return noContent().build();
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Given Organisation does not exist!");
+    }
   }
 
   @Override
@@ -223,7 +272,7 @@ public class OrganisationController
   public ResponseEntity<?> approveOrRejectUser(@PathVariable String organisationId,
       @PathVariable String userId, @RequestBody Boolean isApproved) {
     try {
-      this.providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved);
+      providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist in given Organisation!");
@@ -246,7 +295,7 @@ public class OrganisationController
   public ResponseEntity<?> grantAdminRight(@PathVariable String organisationId,
       @PathVariable String userId, @RequestBody Boolean isAdmin) {
     try {
-      this.providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);
+      providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist in given Organisation!");

@@ -258,4 +258,14 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
     activity.getSchedules().removeIf(schedule -> scheduleIds.contains(schedule.getId()));
     repo.save(activity);
   }
+
+  /**
+   * Delete all by providers.
+   *
+   * @param providers the providers
+   */
+  public void deleteAllByProviders(List<ProviderEntity> providers) {
+    List<ActivityEntity> activitiesToDelete = getByProviders(providers);
+    repo.deleteAll(activitiesToDelete);
+  }
 }

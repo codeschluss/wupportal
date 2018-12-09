@@ -47,8 +47,16 @@ public class ActivityControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
-  public void addNotApprovedDenied() throws URISyntaxException {
-    ActivityEntity activity = createActivity("addNotApprovedDenied");
+  public void addNotApprovedProviderDenied() throws URISyntaxException {
+    ActivityEntity activity = createActivity("addNotApprovedProviderDenied");
+
+    controller.create(activity);
+  }
+  
+  @Test(expected = AccessDeniedException.class)
+  @WithUserDetails("notapprovedorga@user")
+  public void addNotApprovedOrgaDenied() throws URISyntaxException {
+    ActivityEntity activity = createActivity("addNotApprovedOrgaDenied");
 
     controller.create(activity);
   }

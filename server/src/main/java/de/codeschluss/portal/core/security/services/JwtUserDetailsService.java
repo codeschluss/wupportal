@@ -44,7 +44,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     String[] createdActivitiesIds = getCreatedActivities(providers);
-    String[] approvedProviderIds = getApprovedProviders(providers);
+    String[] approvedProviderIds = getApprovedWithApprovedOrgasProviders(providers);
     String[] orgaAdminIds = getOrgaAdminProviders(providers);
 
     return new JwtUserDetails(user, approvedProviderIds, orgaAdminIds, createdActivitiesIds);
@@ -60,8 +60,9 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
   }
 
-  private String[] getApprovedProviders(List<ProviderEntity> providers) {
-    return mapToOrgas(providers.stream().filter(provider -> provider.isApproved()));
+  private String[] getApprovedWithApprovedOrgasProviders(List<ProviderEntity> providers) {
+    return mapToOrgas(providers.stream().filter(provider -> provider.isApproved() 
+        && provider.getOrganisation().isApproved()));
   }
 
   private String[] getOrgaAdminProviders(List<ProviderEntity> providers) {

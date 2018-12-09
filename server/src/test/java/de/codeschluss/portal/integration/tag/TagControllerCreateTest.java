@@ -63,6 +63,14 @@ public class TagControllerCreateTest {
 
     controller.create(tag);
   }
+  
+  @Test(expected = AccessDeniedException.class)
+  @WithUserDetails("notapprovedorga@user")
+  public void addNotApprovedOrgaDenied() throws URISyntaxException {
+    TagEntity tag = new TagEntity("addNotApprovedDenied", "addNotApprovedDenied", null, null);
+
+    controller.create(tag);
+  }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {

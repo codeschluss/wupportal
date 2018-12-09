@@ -7,7 +7,7 @@ databaseChangeLog:
         dbms: h2, mysql
         encoding: utf8
         endDelimiter: \nGO
-        path: ../data/before_mig.sql
+        path: ../data/after_mig.sql
         relativeToChangelogFile: true
         splitStatements: true
         stripComments: true

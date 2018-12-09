@@ -18,7 +18,6 @@ import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.CustomSort;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.OwnActivityPermission;
@@ -134,9 +133,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @ProviderPermission
   public ResponseEntity<?> create(@RequestBody ActivityEntity newActivity) 
       throws URISyntaxException {
-    if (service.getExisting(newActivity) != null) {
-      throw new DuplicateEntryException("Activity already exists!");
-    }
+    validateCreate(newActivity);
 
     try {
       newActivity.setProvider(getProvider(newActivity.getOrganisationId()));

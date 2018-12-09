@@ -1,12 +1,9 @@
 package de.codeschluss.portal.components.address;
 
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.service.QueryBuilder;
-
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -81,15 +78,6 @@ public class AddressQueryBuilder extends QueryBuilder<QAddressEntity> {
         .or(query.place.likeIgnoreCase(filter))
         .or(query.postalCode.likeIgnoreCase(filter))
         .or(query.street.likeIgnoreCase(filter));
-  }
-
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service.QueryBuilder#withIdsIn(java.util.List)
-   */
-  @Override
-  public Predicate withIdsIn(List<String> ids) {
-    // TODO Auto-generated method stub
-    return null;
   }
 
 }

@@ -67,6 +67,15 @@ public class AddressControllerCreateTest {
 
     controller.create(address);
   }
+  
+  @Test(expected = AccessDeniedException.class)
+  @WithUserDetails("notapprovedorga@user")
+  public void addNotApprovedOrgaDenied() throws URISyntaxException {
+    AddressEntity address = new AddressEntity("1", "addNotApprovedOrgaDenied", "1111",
+        "addNotApprovedOrgaDenied", null, 1, 1, null, null);
+
+    controller.create(address);
+  }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {

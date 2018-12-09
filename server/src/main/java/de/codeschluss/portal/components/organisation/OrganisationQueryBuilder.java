@@ -4,7 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
-import de.codeschluss.portal.components.activity.ActivityQueryParam;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.service.QueryBuilder;
@@ -104,7 +103,6 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
         .or(query.address.street.likeIgnoreCase(filter)));
   }
   
-
   /**
    * With approved only.
    *
@@ -130,7 +128,6 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
     return query.providers.any().activities.any().id.eq(activityId);
   }
   
-
   /**
    * Validate params.
    *

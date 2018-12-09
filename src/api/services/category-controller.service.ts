@@ -239,7 +239,7 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerFindTranslationsResponse(categoryId: string): Observable<StrictHttpResponse<{}>> {
+  categoryControllerReadTranslationsResponse(categoryId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -265,8 +265,8 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerFindTranslations(categoryId: string): Observable<{}> {
-    return this.categoryControllerFindTranslationsResponse(categoryId).pipe(
+  categoryControllerReadTranslations(categoryId: string): Observable<{}> {
+    return this.categoryControllerReadTranslationsResponse(categoryId).pipe(
       __map(_r => _r.body as {})
     );
   }

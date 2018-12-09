@@ -15,6 +15,10 @@ export interface Link {
   type?: string;
 }
 
+export interface ResourceObject {
+  _links?: Array<Link>;
+}
+
 export type StrictHttpResponse<T> = HttpResponse<T> & {
   readonly body: T;
 };

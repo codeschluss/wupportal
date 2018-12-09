@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { CategoryControllerService } from '../../api/services/category-controller.service';
-import { CategoryModel } from '../category/category.model';
+import { CategoryModel } from './category.model';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryProvider
@@ -13,9 +13,9 @@ export class CategoryProvider
 
   public delete: (id: string) => Promise<any>;
 
-  public findOne: (id: string) => Promise<CategoryModel>;
+  public readOne: (id: string) => Promise<CategoryModel>;
 
-  public findAll: (params?: CategoryControllerService
+  public readAll: (params?: CategoryControllerService
     .CategoryControllerReadAllParams) => Promise<CategoryModel[]>;
 
   protected linked = [];
@@ -23,8 +23,9 @@ export class CategoryProvider
   protected methods = {
     create: this.service.categoryControllerCreateResponse,
     delete: this.service.categoryControllerDeleteResponse,
-    findAll: this.service.categoryControllerReadAllResponse,
-    findOne: this.service.categoryControllerReadOneResponse,
+    readAll: this.service.categoryControllerReadAllResponse,
+    readOne: this.service.categoryControllerReadOneResponse,
+    translate: this.service.categoryControllerReadTranslationsResponse,
     update: this.service.categoryControllerUpdateResponse
   };
 

@@ -12,10 +12,11 @@ export interface CrudLink {
 
 export interface CrudMethods {
   create: (model: CrudModel) => Observable<StrictHttpResponse<object>>;
-  update: (model: CrudModel, id: string) => Observable<StrictHttpResponse<{}>>;
   delete: (id: string) => Observable<StrictHttpResponse<object>>;
-  findAll: (params?: object) => Observable<StrictHttpResponse<object>>;
-  findOne: (id: string) => Observable<StrictHttpResponse<object>>;
+  readAll: (params?: object) => Observable<StrictHttpResponse<object>>;
+  readOne: (id: string) => Observable<StrictHttpResponse<object>>;
+  translate?: (id: string) => Observable<StrictHttpResponse<object>>;
+  update: (model: CrudModel, id: string) => Observable<StrictHttpResponse<{}>>;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -51,28 +52,28 @@ export abstract class CrudProvider
     return this.call(this.methods.create, model).toPromise();
   }
 
-  public update(id: string, model: Model): Promise<any> {
-    return this.call(this.methods.update, id, model).toPromise();
-  }
-
   public delete(id: string): Promise<any> {
     return this.call(this.methods.delete, id).toPromise();
   }
 
-  public findOne(id: string): Promise<Model> {
-    return this.call(this.methods.findOne, id).pipe(
+  public readOne(id: string): Promise<Model> {
+    return this.call(this.methods.readOne, id).pipe(
       map((response) => this.cast<Model>(response)),
       tap((response) => this.link(response)),
       tap((response) => this.purge(response))
     ).toPromise();
   }
 
-  public findAll(params?: object): Promise<Model[]> {
-    return this.call(this.methods.findAll, params || { }).pipe(
+  public readAll(params?: object): Promise<Model[]> {
+    return this.call(this.methods.readAll, params || { }).pipe(
       map((response) => this.cast<Model[]>(response)),
       tap((response) => this.link(response)),
       tap((response) => this.purge(response))
     ).toPromise();
+  }
+
+  public update(id: string, model: Model): Promise<any> {
+    return this.call(this.methods.update, id, model).toPromise();
   }
 
   protected apply(method:

@@ -239,7 +239,7 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerFindTranslationsResponse(tagId: string): Observable<StrictHttpResponse<{}>> {
+  tagControllerReadTranslationsResponse(tagId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -265,8 +265,8 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerFindTranslations(tagId: string): Observable<{}> {
-    return this.tagControllerFindTranslationsResponse(tagId).pipe(
+  tagControllerReadTranslations(tagId: string): Observable<{}> {
+    return this.tagControllerReadTranslationsResponse(tagId).pipe(
       __map(_r => _r.body as {})
     );
   }

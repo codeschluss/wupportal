@@ -24,8 +24,8 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     this.resolving.push(joiner);
     const provider = this.injector.get(joiner.graph.model['provider']);
     const response = joiner.graph.root && route.params.uuid
-      ? await provider.findOne(route.params.uuid)
-      : await provider.findAll();
+      ? await provider.readOne(route.params.uuid)
+      : await provider.readAll();
 
     Array.isArray(response)
       ? await response.map((model) => this.resolver(model, joiner.graph.nodes))

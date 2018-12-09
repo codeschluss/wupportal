@@ -3,9 +3,10 @@ import { CrudProvider } from '@portal/core';
 import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
-import { OrganisationModel } from '../organisation/organisation.model';
+import { OrganisationImageModel } from '../image/organisation-image.model';
 import { ProviderModel } from '../provider/provider.model';
 import { UserModel } from '../user/user.model';
+import { OrganisationModel } from './organisation.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrganisationProvider
@@ -14,13 +15,18 @@ export class OrganisationProvider
   protected linked = [
     {
       field: 'activities',
-      method: this.service.organisationControllerFindActivitiesResponse,
+      method: this.service.organisationControllerReadActivitiesResponse,
       model: ActivityModel
     },
     {
       field: 'address',
-      method: this.service.organisationControllerFindAddressResponse,
+      method: this.service.organisationControllerReadAddressResponse,
       model: AddressModel
+    },
+    {
+      field: 'images',
+      method: this.service.organisationControllerReadImagesResponse,
+      model: OrganisationImageModel
     },
     {
       field: 'provider',
@@ -29,7 +35,7 @@ export class OrganisationProvider
     },
     {
       field: 'users',
-      method: this.service.organisationControllerFindUsersResponse,
+      method: this.service.organisationControllerReadUsersResponse,
       model: UserModel
     }
   ];
@@ -37,8 +43,9 @@ export class OrganisationProvider
   protected methods = {
     create: this.service.organisationControllerCreateResponse,
     delete: this.service.organisationControllerDeleteResponse,
-    findAll: this.service.organisationControllerReadAllResponse,
-    findOne: this.service.organisationControllerReadOneResponse,
+    readAll: this.service.organisationControllerReadAllResponse,
+    readOne: this.service.organisationControllerReadOneResponse,
+    translate: this.service.organisationControllerReadTranslationsResponse,
     update: this.service.organisationControllerUpdateResponse
   };
 
@@ -57,9 +64,9 @@ export class OrganisationProvider
 
   public delete: (id: string) => Promise<any>;
 
-  public findOne: (id: string) => Promise<OrganisationModel>;
+  public readOne: (id: string) => Promise<OrganisationModel>;
 
-  public findAll: (params?: OrganisationControllerService
+  public readAll: (params?: OrganisationControllerService
     .OrganisationControllerReadAllParams) => Promise<OrganisationModel[]>;
 
   public grantOrganisationAdmin:

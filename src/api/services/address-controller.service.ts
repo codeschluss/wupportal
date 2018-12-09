@@ -240,7 +240,7 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerFindSuburbResponse(addressId: string): Observable<StrictHttpResponse<ResourceObject>> {
+  addressControllerReadSuburbResponse(addressId: string): Observable<StrictHttpResponse<ResourceObject>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -266,8 +266,8 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerFindSuburb(addressId: string): Observable<ResourceObject> {
-    return this.addressControllerFindSuburbResponse(addressId).pipe(
+  addressControllerReadSuburb(addressId: string): Observable<ResourceObject> {
+    return this.addressControllerReadSuburbResponse(addressId).pipe(
       __map(_r => _r.body as ResourceObject)
     );
   }

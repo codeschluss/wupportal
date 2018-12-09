@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { TargetGroupControllerService } from '../../api/services/target-group-controller.service';
-import { TargetGroupModel } from '../target-group/target-group.model';
+import { TargetGroupModel } from './target-group.model';
 
 @Injectable({ providedIn: 'root' })
 export class TargetGroupProvider
@@ -13,9 +13,9 @@ export class TargetGroupProvider
 
   public delete: (id: string) => Promise<any>;
 
-  public findOne: (id: string) => Promise<TargetGroupModel>;
+  public readOne: (id: string) => Promise<TargetGroupModel>;
 
-  public findAll: (params?: TargetGroupControllerService
+  public readAll: (params?: TargetGroupControllerService
     .TargetGroupControllerReadAllParams) => Promise<TargetGroupModel[]>;
 
   protected linked = [];
@@ -23,8 +23,9 @@ export class TargetGroupProvider
   protected methods = {
     create: this.service.targetGroupControllerCreateResponse,
     delete: this.service.targetGroupControllerDeleteResponse,
-    findAll: this.service.targetGroupControllerReadAllResponse,
-    findOne: this.service.targetGroupControllerReadOneResponse,
+    readAll: this.service.targetGroupControllerReadAllResponse,
+    readOne: this.service.targetGroupControllerReadOneResponse,
+    translate: this.service.targetGroupControllerReadTranslationsResponse,
     update: this.service.targetGroupControllerUpdateResponse
   };
 

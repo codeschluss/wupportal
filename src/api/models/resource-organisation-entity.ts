@@ -1,13 +1,11 @@
 /* tslint:disable */
 import { Link } from './link';
-import { OrganisationImageEntity } from './organisation-image-entity';
 export interface ResourceOrganisationEntity {
-  mail?: string;
   _links?: Array<Link>;
+  created?: string;
   description?: string;
   id?: string;
-  images?: Array<OrganisationImageEntity>;
-  created?: string;
+  mail?: string;
   modified?: string;
   name?: string;
   phone?: string;

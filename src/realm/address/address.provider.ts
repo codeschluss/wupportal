@@ -1,8 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { AddressControllerService } from '../../api/services/address-controller.service';
-import { AddressModel } from '../address/address.model';
 import { SuburbModel } from '../suburb/suburb.model';
+import { AddressModel } from './address.model';
 
 @Injectable({ providedIn: 'root' })
 export class AddressProvider
@@ -11,7 +11,7 @@ export class AddressProvider
   protected linked = [
     {
       field: 'suburb',
-      method: this.service.addressControllerFindSuburbResponse,
+      method: this.service.addressControllerReadSuburbResponse,
       model: SuburbModel,
     }
   ];
@@ -19,8 +19,8 @@ export class AddressProvider
   protected methods = {
     create: this.service.addressControllerCreateResponse,
     delete: this.service.addressControllerDeleteResponse,
-    findAll: this.service.addressControllerReadAllResponse,
-    findOne: this.service.addressControllerReadOneResponse,
+    readAll: this.service.addressControllerReadAllResponse,
+    readOne: this.service.addressControllerReadOneResponse,
     update: this.service.addressControllerUpdateResponse
   };
 
@@ -39,9 +39,9 @@ export class AddressProvider
 
   public delete: (id: string) => Promise<any>;
 
-  public findOne: (id: string) => Promise<AddressModel>;
+  public readOne: (id: string) => Promise<AddressModel>;
 
-  public findAll: (params?: AddressControllerService
+  public readAll: (params?: AddressControllerService
     .AddressControllerReadAllParams) => Promise<AddressModel[]>;
 
   public relinkSuburb:

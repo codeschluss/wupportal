@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { ActivityModel } from '../../../realm/activity/activity.model';
 import { AddressModel } from '../../../realm/address/address.model';
@@ -14,9 +14,10 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: 'about.component.html'
 })
 
-export class AboutComponent {
+export class AboutComponent implements AfterViewInit {
 
-  public activities: ActivityModel[] = [];
+  public activities: any[];
+
   index = 0;
   speed = 5000;
   infinite = false;
@@ -25,13 +26,12 @@ export class AboutComponent {
   autoplay = false;
 
   constructor(
-    route: ActivatedRoute
+    public route: ActivatedRoute
   ) {
-    this.activities = route.snapshot.data.activities;
-    // for (let i = 0; i < 12; i++) {
-    //   this.activities.push(
-    //     this.buildTestActivity());
-    // }
+  }
+
+  ngAfterViewInit(): void {
+    this.activities = this.route.snapshot.data.activities;
   }
 
   buildTestActivity(): ActivityModel {

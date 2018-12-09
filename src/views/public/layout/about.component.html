@@ -9,9 +9,11 @@
         <div id="landingPageBadge">Willkommen bei Wupp'n'go deinem online Event-Portal!</div>
       </div>
     </div>
-    <div id="activity-carousel" class="background-color-secondary">
-      <activity-carousel-component [activities]=activities></activity-carousel-component>
-    </div>
+    <ng-container *ngIf="activities.length">
+      <div id="activity-carousel" class="background-color-secondary">
+        <activity-carousel-component [activities]="activities"></activity-carousel-component>
+      </div>
+    </ng-container> 
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" 

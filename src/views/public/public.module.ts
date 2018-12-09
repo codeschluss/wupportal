@@ -36,6 +36,7 @@ import { SearchInputComponent } from './search/search.input.component';
 import { BlogViewComponent } from './blog/blog.view.component';
 import { NavBarComponent } from '../layout/navbar.component';
 import { FooterComponent } from '../layout/footer.component';
+import { ImprintDialogComponent } from '../layout/imprint.dialog.component';
 
 fontawesome.add(fas);
 
@@ -60,7 +61,8 @@ const PublicDeclarations = [
   BlogListItemComponent,
   BlogViewComponent,
   SearchResultListComponent,
-  SearchInputComponent
+  SearchInputComponent,
+  ImprintDialogComponent
 ];
 
 const PublicImports = [
@@ -95,7 +97,11 @@ const PublicProviders = [
     PublicRouter
   ],
   providers: PublicProviders,
-  entryComponents: [BottomSheetMapComponent, BottomSheetScheduleComponent],
+  entryComponents: [
+    BottomSheetMapComponent,
+    BottomSheetScheduleComponent,
+    ImprintDialogComponent
+  ],
   exports: []
 })
 

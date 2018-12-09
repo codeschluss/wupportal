@@ -18,6 +18,7 @@ import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
 import { AddressModel } from 'src/realm/address/address.model';
 import { SuburbModel } from 'src/realm/suburb/suburb.model';
 import { ScheduleModel } from 'src/realm/schedule/schedule.model';
+import { OrganisationImageModel } from 'src/realm/image/organisation-image.model';
 
 const PublicProviders = [
 ];
@@ -104,6 +105,7 @@ const PublicRoutes = [
       organisation: CrudJoiner.of(OrganisationModel)
         .with(AddressModel).yield(SuburbModel)
         .with(ActivityModel)
+        .with(OrganisationImageModel)
     }
   },
   {

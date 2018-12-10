@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Data, ResolveData } from '@angular/router';
-import { CrudJoiner, CrudResolver, SessionResolver } from '@portal/core';
+import { ActivatedRoute } from '@angular/router';
 import { BaseForm, BooleanFieldComponent, ChipListFieldComponent, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -23,31 +22,7 @@ import { ActivityProvider } from './activity.provider';
   `)
 })
 
-export class ActivityFormComponent
-  extends BaseForm<ActivityProvider, ActivityModel> {
-
-  public static resolve: ResolveData = {
-    activity: CrudResolver,
-    category: CrudResolver,
-    organisation: CrudResolver,
-    session: SessionResolver,
-    tags: CrudResolver,
-    targetGroups: CrudResolver,
-  };
-
-  public static resolveConf: Data = {
-    activity: CrudJoiner.of(ActivityModel)
-      .with(CategoryModel)
-      .with(OrganisationModel)
-      .with(TagModel)
-      .with(TargetGroupModel),
-    categoriy: CrudJoiner.of(CategoryModel, false),
-    organisation: CrudJoiner.of(OrganisationModel, false),
-    tags: CrudJoiner.of(TagModel, false),
-    targetGroups: CrudJoiner.of(TargetGroupModel, false)
-  };
-
-  public base = 'activity';
+export class ActivityFormComponent extends BaseForm<ActivityModel> {
 
   public fields = [
     {
@@ -64,25 +39,25 @@ export class ActivityFormComponent
     {
       name: 'organisation',
       input: SelectFieldComponent,
-      options: this.route.snapshot.data.session.accessToken.approvedOrgas
-        .map((id) => this.route.snapshot.data.organisation
-          .find((organisation) => organisation.id === id)),
+      model: OrganisationModel,
       tests: [Validators.required]
     },
     {
       name: 'category',
       input: SelectFieldComponent,
+      model: CategoryModel,
       tests: [Validators.required]
     },
     {
       name: 'targetGroups',
       input: SelectFieldComponent,
-      multi: true,
+      model: TargetGroupModel,
+      multi: true
     },
     {
       name: 'tags',
       input: ChipListFieldComponent,
-      model: TagModel,
+      model: TagModel
     },
     {
       name: 'showUser',
@@ -90,7 +65,7 @@ export class ActivityFormComponent
     }
   ];
 
-  protected model = this.formed(ActivityModel);
+  public model = ActivityModel;
 
   public constructor(
     protected builder: FormBuilder,
@@ -98,6 +73,15 @@ export class ActivityFormComponent
     protected route: ActivatedRoute
   ) {
     super();
+  }
+
+  protected ngPostInit(): void {
+    const options = this.route.snapshot.data.session.accessToken
+      .approvedOrgas.map((id) => this.route.snapshot.data.organisation
+        .find((organisation) => organisation.id === id));
+
+    this.fields = this.fields.map((field) => field.name === 'organisations'
+      ? Object.assign(field, { options: options }) : field);
   }
 
 }

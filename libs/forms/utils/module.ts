@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule, MatStepperModule } from '@angular/material';
+import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
 import { BooleanFieldComponent } from '../field/boolean.field';
 import { ChipListFieldComponent } from '../field/chip-list.field';
@@ -23,28 +24,25 @@ const ModuleLoop = [
   ReactiveFormsModule
 ];
 
+const Components = [
+  BaseFieldComponent,
+  BooleanFieldComponent,
+  ChipListFieldComponent,
+  DatetimeFieldComponent,
+  SelectFieldComponent,
+  StringFieldComponent
+];
+
 @NgModule({
-  declarations: [
-    BaseFieldComponent,
-    BooleanFieldComponent,
-    ChipListFieldComponent,
-    DatetimeFieldComponent,
-    SelectFieldComponent,
-    StringFieldComponent
-  ],
-  entryComponents: [
-    BooleanFieldComponent,
-    ChipListFieldComponent,
-    DatetimeFieldComponent,
-    SelectFieldComponent,
-    StringFieldComponent
-  ],
+  declarations: Components,
+  entryComponents: [Components],
   exports: [
     BaseFieldComponent,
     ...ModuleLoop
   ],
   imports: [
     CommonModule,
+    CoreModule,
     ...ModuleLoop
   ]
 })

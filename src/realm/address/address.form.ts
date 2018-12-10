@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Data, ResolveData } from '@angular/router';
-import { CrudJoiner, CrudResolver } from '@portal/core';
+import { ActivatedRoute } from '@angular/router';
 import { BaseForm, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
 import { AddressProvider } from './address.provider';
 
 @Component({
-  selector: 'activity-form',
+  selector: 'address-form',
   template: BaseForm.template(`
     <i18n #place i18n="@@place">place</i18n>
     <i18n #postalCode i18n="@@postalCode">postalCode</i18n>
@@ -18,20 +17,7 @@ import { AddressProvider } from './address.provider';
   `)
 })
 
-export class AddressFormComponent
-  extends BaseForm<AddressProvider, AddressModel> {
-
-  public static resolve: ResolveData = {
-    address: CrudResolver,
-    suburb: CrudResolver
-  };
-
-  public static resolveConf: Data = {
-    address: CrudJoiner.of(AddressModel).with(SuburbModel),
-    suburb: CrudJoiner.of(SuburbModel, false)
-  };
-
-  public base = 'address';
+export class AddressFormComponent extends BaseForm<AddressModel> {
 
   public fields = [
     {
@@ -47,6 +33,7 @@ export class AddressFormComponent
     {
       name: 'suburb',
       input: SelectFieldComponent,
+      model: SuburbModel,
       tests: [Validators.required]
     },
     {
@@ -61,7 +48,7 @@ export class AddressFormComponent
     }
   ];
 
-  protected model = this.formed(AddressModel);
+  public model = AddressModel;
 
   public constructor(
     protected builder: FormBuilder,

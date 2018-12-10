@@ -37,6 +37,8 @@ import { BlogViewComponent } from './blog/blog.view.component';
 import { NavBarComponent } from '../layout/navbar.component';
 import { FooterComponent } from '../layout/footer.component';
 import { ImprintDialogComponent } from '../layout/imprint.dialog.component';
+import { OrgaMediaDialogComponent } from './organisation/organisation.mediacontent.dialog.component';
+import { LangaugeChooserDialogComponent } from '../layout/languagecooser.component';
 
 fontawesome.add(fas);
 
@@ -52,11 +54,13 @@ const PublicDeclarations = [
   OrganisationListComponent,
   OrganisationViewComponent,
   OrganisationCardComponent,
+  OrgaMediaDialogComponent,
   AboutComponent,
   MappingComponent,
   LayoutComponent,
   FooterComponent,
   NavBarComponent,
+  LangaugeChooserDialogComponent,
   BlogListComponent,
   BlogListItemComponent,
   BlogViewComponent,
@@ -81,7 +85,6 @@ const PublicImports = [
   FontAwesomeModule,
   LayoutComponent.imports,
   NavBarComponent.imports,
-  OrganisationListComponent.imports,
   SearchResultListComponent.imports,
   FormsModule
 ];
@@ -100,7 +103,9 @@ const PublicProviders = [
   entryComponents: [
     BottomSheetMapComponent,
     BottomSheetScheduleComponent,
-    ImprintDialogComponent
+    ImprintDialogComponent,
+    OrgaMediaDialogComponent,
+    LangaugeChooserDialogComponent
   ],
   exports: []
 })

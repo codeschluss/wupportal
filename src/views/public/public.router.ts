@@ -13,7 +13,6 @@ import { CrudResolver, CrudJoiner } from '@portal/core';
 import { ActivityModel } from 'src/realm/activity/activity.model';
 import { CategoryModel } from 'src/realm/category/category.model';
 import { OrganisationModel } from 'src/realm/organisation/organisation.model';
-import { TagModel } from 'src/realm/tag/tag.model';
 import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
 import { AddressModel } from 'src/realm/address/address.model';
 import { SuburbModel } from 'src/realm/suburb/suburb.model';

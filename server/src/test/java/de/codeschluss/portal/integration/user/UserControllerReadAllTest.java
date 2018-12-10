@@ -24,12 +24,12 @@ public class UserControllerReadAllTest {
   @Autowired
   private UserController controller;
 
-  private FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "username", "asc");
+  private FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "username", "asc", null);
 
   @Test
   @WithUserDetails("super@user")
   public void findAllWithoutPaginationSuperUserOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "username", "asc");
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "username", "asc", null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -39,7 +39,7 @@ public class UserControllerReadAllTest {
   @Test
   @WithUserDetails("super@user")
   public void findAllEmptyParamsSuperUserOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null, null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -56,7 +56,7 @@ public class UserControllerReadAllTest {
   @Test(expected = PropertyReferenceException.class)
   @WithUserDetails("super@user")
   public void findAllWrongParamsSuperUser() {
-    FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "blablabla123", "wrong");
+    FilterSortPaginate params = new FilterSortPaginate("user", 1, 5, "blablabla123", "wrong", null);
     controller.readAll(params);
   }
 

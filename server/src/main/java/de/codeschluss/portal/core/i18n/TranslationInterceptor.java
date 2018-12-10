@@ -24,15 +24,15 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class TranslationInterceptor {
 
-  @Pointcut("execution(* de.codeschluss.portal.core.service.DataRepository+.save(..))")
+  @Pointcut("execution(* de.codeschluss.portal.core.repository.DataRepository+.save(..))")
   private void save() {
   }
 
-  @Pointcut("execution(public * de.codeschluss.portal.core.service.DataRepository+.findOne(..))")
+  @Pointcut("execution(public * de.codeschluss.portal.core.repository.DataRepository+.findOne(..))")
   private void findOne() {
   }
 
-  @Pointcut("execution(* de.codeschluss.portal.core.service.DataRepository+.findAll(..))")
+  @Pointcut("execution(* de.codeschluss.portal.core.repository.DataRepository+.findAll(..))")
   private void findAll() {
   }
 

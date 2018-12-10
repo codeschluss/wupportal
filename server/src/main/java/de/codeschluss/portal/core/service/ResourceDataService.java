@@ -1,10 +1,8 @@
-package de.codeschluss.portal.core.api;
+package de.codeschluss.portal.core.service;
 
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
-import de.codeschluss.portal.core.service.BaseEntity;
-import de.codeschluss.portal.core.service.DataRepository;
-import de.codeschluss.portal.core.service.DataService;
-import de.codeschluss.portal.core.service.QueryBuilder;
+import de.codeschluss.portal.core.repository.DataRepository;
 
 import java.util.List;
 

@@ -6,8 +6,8 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
-import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.util.List;
 
@@ -27,9 +27,9 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   /**
    * Instantiates a new activity service.
    *
-   * @param repo          the repo
+   * @param repo the repo
    * @param entities the entities
-   * @param assembler          the assembler
+   * @param assembler the assembler
    */
   public ActivityService(
       ActivityRepository repo, 
@@ -38,16 +38,9 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
     super(repo, entities, assembler);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * de.codeschluss.portal.core.service.DataService#getExisting(de.codeschluss.
-   * portal.core.common.BaseEntity)
-   */
   @Override
   public ActivityEntity getExisting(ActivityEntity activity) {
-    return repo.findOne(entities.withId(activity.getId())).orElse(null);
+    return repo.findById(activity.getId()).orElse(null);
   }
 
   /**
@@ -90,12 +83,6 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
     return repo.exists(entities.forIdWithAnyOfProviders(activityId, providers));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.DataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public ActivityEntity update(String id, ActivityEntity newActivity) {
     return repo.findById(id).map(activity -> {

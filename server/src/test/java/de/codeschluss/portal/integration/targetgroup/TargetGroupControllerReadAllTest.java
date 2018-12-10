@@ -21,11 +21,11 @@ public class TargetGroupControllerReadAllTest {
   @Autowired
   private TargetGroupController controller;
 
-  private FilterSortPaginate params = new FilterSortPaginate("target", 0, 5, "name", "asc");
+  private FilterSortPaginate params = new FilterSortPaginate("target", 0, 5, "name", "asc", null);
 
   @Test
   public void findAllWithoutPaginationOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc");
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc", null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -34,7 +34,7 @@ public class TargetGroupControllerReadAllTest {
 
   @Test
   public void findAllEmptyParamsOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null, null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -49,7 +49,8 @@ public class TargetGroupControllerReadAllTest {
 
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
-    FilterSortPaginate params = new FilterSortPaginate("target", 1, 5, "blablabla123", "wrong");
+    FilterSortPaginate params = new FilterSortPaginate("target", 1, 5, "blablabla123", "wrong",
+        null);
     controller.readAll(params);
   }
 }

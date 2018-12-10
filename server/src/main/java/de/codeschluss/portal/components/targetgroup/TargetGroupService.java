@@ -1,7 +1,7 @@
 package de.codeschluss.portal.components.targetgroup;
 
-import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.util.List;
 

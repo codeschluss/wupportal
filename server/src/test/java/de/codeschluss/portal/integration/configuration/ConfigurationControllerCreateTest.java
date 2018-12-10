@@ -3,8 +3,8 @@ package de.codeschluss.portal.integration.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
-import de.codeschluss.portal.core.configuration.ConfigurationController;
-import de.codeschluss.portal.core.configuration.ConfigurationEntity;
+import de.codeschluss.portal.core.config.ConfigurationController;
+import de.codeschluss.portal.core.config.ConfigurationEntity;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;

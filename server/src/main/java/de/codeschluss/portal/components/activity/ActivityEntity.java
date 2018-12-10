@@ -80,7 +80,7 @@ public class ActivityEntity extends BaseEntity {
   @JsonDeserialize
   private String addressId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @ToString.Exclude
   @JsonIgnore
   private AddressEntity address;

@@ -21,11 +21,11 @@ public class SuburbControllerReadAllTest {
   @Autowired
   private SuburbController controller;
 
-  private FilterSortPaginate params = new FilterSortPaginate("suburb", 0, 5, "name", "asc");
+  private FilterSortPaginate params = new FilterSortPaginate("suburb", 0, 5, "name", "asc", null);
 
   @Test
   public void findAllWithoutPaginationOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc");
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "name", "asc", null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -34,7 +34,7 @@ public class SuburbControllerReadAllTest {
 
   @Test
   public void findAllEmptyParamsOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null, null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -49,7 +49,8 @@ public class SuburbControllerReadAllTest {
 
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
-    FilterSortPaginate params = new FilterSortPaginate("suburb", 1, 5, "blablabla123", "wrong");
+    FilterSortPaginate params = new FilterSortPaginate("suburb", 1, 5, "blablabla123", "wrong",
+        null);
     controller.readAll(params);
   }
 }

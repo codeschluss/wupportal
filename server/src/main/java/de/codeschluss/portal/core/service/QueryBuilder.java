@@ -3,7 +3,7 @@ package de.codeschluss.portal.core.service;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringPath;
 
-import de.codeschluss.portal.core.api.dto.CustomSort;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public abstract class QueryBuilder<T> {
    * @param sortParam the sort param
    * @return the sort
    */
-  public <P extends CustomSort> Sort createSort(P sortParam) {
+  public <P extends BaseParams> Sort createSort(P sortParam) {
     Direction direction = getDirection(sortParam);
     String sort = getSort(sortParam);
 
@@ -57,7 +57,7 @@ public abstract class QueryBuilder<T> {
    * @param sortParam the sort param
    * @return the sort
    */
-  protected <P extends CustomSort> String getSort(P sortParam) {
+  protected <P extends BaseParams> String getSort(P sortParam) {
     return sortParam == null || sortParam.getSort() == null || sortParam.getSort().isEmpty() 
         ? defaultSortProp 
         : prepareSort(sortParam.getSort());
@@ -80,7 +80,7 @@ public abstract class QueryBuilder<T> {
    * @param sortParam the sort param
    * @return the direction
    */
-  protected <P extends CustomSort> Direction getDirection(P sortParam) {
+  protected <P extends BaseParams> Direction getDirection(P sortParam) {
     return sortParam == null || sortParam.getDir() == null || isAsc(sortParam)
         ? Sort.Direction.ASC
         : Sort.Direction.DESC;
@@ -93,7 +93,7 @@ public abstract class QueryBuilder<T> {
    * @param sortParam the sort param
    * @return true, if is asc
    */
-  protected <P extends CustomSort> boolean isAsc(P sortParam) {
+  protected <P extends BaseParams> boolean isAsc(P sortParam) {
     return sortParam.getDir().trim().toLowerCase().equals(
         Sort.Direction.ASC.toString().toLowerCase());
   }

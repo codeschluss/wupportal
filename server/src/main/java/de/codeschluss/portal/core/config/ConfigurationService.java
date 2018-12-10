@@ -1,6 +1,6 @@
-package de.codeschluss.portal.core.configuration;
+package de.codeschluss.portal.core.config;
 
-import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import org.springframework.stereotype.Service;
 

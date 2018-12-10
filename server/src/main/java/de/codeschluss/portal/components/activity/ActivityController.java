@@ -16,7 +16,7 @@ import de.codeschluss.portal.components.tag.TagService;
 import de.codeschluss.portal.components.targetgroup.TargetGroupService;
 import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
-import de.codeschluss.portal.core.api.dto.CustomSort;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -395,7 +395,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @GetMapping("/activities/{activityId}/schedules")
   public ResponseEntity<?> readSchedules(
       @PathVariable String activityId,
-      CustomSort params) {
+      BaseParams params) {
     return ok(scheduleService.getResourceByActivity(activityId, params));
   }
 

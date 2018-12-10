@@ -3,7 +3,7 @@ package de.codeschluss.portal.integration.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
-import de.codeschluss.portal.core.configuration.ConfigurationController;
+import de.codeschluss.portal.core.config.ConfigurationController;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +21,12 @@ public class ConfigurationControllerReadAllTest {
   @Autowired
   private ConfigurationController controller;
 
-  private FilterSortPaginate params = new FilterSortPaginate("configuration", 0, 5, "item", "asc");
+  private FilterSortPaginate params = new FilterSortPaginate("configuration", 0, 5, "item", "asc",
+      null);
 
   @Test
   public void findAllWithoutPaginationOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "item", "asc");
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, "item", "asc", null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -34,7 +35,7 @@ public class ConfigurationControllerReadAllTest {
 
   @Test
   public void findAllEmptyParamsOk() {
-    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null);
+    FilterSortPaginate params = new FilterSortPaginate(null, null, null, null, null, null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -50,7 +51,7 @@ public class ConfigurationControllerReadAllTest {
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
     FilterSortPaginate params = new FilterSortPaginate("configuration", 1, 5, "blablabla123",
-        "wrong");
+        "wrong", null);
     controller.readAll(params);
   }
 }

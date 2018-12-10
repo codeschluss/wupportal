@@ -37,14 +37,15 @@ public class OrganisationQueryParam extends FilterSortPaginate {
       Integer size, 
       String sort,
       String dir, 
+      String embeddings,
       Boolean approved) {
-    super(filter, page, size, sort, dir);
+    super(filter, page, size, sort, dir, embeddings);
     this.approved = approved;
   }
   
   @Override
   public boolean isEmptyQuery() {
-    return (filter == null || filter.isEmpty())
+    return super.isEmptyQuery()
         && (approved == null || !approved);
   }  
 }

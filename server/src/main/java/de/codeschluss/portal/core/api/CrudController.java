@@ -9,6 +9,7 @@ import de.codeschluss.portal.core.api.dto.SortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.service.BaseEntity;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.net.URI;
 import java.net.URISyntaxException;

@@ -1,4 +1,6 @@
-package de.codeschluss.portal.core.service;
+package de.codeschluss.portal.core.repository;
+
+import de.codeschluss.portal.core.service.BaseEntity;
 
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;

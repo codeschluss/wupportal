@@ -5,12 +5,12 @@ import de.codeschluss.portal.core.i18n.translation.TranslationRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * The Interface TargetGroupTranslatableRepository.
+ * The Interface TargetGroupTranslatablesRepository.
  * 
  * @author Valmir Etemi
  *
  */
 @Repository
-public interface TargetGroupTranslatableRepository 
+public interface TargetGroupTranslatablesRepository 
     extends TranslationRepository<TargetGroupTranslatablesEntity> {
 }

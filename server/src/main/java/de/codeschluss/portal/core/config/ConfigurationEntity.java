@@ -1,4 +1,4 @@
-package de.codeschluss.portal.core.configuration;
+package de.codeschluss.portal.core.config;
 
 import de.codeschluss.portal.core.service.BaseEntity;
 

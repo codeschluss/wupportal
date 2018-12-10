@@ -2,10 +2,10 @@ package de.codeschluss.portal.core.i18n.language;
 
 import com.google.common.net.HttpHeaders;
 
-import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.TranslationsConfiguration;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.util.ArrayList;
 import java.util.List;

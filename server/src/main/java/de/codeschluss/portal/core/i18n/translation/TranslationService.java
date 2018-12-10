@@ -6,9 +6,9 @@ import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslationResult;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
+import de.codeschluss.portal.core.repository.DataRepository;
+import de.codeschluss.portal.core.repository.RepositoryService;
 import de.codeschluss.portal.core.service.BaseEntity;
-import de.codeschluss.portal.core.service.DataRepository;
-import de.codeschluss.portal.core.service.RepositoryService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

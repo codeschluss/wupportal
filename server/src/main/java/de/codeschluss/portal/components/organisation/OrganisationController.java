@@ -354,7 +354,6 @@ public class OrganisationController
     return ok(organisationImageService.getResourcesByOrganisation(organisationId));
   }
   
-
   /**
    * Adds the image.
    *

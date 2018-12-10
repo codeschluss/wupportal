@@ -37,14 +37,12 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     this.languageService = languageService;
   }
   
-  @Override
   protected String prepareSort(String sortProp) {
     return sortProp.equals("name") || sortProp.equals("description")
         ? "translatables." + sortProp
         : sortProp;
   }
 
-  @Override
   public boolean localized() {
     return true;
   }
@@ -220,7 +218,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    */
   public BooleanExpression forIdWithAnyOfProviders(
       String activityId, List<ProviderEntity> providers) {
-    return withAnyOfProviders(providers).and(withId(activityId));
+    return withAnyOfProviders(providers).and(query.id.eq(activityId));
   }
   
   /**
@@ -256,5 +254,4 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     throw new RuntimeException(
         "Must be of type " + ActivityQueryParam.class + " but is " + p.getClass());
   }
-
 }

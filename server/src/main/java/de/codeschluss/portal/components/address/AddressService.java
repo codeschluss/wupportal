@@ -1,8 +1,8 @@
 package de.codeschluss.portal.components.address;
 
 import de.codeschluss.portal.components.suburb.SuburbEntity;
-import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package de.codeschluss.portal.core.configuration;
+package de.codeschluss.portal.core.config;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;

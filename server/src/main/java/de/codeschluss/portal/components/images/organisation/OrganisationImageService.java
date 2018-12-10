@@ -1,9 +1,9 @@
 package de.codeschluss.portal.components.images.organisation;
 
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
-import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.image.ImageService;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.io.IOException;
 import java.util.List;

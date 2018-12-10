@@ -1,10 +1,10 @@
 package de.codeschluss.portal.components.user;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.util.List;
 import java.util.stream.Collectors;

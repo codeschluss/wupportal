@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.targetgroup;
 
-import de.codeschluss.portal.core.service.DataRepository;
+import de.codeschluss.portal.core.repository.DataRepository;
 
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface TargetGroupRepository extends DataRepository<TargetGroupEntity> {
+public interface TargetGroupRepository
+    extends DataRepository<TargetGroupEntity> {
 
 }

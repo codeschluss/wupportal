@@ -22,12 +22,12 @@ public class OrganisationControllerReadAllTest {
   private OrganisationController controller;
 
   private OrganisationQueryParam params = new OrganisationQueryParam("organisation", 1, 5, "name",
-      "asc", null);
+      "asc", null, null);
 
   @Test
   public void findAllWithoutPaginationOk() {
     OrganisationQueryParam params = new OrganisationQueryParam(null, null, null, "name", "asc",
-        null);
+        null, null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -36,7 +36,8 @@ public class OrganisationControllerReadAllTest {
 
   @Test
   public void findAllEmptyParamsOk() {
-    OrganisationQueryParam params = new OrganisationQueryParam(null, null, null, null, null, null);
+    OrganisationQueryParam params = new OrganisationQueryParam(null, null, null, null, null, null,
+        null);
 
     Resources<?> result = (Resources<?>) controller.readAll(params).getBody();
 
@@ -52,7 +53,7 @@ public class OrganisationControllerReadAllTest {
   @Test(expected = PropertyReferenceException.class)
   public void findAllWrongParams() {
     OrganisationQueryParam params = new OrganisationQueryParam("organisation", 1, 5, "blablabla123",
-        "wrong", null);
+        "wrong", null, null);
     controller.readAll(params);
   }
 }

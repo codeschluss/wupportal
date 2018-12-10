@@ -4,9 +4,9 @@ import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.api.ResourceDataService;
 import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.util.List;
 import java.util.stream.Collectors;

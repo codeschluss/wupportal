@@ -23,12 +23,14 @@ public class FilterSortPaginate extends SortPaginate {
       Integer page, 
       Integer size, 
       String sort, 
-      String dir) {
-    super(page, sort, size, dir);
+      String dir,
+      String embeddings) {
+    super(page, sort, size, dir, embeddings);
     this.filter = filter;
   }
   
   public boolean isEmptyQuery() {
-    return filter == null || filter.isEmpty();
+    return super.isEmptyQuery() 
+        && (filter == null || filter.isEmpty());
   }
 }

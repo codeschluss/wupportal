@@ -26,10 +26,6 @@ public class TranslationResourceAssembler
 
   CrudController<?,?> currentController;
   
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service
-   * .PagingAndSortingAssembler#createResourceLinks(de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   protected List<Link> createResourceLinks(TranslatableEntity<?> entity) {
     if (currentController == null) {

@@ -1,85 +1,125 @@
-import { Type } from '@angular/core';
-import { Route } from '@angular/router';
-import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, SessionProvider } from '@portal/core';
+import { OnInit, Type } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { CrudJoiner, CrudModel, CrudResolver, SessionResolver } from '@portal/core';
 import { BaseForm } from './base.form';
 
 export interface FormStep {
-  form: Type<BaseForm<CrudProvider<BaseService, CrudModel>, CrudModel>>;
+  field: string;
+  form: Type<BaseForm<CrudModel>>;
 }
 
-export abstract class BaseStepper
-  <Provider extends CrudProvider<BaseService, Model>, Model extends CrudModel> {
+export abstract class BaseStepper<Model extends CrudModel> implements OnInit {
 
-  protected abstract base: string;
+  public abstract root: string;
+
+  public abstract steps: FormStep[];
+
+  protected abstract joiner: CrudJoiner;
 
   protected abstract model: Type<Model>;
 
-  protected abstract provider: Type<Provider>;
+  protected abstract route: ActivatedRoute;
 
-  protected abstract steps: FormStep[];
+  protected abstract router: Router;
 
-  public static route(): Route {
-    let joiner = CrudJoiner.of(this.prototype.model);
-    const links = (form) => form.model.provider.system.linked
-      .filter((link) => form.fields.some((field) => field.name === link.field));
-
-    this.prototype.provider.prototype.system.linked
-      .forEach((link) => joiner = joiner.with(link.model));
+  public static get routing(this: any): Route {
+    const self = new this();
 
     return {
-      path: `${this.prototype.base}/:uuid`,
-      component: this as any,
-      children: this.prototype.steps.map((step) => ({
-        path: `${step.form.prototype.base}/:uuid`,
-        component: step.form,
-        resolve: Object.assign({
-          session: SessionProvider,
-          [this.prototype.base]: CrudResolver
-        }, ...links(step.form.prototype).map((link) => ({
-          [link.field]: CrudResolver,
-        }))),
-        data: Object.assign({
-          [this.prototype.base]: joiner
-        }, ...links(step.form.prototype).map((link) => ({
-          [link.field]: CrudJoiner.of(link.model, false),
-        })))
-      }))
+      path: `${self.root}/:uuid`,
+      component: this,
+      resolve: {
+        entity: CrudResolver,
+        session: SessionResolver
+      },
+      data: {
+        entity: self.joiner
+      }
     };
   }
 
   protected static template(template: string): string {
     return `
-      <mat-horizontal-stepper linear #stepper>
-        <ng-container *ngFor="let form of forms; let i = index">
-          <mat-step [stepControl]="form.group">
+      <mat-horizontal-stepper linear>
+        <ng-container *ngFor="let step of steps" ngProjectAs="mat-step">
+          <mat-step [stepControl]="step.group">
             <ng-template matStepLabel>${template}</ng-template>
             <router-outlet></router-outlet>
-            <slot *ngIf="i > 0; then prev"></slot>
-            <slot *ngIf="i < forms.length - 1; then next; else save"></slot>
+            <ng-container *ngIf="canPrev(step)">
+              <button mat-button matStepperPrevious [routerLink]="doPrev(step)">
+                PREV
+              </button>
+            </ng-container>
+            <ng-container *ngIf="canNext(step)">
+              <button mat-button matStepperNext [routerLink]="doNext(step)">
+                NEXT
+              </button>
+            </ng-container>
+            <ng-container *ngIf="canSave(step)">
+              <button mat-button matStepperNext (click)="save()">
+                SAVE
+              </button>
+            </ng-container>
           </mat-step>
         </ng-container>
       </mat-horizontal-stepper>
-
-      <ng-template #next>
-        <button mat-button matStepperNext>__NEXT</button>
-      </ng-template>
-      <ng-template #prev>
-        <button mat-button matStepperPrevious>__PREV</button>
-      </ng-template>
-      <ng-template #save>
-        <button mat-button matStepperNext (click)="save()">__SAVE</button>
-      </ng-template>
     `;
   }
 
-  public get forms():
-    Type<BaseForm<CrudProvider<BaseService, CrudModel>, CrudModel>>[] {
+  public canNext = (step) => this.steps.indexOf(step) < this.steps.length - 1;
+  public canPrev = (step) => this.steps.indexOf(step) !== 0;
+  public canSave = (step) => this.steps.indexOf(step) === this.steps.length - 1;
+  public doNext = (step) => this.steps[this.steps.indexOf(step) + 1].field;
+  public doPrev = (step) => this.steps[this.steps.indexOf(step) - 1].field;
 
-    return this.steps.map((step) => step.form);
+  public ngOnInit(): void {
+    if (!this.route.snapshot.children.length) {
+      this.router.resetConfig(this.router.config
+        .map((route) => this.walker(route, this.routing())));
+
+      this.router.navigate([this.steps[0].field], { relativeTo: this.route });
+    }
   }
 
   public save(): void {
     console.log('SAVE');
+  }
+
+  private routing(): Route[] {
+    return this.steps.map((step) => {
+      const form = new step.form();
+      const fields = form.fields.filter((field) => field.model);
+
+      return {
+        path: `${step.field}`,
+        component: step.form,
+        resolve: fields.reduce((obj, field) => Object.assign(obj, {
+          [field.name]: CrudResolver,
+        }), { }),
+        data: Object.assign({
+          entity: step.field === this.root
+            ? this.route.snapshot.data.entity
+            : this.route.snapshot.data.entity[step.field],
+          session: this.route.snapshot.data.session
+        }, ...fields.map((field) => ({
+          [field.name]: CrudJoiner.of(field.model, false)
+        })))
+      };
+    });
+  }
+
+  private walker(route: Route, children: Route[]) {
+    if ((route['_loadedConfig'] || { }).routes) {
+      route['_loadedConfig'].routes = route['_loadedConfig'].routes
+        .map((child) => this.walker(child, children));
+    } else if (route.children) {
+      route.children = route.children
+        .map((child) => this.walker(child, children));
+    } else if (route.component === this.constructor) {
+      route.children = children;
+    }
+
+    return route;
   }
 
 }

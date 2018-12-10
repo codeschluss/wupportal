@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CorePackage, SessionProvider } from '@portal/core';
 import { ActivityProvider } from '../../realm/activity/activity.provider';
 import { OrganisationProvider } from '../../realm/organisation/organisation.provider';
@@ -13,7 +13,9 @@ import { ClientPackage } from '../../utils/package';
 export class AdminComponent {
 
   public constructor(
-    private activatedRoute: ActivatedRoute,
+    private route: ActivatedRoute,
+    private router: Router,
+
     private activityProvider: ActivityProvider,
     private organisationProvider: OrganisationProvider,
     private sessionProvider: SessionProvider,
@@ -22,21 +24,17 @@ export class AdminComponent {
     private clientPackage: ClientPackage,
     private corePackage: CorePackage
   ) {
-    this.sessionProvider.subscribe((i) => {
-      console.log('refresh_exp', i.refreshToken.exp - Date.now() / 1000);
-      console.log('access__exp', i.accessToken.exp - Date.now() / 1000);
-      console.log('refresh_jwt', i.refreshToken.raw);
-      console.log('access__jwt', i.accessToken.raw);
-    });
 
-    console.log('PKG', this.corePackage, this.clientPackage);
+    // console.log('PKG', this.corePackage, this.clientPackage);
 
-    console.log(this.activatedRoute.snapshot);
-    console.log(this.activityProvider);
+    console.log(this.route);
+    console.log(this.router);
+    // console.log(this.activityProvider);
     // console.log(this.userProvider);
-    console.log(this.sessionProvider);
 
-    this.tests();
+    // console.log('ROUTE', ActivityStepperComponent.route());
+
+    // this.tests();
   }
 
   private async tests() {
@@ -57,6 +55,14 @@ export class AdminComponent {
   }
 
   private async sessionTest() {
+    console.log(this.sessionProvider);
+    this.sessionProvider.subscribe((i) => {
+      console.log('refresh_exp', i.refreshToken.exp - Date.now() / 1000);
+      console.log('access__exp', i.accessToken.exp - Date.now() / 1000);
+      console.log('refresh_jwt', i.refreshToken.raw);
+      console.log('access__jwt', i.accessToken.raw);
+    });
+
     await this.sessionProvider.login('super@user', 'test');
     await this.sessionProvider.refresh();
   }

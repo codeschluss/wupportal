@@ -1,7 +1,7 @@
 import { OnInit, Type } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BaseService, CrudModel, CrudProvider } from '@portal/core';
+import { CrudModel } from '@portal/core';
 import { BaseFieldComponent } from './base.field';
 
 export interface FormField {
@@ -16,21 +16,15 @@ export interface FormField {
   value?: any;
 }
 
-export abstract class BaseForm
-  <Provider extends CrudProvider<BaseService, Model>, Model extends CrudModel>
-  implements OnInit {
-
-  public abstract base: string;
+export abstract class BaseForm<Model extends CrudModel> implements OnInit {
 
   public abstract fields: FormField[];
+
+  public abstract model: Type<Model>;
 
   public group: FormGroup;
 
   protected abstract builder: FormBuilder;
-
-  protected abstract model: Type<Model>;
-
-  protected abstract provider: Provider;
 
   protected abstract route: ActivatedRoute;
 
@@ -46,12 +40,14 @@ export abstract class BaseForm
   }
 
   public ngOnInit(): void {
-    this.group = this.builder.group({ });
-    this.fields = this.fields.map((field) => Object.assign({
+    this.fields = this.fields.map((field) => Object.assign(field, {
       label: field.label || 'name',
       options: field.options || this.route.snapshot.data[field.name],
-      value: field.value || this.route.snapshot.data[this.base][field.name],
+      value: field.value || this.route.snapshot.data.entity[field.name]
     }));
+
+    this.ngPostInit();
+    this.group = this.builder.group({ });
     this.fields.forEach((field) => this.group.addControl(field.name,
       this.builder.control(field.value, field.tests)));
   }
@@ -60,16 +56,12 @@ export abstract class BaseForm
     console.log(this.group.value);
   }
 
-  protected formed(model: Type<Model>): Type<Model> {
-    return Object.defineProperty(model, 'form', {
-      value: this.constructor
-    });
-  }
+  protected ngPostInit(): void { }
 
   protected save(model: Model): Promise<any> {
     return model.id
-      ? this.provider.update(model.id, model)
-      : this.provider.create(model);
+      ? this.model['provider'].update(model.id, model)
+      : this.model['provider'].create(model);
   }
 
 }

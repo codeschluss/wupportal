@@ -30,8 +30,7 @@ public class CategoryControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    CategoryEntity category = 
-        new CategoryEntity("green", "updateSuperUserOk", "category2", null, null);
+    CategoryEntity category = newCategory("green", "updateSuperUserOk", "category2");
     String categoryId = "00000000-0000-0000-0007-200000000000";
 
     controller.update(category, categoryId);
@@ -43,8 +42,8 @@ public class CategoryControllerUpdateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedName() throws URISyntaxException {
-    CategoryEntity category = new CategoryEntity("updateSuperUserDuplicatedName",
-        "updateSuperUserDuplicatedName", "category1", null, null);
+    CategoryEntity category = newCategory("updateSuperUserDuplicatedName",
+        "updateSuperUserDuplicatedName", "category1");
     String categoryId = "00000000-0000-0000-0007-200000000000";
 
     controller.update(category, categoryId);
@@ -53,8 +52,8 @@ public class CategoryControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    CategoryEntity category = new CategoryEntity("updateProviderUserDenied",
-        "updateProviderUserDenied", "updateProviderUserDenied", null, null);
+    CategoryEntity category = newCategory("updateProviderUserDenied", "updateProviderUserDenied",
+        "updateProviderUserDenied");
     String categoryId = "00000000-0000-0000-0007-100000000000";
 
     controller.update(category, categoryId);
@@ -62,11 +61,19 @@ public class CategoryControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    CategoryEntity category = new CategoryEntity("updateNoUserDenied", "updateNoUserDenied",
-        "updateNoUserDenied", null, null);
+    CategoryEntity category = newCategory("updateNoUserDenied", "updateNoUserDenied",
+        "updateNoUserDenied");
     String categoryId = "00000000-0000-0000-0007-100000000000";
 
     controller.update(category, categoryId);
+  }
+
+  private CategoryEntity newCategory(String color, String description, String name) {
+    CategoryEntity category = new CategoryEntity();
+    category.setName(name);
+    category.setColor(color);
+    category.setDescription(description);
+    return category;
   }
 
 }

@@ -1,6 +1,7 @@
 package de.codeschluss.portal.components.address;
 
 import de.codeschluss.portal.components.suburb.SuburbEntity;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -25,10 +26,8 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
    * @param assembler
    *          the assembler
    */
-  public AddressService(
-      AddressRepository repo, 
-      AddressQueryBuilder entities,
-      AddressResourceAssembler assembler) {
+  public AddressService(AddressRepository repo, AddressQueryBuilder entities,
+      PagingAndSortingAssembler assembler) {
     super(repo, entities, assembler);
   }
 
@@ -44,10 +43,10 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
    *          the orga id
    * @return the resources with suburbs by organisation
    */
-  public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) {
+  public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) throws Throwable {
     AddressEntity address = repo.findOne(entities.withAnyOrganisationId(orgaId))
         .orElseThrow(() -> new NotFoundException(orgaId));
-    return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
+    return assembler.toResourceWithSingleEmbedabble(address, address.getSuburb(), "suburb");
   }
 
   /**
@@ -57,17 +56,17 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
    *          the activity id
    * @return the resources with suburbs by activity
    */
-  public Resource<?> getResourcesWithSuburbsByActivity(String activityId) {
+  public Resource<?> getResourcesWithSuburbsByActivity(String activityId) throws Throwable {
     AddressEntity address = repo.findOne(entities.withAnyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
-    return assembler.toResourceWithEmbedabble(address, address.getSuburb(), "suburb");
+    return assembler.toResourceWithSingleEmbedabble(address, address.getSuburb(), "suburb");
   }
 
   /*
    * (non-Javadoc)
    * 
-   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.String,
-   * de.codeschluss.portal.core.service.BaseEntity)
+   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.
+   * String, de.codeschluss.portal.core.service.BaseEntity)
    */
   @Override
   public AddressEntity update(String id, AddressEntity newAddress) {
@@ -85,8 +84,8 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
     });
   }
 
-  /**<
-   * Update suburb.
+  /**
+   * < Update suburb.
    *
    * @param addressId
    *          the address id

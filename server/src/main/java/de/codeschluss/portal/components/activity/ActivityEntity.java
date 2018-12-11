@@ -1,5 +1,8 @@
 package de.codeschluss.portal.components.activity;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -11,10 +14,12 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
+import de.codeschluss.portal.core.entity.BaseResource;
 import de.codeschluss.portal.core.i18n.annotations.Localized;
-import de.codeschluss.portal.core.service.BaseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,6 +44,7 @@ import lombok.ToString;
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -59,7 +65,7 @@ import org.springframework.hateoas.core.Relation;
     name = "UUID",
     strategy = "org.hibernate.id.UUIDGenerator"
 )
-public class ActivityEntity extends BaseEntity {
+public class ActivityEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
 
@@ -89,7 +95,7 @@ public class ActivityEntity extends BaseEntity {
   @JsonDeserialize
   private String categoryId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @ToString.Exclude
   @JsonIgnore
   @JoinColumn(nullable = false)
@@ -99,7 +105,7 @@ public class ActivityEntity extends BaseEntity {
   @JsonDeserialize
   private String organisationId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @ToString.Exclude
   @JsonIgnore
   @JoinColumn(nullable = false)
@@ -147,7 +153,7 @@ public class ActivityEntity extends BaseEntity {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
-  protected List<ActivityTranslatablesEntity> translatables;
+  protected Set<ActivityTranslatablesEntity> translatables;
 
   @JsonIgnore
   public String getAddressId() {
@@ -162,5 +168,31 @@ public class ActivityEntity extends BaseEntity {
   @JsonIgnore
   public String getOrganisationId() {
     return this.organisationId;
+  }
+
+  @Override
+  public List<Link> createResourceLinks() {
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readOne(id)).withSelfRel());
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readOrganisation(id)).withRel("organisation"));
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readUser(id)).withRel("user"));
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readCategory(id)).withRel("category"));
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readSchedules(id, null)).withRel("schedules"));
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readTags(id)).withRel("tags"));
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readTargetGroups(id)).withRel("targetgroups"));
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readAddress(id)).withRel("address"));
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readTranslations(id)).withRel("translations"));
+
+    return links;
   }
 }

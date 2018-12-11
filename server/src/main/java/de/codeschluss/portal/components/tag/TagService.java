@@ -1,5 +1,6 @@
 package de.codeschluss.portal.components.tag;
 
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -28,7 +29,7 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
    */
   public TagService(
       TagRepository repo, 
-      TagResourceAssembler assembler,
+      PagingAndSortingAssembler assembler,
       TagQueryBuilder entities) {
     super(repo, entities, assembler);
   }
@@ -45,7 +46,8 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
    *          the activity id
    * @return the resource by activity
    */
-  public Resources<?> getResourcesByActivity(String activityId) {
+  public Resources<?> getResourcesByActivity(String activityId)
+      throws Throwable {
     List<TagEntity> tags = repo.findAll(entities.withAnyActivityId(activityId));
     if (tags == null || tags.isEmpty()) {
       throw new NotFoundException(activityId);

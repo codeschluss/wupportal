@@ -20,7 +20,6 @@ import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -183,7 +182,11 @@ public class OrganisationController
    */
   @GetMapping("/organisations/{organisationId}/address")
   public ResponseEntity<?> readAddress(@PathVariable String organisationId) {
-    return ok(addressService.getResourcesWithSuburbsByOrganisation(organisationId));
+    try {
+      return ok(addressService.getResourcesWithSuburbsByOrganisation(organisationId));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -217,7 +220,11 @@ public class OrganisationController
   @GetMapping("/organisations/{organisationId}/activities")
   public ResponseEntity<?> readActivities(@PathVariable String organisationId) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
-    return ok(activityService.getResourcesByProviders(providers));
+    try {
+      return ok(activityService.getResourcesByProviders(providers));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -333,11 +340,7 @@ public class OrganisationController
   public ResponseEntity<?> readTranslations(@PathVariable String organisationId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(organisationId), this));
-    } catch (NoSuchMethodException 
-        | SecurityException 
-        | IllegalAccessException
-        | IllegalArgumentException
-        | InvocationTargetException e) {
+    } catch (Throwable e) {
       throw new RuntimeException("Translations are not available");
     }
   }
@@ -351,7 +354,11 @@ public class OrganisationController
    */
   @GetMapping("/organisations/{organisationId}/images")
   public ResponseEntity<?> readImages(@PathVariable String organisationId) {
-    return ok(organisationImageService.getResourcesByOrganisation(organisationId));
+    try {
+      return ok(organisationImageService.getResourcesByOrganisation(organisationId));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
   
   /**

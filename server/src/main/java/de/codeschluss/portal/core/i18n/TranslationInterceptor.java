@@ -1,8 +1,8 @@
 package de.codeschluss.portal.core.i18n;
 
+import de.codeschluss.portal.core.entity.BaseEntity;
 import de.codeschluss.portal.core.i18n.translation.TranslationHelper;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
-import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.util.List;
 import java.util.Optional;

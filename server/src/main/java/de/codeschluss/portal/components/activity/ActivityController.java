@@ -26,7 +26,6 @@ import de.codeschluss.portal.core.security.permissions.ProviderPermission;
 import de.codeschluss.portal.core.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -171,7 +170,11 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @GetMapping("/activities/{activityId}/address")
   public ResponseEntity<?> readAddress(@PathVariable String activityId) {
-    return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
+    try {
+      return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -272,7 +275,11 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @ShowUserOrSuperUserPermission
   public ResponseEntity<?> readUser(@PathVariable String activityId) {
     ProviderEntity provider = providerService.getProviderByActivity(activityId);
-    return ok(userService.getResourceByProvider(provider));
+    try {
+      return ok(userService.getResourceByProvider(provider));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -284,7 +291,11 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @GetMapping("/activities/{activityId}/tags")
   public ResponseEntity<?> readTags(@PathVariable String activityId) {
-    return ok(tagService.getResourcesByActivity(activityId));
+    try {
+      return ok(tagService.getResourcesByActivity(activityId));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -305,6 +316,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       return readTags(activityId);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 
@@ -338,7 +351,11 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @GetMapping("/activities/{activityId}/targetgroups")
   public ResponseEntity<?> readTargetGroups(@PathVariable String activityId) {
-    return ok(targetGroupService.getResourceByActivity(activityId));
+    try {
+      return ok(targetGroupService.getResourceByActivity(activityId));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -361,6 +378,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       return readTargetGroups(activityId);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Target Group or Activity do not exist");
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 
@@ -395,8 +414,12 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @GetMapping("/activities/{activityId}/schedules")
   public ResponseEntity<?> readSchedules(
       @PathVariable String activityId,
-      BaseParams params) {
-    return ok(scheduleService.getResourceByActivity(activityId, params));
+      BaseParams params)  {
+    try {
+      return ok(scheduleService.getResourceByActivity(activityId, params));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -417,6 +440,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       return readSchedules(activityId, null);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 
@@ -458,17 +483,12 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    *
    * @param activityId the activity id
    * @return the response entity
-   * @throws Throwable the throwable
    */
   @GetMapping("/activities/{activityId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String activityId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(activityId), this));
-    } catch (NoSuchMethodException 
-        | SecurityException 
-        | IllegalAccessException
-        | IllegalArgumentException
-        | InvocationTargetException e) {
+    } catch (Throwable e) {
       throw new RuntimeException("Translations are not available");
     }
   }

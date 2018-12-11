@@ -32,7 +32,7 @@ public class ConfigurationControllerCreateTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
-    ConfigurationEntity configuration = new ConfigurationEntity("addSuperUserOk", "addSuperUserOk");
+    ConfigurationEntity configuration = newConfiguration("addSuperUserOk", "addSuperUserOk");
 
     controller.create(configuration);
 
@@ -45,7 +45,7 @@ public class ConfigurationControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    ConfigurationEntity configuration = new ConfigurationEntity("configuration1", "configuration1");
+    ConfigurationEntity configuration = newConfiguration("configuration1", "configuration1");
 
     controller.create(configuration);
   }
@@ -53,17 +53,22 @@ public class ConfigurationControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
-    ConfigurationEntity configuration = new ConfigurationEntity("addProviderDenied",
-        "addProviderDenied");
+    ConfigurationEntity configuration = newConfiguration("addProviderDenied", "addProviderDenied");
 
     controller.create(configuration);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    ConfigurationEntity configuration = new ConfigurationEntity("addNoUserDenied",
-        "addNoUserDenied");
+    ConfigurationEntity configuration = newConfiguration("addNoUserDenied", "addNoUserDenied");
 
     controller.create(configuration);
+  }
+
+  private ConfigurationEntity newConfiguration(String item, String value) {
+    ConfigurationEntity config = new ConfigurationEntity();
+    config.setItem(item);
+    config.setValue(value);
+    return config;
   }
 }

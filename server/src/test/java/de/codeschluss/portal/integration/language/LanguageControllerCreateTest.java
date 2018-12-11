@@ -32,7 +32,7 @@ public class LanguageControllerCreateTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("addSuperUserOk", "addSuperUserOk",
+    LanguageEntity language = newLanguage("addSuperUserOk", "addSuperUserOk",
         "addSuperUserOk");
 
     controller.create(language);
@@ -46,7 +46,7 @@ public class LanguageControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicatedLocale() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("es", "addSuperUserDuplicatedLocale",
+    LanguageEntity language = newLanguage("es", "addSuperUserDuplicatedLocale",
         "addSuperUserDuplicatedLocale");
 
     controller.create(language);
@@ -55,7 +55,7 @@ public class LanguageControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicatedName() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("addSuperUserDuplicatedName", "ToRead",
+    LanguageEntity language = newLanguage("addSuperUserDuplicatedName", "ToRead",
         "addSuperUserDuplicatedName");
 
     controller.create(language);
@@ -64,7 +64,7 @@ public class LanguageControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("addProviderDenied", "addProviderDenied",
+    LanguageEntity language = newLanguage("addProviderDenied", "addProviderDenied",
         "addProviderDenied");
 
     controller.create(language);
@@ -72,9 +72,17 @@ public class LanguageControllerCreateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    LanguageEntity language = new LanguageEntity("addNoUserDenied", "addNoUserDenied",
+    LanguageEntity language = newLanguage("addNoUserDenied", "addNoUserDenied",
         "addNoUserDenied");
 
     controller.create(language);
+  }
+  
+  private LanguageEntity newLanguage(String locale, String name, String machineTranslated) {
+    LanguageEntity language = new LanguageEntity();
+    language.setLocale(locale);
+    language.setName(name);
+    language.setMachineTranslated(machineTranslated);
+    return language;
   }
 }

@@ -30,8 +30,7 @@ public class ConfigurationControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    ConfigurationEntity configuration = new ConfigurationEntity("updateSuperUserOk",
-        "updateSuperUserOk");
+    ConfigurationEntity configuration = newConfiguration("updateSuperUserOk", "updateSuperUserOk");
     String configurationId = "00000000-0000-0000-0001-000000000008";
 
     controller.update(configuration, configurationId);
@@ -44,7 +43,7 @@ public class ConfigurationControllerUpdateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedName() throws URISyntaxException {
-    ConfigurationEntity configuration = new ConfigurationEntity("configuration1",
+    ConfigurationEntity configuration = newConfiguration("configuration1",
         "updateSuperUserDuplicatedName");
     String configurationId = "00000000-0000-0000-0001-000000000009";
 
@@ -54,7 +53,7 @@ public class ConfigurationControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    ConfigurationEntity configuration = new ConfigurationEntity("updateProviderUserDenied",
+    ConfigurationEntity configuration = newConfiguration("updateProviderUserDenied",
         "updateProviderUserDenied");
     String configurationId = "00000000-0000-0000-0001-000000000001";
 
@@ -63,11 +62,18 @@ public class ConfigurationControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    ConfigurationEntity configuration = new ConfigurationEntity("updateNoUserDenied",
+    ConfigurationEntity configuration = newConfiguration("updateNoUserDenied",
         "updateNoUserDenied");
     String configurationId = "00000000-0000-0000-0001-000000000001";
 
     controller.update(configuration, configurationId);
+  }
+
+  private ConfigurationEntity newConfiguration(String item, String value) {
+    ConfigurationEntity config = new ConfigurationEntity();
+    config.setItem(item);
+    config.setValue(value);
+    return config;
   }
 
 }

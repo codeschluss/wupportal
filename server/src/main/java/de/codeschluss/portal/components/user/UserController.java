@@ -194,7 +194,11 @@ public class UserController extends CrudController<UserEntity, UserService> {
   // TODO: Visible for all?
   public ResponseEntity<?> readActivities(@PathVariable String userId) {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
-    return ok(activityService.getResourcesByProviders(providers));
+    try {
+      return ok(activityService.getResourcesByProviders(providers));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**

@@ -4,6 +4,7 @@ import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
@@ -25,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class OrganisationService 
+public class OrganisationService
     extends ResourceDataService<OrganisationEntity, OrganisationQueryBuilder> {
 
   /**
@@ -38,11 +39,8 @@ public class OrganisationService
    * @param addressService
    *          the address service
    */
-  public OrganisationService(
-      OrganisationRepository repo, 
-      OrganisationQueryBuilder entities,
-      OrganisationResourceAssembler assembler,
-      AddressService addressService) {
+  public OrganisationService(OrganisationRepository repo, OrganisationQueryBuilder entities,
+      PagingAndSortingAssembler assembler, AddressService addressService) {
     super(repo, entities, assembler);
   }
 
@@ -113,33 +111,36 @@ public class OrganisationService
    */
   public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers) {
     List<ResourceWithEmbeddable<OrganisationEntity>> result = providers.stream().map(provider -> {
-      return assembler.toResourceWithEmbedabble(provider.getOrganisation(), provider, "provider");
+      return assembler.toResourceWithSingleEmbedabble(provider.getOrganisation(), provider,
+          "provider");
     }).collect(Collectors.toList());
 
     return assembler.toListResources(result, null);
   }
-  
+
   /**
    * Gets the orga activity.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the orga activity
    */
   public OrganisationEntity getOrgaActivity(String activityId) {
-    return repo
-        .findOne(entities.forActivity(activityId))
+    return repo.findOne(entities.forActivity(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
   }
 
   /**
    * Adds the image.
    *
-   * @param organisationId the organisation id
-   * @param image the image
+   * @param organisationId
+   *          the organisation id
+   * @param image
+   *          the image
    * @return the list
    */
-  public List<OrganisationImageEntity> addImage(
-      String organisationId, OrganisationImageEntity image) {
+  public List<OrganisationImageEntity> addImage(String organisationId,
+      OrganisationImageEntity image) {
     OrganisationEntity organisation = getById(organisationId);
     organisation.getImages().add(image);
     return repo.save(organisation).getImages();
@@ -148,8 +149,10 @@ public class OrganisationService
   /**
    * Delete images.
    *
-   * @param organisationId the organisation id
-   * @param imagesIds the images ids
+   * @param organisationId
+   *          the organisation id
+   * @param imagesIds
+   *          the images ids
    */
   public void deleteImages(String organisationId, List<String> imagesIds) {
     OrganisationEntity organisation = getById(organisationId);
@@ -160,8 +163,10 @@ public class OrganisationService
   /**
    * Sets the approval.
    *
-   * @param organisationId the organisation id
-   * @param isApproved the is approved
+   * @param organisationId
+   *          the organisation id
+   * @param isApproved
+   *          the is approved
    */
   public void setApproval(String organisationId, Boolean isApproved) {
     OrganisationEntity organisation = getById(organisationId);

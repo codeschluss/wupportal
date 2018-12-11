@@ -30,7 +30,7 @@ public class SuburbControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    SuburbEntity suburb = new SuburbEntity("updateSuperUserOk", null);
+    SuburbEntity suburb = newSuburb("updateSuperUserOk");
     String suburbId = "00000000-0000-0000-0005-200000000000";
 
     controller.update(suburb, suburbId);
@@ -42,7 +42,7 @@ public class SuburbControllerUpdateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicated() throws URISyntaxException {
-    SuburbEntity suburb = new SuburbEntity("suburb1", null);
+    SuburbEntity suburb = newSuburb("suburb1");
     String suburbId = "00000000-0000-0000-0005-200000000000";
 
     controller.update(suburb, suburbId);
@@ -51,7 +51,7 @@ public class SuburbControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    SuburbEntity suburb = new SuburbEntity("suburb2", null);
+    SuburbEntity suburb = newSuburb("suburb2");
     String suburbId = "00000000-0000-0000-0005-100000000000";
 
     controller.update(suburb, suburbId);
@@ -59,10 +59,16 @@ public class SuburbControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    SuburbEntity suburb = new SuburbEntity("suburb2", null);
+    SuburbEntity suburb = newSuburb("suburb2");
     String suburbId = "00000000-0000-0000-0005-100000000000";
 
     controller.update(suburb, suburbId);
+  }
+  
+  private SuburbEntity newSuburb(String name) {
+    SuburbEntity suburb = new SuburbEntity();
+    suburb.setName(name);
+    return suburb;
   }
 
 }

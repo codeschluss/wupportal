@@ -1,6 +1,7 @@
 package de.codeschluss.portal.components.images.organisation;
 
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.image.ImageService;
 import de.codeschluss.portal.core.service.ResourceDataService;
@@ -32,7 +33,7 @@ public class OrganisationImageService
   public OrganisationImageService(
       OrganisationImageRepository repo, 
       OrganisationImageQueryBuilder entities,
-      OrganisationImageResourceAssembler assembler,
+      PagingAndSortingAssembler assembler,
       ImageService imageService) {
     super(repo, entities, assembler);
     this.imageService = imageService;
@@ -62,7 +63,8 @@ public class OrganisationImageService
    * @param organisationId the organisation id
    * @return the resources by organisation
    */
-  public Resources<?> getResourcesByOrganisation(String organisationId) {
+  public Resources<?> getResourcesByOrganisation(String organisationId)
+      throws Throwable {
     List<OrganisationImageEntity> images = repo.findAll(
         entities.forOrganisationId(organisationId));
     if (images == null || images.isEmpty()) {

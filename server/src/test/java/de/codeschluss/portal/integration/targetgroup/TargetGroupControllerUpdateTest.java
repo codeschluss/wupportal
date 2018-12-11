@@ -30,8 +30,7 @@ public class TargetGroupControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("updateSuperUserOk", "updateSuperUserOk",
-        null, null);
+    TargetGroupEntity targetGroup = newTargetGroup("updateSuperUserOk", "updateSuperUserOk");
     String targetGroupId = "00000000-0000-0000-0003-800000000000";
 
     controller.update(targetGroup, targetGroupId);
@@ -44,7 +43,7 @@ public class TargetGroupControllerUpdateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicatedName() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("target1", "target1", null, null);
+    TargetGroupEntity targetGroup = newTargetGroup("target1", "target1");
     String targetGroupId = "00000000-0000-0000-0003-800000000000";
 
     controller.update(targetGroup, targetGroupId);
@@ -53,8 +52,8 @@ public class TargetGroupControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("updateProviderUserDenied",
-        "updateProviderUserDenied", null, null);
+    TargetGroupEntity targetGroup = newTargetGroup("updateProviderUserDenied",
+        "updateProviderUserDenied");
     String targetGroupId = "00000000-0000-0000-0003-100000000000";
 
     controller.update(targetGroup, targetGroupId);
@@ -62,11 +61,17 @@ public class TargetGroupControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("updateNoUserDenied",
-        "updateNoUserDenied", null, null);
+    TargetGroupEntity targetGroup = newTargetGroup("updateNoUserDenied", "updateNoUserDenied");
     String targetGroupId = "00000000-0000-0000-0003-100000000000";
 
     controller.update(targetGroup, targetGroupId);
+  }
+
+  private TargetGroupEntity newTargetGroup(String description, String name) {
+    TargetGroupEntity targetGroup = new TargetGroupEntity();
+    targetGroup.setDescription(description);
+    targetGroup.setName(name);
+    return targetGroup;
   }
 
 }

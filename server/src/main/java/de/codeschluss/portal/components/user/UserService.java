@@ -1,6 +1,7 @@
 package de.codeschluss.portal.components.user;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
@@ -46,7 +47,7 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
    */
   public UserService(
       UserRepository repo, 
-      UserResourceAssembler assembler,
+      PagingAndSortingAssembler assembler,
       BCryptPasswordEncoder encoder, 
       MailService mailService,
       UserQueryBuilder entities) {
@@ -150,7 +151,7 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
    */
   public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers) {
     List<ResourceWithEmbeddable<UserEntity>> result = providers.stream().map(provider -> {
-      return assembler.toResourceWithEmbedabble(provider.getUser(), provider, "provider");
+      return assembler.toResourceWithSingleEmbedabble(provider.getUser(), provider, "provider");
     }).collect(Collectors.toList());
 
     return assembler.toListResources(result, null);
@@ -163,7 +164,8 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
    *          the provider
    * @return the resource by provider
    */
-  public Object getResourceByProvider(ProviderEntity provider) {
+  public Object getResourceByProvider(ProviderEntity provider)
+      throws Throwable {
     return assembler.toResource(provider.getUser());
   }
 

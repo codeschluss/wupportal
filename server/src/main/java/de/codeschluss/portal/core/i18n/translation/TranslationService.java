@@ -1,6 +1,8 @@
 package de.codeschluss.portal.core.i18n.translation;
 
 import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.entity.BaseEntity;
 import de.codeschluss.portal.core.i18n.TranslationsConfiguration;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslationResult;
@@ -8,9 +10,7 @@ import de.codeschluss.portal.core.i18n.language.LanguageEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.repository.DataRepository;
 import de.codeschluss.portal.core.repository.RepositoryService;
-import de.codeschluss.portal.core.service.BaseEntity;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class TranslationService {
   private LanguageService languageService;
 
   /** The assembler. */
-  private final TranslationResourceAssembler assembler;
+  private final PagingAndSortingAssembler assembler;
 
   private final TranslationsConfiguration config;
 
@@ -61,7 +61,7 @@ public class TranslationService {
    */
   @Autowired
   public TranslationService(RepositoryService repoService, LanguageService languageService,
-      TranslationResourceAssembler assembler, TranslationsConfiguration config) {
+      PagingAndSortingAssembler assembler, TranslationsConfiguration config) {
     this.repoService = repoService;
     this.languageService = languageService;
     this.assembler = assembler;
@@ -187,26 +187,14 @@ public class TranslationService {
   /**
    * Gets the all translations.
    *
-   * @param parent
-   *          the parent
-   * @param controller
-   *          the controller
+   * @param parent the parent
+   * @param controller the controller
    * @return the all translations
-   * @throws NoSuchMethodException
-   *           the no such method exception
-   * @throws SecurityException
-   *           the security exception
-   * @throws IllegalAccessException
-   *           the illegal access exception
-   * @throws IllegalArgumentException
-   *           the illegal argument exception
-   * @throws InvocationTargetException
-   *           the invocation target exception
+   * @throws Throwable the throwable
    */
   @SuppressWarnings("unchecked")
   public Resources<?> getAllTranslations(BaseEntity parent, CrudController<?, ?> controller)
-      throws NoSuchMethodException, SecurityException, IllegalAccessException,
-      IllegalArgumentException, InvocationTargetException {
+      throws Throwable {
 
     DataRepository<TranslatableEntity<?>> repo = repoService
         .getRepository(TranslationHelper.getTranslatableType(parent));
@@ -216,7 +204,6 @@ public class TranslationService {
       Method findByParent = translationRepo.getClass().getMethod("findByParent",
           parent.getClass().getSuperclass());
 
-      assembler.setCurrentController(controller);
       return assembler.entitiesToResources(
           (List<TranslatableEntity<?>>) findByParent.invoke(translationRepo, parent), null);
     }

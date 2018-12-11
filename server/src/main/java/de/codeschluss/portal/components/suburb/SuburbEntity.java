@@ -1,10 +1,15 @@
 package de.codeschluss.portal.components.suburb;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.codeschluss.portal.components.address.AddressController;
 import de.codeschluss.portal.components.address.AddressEntity;
-import de.codeschluss.portal.core.service.BaseEntity;
+import de.codeschluss.portal.core.entity.BaseResource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -18,6 +23,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -33,7 +39,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "suburbs")
 @Relation(collectionRelation = "data")
-public class SuburbEntity extends BaseEntity {
+public class SuburbEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
 
@@ -43,5 +49,15 @@ public class SuburbEntity extends BaseEntity {
   @OneToMany(mappedBy = "suburb")
   @JsonIgnore
   private List<AddressEntity> addresses;
+  
+  @Override
+  public List<Link> createResourceLinks() {
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(AddressController.class)
+        .readOne(getId())).withSelfRel());
+
+    return links;
+  }
 
 }

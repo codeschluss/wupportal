@@ -1,5 +1,6 @@
 package de.codeschluss.portal.components.targetgroup;
 
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -29,7 +30,7 @@ public class TargetGroupService
   public TargetGroupService(
       TargetGroupRepository repo, 
       TargetGroupQueryBuilder entities,
-      TargetGroupResourceAssembler assembler,
+      PagingAndSortingAssembler assembler,
       TargetGroupQueryBuilder queryBuilder) {
     super(repo, entities, assembler);
   }
@@ -46,7 +47,7 @@ public class TargetGroupService
    *          the activity id
    * @return the resource by activity
    */
-  public Object getResourceByActivity(String activityId) {
+  public Object getResourceByActivity(String activityId) throws Throwable {
     List<TargetGroupEntity> targetGroups = repo.findAll(entities.withAnyActivityId(activityId));
     
     if (targetGroups == null || targetGroups.isEmpty()) {

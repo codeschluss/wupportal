@@ -31,8 +31,7 @@ public class AddressControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   public void addSuperUserOk() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("1", "addSuperUserOk", "1111", "addSuperUserOk", null,
-        1, 1, null, null);
+    AddressEntity address = newAddress("1", "addSuperUserOk", "1111", "addSuperUserOk");
 
     controller.create(address);
 
@@ -42,8 +41,7 @@ public class AddressControllerCreateTest {
   @Test
   @WithUserDetails("provider1@user")
   public void addProviderUserOk() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("1", "addProviderUserOk", "1111", "addProviderUserOk",
-        null, 1, 1, null, null);
+    AddressEntity address = newAddress("1", "addProviderUserOk", "1111", "addProviderUserOk");
 
     controller.create(address);
 
@@ -53,8 +51,7 @@ public class AddressControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("1", "wuppertal", "42103", "address1", null, 0, 0,
-        null, null);
+    AddressEntity address = newAddress("1", "wuppertal", "42103", "address1");
 
     controller.create(address);
   }
@@ -62,8 +59,8 @@ public class AddressControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
   public void addNotApprovedProviderDenied() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("1", "addAdminNoProviderDenied", "1111",
-        "addAdminNoProviderDenied", null, 1, 1, null, null);
+    AddressEntity address = newAddress("1", "addAdminNoProviderDenied", "1111",
+        "addAdminNoProviderDenied");
 
     controller.create(address);
   }
@@ -71,16 +68,15 @@ public class AddressControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("notapprovedorga@user")
   public void addNotApprovedOrgaDenied() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("1", "addNotApprovedOrgaDenied", "1111",
-        "addNotApprovedOrgaDenied", null, 1, 1, null, null);
+    AddressEntity address = newAddress("1", "addNotApprovedOrgaDenied", "1111",
+        "addNotApprovedOrgaDenied");
 
     controller.create(address);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("1", "addNoUserDenied", "1111", "addNoUserDenied",
-        null, 1, 1, null, null);
+    AddressEntity address = newAddress("1", "addNoUserDenied", "1111", "addNoUserDenied");
 
     controller.create(address);
   }
@@ -91,5 +87,15 @@ public class AddressControllerCreateTest {
         .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getStreet().equals(address.getStreet()), "address exists"));
+  }
+  
+  private AddressEntity newAddress(
+      String houseNumber, String place, String postalCode, String street) {
+    AddressEntity address = new AddressEntity();
+    address.setHouseNumber(houseNumber);
+    address.setPlace(place);
+    address.setPostalCode(postalCode);
+    address.setStreet(street);
+    return address;
   }
 }

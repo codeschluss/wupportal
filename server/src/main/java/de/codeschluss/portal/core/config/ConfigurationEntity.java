@@ -1,6 +1,12 @@
 package de.codeschluss.portal.core.config;
 
-import de.codeschluss.portal.core.service.BaseEntity;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import de.codeschluss.portal.core.entity.BaseResource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -27,7 +34,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "configurations")
 @Relation(collectionRelation = "data")
-public class ConfigurationEntity extends BaseEntity {
+public class ConfigurationEntity extends BaseResource {
   
   private static final long serialVersionUID = 1L;
 
@@ -36,4 +43,14 @@ public class ConfigurationEntity extends BaseEntity {
 
   @Column(nullable = false)
   private String value;
+
+  @Override
+  public List<Link> createResourceLinks() {
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(ConfigurationController.class)
+        .readOne(getId())).withSelfRel());
+
+    return links;
+  }
 }

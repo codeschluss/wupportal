@@ -6,6 +6,7 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -34,7 +35,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   public ActivityService(
       ActivityRepository repo, 
       ActivityQueryBuilder entities,
-      ActivityResourceAssembler assembler) {
+      PagingAndSortingAssembler assembler) {
     super(repo, entities, assembler);
   }
 
@@ -50,7 +51,8 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    *          the providers
    * @return the resources by providers
    */
-  public Resources<?> getResourcesByProviders(List<ProviderEntity> providers) {
+  public Resources<?> getResourcesByProviders(List<ProviderEntity> providers)
+      throws Throwable {
     return assembler.entitiesToResources(getByProviders(providers), null);
   }
 

@@ -1,5 +1,6 @@
 package de.codeschluss.portal.core.config;
 
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ConfigurationService
   public ConfigurationService(
       ConfigurationRepository repo,
       ConfigurationQueryBuilder entities,
-      ConfigurationResourceAssembler assembler) {
+      PagingAndSortingAssembler assembler) {
     super(repo, entities, assembler);
   }
 

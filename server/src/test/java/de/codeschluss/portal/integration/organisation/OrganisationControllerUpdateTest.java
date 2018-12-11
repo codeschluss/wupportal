@@ -34,9 +34,9 @@ public class OrganisationControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity(true, "updateSuperUserOk",
+    OrganisationEntity organisation = newOrganisation(true, "updateSuperUserOk",
         "updateSuperUserOk", "updateSuperUserOk", "123456789", "updateSuperUserOk",
-        "updateSuperUserOk", null, null, null, null);
+        "updateSuperUserOk");
 
     controller.update(organisation, "00000000-0000-0000-0008-300000000000");
 
@@ -46,9 +46,9 @@ public class OrganisationControllerUpdateTest {
   @Test
   @WithUserDetails("admin@user")
   public void updateOwnOrganisationOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity(true, "updateOwnOrganisationOk",
+    OrganisationEntity organisation = newOrganisation(true, "updateOwnOrganisationOk",
         "updateOwnOrganisationOk", "organisation1", "123456789", "updateOwnOrganisationOk",
-        "updateOwnOrganisationOk", null, null, null, null);
+        "updateOwnOrganisationOk");
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
 
@@ -58,20 +58,33 @@ public class OrganisationControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateOtherOrganisationDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity(true, "updateOtherOrganisationDenied",
+    OrganisationEntity organisation = newOrganisation(true, "updateOtherOrganisationDenied",
         "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", "123456789",
-        "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", null, null, null, null);
+        "updateOtherOrganisationDenied", "updateOtherOrganisationDenied");
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateOtherNotRegisteredOrganisationDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity(true, "updateOtherOrganisationDenied",
-        "organisation1", "organisation1", "123456789", "organisation1", "organisation1", null, null,
-        null, null);
+    OrganisationEntity organisation = newOrganisation(true, "updateOtherOrganisationDenied",
+        "organisation1", "organisation1", "123456789", "organisation1", "organisation1");
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
+  }
+
+  private OrganisationEntity newOrganisation(boolean approved, String description, String mail,
+      String name, String phone, String videoUrl, String website) {
+    OrganisationEntity organisation = new OrganisationEntity();
+    organisation.setApproved(approved);
+    organisation.setDescription(description);
+    organisation.setMail(mail);
+    organisation.setName(name);
+    organisation.setPhone(phone);
+    organisation.setVideoUrl(videoUrl);
+    organisation.setWebsite(website);
+
+    return organisation;
   }
 
 }

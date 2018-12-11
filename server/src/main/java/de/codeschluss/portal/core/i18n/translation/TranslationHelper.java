@@ -1,13 +1,14 @@
 package de.codeschluss.portal.core.i18n.translation;
 
+import de.codeschluss.portal.core.entity.BaseEntity;
 import de.codeschluss.portal.core.i18n.annotations.Localized;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
-import de.codeschluss.portal.core.service.BaseEntity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,12 +81,12 @@ public class TranslationHelper {
    * @throws IllegalArgumentException the illegal argument exception
    * @throws IllegalAccessException the illegal access exception
    */
-  public static List<?> getTranslatableProperty(Object entity) 
+  public static Collection<?> getTranslatableProperty(Object entity) 
        throws Throwable {
     for (Field field : entity.getClass().getDeclaredFields()) {
       if (getTranslatableType(field.getGenericType()) != null) {
         field.setAccessible(true);
-        return (List<?>) field.get(entity);
+        return (Collection<?>) field.get(entity);
       }
     }
     throw new RuntimeException(
@@ -99,7 +100,7 @@ public class TranslationHelper {
    * @param locale the locale
    * @return the translations
    */
-  public static Map<String, String> mapTranslations(List<?> translatables, String locale)
+  public static Map<String, String> mapTranslations(Collection<?> translatables, String locale)
       throws Throwable {
     for (Object translatable : translatables) {
       Map<String, String> translations = new HashMap<>();

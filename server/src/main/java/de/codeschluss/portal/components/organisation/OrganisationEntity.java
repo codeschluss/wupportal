@@ -1,5 +1,8 @@
 package de.codeschluss.portal.components.organisation;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -9,9 +12,11 @@ import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.organisation.translations.OrganisationTranslatablesEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.core.service.BaseEntity;
+import de.codeschluss.portal.core.entity.BaseResource;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,6 +35,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -49,7 +55,7 @@ import org.springframework.hateoas.core.Relation;
     name = "UUID",
     strategy = "org.hibernate.id.UUIDGenerator"
 )
-public class OrganisationEntity extends BaseEntity {
+public class OrganisationEntity extends BaseResource {
   
   private static final long serialVersionUID = 1L;
   
@@ -91,7 +97,7 @@ public class OrganisationEntity extends BaseEntity {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
-  protected List<OrganisationTranslatablesEntity> translatables;
+  protected Set<OrganisationTranslatablesEntity> translatables;
   
   @JsonProperty
   public boolean isApproved() {
@@ -101,5 +107,23 @@ public class OrganisationEntity extends BaseEntity {
   @JsonIgnore
   public void setApproved(boolean approved) {
     this.approved = approved;
+  }
+
+  @Override
+  public List<Link> createResourceLinks() {
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(OrganisationController.class)
+        .readOne(id)).withSelfRel());
+    links.add(linkTo(methodOn(OrganisationController.class)
+        .readActivities(id)).withRel("activities"));
+    links.add(linkTo(methodOn(OrganisationController.class)
+        .readUsers(id)).withRel("users"));
+    links.add(linkTo(methodOn(OrganisationController.class)
+        .readAddress(id)).withRel("address"));
+    links.add(linkTo(methodOn(OrganisationController.class)
+        .readTranslations(id)).withRel("translations"));
+
+    return links;
   }
 }

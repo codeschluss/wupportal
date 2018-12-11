@@ -1,8 +1,12 @@
 package de.codeschluss.portal.core.i18n.language;
 
-import de.codeschluss.portal.core.service.BaseEntity;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.io.Serializable;
+import de.codeschluss.portal.core.entity.BaseResource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -29,7 +34,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "languages")
 @Relation(collectionRelation = "data")
-public class LanguageEntity extends BaseEntity implements Serializable {
+public class LanguageEntity extends BaseResource {
   
   private static final long serialVersionUID = 1L;
 
@@ -40,4 +45,14 @@ public class LanguageEntity extends BaseEntity implements Serializable {
   private String name;
   
   private String machineTranslated;
+  
+  @Override
+  public List<Link> createResourceLinks() {
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(LanguageController.class)
+        .readOne(getId())).withSelfRel());
+
+    return links;
+  }
 }

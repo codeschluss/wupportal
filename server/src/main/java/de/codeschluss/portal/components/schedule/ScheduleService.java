@@ -2,6 +2,7 @@ package de.codeschluss.portal.components.schedule;
 
 import com.querydsl.core.types.Predicate;
 
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
@@ -34,7 +35,7 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   public ScheduleService(
       ScheduleRepository repo, 
       ScheduleQueryBuilder entities,
-      ScheduleResourceAssembler assembler) {
+      PagingAndSortingAssembler assembler) {
     super(repo, entities, assembler);
   }
 
@@ -50,7 +51,8 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
    * @param params the params
    * @return the resource by activity
    */
-  public Resources<?> getResourceByActivity(String activityId, BaseParams params) {
+  public Resources<?> getResourceByActivity(String activityId, BaseParams params)
+      throws Throwable {
     Predicate query = entities.forActivityAndCurrentOnly(activityId);
     List<ScheduleEntity> schedules = repo.findAll(query, entities.createSort(params));
     if (schedules == null || schedules.isEmpty()) {

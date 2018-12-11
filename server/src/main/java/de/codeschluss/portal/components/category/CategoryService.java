@@ -1,5 +1,6 @@
 package de.codeschluss.portal.components.category;
 
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -26,7 +27,7 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
    */
   public CategoryService(
       CategoryRepository repo, 
-      CategoryResourceAssembler assembler,
+      PagingAndSortingAssembler assembler,
       CategoryQueryBuilder entities) {
     super(repo, entities, assembler);
   }

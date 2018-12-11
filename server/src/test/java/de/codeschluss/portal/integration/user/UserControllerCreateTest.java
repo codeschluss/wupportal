@@ -29,8 +29,8 @@ public class UserControllerCreateTest {
 
   @Test
   public void addWithoutSecurityOk() throws URISyntaxException {
-    UserEntity user = new UserEntity("addWithoutSecurityOk", "test", "12345678", true,
-        "addWithoutSecurityOk", null);
+    UserEntity user = newUser("addWithoutSecurityOk", "test", "12345678", true,
+        "addWithoutSecurityOk");
 
     controller.create(user);
 
@@ -39,9 +39,20 @@ public class UserControllerCreateTest {
 
   @Test(expected = DuplicateEntryException.class)
   public void addWithoutSecurityDuplicated() throws URISyntaxException {
-    UserEntity user = new UserEntity("test", "test", "12345678", true, "provider1@user", null);
+    UserEntity user = newUser("test", "test", "12345678", true, "provider1@user");
 
     controller.create(user);
+  }
+
+  private UserEntity newUser(String fullname, String password, String phone, boolean superuser,
+      String username) {
+    UserEntity user = new UserEntity();
+    user.setFullname(fullname);
+    user.setPassword(password);
+    user.setPhone(phone);
+    user.setSuperuser(superuser);
+    user.setUsername(username);
+    return user;
   }
 
 }

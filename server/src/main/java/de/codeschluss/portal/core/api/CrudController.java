@@ -6,9 +6,9 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.api.dto.SortPaginate;
+import de.codeschluss.portal.core.entity.BaseResource;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
-import de.codeschluss.portal.core.service.BaseEntity;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.net.URI;
@@ -16,7 +16,6 @@ import java.net.URISyntaxException;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  *          the generic type
  * 
  */
-public abstract class CrudController<E extends BaseEntity, S extends ResourceDataService<E, ?>> {
+public abstract class CrudController<E extends BaseResource, S extends ResourceDataService<E, ?>> {
   
   /** The service. */
   protected final S service;
@@ -56,9 +55,13 @@ public abstract class CrudController<E extends BaseEntity, S extends ResourceDat
   public ResponseEntity<?> readAll(FilterSortPaginate params) {
     validateRead(params);
 
-    return params.getPage() == null && params.getSize() == null
-        ? ok(service.getSortedListResources(params))
-        : ok(service.getPagedResources(params));
+    try {
+      return params.getPage() == null && params.getSize() == null
+          ? ok(service.getSortedListResources(params))
+          : ok(service.getPagedResources(params));
+    } catch (Throwable e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
   
   /**

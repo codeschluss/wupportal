@@ -1,6 +1,7 @@
 package de.codeschluss.portal.core.service;
 
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.entity.BaseEntity;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.repository.DataRepository;
 

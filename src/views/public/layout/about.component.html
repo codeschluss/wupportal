@@ -3,13 +3,13 @@
   <div fxLayout="column">
     <div class="header background-color-secondary">
       <div>
-        <h2 id="headline">Neue Veranstaltungen <br> in Wuppertal</h2>
+        <h2 id="headline"><i18n i18n="@@newActivity">newActivity</i18n>Neue Veranstaltungen <br> in Wuppertal</h2>
       </div>
       <div class="roundPin background-color-primary" fxHide.lt-md="true">
         <div id="landingPageBadge">Willkommen bei Wupp'n'go deinem online Event-Portal!</div>
       </div>
     </div>
-    <ng-container *ngIf="activities.length">
+    <ng-container *ngIf="activities && activities.length">
       <div id="activity-carousel" class="background-color-secondary">
         <activity-carousel-component [activities]="activities"></activity-carousel-component>
       </div>

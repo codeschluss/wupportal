@@ -14,9 +14,9 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: 'about.component.html'
 })
 
-export class AboutComponent implements AfterViewInit {
+export class AboutComponent {
 
-  public activities: any[];
+  public activities: any[] = [];
 
   index = 0;
   speed = 5000;
@@ -28,9 +28,6 @@ export class AboutComponent implements AfterViewInit {
   constructor(
     public route: ActivatedRoute
   ) {
-  }
-
-  ngAfterViewInit(): void {
     this.activities = this.route.snapshot.data.activities;
   }
 

@@ -20,6 +20,7 @@ import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -182,11 +183,7 @@ public class OrganisationController
    */
   @GetMapping("/organisations/{organisationId}/address")
   public ResponseEntity<?> readAddress(@PathVariable String organisationId) {
-    try {
-      return ok(addressService.getResourcesWithSuburbsByOrganisation(organisationId));
-    } catch (Throwable e) {
-      throw new RuntimeException(e.getMessage());
-    }
+    return ok(addressService.getResourcesWithSuburbsByOrganisation(organisationId));
   }
 
   /**
@@ -222,7 +219,7 @@ public class OrganisationController
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
     try {
       return ok(activityService.getResourcesByProviders(providers));
-    } catch (Throwable e) {
+    } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
   }
@@ -340,8 +337,9 @@ public class OrganisationController
   public ResponseEntity<?> readTranslations(@PathVariable String organisationId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(organisationId), this));
-    } catch (Throwable e) {
-      throw new RuntimeException("Translations are not available");
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+        | IllegalArgumentException | InvocationTargetException | IOException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
   
@@ -356,7 +354,7 @@ public class OrganisationController
   public ResponseEntity<?> readImages(@PathVariable String organisationId) {
     try {
       return ok(organisationImageService.getResourcesByOrganisation(organisationId));
-    } catch (Throwable e) {
+    } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
   }

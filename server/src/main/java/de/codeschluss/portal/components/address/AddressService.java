@@ -43,7 +43,7 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
    *          the orga id
    * @return the resources with suburbs by organisation
    */
-  public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) throws Throwable {
+  public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) {
     AddressEntity address = repo.findOne(entities.withAnyOrganisationId(orgaId))
         .orElseThrow(() -> new NotFoundException(orgaId));
     return assembler.toResourceWithSingleEmbedabble(address, address.getSuburb(), "suburb");
@@ -56,7 +56,7 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
    *          the activity id
    * @return the resources with suburbs by activity
    */
-  public Resource<?> getResourcesWithSuburbsByActivity(String activityId) throws Throwable {
+  public Resource<?> getResourcesWithSuburbsByActivity(String activityId) {
     AddressEntity address = repo.findOne(entities.withAnyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
     return assembler.toResourceWithSingleEmbedabble(address, address.getSuburb(), "suburb");

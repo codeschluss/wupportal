@@ -1,10 +1,14 @@
 package de.codeschluss.portal.core.service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.entity.BaseResource;
 import de.codeschluss.portal.core.repository.DataRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.hateoas.PagedResources;
@@ -75,14 +79,14 @@ public abstract class ResourceDataService<E extends BaseResource, B extends Quer
     return assembler.toResource(update(id, updatedEntity));
   }
 
-  public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P params)
-      throws Throwable {
+  public <P extends FilterSortPaginate> Resources<?> getSortedListResources(P params) 
+      throws JsonParseException, JsonMappingException, IOException {
     List<E> result = getSortedList(params);
     return assembler.entitiesToResources(result, params);
   }
 
-  public <P extends FilterSortPaginate> PagedResources<Resource<E>> getPagedResources(P params)
-      throws Throwable {
+  public <P extends FilterSortPaginate> PagedResources<Resource<E>> getPagedResources(P params) 
+      throws JsonParseException, JsonMappingException, IOException {
     return assembler.entitiesToPagedResources(getPaged(params), params);
   }
 

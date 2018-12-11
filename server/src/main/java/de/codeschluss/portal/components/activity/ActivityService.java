@@ -1,5 +1,8 @@
 package de.codeschluss.portal.components.activity;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
@@ -10,6 +13,7 @@ import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.hateoas.Resources;
@@ -47,12 +51,14 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   /**
    * Gets the resources by providers.
    *
-   * @param providers
-   *          the providers
+   * @param providers the providers
    * @return the resources by providers
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Resources<?> getResourcesByProviders(List<ProviderEntity> providers)
-      throws Throwable {
+  public Resources<?> getResourcesByProviders(List<ProviderEntity> providers) 
+      throws JsonParseException, JsonMappingException, IOException {
     return assembler.entitiesToResources(getByProviders(providers), null);
   }
 

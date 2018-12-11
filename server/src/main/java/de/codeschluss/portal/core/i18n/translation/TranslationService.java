@@ -1,5 +1,8 @@
 package de.codeschluss.portal.core.i18n.translation;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.entity.BaseEntity;
@@ -11,6 +14,8 @@ import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.repository.DataRepository;
 import de.codeschluss.portal.core.repository.RepositoryService;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
@@ -190,11 +195,19 @@ public class TranslationService {
    * @param parent the parent
    * @param controller the controller
    * @return the all translations
-   * @throws Throwable the throwable
+   * @throws NoSuchMethodException the no such method exception
+   * @throws SecurityException the security exception
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IllegalAccessException the illegal access exception
+   * @throws IllegalArgumentException the illegal argument exception
+   * @throws InvocationTargetException the invocation target exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
   @SuppressWarnings("unchecked")
   public Resources<?> getAllTranslations(BaseEntity parent, CrudController<?, ?> controller)
-      throws Throwable {
+      throws NoSuchMethodException, SecurityException, JsonParseException, JsonMappingException,
+      IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException {
 
     DataRepository<TranslatableEntity<?>> repo = repoService
         .getRepository(TranslationHelper.getTranslatableType(parent));
@@ -227,34 +240,34 @@ public class TranslationService {
       TranslationResult translationResult = new TranslationResult();
       Map<String, String> translatedLabels = new HashMap<>(labels.size());
       String machineTranslatedLabel = getMachineTranslatedLabel(targetLang);
-      
+
       labels.forEach((label, text) -> {
         String translation = translate(targetLang, params.getSource(), text);
         translatedLabels.put(label, addMachineTranslatedTo(translation, machineTranslatedLabel));
       });
-      
+
       translationResult.setLang(targetLang);
       translationResult.setTranslations(translatedLabels);
       results.add(translationResult);
     });
     return results;
   }
-  
 
   /**
    * Gets the machine translated label.
    *
-   * @param targetLang the target lang
+   * @param targetLang
+   *          the target lang
    * @return the machine translated label
    */
   private String getMachineTranslatedLabel(String targetLang) {
     String machineTranslated = languageService.getByLocale(targetLang).getMachineTranslated();
-    
+
     if (machineTranslated == null || machineTranslated.isEmpty()) {
       machineTranslated = translate(targetLang, config.getDefaultLocale(),
           config.getDefaultAutomaticTranslated());
     }
-    
+
     return machineTranslated;
   }
 
@@ -270,14 +283,12 @@ public class TranslationService {
    * @return the string
    */
   public String translate(String target, String source, String text) {
-    String response = translationClient
-        .method(HttpMethod.GET)
-        .uri(createUri(target, source, text))
+    String response = translationClient.method(HttpMethod.GET).uri(createUri(target, source, text))
         .header("Ocp-Apim-Subscription-Key", config.getServiceSubscriptionKey()).retrieve()
         .bodyToMono(String.class).block();
     return prepareReponse(response, target);
   }
-  
+
   /**
    * Creates the uri.
    *
@@ -297,25 +308,27 @@ public class TranslationService {
   /**
    * Prepare reponse.
    *
-   * @param response the response
+   * @param response
+   *          the response
    * @return the string
    */
-  private String prepareReponse(String response, String targetLang) {   
+  private String prepareReponse(String response, String targetLang) {
     // TODO: Workaround. Not able to properly extract result.
     return response
         .replace("<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">", "")
         .replace("</string>", "");
   }
-  
 
   /**
    * Adds the machine translated to.
    *
-   * @param translation the translation
-   * @param machineTranslated the machine translated
+   * @param translation
+   *          the translation
+   * @param machineTranslated
+   *          the machine translated
    * @return the string
    */
-  private String addMachineTranslatedTo(String translation, String machineTranslated) {    
+  private String addMachineTranslatedTo(String translation, String machineTranslated) {
     return "(" + machineTranslated + ") " + translation;
   }
 }

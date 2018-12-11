@@ -26,6 +26,8 @@ import de.codeschluss.portal.core.security.permissions.ProviderPermission;
 import de.codeschluss.portal.core.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -85,17 +87,28 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Instantiates a new activity controller.
    *
-   * @param service the service
-   * @param addressService the address service
-   * @param categoryService the category service
-   * @param providerService the provider service
-   * @param userService the user service
-   * @param tagService the tag service
-   * @param targetGroupService the target group service
-   * @param scheduleService the schedule service
-   * @param organisationService the organisation service
-   * @param translationService the translation service
-   * @param authService the auth service
+   * @param service
+   *          the service
+   * @param addressService
+   *          the address service
+   * @param categoryService
+   *          the category service
+   * @param providerService
+   *          the provider service
+   * @param userService
+   *          the user service
+   * @param tagService
+   *          the tag service
+   * @param targetGroupService
+   *          the target group service
+   * @param scheduleService
+   *          the schedule service
+   * @param organisationService
+   *          the organisation service
+   * @param translationService
+   *          the translation service
+   * @param authService
+   *          the auth service
    */
   public ActivityController(ActivityService service, AddressService addressService,
       CategoryService categoryService, ProviderService providerService, UserService userService,
@@ -126,11 +139,10 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     return super.readOne(activityId);
   }
 
-
   @Override
   @PostMapping("/activities")
   @ProviderPermission
-  public ResponseEntity<?> create(@RequestBody ActivityEntity newActivity) 
+  public ResponseEntity<?> create(@RequestBody ActivityEntity newActivity)
       throws URISyntaxException {
     validateCreate(newActivity);
 
@@ -165,16 +177,13 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Read address.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/address")
   public ResponseEntity<?> readAddress(@PathVariable String activityId) {
-    try {
-      return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
-    } catch (Throwable e) {
-      throw new RuntimeException(e.getMessage());
-    }
+    return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
   }
 
   /**
@@ -201,7 +210,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Read category.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/category")
@@ -230,11 +240,11 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     }
   }
 
-
   /**
    * Read organisation.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/organisation")
@@ -275,11 +285,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @ShowUserOrSuperUserPermission
   public ResponseEntity<?> readUser(@PathVariable String activityId) {
     ProviderEntity provider = providerService.getProviderByActivity(activityId);
-    try {
-      return ok(userService.getResourceByProvider(provider));
-    } catch (Throwable e) {
-      throw new RuntimeException(e.getMessage());
-    }
+    return ok(userService.getResourceByProvider(provider));
   }
 
   /**
@@ -293,7 +299,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   public ResponseEntity<?> readTags(@PathVariable String activityId) {
     try {
       return ok(tagService.getResourcesByActivity(activityId));
-    } catch (Throwable e) {
+    } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
   }
@@ -316,8 +322,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       return readTags(activityId);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
-    } catch (Throwable e) {
-      throw new RuntimeException(e.getMessage());
     }
   }
 
@@ -353,7 +357,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   public ResponseEntity<?> readTargetGroups(@PathVariable String activityId) {
     try {
       return ok(targetGroupService.getResourceByActivity(activityId));
-    } catch (Throwable e) {
+    } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
   }
@@ -378,8 +382,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       return readTargetGroups(activityId);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Target Group or Activity do not exist");
-    } catch (Throwable e) {
-      throw new RuntimeException(e.getMessage());
     }
   }
 
@@ -412,12 +414,10 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/schedules")
-  public ResponseEntity<?> readSchedules(
-      @PathVariable String activityId,
-      BaseParams params)  {
+  public ResponseEntity<?> readSchedules(@PathVariable String activityId, BaseParams params) {
     try {
       return ok(scheduleService.getResourceByActivity(activityId, params));
-    } catch (Throwable e) {
+    } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
   }
@@ -440,8 +440,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
       return readSchedules(activityId, null);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
-    } catch (Throwable e) {
-      throw new RuntimeException(e.getMessage());
     }
   }
 
@@ -481,15 +479,17 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Read translations.
    *
-   * @param activityId the activity id
+   * @param activityId
+   *          the activity id
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String activityId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(activityId), this));
-    } catch (Throwable e) {
-      throw new RuntimeException("Translations are not available");
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+        | IllegalArgumentException | InvocationTargetException | IOException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 }

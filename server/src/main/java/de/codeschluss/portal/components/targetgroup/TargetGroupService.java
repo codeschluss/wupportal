@@ -1,9 +1,13 @@
 package de.codeschluss.portal.components.targetgroup;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -43,11 +47,14 @@ public class TargetGroupService
   /**
    * Gets the resource by activity.
    *
-   * @param activityId
-   *          the activity id
+   * @param activityId the activity id
    * @return the resource by activity
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Object getResourceByActivity(String activityId) throws Throwable {
+  public Object getResourceByActivity(String activityId) 
+       throws JsonParseException, JsonMappingException, IOException {
     List<TargetGroupEntity> targetGroups = repo.findAll(entities.withAnyActivityId(activityId));
     
     if (targetGroups == null || targetGroups.isEmpty()) {

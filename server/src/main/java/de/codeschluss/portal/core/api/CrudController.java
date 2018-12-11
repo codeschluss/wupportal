@@ -11,6 +11,7 @@ import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -59,8 +60,8 @@ public abstract class CrudController<E extends BaseResource, S extends ResourceD
       return params.getPage() == null && params.getSize() == null
           ? ok(service.getSortedListResources(params))
           : ok(service.getPagedResources(params));
-    } catch (Throwable e) {
-      throw new RuntimeException(e.getMessage());
+    } catch (IOException e) {
+      throw new BadParamsException(params.toString());
     }
   }
   

@@ -16,6 +16,7 @@ import de.codeschluss.portal.core.security.permissions.OwnUserOrSuperUserPermiss
 import de.codeschluss.portal.core.security.permissions.OwnUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
@@ -196,7 +197,7 @@ public class UserController extends CrudController<UserEntity, UserService> {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
     try {
       return ok(activityService.getResourcesByProviders(providers));
-    } catch (Throwable e) {
+    } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
   }

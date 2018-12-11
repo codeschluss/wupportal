@@ -48,20 +48,17 @@ public class PagingAndSortingAssembler {
   /**
    * Entities to resources.
    *
-   * @param <P>
-   *          the generic type
-   * @param <E>
-   *          the element type
-   * @param result
-   *          the result
-   * @param params
-   *          the params
+   * @param <P> the generic type
+   * @param <E> the element type
+   * @param result the result
+   * @param params the params
    * @return the resources
-   * @throws Throwable
-   *           the throwable
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
   public <P extends BaseParams, E extends BaseResource> Resources<?> entitiesToResources(
-      List<E> result, P params) throws Throwable {
+      List<E> result, P params) throws JsonParseException, JsonMappingException, IOException {
     List<Resource<E>> entityResources = createResources(result.parallelStream(), params);
     return toListResources(entityResources, params);
   }
@@ -85,18 +82,17 @@ public class PagingAndSortingAssembler {
   /**
    * Entities to paged resources.
    *
-   * @param <E>
-   *          the element type
-   * @param result
-   *          the result
-   * @param params
-   *          the params
+   * @param <E> the element type
+   * @param result the result
+   * @param params the params
    * @return the paged resources
-   * @throws Throwable
-   *           the throwable
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
   public <E extends BaseResource> PagedResources<Resource<E>> entitiesToPagedResources(
-      Page<E> result, FilterSortPaginate params) throws Throwable {
+      Page<E> result, FilterSortPaginate params)
+      throws JsonParseException, JsonMappingException, IOException {
     List<Resource<E>> entityResources = createResources(result.stream(), params);
     List<Link> links = createPagingLinks(params, result);
     return toPagedResources(entityResources, result, links);
@@ -146,22 +142,9 @@ public class PagingAndSortingAssembler {
         page.getPageable().getPageNumber(), page.getTotalElements(), page.getTotalPages()), links);
   }
 
-  /**
-   * Creates the resources.
-   *
-   * @param <E>
-   *          the element type
-   * @param result
-   *          the result
-   * @param params
-   *          the params
-   * @return the list
-   * @throws Throwable
-   *           the throwable
-   */
   private <E extends BaseResource> List<Resource<E>> createResources(Stream<E> result,
-      BaseParams params) throws Throwable {
-    if (params.getEmbeddings() == null && params.getEmbeddings().isEmpty()) {
+      BaseParams params) throws JsonParseException, JsonMappingException, IOException {
+    if (params == null || params.getEmbeddings() == null || params.getEmbeddings().isEmpty()) {
       return result.map(this::toResource).collect(Collectors.toList());
     } else {
       EmbeddedGraph graph = createEmbeddingsFromParam(params);
@@ -242,8 +225,7 @@ public class PagingAndSortingAssembler {
    * @return true, if is valid sub resource
    */
   private boolean isValidSubResource(Object fieldValue, Field field) {
-    return fieldValue != null 
-        && field != null 
+    return fieldValue != null && field != null
         && BaseResource.class.isAssignableFrom(fieldValue.getClass())
         && field.getDeclaredAnnotation(ManyToOne.class) != null;
   }

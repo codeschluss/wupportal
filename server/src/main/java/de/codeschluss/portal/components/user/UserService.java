@@ -164,8 +164,7 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
    *          the provider
    * @return the resource by provider
    */
-  public Object getResourceByProvider(ProviderEntity provider)
-      throws Throwable {
+  public Object getResourceByProvider(ProviderEntity provider) {
     return assembler.toResource(provider.getUser());
   }
 

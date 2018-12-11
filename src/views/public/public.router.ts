@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AboutComponent } from './layout/about.component';
 import { ActivityListComponent } from './activity/activity.list.component';
 import { ActivityViewComponent } from './activity/activity.view.component';
 import { LayoutComponent } from '../layout/layout.component';
@@ -18,6 +17,7 @@ import { AddressModel } from 'src/realm/address/address.model';
 import { SuburbModel } from 'src/realm/suburb/suburb.model';
 import { ScheduleModel } from 'src/realm/schedule/schedule.model';
 import { OrganisationImageModel } from 'src/realm/image/organisation-image.model';
+import { AboutComponent } from './about/about.component';
 
 const PublicProviders = [
 ];

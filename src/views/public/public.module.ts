@@ -15,7 +15,6 @@ import { ActivityListComponent } from './activity/activity.list.component';
 
 import { OrganisationViewComponent } from './organisation/organisation.view.component';
 
-import { AboutComponent } from './layout/about.component';
 import { MappingComponent } from './mapping/mapping.component';
 
 import { BottomSheetMapComponent } from './mapping/map.bottomsheet.component';
@@ -42,6 +41,7 @@ import { LangaugeChooserDialogComponent } from '../layout/languagecooser.compone
 import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
 import { SocialMediaComponent } from '../layout/social.media.component';
 import { CoreModule } from '@portal/core';
+import { AboutComponent } from './about/about.component';
 
 fontawesome.add(fas);
 

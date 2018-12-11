@@ -2,6 +2,47 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="latestBlogPosts" datatype="html">
+				<target>Neuste Blogbeiträge</target>
+      </trans-unit>
+      <trans-unit id="readMore" datatype="html">
+				<target>mehr lesen</target>
+      </trans-unit>
+      <trans-unit id="newActivities" datatype="html">
+				<target>Neue Veranstaltungen</target>
+      </trans-unit>
+      <trans-unit id="inWuppertal" datatype="html">
+				<target>in Wuppertal</target>
+      </trans-unit>
+      <trans-unit id="portalSubtitle" datatype="html">
+				<target>
+          Willkommen bei Wupp'n'go deinem online Event-Portal
+        </target>
+      </trans-unit>
+      <trans-unit id="aboutPageTextHeadLine" datatype="html">
+				<target>Die Geschichte von Wuppngo</target>
+      </trans-unit>
+      <trans-unit id="imprint" datatype="html">
+				<target>Impressum</target>
+      </trans-unit>
+      <trans-unit id="dataProtection" datatype="html">
+				<target>Datenschutz</target>
+      </trans-unit>
+      <trans-unit id="portalName" datatype="html">
+        <target>Wupp'n'go</target>
+      </trans-unit>
+      <trans-unit id="activities" datatype="html">
+        <target>Veranstaltungen</target>
+      </trans-unit>
+      <trans-unit id="worthKnowing" datatype="html">
+        <target>Wissenswertes</target>
+      </trans-unit>
+      <trans-unit id="blogs" datatype="html">
+        <target>Blogs</target>
+      </trans-unit>
+      
+      
+      
       <trans-unit id="aboutWupportal" datatype="html">
 				<target>Über das Wupportal</target>
       </trans-unit>

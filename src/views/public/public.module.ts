@@ -39,6 +39,9 @@ import { FooterComponent } from '../layout/footer.component';
 import { ImprintDialogComponent } from '../layout/imprint.dialog.component';
 import { OrgaMediaDialogComponent } from './organisation/organisation.mediacontent.dialog.component';
 import { LangaugeChooserDialogComponent } from '../layout/languagecooser.component';
+import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
+import { SocialMediaComponent } from '../layout/social.media.component';
+import { CoreModule } from '@portal/core';
 
 fontawesome.add(fas);
 
@@ -66,7 +69,8 @@ const PublicDeclarations = [
   BlogViewComponent,
   SearchResultListComponent,
   SearchInputComponent,
-  ImprintDialogComponent
+  ImprintDialogComponent,
+  SocialMediaComponent
 ];
 
 const PublicImports = [
@@ -86,7 +90,9 @@ const PublicImports = [
   LayoutComponent.imports,
   NavBarComponent.imports,
   SearchResultListComponent.imports,
-  FormsModule
+  FormsModule,
+  JwSocialButtonsModule,
+  CoreModule
 ];
 
 const PublicProviders = [

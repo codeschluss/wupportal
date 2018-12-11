@@ -90,6 +90,7 @@ const PublicRoutes = [
         data: {
           organisations: CrudJoiner.of(OrganisationModel)
             .with(AddressModel).yield(SuburbModel)
+            .with(OrganisationImageModel)
         }
       }
     ]

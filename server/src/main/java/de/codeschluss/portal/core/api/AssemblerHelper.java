@@ -8,6 +8,7 @@ import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.EmbeddedGraph;
 import de.codeschluss.portal.core.entity.BaseEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
+import de.codeschluss.portal.core.security.Sensible;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -60,6 +61,7 @@ public class AssemblerHelper {
   boolean isValidSubResource(Object fieldValue, Field field) {
     return fieldValue != null && field != null
         && BaseEntity.class.isAssignableFrom(fieldValue.getClass())
+        && fieldValue.getClass().getDeclaredAnnotation(Sensible.class) == null
         && field.getDeclaredAnnotation(ManyToOne.class) != null;
   }
 

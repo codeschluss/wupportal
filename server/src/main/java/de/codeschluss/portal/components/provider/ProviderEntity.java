@@ -7,6 +7,7 @@ import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
+import de.codeschluss.portal.core.security.Sensible;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Sensible
 @Table(name = "providers")
 @Relation(collectionRelation = "data")
 public class ProviderEntity extends BaseResource {

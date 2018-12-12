@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
+import de.codeschluss.portal.core.security.Sensible;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Sensible
 @Table(name = "users")
 @Relation(collectionRelation = "data")
 public class UserEntity extends BaseResource {

@@ -34,13 +34,16 @@ public class OrganisationControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
+    String organisationId = "00000000-0000-0000-0008-300000000000";
     OrganisationEntity organisation = newOrganisation(true, "updateSuperUserOk",
         "updateSuperUserOk", "updateSuperUserOk", "123456789", "updateSuperUserOk",
         "updateSuperUserOk");
 
-    controller.update(organisation, "00000000-0000-0000-0008-300000000000");
+    controller.update(organisation, organisationId);
 
-    assertThat(service.existsByName(organisation.getName()));
+    OrganisationEntity updateOrganisation = service.getById(organisationId);
+    assertThat(updateOrganisation.getName()).isEqualTo(organisation.getName());
+    assertThat(updateOrganisation.getDescription()).isEqualTo(organisation.getDescription());
   }
 
   @Test

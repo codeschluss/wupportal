@@ -1,16 +1,21 @@
 package de.codeschluss.portal.components.organisation;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.address.AddressService;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
+import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
-import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -90,6 +95,26 @@ public class OrganisationService
     orga.setAddress(address);
     return repo.save(orga);
   }
+  
+  /**
+   * Gets the by providers.
+   *
+   * @param providers the providers
+   * @param params the params
+   * @return the by providers
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  public Resources<?> getByProviders(List<ProviderEntity> providers, BaseParams params) 
+      throws JsonParseException, JsonMappingException, IOException {
+    Predicate query = entities.withAnyOfProviders(providers);
+    List<OrganisationEntity> result = params == null
+        ? repo.findAll(query)
+        : repo.findAll(query, entities.createSort(params));
+
+    return assembler.entitiesToResources(result, params);
+  }
 
   /**
    * Convert to resource.
@@ -100,22 +125,6 @@ public class OrganisationService
    */
   public Resource<OrganisationEntity> convertToResource(ProviderEntity provider) {
     return assembler.toResource(provider.getOrganisation());
-  }
-
-  /**
-   * Convert to resources with providers.
-   *
-   * @param providers
-   *          the providers
-   * @return the resources
-   */
-  public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers) {
-    List<ResourceWithEmbeddable<OrganisationEntity>> result = providers.stream().map(provider -> {
-      return assembler.toResourceWithSingleEmbedabble(provider.getOrganisation(), provider,
-          "provider");
-    }).collect(Collectors.toList());
-
-    return assembler.toListResources(result, null);
   }
 
   /**
@@ -172,5 +181,27 @@ public class OrganisationService
     OrganisationEntity organisation = getById(organisationId);
     organisation.setApproved(isApproved);
     repo.save(organisation);
+  }
+
+  /**
+   * Gets the resource by provider.
+   *
+   * @param provider the provider
+   * @return the resource by provider
+   */
+  public Resource<?> getResourceByProvider(ProviderEntity provider) {
+    OrganisationEntity orga = repo.findOne(entities.withProvider(provider))
+        .orElseThrow(() -> new NotFoundException(provider.getId()));
+    return assembler.toResource(orga);
+  }
+
+  /**
+   * Gets the for admin provider.
+   *
+   * @param user the user
+   * @return the for admin provider
+   */
+  public List<OrganisationEntity> getForAdminProvider(UserEntity user) {
+    return repo.findAll(entities.forOrgaAdmin(user.getId()));
   }
 }

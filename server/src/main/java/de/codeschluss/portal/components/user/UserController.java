@@ -8,6 +8,7 @@ import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
@@ -134,9 +135,15 @@ public class UserController extends CrudController<UserEntity, UserService> {
    */
   @GetMapping("/users/{userId}/organisations")
   @OwnUserOrSuperUserPermission
-  public ResponseEntity<?> readOrganisations(@PathVariable String userId) {
+  public ResponseEntity<?> readOrganisations(
+      @PathVariable String userId,
+      BaseParams params) {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
-    return ok(organisationService.convertToResourcesWithProviders(providers));
+    try {
+      return ok(organisationService.getByProviders(providers, params));
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -158,11 +165,13 @@ public class UserController extends CrudController<UserEntity, UserService> {
     }
 
     try {
-      List<ProviderEntity> providers = providerService
-          .addAllWithMail(providerService.createProviders(service.getById(userId), distinctOrgas));
-      return ok(organisationService.convertToResourcesWithProviders(providers));
+      List<ProviderEntity> providers = providerService.addAllResourcesWithMail(
+          providerService.createProviders(service.getById(userId), distinctOrgas));
+      return ok(service.getResourcesByProviders(providers, null));
     } catch (NotFoundException | NullPointerException e) {
       throw new BadParamsException("User or Organisation are null or do not exist!");
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 
@@ -193,10 +202,12 @@ public class UserController extends CrudController<UserEntity, UserService> {
    */
   @GetMapping("/users/{userId}/activities")
   // TODO: Visible for all?
-  public ResponseEntity<?> readActivities(@PathVariable String userId) {
+  public ResponseEntity<?> readActivities(
+      @PathVariable String userId,
+      BaseParams params) {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
     try {
-      return ok(activityService.getResourcesByProviders(providers));
+      return ok(activityService.getResourcesByProviders(providers, params));
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }

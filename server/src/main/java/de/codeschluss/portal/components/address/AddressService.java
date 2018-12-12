@@ -43,10 +43,10 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
    *          the orga id
    * @return the resources with suburbs by organisation
    */
-  public Resource<?> getResourcesWithSuburbsByOrganisation(String orgaId) {
+  public Resource<?> getResourcesByOrganisation(String orgaId) {
     AddressEntity address = repo.findOne(entities.withAnyOrganisationId(orgaId))
         .orElseThrow(() -> new NotFoundException(orgaId));
-    return assembler.toResourceWithSingleEmbedabble(address, address.getSuburb(), "suburb");
+    return assembler.toResource(address);
   }
 
   /**
@@ -56,18 +56,12 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
    *          the activity id
    * @return the resources with suburbs by activity
    */
-  public Resource<?> getResourcesWithSuburbsByActivity(String activityId) {
+  public Resource<?> getResourcesByActivity(String activityId) {
     AddressEntity address = repo.findOne(entities.withAnyActivityId(activityId))
         .orElseThrow(() -> new NotFoundException(activityId));
-    return assembler.toResourceWithSingleEmbedabble(address, address.getSuburb(), "suburb");
+    return assembler.toResource(address);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.codeschluss.portal.core.service.ResourceDataService#update(java.lang.
-   * String, de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public AddressEntity update(String id, AddressEntity newAddress) {
     return repo.findById(id).map(address -> {

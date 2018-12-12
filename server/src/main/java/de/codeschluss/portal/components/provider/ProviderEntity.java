@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.user.UserEntity;
-import de.codeschluss.portal.core.entity.BaseEntity;
+import de.codeschluss.portal.core.entity.BaseResource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,6 +26,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -40,7 +42,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "providers")
 @Relation(collectionRelation = "data")
-public class ProviderEntity extends BaseEntity {
+public class ProviderEntity extends BaseResource {
   private static final long serialVersionUID = 1L;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
@@ -84,5 +86,10 @@ public class ProviderEntity extends BaseEntity {
   @JsonIgnore
   public void setApproved(boolean isApproved) {
     this.approved = isApproved;
+  }
+
+  @Override
+  public List<Link> createResourceLinks() {
+    return new ArrayList<Link>();
   }
 }

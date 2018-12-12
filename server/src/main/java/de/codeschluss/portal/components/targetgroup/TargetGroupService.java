@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -53,9 +54,11 @@ public class TargetGroupService
    * @throws JsonMappingException the json mapping exception
    * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Object getResourceByActivity(String activityId) 
+  public Object getResourceByActivity(String activityId, BaseParams params) 
        throws JsonParseException, JsonMappingException, IOException {
-    List<TargetGroupEntity> targetGroups = repo.findAll(entities.withAnyActivityId(activityId));
+    List<TargetGroupEntity> targetGroups = repo.findAll(
+        entities.withAnyActivityId(activityId),
+        entities.createSort(params));
     
     if (targetGroups == null || targetGroups.isEmpty()) {
       throw new NotFoundException(activityId);

@@ -2,12 +2,10 @@ package de.codeschluss.portal.core.api;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.EmbeddedGraph;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
-import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
 import de.codeschluss.portal.core.api.dto.SortPaginate;
 import de.codeschluss.portal.core.entity.BaseResource;
 
@@ -17,12 +15,11 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.persistence.ManyToOne;
 
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
@@ -30,11 +27,8 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.PagedResources.PageMetadata;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.hateoas.core.EmbeddedWrapper;
-import org.springframework.hateoas.core.EmbeddedWrappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,6 +38,12 @@ import org.springframework.util.Base64Utils;
  */
 @Service
 public class PagingAndSortingAssembler {
+  
+  private AssemblerHelper helper;
+
+  public PagingAndSortingAssembler(AssemblerHelper helper) {
+    this.helper = helper;
+  }
 
   /**
    * Entities to resources.
@@ -59,7 +59,7 @@ public class PagingAndSortingAssembler {
    */
   public <P extends BaseParams, E extends BaseResource> Resources<?> entitiesToResources(
       List<E> result, P params) throws JsonParseException, JsonMappingException, IOException {
-    List<Resource<E>> entityResources = createResources(result.parallelStream(), params);
+    List<Resource<E>> entityResources = createResources(result.stream(), params);
     return toListResources(entityResources, params);
   }
 
@@ -74,7 +74,8 @@ public class PagingAndSortingAssembler {
    *          the params
    * @return the resources
    */
-  public <P extends BaseParams> Resources<?> toListResources(List<? extends Resource<?>> content,
+  public <P extends BaseParams> Resources<?> toListResources(
+      List<? extends Resource<?>> content,
       P params) {
     return new Resources<>(content, PaginationLinkBuilder.createSelfLink(params));
   }
@@ -147,32 +148,12 @@ public class PagingAndSortingAssembler {
     if (params == null || params.getEmbeddings() == null || params.getEmbeddings().isEmpty()) {
       return result.map(this::toResource).collect(Collectors.toList());
     } else {
-      EmbeddedGraph graph = createEmbeddingsFromParam(params);
+      EmbeddedGraph graph = helper.createEmbeddingsFromParam(params);
       return result.map(entity -> toResourceWithEmbedabbles(entity, graph))
           .collect(Collectors.toList());
     }
   }
-
-  /**
-   * Creates the embeddings from param.
-   *
-   * @param params
-   *          the params
-   * @return the embedded graph
-   * @throws JsonParseException
-   *           the json parse exception
-   * @throws JsonMappingException
-   *           the json mapping exception
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
-   */
-  private EmbeddedGraph createEmbeddingsFromParam(BaseParams params)
-      throws JsonParseException, JsonMappingException, IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    String decodedEmbeddding = new String(Base64Utils.decodeFromString(params.getEmbeddings()));
-    return mapper.readValue(decodedEmbeddding, EmbeddedGraph.class);
-  }
-
+  
   /**
    * To resource with embedabbles.
    *
@@ -186,9 +167,9 @@ public class PagingAndSortingAssembler {
    */
   @SuppressWarnings("unchecked")
   @Transactional
-  public <E extends BaseResource> ResourceWithEmbeddable<E> toResourceWithEmbedabbles(E entity,
+  public <E extends BaseResource> Resource<E> toResourceWithEmbedabbles(E entity,
       EmbeddedGraph embeddings) {
-    List<Object> embeddables = new ArrayList<>();
+    Map<String,Object> embeddables = new HashMap<>();
     for (EmbeddedGraph node : embeddings.getNodes()) {
       Field field;
       Object fieldValue;
@@ -201,7 +182,7 @@ public class PagingAndSortingAssembler {
         break;
       }
 
-      if (isValidSubResource(fieldValue, field)) {
+      if (helper.isValidSubResource(fieldValue, field)) {
         E subEntity = (E) fieldValue;
         Object resource;
         if (node.getNodes() != null && !node.getNodes().isEmpty()) {
@@ -209,59 +190,20 @@ public class PagingAndSortingAssembler {
         } else {
           resource = toResource(subEntity);
         }
-        embeddables.add(resource);
+        embeddables.put(node.getName(), resource);
       }
     }
-    return toResourceWithSingleEmbedabble(entity, embeddables, embeddings.getName());
-  }
-
-  /**
-   * Checks if is valid sub resource.
-   *
-   * @param fieldValue
-   *          the field value
-   * @param field
-   *          the field
-   * @return true, if is valid sub resource
-   */
-  private boolean isValidSubResource(Object fieldValue, Field field) {
-    return fieldValue != null && field != null
-        && BaseResource.class.isAssignableFrom(fieldValue.getClass())
-        && field.getDeclaredAnnotation(ManyToOne.class) != null;
+    return helper.resourceWithEmbeddable(entity, embeddables);
   }
 
   /**
    * To resource.
    *
-   * @param <E>
-   *          the element type
-   * @param entity
-   *          the entity
+   * @param entity the entity
    * @return the resource
    */
+  @SuppressWarnings("unchecked")
   public <E extends BaseResource> Resource<E> toResource(E entity) {
-    return entity.toResource();
-  }
-
-  /**
-   * To resource with single embedabble.
-   *
-   * @param <E>
-   *          the element type
-   * @param entity
-   *          the entity
-   * @param embeddable
-   *          the embeddable
-   * @param relationName
-   *          the relation name
-   * @return the resource with embeddable
-   */
-  public <E extends BaseResource> ResourceWithEmbeddable<E> toResourceWithSingleEmbedabble(E entity,
-      Object embeddable, String relationName) {
-    EmbeddedWrapper embedding = relationName == null || relationName.isEmpty()
-        ? new EmbeddedWrappers(true).wrap(embeddable)
-        : new EmbeddedWrappers(true).wrap(embeddable, relationName);
-
-    return new ResourceWithEmbeddable<E>(entity, Arrays.asList(embedding));
+    return (Resource<E>) helper.toResource(entity);
   }
 }

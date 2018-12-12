@@ -25,8 +25,4 @@ public class BaseParams {
 
   /** The embeddings. */
   private String embeddings;
-
-  public boolean isEmptyQuery() {
-    return embeddings == null || embeddings.isEmpty();
-  }
 }

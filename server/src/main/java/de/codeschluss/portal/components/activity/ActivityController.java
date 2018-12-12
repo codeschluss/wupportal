@@ -183,7 +183,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @GetMapping("/activities/{activityId}/address")
   public ResponseEntity<?> readAddress(@PathVariable String activityId) {
-    return ok(addressService.getResourcesWithSuburbsByActivity(activityId));
+    return ok(addressService.getResourcesByActivity(activityId));
   }
 
   /**
@@ -250,7 +250,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @GetMapping("/activities/{activityId}/organisation")
   public ResponseEntity<?> readOrganisation(@PathVariable String activityId) {
     ProviderEntity provider = providerService.getProviderByActivity(activityId);
-    return ok(organisationService.convertToResource(provider));
+    return ok(organisationService.getResourceByProvider(provider));
   }
 
   /**
@@ -296,9 +296,11 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/tags")
-  public ResponseEntity<?> readTags(@PathVariable String activityId) {
+  public ResponseEntity<?> readTags(
+      @PathVariable String activityId,
+      BaseParams params) {
     try {
-      return ok(tagService.getResourcesByActivity(activityId));
+      return ok(tagService.getResourcesByActivity(activityId, params));
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
@@ -318,8 +320,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   public ResponseEntity<?> addTags(@PathVariable String activityId,
       @RequestBody TagEntity... tags) {
     try {
-      service.addTags(activityId, tagService.addAll(Arrays.asList(tags)));
-      return readTags(activityId);
+      return ok(service.addTags(activityId, tagService.addAll(Arrays.asList(tags))));
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
     }
@@ -354,9 +355,11 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @return the response entity
    */
   @GetMapping("/activities/{activityId}/targetgroups")
-  public ResponseEntity<?> readTargetGroups(@PathVariable String activityId) {
+  public ResponseEntity<?> readTargetGroups(
+      @PathVariable String activityId,
+      BaseParams params) {
     try {
-      return ok(targetGroupService.getResourceByActivity(activityId));
+      return ok(targetGroupService.getResourceByActivity(activityId, params));
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage());
     }
@@ -378,8 +381,8 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     try {
       List<String> distinctTargetGroups = Arrays.asList(targetGroupIds).stream().distinct()
           .collect(Collectors.toList());
-      service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups));
-      return readTargetGroups(activityId);
+      return ok(
+          service.addTargetGroups(activityId, targetGroupService.getByIds(distinctTargetGroups)));
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Target Group or Activity do not exist");
     }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -52,13 +53,15 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
    * @throws JsonMappingException the json mapping exception
    * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Resources<?> getResourcesByActivity(String activityId) 
+  public Resources<?> getResourcesByActivity(String activityId, BaseParams params) 
       throws JsonParseException, JsonMappingException, IOException {
-    List<TagEntity> tags = repo.findAll(entities.withAnyActivityId(activityId));
+    List<TagEntity> tags = repo.findAll(entities.withAnyActivityId(
+        activityId), 
+        entities.createSort(params));
     if (tags == null || tags.isEmpty()) {
       throw new NotFoundException(activityId);
     }
-    return assembler.entitiesToResources(tags, null);
+    return assembler.entitiesToResources(tags, params);
   }
 
   @Override

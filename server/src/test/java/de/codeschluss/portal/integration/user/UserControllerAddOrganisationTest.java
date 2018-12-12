@@ -8,6 +8,8 @@ import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.integration.SmtpServerRule;
 
+import java.util.Arrays;
+
 import javax.mail.MessagingException;
 
 import org.assertj.core.api.Condition;
@@ -22,9 +24,11 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class UserControllerAddOrganisationTest {
 
   @Autowired
@@ -35,39 +39,33 @@ public class UserControllerAddOrganisationTest {
 
   @Test
   @WithUserDetails("super@user")
-  @SuppressWarnings("unchecked")
   public void addSingleOrganisationForOtherUserSuperUserOk() {
     String userId = "00000000-0000-0000-0004-300000000000";
     String orgaId = "00000000-0000-0000-0008-200000000000";
 
-    Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) 
-        controller.addOrganisation(userId, orgaId).getBody();
+    controller.addOrganisation(userId, orgaId).getBody();
 
-    assertContaining(result, userId, orgaId);
+    assertContaining(userId, orgaId);
   }
 
   @Test
   @WithUserDetails("provider1@user")
-  @SuppressWarnings("unchecked")
   public void addMultipleOrganisationForOwnUserOk() throws MessagingException {
     String userId = "00000000-0000-0000-0004-300000000000";
     String orgaId1 = "00000000-0000-0000-0008-300000000000";
     String orgaId2 = "00000000-0000-0000-0008-600000000000";
     String[] requestBody = new String[2];
     requestBody[0] = orgaId1;
-    requestBody[1] = orgaId2;
-
-    Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) 
-        controller.addOrganisation(userId, requestBody).getBody();
+    requestBody[1] = orgaId2; 
+    
+    controller.addOrganisation(userId, requestBody).getBody();
     
     assertThat(smtpServerRule.getMessages()).isNotEmpty();
-    assertContaining(result, userId, orgaId1);
-    assertContaining(result, userId, orgaId2);
+    assertContaining(userId, orgaId1, orgaId2);
   }
 
   @Test
   @WithUserDetails("provider1@user")
-  @SuppressWarnings("unchecked")
   public void addOrganisationFilterDuplicateOrgasForOwnUserOk() {
     String userId = "00000000-0000-0000-0004-300000000000";
     String orgaId1 = "00000000-0000-0000-0008-500000000000";
@@ -76,11 +74,10 @@ public class UserControllerAddOrganisationTest {
     requestBody[0] = orgaId1;
     requestBody[1] = orgaId2;
 
-    Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) 
-        controller.addOrganisation(userId, requestBody).getBody();
+    controller.addOrganisation(userId, requestBody).getBody();
 
     assertThat(smtpServerRule.getMessages()).isNotEmpty();
-    assertContaining(result, userId, orgaId1);
+    assertContaining(userId, orgaId1);
   }
 
   @Test(expected = DuplicateEntryException.class)
@@ -127,9 +124,12 @@ public class UserControllerAddOrganisationTest {
     controller.addOrganisation(userId, orgaId);
   }
 
-  private void assertContaining(Resources<Resource<OrganisationEntity>> result, String userId,
-      String orgaId) {
-    assertThat(result.getContent()).haveExactly(1, new Condition<>(
-        p -> p.getContent().getId().equals(orgaId), "new organisation with given orga exists"));
+  @SuppressWarnings("unchecked")
+  private void assertContaining(String userId, String... orgaId) {
+    Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) 
+        controller.readOrganisations(userId, null).getBody();
+    assertThat(result.getContent()).haveExactly(orgaId.length, new Condition<>(
+        p -> Arrays.asList(orgaId).contains(p.getContent().getId()), 
+        "new organisation with given orga exists"));
   }
 }

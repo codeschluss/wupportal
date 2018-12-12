@@ -23,7 +23,7 @@ public class UserControllerReadActivitiesTest {
   public void findActivitiesByUserOk() {
 
     Resources<?> result = (Resources<?>) controller
-        .readActivities("00000000-0000-0000-0004-300000000000").getBody();
+        .readActivities("00000000-0000-0000-0004-300000000000", null).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -32,7 +32,7 @@ public class UserControllerReadActivitiesTest {
   public void findActivitiesByUserNotFound() {
 
     Resources<?> result = (Resources<?>) controller
-        .readActivities("00000000-0000-0000-0004-XX0000000000").getBody();
+        .readActivities("00000000-0000-0000-0004-XX0000000000", null).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }

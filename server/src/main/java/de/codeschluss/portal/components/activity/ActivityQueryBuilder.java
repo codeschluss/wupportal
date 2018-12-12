@@ -221,6 +221,10 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
     return withAnyOfProviders(providers).and(query.id.eq(activityId));
   }
   
+  public BooleanExpression forUser(String userId) {
+    return query.provider.user.id.eq(userId);
+  }
+  
   /**
    * With any of providers.
    *

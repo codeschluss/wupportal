@@ -15,7 +15,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -59,7 +58,7 @@ public class UserEntity extends BaseResource {
   @Column(unique = true, nullable = false)
   private String username;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
   private List<ProviderEntity> providerEntities;
@@ -91,9 +90,9 @@ public class UserEntity extends BaseResource {
     links.add(linkTo(methodOn(UserController.class)
         .readOne(getId())).withSelfRel());
     links.add(linkTo(methodOn(UserController.class)
-        .readOrganisations(getId())).withRel("organisations"));
+        .readOrganisations(id, null)).withRel("organisations"));
     links.add(linkTo(methodOn(UserController.class)
-        .readActivities(getId())).withRel("activities"));
+        .readActivities(id, null)).withRel("activities"));
 
     return links;
   }

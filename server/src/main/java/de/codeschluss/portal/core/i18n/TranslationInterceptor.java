@@ -31,6 +31,10 @@ public class TranslationInterceptor {
   @Pointcut("execution(public * de.codeschluss.portal.core.repository.DataRepository+.findOne(..))")
   private void findOne() {
   }
+  
+  @Pointcut("execution(public * de.codeschluss.portal.core.api.AssemblerHelper.toResource(..))")
+  private void toResource() {
+  }
 
   @Pointcut("execution(* de.codeschluss.portal.core.repository.DataRepository+.findAll(..))")
   private void findAll() {
@@ -71,7 +75,7 @@ public class TranslationInterceptor {
    *           the throwable
    */
   @Around("findOne()")
-  public Object replaceSingleWithTranslation(ProceedingJoinPoint pjp) throws Throwable {
+  public Object replaceSingleEntityWithTranslation(ProceedingJoinPoint pjp) throws Throwable {
     Object result = pjp.proceed();
     if (result instanceof Optional<?> && ((Optional<?>) result).isPresent()) {
       Object entity = ((Optional<?>) result).get();
@@ -81,6 +85,23 @@ public class TranslationInterceptor {
       }
     }
     return result;
+  }
+  
+
+  /**
+   * Replace single resource with translation.
+   *
+   * @param pjp the pjp
+   * @return the object
+   * @throws Throwable the throwable
+   */
+  @Around("toResource()")
+  public Object replaceSingleResourceWithTranslation(ProceedingJoinPoint pjp) throws Throwable {
+    Object entity = pjp.getArgs()[0];
+    if (TranslationHelper.isLocalizable(entity)) {
+      translationService.localizeSingle(entity);
+    }
+    return pjp.proceed();
   }
 
   /**

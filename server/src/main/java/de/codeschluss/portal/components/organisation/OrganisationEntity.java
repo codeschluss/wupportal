@@ -13,6 +13,7 @@ import de.codeschluss.portal.components.images.organisation.OrganisationImageEnt
 import de.codeschluss.portal.components.organisation.translations.OrganisationTranslatablesEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
+import de.codeschluss.portal.core.i18n.annotations.Localized;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ import org.springframework.hateoas.core.Relation;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Entity
+@Localized
 @Table(name = "organisations")
 @Relation(collectionRelation = "data")
 @GenericGenerator(
@@ -116,9 +118,9 @@ public class OrganisationEntity extends BaseResource {
     links.add(linkTo(methodOn(OrganisationController.class)
         .readOne(id)).withSelfRel());
     links.add(linkTo(methodOn(OrganisationController.class)
-        .readActivities(id)).withRel("activities"));
+        .readActivities(id, null)).withRel("activities"));
     links.add(linkTo(methodOn(OrganisationController.class)
-        .readUsers(id)).withRel("users"));
+        .readUsers(id, null)).withRel("users"));
     links.add(linkTo(methodOn(OrganisationController.class)
         .readAddress(id)).withRel("address"));
     links.add(linkTo(methodOn(OrganisationController.class)

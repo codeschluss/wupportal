@@ -30,7 +30,6 @@ public class FilterSortPaginate extends SortPaginate {
   }
   
   public boolean isEmptyQuery() {
-    return super.isEmptyQuery() 
-        && (filter == null || filter.isEmpty());
+    return filter == null || filter.isEmpty();
   }
 }

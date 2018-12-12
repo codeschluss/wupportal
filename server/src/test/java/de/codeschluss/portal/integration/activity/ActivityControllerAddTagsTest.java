@@ -79,7 +79,7 @@ public class ActivityControllerAddTagsTest {
   @SuppressWarnings("unchecked")
   private void assertContaining(TagEntity tag, String activityId) {
     Resources<Resource<TagEntity>> result = (Resources<Resource<TagEntity>>) controller
-        .readTags(activityId).getBody();
+        .readTags(activityId, null).getBody();
 
     assertThat(result.getContent()).haveAtLeastOne(
         new Condition<>(t -> t.getContent().getName().equals(tag.getName()), "tag exists"));

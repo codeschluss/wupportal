@@ -64,10 +64,12 @@ public class TranslationHelper {
 
     for (Field field : entity.getClass().getDeclaredFields()) {
       field.setAccessible(true);
-      String translation = translations.get(field.getName());
-      if (translation != null) {
-        field.set(entity, translation);
-        touched = true;
+      if (field.get(entity) == null) {
+        String translation = translations.get(field.getName());
+        if (translation != null) {
+          field.set(entity, translation);
+          touched = true;
+        }
       }
     }
     return touched;
@@ -102,18 +104,20 @@ public class TranslationHelper {
    */
   public static Map<String, String> mapTranslations(Collection<?> translatables, String locale)
       throws Throwable {
-    for (Object translatable : translatables) {
-      Map<String, String> translations = new HashMap<>();
-      if (languageMatched(locale, translatable)) {
-        for (Field field : translatable.getClass().getDeclaredFields()) {
-          field.setAccessible(true);
-          Object fieldValue = field.get(translatable);
-          
-          if (fieldValue instanceof String) {
-            translations.put(field.getName(), fieldValue.toString());
+    if (translatables != null && !translatables.isEmpty()) {
+      for (Object translatable : translatables) {
+        Map<String, String> translations = new HashMap<>();
+        if (languageMatched(locale, translatable)) {
+          for (Field field : translatable.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            Object fieldValue = field.get(translatable);
+            
+            if (fieldValue instanceof String) {
+              translations.put(field.getName(), fieldValue.toString());
+            }
           }
+          return translations;
         }
-        return translations;
       }
     }
     return null;

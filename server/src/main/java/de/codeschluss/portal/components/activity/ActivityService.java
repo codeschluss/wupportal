@@ -2,6 +2,7 @@ package de.codeschluss.portal.components.activity;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.querydsl.core.types.Predicate;
 
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
@@ -9,7 +10,9 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
+import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
@@ -57,25 +60,32 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    * @throws JsonMappingException the json mapping exception
    * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Resources<?> getResourcesByProviders(List<ProviderEntity> providers) 
+  public Resources<?> getResourcesByProviders(List<ProviderEntity> providers, BaseParams params) 
       throws JsonParseException, JsonMappingException, IOException {
-    return assembler.entitiesToResources(getByProviders(providers), null);
+    return assembler.entitiesToResources(getByProviders(providers, params), params);
   }
 
   /**
    * Gets the by providers.
    *
-   * @param providers
-   *          the providers
+   * @param providers the providers
+   * @param params the params
    * @return the by providers
    */
-  public List<ActivityEntity> getByProviders(List<ProviderEntity> providers) {
-    List<ActivityEntity> result = repo.findAll(entities.withAnyOfProviders(providers));
+  public List<ActivityEntity> getByProviders(List<ProviderEntity> providers, BaseParams params) {
+    Predicate query = entities.withAnyOfProviders(providers);
+    List<ActivityEntity> result = params == null
+        ? repo.findAll(query)
+        : repo.findAll(query, entities.createSort(params));
     
     if (result == null || result.isEmpty()) {
       throw new NotFoundException(providers.toString());
     }
     return result;
+  }
+  
+  public List<ActivityEntity> getByUser(UserEntity user) {
+    return repo.findAll(entities.forUser(user.getId()));
   }
 
   /**
@@ -260,7 +270,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    * @param providers the providers
    */
   public void deleteAllByProviders(List<ProviderEntity> providers) {
-    List<ActivityEntity> activitiesToDelete = getByProviders(providers);
+    List<ActivityEntity> activitiesToDelete = getByProviders(providers, null);
     repo.deleteAll(activitiesToDelete);
   }
 }

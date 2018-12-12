@@ -1,16 +1,22 @@
 package de.codeschluss.portal.components.user;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.querydsl.core.types.Predicate;
+
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
-import de.codeschluss.portal.core.api.dto.ResourceWithEmbeddable;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -143,18 +149,24 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
   }
 
   /**
-   * Convert to resources with providers.
+   * Gets the resources by providers.
    *
-   * @param providers
-   *          the providers
-   * @return the resources
+   * @param providers the providers
+   * @param params the params
+   * @return the resources by providers
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Resources<?> convertToResourcesWithProviders(List<ProviderEntity> providers) {
-    List<ResourceWithEmbeddable<UserEntity>> result = providers.stream().map(provider -> {
-      return assembler.toResourceWithSingleEmbedabble(provider.getUser(), provider, "provider");
-    }).collect(Collectors.toList());
+  public Resources<?> getResourcesByProviders(
+      List<ProviderEntity> providers,
+      BaseParams params) throws JsonParseException, JsonMappingException, IOException {
+    Predicate query = entities.withAnyOfProviders(providers);
+    List<UserEntity> result = params == null
+        ? repo.findAll(query)
+        : repo.findAll(query, entities.createSort(params));
 
-    return assembler.toListResources(result, null);
+    return assembler.entitiesToResources(result, params);
   }
 
   /**
@@ -164,7 +176,7 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
    *          the provider
    * @return the resource by provider
    */
-  public Object getResourceByProvider(ProviderEntity provider) {
+  public Resource<UserEntity> getResourceByProvider(ProviderEntity provider) {
     return assembler.toResource(provider.getUser());
   }
 

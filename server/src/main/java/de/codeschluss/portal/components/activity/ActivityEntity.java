@@ -185,9 +185,9 @@ public class ActivityEntity extends BaseResource {
     links.add(linkTo(methodOn(ActivityController.class)
         .readSchedules(id, null)).withRel("schedules"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .readTags(id)).withRel("tags"));
+        .readTags(id, null)).withRel("tags"));
     links.add(linkTo(methodOn(ActivityController.class)
-        .readTargetGroups(id)).withRel("targetgroups"));
+        .readTargetGroups(id, null)).withRel("targetgroups"));
     links.add(linkTo(methodOn(ActivityController.class)
         .readAddress(id)).withRel("address"));
     links.add(linkTo(methodOn(ActivityController.class)

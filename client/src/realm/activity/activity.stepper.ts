@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
 import { BaseStepper } from '@portal/forms';
@@ -53,6 +54,7 @@ export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
   protected model = ActivityModel;
 
   public constructor(
+    protected builder: FormBuilder,
     protected route: ActivatedRoute,
     protected router: Router
   ) {

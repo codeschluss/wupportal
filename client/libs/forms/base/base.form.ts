@@ -31,7 +31,7 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
   protected static template(template: string): string {
     return `
       <ng-template>${template}</ng-template>
-      <form [formGroup]="group" (ngSubmit)="submit()">
+      <form [formGroup]="group">
         <ng-container *ngFor="let field of fields">
           <base-field [field]="field" [group]="group"></base-field>
         </ng-container>
@@ -40,20 +40,16 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.group = this.route.snapshot.data.group;
     this.fields = this.fields.map((field) => Object.assign(field, {
       label: field.label || 'name',
       options: field.options || this.route.snapshot.data[field.name],
-      value: field.value || this.route.snapshot.data.entity[field.name]
+      value: field.value || this.route.snapshot.data.model[field.name]
     }));
 
     this.ngPostInit();
-    this.group = this.builder.group({ });
     this.fields.forEach((field) => this.group.addControl(field.name,
       this.builder.control(field.value, field.tests)));
-  }
-
-  public submit(): void {
-    console.log(this.group.value);
   }
 
   protected ngPostInit(): void { }

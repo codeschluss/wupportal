@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BaseForm, BooleanFieldComponent, ChipListFieldComponent, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { BaseForm, BooleanFieldComponent, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';
@@ -24,7 +24,7 @@ import { ActivityProvider } from './activity.provider';
 
 export class ActivityFormComponent extends BaseForm<ActivityModel> {
 
-  public fields = [
+  public fields: FormField[] = [
     {
       name: 'name',
       input: StringFieldComponent,
@@ -80,8 +80,8 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
       .approvedOrgas.map((id) => this.route.snapshot.data.organisation
         .find((organisation) => organisation.id === id));
 
-    this.fields = this.fields.map((field) => field.name === 'organisations'
-      ? Object.assign(field, { options: options }) : field);
+    this.fields[this.fields.findIndex((field) =>
+        field.name === 'organisation')].options = options;
   }
 
 }

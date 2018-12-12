@@ -19,7 +19,7 @@ const AdminRoutes = [
     path: 'main',
     component: AdminComponent,
     canActivate: [],
-    children: [ActivityStepperComponent.routing]
+    children: [ActivityStepperComponent.routes]
   },
   {
     path: 'test',

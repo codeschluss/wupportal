@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule, MatStepperModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule, MatTabsModule } from '@angular/material';
 import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
 import { BooleanFieldComponent } from '../field/boolean.field';
@@ -20,7 +20,7 @@ const ModuleLoop = [
   MatInputModule,
   MatSelectModule,
   MatSlideToggleModule,
-  MatStepperModule,
+  MatTabsModule,
   ReactiveFormsModule
 ];
 

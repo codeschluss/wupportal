@@ -2,13 +2,13 @@ package de.codeschluss.portal.components.tag;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
@@ -85,12 +85,9 @@ public class TagController extends CrudController<TagEntity, TagService> {
   public ResponseEntity<?> readTranslations(@PathVariable String tagId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(tagId), this));
-    } catch (NoSuchMethodException 
-        | SecurityException 
-        | IllegalAccessException
-        | IllegalArgumentException
-        | InvocationTargetException e) {
-      throw new RuntimeException("Translations are not available");
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+        | IllegalArgumentException | InvocationTargetException | IOException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 }

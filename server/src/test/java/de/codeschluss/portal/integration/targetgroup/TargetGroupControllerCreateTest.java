@@ -32,8 +32,7 @@ public class TargetGroupControllerCreateTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("addSuperUserOk", "addSuperUserOk", null,
-        null);
+    TargetGroupEntity targetGroup = newTargetGroup("addSuperUserOk", "addSuperUserOk");
 
     controller.create(targetGroup);
 
@@ -47,7 +46,7 @@ public class TargetGroupControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("target1", "target1", null, null);
+    TargetGroupEntity targetGroup = newTargetGroup("target1", "target1");
 
     controller.create(targetGroup);
   }
@@ -55,17 +54,22 @@ public class TargetGroupControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("addProviderDenied", "addProviderDenied",
-        null, null);
+    TargetGroupEntity targetGroup = newTargetGroup("addProviderDenied", "addProviderDenied");
 
     controller.create(targetGroup);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    TargetGroupEntity targetGroup = new TargetGroupEntity("addNoUserDenied", "addNoUserDenied",
-        null, null);
+    TargetGroupEntity targetGroup = newTargetGroup("addNoUserDenied", "addNoUserDenied");
 
     controller.create(targetGroup);
+  }
+  
+  private TargetGroupEntity newTargetGroup(String description, String name) {
+    TargetGroupEntity targetGroup = new TargetGroupEntity();
+    targetGroup.setDescription(description);
+    targetGroup.setName(name);
+    return targetGroup;
   }
 }

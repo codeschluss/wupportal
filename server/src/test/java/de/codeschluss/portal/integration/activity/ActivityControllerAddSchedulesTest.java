@@ -32,8 +32,8 @@ public class ActivityControllerAddSchedulesTest {
   @Test
   @WithUserDetails("super@user")
   public void addSchedulesSuperUserOk() throws URISyntaxException {
-    ScheduleEntity schedule = new ScheduleEntity(null, new Date(System.currentTimeMillis()),
-        new Date(System.currentTimeMillis() + 1000000));
+    ScheduleEntity schedule = newSchedule();
+    
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     controller.addSchedules(activityId, schedule);
@@ -44,8 +44,7 @@ public class ActivityControllerAddSchedulesTest {
   @Test
   @WithUserDetails("provider1@user")
   public void addSchedulesProviderOk() throws URISyntaxException {
-    ScheduleEntity schedule = new ScheduleEntity(null, new Date(System.currentTimeMillis()),
-        new Date(System.currentTimeMillis() + 1000000));
+    ScheduleEntity schedule = newSchedule();
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.addSchedules(activityId, schedule);
@@ -56,8 +55,7 @@ public class ActivityControllerAddSchedulesTest {
   @Test
   @WithUserDetails("admin@user")
   public void addSchedulesAdminOk() throws URISyntaxException {
-    ScheduleEntity schedule = new ScheduleEntity(null, new Date(System.currentTimeMillis()),
-        new Date(System.currentTimeMillis() + 1000000));
+    ScheduleEntity schedule = newSchedule();
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.addSchedules(activityId, schedule);
@@ -68,8 +66,7 @@ public class ActivityControllerAddSchedulesTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addSchedulesOtherProviderDenied() throws URISyntaxException {
-    ScheduleEntity schedule = new ScheduleEntity(null, new Date(System.currentTimeMillis()),
-        new Date(System.currentTimeMillis() + 1000000));
+    ScheduleEntity schedule = newSchedule();
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.addSchedules(activityId, schedule);
@@ -77,8 +74,7 @@ public class ActivityControllerAddSchedulesTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addSchedulesNoUserDenied() throws URISyntaxException {
-    ScheduleEntity schedule = new ScheduleEntity(null, new Date(System.currentTimeMillis()),
-        new Date(System.currentTimeMillis() + 1000000));
+    ScheduleEntity schedule = newSchedule();
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.addSchedules(activityId, schedule);
@@ -88,5 +84,12 @@ public class ActivityControllerAddSchedulesTest {
     Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getSchedules()).haveAtLeastOne(new Condition<>(
         s -> s.getStartDate().getTime() == schedule.getStartDate().getTime(), "schedule exists"));
+  }
+  
+  private ScheduleEntity newSchedule() {
+    ScheduleEntity schedule = new ScheduleEntity();
+    schedule.setStartDate(new Date(System.currentTimeMillis()));
+    schedule.setEndDate(new Date(System.currentTimeMillis() + 1000000));
+    return schedule;
   }
 }

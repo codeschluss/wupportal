@@ -2,12 +2,12 @@ package de.codeschluss.portal.components.category;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
@@ -80,18 +80,14 @@ public class CategoryController extends CrudController<CategoryEntity, CategoryS
    *
    * @param categoryId the category id
    * @return the response entity
-   * @throws Throwable the throwable
    */
   @GetMapping("/categories/{categoryId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String categoryId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(categoryId), this));
-    } catch (NoSuchMethodException 
-        | SecurityException 
-        | IllegalAccessException
-        | IllegalArgumentException
-        | InvocationTargetException e) {
-      throw new RuntimeException("Translations are not available");
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+        | IllegalArgumentException | InvocationTargetException | IOException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 }

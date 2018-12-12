@@ -47,15 +47,26 @@ public class ProviderQueryBuilder extends QueryBuilder<QProviderEntity> {
   public BooleanExpression withUserIdAndOrgaId(String userId, String orgaId) {
     return withUserId(userId).and(withOrgaId(orgaId));
   }
-
+ 
   /**
-   * With approved user id.
+   * With approved orgas and user.
    *
    * @param userId the user id
    * @return the boolean expression
    */
-  public BooleanExpression withApprovedUserId(String userId) {
-    return withUserId(userId).and(query.approved.isTrue());
+  public BooleanExpression withApprovedOrgasAndUser(String userId) {
+    return withUserId(userId)
+        .and(withApprovedOrgas())
+        .and(approved());
+  }
+  
+  /**
+   * With approved orgas.
+   *
+   * @return the boolean expression
+   */
+  private BooleanExpression withApprovedOrgas() {
+    return query.organisation.approved.isTrue();
   }
   
   /**
@@ -88,6 +99,15 @@ public class ProviderQueryBuilder extends QueryBuilder<QProviderEntity> {
   }
 
   /**
+   * Approved.
+   *
+   * @return the boolean expression
+   */
+  public BooleanExpression approved() {
+    return query.approved.isTrue();
+  }
+
+  /**
    * With user id.
    *
    * @param userId the user id
@@ -117,9 +137,6 @@ public class ProviderQueryBuilder extends QueryBuilder<QProviderEntity> {
     return query.activities.any().id.eq(activityId);
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service.QueryBuilder#fuzzySearch(java.lang.String)
-   */
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());

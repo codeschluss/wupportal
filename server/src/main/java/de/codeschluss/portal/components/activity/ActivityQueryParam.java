@@ -52,11 +52,12 @@ public class ActivityQueryParam extends FilterSortPaginate {
       Integer size, 
       String sort,
       String dir, 
+      String embeddings,
       Boolean current,
       List<String> categories,
       List<String> suburubs,
       List<String> targetgroups) {
-    super(filter, page, size, sort, dir);
+    super(filter, page, size, sort, dir, embeddings);
     this.current = current;
     this.categories = categories;
     this.suburbs = suburubs;
@@ -65,7 +66,7 @@ public class ActivityQueryParam extends FilterSortPaginate {
   
   @Override
   public boolean isEmptyQuery() {
-    return (filter == null || filter.isEmpty())
+    return super.isEmptyQuery()
         && (current == null || !current)
         && (categories == null || categories.isEmpty())
         && (suburbs == null || suburbs.isEmpty())

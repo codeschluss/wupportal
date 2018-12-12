@@ -2,10 +2,11 @@ package de.codeschluss.portal.core.i18n.language;
 
 import com.google.common.net.HttpHeaders;
 
-import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.TranslationsConfiguration;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
   public LanguageService(
       LanguageRepository repo, 
       LanguageQueryBuilder entities,
-      LanguageResourceAssembler assembler,
+      PagingAndSortingAssembler assembler,
       HttpServletRequest request,
       TranslationsConfiguration config) {
     super(repo, entities, assembler);
@@ -50,10 +51,6 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
     this.config = config;
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service
-   * .DataService#getExisting(de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public LanguageEntity getExisting(LanguageEntity newLanguage) {
     return repo.findOne(

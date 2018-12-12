@@ -2,8 +2,11 @@ package de.codeschluss.portal.components.user;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 
+import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.service.QueryBuilder;
+
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -45,6 +48,16 @@ public class UserQueryBuilder extends QueryBuilder<QUserEntity> {
   public BooleanExpression asSuperuser() {
     return query.superuser.eq(true);
   }
+  
+  /**
+   * With any of providers.
+   *
+   * @param providers the providers
+   * @return the boolean expression
+   */
+  public BooleanExpression withAnyOfProviders(List<ProviderEntity> providers) {
+    return query.providerEntities.any().in(providers);
+  }
 
   /**
    * Fuzzy search.
@@ -59,7 +72,4 @@ public class UserQueryBuilder extends QueryBuilder<QUserEntity> {
         .or(query.username.likeIgnoreCase(filter))
         .or(query.phone.likeIgnoreCase(filter));
   }
-  
-  
-
 }

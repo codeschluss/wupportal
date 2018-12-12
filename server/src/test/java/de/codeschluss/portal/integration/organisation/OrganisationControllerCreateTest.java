@@ -37,9 +37,8 @@ public class OrganisationControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   public void addSuperUserOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity(true, "addSuperUserOk",
-        "add@SuperUserOk", "addSuperUserOk", "123456789", "addSuperUserOk", "addSuperUserOk", null,
-        null, null, null);
+    OrganisationEntity organisation = newOrganisation(true, "addSuperUserOk", "add@SuperUserOk",
+        "addSuperUserOk", "123456789", "addSuperUserOk", "addSuperUserOk");
 
     controller.create(organisation);
 
@@ -50,9 +49,9 @@ public class OrganisationControllerCreateTest {
   @WithUserDetails("createorga@user")
   @SuppressWarnings("unchecked")
   public void addCreateOrgaOk() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity(false, "addCreateOrgaOk",
+    OrganisationEntity organisation = newOrganisation(false, "addCreateOrgaOk",
         "addCreateOrgaOk@addCreateOrgaOk", "addCreateOrgaOk", "123456789", "addCreateOrgaOk",
-        "addCreateOrgaOk", null, null, null, null);
+        "addCreateOrgaOk");
 
     OrganisationEntity savedOrga = ((Resource<OrganisationEntity>) controller.create(organisation)
         .getBody()).getContent();
@@ -66,11 +65,24 @@ public class OrganisationControllerCreateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    OrganisationEntity organisation = new OrganisationEntity(true, "addNoUserDenied",
-        "addNoUserDenied", "addNoUserDenied", "123456789", "addNoUserDenied", "addNoUserDenied",
-        null, null, null, null);
+    OrganisationEntity organisation = newOrganisation(true, "addNoUserDenied",
+        "addNoUserDenied", "addNoUserDenied", "123456789", "addNoUserDenied", "addNoUserDenied");
 
     controller.create(organisation);
+  }
+
+  private OrganisationEntity newOrganisation(boolean approved, String description, String mail,
+      String name, String phone, String videoUrl, String website) {
+    OrganisationEntity organisation = new OrganisationEntity();
+    organisation.setApproved(approved);
+    organisation.setDescription(description);
+    organisation.setMail(mail);
+    organisation.setName(name);
+    organisation.setPhone(phone);
+    organisation.setVideoUrl(videoUrl);
+    organisation.setWebsite(website);
+
+    return organisation;
   }
 
 }

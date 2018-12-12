@@ -2,8 +2,8 @@ package de.codeschluss.portal.core.i18n.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.codeschluss.portal.core.entity.BaseResource;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
-import de.codeschluss.portal.core.service.BaseEntity;
 
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -20,7 +20,7 @@ import org.springframework.hateoas.core.Relation;
  */
 @MappedSuperclass
 @Relation(collectionRelation = "data")
-public class TranslatableEntity<P extends BaseEntity> extends BaseEntity {
+public abstract class TranslatableEntity<P extends BaseResource> extends BaseResource {
 
   private static final long serialVersionUID = 1L;
   

@@ -130,7 +130,7 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
    * @return the approved providers
    */
   public List<ProviderEntity> getApprovedProviders(UserEntity user) {
-    List<ProviderEntity> result = repo.findAll(entities.withApprovedUserId(user.getId()));
+    List<ProviderEntity> result = repo.findAll(entities.withApprovedOrgasAndUser(user.getId()));
     
     if (result == null || result.isEmpty()) {
       return Collections.emptyList();
@@ -253,7 +253,7 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
    *          the providers
    * @return the list
    */
-  public List<ProviderEntity> addAllWithMail(List<ProviderEntity> providers) {
+  public List<ProviderEntity> addAllResourcesWithMail(List<ProviderEntity> providers) {
     return providers.stream().map(provider -> {
       provider = repo.save(provider);
       sendApplicationMail(provider);
@@ -318,6 +318,4 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
 
     repo.save(provider);
   }
-
-
 }

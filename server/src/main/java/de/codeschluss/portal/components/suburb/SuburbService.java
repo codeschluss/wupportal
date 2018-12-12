@@ -1,7 +1,8 @@
 package de.codeschluss.portal.components.suburb;
 
-import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQuery
   public SuburbService(
       SuburbRepository repo, 
       SuburbQueryBuilder entities,
-      SuburbResourceAssembler assembler) {
+      PagingAndSortingAssembler assembler) {
     super(repo, entities, assembler);
   }
 

@@ -1,9 +1,13 @@
 package de.codeschluss.portal.components.images.organisation;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
-import de.codeschluss.portal.core.api.ResourceDataService;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.image.ImageService;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +36,7 @@ public class OrganisationImageService
   public OrganisationImageService(
       OrganisationImageRepository repo, 
       OrganisationImageQueryBuilder entities,
-      OrganisationImageResourceAssembler assembler,
+      PagingAndSortingAssembler assembler,
       ImageService imageService) {
     super(repo, entities, assembler);
     this.imageService = imageService;
@@ -61,8 +65,12 @@ public class OrganisationImageService
    *
    * @param organisationId the organisation id
    * @return the resources by organisation
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Resources<?> getResourcesByOrganisation(String organisationId) {
+  public Resources<?> getResourcesByOrganisation(String organisationId) 
+       throws JsonParseException, JsonMappingException, IOException {
     List<OrganisationImageEntity> images = repo.findAll(
         entities.forOrganisationId(organisationId));
     if (images == null || images.isEmpty()) {

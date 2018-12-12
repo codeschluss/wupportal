@@ -32,7 +32,7 @@ public class SuburbControllerCreateTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
-    SuburbEntity suburb = new SuburbEntity("addSuperUserOk", null);
+    SuburbEntity suburb = newSuburb("addSuperUserOk");
 
     controller.create(suburb);
 
@@ -45,7 +45,7 @@ public class SuburbControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    SuburbEntity suburb = new SuburbEntity("suburb1", null);
+    SuburbEntity suburb = newSuburb("suburb1");
 
     controller.create(suburb);
   }
@@ -53,15 +53,21 @@ public class SuburbControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
-    SuburbEntity suburb = new SuburbEntity("addProviderDenied", null);
+    SuburbEntity suburb = newSuburb("addProviderDenied");
 
     controller.create(suburb);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    SuburbEntity suburb = new SuburbEntity("addNoUserDenied", null);
+    SuburbEntity suburb = newSuburb("addNoUserDenied");
 
     controller.create(suburb);
+  }
+  
+  private SuburbEntity newSuburb(String name) {
+    SuburbEntity suburb = new SuburbEntity();
+    suburb.setName(name);
+    return suburb;
   }
 }

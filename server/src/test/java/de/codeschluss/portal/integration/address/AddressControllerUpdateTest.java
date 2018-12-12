@@ -30,8 +30,7 @@ public class AddressControllerUpdateTest {
   @Test
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("2", "wuppertal", "42103", "changed", null, 0, 0,
-        null, null);
+    AddressEntity address = newAddress("2", "wuppertal", "42103", "changed");
     String addressId = "00000000-0000-0000-0006-200000000000";
 
     controller.update(address, addressId);
@@ -43,8 +42,7 @@ public class AddressControllerUpdateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void updateSuperUserDuplicated() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("1", "wuppertal", "42103", "address1", null, 0, 0,
-        null, null);
+    AddressEntity address = newAddress("1", "wuppertal", "42103", "address1");
     String addressId = "00000000-0000-0000-0006-200000000000";
 
     controller.update(address, addressId);
@@ -53,8 +51,7 @@ public class AddressControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderUserDenied() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("2", "wuppertal", "42103", "changed", null, 0, 0,
-        null, null);
+    AddressEntity address = newAddress("2", "wuppertal", "42103", "changed");
     String addressId = "00000000-0000-0000-0006-100000000000";
 
     controller.update(address, addressId);
@@ -62,11 +59,20 @@ public class AddressControllerUpdateTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    AddressEntity address = new AddressEntity("2", "wuppertal", "42103", "changed", null, 0, 0,
-        null, null);
+    AddressEntity address = newAddress("2", "wuppertal", "42103", "changed");
     String addressId = "00000000-0000-0000-0006-100000000000";
 
     controller.update(address, addressId);
+  }
+  
+  private AddressEntity newAddress(
+      String houseNumber, String place, String postalCode, String street) {
+    AddressEntity address = new AddressEntity();
+    address.setHouseNumber(houseNumber);
+    address.setPlace(place);
+    address.setPostalCode(postalCode);
+    address.setStreet(street);
+    return address;
   }
 
 }

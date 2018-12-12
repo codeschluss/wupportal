@@ -11,6 +11,7 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -129,6 +130,7 @@ public class OrganisationController
    * @return the organisation entity
    */
   private OrganisationEntity createOrgaWithAdmin(OrganisationEntity newOrga) {
+    newOrga.setApproved(false);
     OrganisationEntity orga = service.add(newOrga);
     ProviderEntity admin = new ProviderEntity(true, true, null, orga, authService.getCurrentUser());
     providerService.add(admin);
@@ -183,7 +185,7 @@ public class OrganisationController
    */
   @GetMapping("/organisations/{organisationId}/address")
   public ResponseEntity<?> readAddress(@PathVariable String organisationId) {
-    return ok(addressService.getResourcesWithSuburbsByOrganisation(organisationId));
+    return ok(addressService.getResourcesByOrganisation(organisationId));
   }
 
   /**
@@ -215,9 +217,15 @@ public class OrganisationController
    * @return the response entity
    */
   @GetMapping("/organisations/{organisationId}/activities")
-  public ResponseEntity<?> readActivities(@PathVariable String organisationId) {
+  public ResponseEntity<?> readActivities(
+      @PathVariable String organisationId,
+      BaseParams params) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
-    return ok(activityService.getResourcesByProviders(providers));
+    try {
+      return ok(activityService.getResourcesByProviders(providers, params));
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -251,9 +259,15 @@ public class OrganisationController
    */
   @GetMapping("/organisations/{organisationId}/users")
   @OrgaAdminOrSuperUserPermission
-  public ResponseEntity<?> readUsers(@PathVariable String organisationId) {
+  public ResponseEntity<?> readUsers(
+      @PathVariable String organisationId,
+      BaseParams params) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
-    return ok(userService.convertToResourcesWithProviders(providers));
+    try {
+      return ok(userService.getResourcesByProviders(providers, params));
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
 
   /**
@@ -333,12 +347,9 @@ public class OrganisationController
   public ResponseEntity<?> readTranslations(@PathVariable String organisationId) {
     try {
       return ok(translationService.getAllTranslations(service.getById(organisationId), this));
-    } catch (NoSuchMethodException 
-        | SecurityException 
-        | IllegalAccessException
-        | IllegalArgumentException
-        | InvocationTargetException e) {
-      throw new RuntimeException("Translations are not available");
+    } catch (NoSuchMethodException | SecurityException | IllegalAccessException
+        | IllegalArgumentException | InvocationTargetException | IOException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
   
@@ -351,10 +362,13 @@ public class OrganisationController
    */
   @GetMapping("/organisations/{organisationId}/images")
   public ResponseEntity<?> readImages(@PathVariable String organisationId) {
-    return ok(organisationImageService.getResourcesByOrganisation(organisationId));
+    try {
+      return ok(organisationImageService.getResourcesByOrganisation(organisationId));
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
   
-
   /**
    * Adds the image.
    *

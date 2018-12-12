@@ -22,7 +22,7 @@ public class OrganisationControllerReadActivitiesTest {
   @Test
   public void findActivitiesByOrganisationOk() {
     Resources<?> result = (Resources<?>) controller
-        .readActivities("00000000-0000-0000-0008-100000000000").getBody();
+        .readActivities("00000000-0000-0000-0008-100000000000", null).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }
@@ -30,7 +30,7 @@ public class OrganisationControllerReadActivitiesTest {
   @Test(expected = NotFoundException.class)
   public void findActivitiesByOrganisationNotFound() {
     Resources<?> result = (Resources<?>) controller
-        .readActivities("00000000-0000-0000-0008-XX0000000000").getBody();
+        .readActivities("00000000-0000-0000-0008-XX0000000000", null).getBody();
 
     assertThat(result.getContent()).isNotEmpty();
   }

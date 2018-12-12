@@ -34,9 +34,8 @@ public class UserControllerUpdateTest {
   @Test
   @WithUserDetails("provider1@user")
   public void updateOwnUserOk() throws URISyntaxException {
-    UserEntity user = new UserEntity("provider1@user", "test", "12345678", true,
-        "addWithoutSecurityOk", null);
-    
+    UserEntity user = newUser("provider1@user", "test", "12345678", true, "addWithoutSecurityOk");
+
     controller.update(user, "00000000-0000-0000-0004-300000000000");
 
     assertThat(service.getUser(user.getUsername()).getUsername()).isEqualTo(user.getUsername());
@@ -45,18 +44,27 @@ public class UserControllerUpdateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider2@user")
   public void updateOtherUserDenied() throws URISyntaxException {
-    UserEntity user = new UserEntity("provider1@user", "test", "12345678", true,
-        "addWithoutSecurityOk", null);
+    UserEntity user = newUser("provider1@user", "test", "12345678", true, "addWithoutSecurityOk");
 
     controller.update(user, "00000000-0000-0000-0004-300000000000");
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateOtherNotRegisteredUserDenied() throws URISyntaxException {
-    UserEntity user = new UserEntity("provider1@user", "test", "12345678", true,
-        "addWithoutSecurityOk", null);
+    UserEntity user = newUser("provider1@user", "test", "12345678", true, "addWithoutSecurityOk");
 
     controller.update(user, "00000000-0000-0000-0004-300000000000");
+  }
+
+  private UserEntity newUser(String fullname, String password, String phone, boolean superuser,
+      String username) {
+    UserEntity user = new UserEntity();
+    user.setFullname(fullname);
+    user.setPassword(password);
+    user.setPhone(phone);
+    user.setSuperuser(superuser);
+    user.setUsername(username);
+    return user;
   }
 
 }

@@ -32,8 +32,8 @@ public class CategoryControllerCreateTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void addSuperUserOk() throws URISyntaxException {
-    CategoryEntity category = new CategoryEntity("addSuperUserOk", "addSuperUserOk",
-        "addSuperUserOk", null, null);
+    CategoryEntity category = newCategory("addSuperUserOk", "addSuperUserOk",
+        "addSuperUserOk");
 
     controller.create(category);
 
@@ -46,8 +46,8 @@ public class CategoryControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    CategoryEntity category = new CategoryEntity("addSuperUserDuplicatedName",
-        "addSuperUserDuplicatedName", "category1", null, null);
+    CategoryEntity category = newCategory("addSuperUserDuplicatedName",
+        "addSuperUserDuplicatedName", "category1");
 
     controller.create(category);
   }
@@ -55,17 +55,25 @@ public class CategoryControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addProviderDenied() throws URISyntaxException {
-    CategoryEntity category = new CategoryEntity("addProviderDenied", "addProviderDenied",
-        "addProviderDenied", null, null);
+    CategoryEntity category = newCategory("addProviderDenied", "addProviderDenied",
+        "addProviderDenied");
 
     controller.create(category);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    CategoryEntity category = new CategoryEntity("addNoUserDenied", "addNoUserDenied",
-        "addNoUserDenied", null, null);
+    CategoryEntity category = newCategory("addNoUserDenied", "addNoUserDenied",
+        "addNoUserDenied");
 
     controller.create(category);
+  }
+  
+  private CategoryEntity newCategory(String color, String description, String name) {
+    CategoryEntity category = new CategoryEntity();
+    category.setName(name);
+    category.setColor(color);
+    category.setDescription(description);
+    return category;
   }
 }

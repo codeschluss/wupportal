@@ -1,8 +1,14 @@
 package de.codeschluss.portal.components.tag;
 
-import de.codeschluss.portal.core.api.ResourceDataService;
-import de.codeschluss.portal.core.exception.NotFoundException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.dto.BaseParams;
+import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.service.ResourceDataService;
+
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.hateoas.Resources;
@@ -28,7 +34,7 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
    */
   public TagService(
       TagRepository repo, 
-      TagResourceAssembler assembler,
+      PagingAndSortingAssembler assembler,
       TagQueryBuilder entities) {
     super(repo, entities, assembler);
   }
@@ -39,18 +45,23 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
   }
 
   /**
-   * Gets the resource by activity.
+   * Gets the resources by activity.
    *
-   * @param activityId
-   *          the activity id
-   * @return the resource by activity
+   * @param activityId the activity id
+   * @return the resources by activity
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Resources<?> getResourcesByActivity(String activityId) {
-    List<TagEntity> tags = repo.findAll(entities.withAnyActivityId(activityId));
+  public Resources<?> getResourcesByActivity(String activityId, BaseParams params) 
+      throws JsonParseException, JsonMappingException, IOException {
+    List<TagEntity> tags = repo.findAll(entities.withAnyActivityId(
+        activityId), 
+        entities.createSort(params));
     if (tags == null || tags.isEmpty()) {
       throw new NotFoundException(activityId);
     }
-    return assembler.entitiesToResources(tags, null);
+    return assembler.entitiesToResources(tags, params);
   }
 
   @Override

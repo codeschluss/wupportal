@@ -1,11 +1,15 @@
 package de.codeschluss.portal.components.schedule;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.querydsl.core.types.Predicate;
 
-import de.codeschluss.portal.core.api.ResourceDataService;
-import de.codeschluss.portal.core.api.dto.CustomSort;
+import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.service.ResourceDataService;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +38,7 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   public ScheduleService(
       ScheduleRepository repo, 
       ScheduleQueryBuilder entities,
-      ScheduleResourceAssembler assembler) {
+      PagingAndSortingAssembler assembler) {
     super(repo, entities, assembler);
   }
 
@@ -49,8 +53,12 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
    * @param activityId the activity id
    * @param params the params
    * @return the resource by activity
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
-  public Resources<?> getResourceByActivity(String activityId, CustomSort params) {
+  public Resources<?> getResourceByActivity(String activityId, BaseParams params) 
+      throws JsonParseException, JsonMappingException, IOException {
     Predicate query = entities.forActivityAndCurrentOnly(activityId);
     List<ScheduleEntity> schedules = repo.findAll(query, entities.createSort(params));
     if (schedules == null || schedules.isEmpty()) {

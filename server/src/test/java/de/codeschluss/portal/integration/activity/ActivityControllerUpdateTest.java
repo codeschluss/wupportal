@@ -18,12 +18,10 @@ import org.springframework.hateoas.Resources;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Rollback
 public class ActivityControllerUpdateTest {
 
   @Autowired
@@ -80,11 +78,20 @@ public class ActivityControllerUpdateTest {
   }
 
   private ActivityEntity createActivity(String name) {
+    ActivityEntity activity = new ActivityEntity();
+    
+    String addressId = "00000000-0000-0000-0006-100000000000";
     String categoryId = "00000000-0000-0000-0007-100000000000";
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    String addressId = "00000000-0000-0000-0006-100000000000";
-    return new ActivityEntity(name, "createActivity", true, addressId, null, categoryId, null,
-        organisationId, null, null, null, null, null);
+    
+    activity.setName(name);
+    activity.setName("createActivity");
+    activity.setAddressId(addressId);
+    activity.setCategoryId(categoryId);
+    activity.setOrganisationId(organisationId);
+    activity.setShowUser(true);
+    
+    return activity;
   }
 
   @SuppressWarnings("unchecked")

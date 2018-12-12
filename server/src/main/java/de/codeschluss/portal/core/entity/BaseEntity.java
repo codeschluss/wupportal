@@ -1,4 +1,4 @@
-package de.codeschluss.portal.core.service;
+package de.codeschluss.portal.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -47,7 +47,7 @@ public abstract class BaseEntity implements Serializable {
   public String getId() {
     return this.id;
   }
-
+  
   public BaseEntity() {
     this.id = UUID.randomUUID().toString();
   }

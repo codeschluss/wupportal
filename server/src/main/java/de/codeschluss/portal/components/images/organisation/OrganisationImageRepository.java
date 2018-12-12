@@ -1,6 +1,6 @@
 package de.codeschluss.portal.components.images.organisation;
 
-import de.codeschluss.portal.core.service.DataRepository;
+import de.codeschluss.portal.core.repository.DataRepository;
 
 import org.springframework.stereotype.Repository;
 

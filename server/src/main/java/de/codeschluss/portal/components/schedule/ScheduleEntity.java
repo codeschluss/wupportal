@@ -1,11 +1,17 @@
 package de.codeschluss.portal.components.schedule;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
-import de.codeschluss.portal.core.service.BaseEntity;
+import de.codeschluss.portal.core.entity.BaseResource;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +26,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -35,7 +42,7 @@ import org.springframework.hateoas.core.Relation;
 @Entity
 @Table(name = "schedules")
 @Relation(collectionRelation = "data")
-public class ScheduleEntity extends BaseEntity {
+public class ScheduleEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
 
@@ -50,5 +57,17 @@ public class ScheduleEntity extends BaseEntity {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "start_date")
   private Date startDate;
+
+  @Override
+  public List<Link> createResourceLinks() {
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readSchedules(getActivity().getId(), null)).withSelfRel());
+
+    return links;
+  }
+  
+  
 
 }

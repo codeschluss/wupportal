@@ -1,15 +1,20 @@
 package de.codeschluss.portal.components.category;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.category.translations.CategoryTranslatablesEntity;
+import de.codeschluss.portal.core.entity.BaseResource;
 import de.codeschluss.portal.core.i18n.annotations.Localized;
-import de.codeschluss.portal.core.service.BaseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,6 +32,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -43,7 +49,7 @@ import org.springframework.hateoas.core.Relation;
 @Localized
 @Table(name = "categories")
 @Relation(collectionRelation = "data")
-public class CategoryEntity extends BaseEntity {
+public class CategoryEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
 
@@ -66,6 +72,18 @@ public class CategoryEntity extends BaseEntity {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
-  protected List<CategoryTranslatablesEntity> translatables;
+  protected Set<CategoryTranslatablesEntity> translatables;
+  
+  @Override
+  public List<Link> createResourceLinks() {
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(CategoryController.class)
+        .readOne(id)).withSelfRel());
+    links.add(linkTo(methodOn(CategoryController.class)
+        .readTranslations(id)).withRel("translations"));
+
+    return links;
+  }
 
 }

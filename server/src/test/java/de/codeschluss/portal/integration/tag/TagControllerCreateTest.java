@@ -31,7 +31,7 @@ public class TagControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   public void addSuperUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addSuperUserOk", "addSuperUserOk", null, null);
+    TagEntity tag = newTag("addSuperUserOk", "addSuperUserOk");
 
     controller.create(tag);
 
@@ -41,7 +41,7 @@ public class TagControllerCreateTest {
   @Test
   @WithUserDetails("provider1@user")
   public void addProviderUserOk() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addProviderUserOk", "addProviderUserOk", null, null);
+    TagEntity tag = newTag("addProviderUserOk", "addProviderUserOk");
 
     controller.create(tag);
 
@@ -51,7 +51,7 @@ public class TagControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void addSuperUserDuplicated() throws URISyntaxException {
-    TagEntity tag = new TagEntity("tag1", "tag1", null, null);
+    TagEntity tag = newTag("tag1", "tag1");
 
     controller.create(tag);
   }
@@ -59,7 +59,7 @@ public class TagControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
   public void addNotApprovedDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addNotApprovedDenied", "addNotApprovedDenied", null, null);
+    TagEntity tag = newTag("addNotApprovedDenied", "addNotApprovedDenied");
 
     controller.create(tag);
   }
@@ -67,14 +67,14 @@ public class TagControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("notapprovedorga@user")
   public void addNotApprovedOrgaDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addNotApprovedDenied", "addNotApprovedDenied", null, null);
+    TagEntity tag = newTag("addNotApprovedDenied", "addNotApprovedDenied");
 
     controller.create(tag);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addNoUserDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addNoUserDenied", "addNoUserDenied", null, null);
+    TagEntity tag = newTag("addNoUserDenied", "addNoUserDenied");
 
     controller.create(tag);
   }
@@ -85,5 +85,12 @@ public class TagControllerCreateTest {
         .readAll(new FilterSortPaginate()).getBody();
     assertThat(result.getContent()).haveAtLeastOne(
         new Condition<>(p -> p.getContent().getName().equals(tag.getName()), "tag exists"));
+  }
+  
+  private TagEntity newTag(String name, String description) {
+    TagEntity tag = new TagEntity();
+    tag.setName(name);
+    tag.setName(description);
+    return tag;
   }
 }

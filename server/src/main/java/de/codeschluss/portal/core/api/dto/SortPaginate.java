@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class SortPaginate extends CustomSort {
+public class SortPaginate extends BaseParams {
 
   /** The page. */
   protected Integer page;
@@ -37,8 +37,9 @@ public class SortPaginate extends CustomSort {
       Integer page, 
       String sort,
       Integer size,
-      String dir) {
-    super(sort, dir);
+      String dir,
+      String embeddings) {
+    super(sort, dir, embeddings);
     this.page = page;
     this.size = size;
   }

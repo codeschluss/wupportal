@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
+import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
 import de.codeschluss.portal.core.service.QueryBuilder;
@@ -59,6 +60,26 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
   public BooleanExpression withName(String name) {
     return query.name.eq(name);
   }
+  
+  /**
+   * With any of providers.
+   *
+   * @param providers the providers
+   * @return the boolean expression
+   */
+  public BooleanExpression withAnyOfProviders(List<ProviderEntity> providers) {
+    return query.providers.any().in(providers);
+  }
+  
+  /**
+   * With provider.
+   *
+   * @param provider the provider
+   * @return the boolean expression
+   */
+  public BooleanExpression withProvider(ProviderEntity provider) {
+    return query.providers.any().eq(provider);
+  }
 
   @Override
   public Predicate search(FilterSortPaginate p) {
@@ -112,7 +133,7 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
    *
    * @return the predicate
    */
-  private Predicate withApprovedOnly() {
+  private BooleanExpression withApprovedOnly() {
     return query.approved.isTrue();
   }
 
@@ -145,5 +166,16 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
     }
     throw new RuntimeException(
         "Must be of type " + OrganisationQueryParam.class + " but is " + p.getClass());
+  }
+
+  /**
+   * For orga admin.
+   *
+   * @param userId the user id
+   * @return the predicate
+   */
+  public Predicate forOrgaAdmin(String userId) {
+    return query.providers.any().user.id.eq(userId)
+        .and(query.providers.any().admin.isTrue());
   }
 }

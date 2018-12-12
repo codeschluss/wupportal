@@ -1,9 +1,16 @@
 package de.codeschluss.portal.components.images.organisation;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
-import de.codeschluss.portal.core.service.BaseEntity;
+import de.codeschluss.portal.core.entity.BaseResource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +24,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 import org.springframework.util.Base64Utils;
 
@@ -33,7 +41,7 @@ import org.springframework.util.Base64Utils;
 @Entity
 @Table(name = "organisation_images")
 @Relation(collectionRelation = "data")
-public class OrganisationImageEntity extends BaseEntity {
+public class OrganisationImageEntity extends BaseResource {
   
   private static final long serialVersionUID = 1L;
   
@@ -52,6 +60,16 @@ public class OrganisationImageEntity extends BaseEntity {
   
   public byte[] getImage() {
     return Base64Utils.encode(image);
+  }
+  
+  @Override
+  public List<Link> createResourceLinks() {
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(OrganisationController.class)
+        .readImages(getOrganisation().getId())).withSelfRel());
+
+    return links;
   }
 
 }

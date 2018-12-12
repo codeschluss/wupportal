@@ -2,7 +2,7 @@ package de.codeschluss.portal.integration.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.codeschluss.portal.core.configuration.ConfigurationController;
+import de.codeschluss.portal.core.config.ConfigurationController;
 import de.codeschluss.portal.core.exception.NotFoundException;
 
 import java.net.URISyntaxException;

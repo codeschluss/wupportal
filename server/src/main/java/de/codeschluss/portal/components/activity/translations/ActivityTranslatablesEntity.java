@@ -1,7 +1,14 @@
 package de.codeschluss.portal.components.activity.translations;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.core.i18n.entities.TranslatableEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +21,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
 
 /**
@@ -39,4 +47,14 @@ public class ActivityTranslatablesEntity extends TranslatableEntity<ActivityEnti
   @Lob
   @Column(columnDefinition = "TEXT")
   private String description;
+
+  @Override
+  public List<Link> createResourceLinks() {    
+    List<Link> links = new ArrayList<Link>();
+
+    links.add(linkTo(methodOn(ActivityController.class)
+        .readTranslations(getId())).withSelfRel());
+
+    return links;
+  }
 }

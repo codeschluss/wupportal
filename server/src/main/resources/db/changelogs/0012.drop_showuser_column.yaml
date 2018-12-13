@@ -1,0 +1,8 @@
+databaseChangeLog:
+- changeSet:
+    id: 1544653700468-26
+    author: vetemi (generated)
+    changes:
+    - dropColumn:
+        columnName: show_user
+        tableName: activities

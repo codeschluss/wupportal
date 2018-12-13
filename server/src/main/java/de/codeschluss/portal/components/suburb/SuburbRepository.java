@@ -5,7 +5,7 @@ import de.codeschluss.portal.core.repository.DataRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * The Interface SuburbRepository.
+ * The Interface ContactRepository.
  * 
  * @author Valmir Etemi
  *

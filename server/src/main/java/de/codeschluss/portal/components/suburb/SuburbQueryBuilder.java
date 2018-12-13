@@ -10,7 +10,7 @@ import de.codeschluss.portal.core.service.QueryBuilder;
 import org.springframework.stereotype.Service;
 
 /**
- * The Class SuburbQueryBuilder.
+ * The Class ContactQueryBuilder.
  * 
  * @author Valmir Etemi
  *

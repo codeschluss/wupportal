@@ -23,7 +23,6 @@ import de.codeschluss.portal.core.i18n.translation.TranslationService;
 import de.codeschluss.portal.core.security.permissions.OwnActivityPermission;
 import de.codeschluss.portal.core.security.permissions.OwnOrOrgaActivityOrSuperUserPermission;
 import de.codeschluss.portal.core.security.permissions.ProviderPermission;
-import de.codeschluss.portal.core.security.permissions.ShowUserOrSuperUserPermission;
 import de.codeschluss.portal.core.security.services.AuthorizationService;
 
 import java.io.IOException;
@@ -62,9 +61,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
 
   /** The provider service. */
   private final ProviderService providerService;
-
-  /** The user service. */
-  private final UserService userService;
 
   /** The tag service. */
   private final TagService tagService;
@@ -119,7 +115,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     this.addressService = addressService;
     this.categoryService = categoryService;
     this.providerService = providerService;
-    this.userService = userService;
     this.tagService = tagService;
     this.targetGroupService = targetGroupService;
     this.scheduleService = scheduleService;
@@ -272,20 +267,6 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");
     }
-  }
-
-  /**
-   * Read user.
-   *
-   * @param activityId
-   *          the activity id
-   * @return the response entity
-   */
-  @GetMapping("/activities/{activityId}/user")
-  @ShowUserOrSuperUserPermission
-  public ResponseEntity<?> readUser(@PathVariable String activityId) {
-    ProviderEntity provider = providerService.getProviderByActivity(activityId);
-    return ok(userService.getResourceByProvider(provider));
   }
 
   /**

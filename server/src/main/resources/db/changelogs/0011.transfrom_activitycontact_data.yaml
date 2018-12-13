@@ -1,0 +1,19 @@
+databaseChangeLog:
+- changeSet:
+    id: 0011.transfrom_activitycontact_data
+    author: vetemi
+    changes:
+    - sql:
+        comment: transfer all contact data from user to activity where show user is set to true
+        dbms: mysql, h2
+        splitStatements: true
+        sql:
+            /*!40101 SET character_set_client = utf8 */;
+            update activities
+                inner join providers on activities.provider_id = providers.id
+                inner join users on providers.user_id = users.id
+            set
+                activities.contact_name = users.fullname,
+                activities.phone = users.phone,
+                activities.mail = users.username
+            where activities.show_user = 1;

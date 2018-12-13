@@ -19,3 +19,11 @@ databaseChangeLog:
         file: classpath:db/changelogs/0008.drop_orgaimages_column.yaml
     - include:
         file: classpath:db/changelogs/0009.add_orgapproved_column.yaml
+    - include:
+        file: classpath:db/changelogs/0010.add_accontact_column.yaml
+    - include:
+        file: classpath:db/changelogs/0011.transfrom_activitycontact_data.yaml
+    - include:
+        file: classpath:db/changelogs/0011.transfrom_activitycontact_data.yaml
+    - include:
+        file: classpath:db/changelogs/0012.drop_showuser_column.yaml

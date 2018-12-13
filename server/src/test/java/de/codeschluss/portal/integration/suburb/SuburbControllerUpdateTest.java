@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.suburb.SuburbController;
 import de.codeschluss.portal.components.suburb.SuburbEntity;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -37,6 +38,14 @@ public class SuburbControllerUpdateTest {
 
     Resource<SuburbEntity> result = (Resource<SuburbEntity>) controller.readOne(suburbId);
     assertThat(result.getContent().getName()).isEqualTo(suburb.getName());
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidDenied() throws URISyntaxException {
+    SuburbEntity suburb = newSuburb(null);
+
+    controller.create(suburb);
   }
 
   @Test(expected = DuplicateEntryException.class)

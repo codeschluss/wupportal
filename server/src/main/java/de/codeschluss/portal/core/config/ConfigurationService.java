@@ -26,6 +26,12 @@ public class ConfigurationService
   public ConfigurationEntity getExisting(ConfigurationEntity newConfiguration) {
     return repo.findOne(entities.withItem(newConfiguration.getItem())).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(ConfigurationEntity newConfiguration) {
+    return newConfiguration.getItem() != null && !newConfiguration.getItem().isEmpty()
+        && newConfiguration.getValue() != null && !newConfiguration.getItem().isEmpty();
+  }
 
   @Override
   public ConfigurationEntity update(String id, ConfigurationEntity newConfiguration) {

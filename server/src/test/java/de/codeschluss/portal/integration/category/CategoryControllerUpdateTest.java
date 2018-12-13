@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.category.CategoryController;
 import de.codeschluss.portal.components.category.CategoryEntity;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -37,6 +38,26 @@ public class CategoryControllerUpdateTest {
 
     Resource<CategoryEntity> result = (Resource<CategoryEntity>) controller.readOne(categoryId);
     assertThat(result.getContent().getName()).isEqualTo(category.getName());
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidNameDenied() throws URISyntaxException {
+    CategoryEntity category = newCategory("updateNotValidNameDenied", "updateNotValidNameDenied",
+        null);
+    String categoryId = "00000000-0000-0000-0007-200000000000";
+
+    controller.update(category, categoryId);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidColorDenied() throws URISyntaxException {
+    CategoryEntity category = newCategory(null, "updateNotValidColorDenied",
+        "updateNotValidColorDenied");
+    String categoryId = "00000000-0000-0000-0007-200000000000";
+
+    controller.update(category, categoryId);
   }
 
   @Test(expected = DuplicateEntryException.class)

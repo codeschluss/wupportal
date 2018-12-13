@@ -44,6 +44,11 @@ public class TargetGroupService
   public TargetGroupEntity getExisting(TargetGroupEntity newTargetGroup) {
     return repo.findOne(entities.withName(newTargetGroup.getName())).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(TargetGroupEntity newTargetGroup) {
+    return newTargetGroup.getName() != null && !newTargetGroup.getName().isEmpty();
+  }
 
   /**
    * Gets the resource by activity.

@@ -64,6 +64,11 @@ public class OrganisationService
   public OrganisationEntity getExisting(OrganisationEntity orga) {
     return repo.findOne(entities.withName(orga.getName())).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(OrganisationEntity newOrga) {
+    return newOrga.getName() != null && !newOrga.getName().isEmpty();
+  }
 
   @Override
   public OrganisationEntity update(String id, OrganisationEntity newOrga) {

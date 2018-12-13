@@ -46,6 +46,11 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   public ScheduleEntity getExisting(ScheduleEntity newSchedule) {
     return repo.findById(newSchedule.getId()).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(ScheduleEntity newSchedule) {
+    return newSchedule.getStartDate() != null && newSchedule.getEndDate() != null;
+  }
 
   /**
    * Gets the resource by activity.

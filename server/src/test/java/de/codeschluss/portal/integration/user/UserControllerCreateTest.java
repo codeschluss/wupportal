@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.user.UserController;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.components.user.UserService;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -28,17 +29,32 @@ public class UserControllerCreateTest {
   private UserService service;
 
   @Test
-  public void addWithoutSecurityOk() throws URISyntaxException {
-    UserEntity user = newUser("addWithoutSecurityOk", "test", "12345678", true,
-        "addWithoutSecurityOk");
+  public void createWithoutSecurityOk() throws URISyntaxException {
+    UserEntity user = newUser("createWithoutSecurityOk", "test", "12345678", true,
+        "createWithoutSecurityOk");
 
     controller.create(user);
 
     assertThat(service.userExists(user.getUsername())).isTrue();
   }
 
+  @Test(expected = BadParamsException.class)
+  public void createNotValidUsernameDenied() throws URISyntaxException {
+    UserEntity user = newUser("createNotValidUsernameDenied", "test", "12345678", true, null);
+
+    controller.create(user);
+  }
+
+  @Test(expected = BadParamsException.class)
+  public void createNotValidPasswordDenied() throws URISyntaxException {
+    UserEntity user = newUser("createNotValidPasswordDenied", null, "12345678", true,
+        "createNotValidPasswordDenied");
+
+    controller.create(user);
+  }
+
   @Test(expected = DuplicateEntryException.class)
-  public void addWithoutSecurityDuplicated() throws URISyntaxException {
+  public void createWithoutSecurityDuplicated() throws URISyntaxException {
     UserEntity user = newUser("test", "test", "12345678", true, "provider1@user");
 
     controller.create(user);

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
+import de.codeschluss.portal.core.exception.BadParamsException;
 
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -61,6 +62,15 @@ public class ActivityControllerAddSchedulesTest {
     controller.addSchedules(activityId, schedule);
 
     assertContaining(schedule, activityId);
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("provider1@user")
+  public void addSchedulesNotValidDenied() throws URISyntaxException {
+    ScheduleEntity schedule = new ScheduleEntity();
+    String activityId = "00000000-0000-0000-0010-200000000000";
+
+    controller.addSchedules(activityId, schedule);
   }
 
   @Test(expected = AccessDeniedException.class)

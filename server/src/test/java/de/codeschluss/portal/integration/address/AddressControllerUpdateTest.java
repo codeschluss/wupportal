@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.address.AddressController;
 import de.codeschluss.portal.components.address.AddressEntity;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -37,6 +38,25 @@ public class AddressControllerUpdateTest {
 
     Resource<AddressEntity> result = (Resource<AddressEntity>) controller.readOne(addressId);
     assertThat(result.getContent().getStreet()).isEqualTo(address.getStreet());
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidPlaceDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", null, "42103", "updateNotValidPlaceDenied");
+    String addressId = "00000000-0000-0000-0006-200000000000";
+
+    controller.update(address, addressId);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidPostalCodeDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", "createNotValidPostalCodeDenied", null,
+        "createNotValidPostalCodeDenied");
+    String addressId = "00000000-0000-0000-0006-200000000000";
+
+    controller.update(address, addressId);
   }
 
   @Test(expected = DuplicateEntryException.class)

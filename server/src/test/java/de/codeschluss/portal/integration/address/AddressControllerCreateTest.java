@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.address.AddressController;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -30,8 +31,8 @@ public class AddressControllerCreateTest {
 
   @Test
   @WithUserDetails("super@user")
-  public void addSuperUserOk() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "addSuperUserOk", "1111", "addSuperUserOk");
+  public void createSuperUserOk() throws URISyntaxException {
+    AddressEntity address = newAddress("1", "createSuperUserOk", "1111", "createSuperUserOk");
 
     controller.create(address);
 
@@ -40,17 +41,34 @@ public class AddressControllerCreateTest {
 
   @Test
   @WithUserDetails("provider1@user")
-  public void addProviderUserOk() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "addProviderUserOk", "1111", "addProviderUserOk");
+  public void createProviderUserOk() throws URISyntaxException {
+    AddressEntity address = newAddress("1", "createProviderUserOk", "1111", "createProviderUserOk");
 
     controller.create(address);
 
     assertContaining(address);
   }
 
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidPlaceDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", null, "42103", "createNotValidPostalCodeDenied");
+
+    controller.create(address);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidPostalCodeDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", "createNotValidPostalCodeDenied", null,
+        "createNotValidPostalCodeDenied");
+
+    controller.create(address);
+  }
+
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void addSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws URISyntaxException {
     AddressEntity address = newAddress("1", "wuppertal", "42103", "address1");
 
     controller.create(address);
@@ -58,25 +76,25 @@ public class AddressControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
-  public void addNotApprovedProviderDenied() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "addAdminNoProviderDenied", "1111",
-        "addAdminNoProviderDenied");
+  public void createNotApprovedProviderDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", "createNotApprovedProviderDenied", "1111",
+        "createNotApprovedProviderDenied");
 
     controller.create(address);
   }
-  
+
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("notapprovedorga@user")
-  public void addNotApprovedOrgaDenied() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "addNotApprovedOrgaDenied", "1111",
-        "addNotApprovedOrgaDenied");
+  public void createNotApprovedOrgaDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", "createNotApprovedOrgaDenied", "1111",
+        "createNotApprovedOrgaDenied");
 
     controller.create(address);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void addNoUserDenied() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "addNoUserDenied", "1111", "addNoUserDenied");
+  public void createNoUserDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", "createNoUserDenied", "1111", "createNoUserDenied");
 
     controller.create(address);
   }
@@ -88,9 +106,9 @@ public class AddressControllerCreateTest {
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
         p -> p.getContent().getStreet().equals(address.getStreet()), "address exists"));
   }
-  
-  private AddressEntity newAddress(
-      String houseNumber, String place, String postalCode, String street) {
+
+  private AddressEntity newAddress(String houseNumber, String place, String postalCode,
+      String street) {
     AddressEntity address = new AddressEntity();
     address.setHouseNumber(houseNumber);
     address.setPlace(place);

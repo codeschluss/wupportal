@@ -36,6 +36,10 @@ public class ImageService {
    *           Signals that an I/O exception has occurred.
    */
   public byte[] resize(MultipartFile imageFile) throws IOException {
+    if (imageFile.getBytes() == null || imageFile.getBytes().length == 1) {
+      return null;
+    }
+    
     BufferedImage imageBuff = ImageIO.read(imageFile.getInputStream());
     Image image = imageBuff.getScaledInstance(config.getMaxWidth(), -1, Image.SCALE_SMOOTH);
 
@@ -45,7 +49,6 @@ public class ImageService {
     Graphics2D neGraphic = bimage.createGraphics();
     neGraphic.drawImage(image, 0, 0, null);
     neGraphic.dispose();
-
     return ((DataBufferByte) bimage.getData().getDataBuffer()).getData();
   }
 

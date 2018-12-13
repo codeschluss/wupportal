@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import de.codeschluss.portal.components.organisation.OrganisationController;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.image.ImageService;
 
@@ -58,6 +59,16 @@ public class OrganisationControllerCreateAndFindImagesTest {
         .readImages("00000000-0000-0000-0008-100000000000").getBody();
 
     assertThat(result.getContent()).isNotEmpty();
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("admin@user")
+  public void addNotValidDenied() throws IOException {
+    given(this.imageService.resize(Mockito.any())).willReturn(null);
+    byte[] content = null;
+    MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
+        "text/plain", content);
+    controller.addImage("00000000-0000-0000-0008-100000000000", "test", multipartFile);
   }
   
   @Test(expected = AccessDeniedException.class)

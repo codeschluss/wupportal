@@ -67,7 +67,4 @@ public class ScheduleEntity extends BaseResource {
 
     return links;
   }
-  
-  
-
 }

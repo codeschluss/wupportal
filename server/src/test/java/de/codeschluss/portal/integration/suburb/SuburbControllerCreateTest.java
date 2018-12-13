@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.suburb.SuburbController;
 import de.codeschluss.portal.components.suburb.SuburbEntity;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -31,8 +32,8 @@ public class SuburbControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void addSuperUserOk() throws URISyntaxException {
-    SuburbEntity suburb = newSuburb("addSuperUserOk");
+  public void createSuperUserOk() throws URISyntaxException {
+    SuburbEntity suburb = newSuburb("createSuperUserOk");
 
     controller.create(suburb);
 
@@ -41,10 +42,18 @@ public class SuburbControllerCreateTest {
     assertThat(result.getContent()).haveAtLeastOne(
         new Condition<>(p -> p.getContent().getName().equals(suburb.getName()), "suburb exists"));
   }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidDenied() throws URISyntaxException {
+    SuburbEntity suburb = newSuburb(null);
+
+    controller.create(suburb);
+  }
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void addSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws URISyntaxException {
     SuburbEntity suburb = newSuburb("suburb1");
 
     controller.create(suburb);
@@ -52,15 +61,15 @@ public class SuburbControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void addProviderDenied() throws URISyntaxException {
-    SuburbEntity suburb = newSuburb("addProviderDenied");
+  public void createProviderDenied() throws URISyntaxException {
+    SuburbEntity suburb = newSuburb("createProviderDenied");
 
     controller.create(suburb);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void addNoUserDenied() throws URISyntaxException {
-    SuburbEntity suburb = newSuburb("addNoUserDenied");
+  public void createNoUserDenied() throws URISyntaxException {
+    SuburbEntity suburb = newSuburb("createNoUserDenied");
 
     controller.create(suburb);
   }

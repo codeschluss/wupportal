@@ -36,6 +36,11 @@ public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQuery
   public SuburbEntity getExisting(SuburbEntity suburb) {
     return repo.findOne(entities.withName(suburb.getName())).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(SuburbEntity newSuburb) {
+    return newSuburb.getName() != null && !newSuburb.getName().isEmpty();
+  }
 
   /**
    * Gets the resource by address.

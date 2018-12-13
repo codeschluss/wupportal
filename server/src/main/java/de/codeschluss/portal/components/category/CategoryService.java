@@ -36,6 +36,12 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
   public CategoryEntity getExisting(CategoryEntity newCategory) {
     return repo.findOne(entities.withName(newCategory.getName())).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(CategoryEntity newCategory) {
+    return newCategory.getName() != null && !newCategory.getName().isEmpty()
+        && newCategory.getColor() != null && !newCategory.getColor().isEmpty();
+  }
 
   /**
    * Gets the resource by activity.

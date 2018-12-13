@@ -81,6 +81,12 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
       return null;
     }
   }
+  
+  @Override
+  public boolean validFieldConstraints(UserEntity newUser) {
+    return newUser.getUsername() != null && !newUser.getUsername().isEmpty()
+        && newUser.getPassword() != null && !newUser.getPassword().isEmpty();
+  }
 
   /**
    * Gets the user.

@@ -43,6 +43,11 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
   public TagEntity getExisting(TagEntity newTag) {
     return repo.findOne(entities.withName(newTag.getName())).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(TagEntity newTag) {
+    return newTag.getName() != null && !newTag.getName().isEmpty();
+  }
 
   /**
    * Gets the resources by activity.

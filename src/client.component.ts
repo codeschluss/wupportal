@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'client-component',
@@ -8,4 +9,15 @@ import { Component } from '@angular/core';
   `
 })
 
-export class ClientComponent { }
+export class ClientComponent {
+
+  constructor(
+    private titleService: Title) {
+      this.setTitle('Wupp\'n\'go');
+    }
+
+  public setTitle(newTitle: string): void {
+    this.titleService.setTitle(newTitle);
+  }
+
+}

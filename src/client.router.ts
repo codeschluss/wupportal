@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { I18nResolver, SessionResolver } from '@portal/core';
-import { LayoutComponent } from './views/layout/layout.component';
 
 const ClientResolvers = {
   session: SessionResolver,

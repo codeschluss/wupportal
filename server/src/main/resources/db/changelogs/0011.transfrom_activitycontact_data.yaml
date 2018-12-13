@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 0011.transfrom_activitycontact_data
+    id: 0011.transfrom_activitycontact_data_1
     author: vetemi
     changes:
     - sql:
@@ -17,3 +17,20 @@ databaseChangeLog:
                 activities.phone = users.phone,
                 activities.mail = users.username
             where activities.show_user = 1;
+- changeSet:
+    id: 0011.transfrom_activitycontact_data_2
+    author: vetemi
+    changes:
+    - sql:
+        comment: transfer all contact data from organisation to activity where show user is set to false
+        dbms: mysql, h2
+        splitStatements: true
+        sql:
+            /*!40101 SET character_set_client = utf8 */;
+            update activities
+                inner join providers on activities.provider_id = providers.id
+                inner join organisations on providers.organisation_id = organisations.id
+            set
+                activities.phone = organisations.phone,
+                activities.mail = organisations.mail
+            where activities.show_user = 0;

@@ -6,14 +6,19 @@ import { OrganisationModel } from '../organisation/organisation.model';
 import { ScheduleModel } from '../schedule/schedule.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
-import { UserModel } from '../user/user.model';
 
 export class ActivityModel
   extends CrudModel implements ActivityEntity {
 
+  public contactName: string;
   public description: string;
+  public mail: string;
   public name: string;
-  public showUser: boolean;
+  public phone: string;
+
+  public addressId: string;
+  public categoryId: string;
+  public organisationId: string;
 
   public address: Promise<AddressModel>;
   public category: Promise<CategoryModel>;
@@ -21,6 +26,5 @@ export class ActivityModel
   public schedules: Promise<ScheduleModel[]>;
   public tags: Promise<TagModel[]>;
   public targetGroups: Promise<TargetGroupModel[]>;
-  public user: Promise<UserModel>;
 
 }

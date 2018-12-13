@@ -10,20 +10,25 @@
     "email": "info@codeschluss.de",
     "url": "https://github.com/codeschluss/wupportal/issues"
   },
-  "dependencies": {
-    "@angular/common": "7.1.1",
-    "@angular/core": "7.1.1",
+  "peerDependencies": {
+    "@angular-devkit/build-ng-packagr": "0.11.2",
+    "@angular/animations": "7.1.2",
+    "@angular/cdk": "7.1.1",
+    "@angular/common": "7.1.2",
+    "@angular/cli": "7.1.2",
+    "@angular/compiler": "7.1.2",
+    "@angular/compiler-cli": "7.1.2",
+    "@angular/core": "7.1.2",
+    "@angular/forms": "7.1.2",
     "@angular/material": "7.1.1",
-    "@angular/router": "7.1.1",
-    "@angular/service-worker": "7.1.1",
+    "@angular/platform-browser": "7.1.2",
+    "@angular/router": "7.1.2",
+    "@angular/service-worker": "7.1.2",
     "@ngx-pwa/local-storage": "7.2.0",
     "@ngx-translate/i18n-polyfill": "1.0.0",
-    "rxjs": "6.3.3"
-  },
-  "devDependencies": {
-    "@angular-devkit/build-ng-packagr": "0.11.1",
     "ng-packagr": "4.4.5",
+    "rxjs": "6.3.3",
     "tsickle": "0.34.0",
-    "tslib": "1.9.3"
+    "typescript": "3.1.6"
   }
 }

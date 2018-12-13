@@ -1,5 +1,6 @@
 /* tslint:disable */
 export interface TagEntity {
+  _embedded?: {};
   created?: string;
   description?: string;
   id?: string;

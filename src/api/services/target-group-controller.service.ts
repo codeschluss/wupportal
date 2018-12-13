@@ -31,6 +31,8 @@ class TargetGroupControllerService extends BaseService {
    *
    * - `dir`:
    *
+   * - `embeddings`:
+   *
    * - `page`:
    *
    * - `size`:
@@ -45,6 +47,7 @@ class TargetGroupControllerService extends BaseService {
     let __body: any = null;
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.embeddings != null) __params = __params.set('embeddings', params.embeddings.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
@@ -71,6 +74,8 @@ class TargetGroupControllerService extends BaseService {
    * - `sort`:
    *
    * - `dir`:
+   *
+   * - `embeddings`:
    *
    * - `page`:
    *
@@ -280,6 +285,7 @@ module TargetGroupControllerService {
   export interface TargetGroupControllerReadAllParams {
     sort?: string;
     dir?: string;
+    embeddings?: string;
     page?: number;
     size?: number;
     filter?: string;

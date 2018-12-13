@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { TagControllerService } from '../../api/services/tag-controller.service';
 import { TagModel } from './tag.model';
@@ -32,7 +32,6 @@ export class TagProvider
   protected model = this.based(TagModel);
 
   public constructor(
-    protected injector: Injector,
     protected service: TagControllerService
   ) {
     super();

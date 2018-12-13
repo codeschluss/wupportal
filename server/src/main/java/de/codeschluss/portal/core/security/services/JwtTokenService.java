@@ -44,6 +44,7 @@ public class JwtTokenService {
   public String createAccessToken(JwtUserDetails jwtUserDetails) {
     return JWT.create().withSubject(jwtUserDetails.getUsername())
         .withClaim(securityConfig.getClaimSuperuser(), jwtUserDetails.isSuperUser())
+        .withClaim(securityConfig.getClaimUserid(), jwtUserDetails.getUser().getId())
         .withArrayClaim(securityConfig.getClaimCreatedActivities(),
             jwtUserDetails.getCreatedActivities())
         .withArrayClaim(securityConfig.getClaimApprovedOrgas(),

@@ -203,18 +203,15 @@ public class ActivityControllerReadAllTest {
     providerList.add(organisation);
     provider.setNodes(providerList);
     
-    EmbeddedGraph activities = new EmbeddedGraph();
-    activities.setName("activities");
     List<EmbeddedGraph> activityList = new ArrayList<>();
     activityList.add(address);
     activityList.add(category);
     activityList.add(provider);
     activityList.add(tags);
     activityList.add(schedules);
-    activities.setNodes(activityList);
     
     ObjectMapper mapper = new ObjectMapper();
-    return Base64Utils.encodeToString(mapper.writeValueAsString(activities).getBytes());
+    return Base64Utils.encodeToString(mapper.writeValueAsString(activityList).getBytes());
   }
 
   @Test(expected = NotFoundException.class)

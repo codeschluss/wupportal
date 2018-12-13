@@ -143,12 +143,23 @@ public class PagingAndSortingAssembler {
         page.getPageable().getPageNumber(), page.getTotalElements(), page.getTotalPages()), links);
   }
 
+  /**
+   * Creates the resources.
+   *
+   * @param <E> the element type
+   * @param result the result
+   * @param params the params
+   * @return the list
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private <E extends BaseResource> List<Resource<E>> createResources(Stream<E> result,
       BaseParams params) throws JsonParseException, JsonMappingException, IOException {
     if (params == null || params.getEmbeddings() == null || params.getEmbeddings().isEmpty()) {
       return result.map(this::toResource).collect(Collectors.toList());
     } else {
-      EmbeddedGraph graph = helper.createEmbeddingsFromParam(params);
+      List<EmbeddedGraph> graph = helper.createEmbeddingsFromParam(params);
       return result.map(entity -> toResourceWithEmbedabbles(entity, graph))
           .collect(Collectors.toList());
     }
@@ -168,9 +179,9 @@ public class PagingAndSortingAssembler {
   @SuppressWarnings("unchecked")
   @Transactional
   public <E extends BaseResource> Resource<E> toResourceWithEmbedabbles(E entity,
-      EmbeddedGraph embeddings) {
+      List<EmbeddedGraph> embeddings) {
     Map<String,Object> embeddables = new HashMap<>();
-    for (EmbeddedGraph node : embeddings.getNodes()) {
+    for (EmbeddedGraph node : embeddings) {
       Field field;
       Object fieldValue;
       try {
@@ -186,7 +197,7 @@ public class PagingAndSortingAssembler {
         E subEntity = (E) fieldValue;
         Object resource;
         if (node.getNodes() != null && !node.getNodes().isEmpty()) {
-          resource = toResourceWithEmbedabbles(subEntity, node);
+          resource = toResourceWithEmbedabbles(subEntity, node.getNodes());
         } else {
           resource = toResource(subEntity);
         }

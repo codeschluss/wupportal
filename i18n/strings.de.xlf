@@ -40,6 +40,12 @@
       <trans-unit id="blogs" datatype="html">
         <target>Blogs</target>
       </trans-unit>
+      <trans-unit id="noBrowserSupportVideo" datatype="html">
+        <target>Leider unterstützt dein Browser die Wiedergabe von Videos nicht</target>
+      </trans-unit>
+      
+
+      
       
       
       

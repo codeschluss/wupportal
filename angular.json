@@ -47,6 +47,11 @@
                 "glob": "**/*",
                 "input": "imgs",
                 "output": "/imgs"
+              },
+              {
+                "glob": "**/*",
+                "input": "videos",
+                "output": "/videos"
               }
             ],
             "styles": [

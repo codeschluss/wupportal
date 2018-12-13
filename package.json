@@ -1,14 +1,14 @@
 {
   "name": "@portal/client",
   "version": "0.0.2",
-  "description": "Client for Wupportal: An informative portal for new citizens in Wuppertal",
-  "homepage": "https://www.wupportal.org",
+  "description": "Client for Wuppngo: A portal for young people in Wuppertal",
+  "homepage": "https://www.wuppngo.org",
   "author": {
     "name": "Wupportal Team"
   },
   "bugs": {
     "email": "info@codeschluss.de",
-    "url": "https://github.com/codeschluss/wupportal/issues"
+    "url": "https://github.com/codeschluss/wuppngo/issues"
   },
   "config": {
     "api": {
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/codeschluss/wupportal"
+    "url": "https://github.com/codeschluss/wuppngo"
   },
   "scripts": {
     "build": "ng build",

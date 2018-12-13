@@ -110,6 +110,9 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
         .and(
             query.translatables.any().name.likeIgnoreCase(filter)
             .or(query.translatables.any().description.likeIgnoreCase(filter)))
+        .or(query.phone.likeIgnoreCase(filter))
+        .or(query.mail.likeIgnoreCase(filter))
+        .or(query.contactName.likeIgnoreCase(filter))
         .or(query.address.street.likeIgnoreCase(filter))
         .or(query.address.place.likeIgnoreCase(filter))
         .or(query.address.houseNumber.likeIgnoreCase(filter))

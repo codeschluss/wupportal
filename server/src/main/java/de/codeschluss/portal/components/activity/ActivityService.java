@@ -106,7 +106,9 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
     return repo.findById(id).map(activity -> {
       activity.setName(newActivity.getName());
       activity.setDescription(newActivity.getDescription());
-      activity.setShowUser(newActivity.isShowUser());
+      activity.setContactName(newActivity.getContactName());
+      activity.setPhone(newActivity.getPhone());
+      activity.setMail(activity.getMail());
       return repo.save(activity);
     }).orElseGet(() -> {
       newActivity.setId(id);

@@ -89,7 +89,6 @@ public class ActivityControllerUpdateTest {
     activity.setAddressId(addressId);
     activity.setCategoryId(categoryId);
     activity.setOrganisationId(organisationId);
-    activity.setShowUser(true);
     
     return activity;
   }

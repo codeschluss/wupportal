@@ -22,9 +22,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AuthorizationService {
-
-  /** The actitivity service. */
-  private final ActivityService actitivityService;
   
   /** The organisation service. */
   private final OrganisationService organisationService;
@@ -39,7 +36,6 @@ public class AuthorizationService {
   public AuthorizationService(
       ActivityService actitivityService,
       OrganisationService organisationService) {
-    this.actitivityService = actitivityService;
     this.organisationService = organisationService;
   }
 
@@ -136,16 +132,6 @@ public class AuthorizationService {
     } catch (NotFoundException e) {
       return false;
     }
-  }
-
-  /**
-   * Show user.
-   *
-   * @param activityId the activity id
-   * @return true, if successful
-   */
-  public boolean showUser(String activityId) {
-    return actitivityService.getById(activityId).isShowUser();
   }
 
   /**

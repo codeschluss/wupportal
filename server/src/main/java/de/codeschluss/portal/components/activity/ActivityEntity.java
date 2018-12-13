@@ -68,6 +68,13 @@ import org.springframework.hateoas.core.Relation;
 public class ActivityEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
+  
+  @Column(name = "contact_name")
+  private String contactName;
+  
+  private String phone;
+  
+  private String mail;
 
   @JsonSerialize
   @JsonDeserialize
@@ -78,9 +85,6 @@ public class ActivityEntity extends BaseResource {
   @JsonDeserialize
   @Transient
   private String description;
-
-  @Column(name = "show_user", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-  private boolean showUser;
 
   @Transient
   @JsonDeserialize
@@ -178,8 +182,6 @@ public class ActivityEntity extends BaseResource {
         .readOne(id)).withSelfRel());
     links.add(linkTo(methodOn(ActivityController.class)
         .readOrganisation(id)).withRel("organisation"));
-    links.add(linkTo(methodOn(ActivityController.class)
-        .readUser(id)).withRel("user"));
     links.add(linkTo(methodOn(ActivityController.class)
         .readCategory(id)).withRel("category"));
     links.add(linkTo(methodOn(ActivityController.class)

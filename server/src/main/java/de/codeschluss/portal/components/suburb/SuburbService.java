@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class SuburbService.
+ * The Class ContactService.
  * 
  * @author Valmir Etemi
  *

@@ -10,6 +10,6 @@ databaseChangeLog:
                 nullable: false
             defaultValueBoolean: false
             name: approved
-            type: BIT(1)
-            value: true
+            type: tinyint(1)
+            value: 1
         tableName: organisations

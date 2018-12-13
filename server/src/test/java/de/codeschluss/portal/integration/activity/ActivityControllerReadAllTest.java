@@ -27,11 +27,13 @@ import org.springframework.hateoas.Resources;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
+@Transactional
 public class ActivityControllerReadAllTest {
 
   @Autowired

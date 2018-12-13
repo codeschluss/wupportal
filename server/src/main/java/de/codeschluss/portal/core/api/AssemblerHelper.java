@@ -11,8 +11,10 @@ import de.codeschluss.portal.core.entity.BaseEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
 import de.codeschluss.portal.core.security.Sensible;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
-import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -51,16 +53,30 @@ public class AssemblerHelper {
   }
   
   /**
+   * Gets the field value.
+   *
+   * @param fieldName the field name
+   * @param entity the entity
+   * @return the field value
+   */
+  public Object getFieldValue(String fieldName, Object entity) {
+    try {
+      return new PropertyDescriptor(fieldName, entity.getClass()).getReadMethod()
+          .invoke(entity);
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+        | IntrospectionException | SecurityException e) {
+      return null;
+    }
+  }
+  
+  /**
    * Checks if is valid sub resource.
    *
-   * @param fieldValue
-   *          the field value
-   * @param field
-   *          the field
+   * @param fieldValue the field value
    * @return true, if is valid sub resource
    */
-  boolean isValidSubResource(Object fieldValue, Field field) {
-    return fieldValue != null && field != null
+  boolean isValidSubResource(Object fieldValue) {
+    return fieldValue != null
         && BaseEntity.class.isAssignableFrom(fieldValue.getClass())
         && fieldValue.getClass().getDeclaredAnnotation(Sensible.class) == null;
   }
@@ -69,11 +85,10 @@ public class AssemblerHelper {
    * Checks if is valid sub list.
    *
    * @param fieldValue the field value
-   * @param field the field
    * @return true, if is valid sub list
    */
-  public boolean isValidSubList(Object fieldValue, Field field) {
-    return fieldValue != null && field != null
+  public boolean isValidSubList(Object fieldValue) {
+    return fieldValue != null
         && AbstractPersistentCollection.class.isAssignableFrom(fieldValue.getClass());
   }
 

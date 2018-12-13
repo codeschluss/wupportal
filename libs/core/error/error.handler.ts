@@ -33,12 +33,17 @@ export class CoreErrorHandler implements ErrorHandler {
   }
 
   public throwError(error: ErrorModel, stacktrace?: string): void {
-    this.dialog.open(ErrorDialogComponent, {
-      data: {
-        error: error,
-        stacktrace: stacktrace || null
-      }
-    });
-  }
+    // workaround for chrome bug concerning video tag in html5
+    if (!error.path.endsWith('/home')
+      && error.message !== '{ isTrusted: [Getter] }') {
+      this.dialog.open(ErrorDialogComponent, {
+        data: {
+          error: error,
+          stacktrace: stacktrace || null
+        }
+      });
+    }
+}
+
 
 }

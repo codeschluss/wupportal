@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { LanguageModel } from 'src/realm/language/language.model';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { LanguageProvider } from 'src/realm/language/language.provider';
+import { SessionProvider } from '@portal/core';
 
 @Component({
     selector: 'languagechooser-dialog',
@@ -14,9 +14,10 @@ import { LanguageProvider } from 'src/realm/language/language.provider';
 
     constructor(
         public dialogRef: MatDialogRef<LangaugeChooserDialogComponent>,
-        private languageProvider: LanguageProvider
-      ) {
-        this.setLanguages();
+        private languageProvider: LanguageProvider,
+        private session: SessionProvider,
+        ) {
+        this.initLanguages();
       }
 
     onNoClick(): void {
@@ -28,12 +29,16 @@ import { LanguageProvider } from 'src/realm/language/language.provider';
    }
 
    //   Just Prototyping
-    changeLanguage(languge: LanguageModel) {
-        console.log('language changed to: ' + languge.locale);
+    changeLanguage(locale: string) {
+
+      this.session.changeLanguage(locale);
+      location.reload();
     }
 
-    setLanguages(): void {
-        this.languageProvider.readAll().then(langs => this.languages = langs);
+    private initLanguages(): void {
+        this.languageProvider.readAll().then(langs => {
+          this.languages = langs;
+        });
     }
 
 

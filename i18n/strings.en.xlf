@@ -2,6 +2,59 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="latestBlogPosts" datatype="html">
+				<target>Latest blog posts</target>
+      </trans-unit>
+      <trans-unit id="readMore" datatype="html">
+				<target>rad more</target>
+      </trans-unit>
+      <trans-unit id="newActivities" datatype="html">
+				<target>New activities</target>
+      </trans-unit>
+      <trans-unit id="inWuppertal" datatype="html">
+				<target>in Wuppertal</target>
+      </trans-unit>
+      <trans-unit id="portalSubtitle" datatype="html">
+				<target>
+          Welcome to Wupp'n'go - your online event portal
+        </target>
+      </trans-unit>
+      <trans-unit id="aboutPageTextHeadLine" datatype="html">
+				<target>The history of Wupp'n'go</target>
+      </trans-unit>
+      <trans-unit id="imprint" datatype="html">
+				<target>Imprint</target>
+      </trans-unit>
+      <trans-unit id="dataProtection" datatype="html">
+				<target>Data protection</target>
+      </trans-unit>
+      <trans-unit id="portalName" datatype="html">
+        <target>Wupp'n'go</target>
+      </trans-unit>
+      <trans-unit id="activities" datatype="html">
+        <target>Activities</target>
+      </trans-unit>
+      <trans-unit id="worthKnowing" datatype="html">
+        <target>Worth knowing</target>
+      </trans-unit>
+      <trans-unit id="blogs" datatype="html">
+        <target>Blogs</target>
+      </trans-unit>
+      <trans-unit id="noBrowserSupportVideo" datatype="html">
+        <target>No browser support for video</target>
+      </trans-unit>
+            <trans-unit id="register" datatype="html">
+        <target>register</target>
+      </trans-unit>
+      <trans-unit id="forgetPassword" datatype="html">
+        <target>forget your password?</target>
+      </trans-unit>
+      <trans-unit id="login" datatype="html">
+        <target>login</target>
+      </trans-unit>
+
+
+
       <trans-unit id="aboutWupportal" datatype="html">
         <target>About Wupportal</target>
       </trans-unit>

@@ -45,6 +45,13 @@ export class SessionProvider {
     ).toPromise();
   }
 
+  public changeLanguage(locale: string): void {
+    this.session.subscribe(session => {
+      session.language = locale;
+      this.writer(session);
+    });
+  }
+
   public logout(): void {
     this.timeout.unsubscribe();
     this.update({

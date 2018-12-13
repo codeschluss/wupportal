@@ -16,11 +16,11 @@
       </trans-unit>
       <trans-unit id="portalSubtitle" datatype="html">
 				<target>
-          Willkommen bei Wupp'n'go deinem online Event-Portal
+          Willkommen bei Wupp'n'go - deinem online Event-Portal
         </target>
       </trans-unit>
       <trans-unit id="aboutPageTextHeadLine" datatype="html">
-				<target>Die Geschichte von Wuppngo</target>
+				<target>Die Geschichte von Wupp'n'go</target>
       </trans-unit>
       <trans-unit id="imprint" datatype="html">
 				<target>Impressum</target>
@@ -43,8 +43,15 @@
       <trans-unit id="noBrowserSupportVideo" datatype="html">
         <target>Leider unterstützt dein Browser die Wiedergabe von Videos nicht</target>
       </trans-unit>
-      
-
+      <trans-unit id="register" datatype="html">
+        <target>Registrieren</target>
+      </trans-unit>
+      <trans-unit id="forgetPassword" datatype="html">
+        <target>Passwort vergessen?</target>
+      </trans-unit>
+      <trans-unit id="login" datatype="html">
+        <target>Anmelden</target>
+      </trans-unit>
       
       
       

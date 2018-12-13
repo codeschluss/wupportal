@@ -52,6 +52,12 @@
       <trans-unit id="login" datatype="html">
         <target>Anmelden</target>
       </trans-unit>
+      <trans-unit id="wrongUserNameOrPassword" datatype="html">
+        <target>Passwort oder Username falsch</target>
+      </trans-unit>
+      <trans-unit id="serverNotReachable" datatype="html">
+        <target>Es scheint ein Problem mit dem Server vorzuligen. Bitte versuchen Sie es später nochmal.</target>
+      </trans-unit>
       
       
       

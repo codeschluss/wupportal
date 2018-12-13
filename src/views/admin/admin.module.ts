@@ -3,11 +3,15 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
+import { LoginComponent } from './login.component';
+import { CoreModule } from '@portal/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const AdminProviders = [
 ];
 
 const AdminEntryComponents = [
+  LoginComponent
 ];
 
 const AdminDeclarations = [
@@ -15,6 +19,9 @@ const AdminDeclarations = [
 ];
 
 const AdminImports = [
+  CoreModule,
+  FlexLayoutModule,
+  LoginComponent.imports
 ];
 
 

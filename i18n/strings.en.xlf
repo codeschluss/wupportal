@@ -52,6 +52,12 @@
       <trans-unit id="login" datatype="html">
         <target>login</target>
       </trans-unit>
+      <trans-unit id="wrongUserNameOrPassword" datatype="html">
+        <target>Password or user name wrong</target>
+      </trans-unit>
+      <trans-unit id="serverNotReachable" datatype="html">
+        <target>There is a problem with the server. Please try again later.</target>
+      </trans-unit>
 
 
 

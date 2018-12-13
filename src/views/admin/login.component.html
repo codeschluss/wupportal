@@ -1,0 +1,75 @@
+<div id="loginView" 
+    fxLayout="column" 
+    fxLayoutAlign="space-around center" 
+    [style.width]="'80%'" 
+    [style.height]="'80vh'" 
+    [style.margin]="'auto'"
+    fxLayoutGap="30px"> 
+    <img id="logo"
+        src="imgs/Logo_bunt_cmyk.svg"
+        [style.width]="'10%'" 
+        (click)="goToHome()">
+    <h2>
+        <i18n class="color-primary" i18n="@@portalSubtitle">portalSubtitle</i18n>
+    </h2>
+        <form #loginForm="ngForm" 
+        (ngSubmit)="login()" 
+        [style.width]="'100%'"
+        fxLayout="column" 
+        fxLayoutAlign="space-around center">
+        <mat-form-field [style.width]="'100%'">
+            <input matInput 
+                placeholder="User name" 
+                name="userName" 
+                type="text" 
+                [(ngModel)]="userName" 
+                required>
+        </mat-form-field>
+        
+        <mat-form-field [style.width]="'100%'">
+            <input matInput 
+                placeholder="Passwort" 
+                name="password" 
+                type="text" 
+                [(ngModel)]="password" 
+                required>
+        </mat-form-field>
+    </form>
+    <div fxLayout="row" 
+        fxLayoutAlign="space-between center" 
+        [style.width]="'100%'" 
+        [style.margin]="'20px'">
+        <button mat-button type="button" color="primary">
+            <i18n i18n="@@register">register</i18n>
+        </button>
+
+        <button mat-button type="button" color="accent">
+            <i18n i18n="@@forgetPassword" class="color-accent">forgetPassword</i18n>
+        </button>
+    </div>
+    <div fxFlex 
+        fxLayout="row" 
+        fxLayoutAlign="end end" 
+        [style.width]="'100%'" 
+        [style.margin]="'20px'">
+        <button mat-raised-button 
+            (click)="login()"
+            color="primary" 
+            form="ngForm" 
+            [disabled]="!loginForm.form.valid">
+            <i18n i18n="@@login">login</i18n>
+        </button>
+    </div>
+    <div *ngIf="error">
+        <div [ngSwitch]="error">
+            <mat-error *ngSwitchCase="'bad gateway'">
+                <i18n i18n="@@serverNotReachable">serverNotReachable</i18n>
+            </mat-error>
+            <mat-error *ngSwitchCase="'unauthorized'">
+                <i18n i18n="@@wrongUserNameOrPassword">wrongUserNameOrPassword</i18n>
+            </mat-error>
+            <mat-error *ngSwitchDefault>{{error}}</mat-error>
+        </div>
+    </div>
+
+</div>

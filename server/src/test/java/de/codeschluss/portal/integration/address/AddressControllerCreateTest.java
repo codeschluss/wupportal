@@ -51,8 +51,17 @@ public class AddressControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidDenied() throws URISyntaxException {
-    AddressEntity address = newAddress("1", null, "42103", "address1");
+  public void createNotValidPlaceDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", null, "42103", "createNotValidPostalCodeDenied");
+
+    controller.create(address);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidPostalCodeDenied() throws URISyntaxException {
+    AddressEntity address = newAddress("1", "createNotValidPostalCodeDenied", null,
+        "createNotValidPostalCodeDenied");
 
     controller.create(address);
   }

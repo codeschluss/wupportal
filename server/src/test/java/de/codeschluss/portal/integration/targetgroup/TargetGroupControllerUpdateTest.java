@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.targetgroup.TargetGroupController;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -38,6 +39,15 @@ public class TargetGroupControllerUpdateTest {
     Resource<TargetGroupEntity> result = (Resource<TargetGroupEntity>) controller
         .readOne(targetGroupId);
     assertThat(result.getContent().getName()).isEqualTo(targetGroup.getName());
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidDenied() throws URISyntaxException {
+    TargetGroupEntity targetGroup = newTargetGroup("target1", null);
+    String targetGroupId = "00000000-0000-0000-0003-800000000000";
+
+    controller.update(targetGroup, targetGroupId);
   }
 
   @Test(expected = DuplicateEntryException.class)

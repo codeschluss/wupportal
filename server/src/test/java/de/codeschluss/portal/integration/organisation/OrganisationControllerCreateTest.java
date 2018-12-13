@@ -6,6 +6,7 @@ import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.provider.ProviderService;
+import de.codeschluss.portal.core.exception.BadParamsException;
 
 import java.net.URISyntaxException;
 
@@ -36,9 +37,10 @@ public class OrganisationControllerCreateTest {
 
   @Test
   @WithUserDetails("super@user")
-  public void addSuperUserOk() throws URISyntaxException {
-    OrganisationEntity organisation = newOrganisation(true, "addSuperUserOk", "add@SuperUserOk",
-        "addSuperUserOk", "123456789", "addSuperUserOk", "addSuperUserOk");
+  public void createSuperUserOk() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(true, "createSuperUserOk",
+        "create@SuperUserOk", "createSuperUserOk", "123456789", "createSuperUserOk",
+        "createSuperUserOk");
 
     controller.create(organisation);
 
@@ -48,10 +50,10 @@ public class OrganisationControllerCreateTest {
   @Test
   @WithUserDetails("createorga@user")
   @SuppressWarnings("unchecked")
-  public void addCreateOrgaOk() throws URISyntaxException {
-    OrganisationEntity organisation = newOrganisation(false, "addCreateOrgaOk",
-        "addCreateOrgaOk@addCreateOrgaOk", "addCreateOrgaOk", "123456789", "addCreateOrgaOk",
-        "addCreateOrgaOk");
+  public void createCreateOrgaOk() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(false, "createCreateOrgaOk",
+        "createCreateOrgaOk@createCreateOrgaOk", "createCreateOrgaOk", "123456789",
+        "createCreateOrgaOk", "createCreateOrgaOk");
 
     OrganisationEntity savedOrga = ((Resource<OrganisationEntity>) controller.create(organisation)
         .getBody()).getContent();
@@ -62,11 +64,22 @@ public class OrganisationControllerCreateTest {
     assertThat(providerService.getProvidersByOrganisation(savedOrga.getId())).haveAtLeastOne(
         new Condition<>(p -> p.getUser().getUsername().equals("createorga@user"), "user exists"));
   }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidOk() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(true, "createSuperUserOk",
+        "create@SuperUserOk", null, "123456789", "createSuperUserOk",
+        "createSuperUserOk");
+
+    controller.create(organisation);
+  }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void addNoUserDenied() throws URISyntaxException {
-    OrganisationEntity organisation = newOrganisation(true, "addNoUserDenied",
-        "addNoUserDenied", "addNoUserDenied", "123456789", "addNoUserDenied", "addNoUserDenied");
+  public void createNoUserDenied() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(true, "createNoUserDenied",
+        "createNoUserDenied", "createNoUserDenied", "123456789", "createNoUserDenied",
+        "createNoUserDenied");
 
     controller.create(organisation);
   }

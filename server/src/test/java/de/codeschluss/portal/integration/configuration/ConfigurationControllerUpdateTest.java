@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.core.config.ConfigurationController;
 import de.codeschluss.portal.core.config.ConfigurationEntity;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -38,6 +39,24 @@ public class ConfigurationControllerUpdateTest {
     Resource<ConfigurationEntity> result = (Resource<ConfigurationEntity>) controller
         .readOne(configurationId);
     assertThat(result.getContent().getItem()).isEqualTo(configuration.getItem());
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidItemOk() throws URISyntaxException {
+    ConfigurationEntity configuration = newConfiguration(null, "updateSuperUserOk");
+    String configurationId = "00000000-0000-0000-0001-000000000008";
+
+    controller.update(configuration, configurationId);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidValueOk() throws URISyntaxException {
+    ConfigurationEntity configuration = newConfiguration("updateNotValidValueOk", null);
+    String configurationId = "00000000-0000-0000-0001-000000000008";
+
+    controller.update(configuration, configurationId);
   }
 
   @Test(expected = DuplicateEntryException.class)

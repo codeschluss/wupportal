@@ -2,6 +2,7 @@ package de.codeschluss.portal.integration.language;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.i18n.language.LanguageController;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
@@ -37,6 +38,25 @@ public class LanguageControllerUpdateTest {
 
     Resource<LanguageEntity> result = (Resource<LanguageEntity>) controller.readOne(languageId);
     assertThat(result.getContent().getName()).isEqualTo(language.getName());
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidLocaleDenied() throws URISyntaxException {
+    LanguageEntity language = newLanguage(null, "updateNotValidLocaleDenied",
+        "updateNotValidLocaleDenied");
+    String languageId = "00000000-0000-0000-0013-200000000000";
+
+    controller.update(language, languageId);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidNameDenied() throws URISyntaxException {
+    LanguageEntity language = newLanguage("es", null, "updateSuperUserDuplicatedLocale");
+    String languageId = "00000000-0000-0000-0013-200000000000";
+
+    controller.update(language, languageId);
   }
 
   @Test(expected = DuplicateEntryException.class)

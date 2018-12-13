@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.tag.TagController;
 import de.codeschluss.portal.components.tag.TagEntity;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -38,6 +39,15 @@ public class TagControllerUpdateTest {
     Resource<TagEntity> result = (Resource<TagEntity>) controller.readOne(tagId);
     assertThat(result.getContent().getName()).isEqualTo(tag.getName());
   }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotvalidOk() throws URISyntaxException {
+    TagEntity tag = newTag(null, "updateNotvalidOk");
+    String tagId = "00000000-0000-0000-0002-110000000000";
+
+    controller.update(tag, tagId);
+  }
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
@@ -68,7 +78,7 @@ public class TagControllerUpdateTest {
   private TagEntity newTag(String name, String description) {
     TagEntity tag = new TagEntity();
     tag.setName(name);
-    tag.setName(description);
+    tag.setDescription(description);
     return tag;
   }
 

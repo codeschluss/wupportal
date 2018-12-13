@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.image.ImageService;
 import de.codeschluss.portal.core.service.ResourceDataService;
@@ -16,6 +17,7 @@ import org.apache.tika.Tika;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -50,7 +52,7 @@ public class OrganisationImageService
   
   @Override
   public boolean validFieldConstraints(OrganisationImageEntity newOrgaImage) {
-    return newOrgaImage.getImage() != null && newOrgaImage.getImage().length > 0;
+    return newOrgaImage.getImage() != null && newOrgaImage.getImage().length == 0;
   }
 
   @Override
@@ -98,10 +100,17 @@ public class OrganisationImageService
       MultipartFile imageFile, 
       String caption, 
       OrganisationEntity organisation) throws IOException {
+    if (imageFile.getBytes() == null || imageFile.getBytes().length == 0) {
+      throw new BadParamsException("Image required");
+    }
+    
     String mimeType = contentDetector.detect(imageFile.getBytes());
     byte[] image = imageService.resize(imageFile);
-    OrganisationImageEntity saved = repo.save(new OrganisationImageEntity(
-        caption, image, mimeType, organisation));
+    
+    OrganisationImageEntity imageEntity = new OrganisationImageEntity(
+        caption, Base64Utils.decode(image), mimeType, organisation);
+    
+    OrganisationImageEntity saved = repo.save(imageEntity);
     return assembler.toResource(saved);
   }
 }

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.organisation.OrganisationService;
+import de.codeschluss.portal.core.exception.BadParamsException;
 
 import java.net.URISyntaxException;
 
@@ -56,6 +57,16 @@ public class OrganisationControllerUpdateTest {
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
 
     assertThat(service.existsByName(organisation.getName()));
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidOk() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(true, "createSuperUserOk",
+        "create@SuperUserOk", null, "123456789", "createSuperUserOk",
+        "createSuperUserOk");
+
+    controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }
 
   @Test(expected = AccessDeniedException.class)

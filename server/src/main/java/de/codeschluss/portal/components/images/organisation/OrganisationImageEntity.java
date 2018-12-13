@@ -26,7 +26,6 @@ import lombok.NoArgsConstructor;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.core.Relation;
-import org.springframework.util.Base64Utils;
 
 /**
  * The persistent class for the organisation_images database table.
@@ -57,10 +56,6 @@ public class OrganisationImageEntity extends BaseResource {
   @ManyToOne
   @JsonIgnore
   private OrganisationEntity organisation;
-  
-  public byte[] getImage() {
-    return Base64Utils.encode(image);
-  }
   
   @Override
   public List<Link> createResourceLinks() {

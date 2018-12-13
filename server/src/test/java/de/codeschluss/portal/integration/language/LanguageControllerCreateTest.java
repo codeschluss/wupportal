@@ -3,6 +3,7 @@ package de.codeschluss.portal.integration.language;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.i18n.language.LanguageController;
 import de.codeschluss.portal.core.i18n.language.LanguageEntity;
@@ -31,9 +32,9 @@ public class LanguageControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void addSuperUserOk() throws URISyntaxException {
-    LanguageEntity language = newLanguage("addSuperUserOk", "addSuperUserOk",
-        "addSuperUserOk");
+  public void createSuperUserOk() throws URISyntaxException {
+    LanguageEntity language = newLanguage("createSuperUserOk", "createSuperUserOk",
+        "createSuperUserOk");
 
     controller.create(language);
 
@@ -43,41 +44,58 @@ public class LanguageControllerCreateTest {
         p -> p.getContent().getName().equals(language.getName()), "language exists"));
   }
 
-  @Test(expected = DuplicateEntryException.class)
+  @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void addSuperUserDuplicatedLocale() throws URISyntaxException {
-    LanguageEntity language = newLanguage("es", "addSuperUserDuplicatedLocale",
-        "addSuperUserDuplicatedLocale");
+  public void createNotValidLocaleDenied() throws URISyntaxException {
+    LanguageEntity language = newLanguage(null, "createNotValidLocaleDenied",
+        "createNotValidLocaleDenied");
+
+    controller.create(language);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidNameDenied() throws URISyntaxException {
+    LanguageEntity language = newLanguage("es", null, "createSuperUserDuplicatedLocale");
 
     controller.create(language);
   }
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void addSuperUserDuplicatedName() throws URISyntaxException {
-    LanguageEntity language = newLanguage("addSuperUserDuplicatedName", "ToRead",
-        "addSuperUserDuplicatedName");
+  public void createSuperUserDuplicatedLocale() throws URISyntaxException {
+    LanguageEntity language = newLanguage("es", "createSuperUserDuplicatedLocale",
+        "createSuperUserDuplicatedLocale");
+
+    controller.create(language);
+  }
+
+  @Test(expected = DuplicateEntryException.class)
+  @WithUserDetails("super@user")
+  public void createSuperUserDuplicatedName() throws URISyntaxException {
+    LanguageEntity language = newLanguage("createSuperUserDuplicatedName", "ToRead",
+        "createSuperUserDuplicatedName");
 
     controller.create(language);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void addProviderDenied() throws URISyntaxException {
-    LanguageEntity language = newLanguage("addProviderDenied", "addProviderDenied",
-        "addProviderDenied");
+  public void createProviderDenied() throws URISyntaxException {
+    LanguageEntity language = newLanguage("createProviderDenied", "createProviderDenied",
+        "createProviderDenied");
 
     controller.create(language);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void addNoUserDenied() throws URISyntaxException {
-    LanguageEntity language = newLanguage("addNoUserDenied", "addNoUserDenied",
-        "addNoUserDenied");
+  public void createNoUserDenied() throws URISyntaxException {
+    LanguageEntity language = newLanguage("createNoUserDenied", "createNoUserDenied",
+        "createNoUserDenied");
 
     controller.create(language);
   }
-  
+
   private LanguageEntity newLanguage(String locale, String name, String machineTranslated) {
     LanguageEntity language = new LanguageEntity();
     language.setLocale(locale);

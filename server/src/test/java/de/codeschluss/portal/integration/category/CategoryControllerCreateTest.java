@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.category.CategoryController;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -31,9 +32,9 @@ public class CategoryControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void addSuperUserOk() throws URISyntaxException {
-    CategoryEntity category = newCategory("addSuperUserOk", "addSuperUserOk",
-        "addSuperUserOk");
+  public void createSuperUserOk() throws URISyntaxException {
+    CategoryEntity category = newCategory("createSuperUserOk", "createSuperUserOk",
+        "createSuperUserOk");
 
     controller.create(category);
 
@@ -43,32 +44,50 @@ public class CategoryControllerCreateTest {
         p -> p.getContent().getName().equals(category.getName()), "category exists"));
   }
 
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidNameDenied() throws URISyntaxException {
+    CategoryEntity category = newCategory("createNotValidNameDenied", "createNotValidNameDenied",
+        null);
+
+    controller.create(category);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidColorDenied() throws URISyntaxException {
+    CategoryEntity category = newCategory(null, "createNotValidColorDenied",
+        "createNotValidColorDenied");
+
+    controller.create(category);
+  }
+
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void addSuperUserDuplicated() throws URISyntaxException {
-    CategoryEntity category = newCategory("addSuperUserDuplicatedName",
-        "addSuperUserDuplicatedName", "category1");
+  public void createSuperUserDuplicated() throws URISyntaxException {
+    CategoryEntity category = newCategory("createSuperUserDuplicatedName",
+        "createSuperUserDuplicatedName", "category1");
 
     controller.create(category);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void addProviderDenied() throws URISyntaxException {
-    CategoryEntity category = newCategory("addProviderDenied", "addProviderDenied",
-        "addProviderDenied");
+  public void createProviderDenied() throws URISyntaxException {
+    CategoryEntity category = newCategory("createProviderDenied", "createProviderDenied",
+        "createProviderDenied");
 
     controller.create(category);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void addNoUserDenied() throws URISyntaxException {
-    CategoryEntity category = newCategory("addNoUserDenied", "addNoUserDenied",
-        "addNoUserDenied");
+  public void createNoUserDenied() throws URISyntaxException {
+    CategoryEntity category = newCategory("createNoUserDenied", "createNoUserDenied",
+        "createNoUserDenied");
 
     controller.create(category);
   }
-  
+
   private CategoryEntity newCategory(String color, String description, String name) {
     CategoryEntity category = new CategoryEntity();
     category.setName(name);

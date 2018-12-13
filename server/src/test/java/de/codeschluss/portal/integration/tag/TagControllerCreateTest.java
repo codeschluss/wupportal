@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.tag.TagController;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
 import java.net.URISyntaxException;
@@ -30,8 +31,8 @@ public class TagControllerCreateTest {
 
   @Test
   @WithUserDetails("super@user")
-  public void addSuperUserOk() throws URISyntaxException {
-    TagEntity tag = newTag("addSuperUserOk", "addSuperUserOk");
+  public void createSuperUserOk() throws URISyntaxException {
+    TagEntity tag = newTag("createSuperUserOk", "createSuperUserOk");
 
     controller.create(tag);
 
@@ -40,17 +41,25 @@ public class TagControllerCreateTest {
 
   @Test
   @WithUserDetails("provider1@user")
-  public void addProviderUserOk() throws URISyntaxException {
-    TagEntity tag = newTag("addProviderUserOk", "addProviderUserOk");
+  public void createProviderUserOk() throws URISyntaxException {
+    TagEntity tag = newTag("createProviderUserOk", "createProviderUserOk");
 
     controller.create(tag);
 
     assertContaining(tag);
   }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotvalidOk() throws URISyntaxException {
+    TagEntity tag = newTag(null, "createNotvalidOk");
+
+    controller.create(tag);
+  }
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void addSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws URISyntaxException {
     TagEntity tag = newTag("tag1", "tag1");
 
     controller.create(tag);
@@ -58,23 +67,23 @@ public class TagControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
-  public void addNotApprovedDenied() throws URISyntaxException {
-    TagEntity tag = newTag("addNotApprovedDenied", "addNotApprovedDenied");
+  public void createNotApprovedDenied() throws URISyntaxException {
+    TagEntity tag = newTag("createNotApprovedDenied", "createNotApprovedDenied");
 
     controller.create(tag);
   }
   
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("notapprovedorga@user")
-  public void addNotApprovedOrgaDenied() throws URISyntaxException {
-    TagEntity tag = newTag("addNotApprovedDenied", "addNotApprovedDenied");
+  public void createNotApprovedOrgaDenied() throws URISyntaxException {
+    TagEntity tag = newTag("createNotApprovedDenied", "createNotApprovedDenied");
 
     controller.create(tag);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void addNoUserDenied() throws URISyntaxException {
-    TagEntity tag = newTag("addNoUserDenied", "addNoUserDenied");
+  public void createNoUserDenied() throws URISyntaxException {
+    TagEntity tag = newTag("createNoUserDenied", "createNoUserDenied");
 
     controller.create(tag);
   }
@@ -90,7 +99,7 @@ public class TagControllerCreateTest {
   private TagEntity newTag(String name, String description) {
     TagEntity tag = new TagEntity();
     tag.setName(name);
-    tag.setName(description);
+    tag.setDescription(description);
     return tag;
   }
 }

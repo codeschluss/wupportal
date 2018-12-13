@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.tag.TagEntity;
+import de.codeschluss.portal.core.exception.BadParamsException;
 
 import java.net.URISyntaxException;
 
@@ -57,6 +58,15 @@ public class ActivityControllerAddTagsTest {
     controller.addTags(activityId, tag);
 
     assertContaining(tag, activityId);
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("provider1@user")
+  public void addTagsNotValidDenied() throws URISyntaxException {
+    TagEntity tag = new TagEntity("addTagsNotValidDenied", null, null, null);
+    String activityId = "00000000-0000-0000-0010-200000000000";
+
+    controller.addTags(activityId, tag);
   }
 
   @Test(expected = AccessDeniedException.class)

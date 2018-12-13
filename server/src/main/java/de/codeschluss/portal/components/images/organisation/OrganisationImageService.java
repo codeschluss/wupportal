@@ -47,6 +47,11 @@ public class OrganisationImageService
   public OrganisationImageEntity getExisting(OrganisationImageEntity newEntity) {
     return repo.findOne(entities.withId(newEntity.getId())).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(OrganisationImageEntity newOrgaImage) {
+    return newOrgaImage.getImage() != null && newOrgaImage.getImage().length > 0;
+  }
 
   @Override
   public OrganisationImageEntity update(String id, OrganisationImageEntity updatedEntity) {

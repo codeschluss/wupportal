@@ -50,6 +50,23 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   public ActivityEntity getExisting(ActivityEntity activity) {
     return repo.findById(activity.getId()).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(ActivityEntity newActivity) {
+    return newActivity.getName() != null && !newActivity.getName().isEmpty()
+        && validContactData(newActivity);
+  }
+
+  /**
+   * Valid contact data.
+   *
+   * @param newActivity the new activity
+   * @return true, if successful
+   */
+  private boolean validContactData(ActivityEntity newActivity) {
+    return (newActivity.getMail() != null && !newActivity.getMail().isEmpty())
+        || (newActivity.getPhone() != null && !newActivity.getMail().isEmpty());
+  }
 
   /**
    * Gets the resources by providers.

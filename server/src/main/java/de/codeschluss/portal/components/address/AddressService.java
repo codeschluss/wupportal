@@ -35,6 +35,13 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
   public AddressEntity getExisting(AddressEntity address) {
     return repo.findOne(entities.withAddress(address)).orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(AddressEntity newAddress) {
+    return newAddress.getPlace() != null && !newAddress.getPlace().isEmpty()
+        && newAddress.getPostalCode() != null && !newAddress.getPostalCode().isEmpty()
+        && newAddress.getStreet() != null && !newAddress.getStreet().isEmpty();
+  }
 
   /**
    * Gets the resources with suburbs by organisation.

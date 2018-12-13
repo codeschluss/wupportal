@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.activity.ActivityQueryParam;
+import de.codeschluss.portal.core.exception.BadParamsException;
 
 import java.net.URISyntaxException;
 
@@ -29,41 +30,72 @@ public class ActivityControllerCreateTest {
 
   @Test
   @WithUserDetails("provider1@user")
-  public void addProviderOk() throws URISyntaxException {
-    ActivityEntity activity = createActivity("addProviderOk");
+  public void createProviderOk() throws URISyntaxException {
+    ActivityEntity activity = createActivity("createProviderOk");
 
     controller.create(activity);
 
     assertContaining(activity);
   }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("provider1@user")
+  public void createNotValidContactDenied() throws URISyntaxException {
+    String addressId = "00000000-0000-0000-0006-100000000000";
+    String categoryId = "00000000-0000-0000-0007-100000000000";
+    String organisationId = "00000000-0000-0000-0008-100000000000";
+    ActivityEntity activity = new ActivityEntity();
+    activity.setAddressId(addressId);
+    activity.setCategoryId(categoryId);
+    activity.setOrganisationId(organisationId);
+    activity.setName("createNotValidContactDenied");
+
+    controller.create(activity);
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("provider1@user")
+  public void createNotValidNameDenied() throws URISyntaxException {
+    String addressId = "00000000-0000-0000-0006-100000000000";
+    String categoryId = "00000000-0000-0000-0007-100000000000";
+    String organisationId = "00000000-0000-0000-0008-100000000000";
+    ActivityEntity activity = new ActivityEntity();
+    activity.setAddressId(addressId);
+    activity.setCategoryId(categoryId);
+    activity.setOrganisationId(organisationId);
+    activity.setPhone("123456");
+    activity.setMail("createNotValidNameDenied");
+
+    controller.create(activity);
+  }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("super@user")
-  public void addSuperUserIsNoProviderDenied() throws URISyntaxException {
-    ActivityEntity activity = createActivity("addSuperUserOk");
+  public void createSuperUserIsNoProviderDenied() throws URISyntaxException {
+    ActivityEntity activity = createActivity("createSuperUserOk");
 
     controller.create(activity);
   }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
-  public void addNotApprovedProviderDenied() throws URISyntaxException {
-    ActivityEntity activity = createActivity("addNotApprovedProviderDenied");
+  public void createNotApprovedProviderDenied() throws URISyntaxException {
+    ActivityEntity activity = createActivity("createNotApprovedProviderDenied");
 
     controller.create(activity);
   }
   
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("notapprovedorga@user")
-  public void addNotApprovedOrgaDenied() throws URISyntaxException {
-    ActivityEntity activity = createActivity("addNotApprovedOrgaDenied");
+  public void createNotApprovedOrgaDenied() throws URISyntaxException {
+    ActivityEntity activity = createActivity("createNotApprovedOrgaDenied");
 
     controller.create(activity);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void addNoUserDenied() throws URISyntaxException {
-    ActivityEntity activity = createActivity("addNoUserDenied");
+  public void createNoUserDenied() throws URISyntaxException {
+    ActivityEntity activity = createActivity("createNoUserDenied");
 
     controller.create(activity);
   }
@@ -76,7 +108,8 @@ public class ActivityControllerCreateTest {
     String organisationId = "00000000-0000-0000-0008-100000000000";
     
     activity.setName(name);
-    activity.setName("createActivity");
+    activity.setMail("createActivity");
+    activity.setPhone("123456789");
     activity.setAddressId(addressId);
     activity.setCategoryId(categoryId);
     activity.setOrganisationId(organisationId);

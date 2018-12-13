@@ -69,6 +69,11 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
         .findOne(entities.withUserIdAndOrgaId(userId, orgaId))
         .orElse(null);
   }
+  
+  @Override
+  public boolean validFieldConstraints(ProviderEntity newProvider) {
+    return newProvider.getOrganisation() != null && newProvider.getUser() != null;
+  }
 
   @Override
   public ProviderEntity update(String id, ProviderEntity updatedEntity) {

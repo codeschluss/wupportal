@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.activity.ActivityQueryParam;
+import de.codeschluss.portal.core.exception.BadParamsException;
 
 import java.net.URISyntaxException;
 
@@ -59,6 +60,39 @@ public class ActivityControllerUpdateTest {
 
     assertContaining(activity);
   }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("provider1@user")
+  public void updateNotValidContactDenied() throws URISyntaxException {
+    String addressId = "00000000-0000-0000-0006-100000000000";
+    String categoryId = "00000000-0000-0000-0007-100000000000";
+    String organisationId = "00000000-0000-0000-0008-100000000000";
+    ActivityEntity activity = new ActivityEntity();
+    activity.setAddressId(addressId);
+    activity.setCategoryId(categoryId);
+    activity.setOrganisationId(organisationId);
+    activity.setName("createNotValidContactDenied");
+    String activityId = "00000000-0000-0000-0010-200000000000";
+
+    controller.update(activity, activityId);
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("provider1@user")
+  public void updateNotValidNameDenied() throws URISyntaxException {
+    String addressId = "00000000-0000-0000-0006-100000000000";
+    String categoryId = "00000000-0000-0000-0007-100000000000";
+    String organisationId = "00000000-0000-0000-0008-100000000000";
+    ActivityEntity activity = new ActivityEntity();
+    activity.setAddressId(addressId);
+    activity.setCategoryId(categoryId);
+    activity.setOrganisationId(organisationId);
+    activity.setPhone("123456");
+    activity.setMail("createNotValidNameDenied");
+    String activityId = "00000000-0000-0000-0010-200000000000";
+
+    controller.update(activity, activityId);
+  }
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
@@ -85,7 +119,8 @@ public class ActivityControllerUpdateTest {
     String organisationId = "00000000-0000-0000-0008-100000000000";
     
     activity.setName(name);
-    activity.setName("createActivity");
+    activity.setMail("createActivity");
+    activity.setPhone("123456789");
     activity.setAddressId(addressId);
     activity.setCategoryId(categoryId);
     activity.setOrganisationId(organisationId);

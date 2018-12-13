@@ -113,5 +113,4 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
       throw new BadParamsException("Address or Suburb with given ID do not exist!");
     }
   }
-
 }

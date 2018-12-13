@@ -55,7 +55,6 @@ public abstract class CrudController<E extends BaseResource, S extends ResourceD
    */
   public ResponseEntity<?> readAll(FilterSortPaginate params) {
     validateRead(params);
-
     try {
       return params.getPage() == null && params.getSize() == null
           ? ok(service.getSortedListResources(params))
@@ -126,6 +125,9 @@ public abstract class CrudController<E extends BaseResource, S extends ResourceD
     if (service.getExisting(newEntity) != null) {
       throw new DuplicateEntryException("Entity already exists!");
     }
+    if (!service.validFieldConstraints(newEntity)) {
+      throw new BadParamsException("Required Fields not satisfied");
+    }
   }
 
   /**
@@ -144,6 +146,9 @@ public abstract class CrudController<E extends BaseResource, S extends ResourceD
     E duplicate = service.getExisting(newEntity);
     if (duplicate != null && !duplicate.getId().equals(id)) {
       throw new DuplicateEntryException("Entity already exists!");
+    }
+    if (!service.validFieldConstraints(newEntity)) {
+      throw new BadParamsException("Required Fields not satisfied");
     }
 
     Resource<E> resource = service.updateResource(id, newEntity);

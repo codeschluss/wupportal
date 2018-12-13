@@ -301,9 +301,23 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   public ResponseEntity<?> addTags(@PathVariable String activityId,
       @RequestBody TagEntity... tags) {
     try {
+      validateTags(tags);
       return ok(service.addTags(activityId, tagService.addAll(Arrays.asList(tags))));
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
+    }
+  }
+
+  /**
+   * Validate tags.
+   *
+   * @param tags the tags
+   */
+  private void validateTags(TagEntity[] tags) {
+    for (TagEntity tag : tags) {
+      if (!tagService.validFieldConstraints(tag)) {
+        throw new BadParamsException("Tags must have a name");
+      }
     }
   }
 
@@ -420,10 +434,24 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   public ResponseEntity<?> addSchedules(@PathVariable String activityId,
       @RequestBody ScheduleEntity... schedules) {
     try {
+      validateSchedules(schedules);
       service.addSchedules(activityId, scheduleService.addAll(Arrays.asList(schedules)));
       return readSchedules(activityId, null);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
+    }
+  }
+
+  /**
+   * Validate schedules.
+   *
+   * @param schedules the schedules
+   */
+  private void validateSchedules(ScheduleEntity[] schedules) {
+    for (ScheduleEntity schedule : schedules) {
+      if (!scheduleService.validFieldConstraints(schedule)) {
+        throw new BadParamsException("Schedules need Start and End date");
+      }
     }
   }
 

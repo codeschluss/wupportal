@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.codeschluss</groupId>
-	<artifactId>wupportal</artifactId>
+	<artifactId>portal</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>wupportal</name>
-	<description>Demo project for Spring Boot</description>
+	<name>portal</name>
+	<description>An informative portal</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -61,6 +61,11 @@ public class OrganisationEntity extends BaseResource {
   
   private static final long serialVersionUID = 1L;
   
+  @ManyToOne
+  @JsonIgnore
+  @ToString.Exclude
+  private AddressEntity address;
+  
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean approved;
 
@@ -68,6 +73,11 @@ public class OrganisationEntity extends BaseResource {
   @JsonDeserialize
   @Transient
   private String description;
+  
+  @OneToMany(mappedBy = "organisation", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  @JsonIgnore
+  @ToString.Exclude
+  private List<OrganisationImageEntity> images;
 
   private String mail;
 
@@ -76,30 +86,20 @@ public class OrganisationEntity extends BaseResource {
 
   private String phone;
   
-  @Column(name = "video_url")
-  private String videoUrl;
-
-  private String website;
-
-  @ManyToOne
-  @JsonIgnore
-  @ToString.Exclude
-  private AddressEntity address;
-
   @OneToMany(mappedBy = "organisation", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
   private List<ProviderEntity> providers;
   
-  @OneToMany(mappedBy = "organisation", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-  @JsonIgnore
-  @ToString.Exclude
-  private List<OrganisationImageEntity> images;
-  
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
   protected Set<OrganisationTranslatablesEntity> translatables;
+  
+  @Column(name = "video_url")
+  private String videoUrl;
+
+  private String website;
   
   @JsonProperty
   public boolean isApproved() {

@@ -53,17 +53,17 @@ public class UserEntity extends BaseResource {
   private String password;
 
   private String phone;
+  
+  @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+  @JsonIgnore
+  @ToString.Exclude
+  private List<ProviderEntity> providers;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean superuser;
 
   @Column(unique = true, nullable = false)
   private String username;
-
-  @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-  @JsonIgnore
-  @ToString.Exclude
-  private List<ProviderEntity> providers;
 
   @JsonIgnore
   public String getPassword() {

@@ -63,7 +63,7 @@ public class ActivityControllerAddTagsTest {
   @Test(expected = BadParamsException.class)
   @WithUserDetails("provider1@user")
   public void addTagsNotValidDenied() throws URISyntaxException {
-    TagEntity tag = new TagEntity("addTagsNotValidDenied", null, null, null);
+    TagEntity tag = newTag(null, "addTagsNotValidDenied");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.addTags(activityId, tag);
@@ -98,7 +98,7 @@ public class ActivityControllerAddTagsTest {
   private TagEntity newTag(String name, String description) {
     TagEntity tag = new TagEntity();
     tag.setName(name);
-    tag.setName(description);
+    tag.setDescription(description);
     return tag;
   }
 }

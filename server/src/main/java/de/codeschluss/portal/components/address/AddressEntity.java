@@ -45,6 +45,22 @@ import org.springframework.hateoas.core.Relation;
 public class AddressEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
+  
+  @OneToMany(mappedBy = "address")
+  @JsonIgnore
+  @ToString.Exclude
+  private List<ActivityEntity> activities;
+  
+  @Column(nullable = true)
+  private float latitude;
+
+  @Column(nullable = true)
+  private float longitude;
+  
+  @OneToMany(mappedBy = "address")
+  @JsonIgnore
+  @ToString.Exclude
+  private List<OrganisationEntity> organisations;
 
   @Column(name = "house_number")
   private String houseNumber;
@@ -59,22 +75,6 @@ public class AddressEntity extends BaseResource {
   @ManyToOne
   @JsonIgnore
   private SuburbEntity suburb;
-
-  @Column(nullable = true)
-  private float latitude;
-
-  @Column(nullable = true)
-  private float longitude;
-
-  @OneToMany(mappedBy = "address")
-  @JsonIgnore
-  @ToString.Exclude
-  private List<ActivityEntity> activities;
-
-  @OneToMany(mappedBy = "address")
-  @JsonIgnore
-  @ToString.Exclude
-  private List<OrganisationEntity> organisations;
   
   @Override
   public List<Link> createResourceLinks() {

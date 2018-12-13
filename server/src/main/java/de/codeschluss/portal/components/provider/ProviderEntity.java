@@ -43,18 +43,19 @@ import org.springframework.hateoas.core.Relation;
 @Table(name = "providers")
 @Relation(collectionRelation = "data")
 public class ProviderEntity extends BaseResource {
+  
   private static final long serialVersionUID = 1L;
+  
+  @OneToMany(mappedBy = "provider", cascade = CascadeType.REMOVE)
+  @JsonIgnore
+  @ToString.Exclude
+  private List<ActivityEntity> activities;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean admin;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
   private boolean approved;
-
-  @OneToMany(mappedBy = "provider", cascade = CascadeType.REMOVE)
-  @JsonIgnore
-  @ToString.Exclude
-  private List<ActivityEntity> activities;
 
   @ManyToOne
   @JsonIgnore

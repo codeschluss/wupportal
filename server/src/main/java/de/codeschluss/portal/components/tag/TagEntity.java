@@ -53,6 +53,10 @@ import org.springframework.hateoas.core.Relation;
 public class TagEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
+  
+  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+  @JsonIgnore
+  private List<ActivityEntity> activities;
 
   @Lob
   @Column(columnDefinition = "TEXT")
@@ -62,10 +66,6 @@ public class TagEntity extends BaseResource {
   @JsonDeserialize
   @Transient
   private String name;
-
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
-  @JsonIgnore
-  private List<ActivityEntity> activities;
   
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @ToString.Exclude

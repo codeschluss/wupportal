@@ -43,12 +43,12 @@ public class SuburbEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
 
-  @Column(unique = true, nullable = false)
-  private String name;
-
   @OneToMany(mappedBy = "suburb")
   @JsonIgnore
   private List<AddressEntity> addresses;
+  
+  @Column(unique = true, nullable = false)
+  private String name;
   
   @Override
   public List<Link> createResourceLinks() {

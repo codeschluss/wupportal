@@ -132,7 +132,13 @@ public class OrganisationController
   private OrganisationEntity createOrgaWithAdmin(OrganisationEntity newOrga) {
     newOrga.setApproved(false);
     OrganisationEntity orga = service.add(newOrga);
-    ProviderEntity admin = new ProviderEntity(true, true, null, orga, authService.getCurrentUser());
+    
+    ProviderEntity admin = new ProviderEntity();
+    admin.setApproved(true);
+    admin.setAdmin(true);
+    admin.setOrganisation(orga);
+    admin.setUser(authService.getCurrentUser());
+    
     providerService.add(admin);
     return orga;
   }

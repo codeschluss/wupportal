@@ -41,12 +41,12 @@ public class ActivityTranslatablesEntity extends TranslatableEntity<ActivityEnti
 
   private static final long serialVersionUID = 1L;
 
-  @Column(nullable = false)
-  private String name;
-
   @Lob
   @Column(columnDefinition = "TEXT")
   private String description;
+  
+  @Column(nullable = false)
+  private String name;
 
   @Override
   public List<Link> createResourceLinks() {    

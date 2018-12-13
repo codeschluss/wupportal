@@ -69,23 +69,6 @@ public class ActivityEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
   
-  @Column(name = "contact_name")
-  private String contactName;
-  
-  private String phone;
-  
-  private String mail;
-
-  @JsonSerialize
-  @JsonDeserialize
-  @Transient
-  private String name;
-
-  @JsonSerialize
-  @JsonDeserialize
-  @Transient
-  private String description;
-
   @Transient
   @JsonDeserialize
   private String addressId;
@@ -104,10 +87,27 @@ public class ActivityEntity extends BaseResource {
   @JsonIgnore
   @JoinColumn(nullable = false)
   private CategoryEntity category;
+  
+  @Column(name = "contact_name")
+  private String contactName;
+  
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
+  private String description;
+  
+  private String mail;
+  
+  @JsonSerialize
+  @JsonDeserialize
+  @Transient
+  private String name;
 
   @Transient
   @JsonDeserialize
   private String organisationId;
+  
+  private String phone;
 
   @ManyToOne
   @ToString.Exclude

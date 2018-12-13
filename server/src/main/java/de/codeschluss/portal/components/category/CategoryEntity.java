@@ -52,6 +52,10 @@ import org.springframework.hateoas.core.Relation;
 public class CategoryEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
+  
+  @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+  @JsonIgnore
+  private List<ActivityEntity> activities;
 
   @Column(unique = true, nullable = false)
   private String color;
@@ -64,10 +68,6 @@ public class CategoryEntity extends BaseResource {
   @JsonDeserialize
   @Transient
   private String name;
-
-  @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-  @JsonIgnore
-  private List<ActivityEntity> activities;
   
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent", cascade = CascadeType.REMOVE)
   @ToString.Exclude

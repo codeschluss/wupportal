@@ -236,7 +236,12 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
    * @return the provider entity
    */
   public ProviderEntity createProvider(OrganisationEntity orga, UserEntity user) {
-    return new ProviderEntity(false, false, null, orga, user);
+    ProviderEntity provider = new ProviderEntity();
+    provider.setAdmin(false);
+    provider.setApproved(false);
+    provider.setOrganisation(orga);
+    provider.setUser(user);
+    return provider;
   }
 
   /**

@@ -63,7 +63,7 @@ public class UserEntity extends BaseResource {
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
   @JsonIgnore
   @ToString.Exclude
-  private List<ProviderEntity> providerEntities;
+  private List<ProviderEntity> providers;
 
   @JsonIgnore
   public String getPassword() {

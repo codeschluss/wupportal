@@ -179,7 +179,7 @@ public class PagingAndSortingAssembler {
             .invoke(entity);
       } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
           | IntrospectionException | NoSuchFieldException | SecurityException e) {
-        break;
+        continue;
       }
 
       if (helper.isValidSubResource(fieldValue, field)) {
@@ -192,6 +192,14 @@ public class PagingAndSortingAssembler {
         }
         embeddables.put(node.getName(), resource);
       }
+      
+      if (helper.isValidSubList(fieldValue, field)) {
+        List<?> subEntity = (List<?>) fieldValue;
+        Object listResource = subEntity.stream()
+            .map(subRes -> toResource((E) subRes))
+            .collect(Collectors.toList());
+        embeddables.put(node.getName(), listResource);
+      }        
     }
     return resourceWithEmbeddable(entity, embeddables);
   }

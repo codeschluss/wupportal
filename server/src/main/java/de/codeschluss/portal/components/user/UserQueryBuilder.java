@@ -56,7 +56,7 @@ public class UserQueryBuilder extends QueryBuilder<QUserEntity> {
    * @return the boolean expression
    */
   public BooleanExpression withAnyOfProviders(List<ProviderEntity> providers) {
-    return query.providerEntities.any().in(providers);
+    return query.providers.any().in(providers);
   }
 
   /**

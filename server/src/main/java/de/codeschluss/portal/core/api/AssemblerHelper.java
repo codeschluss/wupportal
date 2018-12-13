@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import javax.persistence.ManyToOne;
-
+import org.hibernate.collection.internal.AbstractPersistentCollection;
 import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
@@ -61,8 +60,19 @@ public class AssemblerHelper {
   boolean isValidSubResource(Object fieldValue, Field field) {
     return fieldValue != null && field != null
         && BaseEntity.class.isAssignableFrom(fieldValue.getClass())
-        && fieldValue.getClass().getDeclaredAnnotation(Sensible.class) == null
-        && field.getDeclaredAnnotation(ManyToOne.class) != null;
+        && fieldValue.getClass().getDeclaredAnnotation(Sensible.class) == null;
+  }
+  
+  /**
+   * Checks if is valid sub list.
+   *
+   * @param fieldValue the field value
+   * @param field the field
+   * @return true, if is valid sub list
+   */
+  public boolean isValidSubList(Object fieldValue, Field field) {
+    return fieldValue != null && field != null
+        && AbstractPersistentCollection.class.isAssignableFrom(fieldValue.getClass());
   }
 
   /**

@@ -187,6 +187,12 @@ public class ActivityControllerReadAllTest {
     EmbeddedGraph organisation = new EmbeddedGraph();
     organisation.setName("organisation");
     
+    EmbeddedGraph tags = new EmbeddedGraph();
+    tags.setName("tags");
+    
+    EmbeddedGraph schedules = new EmbeddedGraph();
+    schedules.setName("schedules");
+    
     EmbeddedGraph user = new EmbeddedGraph();
     user.setName("user");
     
@@ -203,6 +209,8 @@ public class ActivityControllerReadAllTest {
     activityList.add(address);
     activityList.add(category);
     activityList.add(provider);
+    activityList.add(tags);
+    activityList.add(schedules);
     activities.setNodes(activityList);
     
     ObjectMapper mapper = new ObjectMapper();

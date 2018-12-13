@@ -59,12 +59,8 @@ export abstract class CrudProvider
     ).toPromise();
   }
 
-  public readAll(
-    params?: ReadAllParams,
-    intercept?: (response: StrictHttpResponse<any>) => void
-  ): Promise<Model[]> {
+  public readAll(params?: ReadAllParams): Promise<Model[]> {
     return this.call(this.methods.readAll, params || { }).pipe(
-      tap((response) => intercept && intercept(response)),
       map((response) => this.cast<Model[]>(response)),
       tap((response) => this.link(response))
     ).toPromise();

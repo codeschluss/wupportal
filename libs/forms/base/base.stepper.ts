@@ -1,4 +1,4 @@
-import { OnInit, Type } from '@angular/core';
+import { OnDestroy, OnInit, Type } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, SessionResolver } from '@portal/core';
@@ -9,7 +9,8 @@ export interface FormStep {
   form: Type<BaseForm<CrudModel>>;
 }
 
-export abstract class BaseStepper<Model extends CrudModel> implements OnInit {
+export abstract class BaseStepper<Model extends CrudModel>
+  implements OnInit, OnDestroy {
 
   public abstract root: string;
 
@@ -32,11 +33,11 @@ export abstract class BaseStepper<Model extends CrudModel> implements OnInit {
       path: `${self.root}/:uuid`,
       component: this,
       resolve: {
-        model: CrudResolver,
+        item: CrudResolver,
         session: SessionResolver
       },
       data: {
-        model: self.joiner
+        item: self.joiner
       }
     };
   }
@@ -45,9 +46,9 @@ export abstract class BaseStepper<Model extends CrudModel> implements OnInit {
     return `
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps">
-          <a mat-tab-link [disabled]="!valid" [routerLink]="step.field"
+          <a mat-tab-link [disabled]="!isValid" [routerLink]="step.field"
             #tab="routerLinkActive" routerLinkActive [active]="tab.isActive">
-            ${template}
+            {{ step.field }}
           </a>
         </ng-container>
       </nav>
@@ -55,19 +56,17 @@ export abstract class BaseStepper<Model extends CrudModel> implements OnInit {
       <router-outlet></router-outlet>
 
       <ng-container *ngIf="hasPrev">
-        <button mat-button [disabled]="!valid"
-          [routerLink]="get(-1)?.field">
+        <button mat-button [disabled]="!isValid" [routerLink]="get(-1)?.field">
           <i18n i18n="@@prevForm">prevForm</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="hasNext">
-        <button mat-button [disabled]="!valid"
-          [routerLink]="get(+1)?.field">
+        <button mat-button [disabled]="!isValid" [routerLink]="get(+1)?.field">
           <i18n i18n="@@nextForm">nextForm</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="hasSave">
-        <button mat-button [disabled]="!valid" (click)="save()">
+        <button mat-button [disabled]="!isValid" (click)="save()">
           <i18n i18n="@@saveForms">saveForms</i18n>
         </button>
       </ng-container>
@@ -85,20 +84,25 @@ export abstract class BaseStepper<Model extends CrudModel> implements OnInit {
     return this.steps.indexOf(this.get()) === this.steps.length - 1;
   }
 
-  public get valid(): boolean {
+  public get isValid(): boolean {
     return this.route.snapshot.routeConfig.children
         .every((child) => child.data.group.valid);
   }
 
   public ngOnInit(): void {
     if (!this.route.snapshot.routeConfig.children) {
-      this.router.resetConfig(this.router.config
-          .map((route) => this.walker(route, this.routes())));
+      this.router.config = this.router.config
+        .map((route) => this.walker(route, this.routes()));
     }
 
     if (!this.route.snapshot.children.length) {
       this.router.navigate([this.get().field], { relativeTo: this.route });
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.router.config = this.router.config
+      .map((route) => this.walker(route, []));
   }
 
   public get(index: number = 0): FormStep {
@@ -128,18 +132,18 @@ export abstract class BaseStepper<Model extends CrudModel> implements OnInit {
         }), { }),
         data: Object.assign({
           group: this.builder.group({ }),
-          model: step.field === this.root
-            ? this.route.snapshot.data.model
-            : this.route.snapshot.data.model[step.field],
+          item: step.field === this.root
+            ? this.route.snapshot.data.item
+            : this.route.snapshot.data.item[step.field],
           session: this.route.snapshot.data.session
         }, ...fields.map((field) => ({
-          [field.name]: CrudJoiner.of(field.model, false)
+          [field.name]: CrudJoiner.of(field.model, { filter: null })
         })))
       };
     });
   }
 
-  private walker(route: Route, children: Route[]) {
+  private walker(route: Route, children: Route[]): Route {
     if ((route['_loadedConfig'] || { }).routes) {
       route['_loadedConfig'].routes = route['_loadedConfig'].routes
         .map((child) => this.walker(child, children));

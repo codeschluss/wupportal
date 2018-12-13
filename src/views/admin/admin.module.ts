@@ -1,44 +1,42 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material';
 import { CoreModule } from '@portal/core';
 import { FormsModule } from '@portal/forms';
 import { ActivityFormComponent } from 'src/realm/activity/activity.form';
 import { ActivityStepperComponent } from 'src/realm/activity/activity.stepper';
+import { ActivityTableComponent } from 'src/realm/activity/activity.table';
 import { AddressFormComponent } from 'src/realm/address/address.form';
+import { UserFormComponent } from 'src/realm/user/user.form';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
+import { AccountPanelComponent } from './panels/account.panel';
 
-const AdminProviders = [
-];
-
-const AdminEntryComponents = [
+const entryComponents = [
   ActivityFormComponent,
   ActivityStepperComponent,
   AddressFormComponent
 ];
 
-const AdminDeclarations = [
+const declarations = [
   AdminComponent,
-];
-
-const AdminImports = [
-  CoreModule,
-  FormsModule
+  ActivityTableComponent,
+  UserFormComponent,
+  AccountPanelComponent
 ];
 
 @NgModule({
-  providers: AdminProviders,
-  entryComponents: AdminEntryComponents,
+  entryComponents: entryComponents,
   declarations: [
-    ...AdminDeclarations,
-    ...AdminEntryComponents
+    ...declarations,
+    ...entryComponents
   ],
   imports: [
-    AdminImports,
     AdminRouter,
     CommonModule,
-    ReactiveFormsModule
+    CoreModule,
+    FormsModule,
+    MatTabsModule
   ]
 })
 

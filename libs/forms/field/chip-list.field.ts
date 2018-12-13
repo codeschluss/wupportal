@@ -10,9 +10,9 @@ import { BaseFieldComponent } from '../base/base.field';
 @Component({
   template: BaseFieldComponent.template(`
     <mat-chip-list #chips>
-      <ng-container *ngFor="let model of value" ngProjectAs="mat-chip">
-        <mat-chip [selectable]="false" (removed)="delete(model)">
-          {{ toLabel(model) }}
+      <ng-container *ngFor="let item of value" ngProjectAs="mat-chip">
+        <mat-chip [selectable]="false" (removed)="delete(item)">
+          {{ toLabel(item) }}
           <span matChipRemove>&times;</span>
         </mat-chip>
       </ng-container>
@@ -25,9 +25,9 @@ import { BaseFieldComponent } from '../base/base.field';
     </mat-chip-list>
 
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
-      <ng-container *ngFor="let model of options | async">
-        <mat-option [value]="model.id">
-          {{ toLabel(model) }}
+      <ng-container *ngFor="let item of options | async">
+        <mat-option [value]="item.id">
+          {{ toLabel(item) }}
         </mat-option>
       </ng-container>
     </mat-autocomplete>
@@ -48,8 +48,8 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   public options: Observable<CrudModel[]>;
 
-  public delete(model: CrudModel): void {
-    this.value = this.value.filter((mod) => mod !== model);
+  public delete(item: CrudModel): void {
+    this.value = this.value.filter((value) => value !== item);
   }
 
   public insert(event: MatChipInputEvent): void {
@@ -61,7 +61,7 @@ export class ChipListFieldComponent extends BaseFieldComponent {
   }
 
   public select(event: MatAutocompleteSelectedEvent): void {
-    if (!this.value.some((model) => model.id === event.option.value)) {
+    if (!this.value.some((item) => item.id === event.option.value)) {
       this.value = this.value.concat(this.toModel(event.option.value));
     }
   }
@@ -78,20 +78,20 @@ export class ChipListFieldComponent extends BaseFieldComponent {
     this.search.setValue('');
   }
 
-  private find(label: string = '', models = this.value): CrudModel {
-    return label && models.find((model) => this.toLabel(model)
+  private find(label: string = '', items = this.value): CrudModel {
+    return label && items.find((item) => this.toLabel(item)
       .localeCompare(label, undefined, { sensitivity: 'accent' }) === 0);
   }
 
-  private matches(label: string = '', models = this.value): CrudModel[] {
+  private matches(label: string = '', items = this.value): CrudModel[] {
     const regex = new RegExp(label, 'i');
-    return models.filter((model) => this.toLabel(model).search(regex) !== -1);
+    return items.filter((item) => this.toLabel(item).search(regex) !== -1);
   }
 
-  private optionalize(label: string = '', models = this.value): CrudModel[] {
-    const ids = models.map((model) => model.id);
-    const opts = this.field.options.filter((model) => !ids.includes(model.id));
-    return label ? this.matches(label, opts) : opts;
+  private optionalize(label: string = '', items = this.value): CrudModel[] {
+    const ids = items.map((item) => item.id);
+    const options = this.field.options.filter((item) => !ids.includes(item.id));
+    return label ? this.matches(label, options) : options;
   }
 
   private sanitize(label: string = ''): string {

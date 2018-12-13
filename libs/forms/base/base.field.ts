@@ -52,14 +52,14 @@ export class BaseFieldComponent implements OnInit {
   public toId(input: CrudModel): string;
   public toId(input: CrudModel[]): string[];
   public toId(input: CrudModel | CrudModel[]): string | string[] {
-    return Array.isArray(input) ? input.map((model) => model.id) : input.id;
+    return Array.isArray(input) ? input.map((item) => item.id) : input.id;
   }
 
   public toLabel(input: CrudModel): string;
   public toLabel(input: CrudModel[]): string[];
   public toLabel(input: CrudModel | CrudModel[]): string | string[] {
     return Array.isArray(input)
-      ? input.map((model) => model[this.field.label])
+      ? input.map((item) => item[this.field.label])
       : input[this.field.label];
   }
 
@@ -67,7 +67,7 @@ export class BaseFieldComponent implements OnInit {
   public toModel(input: string[]): CrudModel[];
   public toModel(input: string | string[]): CrudModel | CrudModel[] {
     const toModel = (id: string) =>
-      this.field.options.find((model) => model.id === id);
+      this.field.options.find((item) => item.id === id);
 
     return Array.isArray(input)
       ? input.map((id) => toModel(id))

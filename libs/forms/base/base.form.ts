@@ -1,4 +1,4 @@
-import { OnInit, Type } from '@angular/core';
+import { Input, OnInit, Type } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CrudModel } from '@portal/core';
@@ -18,11 +18,15 @@ export interface FormField {
 
 export abstract class BaseForm<Model extends CrudModel> implements OnInit {
 
+  @Input()
+  public group: FormGroup;
+
+  @Input()
+  public item: Model;
+
   public abstract fields: FormField[];
 
   public abstract model: Type<Model>;
-
-  public group: FormGroup;
 
   protected abstract builder: FormBuilder;
 
@@ -40,11 +44,14 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.group = this.route.snapshot.data.group;
+    const data = this.route.snapshot.data;
+    this.group = this.group || data.group || this.builder.group({ });
+    this.item = this.item || data.item || { };
+
     this.fields = this.fields.map((field) => Object.assign(field, {
       label: field.label || 'name',
-      options: field.options || this.route.snapshot.data[field.name],
-      value: field.value || this.route.snapshot.data.model[field.name]
+      options: field.options || data[field.name],
+      value: field.value || this.item[field.name]
     }));
 
     this.ngPostInit();
@@ -54,10 +61,10 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
 
   protected ngPostInit(): void { }
 
-  protected save(model: Model): Promise<any> {
-    return model.id
-      ? this.model['provider'].update(model.id, model)
-      : this.model['provider'].create(model);
+  protected save(item: Model): Promise<any> {
+    return item.id
+      ? this.model['provider'].update(item.id, item)
+      : this.model['provider'].create(item);
   }
 
 }

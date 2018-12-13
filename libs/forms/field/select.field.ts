@@ -6,9 +6,9 @@ import { BaseFieldComponent } from '../base/base.field';
 @Component({
   template: BaseFieldComponent.template(`
     <mat-select [formControl]="select" [multiple]="field.multi">
-      <ng-container *ngFor="let model of field.options">
-        <mat-option [value]="model.id">
-          {{ toLabel(model) }}
+      <ng-container *ngFor="let item of field.options">
+        <mat-option [value]="item.id">
+          {{ toLabel(item) }}
         </mat-option>
       </ng-container>
     </mat-select>

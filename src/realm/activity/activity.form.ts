@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BaseForm, BooleanFieldComponent, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';
@@ -14,11 +14,13 @@ import { ActivityProvider } from './activity.provider';
   template: BaseForm.template(`
     <i18n #name i18n="@@title">title</i18n>
     <i18n #description i18n="@@description">description</i18n>
+    <i18n #contactName i18n="@@contactName">contactName</i18n>
+    <i18n #phone i18n="@@phone">phone</i18n>
+    <i18n #mail i18n="@@mail">mail</i18n>
     <i18n #organisation i18n="@@organisation">organisation</i18n>
     <i18n #category i18n="@@category">category</i18n>
     <i18n #targetGroups i18n="@@targetGroups">targetGroups</i18n>
     <i18n #tags i18n="@@tags">tags</i18n>
-    <i18n #showUser i18n="@@showUser">showUser</i18n>
   `)
 })
 
@@ -35,6 +37,19 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
       input: StringFieldComponent,
       multi: true,
       tests: [Validators.required]
+    },
+    {
+      name: 'contactName',
+      input: StringFieldComponent,
+      tests: [Validators.required]
+    },
+    {
+      name: 'phone',
+      input: StringFieldComponent
+    },
+    {
+      name: 'mail',
+      input: StringFieldComponent
     },
     {
       name: 'organisation',
@@ -58,10 +73,6 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
       name: 'tags',
       input: ChipListFieldComponent,
       model: TagModel
-    },
-    {
-      name: 'showUser',
-      input: BooleanFieldComponent
     }
   ];
 

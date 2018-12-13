@@ -27,12 +27,9 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       ? await provider.readOne(route.params.uuid)
       : await provider.readAll();
 
-    if (Array.isArray(response)) {
-      for (const model of response) {
-        await this.resolver(model, joiner.graph.nodes);
-      }
-    } else {
-      await this.resolver(response, joiner.graph.nodes);
+
+    for (const model of Array.isArray(response) ? response : [response]) {
+      await this.resolver(model, joiner.graph.nodes);
     }
 
     this.resolving.splice(this.resolving.indexOf(joiner), 1);

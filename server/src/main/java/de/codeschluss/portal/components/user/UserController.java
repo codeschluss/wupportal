@@ -167,11 +167,9 @@ public class UserController extends CrudController<UserEntity, UserService> {
     try {
       List<ProviderEntity> providers = providerService.addAllResourcesWithMail(
           providerService.createProviders(service.getById(userId), distinctOrgas));
-      return ok(service.getResourcesByProviders(providers, null));
+      return ok(providers);
     } catch (NotFoundException | NullPointerException e) {
       throw new BadParamsException("User or Organisation are null or do not exist!");
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage());
     }
   }
 

@@ -263,11 +263,7 @@ public class OrganisationController
       @PathVariable String organisationId,
       BaseParams params) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
-    try {
-      return ok(userService.getResourcesByProviders(providers, params));
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage());
-    }
+    return ok(userService.convertToResourcesEmbeddedProviders(providers));
   }
 
   /**

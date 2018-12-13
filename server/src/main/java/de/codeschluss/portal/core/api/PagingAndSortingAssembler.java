@@ -193,7 +193,21 @@ public class PagingAndSortingAssembler {
         embeddables.put(node.getName(), resource);
       }
     }
-    return helper.resourceWithEmbeddable(entity, embeddables);
+    return resourceWithEmbeddable(entity, embeddables);
+  }
+  
+  /**
+   * Resource with embeddable.
+   *
+   * @param <E> the element type
+   * @param entity the entity
+   * @param embeddables the embeddables
+   * @return the resource
+   */
+  @SuppressWarnings("unchecked")
+  public <E extends BaseResource> Resource<E> resourceWithEmbeddable(Object entity,
+      Map<String, Object> embeddables) {
+    return helper.resourceWithEmbeddable((E) entity, embeddables);
   }
 
   /**

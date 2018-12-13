@@ -1,18 +1,14 @@
 package de.codeschluss.portal.components.user;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.querydsl.core.types.Predicate;
-
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
-import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -155,24 +151,23 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
   }
 
   /**
-   * Gets the resources by providers.
+   * Convert to resources embedded providers.
    *
    * @param providers the providers
-   * @param params the params
-   * @return the resources by providers
-   * @throws JsonParseException the json parse exception
-   * @throws JsonMappingException the json mapping exception
-   * @throws IOException Signals that an I/O exception has occurred.
+   * @return the resources
    */
-  public Resources<?> getResourcesByProviders(
-      List<ProviderEntity> providers,
-      BaseParams params) throws JsonParseException, JsonMappingException, IOException {
-    Predicate query = entities.withAnyOfProviders(providers);
-    List<UserEntity> result = params == null
-        ? repo.findAll(query)
-        : repo.findAll(query, entities.createSort(params));
-
-    return assembler.entitiesToResources(result, params);
+  public Resources<?> convertToResourcesEmbeddedProviders(List<ProviderEntity> providers) {
+    if (providers == null || providers.isEmpty()) {
+      throw new NotFoundException(providers.toString());
+    }
+    
+    List<Resource<?>> embeddedUser = providers.stream().map(provider -> {
+      Map<String, Object> embedded = new HashMap<>();
+      embedded.put("provider", provider);
+      return assembler.resourceWithEmbeddable(provider.getUser(), embedded);
+    }).collect(Collectors.toList());
+    
+    return assembler.toListResources(embeddedUser, null);
   }
 
   /**

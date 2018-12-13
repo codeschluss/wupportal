@@ -1,5 +1,6 @@
 /* tslint:disable */
 export interface AddressEntity {
+  _embedded?: {};
   created?: string;
   houseNumber?: string;
   id?: string;

@@ -1,13 +1,13 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
 import { AddressModel } from '../address/address.model';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
+import { ProviderModel } from '../provider/provider.model';
 import { ScheduleModel } from '../schedule/schedule.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
-import { UserModel } from '../user/user.model';
 import { ActivityModel } from './activity.model';
 
 @Injectable({ providedIn: 'root' })
@@ -31,6 +31,11 @@ export class ActivityProvider
       model: OrganisationModel
     },
     {
+      field: 'provider',
+      method: null,
+      model: ProviderModel
+    },
+    {
       field: 'schedules',
       method: this.service.activityControllerReadSchedulesResponse,
       model: ScheduleModel
@@ -44,12 +49,7 @@ export class ActivityProvider
       field: 'targetGroups',
       method: this.service.activityControllerReadTargetGroupsResponse,
       model: TargetGroupModel
-    },
-    {
-      field: 'user',
-      method: this.service.activityControllerReadUserResponse,
-      model: UserModel
-    },
+    }
   ];
 
   protected methods = {
@@ -64,7 +64,6 @@ export class ActivityProvider
   protected model = this.based(ActivityModel);
 
   public constructor(
-    protected injector: Injector,
     protected service: ActivityControllerService
   ) {
     super();

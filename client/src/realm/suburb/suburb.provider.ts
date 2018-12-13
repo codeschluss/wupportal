@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { SuburbControllerService } from '../../api/services/suburb-controller.service';
 import { SuburbModel } from './suburb.model';
@@ -31,7 +31,6 @@ export class SuburbProvider
   protected model = this.based(SuburbModel);
 
   public constructor(
-    protected injector: Injector,
     protected service: SuburbControllerService
   ) {
     super();

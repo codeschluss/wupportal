@@ -32,6 +32,8 @@ class AddressControllerService extends BaseService {
    *
    * - `dir`:
    *
+   * - `embeddings`:
+   *
    * - `page`:
    *
    * - `size`:
@@ -46,6 +48,7 @@ class AddressControllerService extends BaseService {
     let __body: any = null;
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.embeddings != null) __params = __params.set('embeddings', params.embeddings.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
@@ -72,6 +75,8 @@ class AddressControllerService extends BaseService {
    * - `sort`:
    *
    * - `dir`:
+   *
+   * - `embeddings`:
    *
    * - `page`:
    *
@@ -322,6 +327,7 @@ module AddressControllerService {
   export interface AddressControllerReadAllParams {
     sort?: string;
     dir?: string;
+    embeddings?: string;
     page?: number;
     size?: number;
     filter?: string;

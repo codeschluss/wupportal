@@ -1,8 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CoreModule, CoreSettings } from '@portal/core';
+import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration } from './api/api-configuration';
 import { ApiModule } from './api/api.module';
 import { ClientComponent } from './client.component';
@@ -18,6 +16,8 @@ import { TargetGroupProvider } from './realm/target-group/target-group.provider'
 import { UserProvider } from './realm/user/user.provider';
 import { ClientPackage } from './utils/package';
 import { LayoutComponent } from './views/layout/layout.component';
+import { CoreModule, CoreSettings } from 'libs/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   bootstrap: [ClientComponent],
@@ -25,10 +25,9 @@ import { LayoutComponent } from './views/layout/layout.component';
   imports: [
     // TODO: move
     LayoutComponent.imports,
-
+    BrowserAnimationsModule,
     ApiModule,
     BrowserModule,
-    BrowserAnimationsModule,
     ClientRouter,
     CoreModule,
     HttpClientModule,

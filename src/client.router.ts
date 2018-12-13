@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { I18nResolver, SessionResolver } from '@portal/core';
+import { SessionResolver, I18nResolver } from 'libs/core';
 
 const ClientResolvers = {
   session: SessionResolver,

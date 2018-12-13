@@ -31,11 +31,15 @@ class OrganisationControllerService extends BaseService {
    *
    * - `dir`:
    *
+   * - `embeddings`:
+   *
    * - `page`:
    *
    * - `size`:
    *
    * - `filter`:
+   *
+   * - `approved`:
    *
    * @return OK
    */
@@ -45,9 +49,11 @@ class OrganisationControllerService extends BaseService {
     let __body: any = null;
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.embeddings != null) __params = __params.set('embeddings', params.embeddings.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
+    if (params.approved != null) __params = __params.set('approved', params.approved.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/organisations`,
@@ -72,11 +78,15 @@ class OrganisationControllerService extends BaseService {
    *
    * - `dir`:
    *
+   * - `embeddings`:
+   *
    * - `page`:
    *
    * - `size`:
    *
    * - `filter`:
+   *
+   * - `approved`:
    *
    * @return OK
    */
@@ -237,13 +247,22 @@ class OrganisationControllerService extends BaseService {
 
   /**
    * @param organisationId organisationId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
-  organisationControllerReadActivitiesResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadActivitiesResponse(organisationId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/organisations/${organisationId}/activities`,
@@ -263,10 +282,16 @@ class OrganisationControllerService extends BaseService {
   }
   /**
    * @param organisationId organisationId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
-  organisationControllerReadActivities(organisationId: string): Observable<{}> {
-    return this.organisationControllerReadActivitiesResponse(organisationId).pipe(
+  organisationControllerReadActivities(organisationId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<{}> {
+    return this.organisationControllerReadActivitiesResponse(organisationId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -385,6 +410,47 @@ class OrganisationControllerService extends BaseService {
   organisationControllerUpdateAddress(organisationId: string,
     addressId: string): Observable<{}> {
     return this.organisationControllerUpdateAddressResponse(organisationId, addressId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @param isApproved isApproved
+   * @return OK
+   */
+  organisationControllerGrantApprovalResponse(organisationId: string,
+    isApproved: boolean): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = isApproved;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/organisations/${organisationId}/approve`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @param isApproved isApproved
+   * @return OK
+   */
+  organisationControllerGrantApproval(organisationId: string,
+    isApproved: boolean): Observable<{}> {
+    return this.organisationControllerGrantApprovalResponse(organisationId, isApproved).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -553,13 +619,22 @@ class OrganisationControllerService extends BaseService {
 
   /**
    * @param organisationId organisationId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
-  organisationControllerReadUsersResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadUsersResponse(organisationId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/organisations/${organisationId}/users`,
@@ -579,10 +654,16 @@ class OrganisationControllerService extends BaseService {
   }
   /**
    * @param organisationId organisationId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
-  organisationControllerReadUsers(organisationId: string): Observable<{}> {
-    return this.organisationControllerReadUsersResponse(organisationId).pipe(
+  organisationControllerReadUsers(organisationId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<{}> {
+    return this.organisationControllerReadUsersResponse(organisationId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -729,9 +810,11 @@ module OrganisationControllerService {
   export interface OrganisationControllerReadAllParams {
     sort?: string;
     dir?: string;
+    embeddings?: string;
     page?: number;
     size?: number;
     filter?: string;
+    approved?: boolean;
   }
 }
 

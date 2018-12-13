@@ -15,6 +15,19 @@ export interface Link {
   type?: string;
 }
 
+export interface ReadAllParams {
+  dir?: string;
+  filter?: string;
+  page?: number;
+  size?: number;
+  sort?: string;
+}
+
+export interface ReadEmbeddedParams {
+  dir?: string;
+  sort?: string;
+}
+
 export interface ResourceObject {
   _links?: Array<Link>;
 }

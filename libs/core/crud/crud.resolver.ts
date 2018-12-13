@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { CrudGraph, CrudJoiner } from './crud.joiner';
@@ -9,10 +9,6 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
 
   private resolving: CrudJoiner[] = [];
 
-  public constructor(
-    private injector: Injector
-  ) { }
-
   public async resolve(route: ActivatedRouteSnapshot):
     Promise<CrudModel | CrudModel[]> {
 
@@ -22,42 +18,59 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       .find((key) => !this.resolving.includes(route.data[key]))];
 
     this.resolving.push(joiner);
-    const provider = this.injector.get(joiner.graph.model['provider']);
-    const response = joiner.graph.root && route.params.uuid
-      ? await provider.readOne(route.params.uuid)
-      : await provider.readAll();
+    joiner.graph.params.embeddings = this.embed(joiner.graph.nodes);
+    const response = joiner.graph.params.filter !== null && route.params.uuid
+      ? await joiner.graph.provider.readOne(route.params.uuid)
+      : await joiner.graph.provider.readAll(joiner.graph.params);
 
-
-    for (const model of Array.isArray(response) ? response : [response]) {
-      await this.resolver(model, joiner.graph.nodes);
+    for (const item of Array.isArray(response) ? response : [response]) {
+      await this.resolver(item, joiner.graph.nodes);
     }
 
     this.resolving.splice(this.resolving.indexOf(joiner), 1);
     return response;
   }
 
-  private async resolver(model: CrudModel, nodes: CrudGraph[]): Promise<any> {
-    if (model.constructor['provider']) {
-      const provider = this.injector.get(model.constructor['provider']).system;
+  private async resolver(item: CrudModel, nodes: CrudGraph[]): Promise<any> {
+    if (item.constructor['provider']) {
+      const provider = item.constructor['provider'].system;
 
       for (const node of nodes) {
-        const link = provider.linked.find((lnk) => lnk.model === node.model);
+        const link = provider.linked.find((lnk) => lnk.field === node.name);
+        let value;
 
-        let value; try {
-          value = (model._embedded || { })[link.field]
-            ? Object.assign(new link.model(), model._embedded[link.field])
-            : await provider.call(link.method, model.id).pipe(map(
+        if ((item._embedded || { })[link.field]) {
+          value = Object.assign(new link.model(), item._embedded[link.field]);
+        } else {
+          const params = [
+            item.id,
+            node.params.sort,
+            node.params.dir,
+            this.embed(node.nodes)
+          ];
+
+          try {
+            value = await provider.call(link.method, ...params).pipe(map(
               (response) => provider.cast(response, link.model))).toPromise();
-        } catch (error) { }
-
-        if (value) {
-          if (node.nodes.length) { await this.resolver(value, node.nodes); }
-          provider.purge(value);
+          } catch (error) { }
         }
 
-        Object.defineProperty(model, link.field, { value: value });
+        if (value && node.nodes.length) {
+          await this.resolver(value, node.nodes);
+        }
+
+        Object.defineProperty(item, link.field, { value: value });
       }
     }
+  }
+
+  private embed(tree: CrudGraph[]): string {
+    const embed = (nodes) => nodes.map((node) => ({
+      name: node.name,
+      nodes: embed(node.nodes)
+    }));
+
+    return btoa(JSON.stringify(embed(tree)));
   }
 
 }

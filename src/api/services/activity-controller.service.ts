@@ -39,6 +39,8 @@ class ActivityControllerService extends BaseService {
    *
    * - `dir`:
    *
+   * - `embeddings`:
+   *
    * - `page`:
    *
    * - `size`:
@@ -58,6 +60,7 @@ class ActivityControllerService extends BaseService {
     (params.targetgroups || []).forEach(val => {if (val != null) __params = __params.append('targetgroups', val.toString())});
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.embeddings != null) __params = __params.set('embeddings', params.embeddings.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
@@ -91,6 +94,8 @@ class ActivityControllerService extends BaseService {
    * - `sort`:
    *
    * - `dir`:
+   *
+   * - `embeddings`:
    *
    * - `page`:
    *
@@ -492,17 +497,20 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
   activityControllerReadSchedulesResponse(activityId: string,
     sort?: string,
-    dir?: string): Observable<StrictHttpResponse<{}>> {
+    dir?: string,
+    embeddings?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     if (sort != null) __params = __params.set('sort', sort.toString());
     if (dir != null) __params = __params.set('dir', dir.toString());
+    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/activities/${activityId}/schedules`,
@@ -524,12 +532,14 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
   activityControllerReadSchedules(activityId: string,
     sort?: string,
-    dir?: string): Observable<{}> {
-    return this.activityControllerReadSchedulesResponse(activityId, sort, dir).pipe(
+    dir?: string,
+    embeddings?: string): Observable<{}> {
+    return this.activityControllerReadSchedulesResponse(activityId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -618,13 +628,22 @@ class ActivityControllerService extends BaseService {
 
   /**
    * @param activityId activityId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
-  activityControllerReadTagsResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerReadTagsResponse(activityId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/activities/${activityId}/tags`,
@@ -644,10 +663,16 @@ class ActivityControllerService extends BaseService {
   }
   /**
    * @param activityId activityId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
-  activityControllerReadTags(activityId: string): Observable<{}> {
-    return this.activityControllerReadTagsResponse(activityId).pipe(
+  activityControllerReadTags(activityId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<{}> {
+    return this.activityControllerReadTagsResponse(activityId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -736,13 +761,22 @@ class ActivityControllerService extends BaseService {
 
   /**
    * @param activityId activityId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
-  activityControllerReadTargetGroupsResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerReadTargetGroupsResponse(activityId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/activities/${activityId}/targetgroups`,
@@ -762,10 +796,16 @@ class ActivityControllerService extends BaseService {
   }
   /**
    * @param activityId activityId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
    * @return OK
    */
-  activityControllerReadTargetGroups(activityId: string): Observable<{}> {
-    return this.activityControllerReadTargetGroupsResponse(activityId).pipe(
+  activityControllerReadTargetGroups(activityId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<{}> {
+    return this.activityControllerReadTargetGroupsResponse(activityId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -887,42 +927,6 @@ class ActivityControllerService extends BaseService {
       __map(_r => _r.body as {})
     );
   }
-
-  /**
-   * @param activityId activityId
-   * @return OK
-   */
-  activityControllerReadUserResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/activities/${activityId}/user`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * @param activityId activityId
-   * @return OK
-   */
-  activityControllerReadUser(activityId: string): Observable<{}> {
-    return this.activityControllerReadUserResponse(activityId).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
 }
 
 module ActivityControllerService {
@@ -936,6 +940,7 @@ module ActivityControllerService {
     targetgroups?: Array<string>;
     sort?: string;
     dir?: string;
+    embeddings?: string;
     page?: number;
     size?: number;
     filter?: string;

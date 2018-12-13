@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { LanguageControllerService } from '../../api/services/language-controller.service';
 import { LanguageModel } from './language.model';
@@ -31,7 +31,6 @@ export class LanguageProvider
   protected model = this.based(LanguageModel);
 
   public constructor(
-    protected injector: Injector,
     protected service: LanguageControllerService
   ) {
     super();

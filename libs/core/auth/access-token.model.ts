@@ -5,6 +5,7 @@ export class AccessTokenModel {
   public static readonly schema: JSONSchemaObject = {
     properties: {
       exp: { type: 'integer' },
+      id: { type: 'string' },
       raw: { type: 'string' },
       scopes: { items: { const: 'access' } },
       sub: { type: 'string' },
@@ -17,6 +18,7 @@ export class AccessTokenModel {
   };
 
   public exp: number = 0;
+  public id: string = '';
   public raw: string = '';
   public scopes: string[] = ['access'];
   public sub: string = '';

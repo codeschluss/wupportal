@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { TargetGroupControllerService } from '../../api/services/target-group-controller.service';
 import { TargetGroupModel } from './target-group.model';
@@ -32,7 +32,6 @@ export class TargetGroupProvider
   protected model = this.based(TargetGroupModel);
 
   public constructor(
-    protected injector: Injector,
     protected service: TargetGroupControllerService
   ) {
     super();

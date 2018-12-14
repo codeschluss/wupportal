@@ -26,7 +26,7 @@ export abstract class BaseStepper<Model extends CrudModel>
 
   protected abstract router: Router;
 
-  public static get route(this: any): Route {
+  public static get routing(this: any): Route {
     const self = new this();
 
     return {

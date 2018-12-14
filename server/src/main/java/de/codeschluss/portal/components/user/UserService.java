@@ -106,7 +106,7 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
   public UserEntity update(String id, UserEntity newUser) {
     return repo.findById(id).map(user -> {
       user.setUsername(newUser.getUsername());
-      user.setFullname(newUser.getFullname());
+      user.setName(newUser.getName());
       user.setPassword(bcryptPasswordEncoder.encode(newUser.getPassword()));
       user.setPhone(newUser.getPhone());
       return repo.save(user);

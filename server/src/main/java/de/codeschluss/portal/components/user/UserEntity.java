@@ -47,7 +47,7 @@ public class UserEntity extends BaseResource {
 
   private static final long serialVersionUID = 1L;
 
-  private String fullname;
+  private String name;
 
   @Column(nullable = false)
   private String password;

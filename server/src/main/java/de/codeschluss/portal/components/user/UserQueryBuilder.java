@@ -68,7 +68,7 @@ public class UserQueryBuilder extends QueryBuilder<QUserEntity> {
   @Override
   public BooleanExpression search(FilterSortPaginate params) {
     String filter = prepareFilter(params.getFilter());
-    return query.fullname.likeIgnoreCase(filter)
+    return query.name.likeIgnoreCase(filter)
         .or(query.username.likeIgnoreCase(filter))
         .or(query.phone.likeIgnoreCase(filter));
   }

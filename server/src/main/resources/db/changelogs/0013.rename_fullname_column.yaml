@@ -1,0 +1,9 @@
+databaseChangeLog:
+- changeSet:
+    id: 0013.rename_fullname_column
+    author: vetemi
+    changes:
+    - renameColumn:
+        newColumnName: name
+        oldColumnName: fullname
+        tableName: users

@@ -67,7 +67,7 @@ public class MailService {
   public boolean sendResetPasswordMail(UserEntity user, String newPassword) {
     try {
       Map<String, Object> model = new HashMap<>();
-      model.put("name", user.getFullname());
+      model.put("name", user.getName());
       model.put("newPwd", newPassword);
       model.put("portalName", mailConfig.getPortalName());
       Template t = freemarkerConfig.getTemplate("resetpassword.ftl");
@@ -116,7 +116,7 @@ public class MailService {
   public boolean sendApprovedUserMail(ProviderEntity approvedProvider) {
     try {
       Map<String, Object> model = new HashMap<>();
-      model.put("name", approvedProvider.getUser().getFullname());
+      model.put("name", approvedProvider.getUser().getName());
       model.put("orgaName", approvedProvider.getOrganisation().getName());
       model.put("portalName", mailConfig.getPortalName());
       Template t = freemarkerConfig.getTemplate("approvedprovider.ftl");

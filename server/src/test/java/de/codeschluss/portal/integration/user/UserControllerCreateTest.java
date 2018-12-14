@@ -60,10 +60,10 @@ public class UserControllerCreateTest {
     controller.create(user);
   }
 
-  private UserEntity newUser(String fullname, String password, String phone, boolean superuser,
+  private UserEntity newUser(String name, String password, String phone, boolean superuser,
       String username) {
     UserEntity user = new UserEntity();
-    user.setFullname(fullname);
+    user.setName(name);
     user.setPassword(password);
     user.setPhone(phone);
     user.setSuperuser(superuser);

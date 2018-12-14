@@ -77,10 +77,10 @@ public class UserControllerUpdateTest {
     controller.update(user, "00000000-0000-0000-0004-300000000000");
   }
 
-  private UserEntity newUser(String fullname, String password, String phone, boolean superuser,
+  private UserEntity newUser(String name, String password, String phone, boolean superuser,
       String username) {
     UserEntity user = new UserEntity();
-    user.setFullname(fullname);
+    user.setName(name);
     user.setPassword(password);
     user.setPhone(phone);
     user.setSuperuser(superuser);

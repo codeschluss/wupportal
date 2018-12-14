@@ -1,6 +1,7 @@
 /* tslint:disable */
 import { Link } from './link';
 export interface ResourceCategoryEntity {
+  _embedded?: {};
   _links?: Array<Link>;
   color?: string;
   created?: string;

@@ -19,7 +19,7 @@ export class TokenService {
   ) { }
 
   public apiLoginResponse(username: string, password: string):
-    Observable<StrictHttpResponse<object>> {
+    Observable<StrictHttpResponse<any>> {
 
     return this.call(new HttpRequest<any>(
       'POST',
@@ -35,7 +35,7 @@ export class TokenService {
     ));
   }
 
-  public apiRefreshResponse(): Observable<StrictHttpResponse<object>> {
+  public apiRefreshResponse(): Observable<StrictHttpResponse<any>> {
     return this.call(new HttpRequest<any>(
       'GET',
       this.coreSettings.refreshUrl,
@@ -48,36 +48,36 @@ export class TokenService {
   }
 
   private call(request: HttpRequest<any>):
-    Observable<StrictHttpResponse<object>> {
+    Observable<StrictHttpResponse<any>> {
 
     return this.httpClient.request<any>(request).pipe(
       filter((response) => response instanceof HttpResponse),
-      map((response) => response as StrictHttpResponse<object>),
+      map((response) => response as StrictHttpResponse<any>),
       map((response) => this.tokenize(response)),
       tap((response) => this.validate(response))
     );
   }
 
-  private tokenize(response: StrictHttpResponse<object>):
-    StrictHttpResponse<object> {
+  private tokenize(response: StrictHttpResponse<any>):
+    StrictHttpResponse<any> {
 
     Object.keys(response.body).forEach((type) => {
       const token = JSON.parse(atob(response.body[type].split('.')[1]));
-      let model; switch (type) {
-        case 'access': model = new AccessTokenModel(); break;
-        case 'refresh': model = new RefreshTokenModel(); break;
+      let item; switch (type) {
+        case 'access': item = new AccessTokenModel(); break;
+        case 'refresh': item = new RefreshTokenModel(); break;
       }
 
       token.exp = token.exp - 5;
       token.raw = response.body[type];
-      response.body[type] = Object.assign(model, token);
+      response.body[type] = Object.assign(item, token);
     });
 
     return response.clone<object>({ body: response.body });
   }
 
-  private validate(response: StrictHttpResponse<object>): void {
-    Object.values(response.body).forEach((token) => {
+  private validate(response: StrictHttpResponse<any>): void {
+    Object.values(response.body).forEach((token: any) => {
       if (!this.jsonValidator.validate(token, token.constructor.schema)) {
         throw Object.assign(new ErrorModel(), {
           status: 412,

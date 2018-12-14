@@ -1,11 +1,12 @@
 /* tslint:disable */
 import { Link } from './link';
 export interface ResourceAddressEntity {
-  _links?: Array<Link>;
+  latitude?: number;
+  _embedded?: {};
   created?: string;
   houseNumber?: string;
   id?: string;
-  latitude?: number;
+  _links?: Array<Link>;
   longitude?: number;
   modified?: string;
   place?: string;

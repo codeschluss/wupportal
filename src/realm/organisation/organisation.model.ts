@@ -9,12 +9,15 @@ import { UserModel } from '../user/user.model';
 export class OrganisationModel
   extends CrudModel implements OrganisationEntity {
 
+  public approved: boolean;
   public description: string;
   public mail: string;
   public name: string;
   public phone: string;
   public videoUrl: string;
   public website: string;
+
+  public addressId: string;
 
   public activities: Promise<ActivityModel[]>;
   public address: Promise<AddressModel>;

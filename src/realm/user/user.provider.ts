@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../activity/activity.model';
@@ -39,7 +39,6 @@ export class UserProvider
   protected model = this.based(UserModel);
 
   public constructor(
-    protected injector: Injector,
     protected service: UserControllerService
   ) {
     super();

@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
 import { ConfigurationControllerService } from '../../api/services/configuration-controller.service';
 import { ConfigurationModel } from '../configuration/configuration.model';
@@ -31,7 +31,6 @@ export class ConfigurationProvider
   protected model = this.based(ConfigurationModel);
 
   public constructor(
-    protected injector: Injector,
     protected service: ConfigurationControllerService
   ) {
     super();

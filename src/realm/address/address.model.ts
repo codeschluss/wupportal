@@ -12,6 +12,8 @@ export class AddressModel
   public postalCode: string;
   public street: string;
 
+  public suburbId: string;
+
   public suburb: Promise<SuburbModel>;
 
 }

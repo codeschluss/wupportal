@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ActivityModel } from 'src/realm/activity/activity.model';
+import { ActivityStepperComponent } from 'src/realm/activity/activity.stepper';
+import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { UserModel } from 'src/realm/user/user.model';
 import { AdminComponent } from './admin.component';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { CrudResolver, CrudJoiner } from '@portal/core';
-import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 
 const AdminResolvers = [];
 
@@ -125,6 +129,7 @@ const AdminRoutes = [
   exports: [RouterModule],
   imports: [RouterModule.forChild(AdminRoutes)],
   providers: AdminProviders
+
 })
 
 export class AdminRouter { }

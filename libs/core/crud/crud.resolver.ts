@@ -39,7 +39,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
         const link = provider.linked.find((lnk) => lnk.field === node.name);
         let value;
 
-        if ((item._embedded || { })[link.field]) {
+        if ((item._embedded || {})[link.field]) {
           value = Object.assign(new link.model(), item._embedded[link.field]);
         } else {
           const params = [

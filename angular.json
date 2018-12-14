@@ -118,6 +118,33 @@
           }
         }
       }
+    },
+    "@portal/forms": {
+      "root": "libs/forms",
+      "sourceRoot": "libs/forms",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/forms/tsconfig.json",
+            "project": "libs/forms/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json",
+              "libs/forms/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   }
 }

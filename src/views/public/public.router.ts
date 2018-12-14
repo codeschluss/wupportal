@@ -30,7 +30,11 @@ const PublicRoutes = [
       activities: CrudResolver
     },
     data: {
-      activities: CrudJoiner.of(ActivityModel)
+      activities: CrudJoiner.of(ActivityModel, {
+        size: 15,
+        dir: 'asc',
+        page: 0,
+        sort: 'schedules.startDate'})
         .with('category')
         .with('address').yield('suburb')
         .with('schedules')

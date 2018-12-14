@@ -2,9 +2,9 @@
 export interface UserEntity {
   _embedded?: {};
   created?: string;
-  fullname?: string;
   id?: string;
   modified?: string;
+  name?: string;
   password?: string;
   phone?: string;
   superuser?: boolean;

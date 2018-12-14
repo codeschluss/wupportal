@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route } from '@angular/router';
+import { CrudJoiner, CrudResolver, Selfroute } from '@portal/core';
 import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
 
 @Component({
@@ -83,26 +84,26 @@ import { ConfigurationModel } from 'src/realm/configuration/configuration.model'
   `
 })
 
-export class ApplicationPanelComponent implements OnInit {
-
-  // public static get route(): Route {
-  //   return {
-  //     path: 'application',
-  //     component: ApplicationPanelComponent,
-  //     resolve: {
-  //       configuration: CrudResolver
-  //     },
-  //     data: {
-  //       configuration: CrudJoiner.of(ConfigurationModel)
-  //     }
-  //   };
-  // }
+export class ApplicationPanelComponent extends Selfroute implements OnInit {
 
   public configuration: ConfigurationModel[];
 
+  protected routing: Route = {
+    path: 'application',
+    component: ApplicationPanelComponent,
+    resolve: {
+      configuration: CrudResolver
+    },
+    data: {
+      configuration: CrudJoiner.of(ConfigurationModel)
+    }
+  };
+
   public constructor(
     private route: ActivatedRoute
-  ) { }
+  ) {
+    super();
+  }
 
   public ngOnInit(): void {
     this.configuration = this.route.snapshot.data.configuration.reduce(

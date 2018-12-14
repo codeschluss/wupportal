@@ -64,6 +64,12 @@
       <trans-unit id="notSamePassword" datatype="html">
         <target>Die eingegebenen Passwörter stimmen nicht überein</target>
       </trans-unit>
+      <trans-unit id="personalData" datatype="html">
+        <target>Persönlicher Bereich</target>
+      </trans-unit>
+      <trans-unit id="adminArea" datatype="html">
+        <target>Verwaltungsbereich</target>
+      </trans-unit>
       
       
       

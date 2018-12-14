@@ -64,6 +64,12 @@
       <trans-unit id="notSamePassword" datatype="html">
         <target>The entered passwords are different</target>
       </trans-unit>
+      <trans-unit id="personalData" datatype="html">
+        <target>Personal data</target>
+      </trans-unit>
+      <trans-unit id="adminArea" datatype="html">
+        <target>Admin area</target>
+      </trans-unit>
 
 
 

@@ -24,20 +24,20 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       : await joiner.graph.provider.readAll(joiner.graph.params);
 
     for (const item of Array.isArray(response) ? response : [response]) {
-      await this.resolver(item, joiner.graph.nodes);
+      await this.run(item, joiner.graph.nodes);
     }
 
     this.resolving.splice(this.resolving.indexOf(joiner), 1);
     return response;
   }
 
-  private async resolver(item: CrudModel, nodes: CrudGraph[]): Promise<any> {
+  public async run(item: CrudModel, nodes: CrudGraph[]): Promise<CrudModel> {
     if (item.constructor['provider']) {
       const provider = item.constructor['provider'].system;
 
       for (const node of nodes) {
         const link = provider.linked.find((lnk) => lnk.field === node.name);
-        let value;
+        let value = null;
 
         if ((item._embedded || {})[link.field]) {
           value = Object.assign(new link.model(), item._embedded[link.field]);
@@ -56,12 +56,16 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
         }
 
         if (value && node.nodes.length) {
-          await this.resolver(value, node.nodes);
+          for (const itm of Array.isArray(value) ? value : [value]) {
+            await this.run(itm, node.nodes);
+          }
         }
 
         Object.defineProperty(item, link.field, { value: value });
       }
     }
+
+    return item;
   }
 
   private embed(tree: CrudGraph[]): string {

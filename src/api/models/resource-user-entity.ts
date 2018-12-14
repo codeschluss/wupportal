@@ -4,9 +4,9 @@ export interface ResourceUserEntity {
   _embedded?: {};
   _links?: Array<Link>;
   created?: string;
-  fullname?: string;
   id?: string;
   modified?: string;
+  name?: string;
   phone?: string;
   superuser?: boolean;
   username?: string;

@@ -13,10 +13,10 @@ export class SessionResolver implements Resolve<SessionModel> {
   ) { }
 
   public async resolve(): Promise<SessionModel> {
-    return this.resolver();
+    return this.run();
   }
 
-  private async resolver(): Promise<SessionModel> {
+  public async run(): Promise<SessionModel> {
     const schema = { schema: SessionModel.schema };
     const session = this.storage.getItem<SessionModel>('session', schema);
     return this.session = await session.toPromise() || new SessionModel();

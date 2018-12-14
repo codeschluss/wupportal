@@ -1,0 +1,105 @@
+<div id="loginView" 
+    fxLayout="column" 
+    fxLayoutAlign="space-around center" 
+    [style.width]="'80%'" 
+    [style.height]="'80vh'" 
+    [style.margin]="'auto'"
+    fxLayoutGap="30px"> 
+    <img id="logo"
+        src="imgs/Logo_bunt_cmyk.svg"
+        [style.width]="'10%'" 
+        (click)="goToHome()">
+    <h2>
+        <i18n class="color-primary" i18n="@@portalSubtitle">portalSubtitle</i18n>
+    </h2>
+        <form #registerForm="ngForm" 
+        (ngSubmit)="register()" 
+        [style.width]="'100%'"
+        fxLayout="column" 
+        fxLayoutAlign="space-around center">
+        <mat-form-field [style.width]="'100%'">
+            <input matInput 
+                placeholder="Email" 
+                name="userName" 
+                type="text" 
+                [(ngModel)]="userName" 
+                required>
+        </mat-form-field>
+
+        <mat-form-field [style.width]="'100%'">
+            <input matInput 
+                placeholder="Vor- und Nachname" 
+                name="fullName" 
+                type="text" 
+                [(ngModel)]="fullName">
+        </mat-form-field>
+
+        <mat-form-field [style.width]="'100%'">
+            <input matInput 
+                placeholder="Telefon" 
+                name="phone" 
+                type="text" 
+                [(ngModel)]="phone">
+        </mat-form-field>
+
+        <mat-form-field [style.width]="'100%'">
+            <mat-select placeholder="Organisationen" [formControl]="organisationsCtrl" multiple>
+                <mat-option *ngFor="let organisation of organisations" [value]="topping">{{organisation.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+              
+        
+        <mat-form-field [style.width]="'100%'">
+            <input matInput 
+                placeholder="Neues Passwort" 
+                name="password" 
+                type="password" 
+                [(ngModel)]="password" 
+                required>
+        </mat-form-field>
+
+        <mat-form-field [style.width]="'100%'">
+            <input matInput 
+                placeholder="Passwort wiederholen" 
+                name="passwordRepeat" 
+                type="password" 
+                [(ngModel)]="passwordRepeat" 
+                required>
+        </mat-form-field>
+
+    </form>
+    <div fxFlex
+        fxLayout="row" 
+        fxLayoutAlign="end end" 
+        [style.width]="'100%'" 
+        [style.margin]="'20px'">
+
+        <button mat-raised-button type="button" color="primary" [style.background-coorl]="'#9F9F9F'">
+            <i18n i18n="@@back">back</i18n>
+        </button>
+
+        <button mat-raised-button 
+            (click)="register()"
+            color="primary" 
+            form="ngForm" 
+            [disabled]="!registerForm.form.valid">
+            <i18n i18n="@@register">register</i18n>
+        </button>
+    </div>
+
+    <div *ngIf="error">
+        <!-- TODO: Refactor -->
+        <div [ngSwitch]="error">
+            <mat-error *ngSwitchCase="'bad gateway'">
+                <i18n i18n="@@serverNotReachable">serverNotReachable</i18n>
+            </mat-error>
+            <mat-error *ngSwitchCase="'unauthorized'">
+                <i18n i18n="@@wrongUserNameOrPassword">wrongUserNameOrPassword</i18n>
+            </mat-error>
+            <mat-error *ngSwitchDefault>{{error}}</mat-error>
+        </div>
+        <mat-error *ngIf="password != passwordRepeat">
+            <i18n i18n="@@notSamePassword">notSamePassword</i18n>
+        </mat-error>
+    </div>
+</div>

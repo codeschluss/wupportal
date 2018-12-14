@@ -6,12 +6,14 @@ import { AdminRouter } from './admin.router';
 import { LoginComponent } from './login.component';
 import { CoreModule } from '@portal/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { RegisterComponent } from './register.component';
 
 const AdminProviders = [
 ];
 
 const AdminEntryComponents = [
-  LoginComponent
+  LoginComponent,
+  RegisterComponent
 ];
 
 const AdminDeclarations = [
@@ -21,7 +23,8 @@ const AdminDeclarations = [
 const AdminImports = [
   CoreModule,
   FlexLayoutModule,
-  LoginComponent.imports
+  LoginComponent.imports,
+  RegisterComponent.imports
 ];
 
 

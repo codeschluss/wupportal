@@ -58,6 +58,14 @@
       <trans-unit id="serverNotReachable" datatype="html">
         <target>Es scheint ein Problem mit dem Server vorzuligen. Bitte versuchen Sie es später nochmal.</target>
       </trans-unit>
+      <trans-unit id="back" datatype="html">
+        <target>zurück</target>
+      </trans-unit>
+      <trans-unit id="notSamePassword" datatype="html">
+        <target>Die eingegebenen Passwörter stimmen nicht überein</target>
+      </trans-unit>
+      
+      
       
       
       

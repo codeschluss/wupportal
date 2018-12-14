@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { LoginComponent } from './login.component';
+import { RegisterComponent } from './register.component';
+import { CrudResolver, CrudJoiner } from '@portal/core';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 
 const AdminResolvers = [];
 
@@ -10,6 +13,16 @@ const routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    resolve: {
+      organisations: CrudResolver
+    },
+    data: {
+      organisations: CrudJoiner.of(OrganisationModel)
+    }
   },
   // {
   //   path: 'account',

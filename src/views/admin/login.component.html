@@ -30,7 +30,7 @@
             <input matInput 
                 placeholder="Passwort" 
                 name="password" 
-                type="text" 
+                type="password" 
                 [(ngModel)]="password" 
                 required>
         </mat-form-field>
@@ -39,7 +39,7 @@
         fxLayoutAlign="space-between center" 
         [style.width]="'100%'" 
         [style.margin]="'20px'">
-        <button mat-button type="button" color="primary">
+        <button mat-button type="button" color="primary" (click)="goToRegister()">
             <i18n i18n="@@register">register</i18n>
         </button>
 

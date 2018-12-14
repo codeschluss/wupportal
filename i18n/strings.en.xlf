@@ -43,7 +43,7 @@
       <trans-unit id="noBrowserSupportVideo" datatype="html">
         <target>No browser support for video</target>
       </trans-unit>
-            <trans-unit id="register" datatype="html">
+      <trans-unit id="register" datatype="html">
         <target>register</target>
       </trans-unit>
       <trans-unit id="forgetPassword" datatype="html">
@@ -58,6 +58,13 @@
       <trans-unit id="serverNotReachable" datatype="html">
         <target>There is a problem with the server. Please try again later.</target>
       </trans-unit>
+      <trans-unit id="back" datatype="html">
+        <target>back</target>
+      </trans-unit>
+      <trans-unit id="notSamePassword" datatype="html">
+        <target>The entered passwords are different</target>
+      </trans-unit>
+
 
 
 

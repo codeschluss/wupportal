@@ -7,6 +7,7 @@ import { SessionProvider } from '@portal/core';
 @Component({
     templateUrl: 'login.component.html'
 })
+
 export class LoginComponent {
 
     static readonly imports = [
@@ -37,5 +38,9 @@ export class LoginComponent {
 
     goToHome(): void {
         this.router.navigate(['/home']);
+    }
+
+    goToRegister(): void {
+        this.router.navigate(['/admin/register']);
     }
 }

@@ -11,6 +11,7 @@ import { ActivityProvider } from './realm/activity/activity.provider';
 import { AddressProvider } from './realm/address/address.provider';
 import { CategoryProvider } from './realm/category/category.provider';
 import { ConfigurationProvider } from './realm/configuration/configuration.provider';
+import { LanguageProvider } from './realm/language/language.provider';
 import { OrganisationProvider } from './realm/organisation/organisation.provider';
 import { SuburbProvider } from './realm/suburb/suburb.provider';
 import { TagProvider } from './realm/tag/tag.provider';
@@ -31,7 +32,7 @@ import { LayoutComponent } from './views/layout/layout.component';
     BrowserAnimationsModule,
     ClientRouter,
     CoreModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [
     ActivityProvider,
@@ -57,6 +58,7 @@ export class ClientModule {
     _addressProvider: AddressProvider,
     _categoryProvider: CategoryProvider,
     _configurationProvider: ConfigurationProvider,
+    _languageProvider: LanguageProvider,
     _organisationProvider: OrganisationProvider,
     _suburbProvider: SuburbProvider,
     _tagProvider: TagProvider,

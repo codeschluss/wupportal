@@ -12,15 +12,17 @@ import { ActivityProvider } from './activity.provider';
 @Component({
   selector: 'activity-form',
   template: BaseForm.template(`
-    <i18n #name i18n="@@title">title</i18n>
-    <i18n #description i18n="@@description">description</i18n>
-    <i18n #contactName i18n="@@contactName">contactName</i18n>
-    <i18n #phone i18n="@@phone">phone</i18n>
-    <i18n #mail i18n="@@mail">mail</i18n>
-    <i18n #organisation i18n="@@organisation">organisation</i18n>
-    <i18n #category i18n="@@category">category</i18n>
-    <i18n #targetGroups i18n="@@targetGroups">targetGroups</i18n>
-    <i18n #tags i18n="@@tags">tags</i18n>
+    <i18n *ngSwitchCase="'name'" i18n="@@title">title</i18n>
+    <i18n *ngSwitchCase="'description'" i18n="@@description">description</i18n>
+    <i18n *ngSwitchCase="'contactName'" i18n="@@contactName">contactName</i18n>
+    <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
+    <i18n *ngSwitchCase="'mail'" i18n="@@mail">mail</i18n>
+    <i18n *ngSwitchCase="'organisation'"
+      i18n="@@organisation">organisation</i18n>
+    <i18n *ngSwitchCase="'category'" i18n="@@category">category</i18n>
+    <i18n *ngSwitchCase="'targetGroups'"
+      i18n="@@targetGroups">targetGroups</i18n>
+    <i18n *ngSwitchCase="'tags'" i18n="@@tags">tags</i18n>
   `)
 })
 

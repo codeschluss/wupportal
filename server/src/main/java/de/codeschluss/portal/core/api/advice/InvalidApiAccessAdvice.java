@@ -4,6 +4,7 @@ import de.codeschluss.portal.core.api.dto.ApiError;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,8 +25,11 @@ public class InvalidApiAccessAdvice extends ResponseEntityExceptionHandler {
     return handleResponse("Invalid API params");
   }
 
-  @ExceptionHandler(BadParamsException.class)
-  public ResponseEntity<ApiError> badParamsAccessHandler(BadParamsException ex) {
+  @ExceptionHandler(value = {
+      BadParamsException.class,
+      PropertyReferenceException.class
+  })
+  public ResponseEntity<ApiError> badParamsAccessHandler(Exception ex) {
     return handleResponse(ex.getMessage());
   }
 

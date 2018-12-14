@@ -1,5 +1,5 @@
 import { CrudModel } from '@portal/core';
-import { LanguageEntity } from 'src/api/models/language-entity';
+import { LanguageEntity } from '../../api/models/language-entity';
 
 export class LanguageModel
   extends CrudModel implements LanguageEntity {

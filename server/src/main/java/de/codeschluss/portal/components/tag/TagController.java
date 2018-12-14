@@ -84,7 +84,7 @@ public class TagController extends CrudController<TagEntity, TagService> {
   @GetMapping("/tags/{tagId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String tagId) {
     try {
-      return ok(translationService.getAllTranslations(service.getById(tagId), this));
+      return ok(translationService.getAllTranslations(service.getById(tagId)));
     } catch (NoSuchMethodException | SecurityException | IllegalAccessException
         | IllegalArgumentException | InvocationTargetException | IOException e) {
       throw new RuntimeException(e.getMessage());

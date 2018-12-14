@@ -498,7 +498,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @GetMapping("/activities/{activityId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String activityId) {
     try {
-      return ok(translationService.getAllTranslations(service.getById(activityId), this));
+      return ok(translationService.getAllTranslations(service.getById(activityId)));
     } catch (NoSuchMethodException | SecurityException | IllegalAccessException
         | IllegalArgumentException | InvocationTargetException | IOException e) {
       throw new RuntimeException(e.getMessage());

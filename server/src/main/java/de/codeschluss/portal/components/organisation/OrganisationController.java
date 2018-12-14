@@ -348,7 +348,7 @@ public class OrganisationController
   @GetMapping("/organisations/{organisationId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String organisationId) {
     try {
-      return ok(translationService.getAllTranslations(service.getById(organisationId), this));
+      return ok(translationService.getAllTranslations(service.getById(organisationId)));
     } catch (NoSuchMethodException | SecurityException | IllegalAccessException
         | IllegalArgumentException | InvocationTargetException | IOException e) {
       throw new RuntimeException(e.getMessage());

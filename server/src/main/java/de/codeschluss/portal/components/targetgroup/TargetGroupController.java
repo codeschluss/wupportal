@@ -85,7 +85,7 @@ public class TargetGroupController extends CrudController<TargetGroupEntity, Tar
   @GetMapping("/targetgroups/{targetGroupId}/translations")
   public ResponseEntity<?> readTranslations(@PathVariable String targetGroupId) {
     try {
-      return ok(translationService.getAllTranslations(service.getById(targetGroupId), this));
+      return ok(translationService.getAllTranslations(service.getById(targetGroupId)));
     } catch (NoSuchMethodException | SecurityException | IllegalAccessException
         | IllegalArgumentException | InvocationTargetException | IOException e) {
       throw new RuntimeException(e.getMessage());

@@ -3,7 +3,6 @@ package de.codeschluss.portal.core.i18n.translation;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.PagingAndSortingAssembler;
 import de.codeschluss.portal.core.entity.BaseEntity;
 import de.codeschluss.portal.core.i18n.TranslationsConfiguration;
@@ -193,7 +192,6 @@ public class TranslationService {
    * Gets the all translations.
    *
    * @param parent the parent
-   * @param controller the controller
    * @return the all translations
    * @throws NoSuchMethodException the no such method exception
    * @throws SecurityException the security exception
@@ -205,7 +203,7 @@ public class TranslationService {
    * @throws IOException Signals that an I/O exception has occurred.
    */
   @SuppressWarnings("unchecked")
-  public Resources<?> getAllTranslations(BaseEntity parent, CrudController<?, ?> controller)
+  public Resources<?> getAllTranslations(BaseEntity parent)
       throws NoSuchMethodException, SecurityException, JsonParseException, JsonMappingException,
       IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException {
 

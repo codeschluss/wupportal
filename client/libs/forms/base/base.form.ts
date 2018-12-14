@@ -34,19 +34,27 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
 
   protected static template(template: string): string {
     return `
-      <ng-template>${template}</ng-template>
+      <ng-template #label let-field="field">
+        <ng-container [ngSwitch]="field.name">${template}</ng-container>
+      </ng-template>
       <form [formGroup]="group">
         <ng-container *ngFor="let field of fields">
+          <ng-container *ngTemplateOutlet="label; context: { field: field }">
+          </ng-container>
           <base-field [field]="field" [group]="group"></base-field>
         </ng-container>
       </form>
     `;
   }
 
+  public get isValid(): boolean {
+    return this.group.valid;
+  }
+
   public ngOnInit(): void {
     const data = this.route.snapshot.data;
     this.group = this.group || data.group || this.builder.group({ });
-    this.item = this.item || data.item || { };
+    this.item = this.item || data.item || new this.model();
 
     this.fields = this.fields.map((field) => Object.assign(field, {
       label: field.label || 'name',
@@ -59,12 +67,10 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
       this.builder.control(field.value, field.tests)));
   }
 
-  protected ngPostInit(): void { }
-
-  protected save(item: Model): Promise<any> {
-    return item.id
-      ? this.model['provider'].update(item.id, item)
-      : this.model['provider'].create(item);
+  public save(): Promise<any> {
+    return Promise.resolve(console.log(this.group.value));
   }
+
+  protected ngPostInit(): void { }
 
 }

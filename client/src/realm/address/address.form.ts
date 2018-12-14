@@ -9,11 +9,11 @@ import { AddressProvider } from './address.provider';
 @Component({
   selector: 'address-form',
   template: BaseForm.template(`
-    <i18n #place i18n="@@place">place</i18n>
-    <i18n #postalCode i18n="@@postalCode">postalCode</i18n>
-    <i18n #suburb i18n="@@suburb">suburb</i18n>
-    <i18n #street i18n="@@street">street</i18n>
-    <i18n #houseNumber i18n="@@houseNumber">houseNumber</i18n>
+    <i18n *ngSwitchCase="'houseNumber'" i18n="@@houseNumber">houseNumber</i18n>
+    <i18n *ngSwitchCase="'place'" i18n="@@place">place</i18n>
+    <i18n *ngSwitchCase="'postalCode'" i18n="@@postalCode">postalCode</i18n>
+    <i18n *ngSwitchCase="'suburb'" i18n="@@suburb">suburb</i18n>
+    <i18n *ngSwitchCase="'street'" i18n="@@street">street</i18n>
   `)
 })
 

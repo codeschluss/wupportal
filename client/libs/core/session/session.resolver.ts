@@ -16,7 +16,7 @@ export class SessionResolver implements Resolve<SessionModel> {
     return this.run();
   }
 
-  public async run(): Promise<SessionModel> {
+  private async run(): Promise<SessionModel> {
     const schema = { schema: SessionModel.schema };
     const session = this.storage.getItem<SessionModel>('session', schema);
     return this.session = await session.toPromise() || new SessionModel();

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { TagControllerService } from '../../api/services/tag-controller.service';
 import { TagModel } from './tag.model';
 
@@ -7,16 +8,16 @@ import { TagModel } from './tag.model';
 export class TagProvider
   extends CrudProvider<TagControllerService, TagModel> {
 
-  public create: (model: TagModel) => Promise<any>;
+  public create: (model: TagModel) => Observable<any>;
 
-  public update: (id: string, model: TagModel) => Promise<any>;
+  public update: (id: string, model: TagModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<TagModel>;
+  public readOne: (id: string) => Observable<TagModel>;
 
   public readAll: (params?: TagControllerService
-    .TagControllerReadAllParams) => Promise<TagModel[]>;
+    .TagControllerReadAllParams) => Observable<TagModel[]>;
 
   protected linked = [];
 

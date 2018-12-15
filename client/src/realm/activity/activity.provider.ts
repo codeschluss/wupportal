@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
 import { AddressModel } from '../address/address.model';
 import { CategoryModel } from '../category/category.model';
@@ -69,51 +70,51 @@ export class ActivityProvider
     super();
   }
 
-  public create: (model: ActivityModel) => Promise<any>;
+  public create: (model: ActivityModel) => Observable<any>;
 
-  public update: (id: string, model: ActivityModel) => Promise<any>;
+  public update: (id: string, model: ActivityModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<ActivityModel>;
+  public readOne: (id: string) => Observable<ActivityModel>;
 
   public readAll: (params?: ActivityControllerService
-    .ActivityControllerReadAllParams) => Promise<ActivityModel[]>;
+    .ActivityControllerReadAllParams) => Observable<ActivityModel[]>;
 
   public linkTargetGroups:
-    (id: string, targetGroupIds: string[]) => Promise<any> =
+    (id: string, targetGroupIds: string[]) => Observable<any> =
       this.apply(this.service.activityControllerAddTargetGroupsResponse);
 
   public pasteSchedules:
-    (id: string, schedules: ScheduleModel[]) => Promise<any> =
+    (id: string, schedules: ScheduleModel[]) => Observable<any> =
       this.apply(this.service.activityControllerAddSchedulesResponse);
 
   public pasteTags:
-    (id: string, tags: TagModel[]) => Promise<any> =
+    (id: string, tags: TagModel[]) => Observable<any> =
       this.apply(this.service.activityControllerAddTagsResponse);
 
   public relinkAddress:
-    (id: string, addressId: string) => Promise<any> =
+    (id: string, addressId: string) => Observable<any> =
       this.apply(this.service.activityControllerUpdateAddressResponse);
 
   public relinkCategory:
-    (id: string, categoryId: string) => Promise<any> =
+    (id: string, categoryId: string) => Observable<any> =
       this.apply(this.service.activityControllerUpdateCategoryResponse);
 
   public relinkOrganisation:
-    (id: string, organisationId: string) => Promise<any> =
+    (id: string, organisationId: string) => Observable<any> =
       this.apply(this.service.activityControllerUpdateOrganisationResponse);
 
   public unlinkSchedule:
-    (id: string, scheduleId: string) => Promise<any> =
+    (id: string, scheduleId: string) => Observable<any> =
       this.apply(this.service.activityControllerDeleteSchedulesResponse);
 
   public unlinkTag:
-    (id: string, tagId: string) => Promise<any> =
+    (id: string, tagId: string) => Observable<any> =
       this.apply(this.service.activityControllerDeleteTagsResponse);
 
   public unlinkTargetGroup:
-    (id: string, targetGroupId: string) => Promise<any> =
+    (id: string, targetGroupId: string) => Observable<any> =
       this.apply(this.service.activityControllerDeleteTargetGroupsResponse);
 
 }

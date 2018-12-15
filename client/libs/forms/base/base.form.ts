@@ -2,6 +2,7 @@ import { Input, OnInit, Type } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CrudModel } from '@portal/core';
+import { Observable, of } from 'rxjs';
 import { BaseFieldComponent } from './base.field';
 
 export interface FormField {
@@ -67,8 +68,8 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
       this.builder.control(field.value, field.tests)));
   }
 
-  public save(): Promise<any> {
-    return Promise.resolve(console.log(this.group.value));
+  public save(): Observable<any> {
+    return of(console.log(this.group.value));
   }
 
   protected ngPostInit(): void { }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CrudGraph, CrudJoiner } from './crud.joiner';
 import { CrudModel } from './crud.model';
@@ -9,6 +10,14 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
 
   private resolving: CrudJoiner[] = [];
 
+  public refine(input: CrudModel | CrudModel[], graph: CrudGraph):
+    Observable<CrudModel | CrudModel[]> {
+
+    return Array.isArray(input)
+      ? forkJoin(...input.map((item) => from(this.run(item, graph.nodes))))
+      : from(this.run(input, graph.nodes));
+  }
+
   public async resolve(route: ActivatedRouteSnapshot):
     Promise<CrudModel | CrudModel[]> {
 
@@ -16,12 +25,12 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       .filter((key) => route.routeConfig.resolve[key] === this.constructor)
       .filter((key) => route.data[key] instanceof CrudJoiner)
       .find((key) => !this.resolving.includes(route.data[key]))];
-
     this.resolving.push(joiner);
-    joiner.graph.params.embeddings = this.embed(joiner.graph.nodes);
+
+    joiner.graph.params.embeddings = this.embed(joiner.graph);
     const response = joiner.graph.params.filter !== null && route.params.uuid
-      ? await joiner.graph.provider.readOne(route.params.uuid)
-      : await joiner.graph.provider.readAll(joiner.graph.params);
+      ? await joiner.graph.provider.readOne(route.params.uuid).toPromise()
+      : await joiner.graph.provider.readAll(joiner.graph.params).toPromise();
 
     for (const item of Array.isArray(response) ? response : [response]) {
       await this.run(item, joiner.graph.nodes);
@@ -31,7 +40,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     return response;
   }
 
-  public async run(item: CrudModel, nodes: CrudGraph[]): Promise<CrudModel> {
+  private async run(item: CrudModel, nodes: CrudGraph[]): Promise<CrudModel> {
     if (item.constructor['provider']) {
       const provider = item.constructor['provider'].system;
 
@@ -46,7 +55,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
             item.id,
             node.params.sort,
             node.params.dir,
-            this.embed(node.nodes)
+            this.embed(node)
           ];
 
           try {
@@ -68,13 +77,13 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     return item;
   }
 
-  private embed(tree: CrudGraph[]): string {
+  private embed(tree: CrudGraph): string {
     const embed = (nodes) => nodes.map((node) => ({
       name: node.name,
       nodes: embed(node.nodes)
     }));
 
-    return btoa(JSON.stringify(embed(tree)));
+    return btoa(JSON.stringify(embed(tree.nodes)));
   }
 
 }

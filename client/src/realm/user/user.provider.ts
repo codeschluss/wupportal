@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -44,35 +45,35 @@ export class UserProvider
     super();
   }
 
-  public create: (model: UserModel) => Promise<any>;
+  public create: (model: UserModel) => Observable<any>;
 
-  public update: (id: string, model: UserModel) => Promise<any>;
+  public update: (id: string, model: UserModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<UserModel>;
+  public readOne: (id: string) => Observable<UserModel>;
 
   public readAll: (params?: UserControllerService
-    .UserControllerReadAllParams) => Promise<UserModel[]>;
+    .UserControllerReadAllParams) => Observable<UserModel[]>;
 
   public grantSuperUser:
-    (userId: string, grant: boolean) => Promise<any> =
+    (id: string, grant: boolean) => Observable<any> =
       this.apply(this.service.userControllerGrantSuperuserRightResponse);
 
   public resetPassword:
-    (username: string) => Promise<any> =
+    (username: string) => Observable<any> =
       this.apply(this.service.userControllerResetPasswordResponse);
 
   public linkOrganisations:
-    (id: string, organisationIds: string[]) => Promise<any> =
+    (id: string, organisationIds: string[]) => Observable<any> =
       this.apply(this.service.userControllerAddOrganisationResponse);
 
   public unlinkActivity:
-    (id: string, activityId: string) => Promise<any> =
+    (id: string, activityId: string) => Observable<any> =
       this.apply(this.service.userControllerDeleteActivityResponse);
 
   public unlinkOrganisation:
-    (id: string, organisationId) => Promise<any> =
+    (id: string, organisationId) => Observable<any> =
       this.apply(this.service.userControllerDeleteOrganisationResponse);
 
 }

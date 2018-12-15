@@ -17,7 +17,7 @@ export class I18nResolver implements Resolve<string> {
     return this.xlf ? Promise.resolve(this.xlf) : this.run();
   }
 
-  public async run(): Promise<string> {
+  private async run(): Promise<string> {
     const session = await this.session.resolve();
     const url = `/i18n/strings.${session.language}.xlf`;
     const request = this.httpClient.get(url, { responseType: 'text' });

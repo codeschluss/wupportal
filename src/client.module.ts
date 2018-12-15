@@ -11,6 +11,7 @@ import { CategoryProvider } from './realm/category/category.provider';
 import { ConfigurationProvider } from './realm/configuration/configuration.provider';
 import { LanguageProvider } from './realm/language/language.provider';
 import { OrganisationProvider } from './realm/organisation/organisation.provider';
+import { ProviderProvider } from './realm/provider/provider.provider';
 import { SuburbProvider } from './realm/suburb/suburb.provider';
 import { TagProvider } from './realm/tag/tag.provider';
 import { TargetGroupProvider } from './realm/target-group/target-group.provider';
@@ -39,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CategoryProvider,
     ConfigurationProvider,
     OrganisationProvider,
+    ProviderProvider,
     SuburbProvider,
     TagProvider,
     TargetGroupProvider,
@@ -59,6 +61,7 @@ export class ClientModule {
     _configurationProvider: ConfigurationProvider,
     _languageProvider: LanguageProvider,
     _organisationProvider: OrganisationProvider,
+    _providerProvider: ProviderProvider,
     _suburbProvider: SuburbProvider,
     _tagProvider: TagProvider,
     _targetGroupProvider: TargetGroupProvider,

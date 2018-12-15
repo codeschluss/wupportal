@@ -27,7 +27,23 @@ export class CrudJoiner {
   }
 
   public get graph(): CrudGraph {
-    return this.joinGraph;
+    const merger = (nodes, node) => nodes.filter((nd) => nd.name !== node.name)
+      .concat(nodes.filter((nd) => nd.name === node.name).reduce((a, b) =>
+        Object.assign(a, { nodes: a.nodes.concat(b.nodes) }), node));
+
+    const grapher = (graph: CrudGraph) => {
+      graph.nodes = graph.nodes.map((node) => grapher(node));
+      graph.nodes = graph.nodes.reduce((nodes, node) => {
+
+      return nodes.some((nd) => nd.name === node.name)
+        ? merger(nodes, node)
+        : nodes.concat(node);
+      }, []);
+
+      return graph;
+    };
+
+    return grapher(this.joinGraph);
   }
 
   public with(field: string, params?: ReadEmbeddedParams): CrudJoiner {
@@ -41,13 +57,13 @@ export class CrudJoiner {
   }
 
   public yield(field: string, params?: ReadEmbeddedParams): CrudJoiner {
-    const filler = (node: CrudGraph) => Object.assign(node, {
-      nodes: node.nodes.length
-        ? node.nodes.map((child) => filler(child))
+    const yielder = (graph: CrudGraph) => Object.assign(graph, {
+      nodes: graph.nodes.length
+        ? graph.nodes.map((child) => yielder(child))
         : [{ name: field, nodes: [], params: params || { } }]
     });
 
-    this.joinGraph.nodes.push(filler(this.joinGraph.nodes.pop()));
+    this.joinGraph.nodes.push(yielder(this.joinGraph.nodes.pop()));
     return this;
   }
 

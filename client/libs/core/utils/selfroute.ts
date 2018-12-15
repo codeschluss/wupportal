@@ -5,7 +5,7 @@ export abstract class Selfroute {
   protected abstract routing: Route;
 
   public static get routing(this: any): Route {
-    return new this().routes;
+    return new this().routing;
   }
 
 }

@@ -7,3 +7,4 @@ databaseChangeLog:
         newColumnName: name
         oldColumnName: fullname
         tableName: users
+        type: VARCHAR(255)

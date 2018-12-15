@@ -3,20 +3,20 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule, MatTabsModule } from '@angular/material';
 import { CoreModule } from '@portal/core';
 import { FormsModule } from '@portal/forms';
-import { ActivityFormComponent } from 'src/realm/activity/activity.form';
-import { ActivityStepperComponent } from 'src/realm/activity/activity.stepper';
-import { ActivityTableComponent } from 'src/realm/activity/activity.table';
-import { AddressFormComponent } from 'src/realm/address/address.form';
-import { AddressTableComponent } from 'src/realm/address/address.table';
-import { CategoryTableComponent } from 'src/realm/category/category.table';
-import { ConfigurationFormComponent } from 'src/realm/configuration/configuration.form';
-import { LanguageTableComponent } from 'src/realm/language/language.table';
-import { OrganisationTableComponent } from 'src/realm/organisation/organisation.table';
-import { SuburbTableComponent } from 'src/realm/suburb/suburb.table';
-import { TagTableComponent } from 'src/realm/tag/tag.table';
-import { TargetGroupTableComponent } from 'src/realm/target-group/target-group.table';
-import { UserFormComponent } from 'src/realm/user/user.form';
-import { UserTableComponent } from 'src/realm/user/user.table';
+import { ActivityFormComponent } from '../../realm/activity/activity.form';
+import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
+import { ActivityTableComponent } from '../../realm/activity/activity.table';
+import { AddressFormComponent } from '../../realm/address/address.form';
+import { AddressTableComponent } from '../../realm/address/address.table';
+import { CategoryTableComponent } from '../../realm/category/category.table';
+import { ConfigurationFormComponent } from '../../realm/configuration/configuration.form';
+import { LanguageTableComponent } from '../../realm/language/language.table';
+import { OrganisationTableComponent } from '../../realm/organisation/organisation.table';
+import { SuburbTableComponent } from '../../realm/suburb/suburb.table';
+import { TagTableComponent } from '../../realm/tag/tag.table';
+import { TargetGroupTableComponent } from '../../realm/target-group/target-group.table';
+import { UserFormComponent } from '../../realm/user/user.form';
+import { UserTableComponent } from '../../realm/user/user.table';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
 import { AccountPanelComponent } from './panels/account.panel';
@@ -53,6 +53,7 @@ const tables = [
 @NgModule({
   entryComponents: [
     ...forms,
+    ...panels,
     ...steppers
   ],
   declarations: [

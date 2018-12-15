@@ -128,6 +128,106 @@ class UserControllerService extends BaseService {
   }
 
   /**
+   * @return OK
+   */
+  userControllerApplyAsBloggerResponse(): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/users/blogapply`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  userControllerApplyAsBlogger(): Observable<{}> {
+    return this.userControllerApplyAsBloggerResponse().pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param params The `UserControllerService.UserControllerReadAllBloggersParams` containing the following parameters:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `embeddings`:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `filter`:
+   *
+   * @return OK
+   */
+  userControllerReadAllBloggersResponse(params: UserControllerService.UserControllerReadAllBloggersParams): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (params.sort != null) __params = __params.set('sort', params.sort.toString());
+    if (params.dir != null) __params = __params.set('dir', params.dir.toString());
+    if (params.embeddings != null) __params = __params.set('embeddings', params.embeddings.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.filter != null) __params = __params.set('filter', params.filter.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/users/bloggers`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param params The `UserControllerService.UserControllerReadAllBloggersParams` containing the following parameters:
+   *
+   * - `sort`:
+   *
+   * - `dir`:
+   *
+   * - `embeddings`:
+   *
+   * - `page`:
+   *
+   * - `size`:
+   *
+   * - `filter`:
+   *
+   * @return OK
+   */
+  userControllerReadAllBloggers(params: UserControllerService.UserControllerReadAllBloggersParams): Observable<{}> {
+    return this.userControllerReadAllBloggersResponse(params).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
    * @param username username
    * @return OK
    */
@@ -375,6 +475,139 @@ class UserControllerService extends BaseService {
    * @param embeddings undefined
    * @return OK
    */
+  userControllerReadBlogsResponse(userId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/users/${userId}/blogs`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param userId userId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
+   * @return OK
+   */
+  userControllerReadBlogs(userId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<{}> {
+    return this.userControllerReadBlogsResponse(userId, sort, dir, embeddings).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param userId userId
+   * @param blogId blogId
+   * @return OK
+   */
+  userControllerDeleteBlogResponse(userId: string,
+    blogId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/users/${userId}/blogs/${blogId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param userId userId
+   * @param blogId blogId
+   * @return OK
+   */
+  userControllerDeleteBlog(userId: string,
+    blogId: string): Observable<{}> {
+    return this.userControllerDeleteBlogResponse(userId, blogId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param userId userId
+   * @param isBlogger isBlogger
+   * @return OK
+   */
+  userControllerGrantBloggerRightResponse(userId: string,
+    isBlogger: boolean): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = isBlogger;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/users/${userId}/grantblogger`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param userId userId
+   * @param isBlogger isBlogger
+   * @return OK
+   */
+  userControllerGrantBloggerRight(userId: string,
+    isBlogger: boolean): Observable<{}> {
+    return this.userControllerGrantBloggerRightResponse(userId, isBlogger).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param userId userId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
+   * @return OK
+   */
   userControllerReadOrganisationsResponse(userId: string,
     sort?: string,
     dir?: string,
@@ -549,6 +782,18 @@ module UserControllerService {
    * Parameters for userControllerReadAll
    */
   export interface UserControllerReadAllParams {
+    sort?: string;
+    dir?: string;
+    embeddings?: string;
+    page?: number;
+    size?: number;
+    filter?: string;
+  }
+
+  /**
+   * Parameters for userControllerReadAllBloggers
+   */
+  export interface UserControllerReadAllBloggersParams {
     sort?: string;
     dir?: string;
     embeddings?: string;

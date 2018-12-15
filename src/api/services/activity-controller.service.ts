@@ -420,6 +420,42 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
+  activityControllerIncreaseLikeResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/activities/${activityId}/like`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerIncreaseLike(activityId: string): Observable<{}> {
+    return this.activityControllerIncreaseLikeResponse(activityId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param activityId activityId
+   * @return OK
+   */
   activityControllerReadOrganisationResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();

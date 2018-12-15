@@ -7,6 +7,7 @@ export interface ActivityEntity {
   created?: string;
   description?: string;
   addressId?: string;
+  likes?: number;
   mail?: string;
   modified?: string;
   name?: string;

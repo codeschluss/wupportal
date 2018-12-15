@@ -4,6 +4,12 @@ import { CrudModel, StrictHttpResponse } from '@portal/core';
 import { BehaviorSubject, merge, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
+export interface TableColumn {
+  name: string;
+  sort?: boolean;
+  value: (item: CrudModel) => string;
+}
+
 export abstract class BaseTable<Model extends CrudModel>
   implements AfterViewInit {
 
@@ -18,19 +24,37 @@ export abstract class BaseTable<Model extends CrudModel>
 
   public source: BehaviorSubject<Model[]> = new BehaviorSubject<Model[]>([]);
 
-  public abstract columns: string[];
+  public abstract columns: TableColumn[];
 
   protected abstract model: Type<Model>;
 
   protected static template(template: string): string {
-    return `
+    return template + `
       <mat-table matSort [dataSource]="source.asObservable()">
-        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columns"></mat-row>
-        ${template}
+        <mat-header-row *matHeaderRowDef="colDefs"></mat-header-row>
+        <mat-row *matRowDef="let item; columns: colDefs"></mat-row>
+        <ng-container *ngFor="let col of columns" [matColumnDef]="col.name">
+          <ng-container *ngIf="col.sort">
+            <mat-header-cell mat-sort-header *matHeaderCellDef>
+              <ng-container *ngTemplateOutlet="label; context: { case: col }">
+              </ng-container>
+            </mat-header-cell>
+          </ng-container>
+          <ng-container *ngIf="!col.sort">
+            <mat-header-cell *matHeaderCellDef>
+              <ng-container *ngTemplateOutlet="label; context: { case: col }">
+              </ng-container>
+            </mat-header-cell>
+          </ng-container>
+          <mat-cell *matCellDef="let item">{{ col.value(item) }}</mat-cell>
+        </ng-container>
       </mat-table>
       <mat-paginator [pageSize]="10"></mat-paginator>
     `;
+  }
+
+  public get colDefs(): string[] {
+    return this.columns.map((column) => column.name);
   }
 
   public ngAfterViewInit(): void {
@@ -44,8 +68,8 @@ export abstract class BaseTable<Model extends CrudModel>
   private list(): void {
     this.pager.length = this.items.length;
     this.source.next(this.items.sort((a, b) => this.sorter.direction === 'asc'
-      ? (b[this.sorter.active] || '').localeCompare(a[this.sorter.active])
-      : (a[this.sorter.active] || '').localeCompare(b[this.sorter.active])
+      ? (a[this.sorter.active] || '').localeCompare(b[this.sorter.active])
+      : (b[this.sorter.active] || '').localeCompare(a[this.sorter.active])
     ).slice(
       this.pager.pageIndex * this.pager.pageSize,
       (this.pager.pageIndex + 1) * this.pager.pageSize

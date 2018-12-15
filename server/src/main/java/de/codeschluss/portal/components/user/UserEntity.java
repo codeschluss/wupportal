@@ -5,6 +5,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
@@ -50,6 +51,7 @@ public class UserEntity extends BaseResource {
   private String name;
 
   @Column(nullable = false)
+  @JsonProperty(access = Access.WRITE_ONLY)
   private String password;
 
   private String phone;
@@ -60,30 +62,11 @@ public class UserEntity extends BaseResource {
   private List<ProviderEntity> providers;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @JsonProperty(access = Access.READ_ONLY)
   private boolean superuser;
 
   @Column(unique = true, nullable = false)
   private String username;
-
-  @JsonIgnore
-  public String getPassword() {
-    return this.password;
-  }
-
-  @JsonProperty
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  @JsonProperty
-  public boolean isSuperuser() {
-    return this.superuser;
-  }
-
-  @JsonIgnore
-  public void setSuperuser(boolean superuser) {
-    this.superuser = superuser;
-  }
 
   @Override
   public List<Link> createResourceLinks() {

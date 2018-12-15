@@ -2,6 +2,7 @@ package de.codeschluss.portal.components.provider;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
@@ -52,9 +53,11 @@ public class ProviderEntity extends BaseResource {
   private List<ActivityEntity> activities;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @JsonProperty(access = Access.READ_ONLY)
   private boolean admin;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @JsonProperty(access = Access.READ_ONLY)
   private boolean approved;
 
   @ManyToOne
@@ -68,26 +71,6 @@ public class ProviderEntity extends BaseResource {
   @ToString.Exclude
   @JoinColumn(nullable = false)
   private UserEntity user;
-
-  @JsonProperty
-  public boolean isAdmin() {
-    return this.admin;
-  }
-
-  @JsonIgnore
-  public void setAdmin(boolean isAdmin) {
-    this.admin = isAdmin;
-  }
-
-  @JsonProperty
-  public boolean isApproved() {
-    return this.approved;
-  }
-
-  @JsonIgnore
-  public void setApproved(boolean isApproved) {
-    this.approved = isApproved;
-  }
 
   @Override
   public List<Link> createResourceLinks() {

@@ -5,6 +5,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -67,6 +68,7 @@ public class OrganisationEntity extends BaseResource {
   private AddressEntity address;
   
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+  @JsonProperty(access = Access.READ_ONLY)
   private boolean approved;
 
   @JsonSerialize
@@ -100,16 +102,6 @@ public class OrganisationEntity extends BaseResource {
   private String videoUrl;
 
   private String website;
-  
-  @JsonProperty
-  public boolean isApproved() {
-    return this.approved;
-  }
-
-  @JsonIgnore
-  public void setApproved(boolean approved) {
-    this.approved = approved;
-  }
 
   @Override
   public List<Link> createResourceLinks() {

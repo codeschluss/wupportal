@@ -159,21 +159,6 @@ public class ActivityEntity extends BaseResource {
   @JsonIgnore
   protected Set<ActivityTranslatablesEntity> translatables;
 
-  @JsonIgnore
-  public String getAddressId() {
-    return this.addressId;
-  }
-
-  @JsonIgnore
-  public String getCategoryId() {
-    return this.categoryId;
-  }
-
-  @JsonIgnore
-  public String getOrganisationId() {
-    return this.organisationId;
-  }
-
   @Override
   public List<Link> createResourceLinks() {
     List<Link> links = new ArrayList<Link>();

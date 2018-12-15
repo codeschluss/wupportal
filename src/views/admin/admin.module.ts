@@ -53,6 +53,7 @@ const tables = [
 @NgModule({
   entryComponents: [
     ...forms,
+    ...panels,
     ...steppers
   ],
   declarations: [

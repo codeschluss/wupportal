@@ -8,17 +8,21 @@ import { ConfigurationProvider } from './configuration.provider';
 @Component({
   selector: 'configuration-form',
   template: BaseForm.template(`
-    <i18n *ngSwitchCase="'mapcenterLatitude'"
-      i18n="@@mapcenterLatitude">mapcenterLatitude</i18n>
-    <i18n *ngSwitchCase="'mapcenterLongitude'"
-      i18n="@@mapcenterLongitude">mapcenterLongitude</i18n>
-    <i18n *ngSwitchCase="'mapProjection'"
-      i18n="@@mapProjection">mapProjection</i18n>
-    <i18n *ngSwitchCase="'portalMail'" i18n="@@portalMail">portalMail</i18n>
-    <i18n *ngSwitchCase="'portalName'" i18n="@@portalName">portalName</i18n>
-    <i18n *ngSwitchCase="'portalSubtitle'"
-      i18n="@@portalSubtitle">portalSubtitle</i18n>
-    <i18n *ngSwitchCase="'zoomfactor'" i18n="@@zoomfactor">zoomfactor</i18n>
+    <ng-template #label let-case="case">
+      <ng-container [ngSwitch]="case.name">
+        <i18n *ngSwitchCase="'mapcenterLatitude'"
+          i18n="@@mapcenterLatitude">mapcenterLatitude</i18n>
+        <i18n *ngSwitchCase="'mapcenterLongitude'"
+          i18n="@@mapcenterLongitude">mapcenterLongitude</i18n>
+        <i18n *ngSwitchCase="'mapProjection'"
+          i18n="@@mapProjection">mapProjection</i18n>
+        <i18n *ngSwitchCase="'portalMail'" i18n="@@portalMail">portalMail</i18n>
+        <i18n *ngSwitchCase="'portalName'" i18n="@@portalName">portalName</i18n>
+        <i18n *ngSwitchCase="'portalSubtitle'"
+          i18n="@@portalSubtitle">portalSubtitle</i18n>
+        <i18n *ngSwitchCase="'zoomfactor'" i18n="@@zoomfactor">zoomfactor</i18n>
+      </ng-container>
+    </ng-template>
   `)
 })
 

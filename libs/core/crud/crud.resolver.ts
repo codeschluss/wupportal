@@ -78,12 +78,12 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
   }
 
   private embed(tree: CrudGraph): string {
-    const embed = (nodes) => nodes.map((node) => ({
+    const embedder = (nodes) => nodes.map((node) => ({
       name: node.name,
-      nodes: embed(node.nodes)
+      nodes: embedder(node.nodes)
     }));
 
-    return btoa(JSON.stringify(embed(tree.nodes)));
+    return btoa(JSON.stringify(embedder(tree.nodes)));
   }
 
 }

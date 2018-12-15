@@ -5,45 +5,52 @@ import { OrganisationModel } from './organisation.model';
 @Component({
   selector: 'organisation-table',
   template: BaseTable.template(`
-    <ng-container matColumnDef="name">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>
-        <i18n i18n="@@title">title</i18n></mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="website">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>
-        <i18n i18n="@@website">website</i18n></mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.website }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="mail">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>
-        <i18n i18n="@@mail">mail</i18n></mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.mail }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="phone">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>
-        <i18n i18n="@@phone">phone</i18n></mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.phone }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="address">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>
-        <i18n i18n="@@address">address</i18n></mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        {{ row.address.street }} {{ row.address.houseNumber }}
-        {{ row.address.postalCode }} {{ row.address.place }}
-        {{ row.address.suburb.name }}
-      </mat-cell>
-    </ng-container>
+    <ng-template #label let-case="case">
+      <ng-container [ngSwitch]="case.name">
+        <i18n *ngSwitchCase="'address'" i18n="@@address">address</i18n>
+        <i18n *ngSwitchCase="'mail'" i18n="@@mail">mail</i18n>
+        <i18n *ngSwitchCase="'name'" i18n="@@title">title</i18n>
+        <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
+        <i18n *ngSwitchCase="'website'" i18n="@@website">website</i18n>
+      </ng-container>
+    </ng-template>
   `)
 })
 
 export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
 
-  public columns = ['name', 'website', 'mail', 'phone', 'address'];
+  public columns = [
+    {
+      name: 'name',
+      sort: true,
+      value: (item) => item.name
+    },
+    {
+      name: 'website',
+      sort: true,
+      value: (item) => item.website
+    },
+    {
+      name: 'mail',
+      sort: true,
+      value: (item) => item.mail
+    },
+    {
+      name: 'phone',
+      sort: true,
+      value: (item) => item.phone
+    },
+    {
+      name: 'address',
+      value: (item) => `
+        ${item.address.street}
+        ${item.address.houseNumber}
+        ${item.address.postalCode}
+        ${item.address.place}
+        ${item.address.suburb.name}
+      `
+    }
+  ];
 
   protected model: Type<OrganisationModel> = OrganisationModel;
 

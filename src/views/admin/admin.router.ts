@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SessionResolver } from '@portal/core';
+import { SessionResolver, CrudResolver, CrudJoiner } from '@portal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { AdminComponent } from './admin.component';
 import { AccountPanelComponent } from './panels/account.panel';
 import { ApplicationPanelComponent } from './panels/application.panel';
 import { RegisterComponent } from './register.component';
 import { LoginComponent } from './login.component';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 
 @NgModule({
   exports: [RouterModule],

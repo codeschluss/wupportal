@@ -1,4 +1,5 @@
 import { CrudModel } from '@portal/core';
+import { Observable } from 'rxjs';
 import { OrganisationEntity } from '../../api/models/organisation-entity';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
@@ -19,10 +20,10 @@ export class OrganisationModel
 
   public addressId: string;
 
-  public activities: Promise<ActivityModel[]>;
-  public address: Promise<AddressModel>;
-  public images: Promise<OrganisationImageModel[]>;
-  public provider: Promise<ProviderModel>;
-  public users: Promise<UserModel[]>;
+  public activities: Observable<ActivityModel[]>;
+  public address: Observable<AddressModel>;
+  public images: Observable<OrganisationImageModel[]>;
+  public provider: Observable<ProviderModel>;
+  public users: Observable<UserModel[]>;
 
 }

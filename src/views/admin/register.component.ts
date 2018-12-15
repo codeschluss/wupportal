@@ -45,15 +45,14 @@ export class RegisterComponent {
         user.phone = this.phone;
         user.username = this.userName;
         user.organisations = this.organisationsCtrl.value;
-        this.userProvider.create(user).then(() => {
+        this.userProvider.create(user).subscribe(() => {
             this.openBottomSheet();
             this.goToLogin();
-        }).catch(
-            error => {
-                this.error = error;
-                console.log(error);
-            }
-        );
+        },
+        error => {
+            this.error = error;
+            console.log(error);
+        });
     }
 
     goToLogin(): void {

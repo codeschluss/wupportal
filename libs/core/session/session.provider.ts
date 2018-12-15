@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, empty, Subscription, timer } from 'rxjs';
+import { BehaviorSubject, empty, Observable, Subscription, timer } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { AccessTokenModel } from '../auth/access-token.model';
 import { RefreshTokenModel } from '../auth/refresh-token.model';
@@ -38,11 +38,10 @@ export class SessionProvider {
     }
   }
 
-  public login(username: string, password: string): Promise<any> {
+  public login(username: string, password: string): Observable<any> {
     return this.service.apiLoginResponse(username, password).pipe(
       tap((response) => this.update(response.body)),
-      tap(() => this.worker(this.session.value))
-    ).toPromise();
+      tap(() => this.worker(this.session.value)));
   }
 
   public changeLanguage(locale: string): void {
@@ -60,11 +59,10 @@ export class SessionProvider {
     });
   }
 
-  public refresh(): Promise<any> {
+  public refresh(): Observable<any> {
     return this.service.apiRefreshResponse().pipe(
       tap((response) => this.update(response.body)),
-      tap(() => this.worker(this.session.value))
-    ).toPromise();
+      tap(() => this.worker(this.session.value)));
   }
 
   public subscribe(next: (value: SessionModel) => void): Subscription {

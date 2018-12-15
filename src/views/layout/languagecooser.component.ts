@@ -36,7 +36,7 @@ import { SessionProvider } from '@portal/core';
     }
 
     private initLanguages(): void {
-        this.languageProvider.readAll().then(langs => {
+        this.languageProvider.readAll().subscribe(langs => {
           this.languages = langs;
         });
     }

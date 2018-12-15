@@ -25,15 +25,15 @@ export class LoginComponent {
         private session: SessionProvider) {}
 
     login(): void {
-        this.session.login(this.userName, this.password).then(
-            value => this.goToHome()).catch(error => {
+        this.session.login(this.userName, this.password).subscribe(
+            value => this.goToHome(),
+            error => {
                 if (error.error && error.error.message) {
                     this.error = error.error.message.toLowerCase();
                 } else {
                     this.error = error.statusText.toLowerCase();
                 }
-            }
-        );
+            });
     }
 
     goToHome(): void {

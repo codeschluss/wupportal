@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { AddressControllerService } from '../../api/services/address-controller.service';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
@@ -32,19 +33,19 @@ export class AddressProvider
     super();
   }
 
-  public create: (model: AddressModel) => Promise<any>;
+  public create: (model: AddressModel) => Observable<any>;
 
-  public update: (id: string, model: AddressModel) => Promise<any>;
+  public update: (id: string, model: AddressModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<AddressModel>;
+  public readOne: (id: string) => Observable<AddressModel>;
 
   public readAll: (params?: AddressControllerService
-    .AddressControllerReadAllParams) => Promise<AddressModel[]>;
+    .AddressControllerReadAllParams) => Observable<AddressModel[]>;
 
   public relinkSuburb:
-    (id: string, suburbId: string) => Promise<any> =
+    (id: string, suburbId: string) => Observable<any> =
       this.apply(this.service.addressControllerUpdateSuburbResponse);
 
 }

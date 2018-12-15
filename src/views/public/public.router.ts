@@ -14,8 +14,8 @@ import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
 import { SuburbModel } from 'src/realm/suburb/suburb.model';
 import { AboutComponent } from './about/about.component';
-import { CrudResolver, CrudJoiner } from 'libs/core';
 import { MappingComponent } from './mapping/mapping.component';
+import { CrudResolver, CrudJoiner } from '@portal/core';
 
 const PublicProviders = [
 ];

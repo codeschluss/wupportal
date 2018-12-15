@@ -8,12 +8,20 @@ import { UserProvider } from './user.provider';
 @Component({
   selector: 'user-form',
   template: BaseForm.template(`
-    <i18n *ngSwitchCase="'name'" i18n="@@name">name</i18n>
-    <i18n *ngSwitchCase="'username'" i18n="@@email">email</i18n>
-    <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
-    <i18n *ngSwitchCase="'password'" i18n="@@password">password</i18n>
-    <i18n *ngSwitchCase="'passwordConfirm'"
-      i18n="@@passwordConfifm">passwordConfirm</i18n>
+    <!--
+    <ng-template #label let-field="field">
+      <ng-container [ngSwitch]="field.name">
+    -->
+        <i18n *ngSwitchCase="'name'" i18n="@@name">name</i18n>
+        <i18n *ngSwitchCase="'username'" i18n="@@email">email</i18n>
+        <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
+        <i18n *ngSwitchCase="'password'" i18n="@@password">password</i18n>
+        <i18n *ngSwitchCase="'passwordConfirm'"
+          i18n="@@passwordConfifm">passwordConfirm</i18n>
+    <!--
+      </ng-container>
+    </ng-template>
+    -->
   `)
 })
 

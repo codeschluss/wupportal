@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Data } from '@angular/router';
-import { ActivityModel } from 'src/realm/activity/activity.model';
-import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { ActivatedRoute, Route } from '@angular/router';
+import { CrudGraph, CrudJoiner, CrudResolver, Selfroute } from '@portal/core';
+import { UserModel } from '../../../realm/user/user.model';
 
 @Component({
   template: `
@@ -10,70 +10,67 @@ import { OrganisationModel } from 'src/realm/organisation/organisation.model';
         <ng-template matTabLabel>
           <i18n i18n="@@userDetails">userDetails</i18n>
         </ng-template>
-        <user-form #form [item]="data.user"></user-form>
-        <button mat-button [disabled]="!form.isValid" (click)="form.save()">
-          <i18n i18n="@@save">save</i18n>
-        </button>
+        <ng-container *ngIf="user">
+          <user-form #form [item]="user"></user-form>
+          <button mat-button [disabled]="!form.isValid" (click)="form.save()">
+            <i18n i18n="@@save">save</i18n>
+          </button>
+        </ng-container>
       </mat-tab>
 
-      <mat-tab [disabled]="!organisations.length">
+      <mat-tab [disabled]="!user?.organisations">
         <ng-template matTabLabel>
           <i18n i18n="@@userOrganisations">userOrganisations</i18n>
         </ng-template>
         <ng-template matTabContent>
-          <organisation-table [items]="organisations"></organisation-table>
+          <organisation-table [items]="user.organisations">
+          </organisation-table>
         </ng-template>
       </mat-tab>
 
-      <mat-tab [disabled]="!activities.length">
+      <mat-tab [disabled]="!user?.activities">
         <ng-template matTabLabel>
           <i18n i18n="@@userActivities">userActivities</i18n>
         </ng-template>
         <ng-template matTabContent>
-          <activity-table [items]="activities"></activity-table>
+          <activity-table [items]="user.activities">
+          </activity-table>
         </ng-template>
       </mat-tab>
     </mat-tab-group>
   `
 })
 
-export class AccountPanelComponent implements OnInit {
+export class AccountPanelComponent extends Selfroute implements OnInit {
 
-  // public static get route(): Route {
-  //   return {
-  //     path: 'account/:uuid',
-  //     component: AccountPanelComponent,
-  //     resolve: {
-  //       activities: CrudResolver,
-  //       organisations: CrudResolver,
-  //       session: SessionResolver,
-  //       user: CrudResolver
-  //     },
-  //     data: {
-  //       activities: CrudJoiner.of(ActivityModel, { filter: null }),
-  //       organisations: CrudJoiner.of(OrganisationModel, { filter: null })
-  //         .with('address').yield('suburb'),
-  //       user: CrudJoiner.of(UserModel)
-  //     }
-  //   };
-  // }
+  public user: UserModel;
 
-  public data: Data = this.route.snapshot.data;
+  protected routing: Route = {
+    path: 'account/:uuid',
+    component: AccountPanelComponent,
+    resolve: {
+      user: CrudResolver
+    },
+    data: {
+      user: CrudJoiner.of(UserModel)
+    }
+  };
 
-  public activities: ActivityModel[] = [];
-
-  public organisations: OrganisationModel[] = [];
+  private graph: CrudGraph[] = CrudJoiner.of(UserModel)
+    .with('activities')
+    .with('organisations').yield('address').yield('suburb')
+  .graph.nodes;
 
   public constructor(
+    private resolver: CrudResolver,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    super();
+  }
 
   public ngOnInit(): void {
-    const token = this.data.session.accessToken;
-    this.organisations = [...token.adminOrgas, ...token.approvedOrgas]
-      .map((id) => this.data.organisations.find((item) => item.id === id));
-    this.activities = token.createdActivities
-      .map((id) => this.data.activities.find((item) => item.id === id));
+    this.resolver.run(this.route.snapshot.data.user, this.graph)
+      .then((item) => this.user = item as UserModel);
   }
 
 }

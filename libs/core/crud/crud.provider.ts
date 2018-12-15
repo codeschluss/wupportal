@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { BaseService, ReadAllParams, StrictHttpResponse } from '../utils/api';
 import { CrudModel } from './crud.model';
@@ -44,35 +44,33 @@ export abstract class CrudProvider
 
   protected abstract service: Service;
 
-  public create(item: Model): Promise<any> {
-    return this.call(this.methods.create, item).toPromise();
+  public create(item: Model): Observable<any> {
+    return this.call(this.methods.create, item);
   }
 
-  public delete(id: string): Promise<any> {
-    return this.call(this.methods.delete, id).toPromise();
+  public delete(id: string): Observable<any> {
+    return this.call(this.methods.delete, id);
   }
 
-  public readOne(id: string): Promise<Model> {
+  public readOne(id: string): Observable<Model> {
     return this.call(this.methods.readOne, id).pipe(
       map((response) => this.cast<Model>(response)),
-      tap((response) => this.link(response))
-    ).toPromise();
+      tap((response) => this.link(response)));
   }
 
-  public readAll(params?: ReadAllParams): Promise<Model[]> {
+  public readAll(params?: ReadAllParams): Observable<Model[]> {
     return this.call(this.methods.readAll, params || { }).pipe(
       map((response) => this.cast<Model[]>(response)),
-      tap((response) => this.link(response))
-    ).toPromise();
+      tap((response) => this.link(response)));
   }
 
-  public update(id: string, item: Model): Promise<any> {
-    return this.call(this.methods.update, id, item).toPromise();
+  public update(id: string, item: Model): Observable<any> {
+    return this.call(this.methods.update, id, item);
   }
 
   protected apply(method:
     (...args: any) => Observable<StrictHttpResponse<any>>):
-    (...args: any) => Promise<StrictHttpResponse<any>> {
+    (...args: any) => Observable<StrictHttpResponse<any>> {
 
     return (...args: any) => method.call(this.service, ...args).toPromise();
   }
@@ -101,7 +99,7 @@ export abstract class CrudProvider
     const linker = (item) => this.linked.forEach((link) => {
       const data = (item._embedded || { })[link.field];
       const getter = () => data
-        ? Promise.resolve(Object.assign(new link.model(), data))
+        ? of(Object.assign(new link.model(), data))
         : this.walker(link, item);
 
       Object.defineProperty(item, link.field, { get: getter });
@@ -112,13 +110,12 @@ export abstract class CrudProvider
       : linker(input);
   }
 
-  private walker(link: CrudLink, item: Model): Promise<any> {
+  private walker(link: CrudLink, item: Model): Observable<any> {
     if (link.model['provider']) {
       const provider = link.model['provider'];
       return this.call.apply(provider, [link.method, item.id]).pipe(
         map((response) => this.cast.apply(provider, [response, link.model])),
-        tap((response) => this.link.apply(provider, [response]))
-      ).toPromise();
+        tap((response) => this.link.apply(provider, [response])));
     }
   }
 

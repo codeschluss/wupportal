@@ -1,4 +1,5 @@
 import { CrudModel } from '@portal/core';
+import { Observable } from 'rxjs';
 import { ActivityEntity } from '../../api/models/activity-entity';
 import { AddressModel } from '../address/address.model';
 import { CategoryModel } from '../category/category.model';
@@ -20,11 +21,11 @@ export class ActivityModel
   public categoryId: string;
   public organisationId: string;
 
-  public address: Promise<AddressModel>;
-  public category: Promise<CategoryModel>;
-  public organisation: Promise<OrganisationModel>;
-  public schedules: Promise<ScheduleModel[]>;
-  public tags: Promise<TagModel[]>;
-  public targetGroups: Promise<TargetGroupModel[]>;
+  public address: Observable<AddressModel>;
+  public category: Observable<CategoryModel>;
+  public organisation: Observable<OrganisationModel>;
+  public schedules: Observable<ScheduleModel[]>;
+  public tags: Observable<TagModel[]>;
+  public targetGroups: Observable<TargetGroupModel[]>;
 
 }

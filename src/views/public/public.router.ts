@@ -15,6 +15,7 @@ import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
 import { SuburbModel } from 'src/realm/suburb/suburb.model';
 import { AboutComponent } from './about/about.component';
 import { CrudResolver, CrudJoiner } from 'libs/core';
+import { MappingComponent } from './mapping/mapping.component';
 
 const PublicProviders = [
 ];
@@ -65,6 +66,19 @@ const PublicRoutes = [
     ]
   },
   {
+    path: 'list/activities/map',
+    component: MappingComponent,
+    resolve: {
+      activities: CrudResolver,
+    },
+    data: {
+      activities: CrudJoiner.of(ActivityModel)
+        .with('category')
+        .with('address').yield('suburb')
+        .with('schedules'),
+    }
+  },
+  {
     path: 'view/activities/:uuid',
     component: ActivityViewComponent,
     resolve: {
@@ -105,7 +119,7 @@ const PublicRoutes = [
     data: {
       organisation: CrudJoiner.of(OrganisationModel)
         .with('address').yield('suburb')
-        .with('activity')
+        .with('activities')
         .with('images')
     }
   },

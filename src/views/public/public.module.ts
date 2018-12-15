@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatBottomSheetModule, MatDatepickerModule, MatListModule, MatCardModule } from '@angular/material';
+import { MatBottomSheetModule, MatDatepickerModule, MatListModule, MatCardModule, MatPaginatorModule } from '@angular/material';
 
 import { PublicComponent } from './public.component';
 import { PublicRouter } from './public.router';
@@ -92,7 +92,8 @@ const PublicImports = [
   SearchResultListComponent.imports,
   FormsModule,
   JwSocialButtonsModule,
-  CoreModule
+  CoreModule,
+  MatPaginatorModule
 ];
 
 const PublicProviders = [

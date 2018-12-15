@@ -34,13 +34,10 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
   protected abstract route: ActivatedRoute;
 
   protected static template(template: string): string {
-    return `
-      <ng-template #label let-field="field">
-        <ng-container [ngSwitch]="field.name">${template}</ng-container>
-      </ng-template>
+    return template + `
       <form [formGroup]="group">
         <ng-container *ngFor="let field of fields">
-          <ng-container *ngTemplateOutlet="label; context: { field: field }">
+          <ng-container *ngTemplateOutlet="label; context: { case: field }">
           </ng-container>
           <base-field [field]="field" [group]="group"></base-field>
         </ng-container>

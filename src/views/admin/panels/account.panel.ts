@@ -53,7 +53,8 @@ export class AccountPanelComponent extends Selfroute implements OnInit {
     },
     data: {
       user: CrudJoiner.of(UserModel)
-        .with('activities')
+        .with('activities').yield('category')
+        .with('activities').yield('provider').yield('organisation')
         .with('organisations').yield('address').yield('suburb')
     }
   };

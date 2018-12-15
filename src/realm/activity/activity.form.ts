@@ -12,17 +12,23 @@ import { ActivityProvider } from './activity.provider';
 @Component({
   selector: 'activity-form',
   template: BaseForm.template(`
-    <i18n *ngSwitchCase="'name'" i18n="@@title">title</i18n>
-    <i18n *ngSwitchCase="'description'" i18n="@@description">description</i18n>
-    <i18n *ngSwitchCase="'contactName'" i18n="@@contactName">contactName</i18n>
-    <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
-    <i18n *ngSwitchCase="'mail'" i18n="@@mail">mail</i18n>
-    <i18n *ngSwitchCase="'organisation'"
-      i18n="@@organisation">organisation</i18n>
-    <i18n *ngSwitchCase="'category'" i18n="@@category">category</i18n>
-    <i18n *ngSwitchCase="'targetGroups'"
-      i18n="@@targetGroups">targetGroups</i18n>
-    <i18n *ngSwitchCase="'tags'" i18n="@@tags">tags</i18n>
+    <ng-template #label let-case="case">
+      <ng-container [ngSwitch]="case.name">
+        <i18n *ngSwitchCase="'name'" i18n="@@title">title</i18n>
+        <i18n *ngSwitchCase="'description'"
+          i18n="@@description">description</i18n>
+        <i18n *ngSwitchCase="'contactName'"
+          i18n="@@contactName">contactName</i18n>
+        <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
+        <i18n *ngSwitchCase="'mail'" i18n="@@mail">mail</i18n>
+        <i18n *ngSwitchCase="'organisation'"
+          i18n="@@organisation">organisation</i18n>
+        <i18n *ngSwitchCase="'category'" i18n="@@category">category</i18n>
+        <i18n *ngSwitchCase="'targetGroups'"
+          i18n="@@targetGroups">targetGroups</i18n>
+        <i18n *ngSwitchCase="'tags'" i18n="@@tags">tags</i18n>
+      </ng-container>
+    </ng-template>
   `)
 })
 
@@ -51,7 +57,8 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
     },
     {
       name: 'mail',
-      input: StringFieldComponent
+      input: StringFieldComponent,
+      tests: [Validators.email]
     },
     {
       name: 'organisation',

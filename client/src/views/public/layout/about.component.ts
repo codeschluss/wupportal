@@ -49,12 +49,12 @@ export class AboutComponent {
 
     testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
       resolve(testSubUrb);
-    });
+    }) as any;
 
     testAddress.place = 'SampleCity';
     actOne.address = new Promise<AddressModel>((resolve, reject) => {
       resolve(testAddress);
-    });
+    }) as any;
 
     const category = new CategoryModel;
     category.name = 'party';
@@ -62,7 +62,7 @@ export class AboutComponent {
 
     actOne.category = new Promise<CategoryModel>((resolve, reject) => {
       resolve(category);
-    });
+    }) as any;
 
     const target_group = new TargetGroupModel;
     target_group.name = 'youth';
@@ -70,7 +70,7 @@ export class AboutComponent {
 
     actOne.targetGroups = new Promise<TargetGroupModel[]>((resolve, reject) => {
       resolve(targetGroups);
-    });
+    }) as any;
 
     const schedule = new ScheduleModel;
     schedule.startDate = new Date().toUTCString();
@@ -92,13 +92,13 @@ export class AboutComponent {
 
     actOne.schedules = new Promise<ScheduleModel[]>((resolve, reject) => {
       resolve(schedules);
-    });
+    }) as any;
 
     const organisation = new OrganisationModel;
     organisation.name = 'testOrganisation';
     actOne.organisation = new Promise<OrganisationModel>((resolve, reject) => {
       resolve(organisation);
-    });
+    }) as any;
 
     return actOne;
 }

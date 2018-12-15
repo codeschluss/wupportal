@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material';
+import { Observable } from 'rxjs';
 import { ActivityProvider } from 'src/realm/activity/activity.provider';
 import { AddressModel } from 'src/realm/address/address.model';
 import { CategoryProvider } from 'src/realm/category/category.provider';
@@ -25,9 +26,9 @@ export class ActivityListComponent {
   public static readonly imports = [];
   public activities: ActivityModel[] = [];
 
-  public suburbs: Promise<SuburbModel[]>;
-  public categories: Promise<CategoryModel[]>;
-  public target_groups: Promise<TargetGroupModel[]>;
+  public suburbs: Observable<SuburbModel[]>;
+  public categories: Observable<CategoryModel[]>;
+  public target_groups: Observable<TargetGroupModel[]>;
 
   @ViewChild(MappingComponent)
   private mapping: MappingComponent;
@@ -74,12 +75,12 @@ export class ActivityListComponent {
 
       testAddress.suburb = new Promise<SuburbModel>((resolve, reject) => {
         resolve(testSubUrb);
-      });
+      }) as any;
 
       testAddress.place = 'SampleCity';
       actOne.address = new Promise<AddressModel>((resolve, reject) => {
         resolve(testAddress);
-      });
+      }) as any;
 
       const category = new CategoryModel;
       category.name = 'party';
@@ -87,7 +88,7 @@ export class ActivityListComponent {
 
       actOne.category = new Promise<CategoryModel>((resolve, reject) => {
         resolve(category);
-      });
+      }) as any;
 
       const target_group = new TargetGroupModel;
       target_group.name = 'youth';
@@ -95,7 +96,7 @@ export class ActivityListComponent {
 
       actOne.targetGroups = new Promise<TargetGroupModel[]>((resolve, reject) => {
         resolve(targetGroups);
-      });
+      }) as any;
 
       const schedule = new ScheduleModel;
       schedule.startDate = new Date().toUTCString();
@@ -117,13 +118,13 @@ export class ActivityListComponent {
 
       actOne.schedules = new Promise<ScheduleModel[]>((resolve, reject) => {
         resolve(schedules);
-      });
+      }) as any;
 
       const organisation = new OrganisationModel;
       organisation.name = 'testOrganisation';
       actOne.organisation = new Promise<OrganisationModel>((resolve, reject) => {
         resolve(organisation);
-      });
+      }) as any;
 
       return actOne;
   }

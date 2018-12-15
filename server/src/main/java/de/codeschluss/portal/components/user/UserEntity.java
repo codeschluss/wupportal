@@ -6,6 +6,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.core.entity.BaseResource;
@@ -19,6 +20,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -55,6 +57,10 @@ public class UserEntity extends BaseResource {
   private String password;
 
   private String phone;
+  
+  @Transient
+  @JsonDeserialize
+  private List<String> organisations;
   
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
   @JsonIgnore

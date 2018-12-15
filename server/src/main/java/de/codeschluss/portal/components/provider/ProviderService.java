@@ -4,6 +4,7 @@ import de.codeschluss.portal.components.organisation.OrganisationEntity;
 import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.user.UserEntity;
 import de.codeschluss.portal.components.user.UserService;
+import de.codeschluss.portal.core.exception.DuplicateEntryException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.mail.MailService;
 import de.codeschluss.portal.core.service.DataService;
@@ -199,22 +200,6 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
   }
 
   /**
-   * Creates the providers.
-   *
-   * @param user
-   *          the user
-   * @param organisationIds
-   *          the organisation ids
-   * @return the list
-   */
-  public List<ProviderEntity> createProviders(UserEntity user, List<String> organisationIds) {
-    return organisationIds.stream().map(orgaId -> {
-      checkIfNullOrEmpty(orgaId);
-      return createProvider(orgaService.getById(orgaId), user);
-    }).collect(Collectors.toList());
-  }
-
-  /**
    * Check if null or empty.
    *
    * @param id
@@ -254,6 +239,40 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
    */
   public void deleteForUserAndOrga(String userId, String orgaId) {
     repo.delete(getProviderByUserAndOrganisation(userId, orgaId));
+  }
+  
+  /**
+   * Creates the application.
+   *
+   * @param user the user
+   * @param organisationParam the organisation param
+   * @return the list
+   */
+  public List<ProviderEntity> createApplication(UserEntity user, List<String> organisationParam) {
+    List<String> distinctOrgas = organisationParam.stream().distinct()
+        .collect(Collectors.toList());
+
+    if (isDuplicate(user.getId(), distinctOrgas)) {
+      throw new DuplicateEntryException("User with one or more Organisations already exists");
+    }
+    
+    return addAllResourcesWithMail(createProviders(user, distinctOrgas));
+  }
+  
+  /**
+   * Creates the providers.
+   *
+   * @param user
+   *          the user
+   * @param organisationIds
+   *          the organisation ids
+   * @return the list
+   */
+  private List<ProviderEntity> createProviders(UserEntity user, List<String> organisationIds) {
+    return organisationIds.stream().map(orgaId -> {
+      checkIfNullOrEmpty(orgaId);
+      return createProvider(orgaService.getById(orgaId), user);
+    }).collect(Collectors.toList());
   }
 
   /**

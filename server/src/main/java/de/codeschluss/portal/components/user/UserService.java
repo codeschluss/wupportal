@@ -158,7 +158,7 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
    */
   public Resources<?> convertToResourcesEmbeddedProviders(List<ProviderEntity> providers) {
     if (providers == null || providers.isEmpty()) {
-      throw new NotFoundException(providers.toString());
+      throw new NotFoundException("No member exists");
     }
     
     List<Resource<?>> embeddedUser = providers.stream().map(provider -> {

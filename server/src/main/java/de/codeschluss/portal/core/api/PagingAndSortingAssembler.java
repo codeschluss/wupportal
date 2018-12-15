@@ -62,7 +62,7 @@ public class PagingAndSortingAssembler {
    */
   public <P extends BaseParams, E extends BaseResource> Resources<?> entitiesToResources(
       List<E> result, P params) throws JsonParseException, JsonMappingException, IOException {
-    List<Resource<E>> entityResources = createResources(result.stream(), params);
+    List<Resource<?>> entityResources = createResources(result.stream(), params);
     return toListResources(entityResources, params);
   }
 
@@ -99,12 +99,11 @@ public class PagingAndSortingAssembler {
    * @throws IOException
    *           Signals that an I/O exception has occurred.
    */
-  public <E extends BaseResource> PagedResources<Resource<E>> entitiesToPagedResources(
+  public <E extends BaseResource> PagedResources<Resource<?>> entitiesToPagedResources(
       Page<E> result, FilterSortPaginate params)
       throws JsonParseException, JsonMappingException, IOException {
-    List<Resource<E>> entityResources = createResources(result.stream(), params);
-    List<Link> links = createPagingLinks(params, result);
-    return toPagedResources(entityResources, result, links);
+    List<Resource<?>> entityResources = createResources(result.stream(), params);
+    return toPagedResources(entityResources, result, params);
   }
 
   /**
@@ -132,22 +131,20 @@ public class PagingAndSortingAssembler {
     return links;
   }
 
+
   /**
    * To paged resources.
    *
-   * @param <E>
-   *          the element type
-   * @param resources
-   *          the resources
-   * @param page
-   *          the page
-   * @param links
-   *          the links
+   * @param <E> the element type
+   * @param resources the resources
+   * @param page the page
+   * @param params the params
    * @return the paged resources
    */
-  public <E extends BaseResource> PagedResources<Resource<E>> toPagedResources(
-      List<Resource<E>> resources, Page<E> page, List<Link> links) {
-    return new PagedResources<Resource<E>>(resources, new PageMetadata(page.getSize(),
+  public <E extends BaseResource> PagedResources<Resource<?>> toPagedResources(
+      List<Resource<?>> resources, Page<E> page, FilterSortPaginate params) {
+    List<Link> links = createPagingLinks(params, page);
+    return new PagedResources<Resource<?>>(resources, new PageMetadata(page.getSize(),
         page.getPageable().getPageNumber(), page.getTotalElements(), page.getTotalPages()), links);
   }
 
@@ -168,7 +165,7 @@ public class PagingAndSortingAssembler {
    * @throws IOException
    *           Signals that an I/O exception has occurred.
    */
-  private <E extends BaseResource> List<Resource<E>> createResources(Stream<E> result,
+  private <E extends BaseResource> List<Resource<?>> createResources(Stream<E> result,
       BaseParams params) throws JsonParseException, JsonMappingException, IOException {
     if (params == null || params.getEmbeddings() == null || params.getEmbeddings().isEmpty()) {
       return result.map(this::toResource).collect(Collectors.toList());

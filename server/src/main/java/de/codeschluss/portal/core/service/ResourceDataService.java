@@ -85,7 +85,7 @@ public abstract class ResourceDataService<E extends BaseResource, B extends Quer
     return assembler.entitiesToResources(result, params);
   }
 
-  public <P extends FilterSortPaginate> PagedResources<Resource<E>> getPagedResources(P params) 
+  public <P extends FilterSortPaginate> PagedResources<Resource<?>> getPagedResources(P params) 
       throws JsonParseException, JsonMappingException, IOException {
     return assembler.entitiesToPagedResources(getPaged(params), params);
   }

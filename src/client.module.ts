@@ -23,11 +23,11 @@ import { LayoutComponent } from './views/layout/layout.component';
 
 @NgModule({
   bootstrap: [ClientComponent],
-  declarations: [ClientComponent],
+  declarations: [
+    ClientComponent,
+    LayoutComponent
+  ],
   imports: [
-    // TODO: move
-    LayoutComponent.imports,
-
     ApiModule,
     BrowserModule,
     BrowserAnimationsModule,

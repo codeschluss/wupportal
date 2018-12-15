@@ -30,7 +30,7 @@ import { ApplicationPanelComponent } from './panels/application.panel';
       pathMatch: 'full',
       redirectTo: ''
     }
-  ])],
+  ])]
 })
 
 export class AdminRouter { }

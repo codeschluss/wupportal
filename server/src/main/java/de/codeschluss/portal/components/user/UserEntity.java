@@ -60,7 +60,7 @@ public class UserEntity extends BaseResource {
   
   @Transient
   @JsonDeserialize
-  private List<String> organisations;
+  private List<String> organisationRegistrations;
   
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
   @JsonIgnore

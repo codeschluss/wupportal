@@ -94,8 +94,9 @@ public class UserController extends CrudController<UserEntity, UserService> {
     try {
       UserEntity createdUser = service.add(newUser);
       
-      if (newUser.getOrganisations() != null && !newUser.getOrganisations().isEmpty()) {
-        providerService.createApplication(createdUser, newUser.getOrganisations());
+      if (newUser.getOrganisationRegistrations() != null 
+          && !newUser.getOrganisationRegistrations().isEmpty()) {
+        providerService.createApplication(createdUser, newUser.getOrganisationRegistrations());
       }
       
       return created(new URI(createdUser.toResource().getId().expand().getHref()))

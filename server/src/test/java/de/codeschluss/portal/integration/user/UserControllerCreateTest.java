@@ -63,7 +63,7 @@ public class UserControllerCreateTest {
     orgas.add(orgaId2);
     UserEntity user = newUser("createWithoutSecurityOk", "test", "12345678", true,
         "createWithoutSecurityOk");
-    user.setOrganisations(orgas);
+    user.setOrganisationRegistrations(orgas);
 
     UserEntity savedUser = ((Resource<UserEntity>) controller.create(user).getBody()).getContent();
 

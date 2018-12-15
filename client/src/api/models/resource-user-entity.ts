@@ -7,6 +7,7 @@ export interface ResourceUserEntity {
   id?: string;
   modified?: string;
   name?: string;
+  organisationRegistrations?: Array<string>;
   phone?: string;
   superuser?: boolean;
   username?: string;

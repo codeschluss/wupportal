@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { MatSelectModule, MatBottomSheet, MatBottomSheetModule, MatListModule } from '@angular/material';
+import { MatSelectModule, MatBottomSheet, MatBottomSheetModule } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionProvider } from '@portal/core';
 import { UserModel } from 'src/realm/user/user.model';
 import { UserProvider } from 'src/realm/user/user.provider';
-import { throwError } from 'rxjs';
 import { InfoBottomComponent } from './info.bottomsheet.component';
 
 @Component({
@@ -16,8 +15,7 @@ export class RegisterComponent {
 
     static readonly imports = [
         MatSelectModule,
-        MatBottomSheetModule,
-        MatListModule
+        MatBottomSheetModule
     ];
 
     userName: string = '';

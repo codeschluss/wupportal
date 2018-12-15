@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { CategoryControllerService } from '../../api/services/category-controller.service';
 import { CategoryModel } from './category.model';
 
@@ -7,16 +8,16 @@ import { CategoryModel } from './category.model';
 export class CategoryProvider
   extends CrudProvider<CategoryControllerService, CategoryModel> {
 
-  public create: (model: CategoryModel) => Promise<any>;
+  public create: (model: CategoryModel) => Observable<any>;
 
-  public update: (id: string, model: CategoryModel) => Promise<any>;
+  public update: (id: string, model: CategoryModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<CategoryModel>;
+  public readOne: (id: string) => Observable<CategoryModel>;
 
   public readAll: (params?: CategoryControllerService
-    .CategoryControllerReadAllParams) => Promise<CategoryModel[]>;
+    .CategoryControllerReadAllParams) => Observable<CategoryModel[]>;
 
   protected linked = [];
 

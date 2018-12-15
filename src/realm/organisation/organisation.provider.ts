@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
@@ -57,35 +58,35 @@ export class OrganisationProvider
     super();
   }
 
-  public create: (model: OrganisationModel) => Promise<any>;
+  public create: (model: OrganisationModel) => Observable<any>;
 
-  public update: (id: string, model: OrganisationModel) => Promise<any>;
+  public update: (id: string, model: OrganisationModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<OrganisationModel>;
+  public readOne: (id: string) => Observable<OrganisationModel>;
 
   public readAll: (params?: OrganisationControllerService
-    .OrganisationControllerReadAllParams) => Promise<OrganisationModel[]>;
+    .OrganisationControllerReadAllParams) => Observable<OrganisationModel[]>;
 
   public grantOrganisationAdmin:
-    (organisationId: string, userId: string, grant: boolean) => Promise<any> =
+    (id: string, userId: string, grant: boolean) => Observable<any> =
       this.apply(this.service.organisationControllerGrantAdminRightResponse);
 
   public grantOrganisationUser:
-    (organisationId: string, userId: string, grant: boolean) => Promise<any> =
+    (id: string, userId: string, grant: boolean) => Observable<any> =
     this.apply(this.service.organisationControllerApproveOrRejectUserResponse);
 
   public relinkAddress:
-    (id: string, addressId: string) => Promise<any> =
+    (id: string, addressId: string) => Observable<any> =
       this.apply(this.service.organisationControllerUpdateAddressResponse);
 
   public unlinkActivity:
-    (id: string, activityId: string) => Promise<any> =
+    (id: string, activityId: string) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteActivityResponse);
 
   public unlinkUser:
-    (id: string, userId: string) => Promise<any> =
+    (id: string, userId: string) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteUserResponse);
 
 }

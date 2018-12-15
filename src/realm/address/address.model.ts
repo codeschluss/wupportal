@@ -1,4 +1,5 @@
 import { CrudModel } from '@portal/core';
+import { Observable } from 'rxjs';
 import { AddressEntity } from '../../api/models/address-entity';
 import { SuburbModel } from '../suburb/suburb.model';
 
@@ -14,6 +15,6 @@ export class AddressModel
 
   public suburbId: string;
 
-  public suburb: Promise<SuburbModel>;
+  public suburb: Observable<SuburbModel>;
 
 }

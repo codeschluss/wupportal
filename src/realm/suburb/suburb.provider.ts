@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { SuburbControllerService } from '../../api/services/suburb-controller.service';
 import { SuburbModel } from './suburb.model';
 
@@ -7,16 +8,16 @@ import { SuburbModel } from './suburb.model';
 export class SuburbProvider
   extends CrudProvider<SuburbControllerService, SuburbModel> {
 
-  public create: (model: SuburbModel) => Promise<any>;
+  public create: (model: SuburbModel) => Observable<any>;
 
-  public update: (id: string, model: SuburbModel) => Promise<any>;
+  public update: (id: string, model: SuburbModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<SuburbModel>;
+  public readOne: (id: string) => Observable<SuburbModel>;
 
   public readAll: (params?: SuburbControllerService
-    .SuburbControllerReadAllParams) => Promise<SuburbModel[]>;
+    .SuburbControllerReadAllParams) => Observable<SuburbModel[]>;
 
   protected linked = [];
 

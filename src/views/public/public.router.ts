@@ -13,11 +13,9 @@ import { ActivityModel } from 'src/realm/activity/activity.model';
 import { CategoryModel } from 'src/realm/category/category.model';
 import { OrganisationModel } from 'src/realm/organisation/organisation.model';
 import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
-import { AddressModel } from 'src/realm/address/address.model';
 import { SuburbModel } from 'src/realm/suburb/suburb.model';
-import { ScheduleModel } from 'src/realm/schedule/schedule.model';
-import { OrganisationImageModel } from 'src/realm/image/organisation-image.model';
 import { AboutComponent } from './about/about.component';
+import { MappingComponent } from './mapping/mapping.component';
 
 const PublicProviders = [
 ];
@@ -33,10 +31,14 @@ const PublicRoutes = [
       activities: CrudResolver
     },
     data: {
-      activities: CrudJoiner.of(ActivityModel)
-        .with(CategoryModel)
-        .with(AddressModel).yield(SuburbModel)
-        .with(ScheduleModel)
+      activities: CrudJoiner.of(ActivityModel, {
+        size: 15,
+        dir: 'asc',
+        page: 0,
+        sort: 'schedules.startDate'})
+        .with('category')
+        .with('address').yield('suburb')
+        .with('schedules')
     }
   },
   {
@@ -53,15 +55,28 @@ const PublicRoutes = [
         },
         data: {
           activities: CrudJoiner.of(ActivityModel)
-            .with(CategoryModel)
-            .with(AddressModel).yield(SuburbModel)
-            .with(ScheduleModel),
+            .with('category')
+            .with('address').yield('suburb')
+            .with('schedules'),
           targetGroups: CrudJoiner.of(TargetGroupModel),
           categories: CrudJoiner.of(CategoryModel),
           suburbs: CrudJoiner.of(SuburbModel)
         }
       }
     ]
+  },
+  {
+    path: 'list/activities/map',
+    component: MappingComponent,
+    resolve: {
+      activities: CrudResolver,
+    },
+    data: {
+      activities: CrudJoiner.of(ActivityModel)
+        .with('category')
+        .with('address').yield('suburb')
+        .with('schedules'),
+    }
   },
   {
     path: 'view/activities/:uuid',
@@ -71,11 +86,11 @@ const PublicRoutes = [
     },
     data: {
       activity: CrudJoiner.of(ActivityModel)
-        .with(CategoryModel)
-        .with(OrganisationModel)
-        .with(TargetGroupModel)
-        .with(ScheduleModel)
-        .with(AddressModel).yield(SuburbModel)
+        .with('category')
+        .with('organisation')
+        .with('targetGroups')
+        .with('schedules')
+        .with('address').yield('suburb')
     }
   },
   {
@@ -89,8 +104,8 @@ const PublicRoutes = [
         },
         data: {
           organisations: CrudJoiner.of(OrganisationModel)
-            .with(AddressModel).yield(SuburbModel)
-            .with(OrganisationImageModel)
+            .with('address').yield('suburb')
+            .with('images')
         }
       }
     ]
@@ -103,9 +118,9 @@ const PublicRoutes = [
     },
     data: {
       organisation: CrudJoiner.of(OrganisationModel)
-        .with(AddressModel).yield(SuburbModel)
-        .with(ActivityModel)
-        .with(OrganisationImageModel)
+        .with('address').yield('suburb')
+        .with('activities')
+        .with('images')
     }
   },
   {

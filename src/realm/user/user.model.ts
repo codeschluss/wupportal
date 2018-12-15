@@ -1,4 +1,5 @@
 import { CrudModel } from '@portal/core';
+import { Observable } from 'rxjs';
 import { UserEntity } from '../../api/models/user-entity';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -13,8 +14,8 @@ export class UserModel
   public superuser: boolean;
   public username: string;
 
-  public activities: Promise<ActivityModel[]>;
-  public organisations: Promise<OrganisationModel[]>;
-  public provider: Promise<ProviderModel>;
+  public activities: Observable<ActivityModel[]>;
+  public organisations: Observable<OrganisationModel[]>;
+  public provider: Observable<ProviderModel>;
 
 }

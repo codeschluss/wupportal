@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { LanguageControllerService } from '../../api/services/language-controller.service';
 import { LanguageModel } from './language.model';
 
@@ -7,16 +8,16 @@ import { LanguageModel } from './language.model';
 export class LanguageProvider
   extends CrudProvider<LanguageControllerService, LanguageModel> {
 
-  public create: (model: LanguageModel) => Promise<any>;
+  public create: (model: LanguageModel) => Observable<any>;
 
-  public update: (id: string, model: LanguageModel) => Promise<any>;
+  public update: (id: string, model: LanguageModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<LanguageModel>;
+  public readOne: (id: string) => Observable<LanguageModel>;
 
   public readAll: (params?: LanguageControllerService
-    .LanguageControllerReadAllParams) => Promise<LanguageModel[]>;
+    .LanguageControllerReadAllParams) => Observable<LanguageModel[]>;
 
   protected linked = [];
 

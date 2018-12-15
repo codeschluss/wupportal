@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { TargetGroupControllerService } from '../../api/services/target-group-controller.service';
 import { TargetGroupModel } from './target-group.model';
 
@@ -7,16 +8,16 @@ import { TargetGroupModel } from './target-group.model';
 export class TargetGroupProvider
   extends CrudProvider<TargetGroupControllerService, TargetGroupModel> {
 
-  public create: (model: TargetGroupModel) => Promise<any>;
+  public create: (model: TargetGroupModel) => Observable<any>;
 
-  public update: (id: string, model: TargetGroupModel) => Promise<any>;
+  public update: (id: string, model: TargetGroupModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<TargetGroupModel>;
+  public readOne: (id: string) => Observable<TargetGroupModel>;
 
   public readAll: (params?: TargetGroupControllerService
-    .TargetGroupControllerReadAllParams) => Promise<TargetGroupModel[]>;
+    .TargetGroupControllerReadAllParams) => Observable<TargetGroupModel[]>;
 
   protected linked = [];
 

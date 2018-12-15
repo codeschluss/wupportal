@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudProvider } from '@portal/core';
+import { Observable } from 'rxjs';
 import { ConfigurationControllerService } from '../../api/services/configuration-controller.service';
 import { ConfigurationModel } from '../configuration/configuration.model';
 
@@ -7,16 +8,16 @@ import { ConfigurationModel } from '../configuration/configuration.model';
 export class ConfigurationProvider
   extends CrudProvider<ConfigurationControllerService, ConfigurationModel> {
 
-  public create: (model: ConfigurationModel) => Promise<any>;
+  public create: (model: ConfigurationModel) => Observable<any>;
 
-  public update: (id: string, model: ConfigurationModel) => Promise<any>;
+  public update: (id: string, model: ConfigurationModel) => Observable<any>;
 
-  public delete: (id: string) => Promise<any>;
+  public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Promise<ConfigurationModel>;
+  public readOne: (id: string) => Observable<ConfigurationModel>;
 
   public readAll: (params?: ConfigurationControllerService
-    .ConfigurationControllerReadAllParams) => Promise<ConfigurationModel[]>;
+    .ConfigurationControllerReadAllParams) => Observable<ConfigurationModel[]>;
 
   protected linked = [];
 

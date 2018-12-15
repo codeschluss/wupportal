@@ -7,7 +7,7 @@ import { ProviderModel } from '../provider/provider.model';
 export class UserModel
   extends CrudModel implements UserEntity {
 
-  public fullname: string;
+  public name: string;
   public password: string;
   public phone: string;
   public superuser: boolean;

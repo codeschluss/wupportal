@@ -24,13 +24,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RegisterComponent } from './register.component';
 import { AccountPanelComponent } from './panels/account.panel';
 import { ApplicationPanelComponent } from './panels/application.panel';
+import { InfoBottomComponent } from './info.bottomsheet.component';
 
 
 const forms = [
   ActivityFormComponent,
   AddressFormComponent,
   ConfigurationFormComponent,
-  UserFormComponent
+  UserFormComponent,
+  InfoBottomComponent
 ];
 
 const panels = [
@@ -57,7 +59,7 @@ const tables = [
 @NgModule({
   entryComponents: [
     ...forms,
-    ...steppers
+    ...steppers,
   ],
   declarations: [
     AdminComponent,

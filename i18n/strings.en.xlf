@@ -70,6 +70,9 @@
       <trans-unit id="adminArea" datatype="html">
         <target>Admin area</target>
       </trans-unit>
+      <trans-unit id="successfullRegister" datatype="html">
+        <target>You sucessfull registered yourself to the portal</target>
+      </trans-unit> 
 
 
 

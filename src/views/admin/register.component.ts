@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule } from '@angular/material';
-import { FormsModule, FormControl } from '@angular/forms';
+import { MatSelectModule, MatBottomSheet, MatBottomSheetModule, MatListModule } from '@angular/material';
+import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionProvider } from '@portal/core';
 import { UserModel } from 'src/realm/user/user.model';
 import { UserProvider } from 'src/realm/user/user.provider';
+import { throwError } from 'rxjs';
+import { InfoBottomComponent } from './info.bottomsheet.component';
 
 @Component({
     templateUrl: 'register.component.html'
@@ -13,7 +15,9 @@ import { UserProvider } from 'src/realm/user/user.provider';
 export class RegisterComponent {
 
     static readonly imports = [
-        MatSelectModule
+        MatSelectModule,
+        MatBottomSheetModule,
+        MatListModule
     ];
 
     userName: string = '';
@@ -30,20 +34,21 @@ export class RegisterComponent {
         private router: Router,
         private session: SessionProvider,
         private route: ActivatedRoute,
-        private userProvider: UserProvider
+        private userProvider: UserProvider,
+        private bottomSheet: MatBottomSheet
         ) {
             this.organisations = this.route.snapshot.data.organisations;
         }
 
     register(): void {
         const user = new UserModel;
-        user.id = '123';
-        user.username = this.userName;
-        user.fullname = this.fullName;
+        user.name = this.fullName;
         user.password = this.password;
         user.phone = this.phone;
+        user.username = this.userName;
         user.organisations = this.organisationsCtrl.value;
         this.userProvider.create(user).then(() => {
+            this.openBottomSheet();
             this.goToLogin();
         }).catch(
             error => {
@@ -60,4 +65,9 @@ export class RegisterComponent {
     goToHome(): void {
         this.router.navigate(['/home']);
     }
+
+    openBottomSheet(): void {
+        this.bottomSheet.open(InfoBottomComponent,
+            { data: { message: 'successfullRegister' } });
+      }
 }

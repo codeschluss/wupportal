@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudGraph, CrudJoiner, CrudResolver, Selfroute } from '@portal/core';
+import { CrudJoiner, CrudResolver, Selfroute } from '@portal/core';
 import { UserModel } from '../../../realm/user/user.model';
 
 @Component({
@@ -53,24 +53,19 @@ export class AccountPanelComponent extends Selfroute implements OnInit {
     },
     data: {
       user: CrudJoiner.of(UserModel)
+        .with('activities')
+        .with('organisations').yield('address').yield('suburb')
     }
   };
 
-  private graph: CrudGraph[] = CrudJoiner.of(UserModel)
-    .with('activities')
-    .with('organisations').yield('address').yield('suburb')
-  .graph.nodes;
-
   public constructor(
-    private resolver: CrudResolver,
     private route: ActivatedRoute
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    this.resolver.run(this.route.snapshot.data.user, this.graph)
-      .then((item) => this.user = item as UserModel);
+    this.user = this.route.snapshot.data.user;
   }
 
 }

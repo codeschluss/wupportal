@@ -5,6 +5,7 @@ export interface UserEntity {
   id?: string;
   modified?: string;
   name?: string;
+  organisationRegistrations?: Array<string>;
   password?: string;
   phone?: string;
   superuser?: boolean;

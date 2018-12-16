@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BaseForm, FormField, ImageFieldComponent } from '@portal/forms';
+import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { ImageModel } from './image.model';
 
 @Component({
@@ -20,7 +20,8 @@ export class ImageFormComponent extends BaseForm<ImageModel> {
   public fields: FormField[] = [
     {
       name: 'images',
-      input: ImageFieldComponent,
+      // input: ImageFieldComponent,
+      input: StringFieldComponent,
       multi: true
     }
   ];

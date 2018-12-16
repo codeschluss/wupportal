@@ -27,7 +27,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       .find((key) => !this.resolving.includes(route.data[key]))];
     this.resolving.push(joiner);
 
-    joiner.graph.params.embeddings = this.embed(joiner.graph);
+    joiner.graph.params.embeddings = CrudJoiner.to(joiner.graph);
     const response = joiner.graph.params.filter !== null && route.params.uuid
       ? await joiner.graph.provider.readOne(route.params.uuid).toPromise()
       : await joiner.graph.provider.readAll(joiner.graph.params).toPromise();
@@ -55,7 +55,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
             item.id,
             node.params.sort,
             node.params.dir,
-            this.embed(node)
+            CrudJoiner.to(node)
           ];
 
           try {
@@ -75,15 +75,6 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     }
 
     return item;
-  }
-
-  private embed(tree: CrudGraph): string {
-    const embedder = (nodes) => nodes.map((node) => ({
-      name: node.name,
-      nodes: embedder(node.nodes)
-    }));
-
-    return btoa(JSON.stringify(embedder(tree.nodes)));
   }
 
 }

@@ -22,8 +22,8 @@ export class SessionProvider {
     resolver: SessionResolver
   ) {
     this.session = new BehaviorSubject<SessionModel>(resolver.session);
-    this.session.pipe(take(1)).subscribe((session) => this.worker(session));
-    this.session.subscribe((session) => this.writer(session));
+    this.session.pipe(take(1)).subscribe((session) => this.work(session));
+    this.session.subscribe((session) => this.write(session));
   }
 
   public get current(): SessionModel {
@@ -41,21 +41,21 @@ export class SessionProvider {
   public login(username: string, password: string): Observable<any> {
     return this.service.apiLoginResponse(username, password).pipe(
       tap((response) => this.update(response.body)),
-      tap(() => this.worker(this.session.value)));
+      tap(() => this.work(this.session.value)));
   }
 
   public logOut(): void {
     this.session.subscribe(session => {
       session.accessToken = new AccessTokenModel;
       session.refreshToken = new RefreshTokenModel;
-      this.writer(session);
+      this.write(session);
     });
   }
 
   public changeLanguage(locale: string): void {
     this.session.subscribe(session => {
       session.language = locale;
-      this.writer(session);
+      this.write(session);
     });
   }
 
@@ -70,7 +70,7 @@ export class SessionProvider {
   public refresh(): Observable<any> {
     return this.service.apiRefreshResponse().pipe(
       tap((response) => this.update(response.body)),
-      tap(() => this.worker(this.session.value)));
+      tap(() => this.work(this.session.value)));
   }
 
   public subscribe(next: (value: SessionModel) => void): Subscription {
@@ -84,19 +84,19 @@ export class SessionProvider {
     }));
   }
 
-  private worker(session: SessionModel): void {
+  private work(session: SessionModel): void {
     if (session.refreshToken.raw) {
       const accessExp = session.accessToken.exp * 1000 - Date.now();
       const refreshExp = session.refreshToken.exp * 1000 - Date.now();
       this.timeout.unsubscribe();
 
       this.timeout = refreshExp > accessExp
-        ? timer(accessExp).subscribe(() => this.refresh())
+        ? timer(accessExp).subscribe(() => this.refresh().subscribe())
         : timer(refreshExp).subscribe(() => this.logout());
     }
   }
 
-  private writer(session: SessionModel): void {
+  private write(session: SessionModel): void {
     this.storage.setItemSubscribe('session', session);
   }
 

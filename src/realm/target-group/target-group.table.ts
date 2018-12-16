@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
-import { BaseTable } from '@portal/forms';
+import { CrudJoiner } from '@portal/core';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { TargetGroupModel } from './target-group.model';
 
 @Component({
@@ -17,7 +18,7 @@ import { TargetGroupModel } from './target-group.model';
 
 export class TargetGroupTableComponent extends BaseTable<TargetGroupModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'name',
       sort: true,
@@ -29,6 +30,8 @@ export class TargetGroupTableComponent extends BaseTable<TargetGroupModel> {
       value: (item) => item.description
     }
   ];
+
+  protected joiner: CrudJoiner = CrudJoiner.of(TargetGroupModel);
 
   protected model: Type<TargetGroupModel> = TargetGroupModel;
 

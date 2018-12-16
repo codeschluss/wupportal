@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { SuburbControllerService } from '../../api/services/suburb-controller.service';
 import { SuburbModel } from './suburb.model';
@@ -19,9 +19,9 @@ export class SuburbProvider
   public readAll: (params?: SuburbControllerService
     .SuburbControllerReadAllParams) => Observable<SuburbModel[]>;
 
-  protected linked = [];
+  protected linked: CrudLink[] = [];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.suburbControllerCreateResponse,
     delete: this.service.suburbControllerDeleteResponse,
     readAll: this.service.suburbControllerReadAllResponse,
@@ -29,7 +29,7 @@ export class SuburbProvider
     update: this.service.suburbControllerUpdateResponse
   };
 
-  protected model = this.based(SuburbModel);
+  protected model: Type<SuburbModel> = this.based(SuburbModel);
 
   public constructor(
     protected service: SuburbControllerService

@@ -6,4 +6,5 @@ export * from './field/chip-list.field';
 export * from './field/datetime.field';
 export * from './field/select.field';
 export * from './field/string.field';
+export * from './field/upload.field';
 export * from './utils/module';

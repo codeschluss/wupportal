@@ -38,7 +38,8 @@ const PublicRoutes = [
         size: 15,
         dir: 'asc',
         page: 0,
-        sort: 'schedules.startDate'})
+        sort: 'schedules.startDate'
+      })
         .with('category')
         .with('address').yield('suburb')
         .with('schedules')
@@ -113,8 +114,8 @@ const PublicRoutes = [
     }
   },
   {
-  path: 'list/organisations',
-  children: [
+    path: 'list/organisations',
+    children: [
       {
         path: '',
         component: OrganisationListComponent,

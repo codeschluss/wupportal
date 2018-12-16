@@ -1,50 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
-import { BaseStepper } from '@portal/forms';
+import { BaseStepper, FormStep } from '@portal/forms';
 import { AddressFormComponent } from '../address/address.form';
+import { ScheduleFormComponent } from '../schedule/schedule.form';
+import { TranslationFormComponent } from '../translation/translation.form';
 import { ActivityFormComponent } from './activity.form';
 import { ActivityModel } from './activity.model';
 
 @Component({
   selector: 'activity-stepper',
   template: BaseStepper.template(`
-    <ng-container *ngIf="true; then new"></ng-container>
-
-    <ng-template #name>
-      {{ route.snapshot.data[root].name }}
-    </ng-template>
-    <ng-template #new>
-      <i18n i18n="@@newActivity">newActivity</i18n>
+    <ng-template #label let-case="case">
+      <ng-container [ngSwitch]="case.name">
+        <i18n *ngSwitchCase="'activity'" i18n="@@activity">activity</i18n>
+        <i18n *ngSwitchCase="'address'" i18n="@@address">address</i18n>
+        <i18n *ngSwitchCase="'schedules'" i18n="@@schedules">schedules</i18n>
+        <i18n *ngSwitchCase="'translations'"
+          i18n="@@translations">translations</i18n>
+      </ng-container>
     </ng-template>
   `)
 })
 
 export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
 
-  public root = 'activity';
+  public root: string = 'activity';
 
-  public steps = [
+  public steps: FormStep[] = [
     {
-      field: this.root,
+      name: this.root,
       form: ActivityFormComponent
     },
     {
-      field: 'address',
+      name: 'address',
       form: AddressFormComponent
+    },
+    {
+      name: 'schedules',
+      form: ScheduleFormComponent
+    },
+    {
+      name: 'translations',
+      form: TranslationFormComponent
     }
   ];
 
-  protected joiner = CrudJoiner.of(ActivityModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
     .with('address').yield('suburb')
     .with('category')
     .with('organisation')
     .with('schedules')
-    .with('tags', { sort: 'name', dir: 'asc' })
+    .with('tags')
     .with('targetGroups');
 
-  protected model = ActivityModel;
+  protected model: Type<ActivityModel> = ActivityModel;
 
   public constructor(
     protected builder: FormBuilder,

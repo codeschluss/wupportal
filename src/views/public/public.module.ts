@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBottomSheetModule, MatDatepickerModule, MatListModule, MatCardModule, MatPaginatorModule } from '@angular/material';
@@ -43,6 +41,7 @@ import { SocialMediaComponent } from '../layout/social.media.component';
 import { CoreModule } from '@portal/core';
 import { AboutComponent } from './about/about.component';
 import { SearchComponent } from './search/search.component';
+import { CommonModule } from '@angular/common';
 
 fontawesome.add(fas);
 
@@ -76,7 +75,6 @@ const PublicDeclarations = [
 ];
 
 const PublicImports = [
-  PublicComponent.imports,
   MatSelectModule,
   MatChipsModule,
   MatListModule,

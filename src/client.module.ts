@@ -24,10 +24,11 @@ import { BlogProvider } from './realm/blog/blog.provider';
 
 @NgModule({
   bootstrap: [ClientComponent],
-  declarations: [ClientComponent],
+  declarations: [
+    ClientComponent,
+  ],
   imports: [
     // TODO: move
-    LayoutComponent.imports,
     BrowserAnimationsModule,
     ApiModule,
     BrowserModule,

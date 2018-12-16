@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BaseForm, StringFieldComponent } from '@portal/forms';
+import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { UserModel } from './user.model';
-import { UserProvider } from './user.provider';
 
 @Component({
   selector: 'user-form',
@@ -23,7 +22,7 @@ import { UserProvider } from './user.provider';
 
 export class UserFormComponent extends BaseForm<UserModel> {
 
-  public fields = [
+  public fields: FormField[] = [
     {
       name: 'name',
       input: StringFieldComponent,
@@ -55,11 +54,10 @@ export class UserFormComponent extends BaseForm<UserModel> {
     }
   ];
 
-  public model = UserModel;
+  public model: Type<UserModel> = UserModel;
 
   public constructor(
     protected builder: FormBuilder,
-    protected provider: UserProvider,
     protected route: ActivatedRoute
   ) {
     super();

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
-import { BaseStepper } from '@portal/forms';
+import { BaseStepper, FormStep } from '@portal/forms';
 import { AddressFormComponent } from '../address/address.form';
 import { ActivityFormComponent } from './activity.form';
 import { ActivityModel } from './activity.model';
@@ -23,9 +23,9 @@ import { ActivityModel } from './activity.model';
 
 export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
 
-  public root = 'activity';
+  public root: string = 'activity';
 
-  public steps = [
+  public steps: FormStep[] = [
     {
       field: this.root,
       form: ActivityFormComponent
@@ -36,7 +36,7 @@ export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
     }
   ];
 
-  protected joiner = CrudJoiner.of(ActivityModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
     .with('address').yield('suburb')
     .with('category')
     .with('organisation')
@@ -44,7 +44,7 @@ export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
     .with('tags', { sort: 'name', dir: 'asc' })
     .with('targetGroups');
 
-  protected model = ActivityModel;
+  protected model: Type<ActivityModel> = ActivityModel;
 
   public constructor(
     protected builder: FormBuilder,

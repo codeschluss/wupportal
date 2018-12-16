@@ -7,7 +7,7 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 export interface TableColumn {
   name: string;
   sort?: boolean;
-  value: (item: CrudModel) => string;
+  value: (item) => string;
 }
 
 export abstract class BaseTable<Model extends CrudModel>

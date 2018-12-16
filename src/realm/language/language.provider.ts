@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { LanguageControllerService } from '../../api/services/language-controller.service';
 import { LanguageModel } from './language.model';
@@ -19,9 +19,9 @@ export class LanguageProvider
   public readAll: (params?: LanguageControllerService
     .LanguageControllerReadAllParams) => Observable<LanguageModel[]>;
 
-  protected linked = [];
+  protected linked: CrudLink[] = [];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.languageControllerCreateResponse,
     delete: this.service.languageControllerDeleteResponse,
     readAll: this.service.languageControllerReadAllResponse,
@@ -29,7 +29,7 @@ export class LanguageProvider
     update: this.service.languageControllerUpdateResponse
   };
 
-  protected model = this.based(LanguageModel);
+  protected model: Type<LanguageModel> = this.based(LanguageModel);
 
   public constructor(
     protected service: LanguageControllerService

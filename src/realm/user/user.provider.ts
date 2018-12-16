@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../activity/activity.model';
@@ -11,7 +11,7 @@ import { UserModel } from './user.model';
 export class UserProvider
   extends CrudProvider<UserControllerService, UserModel> {
 
-  protected linked = [
+  protected linked: CrudLink[] = [
     {
       field: 'activities',
       method: this.service.userControllerReadActivitiesResponse,
@@ -29,7 +29,7 @@ export class UserProvider
     }
   ];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.userControllerCreateResponse,
     delete: this.service.userControllerDeleteResponse,
     readAll: this.service.userControllerReadAllResponse,
@@ -37,7 +37,7 @@ export class UserProvider
     update: this.service.userControllerUpdateResponse
   };
 
-  protected model = this.based(UserModel);
+  protected model: Type<UserModel> = this.based(UserModel);
 
   public constructor(
     protected service: UserControllerService

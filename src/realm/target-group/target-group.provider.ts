@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { TargetGroupControllerService } from '../../api/services/target-group-controller.service';
 import { TargetGroupModel } from './target-group.model';
@@ -19,9 +19,9 @@ export class TargetGroupProvider
   public readAll: (params?: TargetGroupControllerService
     .TargetGroupControllerReadAllParams) => Observable<TargetGroupModel[]>;
 
-  protected linked = [];
+  protected linked: CrudLink[] = [];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.targetGroupControllerCreateResponse,
     delete: this.service.targetGroupControllerDeleteResponse,
     readAll: this.service.targetGroupControllerReadAllResponse,
@@ -30,7 +30,7 @@ export class TargetGroupProvider
     update: this.service.targetGroupControllerUpdateResponse
   };
 
-  protected model = this.based(TargetGroupModel);
+  protected model: Type<TargetGroupModel> = this.based(TargetGroupModel);
 
   public constructor(
     protected service: TargetGroupControllerService

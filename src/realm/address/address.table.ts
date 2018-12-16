@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { AddressModel } from './address.model';
 
 @Component({
@@ -21,7 +21,7 @@ import { AddressModel } from './address.model';
 
 export class AddressTableComponent extends BaseTable<AddressModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'street',
       sort: true,
@@ -52,6 +52,6 @@ export class AddressTableComponent extends BaseTable<AddressModel> {
 
   protected model: Type<AddressModel> = AddressModel;
 
-  protected root: 'address';
+  protected root: string = 'address';
 
 }

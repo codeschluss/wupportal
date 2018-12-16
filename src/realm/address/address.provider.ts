@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { AddressControllerService } from '../../api/services/address-controller.service';
 import { SuburbModel } from '../suburb/suburb.model';
@@ -9,7 +9,7 @@ import { AddressModel } from './address.model';
 export class AddressProvider
   extends CrudProvider<AddressControllerService, AddressModel> {
 
-  protected linked = [
+  protected linked: CrudLink[] = [
     {
       field: 'suburb',
       method: this.service.addressControllerReadSuburbResponse,
@@ -17,7 +17,7 @@ export class AddressProvider
     }
   ];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.addressControllerCreateResponse,
     delete: this.service.addressControllerDeleteResponse,
     readAll: this.service.addressControllerReadAllResponse,
@@ -25,7 +25,7 @@ export class AddressProvider
     update: this.service.addressControllerUpdateResponse
   };
 
-  protected model = this.based(AddressModel);
+  protected model: Type<AddressModel> = this.based(AddressModel);
 
   public constructor(
     protected service: AddressControllerService

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
@@ -85,7 +85,7 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
     }
   ];
 
-  public model = ActivityModel;
+  public model: Type<ActivityModel> = ActivityModel;
 
   public constructor(
     protected builder: FormBuilder,

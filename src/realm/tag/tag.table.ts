@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { TagModel } from './tag.model';
 
 @Component({
@@ -18,7 +18,7 @@ import { TagModel } from './tag.model';
 
 export class TagTableComponent extends BaseTable<TagModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'name',
       sort: true,
@@ -35,6 +35,6 @@ export class TagTableComponent extends BaseTable<TagModel> {
 
   protected model: Type<TagModel> = TagModel;
 
-  protected root: 'tag';
+  protected root: string = 'tag';
 
 }

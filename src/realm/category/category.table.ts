@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { CategoryModel } from './category.model';
 
 @Component({
@@ -19,7 +19,7 @@ import { CategoryModel } from './category.model';
 
 export class CategoryTableComponent extends BaseTable<CategoryModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'name',
       sort: true,
@@ -41,6 +41,6 @@ export class CategoryTableComponent extends BaseTable<CategoryModel> {
 
   protected model: Type<CategoryModel> = CategoryModel;
 
-  protected root: 'category';
+  protected root: string = 'category';
 
 }

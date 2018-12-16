@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { LanguageModel } from './language.model';
 
 @Component({
@@ -19,7 +19,7 @@ import { LanguageModel } from './language.model';
 
 export class LanguageTableComponent extends BaseTable<LanguageModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'name',
       sort: true,
@@ -41,6 +41,6 @@ export class LanguageTableComponent extends BaseTable<LanguageModel> {
 
   protected model: Type<LanguageModel> = LanguageModel;
 
-  protected root: 'language';
+  protected root: string = 'language';
 
 }

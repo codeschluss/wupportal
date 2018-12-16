@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { SuburbModel } from './suburb.model';
 
 @Component({
@@ -16,7 +16,7 @@ import { SuburbModel } from './suburb.model';
 
 export class SuburbTableComponent extends BaseTable<SuburbModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'name',
       sort: true,
@@ -28,6 +28,6 @@ export class SuburbTableComponent extends BaseTable<SuburbModel> {
 
   protected model: Type<SuburbModel> = SuburbModel;
 
-  protected root: 'suburb';
+  protected root: string = 'suburb';
 
 }

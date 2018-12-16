@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { ActivityModel } from './activity.model';
 
 @Component({
@@ -21,7 +21,7 @@ import { ActivityModel } from './activity.model';
 
 export class ActivityTableComponent extends BaseTable<ActivityModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'name',
       sort: true,
@@ -47,6 +47,6 @@ export class ActivityTableComponent extends BaseTable<ActivityModel> {
 
   protected model: Type<ActivityModel> = ActivityModel;
 
-  protected root: 'activity';
+  protected root: string = 'activity';
 
 }

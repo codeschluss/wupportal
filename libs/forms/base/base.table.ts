@@ -42,8 +42,6 @@ export abstract class BaseTable<Model extends CrudModel>
 
   protected abstract model: Type<Model>;
 
-  protected abstract root: string;
-
   protected static template(template: string): string {
     return template + `
       <mat-table matSort [dataSource]="source.asObservable()">
@@ -58,7 +56,7 @@ export abstract class BaseTable<Model extends CrudModel>
               </ng-container>
               </mat-header-cell>
             <mat-cell *matCellDef="let item">
-              {{ column.value(item) }}
+              {{ item[column.name] ? column.value(item) : '' }}
             </mat-cell>
           </ng-container>
         </ng-container>
@@ -105,7 +103,7 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   public delete(item: CrudModel): string[] {
-    return ['/'];
+    return ['.'];
     // return this.walk(item['deleter']);
   }
 

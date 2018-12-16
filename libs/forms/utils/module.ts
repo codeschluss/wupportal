@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { CoreModule } from '@portal/core';
@@ -9,8 +9,19 @@ import { ChipListFieldComponent } from '../field/chip-list.field';
 import { DatetimeFieldComponent } from '../field/datetime.field';
 import { SelectFieldComponent } from '../field/select.field';
 import { StringFieldComponent } from '../field/string.field';
+import { UploadFieldComponent } from '../field/upload.field';
+import { FileValueAccessorDirective } from './accesor';
 
-const ModuleLoop = [
+const fields: Type<BaseFieldComponent>[] = [
+  BooleanFieldComponent,
+  ChipListFieldComponent,
+  DatetimeFieldComponent,
+  UploadFieldComponent,
+  SelectFieldComponent,
+  StringFieldComponent
+];
+
+const loopback: Type<any>[] = [
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
@@ -18,38 +29,20 @@ const ModuleLoop = [
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatPaginatorModule,
   MatSelectModule,
   MatSlideToggleModule,
-  MatTabsModule,
-
-  MatTableModule,
-  MatPaginatorModule,
   MatSortModule,
-
+  MatTableModule,
+  MatTabsModule,
   ReactiveFormsModule
 ];
 
-const Components = [
-  BaseFieldComponent,
-  BooleanFieldComponent,
-  ChipListFieldComponent,
-  DatetimeFieldComponent,
-  SelectFieldComponent,
-  StringFieldComponent
-];
-
 @NgModule({
-  declarations: Components,
-  entryComponents: [Components],
-  exports: [
-    BaseFieldComponent,
-    ...ModuleLoop
-  ],
-  imports: [
-    CommonModule,
-    CoreModule,
-    ...ModuleLoop
-  ]
+  declarations: [...fields, BaseFieldComponent, FileValueAccessorDirective],
+  entryComponents: [...fields],
+  exports: [...loopback, BaseFieldComponent, FileValueAccessorDirective],
+  imports: [...loopback, CommonModule, CoreModule]
 })
 
 export class FormsModule { }

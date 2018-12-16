@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatSelectModule, MatBottomSheet, MatBottomSheetModule } from '@angular/material';
+import { MatSelectModule, MatBottomSheet, MatBottomSheetModule, MatCheckboxModule } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionProvider } from '@portal/core';
@@ -15,7 +15,8 @@ export class RegisterComponent {
 
     static readonly imports = [
         MatSelectModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        MatCheckboxModule
     ];
 
     userName: string = '';
@@ -23,6 +24,7 @@ export class RegisterComponent {
     passwordRepeat: string;
     fullName: string;
     phone: string;
+    isBlogger: boolean;
 
     error: string;
     organisationsCtrl = new FormControl();
@@ -36,6 +38,9 @@ export class RegisterComponent {
         private bottomSheet: MatBottomSheet
         ) {
             this.organisations = this.route.snapshot.data.organisations;
+            this.organisations.unshift({
+                name: 'Meine Organisation ist nicht dabei',
+                value: 'orgaNotThere'});
         }
 
     register(): void {
@@ -43,11 +48,18 @@ export class RegisterComponent {
         user.name = this.fullName;
         user.password = this.password;
         user.phone = this.phone;
+        user.applyBlogger = this.isBlogger;
         user.username = this.userName;
         user.organisations = this.organisationsCtrl.value;
         this.userProvider.create(user).subscribe(() => {
             this.openBottomSheet();
-            this.goToLogin();
+            if (this.organisations.find
+                (entry => entry.value === 'orgaNotThere')) {
+                    console.log('new organisation will be created');
+                    this.goToCreateOrganisation();
+            } else {
+                this.goToLogin();
+            }
         },
         error => {
             this.error = error;
@@ -57,6 +69,10 @@ export class RegisterComponent {
 
     goToLogin(): void {
         this.router.navigate(['/admin/login']);
+    }
+
+    goToCreateOrganisation(): void {
+        this.router.navigate(['/admin/edit/organisation']);
     }
 
     goToHome(): void {

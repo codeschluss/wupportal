@@ -20,6 +20,7 @@ import { ClientPackage } from './utils/package';
 import { LayoutComponent } from './views/layout/layout.component';
 import { CoreModule, CoreSettings } from 'libs/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BlogProvider } from './realm/blog/blog.provider';
 
 @NgModule({
   bootstrap: [ClientComponent],
@@ -38,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ActivityProvider,
     AddressProvider,
     CategoryProvider,
+    BlogProvider,
     ConfigurationProvider,
     OrganisationProvider,
     ProviderProvider,
@@ -57,6 +59,7 @@ export class ClientModule {
 
     _activityProvider: ActivityProvider,
     _addressProvider: AddressProvider,
+    _blogProvider: BlogProvider,
     _categoryProvider: CategoryProvider,
     _configurationProvider: ConfigurationProvider,
     _languageProvider: LanguageProvider,

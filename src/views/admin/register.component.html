@@ -42,12 +42,15 @@
                 [(ngModel)]="phone">
         </mat-form-field>
 
+        <mat-checkbox id="isBlogger" name="isBlgger" [(ngModel)]="isBlogger">
+            <i18n i18n="@@blogger">blogger</i18n>
+        </mat-checkbox>
+
         <mat-form-field [style.width]="'100%'">
             <mat-select placeholder="Organisationen" [formControl]="organisationsCtrl" multiple>
-                <mat-option *ngFor="let organisation of organisations" [value]="topping">{{organisation.name}}</mat-option>
+                <mat-option *ngFor="let organisation of organisations" [value]="organisation.id">{{organisation.name}}</mat-option>
             </mat-select>
         </mat-form-field>
-              
         
         <mat-form-field [style.width]="'100%'">
             <input matInput 

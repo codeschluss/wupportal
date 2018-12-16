@@ -13,6 +13,7 @@ export class UserModel
   public phone: string;
   public superuser: boolean;
   public username: string;
+  public applyBlogger: boolean;
 
   public activities: Observable<ActivityModel[]>;
   public organisations: Observable<OrganisationModel[]>;

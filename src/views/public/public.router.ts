@@ -16,6 +16,7 @@ import { SuburbModel } from 'src/realm/suburb/suburb.model';
 import { AboutComponent } from './about/about.component';
 import { MappingComponent } from './mapping/mapping.component';
 import { CrudResolver, CrudJoiner } from '@portal/core';
+import { BlogModel } from 'src/realm/blog/blog.model';
 
 const PublicProviders = [
 ];
@@ -48,16 +49,11 @@ const PublicRoutes = [
         path: '',
         component: ActivityListComponent,
         resolve: {
-          activities: CrudResolver,
           targetGroups: CrudResolver,
           categories: CrudResolver,
           suburbs: CrudResolver
         },
         data: {
-          activities: CrudJoiner.of(ActivityModel)
-            .with('category')
-            .with('address').yield('suburb')
-            .with('schedules'),
           targetGroups: CrudJoiner.of(TargetGroupModel),
           categories: CrudJoiner.of(CategoryModel),
           suburbs: CrudJoiner.of(SuburbModel)
@@ -137,8 +133,14 @@ const PublicRoutes = [
     ]
   },
   {
-    path: 'view/blogs/:id',
-    component: BlogViewComponent
+    path: 'view/blogs/:uuid',
+    component: BlogViewComponent,
+    resolve: {
+      blog: CrudResolver
+    },
+    data: {
+      blog: CrudJoiner.of(BlogModel)
+    }
   },
   {
     path: 'search',

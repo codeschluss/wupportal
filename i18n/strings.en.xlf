@@ -6,7 +6,7 @@
 				<target>Latest blog posts</target>
       </trans-unit>
       <trans-unit id="readMore" datatype="html">
-				<target>rad more</target>
+				<target>read more</target>
       </trans-unit>
       <trans-unit id="newActivities" datatype="html">
 				<target>New activities</target>

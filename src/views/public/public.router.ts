@@ -18,6 +18,7 @@ import { MappingComponent } from './mapping/mapping.component';
 import { CrudResolver, CrudJoiner } from '@portal/core';
 import { BlogModel } from 'src/realm/blog/blog.model';
 import { SearchComponent } from './search/search.component';
+import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
 
 const PublicProviders = [
 ];
@@ -52,12 +53,14 @@ const PublicRoutes = [
         resolve: {
           targetGroups: CrudResolver,
           categories: CrudResolver,
-          suburbs: CrudResolver
+          suburbs: CrudResolver,
+          configurations: CrudResolver
         },
         data: {
           targetGroups: CrudJoiner.of(TargetGroupModel),
           categories: CrudJoiner.of(CategoryModel),
-          suburbs: CrudJoiner.of(SuburbModel)
+          suburbs: CrudJoiner.of(SuburbModel),
+          configurations: CrudJoiner.of(ConfigurationModel)
         }
       }
     ]
@@ -67,19 +70,21 @@ const PublicRoutes = [
     component: MappingComponent,
     resolve: {
       activities: CrudResolver,
+      configurations: CrudResolver
     },
     data: {
       activities: CrudJoiner.of(ActivityModel)
         .with('category')
         .with('address').yield('suburb')
         .with('schedules'),
+      configurations: CrudJoiner.of(ConfigurationModel)
     }
   },
   {
     path: 'view/activities/:uuid',
     component: ActivityViewComponent,
     resolve: {
-      activity: CrudResolver
+      activity: CrudResolver,
     },
     data: {
       activity: CrudJoiner.of(ActivityModel)
@@ -87,7 +92,24 @@ const PublicRoutes = [
         .with('organisation')
         .with('targetGroups')
         .with('schedules')
-        .with('address').yield('suburb')
+        .with('address').yield('suburb'),
+    }
+  },
+  {
+    path: 'map/activities/:uuid',
+    component: MappingComponent,
+    resolve: {
+      activities: CrudResolver,
+      // configurations: CrudResolver
+    },
+    data: {
+      activities: CrudJoiner.of(ActivityModel)
+        .with('category')
+        .with('organisation')
+        .with('targetGroups')
+        .with('schedules')
+        .with('address').yield('suburb'),
+      // configurations: CrudJoiner.of(ConfigurationModel)
     }
   },
   {
@@ -141,6 +163,7 @@ const PublicRoutes = [
     },
     data: {
       blog: CrudJoiner.of(BlogModel)
+      // .with('activity')
     }
   },
   {
@@ -169,7 +192,7 @@ const PublicRoutes = [
     path: '',
     children: PublicRoutes,
     resolve: PublicResolvers,
-    component: LayoutComponent
+    component: LayoutComponent,
   }])],
   providers: PublicProviders
 })

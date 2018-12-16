@@ -27,7 +27,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { LayoutComponent } from '../layout/layout.component';
 import { OrganisationListComponent } from './organisation/organisation.list.component';
 import { OrganisationCardComponent } from './organisation/organisation.card.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlogListComponent } from './blog/blog.list.component';
 import { SearchResultListComponent } from './search/searchresult.list.component';
 import { BlogListItemComponent } from './blog/blog.listitem.component';
@@ -96,7 +96,8 @@ const PublicImports = [
   FormsModule,
   JwSocialButtonsModule,
   CoreModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  ReactiveFormsModule
 ];
 
 const PublicProviders = [

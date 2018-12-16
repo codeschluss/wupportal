@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
 import { BaseStepper, FormStep } from '@portal/forms';
 import { AddressFormComponent } from '../address/address.form';
-import { ScheduleFormComponent } from '../schedule/schedule.form';
+import { ImageFormComponent } from '../image/image.form';
 import { TranslationFormComponent } from '../translation/translation.form';
-import { ActivityFormComponent } from './activity.form';
-import { ActivityModel } from './activity.model';
+import { OrganisationFormComponent } from './organisation.form';
+import { OrganisationModel } from './organisation.model';
 
 @Component({
-  selector: 'activity-stepper',
+  selector: 'organisation-stepper',
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -24,22 +24,23 @@ import { ActivityModel } from './activity.model';
   `)
 })
 
-export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
+export class OrganisationStepperComponent
+  extends BaseStepper<OrganisationModel> {
 
   public root: string = 'activity';
 
   public steps: FormStep[] = [
     {
       name: this.root,
-      form: ActivityFormComponent
+      form: OrganisationFormComponent
     },
     {
       name: 'address',
       form: AddressFormComponent
     },
     {
-      name: 'schedules',
-      form: ScheduleFormComponent
+      name: 'images',
+      form: ImageFormComponent
     },
     {
       name: 'translations',
@@ -47,7 +48,7 @@ export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
     .with('address').yield('suburb')
     .with('category')
     .with('organisation')
@@ -55,7 +56,7 @@ export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
     .with('tags')
     .with('targetGroups');
 
-  protected model: Type<ActivityModel> = ActivityModel;
+  protected model: Type<OrganisationModel> = OrganisationModel;
 
   public constructor(
     protected builder: FormBuilder,

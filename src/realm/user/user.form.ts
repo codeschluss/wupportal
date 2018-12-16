@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { UserModel } from './user.model';
-import { UserProvider } from './user.provider';
 
 @Component({
   selector: 'user-form',
@@ -59,7 +58,6 @@ export class UserFormComponent extends BaseForm<UserModel> {
 
   public constructor(
     protected builder: FormBuilder,
-    protected provider: UserProvider,
     protected route: ActivatedRoute
   ) {
     super();

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { OrganisationEntity } from '../../api/models/organisation-entity';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
-import { OrganisationImageModel } from '../image/organisation-image.model';
+import { ImageModel } from '../image/image.model';
 import { ProviderModel } from '../provider/provider.model';
 import { UserModel } from '../user/user.model';
 
@@ -22,7 +22,7 @@ export class OrganisationModel
 
   public activities: Observable<ActivityModel[]>;
   public address: Observable<AddressModel>;
-  public images: Observable<OrganisationImageModel[]>;
+  public images: Observable<ImageModel[]>;
   public provider: Observable<ProviderModel>;
   public users: Observable<UserModel[]>;
 

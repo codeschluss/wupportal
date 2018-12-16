@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SessionResolver } from '@portal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
+import { AccountPanelComponent } from './account/account.panel';
 import { AdminComponent } from './admin.component';
-import { AccountPanelComponent } from './panels/account.panel';
-import { ApplicationPanelComponent } from './panels/application.panel';
+import { ApplicationPanelComponent } from './application/application.panel';
 
 @NgModule({
   exports: [RouterModule],

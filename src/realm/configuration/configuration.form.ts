@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { ConfigurationModel } from './configuration.model';
-import { ConfigurationProvider } from './configuration.provider';
 
 @Component({
   selector: 'configuration-form',
@@ -73,7 +72,6 @@ export class ConfigurationFormComponent extends BaseForm<ConfigurationModel> {
 
   public constructor(
     protected builder: FormBuilder,
-    protected provider: ConfigurationProvider,
     protected route: ActivatedRoute
   ) {
     super();

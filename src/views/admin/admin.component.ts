@@ -13,10 +13,8 @@ export class AdminComponent {
     private router: Router,
     private sessionProvider: SessionProvider
   ) {
-    const token = this.route.snapshot.data.session.accessToken;
-    console.log(this.sessionProvider);
-
     if (!this.route.snapshot.firstChild) {
+      const token = this.route.snapshot.data.session.accessToken;
       this.router.navigate(['account', token.id], { relativeTo: this.route });
     }
   }

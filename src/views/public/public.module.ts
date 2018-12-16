@@ -42,6 +42,7 @@ import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
 import { SocialMediaComponent } from '../layout/social.media.component';
 import { CoreModule } from '@portal/core';
 import { AboutComponent } from './about/about.component';
+import { SearchComponent } from './search/search.component';
 
 fontawesome.add(fas);
 
@@ -69,8 +70,9 @@ const PublicDeclarations = [
   BlogViewComponent,
   SearchResultListComponent,
   SearchInputComponent,
+  SearchComponent,
   ImprintDialogComponent,
-  SocialMediaComponent
+  SocialMediaComponent,
 ];
 
 const PublicImports = [
@@ -90,6 +92,7 @@ const PublicImports = [
   LayoutComponent.imports,
   NavBarComponent.imports,
   SearchResultListComponent.imports,
+  SearchComponent.imports,
   FormsModule,
   JwSocialButtonsModule,
   CoreModule,

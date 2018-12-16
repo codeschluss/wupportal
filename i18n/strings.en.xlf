@@ -72,6 +72,9 @@
       </trans-unit>
       <trans-unit id="successfullRegister" datatype="html">
         <target>You sucessfull registered yourself to the portal</target>
+      </trans-unit>
+      <trans-unit id="resultsFor" datatype="html">
+        <target>Results for</target>
       </trans-unit> 
 
 

@@ -17,6 +17,7 @@ import { AboutComponent } from './about/about.component';
 import { MappingComponent } from './mapping/mapping.component';
 import { CrudResolver, CrudJoiner } from '@portal/core';
 import { BlogModel } from 'src/realm/blog/blog.model';
+import { SearchComponent } from './search/search.component';
 
 const PublicProviders = [
 ];
@@ -147,11 +148,11 @@ const PublicRoutes = [
     children: [
       {
         path: ':query',
-        component: SearchResultListComponent,
+        component: SearchComponent,
       },
       {
         path: '',
-        component: SearchResultListComponent
+        component: SearchComponent
       }
     ]
   },

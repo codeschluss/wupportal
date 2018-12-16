@@ -66,12 +66,12 @@ export class BaseFieldComponent implements OnInit {
   public toModel(input: string): CrudModel;
   public toModel(input: string[]): CrudModel[];
   public toModel(input: string | string[]): CrudModel | CrudModel[] {
-    const toModel = (id: string) =>
+    const modeler = (id: string) =>
       this.field.options.find((item) => item.id === id);
 
     return Array.isArray(input)
-      ? input.map((id) => toModel(id))
-      : toModel(input);
+      ? input.map((id) => modeler(id))
+      : modeler(input);
   }
 
   protected ngPostInit(): void { }

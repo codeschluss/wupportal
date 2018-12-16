@@ -100,7 +100,7 @@ export abstract class CrudProvider
       const data = (item._embedded || { })[link.field];
       const getter = () => data
         ? of(Object.assign(new link.model(), data))
-        : this.walker(link, item);
+        : this.walk(link, item);
 
       Object.defineProperty(item, link.field, { get: getter });
     });
@@ -110,7 +110,7 @@ export abstract class CrudProvider
       : linker(input);
   }
 
-  private walker(link: CrudLink, item: Model): Observable<any> {
+  private walk(link: CrudLink, item: Model): Observable<any> {
     if (link.model['provider']) {
       const provider = link.model['provider'];
       return this.call.apply(provider, [link.method, item.id]).pipe(

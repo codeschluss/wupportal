@@ -1,5 +1,6 @@
 import { AfterViewInit, ContentChildren, Input, QueryList, Type, ViewChild } from '@angular/core';
 import { MatColumnDef, MatPaginator, MatSort, MatTable } from '@angular/material';
+import { Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@portal/core';
 import { BehaviorSubject, merge, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
@@ -52,7 +53,8 @@ export abstract class BaseTable<Model extends CrudModel>
           <ng-container [matColumnDef]="column.name">
             <mat-header-cell mat-sort-header
               [disabled]="!column.sort" *matHeaderCellDef>
-              <ng-container *ngTemplateOutlet="label;context: { case: column }">
+              <ng-container *ngTemplateOutlet="label;
+                context: { case: column }">
               </ng-container>
               </mat-header-cell>
             <mat-cell *matCellDef="let item">
@@ -82,7 +84,8 @@ export abstract class BaseTable<Model extends CrudModel>
   public get readonly(): boolean { return this.editable === undefined; }
 
   public constructor(
-    protected resolver: CrudResolver
+    private resolver: CrudResolver,
+    private router: Router
   ) { }
 
   public ngAfterViewInit(): void {
@@ -102,11 +105,12 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   public delete(item: CrudModel): string[] {
-    return ['admin', 'delete', this.root, item.id];
+    return ['/'];
+    // return this.walk(item['deleter']);
   }
 
   public edit(item: CrudModel): string[] {
-    return ['admin', 'edit', this.root, item.id];
+    return this.walk(item.constructor['stepper']).concat(item.id);
   }
 
   private relist(): void {
@@ -140,6 +144,26 @@ export abstract class BaseTable<Model extends CrudModel>
     this.pager.length = response.body.page.totalElements;
     this.pager.pageIndex = response.body.page.number;
     this.pager.pageSize = response.body.page.size;
+  }
+
+  private walk(component: Type<any>): string[] {
+    const walker = (route, path = ['/']) => {
+      if (route.component === component) {
+        return path;
+      } else if (route.children) {
+        return route.children
+          .flatMap((child) => walker(child, path.concat(child.path)));
+      } else if ((route['_loadedConfig'] || { }).routes) {
+        return route['_loadedConfig'].routes
+          .flatMap((child) => walker(child, path.concat(child.path)));
+      }
+    };
+
+    const paths = this.router.config
+      .flatMap((route) => walker(route)).filter((segment) => !!segment);
+    paths.push(((path) => path.replace('/:uuid', ''))(paths.pop()));
+
+    return paths;
   }
 
 }

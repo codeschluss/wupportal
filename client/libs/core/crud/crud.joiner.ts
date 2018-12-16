@@ -27,12 +27,12 @@ export class CrudJoiner {
   }
 
   public static to(tree: CrudGraph): string {
-    const embedder = (nodes) => nodes.map((node) => ({
+    const builder = (nodes) => nodes.map((node) => ({
       name: node.name,
-      nodes: embedder(node.nodes)
+      nodes: builder(node.nodes)
     }));
 
-    return btoa(JSON.stringify(embedder(tree.nodes)));
+    return btoa(JSON.stringify(builder(tree.nodes)));
   }
 
   public get graph(): CrudGraph {

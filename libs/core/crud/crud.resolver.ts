@@ -27,7 +27,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       .find((key) => !this.resolving.includes(route.data[key]))];
     this.resolving.push(joiner);
 
-    joiner.graph.params.embeddings = this.embed(joiner.graph);
+    joiner.graph.params.embeddings = CrudJoiner.to(joiner.graph);
     const response = joiner.graph.params.filter !== null && route.params.uuid
       ? await joiner.graph.provider.readOne(route.params.uuid).toPromise()
       : await joiner.graph.provider.readAll(joiner.graph.params).toPromise();
@@ -46,44 +46,38 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
 
       for (const node of nodes) {
         const link = provider.linked.find((lnk) => lnk.field === node.name);
-        let value = null;
 
-        if ((item._embedded || {})[link.field]) {
-          value = Object.assign(new link.model(), item._embedded[link.field]);
-        } else {
-          const params = [
-            item.id,
-            node.params.sort,
-            node.params.dir,
-            this.embed(node)
-          ];
+        if (link) {
+          let value = null;
 
-          try {
-            value = await provider.call(link.method, ...params).pipe(map(
-              (response) => provider.cast(response, link.model))).toPromise();
-          } catch (error) { }
-        }
+          if ((item._embedded || {})[link.field]) {
+            value = Object.assign(new link.model(), item._embedded[link.field]);
+          } else {
+            const params = [
+              item.id,
+              node.params.sort,
+              node.params.dir,
+              CrudJoiner.to(node)
+            ];
 
-        if (value && node.nodes.length) {
-          for (const itm of Array.isArray(value) ? value : [value]) {
-            await this.run(itm, node.nodes);
+            try {
+              value = await provider.call(link.method, ...params).pipe(map(
+                (response) => provider.cast(response, link.model))).toPromise();
+            } catch (error) { }
           }
-        }
 
-        Object.defineProperty(item, link.field, { value: value });
+          if (value && node.nodes.length) {
+            for (const itm of Array.isArray(value) ? value : [value]) {
+              await this.run(itm, node.nodes);
+            }
+          }
+
+          Object.defineProperty(item, link.field, { value: value });
+        }
       }
     }
 
     return item;
-  }
-
-  private embed(tree: CrudGraph): string {
-    const embedder = (nodes) => nodes.map((node) => ({
-      name: node.name,
-      nodes: embedder(node.nodes)
-    }));
-
-    return btoa(JSON.stringify(embedder(tree.nodes)));
   }
 
 }

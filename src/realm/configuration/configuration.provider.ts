@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { ConfigurationControllerService } from '../../api/services/configuration-controller.service';
 import { ConfigurationModel } from '../configuration/configuration.model';
@@ -19,9 +19,9 @@ export class ConfigurationProvider
   public readAll: (params?: ConfigurationControllerService
     .ConfigurationControllerReadAllParams) => Observable<ConfigurationModel[]>;
 
-  protected linked = [];
+  protected linked: CrudLink[] = [];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.configurationControllerCreateResponse,
     delete: this.service.configurationControllerDeleteResponse,
     readAll: this.service.configurationControllerReadAllResponse,
@@ -29,7 +29,7 @@ export class ConfigurationProvider
     update: this.service.configurationControllerUpdateResponse
   };
 
-  protected model = this.based(ConfigurationModel);
+  protected model: Type<ConfigurationModel> = this.based(ConfigurationModel);
 
   public constructor(
     protected service: ConfigurationControllerService

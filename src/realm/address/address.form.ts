@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BaseForm, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
-import { AddressProvider } from './address.provider';
 
 @Component({
   selector: 'address-form',
@@ -24,7 +23,7 @@ import { AddressProvider } from './address.provider';
 
 export class AddressFormComponent extends BaseForm<AddressModel> {
 
-  public fields = [
+  public fields: FormField[] = [
     {
       name: 'place',
       input: StringFieldComponent,
@@ -53,11 +52,10 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
     }
   ];
 
-  public model = AddressModel;
+  public model: Type<AddressModel> = AddressModel;
 
   public constructor(
     protected builder: FormBuilder,
-    protected provider: AddressProvider,
     protected route: ActivatedRoute
   ) {
     super();

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
 import { AddressModel } from '../address/address.model';
@@ -15,7 +15,7 @@ import { ActivityModel } from './activity.model';
 export class ActivityProvider
   extends CrudProvider<ActivityControllerService, ActivityModel> {
 
-  protected linked = [
+  protected linked: CrudLink[] = [
     {
       field: 'address',
       method: this.service.activityControllerReadAddressResponse,
@@ -33,7 +33,7 @@ export class ActivityProvider
     },
     {
       field: 'provider',
-      method: null,
+      method: () => null,
       model: ProviderModel
     },
     {
@@ -53,7 +53,7 @@ export class ActivityProvider
     }
   ];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.activityControllerCreateResponse,
     delete: this.service.activityControllerDeleteResponse,
     readAll: this.service.activityControllerReadAllResponse,
@@ -62,7 +62,7 @@ export class ActivityProvider
     update: this.service.activityControllerUpdateResponse
   };
 
-  protected model = this.based(ActivityModel);
+  protected model: Type<ActivityModel> = this.based(ActivityModel);
 
   public constructor(
     protected service: ActivityControllerService

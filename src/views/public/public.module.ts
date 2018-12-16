@@ -1,13 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatBottomSheetModule, MatDatepickerModule, MatListModule, MatCardModule } from '@angular/material';
-
 import { PublicComponent } from './public.component';
 import { PublicRouter } from './public.router';
 
+<<<<<<< HEAD
 import { ActivityViewComponent } from './activity/activity.view.component';
 import { ActivityCarouselComponent } from './activity/activity.carousel.component';
 import { ActivityCardComponent } from './activity/activity.card.component';
@@ -114,6 +109,11 @@ const PublicProviders = [
     LangaugeChooserDialogComponent
   ],
   exports: []
+=======
+@NgModule({
+  declarations: [PublicComponent],
+  imports: [PublicRouter]
+>>>>>>> wupportal/development
 })
 
 export class PublicModule { }

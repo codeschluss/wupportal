@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
@@ -7,7 +7,6 @@ import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
 import { ActivityModel } from './activity.model';
-import { ActivityProvider } from './activity.provider';
 
 @Component({
   selector: 'activity-form',
@@ -85,11 +84,10 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
     }
   ];
 
-  public model = ActivityModel;
+  public model: Type<ActivityModel> = ActivityModel;
 
   public constructor(
     protected builder: FormBuilder,
-    protected provider: ActivityProvider,
     protected route: ActivatedRoute
   ) {
     super();

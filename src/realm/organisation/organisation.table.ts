@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
-import { BaseTable } from '@portal/forms';
+import { CrudJoiner } from '@portal/core';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { OrganisationModel } from './organisation.model';
 
 @Component({
@@ -19,7 +20,7 @@ import { OrganisationModel } from './organisation.model';
 
 export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'name',
       sort: true,
@@ -51,6 +52,9 @@ export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
       `
     }
   ];
+
+  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
+    .with('address').yield('suburb');
 
   protected model: Type<OrganisationModel> = OrganisationModel;
 

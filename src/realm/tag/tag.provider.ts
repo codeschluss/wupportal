@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { TagControllerService } from '../../api/services/tag-controller.service';
 import { TagModel } from './tag.model';
@@ -19,9 +19,9 @@ export class TagProvider
   public readAll: (params?: TagControllerService
     .TagControllerReadAllParams) => Observable<TagModel[]>;
 
-  protected linked = [];
+  protected linked: CrudLink[] = [];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.tagControllerCreateResponse,
     delete: this.service.tagControllerDeleteResponse,
     readAll: this.service.tagControllerReadAllResponse,
@@ -30,7 +30,7 @@ export class TagProvider
     update: this.service.tagControllerUpdateResponse
   };
 
-  protected model = this.based(TagModel);
+  protected model: Type<TagModel> = this.based(TagModel);
 
   public constructor(
     protected service: TagControllerService

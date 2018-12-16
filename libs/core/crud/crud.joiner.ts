@@ -26,6 +26,15 @@ export class CrudJoiner {
     return node;
   }
 
+  public static to(tree: CrudGraph): string {
+    const builder = (nodes) => nodes.map((node) => ({
+      name: node.name,
+      nodes: builder(node.nodes)
+    }));
+
+    return btoa(JSON.stringify(builder(tree.nodes)));
+  }
+
   public get graph(): CrudGraph {
     const merger = (nodes, node) => nodes.filter((nd) => nd.name !== node.name)
       .concat(nodes.filter((nd) => nd.name === node.name).reduce((a, b) =>

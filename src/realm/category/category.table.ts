@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
-import { BaseTable } from '@portal/forms';
+import { CrudJoiner } from '@portal/core';
+import { BaseTable, TableColumn } from '@portal/forms';
 import { CategoryModel } from './category.model';
 
 @Component({
@@ -18,7 +19,7 @@ import { CategoryModel } from './category.model';
 
 export class CategoryTableComponent extends BaseTable<CategoryModel> {
 
-  public columns = [
+  public columns: TableColumn[] = [
     {
       name: 'name',
       sort: true,
@@ -35,6 +36,8 @@ export class CategoryTableComponent extends BaseTable<CategoryModel> {
       value: (item) => item.color
     }
   ];
+
+  protected joiner: CrudJoiner = CrudJoiner.of(CategoryModel);
 
   protected model: Type<CategoryModel> = CategoryModel;
 

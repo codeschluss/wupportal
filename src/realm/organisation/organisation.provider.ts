@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
+import { empty, Observable } from 'rxjs';
 import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
-import { OrganisationImageModel } from '../image/organisation-image.model';
+import { ImageModel } from '../image/image.model';
 import { ProviderModel } from '../provider/provider.model';
 import { UserModel } from '../user/user.model';
 import { OrganisationModel } from './organisation.model';
@@ -13,7 +13,7 @@ import { OrganisationModel } from './organisation.model';
 export class OrganisationProvider
   extends CrudProvider<OrganisationControllerService, OrganisationModel> {
 
-  protected linked = [
+  protected linked: CrudLink[] = [
     {
       field: 'activities',
       method: this.service.organisationControllerReadActivitiesResponse,
@@ -27,11 +27,11 @@ export class OrganisationProvider
     {
       field: 'images',
       method: this.service.organisationControllerReadImagesResponse,
-      model: OrganisationImageModel
+      model: ImageModel
     },
     {
-      field: 'provider',
-      method: null,
+      field: 'providers',
+      method: () => empty(),
       model: ProviderModel
     },
     {
@@ -41,7 +41,7 @@ export class OrganisationProvider
     }
   ];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.organisationControllerCreateResponse,
     delete: this.service.organisationControllerDeleteResponse,
     readAll: this.service.organisationControllerReadAllResponse,
@@ -50,7 +50,7 @@ export class OrganisationProvider
     update: this.service.organisationControllerUpdateResponse
   };
 
-  protected model = this.based(OrganisationModel);
+  protected model: Type<OrganisationModel> = this.based(OrganisationModel);
 
   public constructor(
     protected service: OrganisationControllerService

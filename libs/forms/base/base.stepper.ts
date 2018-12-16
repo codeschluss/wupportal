@@ -2,6 +2,7 @@ import { OnDestroy, OnInit, Type } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, SessionResolver } from '@portal/core';
+import { Observable, of } from 'rxjs';
 import { BaseForm } from './base.form';
 
 export interface FormStep {
@@ -96,7 +97,10 @@ export abstract class BaseStepper<Model extends CrudModel>
     }
 
     if (!this.route.snapshot.children.length) {
-      this.router.navigate([this.get().field], { relativeTo: this.route });
+      this.router.navigate([this.get().field], {
+        relativeTo: this.route,
+        replaceUrl: true
+      });
     }
   }
 
@@ -114,9 +118,9 @@ export abstract class BaseStepper<Model extends CrudModel>
     return this.steps[index];
   }
 
-  public save(): void {
-    this.route.snapshot.routeConfig.children
-      .forEach((i) => console.log(i.data.group.value));
+  public save(): Observable<any> {
+    return of(this.route.snapshot.routeConfig.children
+      .forEach((i) => console.log(i.data.group.value)));
   }
 
   private routes(): Route[] {

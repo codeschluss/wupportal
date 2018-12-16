@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
-import { AddressProvider } from './address.provider';
 
 @Component({
   selector: 'address-form',
@@ -57,7 +56,6 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
 
   public constructor(
     protected builder: FormBuilder,
-    protected provider: AddressProvider,
     protected route: ActivatedRoute
   ) {
     super();

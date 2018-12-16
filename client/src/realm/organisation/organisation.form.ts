@@ -1,12 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
-import { CategoryModel } from '../category/category.model';
+import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { OrganisationModel } from '../organisation/organisation.model';
-import { TagModel } from '../tag/tag.model';
-import { TargetGroupModel } from '../target-group/target-group.model';
-import { ActivityModel } from './activity.model';
 
 @Component({
   selector: 'activity-form',
@@ -31,7 +27,7 @@ import { ActivityModel } from './activity.model';
   `)
 })
 
-export class ActivityFormComponent extends BaseForm<ActivityModel> {
+export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
 
   public fields: FormField[] = [
     {
@@ -46,9 +42,8 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
       tests: [Validators.required]
     },
     {
-      name: 'contactName',
-      input: StringFieldComponent,
-      tests: [Validators.required]
+      name: 'website',
+      input: StringFieldComponent
     },
     {
       name: 'phone',
@@ -60,46 +55,19 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
       tests: [Validators.email]
     },
     {
-      name: 'organisation',
+      name: 'videoUrl',
       input: SelectFieldComponent,
-      model: OrganisationModel,
-      tests: [Validators.required]
-    },
-    {
-      name: 'category',
-      input: SelectFieldComponent,
-      model: CategoryModel,
-      tests: [Validators.required]
-    },
-    {
-      name: 'targetGroups',
-      input: SelectFieldComponent,
-      model: TargetGroupModel,
-      multi: true
-    },
-    {
-      name: 'tags',
-      input: ChipListFieldComponent,
-      model: TagModel
+      model: OrganisationModel
     }
   ];
 
-  public model: Type<ActivityModel> = ActivityModel;
+  public model: Type<OrganisationModel> = OrganisationModel;
 
   public constructor(
     protected builder: FormBuilder,
     protected route: ActivatedRoute
   ) {
     super();
-  }
-
-  protected ngPostInit(): void {
-    const options = this.route.snapshot.data.session.accessToken
-      .approvedOrgas.map((id) => this.route.snapshot.data.organisation
-        .find((organisation) => organisation.id === id));
-
-    this.fields[this.fields.findIndex((field) =>
-        field.name === 'organisation')].options = options;
   }
 
 }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
-import { OrganisationImageModel } from '../image/organisation-image.model';
+import { ImageModel } from '../image/image.model';
 import { ProviderModel } from '../provider/provider.model';
 import { UserModel } from '../user/user.model';
 import { OrganisationModel } from './organisation.model';
@@ -27,7 +27,7 @@ export class OrganisationProvider
     {
       field: 'images',
       method: this.service.organisationControllerReadImagesResponse,
-      model: OrganisationImageModel
+      model: ImageModel
     },
     {
       field: 'providers',

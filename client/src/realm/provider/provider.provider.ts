@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BaseService, CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { BaseService, CrudLink, CrudProvider } from '@portal/core';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { ProviderModel } from '../provider/provider.model';
@@ -8,7 +8,7 @@ import { ProviderModel } from '../provider/provider.model';
 export class ProviderProvider
   extends CrudProvider<BaseService, ProviderModel> {
 
-  protected linked = [
+  protected linked: CrudLink[] = [
     {
       field: 'activity',
       method: null,
@@ -23,7 +23,7 @@ export class ProviderProvider
 
   protected methods;
 
-  protected model = this.based(ProviderModel);
+  protected model: Type<ProviderModel> = this.based(ProviderModel);
 
   protected service;
 

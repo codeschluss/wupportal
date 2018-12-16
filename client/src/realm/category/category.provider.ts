@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { Injectable, Type } from '@angular/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { CategoryControllerService } from '../../api/services/category-controller.service';
 import { CategoryModel } from './category.model';
@@ -19,9 +19,9 @@ export class CategoryProvider
   public readAll: (params?: CategoryControllerService
     .CategoryControllerReadAllParams) => Observable<CategoryModel[]>;
 
-  protected linked = [];
+  protected linked: CrudLink[] = [];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.categoryControllerCreateResponse,
     delete: this.service.categoryControllerDeleteResponse,
     readAll: this.service.categoryControllerReadAllResponse,
@@ -30,7 +30,7 @@ export class CategoryProvider
     update: this.service.categoryControllerUpdateResponse
   };
 
-  protected model = this.based(CategoryModel);
+  protected model: Type<CategoryModel> = this.based(CategoryModel);
 
   public constructor(
     protected service: CategoryControllerService

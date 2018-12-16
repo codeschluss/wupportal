@@ -29,6 +29,7 @@ export abstract class BaseStepper<Model extends CrudModel>
 
   public static get routing(this: any): Route {
     const self = new this();
+    self.model = self.stepped(self.model);
 
     return {
       path: `${self.root}/:uuid`,
@@ -121,6 +122,10 @@ export abstract class BaseStepper<Model extends CrudModel>
   public save(): Observable<any> {
     return of(this.route.snapshot.routeConfig.children
       .forEach((i) => console.log(i.data.group.value)));
+  }
+
+  protected stepped(model: Type<Model>): Type<Model> {
+    return Object.defineProperty(model, 'stepper', { value: this });
   }
 
   private routes(): Route[] {

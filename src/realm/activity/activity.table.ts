@@ -1,4 +1,5 @@
 import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseTable } from '@portal/forms';
 import { ActivityModel } from './activity.model';
 
@@ -41,6 +42,11 @@ export class ActivityTableComponent extends BaseTable<ActivityModel> {
     }
   ];
 
+  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
+    .with('category').with('provider').yield('organisation');
+
   protected model: Type<ActivityModel> = ActivityModel;
+
+  protected root: 'activity';
 
 }

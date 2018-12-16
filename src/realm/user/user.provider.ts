@@ -23,7 +23,7 @@ export class UserProvider
       model: OrganisationModel
     },
     {
-      field: 'provider',
+      field: 'providers',
       method: null,
       model: ProviderModel
     }

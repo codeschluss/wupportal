@@ -30,7 +30,7 @@ export class OrganisationProvider
       model: OrganisationImageModel
     },
     {
-      field: 'provider',
+      field: 'providers',
       method: null,
       model: ProviderModel
     },

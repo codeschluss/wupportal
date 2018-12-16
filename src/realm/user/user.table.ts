@@ -1,4 +1,5 @@
 import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseTable } from '@portal/forms';
 import { UserModel } from './user.model';
 
@@ -41,6 +42,10 @@ export class UserTableComponent extends BaseTable<UserModel> {
     },
   ];
 
+  protected joiner: CrudJoiner = CrudJoiner.of(UserModel);
+
   protected model: Type<UserModel> = UserModel;
+
+  protected root: 'user';
 
 }

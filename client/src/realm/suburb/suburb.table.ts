@@ -1,4 +1,5 @@
 import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseTable } from '@portal/forms';
 import { SuburbModel } from './suburb.model';
 
@@ -23,6 +24,10 @@ export class SuburbTableComponent extends BaseTable<SuburbModel> {
     }
   ];
 
+  protected joiner: CrudJoiner = CrudJoiner.of(SuburbModel);
+
   protected model: Type<SuburbModel> = SuburbModel;
+
+  protected root: 'suburb';
 
 }

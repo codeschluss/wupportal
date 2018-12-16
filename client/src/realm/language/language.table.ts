@@ -1,4 +1,5 @@
 import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseTable } from '@portal/forms';
 import { LanguageModel } from './language.model';
 
@@ -36,6 +37,10 @@ export class LanguageTableComponent extends BaseTable<LanguageModel> {
     }
   ];
 
+  protected joiner: CrudJoiner = CrudJoiner.of(LanguageModel);
+
   protected model: Type<LanguageModel> = LanguageModel;
+
+  protected root: 'language';
 
 }

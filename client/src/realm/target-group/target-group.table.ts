@@ -1,4 +1,5 @@
 import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseTable } from '@portal/forms';
 import { TargetGroupModel } from './target-group.model';
 
@@ -30,6 +31,10 @@ export class TargetGroupTableComponent extends BaseTable<TargetGroupModel> {
     }
   ];
 
+  protected joiner: CrudJoiner = CrudJoiner.of(TargetGroupModel);
+
   protected model: Type<TargetGroupModel> = TargetGroupModel;
+
+  protected root: 'targetgroup';
 
 }

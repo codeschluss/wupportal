@@ -1,4 +1,5 @@
 import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseTable } from '@portal/forms';
 import { CategoryModel } from './category.model';
 
@@ -36,6 +37,10 @@ export class CategoryTableComponent extends BaseTable<CategoryModel> {
     }
   ];
 
+  protected joiner: CrudJoiner = CrudJoiner.of(CategoryModel);
+
   protected model: Type<CategoryModel> = CategoryModel;
+
+  protected root: 'category';
 
 }

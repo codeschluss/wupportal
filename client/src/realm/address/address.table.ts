@@ -1,4 +1,5 @@
 import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseTable } from '@portal/forms';
 import { AddressModel } from './address.model';
 
@@ -7,7 +8,12 @@ import { AddressModel } from './address.model';
   template: BaseTable.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'locale'" i18n="@@locale">locale</i18n>
+        <i18n *ngSwitchCase="'houseNumber'"
+          i18n="@@houseNumber">houseNumber</i18n>
+        <i18n *ngSwitchCase="'place'" i18n="@@place">place</i18n>
+        <i18n *ngSwitchCase="'postalCode'" i18n="@@postalCode">postalCode</i18n>
+        <i18n *ngSwitchCase="'street'" i18n="@@street">street</i18n>
+        <i18n *ngSwitchCase="'suburb'" i18n="@@suburb">suburb</i18n>
       </ng-container>
     </ng-template>
   `)
@@ -42,6 +48,10 @@ export class AddressTableComponent extends BaseTable<AddressModel> {
     },
   ];
 
+  protected joiner: CrudJoiner = CrudJoiner.of(AddressModel).with('suburb');
+
   protected model: Type<AddressModel> = AddressModel;
+
+  protected root: 'address';
 
 }

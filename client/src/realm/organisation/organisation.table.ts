@@ -1,4 +1,5 @@
 import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseTable } from '@portal/forms';
 import { OrganisationModel } from './organisation.model';
 
@@ -52,6 +53,11 @@ export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
     }
   ];
 
+  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
+    .with('address').yield('suburb');
+
   protected model: Type<OrganisationModel> = OrganisationModel;
+
+  protected root: 'organisation';
 
 }

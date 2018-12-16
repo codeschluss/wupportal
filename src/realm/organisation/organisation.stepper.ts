@@ -14,9 +14,10 @@ import { OrganisationModel } from './organisation.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'activity'" i18n="@@activity">activity</i18n>
         <i18n *ngSwitchCase="'address'" i18n="@@address">address</i18n>
-        <i18n *ngSwitchCase="'schedules'" i18n="@@schedules">schedules</i18n>
+        <i18n *ngSwitchCase="'images'" i18n="@@images">images</i18n>
+        <i18n *ngSwitchCase="'organisation'"
+          i18n="@@organisation">organisation</i18n>
         <i18n *ngSwitchCase="'translations'"
           i18n="@@translations">translations</i18n>
       </ng-container>
@@ -27,7 +28,7 @@ import { OrganisationModel } from './organisation.model';
 export class OrganisationStepperComponent
   extends BaseStepper<OrganisationModel> {
 
-  public root: string = 'activity';
+  public root: string = 'organisation';
 
   public steps: FormStep[] = [
     {
@@ -49,12 +50,7 @@ export class OrganisationStepperComponent
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
-    .with('address').yield('suburb')
-    .with('category')
-    .with('organisation')
-    .with('schedules')
-    .with('tags')
-    .with('targetGroups');
+    .with('address').yield('suburb').with('images');
 
   protected model: Type<OrganisationModel> = OrganisationModel;
 

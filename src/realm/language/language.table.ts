@@ -41,6 +41,4 @@ export class LanguageTableComponent extends BaseTable<LanguageModel> {
 
   protected model: Type<LanguageModel> = LanguageModel;
 
-  protected root: string = 'language';
-
 }

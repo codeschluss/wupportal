@@ -33,7 +33,7 @@ export class ActivityProvider
     },
     {
       field: 'provider',
-      method: null,
+      method: () => null,
       model: ProviderModel
     },
     {

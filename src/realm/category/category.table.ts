@@ -41,6 +41,4 @@ export class CategoryTableComponent extends BaseTable<CategoryModel> {
 
   protected model: Type<CategoryModel> = CategoryModel;
 
-  protected root: string = 'category';
-
 }

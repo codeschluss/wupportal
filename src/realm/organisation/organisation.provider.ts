@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
@@ -31,7 +31,7 @@ export class OrganisationProvider
     },
     {
       field: 'providers',
-      method: null,
+      method: () => empty(),
       model: ProviderModel
     },
     {

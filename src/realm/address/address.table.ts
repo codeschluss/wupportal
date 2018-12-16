@@ -52,6 +52,4 @@ export class AddressTableComponent extends BaseTable<AddressModel> {
 
   protected model: Type<AddressModel> = AddressModel;
 
-  protected root: string = 'address';
-
 }

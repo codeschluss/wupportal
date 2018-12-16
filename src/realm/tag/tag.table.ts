@@ -35,6 +35,4 @@ export class TagTableComponent extends BaseTable<TagModel> {
 
   protected model: Type<TagModel> = TagModel;
 
-  protected root: string = 'tag';
-
 }

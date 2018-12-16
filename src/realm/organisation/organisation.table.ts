@@ -58,6 +58,4 @@ export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
 
   protected model: Type<OrganisationModel> = OrganisationModel;
 
-  protected root: string = 'organisation';
-
 }

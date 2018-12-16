@@ -47,6 +47,4 @@ export class ActivityTableComponent extends BaseTable<ActivityModel> {
 
   protected model: Type<ActivityModel> = ActivityModel;
 
-  protected root: string = 'activity';
-
 }

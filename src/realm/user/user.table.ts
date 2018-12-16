@@ -46,6 +46,4 @@ export class UserTableComponent extends BaseTable<UserModel> {
 
   protected model: Type<UserModel> = UserModel;
 
-  protected root: string = 'user';
-
 }

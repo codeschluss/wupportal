@@ -6,7 +6,10 @@ import { SessionModel } from './session.model';
 @Injectable({ providedIn: 'root' })
 export class SessionResolver implements Resolve<SessionModel> {
 
-  public session: SessionModel;
+  public static session: SessionModel;
+
+  public get session(): SessionModel { return SessionResolver.session; }
+  public set session(set: SessionModel) { SessionResolver.session = set; }
 
   public constructor(
     private storage: LocalStorage

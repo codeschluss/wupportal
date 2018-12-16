@@ -35,6 +35,4 @@ export class TargetGroupTableComponent extends BaseTable<TargetGroupModel> {
 
   protected model: Type<TargetGroupModel> = TargetGroupModel;
 
-  protected root: string = 'targetgroup';
-
 }

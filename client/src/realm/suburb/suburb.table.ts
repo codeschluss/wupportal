@@ -28,6 +28,4 @@ export class SuburbTableComponent extends BaseTable<SuburbModel> {
 
   protected model: Type<SuburbModel> = SuburbModel;
 
-  protected root: string = 'suburb';
-
 }

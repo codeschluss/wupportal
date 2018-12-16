@@ -1,8 +1,8 @@
-import { AfterViewInit, Input, Type, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
-import { CrudModel, StrictHttpResponse } from '@portal/core';
+import { AfterViewInit, ContentChildren, Input, QueryList, Type, ViewChild } from '@angular/core';
+import { MatColumnDef, MatPaginator, MatSort, MatTable } from '@angular/material';
+import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@portal/core';
 import { BehaviorSubject, merge, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 
 export interface TableColumn {
   name: string;
@@ -14,6 +14,9 @@ export abstract class BaseTable<Model extends CrudModel>
   implements AfterViewInit {
 
   @Input()
+  public editable: any;
+
+  @Input()
   public items: Model[];
 
   @ViewChild(MatPaginator)
@@ -22,50 +25,91 @@ export abstract class BaseTable<Model extends CrudModel>
   @ViewChild(MatSort)
   public sorter: MatSort;
 
+  @ViewChild(MatTable)
+  public table: MatTable<Model>;
+
+  @ContentChildren(MatColumnDef)
+  public views: QueryList<MatColumnDef>;
+
   public source: BehaviorSubject<Model[]> = new BehaviorSubject<Model[]>([]);
+
+  public verticals: string[] = [];
 
   public abstract columns: TableColumn[];
 
+  protected abstract joiner: CrudJoiner;
+
   protected abstract model: Type<Model>;
+
+  protected abstract root: string;
 
   protected static template(template: string): string {
     return template + `
       <mat-table matSort [dataSource]="source.asObservable()">
-        <mat-header-row *matHeaderRowDef="colDefs"></mat-header-row>
-        <mat-row *matRowDef="let item; columns: colDefs"></mat-row>
-        <ng-container *ngFor="let col of columns" [matColumnDef]="col.name">
-          <ng-container *ngIf="col.sort">
-            <mat-header-cell mat-sort-header *matHeaderCellDef>
-              <ng-container *ngTemplateOutlet="label; context: { case: col }">
+        <mat-header-row *matHeaderRowDef="verticals"></mat-header-row>
+        <mat-row *matRowDef="let item; columns: verticals"></mat-row>
+        <ng-container *ngFor="let column of columns">
+          <ng-container [matColumnDef]="column.name">
+            <mat-header-cell mat-sort-header
+              [disabled]="!column.sort" *matHeaderCellDef>
+              <ng-container *ngTemplateOutlet="label;context: { case: column }">
               </ng-container>
-            </mat-header-cell>
+              </mat-header-cell>
+            <mat-cell *matCellDef="let item">
+              {{ column.value(item) }}
+            </mat-cell>
           </ng-container>
-          <ng-container *ngIf="!col.sort">
-            <mat-header-cell *matHeaderCellDef>
-              <ng-container *ngTemplateOutlet="label; context: { case: col }">
-              </ng-container>
-            </mat-header-cell>
-          </ng-container>
-          <mat-cell *matCellDef="let item">{{ col.value(item) }}</mat-cell>
         </ng-container>
+        <ng-content></ng-content>
+          <ng-container matColumnDef="actions" *ngIf="!this.readonly">
+            <mat-header-cell *matHeaderCellDef>
+              <i18n i18n="@@actions">actions</i18n>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let item">
+              <button mat-button [routerLink]="edit(item)">
+                <i18n i18n="@@edit">edit</i18n>
+              </button>
+              <button mat-button [routerLink]="delete(item)">
+                <i18n i18n="@@delete">delete</i18n>
+              </button>
+            </mat-cell>
+          </ng-container>
       </mat-table>
       <mat-paginator [pageSize]="10"></mat-paginator>
     `;
   }
 
-  public get colDefs(): string[] {
-    return this.columns.map((column) => column.name);
-  }
+  public get readonly(): boolean { return this.editable === undefined; }
+
+  public constructor(
+    protected resolver: CrudResolver
+  ) { }
 
   public ngAfterViewInit(): void {
+    this.sorter.disableClear = true;
+    this.views.forEach((view) => this.table.addColumnDef(view));
+    this.verticals = [
+      ...this.columns.map((column) => column.name),
+      ...this.views.map((def) => def.name),
+      ...(this.readonly ? [] : ['actions'])
+    ];
+
     merge(
       of(null),
       this.pager.page,
       this.sorter.sortChange.pipe(tap(() => this.pager.pageIndex = 0))
-    ).subscribe(() => this.items ? this.list() : this.reload());
+    ).subscribe(() => this.items ? this.relist() : this.reload());
   }
 
-  private list(): void {
+  public delete(item: CrudModel): string[] {
+    return ['admin', 'delete', this.root, item.id];
+  }
+
+  public edit(item: CrudModel): string[] {
+    return ['admin', 'edit', this.root, item.id];
+  }
+
+  private relist(): void {
     this.pager.length = this.items.length;
     this.source.next(this.items.sort((a, b) => this.sorter.direction === 'asc'
       ? (a[this.sorter.active] || '').localeCompare(b[this.sorter.active])
@@ -80,13 +124,15 @@ export abstract class BaseTable<Model extends CrudModel>
     const provider = this.model['provider'].system;
     provider.call(provider.methods.readAll, {
       dir: this.sorter.direction,
+      embeddings: CrudJoiner.to(this.joiner.graph),
       filter: '',
       page: this.pager.pageIndex,
       size: this.pager.pageSize,
       sort: this.sorter.active
     }).pipe(
       tap((response) => this.scroll(response as any)),
-      map((response) => provider.cast(response))
+      map((response) => provider.cast(response)),
+      mergeMap((items) => this.resolver.refine(items as any, this.joiner.graph))
     ).subscribe((items) => this.source.next(items));
   }
 

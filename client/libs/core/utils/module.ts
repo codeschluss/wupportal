@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { MatButtonModule, MatDialogModule, MatProgressBarModule } from '@angular/material';
-import { UrlSerializer } from '@angular/router';
+import { RouterModule, UrlSerializer } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { ErrorDialogComponent } from '../error/error.dialog';
@@ -11,6 +11,7 @@ import { I18nComponent } from '../i18n/i18n.component';
 import { I18nInterceptor } from '../i18n/i18n.interceptor';
 import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
+import { RoutletterChildComponent, RoutletterHostComponent } from './routeletter';
 import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
 
@@ -18,20 +19,25 @@ import { CoreSettings } from './settings';
   declarations: [
     ErrorDialogComponent,
     I18nComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    RoutletterChildComponent,
+    RoutletterHostComponent
   ],
   entryComponents: [
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    RoutletterChildComponent
   ],
   exports: [
     I18nComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    RoutletterHostComponent
   ],
   imports: [
     CommonModule,
     MatButtonModule,
     MatDialogModule,
     MatProgressBarModule,
+    RouterModule,
     ServiceWorkerModule.register('ngsw-worker.js')
   ],
   providers: [

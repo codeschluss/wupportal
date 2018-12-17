@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { RoutletterHostComponent } from '@portal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { AddressStepperComponent } from '../../realm/address/address.stepper';
 import { CategoryStepperComponent } from '../../realm/category/category.stepper';
@@ -28,7 +29,7 @@ import { OrganisationPanelComponent } from './organisation/organisation.panel';
         OrganisationPanelComponent.routing,
         {
           path: 'edit',
-          // component: EditorDialogComponent,
+          component: RoutletterHostComponent,
           children: [
             ActivityStepperComponent.routing,
             AddressStepperComponent.routing,

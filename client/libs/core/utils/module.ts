@@ -11,26 +11,26 @@ import { I18nComponent } from '../i18n/i18n.component';
 import { I18nInterceptor } from '../i18n/i18n.interceptor';
 import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
-import { RoutletterChildComponent, RoutletterHostComponent } from './routeletter';
 import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
+import { SplashChildComponent, SplashHostComponent } from './splash';
 
 @NgModule({
   declarations: [
     ErrorDialogComponent,
     I18nComponent,
     LoadingIndicatorComponent,
-    RoutletterChildComponent,
-    RoutletterHostComponent
+    SplashChildComponent,
+    SplashHostComponent
   ],
   entryComponents: [
     ErrorDialogComponent,
-    RoutletterChildComponent
+    SplashChildComponent
   ],
   exports: [
     I18nComponent,
     LoadingIndicatorComponent,
-    RoutletterHostComponent
+    SplashHostComponent
   ],
   imports: [
     CommonModule,

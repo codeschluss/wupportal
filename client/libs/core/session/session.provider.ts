@@ -20,6 +20,7 @@ export class SessionProvider {
   ) {
     const schema = { schema: SessionModel.schema };
     this.localStorage.getItem<SessionModel>('session', schema).pipe(
+      map((session) => session || new SessionModel()),
       tap((session) => this.session.next(session)),
       map((session) => session.refreshToken.exp * 1000),
       mergeMap((exp) =>  exp > Date.now() ? this.refresh() : empty())

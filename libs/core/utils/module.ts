@@ -11,7 +11,6 @@ import { I18nComponent } from '../i18n/i18n.component';
 import { I18nInterceptor } from '../i18n/i18n.interceptor';
 import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
-import { CorePackage } from './package';
 import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
 
@@ -36,7 +35,6 @@ import { CoreSettings } from './settings';
     ServiceWorkerModule.register('ngsw-worker.js')
   ],
   providers: [
-    { provide: CorePackage, useClass: CorePackage },
     { provide: CoreSettings, useClass: CoreSettings },
     { provide: ErrorHandler, useClass: CoreErrorHandler },
     { provide: UrlSerializer, useClass: CoreUrlSerializer },

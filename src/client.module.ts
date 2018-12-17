@@ -53,7 +53,6 @@ export class ClientModule {
 
   public constructor(
     apiConfiguration: ApiConfiguration,
-    clientPackage: ClientPackage,
     coreSettings: CoreSettings,
 
     _activityProvider: ActivityProvider,
@@ -68,9 +67,9 @@ export class ClientModule {
     _targetGroupProvider: TargetGroupProvider,
     _userProvider: UserProvider
   ) {
-    apiConfiguration.rootUrl = clientPackage.config.api.rootUrl;
-    coreSettings.authUrl = clientPackage.config.api.authUrl;
-    coreSettings.refreshUrl = clientPackage.config.api.refreshUrl;
+    apiConfiguration.rootUrl = ClientPackage.config.api.rootUrl;
+    coreSettings.authUrl = ClientPackage.config.api.authUrl;
+    coreSettings.refreshUrl = ClientPackage.config.api.refreshUrl;
   }
 
 }

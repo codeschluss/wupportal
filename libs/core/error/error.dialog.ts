@@ -30,9 +30,9 @@ import { CorePackage } from '../utils/package';
 
 export class ErrorDialogComponent {
 
-  public constructor(
-    public corePackage: CorePackage,
+  public corePackage = CorePackage;
 
+  public constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: any
   ) { }

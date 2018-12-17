@@ -3,6 +3,7 @@ import { ActivatedRoute, Route } from '@angular/router';
 import { CrudJoiner, CrudResolver, Selfroute } from '@portal/core';
 import { OrganisationModel } from '../../../realm/organisation/organisation.model';
 import { UserModel } from '../../../realm/user/user.model';
+import { ClientPackage } from '../../../utils/package';
 
 @Component({
   templateUrl: './account.panel.html'
@@ -36,14 +37,16 @@ export class AccountPanelComponent extends Selfroute implements OnInit {
     this.user = this.route.snapshot.data.user;
   }
 
-  public isAdmin(item: OrganisationModel): boolean {
-    return this.route.snapshot.data.session.accessToken
-      .adminOrgas.includes(item.id);
+    public isAdmin(item: OrganisationModel): boolean {
+    const claim = ClientPackage.config.jwtClaims.organisationAdmin;
+    return this.route.snapshot.data.session
+      .accessToken[claim].includes(item.id);
   }
 
   public isApproved(item: OrganisationModel): boolean {
-    return this.route.snapshot.data.session.accessToken
-      .approvedOrgas.includes(item.id);
+    const claim = ClientPackage.config.jwtClaims.organisationUser;
+    return this.route.snapshot.data.session
+      .accessToken[claim].includes(item.id);
   }
 
 }

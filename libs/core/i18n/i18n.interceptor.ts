@@ -11,7 +11,7 @@ export class I18nInterceptor implements HttpInterceptor {
   public constructor(
     private session: SessionProvider
   ) {
-    this.session.subscribe((next) => this.language = next.language);
+    this.session.value.subscribe((next) => this.language = next.language);
   }
 
   public intercept(request: HttpRequest<any>, next: HttpHandler):

@@ -2,15 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "inlineSources": true,
-    "importHelpers": true,
-    "lib": ["dom", "es2018"],
-    "module": "es2015",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "target": "es2015"
+    "importHelpers": true
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,

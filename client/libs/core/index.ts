@@ -15,5 +15,6 @@ export * from './session/session.resolver';
 export * from './utils/api';
 export * from './utils/module';
 export * from './utils/package';
+export * from './utils/pathfinder';
 export * from './utils/selfroute';
 export * from './utils/settings';

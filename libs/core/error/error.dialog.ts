@@ -5,7 +5,8 @@ import { CorePackage } from '../utils/package';
 @Component({
   template: `
     <h1 mat-dialog-title>
-      Unhandled Error: {{ data.error.error }}
+      <i18n i18n="@@unhandledError">unhandledError</i18n>:
+      {{ data.error.error }}
     </h1>
     <div mat-dialog-content>
       <pre><strong>Status:</strong><br>{{ data.error.status }}</pre>
@@ -16,10 +17,10 @@ import { CorePackage } from '../utils/package';
     </div>
     <div mat-dialog-actions>
       <a mat-button href="{{ corePackage.bugs.url }}" target="_blank">
-        Report Issue
+        <i18n i18n="@@reportIssue">reportIssue</i18n>
       </a>
       <button mat-button mat-dialog-close>
-        Close
+        <i18n i18n="@@close">close</i18n>
       </button>
     </div>
   `,
@@ -30,9 +31,9 @@ import { CorePackage } from '../utils/package';
 
 export class ErrorDialogComponent {
 
-  public constructor(
-    public corePackage: CorePackage,
+  public corePackage = CorePackage;
 
+  public constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: any
   ) { }

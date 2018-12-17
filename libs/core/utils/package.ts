@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
-
 declare function require(name: string);
 
-@Injectable({ providedIn: 'root' })
 export class CorePackage {
 
-  private packageJson: any = require('libs/core/package.json');
+  private static packageJson: any = require('libs/core/package.json');
 
-  public get bugs(): {
+  public static get bugs(): {
     email: string,
     url: string
   } {
     return this.packageJson.bugs;
   }
 
-  public get repository(): {
+  public static get repository(): {
     type: string,
     url: string
   } {

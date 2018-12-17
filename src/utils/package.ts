@@ -1,34 +1,31 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({ providedIn: 'root' })
 export class ClientPackage {
 
-  private packageJson: any = require('package.json');
+  private static packageJson: any = require('package.json');
 
-  public get bugs(): {
+  public static get bugs(): {
     email: string,
     url: string
   } {
     return this.packageJson.bugs;
   }
 
-  public get config(): {
+  public static get config(): {
     api: {
       rootUrl: string,
       authUrl: string,
       refreshUrl: string
     },
-    jwt: {
-      claimAdminOrgas: string,
-      claimApprovedOrgas: string,
-      claimCreatedActivities: string,
-      claimSuperUser: string
+    jwtClaims: {
+      activityProvider: string,
+      organisationAdmin: string,
+      organisationUser: string,
+      superUser: string
     }
   } {
     return this.packageJson.config;
   }
 
-  public get repository(): {
+  public static get repository(): {
     type: string,
     url: string
   } {

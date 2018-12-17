@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SessionResolver } from '@portal/core';
+import { RoutletterHostComponent } from '@portal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { AddressStepperComponent } from '../../realm/address/address.stepper';
 import { CategoryStepperComponent } from '../../realm/category/category.stepper';
@@ -12,6 +12,7 @@ import { TargetGroupStepperComponent } from '../../realm/target-group/target-gro
 import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { AccountPanelComponent } from './account/account.panel';
 import { AdminComponent } from './admin.component';
+import { AdminGuarding } from './admin.guarding';
 import { ApplicationPanelComponent } from './application/application.panel';
 import { OrganisationPanelComponent } from './organisation/organisation.panel';
 
@@ -21,26 +22,26 @@ import { OrganisationPanelComponent } from './organisation/organisation.panel';
     {
       path: '',
       component: AdminComponent,
-      resolve: {
-        session: SessionResolver
-      },
-    },
-    AccountPanelComponent.routing,
-    ApplicationPanelComponent.routing,
-    OrganisationPanelComponent.routing,
-    {
-      path: 'edit',
-      // component: EditorDialogComponent,
+      canActivate: [AdminGuarding],
       children: [
-        ActivityStepperComponent.routing,
-        AddressStepperComponent.routing,
-        CategoryStepperComponent.routing,
-        LanguageStepperComponent.routing,
-        OrganisationStepperComponent.routing,
-        SuburbStepperComponent.routing,
-        TagStepperComponent.routing,
-        TargetGroupStepperComponent.routing,
-        UserStepperComponent.routing
+        AccountPanelComponent.routing,
+        ApplicationPanelComponent.routing,
+        OrganisationPanelComponent.routing,
+        {
+          path: 'edit',
+          component: RoutletterHostComponent,
+          children: [
+            ActivityStepperComponent.routing,
+            AddressStepperComponent.routing,
+            CategoryStepperComponent.routing,
+            LanguageStepperComponent.routing,
+            OrganisationStepperComponent.routing,
+            SuburbStepperComponent.routing,
+            TagStepperComponent.routing,
+            TargetGroupStepperComponent.routing,
+            UserStepperComponent.routing
+          ]
+        },
       ]
     },
     {

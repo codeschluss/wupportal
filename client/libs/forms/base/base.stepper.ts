@@ -47,8 +47,8 @@ export abstract class BaseStepper<Model extends CrudModel>
   protected static template(template: string): string {
     return template + `
       <nav mat-tab-nav-bar>
-        <ng-container *ngFor="let step of steps">
-          <a mat-tab-link [disabled]="!isValid" [routerLink]="step.name"
+        <ng-container *ngFor="let step of steps; let i = index">
+          <a mat-tab-link [disabled]="!isValid" (click)="goto(i)"
             #tab="routerLinkActive" routerLinkActive [active]="tab.isActive">
             <ng-container *ngTemplateOutlet="label; context: { case: step }">
             </ng-container>
@@ -59,14 +59,14 @@ export abstract class BaseStepper<Model extends CrudModel>
       <router-outlet></router-outlet>
 
       <ng-container *ngIf="hasPrev">
-        <button mat-button [disabled]="!isValid" [routerLink]="get(-1)?.name">
+        <a mat-button [disabled]="!isValid" (click)="jump(-1)">
           <i18n i18n="@@prevForm">prevForm</i18n>
-        </button>
+        </a>
       </ng-container>
       <ng-container *ngIf="hasNext">
-        <button mat-button [disabled]="!isValid" [routerLink]="get(+1)?.name">
+        <a mat-button [disabled]="!isValid" (click)="jump(+1)">
           <i18n i18n="@@nextForm">nextForm</i18n>
-        </button>
+        </a>
       </ng-container>
       <ng-container *ngIf="hasSave">
         <button mat-button [disabled]="!isValid" (click)="save()">
@@ -76,15 +76,13 @@ export abstract class BaseStepper<Model extends CrudModel>
     `;
   }
 
-  public get hasNext() {
-    return this.steps.indexOf(this.get()) < this.steps.length - 1;
-  }
+  public get hasNext(): boolean { return this.index < this.steps.length - 1; }
+  public get hasPrev(): boolean { return this.index > 0; }
+  public get hasSave(): boolean { return this.index === this.steps.length - 1; }
 
-  public get hasPrev() {
-    return this.steps.indexOf(this.get()) > 0;
-  }
-  public get hasSave() {
-    return this.steps.indexOf(this.get()) === this.steps.length - 1;
+  public get index(): number {
+    return this.route.snapshot.firstChild ? this.steps.findIndex((step) =>
+      step.name === this.route.snapshot.firstChild.routeConfig.path) : 0;
   }
 
   public get isValid(): boolean {
@@ -98,12 +96,7 @@ export abstract class BaseStepper<Model extends CrudModel>
         .map((route) => this.walk(route, this.routes()));
     }
 
-    if (!this.route.snapshot.children.length) {
-      this.router.navigate([this.get().name], {
-        relativeTo: this.route,
-        replaceUrl: true
-      });
-    }
+    if (!this.route.snapshot.children.length) { this.goto(0); }
   }
 
   public ngOnDestroy(): void {
@@ -111,13 +104,20 @@ export abstract class BaseStepper<Model extends CrudModel>
       .map((route) => this.walk(route, []));
   }
 
-  public get(index: number = 0): FormStep {
+  public goto(index): void {
+    this.router.navigate([this.steps[index].name], {
+      relativeTo: this.route,
+      replaceUrl: true
+    });
+  }
+
+  public jump(index: number = 0): void {
     if (this.route.snapshot.firstChild) {
       index = index + this.steps.findIndex((step) =>
         step.name === this.route.snapshot.firstChild.routeConfig.path);
     }
 
-    return this.steps[index];
+    this.goto(index);
   }
 
   public save(): Observable<any> {

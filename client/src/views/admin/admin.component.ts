@@ -1,19 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Pathfinder } from '@portal/core';
+import { AccountPanelComponent } from './account/account.panel';
 
 @Component({
   template: `<router-outlet></router-outlet>`
 })
 
-export class AdminComponent {
+export class AdminComponent implements OnInit {
 
   public constructor(
+    private pathfinder: Pathfinder,
     private route: ActivatedRoute,
     private router: Router
-  ) {
+  ) { }
+
+  public ngOnInit(): void {
     if (!this.route.snapshot.firstChild) {
-      const token = this.route.snapshot.data.session.accessToken;
-      this.router.navigate(['account', token.id], { relativeTo: this.route });
+      this.router.navigate(this.pathfinder.to(AccountPanelComponent)
+        .concat(this.route.snapshot.data.session.accessToken.id));
     }
   }
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
 import { BooleanFieldComponent } from '../field/boolean.field';
@@ -11,6 +11,13 @@ import { SelectFieldComponent } from '../field/select.field';
 import { StringFieldComponent } from '../field/string.field';
 import { UploadFieldComponent } from '../field/upload.field';
 import { FileValueAccessorDirective } from './accesor';
+import { ConfirmDialogComponent } from './confirm';
+
+const declarations: Type<any>[] = [
+  BaseFieldComponent,
+  ConfirmDialogComponent,
+  FileValueAccessorDirective
+];
 
 const fields: Type<BaseFieldComponent>[] = [
   BooleanFieldComponent,
@@ -21,14 +28,16 @@ const fields: Type<BaseFieldComponent>[] = [
   StringFieldComponent
 ];
 
-const loopback: Type<any>[] = [
+const modloop: Type<any>[] = [
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
   MatDatepickerModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatListModule,
   MatPaginatorModule,
   MatSelectModule,
   MatSlideToggleModule,
@@ -39,10 +48,10 @@ const loopback: Type<any>[] = [
 ];
 
 @NgModule({
-  declarations: [...fields, BaseFieldComponent, FileValueAccessorDirective],
-  entryComponents: [...fields],
-  exports: [...loopback, BaseFieldComponent, FileValueAccessorDirective],
-  imports: [...loopback, CommonModule, CoreModule]
+  declarations: [...fields, ...declarations],
+  entryComponents: [...fields, ConfirmDialogComponent],
+  exports: [...modloop, BaseFieldComponent],
+  imports: [...modloop, CommonModule, CoreModule]
 })
 
 export class FormsModule { }

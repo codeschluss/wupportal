@@ -1,8 +1,9 @@
 import { AfterViewInit, ContentChildren, Input, QueryList, Type, ViewChild } from '@angular/core';
-import { MatColumnDef, MatPaginator, MatSort, MatTable } from '@angular/material';
+import { MatColumnDef, MatDialog, MatPaginator, MatSort, MatTable } from '@angular/material';
 import { CrudJoiner, CrudModel, CrudResolver, Pathfinder, StrictHttpResponse } from '@portal/core';
-import { BehaviorSubject, merge, of } from 'rxjs';
+import { BehaviorSubject, empty, merge, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
+import { ConfirmDialogComponent } from '../utils/confirm';
 
 export interface TableColumn {
   name: string;
@@ -31,9 +32,9 @@ export abstract class BaseTable<Model extends CrudModel>
   @ContentChildren(MatColumnDef)
   public views: QueryList<MatColumnDef>;
 
-  public source: BehaviorSubject<Model[]> = new BehaviorSubject<Model[]>([]);
+  public collate: string[] = [];
 
-  public verticals: string[] = [];
+  public source: BehaviorSubject<Model[]> = new BehaviorSubject<Model[]>([]);
 
   public abstract columns: TableColumn[];
 
@@ -44,8 +45,8 @@ export abstract class BaseTable<Model extends CrudModel>
   protected static template(template: string): string {
     return template + `
       <mat-table matSort [dataSource]="source.asObservable()">
-        <mat-header-row *matHeaderRowDef="verticals"></mat-header-row>
-        <mat-row *matRowDef="let item; columns: verticals"></mat-row>
+        <mat-header-row *matHeaderRowDef="collate"></mat-header-row>
+        <mat-row *matRowDef="let item; columns: collate"></mat-row>
         <ng-container *ngFor="let column of columns">
           <ng-container [matColumnDef]="column.name">
             <mat-header-cell mat-sort-header
@@ -68,7 +69,7 @@ export abstract class BaseTable<Model extends CrudModel>
               <button mat-button [routerLink]="edit(item)">
                 <i18n i18n="@@edit">edit</i18n>
               </button>
-              <button mat-button [routerLink]="delete(item)">
+              <button mat-button color="warn" (click)="delete(item)">
                 <i18n i18n="@@delete">delete</i18n>
               </button>
             </mat-cell>
@@ -81,6 +82,7 @@ export abstract class BaseTable<Model extends CrudModel>
   public get readonly(): boolean { return this.editable === undefined; }
 
   public constructor(
+    private dialog: MatDialog,
     private pathfinder: Pathfinder,
     private resolver: CrudResolver
   ) { }
@@ -88,7 +90,7 @@ export abstract class BaseTable<Model extends CrudModel>
   public ngAfterViewInit(): void {
     this.sorter.disableClear = true;
     this.views.forEach((view) => this.table.addColumnDef(view));
-    this.verticals = [
+    this.collate = [
       ...this.columns.map((column) => column.name),
       ...this.views.map((def) => def.name),
       ...(this.readonly ? [] : ['actions'])
@@ -101,12 +103,23 @@ export abstract class BaseTable<Model extends CrudModel>
     ).subscribe(() => this.items ? this.relist() : this.reload());
   }
 
-  public delete(item: CrudModel): string[] {
-    return ['.'];
-    // return this.walk(item['deleter']);
+  public delete(item: Model): void {
+    const dialog = this.dialog.open(ConfirmDialogComponent, { data: item });
+    const provider = item.constructor['provider'];
+
+    dialog.afterClosed().pipe(
+      mergeMap((yes) => yes ? provider.delete(item.id) : empty())
+    ).subscribe(() => {
+      if (this.items) {
+        this.items.splice(this.items.indexOf(item), 1);
+        this.relist();
+      } else {
+        this.reload();
+      }
+    });
   }
 
-  public edit(item: CrudModel): string[] {
+  public edit(item: Model): string[] {
     return this.pathfinder.to(item.constructor['stepper']).concat(item.id);
   }
 
@@ -131,13 +144,13 @@ export abstract class BaseTable<Model extends CrudModel>
       size: this.pager.pageSize,
       sort: this.sorter.active
     }).pipe(
-      tap((response) => this.scroll(response as any)),
+      tap((response) => this.page(response as any)),
       map((response) => provider.cast(response)),
       mergeMap((items) => this.resolver.refine(items as any, this.joiner.graph))
     ).subscribe((items) => this.source.next(items));
   }
 
-  private scroll(response: StrictHttpResponse<any>) {
+  private page(response: StrictHttpResponse<any>) {
     this.pager.length = response.body.page.totalElements;
     this.pager.pageIndex = response.body.page.number;
     this.pager.pageSize = response.body.page.size;

@@ -15,9 +15,9 @@ export class TokenInterceptor implements HttpInterceptor {
 
   public constructor(
     private coreSettings: CoreSettings,
-    private session: SessionProvider
+    private sessionProvider: SessionProvider
   ) {
-    this.session.subscribe((next) => {
+    this.sessionProvider.value.subscribe((next) => {
       this.accessToken = next.accessToken;
       this.refreshToken = next.refreshToken;
     });

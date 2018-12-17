@@ -16,11 +16,11 @@
       "authUrl": "/api/login",
       "refreshUrl": "/api/refresh"
     },
-    "jwt": {
-      "claimAdminOrgas": "adminOrgas",
-      "claimApprovedOrgas": "approvedOrgas",
-      "claimCreatedActivities": "createdActivities",
-      "claimSuperUser": "superuser"
+    "jwtClaims": {
+      "activityProvider": "createdActivities",
+      "organisationAdmin": "adminOrgas",
+      "organisationUser": "approvedOrgas",
+      "superUser": "superuser"
     }
   },
   "repository": {

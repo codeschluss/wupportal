@@ -2,6 +2,7 @@ import { Component, Type } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { ClientPackage } from '../../utils/package';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';
@@ -94,8 +95,9 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
   }
 
   protected ngPostInit(): void {
-    const options = this.route.snapshot.data.session.accessToken
-      .approvedOrgas.map((id) => this.route.snapshot.data.organisation
+    const claim = ClientPackage.config.jwtClaims.organisationUser;
+    const options = this.route.snapshot.data.session.accessToken[claim]
+      .map((id) => this.route.snapshot.data.organisation
         .find((organisation) => organisation.id === id));
 
     this.fields[this.fields.findIndex((field) =>

@@ -25,6 +25,7 @@
             "outputHashing": "none",
             "outputPath": "target",
             "serviceWorker": true,
+            "sourceMap": false,
             "tsConfig": "tsconfig.json",
             "vendorChunk": true,
             "assets": [
@@ -64,8 +65,7 @@
           "configurations": {
             "production": {
               "buildOptimizer": true,
-              "optimization": true,
-              "sourceMap": false
+              "optimization": true
             }
           }
         },

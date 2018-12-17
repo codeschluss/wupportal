@@ -26,7 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    if (this.accessToken.raw && this.refreshToken.raw) {
+    if (this.accessToken && this.refreshToken) {
       switch (request.url) {
         case this.coreSettings.authUrl: break;
 

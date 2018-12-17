@@ -35,13 +35,16 @@ export class TokenService {
     ));
   }
 
-  public apiRefreshResponse(): Observable<StrictHttpResponse<any>> {
+  public apiRefreshResponse(token?: RefreshTokenModel):
+    Observable<StrictHttpResponse<any>> {
+
+    const header = token ? { 'Authorization': `Bearer ${token.raw}` } : { };
     return this.call(new HttpRequest<any>(
       'GET',
       this.coreSettings.refreshUrl,
       null,
       {
-        headers: new HttpHeaders(),
+        headers: new HttpHeaders(header),
         responseType: 'json'
       }
     ));

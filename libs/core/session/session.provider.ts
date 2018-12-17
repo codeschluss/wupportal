@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, empty, Observable, Subscription, timer } from 'rxjs';
-import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, empty, Observable, of, Subscription, timer } from 'rxjs';
+import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AccessTokenModel } from '../auth/access-token.model';
 import { RefreshTokenModel } from '../auth/refresh-token.model';
 import { TokenService } from '../auth/token.service';
@@ -14,22 +14,45 @@ export class SessionProvider {
 
   private timeout: Subscription = empty().subscribe();
 
+  private readonly tokens: object = {
+    access: new AccessTokenModel(),
+    refresh: new RefreshTokenModel()
+  };
+
   public constructor(
     private tokenService: TokenService,
-    private localStorage: LocalStorage
+    localStorage: LocalStorage
   ) {
     const schema = { schema: SessionModel.schema };
-    this.localStorage.getItem<SessionModel>('session', schema).pipe(
+    localStorage.getItem<SessionModel>('session', schema).pipe(
       map((session) => session || new SessionModel()),
-      tap((session) => this.session.next(session)),
-      map((session) => session.refreshToken.exp * 1000),
-      mergeMap((exp) =>  exp > Date.now() ? this.refresh() : empty())
-    ).subscribe(undefined, () => this.logout(), () => this.session.subscribe(
-      (session) => localStorage.setItemSubscribe('session', session)));
+      mergeMap((session) => this.validate(session)),
+      tap((session) => this.session.next(session))
+    ).subscribe(() => this.value.subscribe((session) =>
+      localStorage.setItemSubscribe('session', session)));
   }
 
   public get value(): Observable<SessionModel> {
     return this.session.pipe(filter(Boolean));
+  }
+
+  public login(username: string, password: string): Observable<any> {
+    return this.tokenService.apiLoginResponse(username, password).pipe(
+      map((response) => this.tokenize(this.session.value, response.body)),
+      tap((session) => this.session.next(session)),
+      tap(() => this.work(this.session.value)));
+  }
+
+  public refresh(): Observable<any> {
+    return this.tokenService.apiRefreshResponse().pipe(
+      map((response) => this.tokenize(this.session.value, response.body)),
+      tap((session) => this.session.next(session)),
+      tap(() => this.work(this.session.value)));
+  }
+
+  public logout(): void {
+    this.timeout.unsubscribe();
+    this.session.next(this.tokenize(this.session.value, this.tokens));
   }
 
   public like(id: string): void {
@@ -40,31 +63,20 @@ export class SessionProvider {
     }
   }
 
-  public login(username: string, password: string): Observable<any> {
-    return this.tokenService.apiLoginResponse(username, password).pipe(
-      tap((response) => this.update(response.body)),
-      tap(() => this.work(this.session.value)));
-  }
-
-  public logout(): void {
-    this.timeout.unsubscribe();
-    this.update({
-      access: new AccessTokenModel(),
-      refresh: new RefreshTokenModel()
+  private tokenize(session: SessionModel, tokens: any): SessionModel {
+    return Object.assign(session, {
+      accessToken: tokens.access || session.accessToken,
+      refreshToken: tokens.refresh || session.refreshToken
     });
   }
 
-  public refresh(): Observable<any> {
-    return this.tokenService.apiRefreshResponse().pipe(
-      tap((response) => this.update(response.body)),
-      tap(() => this.work(this.session.value)));
-  }
-
-  private update(tokens: any): void {
-    this.session.next(Object.assign(this.session.value, {
-      accessToken: tokens.access || this.session.value.accessToken,
-      refreshToken: tokens.refresh || this.session.value.refreshToken
-    }));
+  private validate(session: SessionModel): Observable<SessionModel> {
+    return session.refreshToken.exp * 1000 < Date.now()
+      ? of(this.tokenize(session, this.tokens))
+      : this.tokenService.apiRefreshResponse(session.refreshToken).pipe(
+        map((response) => response.body),
+        catchError(() => of(this.tokens)),
+        map((tokens) => this.tokenize(session, tokens)));
   }
 
   private work(session: SessionModel): void {

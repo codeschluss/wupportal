@@ -4,6 +4,13 @@ export interface BaseService {
   rootUrl: string;
 }
 
+export interface JwtClaims {
+  activityProvider: string[];
+  organisationAdmin: string[];
+  organisationUser: string[];
+  superUser: boolean;
+}
+
 export interface Link {
   deprecation?: string;
   href?: string;

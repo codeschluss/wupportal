@@ -5,7 +5,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class LoadingProvider {
 
-  private loads: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private loads: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   private requests: HttpRequest<any>[] = [];
 

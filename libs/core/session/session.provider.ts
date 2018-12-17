@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, empty, Observable, Subscription, timer } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AccessTokenModel } from '../auth/access-token.model';
 import { RefreshTokenModel } from '../auth/refresh-token.model';
 import { TokenService } from '../auth/token.service';
@@ -20,10 +20,12 @@ export class SessionProvider {
   ) {
     const schema = { schema: SessionModel.schema };
     this.localStorage.getItem<SessionModel>('session', schema).pipe(
+      map((session) => session || new SessionModel()),
       tap((session) => this.session.next(session)),
-      tap((session) => this.work(session))
-    ).subscribe(() => this.session.subscribe((session) =>
-      localStorage.setItemSubscribe('session', session)));
+      map((session) => session.refreshToken.exp * 1000),
+      mergeMap((exp) =>  exp > Date.now() ? this.refresh() : empty())
+    ).subscribe(undefined, () => this.logout(), () => this.session.subscribe(
+      (session) => localStorage.setItemSubscribe('session', session)));
   }
 
   public get value(): Observable<SessionModel> {
@@ -73,10 +75,10 @@ export class SessionProvider {
       tap(() => this.work(this.session.value)));
   }
 
-  private update(tokens: object): void {
+  private update(tokens: any): void {
     this.session.next(Object.assign(this.session.value, {
-      accessToken: tokens['access'] || this.session.value.accessToken,
-      refreshToken: tokens['refresh'] || this.session.value.refreshToken
+      accessToken: tokens.access || this.session.value.accessToken,
+      refreshToken: tokens.refresh || this.session.value.refreshToken
     }));
   }
 

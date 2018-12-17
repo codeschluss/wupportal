@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RoutletterHostComponent } from '@portal/core';
+import { SplashHostComponent } from '@portal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { AddressStepperComponent } from '../../realm/address/address.stepper';
 import { CategoryStepperComponent } from '../../realm/category/category.stepper';
@@ -23,13 +23,14 @@ import { OrganisationPanelComponent } from './organisation/organisation.panel';
       path: '',
       component: AdminComponent,
       canActivate: [AdminGuarding],
+      canActivateChild: [AdminGuarding],
       children: [
         AccountPanelComponent.routing,
         ApplicationPanelComponent.routing,
         OrganisationPanelComponent.routing,
         {
           path: 'edit',
-          component: RoutletterHostComponent,
+          component: SplashHostComponent,
           children: [
             ActivityStepperComponent.routing,
             AddressStepperComponent.routing,

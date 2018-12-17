@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   `
 })
 
-export class RoutletterHostComponent implements AfterViewInit {
+export class SplashHostComponent implements AfterViewInit {
 
   @ViewChild('routlet')
   public routlet: TemplateRef<any>;
@@ -24,7 +24,13 @@ export class RoutletterHostComponent implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     if (this.route.snapshot.firstChild) {
-      this.dialog.open(RoutletterChildComponent, { data: this.routlet });
+      this.dialog.open(SplashChildComponent, {
+        data: this.routlet,
+        maxHeight: '80vh',
+        maxWidth: '80vw',
+        minHeight: '80vh',
+        minWidth: '80vw'
+      });
     } else {
       this.location.back();
     }
@@ -34,21 +40,12 @@ export class RoutletterHostComponent implements AfterViewInit {
 
 @Component({
   template: `
-    <h1 mat-dialog-title>
-      MAT_DIALOG
-    </h1>
-    <div mat-dialog-content>
-      <ng-container *ngTemplateOutlet="routlet"></ng-container>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-button mat-dialog-close (click)="location.back()">
-        <i18n i18n="@@close">close</i18n>
-      </button>
-    </div>
+    <button color="warn" mat-button mat-dialog-close>&times;</button>
+    <ng-container *ngTemplateOutlet="routlet"></ng-container>
   `
 })
 
-export class RoutletterChildComponent {
+export class SplashChildComponent {
 
   public constructor(
     public location: Location,

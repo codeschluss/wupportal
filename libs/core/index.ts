@@ -16,6 +16,6 @@ export * from './utils/api';
 export * from './utils/module';
 export * from './utils/package';
 export * from './utils/pathfinder';
-export * from './utils/routeletter';
 export * from './utils/selfroute';
 export * from './utils/settings';
+export * from './utils/splash';

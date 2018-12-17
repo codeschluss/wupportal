@@ -36,11 +36,15 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
   protected static template(template: string): string {
     return template + `
       <form [formGroup]="group">
-        <ng-container *ngFor="let field of fields">
-          <ng-container *ngTemplateOutlet="label; context: { case: field }">
+        <mat-list>
+          <ng-container *ngFor="let field of fields">
+            <mat-list-item>
+              <ng-container *ngTemplateOutlet="label; context: { case: field }">
+              </ng-container>
+              <base-field [field]="field" [group]="group"></base-field>
+            </mat-list-item>
           </ng-container>
-          <base-field [field]="field" [group]="group"></base-field>
-        </ng-container>
+        </mat-list>
       </form>
     `;
   }

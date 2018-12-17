@@ -30,7 +30,7 @@ export class SplashHostComponent implements AfterViewInit {
         maxWidth: '80vw',
         minHeight: '80vh',
         minWidth: '80vw'
-      });
+      }).afterClosed().subscribe(() => this.location.back());
     } else {
       this.location.back();
     }
@@ -40,7 +40,6 @@ export class SplashHostComponent implements AfterViewInit {
 
 @Component({
   template: `
-    <button color="warn" mat-button mat-dialog-close>&times;</button>
     <ng-container *ngTemplateOutlet="routlet"></ng-container>
   `
 })

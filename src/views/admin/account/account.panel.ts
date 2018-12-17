@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfroute } from '@portal/core';
+import { CrudJoiner, CrudResolver, Selfroute, SessionResolver } from '@portal/core';
 import { OrganisationModel } from '../../../realm/organisation/organisation.model';
 import { UserModel } from '../../../realm/user/user.model';
 import { ClientPackage } from '../../../utils/package';
@@ -17,6 +17,7 @@ export class AccountPanelComponent extends Selfroute implements OnInit {
     path: 'account/:uuid',
     component: AccountPanelComponent,
     resolve: {
+      session: SessionResolver,
       user: CrudResolver
     },
     data: {

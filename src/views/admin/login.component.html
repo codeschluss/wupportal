@@ -9,9 +9,7 @@
         src="imgs/Logo_bunt_cmyk.svg"
         [style.width]="'10%'" 
         (click)="goToHome()">
-    <h2>
-        <i18n class="color-primary" i18n="@@portalSubtitle">portalSubtitle</i18n>
-    </h2>
+        <i18n class="color-primary" class="h2" i18n="@@portalSubtitle">portalSubtitle</i18n>
         <form #loginForm="ngForm" 
         (ngSubmit)="login()" 
         [style.width]="'100%'"

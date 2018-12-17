@@ -117,6 +117,15 @@ $custom-theme: mat-light-theme($custom-primary, $custom-secondary);
   font-size: 18px;
 }
 
+.h2 {
+  font-size: 35px;
+}
+
+.h2 * {
+  font-size: 35px;
+}
+
+
 h2 {
   font-size: 35px;
 }

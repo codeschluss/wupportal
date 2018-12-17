@@ -42,6 +42,9 @@ import { CoreModule } from '@portal/core';
 import { AboutComponent } from './about/about.component';
 import { SearchComponent } from './search/search.component';
 import { CommonModule } from '@angular/common';
+import { TopicsListComponent } from './worthKnowing/topics.list.component';
+import { TopicViewComponent } from './worthKnowing/topic.view.component';
+import { PageViewComponent } from './worthKnowing/page.view.component';
 
 fontawesome.add(fas);
 
@@ -72,6 +75,9 @@ const PublicDeclarations = [
   SearchComponent,
   ImprintDialogComponent,
   SocialMediaComponent,
+  TopicsListComponent,
+  TopicViewComponent,
+  PageViewComponent
 ];
 
 const PublicImports = [

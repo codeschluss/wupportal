@@ -44,19 +44,11 @@ export class SessionProvider {
       tap(() => this.work(this.session.value)));
   }
 
-  public logOut(): void {
-    this.session.subscribe(session => {
-      session.accessToken = new AccessTokenModel;
-      session.refreshToken = new RefreshTokenModel;
-      this.write(session);
-    });
-  }
-
-  public changeLanguage(locale: string): void {
-    this.session.subscribe(session => {
-      session.language = locale;
-      this.write(session);
-    });
+   public changeLanguage(locale: string): void {
+    // this.session.subscribe(session => {
+    //   session.language = locale;
+    //   this.work(session);
+    // });
   }
 
   public logout(): void {

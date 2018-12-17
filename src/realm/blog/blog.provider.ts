@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CrudProvider } from '@portal/core';
+import { CrudProvider, CrudLink } from '@portal/core';
 import { Observable } from 'rxjs';
 import { BlogControllerService } from '../../api/services/blog-controller.service';
 import { BlogModel } from './blog.model';
+import { ActivityModel } from '../activity/activity.model';
 
 @Injectable({ providedIn: 'root' })
 export class BlogProvider
@@ -19,7 +20,13 @@ export class BlogProvider
   public readAll: (params?: BlogControllerService
     .BlogControllerReadAllParams) => Observable<BlogModel[]>;
 
-  protected linked = [];
+  protected linked: CrudLink[] = [
+    {
+      field: 'activity',
+      method: this.service.blogControllerReadActivityResponse,
+      model: ActivityModel
+    }
+  ];
 
   protected methods = {
     create: this.service.blogControllerCreateResponse,

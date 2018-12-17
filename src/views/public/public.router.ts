@@ -6,7 +6,6 @@ import { LayoutComponent } from '../layout/layout.component';
 import { OrganisationListComponent } from './organisation/organisation.list.component';
 import { OrganisationViewComponent } from './organisation/organisation.view.component';
 import { BlogListComponent } from './blog/blog.list.component';
-import { SearchResultListComponent } from './search/searchresult.list.component';
 import { BlogViewComponent } from './blog/blog.view.component';
 import { ActivityModel } from 'src/realm/activity/activity.model';
 import { CategoryModel } from 'src/realm/category/category.model';
@@ -19,6 +18,11 @@ import { CrudResolver, CrudJoiner } from '@portal/core';
 import { BlogModel } from 'src/realm/blog/blog.model';
 import { SearchComponent } from './search/search.component';
 import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
+import { TopicsListComponent } from './worthKnowing/topics.list.component';
+import { TopicModel } from 'src/realm/topic/topic.model';
+import { TopicViewComponent } from './worthKnowing/topic.view.component';
+import { PageModel } from 'src/realm/page/page.model';
+import { PageViewComponent } from './worthKnowing/page.view.component';
 
 const PublicProviders = [
 ];
@@ -101,7 +105,6 @@ const PublicRoutes = [
     component: MappingComponent,
     resolve: {
       activities: CrudResolver,
-      // configurations: CrudResolver
     },
     data: {
       activities: CrudJoiner.of(ActivityModel)
@@ -110,7 +113,6 @@ const PublicRoutes = [
         .with('targetGroups')
         .with('schedules')
         .with('address').yield('suburb'),
-      // configurations: CrudJoiner.of(ConfigurationModel)
     }
   },
   {
@@ -163,11 +165,44 @@ const PublicRoutes = [
       blog: CrudResolver
     },
     data: {
-      blog: CrudJoiner.of(BlogModel)
-      // .with('activity')
+      blog: CrudJoiner.of(BlogModel).with('activity')
     }
   },
   {
+    path: 'list/topics',
+    children: [
+      {
+        path: '',
+        component: TopicsListComponent,
+        resolve: {
+          topics: CrudResolver,
+        },
+        data: {
+          topics: CrudJoiner.of(TopicModel),
+        }
+      }]
+    },
+    {
+      path: 'view/topic/:uuid',
+      component: TopicViewComponent,
+        resolve: {
+          topic: CrudResolver,
+        },
+        data: {
+          topic: CrudJoiner.of(TopicModel).with('pages'),
+        }
+    },
+  {
+  path: 'view/page/:uuid',
+  component: PageViewComponent,
+      resolve: {
+        page: CrudResolver,
+      },
+      data: {
+        page: CrudJoiner.of(PageModel),
+      }
+    },
+    {
     path: 'search',
     children: [
       {

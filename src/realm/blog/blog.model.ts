@@ -12,6 +12,6 @@ export class BlogModel
     title: string;
     created: string;
 
-    public activities: Observable<ActivityModel[]>;
+    public activity: Observable<ActivityModel[]>;
 
 }

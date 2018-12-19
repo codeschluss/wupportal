@@ -20,7 +20,7 @@ import { SessionProvider } from '@portal/core';
         this.initLanguages();
       }
 
-    onNoClick(): void {
+    close(): void {
       this.dialogRef.close();
     }
 

@@ -10,6 +10,7 @@ export class LayoutComponent {
 
   public static readonly imports = [];
 
-  public constructor() { }
+  public constructor(
+  ) {}
 
 }

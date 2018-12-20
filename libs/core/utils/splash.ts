@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   template: `
-    <ng-template #routlet>
+    <ng-template #splash>
       <router-outlet></router-outlet>
     </ng-template>
   `
@@ -13,8 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 
 export class SplashHostComponent implements AfterViewInit {
 
-  @ViewChild('routlet')
-  public routlet: TemplateRef<any>;
+  @ViewChild('splash')
+  public splash: TemplateRef<any>;
 
   public constructor(
     private dialog: MatDialog,
@@ -25,7 +25,7 @@ export class SplashHostComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
     if (this.route.snapshot.firstChild) {
       this.dialog.open(SplashChildComponent, {
-        data: this.routlet,
+        data: this.splash,
         maxHeight: '80vh',
         maxWidth: '80vw',
         minHeight: '80vh',
@@ -40,7 +40,7 @@ export class SplashHostComponent implements AfterViewInit {
 
 @Component({
   template: `
-    <ng-container *ngTemplateOutlet="routlet"></ng-container>
+    <ng-container *ngTemplateOutlet="splash"></ng-container>
   `
 })
 
@@ -50,7 +50,7 @@ export class SplashChildComponent {
     public location: Location,
 
     @Inject(MAT_DIALOG_DATA)
-    public routlet: TemplateRef<any>
+    public splash: TemplateRef<any>
   ) { }
 
 }

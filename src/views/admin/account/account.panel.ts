@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfroute, SessionResolver } from '@portal/core';
+import { CrudJoiner, CrudResolver, Selfroute, TokenResolver } from '@portal/core';
 import { OrganisationModel } from '../../../realm/organisation/organisation.model';
 import { UserModel } from '../../../realm/user/user.model';
 import { ClientPackage } from '../../../utils/package';
@@ -17,7 +17,7 @@ export class AccountPanelComponent extends Selfroute implements OnInit {
     path: 'account/:uuid',
     component: AccountPanelComponent,
     resolve: {
-      session: SessionResolver,
+      tokens: TokenResolver,
       user: CrudResolver
     },
     data: {
@@ -40,14 +40,12 @@ export class AccountPanelComponent extends Selfroute implements OnInit {
 
     public isAdmin(item: OrganisationModel): boolean {
     const claim = ClientPackage.config.jwtClaims.organisationAdmin;
-    return this.route.snapshot.data.session
-      .accessToken[claim].includes(item.id);
+    return this.route.snapshot.data.tokens.access[claim].includes(item.id);
   }
 
   public isApproved(item: OrganisationModel): boolean {
     const claim = ClientPackage.config.jwtClaims.organisationUser;
-    return this.route.snapshot.data.session
-      .accessToken[claim].includes(item.id);
+    return this.route.snapshot.data.tokens.access[claim].includes(item.id);
   }
 
 }

@@ -1,5 +1,7 @@
 export * from './auth/access-token.model';
 export * from './auth/refresh-token.model';
+export * from './auth/token.provider';
+export * from './auth/token.resolver';
 export * from './crud/crud.joiner';
 export * from './crud/crud.model';
 export * from './crud/crud.provider';
@@ -8,7 +10,6 @@ export * from './error/error.handler';
 export * from './error/error.model';
 export * from './i18n/i18n.component';
 export * from './i18n/i18n.resolver';
-export * from './loading/loading.provider';
 export * from './session/session.model';
 export * from './session/session.provider';
 export * from './session/session.resolver';

@@ -4,8 +4,8 @@
       <i18n i18n="@@userDetails">userDetails</i18n>
     </ng-template>
     <ng-container *ngIf="user">
-      <user-form #form [item]="user"></user-form>
-      <button mat-button [disabled]="!form.isValid" (click)="form.save()">
+      <user-form [item]="user"></user-form>
+      <button mat-button [disabled]="!form.isValid">
         <i18n i18n="@@save">save</i18n>
       </button>
     </ng-container>

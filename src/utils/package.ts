@@ -19,7 +19,8 @@ export class ClientPackage {
       activityProvider: string,
       organisationAdmin: string,
       organisationUser: string,
-      superUser: string
+      superUser: string,
+      userId: string
     }
   } {
     return this.packageJson.config;

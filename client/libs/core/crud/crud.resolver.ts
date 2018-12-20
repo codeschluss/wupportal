@@ -45,7 +45,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       const provider = item.constructor['provider'].system;
 
       for (const node of nodes) {
-        const link = provider.linked.find((lnk) => lnk.field === node.name);
+        const link = provider.linked.find((l) => l.field === node.name);
 
         if (link) {
           let value = null;
@@ -67,8 +67,8 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
           }
 
           if (value && node.nodes.length) {
-            for (const itm of Array.isArray(value) ? value : [value]) {
-              await this.run(itm, node.nodes);
+            for (const child of Array.isArray(value) ? value : [value]) {
+              await this.run(child, node.nodes);
             }
           }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JSONSchemaObject, LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, combineLatest, empty, forkJoin, Observable, of, Subscription, timer } from 'rxjs';
+import { BehaviorSubject, combineLatest, empty, Observable, of, Subscription, timer } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AuthTokens, StrictHttpResponse } from '../utils/api';
 import { AccessTokenModel } from './access-token.model';
@@ -23,24 +23,14 @@ export class TokenProvider {
     this.accessToken = new BehaviorSubject(null);
     this.refreshToken = new BehaviorSubject(null);
 
-    forkJoin(
-      localStorage.getItem<AccessTokenModel>('accessToken', {
-        schema: AccessTokenModel.schema as JSONSchemaObject
-      }).pipe(map((token) => token || new AccessTokenModel())),
-      localStorage.getItem<RefreshTokenModel>('refreshToken', {
+    localStorage.getItem<RefreshTokenModel>('refreshToken', {
         schema: RefreshTokenModel.schema as JSONSchemaObject
-      }).pipe(map((token) => token || new RefreshTokenModel()))
-    ).pipe(
-      mergeMap((tokens) => this.validate(...tokens)),
+    }).pipe(
+      mergeMap((token) => this.validate(token)),
       map((tokens) => this.update(tokens)),
       map((tokens) => this.work(tokens))
-    ).subscribe(() => {
-      this.accessToken.subscribe((token) =>
-        localStorage.setItemSubscribe('accessToken', token));
-
-      this.refreshToken.subscribe((token) =>
-        localStorage.setItemSubscribe('refreshToken', token));
-    });
+    ).subscribe(() => this.refreshToken.subscribe((token) =>
+        localStorage.setItemSubscribe('refreshToken', token)));
   }
 
   public get value(): Observable<AuthTokens> {
@@ -104,21 +94,18 @@ export class TokenProvider {
     };
   }
 
-  private validate(
-    accessToken: AccessTokenModel,
-    refreshToken: RefreshTokenModel
-  ): Observable<AuthTokens> {
-
-    const tokens = {
-      access: accessToken,
-      refresh: refreshToken
+  private validate(token: RefreshTokenModel): Observable<AuthTokens> {
+    const defaults = {
+      access: new AccessTokenModel(),
+      refresh: new RefreshTokenModel()
     };
 
-    return tokens.refresh.exp * 1000 < Date.now() ? of(tokens) :
-      this.tokenService.apiRefreshResponse(tokens.refresh).pipe(
+    return token.exp * 1000 > Date.now()
+      ? this.tokenService.apiRefreshResponse(token).pipe(
         map((response) => this.tokenize(response)),
-        map((fresh) => Object.assign(tokens, { access: fresh.access })),
-        catchError(() => of(tokens)));
+        map((tokens) => ({ access: tokens.access, refresh: token })),
+        catchError(() => of(defaults)))
+      : of(defaults);
   }
 
   private work(tokens: AuthTokens): void {

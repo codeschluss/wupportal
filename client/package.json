@@ -20,7 +20,8 @@
       "activityProvider": "createdActivities",
       "organisationAdmin": "adminOrgas",
       "organisationUser": "approvedOrgas",
-      "superUser": "superuser"
+      "superUser": "superuser",
+      "userId": "id"
     }
   },
   "repository": {

@@ -1,4 +1,11 @@
 import { HttpResponse } from '@angular/common/http';
+import { AccessTokenModel } from '../token/access-token.model';
+import { RefreshTokenModel } from '../token/refresh-token.model';
+
+export interface AuthTokens {
+  access: AccessTokenModel;
+  refresh: RefreshTokenModel;
+}
 
 export interface BaseService {
   rootUrl: string;
@@ -9,6 +16,7 @@ export interface JwtClaims {
   organisationAdmin: string[];
   organisationUser: string[];
   superUser: boolean;
+  userId: string;
 }
 
 export interface Link {

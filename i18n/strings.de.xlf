@@ -20,7 +20,7 @@
         </target>
       </trans-unit>
       <trans-unit id="aboutPageTextHeadLine" datatype="html">
-				<target>Die Geschichte von Wupp'n'go</target>
+				<target>Wieso, weshalb, warum...</target>
       </trans-unit>
       <trans-unit id="imprint" datatype="html">
 				<target>Impressum</target>
@@ -75,6 +75,9 @@
       </trans-unit>
       <trans-unit id="resultsFor" datatype="html">
         <target>Ergebnisse für</target>
+      </trans-unit> 
+      <trans-unit id="by" datatype="html">
+        <target>von</target>
       </trans-unit> 
       
       

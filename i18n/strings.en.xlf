@@ -76,6 +76,10 @@
       <trans-unit id="resultsFor" datatype="html">
         <target>Results for</target>
       </trans-unit> 
+      <trans-unit id="by" datatype="html">
+        <target>by</target>
+      </trans-unit> 
+
 
 
 

@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
-import { AccessTokenModel } from '../token/access-token.model';
-import { RefreshTokenModel } from '../token/refresh-token.model';
+import { AccessTokenModel } from '../auth/access-token.model';
+import { RefreshTokenModel } from '../auth/refresh-token.model';
 
 export interface AuthTokens {
   access: AccessTokenModel;

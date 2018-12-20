@@ -5,12 +5,14 @@ import { MatButtonModule, MatDialogModule, MatProgressBarModule } from '@angular
 import { RouterModule, UrlSerializer } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TokenInterceptor } from '../auth/token.interceptor';
+import { TokenProvider } from '../auth/token.provider';
 import { ErrorDialogComponent } from '../error/error.dialog';
 import { CoreErrorHandler } from '../error/error.handler';
 import { I18nComponent } from '../i18n/i18n.component';
 import { I18nInterceptor } from '../i18n/i18n.interceptor';
 import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
+import { SessionProvider } from '../session/session.provider';
 import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
 import { SplashChildComponent, SplashHostComponent } from './splash';
@@ -43,6 +45,8 @@ import { SplashChildComponent, SplashHostComponent } from './splash';
   providers: [
     { provide: CoreSettings, useClass: CoreSettings },
     { provide: ErrorHandler, useClass: CoreErrorHandler },
+    { provide: SessionProvider, useClass: SessionProvider },
+    { provide: TokenProvider, useClass: TokenProvider },
     { provide: UrlSerializer, useClass: CoreUrlSerializer },
 
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
@@ -51,4 +55,11 @@ import { SplashChildComponent, SplashHostComponent } from './splash';
   ]
 })
 
-export class CoreModule { }
+export class CoreModule {
+
+  public constructor(
+    _sessionProvider: SessionProvider,
+    _tokenProvider: TokenProvider
+  ) { }
+
+}

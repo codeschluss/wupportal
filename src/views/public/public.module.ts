@@ -45,6 +45,9 @@ import { CommonModule } from '@angular/common';
 import { TopicsListComponent } from './worthKnowing/topics.list.component';
 import { TopicViewComponent } from './worthKnowing/topic.view.component';
 import { PageViewComponent } from './worthKnowing/page.view.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './login/register.component';
+import { InfoBottomComponent } from './login/info.bottomsheet.component';
 
 fontawesome.add(fas);
 
@@ -77,7 +80,10 @@ const PublicDeclarations = [
   SocialMediaComponent,
   TopicsListComponent,
   TopicViewComponent,
-  PageViewComponent
+  PageViewComponent,
+  LoginComponent,
+  RegisterComponent,
+  InfoBottomComponent
 ];
 
 const PublicImports = [
@@ -101,7 +107,9 @@ const PublicImports = [
   JwSocialButtonsModule,
   CoreModule,
   MatPaginatorModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  LoginComponent.imports,
+  RegisterComponent.imports
 ];
 
 const PublicProviders = [
@@ -112,7 +120,7 @@ const PublicProviders = [
   imports: [
     CommonModule,
     PublicImports,
-    PublicRouter
+    PublicRouter,
   ],
   providers: PublicProviders,
   entryComponents: [
@@ -120,7 +128,8 @@ const PublicProviders = [
     BottomSheetScheduleComponent,
     ImprintDialogComponent,
     OrgaMediaDialogComponent,
-    LangaugeChooserDialogComponent
+    LangaugeChooserDialogComponent,
+    InfoBottomComponent
   ],
   exports: []
 })

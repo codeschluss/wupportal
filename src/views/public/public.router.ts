@@ -23,6 +23,8 @@ import { TopicModel } from 'src/realm/topic/topic.model';
 import { TopicViewComponent } from './worthKnowing/topic.view.component';
 import { PageModel } from 'src/realm/page/page.model';
 import { PageViewComponent } from './worthKnowing/page.view.component';
+import { RegisterComponent } from './login/register.component';
+import { LoginComponent } from './login/login.component';
 
 const PublicProviders = [
 ];
@@ -178,7 +180,7 @@ const PublicRoutes = [
           topics: CrudResolver,
         },
         data: {
-          topics: CrudJoiner.of(TopicModel),
+          topics: CrudJoiner.of(TopicModel).with('pages'),
         }
       }]
     },
@@ -214,11 +216,6 @@ const PublicRoutes = [
         component: SearchComponent
       }
     ]
-  },
-  {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: 'home'
   }
 ];
 
@@ -229,7 +226,27 @@ const PublicRoutes = [
     children: PublicRoutes,
     resolve: PublicResolvers,
     component: LayoutComponent,
-  }])],
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    resolve: {
+      organisations: CrudResolver
+    },
+    data: {
+      organisations: CrudJoiner.of(OrganisationModel)
+    }
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'home'
+  }
+])],
   providers: PublicProviders
 })
 

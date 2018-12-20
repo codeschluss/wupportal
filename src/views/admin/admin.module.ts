@@ -36,10 +36,7 @@ import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { UserTableComponent } from '../../realm/user/user.table';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
-import { LoginComponent } from './login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { RegisterComponent } from './register.component';
-import { InfoBottomComponent } from './info.bottomsheet.component';
 import { OrganisationPanelComponent } from './organisation/organisation.panel';
 import { AccountPanelComponent } from './account/account.panel';
 import { ApplicationPanelComponent } from './application/application.panel';
@@ -96,13 +93,9 @@ const panels: Type<any>[] = [
     ...forms,
     ...panels,
     ...steppers,
-    InfoBottomComponent,
   ],
   declarations: [
     AdminComponent,
-    LoginComponent,
-    RegisterComponent,
-    InfoBottomComponent,
     ...forms,
     ...panels,
     ...steppers,
@@ -117,8 +110,6 @@ const panels: Type<any>[] = [
     MatTabsModule,
     CoreModule,
     FlexLayoutModule,
-    LoginComponent.imports,
-    RegisterComponent.imports,
     MatCheckboxModule,
   ]
 })

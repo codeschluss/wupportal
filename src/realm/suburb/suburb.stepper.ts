@@ -1,6 +1,4 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
 import { BaseStepper, FormStep } from '@portal/forms';
 import { SuburbFormComponent } from './suburb.form';
@@ -31,13 +29,5 @@ export class SuburbStepperComponent extends BaseStepper<SuburbModel> {
   protected joiner: CrudJoiner = CrudJoiner.of(SuburbModel);
 
   protected model: Type<SuburbModel> = SuburbModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute,
-    protected router: Router
-  ) {
-    super();
-  }
 
 }

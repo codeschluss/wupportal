@@ -10,7 +10,7 @@ export class LanguageProvider
 
   public create: (model: LanguageModel) => Observable<any>;
 
-  public update: (id: string, model: LanguageModel) => Observable<any>;
+  public update: (model: LanguageModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

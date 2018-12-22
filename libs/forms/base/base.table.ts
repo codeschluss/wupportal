@@ -3,7 +3,7 @@ import { MatColumnDef, MatDialog, MatPaginator, MatSort, MatTable } from '@angul
 import { CrudJoiner, CrudModel, CrudResolver, Pathfinder, StrictHttpResponse } from '@portal/core';
 import { BehaviorSubject, empty, merge, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
-import { ConfirmDialogComponent } from '../utils/confirm';
+import { ConfirmNoteComponent } from '../note/confirm.note';
 
 export interface TableColumn {
   name: string;
@@ -56,24 +56,24 @@ export abstract class BaseTable<Model extends CrudModel>
               </ng-container>
               </mat-header-cell>
             <mat-cell *matCellDef="let item">
-              {{ item[column.name] ? column.value(item) : '' }}
+              {{ column.value(item) }}
             </mat-cell>
           </ng-container>
         </ng-container>
         <ng-content></ng-content>
-          <ng-container matColumnDef="actions" *ngIf="!this.readonly">
-            <mat-header-cell *matHeaderCellDef>
-              <i18n i18n="@@actions">actions</i18n>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let item">
-              <button mat-button [routerLink]="edit(item)">
-                <i18n i18n="@@edit">edit</i18n>
-              </button>
-              <button mat-button color="warn" (click)="delete(item)">
-                <i18n i18n="@@delete">delete</i18n>
-              </button>
-            </mat-cell>
-          </ng-container>
+        <ng-container matColumnDef="actions" *ngIf="!this.readonly">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button [routerLink]="edit(item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn" (click)="delete(item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
       </mat-table>
       <mat-paginator [pageSize]="10"></mat-paginator>
     `;
@@ -104,7 +104,7 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   public delete(item: Model): void {
-    const dialog = this.dialog.open(ConfirmDialogComponent, { data: item });
+    const dialog = this.dialog.open(ConfirmNoteComponent, { data: item });
     const provider = item.constructor['provider'];
 
     dialog.afterClosed().pipe(

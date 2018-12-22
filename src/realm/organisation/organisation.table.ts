@@ -43,13 +43,14 @@ export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
     },
     {
       name: 'address',
-      value: (item) => `
+      // TODO: non-optional address
+      value: (item) => item.address ? `
         ${item.address.street}
         ${item.address.houseNumber}
         ${item.address.postalCode}
         ${item.address.place}
         ${item.address.suburb.name}
-      `
+      ` : ''
     }
   ];
 

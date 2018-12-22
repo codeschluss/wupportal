@@ -10,7 +10,7 @@ export class ConfigurationProvider
 
   public create: (model: ConfigurationModel) => Observable<any>;
 
-  public update: (id: string, model: ConfigurationModel) => Observable<any>;
+  public update: (model: ConfigurationModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

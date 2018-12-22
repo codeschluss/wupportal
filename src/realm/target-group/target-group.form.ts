@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { TargetGroupModel } from './target-group.model';
 
@@ -34,12 +33,5 @@ export class TargetGroupFormComponent extends BaseForm<TargetGroupModel> {
   ];
 
   public model: Type<TargetGroupModel> = TargetGroupModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
-  }
 
 }

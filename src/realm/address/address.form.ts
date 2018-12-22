@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { Observable } from 'rxjs';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
 
@@ -54,11 +54,9 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
 
   public model: Type<AddressModel> = AddressModel;
 
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
+  protected persist(item: AddressModel = this.item): Observable<any> {
+    item.suburbId = this.value('suburb').id;
+    return super.persist(item);
   }
 
 }

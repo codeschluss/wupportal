@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { BaseForm, BooleanFieldComponent, FormField, StringFieldComponent } from '@portal/forms';
 import { LanguageModel } from './language.model';
 
@@ -38,12 +37,5 @@ export class LanguageFormComponent extends BaseForm<LanguageModel> {
   ];
 
   public model: Type<LanguageModel> = LanguageModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
-  }
 
 }

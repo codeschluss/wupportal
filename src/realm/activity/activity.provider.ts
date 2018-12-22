@@ -72,7 +72,7 @@ export class ActivityProvider
 
   public create: (model: ActivityModel) => Observable<any>;
 
-  public update: (id: string, model: ActivityModel) => Observable<any>;
+  public update: (model: ActivityModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

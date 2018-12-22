@@ -1,7 +1,6 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { Validators } from '@angular/forms';
+import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { OrganisationModel } from '../organisation/organisation.model';
 
 @Component({
@@ -22,6 +21,7 @@ import { OrganisationModel } from '../organisation/organisation.model';
         <i18n *ngSwitchCase="'targetGroups'"
           i18n="@@targetGroups">targetGroups</i18n>
         <i18n *ngSwitchCase="'tags'" i18n="@@tags">tags</i18n>
+        <i18n *ngSwitchCase="'videoUrl'" i18n="@@videoUrl">videoUrl</i18n>
       </ng-container>
     </ng-template>
   `)
@@ -56,18 +56,11 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
     },
     {
       name: 'videoUrl',
-      input: SelectFieldComponent,
+      input: StringFieldComponent,
       model: OrganisationModel
     }
   ];
 
   public model: Type<OrganisationModel> = OrganisationModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
-  }
 
 }

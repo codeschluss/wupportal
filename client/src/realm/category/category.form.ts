@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { CategoryModel } from './category.model';
 
@@ -39,12 +38,5 @@ export class CategoryFormComponent extends BaseForm<CategoryModel> {
   ];
 
   public model: Type<CategoryModel> = CategoryModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
-  }
 
 }

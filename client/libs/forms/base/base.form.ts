@@ -29,10 +29,6 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
 
   public abstract model: Type<Model>;
 
-  protected abstract builder: FormBuilder;
-
-  protected abstract route: ActivatedRoute;
-
   protected static template(template: string): string {
     return template + `
       <form [formGroup]="group">
@@ -49,9 +45,14 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
     `;
   }
 
-  public get isValid(): boolean {
+  public get valid(): boolean {
     return this.group.valid;
   }
+
+  public constructor(
+    protected route: ActivatedRoute,
+    private builder: FormBuilder
+  ) { }
 
   public ngOnInit(): void {
     const data = this.route.snapshot.data;
@@ -65,14 +66,42 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
     }));
 
     this.ngPostInit();
+    this.route.routeConfig.data.persist = this.persist.bind(this);
     this.fields.forEach((field) => this.group.addControl(field.name,
       this.builder.control(field.value, field.tests)));
   }
 
-  public save(): Observable<any> {
-    return of(console.log(this.group.value));
+  public value(field: string): any {
+    const control = this.group.get(field);
+    return control ? control.value : this.item[field];
   }
 
   protected ngPostInit(): void { }
+
+  protected formed(model: Type<Model>): Type<Model> {
+    return Object.defineProperty(model, 'stepper', { value: this.constructor });
+  }
+
+  protected persist(item: Model = this.item): Observable<any> {
+    Object.keys(this.group.controls)
+      .filter((key) => this.group.get(key).dirty)
+      .filter((key) => !this.fields.find((field) => field.name !== key).model)
+      .forEach((key) => item[key] = this.value(key));
+
+    return !this.model['provider'] ? of(item) : item.id
+      ? this.model['provider'].update(item, item.id)
+      : this.model['provider'].create(item);
+  }
+
+  protected select(key: string): { link: CrudModel[], unlink: CrudModel[] } {
+    const items = (this.item[key] || []).filter((item) => item.id);
+    const values = (this.value(key) || []).filter((value) => value.id);
+
+    return {
+      link: values.filter((v) => !items.some((i) => i.id === v.id))
+        .concat(values.filter((value) => !value.id)),
+      unlink: items.filter((i) => !values.some((v) => v.id === i.id))
+    };
+  }
 
 }

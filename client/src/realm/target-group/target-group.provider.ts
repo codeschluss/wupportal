@@ -10,7 +10,7 @@ export class TargetGroupProvider
 
   public create: (model: TargetGroupModel) => Observable<any>;
 
-  public update: (id: string, model: TargetGroupModel) => Observable<any>;
+  public update: (model: TargetGroupModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

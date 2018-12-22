@@ -17,6 +17,7 @@ import { ProviderProvider } from './realm/provider/provider.provider';
 import { SuburbProvider } from './realm/suburb/suburb.provider';
 import { TagProvider } from './realm/tag/tag.provider';
 import { TargetGroupProvider } from './realm/target-group/target-group.provider';
+import { TranslationProvider } from './realm/translation/translation.provider';
 import { UserProvider } from './realm/user/user.provider';
 import { ClientPackage } from './utils/package';
 import { LayoutComponent } from './views/layout/layout.component';
@@ -65,6 +66,7 @@ export class ClientModule {
     _suburbProvider: SuburbProvider,
     _tagProvider: TagProvider,
     _targetGroupProvider: TargetGroupProvider,
+    _translationProvider: TranslationProvider,
     _userProvider: UserProvider
   ) {
     apiConfiguration.rootUrl = ClientPackage.config.api.rootUrl;

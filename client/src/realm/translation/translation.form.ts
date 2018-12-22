@@ -1,7 +1,6 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
+import { BaseForm, FormField } from '@portal/forms';
+import { Observable, of } from 'rxjs';
 import { TranslationModel } from './translation.model';
 
 @Component({
@@ -17,21 +16,12 @@ import { TranslationModel } from './translation.model';
 
 export class TranslationFormComponent extends BaseForm<TranslationModel> {
 
-  public fields: FormField[] = [
-    {
-      name: 'lang',
-      input: StringFieldComponent,
-      tests: [Validators.required]
-    }
-  ];
+  public fields: FormField[] = [];
 
   public model: Type<TranslationModel> = TranslationModel;
 
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
+  protected persist(item: TranslationModel = this.item): Observable<any> {
+    return of(item);
   }
 
 }

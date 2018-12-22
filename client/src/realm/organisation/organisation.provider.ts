@@ -60,7 +60,7 @@ export class OrganisationProvider
 
   public create: (model: OrganisationModel) => Observable<any>;
 
-  public update: (id: string, model: OrganisationModel) => Observable<any>;
+  public update: (model: OrganisationModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

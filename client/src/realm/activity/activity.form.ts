@@ -1,13 +1,14 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { Observable } from 'rxjs';
 import { ClientPackage } from '../../utils/package';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
 import { ActivityModel } from './activity.model';
+import { ActivityProvider } from './activity.provider';
 
 @Component({
   selector: 'activity-form',
@@ -48,8 +49,7 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
     },
     {
       name: 'contactName',
-      input: StringFieldComponent,
-      tests: [Validators.required]
+      input: StringFieldComponent
     },
     {
       name: 'phone',
@@ -58,7 +58,7 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
     {
       name: 'mail',
       input: StringFieldComponent,
-      tests: [Validators.email]
+      tests: [Validators.required, Validators.email]
     },
     {
       name: 'organisation',
@@ -87,21 +87,38 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
 
   public model: Type<ActivityModel> = ActivityModel;
 
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
-  }
-
   protected ngPostInit(): void {
-    const claim = ClientPackage.config.jwtClaims.organisationUser;
-    const options = this.route.snapshot.data.session.accessToken[claim]
-      .map((id) => this.route.snapshot.data.organisation
+    const claim = ClientPackage.config.jwtClaims.superUser;
+    let options = this.route.snapshot.data.organisation;
+
+    if (!this.route.snapshot.data.tokens.access[claim]) {
+      options = [...new Set([
+        ...this.route.snapshot.data.tokens.access
+          [ClientPackage.config.jwtClaims.organisationAdmin],
+        ...this.route.snapshot.data.tokens.access
+          [ClientPackage.config.jwtClaims.organisationUser]
+      ])].map((id) => this.route.snapshot.data.organisation
         .find((organisation) => organisation.id === id));
+    }
 
     this.fields[this.fields.findIndex((field) =>
-        field.name === 'organisation')].options = options;
+      field.name === 'organisation')].options = options;
+  }
+
+  protected persist(item: ActivityModel = this.item): Observable<any> {
+    const provider = this.model['provider'] as ActivityProvider;
+
+    const tags = this.select('tags');
+    tags.link.forEach((t) => provider.pasteTags(item.id, [t as TagModel]));
+    tags.unlink.forEach((t) => provider.unlinkTag(item.id, t.id));
+
+    const targets = this.select('targetGroups');
+    targets.link.forEach((t) => provider.linkTargetGroups(item.id, [t.id]));
+    targets.unlink.forEach((t) => provider.unlinkTargetGroup(item.id, t.id));
+
+    item.categoryId = this.value('category').id;
+    item.organisationId = this.value('organisation').id;
+    return super.persist(item);
   }
 
 }

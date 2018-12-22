@@ -1,6 +1,4 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
 import { BaseStepper, FormStep } from '@portal/forms';
 import { TranslationFormComponent } from '../translation/translation.form';
@@ -38,13 +36,5 @@ export class TagStepperComponent extends BaseStepper<TagModel> {
   protected joiner: CrudJoiner = CrudJoiner.of(TagModel);
 
   protected model: Type<TagModel> = TagModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute,
-    protected router: Router
-  ) {
-    super();
-  }
 
 }

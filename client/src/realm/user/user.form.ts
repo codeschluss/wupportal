@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { UserModel } from './user.model';
 
@@ -55,12 +54,5 @@ export class UserFormComponent extends BaseForm<UserModel> {
   ];
 
   public model: Type<UserModel> = UserModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
-  }
 
 }

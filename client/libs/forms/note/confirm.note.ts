@@ -3,6 +3,9 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { CrudModel } from '@portal/core';
 
 @Component({
+  styles: [
+    'h1 { color: red; }'
+  ],
   template: `
     <h1 mat-dialog-title>
       <i18n i18n="@@pleaseConfirm">pleaseConfirm</i18n>
@@ -24,20 +27,17 @@ import { CrudModel } from '@portal/core';
       </mat-list>
     </div>
     <div mat-dialog-actions>
-      <button mat-button color="warn" [mat-dialog-close]="true">
-        <i18n i18n="@@confirm">confirm</i18n>
-      </button>
       <button mat-button [mat-dialog-close]="false">
         <i18n i18n="@@cancel">cancel</i18n>
       </button>
+      <button mat-button color="warn" [mat-dialog-close]="true">
+        <i18n i18n="@@confirm">confirm</i18n>
+      </button>
     </div>
-  `,
-  styles: [
-    'h1 { color: red; }'
-  ]
+  `
 })
 
-export class ConfirmDialogComponent {
+export class ConfirmNoteComponent {
 
   public constructor(
     @Inject(MAT_DIALOG_DATA)

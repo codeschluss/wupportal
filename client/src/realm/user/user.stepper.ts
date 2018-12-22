@@ -1,6 +1,4 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
 import { BaseStepper, FormStep } from '@portal/forms';
 import { UserFormComponent } from './user.form';
@@ -31,13 +29,5 @@ export class UserStepperComponent extends BaseStepper<UserModel> {
   protected joiner: CrudJoiner = CrudJoiner.of(UserModel);
 
   protected model: Type<UserModel> = UserModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute,
-    protected router: Router
-  ) {
-    super();
-  }
 
 }

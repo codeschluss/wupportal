@@ -10,13 +10,18 @@ import { DatetimeFieldComponent } from '../field/datetime.field';
 import { SelectFieldComponent } from '../field/select.field';
 import { StringFieldComponent } from '../field/string.field';
 import { UploadFieldComponent } from '../field/upload.field';
+import { ConfirmNoteComponent } from '../note/confirm.note';
+import { PersistNoteComponent } from '../note/persist.note';
 import { FileValueAccessorDirective } from './accesor';
-import { ConfirmDialogComponent } from './confirm';
 
 const declarations: Type<any>[] = [
   BaseFieldComponent,
-  ConfirmDialogComponent,
   FileValueAccessorDirective
+];
+
+const entryComponents: Type<any>[] = [
+  ConfirmNoteComponent,
+  PersistNoteComponent
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
@@ -48,8 +53,8 @@ const modloop: Type<any>[] = [
 ];
 
 @NgModule({
-  declarations: [...fields, ...declarations],
-  entryComponents: [...fields, ConfirmDialogComponent],
+  declarations: [...fields, ...declarations, ...entryComponents],
+  entryComponents: [...fields, ...entryComponents],
   exports: [...modloop, BaseFieldComponent],
   imports: [...modloop, CommonModule, CoreModule]
 })

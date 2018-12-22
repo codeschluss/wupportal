@@ -1,8 +1,10 @@
+import { Location } from '@angular/common';
 import { OnDestroy, OnInit, Type } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, SessionResolver } from '@portal/core';
-import { Observable, of } from 'rxjs';
+import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
+import { forkJoin } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { BaseForm } from './base.form';
 
 export interface FormStep {
@@ -10,67 +12,51 @@ export interface FormStep {
   form: Type<BaseForm<CrudModel>>;
 }
 
-export abstract class BaseStepper<Model extends CrudModel>
+export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   implements OnInit, OnDestroy {
 
   public abstract root: string;
 
   public abstract steps: FormStep[];
 
-  protected abstract builder: FormBuilder;
-
   protected abstract joiner: CrudJoiner;
 
   protected abstract model: Type<Model>;
-
-  protected abstract route: ActivatedRoute;
-
-  protected abstract router: Router;
-
-  public static get routing(this: any): Route {
-    const self = new this();
-    self.model = self.stepped(self.model);
-
-    return {
-      path: `${self.root}/:uuid`,
-      component: this,
-      resolve: {
-        item: CrudResolver,
-        session: SessionResolver
-      },
-      data: {
-        item: self.joiner
-      }
-    };
-  }
 
   protected static template(template: string): string {
     return template + `
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
-          <a mat-tab-link [disabled]="!isValid" (click)="goto(i)"
+          <a mat-tab-link replaceUrl [disabled]="!can(i)" [routerLink]="link(i)"
             #tab="routerLinkActive" routerLinkActive [active]="tab.isActive">
             <ng-container *ngTemplateOutlet="label; context: { case: step }">
             </ng-container>
           </a>
         </ng-container>
+        <span style="flex-grow: 1;"></span>
+        <a mat-tab-link (click)="quit()">
+          <i18n i18n="@@close">close</i18n>
+        </a>
       </nav>
 
       <router-outlet></router-outlet>
 
       <ng-container *ngIf="hasPrev">
-        <a mat-button [disabled]="!isValid" (click)="jump(-1)">
+        <button mat-button replaceUrl
+          [disabled]="!valid" [routerLink]="link('-1')">
           <i18n i18n="@@prevForm">prevForm</i18n>
-        </a>
+        </button>
       </ng-container>
       <ng-container *ngIf="hasNext">
-        <a mat-button [disabled]="!isValid" (click)="jump(+1)">
+        <button mat-button replaceUrl
+          [disabled]="!valid" [routerLink]="link('+1')">
           <i18n i18n="@@nextForm">nextForm</i18n>
-        </a>
+        </button>
       </ng-container>
       <ng-container *ngIf="hasSave">
-        <button mat-button [disabled]="!isValid" (click)="save()">
-          <i18n i18n="@@saveForms">saveForms</i18n>
+        <button mat-button color="primary"
+          [disabled]="!valid" (click)="persist()">
+          <i18n i18n="@@persist">persist</i18n>
         </button>
       </ng-container>
     `;
@@ -85,48 +71,79 @@ export abstract class BaseStepper<Model extends CrudModel>
       step.name === this.route.snapshot.firstChild.routeConfig.path) : 0;
   }
 
-  public get isValid(): boolean {
-    return this.route.snapshot.routeConfig.children
-        .every((child) => child.data.group.valid);
+  public get item(): Model {
+    return this.route.snapshot.data.item;
+  }
+
+  public get valid(): boolean {
+    const children = this.route.snapshot.routeConfig.children;
+    return children[this.index] && children[this.index].data.group.valid;
+  }
+
+  protected get routing(this: any): Route {
+    Object.defineProperty(this.model, 'stepper', { value: this.constructor });
+
+    return {
+      path: `${this.root}/:uuid`,
+      component: this.constructor,
+      resolve: {
+        item: CrudResolver,
+        tokens: TokenResolver
+      },
+      data: {
+        item: this.joiner
+      }
+    };
+  }
+
+  public constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    private builder: FormBuilder,
+    private location: Location,
+  ) {
+    super();
   }
 
   public ngOnInit(): void {
-    if (!this.route.snapshot.routeConfig.children) {
-      this.router.config = this.router.config
-        .map((route) => this.walk(route, this.routes()));
-    }
-
-    if (!this.route.snapshot.children.length) { this.goto(0); }
-  }
-
-  public ngOnDestroy(): void {
-    this.router.config = this.router.config
-      .map((route) => this.walk(route, []));
-  }
-
-  public goto(index): void {
-    this.router.navigate([this.steps[index].name], {
+    this.router.config = this.walk(this.router.config, this.routes());
+    this.router.navigate([this.steps[this.index].name], {
       relativeTo: this.route,
       replaceUrl: true
     });
   }
 
-  public jump(index: number = 0): void {
-    if (this.route.snapshot.firstChild) {
-      index = index + this.steps.findIndex((step) =>
-        step.name === this.route.snapshot.firstChild.routeConfig.path);
-    }
-
-    this.goto(index);
+  public ngOnDestroy(): void {
+    this.router.config = this.walk(this.router.config, []);
   }
 
-  public save(): Observable<any> {
-    return of(this.route.snapshot.routeConfig.children
-      .forEach((i) => console.log(i.data.group.value)));
+  public can(index: number): boolean {
+    return index <= this.index;
   }
 
-  protected stepped(model: Type<Model>): Type<Model> {
-    return Object.defineProperty(model, 'stepper', { value: this.constructor });
+  public link(index: number | string): string {
+    if (typeof index === 'string') { index = parseInt(index, 10) + this.index; }
+    return this.steps[index].name;
+  }
+
+  public persist(): void {
+    const routes = this.route.snapshot.routeConfig.children;
+    const root = routes.find((child) => child.path === this.root);
+
+    forkJoin(...routes.filter((r) => r.path !== this.root).map((route) =>
+      route.data.persist().pipe(map((item) => ({ [route.path]: item })))
+    )).pipe(
+      map((items) => items.reduce((a, b) => Object.assign(a, b))),
+      mergeMap((items) => root.data.persist(this.prepare(items)))
+    ).subscribe((item) => console.log('OUT', item));
+  }
+
+  public quit(): void {
+    this.location.back();
+  }
+
+  protected prepare(items: { [field: string]: CrudModel }): Model {
+    return Object.assign(this.item, items);
   }
 
   private routes(): Route[] {
@@ -145,26 +162,12 @@ export abstract class BaseStepper<Model extends CrudModel>
           item: step.name === this.root
             ? this.route.snapshot.data.item
             : this.route.snapshot.data.item[step.name],
-          session: this.route.snapshot.data.session
+          tokens: this.route.snapshot.data.tokens
         }, ...fields.map((field) => ({
           [field.name]: CrudJoiner.of(field.model, { filter: null })
         })))
       };
     });
-  }
-
-  private walk(route: Route, children: Route[]): Route {
-    if ((route['_loadedConfig'] || { }).routes) {
-      route['_loadedConfig'].routes = route['_loadedConfig'].routes
-        .map((child) => this.walk(child, children));
-    } else if (route.children) {
-      route.children = route.children
-        .map((child) => this.walk(child, children));
-    } else if (route.component === this.constructor) {
-      route.children = children;
-    }
-
-    return route;
   }
 
 }

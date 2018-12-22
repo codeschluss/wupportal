@@ -105,7 +105,7 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
       field.name === 'organisation')].options = options;
   }
 
-  protected persist(item: ActivityModel = this.item): Observable<any> {
+  public persist(item: ActivityModel = this.item): Observable<any> {
     const provider = this.model['provider'] as ActivityProvider;
 
     const tags = this.select('tags');

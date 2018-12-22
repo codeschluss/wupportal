@@ -1,20 +1,22 @@
 import { Location } from '@angular/common';
-import { AfterViewInit, Component, Inject, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { AfterViewInit, Component, Inject, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   template: `
-    <ng-template #splash>
+    <ng-template #content>
       <router-outlet></router-outlet>
     </ng-template>
   `
 })
 
-export class SplashHostComponent implements AfterViewInit {
+export class SplashHostComponent implements AfterViewInit, OnDestroy {
 
-  @ViewChild('splash')
-  public splash: TemplateRef<any>;
+  @ViewChild('content')
+  public content: TemplateRef<any>;
+
+  private splash: MatDialogRef<SplashChildComponent>;
 
   public constructor(
     private dialog: MatDialog,
@@ -24,33 +26,33 @@ export class SplashHostComponent implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     if (this.route.snapshot.firstChild) {
-      this.dialog.open(SplashChildComponent, {
-        data: this.splash,
+      this.splash = this.dialog.open(SplashChildComponent, {
+        data: this.content,
         maxHeight: '80vh',
         maxWidth: '80vw',
         minHeight: '80vh',
         minWidth: '80vw'
-      }).afterClosed().subscribe(() => this.location.back());
+      });
     } else {
       this.location.back();
     }
   }
 
+  public ngOnDestroy(): void {
+    this.splash.close();
+  }
+
 }
 
 @Component({
-  template: `
-    <ng-container *ngTemplateOutlet="splash"></ng-container>
-  `
+  template: `<ng-container *ngTemplateOutlet="content"></ng-container>`
 })
 
 export class SplashChildComponent {
 
   public constructor(
-    public location: Location,
-
     @Inject(MAT_DIALOG_DATA)
-    public splash: TemplateRef<any>
+    public content: TemplateRef<any>
   ) { }
 
 }

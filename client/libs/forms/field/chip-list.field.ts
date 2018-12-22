@@ -54,7 +54,7 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   public insert(event: MatChipInputEvent): void {
     const label = this.sanitize(event.value);
-    if (label.length >= 3 && !this.find(label)) {
+    if (label && !this.find(label)) {
       this.value = this.value.concat(this.find(label, this.field.options) ||
         Object.assign(new this.field.model(), { [this.field.label]: label }));
     }
@@ -89,14 +89,17 @@ export class ChipListFieldComponent extends BaseFieldComponent {
   }
 
   private optionalize(label: string = '', items = this.value): CrudModel[] {
-    const ids = items.map((item) => item.id);
-    const options = this.field.options.filter((item) => !ids.includes(item.id));
+    const options = this.field.options
+      .filter((item) => !this.find(this.toLabel(item), items));
+
     return label ? this.matches(label, options) : options;
   }
 
   private sanitize(label: string = ''): string {
     // TODO: sanetize
-    return label[0].toUpperCase() + label.substr(1).toLowerCase();
+    return label = label.trim().length >= 3
+      ? label[0].toUpperCase() + label.substr(1).toLowerCase()
+      : '';
   }
 
 }

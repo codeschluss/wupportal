@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { CrudProvider, CrudLink } from '@portal/core';
 import { Observable, empty } from 'rxjs';
 import { TopicModel } from './topic.model';
 import { TopicControllerService } from 'src/api/services/topic-controller.service';
 import { PageModel } from '../page/page.model';
+import { BaseService } from 'src/api/base-service';
 
 @Injectable({ providedIn: 'root' })
 export class TopicProvider
-  extends CrudProvider<TopicControllerService, TopicModel> {
+  extends CrudProvider<BaseService, TopicModel> {
 
   public create: (model: TopicModel) => Observable<any>;
 
@@ -22,7 +23,7 @@ export class TopicProvider
 
   protected linked: CrudLink[] = [
     {
-      field: 'page',
+      field: 'pages',
       method: () => empty(),
       model: PageModel
     }
@@ -37,7 +38,7 @@ export class TopicProvider
     update: this.service.topicControllerUpdateResponse
   };
 
-  protected model = this.based(TopicModel);
+  protected model: Type<TopicModel> = this.based(TopicModel);
 
   public constructor(
     protected service: TopicControllerService

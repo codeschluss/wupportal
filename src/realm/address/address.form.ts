@@ -54,7 +54,7 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
 
   public model: Type<AddressModel> = AddressModel;
 
-  protected persist(item: AddressModel = this.item): Observable<any> {
+  public persist(item: AddressModel = this.item): Observable<any> {
     item.suburbId = this.value('suburb').id;
     return super.persist(item);
   }

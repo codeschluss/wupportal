@@ -8,10 +8,12 @@ export abstract class Selfrouter {
     return new this().routing;
   }
 
-  protected walk(root: Route[], routes: Route[]): Route[] {
+  protected walk(root: Route[], routes?: Route[]): Route[] {
     const walker = (route, children) => {
       if (route.component === this.constructor) {
-        route.children = children;
+        children
+          ? route.children = children
+          : delete route.children;
       } else if (route.children) {
         route.children = route.children
           .map((child) => walker(child, children));

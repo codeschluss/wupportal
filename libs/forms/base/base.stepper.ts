@@ -114,7 +114,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   public ngOnDestroy(): void {
-    this.router.config = this.walk(this.router.config, []);
+    this.router.config = this.walk(this.router.config, null);
   }
 
   public can(index: number): boolean {

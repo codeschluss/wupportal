@@ -1,4 +1,4 @@
-import { Input, OnInit, Type } from '@angular/core';
+import { Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CrudModel } from '@portal/core';
@@ -17,7 +17,8 @@ export interface FormField {
   value?: any;
 }
 
-export abstract class BaseForm<Model extends CrudModel> implements OnInit {
+export abstract class BaseForm<Model extends CrudModel>
+  implements OnInit, OnDestroy {
 
   @Input()
   public group: FormGroup;
@@ -71,6 +72,21 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
       this.builder.control(field.value, field.tests)));
   }
 
+  public ngOnDestroy(): void {
+    delete this.route.routeConfig.data.persist;
+  }
+
+  public persist(item: Model = this.item): Observable<any> {
+    Object.keys(this.group.controls)
+      .filter((key) => this.group.get(key).dirty)
+      .filter((key) => !this.fields.find((field) => field.name !== key).model)
+      .forEach((key) => item[key] = this.value(key));
+
+    return !this.model['provider'] ? of(item) : item.id
+      ? this.model['provider'].update(item, item.id)
+      : this.model['provider'].create(item);
+  }
+
   public value(field: string): any {
     const control = this.group.get(field);
     return control ? control.value : this.item[field];
@@ -80,17 +96,6 @@ export abstract class BaseForm<Model extends CrudModel> implements OnInit {
 
   protected formed(model: Type<Model>): Type<Model> {
     return Object.defineProperty(model, 'stepper', { value: this.constructor });
-  }
-
-  protected persist(item: Model = this.item): Observable<any> {
-    Object.keys(this.group.controls)
-      .filter((key) => this.group.get(key).dirty)
-      .filter((key) => !this.fields.find((field) => field.name !== key).model)
-      .forEach((key) => item[key] = this.value(key));
-
-    return !this.model['provider'] ? of(item) : item.id
-      ? this.model['provider'].update(item, item.id)
-      : this.model['provider'].create(item);
   }
 
   protected select(key: string): { link: CrudModel[], unlink: CrudModel[] } {

@@ -14,13 +14,13 @@ export class SessionProvider {
   ) {
     this.session = new BehaviorSubject(null);
 
-    localStorage.getItem<SessionModel>('session', {
+    localStorage.getItem<SessionModel>('clientSession', {
       schema: SessionModel.schema as JSONSchemaObject
     }).pipe(
       map((session) => session || new SessionModel()),
       tap((session) => this.session.next(session))
     ).subscribe(() => this.value.subscribe((session) =>
-      localStorage.setItemSubscribe('session', session)));
+      localStorage.setItemSubscribe('clientSession', session)));
   }
 
   public get value(): Observable<SessionModel> {

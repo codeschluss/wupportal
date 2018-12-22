@@ -4,9 +4,9 @@
       <i18n i18n="@@userDetails">userDetails</i18n>
     </ng-template>
     <ng-container *ngIf="user">
-      <user-form [item]="user"></user-form>
-      <button mat-button [disabled]="!form.isValid">
-        <i18n i18n="@@save">save</i18n>
+      <user-form #form [item]="user"></user-form>
+      <button mat-button color="primary" [disabled]="!form.valid">
+        <i18n i18n="@@persist">persist</i18n>
       </button>
     </ng-container>
   </mat-tab>

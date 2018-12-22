@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfroute, TokenResolver } from '@portal/core';
+import { CrudJoiner, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
 import { OrganisationModel } from '../../../realm/organisation/organisation.model';
 import { UserModel } from '../../../realm/user/user.model';
 import { ClientPackage } from '../../../utils/package';
@@ -9,7 +9,7 @@ import { ClientPackage } from '../../../utils/package';
   templateUrl: './account.panel.html'
 })
 
-export class AccountPanelComponent extends Selfroute implements OnInit {
+export class AccountPanelComponent extends Selfrouter implements OnInit {
 
   public user: UserModel;
 

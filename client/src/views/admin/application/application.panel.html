@@ -5,8 +5,8 @@
     </ng-template>
     <ng-container *ngIf="configuration">
       <configuration-form #form [item]="configuration"></configuration-form>
-      <button mat-button [disabled]="!form.isValid" (click)="form.save()">
-        <i18n i18n="@@save">save</i18n>
+      <button mat-button color="primary" [disabled]="!form.valid">
+        <i18n i18n="@@persist">persist</i18n>
       </button>
     </ng-container>
   </mat-tab>

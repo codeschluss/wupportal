@@ -100,7 +100,7 @@ export class TokenProvider {
       refresh: new RefreshTokenModel()
     };
 
-    return token.exp * 1000 > Date.now()
+    return token && token.exp * 1000 > Date.now()
       ? this.tokenService.apiRefreshResponse(token).pipe(
         map((response) => this.tokenize(response)),
         map((tokens) => ({ access: tokens.access, refresh: token })),

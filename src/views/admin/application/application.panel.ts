@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfroute } from '@portal/core';
+import { CrudJoiner, CrudResolver, Selfrouter } from '@portal/core';
 import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
 
 @Component({
   templateUrl: './application.panel.html'
 })
 
-export class ApplicationPanelComponent extends Selfroute implements OnInit {
+export class ApplicationPanelComponent extends Selfrouter implements OnInit {
 
   public configuration: ConfigurationModel[];
 

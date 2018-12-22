@@ -45,7 +45,8 @@ export abstract class CrudProvider
   protected abstract service: Service;
 
   public create(item: Model): Observable<any> {
-    return this.call(this.methods.create, item);
+    return this.call(this.methods.create, item).pipe(
+      map((response) => this.cast<Model[]>(response)));
   }
 
   public delete(id: string): Observable<any> {
@@ -64,8 +65,9 @@ export abstract class CrudProvider
       tap((response) => this.link(response)));
   }
 
-  public update(id: string, item: Model): Observable<any> {
-    return this.call(this.methods.update, id, item);
+  public update(item: Model, id: string): Observable<any> {
+    return this.call(this.methods.update, item, id).pipe(
+      map((response) => this.cast<Model[]>(response)));
   }
 
   protected apply(method:

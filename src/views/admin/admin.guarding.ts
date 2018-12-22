@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
 import { JwtClaims, Pathfinder, SplashHostComponent, TokenProvider } from '@portal/core';
 import { take } from 'rxjs/operators';
-import { ClientComponent } from '../../client.component';
 import { ActivityFormComponent } from '../../realm/activity/activity.form';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { ActivityTableComponent } from '../../realm/activity/activity.table';
@@ -47,6 +46,9 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
       switch (route.component) {
         default: return claimed.superUser;
 
+        case AccountPanelComponent:
+        return route.params.uuid === claimed.userId;
+
         case ActivityFormComponent:
         case ActivityTableComponent:
         case AddressFormComponent:
@@ -58,9 +60,6 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
         case TranslationFormComponent:
         case UserFormComponent:
         return claimed.userId;
-
-        case AccountPanelComponent:
-        return route.params.uuid === claimed.userId;
 
         case OrganisationPanelComponent:
         return claimed.superUser
@@ -82,9 +81,9 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
       }
     })()) { return true; }
 
-    this.router.navigate(claimed.userId
-      ? this.pathfinder.to(AdminComponent)
-      : this.pathfinder.to(ClientComponent));
+    claimed.userId
+      ? this.router.navigate(this.pathfinder.to(AdminComponent))
+      : this.router.navigateByUrl('/');
   }
 
 }

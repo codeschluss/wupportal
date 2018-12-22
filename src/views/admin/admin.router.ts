@@ -22,7 +22,6 @@ import { OrganisationPanelComponent } from './organisation/organisation.panel';
     {
       path: '',
       component: AdminComponent,
-      canActivate: [AdminGuarding],
       canActivateChild: [AdminGuarding],
       children: [
         AccountPanelComponent.routing,

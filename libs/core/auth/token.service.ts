@@ -19,7 +19,7 @@ export class TokenService {
 
     return this.call(new HttpRequest<any>(
       'POST',
-      this.coreSettings.authUrl,
+      this.coreSettings.apiAuthUrl,
       {
         username: username,
         password: password
@@ -37,7 +37,7 @@ export class TokenService {
     const header = token ? { 'Authorization': `Bearer ${token.raw}` } : { };
     return this.call(new HttpRequest<any>(
       'GET',
-      this.coreSettings.refreshUrl,
+      this.coreSettings.apiRefreshUrl,
       null,
       {
         headers: new HttpHeaders(header),

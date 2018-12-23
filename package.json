@@ -22,6 +22,10 @@
       "organisationUser": "approvedOrgas",
       "superUser": "superuser",
       "userId": "id"
+    },
+    "nominatim": {
+      "endpoint": "https://nominatim.openstreetmap.org/search",
+      "params": "format=json&addressdetails=1"
     }
   },
   "repository": {

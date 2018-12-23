@@ -21,6 +21,10 @@ export class ClientPackage {
       organisationUser: string,
       superUser: string,
       userId: string
+    },
+    nominatim: {
+      endpoint: string,
+      params: string
     }
   } {
     return this.packageJson.config;

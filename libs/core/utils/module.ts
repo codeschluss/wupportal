@@ -3,7 +3,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { MatButtonModule, MatDialogModule, MatProgressBarModule } from '@angular/material';
 import { RouterModule, UrlSerializer } from '@angular/router';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { TokenProvider } from '../auth/token.provider';
 import { ErrorDialogComponent } from '../error/error.dialog';
@@ -39,8 +38,7 @@ import { SplashChildComponent, SplashHostComponent } from './splash';
     MatButtonModule,
     MatDialogModule,
     MatProgressBarModule,
-    RouterModule,
-    ServiceWorkerModule.register('ngsw-worker.js')
+    RouterModule
   ],
   providers: [
     { provide: CoreSettings, useClass: CoreSettings },

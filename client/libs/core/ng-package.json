@@ -16,7 +16,6 @@
       "@angular/material": "7.2.0",
       "@angular/platform-browser": "7.1.4",
       "@angular/router": "7.1.4",
-      "@angular/service-worker": "7.1.4",
       "@ngx-pwa/local-storage": "7.2.1",
       "@ngx-translate/i18n-polyfill": "1.0.0",
       "ng-packagr": "4.4.5",

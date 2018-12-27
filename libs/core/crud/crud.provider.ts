@@ -74,7 +74,7 @@ export abstract class CrudProvider
     (...args: any) => Observable<StrictHttpResponse<any>>):
     (...args: any) => Observable<StrictHttpResponse<any>> {
 
-    return (...args: any) => method.call(this.service, ...args).toPromise();
+    return (...args: any) => method.call(this.service, ...args);
   }
 
   protected based(model: Type<Model>): Type<Model> {

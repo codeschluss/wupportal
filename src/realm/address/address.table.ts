@@ -44,6 +44,7 @@ export class AddressTableComponent extends BaseTable<AddressModel> {
     },
     {
       name: 'suburb',
+      sort: true,
       value: (item) => item.suburb.name
     },
   ];

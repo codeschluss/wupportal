@@ -4,6 +4,7 @@ import { ActivityEntity } from '../../api/models/activity-entity';
 import { AddressModel } from '../address/address.model';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
+import { ProviderModel } from '../provider/provider.model';
 import { ScheduleModel } from '../schedule/schedule.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
@@ -24,6 +25,7 @@ export class ActivityModel
   public address: Observable<AddressModel>;
   public category: Observable<CategoryModel>;
   public organisation: Observable<OrganisationModel>;
+  public provider: Observable<ProviderModel>;
   public schedules: Observable<ScheduleModel[]>;
   public tags: Observable<TagModel[]>;
   public targetGroups: Observable<TargetGroupModel[]>;

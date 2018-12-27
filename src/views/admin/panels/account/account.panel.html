@@ -1,29 +1,30 @@
 <mat-tab-group>
-  <mat-tab>
+  <mat-tab id="details">
     <ng-template matTabLabel>
       <i18n i18n="@@userDetails">userDetails</i18n>
     </ng-template>
     <ng-container *ngIf="user">
       <user-form #form [item]="user"></user-form>
-      <button mat-button color="primary" [disabled]="!form.valid">
+      <button mat-button color="primary"
+        [disabled]="!form.valid || group.pristine" (click)="persist()">
         <i18n i18n="@@persist">persist</i18n>
       </button>
     </ng-container>
   </mat-tab>
 
-  <mat-tab [disabled]="!user.organisations">
+  <mat-tab id="organisations" [disabled]="!user.organisations">
     <ng-template matTabLabel>
       <i18n i18n="@@userOrganisations">userOrganisations</i18n>
     </ng-template>
     <ng-container *ngIf="user.organisations">
-      <organisation-table [items]="user.organisations">
+      <organisation-table #table [items]="user.organisations">
         <ng-container matColumnDef="approved">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@approved">approved</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <mat-checkbox disabled [checked]="isApproved(item)">
-            </mat-checkbox>
+            <mat-slide-toggle disabled [checked]="approved(item)">
+            </mat-slide-toggle>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="admin">
@@ -31,20 +32,35 @@
             <i18n i18n="@@admin">admin</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <mat-checkbox disabled [checked]="isAdmin(item)">
-            </mat-checkbox>
+            <mat-slide-toggle disabled [checked]="admin(item)">
+            </mat-slide-toggle>
           </mat-cell>
         </ng-container>
       </organisation-table>
     </ng-container>
   </mat-tab>
 
-  <mat-tab [disabled]="!user.organisations">
+  <mat-tab id="activities" [disabled]="!user.organisations">
     <ng-template matTabLabel>
       <i18n i18n="@@userActivities">userActivities</i18n>
     </ng-template>
     <ng-container *ngIf="user.activities">
-      <activity-table editable [items]="user.activities">
+      <activity-table #table [items]="user.activities">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
       </activity-table>
     </ng-container>
   </mat-tab>

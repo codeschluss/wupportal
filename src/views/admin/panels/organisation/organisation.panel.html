@@ -1,0 +1,109 @@
+<mat-tab-group [selectedIndex]="index">
+  <mat-tab id="organisations">
+    <ng-template matTabLabel>
+      <i18n i18n="@@organisations">organisations</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <organisation-table #table [items]="organisations">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </organisation-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="activities">
+    <ng-template matTabLabel>
+      <i18n i18n="@@activities">activities</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <activity-table #table [items]="activities">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </activity-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="providers">
+    <ng-template matTabLabel>
+      <i18n i18n="@@providers">providers</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <provider-table #table [items]="providers">
+        <ng-container matColumnDef="admin">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@admin">admin</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle [checked]="item.admin"
+              (change)="grantAdmin(item, $event.checked)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button color="warn"
+              (click)="grantUser(item, false)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </provider-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="requests" [disabled]="!requests.length">
+    <ng-template matTabLabel>
+      <span matBadgeOverlap="false" [matBadge]="requests.length || null">
+        <i18n i18n="@@requests">requests</i18n>
+      </span>
+    </ng-template>
+    <ng-template matTabContent>
+      <provider-table #table [items]="requests">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="grantUser(table, item, true)">
+              <i18n i18n="@@approve">approve</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="grantUser(table, item, false)">
+              <i18n i18n="@@deny">deny</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </provider-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

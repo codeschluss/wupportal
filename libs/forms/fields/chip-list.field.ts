@@ -1,7 +1,7 @@
 import { COMMA, ENTER, SEMICOLON, SPACE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatChipInputEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { CrudModel } from '@portal/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -18,6 +18,7 @@ import { BaseFieldComponent } from '../base/base.field';
       </ng-container>
       <input #input
         [formControl]="search"
+        [id]="field.name"
         [matAutocomplete]="auto"
         [matChipInputFor]="chips"
         [matChipInputSeparatorKeyCodes]="keys"
@@ -35,9 +36,6 @@ import { BaseFieldComponent } from '../base/base.field';
 })
 
 export class ChipListFieldComponent extends BaseFieldComponent {
-
-  @ViewChild(MatAutocompleteTrigger)
-  public autocomplete: MatAutocompleteTrigger;
 
   @ViewChild('input')
   public input: ElementRef<HTMLInputElement>;

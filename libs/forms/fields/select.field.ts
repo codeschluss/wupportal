@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSelect } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
+  styles: ['input { display: none; }'],
   template: BaseFieldComponent.template(`
+    <input [id]="field.name">
     <mat-select [formControl]="select" [multiple]="field.multi">
       <ng-container *ngFor="let item of field.options">
         <mat-option [value]="item.id">
@@ -17,10 +20,15 @@ import { BaseFieldComponent } from '../base/base.field';
 
 export class SelectFieldComponent extends BaseFieldComponent {
 
+  @ViewChild(MatSelect)
+  public input: MatSelect;
+
   public select: FormControl = new FormControl();
 
   protected ngPostInit(): void {
+    this.input._onFocus = () => this.input.open();
     if (this.value) { this.select.setValue(this.toId(this.value)); }
+
     this.select.valueChanges
       .pipe(map((change) => this.toModel(change)))
       .subscribe((change) => this.value = change);

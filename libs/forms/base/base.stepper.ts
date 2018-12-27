@@ -33,14 +33,12 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
             </ng-container>
           </a>
         </ng-container>
-        <span style="flex-grow: 1;"></span>
-        <a mat-tab-link (click)="quit()">
+        <span [style.flexGrow]="1"></span>
+        <a mat-tab-link (click)="location.back()">
           <i18n i18n="@@close">close</i18n>
         </a>
       </nav>
-
       <router-outlet></router-outlet>
-
       <ng-container *ngIf="hasPrev">
         <button mat-button replaceUrl
           [disabled]="!valid" [routerLink]="link('-1')">
@@ -67,8 +65,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   public get hasSave(): boolean { return this.index === this.steps.length - 1; }
 
   public get index(): number {
-    return this.route.snapshot.firstChild ? this.steps.findIndex((step) =>
-      step.name === this.route.snapshot.firstChild.routeConfig.path) : 0;
+    return !this.route.snapshot.firstChild ? 0 : this.steps.findIndex(
+      (step) => step.name === this.route.snapshot.firstChild.routeConfig.path);
   }
 
   public get item(): Model {
@@ -97,10 +95,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   public constructor(
+    public location: Location,
     protected route: ActivatedRoute,
     protected router: Router,
     private builder: FormBuilder,
-    private location: Location,
   ) {
     super();
   }
@@ -130,20 +128,17 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     const routes = this.route.snapshot.routeConfig.children;
     const root = routes.find((child) => child.path === this.root);
 
-    forkJoin(...routes.filter((r) => r.path !== this.root).map((route) =>
-      route.data.persist().pipe(map((item) => ({ [route.path]: item })))
+    forkJoin(...routes.filter((route) => route !== root).map(
+      (route) => route.data.persist().pipe(map((item) => [route.path, item]))
     )).pipe(
-      map((items) => items.reduce((a, b) => Object.assign(a, b))),
       mergeMap((items) => root.data.persist(this.prepare(items)))
-    ).subscribe((item) => console.log('OUT', item));
+    ).subscribe(/* TODO: Event handling */);
   }
 
-  public quit(): void {
-    this.location.back();
-  }
-
-  protected prepare(items: { [field: string]: CrudModel }): Model {
-    return Object.assign(this.item, items);
+  private prepare(items: [string, CrudModel][]): Model {
+    return Object.defineProperties(this.item, items
+      .map((item) => ({ [item[0]]: { value: item[1] } }))
+      .reduce((a, b) => Object.assign(a, b)));
   }
 
   private routes(): Route[] {

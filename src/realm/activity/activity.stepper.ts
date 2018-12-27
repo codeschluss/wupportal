@@ -1,5 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner, CrudModel } from '@portal/core';
+import { CrudJoiner } from '@portal/core';
 import { BaseStepper, FormStep } from '@portal/forms';
 import { AddressFormComponent } from '../address/address.form';
 import { ScheduleFormComponent } from '../schedule/schedule.form';
@@ -54,12 +54,5 @@ export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
     .with('targetGroups');
 
   protected model: Type<ActivityModel> = ActivityModel;
-
-  protected prepare(items: { [key: string]: CrudModel }): ActivityModel {
-    return Object.defineProperties(this.item, {
-      address: { value: items.address },
-      addressId: { value: items.address.id }
-    });
-  }
 
 }

@@ -1,14 +1,16 @@
 import { Input, OnDestroy, OnInit, Type } from '@angular/core';
-import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CrudModel } from '@portal/core';
 import { Observable, of } from 'rxjs';
 import { BaseFieldComponent } from './base.field';
+import { BaseStepper } from './base.stepper';
 
 export interface FormField {
   name: string;
   input: Type<BaseFieldComponent>;
   label?: string;
+  locked?: boolean;
   model?: Type<CrudModel>;
   multi?: boolean;
   options?: CrudModel[];
@@ -33,15 +35,18 @@ export abstract class BaseForm<Model extends CrudModel>
   protected static template(template: string): string {
     return template + `
       <form [formGroup]="group">
-        <mat-list>
-          <ng-container *ngFor="let field of fields">
-            <mat-list-item>
+        <ng-container *ngFor="let field of fields">
+          <section>
+            <label [for]="field.name">
               <ng-container *ngTemplateOutlet="label; context: { case: field }">
               </ng-container>
+              <ng-container *ngIf="required(field)">*</ng-container>
+            </label>
+            <span>
               <base-field [field]="field" [group]="group"></base-field>
-            </mat-list-item>
-          </ng-container>
-        </mat-list>
+            </span>
+          </section>
+        </ng-container>
       </form>
     `;
   }
@@ -59,7 +64,7 @@ export abstract class BaseForm<Model extends CrudModel>
     const data = this.route.snapshot.data;
     this.group = this.group || data.group || this.builder.group({ });
     this.item = this.item || data.item || new this.model();
-
+    this.route.routeConfig.data.persist = this.persist.bind(this);
     this.fields = this.fields.map((field) => Object.assign(field, {
       label: field.label || 'name',
       options: field.options || data[field.name],
@@ -67,24 +72,27 @@ export abstract class BaseForm<Model extends CrudModel>
     }));
 
     this.ngPostInit();
-    this.route.routeConfig.data.persist = this.persist.bind(this);
-    this.fields.forEach((field) => this.group.addControl(field.name,
-      this.builder.control(field.value, field.tests)));
+    this.fields.forEach((field) => this.form(field));
   }
 
   public ngOnDestroy(): void {
-    delete this.route.routeConfig.data.persist;
+    if (!BaseStepper.isPrototypeOf(this.route.parent.routeConfig.component)) {
+      delete this.route.routeConfig.data.persist;
+    }
   }
 
   public persist(item: Model = this.item): Observable<any> {
     Object.keys(this.group.controls)
-      .filter((key) => this.group.get(key).dirty)
-      .filter((key) => !this.fields.find((field) => field.name !== key).model)
+      .filter((key) => !this.fields.find((field) => field.name === key).model)
       .forEach((key) => item[key] = this.value(key));
 
     return !this.model['provider'] ? of(item) : item.id
       ? this.model['provider'].update(item, item.id)
       : this.model['provider'].create(item);
+  }
+
+  public required(field: FormField): boolean {
+    return field.tests && field.tests.includes(Validators.required);
   }
 
   public value(field: string): any {
@@ -94,8 +102,11 @@ export abstract class BaseForm<Model extends CrudModel>
 
   protected ngPostInit(): void { }
 
-  protected formed(model: Type<Model>): Type<Model> {
-    return Object.defineProperty(model, 'stepper', { value: this.constructor });
+  protected form(field: FormField): void {
+    this.group.addControl(field.name, this.builder.control({
+      disabled: field.locked,
+      value: field.value
+    }, field.tests));
   }
 
   protected select(key: string): { link: CrudModel[], unlink: CrudModel[] } {

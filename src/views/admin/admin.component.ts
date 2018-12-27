@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Pathfinder, TokenProvider } from '@portal/core';
 import { filter, map, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
-import { AccountPanelComponent } from './account/account.panel';
+import { AccountPanelComponent } from './panels/account/account.panel';
 
 @Component({
   template: `<router-outlet></router-outlet>`
@@ -16,11 +16,12 @@ export class AdminComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private tokenProvider: TokenProvider
-  ) { }
+  ) {
+    console.log('tokenProvider', tokenProvider);
+  }
 
   public ngOnInit(): void {
     const claim = ClientPackage.config.jwtClaims.userId;
-
     this.tokenProvider.value
       .pipe(take(1), map((tokens) => tokens.access[claim]))
       .subscribe((userId) => this.navigate(userId));

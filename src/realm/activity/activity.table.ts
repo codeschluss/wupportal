@@ -34,10 +34,12 @@ export class ActivityTableComponent extends BaseTable<ActivityModel> {
     },
     {
       name: 'organisation',
+      sort: true,
       value: (item) => item.provider.organisation.name
     },
     {
       name: 'category',
+      sort: true,
       value: (item) => item.category.name
     }
   ];

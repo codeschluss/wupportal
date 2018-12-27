@@ -11,11 +11,7 @@ export class PositionService {
       return from(new Promise((resolve, reject) => locator.getCurrentPosition(
         (position) => resolve(position),
         (error) => reject(error),
-        {
-          enableHighAccuracy: true,
-          maximumAge: 0,
-          timeout: 0
-        }
+        { enableHighAccuracy: true }
       )));
     } else {
       return of(null);

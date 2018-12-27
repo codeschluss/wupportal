@@ -1,9 +1,9 @@
 import { AfterViewInit, ContentChildren, Input, QueryList, Type, ViewChild } from '@angular/core';
-import { MatColumnDef, MatDialog, MatPaginator, MatSort, MatTable } from '@angular/material';
+import { MatColumnDef, MatPaginator, MatSort, MatTable } from '@angular/material';
+import { Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, Pathfinder, StrictHttpResponse } from '@portal/core';
-import { BehaviorSubject, empty, merge, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
-import { ConfirmNoteComponent } from '../note/confirm.note';
 
 export interface TableColumn {
   name: string;
@@ -13,9 +13,6 @@ export interface TableColumn {
 
 export abstract class BaseTable<Model extends CrudModel>
   implements AfterViewInit {
-
-  @Input()
-  public editable: any;
 
   @Input()
   public items: Model[];
@@ -42,6 +39,8 @@ export abstract class BaseTable<Model extends CrudModel>
 
   protected abstract model: Type<Model>;
 
+  private data: Model[];
+
   protected static template(template: string): string {
     return template + `
       <mat-table matSort [dataSource]="source.asObservable()">
@@ -61,80 +60,53 @@ export abstract class BaseTable<Model extends CrudModel>
           </ng-container>
         </ng-container>
         <ng-content></ng-content>
-        <ng-container matColumnDef="actions" *ngIf="!this.readonly">
-          <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
-          </mat-header-cell>
-          <mat-cell *matCellDef="let item">
-            <button mat-button [routerLink]="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
-            </button>
-            <button mat-button color="warn" (click)="delete(item)">
-              <i18n i18n="@@delete">delete</i18n>
-            </button>
-          </mat-cell>
-        </ng-container>
       </mat-table>
       <mat-paginator [pageSize]="10"></mat-paginator>
     `;
   }
 
-  public get readonly(): boolean { return this.editable === undefined; }
-
   public constructor(
-    private dialog: MatDialog,
     private pathfinder: Pathfinder,
-    private resolver: CrudResolver
+    private resolver: CrudResolver,
+    private router: Router
   ) { }
 
   public ngAfterViewInit(): void {
+    this.data = this.items;
     this.sorter.disableClear = true;
     this.views.forEach((view) => this.table.addColumnDef(view));
     this.collate = [
       ...this.columns.map((column) => column.name),
-      ...this.views.map((def) => def.name),
-      ...(this.readonly ? [] : ['actions'])
+      ...this.views.map((def) => def.name)
     ];
 
     merge(
       of(null),
       this.pager.page,
       this.sorter.sortChange.pipe(tap(() => this.pager.pageIndex = 0))
-    ).subscribe(() => this.items ? this.relist() : this.reload());
+    ).subscribe(() => this.reload());
   }
 
-  public delete(item: Model): void {
-    const dialog = this.dialog.open(ConfirmNoteComponent, { data: item });
-    const provider = item.constructor['provider'];
-
-    dialog.afterClosed().pipe(
-      mergeMap((yes) => yes ? provider.delete(item.id) : empty())
-    ).subscribe(() => {
-      if (this.items) {
-        this.items.splice(this.items.indexOf(item), 1);
-        this.relist();
-      } else {
-        this.reload();
+  public delete(item: Model): Observable<any> {
+    return this.model['provider'].delete(item.id).pipe(tap(() => {
+      if (this.data) {
+        this.data.splice(this.data.indexOf(item), 1);
       }
-    });
+
+      this.reload();
+    }));
   }
 
-  public edit(item: Model): string[] {
-    return this.pathfinder.to(item.constructor['stepper']).concat(item.id);
+  public edit(item: Model): void {
+    this.router.navigate(this.pathfinder
+      .to(this.model['stepper']).concat(item.id));
   }
 
-  private relist(): void {
-    this.pager.length = this.items.length;
-    this.source.next(this.items.sort((a, b) => this.sorter.direction === 'asc'
-      ? (a[this.sorter.active] || '').localeCompare(b[this.sorter.active])
-      : (b[this.sorter.active] || '').localeCompare(a[this.sorter.active])
-    ).slice(
-      this.pager.pageIndex * this.pager.pageSize,
-      (this.pager.pageIndex + 1) * this.pager.pageSize
-    ));
+  public reload(): void {
+    this.data ? this.relist() : this.recall();
   }
 
-  private reload(): void {
+  private recall(): void {
     const provider = this.model['provider'].system;
     provider.call(provider.methods.readAll, {
       dir: this.sorter.direction,
@@ -148,6 +120,23 @@ export abstract class BaseTable<Model extends CrudModel>
       map((response) => provider.cast(response)),
       mergeMap((items) => this.resolver.refine(items as any, this.joiner.graph))
     ).subscribe((items) => this.source.next(items));
+  }
+
+  private relist(): void {
+    this.pager.length = this.data.length;
+    this.source.next((this.sort(this.data)).slice(
+      this.pager.pageIndex * this.pager.pageSize,
+      (this.pager.pageIndex + 1) * this.pager.pageSize
+    ));
+  }
+
+  private sort(items: Model[]): Model[] {
+    const column = this.columns.find((c) => c.name === this.sorter.active);
+    const value = column ? column.value : (item) => item[this.sorter.active];
+
+    return items.sort((a, b) => this.sorter.direction === 'asc'
+      ? (value(a) || '').localeCompare(value(b) || '')
+      : (value(b) || '').localeCompare(value(a) || ''));
   }
 
   private page(response: StrictHttpResponse<any>) {

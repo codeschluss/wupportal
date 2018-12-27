@@ -4,14 +4,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
-import { BooleanFieldComponent } from '../field/boolean.field';
-import { ChipListFieldComponent } from '../field/chip-list.field';
-import { DatetimeFieldComponent } from '../field/datetime.field';
-import { SelectFieldComponent } from '../field/select.field';
-import { StringFieldComponent } from '../field/string.field';
-import { UploadFieldComponent } from '../field/upload.field';
-import { ConfirmNoteComponent } from '../note/confirm.note';
-import { PersistNoteComponent } from '../note/persist.note';
+import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
+import { SelectDialogComponent } from '../dialogs/select.dialog';
+import { BooleanFieldComponent } from '../fields/boolean.field';
+import { ChipListFieldComponent } from '../fields/chip-list.field';
+import { DatetimeFieldComponent } from '../fields/datetime.field';
+import { SelectFieldComponent } from '../fields/select.field';
+import { StringFieldComponent } from '../fields/string.field';
+import { UploadFieldComponent } from '../fields/upload.field';
 import { FileValueAccessorDirective } from './accesor';
 
 const declarations: Type<any>[] = [
@@ -20,8 +20,8 @@ const declarations: Type<any>[] = [
 ];
 
 const entryComponents: Type<any>[] = [
-  ConfirmNoteComponent,
-  PersistNoteComponent
+  ConfirmDialogComponent,
+  SelectDialogComponent
 ];
 
 const fields: Type<BaseFieldComponent>[] = [

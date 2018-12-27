@@ -6,11 +6,16 @@ import { BaseFieldComponent } from '../base/base.field';
     <ng-container *ngIf="field.multi; then txt; else str"></ng-container>
 
     <ng-template #txt>
-      <textarea matInput matTextareaAutosize [formControlName]="field.name">
+      <textarea matInput matTextareaAutosize
+        [formControlName]="field.name"
+        [id]="field.name">
       </textarea>
     </ng-template>
     <ng-template #str>
-      <input matInput [formControlName]="field.name" [type]="field.type">
+      <input matInput
+        [formControlName]="field.name"
+        [id]="field.name"
+        [type]="field.type">
     </ng-template>
   `)
 })

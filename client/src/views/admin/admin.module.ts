@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
-import { MatButtonModule, MatCheckboxModule, MatTabsModule } from '@angular/material';
+import { MatBadgeModule, MatButtonModule, MatSlideToggleModule, MatTabsModule } from '@angular/material';
 import { CoreModule, CrudModel } from '@portal/core';
 import { BaseForm, BaseStepper, BaseTable, FormsModule } from '@portal/forms';
 import { ActivityFormComponent } from '../../realm/activity/activity.form';
@@ -20,6 +20,7 @@ import { LanguageTableComponent } from '../../realm/language/language.table';
 import { OrganisationFormComponent } from '../../realm/organisation/organisation.form';
 import { OrganisationStepperComponent } from '../../realm/organisation/organisation.stepper';
 import { OrganisationTableComponent } from '../../realm/organisation/organisation.table';
+import { ProviderTableComponent } from '../../realm/provider/provider.table';
 import { ScheduleFormComponent } from '../../realm/schedule/schedule.form';
 import { SuburbFormComponent } from '../../realm/suburb/suburb.form';
 import { SuburbStepperComponent } from '../../realm/suburb/suburb.stepper';
@@ -34,11 +35,11 @@ import { TranslationFormComponent } from '../../realm/translation/translation.fo
 import { UserFormComponent } from '../../realm/user/user.form';
 import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { UserTableComponent } from '../../realm/user/user.table';
-import { AccountPanelComponent } from './account/account.panel';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
-import { ApplicationPanelComponent } from './application/application.panel';
-import { OrganisationPanelComponent } from './organisation/organisation.panel';
+import { AccountPanelComponent } from './panels/account/account.panel';
+import { ApplicationPanelComponent } from './panels/application/application.panel';
+import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 
 const forms: Type<BaseForm<CrudModel>>[] = [
   ActivityFormComponent,
@@ -74,6 +75,7 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   CategoryTableComponent,
   LanguageTableComponent,
   OrganisationTableComponent,
+  ProviderTableComponent,
   SuburbTableComponent,
   TagTableComponent,
   TargetGroupTableComponent,
@@ -104,8 +106,9 @@ const panels: Type<any>[] = [
     CommonModule,
     CoreModule,
     FormsModule,
+    MatBadgeModule,
     MatButtonModule,
-    MatCheckboxModule,
+    MatSlideToggleModule,
     MatTabsModule
   ]
 })

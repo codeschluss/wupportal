@@ -34,12 +34,7 @@ export class UserTableComponent extends BaseTable<UserModel> {
       name: 'phone',
       sort: true,
       value: (item) => item.phone
-    },
-    {
-      name: 'superuser',
-      sort: true,
-      value: (item) => item.superuser
-    },
+    }
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(UserModel);

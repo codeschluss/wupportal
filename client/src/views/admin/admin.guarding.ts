@@ -15,9 +15,9 @@ import { TranslationFormComponent } from '../../realm/translation/translation.fo
 import { UserFormComponent } from '../../realm/user/user.form';
 import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { ClientPackage } from '../../utils/package';
-import { AccountPanelComponent } from './account/account.panel';
 import { AdminComponent } from './admin.component';
-import { OrganisationPanelComponent } from './organisation/organisation.panel';
+import { AccountPanelComponent } from './panels/account/account.panel';
+import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuarding implements CanActivate, CanActivateChild {

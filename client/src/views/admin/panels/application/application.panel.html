@@ -1,0 +1,200 @@
+<mat-tab-group [selectedIndex]="index">
+  <mat-tab id="configuration">
+    <ng-template matTabLabel>
+      <i18n i18n="@@configuration">configuration</i18n>
+    </ng-template>
+    <ng-container *ngIf="configuration">
+      <configuration-form #form [group]="group" [item]="configuration">
+      </configuration-form>
+      <button mat-button color="primary"
+        [disabled]="!form.valid || group.pristine" (click)="persist()">
+        <i18n i18n="@@persist">persist</i18n>
+      </button>
+    </ng-container>
+  </mat-tab>
+
+  <mat-tab id="users">
+    <ng-template matTabLabel>
+      <i18n i18n="@@users">users</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <user-table #table>
+        <ng-container matColumnDef="superUser">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@superUser">superUser</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle [checked]="item.superuser"
+              (change)="grantSuperUser(item, $event.checked)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </user-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="languages">
+    <ng-template matTabLabel>
+      <i18n i18n="@@languages">languages</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <language-table #table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </language-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="categories">
+    <ng-template matTabLabel>
+      <i18n i18n="@@categories">categories</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <category-table #table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </category-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="targetGroups">
+    <ng-template matTabLabel>
+      <i18n i18n="@@targetGroups">targetGroups</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <target-group-table #table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </target-group-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="tags">
+    <ng-template matTabLabel>
+      <i18n i18n="@@tags">tags</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <tag-table #table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </tag-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="suburbs">
+    <ng-template matTabLabel>
+      <i18n i18n="@@suburbs">suburbs</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <suburb-table #table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </suburb-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="addresses">
+    <ng-template matTabLabel>
+      <i18n i18n="@@addresses">addresses</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <address-table #table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-button
+              (click)="edit(table, item)">
+              <i18n i18n="@@edit">edit</i18n>
+            </button>
+            <button mat-button color="warn"
+              (click)="delete(table, item)">
+              <i18n i18n="@@delete">delete</i18n>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </address-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

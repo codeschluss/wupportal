@@ -66,8 +66,8 @@ export class BaseFieldComponent implements OnInit {
   public toModel(input: string): CrudModel;
   public toModel(input: string[]): CrudModel[];
   public toModel(input: string | string[]): CrudModel | CrudModel[] {
-    const modeler = (id: string) =>
-      this.field.options.find((item) => item.id === id);
+    const modeler = (id: string) => this.field.options
+      .find((item) => item.id === id);
 
     return Array.isArray(input)
       ? input.map((id) => modeler(id))

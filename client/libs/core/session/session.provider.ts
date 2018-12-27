@@ -19,8 +19,8 @@ export class SessionProvider {
     }).pipe(
       map((session) => session || new SessionModel()),
       tap((session) => this.session.next(session))
-    ).subscribe(() => this.value.subscribe((session) =>
-      localStorage.setItemSubscribe('clientSession', session)));
+    ).subscribe(() => this.value.subscribe(
+      (session) => localStorage.setItemSubscribe('clientSession', session)));
   }
 
   public get value(): Observable<SessionModel> {

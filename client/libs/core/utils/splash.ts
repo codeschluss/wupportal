@@ -29,9 +29,7 @@ export class SplashHostComponent implements AfterViewInit, OnDestroy {
       this.splash = this.dialog.open(SplashChildComponent, {
         data: this.content,
         maxHeight: '80vh',
-        maxWidth: '80vw',
-        minHeight: '80vh',
-        minWidth: '80vw'
+        maxWidth: '80vw'
       });
     } else {
       this.location.back();

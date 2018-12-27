@@ -51,7 +51,10 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
           let value = null;
 
           if ((item._embedded || { })[link.field]) {
-            value = Object.assign(new link.model(), item._embedded[link.field]);
+            const embedded = item._embedded[link.field];
+            value = Array.isArray(embedded)
+              ? embedded.map((e) => Object.assign(new link.model(), e))
+              : Object.assign(new link.model(), embedded);
           } else {
             const params = [
               item.id,

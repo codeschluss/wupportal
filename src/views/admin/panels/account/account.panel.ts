@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, TokenResolver } from '@portal/core';
+import { CrudJoiner, CrudModel, CrudResolver, TokenResolver } from '@portal/core';
+import { BaseTable } from '@portal/forms';
+import { filter, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
 import { UserModel } from '../../../../realm/user/user.model';
 import { ClientPackage } from '../../../../utils/package';
@@ -44,8 +46,20 @@ export class AccountPanelComponent extends BasePanel {
     return this.route.snapshot.data.tokens.access[claim].includes(item.id);
   }
 
+  public demoteUser(
+    table: BaseTable<CrudModel>,
+    item: OrganisationModel
+  ): void {
+    this.confirm(item).pipe(
+      filter(Boolean),
+      mergeMap(() => this.user.constructor['provider']
+        .unlinkOrganisation(this.user.id, item.id))
+    ).subscribe(() => table.remove(item));
+  }
+
   public persist(): void {
-    this.route.routeConfig.data.persist().subscribe(/* TODO: Event handling */);
+    this.route.routeConfig.data.persist()
+      .subscribe(() => this.group.markAsPristine());
   }
 
 }

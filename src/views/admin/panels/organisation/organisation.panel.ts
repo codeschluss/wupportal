@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, TokenResolver } from '@portal/core';
+import { CrudJoiner, CrudModel, CrudResolver, TokenResolver } from '@portal/core';
+import { BaseTable } from '@portal/forms';
+import { filter, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/activity/activity.model';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
 import { ProviderModel } from '../../../../realm/provider/provider.model';
@@ -21,7 +23,7 @@ export class OrganisationPanelComponent extends BasePanel {
       tokens: TokenResolver
     },
     data: {
-      organisations: CrudJoiner.of(OrganisationModel)
+      organisations: CrudJoiner.of(OrganisationModel, { approved: true })
         .with('activities').yield('category')
         .with('activities').yield('provider').yield('organisation')
         .with('address').yield('suburb')
@@ -36,27 +38,57 @@ export class OrganisationPanelComponent extends BasePanel {
 
   public get organisations(): OrganisationModel[] {
     return this.route.snapshot.data.organisations
-      .filter((organisation) => this.administered().includes(organisation.id));
+      .filter((organisation) => this.owned().includes(organisation.id));
   }
 
   public get providers(): ProviderModel[] {
     return this.route.snapshot.data.organisations
-      .filter((organisation) => this.administered().includes(organisation.id))
-      .flatMap((organisation) => this.providence(organisation))
+      .filter((organisation) => this.owned().includes(organisation.id))
+      .flatMap((organisation) => this.provided(organisation))
       .filter((provider) => provider.approved);
   }
 
   public get requests(): ProviderModel[] {
     return this.route.snapshot.data.organisations
-      .filter((organisation) => this.administered().includes(organisation.id))
-      .flatMap((organisation) => this.providence(organisation))
+      .filter((organisation) => this.owned().includes(organisation.id))
+      .flatMap((organisation) => this.provided(organisation))
       .filter((provider) => !provider.approved);
   }
 
-  public grantAdmin(
-    item: ProviderModel,
-    grant: boolean
-  ): void {
+  public approveUser(table: BaseTable<CrudModel>, item: ProviderModel): void {
+    const organisation = item.organisation as any;
+    const user = item.user as any;
+
+    organisation.constructor['provider']
+      .grantOrganisationUser(organisation.id, user.id, true)
+      .subscribe(() => table.remove(item));
+  }
+
+  public blockUser(table: BaseTable<CrudModel>, item: ProviderModel): void {
+    const organisation = item.organisation as any;
+    const user = item.user as any;
+    Object.assign(item, { name: `${user.name} @ ${organisation.name}` });
+
+    this.confirm(item).pipe(
+      filter(Boolean),
+      mergeMap(() => organisation.constructor['provider']
+        .grantOrganisationUser(organisation.id, user.id, false))
+    ).subscribe(() => table.remove(item));
+  }
+
+  public demoteUser(table: BaseTable<CrudModel>, item: ProviderModel): void {
+    const organisation = item.organisation as any;
+    const user = item.user as any;
+    Object.assign(item, { name: `${user.name} @ ${organisation.name}` });
+
+    this.confirm(item).pipe(
+      filter(Boolean),
+      mergeMap(() => organisation.constructor['provider']
+        .unlinkUser(organisation.id, user.id))
+    ).subscribe(() => table.remove(item));
+  }
+
+  public grantAdmin(item: ProviderModel, grant: boolean): void {
     const organisation = item.organisation as any;
     const user = item.user as any;
 
@@ -65,19 +97,7 @@ export class OrganisationPanelComponent extends BasePanel {
       .subscribe();
   }
 
-  public grantUser(
-    item: ProviderModel,
-    grant: boolean
-  ): void {
-    const organisation = item.organisation as any;
-    const user = item.user as any;
-
-    organisation.constructor['provider']
-      .grantOrganisationUser(organisation.id, user.id, grant)
-      .subscribe();
-  }
-
-  private administered(): string[] {
+  private owned(): string[] {
     const organisations = this.route.snapshot.data.organisations;
     const token = this.route.snapshot.data.tokens.access;
 
@@ -86,8 +106,10 @@ export class OrganisationPanelComponent extends BasePanel {
       : token[ClientPackage.config.jwtClaims.organisationAdmin];
   }
 
-  private providence(organisation: OrganisationModel) {
-    const users = organisation.users || [] as any;
+  private provided(organisation: OrganisationModel) {
+    const token = this.route.snapshot.data.tokens.access;
+    const users = (organisation.users || [] as any)
+      .filter((u) => u.id !== token[ClientPackage.config.jwtClaims.userId]);
 
     return users.map((user) => Object.assign(user.provider, {
       organisation: organisation,

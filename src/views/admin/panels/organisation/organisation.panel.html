@@ -11,7 +11,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-button
-              (click)="edit(table, item)">
+              (click)="edit(item)">
               <i18n i18n="@@edit">edit</i18n>
             </button>
             <button mat-button color="warn"
@@ -36,7 +36,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-button
-              (click)="edit(table, item)">
+              (click)="edit(item)">
               <i18n i18n="@@edit">edit</i18n>
             </button>
             <button mat-button color="warn"
@@ -71,7 +71,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-button color="warn"
-              (click)="grantUser(item, false)">
+              (click)="demoteUser(table, item)">
               <i18n i18n="@@delete">delete</i18n>
             </button>
           </mat-cell>
@@ -80,10 +80,10 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="requests" [disabled]="!requests.length">
+  <mat-tab id="requests" *ngIf="requests && requests.length">
     <ng-template matTabLabel>
-      <span matBadgeOverlap="false" [matBadge]="requests.length || null">
-        <i18n i18n="@@requests">requests</i18n>
+      <span matBadgeOverlap="false" [matBadge]="requests.length">
+        <i18n i18n="@@providerRequests">providerRequests</i18n>
       </span>
     </ng-template>
     <ng-template matTabContent>
@@ -94,12 +94,12 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-button
-              (click)="grantUser(table, item, true)">
+              (click)="approveUser(table, item)">
               <i18n i18n="@@approve">approve</i18n>
             </button>
             <button mat-button color="warn"
-              (click)="grantUser(table, item, false)">
-              <i18n i18n="@@deny">deny</i18n>
+              (click)="blockUser(table, item)">
+              <i18n i18n="@@reject">reject</i18n>
             </button>
           </mat-cell>
         </ng-container>

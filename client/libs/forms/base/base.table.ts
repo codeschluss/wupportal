@@ -1,8 +1,7 @@
 import { AfterViewInit, ContentChildren, Input, QueryList, Type, ViewChild } from '@angular/core';
 import { MatColumnDef, MatPaginator, MatSort, MatTable } from '@angular/material';
-import { Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, Pathfinder, StrictHttpResponse } from '@portal/core';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@portal/core';
+import { BehaviorSubject, merge, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 
 export interface TableColumn {
@@ -66,9 +65,7 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   public constructor(
-    private pathfinder: Pathfinder,
-    private resolver: CrudResolver,
-    private router: Router
+    private resolver: CrudResolver
   ) { }
 
   public ngAfterViewInit(): void {
@@ -87,26 +84,16 @@ export abstract class BaseTable<Model extends CrudModel>
     ).subscribe(() => this.reload());
   }
 
-  public delete(item: Model): Observable<any> {
-    return this.model['provider'].delete(item.id).pipe(tap(() => {
-      if (this.data) {
-        this.data.splice(this.data.indexOf(item), 1);
-      }
-
-      this.reload();
-    }));
-  }
-
-  public edit(item: Model): void {
-    this.router.navigate(this.pathfinder
-      .to(this.model['stepper']).concat(item.id));
-  }
-
   public reload(): void {
-    this.data ? this.relist() : this.recall();
+    this.data ? this.relist() : this.refetch();
   }
 
-  private recall(): void {
+  public remove(item: Model): void {
+    if (this.data) { this.data.splice(this.data.indexOf(item), 1); }
+    this.reload();
+  }
+
+  private refetch(): void {
     const provider = this.model['provider'].system;
     provider.call(provider.methods.readAll, {
       dir: this.sorter.direction,
@@ -130,6 +117,12 @@ export abstract class BaseTable<Model extends CrudModel>
     ));
   }
 
+  private page(response: StrictHttpResponse<any>) {
+    this.pager.length = response.body.page.totalElements;
+    this.pager.pageIndex = response.body.page.number;
+    this.pager.pageSize = response.body.page.size;
+  }
+
   private sort(items: Model[]): Model[] {
     const column = this.columns.find((c) => c.name === this.sorter.active);
     const value = column ? column.value : (item) => item[this.sorter.active];
@@ -137,12 +130,6 @@ export abstract class BaseTable<Model extends CrudModel>
     return items.sort((a, b) => this.sorter.direction === 'asc'
       ? (value(a) || '').localeCompare(value(b) || '')
       : (value(b) || '').localeCompare(value(a) || ''));
-  }
-
-  private page(response: StrictHttpResponse<any>) {
-    this.pager.length = response.body.page.totalElements;
-    this.pager.pageIndex = response.body.page.number;
-    this.pager.pageSize = response.body.page.size;
   }
 
 }

@@ -31,6 +31,7 @@ export interface Link {
 }
 
 export interface ReadAllParams {
+  [key: string]: any;
   dir?: string;
   filter?: string;
   page?: number;
@@ -39,6 +40,7 @@ export interface ReadAllParams {
 }
 
 export interface ReadEmbeddedParams {
+  [key: string]: any;
   dir?: string;
   sort?: string;
 }

@@ -18,6 +18,7 @@ import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
@@ -258,7 +259,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    *          the schedules
    * @return the list
    */
-  public List<ScheduleEntity> addSchedules(String activityId, List<ScheduleEntity> schedules) {
+  public Set<ScheduleEntity> addSchedules(String activityId, List<ScheduleEntity> schedules) {
     ActivityEntity activity = getById(activityId);
     schedules.stream().forEach(scheduleToAdd -> {
       if (activity.getSchedules().stream()

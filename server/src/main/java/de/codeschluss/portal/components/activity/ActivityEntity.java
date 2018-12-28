@@ -118,7 +118,7 @@ public class ActivityEntity extends BaseResource {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity", cascade = CascadeType.REMOVE)
   @ToString.Exclude
   @JsonIgnore
-  private List<ScheduleEntity> schedules;
+  private Set<ScheduleEntity> schedules;
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   @ToString.Exclude

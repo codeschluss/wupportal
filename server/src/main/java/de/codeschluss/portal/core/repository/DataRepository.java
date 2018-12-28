@@ -12,5 +12,4 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface DataRepository<T>
     extends CrudRepository<T, String>, QueryableReadRepository<T> {
-  
 }

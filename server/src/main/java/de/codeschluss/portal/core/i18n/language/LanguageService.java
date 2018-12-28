@@ -76,10 +76,6 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
         .orElseThrow(() -> new NotFoundException(locale));
   }
 
-  /* (non-Javadoc)
-   * @see de.codeschluss.portal.core.service
-   * .DataService#update(java.lang.String, de.codeschluss.portal.core.service.BaseEntity)
-   */
   @Override
   public LanguageEntity update(String id, LanguageEntity newLanguage) {
     return repo.findById(id).map(language -> {

@@ -25,15 +25,20 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       .filter((key) => route.routeConfig.resolve[key] === this.constructor)
       .filter((key) => route.data[key] instanceof CrudJoiner)
       .find((key) => !this.resolving.includes(route.data[key]))];
+
     this.resolving.push(joiner);
-
     joiner.graph.params.embeddings = CrudJoiner.to(joiner.graph);
-    const response = joiner.graph.params.filter !== null && route.params.uuid
-      ? await joiner.graph.provider.readOne(route.params.uuid).toPromise()
-      : await joiner.graph.provider.readAll(joiner.graph.params).toPromise();
 
-    for (const item of Array.isArray(response) ? response : [response]) {
-      await this.run(item, joiner.graph.nodes);
+    let response; try {
+      response = joiner.graph.params.filter !== null && route.params.uuid
+        ? await joiner.graph.provider.readOne(route.params.uuid).toPromise()
+        : await joiner.graph.provider.readAll(joiner.graph.params).toPromise();
+    } catch (error) { }
+
+    if (response) {
+      for (const item of Array.isArray(response) ? response : [response]) {
+        await this.run(item, joiner.graph.nodes);
+      }
     }
 
     this.resolving.splice(this.resolving.indexOf(joiner), 1);

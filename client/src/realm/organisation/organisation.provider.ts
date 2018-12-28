@@ -69,6 +69,10 @@ export class OrganisationProvider
   public readAll: (params?: OrganisationControllerService
     .OrganisationControllerReadAllParams) => Observable<OrganisationModel[]>;
 
+  public grantOrganisation:
+    (id: string, grant: boolean) => Observable<any> =
+      this.apply(this.service.organisationControllerGrantApprovalResponse);
+
   public grantOrganisationAdmin:
     (id: string, userId: string, grant: boolean) => Observable<any> =
       this.apply(this.service.organisationControllerGrantAdminRightResponse);
@@ -77,6 +81,10 @@ export class OrganisationProvider
     (id: string, userId: string, grant: boolean) => Observable<any> =
     this.apply(this.service.organisationControllerApproveOrRejectUserResponse);
 
+  public pasteImage:
+    (id: string, images: ImageModel, caption?: string) => Observable<any> =
+      this.apply(this.service.organisationControllerAddImageResponse);
+
   public relinkAddress:
     (id: string, addressId: string) => Observable<any> =
       this.apply(this.service.organisationControllerUpdateAddressResponse);
@@ -84,6 +92,10 @@ export class OrganisationProvider
   public unlinkActivity:
     (id: string, activityId: string) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteActivityResponse);
+
+  public unlinkImage:
+    (id: string, imageId: string) => Observable<any> =
+      this.apply(this.service.organisationControllerDeleteImagesResponse);
 
   public unlinkUser:
     (id: string, userId: string) => Observable<any> =

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudModel, Pathfinder, Selfrouter } from '@portal/core';
 import { BaseTable, ConfirmDialogComponent } from '@portal/forms';
 import { Observable } from 'rxjs';
-import { filter, mergeMap } from 'rxjs/operators';
+import { filter, mergeMap, tap } from 'rxjs/operators';
 
 export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
@@ -43,15 +43,17 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   public delete(table: BaseTable<CrudModel>, item: CrudModel): void {
     this.confirm(item).pipe(
       filter(Boolean),
-      mergeMap(() => table.delete(item))
+      mergeMap(() => item.constructor['provider'].delete(item.id)),
+      tap(() => table.remove(item))
     ).subscribe();
   }
 
-  public edit(table: BaseTable<CrudModel>, item: CrudModel): void {
-    table.edit(item);
+  public edit(item: CrudModel): void {
+    this.router.navigate(this.pathfinder
+      .to(item.constructor['stepper']).concat(item.id));
   }
 
-  private confirm(item: CrudModel): Observable<boolean> {
+  protected confirm(item: CrudModel): Observable<boolean> {
     return this.dialog.open(ConfirmDialogComponent, {
       data: { item: item }
     }).afterClosed();

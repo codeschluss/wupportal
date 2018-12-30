@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pathfinder, TokenProvider } from '@portal/core';
 import { filter, map, take } from 'rxjs/operators';
@@ -6,6 +6,8 @@ import { ClientPackage } from '../../utils/package';
 import { AccountPanelComponent } from './panels/account/account.panel';
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['admin.scss'],
   template: `<router-outlet></router-outlet>`
 })
 
@@ -16,9 +18,7 @@ export class AdminComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private tokenProvider: TokenProvider
-  ) {
-    console.log('tokenProvider', tokenProvider);
-  }
+  ) { }
 
   public ngOnInit(): void {
     const claim = ClientPackage.config.jwtClaims.userId;

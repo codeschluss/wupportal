@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Route } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { CrudJoiner, CrudResolver } from '@portal/core';
 import { forkJoin } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
@@ -32,7 +31,7 @@ export class ApplicationPanelComponent extends BasePanel {
     }
   };
 
-  public get configuration(): ConfigurationModel[] {
+  public get configuration(): { [kes: string]: string } {
     return this.route.snapshot.data.configuration.reduce(
       (obj, conf) => Object.assign(obj, { [conf.item]: conf.value }), { });
   }
@@ -41,24 +40,18 @@ export class ApplicationPanelComponent extends BasePanel {
     return this.route.snapshot.data.organisations;
   }
 
-  public approveOrganisation(
-    table: BaseTable<CrudModel>,
-    item: OrganisationModel
-  ): void {
+  public approveOrganisation(item: OrganisationModel): void {
     item.constructor['provider']
       .grantOrganisation(item.id, true)
-      .subscribe(() => table.remove(item));
+      .subscribe(() => this.reload());
   }
 
-  public blockOrganisation(
-    table: BaseTable<CrudModel>,
-    item: OrganisationModel
-  ): void {
+  public blockOrganisation(item: OrganisationModel): void {
     this.confirm(item).pipe(
       filter(Boolean),
       mergeMap(() => item.constructor['provider']
         .grantOrganisation(item.id, false))
-    ).subscribe(() => table.remove(item));
+    ).subscribe(() => this.reload());
   }
 
   public grantSuperUser(item: UserModel, grant: boolean): void {

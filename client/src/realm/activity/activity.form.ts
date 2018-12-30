@@ -1,14 +1,14 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
 import { ActivityModel } from './activity.model';
-import { ActivityProvider } from './activity.provider';
 
 @Component({
   selector: 'activity-form',
@@ -105,20 +105,21 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
       field.name === 'organisation')].options = options;
   }
 
-  public persist(item: ActivityModel = this.item): Observable<any> {
-    const provider = this.model['provider'] as ActivityProvider;
+  protected persist(item: ActivityModel = this.item): Observable<any> {
+    const provider = this.model['provider'];
+    const tags = this.diff('tags');
+    const targets = this.diff('targetGroups');
 
-    const tags = this.select('tags');
-    tags.link.forEach((t) => provider.pasteTags(item.id, [t as TagModel]));
-    tags.unlink.forEach((t) => provider.unlinkTag(item.id, t.id));
+    item.addressId = this.value('address', item).id;
+    item.categoryId = this.value('category', item).id;
+    item.organisationId = this.value('organisation', item).id;
 
-    const targets = this.select('targetGroups');
-    targets.link.forEach((t) => provider.linkTargetGroups(item.id, [t.id]));
-    targets.unlink.forEach((t) => provider.unlinkTargetGroup(item.id, t.id));
-
-    item.categoryId = this.value('category').id;
-    item.organisationId = this.value('organisation').id;
-    return super.persist(item);
+    return super.persist(item).pipe(mergeMap((i) => forkJoin([of(i)].concat(
+      ...tags.link.map((t) => provider.pasteTags(i.id, [t])),
+      ...tags.unlink.map((t) => provider.unlinkTag(i.id, t.id)),
+      ...targets.link.map((t) => provider.linkTargetGroups(i.id, [t.id])),
+      ...targets.unlink.map((t) => provider.unlinkTargetGroup(i.id, t.id))
+    )).pipe(map((items) => items.shift()))));
   }
 
 }

@@ -20,7 +20,7 @@ export class TranslationFormComponent extends BaseForm<TranslationModel> {
 
   public model: Type<TranslationModel> = TranslationModel;
 
-  public persist(item: TranslationModel = this.item): Observable<any> {
+  protected persist(item: TranslationModel = this.item): Observable<any> {
     return of(item);
   }
 

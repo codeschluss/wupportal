@@ -1,5 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { NominatimProvider } from '@portal/core';
@@ -25,7 +25,7 @@ import { AddressModel } from './address.model';
       </ng-container>
     </ng-template>
   `) + `
-    <button mat-button (click)="lookup()">
+    <button mat-button [disabled]="!enabled" (click)="lookup()">
       <i18n i18n="@@lookup">lookup</i18n>
     </button>
   `
@@ -47,7 +47,8 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
     {
       name: 'postalCode',
       input: StringFieldComponent,
-      tests: [Validators.required]
+      tests: [Validators.required],
+      type: 'number'
     },
     {
       name: 'place',
@@ -78,18 +79,19 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
 
   public model: Type<AddressModel> = AddressModel;
 
+  public get enabled(): boolean {
+    const value = this.group.value;
+    return value.street
+      && value.houseNumber
+      && (value.postalCode || value.place);
+  }
+
   public constructor(
     private dialog: MatDialog,
     private nominatimProvider: NominatimProvider,
-    builder: FormBuilder,
     route: ActivatedRoute,
   ) {
-    super(route, builder);
-  }
-
-  public persist(item: AddressModel = this.item): Observable<any> {
-    item.suburbId = this.value('suburb').id;
-    return super.persist(item);
+    super(route);
   }
 
   public lookup(): void {
@@ -101,6 +103,11 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
       .subscribe((data) => this.dialog.open(SelectDialogComponent, data)
         .afterClosed().pipe(filter(Boolean))
         .subscribe((selection) => this.group.patchValue(selection)));
+  }
+
+  protected persist(item: AddressModel = this.item): Observable<any> {
+    item.suburbId = this.value('suburb', item).id;
+    return super.persist(item);
   }
 
 }

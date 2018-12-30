@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Route } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, TokenResolver } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { CrudJoiner, CrudResolver, TokenResolver } from '@portal/core';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/activity/activity.model';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
 import { ProviderModel } from '../../../../realm/provider/provider.model';
+import { UserModel } from '../../../../realm/user/user.model';
 import { ClientPackage } from '../../../../utils/package';
 import { BasePanel } from '../base.panel';
 
@@ -55,45 +55,35 @@ export class OrganisationPanelComponent extends BasePanel {
       .filter((provider) => !provider.approved);
   }
 
-  public approveUser(table: BaseTable<CrudModel>, item: ProviderModel): void {
-    const organisation = item.organisation as any;
-    const user = item.user as any;
-
-    organisation.constructor['provider']
-      .grantOrganisationUser(organisation.id, user.id, true)
-      .subscribe(() => table.remove(item));
+  public approveUser(item: ProviderModel): void {
+    item.organisation.constructor['provider']
+      .grantOrganisationUser(item.organisation.id, item.user.id, true)
+      .subscribe(() => this.reload());
   }
 
-  public blockUser(table: BaseTable<CrudModel>, item: ProviderModel): void {
-    const organisation = item.organisation as any;
-    const user = item.user as any;
-    Object.assign(item, { name: `${user.name} @ ${organisation.name}` });
-
-    this.confirm(item).pipe(
+  public blockUser(item: ProviderModel): void {
+    this.confirm(Object.assign(item, {
+      name: `${item.user.name} @ ${item.organisation.name}`
+    })).pipe(
       filter(Boolean),
-      mergeMap(() => organisation.constructor['provider']
-        .grantOrganisationUser(organisation.id, user.id, false))
-    ).subscribe(() => table.remove(item));
+      mergeMap(() => item.organisation.constructor['provider']
+        .grantOrganisationUser(item.organisation.id, item.user.id, false))
+    ).subscribe(() => this.reload());
   }
 
-  public demoteUser(table: BaseTable<CrudModel>, item: ProviderModel): void {
-    const organisation = item.organisation as any;
-    const user = item.user as any;
-    Object.assign(item, { name: `${user.name} @ ${organisation.name}` });
-
-    this.confirm(item).pipe(
+  public demoteUser(item: ProviderModel): void {
+    this.confirm(Object.assign(item, {
+      name: `${item.user.name} @ ${item.organisation.name}`
+    })).pipe(
       filter(Boolean),
-      mergeMap(() => organisation.constructor['provider']
-        .unlinkUser(organisation.id, user.id))
-    ).subscribe(() => table.remove(item));
+      mergeMap(() => item.organisation.constructor['provider']
+        .unlinkUser(item.organisation.id, item.user.id))
+    ).subscribe(() => this.reload());
   }
 
   public grantAdmin(item: ProviderModel, grant: boolean): void {
-    const organisation = item.organisation as any;
-    const user = item.user as any;
-
-    organisation.constructor['provider']
-      .grantOrganisationAdmin(organisation.id, user.id, grant)
+    item.organisation.constructor['provider']
+      .grantOrganisationAdmin(item.organisation.id, item.user.id, grant)
       .subscribe();
   }
 
@@ -108,7 +98,7 @@ export class OrganisationPanelComponent extends BasePanel {
 
   private provided(organisation: OrganisationModel) {
     const token = this.route.snapshot.data.tokens.access;
-    const users = (organisation.users || [] as any)
+    const users = (organisation.users as UserModel[] || [])
       .filter((u) => u.id !== token[ClientPackage.config.jwtClaims.userId]);
 
     return users.map((user) => Object.assign(user.provider, {

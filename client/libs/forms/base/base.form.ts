@@ -1,5 +1,5 @@
-import { Input, OnDestroy, OnInit, Type } from '@angular/core';
-import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CrudModel } from '@portal/core';
 import { Observable, of } from 'rxjs';
@@ -22,6 +22,9 @@ export interface FormField {
 export abstract class BaseForm<Model extends CrudModel>
   implements OnInit, OnDestroy {
 
+  @HostBinding('class')
+  public class: string = 'base-form';
+
   @Input()
   public group: FormGroup;
 
@@ -42,9 +45,9 @@ export abstract class BaseForm<Model extends CrudModel>
               </ng-container>
               <ng-container *ngIf="required(field)">*</ng-container>
             </label>
-            <span>
+            <output [for]="field.name">
               <base-field [field]="field" [group]="group"></base-field>
-            </span>
+            </output>
           </section>
         </ng-container>
       </form>
@@ -56,18 +59,17 @@ export abstract class BaseForm<Model extends CrudModel>
   }
 
   public constructor(
-    protected route: ActivatedRoute,
-    private builder: FormBuilder
+    protected route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
-    const data = this.route.snapshot.data;
-    this.group = this.group || data.group || this.builder.group({ });
-    this.item = this.item || data.item || new this.model();
+    this.item = this.item || this.route.snapshot.data.item || new this.model();
+    this.group = this.group || this.route.snapshot.data.group;
     this.route.routeConfig.data.persist = this.persist.bind(this);
+
     this.fields = this.fields.map((field) => Object.assign(field, {
       label: field.label || 'name',
-      options: field.options || data[field.name],
+      options: field.options || this.route.snapshot.data[field.name],
       value: field.value || this.item[field.name]
     }));
 
@@ -81,35 +83,13 @@ export abstract class BaseForm<Model extends CrudModel>
     }
   }
 
-  public persist(item: Model = this.item): Observable<any> {
-    Object.keys(this.group.controls)
-      .filter((key) => !this.fields.find((field) => field.name === key).model)
-      .forEach((key) => item[key] = this.value(key));
-
-    return !this.model['provider'] ? of(item) : item.id
-      ? this.model['provider'].update(item, item.id)
-      : this.model['provider'].create(item);
-  }
-
   public required(field: FormField): boolean {
     return field.tests && field.tests.includes(Validators.required);
   }
 
-  public value(field: string): any {
-    const control = this.group.get(field);
-    return control ? control.value : this.item[field];
-  }
-
   protected ngPostInit(): void { }
 
-  protected form(field: FormField): void {
-    this.group.addControl(field.name, this.builder.control({
-      disabled: field.locked,
-      value: field.value
-    }, field.tests));
-  }
-
-  protected select(key: string): { link: CrudModel[], unlink: CrudModel[] } {
+  protected diff(key: string): { link: CrudModel[], unlink: CrudModel[] } {
     const items = (this.item[key] || []).filter((item) => item.id);
     const values = (this.value(key) || []).filter((value) => value.id);
 
@@ -118,6 +98,31 @@ export abstract class BaseForm<Model extends CrudModel>
         .concat(values.filter((value) => !value.id)),
       unlink: items.filter((i) => !values.some((v) => v.id === i.id))
     };
+  }
+
+  protected persist(item: Model = this.item): Observable<any> {
+    if (this.group.dirty && this.model['provider']) {
+      this.fields.filter((field) => !field.model)
+        .forEach((field) => item[field.name] = this.value(field.name, item));
+
+      return item.id
+        ? this.model['provider'].update(item, item.id)
+        : this.model['provider'].create(item);
+    }
+
+    return of(item);
+  }
+
+  protected value(field: string, item: Model = this.item): any {
+    const control = this.group.get(field);
+    return control ? control.value : item[field];
+  }
+
+  private form(field: FormField): void {
+    this.group.addControl(field.name, new FormControl({
+      disabled: field.locked,
+      value: field.value
+    }, field.tests));
   }
 
 }

@@ -8,7 +8,8 @@ import { BaseFieldComponent } from '../base/base.field';
   styles: ['input { display: none; }'],
   template: BaseFieldComponent.template(`
     <input [id]="field.name">
-    <mat-select [formControl]="select" [multiple]="field.multi">
+    <mat-select [formControl]="select" [multiple]="field.multi"
+      [required]="required">
       <ng-container *ngFor="let item of field.options">
         <mat-option [value]="item.id">
           {{ toLabel(item) }}
@@ -26,8 +27,9 @@ export class SelectFieldComponent extends BaseFieldComponent {
   public select: FormControl = new FormControl();
 
   protected ngPostInit(): void {
-    this.input._onFocus = () => this.input.open();
-    if (this.value) { this.select.setValue(this.toId(this.value)); }
+    if (this.value) {
+      this.select.setValue(this.toId(this.value));
+    }
 
     this.select.valueChanges
       .pipe(map((change) => this.toModel(change)))

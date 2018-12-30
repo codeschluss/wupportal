@@ -1,3 +1,11 @@
+<h2 class="mat-title">
+  <i18n i18n="@@applicationPanel">applicationPanel</i18n>
+</h2>
+
+<h1 class="mat-headline">
+  {{ configuration.portalName }} &mdash; {{ configuration.portalSubtitle }}
+</h1>
+
 <mat-tab-group [selectedIndex]="index">
   <mat-tab id="configuration">
     <ng-template matTabLabel>
@@ -8,7 +16,7 @@
       </configuration-form>
       <button mat-button color="primary"
         [disabled]="!form.valid || group.pristine" (click)="persist()">
-        <i18n i18n="@@persist">persist</i18n>
+        <i18n i18n="@@persistForm">persistForm</i18n>
       </button>
     </ng-container>
   </mat-tab>
@@ -18,9 +26,9 @@
       <i18n i18n="@@users">users</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <user-table #table>
+      <user-table>
         <ng-container matColumnDef="superUser">
-          <mat-header-cell *matHeaderCellDef>
+          <mat-header-cell  *matHeaderCellDef>
             <i18n i18n="@@superUser">superUser</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
@@ -34,13 +42,11 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -51,21 +57,31 @@
   <mat-tab id="languages">
     <ng-template matTabLabel>
       <i18n i18n="@@languages">languages</i18n>
+      <button mat-icon-button color="primary" (click)="create('language')">
+        <fa-icon icon="plus-square"></fa-icon>
+      </button>
     </ng-template>
     <ng-template matTabContent>
-      <language-table #table>
+      <language-table>
+        <ng-container matColumnDef="machineTranslated">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@machineTranslated">machineTranslated</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle disabled [checked]="item.machineTranslated">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -76,21 +92,30 @@
   <mat-tab id="categories">
     <ng-template matTabLabel>
       <i18n i18n="@@categories">categories</i18n>
+      <button mat-icon-button color="primary" (click)="create('category')">
+        <fa-icon icon="plus-square"></fa-icon>
+      </button>
     </ng-template>
     <ng-template matTabContent>
-      <category-table #table>
+      <category-table>
+        <ng-container matColumnDef="color">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@color">color</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <span [style.color]="item.color">&#x2b24;</span>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -101,21 +126,22 @@
   <mat-tab id="targetGroups">
     <ng-template matTabLabel>
       <i18n i18n="@@targetGroups">targetGroups</i18n>
+      <button mat-icon-button color="primary" (click)="create('target-group')">
+        <fa-icon icon="plus-square"></fa-icon>
+      </button>
     </ng-template>
     <ng-template matTabContent>
-      <target-group-table #table>
+      <target-group-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -128,19 +154,17 @@
       <i18n i18n="@@tags">tags</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <tag-table #table>
+      <tag-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -151,21 +175,22 @@
   <mat-tab id="suburbs">
     <ng-template matTabLabel>
       <i18n i18n="@@suburbs">suburbs</i18n>
+      <button mat-icon-button color="primary" (click)="create('suburb')">
+        <fa-icon icon="plus-square"></fa-icon>
+      </button>
     </ng-template>
     <ng-template matTabContent>
-      <suburb-table #table>
+      <suburb-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -178,19 +203,17 @@
       <i18n i18n="@@addresses">addresses</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <address-table #table>
+      <address-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -205,19 +228,17 @@
       </span>
     </ng-template>
     <ng-template matTabContent>
-      <organisation-table #table [items]="requests">
+      <organisation-table [items]="requests">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="approveOrganisation(table, item)">
-              <i18n i18n="@@approve">approve</i18n>
+            <button mat-icon-button (click)="approveOrganisation(item)">
+              <fa-icon icon="check"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="blockOrganisation(table, item)">
-              <i18n i18n="@@reject">reject</i18n>
+            <button mat-icon-button color="warn" (click)="blockOrganisation(item)">
+              <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>

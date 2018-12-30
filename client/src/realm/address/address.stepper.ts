@@ -26,7 +26,8 @@ export class AddressStepperComponent extends BaseStepper<AddressModel> {
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(AddressModel).with('suburb');
+  protected joiner: CrudJoiner = CrudJoiner.of(AddressModel)
+    .with('suburb');
 
   protected model: Type<AddressModel> = AddressModel;
 

@@ -10,8 +10,8 @@ export class ProviderModel
   public admin: boolean;
   public approved: boolean;
 
-  public activities: Observable<ActivityModel[]>;
-  public organisation: Observable<OrganisationModel>;
-  public user: Observable<UserModel>;
+  public activities: ActivityModel[] & Observable<ActivityModel[]>;
+  public organisation: OrganisationModel & Observable<OrganisationModel>;
+  public user: UserModel & Observable<UserModel>;
 
 }

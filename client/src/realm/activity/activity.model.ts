@@ -22,12 +22,12 @@ export class ActivityModel
   public categoryId: string;
   public organisationId: string;
 
-  public address: Observable<AddressModel>;
-  public category: Observable<CategoryModel>;
-  public organisation: Observable<OrganisationModel>;
-  public provider: Observable<ProviderModel>;
-  public schedules: Observable<ScheduleModel[]>;
-  public tags: Observable<TagModel[]>;
-  public targetGroups: Observable<TargetGroupModel[]>;
+  public address: AddressModel & Observable<AddressModel>;
+  public category: CategoryModel & Observable<CategoryModel>;
+  public organisation: OrganisationModel & Observable<OrganisationModel>;
+  public provider: ProviderModel & Observable<ProviderModel>;
+  public schedules: ScheduleModel[] & Observable<ScheduleModel[]>;
+  public tags: TagModel[] & Observable<TagModel[]>;
+  public targetGroups: TargetGroupModel[] & Observable<TargetGroupModel[]>;
 
 }

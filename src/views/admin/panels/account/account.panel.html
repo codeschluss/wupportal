@@ -11,13 +11,13 @@
     <ng-template matTabLabel>
       <i18n i18n="@@userDetails">userDetails</i18n>
     </ng-template>
-    <ng-container *ngIf="user">
+    <ng-template matTabContent>
       <user-form #form [group]="group" [item]="user"></user-form>
       <button mat-button color="primary"
         [disabled]="!form.valid || group.pristine" (click)="persist()">
         <i18n i18n="@@persistForm">persistForm</i18n>
       </button>
-    </ng-container>
+    </ng-template>
   </mat-tab>
 
   <mat-tab id="organisations" [disabled]="!user.organisations">
@@ -27,7 +27,7 @@
         <fa-icon icon="plus-square"></fa-icon>
       </button>
     </ng-template>
-    <ng-container *ngIf="user.organisations">
+    <ng-template matTabContent>
       <organisation-table [items]="user.organisations">
         <ng-container matColumnDef="approved">
           <mat-header-cell *matHeaderCellDef>
@@ -58,7 +58,7 @@
           </mat-cell>
         </ng-container>
       </organisation-table>
-    </ng-container>
+    </ng-template>
   </mat-tab>
 
   <mat-tab id="activities" [disabled]="!organized">
@@ -70,7 +70,7 @@
           <fa-icon icon="plus-square"></fa-icon>
         </button>
     </ng-template>
-    <ng-container *ngIf="user.activities">
+    <ng-template matTabContent>
       <activity-table [items]="user.activities">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
@@ -86,6 +86,6 @@
           </mat-cell>
         </ng-container>
       </activity-table>
-    </ng-container>
+    </ng-template>
   </mat-tab>
 </mat-tab-group>

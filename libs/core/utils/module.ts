@@ -12,6 +12,7 @@ import { I18nInterceptor } from '../i18n/i18n.interceptor';
 import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
 import { SessionProvider } from '../session/session.provider';
+import { ApiInterceptor } from './api';
 import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
 import { SplashChildComponent, SplashHostComponent } from './splash';
@@ -47,6 +48,7 @@ import { SplashChildComponent, SplashHostComponent } from './splash';
     { provide: TokenProvider, useClass: TokenProvider },
     { provide: UrlSerializer, useClass: CoreUrlSerializer },
 
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

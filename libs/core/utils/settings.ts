@@ -7,6 +7,8 @@ export class CoreSettings {
 
   public apiRefreshUrl: string;
 
+  public apiUrl: string;
+
   public nominatimEndpoint: string;
 
   public nominatimParams: string;

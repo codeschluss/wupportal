@@ -75,6 +75,7 @@ export class ClientModule {
   ) {
     apiConfiguration.rootUrl = ClientPackage.config.api.rootUrl;
     coreSettings.apiAuthUrl = ClientPackage.config.api.authUrl;
+    coreSettings.apiUrl = ClientPackage.config.api.rootUrl;
     coreSettings.apiRefreshUrl = ClientPackage.config.api.refreshUrl;
     coreSettings.nominatimEndpoint = ClientPackage.config.nominatim.endpoint;
     coreSettings.nominatimParams = ClientPackage.config.nominatim.params;

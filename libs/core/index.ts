@@ -10,6 +10,7 @@ export * from './error/error.handler';
 export * from './error/error.model';
 export * from './i18n/i18n.component';
 export * from './i18n/i18n.resolver';
+export * from './loading/loading.provider';
 export * from './location/nominatim.provider';
 export * from './location/position.provider';
 export * from './location/position.resolver';

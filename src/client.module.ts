@@ -2,6 +2,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
+import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
 import { CoreModule, CoreSettings } from '@portal/core';
 import { ApiConfiguration } from './api/api-configuration';
 import { ApiModule } from './api/api.module';
@@ -21,6 +23,8 @@ import { TranslationProvider } from './realm/translation/translation.provider';
 import { UserProvider } from './realm/user/user.provider';
 import { ClientPackage } from './utils/package';
 import { LayoutComponent } from './views/layout/layout.component';
+
+fontawesome.add(freeicons);
 
 @NgModule({
   bootstrap: [ClientComponent],

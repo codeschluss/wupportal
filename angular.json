@@ -35,11 +35,6 @@
                 "output": "/"
               },
               {
-                "glob": "*.css",
-                "input": "res",
-                "output": "/css"
-              },
-              {
                 "glob": "*.xlf",
                 "input": "i18n",
                 "output": "/i18n"

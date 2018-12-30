@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { MatBadgeModule, MatButtonModule, MatSlideToggleModule, MatTabsModule } from '@angular/material';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule, CrudModel } from '@portal/core';
 import { BaseForm, BaseStepper, BaseTable, FormsModule } from '@portal/forms';
 import { ActivityFormComponent } from '../../realm/activity/activity.form';
@@ -105,6 +106,7 @@ const panels: Type<any>[] = [
     AdminRouter,
     CommonModule,
     CoreModule,
+    FontAwesomeModule,
     FormsModule,
     MatBadgeModule,
     MatButtonModule,

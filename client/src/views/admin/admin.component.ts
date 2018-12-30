@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pathfinder, TokenProvider } from '@portal/core';
+import { LoadingProvider, Pathfinder, TokenProvider } from '@portal/core';
 import { filter, map, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { AccountPanelComponent } from './panels/account/account.panel';
@@ -8,12 +8,17 @@ import { AccountPanelComponent } from './panels/account/account.panel';
 @Component({
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['admin.scss'],
-  template: `<router-outlet></router-outlet>`
+  template: `
+    <main id="admin" [class.disabled]="loadingProvider.value | async">
+      <router-outlet></router-outlet>
+    </main>
+  `
 })
 
 export class AdminComponent implements OnInit {
 
   public constructor(
+    public loadingProvider: LoadingProvider,
     private pathfinder: Pathfinder,
     private route: ActivatedRoute,
     private router: Router,

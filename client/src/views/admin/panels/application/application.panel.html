@@ -11,14 +11,14 @@
     <ng-template matTabLabel>
       <i18n i18n="@@configuration">configuration</i18n>
     </ng-template>
-    <ng-container *ngIf="configuration">
+    <ng-template matTabContent>
       <configuration-form #form [group]="group" [item]="configuration">
       </configuration-form>
       <button mat-button color="primary"
         [disabled]="!form.valid || group.pristine" (click)="persist()">
         <i18n i18n="@@persistForm">persistForm</i18n>
       </button>
-    </ng-container>
+    </ng-template>
   </mat-tab>
 
   <mat-tab id="users">
@@ -28,7 +28,7 @@
     <ng-template matTabContent>
       <user-table>
         <ng-container matColumnDef="superUser">
-          <mat-header-cell  *matHeaderCellDef>
+          <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@superUser">superUser</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">

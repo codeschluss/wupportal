@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudModel, Pathfinder, Selfrouter } from '@portal/core';
 import { ConfirmDialogComponent } from '@portal/forms';
 import { Observable } from 'rxjs';
-import { filter, mergeMap, skip } from 'rxjs/operators';
+import { filter, mergeMap } from 'rxjs/operators';
 
 export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
-  public index: number;
+  public index: number = -1;
 
   @ViewChild(MatTabGroup)
   public tab: MatTabGroup;
@@ -26,15 +26,20 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
+    const id = (index) => tabs[index].nativeElement.id;
+    const tabs = this.tabs.toArray();
     const tabulate = (index) => this.router.navigate([], {
-      queryParams: { tab: this.tabs.toArray()[index].nativeElement.id }
+      queryParams: { tab: id(index) }
     });
 
-    this.tab.selectedIndexChange.pipe(skip(1)).subscribe((i) => tabulate(i));
-    this.route.queryParamMap.subscribe((params) => this.index = this.tabs
-      .toArray().findIndex((t) => t.nativeElement.id === params.get('tab')));
+    this.route.queryParams.subscribe((params) =>
+      this.index = tabs.findIndex((t) => t.nativeElement.id === params.tab));
 
-    if (!this.route.snapshot.queryParamMap.has('tab')) { tabulate(0); }
+    this.tab.selectedIndexChange.pipe(
+      filter((index) => id(index) !== this.route.snapshot.queryParams.tab)
+    ).subscribe((index) => tabulate(index));
+
+    if (!this.route.snapshot.queryParams.tab) { tabulate(0); }
   }
 
   public create(alias: string) {

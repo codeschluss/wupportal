@@ -1,59 +1,69 @@
-.base-form {
-  &>form>section {
-    align-items: center;
-    display: flex;
-    padding: 0 16px;
+main#admin {
+  filter: blur(0px) grayscale(0);
+  transition: filter 200ms;
 
-    &:nth-of-type(even) {
-      background-color: rgba(0, 0, 0, .005);
-    }
-    &:nth-of-type(odd) {
-      background-color: rgba(0, 0, 0, .02);
-    }
+  &.disabled {
+    filter: blur(.5px) grayscale(1);
+    pointer-events: none;
+  }
 
-    label {
-      width: 200px;
-    }
+  .base-form {
+    &>form>section {
+      align-items: center;
+      display: flex;
+      padding: 0 16px;
 
-    output {
-      flex-grow: 1;
+      &:nth-of-type(even) {
+        background-color: rgba(0, 0, 0, .005);
+      }
+      &:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, .02);
+      }
 
-      mat-form-field {
-        width: 100%;
+      label {
+        width: 200px;
+      }
+
+      output {
+        flex-grow: 1;
+
+        mat-form-field {
+          width: 100%;
+        }
       }
     }
   }
-}
 
-.mat-tab-group,
-.mat-tab-nav-bar {
-  .mat-tab-body .base-table .mat-row {
-    &:nth-of-type(even) {
-      background-color: rgba(0, 0, 0, .005);
+  .mat-tab-group,
+  .mat-tab-nav-bar {
+    .mat-tab-body .base-table .mat-row {
+      &:nth-of-type(even) {
+        background-color: rgba(0, 0, 0, .005);
+      }
+      &:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, .02);
+      }
     }
-    &:nth-of-type(odd) {
-      background-color: rgba(0, 0, 0, .02);
-    }
-  }
 
-  .mat-tab-label,
-  .mat-tab-link {
-    &.mat-tab-disabled,
-    &.mat-tab-label-active {
-      pointer-events: none;
-      opacity: 1;
+    .mat-tab-label,
+    .mat-tab-link {
+      &.mat-tab-disabled,
+      &.mat-tab-label-active {
+        pointer-events: none;
+        opacity: 1;
 
-      &>.mat-ripple-element {
-        display: none;
+        &>.mat-ripple-element {
+          display: none;
+        }
+
+        .mat-icon-button {
+          pointer-events: auto;
+        }
       }
 
       .mat-icon-button {
-        pointer-events: auto;
+        pointer-events: none;
       }
-    }
-
-    .mat-icon-button {
-      pointer-events: none;
     }
   }
 }

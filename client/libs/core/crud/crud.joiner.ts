@@ -32,7 +32,9 @@ export class CrudJoiner {
       nodes: builder(node.nodes)
     }));
 
-    return btoa(JSON.stringify(builder(tree.nodes)));
+    return tree.nodes.length
+      ? btoa(JSON.stringify(builder(tree.nodes)))
+      : null;
   }
 
   public get graph(): CrudGraph {

@@ -26,7 +26,8 @@ export class NominatimProvider {
         latitude: place.lat,
         longitude: place.lon,
         place: place.address.city
-          || place.address.county,
+          || place.address.county
+          || place.address.state,
         postalCode: place.address.postcode,
         street: place.address.road
           || place.address.construction

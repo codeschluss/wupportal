@@ -45,7 +45,8 @@ export class ActivityTableComponent extends BaseTable<ActivityModel> {
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
-    .with('category').with('provider').yield('organisation');
+    .with('category')
+    .with('provider').yield('organisation');
 
   protected model: Type<ActivityModel> = ActivityModel;
 

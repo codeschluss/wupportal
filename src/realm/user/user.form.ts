@@ -10,9 +10,6 @@ import { UserModel } from './user.model';
       <ng-container [ngSwitch]="case.name">
         <i18n *ngSwitchCase="'name'" i18n="@@name">name</i18n>
         <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
-        <i18n *ngSwitchCase="'password'" i18n="@@password">password</i18n>
-        <i18n *ngSwitchCase="'passwordConfirm'"
-          i18n="@@passwordConfifm">passwordConfirm</i18n>
         <i18n *ngSwitchCase="'username'" i18n="@@username">username</i18n>
       </ng-container>
     </ng-template>
@@ -38,18 +35,6 @@ export class UserFormComponent extends BaseForm<UserModel> {
       input: StringFieldComponent,
       tests: [Validators.required],
       type: 'tel'
-    },
-    {
-      name: 'password',
-      input: StringFieldComponent,
-      tests: [Validators.minLength(12)],
-      type: 'password'
-    },
-    {
-      name: 'passwordConfirm',
-      input: StringFieldComponent,
-      tests: [Validators.minLength(12)],
-      type: 'password'
     }
   ];
 

@@ -1,22 +1,28 @@
+<h2 class="mat-title">
+  <i18n i18n="@@organisationPanel">organisationPanel</i18n>
+</h2>
+
+<h1 class="mat-headline">
+  {{ 'someString' }}
+</h1>
+
 <mat-tab-group [selectedIndex]="index">
   <mat-tab id="organisations">
     <ng-template matTabLabel>
       <i18n i18n="@@organisations">organisations</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <organisation-table #table [items]="organisations">
+      <organisation-table [items]="organisations">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -29,19 +35,17 @@
       <i18n i18n="@@activities">activities</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <activity-table #table [items]="activities">
+      <activity-table [items]="activities">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="edit(item)">
-              <i18n i18n="@@edit">edit</i18n>
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="delete(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -54,7 +58,7 @@
       <i18n i18n="@@providers">providers</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <provider-table #table [items]="providers">
+      <provider-table [items]="providers">
         <ng-container matColumnDef="admin">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@admin">admin</i18n>
@@ -70,9 +74,8 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button color="warn"
-              (click)="demoteUser(table, item)">
-              <i18n i18n="@@delete">delete</i18n>
+            <button mat-icon-button color="warn" (click)="demoteUser(item)">
+              <fa-icon icon="sign-out-alt"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -87,19 +90,17 @@
       </span>
     </ng-template>
     <ng-template matTabContent>
-      <provider-table #table [items]="requests">
+      <provider-table [items]="requests">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-button
-              (click)="approveUser(table, item)">
-              <i18n i18n="@@approve">approve</i18n>
+            <button mat-icon-button (click)="approveUser(item)">
+              <fa-icon icon="check"></fa-icon>
             </button>
-            <button mat-button color="warn"
-              (click)="blockUser(table, item)">
-              <i18n i18n="@@reject">reject</i18n>
+            <button mat-icon-button color="warn" (click)="blockUser(item)">
+              <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>

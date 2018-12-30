@@ -16,6 +16,16 @@ export class TokenProvider {
 
   private timeout: Subscription = empty().subscribe();
 
+  public get value(): Observable<AuthTokens> {
+    return combineLatest(
+      this.accessToken.pipe(filter(Boolean)),
+      this.refreshToken.pipe(filter(Boolean))
+    ).pipe(map(([accessToken, refreshToken]) => ({
+      access: accessToken,
+      refresh: refreshToken
+    })));
+  }
+
   public constructor(
     private tokenService: TokenService,
     localStorage: LocalStorage
@@ -31,16 +41,6 @@ export class TokenProvider {
       map((tokens) => this.work(tokens))
     ).subscribe(() => this.refreshToken.subscribe(
       (token) => localStorage.setItemSubscribe('refreshToken', token)));
-  }
-
-  public get value(): Observable<AuthTokens> {
-    return combineLatest(
-      this.accessToken.pipe(filter(Boolean)),
-      this.refreshToken.pipe(filter(Boolean))
-    ).pipe(map(([accessToken, refreshToken]) => ({
-      access: accessToken,
-      refresh: refreshToken
-    })));
   }
 
   public login(username: string, password: string): Observable<AuthTokens> {

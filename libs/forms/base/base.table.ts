@@ -1,5 +1,6 @@
-import { AfterViewInit, ContentChildren, Input, QueryList, Type, ViewChild } from '@angular/core';
-import { MatColumnDef, MatPaginator, MatSort, MatTable } from '@angular/material';
+import { AfterViewInit, ContentChildren, HostBinding, Input, QueryList, Type, ViewChild } from '@angular/core';
+import { MatColumnDef, MatPaginator, MatSort, MatTable, SortDirection } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@portal/core';
 import { BehaviorSubject, merge, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
@@ -12,6 +13,9 @@ export interface TableColumn {
 
 export abstract class BaseTable<Model extends CrudModel>
   implements AfterViewInit {
+
+  @HostBinding('class')
+  public class: string = 'base-table';
 
   @Input()
   public items: Model[];
@@ -38,8 +42,6 @@ export abstract class BaseTable<Model extends CrudModel>
 
   protected abstract model: Type<Model>;
 
-  private data: Model[];
-
   protected static template(template: string): string {
     return template + `
       <mat-table matSort [dataSource]="source.asObservable()">
@@ -65,17 +67,29 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   public constructor(
-    private resolver: CrudResolver
+    private resolver: CrudResolver,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   public ngAfterViewInit(): void {
-    this.data = this.items;
-    this.sorter.disableClear = true;
-    this.views.forEach((view) => this.table.addColumnDef(view));
     this.collate = [
       ...this.columns.map((column) => column.name),
       ...this.views.map((def) => def.name)
     ];
+
+    this.sorter.disableClear = true;
+    this.views.forEach((view) => this.table.addColumnDef(view));
+
+    Object.keys(this.route.snapshot.queryParams).forEach((param) => {
+      const value = this.route.snapshot.queryParamMap.get(param);
+      switch (param) {
+        case 'dir': this.sorter.direction = value as SortDirection; break;
+        case 'page': this.pager.pageIndex = parseInt(value, 10); break;
+        case 'size': this.pager.pageSize = parseInt(value, 10); break;
+        case 'sort': this.sorter.active = value; break;
+      }
+    });
 
     merge(
       of(null),
@@ -85,12 +99,16 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   public reload(): void {
-    this.data ? this.relist() : this.refetch();
-  }
-
-  public remove(item: Model): void {
-    if (this.data) { this.data.splice(this.data.indexOf(item), 1); }
-    this.reload();
+    this.router.navigate([], {
+      queryParamsHandling: 'merge',
+      queryParams: {
+        dir: this.sorter.direction || null,
+        filter: '' || null,
+        page: this.pager.pageIndex || null,
+        size: this.pager.pageSize || null,
+        sort: this.sorter.active || null
+      }
+    }).then(() => this.items ? this.relist() : this.refetch());
   }
 
   private refetch(): void {
@@ -103,15 +121,15 @@ export abstract class BaseTable<Model extends CrudModel>
       size: this.pager.pageSize,
       sort: this.sorter.active
     }).pipe(
-      tap((response) => this.page(response as any)),
+      tap((response) => this.page(response as StrictHttpResponse<any>)),
       map((response) => provider.cast(response)),
       mergeMap((items) => this.resolver.refine(items as any, this.joiner.graph))
     ).subscribe((items) => this.source.next(items));
   }
 
   private relist(): void {
-    this.pager.length = this.data.length;
-    this.source.next((this.sort(this.data)).slice(
+    this.pager.length = this.items.length;
+    this.source.next((this.sort(this.items)).slice(
       this.pager.pageIndex * this.pager.pageSize,
       (this.pager.pageIndex + 1) * this.pager.pageSize
     ));

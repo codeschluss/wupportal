@@ -1,10 +1,10 @@
 import { Location } from '@angular/common';
-import { OnDestroy, OnInit, Type } from '@angular/core';
+import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
-import { forkJoin } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { BaseForm } from './base.form';
 
 export interface FormStep {
@@ -14,6 +14,12 @@ export interface FormStep {
 
 export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   implements OnInit, OnDestroy {
+
+  @HostBinding('class')
+  public class: string = 'base-stepper';
+
+  @Input()
+  public item: Model;
 
   public abstract root: string;
 
@@ -53,8 +59,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       </ng-container>
       <ng-container *ngIf="hasSave">
         <button mat-button color="primary"
-          [disabled]="!valid" (click)="persist()">
-          <i18n i18n="@@persist">persist</i18n>
+          [disabled]="!valid || pristine" (click)="persist()">
+          <i18n i18n="@@persistForm">persistForm</i18n>
         </button>
       </ng-container>
     `;
@@ -69,13 +75,14 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       (step) => step.name === this.route.snapshot.firstChild.routeConfig.path);
   }
 
-  public get item(): Model {
-    return this.route.snapshot.data.item;
+  public get pristine(): boolean {
+    const routes = this.route.snapshot.routeConfig.children;
+    return !routes.some((route) => route.data.group.dirty);
   }
 
   public get valid(): boolean {
-    const children = this.route.snapshot.routeConfig.children;
-    return children[this.index] && children[this.index].data.group.valid;
+    const routes = this.route.snapshot.routeConfig.children;
+    return routes[this.index] && routes[this.index].data.group.valid;
   }
 
   protected get routing(this: any): Route {
@@ -96,14 +103,15 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
   public constructor(
     public location: Location,
-    protected route: ActivatedRoute,
-    protected router: Router,
     private builder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     super();
   }
 
   public ngOnInit(): void {
+    this.item = this.item || this.route.snapshot.data.item || new this.model();
     this.router.config = this.walk(this.router.config, this.routes());
     this.router.navigate([this.steps[this.index].name], {
       relativeTo: this.route,
@@ -124,21 +132,33 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     return this.steps[index].name;
   }
 
-  public persist(): void {
+  protected persist(): void {
     const routes = this.route.snapshot.routeConfig.children;
-    const root = routes.find((child) => child.path === this.root);
+    const root = routes.find((route) => route.path === this.root);
 
-    forkJoin(...routes.filter((route) => route !== root).map(
-      (route) => route.data.persist().pipe(map((item) => [route.path, item]))
-    )).pipe(
-      mergeMap((items) => root.data.persist(this.prepare(items)))
-    ).subscribe(/* TODO: Event handling */);
+    forkJoin(routes.filter((route) => route !== root).map(
+      (route) => route.data.persist().pipe(map((item) => ({
+        field: route.path,
+        value: item
+      })), tap(() => route.data.group.markAsPristine()))
+    ).concat(of(null))).pipe(
+      map((items) => items.slice(0, -1)),
+      mergeMap((items) => root.data.persist(this.prepare(items))),
+      tap(() => root.data.group.markAsPristine())
+    ).subscribe((item: Model) => this.router.navigate([
+      '../',
+      item.id,
+      this.root
+    ], {
+      relativeTo: this.route,
+      replaceUrl: true,
+    }));
   }
 
-  private prepare(items: [string, CrudModel][]): Model {
+  private prepare(items: { field: string, value: CrudModel }[]): Model {
     return Object.defineProperties(this.item, items
-      .map((item) => ({ [item[0]]: { value: item[1] } }))
-      .reduce((a, b) => Object.assign(a, b)));
+      .map((item) => ({ [item.field]: { value: item.value } }))
+      .reduce((obj, b) => Object.assign(obj, b), { }));
   }
 
   private routes(): Route[] {
@@ -154,9 +174,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         }), { }),
         data: Object.assign({
           group: this.builder.group({ }),
-          item: step.name === this.root
-            ? this.route.snapshot.data.item
-            : this.route.snapshot.data.item[step.name],
+          item: step.name === this.root ? this.item : this.item[step.name],
           tokens: this.route.snapshot.data.tokens
         }, ...fields.map((field) => ({
           [field.name]: CrudJoiner.of(field.model, { filter: null })

@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { CrudModel } from '@portal/core';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -67,8 +67,9 @@ export class ChipListFieldComponent extends BaseFieldComponent {
   protected ngPostInit(): void {
     if (!this.value) { this.value = []; }
     this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
+    this.input.nativeElement.onblur = () => this.clear();
     this.options = this.search.valueChanges
-      .pipe(startWith(''), map((label) => this.optionalize(label)));
+      .pipe(map((label) => this.optionalize(label)));
   }
 
   private clear(): void {
@@ -87,17 +88,14 @@ export class ChipListFieldComponent extends BaseFieldComponent {
   }
 
   private optionalize(label: string = '', items = this.value): CrudModel[] {
-    const options = this.field.options
-      .filter((item) => !this.find(this.toLabel(item), items));
-
-    return label ? this.matches(label, options) : options;
+    return !label ? [] : this.matches(label, this.field.options
+      .filter((item) => !this.find(this.toLabel(item), items)));
   }
 
   private sanitize(label: string = ''): string {
     // TODO: sanetize
-    return label = label.trim().length >= 3
-      ? label[0].toUpperCase() + label.substr(1).toLowerCase()
-      : '';
+    return label = label.trim().length < 3 ? '' :
+      label[0].toUpperCase() + label.substr(1).toLowerCase();
   }
 
 }

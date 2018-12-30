@@ -9,6 +9,10 @@ export class SessionProvider {
 
   private session: BehaviorSubject<SessionModel>;
 
+  public get value(): Observable<SessionModel> {
+    return this.session.pipe(filter(Boolean));
+  }
+
   public constructor(
     localStorage: LocalStorage
   ) {
@@ -21,10 +25,6 @@ export class SessionProvider {
       tap((session) => this.session.next(session))
     ).subscribe(() => this.value.subscribe(
       (session) => localStorage.setItemSubscribe('clientSession', session)));
-  }
-
-  public get value(): Observable<SessionModel> {
-    return this.session.pipe(filter(Boolean));
   }
 
   public like(id: string): void {

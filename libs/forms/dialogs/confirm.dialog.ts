@@ -24,7 +24,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
     </section>
     <section mat-dialog-actions>
       <button mat-button [mat-dialog-close]="false">
-        <i18n i18n="@@cancel">cancel</i18n>
+        <i18n i18n="@@close">close</i18n>
       </button>
       <button mat-button color="warn" [mat-dialog-close]="true">
         <i18n i18n="@@confirm">confirm</i18n>

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Route } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, TokenResolver } from '@portal/core';
-import { BaseTable } from '@portal/forms';
+import { CrudJoiner, CrudResolver, TokenResolver } from '@portal/core';
 import { filter, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
 import { UserModel } from '../../../../realm/user/user.model';
@@ -32,6 +31,11 @@ export class AccountPanelComponent extends BasePanel {
     }
   };
 
+  public get organized(): boolean {
+    return (this.user.organisations as OrganisationModel[] || [])
+      .some((organisation) => organisation.approved);
+  }
+
   public get user(): UserModel {
     return this.route.snapshot.data.user;
   }
@@ -46,15 +50,12 @@ export class AccountPanelComponent extends BasePanel {
     return this.route.snapshot.data.tokens.access[claim].includes(item.id);
   }
 
-  public demoteUser(
-    table: BaseTable<CrudModel>,
-    item: OrganisationModel
-  ): void {
+  public demoteUser(item: OrganisationModel): void {
     this.confirm(item).pipe(
       filter(Boolean),
       mergeMap(() => this.user.constructor['provider']
         .unlinkOrganisation(this.user.id, item.id))
-    ).subscribe(() => table.remove(item));
+    ).subscribe(() => this.reload());
   }
 
   public persist(): void {

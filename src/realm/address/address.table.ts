@@ -45,11 +45,13 @@ export class AddressTableComponent extends BaseTable<AddressModel> {
     {
       name: 'suburb',
       sort: true,
-      value: (item) => item.suburb.name
+      // TODO: non-optional suburb
+      value: (item) => item.suburb ? item.suburb.name : ''
     },
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(AddressModel).with('suburb');
+  protected joiner: CrudJoiner = CrudJoiner.of(AddressModel)
+    .with('suburb');
 
   protected model: Type<AddressModel> = AddressModel;
 

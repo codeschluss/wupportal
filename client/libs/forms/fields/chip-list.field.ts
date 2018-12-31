@@ -1,7 +1,7 @@
 import { COMMA, ENTER, SEMICOLON, SPACE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { CrudModel } from '@portal/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { BaseFieldComponent } from '../base/base.field';
       <ng-container *ngFor="let item of value" ngProjectAs="mat-chip">
         <mat-chip [selectable]="false" (removed)="delete(item)">
           {{ toLabel(item) }}
-          <span matChipRemove>&times;</span>
+          <span matChipRemove>&#x274c;</span>
         </mat-chip>
       </ng-container>
       <input #input
@@ -24,7 +24,6 @@ import { BaseFieldComponent } from '../base/base.field';
         [matChipInputSeparatorKeyCodes]="keys"
         (matChipInputTokenEnd)="insert($event)">
     </mat-chip-list>
-
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
       <ng-container *ngFor="let item of options | async">
         <mat-option [value]="item.id">
@@ -36,6 +35,9 @@ import { BaseFieldComponent } from '../base/base.field';
 })
 
 export class ChipListFieldComponent extends BaseFieldComponent {
+
+  @ViewChild('auto')
+  public auto: MatAutocomplete;
 
   @ViewChild('input')
   public input: ElementRef<HTMLInputElement>;
@@ -67,7 +69,7 @@ export class ChipListFieldComponent extends BaseFieldComponent {
   protected ngPostInit(): void {
     if (!this.value) { this.value = []; }
     this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
-    this.input.nativeElement.onblur = () => this.clear();
+    this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
     this.options = this.search.valueChanges
       .pipe(map((label) => this.optionalize(label)));
   }
@@ -84,7 +86,7 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   private matches(label: string = '', items = this.value): CrudModel[] {
     const regex = new RegExp(label, 'i');
-    return items.filter((item) => this.toLabel(item).search(regex) !== -1);
+    return items.filter((item) => this.toLabel(item).search(regex) >= 0);
   }
 
   private optionalize(label: string = '', items = this.value): CrudModel[] {

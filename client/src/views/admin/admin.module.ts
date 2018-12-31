@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, Type } from '@angular/core';
-import { MatBadgeModule, MatButtonModule, MatSlideToggleModule, MatTabsModule } from '@angular/material';
+import { NgModule, Provider, Type } from '@angular/core';
+import { MatBadgeModule, MatButtonModule, MatSlideToggleModule, MatTabsModule, MAT_TABS_CONFIG } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule, CrudModel } from '@portal/core';
 import { BaseForm, BaseStepper, BaseTable, FormsModule } from '@portal/forms';
@@ -89,6 +89,10 @@ const panels: Type<any>[] = [
   OrganisationPanelComponent
 ];
 
+const providers: Provider[] = [
+  { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '0ms' } }
+];
+
 @NgModule({
   entryComponents: [
     ...forms,
@@ -112,6 +116,9 @@ const panels: Type<any>[] = [
     MatButtonModule,
     MatSlideToggleModule,
     MatTabsModule
+  ],
+  providers: [
+    ...providers
   ]
 })
 

@@ -7,7 +7,31 @@ main#admin {
     pointer-events: none;
   }
 
-  .base-form {
+  mat-tab-group,
+  nav.mat-tab-nav-bar {
+    div.mat-tab-label,
+    a.mat-tab-link {
+      &.mat-tab-disabled,
+      &.mat-tab-label-active {
+        pointer-events: none;
+        opacity: 1;
+
+        &>.mat-ripple-element {
+          display: none;
+        }
+
+        button.mat-icon-button {
+          pointer-events: auto;
+        }
+      }
+
+      button.mat-icon-button {
+        pointer-events: none;
+      }
+    }
+  }
+
+  *.base-form {
     &>form>section {
       align-items: center;
       display: flex;
@@ -34,35 +58,26 @@ main#admin {
     }
   }
 
-  .mat-tab-group,
-  .mat-tab-nav-bar {
-    .mat-tab-body .base-table .mat-row {
+  *.base-table {
+    &>mat-form-field {
+      display: block;
+      width: 100%;
+
+      div.mat-form-field-wrapper {
+        margin-bottom: -1.25em;
+
+        div.mat-form-field-flex {
+          padding: 0 16px;
+        }
+      }
+    }
+
+    mat-row {
       &:nth-of-type(even) {
         background-color: rgba(0, 0, 0, .005);
       }
       &:nth-of-type(odd) {
         background-color: rgba(0, 0, 0, .02);
-      }
-    }
-
-    .mat-tab-label,
-    .mat-tab-link {
-      &.mat-tab-disabled,
-      &.mat-tab-label-active {
-        pointer-events: none;
-        opacity: 1;
-
-        &>.mat-ripple-element {
-          display: none;
-        }
-
-        .mat-icon-button {
-          pointer-events: auto;
-        }
-      }
-
-      .mat-icon-button {
-        pointer-events: none;
       }
     }
   }

@@ -19,8 +19,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class DuplicateEntryAdvice extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(DuplicateEntryException.class)
-  public void invalidApiAccessHandler(DuplicateEntryException ex) {
+  public ResponseEntity<ApiError> invalidApiAccessHandler(DuplicateEntryException ex) {
     HttpStatus status = HttpStatus.CONFLICT;
-    new ResponseEntity<ApiError>(new ApiError(status, "Conflict", ex.getMessage()), status);
+    return new ResponseEntity<ApiError>(new ApiError(status, "Conflict", ex.getMessage()), status);
   }
 }

@@ -1,9 +1,9 @@
-import { AfterViewInit, ContentChildren, HostBinding, Input, QueryList, Type, ViewChild } from '@angular/core';
-import { MatColumnDef, MatPaginator, MatSort, MatTable, SortDirection } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, ContentChildren, HostBinding, Input, OnInit, QueryList, Type, ViewChild } from '@angular/core';
+import { MatColumnDef, MatInput, MatPaginator, MatSort, MatTable, SortDirection } from '@angular/material';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@portal/core';
-import { BehaviorSubject, merge, of } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, ignoreElements, map, mergeMap, tap } from 'rxjs/operators';
 
 export interface TableColumn {
   name: string;
@@ -12,7 +12,7 @@ export interface TableColumn {
 }
 
 export abstract class BaseTable<Model extends CrudModel>
-  implements AfterViewInit {
+  implements OnInit, AfterViewInit {
 
   @HostBinding('class')
   public class: string = 'base-table';
@@ -22,6 +22,9 @@ export abstract class BaseTable<Model extends CrudModel>
 
   @ViewChild(MatPaginator)
   public pager: MatPaginator;
+
+  @ViewChild(MatInput)
+  public search: MatInput;
 
   @ViewChild(MatSort)
   public sorter: MatSort;
@@ -34,6 +37,8 @@ export abstract class BaseTable<Model extends CrudModel>
 
   public collate: string[] = [];
 
+  public size: number = 10;
+
   public source: BehaviorSubject<Model[]> = new BehaviorSubject<Model[]>([]);
 
   public abstract columns: TableColumn[];
@@ -42,8 +47,17 @@ export abstract class BaseTable<Model extends CrudModel>
 
   protected abstract model: Type<Model>;
 
+  public readonly viewpipe: Observable<any> = merge(
+    this.route.queryParams.pipe(tap((params) => this.navigate(params)))
+  ).pipe(ignoreElements());
+
+  private ignored: any;
+
   protected static template(template: string): string {
     return template + `
+      <mat-form-field>
+        <input matInput type="search">
+      </mat-form-field>
       <mat-table matSort [dataSource]="source.asObservable()">
         <mat-header-row *matHeaderRowDef="collate"></mat-header-row>
         <mat-row *matRowDef="let item; columns: collate"></mat-row>
@@ -62,7 +76,8 @@ export abstract class BaseTable<Model extends CrudModel>
         </ng-container>
         <ng-content></ng-content>
       </mat-table>
-      <mat-paginator [pageSize]="10"></mat-paginator>
+      <mat-paginator [pageSize]="size"></mat-paginator>
+      <ng-container *ngIf="viewpipe | async"></ng-container>
     `;
   }
 
@@ -71,6 +86,10 @@ export abstract class BaseTable<Model extends CrudModel>
     private route: ActivatedRoute,
     private router: Router
   ) { }
+
+  public ngOnInit(): void {
+    this.items = this.items || this.route.snapshot.data.items;
+  }
 
   public ngAfterViewInit(): void {
     this.collate = [
@@ -81,73 +100,85 @@ export abstract class BaseTable<Model extends CrudModel>
     this.sorter.disableClear = true;
     this.views.forEach((view) => this.table.addColumnDef(view));
 
-    Object.keys(this.route.snapshot.queryParams).forEach((param) => {
-      const value = this.route.snapshot.queryParamMap.get(param);
-      switch (param) {
-        case 'dir': this.sorter.direction = value as SortDirection; break;
-        case 'page': this.pager.pageIndex = parseInt(value, 10); break;
-        case 'size': this.pager.pageSize = parseInt(value, 10); break;
-        case 'sort': this.sorter.active = value; break;
-      }
-    });
-
     merge(
       of(null),
       this.pager.page,
-      this.sorter.sortChange.pipe(tap(() => this.pager.pageIndex = 0))
-    ).subscribe(() => this.reload());
-  }
-
-  public reload(): void {
-    this.router.navigate([], {
+      merge(
+        this.search.stateChanges.pipe(
+          filter(() => this.input(this.search.value)),
+          map(() => this.search.value || null),
+          distinctUntilChanged(),
+          debounceTime(500)
+        ),
+        this.sorter.sortChange
+      ).pipe(tap(() => this.pager.pageIndex = 0))
+    ).subscribe(() => this.router.navigate([], {
       queryParamsHandling: 'merge',
       queryParams: {
         dir: this.sorter.direction || null,
-        filter: '' || null,
+        find: this.search.value || null,
         page: this.pager.pageIndex || null,
-        size: this.pager.pageSize || null,
+        size: this.pager.pageSize !== this.size ? this.pager.pageSize : null,
         sort: this.sorter.active || null
       }
-    }).then(() => this.items ? this.relist() : this.refetch());
+    }));
   }
 
-  private refetch(): void {
+  private fetch(): void {
     const provider = this.model['provider'].system;
     provider.call(provider.methods.readAll, {
       dir: this.sorter.direction,
       embeddings: CrudJoiner.to(this.joiner.graph),
-      filter: '',
+      filter: this.search.value,
       page: this.pager.pageIndex,
       size: this.pager.pageSize,
       sort: this.sorter.active
     }).pipe(
-      tap((response) => this.page(response as StrictHttpResponse<any>)),
+      tap((response) => this.paginate(response as StrictHttpResponse<any>)),
       map((response) => provider.cast(response)),
       mergeMap((items) => this.resolver.refine(items as any, this.joiner.graph))
-    ).subscribe((items) => this.source.next(items));
+    ).subscribe((items) => this.source.next(items), () => this.source.next([]));
   }
 
-  private relist(): void {
-    this.pager.length = this.items.length;
-    this.source.next((this.sort(this.items)).slice(
+  private filter(): void {
+    const column = this.columns.find((c) => c.name === this.sorter.active);
+    const field = column ? column.value : (item) => item[this.sorter.active];
+    const regex = this.search.value && new RegExp(this.search.value, 'i');
+    const items = this.items.filter((item) => !regex || Object.values(item)
+      .some((value) => typeof value === 'string' && value.search(regex) >= 0));
+
+    this.pager.length = items.length;
+    this.source.next(items.sort((a, b) => this.sorter.direction === 'asc'
+      ? (field(a) || '').localeCompare(field(b) || '')
+      : (field(b) || '').localeCompare(field(a) || '')
+    ).slice(
       this.pager.pageIndex * this.pager.pageSize,
       (this.pager.pageIndex + 1) * this.pager.pageSize
     ));
   }
 
-  private page(response: StrictHttpResponse<any>) {
+  private input(value: string): boolean {
+    return value !== this.route.snapshot.queryParams.find;
+  }
+
+  private navigate(params: Params) {
+    const { dir, find, page, size, sort, ...ignored } = params;
+    this.ignored = this.ignored || ignored;
+
+    if (JSON.stringify(this.ignored) === JSON.stringify(ignored)) {
+      this.sorter.direction = dir || null as SortDirection;
+      this.search.value = find || null;
+      this.pager.pageIndex = parseInt(page, 10) || null;
+      this.pager.pageSize = parseInt(size, 10) || this.size;
+      this.sorter.active = sort || null;
+      this.items ? this.filter() : this.fetch();
+    }
+  }
+
+  private paginate(response: StrictHttpResponse<any>) {
     this.pager.length = response.body.page.totalElements;
     this.pager.pageIndex = response.body.page.number;
     this.pager.pageSize = response.body.page.size;
-  }
-
-  private sort(items: Model[]): Model[] {
-    const column = this.columns.find((c) => c.name === this.sorter.active);
-    const value = column ? column.value : (item) => item[this.sorter.active];
-
-    return items.sort((a, b) => this.sorter.direction === 'asc'
-      ? (value(a) || '').localeCompare(value(b) || '')
-      : (value(b) || '').localeCompare(value(a) || ''));
   }
 
 }

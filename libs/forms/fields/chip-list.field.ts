@@ -3,7 +3,6 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { CrudModel } from '@portal/core';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 
@@ -25,7 +24,7 @@ import { BaseFieldComponent } from '../base/base.field';
         (matChipInputTokenEnd)="insert($event)">
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
-      <ng-container *ngFor="let item of options | async">
+      <ng-container *ngFor="let item of options">
         <mat-option [value]="item.id">
           {{ toLabel(item) }}
         </mat-option>
@@ -46,7 +45,7 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   public search: FormControl = new FormControl();
 
-  public options: Observable<CrudModel[]>;
+  public options: CrudModel[];
 
   public delete(item: CrudModel): void {
     this.value = this.value.filter((value) => value !== item);
@@ -70,8 +69,9 @@ export class ChipListFieldComponent extends BaseFieldComponent {
     if (!this.value) { this.value = []; }
     this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
     this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
-    this.options = this.search.valueChanges
-      .pipe(map((label) => this.optionalize(label)));
+    this.search.valueChanges
+      .pipe(map((label) => this.options = this.optionalize(label)))
+      .subscribe();
   }
 
   private clear(): void {

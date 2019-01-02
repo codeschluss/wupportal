@@ -8,10 +8,15 @@ import { LanguageModel } from './language.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'locale'" i18n="@@locale">locale</i18n>
-        <i18n *ngSwitchCase="'machineTranslated'"
-          i18n="@@machineTranslated">machineTranslated</i18n>
-        <i18n *ngSwitchCase="'name'" i18n="@@name">name</i18n>
+        <ng-container *ngSwitchCase="'locale'">
+          <i18n i18n="@@locale">locale</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'machineTranslated'">
+          <i18n i18n="@@machineTranslated">machineTranslated</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'name'">
+          <i18n i18n="@@title">title</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

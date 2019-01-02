@@ -7,7 +7,9 @@ import { ScheduleModel } from './schedule.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'schedule'" i18n="@@schedule">schedule</i18n>
+        <ng-container *ngSwitchCase="'schedules'">
+          <i18n i18n="@@schedules">schedules</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

@@ -10,10 +10,19 @@ import { TargetGroupModel } from './target-group.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'target-group'"
-          i18n="@@target-group">target-group</i18n>
-        <i18n *ngSwitchCase="'translations'"
-          i18n="@@translations">translations</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createTargetGroup">createTargetGroup</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editTargetGroup">editTargetGroup</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'target-group'">
+          <i18n i18n="@@target-group">target-group</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'translations'">
+          <i18n i18n="@@translations">translations</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, HostBinding, Input, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CrudModel } from '@portal/core';
 import { FormField } from './base.form';
 
@@ -26,21 +26,20 @@ export class BaseFieldComponent implements OnInit {
         <ng-container *ngFor="let test of field.tests" ngProjectAs="mat-error">
           <mat-error *ngIf="group.get(field.name).hasError(test.name)">
             <ng-container [ngSwitch]="test.name">
-              <i18n *ngSwitchCase="'email'"
-                i18n="@@fieldErrorEmail">fieldErrorEmail</i18n>
-              <i18n *ngSwitchCase="'pattern'"
-                i18n="@@fieldErrorPattern">fieldErrorPattern</i18n>
-              <i18n *ngSwitchCase="'required'"
-                i18n="@@fieldErrorRequired">fieldErrorRequired</i18n>
+              <ng-container *ngSwitchCase="'email'">
+                <i18n i18n="@@fieldErrorEmail">fieldErrorEmail</i18n>
+              </ng-container>
+              <ng-container *ngSwitchCase="'pattern'">
+                <i18n i18n="@@fieldErrorPattern">fieldErrorPattern</i18n>
+              </ng-container>
+              <ng-container *ngSwitchCase="'required'">
+                <i18n i18n="@@fieldErrorRequired">fieldErrorRequired</i18n>
+              </ng-container>
             </ng-container>
           </mat-error>
         </ng-container>
       </mat-form-field>
     `;
-  }
-
-  public get required(): boolean {
-    return this.field.tests && this.field.tests.includes(Validators.required);
   }
 
   public get value(): any { return this.group.get(this.field.name).value; }

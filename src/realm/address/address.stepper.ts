@@ -9,7 +9,16 @@ import { AddressModel } from './address.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'address'" i18n="@@address">address</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createActivity">createActivity</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editActivity">editActivity</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'address'">
+          <i18n i18n="@@address">address</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)
@@ -30,5 +39,13 @@ export class AddressStepperComponent extends BaseStepper<AddressModel> {
     .with('suburb');
 
   protected model: Type<AddressModel> = AddressModel;
+
+  public get title(): string {
+    return `
+      ${this.values[this.root].street}
+      ${this.values[this.root].houseNumber}
+      ${this.values[this.root].place}
+    `;
+  }
 
 }

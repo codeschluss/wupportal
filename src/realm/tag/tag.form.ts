@@ -8,9 +8,12 @@ import { TagModel } from './tag.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'description'"
-          i18n="@@description">description</i18n>
-        <i18n *ngSwitchCase="'name'" i18n="@@name">name</i18n>
+        <ng-container *ngSwitchCase="'description'">
+          <i18n i18n="@@description">description</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'name'">
+          <i18n i18n="@@title">title</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

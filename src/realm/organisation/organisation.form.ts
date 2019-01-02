@@ -9,13 +9,24 @@ import { OrganisationModel } from '../organisation/organisation.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'description'"
-          i18n="@@description">description</i18n>
-        <i18n *ngSwitchCase="'mail'" i18n="@@mail">mail</i18n>
-        <i18n *ngSwitchCase="'name'" i18n="@@title">title</i18n>
-        <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
-        <i18n *ngSwitchCase="'videoUrl'" i18n="@@videoUrl">videoUrl</i18n>
-        <i18n *ngSwitchCase="'website'" i18n="@@website">website</i18n>
+        <ng-container *ngSwitchCase="'description'">
+          <i18n i18n="@@description">description</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'mail'">
+          <i18n i18n="@@mail">mail</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'name'">
+          <i18n i18n="@@title">title</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'phone'">
+          <i18n i18n="@@phone">phone</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'videoUrl'">
+          <i18n i18n="@@videoUrl">videoUrl</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'website'">
+          <i18n i18n="@@website">website</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

@@ -11,8 +11,7 @@ import { BaseFieldComponent } from '../base/base.field';
     <mat-chip-list #chips>
       <ng-container *ngFor="let item of value" ngProjectAs="mat-chip">
         <mat-chip [selectable]="false" (removed)="delete(item)">
-          {{ toLabel(item) }}
-          <span matChipRemove>&#x274c;</span>
+          {{ toLabel(item) }}<span matChipRemove>&#x274c;</span>
         </mat-chip>
       </ng-container>
       <input #input
@@ -25,9 +24,7 @@ import { BaseFieldComponent } from '../base/base.field';
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
       <ng-container *ngFor="let item of options">
-        <mat-option [value]="item.id">
-          {{ toLabel(item) }}
-        </mat-option>
+        <mat-option [value]="item.id">{{ toLabel(item) }}</mat-option>
       </ng-container>
     </mat-autocomplete>
   `)

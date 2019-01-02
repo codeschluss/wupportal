@@ -9,7 +9,16 @@ import { UserModel } from './user.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'user'" i18n="@@user">user</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createUser">createUser</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editUser">editUser</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'user'">
+          <i18n i18n="@@user">user</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

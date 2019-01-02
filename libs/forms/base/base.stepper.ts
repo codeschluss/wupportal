@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
 import { forkJoin, of } from 'rxjs';
@@ -31,6 +31,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
   protected static template(template: string): string {
     return template + `
+      <h2 class="mat-title"><ng-container *ngTemplateOutlet="label; context: {
+        case: { name: item.id ? 'edit' : 'create' }
+      }"></ng-container></h2>
+      <h1 class="mat-headline">{{ title || '...' }}</h1>
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
           <a mat-tab-link replaceUrl [disabled]="!can(i)" [routerLink]="link(i)"
@@ -39,36 +43,34 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
             </ng-container>
           </a>
         </ng-container>
-        <span [style.flexGrow]="1"></span>
-        <a mat-tab-link (click)="location.back()">
-          <i18n i18n="@@close">close</i18n>
-        </a>
       </nav>
       <router-outlet></router-outlet>
       <ng-container *ngIf="hasPrev">
         <button mat-button replaceUrl
-          [disabled]="!valid" [routerLink]="link('-1')">
+          [disabled]="!can(index - 1)" [routerLink]="link('-1')">
           <i18n i18n="@@prevForm">prevForm</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="hasNext">
         <button mat-button replaceUrl
-          [disabled]="!valid" [routerLink]="link('+1')">
+          [disabled]="!can(index + 1)" [routerLink]="link('+1')">
           <i18n i18n="@@nextForm">nextForm</i18n>
         </button>
       </ng-container>
-      <ng-container *ngIf="hasSave">
+      <ng-container *ngIf="!hasNext">
         <button mat-button color="primary"
           [disabled]="!valid || pristine" (click)="persist()">
           <i18n i18n="@@persistForm">persistForm</i18n>
         </button>
       </ng-container>
+      <button mat-button color="warn" (click)="location.back()">
+        <i18n i18n="@@close">close</i18n>
+      </button>
     `;
   }
 
   public get hasNext(): boolean { return this.index < this.steps.length - 1; }
   public get hasPrev(): boolean { return this.index > 0; }
-  public get hasSave(): boolean { return this.index === this.steps.length - 1; }
 
   public get index(): number {
     return !this.route.snapshot.firstChild ? 0 : this.steps.findIndex(
@@ -78,6 +80,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   public get pristine(): boolean {
     const routes = this.route.snapshot.routeConfig.children;
     return !routes.some((route) => route.data.group.dirty);
+  }
+
+  public get title(): string {
+    return this.values[this.root].name;
   }
 
   public get valid(): boolean {
@@ -101,11 +107,16 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     };
   }
 
+  protected get values(): object {
+    return this.route.snapshot.routeConfig.children
+      .map((route) => ({ [route.path]: route.data.group.getRawValue() }))
+      .reduce((a, b) => Object.assign(a, b));
+  }
+
   public constructor(
     public location: Location,
-    private builder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router
+    protected route: ActivatedRoute,
+    protected router: Router
   ) {
     super();
   }
@@ -124,7 +135,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   public can(index: number): boolean {
-    return index <= this.index;
+    return index <= this.index || (--index === this.index && this.valid);
   }
 
   public link(index: number | string): string {
@@ -158,7 +169,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   private prepare(items: { field: string, value: CrudModel }[]): Model {
     return Object.defineProperties(this.item, items
       .map((item) => ({ [item.field]: { value: item.value } }))
-      .reduce((obj, b) => Object.assign(obj, b), { }));
+      .reduce((obj, item) => Object.assign(obj, item), { }));
   }
 
   private routes(): Route[] {
@@ -173,7 +184,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
           [field.name]: CrudResolver,
         }), { }),
         data: Object.assign({
-          group: this.builder.group({ }),
+          group: new FormGroup({ }),
           item: step.name === this.root ? this.item : this.item[step.name],
           tokens: this.route.snapshot.data.tokens
         }, ...fields.map((field) => ({

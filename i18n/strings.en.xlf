@@ -79,6 +79,12 @@
       <trans-unit id="by" datatype="html">
         <target>by</target>
       </trans-unit> 
+      <trans-unit id="toActivity" datatype="html">
+        <target>go to activity</target>
+      </trans-unit>
+      <trans-unit id="enteredActivities" datatype="html">
+        <target>entered activities</target>
+      </trans-unit> 
 
 
 

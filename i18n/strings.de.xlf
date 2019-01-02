@@ -79,7 +79,12 @@
       <trans-unit id="by" datatype="html">
         <target>von</target>
       </trans-unit> 
-      
+      <trans-unit id="toActivity" datatype="html">
+        <target>zur Veranstaltung</target>
+      </trans-unit> 
+      <trans-unit id="enteredActivities" datatype="html">
+        <target>eingetragene Veranstaltungen</target>
+      </trans-unit> 
       
       
       

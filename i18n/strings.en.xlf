@@ -85,6 +85,9 @@
       <trans-unit id="enteredActivities" datatype="html">
         <target>entered activities</target>
       </trans-unit> 
+      <trans-unit id="waitingForMap" datatype="html">
+        <target>loading map</target>
+      </trans-unit> 
 
 
 

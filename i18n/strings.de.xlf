@@ -84,7 +84,11 @@
       </trans-unit> 
       <trans-unit id="enteredActivities" datatype="html">
         <target>eingetragene Veranstaltungen</target>
+      </trans-unit>
+      <trans-unit id="waitingForMap" datatype="html">
+        <target>Karte kommt...</target>
       </trans-unit> 
+      
       
       
       

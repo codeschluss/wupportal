@@ -6,6 +6,7 @@ import { NominatimProvider } from '@portal/core';
 import { BaseForm, FormField, SelectDialogComponent, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { ClientPackage } from '../../utils/package';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
 
@@ -53,7 +54,9 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
     {
       name: 'place',
       input: StringFieldComponent,
-      tests: [Validators.required]
+      locked: !!ClientPackage.config.nominatim.city,
+      tests: [Validators.required],
+      value: ClientPackage.config.nominatim.city
     },
     {
       name: 'suburb',

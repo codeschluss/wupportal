@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Provider, Type } from '@angular/core';
-import { MatBadgeModule, MatButtonModule, MatSlideToggleModule, MatTabsModule, MAT_TABS_CONFIG } from '@angular/material';
+import { MatBadgeModule, MatButtonModule, MatDialogModule, MatListModule, MatSlideToggleModule, MatTabsModule, MAT_TABS_CONFIG } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule, CrudModel } from '@portal/core';
 import { BaseForm, BaseStepper, BaseTable, FormsModule } from '@portal/forms';
@@ -38,9 +38,14 @@ import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { UserTableComponent } from '../../realm/user/user.table';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
+import { DeleteDialogComponent } from './dialogs/delete.dialog';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
+
+const dialogs: Type<any>[] = [
+  DeleteDialogComponent
+];
 
 const forms: Type<BaseForm<CrudModel>>[] = [
   ActivityFormComponent,
@@ -95,12 +100,14 @@ const providers: Provider[] = [
 
 @NgModule({
   entryComponents: [
+    ...dialogs,
     ...forms,
     ...panels,
     ...steppers
   ],
   declarations: [
     AdminComponent,
+    ...dialogs,
     ...forms,
     ...panels,
     ...steppers,
@@ -114,6 +121,8 @@ const providers: Provider[] = [
     FormsModule,
     MatBadgeModule,
     MatButtonModule,
+    MatDialogModule,
+    MatListModule,
     MatSlideToggleModule,
     MatTabsModule
   ],

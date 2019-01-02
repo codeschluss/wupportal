@@ -49,8 +49,7 @@ export class SplashHostComponent implements AfterViewInit, OnDestroy {
 export class SplashChildComponent {
 
   public constructor(
-    @Inject(MAT_DIALOG_DATA)
-    public content: TemplateRef<any>
+    @Inject(MAT_DIALOG_DATA) public content: TemplateRef<any>
   ) { }
 
 }

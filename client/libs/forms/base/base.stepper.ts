@@ -63,7 +63,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
           <i18n i18n="@@persistForm">persistForm</i18n>
         </button>
       </ng-container>
-      <button mat-button color="warn" (click)="location.back()">
+      <button mat-button color="warn" style="float: left;"
+        (click)="location.back()">
         <i18n i18n="@@close">close</i18n>
       </button>
     `;

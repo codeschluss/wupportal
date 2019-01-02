@@ -6,7 +6,7 @@ import { StrictHttpResponse } from '../utils/api';
 import { CoreSettings } from '../utils/settings';
 
 @Injectable({ providedIn: 'root' })
-export class NominatimService {
+export class LocationService {
 
   public constructor(
     private coreSettings: CoreSettings,

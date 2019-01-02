@@ -2,8 +2,6 @@ export * from './base/base.field';
 export * from './base/base.form';
 export * from './base/base.stepper';
 export * from './base/base.table';
-export * from './dialogs/confirm.dialog';
-export * from './dialogs/select.dialog';
 export * from './fields/boolean.field';
 export * from './fields/chip-list.field';
 export * from './fields/select.field';

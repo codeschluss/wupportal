@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   template: `
     <h1 mat-dialog-title>
-      <i18n i18n="@@pleaseConfirm">pleaseConfirm</i18n>
+      <i18n i18n="@@confirmDelete">confirmDelete</i18n>
     </h1>
     <section mat-dialog-content>
       <mat-list>
@@ -27,17 +27,16 @@ import { MAT_DIALOG_DATA } from '@angular/material';
         <i18n i18n="@@close">close</i18n>
       </button>
       <button mat-button color="warn" [mat-dialog-close]="true">
-        <i18n i18n="@@confirm">confirm</i18n>
+        <i18n i18n="@@delete">delete</i18n>
       </button>
     </section>
   `
 })
 
-export class ConfirmDialogComponent {
+export class DeleteDialogComponent {
 
   public constructor(
-    @Inject(MAT_DIALOG_DATA)
-    public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
 }

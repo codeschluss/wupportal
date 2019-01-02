@@ -23,6 +23,7 @@ export class ClientPackage {
       userId: string
     },
     nominatim: {
+      city: string,
       endpoint: string,
       params: string
     }

@@ -24,6 +24,7 @@
       "userId": "id"
     },
     "nominatim": {
+      "city": "Wuppertal",
       "endpoint": "https://nominatim.openstreetmap.org/search",
       "params": "format=json&addressdetails=1"
     }

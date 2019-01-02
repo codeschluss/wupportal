@@ -50,7 +50,7 @@ export abstract class BaseTable<Model extends CrudModel>
     this.route.queryParams.pipe(tap((params) => this.navigate(params)))
   ).pipe(ignoreElements());
 
-  private ignored: any;
+  private parameters: any;
 
   protected static template(template: string): string {
     return template + `
@@ -153,10 +153,10 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   private navigate(params: Params) {
-    const { dir, find, page, size, sort, ...ignored } = params;
-    this.ignored = this.ignored || ignored;
+    const { dir, find, page, size, sort, ...rest } = params;
+    this.parameters = this.parameters || rest;
 
-    if (JSON.stringify(this.ignored) === JSON.stringify(ignored)) {
+    if (JSON.stringify(this.parameters) === JSON.stringify(rest)) {
       this.sorter.direction = dir || null as SortDirection;
       this.search.value = find || null;
       this.pager.pageIndex = parseInt(page, 10) || null;

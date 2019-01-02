@@ -2,9 +2,9 @@ import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@
 import { MatDialog, MatTab, MatTabGroup } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudModel, Pathfinder, Selfrouter } from '@portal/core';
-import { ConfirmDialogComponent } from '@portal/forms';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
+import { DeleteDialogComponent } from '../dialogs/delete.dialog';
 
 export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
@@ -39,7 +39,10 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     }));
 
     if (!this.route.snapshot.queryParams.tab) {
-      this.router.navigate([], { queryParams: { tab: id(0) } });
+      this.router.navigate([], {
+        queryParams: { tab: id(0) },
+        replaceUrl: true
+      });
     }
   }
 
@@ -60,7 +63,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   }
 
   protected confirm(item: CrudModel): Observable<boolean> {
-    return this.dialog.open(ConfirmDialogComponent, {
+    return this.dialog.open(DeleteDialogComponent, {
       data: { item: item }
     }).afterClosed();
   }

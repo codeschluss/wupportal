@@ -1,11 +1,9 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { NominatimProvider } from '@portal/core';
-import { BaseForm, FormField, SelectDialogComponent, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { LocationProvider } from '@portal/core';
+import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
@@ -96,29 +94,24 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
   public model: Type<AddressModel> = AddressModel;
 
   public get enabled(): boolean {
-    const value = this.group.value;
+    const value = this.group.getRawValue();
     return value.street
       && value.houseNumber
       && (value.postalCode || value.place);
   }
 
   public constructor(
-    private dialog: MatDialog,
-    private nominatimProvider: NominatimProvider,
+    private locationProvider: LocationProvider,
     route: ActivatedRoute,
   ) {
     super(route);
   }
 
   public lookup(): void {
-    const label = (item) => `${item.street} ${item.houseNumber},`
-      + ` ${item.postalCode} ${item.place}`;
-
-    this.nominatimProvider.search(label(this.group.value))
-      .pipe(map((response) => ({ data: { items: response, label: label } })))
-      .subscribe((data) => this.dialog.open(SelectDialogComponent, data)
-        .afterClosed().pipe(filter(Boolean))
-        .subscribe((selection) => this.group.patchValue(selection)));
+    const value = this.group.getRawValue();
+    this.locationProvider.lookup(
+      `${value.street} ${value.houseNumber}, ${value.postalCode} ${value.place}`
+    ).subscribe((place) => this.group.patchValue(place));
   }
 
   protected persist(item: AddressModel = this.item): Observable<any> {

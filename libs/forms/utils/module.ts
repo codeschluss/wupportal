@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
-import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
-import { SelectDialogComponent } from '../dialogs/select.dialog';
 import { BooleanFieldComponent } from '../fields/boolean.field';
 import { ChipListFieldComponent } from '../fields/chip-list.field';
 import { SelectFieldComponent } from '../fields/select.field';
@@ -16,11 +14,6 @@ import { FileValueAccessorDirective } from './accesor';
 const declarations: Type<any>[] = [
   BaseFieldComponent,
   FileValueAccessorDirective
-];
-
-const entryComponents: Type<any>[] = [
-  ConfirmDialogComponent,
-  SelectDialogComponent
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
@@ -35,11 +28,8 @@ const modloop: Type<any>[] = [
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
-  MatDialogModule,
   MatFormFieldModule,
-  MatIconModule,
   MatInputModule,
-  MatListModule,
   MatPaginatorModule,
   MatSelectModule,
   MatSlideToggleModule,
@@ -50,8 +40,8 @@ const modloop: Type<any>[] = [
 ];
 
 @NgModule({
-  declarations: [...fields, ...declarations, ...entryComponents],
-  entryComponents: [...fields, ...entryComponents],
+  declarations: [...fields, ...declarations],
+  entryComponents: [...fields],
   exports: [...modloop, BaseFieldComponent],
   imports: [...modloop, CommonModule, CoreModule]
 })

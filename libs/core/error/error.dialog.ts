@@ -34,8 +34,7 @@ export class ErrorDialogComponent {
   public corePackage = CorePackage;
 
   public constructor(
-    @Inject(MAT_DIALOG_DATA)
-    public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
 }

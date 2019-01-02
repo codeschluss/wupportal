@@ -40,7 +40,7 @@ export abstract class BaseForm<Model extends CrudModel>
       <form [formGroup]="group">
         <ng-container *ngFor="let field of fields">
           <section>
-            <label [for]="field.name">
+            <label class="mat-body-strong" [for]="field.name">
               <ng-container *ngTemplateOutlet="label; context: { case: field }">
               </ng-container>
               <ng-container *ngIf="required(field)">*</ng-container>

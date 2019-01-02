@@ -52,6 +52,9 @@
       <trans-unit id="login" datatype="html">
         <target>login</target>
       </trans-unit>
+      <trans-unit id="logOut" datatype="html">
+        <target>Log out</target>
+      </trans-unit>
       <trans-unit id="wrongUserNameOrPassword" datatype="html">
         <target>Password or user name wrong</target>
       </trans-unit>
@@ -71,7 +74,7 @@
         <target>Admin area</target>
       </trans-unit>
       <trans-unit id="successfullRegister" datatype="html">
-        <target>You sucessfull registered yourself to the portal</target>
+        <target>You sucessfully registered yourself to the portal</target>
       </trans-unit>
       <trans-unit id="resultsFor" datatype="html">
         <target>Results for</target>

@@ -52,6 +52,9 @@
       <trans-unit id="login" datatype="html">
         <target>Anmelden</target>
       </trans-unit>
+      <trans-unit id="logOut" datatype="html">
+        <target>Abmelden</target>
+      </trans-unit>
       <trans-unit id="wrongUserNameOrPassword" datatype="html">
         <target>Passwort oder Username falsch</target>
       </trans-unit>

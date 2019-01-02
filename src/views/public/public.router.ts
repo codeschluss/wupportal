@@ -216,9 +216,10 @@ const PublicRoutes = [
         component: SearchComponent
       }
     ]
-  },
+  }
+  ,
   {
-    path: '**',
+    path: '',
     pathMatch: 'full',
     redirectTo: 'home'
   }
@@ -237,6 +238,10 @@ const PublicRoutes = [
     component: LoginComponent
   },
   {
+    path: 'logout',
+    component: LoginComponent
+  },
+  {
     path: 'register',
     component: RegisterComponent,
     resolve: {
@@ -245,11 +250,6 @@ const PublicRoutes = [
     data: {
       organisations: CrudJoiner.of(OrganisationModel)
     }
-  },
-  {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: 'home'
   }
 ])],
   providers: PublicProviders

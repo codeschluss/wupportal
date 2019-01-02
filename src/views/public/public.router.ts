@@ -216,6 +216,11 @@ const PublicRoutes = [
         component: SearchComponent
       }
     ]
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'home'
   }
 ];
 

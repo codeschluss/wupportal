@@ -7,7 +7,6 @@ import { debounceTime, distinctUntilChanged, filter, ignoreElements, map, mergeM
 
 export interface TableColumn {
   name: string;
-  sort?: boolean;
   value: (item) => string;
 }
 
@@ -55,24 +54,16 @@ export abstract class BaseTable<Model extends CrudModel>
 
   protected static template(template: string): string {
     return template + `
-      <mat-form-field>
-        <input matInput type="search">
-      </mat-form-field>
+      <mat-form-field><input matInput type="search"></mat-form-field>
       <mat-table matSort [dataSource]="source.asObservable()">
         <mat-header-row *matHeaderRowDef="collate"></mat-header-row>
         <mat-row *matRowDef="let item; columns: collate"></mat-row>
-        <ng-container *ngFor="let column of columns">
-          <ng-container [matColumnDef]="column.name">
-            <mat-header-cell mat-sort-header
-              [disabled]="!column.sort" *matHeaderCellDef>
-              <ng-container *ngTemplateOutlet="label;
-                context: { case: column }">
-              </ng-container>
-              </mat-header-cell>
-            <mat-cell *matCellDef="let item">
-              {{ column.value(item) }}
-            </mat-cell>
-          </ng-container>
+        <ng-container [matColumnDef]="col.name" *ngFor="let col of columns">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <ng-container *ngTemplateOutlet="label; context: { case: col }">
+            </ng-container>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">{{ col.value(item) }}</mat-cell>
         </ng-container>
         <ng-content></ng-content>
       </mat-table>

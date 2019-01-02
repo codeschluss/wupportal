@@ -8,10 +8,15 @@ import { CategoryModel } from './category.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'description'"
-          i18n="@@description">description</i18n>
-        <i18n *ngSwitchCase="'color'" i18n="@@color">color</i18n>
-        <i18n *ngSwitchCase="'name'" i18n="@@name">name</i18n>
+        <ng-container *ngSwitchCase="'color'">
+          <i18n i18n="@@color">color</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'description'">
+          <i18n i18n="@@description">description</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'name'">
+          <i18n i18n="@@title">title</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

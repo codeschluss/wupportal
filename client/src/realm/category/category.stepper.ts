@@ -10,9 +10,19 @@ import { CategoryModel } from './category.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'category'" i18n="@@category">category</i18n>
-        <i18n *ngSwitchCase="'translations'"
-          i18n="@@translations">translations</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createCategory">createCategory</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editCategory">editCategory</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'category'">
+          <i18n i18n="@@category">category</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'translations'">
+          <i18n i18n="@@translations">translations</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

@@ -10,9 +10,19 @@ import { TagModel } from './tag.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'tag'" i18n="@@tag">tag</i18n>
-        <i18n *ngSwitchCase="'translations'"
-          i18n="@@translations">translations</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createTag">createTag</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editTag">editTag</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'tag'">
+          <i18n i18n="@@tag">tag</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'translations'">
+          <i18n i18n="@@translations">translations</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

@@ -15,19 +15,33 @@ import { ActivityModel } from './activity.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'name'" i18n="@@title">title</i18n>
-        <i18n *ngSwitchCase="'description'"
-          i18n="@@description">description</i18n>
-        <i18n *ngSwitchCase="'contactName'"
-          i18n="@@contactName">contactName</i18n>
-        <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
-        <i18n *ngSwitchCase="'mail'" i18n="@@mail">mail</i18n>
-        <i18n *ngSwitchCase="'organisation'"
-          i18n="@@organisation">organisation</i18n>
-        <i18n *ngSwitchCase="'category'" i18n="@@category">category</i18n>
-        <i18n *ngSwitchCase="'targetGroups'"
-          i18n="@@targetGroups">targetGroups</i18n>
-        <i18n *ngSwitchCase="'tags'" i18n="@@tags">tags</i18n>
+        <ng-container *ngSwitchCase="'category'">
+          <i18n i18n="@@category">category</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'contactName'">
+          <i18n i18n="@@contactName">contactName</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'description'">
+          <i18n i18n="@@description">description</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'mail'">
+          <i18n i18n="@@mail">mail</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'name'">
+          <i18n i18n="@@title">title</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'organisation'">
+          <i18n i18n="@@organisation">organisation</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'phone'">
+          <i18n i18n="@@phone">phone</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'tags'">
+          <i18n i18n="@@tags">tags</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'targetGroups'">
+          <i18n i18n="@@targetGroups">targetGroups</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

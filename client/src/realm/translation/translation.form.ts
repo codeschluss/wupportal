@@ -8,7 +8,6 @@ import { TranslationModel } from './translation.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'lang'" i18n="@@lang">lang</i18n>
       </ng-container>
     </ng-template>
   `)

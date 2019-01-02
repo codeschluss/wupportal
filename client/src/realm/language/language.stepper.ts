@@ -9,7 +9,16 @@ import { LanguageModel } from './language.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'language'" i18n="@@language">language</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createLanguage">createLanguage</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editLanguage">editLanguage</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'language'">
+          <i18n i18n="@@language">language</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

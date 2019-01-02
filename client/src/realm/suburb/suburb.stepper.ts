@@ -9,7 +9,16 @@ import { SuburbModel } from './suburb.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'suburb'" i18n="@@suburb">suburb</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createSuburb">createSuburb</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editSuburb">editSuburb</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'suburb'">
+          <i18n i18n="@@suburb">suburb</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

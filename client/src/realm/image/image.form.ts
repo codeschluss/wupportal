@@ -7,7 +7,9 @@ import { ImageModel } from './image.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'images'" i18n="@@images">images</i18n>
+        <ng-container *ngSwitchCase="'images'">
+          <i18n i18n="@@images">images</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

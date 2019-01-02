@@ -8,9 +8,15 @@ import { UserModel } from './user.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'name'" i18n="@@name">name</i18n>
-        <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
-        <i18n *ngSwitchCase="'username'" i18n="@@username">username</i18n>
+        <ng-container *ngSwitchCase="'name'">
+          <i18n i18n="@@fullname">fullname</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'phone'">
+          <i18n i18n="@@phone">phone</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'username'">
+          <i18n i18n="@@username">username</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)

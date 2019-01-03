@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { CrudModel } from '@portal/core';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { Observable } from 'rxjs';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -68,9 +69,9 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
 
   public model: Type<OrganisationModel> = OrganisationModel;
 
-  protected persist(item: OrganisationModel = this.item): Observable<any> {
-    item.addressId = this.value('address', item).id;
-    return super.persist(item);
+  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
+    this.item.addressId = this.value('address', items).id;
+    return super.persist(items);
   }
 
 }

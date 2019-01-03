@@ -32,9 +32,10 @@ main#admin {
   }
 
   *.base-form {
-    &>form>section {
+    & > form > section {
       align-items: center;
       display: flex;
+      min-height: 65px;
       padding: 0 16px;
 
       &:nth-of-type(even) {
@@ -51,6 +52,18 @@ main#admin {
       output {
         flex-grow: 1;
 
+        mat-chip-list > *.mat-chip-list-wrapper {
+          margin: 0;
+
+          mat-chip {
+            width: auto;
+
+            span.mat-chip-remove {
+              height: auto;
+            }
+          }
+        }
+
         mat-form-field {
           width: 100%;
         }
@@ -58,9 +71,20 @@ main#admin {
     }
   }
 
+  *.base-table {
+    mat-row {
+      &:nth-of-type(even) {
+        background-color: rgba(0, 0, 0, .005);
+      }
+      &:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, .02);
+      }
+    }
+  }
+
   *.base-form,
   *.base-table {
-    &>mat-form-field {
+    & > mat-form-field {
       display: block;
       width: 100%;
 
@@ -70,15 +94,6 @@ main#admin {
         div.mat-form-field-flex {
           padding: 0 16px;
         }
-      }
-    }
-
-    mat-row {
-      &:nth-of-type(even) {
-        background-color: rgba(0, 0, 0, .005);
-      }
-      &:nth-of-type(odd) {
-        background-color: rgba(0, 0, 0, .02);
       }
     }
   }

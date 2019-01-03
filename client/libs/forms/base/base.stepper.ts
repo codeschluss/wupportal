@@ -45,6 +45,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         </ng-container>
       </nav>
       <router-outlet></router-outlet>
+      <mat-divider></mat-divider>
       <ng-container *ngIf="hasPrev">
         <button mat-button replaceUrl
           [disabled]="!can(index - 1)" [routerLink]="link('-1')">
@@ -148,29 +149,15 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     const routes = this.route.snapshot.routeConfig.children;
     const root = routes.find((route) => route.path === this.root);
 
-    forkJoin(routes.filter((route) => route !== root).map(
+    forkJoin([of({ })].concat(routes.filter((route) => route !== root).map(
       (route) => route.data.persist().pipe(map((item) => ({
-        field: route.path,
-        value: item
+        [route.path]: item
       })), tap(() => route.data.group.markAsPristine()))
-    ).concat(of(null))).pipe(
-      map((items) => items.slice(0, -1)),
-      mergeMap((items) => root.data.persist(this.prepare(items))),
+    ))).pipe(
+      map((items) => items.reduce((a, b) => Object.assign(a, b))),
+      mergeMap((items) => root.data.persist(items)),
       tap(() => root.data.group.markAsPristine())
-    ).subscribe((item: Model) => this.router.navigate([
-      '../',
-      item.id,
-      this.root
-    ], {
-      relativeTo: this.route,
-      replaceUrl: true,
-    }));
-  }
-
-  private prepare(items: { field: string, value: CrudModel }[]): Model {
-    return Object.defineProperties(this.item, items
-      .map((item) => ({ [item.field]: { value: item.value } }))
-      .reduce((obj, item) => Object.assign(obj, item), { }));
+    ).subscribe(() => this.location.back());
   }
 
   private routes(): Route[] {

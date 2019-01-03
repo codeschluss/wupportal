@@ -89,33 +89,36 @@ export abstract class BaseForm<Model extends CrudModel>
 
   protected ngPostInit(): void { }
 
-  protected diff(key: string): { link: CrudModel[], unlink: CrudModel[] } {
-    const items = (this.item[key] || []).filter((item) => item.id);
-    const values = (this.value(key) || []).filter((value) => value.id);
+  protected diff(field: string, items?: { [key: string]: CrudModel }):
+    { add: Model[], del: Model[] } {
+
+    const add = (this.value(field, items) || []).filter((item) => !item.id);
+    const put = (this.value(field, items) || []).filter((item) => item.id);
+    const del = (this.item[field] || []);
 
     return {
-      link: values.filter((v) => !items.some((i) => i.id === v.id))
-        .concat(values.filter((value) => !value.id)),
-      unlink: items.filter((i) => !values.some((v) => v.id === i.id))
+      add: put.filter((v) => !del.some((t) => t.id === v.id)).concat(add),
+      del: del.filter((t) => !put.some((v) => v.id === t.id))
     };
   }
 
-  protected persist(item: Model = this.item): Observable<any> {
+  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
     if (this.group.dirty && this.model['provider']) {
-      this.fields.filter((field) => !field.model)
-        .forEach((field) => item[field.name] = this.value(field.name, item));
+      this.fields.map((field) => field.name).forEach(
+        (field) => this.item[field] = this.value(field, items));
 
-      return item.id
-        ? this.model['provider'].update(item, item.id)
-        : this.model['provider'].create(item);
+      return this.item.id
+        ? this.model['provider'].update(this.item, this.item.id)
+        : this.model['provider'].create(this.item);
     }
 
-    return of(item);
+    return of(this.item);
   }
 
-  protected value(field: string, item: Model = this.item): any {
+  protected value(field: string, items?: { [key: string]: CrudModel }): any {
     const control = this.group.get(field);
-    return control ? control.value : item[field];
+    return items && field in items ? items[field]
+      : control ? control.value : this.item[field];
   }
 
   private form(field: FormField): void {

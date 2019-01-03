@@ -1,5 +1,8 @@
 import { Component, Type } from '@angular/core';
+import { CrudModel } from '@portal/core';
 import { BaseForm, FormField } from '@portal/forms';
+import { Observable, of } from 'rxjs';
+import { ScheduleFieldComponent } from './schedule.field';
 import { ScheduleModel } from './schedule.model';
 
 @Component({
@@ -17,8 +20,22 @@ import { ScheduleModel } from './schedule.model';
 
 export class ScheduleFormComponent extends BaseForm<ScheduleModel> {
 
-  public fields: FormField[] = [];
+  public fields: FormField[] = [
+    {
+      name: 'schedules',
+      input: ScheduleFieldComponent,
+      model: ScheduleModel
+    }
+  ];
 
   public model: Type<ScheduleModel> = ScheduleModel;
+
+  public ngPostInit(): void {
+    this.fields[0].value = this.item;
+  }
+
+  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
+    return of(this.value('schedules', items));
+  }
 
 }

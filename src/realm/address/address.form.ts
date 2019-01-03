@@ -2,7 +2,7 @@ import { Component, ElementRef, Type, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { CrudJoiner, CrudResolver, LocationProvider, LocationResponse } from '@portal/core';
+import { CrudJoiner, CrudModel, CrudResolver, LocationProvider, LocationResponse } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
@@ -141,15 +141,15 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
     this.group.valueChanges.subscribe(() => this.clear());
     this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
     this.search.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(1000),
       distinctUntilChanged(),
       mergeMap((label) =>  label ? this.optionalize(label) : of([]))
     ).subscribe((items) => this.options = items);
   }
 
-  protected persist(item: AddressModel = this.item): Observable<any> {
-    item.suburbId = this.value('suburb', item).id;
-    return super.persist(item);
+  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
+    this.item.suburbId = this.value('suburb', items).id;
+    return super.persist(items);
   }
 
   private clear(): void {

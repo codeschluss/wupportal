@@ -44,7 +44,7 @@ export class BaseFieldComponent implements OnInit {
 
   public get value(): any { return this.group.get(this.field.name).value; }
   public set value(value: any) {
-    this.group.get(this.field.name).setValue(value);
+    this.group.get(this.field.name).patchValue(value);
     this.group.get(this.field.name).markAsDirty();
   }
 

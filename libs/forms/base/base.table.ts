@@ -99,7 +99,7 @@ export abstract class BaseTable<Model extends CrudModel>
           filter(() => this.input(this.search.value)),
           map(() => this.search.value || null),
           distinctUntilChanged(),
-          debounceTime(500)
+          debounceTime(1000)
         ),
         this.sorter.sortChange
       ).pipe(tap(() => this.pager.pageIndex = 0))

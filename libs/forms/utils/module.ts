@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDividerModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
@@ -29,6 +29,7 @@ export const materials: Type<any>[] = [
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
+  MatDividerModule,
   MatFormFieldModule,
   MatInputModule,
   MatPaginatorModule,

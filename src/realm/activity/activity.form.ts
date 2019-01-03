@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { CrudModel } from '@portal/core';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -103,10 +104,10 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
 
   protected ngPostInit(): void {
     const claim = ClientPackage.config.jwtClaims.superUser;
-    let options = this.route.snapshot.data.organisation;
+    let organisations = this.route.snapshot.data.organisation;
 
     if (!this.route.snapshot.data.tokens.access[claim]) {
-      options = [...new Set([
+      organisations = [...new Set([
         ...this.route.snapshot.data.tokens.access
           [ClientPackage.config.jwtClaims.organisationAdmin],
         ...this.route.snapshot.data.tokens.access
@@ -115,25 +116,27 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
         .find((organisation) => organisation.id === id));
     }
 
-    this.fields[this.fields.findIndex((field) =>
-      field.name === 'organisation')].options = options;
+    this.fields[5].options = organisations;
   }
 
-  protected persist(item: ActivityModel = this.item): Observable<any> {
+  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
+    const schedules = this.diff('schedules', items);
+    const tags = this.diff('tags', items);
+    const targets = this.diff('targetGroups', items);
+
+    this.item.addressId = this.value('address', items).id;
+    this.item.categoryId = this.value('category', items).id;
+    this.item.organisationId = this.value('organisation', items).id;
+
     const provider = this.model['provider'];
-    const tags = this.diff('tags');
-    const targets = this.diff('targetGroups');
-
-    item.addressId = this.value('address', item).id;
-    item.categoryId = this.value('category', item).id;
-    item.organisationId = this.value('organisation', item).id;
-
-    return super.persist(item).pipe(mergeMap((i) => forkJoin([of(i)].concat(
-      ...tags.link.map((t) => provider.pasteTags(i.id, [t])),
-      ...tags.unlink.map((t) => provider.unlinkTag(i.id, t.id)),
-      ...targets.link.map((t) => provider.linkTargetGroups(i.id, [t.id])),
-      ...targets.unlink.map((t) => provider.unlinkTargetGroup(i.id, t.id))
-    )).pipe(map((items) => items.shift()))));
+    return super.persist(items).pipe(mergeMap((i) => forkJoin([of(i)].concat(
+      ...schedules.add.map((s) => provider.pasteSchedules(i.id, [s])),
+      ...schedules.del.map((s) => provider.unlinkSchedule(i.id, s.id)),
+      ...tags.add.map((t) => provider.pasteTags(i.id, [t])),
+      ...tags.del.map((t) => provider.unlinkTag(i.id, t.id)),
+      ...targets.add.map((t) => provider.linkTargetGroups(i.id, [t.id])),
+      ...targets.del.map((t) => provider.unlinkTargetGroup(i.id, t.id))
+    )).pipe(map((results) => results.shift()))));
   }
 
 }

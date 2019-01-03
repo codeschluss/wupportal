@@ -28,7 +28,8 @@ import { TargetGroupModel } from './target-group.model';
   `)
 })
 
-export class TargetGroupStepperComponent extends BaseStepper<TargetGroupModel> {
+export class TargetGroupStepperComponent
+  extends BaseStepper<TargetGroupModel> {
 
   public root: string = 'target-group';
 

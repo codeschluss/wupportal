@@ -1,16 +1,28 @@
-import { Component, Type } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Component, ElementRef, Type, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { LocationProvider } from '@portal/core';
+import { CrudJoiner, CrudResolver, LocationProvider, LocationResponse } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
+import { AddressProvider } from './address.provider';
 
 @Component({
   selector: 'address-form',
-  template: BaseForm.template(`
+  template: `
+    <mat-form-field>
+      <input #input matInput [formControl]="search" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="set($event)">
+        <ng-container *ngFor="let item of options; let i = index">
+          <mat-option [value]="i">{{ name(item) }}</mat-option>
+        </ng-container>
+      </mat-autocomplete>
+    </mat-form-field>
+  ` + BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'houseNumber'">
@@ -36,44 +48,49 @@ import { AddressModel } from './address.model';
         </ng-container>
       </ng-container>
     </ng-template>
-  `) + `
-    <button mat-button [disabled]="!enabled" (click)="lookup()">
-      <i18n i18n="@@lookup">lookup</i18n>
-    </button>
-  `
+  `)
 })
 
 export class AddressFormComponent extends BaseForm<AddressModel> {
 
+  @ViewChild('auto')
+  public auto: MatAutocomplete;
+
+  @ViewChild('input')
+  public input: ElementRef<HTMLInputElement>;
+
   public fields: FormField[] = [
+    {
+      name: 'suburb',
+      input: SelectFieldComponent,
+      model: SuburbModel,
+      tests: [Validators.required]
+    },
     {
       name: 'street',
       input: StringFieldComponent,
+      locked: true,
       tests: [Validators.required]
     },
     {
       name: 'houseNumber',
       input: StringFieldComponent,
+      locked: true,
       tests: [Validators.required]
     },
     {
       name: 'postalCode',
       input: StringFieldComponent,
+      locked: true,
       tests: [Validators.required],
       type: 'number'
     },
     {
       name: 'place',
       input: StringFieldComponent,
-      locked: !!ClientPackage.config.nominatim.city,
+      locked: true,
       tests: [Validators.required],
       value: ClientPackage.config.nominatim.city
-    },
-    {
-      name: 'suburb',
-      input: SelectFieldComponent,
-      model: SuburbModel,
-      tests: [Validators.required]
     },
     {
       name: 'longitude',
@@ -93,30 +110,67 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
 
   public model: Type<AddressModel> = AddressModel;
 
-  public get enabled(): boolean {
-    const value = this.group.getRawValue();
-    return value.street
-      && value.houseNumber
-      && (value.postalCode || value.place);
-  }
+  public options: AddressModel[] & LocationResponse[];
+
+  public search: FormControl = new FormControl();
 
   public constructor(
+    private addressProvider: AddressProvider,
+    private crudResolver: CrudResolver,
     private locationProvider: LocationProvider,
     route: ActivatedRoute,
   ) {
     super(route);
   }
 
-  public lookup(): void {
-    const value = this.group.getRawValue();
-    this.locationProvider.lookup(
-      `${value.street} ${value.houseNumber}, ${value.postalCode} ${value.place}`
-    ).subscribe((place) => this.group.patchValue(place));
+  public name(item: LocationResponse): string {
+    return `
+      ${item.street || '?'}
+      ${item.houseNumber || '?'},
+      ${item.postalCode || '?'}
+      ${item.place || '?'}
+    `;
+  }
+
+  public set(event: MatAutocompleteSelectedEvent): void {
+    const item = this.options[event.option.value];
+    this.group.patchValue({ ...item, suburb: item.suburb || null });
+  }
+
+  protected ngPostInit(): void {
+    this.group.valueChanges.subscribe(() => this.clear());
+    this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
+    this.search.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      mergeMap((label) =>  label ? this.optionalize(label) : of([]))
+    ).subscribe((items) => this.options = items);
   }
 
   protected persist(item: AddressModel = this.item): Observable<any> {
     item.suburbId = this.value('suburb', item).id;
     return super.persist(item);
+  }
+
+  private clear(): void {
+    this.input.nativeElement.value = '';
+    this.search.setValue('');
+  }
+
+  private optionalize(label: string = ''): Observable<any> {
+    const city = ClientPackage.config.nominatim.city;
+    const joiner = CrudJoiner.of(AddressModel).with('suburb');
+    const regex = city && new RegExp(city, 'i');
+
+    return this.addressProvider.readAll({
+      embeddings: CrudJoiner.to(joiner.graph),
+      filter: label
+    }).pipe(
+      mergeMap((items) => this.crudResolver.refine(items, joiner.graph)),
+      catchError(() => this.locationProvider.locate(label).pipe(map((items) =>
+        items.filter((i) => !regex || i.place && i.place.search(regex) >= 0)
+      )))
+    );
   }
 
 }

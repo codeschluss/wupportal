@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSelect } from '@angular/material';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -40,9 +40,11 @@ export class SelectFieldComponent extends BaseFieldComponent
   protected ngPostInit(): void {
     if (this.value) { this.select.setValue(this.toId(this.value)); }
 
-    this.select.valueChanges
-      .pipe(map((change) => this.toModel(change)))
-      .subscribe((change) => this.value = change);
+    this.group.get(this.field.name).valueChanges.pipe(distinctUntilChanged())
+      .subscribe((change) => this.select.setValue(this.toId(change)));
+
+    this.select.valueChanges.pipe(distinctUntilChanged())
+      .subscribe((change) => this.value = this.toModel(change));
   }
 
 }

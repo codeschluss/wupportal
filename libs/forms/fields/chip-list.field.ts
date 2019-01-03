@@ -20,9 +20,9 @@ import { BaseFieldComponent } from '../base/base.field';
         [matAutocomplete]="auto"
         [matChipInputFor]="chips"
         [matChipInputSeparatorKeyCodes]="keys"
-        (matChipInputTokenEnd)="insert($event)">
+        (matChipInputTokenEnd)="create($event)">
     </mat-chip-list>
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="add($event)">
       <ng-container *ngFor="let item of options">
         <mat-option [value]="item.id">{{ toLabel(item) }}</mat-option>
       </ng-container>
@@ -44,11 +44,13 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   public options: CrudModel[];
 
-  public delete(item: CrudModel): void {
-    this.value = this.value.filter((value) => value !== item);
+  public add(event: MatAutocompleteSelectedEvent): void {
+    if (!this.value.some((item) => item.id === event.option.value)) {
+      this.value = this.value.concat(this.toModel(event.option.value));
+    }
   }
 
-  public insert(event: MatChipInputEvent): void {
+  public create(event: MatChipInputEvent): void {
     const label = this.sanitize(event.value);
     if (label && !this.find(label)) {
       this.value = this.value.concat(this.find(label, this.field.options) ||
@@ -56,19 +58,16 @@ export class ChipListFieldComponent extends BaseFieldComponent {
     }
   }
 
-  public select(event: MatAutocompleteSelectedEvent): void {
-    if (!this.value.some((item) => item.id === event.option.value)) {
-      this.value = this.value.concat(this.toModel(event.option.value));
-    }
+  public delete(item: CrudModel): void {
+    this.value = this.value.filter((value) => value !== item);
   }
 
   protected ngPostInit(): void {
     if (!this.value) { this.value = []; }
     this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
     this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
-    this.search.valueChanges
-      .pipe(map((label) => this.options = this.optionalize(label)))
-      .subscribe();
+    this.search.valueChanges.pipe(map((label) => this.optionalize(label)))
+      .subscribe((items) =>  this.options = items);
   }
 
   private clear(): void {

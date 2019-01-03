@@ -28,7 +28,8 @@ import { CategoryModel } from './category.model';
   `)
 })
 
-export class CategoryStepperComponent extends BaseStepper<CategoryModel> {
+export class CategoryStepperComponent
+  extends BaseStepper<CategoryModel> {
 
   public root: string = 'category';
 

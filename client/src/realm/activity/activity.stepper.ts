@@ -36,7 +36,8 @@ import { ActivityModel } from './activity.model';
   `)
 })
 
-export class ActivityStepperComponent extends BaseStepper<ActivityModel> {
+export class ActivityStepperComponent
+  extends BaseStepper<ActivityModel> {
 
   public root: string = 'activity';
 

@@ -24,7 +24,8 @@ import { UserModel } from './user.model';
   `)
 })
 
-export class UserStepperComponent extends BaseStepper<UserModel> {
+export class UserStepperComponent
+  extends BaseStepper<UserModel> {
 
   public root: string = 'user';
 

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
 import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
 import { BooleanFieldComponent } from '../fields/boolean.field';
@@ -11,12 +12,12 @@ import { StringFieldComponent } from '../fields/string.field';
 import { UploadFieldComponent } from '../fields/upload.field';
 import { FileValueAccessorDirective } from './accesor';
 
-const declarations: Type<any>[] = [
+export const declarations: Type<any>[] = [
   BaseFieldComponent,
   FileValueAccessorDirective
 ];
 
-const fields: Type<BaseFieldComponent>[] = [
+export const fields: Type<BaseFieldComponent>[] = [
   BooleanFieldComponent,
   ChipListFieldComponent,
   UploadFieldComponent,
@@ -24,7 +25,7 @@ const fields: Type<BaseFieldComponent>[] = [
   StringFieldComponent
 ];
 
-const modloop: Type<any>[] = [
+export const materials: Type<any>[] = [
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
@@ -35,15 +36,29 @@ const modloop: Type<any>[] = [
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
-  MatTabsModule,
-  ReactiveFormsModule
+  MatTabsModule
 ];
 
 @NgModule({
-  declarations: [...fields, ...declarations],
-  entryComponents: [...fields],
-  exports: [...modloop, BaseFieldComponent],
-  imports: [...modloop, CommonModule, CoreModule]
+  declarations: [
+    ...fields,
+    ...declarations
+  ],
+  entryComponents: [
+    ...fields
+  ],
+  exports: [
+    ...materials,
+    BaseFieldComponent,
+    ReactiveFormsModule
+  ],
+  imports: [
+    ...materials,
+    CommonModule,
+    CoreModule,
+    ReactiveFormsModule,
+    RouterModule
+  ]
 })
 
 export class FormsModule { }

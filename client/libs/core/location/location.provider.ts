@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { forkJoin, Observable, of } from 'rxjs';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../utils/api';
-import { LocationDialogComponent } from './location.dialog';
-import { LocationService } from './location.service';
+import { LocationService, NominatimResponse } from './location.service';
 
 export interface LocationResponse {
   houseNumber: string;
@@ -19,38 +17,31 @@ export interface LocationResponse {
 export class LocationProvider {
 
   public constructor(
-    private dialog: MatDialog,
     private locationService: LocationService
   ) { }
 
-  public lookup(query: string): Observable<LocationResponse> {
+  public locate(query: string): Observable<LocationResponse[]> {
     return forkJoin([
-      of([] as LocationResponse[]),
       this.locationService.nominatimSearchResponse(query)
         .pipe(map((response) => this.normalizeNominatim(response)))
-    ]).pipe(mergeMap((items) => this.select(items.flat())));
+    ]).pipe(map((items) => items.flat()));
   }
 
-  private normalizeNominatim(response: StrictHttpResponse<any>):
+  private normalizeNominatim(response: StrictHttpResponse<NominatimResponse[]>):
     LocationResponse[] {
 
     return response.body.map((item) => ({
       houseNumber: item.address.house_number,
       latitude: item.lat,
       longitude: item.lon,
-      place: item.address.city
-        || item.address.county
+      place: item.address.town
+        || item.address.city
         || item.address.state,
       postalCode: item.address.postcode,
-      street: item.address.road
+      street: item.address.pedestrian
         || item.address.construction
-        || item.address.pedestrian
+        || item.address.road
     }));
-  }
-
-  private select(items: LocationResponse[]): Observable<any> {
-    return this.dialog.open(LocationDialogComponent, { data: items })
-      .afterClosed().pipe(filter(Boolean));
   }
 
 }

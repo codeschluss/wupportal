@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule, MatListModule, MatProgressBarModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatProgressBarModule } from '@angular/material';
 import { RouterModule, UrlSerializer } from '@angular/router';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { TokenProvider } from '../auth/token.provider';
@@ -11,7 +11,6 @@ import { I18nComponent } from '../i18n/i18n.component';
 import { I18nInterceptor } from '../i18n/i18n.interceptor';
 import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
-import { LocationDialogComponent } from '../location/location.dialog';
 import { SessionProvider } from '../session/session.provider';
 import { ApiInterceptor } from './api';
 import { CoreUrlSerializer } from './serializer';
@@ -22,14 +21,12 @@ import { SplashChildComponent, SplashHostComponent } from './splash';
   declarations: [
     ErrorDialogComponent,
     I18nComponent,
-    LocationDialogComponent,
     LoadingIndicatorComponent,
     SplashChildComponent,
     SplashHostComponent
   ],
   entryComponents: [
     ErrorDialogComponent,
-    LocationDialogComponent,
     SplashChildComponent
   ],
   exports: [
@@ -41,7 +38,6 @@ import { SplashChildComponent, SplashHostComponent } from './splash';
     CommonModule,
     MatButtonModule,
     MatDialogModule,
-    MatListModule,
     MatProgressBarModule,
     RouterModule
   ],

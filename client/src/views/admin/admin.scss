@@ -58,6 +58,7 @@ main#admin {
     }
   }
 
+  *.base-form,
   *.base-table {
     &>mat-form-field {
       display: block;

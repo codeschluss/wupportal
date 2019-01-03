@@ -29,8 +29,8 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     const id = (index) => tabs[index].nativeElement.id;
     const tabs = this.tabs.toArray();
 
-    this.route.queryParams.subscribe((params) =>
-      this.index = tabs.findIndex((t) => t.nativeElement.id === params.tab));
+    this.route.queryParams.subscribe((params) => this.index =
+      tabs.findIndex((t) => t.nativeElement.id === params.tab));
 
     this.tab.selectedIndexChange.pipe(
       filter((index) => id(index) !== this.route.snapshot.queryParams.tab)

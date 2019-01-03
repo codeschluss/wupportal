@@ -24,7 +24,8 @@ import { LanguageModel } from './language.model';
   `)
 })
 
-export class LanguageStepperComponent extends BaseStepper<LanguageModel> {
+export class LanguageStepperComponent
+  extends BaseStepper<LanguageModel> {
 
   public root: string = 'language';
 

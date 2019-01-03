@@ -28,7 +28,8 @@ import { TagModel } from './tag.model';
   `)
 })
 
-export class TagStepperComponent extends BaseStepper<TagModel> {
+export class TagStepperComponent
+  extends BaseStepper<TagModel> {
 
   public root: string = 'tag';
 

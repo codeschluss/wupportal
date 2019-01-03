@@ -24,7 +24,8 @@ import { SuburbModel } from './suburb.model';
   `)
 })
 
-export class SuburbStepperComponent extends BaseStepper<SuburbModel> {
+export class SuburbStepperComponent
+  extends BaseStepper<SuburbModel> {
 
   public root: string = 'suburb';
 

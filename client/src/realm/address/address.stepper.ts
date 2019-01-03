@@ -24,7 +24,8 @@ import { AddressModel } from './address.model';
   `)
 })
 
-export class AddressStepperComponent extends BaseStepper<AddressModel> {
+export class AddressStepperComponent
+  extends BaseStepper<AddressModel> {
 
   public root: string = 'address';
 
@@ -43,7 +44,7 @@ export class AddressStepperComponent extends BaseStepper<AddressModel> {
   public get title(): string {
     return `
       ${this.values[this.root].street}
-      ${this.values[this.root].houseNumber}
+      ${this.values[this.root].houseNumber},
       ${this.values[this.root].place}
     `;
   }

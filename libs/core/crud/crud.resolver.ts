@@ -14,7 +14,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     Observable<CrudModel | CrudModel[]> {
 
     return Array.isArray(input)
-      ? forkJoin(...input.map((item) => from(this.run(item, graph.nodes))))
+      ? forkJoin(input.map((item) => from(this.run(item, graph.nodes))))
       : from(this.run(input, graph.nodes));
   }
 
@@ -80,7 +80,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
             }
           }
 
-          Object.defineProperty(item, link.field, { value: value });
+          item[link.field] = value;
         }
       }
     }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
+import de.codeschluss.portal.components.schedule.ScheduleEntity;
 
 import java.net.URISyntaxException;
 
@@ -13,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -54,8 +56,7 @@ public class ActivityControllerDeleteSchedulesTest {
 
     controller.deleteSchedules(activityId, scheduleId);
 
-    result = (Resource<ActivityEntity>) controller.readOne(activityId);
-    assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
+    assertNotContaining(activityId, scheduleId);
   }
 
   @Test
@@ -70,8 +71,7 @@ public class ActivityControllerDeleteSchedulesTest {
 
     controller.deleteSchedules(activityId, scheduleId);
 
-    result = (Resource<ActivityEntity>) controller.readOne(activityId);
-    assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
+    assertNotContaining(activityId, scheduleId);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -91,14 +91,18 @@ public class ActivityControllerDeleteSchedulesTest {
     controller.deleteSchedules(activityId, scheduleId);
   }
 
+  @SuppressWarnings("unchecked")
   private void assertContaining(String activityId, String scheduleId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
-    assertThat(result.getContent().getSchedules())
-        .haveAtLeastOne(new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
+    Resources<Resource<ScheduleEntity>> result = (Resources<Resource<ScheduleEntity>>) controller
+        .readSchedules(activityId, null).getBody();
+    assertThat(result.getContent()).haveAtLeastOne(
+        new Condition<>(t -> t.getContent().getId().equals(scheduleId), "schedule exists"));
   }
 
+  @SuppressWarnings("unchecked")
   private void assertNotContaining(String activityId, String scheduleId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
-    assertThat(result.getContent().getSchedules()).noneMatch(t -> t.getId().equals(scheduleId));
+    Resources<Resource<ScheduleEntity>> result = (Resources<Resource<ScheduleEntity>>) controller
+        .readSchedules(activityId, null).getBody();
+    assertThat(result.getContent()).noneMatch(t -> t.getContent().getId().equals(scheduleId));
   }
 }

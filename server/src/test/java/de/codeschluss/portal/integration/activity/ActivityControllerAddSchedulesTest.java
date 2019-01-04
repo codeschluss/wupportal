@@ -3,7 +3,6 @@ package de.codeschluss.portal.integration.activity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.activity.ActivityController;
-import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
@@ -16,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -34,7 +34,7 @@ public class ActivityControllerAddSchedulesTest {
   @WithUserDetails("super@user")
   public void addSchedulesSuperUserOk() throws URISyntaxException {
     ScheduleEntity schedule = newSchedule();
-    
+
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     controller.addSchedules(activityId, schedule);
@@ -63,7 +63,7 @@ public class ActivityControllerAddSchedulesTest {
 
     assertContaining(schedule, activityId);
   }
-  
+
   @Test(expected = BadParamsException.class)
   @WithUserDetails("provider1@user")
   public void addSchedulesNotValidDenied() throws URISyntaxException {
@@ -90,16 +90,19 @@ public class ActivityControllerAddSchedulesTest {
     controller.addSchedules(activityId, schedule);
   }
 
+  @SuppressWarnings("unchecked")
   private void assertContaining(ScheduleEntity schedule, String activityId) {
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
-    assertThat(result.getContent().getSchedules()).haveAtLeastOne(new Condition<>(
-        s -> s.getStartDate().getTime() == schedule.getStartDate().getTime(), "schedule exists"));
+    Resources<Resource<ScheduleEntity>> result = (Resources<Resource<ScheduleEntity>>) controller
+        .readSchedules(activityId, null).getBody();
+    assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
+        s -> s.getContent().getStartDate().getTime() == schedule.getStartDate().getTime(),
+        "schedule exists"));
   }
-  
+
   private ScheduleEntity newSchedule() {
     ScheduleEntity schedule = new ScheduleEntity();
-    schedule.setStartDate(new Date(System.currentTimeMillis()));
-    schedule.setEndDate(new Date(System.currentTimeMillis() + 1000000));
+    schedule.setStartDate(new Date(System.currentTimeMillis() + 1000000));
+    schedule.setEndDate(new Date(System.currentTimeMillis() + 2000000));
     return schedule;
   }
 }

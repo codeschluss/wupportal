@@ -64,8 +64,19 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?
   
   /**
    * Validate field constraints.
+   *
+   * @param newEntity the new entity
+   * @return true, if successful
    */
-  public abstract boolean validFieldConstraints(E newEntity);
+  public abstract boolean validCreateFieldConstraints(E newEntity);
+  
+  /**
+   * Valid update field constraints.
+   *
+   * @param newEntity the new entity
+   * @return true, if successful
+   */
+  public abstract boolean validUpdateFieldConstraints(E newEntity);
 
   /**
    * Gets the by id.

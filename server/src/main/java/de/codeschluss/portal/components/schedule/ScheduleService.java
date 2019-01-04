@@ -48,7 +48,22 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   }
   
   @Override
-  public boolean validFieldConstraints(ScheduleEntity newSchedule) {
+  public boolean validCreateFieldConstraints(ScheduleEntity newSchedule) {
+    return validFields(newSchedule);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(ScheduleEntity newSchedule) {
+    return validFields(newSchedule);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newSchedule the new schedule
+   * @return true, if successful
+   */
+  private boolean validFields(ScheduleEntity newSchedule) {
     return newSchedule.getStartDate() != null && newSchedule.getEndDate() != null;
   }
 

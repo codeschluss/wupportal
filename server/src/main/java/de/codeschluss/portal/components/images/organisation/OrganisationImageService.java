@@ -51,7 +51,22 @@ public class OrganisationImageService
   }
   
   @Override
-  public boolean validFieldConstraints(OrganisationImageEntity newOrgaImage) {
+  public boolean validCreateFieldConstraints(OrganisationImageEntity newOrgaImage) {
+    return validFields(newOrgaImage);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(OrganisationImageEntity newOrgaImage) {
+    return validFields(newOrgaImage);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newOrgaImage the new orga image
+   * @return true, if successful
+   */
+  private boolean validFields(OrganisationImageEntity newOrgaImage) {
     return newOrgaImage.getImage() != null && newOrgaImage.getImage().length == 0;
   }
 

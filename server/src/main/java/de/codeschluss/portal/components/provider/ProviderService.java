@@ -72,7 +72,22 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
   }
   
   @Override
-  public boolean validFieldConstraints(ProviderEntity newProvider) {
+  public boolean validCreateFieldConstraints(ProviderEntity newProvider) {
+    return validFields(newProvider);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(ProviderEntity newProvider) {
+    return validFields(newProvider);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newProvider the new provider
+   * @return true, if successful
+   */
+  private boolean validFields(ProviderEntity newProvider) {
     return newProvider.getOrganisation() != null && newProvider.getUser() != null;
   }
 

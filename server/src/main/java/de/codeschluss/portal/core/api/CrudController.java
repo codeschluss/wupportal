@@ -122,7 +122,7 @@ public abstract class CrudController<E extends BaseResource, S extends ResourceD
    * @param newEntity the new entity
    */
   protected void validateCreate(E newEntity) {
-    if (!service.validFieldConstraints(newEntity)) {
+    if (!service.validCreateFieldConstraints(newEntity)) {
       throw new BadParamsException("Required Fields not satisfied");
     }
     if (service.getExisting(newEntity) != null) {
@@ -143,7 +143,7 @@ public abstract class CrudController<E extends BaseResource, S extends ResourceD
    */
   public ResponseEntity<?> update(@RequestBody E newEntity, @PathVariable String id)
       throws URISyntaxException {
-    if (!service.validFieldConstraints(newEntity)) {
+    if (!service.validUpdateFieldConstraints(newEntity)) {
       throw new BadParamsException("Required Fields not satisfied");
     }
     

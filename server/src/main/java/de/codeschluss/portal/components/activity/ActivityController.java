@@ -315,7 +315,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   private void validateTags(TagEntity[] tags) {
     for (TagEntity tag : tags) {
-      if (!tagService.validFieldConstraints(tag)) {
+      if (!tagService.validCreateFieldConstraints(tag)) {
         throw new BadParamsException("Tags must have a name");
       }
     }
@@ -449,7 +449,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   private void validateSchedules(ScheduleEntity[] schedules) {
     for (ScheduleEntity schedule : schedules) {
-      if (!scheduleService.validFieldConstraints(schedule)) {
+      if (!scheduleService.validCreateFieldConstraints(schedule)) {
         throw new BadParamsException("Schedules need Start and End date");
       }
     }

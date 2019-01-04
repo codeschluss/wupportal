@@ -66,7 +66,22 @@ public class OrganisationService
   }
   
   @Override
-  public boolean validFieldConstraints(OrganisationEntity newOrga) {
+  public boolean validCreateFieldConstraints(OrganisationEntity newOrga) {
+    return validFields(newOrga);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(OrganisationEntity newOrga) {
+    return validFields(newOrga);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newOrga the new orga
+   * @return true, if successful
+   */
+  private boolean validFields(OrganisationEntity newOrga) {
     return newOrga.getName() != null && !newOrga.getName().isEmpty();
   }
 

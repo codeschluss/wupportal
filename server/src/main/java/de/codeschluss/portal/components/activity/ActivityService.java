@@ -52,7 +52,16 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   }
   
   @Override
-  public boolean validFieldConstraints(ActivityEntity newActivity) {
+  public boolean validCreateFieldConstraints(ActivityEntity newActivity) {
+    return newActivity.getName() != null && !newActivity.getName().isEmpty()
+        && newActivity.getAddressId() != null && !newActivity.getAddressId().isEmpty()
+        && newActivity.getCategoryId() != null && !newActivity.getCategoryId().isEmpty()
+        && newActivity.getOrganisationId() != null && !newActivity.getOrganisationId().isEmpty()
+        && validContactData(newActivity);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(ActivityEntity newActivity) {
     return newActivity.getName() != null && !newActivity.getName().isEmpty()
         && validContactData(newActivity);
   }

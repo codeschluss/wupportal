@@ -28,7 +28,22 @@ public class ConfigurationService
   }
   
   @Override
-  public boolean validFieldConstraints(ConfigurationEntity newConfiguration) {
+  public boolean validCreateFieldConstraints(ConfigurationEntity newConfiguration) {
+    return validFields(newConfiguration);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(ConfigurationEntity newConfiguration) {
+    return validFields(newConfiguration);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newConfiguration the new configuration
+   * @return true, if successful
+   */
+  private boolean validFields(ConfigurationEntity newConfiguration) {
     return newConfiguration.getItem() != null && !newConfiguration.getItem().isEmpty()
         && newConfiguration.getValue() != null && !newConfiguration.getItem().isEmpty();
   }

@@ -45,7 +45,22 @@ public class TagService extends ResourceDataService<TagEntity, TagQueryBuilder> 
   }
   
   @Override
-  public boolean validFieldConstraints(TagEntity newTag) {
+  public boolean validCreateFieldConstraints(TagEntity newTag) {
+    return validFields(newTag);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(TagEntity newTag) {
+    return validFields(newTag);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newTag the new tag
+   * @return true, if successful
+   */
+  private boolean validFields(TagEntity newTag) {
     return newTag.getName() != null && !newTag.getName().isEmpty();
   }
 

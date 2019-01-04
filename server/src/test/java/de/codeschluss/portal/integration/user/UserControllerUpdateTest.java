@@ -51,15 +51,6 @@ public class UserControllerUpdateTest {
     controller.update(user, "00000000-0000-0000-0004-300000000000");
   }
 
-  @Test(expected = BadParamsException.class)
-  @WithUserDetails("provider1@user")
-  public void updateNotValidPasswordDenied() throws URISyntaxException {
-    UserEntity user = newUser("updateNotValidPasswordDenied", null, "12345678", true,
-        "updateNotValidPasswordDenied");
-
-    controller.update(user, "00000000-0000-0000-0004-300000000000");
-  }
-
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider2@user")
   public void updateOtherUserDenied() throws URISyntaxException {

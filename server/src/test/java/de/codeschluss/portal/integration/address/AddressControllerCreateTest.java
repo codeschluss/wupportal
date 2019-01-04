@@ -32,7 +32,9 @@ public class AddressControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   public void createSuperUserOk() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "createSuperUserOk", "1111", "createSuperUserOk");
+    String suburbId = "00000000-0000-0000-0005-100000000000";
+    AddressEntity address = newAddress("1", "createSuperUserOk", "1111", "createSuperUserOk",
+        suburbId);
 
     controller.create(address);
 
@@ -42,7 +44,9 @@ public class AddressControllerCreateTest {
   @Test
   @WithUserDetails("provider1@user")
   public void createProviderUserOk() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "createProviderUserOk", "1111", "createProviderUserOk");
+    String suburbId = "00000000-0000-0000-0005-100000000000";
+    AddressEntity address = newAddress("1", "createProviderUserOk", "1111", "createProviderUserOk",
+        suburbId);
 
     controller.create(address);
 
@@ -52,7 +56,9 @@ public class AddressControllerCreateTest {
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
   public void createNotValidPlaceDenied() throws URISyntaxException {
-    AddressEntity address = newAddress("1", null, "42103", "createNotValidPostalCodeDenied");
+    String suburbId = "00000000-0000-0000-0005-100000000000";
+    AddressEntity address = newAddress("1", null, "42103", "createNotValidPostalCodeDenied",
+        suburbId);
 
     controller.create(address);
   }
@@ -60,8 +66,9 @@ public class AddressControllerCreateTest {
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
   public void createNotValidPostalCodeDenied() throws URISyntaxException {
+    String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createNotValidPostalCodeDenied", null,
-        "createNotValidPostalCodeDenied");
+        "createNotValidPostalCodeDenied", suburbId);
 
     controller.create(address);
   }
@@ -69,7 +76,8 @@ public class AddressControllerCreateTest {
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
   public void createSuperUserDuplicated() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "wuppertal", "42103", "address1");
+    String suburbId = "00000000-0000-0000-0005-100000000000";
+    AddressEntity address = newAddress("1", "wuppertal", "42103", "address1", suburbId);
 
     controller.create(address);
   }
@@ -77,8 +85,9 @@ public class AddressControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
   public void createNotApprovedProviderDenied() throws URISyntaxException {
+    String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createNotApprovedProviderDenied", "1111",
-        "createNotApprovedProviderDenied");
+        "createNotApprovedProviderDenied", suburbId);
 
     controller.create(address);
   }
@@ -86,15 +95,18 @@ public class AddressControllerCreateTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("notapprovedorga@user")
   public void createNotApprovedOrgaDenied() throws URISyntaxException {
+    String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createNotApprovedOrgaDenied", "1111",
-        "createNotApprovedOrgaDenied");
+        "createNotApprovedOrgaDenied", suburbId);
 
     controller.create(address);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void createNoUserDenied() throws URISyntaxException {
-    AddressEntity address = newAddress("1", "createNoUserDenied", "1111", "createNoUserDenied");
+    String suburbId = "00000000-0000-0000-0005-100000000000";
+    AddressEntity address = newAddress("1", "createNoUserDenied", "1111", "createNoUserDenied",
+        suburbId);
 
     controller.create(address);
   }
@@ -108,12 +120,13 @@ public class AddressControllerCreateTest {
   }
 
   private AddressEntity newAddress(String houseNumber, String place, String postalCode,
-      String street) {
+      String street, String suburbId) {
     AddressEntity address = new AddressEntity();
     address.setHouseNumber(houseNumber);
     address.setPlace(place);
     address.setPostalCode(postalCode);
     address.setStreet(street);
+    address.setSuburbId(suburbId);
     return address;
   }
 }

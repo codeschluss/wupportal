@@ -38,7 +38,22 @@ public class CategoryService extends ResourceDataService<CategoryEntity, Categor
   }
   
   @Override
-  public boolean validFieldConstraints(CategoryEntity newCategory) {
+  public boolean validCreateFieldConstraints(CategoryEntity newCategory) {
+    return validFields(newCategory);
+  }
+
+  @Override
+  public boolean validUpdateFieldConstraints(CategoryEntity newCategory) {
+    return validFields(newCategory);
+  }
+  
+  /**
+   * Valid fields.
+   *
+   * @param newCategory the new category
+   * @return true, if successful
+   */
+  private boolean validFields(CategoryEntity newCategory) {
     return newCategory.getName() != null && !newCategory.getName().isEmpty()
         && newCategory.getColor() != null && !newCategory.getColor().isEmpty();
   }

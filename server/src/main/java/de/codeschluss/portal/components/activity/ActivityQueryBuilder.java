@@ -171,13 +171,13 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   public Predicate advancedSearch(ActivityQueryParam params, BooleanBuilder search) {
     BooleanBuilder advancedSearch = new BooleanBuilder();
     if (params.getCategories() != null && !params.getCategories().isEmpty()) {
-      advancedSearch.or(withAnyOfCategories(params.getCategories()));
+      advancedSearch.and(withAnyOfCategories(params.getCategories()));
     }
     if (params.getSuburbs() != null && !params.getSuburbs().isEmpty()) {
-      advancedSearch.or(withAnyOfSuburbs(params.getSuburbs()));
+      advancedSearch.and(withAnyOfSuburbs(params.getSuburbs()));
     }
     if (params.getTargetgroups() != null && !params.getTargetgroups().isEmpty()) {
-      advancedSearch.or(withAnyOfTargetGroups(params.getTargetgroups()));
+      advancedSearch.and(withAnyOfTargetGroups(params.getTargetgroups()));
     }    
     return search.and(advancedSearch).getValue();
   }

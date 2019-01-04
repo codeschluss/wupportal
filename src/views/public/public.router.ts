@@ -1,30 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CrudJoiner, CrudResolver } from '@portal/core';
+import { ActivityModel } from 'src/realm/activity/activity.model';
+import { BlogModel } from 'src/realm/blog/blog.model';
+import { CategoryModel } from 'src/realm/category/category.model';
+import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
+import { OrganisationModel } from 'src/realm/organisation/organisation.model';
+import { PageModel } from 'src/realm/page/page.model';
+import { SuburbModel } from 'src/realm/suburb/suburb.model';
+import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
+import { TopicModel } from 'src/realm/topic/topic.model';
+import { LayoutComponent } from '../layout/layout.component';
+import { AboutComponent } from './about/about.component';
 import { ActivityListComponent } from './activity/activity.list.component';
 import { ActivityViewComponent } from './activity/activity.view.component';
-import { LayoutComponent } from '../layout/layout.component';
-import { OrganisationListComponent } from './organisation/organisation.list.component';
-import { OrganisationViewComponent } from './organisation/organisation.view.component';
 import { BlogListComponent } from './blog/blog.list.component';
 import { BlogViewComponent } from './blog/blog.view.component';
-import { ActivityModel } from 'src/realm/activity/activity.model';
-import { CategoryModel } from 'src/realm/category/category.model';
-import { OrganisationModel } from 'src/realm/organisation/organisation.model';
-import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
-import { SuburbModel } from 'src/realm/suburb/suburb.model';
-import { AboutComponent } from './about/about.component';
-import { MappingComponent } from './mapping/mapping.component';
-import { CrudResolver, CrudJoiner } from '@portal/core';
-import { BlogModel } from 'src/realm/blog/blog.model';
-import { SearchComponent } from './search/search.component';
-import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
-import { TopicsListComponent } from './worthKnowing/topics.list.component';
-import { TopicModel } from 'src/realm/topic/topic.model';
-import { TopicViewComponent } from './worthKnowing/topic.view.component';
-import { PageModel } from 'src/realm/page/page.model';
-import { PageViewComponent } from './worthKnowing/page.view.component';
-import { RegisterComponent } from './login/register.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './login/register.component';
+import { MappingComponent } from './mapping/mapping.component';
+import { OrganisationListComponent } from './organisation/organisation.list.component';
+import { OrganisationViewComponent } from './organisation/organisation.view.component';
+import { SearchComponent } from './search/search.component';
+import { PageViewComponent } from './worthKnowing/page.view.component';
+import { TopicViewComponent } from './worthKnowing/topic.view.component';
+import { TopicsListComponent } from './worthKnowing/topics.list.component';
 
 const PublicProviders = [
 ];
@@ -119,20 +119,7 @@ const PublicRoutes = [
   },
   {
     path: 'list/organisations',
-    children: [
-      {
-        path: '',
-        component: OrganisationListComponent,
-        resolve: {
-          organisations: CrudResolver
-        },
-        data: {
-          organisations: CrudJoiner.of(OrganisationModel)
-            .with('address').yield('suburb')
-            .with('images')
-        }
-      }
-    ]
+    component: OrganisationListComponent,
   },
   {
     path: 'view/organisations/:uuid',
@@ -230,7 +217,6 @@ const PublicRoutes = [
   imports: [RouterModule.forChild([{
     path: '',
     children: PublicRoutes,
-    resolve: PublicResolvers,
     component: LayoutComponent,
   },
   {
@@ -251,8 +237,7 @@ const PublicRoutes = [
       organisations: CrudJoiner.of(OrganisationModel)
     }
   }
-])],
-  providers: PublicProviders
+])]
 })
 
 export class PublicRouter { }

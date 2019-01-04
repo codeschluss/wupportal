@@ -76,6 +76,9 @@
       <trans-unit id="successfullRegister" datatype="html">
         <target>You sucessfully registered yourself to the portal</target>
       </trans-unit>
+      <trans-unit id="successfullLoggedIn" datatype="html">
+        <target>You sucessfully logged in</target>
+      </trans-unit>
       <trans-unit id="resultsFor" datatype="html">
         <target>Results for</target>
       </trans-unit> 
@@ -90,7 +93,11 @@
       </trans-unit> 
       <trans-unit id="waitingForMap" datatype="html">
         <target>loading map</target>
-      </trans-unit> 
+      </trans-unit>
+      <trans-unit id="genericErrorMessage" datatype="html">
+        <target>Something went wrong</target>
+      </trans-unit>      
+
 
 
 

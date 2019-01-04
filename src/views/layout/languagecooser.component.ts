@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { LanguageProvider } from 'src/realm/language/language.provider';
-import { SessionProvider } from '@portal/core';
 
 @Component({
     selector: 'languagechooser-dialog',

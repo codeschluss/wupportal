@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,6 +9,7 @@ import { ApiConfiguration } from './api/api-configuration';
 import { ApiModule } from './api/api.module';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
+import { RealmModule } from './realm/realm.module';
 import { ClientPackage } from './utils/package';
 
 fontawesome.add(freeicons);
@@ -23,7 +25,9 @@ fontawesome.add(freeicons);
     ApiModule,
     BrowserModule,
     ClientRouter,
-    CoreModule
+    CoreModule,
+    HttpClientModule,
+    RealmModule
   ]
 })
 

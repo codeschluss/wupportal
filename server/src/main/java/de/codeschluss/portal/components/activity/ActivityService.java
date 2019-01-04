@@ -133,7 +133,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
       activity.setDescription(newActivity.getDescription());
       activity.setContactName(newActivity.getContactName());
       activity.setPhone(newActivity.getPhone());
-      activity.setMail(activity.getMail());
+      activity.setMail(newActivity.getMail());
       return repo.save(activity);
     }).orElseGet(() -> {
       newActivity.setId(id);

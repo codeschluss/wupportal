@@ -711,6 +711,8 @@ databaseChangeLog:
         constraintName: FK2ex96cup3o0g4rp41v2lyjcat
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: target_groups
 - changeSet:
@@ -723,6 +725,8 @@ databaseChangeLog:
         constraintName: FK3tyc3usongts2dlum3e6c5in4
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: activities
 - changeSet:
@@ -735,6 +739,8 @@ databaseChangeLog:
         constraintName: FKbkdf7cnl974utrinro7goxeon
         deferrable: false
         initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: addresses
 - changeSet:
@@ -747,6 +753,8 @@ databaseChangeLog:
         constraintName: FKjk4bkojabyv3loiomnn73cyv3
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: providers
 - changeSet:
@@ -759,6 +767,8 @@ databaseChangeLog:
         constraintName: FKlymp42tvombik3t66um6ocsba
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: users
 - changeSet:
@@ -771,6 +781,8 @@ databaseChangeLog:
         constraintName: FKmccpbd062822m6n7rw780svwy
         deferrable: false
         initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: suburbs
 - changeSet:
@@ -783,6 +795,8 @@ databaseChangeLog:
         constraintName: FKnitbx3853ryroywn1j1g86aob
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: activities
 - changeSet:
@@ -795,6 +809,8 @@ databaseChangeLog:
         constraintName: FKnp55lepyd48w0lxoqvh7nb3rf
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: activities
 - changeSet:
@@ -807,6 +823,8 @@ databaseChangeLog:
         constraintName: FKop5fy6liunnty8edw5q842b2n
         deferrable: false
         initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: categories
 - changeSet:
@@ -819,6 +837,8 @@ databaseChangeLog:
         constraintName: FKpxtw6v5nck4pk6fc2wl4t283w
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: tags
 - changeSet:
@@ -831,6 +851,8 @@ databaseChangeLog:
         constraintName: FKrcwb03wnd8qgt9a1a6e47afn7
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: organisations
 - changeSet:
@@ -843,5 +865,7 @@ databaseChangeLog:
         constraintName: FKt1nrgbfbgcrtn7a5nbkm7f2y2
         deferrable: false
         initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: addresses

@@ -761,6 +761,20 @@ databaseChangeLog:
         referencedTableName: activities
         validate: true
 - changeSet:
+    id: 1543409395575-33
+    author: vetemi (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: activity_id
+        baseTableName: schedules
+        constraintName: fkey_activity_schedule
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: activities
+- changeSet:
     id: 1544051263451-34
     author: vetemi (generated)
     changes:

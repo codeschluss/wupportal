@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, Injector, NgModule, Provider, Type } from '@angular/core';
 import { MatButtonModule, MatDialogModule, MatProgressBarModule } from '@angular/material';
 import { RouterModule, UrlSerializer } from '@angular/router';
 import { TokenInterceptor } from '../auth/token.interceptor';
@@ -17,37 +17,48 @@ import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
 import { SplashChildComponent, SplashHostComponent } from './splash';
 
+const declarations: Type<any>[] = [
+  I18nComponent,
+  LoadingIndicatorComponent,
+  SplashHostComponent
+];
+
+const dialogs: Type<any>[] = [
+  ErrorDialogComponent,
+  SplashChildComponent
+];
+
+const materials: Type<any>[] = [
+  MatButtonModule,
+  MatDialogModule,
+  MatProgressBarModule
+];
+
+const providers: Provider[] = [
+  CoreSettings,
+  SessionProvider,
+  TokenProvider
+];
+
 @NgModule({
   declarations: [
-    ErrorDialogComponent,
-    I18nComponent,
-    LoadingIndicatorComponent,
-    SplashChildComponent,
-    SplashHostComponent
+    ...declarations,
+    ...dialogs
   ],
   entryComponents: [
-    ErrorDialogComponent,
-    SplashChildComponent
+    ...dialogs
   ],
   exports: [
-    I18nComponent,
-    LoadingIndicatorComponent,
-    SplashHostComponent
+    ...declarations
   ],
   imports: [
+    ...materials,
     CommonModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatProgressBarModule,
     RouterModule
   ],
   providers: [
-    { provide: CoreSettings, useClass: CoreSettings },
     { provide: ErrorHandler, useClass: CoreErrorHandler },
-    { provide: SessionProvider, useClass: SessionProvider },
-    { provide: TokenProvider, useClass: TokenProvider },
     { provide: UrlSerializer, useClass: CoreUrlSerializer },
-
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
@@ -58,8 +69,9 @@ import { SplashChildComponent, SplashHostComponent } from './splash';
 export class CoreModule {
 
   public constructor(
-    _sessionProvider: SessionProvider,
-    _tokenProvider: TokenProvider
-  ) { }
+    injector: Injector
+  ) {
+    providers.forEach((provider) => injector.get(provider));
+  }
 
 }

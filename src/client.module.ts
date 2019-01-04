@@ -9,6 +9,7 @@ import { ApiConfiguration } from './api/api-configuration';
 import { ApiModule } from './api/api.module';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
+import { RealmModule } from './realm/realm.module';
 import { ClientPackage } from './utils/package';
 
 fontawesome.add(freeicons);
@@ -24,7 +25,8 @@ fontawesome.add(freeicons);
     BrowserAnimationsModule,
     ClientRouter,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    RealmModule
   ]
 })
 

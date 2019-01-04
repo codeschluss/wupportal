@@ -18,7 +18,13 @@ import { AddressProvider } from './address.provider';
       <input #input matInput [formControl]="search" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="set($event)">
         <ng-container *ngFor="let item of options; let i = index">
-          <mat-option [value]="i">{{ name(item) }}</mat-option>
+          <mat-option [value]="i">
+            {{ item.street || '?' }}
+            {{ item.houseNumber || '?' }},
+            {{ item.postalCode || '?' }}
+            {{ item.place || '?' }}
+            ({{ item?.suburb?.name || '?' }})
+          </mat-option>
         </ng-container>
       </mat-autocomplete>
     </mat-form-field>
@@ -121,15 +127,6 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
     route: ActivatedRoute,
   ) {
     super(route);
-  }
-
-  public name(item: LocationResponse): string {
-    return `
-      ${item.street || '?'}
-      ${item.houseNumber || '?'},
-      ${item.postalCode || '?'}
-      ${item.place || '?'}
-    `;
   }
 
   public set(event: MatAutocompleteSelectedEvent): void {

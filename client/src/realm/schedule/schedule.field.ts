@@ -19,8 +19,9 @@ import { ScheduleModel } from './schedule.model';
 export class ScheduleFieldComponent extends BaseFieldComponent {
 
   public date(item: ScheduleModel): string {
-    const start = moment(item.startDate);
-    return start.format('YYYY-MM-DD');
+    const end = moment(item.endDate).format('DD.MM.YYYY');
+    const start = moment(item.startDate).format('DD.MM.YYYY');
+    return start === end ? start : `${start} - ${end}`;
   }
 
   public delete(item: ScheduleModel): void {
@@ -28,9 +29,9 @@ export class ScheduleFieldComponent extends BaseFieldComponent {
   }
 
   public time(item: ScheduleModel): string {
-    const end = moment(item.endDate);
-    const start = moment(item.startDate);
-    return `${start.format('HH:ss')} - ${end.format('HH:ss')}`;
+    const end = moment(item.endDate).format('HH:ss');
+    const start = moment(item.startDate).format('HH:ss');
+    return `${start} - ${end}`;
   }
 
   protected ngPostInit(): void {

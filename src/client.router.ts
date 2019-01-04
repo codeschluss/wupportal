@@ -24,7 +24,7 @@ const ClientRoutes = [
       {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'public'
+        redirectTo: ''
       }
     ]
   }

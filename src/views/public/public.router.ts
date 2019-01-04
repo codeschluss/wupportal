@@ -26,18 +26,13 @@ import { PageViewComponent } from './worthKnowing/page.view.component';
 import { TopicViewComponent } from './worthKnowing/topic.view.component';
 import { TopicsListComponent } from './worthKnowing/topics.list.component';
 
-const PublicProviders = [
-];
-
-const PublicResolvers = {
-};
-
 const PublicRoutes = [
   {
     path: 'home',
     component: AboutComponent,
     resolve: {
-      activities: CrudResolver
+      activities: CrudResolver,
+      configurations: CrudResolver
     },
     data: {
       activities: CrudJoiner.of(ActivityModel, {
@@ -48,8 +43,9 @@ const PublicRoutes = [
       })
         .with('category')
         .with('address').yield('suburb')
-        .with('schedules')
-    }
+        .with('schedules'),
+      configurations: CrudJoiner.of(ConfigurationModel)
+    },
   },
   {
     path: 'list/activities',
@@ -167,7 +163,7 @@ const PublicRoutes = [
           topics: CrudResolver,
         },
         data: {
-          topics: CrudJoiner.of(TopicModel).with('pages'),
+          topics: CrudJoiner.of(TopicModel),
         }
       }]
     },

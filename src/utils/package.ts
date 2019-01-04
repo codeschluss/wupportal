@@ -19,7 +19,13 @@ export class ClientPackage {
       activityProvider: string,
       organisationAdmin: string,
       organisationUser: string,
-      superUser: string
+      superUser: string,
+      userId: string
+    },
+    nominatim: {
+      city: string,
+      endpoint: string,
+      params: string
     }
   } {
     return this.packageJson.config;

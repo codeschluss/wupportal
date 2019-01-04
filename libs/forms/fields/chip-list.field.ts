@@ -1,10 +1,9 @@
 import { COMMA, ENTER, SEMICOLON, SPACE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatChipInputEvent } from '@angular/material';
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { CrudModel } from '@portal/core';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -12,23 +11,20 @@ import { BaseFieldComponent } from '../base/base.field';
     <mat-chip-list #chips>
       <ng-container *ngFor="let item of value" ngProjectAs="mat-chip">
         <mat-chip [selectable]="false" (removed)="delete(item)">
-          {{ toLabel(item) }}
-          <span matChipRemove>&times;</span>
+          {{ toLabel(item) }}<span matChipRemove>&#x274c;</span>
         </mat-chip>
       </ng-container>
       <input #input
         [formControl]="search"
+        [id]="field.name"
         [matAutocomplete]="auto"
         [matChipInputFor]="chips"
         [matChipInputSeparatorKeyCodes]="keys"
-        (matChipInputTokenEnd)="insert($event)">
+        (matChipInputTokenEnd)="create($event)">
     </mat-chip-list>
-
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
-      <ng-container *ngFor="let item of options | async">
-        <mat-option [value]="item.id">
-          {{ toLabel(item) }}
-        </mat-option>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="add($event)">
+      <ng-container *ngFor="let item of options">
+        <mat-option [value]="item.id">{{ toLabel(item) }}</mat-option>
       </ng-container>
     </mat-autocomplete>
   `)
@@ -36,8 +32,8 @@ import { BaseFieldComponent } from '../base/base.field';
 
 export class ChipListFieldComponent extends BaseFieldComponent {
 
-  @ViewChild(MatAutocompleteTrigger)
-  public autocomplete: MatAutocompleteTrigger;
+  @ViewChild('auto')
+  public auto: MatAutocomplete;
 
   @ViewChild('input')
   public input: ElementRef<HTMLInputElement>;
@@ -46,31 +42,32 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   public search: FormControl = new FormControl();
 
-  public options: Observable<CrudModel[]>;
+  public options: CrudModel[];
 
-  public delete(item: CrudModel): void {
-    this.value = this.value.filter((value) => value !== item);
-  }
-
-  public insert(event: MatChipInputEvent): void {
-    const label = this.sanitize(event.value);
-    if (label.length >= 3 && !this.find(label)) {
-      this.value = this.value.concat(this.find(label, this.field.options) ||
-        Object.assign(new this.field.model(), { [this.field.label]: label }));
-    }
-  }
-
-  public select(event: MatAutocompleteSelectedEvent): void {
+  public add(event: MatAutocompleteSelectedEvent): void {
     if (!this.value.some((item) => item.id === event.option.value)) {
       this.value = this.value.concat(this.toModel(event.option.value));
     }
   }
 
+  public create(event: MatChipInputEvent): void {
+    const label = this.sanitize(event.value);
+    if (label && !this.find(label)) {
+      this.value = this.value.concat(this.find(label, this.field.options) ||
+        Object.assign(new this.field.model(), { [this.field.label]: label }));
+    }
+  }
+
+  public delete(item: CrudModel): void {
+    this.value = this.value.filter((value) => value !== item);
+  }
+
   protected ngPostInit(): void {
     if (!this.value) { this.value = []; }
     this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
-    this.options = this.search.valueChanges
-      .pipe(startWith(''), map((label) => this.optionalize(label)));
+    this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
+    this.search.valueChanges.pipe(map((label) => this.optionalize(label)))
+      .subscribe((items) =>  this.options = items);
   }
 
   private clear(): void {
@@ -85,18 +82,18 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   private matches(label: string = '', items = this.value): CrudModel[] {
     const regex = new RegExp(label, 'i');
-    return items.filter((item) => this.toLabel(item).search(regex) !== -1);
+    return items.filter((item) => this.toLabel(item).search(regex) >= 0);
   }
 
   private optionalize(label: string = '', items = this.value): CrudModel[] {
-    const ids = items.map((item) => item.id);
-    const options = this.field.options.filter((item) => !ids.includes(item.id));
-    return label ? this.matches(label, options) : options;
+    return !label ? [] : this.matches(label, this.field.options
+      .filter((item) => !this.find(this.toLabel(item), items)));
   }
 
   private sanitize(label: string = ''): string {
     // TODO: sanetize
-    return label[0].toUpperCase() + label.substr(1).toLowerCase();
+    return label = label.trim().length < 3 ? '' :
+      label[0].toUpperCase() + label.substr(1).toLowerCase();
   }
 
 }

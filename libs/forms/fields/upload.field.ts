@@ -4,7 +4,7 @@ import { BaseFieldComponent } from '../base/base.field';
 @Component({
   styles: ['input[type=file] { display: none; }'],
   template: BaseFieldComponent.template(`
-    <input #input type="file" [formControlName]="field.name">
+    <input #input type="file" [formControlName]="field.name" [id]="field.name">
     <input matInput readonly [value]="value" (click)="input.click()">
   `)
 })

@@ -10,7 +10,7 @@ export class SuburbProvider
 
   public create: (model: SuburbModel) => Observable<any>;
 
-  public update: (id: string, model: SuburbModel) => Observable<any>;
+  public update: (model: SuburbModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

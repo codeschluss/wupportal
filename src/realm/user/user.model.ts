@@ -14,8 +14,8 @@ export class UserModel
   public superuser: boolean;
   public username: string;
 
-  public activities: Observable<ActivityModel[]>;
-  public organisations: Observable<OrganisationModel[]>;
-  public provider: Observable<ProviderModel>;
+  public activities: ActivityModel[] & Observable<ActivityModel[]>;
+  public organisations: OrganisationModel[] & Observable<OrganisationModel[]>;
+  public provider: ProviderModel & Observable<ProviderModel>;
 
 }

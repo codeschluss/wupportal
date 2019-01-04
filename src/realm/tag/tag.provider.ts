@@ -10,7 +10,7 @@ export class TagProvider
 
   public create: (model: TagModel) => Observable<any>;
 
-  public update: (id: string, model: TagModel) => Observable<any>;
+  public update: (model: TagModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

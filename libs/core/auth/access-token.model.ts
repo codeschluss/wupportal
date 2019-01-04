@@ -1,8 +1,6 @@
-import { JSONSchemaObject } from '@ngx-pwa/local-storage';
-
 export class AccessTokenModel {
 
-  public static readonly schema: JSONSchemaObject = {
+  public static readonly schema = {
     properties: {
       exp: { type: 'integer' },
       id: { type: 'string' },

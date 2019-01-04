@@ -2,6 +2,7 @@ import { CrudModel } from '@portal/core';
 import { Observable } from 'rxjs';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
+import { UserModel } from '../user/user.model';
 
 export class ProviderModel
   extends CrudModel {
@@ -9,7 +10,8 @@ export class ProviderModel
   public admin: boolean;
   public approved: boolean;
 
-  public activity: Observable<ActivityModel>;
-  public organisation: Observable<OrganisationModel>;
+  public activities: ActivityModel[] & Observable<ActivityModel[]>;
+  public organisation: OrganisationModel & Observable<OrganisationModel>;
+  public user: UserModel & Observable<UserModel>;
 
 }

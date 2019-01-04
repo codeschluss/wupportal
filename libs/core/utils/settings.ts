@@ -3,8 +3,14 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class CoreSettings {
 
-  public authUrl: string = '/api/login';
+  public apiAuthUrl: string;
 
-  public refreshUrl: string = '/api/refresh';
+  public apiRefreshUrl: string;
+
+  public apiUrl: string;
+
+  public nominatimEndpoint: string;
+
+  public nominatimParams: string;
 
 }

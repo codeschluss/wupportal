@@ -32,25 +32,26 @@ export class CrudJoiner {
       nodes: builder(node.nodes)
     }));
 
-    return btoa(JSON.stringify(builder(tree.nodes)));
+    return tree.nodes.length
+      ? btoa(JSON.stringify(builder(tree.nodes)))
+      : null;
   }
 
   public get graph(): CrudGraph {
-    const merger = (nodes, node) => nodes.filter((nd) => nd.name !== node.name)
-      .concat(nodes.filter((nd) => nd.name === node.name).reduce((a, b) =>
-        Object.assign(a, { nodes: a.nodes.concat(b.nodes) }), node));
-
     const grapher = (graph: CrudGraph) => {
       graph.nodes = graph.nodes.map((node) => grapher(node));
       graph.nodes = graph.nodes.reduce((nodes, node) => {
-
-      return nodes.some((nd) => nd.name === node.name)
-        ? merger(nodes, node)
-        : nodes.concat(node);
+        return nodes.some((n) => n.name === node.name)
+          ? merger(nodes, node)
+          : nodes.concat(node);
       }, []);
 
       return graph;
     };
+
+    const merger = (nodes, node) => nodes.filter((n) => n.name !== node.name)
+      .concat(nodes.filter((n) => n.name === node.name).reduce(
+        (a, b) => Object.assign(a, { nodes: a.nodes.concat(b.nodes) }), node));
 
     return grapher(this.joinGraph);
   }

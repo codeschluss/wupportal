@@ -1,0 +1,91 @@
+<h2 class="mat-title">
+  <i18n i18n="@@accountPanel">accountPanel</i18n>
+</h2>
+
+<h1 class="mat-headline">
+  {{ user.name }}
+</h1>
+
+<mat-tab-group [selectedIndex]="index">
+  <mat-tab id="details">
+    <ng-template matTabLabel>
+      <i18n i18n="@@userDetails">userDetails</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <user-form #form [group]="group" [item]="user"></user-form>
+      <button mat-button color="primary"
+        [disabled]="!form.valid || group.pristine" (click)="persist()">
+        <i18n i18n="@@persistForm">persistForm</i18n>
+      </button>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="organisations" [disabled]="!user.organisations">
+    <ng-template matTabLabel>
+      <i18n i18n="@@userOrganisations">userOrganisations</i18n>
+      <button mat-icon-button color="primary" (click)="create('organisation')">
+        <fa-icon icon="plus-square"></fa-icon>
+      </button>
+    </ng-template>
+    <ng-template matTabContent>
+      <organisation-table [items]="user.organisations">
+        <ng-container matColumnDef="approved">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@approved">approved</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle disabled [checked]="approved(item)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="admin">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@admin">admin</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle disabled [checked]="admin(item)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="warn" (click)="demoteUser(item)">
+              <fa-icon icon="sign-out-alt"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </organisation-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="activities" [disabled]="!organized">
+    <ng-template matTabLabel>
+      <i18n i18n="@@userActivities">userActivities</i18n>
+        <button mat-icon-button color="primary"
+          [disabled]="!organized && !user.superuser"
+          (click)="create('activity')">
+          <fa-icon icon="plus-square"></fa-icon>
+        </button>
+    </ng-template>
+    <ng-template matTabContent>
+      <activity-table [items]="user.activities">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button (click)="update(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </activity-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { PublicComponent } from './public.component';
 import { PublicRouter } from './public.router';
 
-<<<<<<< HEAD
 import { ActivityViewComponent } from './activity/activity.view.component';
 import { ActivityCarouselComponent } from './activity/activity.carousel.component';
 import { ActivityCardComponent } from './activity/activity.card.component';
@@ -37,6 +36,8 @@ import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
 import { SocialMediaComponent } from '../layout/social.media.component';
 import { CoreModule } from '@portal/core';
 import { AboutComponent } from './about/about.component';
+import { MatDatepickerModule, MatBottomSheetModule, MatCardModule, MatListModule, MatChipsModule, MatSelectModule } from '@angular/material';
+import { CommonModule } from '@angular/common';
 
 fontawesome.add(fas);
 
@@ -109,11 +110,6 @@ const PublicProviders = [
     LangaugeChooserDialogComponent
   ],
   exports: []
-=======
-@NgModule({
-  declarations: [PublicComponent],
-  imports: [PublicRouter]
->>>>>>> wupportal/development
 })
 
 export class PublicModule { }

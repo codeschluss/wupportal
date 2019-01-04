@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
-import { MatBadgeModule, MatButtonModule, MatDialogModule, MatListModule, MatSlideToggleModule, MatTabsModule } from '@angular/material';
+import { MatBadgeModule, MatButtonModule, MatDialogModule, MatListModule, MatSlideToggleModule, MatTabsModule, MAT_TABS_CONFIG } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule } from '@portal/core';
 import { RealmModule } from '../../realm/realm.module';
@@ -47,6 +47,9 @@ const materials: Type<any>[] = [
     CommonModule,
     CoreModule,
     RealmModule
+  ],
+  providers: [
+    { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '0ms' } }
   ]
 })
 

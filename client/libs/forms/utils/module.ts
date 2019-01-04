@@ -12,12 +12,12 @@ import { StringFieldComponent } from '../fields/string.field';
 import { UploadFieldComponent } from '../fields/upload.field';
 import { FileValueAccessorDirective } from './accesor';
 
-export const declarations: Type<any>[] = [
+const declarations: Type<any>[] = [
   BaseFieldComponent,
   FileValueAccessorDirective
 ];
 
-export const fields: Type<BaseFieldComponent>[] = [
+const fields: Type<BaseFieldComponent>[] = [
   BooleanFieldComponent,
   ChipListFieldComponent,
   UploadFieldComponent,
@@ -25,7 +25,7 @@ export const fields: Type<BaseFieldComponent>[] = [
   StringFieldComponent
 ];
 
-export const materials: Type<any>[] = [
+const materials: Type<any>[] = [
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
@@ -42,15 +42,15 @@ export const materials: Type<any>[] = [
 
 @NgModule({
   declarations: [
-    ...fields,
-    ...declarations
+    ...declarations,
+    ...fields
   ],
   entryComponents: [
     ...fields
   ],
   exports: [
+    ...declarations,
     ...materials,
-    BaseFieldComponent,
     ReactiveFormsModule
   ],
   imports: [

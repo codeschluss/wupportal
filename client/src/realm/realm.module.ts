@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, Type } from '@angular/core';
-import { MatDialogModule, MatListModule, MAT_TABS_CONFIG } from '@angular/material';
+import { Injector, NgModule, Type } from '@angular/core';
+import { MatDialogModule, MatListModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { BaseService, CoreModule, CrudModel, CrudProvider } from '@portal/core';
 import { BaseFieldComponent, BaseForm, BaseStepper, BaseTable, FormsModule } from '@portal/forms';
@@ -140,28 +140,15 @@ const tables: Type<BaseTable<CrudModel>>[] = [
     CoreModule,
     FormsModule,
     RouterModule
-  ],
-  providers: [
-    ...providers,
-    { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '0ms' } }
   ]
 })
 
 export class RealmModule {
 
   public constructor(
-    _activityProvider: ActivityProvider,
-    _addressProvider: AddressProvider,
-    _categoryProvider: CategoryProvider,
-    _configurationProvider: ConfigurationProvider,
-    _languageProvider: LanguageProvider,
-    _organisationProvider: OrganisationProvider,
-    _providerProvider: ProviderProvider,
-    _suburbProvider: SuburbProvider,
-    _tagProvider: TagProvider,
-    _targetGroupProvider: TargetGroupProvider,
-    _translationProvider: TranslationProvider,
-    _userProvider: UserProvider
-  ) { }
+    injector: Injector
+  ) {
+    providers.forEach((provider) => injector.get(provider));
+  }
 
 }

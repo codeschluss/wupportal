@@ -15,9 +15,7 @@
 				<target>in Wuppertal</target>
       </trans-unit>
       <trans-unit id="portalSubtitle" datatype="html">
-				<target>
-          Willkommen bei Wupp'n'go - deinem online Event-Portal
-        </target>
+				<target>Portal Untertitel</target>
       </trans-unit>
       <trans-unit id="aboutPageTextHeadLine" datatype="html">
 				<target>Wieso, weshalb, warum...</target>
@@ -29,7 +27,7 @@
 				<target>Datenschutz</target>
       </trans-unit>
       <trans-unit id="portalName" datatype="html">
-        <target>Wupp'n'go</target>
+        <target>Portalsname</target>
       </trans-unit>
       <trans-unit id="activities" datatype="html">
         <target>Veranstaltungen</target>
@@ -48,6 +46,9 @@
       </trans-unit>
       <trans-unit id="forgetPassword" datatype="html">
         <target>Passwort vergessen?</target>
+      </trans-unit>
+      <trans-unit id="enterUserName" datatype="html">
+        <target>Bitte Username eingeben</target>
       </trans-unit>
       <trans-unit id="login" datatype="html">
         <target>Anmelden</target>
@@ -96,7 +97,13 @@
       </trans-unit>
       <trans-unit id="genericErrorMessage" datatype="html">
         <target>Da ist etwas schief gelaufen</target>
-      </trans-unit>      
+      </trans-unit>
+      <trans-unit id="timer" datatype="html">
+        <target>Timer</target>
+      </trans-unit>
+      <trans-unit id="welcomeTo" datatype="html">
+        <target>Willkommen bei</target>
+      </trans-unit>  
       
       
       

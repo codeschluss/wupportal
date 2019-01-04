@@ -1,5 +1,3 @@
-declare function require(name: string);
-
 export class CorePackage {
 
   private static packageJson: any = require('libs/core/package.json');

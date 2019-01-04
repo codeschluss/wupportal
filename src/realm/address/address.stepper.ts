@@ -1,6 +1,4 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
 import { BaseStepper, FormStep } from '@portal/forms';
 import { AddressFormComponent } from '../address/address.form';
@@ -11,13 +9,23 @@ import { AddressModel } from './address.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'address'" i18n="@@address">address</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createActivity">createActivity</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editActivity">editActivity</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'address'">
+          <i18n i18n="@@address">address</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)
 })
 
-export class AddressStepperComponent extends BaseStepper<AddressModel> {
+export class AddressStepperComponent
+  extends BaseStepper<AddressModel> {
 
   public root: string = 'address';
 
@@ -28,16 +36,17 @@ export class AddressStepperComponent extends BaseStepper<AddressModel> {
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(AddressModel).with('suburb');
+  protected joiner: CrudJoiner = CrudJoiner.of(AddressModel)
+    .with('suburb');
 
   protected model: Type<AddressModel> = AddressModel;
 
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute,
-    protected router: Router
-  ) {
-    super();
+  public get title(): string {
+    return `
+      ${this.values[this.root].street}
+      ${this.values[this.root].houseNumber},
+      ${this.values[this.root].place}
+    `;
   }
 
 }

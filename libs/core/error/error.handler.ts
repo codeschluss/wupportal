@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable } from '@angular/core';
+import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { inspect } from 'util';
 import { ErrorDialogComponent } from './error.dialog';
@@ -8,7 +8,8 @@ import { ErrorModel } from './error.model';
 export class CoreErrorHandler implements ErrorHandler {
 
   public constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private zone: NgZone
   ) {
     window.onerror = this.handleError.bind(this);
     window.onunhandledrejection = this.handleRejection.bind(this);

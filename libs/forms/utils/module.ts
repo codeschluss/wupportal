@@ -1,48 +1,65 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDividerModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
 import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
-import { BooleanFieldComponent } from '../field/boolean.field';
-import { ChipListFieldComponent } from '../field/chip-list.field';
-import { DatetimeFieldComponent } from '../field/datetime.field';
-import { SelectFieldComponent } from '../field/select.field';
-import { StringFieldComponent } from '../field/string.field';
-import { UploadFieldComponent } from '../field/upload.field';
+import { BooleanFieldComponent } from '../fields/boolean.field';
+import { ChipListFieldComponent } from '../fields/chip-list.field';
+import { SelectFieldComponent } from '../fields/select.field';
+import { StringFieldComponent } from '../fields/string.field';
+import { UploadFieldComponent } from '../fields/upload.field';
 import { FileValueAccessorDirective } from './accesor';
 
-const fields: Type<BaseFieldComponent>[] = [
+export const declarations: Type<any>[] = [
+  BaseFieldComponent,
+  FileValueAccessorDirective
+];
+
+export const fields: Type<BaseFieldComponent>[] = [
   BooleanFieldComponent,
   ChipListFieldComponent,
-  DatetimeFieldComponent,
   UploadFieldComponent,
   SelectFieldComponent,
   StringFieldComponent
 ];
 
-const loopback: Type<any>[] = [
+export const materials: Type<any>[] = [
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
-  MatDatepickerModule,
+  MatDividerModule,
   MatFormFieldModule,
-  MatIconModule,
   MatInputModule,
   MatPaginatorModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
-  MatTabsModule,
-  ReactiveFormsModule
+  MatTabsModule
 ];
 
 @NgModule({
-  declarations: [...fields, BaseFieldComponent, FileValueAccessorDirective],
-  entryComponents: [...fields],
-  exports: [...loopback, BaseFieldComponent, FileValueAccessorDirective],
-  imports: [...loopback, CommonModule, CoreModule]
+  declarations: [
+    ...fields,
+    ...declarations
+  ],
+  entryComponents: [
+    ...fields
+  ],
+  exports: [
+    ...materials,
+    BaseFieldComponent,
+    ReactiveFormsModule
+  ],
+  imports: [
+    ...materials,
+    CommonModule,
+    CoreModule,
+    ReactiveFormsModule,
+    RouterModule
+  ]
 })
 
 export class FormsModule { }

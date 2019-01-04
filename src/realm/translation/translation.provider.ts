@@ -4,7 +4,7 @@ import { TranslationControllerService } from '../../api/services/translation-con
 import { TranslationModel } from './translation.model';
 
 @Injectable({ providedIn: 'root' })
-export class ProviderProvider
+export class TranslationProvider
   extends CrudProvider<TranslationControllerService, TranslationModel> {
 
   protected linked: CrudLink[];

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RoutletterHostComponent } from '@portal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { AddressStepperComponent } from '../../realm/address/address.stepper';
 import { CategoryStepperComponent } from '../../realm/category/category.stepper';
@@ -11,10 +10,9 @@ import { TagStepperComponent } from '../../realm/tag/tag.stepper';
 import { TargetGroupStepperComponent } from '../../realm/target-group/target-group.stepper';
 import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { AdminComponent } from './admin.component';
-import { AdminGuarding } from './admin.guarding';
-import { ApplicationPanelComponent } from './application/application.panel';
-import { OrganisationPanelComponent } from './organisation/organisation.panel';
-import { AccountPanelComponent } from './account/account.panel';
+import { AccountPanelComponent } from './panels/account/account.panel';
+import { ApplicationPanelComponent } from './panels/application/application.panel';
+import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 
 @NgModule({
   exports: [RouterModule],
@@ -22,14 +20,13 @@ import { AccountPanelComponent } from './account/account.panel';
     {
       path: '',
       component: AdminComponent,
-      canActivate: [AdminGuarding],
+      // canActivateChild: [AdminGuarding],
       children: [
         AccountPanelComponent.routing,
         ApplicationPanelComponent.routing,
         OrganisationPanelComponent.routing,
         {
           path: 'edit',
-          component: RoutletterHostComponent,
           children: [
             ActivityStepperComponent.routing,
             AddressStepperComponent.routing,
@@ -41,7 +38,7 @@ import { AccountPanelComponent } from './account/account.panel';
             TargetGroupStepperComponent.routing,
             UserStepperComponent.routing
           ]
-        },
+        }
       ]
     },
     {

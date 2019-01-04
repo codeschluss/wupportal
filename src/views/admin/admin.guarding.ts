@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
-import { JwtClaims, Pathfinder, SessionProvider } from '@portal/core';
+import { JwtClaims, Pathfinder, SplashHostComponent, TokenProvider } from '@portal/core';
 import { take } from 'rxjs/operators';
-import { ClientComponent } from '../../client.component';
+import { ActivityFormComponent } from '../../realm/activity/activity.form';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
-import { AddressStepperComponent } from '../../realm/address/address.stepper';
-import { CategoryStepperComponent } from '../../realm/category/category.stepper';
-import { LanguageStepperComponent } from '../../realm/language/language.stepper';
+import { ActivityTableComponent } from '../../realm/activity/activity.table';
+import { AddressFormComponent } from '../../realm/address/address.form';
+import { ImageFormComponent } from '../../realm/image/image.form';
+import { OrganisationFormComponent } from '../../realm/organisation/organisation.form';
 import { OrganisationStepperComponent } from '../../realm/organisation/organisation.stepper';
-import { SuburbStepperComponent } from '../../realm/suburb/suburb.stepper';
-import { TagStepperComponent } from '../../realm/tag/tag.stepper';
-import { TargetGroupStepperComponent } from '../../realm/target-group/target-group.stepper';
+import { OrganisationTableComponent } from '../../realm/organisation/organisation.table';
+import { ScheduleFormComponent } from '../../realm/schedule/schedule.form';
+import { TranslationFormComponent } from '../../realm/translation/translation.form';
+import { UserFormComponent } from '../../realm/user/user.form';
 import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { ClientPackage } from '../../utils/package';
-import { AccountPanelComponent } from './account/account.panel';
 import { AdminComponent } from './admin.component';
-import { ApplicationPanelComponent } from './application/application.panel';
-import { OrganisationPanelComponent } from './organisation/organisation.panel';
+import { AccountPanelComponent } from './panels/account/account.panel';
+import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuarding implements CanActivate, CanActivateChild {
@@ -24,7 +25,7 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
   public constructor(
     private pathfinder: Pathfinder,
     private router: Router,
-    private session: SessionProvider
+    private tokenProvider: TokenProvider
   ) { }
 
   public canActivate(route: ActivatedRouteSnapshot): Promise<any> {
@@ -36,65 +37,53 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
   }
 
   private async allow(route: ActivatedRouteSnapshot): Promise<any> {
-    const jwtClaims = ClientPackage.config.jwtClaims;
-    const session = await this.session.value.pipe(take(1)).toPromise();
-    const userId = session.accessToken.id;
-
-    const claim: JwtClaims = Object.keys(jwtClaims).reduce(
-      (claims, key) => claims[key] = session.accessToken[jwtClaims[key]], { });
+    const claims = ClientPackage.config.jwtClaims;
+    const tokens = await this.tokenProvider.value.pipe(take(1)).toPromise();
+    const claimed = Object.keys(claims).reduce((claim, key) => Object.assign(
+      claim, { [key]: tokens.access[claims[key]] }), { }) as JwtClaims;
 
     if ((() => {
       switch (route.component) {
-        default:
-        return false;
-
-        case AdminComponent:
-        return userId;
+        default: return claimed.superUser;
 
         case AccountPanelComponent:
-        return route.params.uuid === userId;
+        return route.params.uuid === claimed.userId;
+
+        case ActivityFormComponent:
+        case ActivityTableComponent:
+        case AddressFormComponent:
+        case AdminComponent:
+        case ImageFormComponent:
+        case OrganisationTableComponent:
+        case ScheduleFormComponent:
+        case SplashHostComponent:
+        case TranslationFormComponent:
+        case UserFormComponent:
+        return claimed.userId;
 
         case OrganisationPanelComponent:
-        return claim.organisationAdmin.length;
-
-        case ApplicationPanelComponent:
-        return claim.superUser;
+        return claimed.superUser
+          || claimed.organisationAdmin.length;
 
         case ActivityStepperComponent:
-        return claim.superUser
-          || claim.activityProvider.includes(route.params.uuid);
+        return claimed.superUser
+          // || claims.organisationAdmin.includes(item.organisation.id)
+          || claimed.activityProvider.includes(route.params.uuid);
 
-        case AddressStepperComponent:
-        return claim.superUser;
-
-        case CategoryStepperComponent:
-        return claim.superUser;
-
-        case LanguageStepperComponent:
-        return claim.superUser;
-
+        case OrganisationFormComponent:
         case OrganisationStepperComponent:
-        return claim.superUser
-          || claim.organisationAdmin.includes(route.params.uuid);
-
-        case SuburbStepperComponent:
-        return claim.superUser;
-
-        case TagStepperComponent:
-        return claim.superUser;
-
-        case TargetGroupStepperComponent:
-        return claim.superUser;
+        return claimed.superUser
+          || claimed.organisationAdmin.includes(route.params.uuid);
 
         case UserStepperComponent:
-        return claim.superUser
-          || userId === route.params.uuid;
+        return claimed.superUser
+          || claimed.userId === route.params.uuid;
       }
     })()) { return true; }
 
-    this.router.navigate(userId
-      ? this.pathfinder.to(AdminComponent)
-      : this.pathfinder.to(ClientComponent));
+    claimed.userId
+      ? this.router.navigate(this.pathfinder.to(AdminComponent))
+      : this.router.navigateByUrl('/');
   }
 
 }

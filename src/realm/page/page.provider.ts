@@ -10,7 +10,7 @@ export class PageProvider
 
   public create: (model: PageModel) => Observable<any>;
 
-  public update: (id: string, model: PageModel) => Observable<any>;
+  public update: (model: PageModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

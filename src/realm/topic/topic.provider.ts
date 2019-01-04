@@ -12,7 +12,7 @@ export class TopicProvider
 
   public create: (model: TopicModel) => Observable<any>;
 
-  public update: (id: string, model: TopicModel) => Observable<any>;
+  public update: (model: TopicModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

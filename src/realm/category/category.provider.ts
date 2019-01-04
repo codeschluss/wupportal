@@ -10,7 +10,7 @@ export class CategoryProvider
 
   public create: (model: CategoryModel) => Observable<any>;
 
-  public update: (id: string, model: CategoryModel) => Observable<any>;
+  public update: (model: CategoryModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

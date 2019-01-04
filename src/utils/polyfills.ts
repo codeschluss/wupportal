@@ -53,6 +53,13 @@ import 'core-js/es7/reflect';
  **/
 import 'web-animations-js';
 
+/**
+ * Hammer.js `hammerjs`
+ * Some components rely on HammerJS for gestures. In order to get the full
+ * feature-set of these components, HammerJS must be loaded.
+ **/
+import 'hammerjs';
+
 /*******************************************************************************
  * Zone JS is required by default for Angular itself.
  */

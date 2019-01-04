@@ -15,6 +15,6 @@ export class AddressModel
 
   public suburbId: string;
 
-  public suburb: Observable<SuburbModel>;
+  public suburb: SuburbModel & Observable<SuburbModel>;
 
 }

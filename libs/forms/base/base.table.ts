@@ -1,26 +1,29 @@
-import { AfterViewInit, ContentChildren, Input, QueryList, Type, ViewChild } from '@angular/core';
-import { MatColumnDef, MatPaginator, MatSort, MatTable } from '@angular/material';
-import { CrudJoiner, CrudModel, CrudResolver, Pathfinder, StrictHttpResponse } from '@portal/core';
-import { BehaviorSubject, merge, of } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { AfterViewInit, ContentChildren, HostBinding, Input, OnInit, QueryList, Type, ViewChild } from '@angular/core';
+import { MatColumnDef, MatInput, MatPaginator, MatSort, MatTable, SortDirection } from '@angular/material';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@portal/core';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, ignoreElements, map, mergeMap, tap } from 'rxjs/operators';
 
 export interface TableColumn {
   name: string;
-  sort?: boolean;
   value: (item) => string;
 }
 
 export abstract class BaseTable<Model extends CrudModel>
-  implements AfterViewInit {
+  implements OnInit, AfterViewInit {
 
-  @Input()
-  public editable: any;
+  @HostBinding('class')
+  public class: string = 'base-table';
 
   @Input()
   public items: Model[];
 
   @ViewChild(MatPaginator)
   public pager: MatPaginator;
+
+  @ViewChild(MatInput)
+  public search: MatInput;
 
   @ViewChild(MatSort)
   public sorter: MatSort;
@@ -31,9 +34,11 @@ export abstract class BaseTable<Model extends CrudModel>
   @ContentChildren(MatColumnDef)
   public views: QueryList<MatColumnDef>;
 
-  public source: BehaviorSubject<Model[]> = new BehaviorSubject<Model[]>([]);
+  public collate: string[] = [];
 
-  public verticals: string[] = [];
+  public size: number = 10;
+
+  public source: BehaviorSubject<Model[]> = new BehaviorSubject<Model[]>([]);
 
   public abstract columns: TableColumn[];
 
@@ -41,103 +46,127 @@ export abstract class BaseTable<Model extends CrudModel>
 
   protected abstract model: Type<Model>;
 
+  public readonly viewpipe: Observable<any> = merge(
+    this.route.queryParams.pipe(tap((params) => this.navigate(params)))
+  ).pipe(ignoreElements());
+
+  private parameters: any;
+
   protected static template(template: string): string {
     return template + `
+      <mat-form-field><input matInput type="search"></mat-form-field>
       <mat-table matSort [dataSource]="source.asObservable()">
-        <mat-header-row *matHeaderRowDef="verticals"></mat-header-row>
-        <mat-row *matRowDef="let item; columns: verticals"></mat-row>
-        <ng-container *ngFor="let column of columns">
-          <ng-container [matColumnDef]="column.name">
-            <mat-header-cell mat-sort-header
-              [disabled]="!column.sort" *matHeaderCellDef>
-              <ng-container *ngTemplateOutlet="label;
-                context: { case: column }">
-              </ng-container>
-              </mat-header-cell>
-            <mat-cell *matCellDef="let item">
-              {{ item[column.name] ? column.value(item) : '' }}
-            </mat-cell>
-          </ng-container>
+        <mat-header-row *matHeaderRowDef="collate"></mat-header-row>
+        <mat-row *matRowDef="let item; columns: collate"></mat-row>
+        <ng-container [matColumnDef]="col.name" *ngFor="let col of columns">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <ng-container *ngTemplateOutlet="label; context: { case: col }">
+            </ng-container>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">{{ col.value(item) }}</mat-cell>
         </ng-container>
         <ng-content></ng-content>
-          <ng-container matColumnDef="actions" *ngIf="!this.readonly">
-            <mat-header-cell *matHeaderCellDef>
-              <i18n i18n="@@actions">actions</i18n>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let item">
-              <button mat-button [routerLink]="edit(item)">
-                <i18n i18n="@@edit">edit</i18n>
-              </button>
-              <button mat-button [routerLink]="delete(item)">
-                <i18n i18n="@@delete">delete</i18n>
-              </button>
-            </mat-cell>
-          </ng-container>
       </mat-table>
-      <mat-paginator [pageSize]="10"></mat-paginator>
+      <mat-paginator [pageSize]="size"></mat-paginator>
+      <ng-container *ngIf="viewpipe | async"></ng-container>
     `;
   }
 
-  public get readonly(): boolean { return this.editable === undefined; }
-
   public constructor(
-    private pathfinder: Pathfinder,
-    private resolver: CrudResolver
+    private resolver: CrudResolver,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
+  public ngOnInit(): void {
+    this.items = this.items || this.route.snapshot.data.items;
+  }
+
   public ngAfterViewInit(): void {
+    this.collate = [
+      ...this.columns.map((column) => column.name),
+      ...this.views.map((def) => def.name)
+    ];
+
     this.sorter.disableClear = true;
     this.views.forEach((view) => this.table.addColumnDef(view));
-    this.verticals = [
-      ...this.columns.map((column) => column.name),
-      ...this.views.map((def) => def.name),
-      ...(this.readonly ? [] : ['actions'])
-    ];
 
     merge(
       of(null),
       this.pager.page,
-      this.sorter.sortChange.pipe(tap(() => this.pager.pageIndex = 0))
-    ).subscribe(() => this.items ? this.relist() : this.reload());
+      merge(
+        this.search.stateChanges.pipe(
+          filter(() => this.input(this.search.value)),
+          map(() => this.search.value || null),
+          distinctUntilChanged(),
+          debounceTime(1000)
+        ),
+        this.sorter.sortChange
+      ).pipe(tap(() => this.pager.pageIndex = 0))
+    ).subscribe(() => this.router.navigate([], {
+      queryParamsHandling: 'merge',
+      queryParams: {
+        dir: this.sorter.direction || null,
+        find: this.search.value || null,
+        page: this.pager.pageIndex || null,
+        size: this.pager.pageSize !== this.size ? this.pager.pageSize : null,
+        sort: this.sorter.active || null
+      }
+    }));
   }
 
-  public delete(item: CrudModel): string[] {
-    return ['.'];
-    // return this.walk(item['deleter']);
+  private fetch(): void {
+    const provider = this.model['provider'].system;
+    provider.call(provider.methods.readAll, {
+      dir: this.sorter.direction,
+      embeddings: CrudJoiner.to(this.joiner.graph),
+      filter: this.search.value,
+      page: this.pager.pageIndex,
+      size: this.pager.pageSize,
+      sort: this.sorter.active
+    }).pipe(
+      tap((response) => this.paginate(response as StrictHttpResponse<any>)),
+      map((response) => provider.cast(response)),
+      mergeMap((items) => this.resolver.refine(items as any, this.joiner.graph))
+    ).subscribe((items) => this.source.next(items), () => this.source.next([]));
   }
 
-  public edit(item: CrudModel): string[] {
-    return this.pathfinder.to(item.constructor['stepper']).concat(item.id);
-  }
+  private filter(): void {
+    const column = this.columns.find((c) => c.name === this.sorter.active);
+    const field = column ? column.value : (item) => item[this.sorter.active];
+    const regex = this.search.value && new RegExp(this.search.value, 'i');
+    const items = this.items.filter((item) => !regex || Object.values(item)
+      .some((value) => typeof value === 'string' && value.search(regex) >= 0));
 
-  private relist(): void {
-    this.pager.length = this.items.length;
-    this.source.next(this.items.sort((a, b) => this.sorter.direction === 'asc'
-      ? (a[this.sorter.active] || '').localeCompare(b[this.sorter.active])
-      : (b[this.sorter.active] || '').localeCompare(a[this.sorter.active])
+    this.pager.length = items.length;
+    this.source.next(items.sort((a, b) => this.sorter.direction === 'asc'
+      ? (field(a) || '').localeCompare(field(b) || '')
+      : (field(b) || '').localeCompare(field(a) || '')
     ).slice(
       this.pager.pageIndex * this.pager.pageSize,
       (this.pager.pageIndex + 1) * this.pager.pageSize
     ));
   }
 
-  private reload(): void {
-    const provider = this.model['provider'].system;
-    provider.call(provider.methods.readAll, {
-      dir: this.sorter.direction,
-      embeddings: CrudJoiner.to(this.joiner.graph),
-      filter: '',
-      page: this.pager.pageIndex,
-      size: this.pager.pageSize,
-      sort: this.sorter.active
-    }).pipe(
-      tap((response) => this.scroll(response as any)),
-      map((response) => provider.cast(response)),
-      mergeMap((items) => this.resolver.refine(items as any, this.joiner.graph))
-    ).subscribe((items) => this.source.next(items));
+  private input(value: string): boolean {
+    return value !== this.route.snapshot.queryParams.find;
   }
 
-  private scroll(response: StrictHttpResponse<any>) {
+  private navigate(params: Params) {
+    const { dir, find, page, size, sort, ...rest } = params;
+    this.parameters = this.parameters || rest;
+
+    if (JSON.stringify(this.parameters) === JSON.stringify(rest)) {
+      this.sorter.direction = dir || null as SortDirection;
+      this.search.value = find || null;
+      this.pager.pageIndex = parseInt(page, 10) || null;
+      this.pager.pageSize = parseInt(size, 10) || this.size;
+      this.sorter.active = sort || null;
+      this.items ? this.filter() : this.fetch();
+    }
+  }
+
+  private paginate(response: StrictHttpResponse<any>) {
     this.pager.length = response.body.page.totalElements;
     this.pager.pageIndex = response.body.page.number;
     this.pager.pageSize = response.body.page.size;

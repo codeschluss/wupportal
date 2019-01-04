@@ -20,10 +20,10 @@ export class OrganisationModel
 
   public addressId: string;
 
-  public activities: Observable<ActivityModel[]>;
-  public address: Observable<AddressModel>;
-  public images: Observable<ImageModel[]>;
-  public provider: Observable<ProviderModel>;
-  public users: Observable<UserModel[]>;
+  public activities: ActivityModel[] & Observable<ActivityModel[]>;
+  public address: AddressModel & Observable<AddressModel>;
+  public images: ImageModel[] & Observable<ImageModel[]>;
+  public providers: ProviderModel[] & Observable<ProviderModel[]>;
+  public users: UserModel[] & Observable<UserModel[]>;
 
 }

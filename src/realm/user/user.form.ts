@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { UserModel } from './user.model';
 
@@ -9,12 +8,15 @@ import { UserModel } from './user.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'name'" i18n="@@name">name</i18n>
-        <i18n *ngSwitchCase="'phone'" i18n="@@phone">phone</i18n>
-        <i18n *ngSwitchCase="'password'" i18n="@@password">password</i18n>
-        <i18n *ngSwitchCase="'passwordConfirm'"
-          i18n="@@passwordConfifm">passwordConfirm</i18n>
-        <i18n *ngSwitchCase="'username'" i18n="@@username">username</i18n>
+        <ng-container *ngSwitchCase="'name'">
+          <i18n i18n="@@fullname">fullname</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'phone'">
+          <i18n i18n="@@phone">phone</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'username'">
+          <i18n i18n="@@username">username</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)
@@ -39,28 +41,9 @@ export class UserFormComponent extends BaseForm<UserModel> {
       input: StringFieldComponent,
       tests: [Validators.required],
       type: 'tel'
-    },
-    {
-      name: 'password',
-      input: StringFieldComponent,
-      tests: [Validators.minLength(12)],
-      type: 'password'
-    },
-    {
-      name: 'passwordConfirm',
-      input: StringFieldComponent,
-      tests: [Validators.minLength(12)],
-      type: 'password'
     }
   ];
 
   public model: Type<UserModel> = UserModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute
-  ) {
-    super();
-  }
 
 }

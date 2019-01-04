@@ -11,7 +11,7 @@ export class BlogProvider
 
   public create: (model: BlogModel) => Observable<any>;
 
-  public update: (id: string, model: BlogModel) => Observable<any>;
+  public update: (model: BlogModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

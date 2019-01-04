@@ -15,7 +15,7 @@ import { SessionProvider } from '@portal/core';
     constructor(
         public dialogRef: MatDialogRef<LangaugeChooserDialogComponent>,
         private languageProvider: LanguageProvider,
-        private session: SessionProvider,
+        // private session: SessionProvider,
         ) {
         this.initLanguages();
       }
@@ -31,8 +31,8 @@ import { SessionProvider } from '@portal/core';
    //   Just Prototyping
     changeLanguage(locale: string) {
 
-      this.session.changeLanguage(locale);
-      location.reload();
+      // this.session.changeLanguage(locale);
+      // location.reload();
     }
 
     private initLanguages(): void {

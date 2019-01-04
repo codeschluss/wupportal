@@ -22,7 +22,7 @@ export class Pathfinder {
     };
 
     const paths = this.router.config
-      .flatMap((route) => finder(route)).filter((segment) => !!segment);
+      .flatMap((route) => finder(route)).filter(Boolean);
     paths.push(((path) => (path || '').replace('/:uuid', ''))(paths.pop()));
 
     return paths;

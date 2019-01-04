@@ -1,4 +1,31 @@
-import { HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AccessTokenModel } from '../auth/access-token.model';
+import { RefreshTokenModel } from '../auth/refresh-token.model';
+import { CoreSettings } from './settings';
+
+@Injectable({ providedIn: 'root' })
+export class ApiInterceptor implements HttpInterceptor {
+
+  public constructor(
+    private coreSettings: CoreSettings
+  ) { }
+
+  public intercept(request: HttpRequest<any>, next: HttpHandler):
+    Observable<HttpEvent<any>> {
+
+    return next.handle(request.url.startsWith(this.coreSettings.apiUrl)
+      ? request.clone({ setHeaders: { 'Content-Type': 'application/json' } })
+      : request);
+  }
+
+}
+
+export interface AuthTokens {
+  access: AccessTokenModel;
+  refresh: RefreshTokenModel;
+}
 
 export interface BaseService {
   rootUrl: string;
@@ -9,6 +36,7 @@ export interface JwtClaims {
   organisationAdmin: string[];
   organisationUser: string[];
   superUser: boolean;
+  userId: string;
 }
 
 export interface Link {
@@ -23,6 +51,7 @@ export interface Link {
 }
 
 export interface ReadAllParams {
+  [key: string]: any;
   dir?: string;
   filter?: string;
   page?: number;
@@ -31,6 +60,7 @@ export interface ReadAllParams {
 }
 
 export interface ReadEmbeddedParams {
+  [key: string]: any;
   dir?: string;
   sort?: string;
 }

@@ -15,8 +15,8 @@ export class UserModel
   public username: string;
   public applyBlogger: boolean;
 
-  public activities: Observable<ActivityModel[]>;
-  public organisations: Observable<OrganisationModel[]>;
-  public provider: Observable<ProviderModel>;
+  public activities: ActivityModel[] & Observable<ActivityModel[]>;
+  public organisations: OrganisationModel[] & Observable<OrganisationModel[]>;
+  public provider: ProviderModel & Observable<ProviderModel>;
 
 }

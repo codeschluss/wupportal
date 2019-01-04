@@ -23,7 +23,7 @@ export class UserProvider
       model: OrganisationModel
     },
     {
-      field: 'providers',
+      field: 'provider',
       method: () => empty(),
       model: ProviderModel
     }
@@ -47,7 +47,7 @@ export class UserProvider
 
   public create: (model: UserModel) => Observable<any>;
 
-  public update: (id: string, model: UserModel) => Observable<any>;
+  public update: (model: UserModel, id: string) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

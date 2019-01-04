@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core';
-import { BaseService, CrudLink, CrudProvider } from '@portal/core';
+import { BaseService, CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { empty } from 'rxjs';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -12,7 +12,7 @@ export class ProviderProvider
 
   protected linked: CrudLink[] = [
     {
-      field: 'activity',
+      field: 'activities',
       method: () => empty(),
       model: ActivityModel
     },
@@ -28,10 +28,10 @@ export class ProviderProvider
     }
   ];
 
-  protected methods;
+  protected methods: CrudMethods;
 
   protected model: Type<ProviderModel> = this.based(ProviderModel);
 
-  protected service;
+  protected service: BaseService;
 
 }

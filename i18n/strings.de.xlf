@@ -17,9 +17,6 @@
       <trans-unit id="portalSubtitle" datatype="html">
 				<target>Portal Untertitel</target>
       </trans-unit>
-      <trans-unit id="aboutPageTextHeadLine" datatype="html">
-				<target>Wieso, weshalb, warum...</target>
-      </trans-unit>
       <trans-unit id="imprint" datatype="html">
 				<target>Impressum</target>
       </trans-unit>
@@ -103,6 +100,9 @@
       </trans-unit>
       <trans-unit id="welcomeTo" datatype="html">
         <target>Willkommen bei</target>
+      </trans-unit>  
+      <trans-unit id="registration" datatype="html">
+        <target>Registrierung</target>
       </trans-unit>  
       
       

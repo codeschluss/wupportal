@@ -17,9 +17,6 @@
       <trans-unit id="portalSubtitle" datatype="html">
 				<target>portal subtitle</target>
       </trans-unit>
-      <trans-unit id="aboutPageTextHeadLine" datatype="html">
-				<target>The history of Wupp'n'go</target>
-      </trans-unit>
       <trans-unit id="imprint" datatype="html">
 				<target>Imprint</target>
       </trans-unit>
@@ -104,6 +101,9 @@
       <trans-unit id="welcomeTo" datatype="html">
         <target>Welcome to</target>
       </trans-unit>
+      <trans-unit id="registration" datatype="html">
+        <target>Registration</target>
+      </trans-unit> 
 
 
 

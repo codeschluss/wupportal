@@ -110,7 +110,9 @@
       <trans-unit id="orgaDoesNotExist" datatype="html">
         <target>Meine Organisation ist nicht dabei</target>
       </trans-unit>
-
+      <trans-unit id="createdAt" datatype="html">
+        <target>erstellt am</target>
+      </trans-unit>
 
       <trans-unit id="aboutWupportal" datatype="html">
 				<target>Über das Wupportal</target>

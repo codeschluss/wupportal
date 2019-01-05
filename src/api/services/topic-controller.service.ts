@@ -242,6 +242,57 @@ class TopicControllerService extends BaseService {
 
   /**
    * @param topicId topicId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
+   * @return OK
+   */
+  topicControllerReadPagesResponse(topicId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/topics/${topicId}/pages`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param topicId topicId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
+   * @return OK
+   */
+  topicControllerReadPages(topicId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<{}> {
+    return this.topicControllerReadPagesResponse(topicId, sort, dir, embeddings).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param topicId topicId
    * @return OK
    */
   topicControllerReadTranslationsResponse(topicId: string): Observable<StrictHttpResponse<{}>> {

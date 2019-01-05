@@ -27,6 +27,7 @@ import { OrganisationFormComponent } from './organisation/organisation.form';
 import { OrganisationProvider } from './organisation/organisation.provider';
 import { OrganisationStepperComponent } from './organisation/organisation.stepper';
 import { OrganisationTableComponent } from './organisation/organisation.table';
+import { PageProvider } from './page/page.provider';
 import { ProviderProvider } from './provider/provider.provider';
 import { ProviderTableComponent } from './provider/provider.table';
 import { ScheduleFieldComponent } from './schedule/schedule.field';
@@ -43,6 +44,7 @@ import { TargetGroupFormComponent } from './target-group/target-group.form';
 import { TargetGroupProvider } from './target-group/target-group.provider';
 import { TargetGroupStepperComponent } from './target-group/target-group.stepper';
 import { TargetGroupTableComponent } from './target-group/target-group.table';
+import { TopicProvider } from './topic/topic.provider';
 import { TranslationFormComponent } from './translation/translation.form';
 import { TranslationProvider } from './translation/translation.provider';
 import { UserFormComponent } from './user/user.form';
@@ -82,10 +84,12 @@ const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
   ConfigurationProvider,
   LanguageProvider,
   OrganisationProvider,
+  PageProvider,
   ProviderProvider,
   SuburbProvider,
   TagProvider,
   TargetGroupProvider,
+  TopicProvider,
   TranslationProvider,
   UserProvider
 ];

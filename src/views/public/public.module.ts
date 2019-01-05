@@ -12,7 +12,7 @@ import { CoreModule } from '@portal/core';
 import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
 import { FooterComponent } from '../layout/footer.component';
 import { ImprintDialogComponent } from '../layout/imprint.dialog.component';
-import { LangaugeChooserDialogComponent } from '../layout/languagecooser.component';
+import { LangaugeChooserDialogComponent } from '../layout/languagechooser.component';
 import { LayoutComponent } from '../layout/layout.component';
 import { NavBarComponent } from '../layout/navbar.component';
 import { SocialMediaComponent } from '../layout/social.media.component';

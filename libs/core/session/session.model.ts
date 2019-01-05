@@ -10,6 +10,6 @@ export class SessionModel {
 
   public language: string = navigator.language.substr(0, 2);
   public likes: string[] = [];
-  public cookiesAccepted: boolean = false;
+  public cookiesAccepted: boolean;
 
 }

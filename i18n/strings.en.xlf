@@ -79,16 +79,16 @@
       </trans-unit>
       <trans-unit id="resultsFor" datatype="html">
         <target>Results for</target>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="by" datatype="html">
         <target>by</target>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="toActivity" datatype="html">
         <target>go to activity</target>
       </trans-unit>
       <trans-unit id="enteredActivities" datatype="html">
         <target>entered activities</target>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="waitingForMap" datatype="html">
         <target>loading map</target>
       </trans-unit>
@@ -103,7 +103,13 @@
       </trans-unit>
       <trans-unit id="registration" datatype="html">
         <target>Registration</target>
-      </trans-unit> 
+      </trans-unit>
+      <trans-unit id="createMissingOrganisation" datatype="html">
+        <target>Please create the missing organisation</target>
+      </trans-unit>
+      <trans-unit id="orgaDoesNotExist" datatype="html">
+        <target>Can't find my organisation</target>
+      </trans-unit>
 
 
 

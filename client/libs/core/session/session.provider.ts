@@ -28,11 +28,28 @@ export class SessionProvider {
   }
 
   public like(id: string): void {
-    if (!this.session.value.likes.includes(id)) {
+    if (!this.isLiked(id)) {
       this.session.next(Object.assign(this.session.value, {
         likes: this.session.value.likes.concat(id)
       }));
     }
   }
+
+  public isLiked(id: string): boolean {
+    return this.session.value.likes.includes(id);
+  }
+
+  public changeLanguage(locale: string): void {
+    this.session.next(Object.assign(this.session.value, {
+      language: locale
+    }));
+  }
+
+  public acceptCookies(acceptCookies: boolean): void {
+    this.session.next(Object.assign(this.session.value, {
+      cookiesAccepted: acceptCookies
+    }));
+  }
+
 
 }

@@ -45,7 +45,7 @@ const PublicRoutes = [
         .with('address').yield('suburb')
         .with('schedules'),
       configurations: CrudJoiner.of(ConfigurationModel)
-    },
+    }
   },
   {
     path: 'list/activities',

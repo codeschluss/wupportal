@@ -9,7 +9,6 @@ import { SessionProvider } from '@portal/core';
 
 export class LayoutComponent {
 
-  public static readonly imports = [];
   public showCookiesInfo = true;
 
   public constructor(

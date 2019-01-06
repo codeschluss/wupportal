@@ -132,16 +132,7 @@ const PublicRoutes = [
   },
   {
     path: 'list/blogs',
-    children: [
-      {
-        path: '/',
-        component: BlogListComponent,
-      },
-      {
-        path: '',
-        component: BlogListComponent,
-      }
-    ]
+    component: BlogListComponent,
   },
   {
     path: 'view/blogs/:uuid',
@@ -155,19 +146,15 @@ const PublicRoutes = [
   },
   {
     path: 'list/topics',
-    children: [
-      {
-        path: '',
-        component: TopicsListComponent,
-        resolve: {
-          topics: CrudResolver,
-        },
-        data: {
-          topics: CrudJoiner.of(TopicModel),
-        }
-      }]
+    component: TopicsListComponent,
+    resolve: {
+      topics: CrudResolver,
     },
-    {
+    data: {
+      topics: CrudJoiner.of(TopicModel),
+    }
+  },
+  {
       path: 'view/topic/:uuid',
       component: TopicViewComponent,
         resolve: {

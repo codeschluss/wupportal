@@ -94,7 +94,6 @@ const PublicImports = [
   MappingComponent.imports,
   FlexLayoutModule,
   FontAwesomeModule,
-  LayoutComponent.imports,
   NavBarComponent.imports,
   SearchResultListComponent.imports,
   SearchComponent.imports,

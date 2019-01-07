@@ -39,16 +39,18 @@ public class ImageService {
     if (imageFile.getBytes() == null || imageFile.getBytes().length == 1) {
       return null;
     }
-    
+
     BufferedImage imageBuff = ImageIO.read(imageFile.getInputStream());
-    Image image = imageBuff.getScaledInstance(config.getMaxWidth(), -1, Image.SCALE_SMOOTH);
+    Image image = imageBuff.getScaledInstance(config.getMaxWidth(), config.getMaxWidth(),
+        Image.SCALE_SMOOTH);
 
     BufferedImage bimage = new BufferedImage(image.getWidth(null), image.getHeight(null),
-        BufferedImage.TYPE_3BYTE_BGR);
+        BufferedImage.TYPE_4BYTE_ABGR);
 
-    Graphics2D neGraphic = bimage.createGraphics();
-    neGraphic.drawImage(image, 0, 0, null);
-    neGraphic.dispose();
+    Graphics2D graphics = bimage.createGraphics();
+    graphics.drawImage(image, 0, 0, null);
+    graphics.dispose();
+
     return ((DataBufferByte) bimage.getData().getDataBuffer()).getData();
   }
 

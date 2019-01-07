@@ -123,7 +123,7 @@ public class OrganisationImageService
     byte[] image = imageService.resize(imageFile);
     
     OrganisationImageEntity imageEntity = new OrganisationImageEntity(
-        caption, Base64Utils.decode(image), mimeType, organisation);
+        caption, Base64Utils.encode(image), mimeType, organisation);
     
     OrganisationImageEntity saved = repo.save(imageEntity);
     return assembler.toResource(saved);

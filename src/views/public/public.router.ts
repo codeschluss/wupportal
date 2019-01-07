@@ -10,17 +10,15 @@ import { PageModel } from 'src/realm/page/page.model';
 import { SuburbModel } from 'src/realm/suburb/suburb.model';
 import { TargetGroupModel } from 'src/realm/target-group/target-group.model';
 import { TopicModel } from 'src/realm/topic/topic.model';
-import { LayoutComponent } from '../layout/layout.component';
 import { AboutComponent } from './about/about.component';
 import { ActivityListComponent } from './activity/activity.list.component';
 import { ActivityViewComponent } from './activity/activity.view.component';
 import { BlogListComponent } from './blog/blog.list.component';
 import { BlogViewComponent } from './blog/blog.view.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './login/register.component';
 import { MappingComponent } from './mapping/mapping.component';
 import { OrganisationListComponent } from './organisation/organisation.list.component';
 import { OrganisationViewComponent } from './organisation/organisation.view.component';
+import { PublicComponent } from './public.component';
 import { SearchComponent } from './search/search.component';
 import { PageViewComponent } from './worthKnowing/page.view.component';
 import { TopicViewComponent } from './worthKnowing/topic.view.component';
@@ -197,28 +195,11 @@ const PublicRoutes = [
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forChild([{
+  imports: [RouterModule.forChild([
+  {
     path: '',
     children: PublicRoutes,
-    component: LayoutComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'logout',
-    component: LoginComponent
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    resolve: {
-      organisations: CrudResolver
-    },
-    data: {
-      organisations: CrudJoiner.of(OrganisationModel)
-    }
+    component: PublicComponent,
   }
 ])]
 })

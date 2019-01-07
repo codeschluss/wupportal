@@ -10,11 +10,6 @@ import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { CoreModule } from '@portal/core';
 import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
-import { FooterComponent } from '../layout/footer.component';
-import { ImprintDialogComponent } from '../layout/imprint.dialog.component';
-import { LangaugeChooserDialogComponent } from '../layout/languagechooser.component';
-import { LayoutComponent } from '../layout/layout.component';
-import { NavBarComponent } from '../layout/navbar.component';
 import { SocialMediaComponent } from '../layout/social.media.component';
 import { AboutComponent } from './about/about.component';
 import { ActivityCardComponent } from './activity/activity.card.component';
@@ -25,9 +20,6 @@ import { BottomSheetScheduleComponent } from './activity/schedules.bottom.sheet.
 import { BlogListComponent } from './blog/blog.list.component';
 import { BlogListItemComponent } from './blog/blog.listitem.component';
 import { BlogViewComponent } from './blog/blog.view.component';
-import { InfoBottomComponent } from './login/info.bottomsheet.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './login/register.component';
 import { BottomSheetMapComponent } from './mapping/map.bottomsheet.component';
 import { MappingComponent } from './mapping/mapping.component';
 import { OrganisationCardComponent } from './organisation/organisation.card.component';
@@ -37,7 +29,6 @@ import { OrganisationViewComponent } from './organisation/organisation.view.comp
 import { PublicComponent } from './public.component';
 import { PublicRouter } from './public.router';
 import { SearchComponent } from './search/search.component';
-import { SearchInputComponent } from './search/search.input.component';
 import { SearchResultListComponent } from './search/searchresult.list.component';
 import { PageViewComponent } from './worthKnowing/page.view.component';
 import { TopicViewComponent } from './worthKnowing/topic.view.component';
@@ -50,7 +41,6 @@ const PublicDeclarations = [
   PublicComponent,
   BottomSheetMapComponent,
   BottomSheetScheduleComponent,
-
   ActivityViewComponent,
   ActivityCarouselComponent,
   ActivityCardComponent,
@@ -61,24 +51,15 @@ const PublicDeclarations = [
   OrgaMediaDialogComponent,
   AboutComponent,
   MappingComponent,
-  LayoutComponent,
-  FooterComponent,
-  NavBarComponent,
-  LangaugeChooserDialogComponent,
   BlogListComponent,
   BlogListItemComponent,
   BlogViewComponent,
   SearchResultListComponent,
-  SearchInputComponent,
   SearchComponent,
-  ImprintDialogComponent,
   SocialMediaComponent,
   TopicsListComponent,
   TopicViewComponent,
-  PageViewComponent,
-  LoginComponent,
-  RegisterComponent,
-  InfoBottomComponent
+  PageViewComponent
 ];
 
 const PublicImports = [
@@ -94,16 +75,13 @@ const PublicImports = [
   MappingComponent.imports,
   FlexLayoutModule,
   FontAwesomeModule,
-  NavBarComponent.imports,
   SearchResultListComponent.imports,
   SearchComponent.imports,
   FormsModule,
   JwSocialButtonsModule,
   CoreModule,
   MatPaginatorModule,
-  ReactiveFormsModule,
-  LoginComponent.imports,
-  RegisterComponent.imports
+  ReactiveFormsModule
 ];
 
 const PublicProviders = [
@@ -120,10 +98,7 @@ const PublicProviders = [
   entryComponents: [
     BottomSheetMapComponent,
     BottomSheetScheduleComponent,
-    ImprintDialogComponent,
-    OrgaMediaDialogComponent,
-    LangaugeChooserDialogComponent,
-    InfoBottomComponent
+    OrgaMediaDialogComponent
   ],
   exports: []
 })

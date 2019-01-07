@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.provider.ProviderService;
+import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
 import org.junit.Test;
@@ -34,9 +35,10 @@ public class OrganisationControllerGrantAdminRightTest {
     String userId = "00000000-0000-0000-0004-400000000000";
     assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isAdmin())
         .isFalse();
-
+    BooleanPrimitive value = new BooleanPrimitive(true);
+    
     ResponseEntity<?> result = (ResponseEntity<?>) controller.grantAdminRight(organisationId,
-        userId, true);
+        userId, value);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isAdmin())
@@ -50,9 +52,10 @@ public class OrganisationControllerGrantAdminRightTest {
     String userId = "00000000-0000-0000-0004-400000000000";
     assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isAdmin())
         .isFalse();
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
     ResponseEntity<?> result = (ResponseEntity<?>) controller.grantAdminRight(organisationId,
-        userId, true);
+        userId, value);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     assertThat(providerService.getProviderByUserAndOrganisation(userId, organisationId).isAdmin())
@@ -64,8 +67,9 @@ public class OrganisationControllerGrantAdminRightTest {
   public void takeAdminRightsSupeUserBadRequest() {
     String notExistingOrganisationId = "12345678-0000-0000-0004-XX0000000000";
     String userId = "00000000-0000-0000-0004-400000000000";
+    BooleanPrimitive value = new BooleanPrimitive(false);
 
-    controller.grantAdminRight(notExistingOrganisationId, userId, false);
+    controller.grantAdminRight(notExistingOrganisationId, userId, value);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -73,16 +77,18 @@ public class OrganisationControllerGrantAdminRightTest {
   public void takeAdminRightsProviderUserDenied() {
     String orgaId = "00000000-0000-0000-0004-300000000000";
     String userId = "00000000-0000-0000-0004-500000000000";
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
-    controller.grantAdminRight(orgaId, userId, true);
+    controller.grantAdminRight(orgaId, userId, value);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void takeAdminRightsNoUserDenied() {
     String orgaId = "00000000-0000-0000-0004-300000000000";
     String userId = "00000000-0000-0000-0004-500000000000";
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
-    controller.grantAdminRight(orgaId, userId, true);
+    controller.grantAdminRight(orgaId, userId, value);
   }
 
 }

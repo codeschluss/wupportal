@@ -17,11 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.hateoas.Resource;
-import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.hateoas.Resources;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.Base64Utils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,13 +40,14 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   public void addAndDeleteImagesSuperUserOk() throws IOException {
     given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
-        "text/plain", "test".getBytes());
-    OrganisationImageEntity result = ((Resource<OrganisationImageEntity>) controller
-        .addImage(organisationId, "test", multipartFile)
-        .getBody()).getContent();
+    OrganisationImageEntity imageInput = newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes()));
+    Resources<Resource<OrganisationImageEntity>> result = 
+        ((Resources<Resource<OrganisationImageEntity>>) controller
+            .addImage(organisationId, imageInput).getBody());
+    String resultId = result.getContent().iterator().next().getContent().getId();
     
-    controller.deleteImages(organisationId, result.getId());
+    controller.deleteImages(organisationId, resultId);
     
     try {
       controller.readImages(organisationId);
@@ -54,20 +56,21 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
       assertThat(true).isTrue();
     }
   }
-  
+
   @Test
   @WithUserDetails("admin@user")
   @SuppressWarnings("unchecked")
   public void addAndDeleteImagesOwnOrgaOk() throws IOException {
     given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
-        "text/plain", "test".getBytes());
-    OrganisationImageEntity result = ((Resource<OrganisationImageEntity>) controller
-        .addImage(organisationId, "test", multipartFile)
-        .getBody()).getContent();
+    OrganisationImageEntity imageInput = newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes()));
+    Resources<Resource<OrganisationImageEntity>> result = 
+        ((Resources<Resource<OrganisationImageEntity>>) controller
+            .addImage(organisationId, imageInput).getBody());
+    String resultId = result.getContent().iterator().next().getContent().getId();
     
-    controller.deleteImages(organisationId, result.getId());
+    controller.deleteImages(organisationId, resultId);
     
     try {
       controller.readImages(organisationId);
@@ -83,13 +86,14 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   public void addAndFindImagesOtherOrgaDenied() throws IOException {
     given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
-        "text/plain", "test".getBytes());
-    OrganisationImageEntity result = ((Resource<OrganisationImageEntity>) controller
-        .addImage(organisationId, "test", multipartFile)
-        .getBody()).getContent();
+    OrganisationImageEntity imageInput = newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes()));
+    Resources<Resource<OrganisationImageEntity>> result = 
+        ((Resources<Resource<OrganisationImageEntity>>) controller
+            .addImage(organisationId, imageInput).getBody());
+    String resultId = result.getContent().iterator().next().getContent().getId();
     
-    controller.deleteImages(organisationId, result.getId());
+    controller.deleteImages(organisationId, resultId);
   }
   
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -97,12 +101,21 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   public void addAndFindImagesNotRegisteredDenied() throws IOException {
     given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
-        "text/plain", "test".getBytes());
-    OrganisationImageEntity result = ((Resource<OrganisationImageEntity>) controller
-        .addImage(organisationId, "test", multipartFile)
-        .getBody()).getContent();
+    OrganisationImageEntity imageInput = newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes()));
+    Resources<Resource<OrganisationImageEntity>> result = 
+        ((Resources<Resource<OrganisationImageEntity>>) controller
+            .addImage(organisationId, imageInput).getBody());
+    String resultId = result.getContent().iterator().next().getContent().getId();
     
-    controller.deleteImages(organisationId, result.getId());
+    controller.deleteImages(organisationId, resultId);
+  }
+  
+  private OrganisationImageEntity newOrganisationImageEntity(String caption, String data) {
+    OrganisationImageEntity image = new OrganisationImageEntity();
+    image.setCaption(caption);
+    image.setMimeType("test");
+    image.setImage(data);
+    return image;
   }
 }

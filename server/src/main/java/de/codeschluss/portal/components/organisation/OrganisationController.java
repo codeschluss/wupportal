@@ -6,12 +6,14 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.activity.ActivityService;
 import de.codeschluss.portal.components.address.AddressService;
+import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.BaseParams;
+import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -28,6 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -154,10 +155,10 @@ public class OrganisationController
   @SuperUserPermission
   public ResponseEntity<?> grantApproval(
       @PathVariable String organisationId,
-      @RequestBody Boolean isApproved) {
+      @RequestBody BooleanPrimitive isApproved) {
     try {
-      service.setApproval(organisationId, isApproved);
-      if (!isApproved) {
+      service.setApproval(organisationId, isApproved.getValue());
+      if (!isApproved.getValue()) {
         List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
         activityService.deleteAllByProviders(providers);
       }
@@ -286,9 +287,9 @@ public class OrganisationController
   @PutMapping("/organisations/{organisationId}/users/{userId}/approve")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> approveOrRejectUser(@PathVariable String organisationId,
-      @PathVariable String userId, @RequestBody Boolean isApproved) {
+      @PathVariable String userId, @RequestBody BooleanPrimitive isApproved) {
     try {
-      providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved);
+      providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved.getValue());
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist in given Organisation!");
@@ -309,9 +310,9 @@ public class OrganisationController
   @PutMapping("/organisations/{organisationId}/users/{userId}/admin")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> grantAdminRight(@PathVariable String organisationId,
-      @PathVariable String userId, @RequestBody Boolean isAdmin) {
+      @PathVariable String userId, @RequestBody BooleanPrimitive isAdmin) {
     try {
-      providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);
+      providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin.getValue());
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist in given Organisation!");
@@ -375,18 +376,21 @@ public class OrganisationController
    * Adds the image.
    *
    * @param organisationId the organisation id
-   * @param caption the caption
-   * @param imageFile the image file
+   * @param image the image
    * @return the response entity
    */
   @PostMapping("/organisations/{organisationId}/images")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> addImage(@PathVariable String organisationId,
-      @RequestParam(name = "caption", required = false) String caption, 
-      @RequestParam("file") MultipartFile imageFile) {
+      @RequestBody OrganisationImageEntity... image) {
+    if (image == null || image.length == 0) {
+      throw new BadParamsException("Image File must not be null");
+    }
+    
     try {
-      Resource<?> saved = organisationImageService.addResource(
-          imageFile, caption, service.getById(organisationId));
+      Resources<?> saved = organisationImageService.addResources(
+          service.getById(organisationId),
+          image);
       return ok(saved);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Organisation does not exist");

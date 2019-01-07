@@ -6,6 +6,7 @@ import static org.springframework.http.ResponseEntity.ok;
 import de.codeschluss.portal.components.suburb.SuburbService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
@@ -117,9 +118,9 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
   @PutMapping("/addresses/{addressId}/suburb")
   @SuperUserPermission
   public ResponseEntity<Resource<?>> updateSuburb(@PathVariable String addressId,
-      @RequestBody String suburbId) {
-    if (service.existsById(addressId) && suburbService.existsById(suburbId)) {
-      service.updateSuburb(addressId, suburbService.getById(suburbId));
+      @RequestBody StringPrimitive suburbId) {
+    if (service.existsById(addressId) && suburbService.existsById(suburbId.getValue())) {
+      service.updateSuburb(addressId, suburbService.getById(suburbId.getValue()));
       return ok(suburbService.getResourceByAddress(addressId));
     } else {
       throw new BadParamsException("Address or Suburb with given ID do not exist!");

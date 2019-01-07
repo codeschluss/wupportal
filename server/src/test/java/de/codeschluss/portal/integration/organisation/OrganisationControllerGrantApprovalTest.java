@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.organisation.OrganisationService;
+import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
 
 import java.net.URISyntaxException;
 
@@ -34,11 +35,11 @@ public class OrganisationControllerGrantApprovalTest {
   @WithUserDetails("super@user")
   public void grantApprovalSuperUserOk() throws URISyntaxException {
     String organisationId = "00000002-0000-0000-0008-000000000000";
-    boolean isApproved = true;
     assertThat(service.getById(organisationId).isApproved()).isFalse();
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
     ResponseEntity<?> result = (ResponseEntity<?>) controller.grantApproval(organisationId,
-        isApproved);
+        value);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     assertThat(service.getById(organisationId).isApproved()).isTrue();
@@ -48,10 +49,10 @@ public class OrganisationControllerGrantApprovalTest {
   @WithUserDetails("notapprovedorga2@user")
   public void grantApprovalOwnUserDenied() throws URISyntaxException {
     String organisationId = "00000003-0000-0000-0008-000000000000";
-    boolean isApproved = true;
     assertThat(service.getById(organisationId).isApproved()).isFalse();
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
-    controller.grantApproval(organisationId, isApproved);
+    controller.grantApproval(organisationId, value);
 
     controller.readOne(organisationId);
   }
@@ -59,10 +60,10 @@ public class OrganisationControllerGrantApprovalTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void grantApprovalOtherNotRegisteredDenied() {
     String organisationId = "00000003-0000-0000-0008-000000000000";
-    boolean isApproved = true;
     assertThat(service.getById(organisationId).isApproved()).isFalse();
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
-    controller.grantApproval(organisationId, isApproved);
+    controller.grantApproval(organisationId, value);
 
     controller.readOne(organisationId);
   }

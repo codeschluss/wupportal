@@ -17,6 +17,7 @@ import de.codeschluss.portal.components.targetgroup.TargetGroupService;
 import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.BaseParams;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -184,18 +185,17 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Update address.
    *
-   * @param activityId
-   *          the activity id
-   * @param addressId
-   *          the address id
+   * @param activityId the activity id
+   * @param addressId the address id
    * @return the response entity
    */
   @PutMapping("/activities/{activityId}/address")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> updateAddress(@PathVariable String activityId,
-      @RequestBody String addressId) {
-    if (addressService.existsById(addressId) && service.existsById(activityId)) {
-      service.updateAddress(activityId, addressService.getById(addressId));
+      @RequestBody StringPrimitive addressId) {
+    if (addressService.existsById(addressId.getValue()) 
+        && service.existsById(activityId)) {
+      service.updateAddress(activityId, addressService.getById(addressId.getValue()));
       return readAddress(activityId);
     } else {
       throw new BadParamsException("Activity or Address with given ID do not exist!");
@@ -226,9 +226,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @PutMapping("/activities/{activityId}/category")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> updateCategory(@PathVariable String activityId,
-      @RequestBody String categoryId) {
-    if (service.existsById(activityId) && categoryService.existsById(categoryId)) {
-      service.updateCategory(activityId, categoryService.getById(categoryId));
+      @RequestBody StringPrimitive categoryId) {
+    if (service.existsById(activityId) && categoryService.existsById(categoryId.getValue())) {
+      service.updateCategory(activityId, categoryService.getById(categoryId.getValue()));
       return readCategory(activityId);
     } else {
       throw new BadParamsException("Activity or Category with given ID do not exist!");
@@ -260,9 +260,9 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @PutMapping("/activities/{activityId}/organisation")
   @OwnActivityPermission
   public ResponseEntity<?> updateOrganisation(@PathVariable String activityId,
-      @RequestBody String organisationId) {
+      @RequestBody StringPrimitive organisationId) {
     try {
-      service.updateProvider(activityId, getProvider(organisationId));
+      service.updateProvider(activityId, getProvider(organisationId.getValue()));
       return readOrganisation(activityId);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity, Organisation or Provider do not exist!");

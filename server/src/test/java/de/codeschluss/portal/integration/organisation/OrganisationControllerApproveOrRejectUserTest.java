@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.provider.ProviderService;
+import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.integration.SmtpServerRule;
 
@@ -42,9 +43,10 @@ public class OrganisationControllerApproveOrRejectUserTest {
     assertThat(
         providerService.getProviderByUserAndOrganisation(userId, organisationId).isApproved())
             .isFalse();
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
     ResponseEntity<?> result = (ResponseEntity<?>) controller.approveOrRejectUser(organisationId,
-        userId, true);
+        userId, value);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     assertThat(
@@ -61,9 +63,10 @@ public class OrganisationControllerApproveOrRejectUserTest {
     assertThat(
         providerService.getProviderByUserAndOrganisation(userId, organisationId).isApproved())
             .isTrue();
+    BooleanPrimitive value = new BooleanPrimitive(false);
 
     ResponseEntity<?> result = (ResponseEntity<?>) controller.approveOrRejectUser(organisationId,
-        userId, false);
+        userId, value);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     assertThat(
@@ -76,8 +79,9 @@ public class OrganisationControllerApproveOrRejectUserTest {
   public void rejectSupeUserBadRequest() {
     String notExistingOrganisationId = "12345678-0000-0000-0004-XX0000000000";
     String userId = "00000000-0000-0000-0004-400000000000";
+    BooleanPrimitive value = new BooleanPrimitive(false);
 
-    controller.approveOrRejectUser(notExistingOrganisationId, userId, false);
+    controller.approveOrRejectUser(notExistingOrganisationId, userId, value);
   }
 
   @Test(expected = AccessDeniedException.class)
@@ -85,16 +89,18 @@ public class OrganisationControllerApproveOrRejectUserTest {
   public void approveProviderUserDenied() {
     String orgaId = "00000000-0000-0000-0004-300000000000";
     String userId = "00000000-0000-0000-0004-500000000000";
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
-    controller.approveOrRejectUser(orgaId, userId, true);
+    controller.approveOrRejectUser(orgaId, userId, value);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void approveNoUserDenied() {
     String orgaId = "00000000-0000-0000-0004-300000000000";
     String userId = "00000000-0000-0000-0004-500000000000";
+    BooleanPrimitive value = new BooleanPrimitive(true);
 
-    controller.approveOrRejectUser(orgaId, userId, true);
+    controller.approveOrRejectUser(orgaId, userId, value);
   }
   
   private void assertMailSent() {

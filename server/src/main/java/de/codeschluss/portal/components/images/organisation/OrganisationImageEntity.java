@@ -48,7 +48,7 @@ public class OrganisationImageEntity extends BaseResource {
   
   @Lob
   @Column(columnDefinition = "MEDIUMBLOB", nullable = false)
-  private byte[] image;
+  private String image;
   
   @Column(name = "mime_type", nullable = false)
   private String mimeType;

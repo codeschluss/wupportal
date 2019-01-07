@@ -11,20 +11,18 @@ import de.codeschluss.portal.core.image.ImageService;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tika.Tika;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class OrganisationImageService 
     extends ResourceDataService<OrganisationImageEntity, OrganisationImageQueryBuilder> {
   
-  private final Tika contentDetector;
   private final ImageService imageService;
 
   /**
@@ -42,7 +40,6 @@ public class OrganisationImageService
       ImageService imageService) {
     super(repo, entities, assembler);
     this.imageService = imageService;
-    this.contentDetector = new Tika();
   }
   
   @Override
@@ -67,7 +64,7 @@ public class OrganisationImageService
    * @return true, if successful
    */
   private boolean validFields(OrganisationImageEntity newOrgaImage) {
-    return newOrgaImage.getImage() != null && newOrgaImage.getImage().length == 0;
+    return newOrgaImage.getImage() != null && !newOrgaImage.getImage().isEmpty();
   }
 
   @Override
@@ -101,31 +98,47 @@ public class OrganisationImageService
     
     return assembler.entitiesToResources(images, null);
   }
+  
+  /**
+   * Adds the resources.
+   *
+   * @param organisation the organisation
+   * @param images the images
+   * @return the resources
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  public Resources<?> addResources(
+      OrganisationEntity organisation,
+      OrganisationImageEntity... images) throws IOException {
+    List<Resource<?>> savedImages = new ArrayList<>();
+    for (OrganisationImageEntity image : images) {
+      savedImages.add(addResource(image, organisation));
+    }
+    return assembler.toListResources(savedImages, null);
+  }
 
   /**
    * Adds the resource.
    *
-   * @param imageFile the image file
-   * @param caption the caption
+   * @param image the input image
    * @param organisation the organisation
    * @return the resource
    * @throws IOException Signals that an I/O exception has occurred.
    */
   public Resource<?> addResource(
-      MultipartFile imageFile, 
-      String caption, 
+      OrganisationImageEntity image, 
       OrganisationEntity organisation) throws IOException {
-    if (imageFile.getBytes() == null || imageFile.getBytes().length == 0) {
-      throw new BadParamsException("Image required");
+    if (image.getImage() == null || image.getImage().isEmpty()
+        || image.getMimeType() == null || image.getMimeType().isEmpty()) {
+      throw new BadParamsException("Image or Mime Type required");
     }
     
-    String mimeType = contentDetector.detect(imageFile.getBytes());
-    byte[] image = imageService.resize(imageFile);
+    byte[] resizedImage = imageService.resize(
+        Base64Utils.decodeFromString(image.getImage()));
+    image.setOrganisation(organisation);
+    image.setImage(Base64Utils.encodeToString(resizedImage));
     
-    OrganisationImageEntity imageEntity = new OrganisationImageEntity(
-        caption, Base64Utils.encode(image), mimeType, organisation);
-    
-    OrganisationImageEntity saved = repo.save(imageEntity);
+    OrganisationImageEntity saved = repo.save(image);
     return assembler.toResource(saved);
   }
 }

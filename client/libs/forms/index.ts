@@ -6,5 +6,6 @@ export * from './fields/boolean.field';
 export * from './fields/chip-list.field';
 export * from './fields/select.field';
 export * from './fields/string.field';
-export * from './fields/upload.field';
+export * from './fields/url.field';
 export * from './utils/module';
+export * from './utils/pager';

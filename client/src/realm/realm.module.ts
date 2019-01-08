@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Injector, NgModule, Type } from '@angular/core';
-import { MatDialogModule, MatListModule } from '@angular/material';
+import { MatCardModule, MatDialogModule, MatListModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { BaseService, CoreModule, CrudModel, CrudProvider } from '@portal/core';
 import { BaseFieldComponent, BaseForm, BaseStepper, BaseTable, FormsModule } from '@portal/forms';
@@ -18,6 +18,7 @@ import { CategoryStepperComponent } from './category/category.stepper';
 import { CategoryTableComponent } from './category/category.table';
 import { ConfigurationFormComponent } from './configuration/configuration.form';
 import { ConfigurationProvider } from './configuration/configuration.provider';
+import { ImageFieldComponent } from './image/image.field';
 import { ImageFormComponent } from './image/image.form';
 import { LanguageFormComponent } from './language/language.form';
 import { LanguageProvider } from './language/language.provider';
@@ -51,6 +52,7 @@ import { UserStepperComponent } from './user/user.stepper';
 import { UserTableComponent } from './user/user.table';
 
 const fields: Type<BaseFieldComponent>[] = [
+  ImageFieldComponent,
   ScheduleFieldComponent
 ];
 
@@ -71,6 +73,7 @@ const forms: Type<BaseForm<CrudModel>>[] = [
 ];
 
 const materials: Type<any>[] = [
+  MatCardModule,
   MatDialogModule,
   MatListModule
 ];

@@ -23,11 +23,14 @@ export class BaseFieldComponent implements OnInit {
     return `
       <mat-form-field [formGroup]="group">
         ${template}
-        <ng-container *ngFor="let test of field.tests" ngProjectAs="mat-error">
-          <mat-error *ngIf="group.get(field.name).hasError(test.name)">
-            <ng-container [ngSwitch]="test.name">
-              <ng-container *ngSwitchCase="'email'">
-                <i18n i18n="@@fieldErrorEmail">fieldErrorEmail</i18n>
+        <ng-container *ngFor="let error of errors" ngProjectAs="mat-error">
+          <mat-error>
+            <ng-container [ngSwitch]="error">
+              <ng-container *ngSwitchCase="'minLength'">
+                <i18n i18n="@@fieldErrorMinLength">fieldErrorMinLength</i18n>
+              </ng-container>
+              <ng-container *ngSwitchCase="'missmatch'">
+                <i18n i18n="@@fieldErrorMissmatch">fieldErrorMissmatch</i18n>
               </ng-container>
               <ng-container *ngSwitchCase="'pattern'">
                 <i18n i18n="@@fieldErrorPattern">fieldErrorPattern</i18n>
@@ -42,10 +45,16 @@ export class BaseFieldComponent implements OnInit {
     `;
   }
 
+  public get errors(): string[] {
+    const errors = this.group.get(this.field.name).errors;
+    return errors ? Object.keys(errors) : [];
+  }
+
   public get value(): any { return this.group.get(this.field.name).value; }
   public set value(value: any) {
-    this.group.get(this.field.name).patchValue(value);
     this.group.get(this.field.name).markAsDirty();
+    this.group.get(this.field.name).markAsTouched();
+    this.group.get(this.field.name).patchValue(value);
   }
 
   public constructor(

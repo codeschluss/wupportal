@@ -2,7 +2,7 @@ import { AfterViewInit, ContentChildren, HostBinding, Input, OnInit, QueryList, 
 import { MatColumnDef, MatInput, MatPaginator, MatSort, MatTable, SortDirection } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@portal/core';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, ignoreElements, map, mergeMap, tap } from 'rxjs/operators';
 
 export interface TableColumn {
@@ -23,7 +23,7 @@ export abstract class BaseTable<Model extends CrudModel>
   public pager: MatPaginator;
 
   @ViewChild(MatInput)
-  public search: MatInput;
+  public searcher: MatInput;
 
   @ViewChild(MatSort)
   public sorter: MatSort;
@@ -38,7 +38,7 @@ export abstract class BaseTable<Model extends CrudModel>
 
   public size: number = 10;
 
-  public source: BehaviorSubject<Model[]> = new BehaviorSubject<Model[]>([]);
+  public source: BehaviorSubject<Model[]>;
 
   public abstract columns: TableColumn[];
 
@@ -79,6 +79,7 @@ export abstract class BaseTable<Model extends CrudModel>
   ) { }
 
   public ngOnInit(): void {
+    this.source = new BehaviorSubject([]);
     this.items = this.items || this.route.snapshot.data.items;
   }
 
@@ -92,12 +93,11 @@ export abstract class BaseTable<Model extends CrudModel>
     this.views.forEach((view) => this.table.addColumnDef(view));
 
     merge(
-      of(null),
       this.pager.page,
       merge(
-        this.search.stateChanges.pipe(
-          filter(() => this.input(this.search.value)),
-          map(() => this.search.value || null),
+        this.searcher.stateChanges.pipe(
+          map(() => this.searcher.value || undefined),
+          filter((label) => label !== this.route.snapshot.queryParams.find),
           distinctUntilChanged(),
           debounceTime(1000)
         ),
@@ -107,7 +107,7 @@ export abstract class BaseTable<Model extends CrudModel>
       queryParamsHandling: 'merge',
       queryParams: {
         dir: this.sorter.direction || null,
-        find: this.search.value || null,
+        find: this.searcher.value || null,
         page: this.pager.pageIndex || null,
         size: this.pager.pageSize !== this.size ? this.pager.pageSize : null,
         sort: this.sorter.active || null
@@ -120,7 +120,7 @@ export abstract class BaseTable<Model extends CrudModel>
     provider.call(provider.methods.readAll, {
       dir: this.sorter.direction,
       embeddings: CrudJoiner.to(this.joiner.graph),
-      filter: this.search.value,
+      filter: this.searcher.value,
       page: this.pager.pageIndex,
       size: this.pager.pageSize,
       sort: this.sorter.active
@@ -134,7 +134,7 @@ export abstract class BaseTable<Model extends CrudModel>
   private filter(): void {
     const column = this.columns.find((c) => c.name === this.sorter.active);
     const field = column ? column.value : (item) => item[this.sorter.active];
-    const regex = this.search.value && new RegExp(this.search.value, 'i');
+    const regex = this.searcher.value && new RegExp(this.searcher.value, 'i');
     const items = this.items.filter((item) => !regex || Object.values(item)
       .some((value) => typeof value === 'string' && value.search(regex) >= 0));
 
@@ -148,17 +148,13 @@ export abstract class BaseTable<Model extends CrudModel>
     ));
   }
 
-  private input(value: string): boolean {
-    return value !== this.route.snapshot.queryParams.find;
-  }
-
   private navigate(params: Params) {
     const { dir, find, page, size, sort, ...rest } = params;
     this.parameters = this.parameters || rest;
 
     if (JSON.stringify(this.parameters) === JSON.stringify(rest)) {
       this.sorter.direction = dir || null as SortDirection;
-      this.search.value = find || null;
+      this.searcher.value = find || null;
       this.pager.pageIndex = parseInt(page, 10) || null;
       this.pager.pageSize = parseInt(size, 10) || this.size;
       this.sorter.active = sort || null;

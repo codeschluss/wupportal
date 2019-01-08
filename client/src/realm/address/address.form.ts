@@ -1,34 +1,38 @@
-import { Component, ElementRef, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, Type, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, LocationProvider, LocationResponse } from '@portal/core';
+import { CrudJoiner, CrudResolver, LocationProvider, LocationResponse } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
-import { AddressProvider } from './address.provider';
 
 @Component({
   selector: 'address-form',
-  template: `
-    <mat-form-field>
-      <input #input matInput [formControl]="search" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="set($event)">
-        <ng-container *ngFor="let item of options; let i = index">
-          <mat-option [value]="i">
-            {{ item.street || '?' }}
-            {{ item.houseNumber || '?' }},
-            {{ item.postalCode || '?' }}
-            {{ item.place || '?' }}
-            ({{ item?.suburb?.name || '?' }})
-          </mat-option>
-        </ng-container>
-      </mat-autocomplete>
-    </mat-form-field>
-  ` + BaseForm.template(`
+  template: BaseForm.template(`
+    <section>
+      <label class="mat-body-strong">
+        <i18n i18n="@@search">search</i18n>
+      </label>
+      <nav class="output"><mat-form-field>
+        <input #input matInput [formControl]="search" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete"(optionSelected)="set($event)">
+          <ng-container *ngFor="let item of options; let i = index">
+            <mat-option [value]="i">
+              {{ item.street || '?' }}
+              {{ item.houseNumber || '?' }},
+              {{ item.postalCode || '?' }}
+              {{ item.place || '?' }}
+              ({{ item?.suburb?.name || '?' }})
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field></nav>
+    </section>
+
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'houseNumber'">
@@ -57,7 +61,11 @@ import { AddressProvider } from './address.provider';
   `)
 })
 
-export class AddressFormComponent extends BaseForm<AddressModel> {
+export class AddressFormComponent extends BaseForm<AddressModel>
+  implements AfterViewInit {
+
+  @Input()
+  public admin: boolean;
 
   @ViewChild('auto')
   public auto: MatAutocomplete;
@@ -69,6 +77,8 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
     {
       name: 'suburb',
       input: SelectFieldComponent,
+      label: 'name',
+      locked: true,
       model: SuburbModel,
       tests: [Validators.required]
     },
@@ -120,8 +130,11 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
 
   public search: FormControl = new FormControl();
 
+  public get valid(): boolean {
+    return Object.values(this.group.getRawValue()).every(Boolean);
+  }
+
   public constructor(
-    private addressProvider: AddressProvider,
     private crudResolver: CrudResolver,
     private locationProvider: LocationProvider,
     route: ActivatedRoute,
@@ -129,24 +142,31 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
     super(route);
   }
 
-  public set(event: MatAutocompleteSelectedEvent): void {
-    const item = this.options[event.option.value];
-    this.group.patchValue({ ...item, suburb: item.suburb || null });
-  }
-
-  protected ngPostInit(): void {
+  public ngAfterViewInit(): void {
     this.group.valueChanges.subscribe(() => this.clear());
     this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
     this.search.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged(),
-      mergeMap((label) =>  label ? this.optionalize(label) : of([]))
+      mergeMap((label) =>  label ? this.suggest(label) : of([]))
     ).subscribe((items) => this.options = items);
   }
 
-  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
-    this.item.suburbId = this.value('suburb', items).id;
-    return super.persist(items);
+  public persist(): Observable<any> {
+    this.item.suburbId = this.group.get('suburb').value.id;
+
+    return super.persist().pipe(
+      mergeMap((item) => this.cascade(item, 'suburbId', 'relinkSuburb'))
+    );
+  }
+
+  public set(event: MatAutocompleteSelectedEvent): void {
+    this.item = this.options[event.option.value];
+    this.group.patchValue({ ...this.item, suburb: this.item.suburb || null });
+
+    this.item.suburb && this.item.suburb.id
+      ? this.group.get('suburb').disable()
+      : this.group.get('suburb').enable();
   }
 
   private clear(): void {
@@ -154,18 +174,19 @@ export class AddressFormComponent extends BaseForm<AddressModel> {
     this.search.setValue('');
   }
 
-  private optionalize(label: string = ''): Observable<any> {
+  private suggest(label: string = ''): Observable<any> {
     const city = ClientPackage.config.nominatim.city;
     const joiner = CrudJoiner.of(AddressModel).with('suburb');
     const regex = city && new RegExp(city, 'i');
+    const search = city ? label.concat(`, ${city}`) : label;
 
-    return this.addressProvider.readAll({
+    return this.provider.readAll({
       embeddings: CrudJoiner.to(joiner.graph),
       filter: label
     }).pipe(
-      mergeMap((items) => this.crudResolver.refine(items, joiner.graph)),
-      catchError(() => this.locationProvider.locate(label).pipe(map((items) =>
-        items.filter((i) => !regex || i.place && i.place.search(regex) >= 0)
+      mergeMap((items: any) => this.crudResolver.refine(items, joiner.graph)),
+      catchError(() => this.locationProvider.locate(search).pipe(map((items) =>
+        items.filter((i) => !regex || i.place && i.place.search(regex) === 0)
       )))
     );
   }

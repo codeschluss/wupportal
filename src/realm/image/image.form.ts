@@ -1,5 +1,7 @@
 import { Component, Type } from '@angular/core';
-import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
+import { BaseForm, FormField } from '@portal/forms';
+import { Observable, of } from 'rxjs';
+import { ImageFieldComponent } from './image.field';
 import { ImageModel } from './image.model';
 
 @Component({
@@ -18,17 +20,20 @@ import { ImageModel } from './image.model';
 export class ImageFormComponent extends BaseForm<ImageModel> {
 
   public fields: FormField[] = [
-    // {
-    //   name: 'images',
-    //   input: UploadFieldComponent
-    // }
     {
       name: 'images',
-      input: StringFieldComponent,
-      multi: true
+      input: ImageFieldComponent
     }
   ];
 
   public model: Type<ImageModel> = ImageModel;
+
+  public persist(): Observable<any> {
+    return of(this.group.get('images').value);
+  }
+
+  protected ngPostInit(): void {
+    this.fields[0].value = Array.isArray(this.item) ? this.item : [];
+  }
 
 }

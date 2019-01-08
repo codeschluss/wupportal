@@ -1,6 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
+import { StringPrimitive } from '../../api/models/string-primitive';
 import { AddressControllerService } from '../../api/services/address-controller.service';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
@@ -45,7 +46,7 @@ export class AddressProvider
     .AddressControllerReadAllParams) => Observable<AddressModel[]>;
 
   public relinkSuburb:
-    (id: string, suburbId: string) => Observable<any> =
+    (id: string, suburbId: StringPrimitive) => Observable<any> =
       this.apply(this.service.addressControllerUpdateSuburbResponse);
 
 }

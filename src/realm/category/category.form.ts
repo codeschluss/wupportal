@@ -37,7 +37,10 @@ export class CategoryFormComponent extends BaseForm<CategoryModel> {
     {
       name: 'color',
       input: StringFieldComponent,
-      tests: [Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)],
+      tests: [
+        Validators.pattern(/^#[0-9A-Fa-f]{6}$/),
+        Validators.required
+      ],
       type: 'color'
     }
   ];

@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
+import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
 import { forkJoin, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { BaseForm } from './base.form';
@@ -25,16 +25,20 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
   public abstract steps: FormStep[];
 
+  protected provider: CrudProvider<BaseService, Model> & any;
+
   protected abstract joiner: CrudJoiner;
 
   protected abstract model: Type<Model>;
 
   protected static template(template: string): string {
-    return template + `
-      <h2 class="mat-title"><ng-container *ngTemplateOutlet="label; context: {
-        case: { name: item.id ? 'edit' : 'create' }
-      }"></ng-container></h2>
-      <h1 class="mat-headline">{{ title || '...' }}</h1>
+    return `
+      <mat-toolbar color="primary">
+        <h2><ng-container *ngTemplateOutlet="label; context: {
+          case: { name: item?.id ? 'edit' : 'create' }
+        }"></ng-container></h2>
+        <h1>{{ title || '...' }}</h1>
+      </mat-toolbar>
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
           <a mat-tab-link replaceUrl [disabled]="!can(i)" [routerLink]="link(i)"
@@ -44,53 +48,49 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
           </a>
         </ng-container>
       </nav>
+      ${template}
       <router-outlet></router-outlet>
       <mat-divider></mat-divider>
-      <ng-container *ngIf="hasPrev">
-        <button mat-button replaceUrl
-          [disabled]="!can(index - 1)" [routerLink]="link('-1')">
-          <i18n i18n="@@prevForm">prevForm</i18n>
-        </button>
-      </ng-container>
-      <ng-container *ngIf="hasNext">
-        <button mat-button replaceUrl
-          [disabled]="!can(index + 1)" [routerLink]="link('+1')">
-          <i18n i18n="@@nextForm">nextForm</i18n>
-        </button>
-      </ng-container>
-      <ng-container *ngIf="!hasNext">
-        <button mat-button color="primary"
-          [disabled]="!valid || pristine" (click)="persist()">
-          <i18n i18n="@@persistForm">persistForm</i18n>
-        </button>
-      </ng-container>
-      <button mat-button color="warn" style="float: left;"
-        (click)="location.back()">
+      <button mat-button color="warn" tabindex="-1" (click)="location.back()">
         <i18n i18n="@@close">close</i18n>
       </button>
+      <button mat-button tabindex="-1" (click)="reset()">
+        <i18n i18n="@@reset">reset</i18n>
+      </button>
+      <ng-container *ngIf="has('-1')">
+        <button mat-button replaceUrl [disabled]="!can(index - 1)"
+          [routerLink]="link('-1')">
+          <i18n i18n="@@previous">previous</i18n>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="has('+1')">
+        <button mat-button replaceUrl [disabled]="!can(index + 1)"
+          [routerLink]="link('+1')">
+          <i18n i18n="@@next">next</i18n>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="!has('+1')">
+        <button mat-button color="primary" [disabled]="!valid"
+          (click)="persist()">
+          <i18n i18n="@@persist">persist</i18n>
+        </button>
+      </ng-container>
     `;
   }
 
-  public get hasNext(): boolean { return this.index < this.steps.length - 1; }
-  public get hasPrev(): boolean { return this.index > 0; }
-
   public get index(): number {
-    return !this.route.snapshot.firstChild ? 0 : this.steps.findIndex(
-      (step) => step.name === this.route.snapshot.firstChild.routeConfig.path);
-  }
-
-  public get pristine(): boolean {
-    const routes = this.route.snapshot.routeConfig.children;
-    return !routes.some((route) => route.data.group.dirty);
+    return !this.route.snapshot.firstChild ? 0 : this.steps.findIndex((step) =>
+      step.name === this.route.snapshot.firstChild.routeConfig.path);
   }
 
   public get title(): string {
-    return this.values[this.root].name;
+    const data = this.route.snapshot.routeConfig.children[0].data;
+    return data.form && data.form.group.get('name').value;
   }
 
   public get valid(): boolean {
     const routes = this.route.snapshot.routeConfig.children;
-    return routes[this.index] && routes[this.index].data.group.valid;
+    return routes.every((route) => route.data.form && route.data.form.valid);
   }
 
   protected get routing(this: any): Route {
@@ -109,12 +109,6 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     };
   }
 
-  protected get values(): object {
-    return this.route.snapshot.routeConfig.children
-      .map((route) => ({ [route.path]: route.data.group.getRawValue() }))
-      .reduce((a, b) => Object.assign(a, b));
-  }
-
   public constructor(
     public location: Location,
     protected route: ActivatedRoute,
@@ -124,7 +118,12 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   public ngOnInit(): void {
-    this.item = this.item || this.route.snapshot.data.item || new this.model();
+    this.item = this.item
+      || this.route.snapshot.data.item
+      || new this.model();
+
+    this.provider = this.model['provider'];
+
     this.router.config = this.walk(this.router.config, this.routes());
     this.router.navigate([this.steps[this.index].name], {
       relativeTo: this.route,
@@ -137,33 +136,45 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   public can(index: number): boolean {
-    return index <= this.index || (--index === this.index && this.valid);
+    const route = this.route.snapshot.routeConfig.children[this.index];
+    const valid = route && route.data.form && route.data.form.valid;
+    return index <= this.index || (--index === this.index && valid);
+  }
+
+  public has(index: number | string): boolean {
+    index = typeof index === 'string' ? parseInt(index, 10) : index;
+    return index > 0 ? this.index < this.steps.length - 1 : this.index > 0;
   }
 
   public link(index: number | string): string {
-    if (typeof index === 'string') { index = parseInt(index, 10) + this.index; }
-    return this.steps[index].name;
+    return typeof index === 'string'
+      ? this.steps[parseInt(index, 10) + this.index].name
+      : this.steps[index].name;
+  }
+
+  public reset(): void {
+    const route = this.route.snapshot.routeConfig.children[this.index];
+    if (route && route.data.form) { route.data.form.reset(); }
   }
 
   protected persist(): void {
     const routes = this.route.snapshot.routeConfig.children;
     const root = routes.find((route) => route.path === this.root);
+    const control = (field, value) => root.data.group
+      .addControl(field, new FormControl(value));
 
-    forkJoin([of({ })].concat(routes.filter((route) => route !== root).map(
-      (route) => route.data.persist().pipe(map((item) => ({
-        [route.path]: item
-      })), tap(() => route.data.group.markAsPristine()))
+    forkJoin([of(null)].concat(routes.filter((r) => r !== root).map((route) =>
+      route.data.form.persist().pipe(map((item) => [route.path, item]))
     ))).pipe(
-      map((items) => items.reduce((a, b) => Object.assign(a, b))),
-      mergeMap((items) => root.data.persist(items)),
-      tap(() => root.data.group.markAsPristine())
+      map((items) => items.slice(1)),
+      tap((items) => items.forEach((item) => control(item[0], item[1]))),
+      mergeMap(() => root.data.form.persist())
     ).subscribe(() => this.location.back());
   }
 
   private routes(): Route[] {
     return this.steps.map((step) => {
-      const form = new step.form();
-      const fields = form.fields.filter((field) => field.model);
+      const fields = new step.form().fields.filter((field) => field.model);
 
       return {
         path: `${step.name}`,

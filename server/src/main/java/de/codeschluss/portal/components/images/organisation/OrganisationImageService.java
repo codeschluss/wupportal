@@ -13,6 +13,7 @@ import de.codeschluss.portal.core.service.ResourceDataService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -64,7 +65,7 @@ public class OrganisationImageService
    * @return true, if successful
    */
   private boolean validFields(OrganisationImageEntity newOrgaImage) {
-    return newOrgaImage.getImage() != null && !newOrgaImage.getImage().isEmpty();
+    return newOrgaImage.getImageData() != null && !newOrgaImage.getImageData().isEmpty();
   }
 
   @Override
@@ -96,9 +97,22 @@ public class OrganisationImageService
       throw new NotFoundException(organisationId);
     }
     
-    return assembler.entitiesToResources(images, null);
+    return assembler.entitiesToResources(encodeImages(images), null);
   }
   
+  /**
+   * Encode images.
+   *
+   * @param images the images
+   * @return the list
+   */
+  private List<OrganisationImageEntity> encodeImages(List<OrganisationImageEntity> images) {
+    return images.stream().map(image -> {
+      image.setImageData(Base64Utils.encodeToString(image.getImage()));
+      return image;
+    }).collect(Collectors.toList());
+  }
+
   /**
    * Adds the resources.
    *
@@ -128,17 +142,26 @@ public class OrganisationImageService
   public Resource<?> addResource(
       OrganisationImageEntity image, 
       OrganisationEntity organisation) throws IOException {
-    if (image.getImage() == null || image.getImage().isEmpty()
-        || image.getMimeType() == null || image.getMimeType().isEmpty()) {
-      throw new BadParamsException("Image or Mime Type required");
+    if (image.getImageData() == null || image.getImageData().isEmpty()
+        || image.getMimeType() == null || image.getMimeType().isEmpty()
+        || !image.getMimeType().contains("/")) {
+      throw new BadParamsException("Image or Mime Type with correct form required");
     }
     
+    String formatType = extractFormatType(image.getMimeType());
     byte[] resizedImage = imageService.resize(
-        Base64Utils.decodeFromString(image.getImage()));
-    image.setOrganisation(organisation);
-    image.setImage(Base64Utils.encodeToString(resizedImage));
+        Base64Utils.decodeFromString(image.getImageData()),
+        formatType);
     
+    image.setOrganisation(organisation);
+    image.setImage(resizedImage);
+    image.setImageData(Base64Utils.encodeToString(resizedImage));
     OrganisationImageEntity saved = repo.save(image);
     return assembler.toResource(saved);
+  }
+
+  private String extractFormatType(String mimeType) {
+    String[] parts = mimeType.split("/");
+    return parts[1];
   }
 }

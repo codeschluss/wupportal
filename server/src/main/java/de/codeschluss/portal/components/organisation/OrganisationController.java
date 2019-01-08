@@ -288,7 +288,11 @@ public class OrganisationController
   public ResponseEntity<?> approveOrRejectUser(@PathVariable String organisationId,
       @PathVariable String userId, @RequestBody BooleanPrimitive isApproved) {
     try {
-      providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved.getValue());
+      if (isApproved.getValue()) {
+        providerService.setApprovedByUserAndOrga(userId, organisationId);
+      } else {
+        providerService.deleteForUserAndOrga(userId, organisationId);
+      }
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist in given Organisation!");

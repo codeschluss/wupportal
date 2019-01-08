@@ -38,7 +38,7 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
   public void addAndDeleteImagesSuperUserOk() throws IOException {
-    given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
     String organisationId = "00000000-0000-0000-0008-100000000000";
     OrganisationImageEntity imageInput = newOrganisationImageEntity(
         "test", Base64Utils.encodeToString("test".getBytes()));
@@ -61,7 +61,7 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   @WithUserDetails("admin@user")
   @SuppressWarnings("unchecked")
   public void addAndDeleteImagesOwnOrgaOk() throws IOException {
-    given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
     String organisationId = "00000000-0000-0000-0008-100000000000";
     OrganisationImageEntity imageInput = newOrganisationImageEntity(
         "test", Base64Utils.encodeToString("test".getBytes()));
@@ -84,7 +84,7 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   @WithUserDetails("provider1@user")
   @SuppressWarnings("unchecked")
   public void addAndFindImagesOtherOrgaDenied() throws IOException {
-    given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
     String organisationId = "00000000-0000-0000-0008-100000000000";
     OrganisationImageEntity imageInput = newOrganisationImageEntity(
         "test", Base64Utils.encodeToString("test".getBytes()));
@@ -99,7 +99,7 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   @SuppressWarnings("unchecked")
   public void addAndFindImagesNotRegisteredDenied() throws IOException {
-    given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
     String organisationId = "00000000-0000-0000-0008-100000000000";
     OrganisationImageEntity imageInput = newOrganisationImageEntity(
         "test", Base64Utils.encodeToString("test".getBytes()));
@@ -114,8 +114,8 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   private OrganisationImageEntity newOrganisationImageEntity(String caption, String data) {
     OrganisationImageEntity image = new OrganisationImageEntity();
     image.setCaption(caption);
-    image.setMimeType("test");
-    image.setImage(data);
+    image.setMimeType("image/png");
+    image.setImageData(data);
     return image;
   }
 }

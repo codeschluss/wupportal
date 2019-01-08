@@ -6,6 +6,7 @@ import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
+import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.integration.SmtpServerRule;
 
 import javax.mail.MessagingException;
@@ -59,7 +60,7 @@ public class OrganisationControllerApproveOrRejectUserTest {
   @WithUserDetails("admin@user")
   public void rejectOwnAdminOk() {
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    String userId = "00000000-0000-0000-0004-400000000000";
+    String userId = "00000000-0000-0000-0004-140000000000";
     assertThat(
         providerService.getProviderByUserAndOrganisation(userId, organisationId).isApproved())
             .isTrue();
@@ -69,9 +70,7 @@ public class OrganisationControllerApproveOrRejectUserTest {
         userId, value);
 
     assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-    assertThat(
-        providerService.getProviderByUserAndOrganisation(userId, organisationId).isApproved())
-            .isFalse();
+    assertNoContaining(organisationId, userId);
   }
 
   @Test(expected = BadParamsException.class)
@@ -101,6 +100,15 @@ public class OrganisationControllerApproveOrRejectUserTest {
     BooleanPrimitive value = new BooleanPrimitive(true);
 
     controller.approveOrRejectUser(orgaId, userId, value);
+  }
+  
+  private void assertNoContaining(String organisationId, String userId) {
+    try {
+      providerService.getProviderByUserAndOrganisation(userId, organisationId);
+      assertThat(true).isFalse();
+    } catch (NotFoundException e) {
+      assertThat(true).isTrue();
+    }
   }
   
   private void assertMailSent() {

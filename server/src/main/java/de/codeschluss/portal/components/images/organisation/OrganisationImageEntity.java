@@ -4,6 +4,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.organisation.OrganisationEntity;
@@ -17,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -48,7 +51,13 @@ public class OrganisationImageEntity extends BaseResource {
   
   @Lob
   @Column(columnDefinition = "MEDIUMBLOB", nullable = false)
-  private String image;
+  @JsonIgnore
+  private byte[] image;
+  
+  @Transient
+  @JsonSerialize
+  @JsonDeserialize
+  private String imageData;
   
   @Column(name = "mime_type", nullable = false)
   private String mimeType;

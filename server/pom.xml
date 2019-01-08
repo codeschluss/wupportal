@@ -20,6 +20,8 @@
 		<springfoxswagger.version>2.8.0</springfoxswagger.version>
 		<oauth.version>3.4.0</oauth.version>
 		<greenmail.version>1.5.5</greenmail.version>
+		<imgscalr.version>4.2</imgscalr.version>
+		
 	</properties>
 
 	<parent>
@@ -117,6 +119,11 @@
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-maven-plugin</artifactId>
 			<version>${liquibase.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>${imgscalr.version}</version>
 		</dependency>
 
 		<dependency>

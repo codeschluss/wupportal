@@ -322,23 +322,13 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
   /**
    * Sets the approved by user and orga.
    *
-   * @param userId
-   *          the user id
-   * @param orgaId
-   *          the orga id
-   * @param isApproved
-   *          the is approved
+   * @param userId the user id
+   * @param orgaId the orga id
    */
-  public void setApprovedByUserAndOrga(String userId, String orgaId, boolean isApproved) {
+  public void setApprovedByUserAndOrga(String userId, String orgaId) {
     ProviderEntity provider = getProviderByUserAndOrganisation(userId, orgaId);
-    provider.setApproved(isApproved);
-
-    if (!isApproved) {
-      provider.setAdmin(false);
-    } else {
-      mailService.sendApprovedUserMail(provider);
-    }
-
+    provider.setApproved(true);
+    mailService.sendApprovedUserMail(provider);
     repo.save(provider);
   }
 

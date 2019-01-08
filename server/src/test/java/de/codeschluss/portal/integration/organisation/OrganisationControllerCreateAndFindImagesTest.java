@@ -37,9 +37,9 @@ public class OrganisationControllerCreateAndFindImagesTest {
   @Test
   @WithUserDetails("super@user")
   public void addAndFindImagesSuperUserOk() throws IOException {
-    given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
     OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()), "test");
+        "test", Base64Utils.encodeToString("test".getBytes()), "image/png");
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
     
     Resources<?> result = (Resources<?>) controller
@@ -51,9 +51,9 @@ public class OrganisationControllerCreateAndFindImagesTest {
   @Test
   @WithUserDetails("admin@user")
   public void addAndFindImagesOwnOrgaOk() throws IOException {
-    given(this.imageService.resize(Mockito.any())).willReturn("test".getBytes());
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
     OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()), "test");
+        "test", Base64Utils.encodeToString("test".getBytes()), "image/png");
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
 
     Resources<?> result = (Resources<?>) controller
@@ -65,18 +65,27 @@ public class OrganisationControllerCreateAndFindImagesTest {
   @Test(expected = BadParamsException.class)
   @WithUserDetails("admin@user")
   public void addNotValidImageDenied() throws IOException {
-    given(this.imageService.resize(Mockito.any())).willReturn(null);
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn(null);
     OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", null, "test");
+        "test", null, "image/png");
+    controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
+  }
+  
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("admin@user")
+  public void addNullMimeTypeDenied() throws IOException {
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn(null);
+    OrganisationImageEntity imageInput = newOrganisationImageEntity(
+        "test", "test", null);
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
   }
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("admin@user")
   public void addNotValidMimeTypeDenied() throws IOException {
-    given(this.imageService.resize(Mockito.any())).willReturn(null);
+    given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn(null);
     OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", "test", null);
+        "test", "test", "notvalid");
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
   }
   
@@ -116,7 +125,7 @@ public class OrganisationControllerCreateAndFindImagesTest {
       String mimeType) {
     OrganisationImageEntity image = new OrganisationImageEntity();
     image.setCaption(caption);
-    image.setImage(data);
+    image.setImageData(data);
     image.setMimeType(mimeType);
     return image;
   }

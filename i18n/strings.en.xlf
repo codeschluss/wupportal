@@ -113,6 +113,9 @@
       <trans-unit id="createdAt" datatype="html">
         <target>created at</target>
       </trans-unit>
+      <trans-unit id="noResults" datatype="html">
+        <target>No results</target>
+      </trans-unit>
 
 
 

@@ -113,6 +113,9 @@
       <trans-unit id="createdAt" datatype="html">
         <target>erstellt am</target>
       </trans-unit>
+      <trans-unit id="noResults" datatype="html">
+        <target>Keine Ergebnisse</target>
+      </trans-unit>
 
       <trans-unit id="aboutWupportal" datatype="html">
 				<target>Über das Wupportal</target>

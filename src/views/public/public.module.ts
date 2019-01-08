@@ -30,6 +30,7 @@ import { PublicComponent } from './public.component';
 import { PublicRouter } from './public.router';
 import { SearchComponent } from './search/search.component';
 import { SearchResultListComponent } from './search/searchresult.list.component';
+import { PageListComponent } from './worthKnowing/page.list.component';
 import { PageViewComponent } from './worthKnowing/page.view.component';
 import { TopicListItemComponent } from './worthKnowing/topic.listitem.component';
 import { TopicsListComponent } from './worthKnowing/topics.list.component';
@@ -59,7 +60,8 @@ const PublicDeclarations = [
   SocialMediaComponent,
   TopicsListComponent,
   TopicListItemComponent,
-  PageViewComponent
+  PageViewComponent,
+  PageListComponent
 ];
 
 const PublicImports = [

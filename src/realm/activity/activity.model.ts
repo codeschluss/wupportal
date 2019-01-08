@@ -2,6 +2,7 @@ import { CrudModel } from '@portal/core';
 import { Observable } from 'rxjs';
 import { ActivityEntity } from '../../api/models/activity-entity';
 import { AddressModel } from '../address/address.model';
+import { BlogModel } from '../blog/blog.model';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { ProviderModel } from '../provider/provider.model';
@@ -28,6 +29,7 @@ export class ActivityModel
   public provider: ProviderModel & Observable<ProviderModel>;
   public schedules: ScheduleModel[] & Observable<ScheduleModel[]>;
   public tags: TagModel[] & Observable<TagModel[]>;
+  public blogs: BlogModel[] & Observable<BlogModel[]>;
   public targetGroups: TargetGroupModel[] & Observable<TargetGroupModel[]>;
 
 }

@@ -92,6 +92,7 @@ const PublicRoutes = [
         .with('organisation')
         .with('targetGroups')
         .with('schedules')
+        .with('blogs')
         .with('address').yield('suburb'),
     }
   },

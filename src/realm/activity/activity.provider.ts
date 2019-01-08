@@ -3,6 +3,7 @@ import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { empty, Observable } from 'rxjs';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
 import { AddressModel } from '../address/address.model';
+import { BlogModel } from '../blog/blog.model';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { ProviderModel } from '../provider/provider.model';
@@ -50,7 +51,13 @@ export class ActivityProvider
       field: 'targetGroups',
       method: this.service.activityControllerReadTargetGroupsResponse,
       model: TargetGroupModel
-    }
+    },
+    {
+      field: 'blogs',
+      method: () => empty(),
+      model: BlogModel
+    },
+
   ];
 
   protected methods: CrudMethods = {

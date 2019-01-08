@@ -17,10 +17,10 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   public tabs: QueryList<ElementRef>;
 
   public constructor(
+    protected dialog: MatDialog,
     protected pathfinder: Pathfinder,
     protected route: ActivatedRoute,
-    protected router: Router,
-    private dialog: MatDialog
+    protected router: Router
   ) {
     super();
   }

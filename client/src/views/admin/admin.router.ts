@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TokenResolver } from '@portal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { AddressStepperComponent } from '../../realm/address/address.stepper';
 import { CategoryStepperComponent } from '../../realm/category/category.stepper';
@@ -20,6 +21,9 @@ import { OrganisationPanelComponent } from './panels/organisation/organisation.p
     {
       path: '',
       component: AdminComponent,
+      resolve: {
+        tokens: TokenResolver
+      },
       // canActivateChild: [AdminGuarding],
       children: [
         AccountPanelComponent.routing,

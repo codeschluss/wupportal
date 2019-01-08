@@ -1,9 +1,5 @@
 main#client {
-  filter: blur(0px) grayscale(0);
-  transition: filter 300ms;
-
   &.disabled {
-    filter: blur(1px) grayscale(1);
     pointer-events: none;
   }
 }

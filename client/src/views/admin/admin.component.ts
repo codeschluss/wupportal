@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingProvider, Pathfinder, TokenProvider } from '@portal/core';
-import { filter, switchMap, take } from 'rxjs/operators';
+import { filter, mergeMap, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { ReloginDialogComponent } from './dialogs/relogin.dialog';
 import { AccountPanelComponent } from './panels/account/account.panel';
@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
   private work(): void {
     this.tokenProvider.value.pipe(
       filter((tokens) => !tokens.refresh.raw), take(1),
-      switchMap(() => this.dialog.open(ReloginDialogComponent).afterClosed()),
+      mergeMap(() => this.dialog.open(ReloginDialogComponent).afterClosed()),
       filter(Boolean)
     ).subscribe(() => this.work());
   }

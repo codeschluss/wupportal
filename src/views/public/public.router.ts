@@ -139,7 +139,10 @@ const PublicRoutes = [
       blog: CrudResolver
     },
     data: {
-      blog: CrudJoiner.of(BlogModel).with('activity')
+      blog: CrudJoiner.of(BlogModel)
+      .with('activity').yield('address').yield('suburb')
+      .with('activity').yield('category')
+      .with('activity').yield('schedules')
     }
   },
   {

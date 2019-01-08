@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { CrudModel } from '@portal/core';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -68,75 +67,80 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
     },
     {
       name: 'phone',
-      input: StringFieldComponent
+      input: StringFieldComponent,
+      type: 'tel'
     },
     {
       name: 'mail',
       input: StringFieldComponent,
-      tests: [Validators.required, Validators.email]
+      tests: [
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+        Validators.required
+      ],
+      type: 'email'
     },
     {
       name: 'organisation',
       input: SelectFieldComponent,
+      label: 'name',
       model: OrganisationModel,
       tests: [Validators.required]
     },
     {
       name: 'category',
       input: SelectFieldComponent,
+      label: 'name',
       model: CategoryModel,
       tests: [Validators.required]
     },
     {
       name: 'targetGroups',
       input: SelectFieldComponent,
+      label: 'name',
       model: TargetGroupModel,
       multi: true
     },
     {
       name: 'tags',
       input: ChipListFieldComponent,
+      label: 'name',
       model: TagModel
     }
   ];
 
   public model: Type<ActivityModel> = ActivityModel;
 
-  protected ngPostInit(): void {
-    const claim = ClientPackage.config.jwtClaims.superUser;
-    let organisations = this.route.snapshot.data.organisation;
+  public persist(): Observable<any> {
+    const schedules = this.updated('schedules');
+    const tags = this.updated('tags');
+    const targets = this.updated('targetGroups');
 
-    if (!this.route.snapshot.data.tokens.access[claim]) {
-      organisations = [...new Set([
-        ...this.route.snapshot.data.tokens.access
-          [ClientPackage.config.jwtClaims.organisationAdmin],
-        ...this.route.snapshot.data.tokens.access
-          [ClientPackage.config.jwtClaims.organisationUser]
-      ])].map((id) => this.route.snapshot.data.organisation
-        .find((organisation) => organisation.id === id));
-    }
+    this.item.addressId = this.group.get('address').value.id;
+    this.item.categoryId = this.group.get('category').value.id;
+    this.item.organisationId = this.group.get('organisation').value.id;
 
-    this.fields[5].options = organisations;
+    return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
+      ...schedules.add.map((s) => this.provider.pasteSchedules(i.id, [s])),
+      ...schedules.del.map((s) => this.provider.unlinkSchedule(i.id, s.id)),
+      ...tags.add.map((t) => this.provider.pasteTags(i.id, [t])),
+      ...tags.del.map((t) => this.provider.unlinkTag(i.id, t.id)),
+      ...targets.add.map((t) => this.provider.linkTargetGroups(i.id, [t.id])),
+      ...targets.del.map((t) => this.provider.unlinkTargetGroup(i.id, t.id))
+    )).pipe(
+      map((results) => results.shift()),
+      mergeMap((r) => this.cascade(r, 'addresId', 'relinkAddress')),
+      mergeMap((r) => this.cascade(r, 'categoryId', 'relinkCategory')),
+      mergeMap((r) => this.cascade(r, 'organisatioId', 'relinkOrganisation'))
+    )));
   }
 
-  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
-    const schedules = this.diff('schedules', items);
-    const tags = this.diff('tags', items);
-    const targets = this.diff('targetGroups', items);
+  protected ngPostInit(): void {
+    const claim = this.token[ClientPackage.config.jwtClaims.superUser];
 
-    this.item.addressId = this.value('address', items).id;
-    this.item.categoryId = this.value('category', items).id;
-    this.item.organisationId = this.value('organisation', items).id;
-
-    const provider = this.model['provider'];
-    return super.persist(items).pipe(mergeMap((i) => forkJoin([of(i)].concat(
-      ...schedules.add.map((s) => provider.pasteSchedules(i.id, [s])),
-      ...schedules.del.map((s) => provider.unlinkSchedule(i.id, s.id)),
-      ...tags.add.map((t) => provider.pasteTags(i.id, [t])),
-      ...tags.del.map((t) => provider.unlinkTag(i.id, t.id)),
-      ...targets.add.map((t) => provider.linkTargetGroups(i.id, [t.id])),
-      ...targets.del.map((t) => provider.unlinkTargetGroup(i.id, t.id))
-    )).pipe(map((results) => results.shift()))));
+    this.fields[5].options = this.token[claim] ? this.fields[5].options : [
+      ...this.token[ClientPackage.config.jwtClaims.organisationAdmin],
+      ...this.token[ClientPackage.config.jwtClaims.organisationUser]
+    ].map((id) => this.fields[5].options.find((o) => o.id === id));
   }
 
 }

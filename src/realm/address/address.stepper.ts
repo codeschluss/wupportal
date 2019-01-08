@@ -10,10 +10,10 @@ import { AddressModel } from './address.model';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'create'">
-          <i18n i18n="@@createActivity">createActivity</i18n>
+          <i18n i18n="@@createAddress">createAddress</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'edit'">
-          <i18n i18n="@@editActivity">editActivity</i18n>
+          <i18n i18n="@@editAddress">editAddress</i18n>
         </ng-container>
 
         <ng-container *ngSwitchCase="'address'">
@@ -42,10 +42,11 @@ export class AddressStepperComponent
   protected model: Type<AddressModel> = AddressModel;
 
   public get title(): string {
-    return `
-      ${this.values[this.root].street}
-      ${this.values[this.root].houseNumber},
-      ${this.values[this.root].place}
+    const data = this.route.snapshot.routeConfig.children[0].data;
+    return data.form && `
+      ${data.form.group.get('street').value || '?'}
+      ${data.form.group.get('houseNumber').value || '?'},
+      ${data.form.group.get('place').value || '?'}
     `;
   }
 

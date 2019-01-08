@@ -39,8 +39,8 @@ export class TokenProvider {
       mergeMap((token) => this.validate(token)),
       map((tokens) => this.update(tokens)),
       map((tokens) => this.work(tokens))
-    ).subscribe(() => this.refreshToken.subscribe(
-      (token) => localStorage.setItemSubscribe('refreshToken', token)));
+    ).subscribe(() => this.refreshToken.subscribe((token) =>
+      localStorage.setItemSubscribe('refreshToken', token)));
   }
 
   public login(username: string, password: string): Observable<AuthTokens> {

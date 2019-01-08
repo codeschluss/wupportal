@@ -1,6 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { empty, Observable } from 'rxjs';
+import { BooleanPrimitive } from '../../api/models/boolean-primitive';
+import { StringPrimitive } from '../../api/models/string-primitive';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -57,11 +59,11 @@ export class UserProvider
     .UserControllerReadAllParams) => Observable<UserModel[]>;
 
   public grantSuperUser:
-    (id: string, grant: boolean) => Observable<any> =
+    (id: string, grant: BooleanPrimitive) => Observable<any> =
       this.apply(this.service.userControllerGrantSuperuserRightResponse);
 
   public resetPassword:
-    (username: string) => Observable<any> =
+    (username: StringPrimitive) => Observable<any> =
       this.apply(this.service.userControllerResetPasswordResponse);
 
   public linkOrganisations:

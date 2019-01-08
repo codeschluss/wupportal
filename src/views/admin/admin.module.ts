@@ -1,18 +1,24 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
-import { MatBadgeModule, MatButtonModule, MatDialogModule, MatListModule, MatSlideToggleModule, MatTabsModule, MAT_TABS_CONFIG } from '@angular/material';
+import { MatBadgeModule, MatButtonModule, MatDialogModule, MatDividerModule, MatListModule, MatPaginatorIntl, MatSlideToggleModule, MatTabsModule, MatToolbarModule, MAT_TABS_CONFIG } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule } from '@portal/core';
+import { MatPagerIntl } from '@portal/forms';
 import { RealmModule } from '../../realm/realm.module';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
 import { DeleteDialogComponent } from './dialogs/delete.dialog';
+import { ReloginDialogComponent } from './dialogs/relogin.dialog';
+import { RequestDialogComponent } from './dialogs/request.dialog';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 
 const dialogs: Type<any>[] = [
-  DeleteDialogComponent
+  DeleteDialogComponent,
+  ReloginDialogComponent,
+  RequestDialogComponent
 ];
 
 const panels: Type<any>[] = [
@@ -26,9 +32,12 @@ const materials: Type<any>[] = [
   MatBadgeModule,
   MatButtonModule,
   MatDialogModule,
+  MatDividerModule,
   MatListModule,
   MatSlideToggleModule,
-  MatTabsModule
+  MatTabsModule,
+  MatToolbarModule,
+  ScrollingModule
 ];
 
 @NgModule({
@@ -49,7 +58,8 @@ const materials: Type<any>[] = [
     RealmModule
   ],
   providers: [
-    { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '0ms' } }
+    { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '0ms' } },
+    { provide: MatPaginatorIntl, useClass: MatPagerIntl }
   ]
 })
 

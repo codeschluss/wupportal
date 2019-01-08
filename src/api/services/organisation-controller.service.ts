@@ -9,6 +9,8 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { OrganisationEntity } from '../models/organisation-entity';
 import { ResourceOrganisationEntity } from '../models/resource-organisation-entity';
+import { BooleanPrimitive } from '../models/boolean-primitive';
+import { OrganisationImageEntity } from '../models/organisation-image-entity';
 
 /**
  * Organisation Controller
@@ -420,7 +422,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerGrantApprovalResponse(organisationId: string,
-    isApproved: boolean): Observable<StrictHttpResponse<{}>> {
+    isApproved: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -449,7 +451,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerGrantApproval(organisationId: string,
-    isApproved: boolean): Observable<{}> {
+    isApproved: BooleanPrimitive): Observable<{}> {
     return this.organisationControllerGrantApprovalResponse(organisationId, isApproved).pipe(
       __map(_r => _r.body as {})
     );
@@ -493,22 +495,16 @@ class OrganisationControllerService extends BaseService {
 
   /**
    * @param organisationId organisationId
-   * @param file file
-   * @param caption caption
+   * @param image image
    * @return OK
    */
   organisationControllerAddImageResponse(organisationId: string,
-    file: Blob,
-    caption?: string): Observable<StrictHttpResponse<{}>> {
+    image: Array<OrganisationImageEntity>): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __headers.append('Content-Type', 'multipart/form-data');
-    let __formData = new FormData();
-    __body = __formData;
 
-   if(file !== null && typeof file !== "undefined") { __formData.append('file', file as string | Blob);}
-    if (caption != null) __params = __params.set('caption', caption.toString());
+    __body = image;
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/organisations/${organisationId}/images`,
@@ -528,14 +524,12 @@ class OrganisationControllerService extends BaseService {
   }
   /**
    * @param organisationId organisationId
-   * @param file file
-   * @param caption caption
+   * @param image image
    * @return OK
    */
   organisationControllerAddImage(organisationId: string,
-    file: Blob,
-    caption?: string): Observable<{}> {
-    return this.organisationControllerAddImageResponse(organisationId, file, caption).pipe(
+    image: Array<OrganisationImageEntity>): Observable<{}> {
+    return this.organisationControllerAddImageResponse(organisationId, image).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -717,7 +711,7 @@ class OrganisationControllerService extends BaseService {
    */
   organisationControllerGrantAdminRightResponse(organisationId: string,
     userId: string,
-    isAdmin: boolean): Observable<StrictHttpResponse<{}>> {
+    isAdmin: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -749,7 +743,7 @@ class OrganisationControllerService extends BaseService {
    */
   organisationControllerGrantAdminRight(organisationId: string,
     userId: string,
-    isAdmin: boolean): Observable<{}> {
+    isAdmin: BooleanPrimitive): Observable<{}> {
     return this.organisationControllerGrantAdminRightResponse(organisationId, userId, isAdmin).pipe(
       __map(_r => _r.body as {})
     );
@@ -763,7 +757,7 @@ class OrganisationControllerService extends BaseService {
    */
   organisationControllerApproveOrRejectUserResponse(organisationId: string,
     userId: string,
-    isApproved: boolean): Observable<StrictHttpResponse<{}>> {
+    isApproved: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -795,7 +789,7 @@ class OrganisationControllerService extends BaseService {
    */
   organisationControllerApproveOrRejectUser(organisationId: string,
     userId: string,
-    isApproved: boolean): Observable<{}> {
+    isApproved: BooleanPrimitive): Observable<{}> {
     return this.organisationControllerApproveOrRejectUserResponse(organisationId, userId, isApproved).pipe(
       __map(_r => _r.body as {})
     );

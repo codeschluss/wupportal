@@ -1,34 +1,35 @@
-<h2 class="mat-title">
-  <i18n i18n="@@accountPanel">accountPanel</i18n>
-</h2>
-
-<h1 class="mat-headline">
-  {{ user.name }}
-</h1>
+<mat-toolbar color="primary">
+  <h2><i18n i18n="@@accountPanel">accountPanel</i18n></h2>
+  <h1>{{ group?.get('name')?.value || '...' }}</h1>
+</mat-toolbar>
 
 <mat-tab-group [selectedIndex]="index">
-  <mat-tab id="details">
+  <mat-tab id="details" [disabled]="!user">
     <ng-template matTabLabel>
       <i18n i18n="@@userDetails">userDetails</i18n>
     </ng-template>
     <ng-template matTabContent>
       <user-form #form [group]="group" [item]="user"></user-form>
-      <button mat-button color="primary"
-        [disabled]="!form.valid || group.pristine" (click)="persist()">
-        <i18n i18n="@@persistForm">persistForm</i18n>
+      <mat-divider></mat-divider>
+      <button mat-button color="primary" [disabled]="!form.valid"
+        (click)="persist()">
+        <i18n i18n="@@persist">persist</i18n>
       </button>
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="organisations" [disabled]="!user.organisations">
+  <mat-tab id="organisations" [disabled]="!organisations.length">
     <ng-template matTabLabel>
       <i18n i18n="@@userOrganisations">userOrganisations</i18n>
+      <button mat-icon-button color="primary" (click)="apply()">
+        <fa-icon icon="sign-in-alt"></fa-icon>
+      </button>
       <button mat-icon-button color="primary" (click)="create('organisation')">
         <fa-icon icon="plus-square"></fa-icon>
       </button>
     </ng-template>
     <ng-template matTabContent>
-      <organisation-table [items]="user.organisations">
+      <organisation-table [items]="organisations">
         <ng-container matColumnDef="approved">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@approved">approved</i18n>
@@ -61,17 +62,16 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="activities" [disabled]="!organized">
+  <mat-tab id="activities" [disabled]="!activities.length">
     <ng-template matTabLabel>
       <i18n i18n="@@userActivities">userActivities</i18n>
-        <button mat-icon-button color="primary"
-          [disabled]="!organized && !user.superuser"
+        <button mat-icon-button color="primary" [disabled]="!provider"
           (click)="create('activity')">
           <fa-icon icon="plus-square"></fa-icon>
         </button>
     </ng-template>
     <ng-template matTabContent>
-      <activity-table [items]="user.activities">
+      <activity-table [items]="activities">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>

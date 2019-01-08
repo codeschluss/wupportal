@@ -16,7 +16,7 @@ export class LayoutComponent {
   ) {
     this.sessionProvider.value
     .subscribe((next) => { this.showCookiesInfo =
-      typeof next.cookiesAccepted === 'undefined'; }
+      typeof next.isCookieAccepted === 'undefined'; }
       );
   }
 

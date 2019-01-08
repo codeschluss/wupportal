@@ -9,6 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { ActivityEntity } from '../models/activity-entity';
 import { ResourceActivityEntity } from '../models/resource-activity-entity';
+import { StringPrimitive } from '../models/string-primitive';
 import { ScheduleEntity } from '../models/schedule-entity';
 import { TagEntity } from '../models/tag-entity';
 
@@ -304,7 +305,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateAddressResponse(activityId: string,
-    addressId: string): Observable<StrictHttpResponse<{}>> {
+    addressId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -333,7 +334,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateAddress(activityId: string,
-    addressId: string): Observable<{}> {
+    addressId: StringPrimitive): Observable<{}> {
     return this.activityControllerUpdateAddressResponse(activityId, addressId).pipe(
       __map(_r => _r.body as {})
     );
@@ -381,7 +382,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateCategoryResponse(activityId: string,
-    categoryId: string): Observable<StrictHttpResponse<{}>> {
+    categoryId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -410,7 +411,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateCategory(activityId: string,
-    categoryId: string): Observable<{}> {
+    categoryId: StringPrimitive): Observable<{}> {
     return this.activityControllerUpdateCategoryResponse(activityId, categoryId).pipe(
       __map(_r => _r.body as {})
     );
@@ -494,7 +495,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateOrganisationResponse(activityId: string,
-    organisationId: string): Observable<StrictHttpResponse<{}>> {
+    organisationId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -523,7 +524,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateOrganisation(activityId: string,
-    organisationId: string): Observable<{}> {
+    organisationId: StringPrimitive): Observable<{}> {
     return this.activityControllerUpdateOrganisationResponse(activityId, organisationId).pipe(
       __map(_r => _r.body as {})
     );

@@ -50,8 +50,8 @@ export class CrudJoiner {
     };
 
     const merger = (nodes, node) => nodes.filter((n) => n.name !== node.name)
-      .concat(nodes.filter((n) => n.name === node.name).reduce(
-        (a, b) => Object.assign(a, { nodes: a.nodes.concat(b.nodes) }), node));
+      .concat(nodes.filter((n) => n.name === node.name).reduce((a, b) =>
+        Object.assign(a, { nodes: a.nodes.concat(b.nodes) }), node));
 
     return grapher(this.joinGraph);
   }

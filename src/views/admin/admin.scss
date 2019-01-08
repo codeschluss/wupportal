@@ -1,9 +1,9 @@
 main#admin {
-  filter: blur(0px) grayscale(0);
+  filter: grayscale(0);
   transition: filter 200ms;
 
   &.disabled {
-    filter: blur(1px) grayscale(1);
+    filter: grayscale(1);
     pointer-events: none;
   }
 
@@ -31,6 +31,14 @@ main#admin {
     }
   }
 
+  mat-toolbar {
+    font: normal;
+
+    & > * + *::before {
+      content: ': ';
+    }
+  }
+
   *.base-form {
     section {
       align-items: center;
@@ -51,15 +59,15 @@ main#admin {
       }
 
       nav {
+        align-items: center;
+        display: flex;
+
         & > * + * {
           margin-left: 16px;
         }
-
-        mat-form-field.mat-form-field-should-float {
-          padding-top: 16px;
-        }
       }
 
+      nav.output,
       output {
         flex-grow: 1;
 
@@ -83,6 +91,15 @@ main#admin {
   }
 
   *.base-table {
+    mat-cell:last-of-type,
+    mat-header-cell:last-of-type {
+      justify-content: flex-end;
+    }
+
+    mat-paginator .mat-paginator-page-size {
+      display: none;
+    }
+
     mat-row {
       &:nth-of-type(even) {
         background-color: rgba(0, 0, 0, .005);

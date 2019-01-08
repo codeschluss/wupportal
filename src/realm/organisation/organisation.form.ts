@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { CrudModel } from '@portal/core';
-import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
-import { Observable } from 'rxjs';
+import { BaseForm, FormField, StringFieldComponent, UrlFieldComponent } from '@portal/forms';
+import { forkJoin, Observable, of } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../organisation/organisation.model';
 
 @Component({
@@ -49,29 +49,43 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
     },
     {
       name: 'website',
-      input: StringFieldComponent
+      input: UrlFieldComponent,
+      tests: [Validators.pattern(/^https?:\/\/\S+\.\S+(\/\S*)?$/)],
+      type: 'url'
     },
     {
       name: 'phone',
-      input: StringFieldComponent
+      input: StringFieldComponent,
+      type: 'tel'
     },
     {
       name: 'mail',
       input: StringFieldComponent,
-      tests: [Validators.email]
+      tests: [Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
+      type: 'email'
     },
     {
       name: 'videoUrl',
-      input: StringFieldComponent,
-      model: OrganisationModel
+      input: UrlFieldComponent,
+      tests: [Validators.pattern(/^https?:\/\/\S+\.\S+(\/\S*)?$/)],
+      type: 'url'
     }
   ];
 
   public model: Type<OrganisationModel> = OrganisationModel;
 
-  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
-    this.item.addressId = this.value('address', items).id;
-    return super.persist(items);
+  public persist(): Observable<any> {
+    const images = this.updated('images');
+
+    this.item.addressId = this.group.get('address').value.id;
+
+    return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
+      ...images.add.map((g) => this.provider.pasteImages(i.id, [g])),
+      ...images.del.map((g) => this.provider.unlinkImage(i.id, g.id)),
+    )).pipe(
+      map((results) => results.shift()),
+      mergeMap((item) => this.cascade(item, 'addressId', 'relinkAddress'))
+    )));
   }
 
 }

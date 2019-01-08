@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingProvider, Pathfinder, TokenProvider } from '@portal/core';
-import { filter, map, take } from 'rxjs/operators';
+import { filter, switchMap, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
+import { ReloginDialogComponent } from './dialogs/relogin.dialog';
 import { AccountPanelComponent } from './panels/account/account.panel';
 
 @Component({
@@ -19,6 +21,7 @@ export class AdminComponent implements OnInit {
 
   public constructor(
     public loadingProvider: LoadingProvider,
+    private dialog: MatDialog,
     private pathfinder: Pathfinder,
     private route: ActivatedRoute,
     private router: Router,
@@ -27,24 +30,26 @@ export class AdminComponent implements OnInit {
 
   public ngOnInit(): void {
     const claim = ClientPackage.config.jwtClaims.userId;
-    this.tokenProvider.value
-      .pipe(take(1), map((tokens) => tokens.access[claim]))
-      .subscribe((userId) => this.navigate(userId));
-  }
+    const userId = this.route.snapshot.data.tokens.access[claim];
 
-  private navigate(userId: string): void {
-    if (!userId) {
-      this.router.navigateByUrl('/');
-    } else {
-      this.tokenProvider.value
-        .pipe(filter((tokens) => !tokens.refresh.raw), take(1))
-          .subscribe(() => this.router.navigateByUrl('/'));
+    if (userId) {
+      this.work();
 
       if (!this.route.snapshot.firstChild) {
-        this.router.navigate(this.pathfinder
-          .to(AccountPanelComponent).concat(userId));
+        const path = this.pathfinder.to(AccountPanelComponent).concat(userId);
+        this.router.navigate(path);
       }
+    } else {
+      this.router.navigateByUrl('/');
     }
+  }
+
+  private work(): void {
+    this.tokenProvider.value.pipe(
+      filter((tokens) => !tokens.refresh.raw), take(1),
+      switchMap(() => this.dialog.open(ReloginDialogComponent).afterClosed()),
+      filter(Boolean)
+    ).subscribe(() => this.work());
   }
 
 }

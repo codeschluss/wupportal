@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatBottomSheetModule, MatCardModule, MatDatepickerModule, MatListModule, MatPaginatorModule } from '@angular/material';
+import { MatBottomSheetModule, MatCardModule, MatDatepickerModule, MatExpansionModule, MatListModule, MatPaginatorModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -31,7 +31,7 @@ import { PublicRouter } from './public.router';
 import { SearchComponent } from './search/search.component';
 import { SearchResultListComponent } from './search/searchresult.list.component';
 import { PageViewComponent } from './worthKnowing/page.view.component';
-import { TopicViewComponent } from './worthKnowing/topic.view.component';
+import { TopicListItemComponent } from './worthKnowing/topic.listitem.component';
 import { TopicsListComponent } from './worthKnowing/topics.list.component';
 
 
@@ -58,7 +58,7 @@ const PublicDeclarations = [
   SearchComponent,
   SocialMediaComponent,
   TopicsListComponent,
-  TopicViewComponent,
+  TopicListItemComponent,
   PageViewComponent
 ];
 
@@ -67,6 +67,7 @@ const PublicImports = [
   MatChipsModule,
   MatListModule,
   MatCardModule,
+  MatExpansionModule,
   MatBottomSheetModule,
   MatDatepickerModule,
   ActivityViewComponent.imports,

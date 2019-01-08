@@ -21,7 +21,6 @@ import { OrganisationViewComponent } from './organisation/organisation.view.comp
 import { PublicComponent } from './public.component';
 import { SearchComponent } from './search/search.component';
 import { PageViewComponent } from './worthKnowing/page.view.component';
-import { TopicViewComponent } from './worthKnowing/topic.view.component';
 import { TopicsListComponent } from './worthKnowing/topics.list.component';
 
 const PublicRoutes = [
@@ -149,19 +148,9 @@ const PublicRoutes = [
       topics: CrudResolver,
     },
     data: {
-      topics: CrudJoiner.of(TopicModel),
+      topics: CrudJoiner.of(TopicModel).with('pages'),
     }
   },
-  {
-      path: 'view/topic/:uuid',
-      component: TopicViewComponent,
-      resolve: {
-        topic: CrudResolver,
-      },
-      data: {
-        topic: CrudJoiner.of(TopicModel).with('pages'),
-      }
-    },
   {
   path: 'view/page/:uuid',
   component: PageViewComponent,

@@ -1,26 +1,6 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 import { AccessTokenModel } from '../auth/access-token.model';
 import { RefreshTokenModel } from '../auth/refresh-token.model';
-import { CoreSettings } from './settings';
-
-@Injectable({ providedIn: 'root' })
-export class ApiInterceptor implements HttpInterceptor {
-
-  public constructor(
-    private coreSettings: CoreSettings
-  ) { }
-
-  public intercept(request: HttpRequest<any>, next: HttpHandler):
-    Observable<HttpEvent<any>> {
-
-    return next.handle(request.url.startsWith(this.coreSettings.apiUrl)
-      ? request.clone({ setHeaders: { 'Content-Type': 'application/json' } })
-      : request);
-  }
-
-}
 
 export interface AuthTokens {
   access: AccessTokenModel;
@@ -72,3 +52,9 @@ export interface ResourceObject {
 export type StrictHttpResponse<T> = HttpResponse<T> & {
   readonly body: T;
 };
+
+export const True = { value: true };
+export const False = { value: false };
+
+export const Bool = (bool: boolean) => ({ value: bool });
+export const Str = (str: string) => ({ value: str });

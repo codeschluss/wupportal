@@ -10,6 +10,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 import { AddressEntity } from '../models/address-entity';
 import { ResourceAddressEntity } from '../models/resource-address-entity';
 import { ResourceObject } from '../models/resource-object';
+import { StringPrimitive } from '../models/string-primitive';
 
 /**
  * Address Controller
@@ -283,7 +284,7 @@ class AddressControllerService extends BaseService {
    * @return OK
    */
   addressControllerUpdateSuburbResponse(addressId: string,
-    suburbId: string): Observable<StrictHttpResponse<ResourceObject>> {
+    suburbId: StringPrimitive): Observable<StrictHttpResponse<ResourceObject>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -312,7 +313,7 @@ class AddressControllerService extends BaseService {
    * @return OK
    */
   addressControllerUpdateSuburb(addressId: string,
-    suburbId: string): Observable<ResourceObject> {
+    suburbId: StringPrimitive): Observable<ResourceObject> {
     return this.addressControllerUpdateSuburbResponse(addressId, suburbId).pipe(
       __map(_r => _r.body as ResourceObject)
     );

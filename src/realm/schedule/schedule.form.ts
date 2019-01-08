@@ -1,68 +1,119 @@
-import { Component, Type } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { CrudModel } from '@portal/core';
+import { AfterViewInit, Component, Type, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatChip, MatChipList } from '@angular/material';
 import { BaseForm, FormField } from '@portal/forms';
 import * as moment from 'moment';
-import { Observable, of } from 'rxjs';
+import { merge, Observable, of } from 'rxjs';
 import { ScheduleFieldComponent } from './schedule.field';
 import { ScheduleModel } from './schedule.model';
 
 @Component({
   selector: 'schedule-form',
-  template: `
+  template: BaseForm.template(`
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@dateSampling">dateSampling</i18n>
+        <i18n i18n="@@compilation">compilation</i18n>
       </label>
       <nav>
         <mat-form-field>
-          <mat-label><i18n i18n="@@startDate">startDate</i18n></mat-label>
-          <input matInput id="startDate" type="date" [formControl]="onDate">
+          <strong matPrefix>
+            <i18n i18n="@@recurrence">recurrence</i18n>&nbsp;
+          </strong>
+          <mat-select [formControl]="recurrence">
+            <mat-option value="once">
+              <i18n i18n="@@once">once</i18n>
+            </mat-option>
+            <mat-option value="day">
+              <i18n i18n="@@daily">daily</i18n>
+            </mat-option>
+            <mat-option value="week">
+              <i18n i18n="@@weekly">weekly</i18n>
+            </mat-option>
+            <mat-option value="month">
+              <i18n i18n="@@monthly">monthly</i18n>
+            </mat-option>
+            <mat-option value="year">
+              <i18n i18n="@@yearly">yearly</i18n>
+            </mat-option>
+          </mat-select>
         </mat-form-field>
-        <mat-form-field>
-          <mat-label><i18n i18n="@@startTime">startTime</i18n></mat-label>
-          <input matInput id="startTime" type="time" [formControl]="onTime">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label><i18n i18n="@@endDate">endDate</i18n></mat-label>
-          <input matInput id="endDate" type="date" [formControl]="offDate">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label><i18n i18n="@@endTime">endTime</i18n></mat-label>
-          <input matInput id="endTime" type="time" [formControl]="offTime">
-        </mat-form-field>
+        <ng-container *ngIf="recurrence.value === 'week'">
+          <mat-chip-list multiple class="mat-body">
+            <mat-chip #monday="matChip" value="monday"
+              (click)="monday.toggleSelected()">
+              <i18n i18n="@@monday">monday</i18n>
+            </mat-chip>
+            <mat-chip #tuesday="matChip" value="tuesday"
+              (click)="tuesday.toggleSelected()">
+              <i18n i18n="@@tuesday">tuesday</i18n>
+            </mat-chip>
+            <mat-chip #wednesday="matChip" value="wednesday"
+              (click)="wednesday.toggleSelected()">
+              <i18n i18n="@@wednesday">wednesday</i18n>
+            </mat-chip>
+            <mat-chip #thursday="matChip" value="thursday"
+              (click)="thursday.toggleSelected()">
+              <i18n i18n="@@thursday">thursday</i18n>
+            </mat-chip>
+            <mat-chip #friday="matChip" value="friday"
+              (click)="friday.toggleSelected()">
+              <i18n i18n="@@firday">firday</i18n>
+            </mat-chip>
+            <mat-chip #saturday="matChip" value="saturday"
+              (click)="saturday.toggleSelected()">
+              <i18n i18n="@@saturday">saturday</i18n>
+            </mat-chip>
+            <mat-chip #sunday="matChip" value="sunday"
+              (click)="sunday.toggleSelected()">
+              <i18n i18n="@@sunday">sunday</i18n>
+            </mat-chip>
+          </mat-chip-list>
+        </ng-container>
+        <ng-container *ngIf="recurrence.value !== 'once'">
+          <mat-form-field>
+            <strong matPrefix>
+              <i18n i18n="@@until">until</i18n>&nbsp;
+            </strong>
+            <input matInput type="date" [formControl]="until">
+          </mat-form-field>
+        </ng-container>
       </nav>
     </section>
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@recurrence">recurrence</i18n>
+        <i18n i18n="@@schedule">schedule</i18n>
       </label>
       <nav>
         <mat-form-field>
-          <mat-select [formControl]="recurrence">
-            <mat-option value="off">
-              <i18n i18n="@@recurrenceOff">recurrenceOff</i18n>
-            </mat-option>
-            <mat-option value="day">
-              <i18n i18n="@@recurrenceDaily">recurrenceDaily</i18n>
-            </mat-option>
-            <mat-option value="week">
-              <i18n i18n="@@recurrenceWeekly">recurrenceWeekly</i18n>
-            </mat-option>
-            <mat-option value="month">
-              <i18n i18n="@@recurrenceMonthly">recurrenceMonthly</i18n>
-            </mat-option>
-            <mat-option value="year">
-              <i18n i18n="@@recurrenceYearly">recurrenceYearly</i18n>
-            </mat-option>
-          </mat-select>
+          <strong matPrefix>
+            <i18n i18n="@@startDate">startDate</i18n>&nbsp;
+          </strong>
+          <input matInput type="date" [formControl]="fromDate">
         </mat-form-field>
-        <button mat-button [disabled]="!valid" (click)="create()">
+        <mat-form-field>
+          <strong matPrefix>
+            <i18n i18n="@@startTime">startTime</i18n>&nbsp;
+          </strong>
+          <input matInput type="time" [formControl]="fromTime">
+        </mat-form-field>
+        <mat-form-field>
+          <strong matPrefix>
+            <i18n i18n="@@endDate">endDate</i18n>&nbsp;
+          </strong>
+          <input matInput type="date" [formControl]="gotoDate">
+        </mat-form-field>
+        <mat-form-field>
+          <strong matPrefix>
+            <i18n i18n="@@endTime">endTime</i18n>&nbsp;
+          </strong>
+          <input matInput type="time" [formControl]="gotoTime">
+        </mat-form-field>
+        <button mat-button [disabled]="!scheduled" (click)="create()">
           <i18n i18n="@@createSchedules">createSchedules</i18n>
         </button>
       </nav>
     </section>
-  ` + BaseForm.template(`
+
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'schedules'">
@@ -73,80 +124,156 @@ import { ScheduleModel } from './schedule.model';
   `)
 })
 
-export class ScheduleFormComponent extends BaseForm<ScheduleModel> {
+export class ScheduleFormComponent extends BaseForm<ScheduleModel>
+  implements AfterViewInit {
+
+  @ViewChild(MatChipList)
+  public days: MatChipList;
 
   public fields: FormField[] = [
     {
       name: 'schedules',
       input: ScheduleFieldComponent,
-      model: ScheduleModel
+      tests: [Validators.required]
     }
   ];
 
   public model: Type<ScheduleModel> = ScheduleModel;
 
-  public recurrence: FormControl = new FormControl('off');
+  public recurrence: FormControl = new FormControl('once');
 
-  public samples: FormGroup = new FormGroup({
-    offDate: new FormControl(),
-    offTime: new FormControl(),
-    onDate: new FormControl(),
-    onTime: new FormControl()
+  public until: FormControl = new FormControl();
+
+  private formats = { date: 'YYYY-MM-DD', time: 'HH:mm' };
+
+  private values: FormGroup = new FormGroup({
+    fromDate: new FormControl(moment().format(this.formats.date)),
+    fromTime: new FormControl(moment().format(this.formats.time)),
+    gotoDate: new FormControl(moment().format(this.formats.date)),
+    gotoTime: new FormControl(moment().add(1, 'hour').format(this.formats.time))
   });
 
-  public get offDate(): AbstractControl { return this.samples.get('offDate'); }
-  public get offTime(): AbstractControl { return this.samples.get('offTime'); }
-  public get onDate(): AbstractControl { return this.samples.get('onDate'); }
-  public get onTime(): AbstractControl { return this.samples.get('onTime'); }
+  public get fromDate(): AbstractControl { return this.values.get('fromDate'); }
+  public get fromTime(): AbstractControl { return this.values.get('fromTime'); }
+  public get gotoDate(): AbstractControl { return this.values.get('gotoDate'); }
+  public get gotoTime(): AbstractControl { return this.values.get('gotoTime'); }
 
-  public get valid(): boolean {
-    return Object.values(this.samples.value).every(Boolean);
+  public get scheduled(): boolean {
+    const recurrence = this.recurrence.value !== 'week'
+      || (this.days && (this.days.selected as MatChip[]).length);
+    const until = this.recurrence.value === 'once'
+      || moment(this.until.value, this.formats.date).isValid();
+    const values = Object.values(this.values.value).every(Boolean);
+
+    return values && recurrence && until;
   }
 
-  public ngPostInit(): void {
-    this.fields[0].value = Array.isArray(this.item) ? this.item : [];
-    this.samples.valueChanges.subscribe((sample) => this.update(sample));
+  public ngAfterViewInit(): void {
+    merge(
+      this.until.valueChanges,
+      this.values.valueChanges
+    ).subscribe(() => this.update());
+
+    this.recurrence.valueChanges.subscribe((value) =>
+      value === 'once' ? this.until.disable() : this.until.enable());
   }
 
   public create(): void {
-    const { offDate, offTime, onDate, onTime } = this.samples.value;
-    const field = this.group.get('schedules');
-    const format = 'YYYY-MM-DD HH:mm';
+    const { gotoDate, gotoTime, fromDate, fromTime } = this.values.value;
+    const format = `${this.formats.date} ${this.formats.time}`;
+    const from = moment(`${fromDate} ${fromTime}`, format);
+    const goto = moment(`${gotoDate} ${gotoTime}`, format);
+    const ival = goto.diff(from);
 
-    const off = moment(`${offDate} ${offTime}`, format);
-    const on = moment(`${onDate} ${onTime}`, format);
-    const start = Object.assign(new this.model(), {
-      endDate: off.format(),
-      startDate: on.format()
-    });
+    const start = from.clone();
+    const until = moment(this.until.value, this.formats.date);
 
-    switch (this.recurrence.value) {
-      case 'off':
-        field.patchValue(field.value.concat(start));
-        break;
+    const values = [Object.assign(new this.model(), {
+      endDate: goto.format(),
+      startDate: from.format()
+    })];
+
+    if (this.recurrence.value !== 'once') {
+      while (from.diff(until) < 0) {
+        switch (this.recurrence.value) {
+          case 'day':
+            values.push(Object.assign(new this.model(), {
+              endDate: goto.add(1, 'day').format(),
+              startDate: from.add(1, 'day').format()
+            }));
+            break;
+
+          case 'month':
+            values.push(Object.assign(new this.model(), {
+              endDate: goto.add(1, 'month').format(),
+              startDate: from.add(1, 'month').format()
+            }));
+            break;
+
+          case 'week':
+            (this.days.selected as MatChip[])
+              .map((chip) => from.clone().day(chip.value))
+              .filter((day) => day.isAfter(start))
+              .filter((day) => day.isBefore(until))
+              .forEach((day) => values.push(Object.assign(new this.model(), {
+                endDate: day.clone().add(ival).format(),
+                startDate: day.format()
+              })));
+
+            from.add(1, 'week').day(0);
+            until.endOf('day');
+            break;
+
+          case 'year':
+            values.push(Object.assign(new this.model(), {
+              endDate: goto.add(1, 'year').format(),
+              startDate: from.add(1, 'year').format()
+            }));
+            break;
+        }
+      }
     }
+
+    const control = this.group.get('schedules');
+    control.patchValue(control.value.concat(values));
   }
 
-  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
-    return of(this.value('schedules', items));
+  public persist(): Observable<any> {
+    return of(this.group.get('schedules').value);
   }
 
-  private update(sample: any): void {
-    const { offDate, offTime, onDate, onTime } = sample;
-    const format = 'YYYY-MM-DD HH:mm';
+  protected ngPostInit(): void {
+    this.fields[0].value = Array.isArray(this.item) ? this.item : [];
+  }
 
-    const off = moment(`${offDate} ${offTime}`, format);
-    const on = moment(`${onDate} ${onTime}`, format);
+  private update(): void {
+    const { gotoDate, gotoTime, fromDate, fromTime } = this.values.value;
+    const format = `${this.formats.date} ${this.formats.time}`;
+    const from = moment(`${fromDate} ${fromTime}`, format);
+    const goto = moment(`${gotoDate} ${gotoTime}`, format);
+    const until = moment(this.until.value, this.formats.date);
 
-    switch (true) {
-      case (on.isAfter(off) || (on.isValid() && !off.isValid())):
-        this.offDate.patchValue(this.onDate.value, { emitEvent: false });
-        this.offTime.patchValue(this.onTime.value, { emitEvent: false });
-        break;
-
-      default:
-        break;
+    if (from.isBefore()) {
+      this.values.patchValue({
+        fromDate: moment().format(this.formats.date),
+        fromTime: moment().format(this.formats.time)
+      }, { emitEvent: false });
     }
+
+    if (from.isValid() && !goto.isValid() || goto.isBefore(from)) {
+      this.values.patchValue({
+        gotoDate: from.format(this.formats.date),
+        gotoTime: from.format(this.formats.time)
+      }, { emitEvent: false });
+    }
+
+    if (until.isBefore(from)) {
+      this.until.patchValue(
+        from.format(this.formats.date),
+        { emitEvent: false }
+      );
+    }
+
   }
 
 }

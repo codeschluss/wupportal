@@ -1,8 +1,9 @@
 import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CrudModel } from '@portal/core';
+import { AccessTokenModel, BaseService, CrudModel, CrudProvider } from '@portal/core';
 import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { BaseFieldComponent } from './base.field';
 import { BaseStepper } from './base.stepper';
 
@@ -31,13 +32,19 @@ export abstract class BaseForm<Model extends CrudModel>
   @Input()
   public item: Model;
 
+  @Input()
+  public token: AccessTokenModel;
+
   public abstract fields: FormField[];
 
   public abstract model: Type<Model>;
 
+  protected provider: CrudProvider<BaseService, Model> & any;
+
   protected static template(template: string): string {
-    return template + `
+    return `
       <form [formGroup]="group">
+        ${template}
         <ng-container *ngFor="let field of fields">
           <section>
             <label class="mat-body-strong" [for]="field.name">
@@ -63,23 +70,39 @@ export abstract class BaseForm<Model extends CrudModel>
   ) { }
 
   public ngOnInit(): void {
-    this.item = this.item || this.route.snapshot.data.item || new this.model();
-    this.group = this.group || this.route.snapshot.data.group;
-    this.route.routeConfig.data.persist = this.persist.bind(this);
+    this.provider = this.model['provider'];
+    this.route.routeConfig.data.form = this;
+
+    this.group = this.group
+      || this.route.snapshot.data.group
+      || new FormGroup({ });
+
+    this.item = this.item
+      || this.route.snapshot.data.item
+      || new this.model();
+
+    this.token = this.token
+      || this.route.snapshot.data.tokens.access
+      || new AccessTokenModel();
 
     this.fields = this.fields.map((field) => Object.assign(field, {
-      label: field.label || 'name',
       options: field.options || this.route.snapshot.data[field.name],
       value: field.value || this.item[field.name]
     }));
 
     this.ngPostInit();
-    this.fields.forEach((field) => this.form(field));
+
+    this.fields.forEach((field) => {
+      this.group.addControl(field.name, new FormControl({
+        disabled: field.locked,
+        value: field.value
+      }, field.tests));
+    });
   }
 
   public ngOnDestroy(): void {
     if (!BaseStepper.isPrototypeOf(this.route.parent.routeConfig.component)) {
-      delete this.route.routeConfig.data.persist;
+      delete this.route.routeConfig.data.form;
     }
   }
 
@@ -87,45 +110,45 @@ export abstract class BaseForm<Model extends CrudModel>
     return field.tests && field.tests.includes(Validators.required);
   }
 
+  public reset(): void {
+    this.group.reset(this.item);
+  }
+
   protected ngPostInit(): void { }
 
-  protected diff(field: string, items?: { [key: string]: CrudModel }):
-    { add: Model[], del: Model[] } {
+  public persist(): Observable<any> {
+    const item = Object.assign(new this.model(), this.item);
+    this.fields.forEach((field) => Object.assign(item, {
+      [field.name]: this.group.get(field.name).value
+    }));
 
-    const add = (this.value(field, items) || []).filter((item) => !item.id);
-    const put = (this.value(field, items) || []).filter((item) => item.id);
-    const del = (this.item[field] || []);
-
-    return {
-      add: put.filter((v) => !del.some((t) => t.id === v.id)).concat(add),
-      del: del.filter((t) => !put.some((v) => v.id === t.id))
-    };
-  }
-
-  protected persist(items?: { [key: string]: CrudModel }): Observable<any> {
-    if (this.group.dirty && this.model['provider']) {
-      this.fields.map((field) => field.name).forEach(
-        (field) => this.item[field] = this.value(field, items));
-
-      return this.item.id
-        ? this.model['provider'].update(this.item, this.item.id)
-        : this.model['provider'].create(this.item);
+    if (this.group.dirty && this.provider) {
+      return (
+        this.item.id
+          ? this.provider.update(item, this.item.id)
+          : this.provider.create(item)
+      ).pipe(tap(() => this.group.markAsPristine()));
     }
 
-    return of(this.item);
+    return of(item);
   }
 
-  protected value(field: string, items?: { [key: string]: CrudModel }): any {
-    const control = this.group.get(field);
-    return items && field in items ? items[field]
-      : control ? control.value : this.item[field];
+  protected cascade(item: Model, field: string, call: string): Observable<any> {
+    return item[field] === this.item[field] ? of(item) :
+     this.provider[call](item.id, this.item[field]).pipe(map(() => item));
   }
 
-  private form(field: FormField): void {
-    this.group.addControl(field.name, new FormControl({
-      disabled: field.locked,
-      value: field.value
-    }, field.tests));
+  protected updated(field: string):
+    { add: (CrudModel & any)[], del: (CrudModel & any)[] } {
+
+    const del = (this.item[field] || []);
+    const mod = (this.group.get(field).value || []).filter((item) => item.id);
+    const put = (this.group.get(field).value || []).filter((item) => !item.id);
+
+    return {
+      add: mod.filter((m) => !del.some((d) => d.id === m.id)).concat(put),
+      del: del.filter((t) => !mod.some((m) => m.id === t.id))
+    };
   }
 
 }

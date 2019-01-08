@@ -1,10 +1,7 @@
-<h2 class="mat-title">
-  <i18n i18n="@@applicationPanel">applicationPanel</i18n>
-</h2>
-
-<h1 class="mat-headline">
-  {{ configuration.portalName }} &mdash; {{ configuration.portalSubtitle }}
-</h1>
+<mat-toolbar color="primary">
+  <h2><i18n i18n="@@applicationPanel">applicationPanel</i18n></h2>
+  <h1>{{ configuration.portalName }} - {{ configuration.portalSubtitle }}</h1>
+</mat-toolbar>
 
 <mat-tab-group [selectedIndex]="index">
   <mat-tab id="configuration">
@@ -14,9 +11,10 @@
     <ng-template matTabContent>
       <configuration-form #form [group]="group" [item]="configuration">
       </configuration-form>
-      <button mat-button color="primary"
-        [disabled]="!form.valid || group.pristine" (click)="persist()">
-        <i18n i18n="@@persistForm">persistForm</i18n>
+      <mat-divider></mat-divider>
+      <button mat-button color="primary" [disabled]="!form.valid"
+        (click)="persist()">
+        <i18n i18n="@@persist">persist</i18n>
       </button>
     </ng-template>
   </mat-tab>
@@ -42,9 +40,6 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button (click)="update(item)">
-              <fa-icon icon="pen"></fa-icon>
-            </button>
             <button mat-icon-button color="warn" (click)="delete(item)">
               <fa-icon icon="trash"></fa-icon>
             </button>

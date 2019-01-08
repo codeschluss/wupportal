@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, TokenResolver } from '@portal/core';
+import { Bool, CrudJoiner, CrudResolver, False, TokenResolver, True } from '@portal/core';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/activity/activity.model';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
@@ -32,8 +32,8 @@ export class OrganisationPanelComponent extends BasePanel {
   };
 
   public get activities(): ActivityModel[] {
-    return this.organisations.reduce(
-      (a, organisation) => a.concat(...[organisation.activities || []]), []);
+    return this.organisations.reduce((arr, organisation) =>
+      arr.concat(...[organisation.activities || []]), []);
   }
 
   public get organisations(): OrganisationModel[] {
@@ -57,7 +57,7 @@ export class OrganisationPanelComponent extends BasePanel {
 
   public approveUser(item: ProviderModel): void {
     item.organisation.constructor['provider']
-      .grantOrganisationUser(item.organisation.id, item.user.id, true)
+      .grantOrganisationUser(item.organisation.id, item.user.id, True)
       .subscribe(() => this.reload());
   }
 
@@ -67,7 +67,7 @@ export class OrganisationPanelComponent extends BasePanel {
     })).pipe(
       filter(Boolean),
       mergeMap(() => item.organisation.constructor['provider']
-        .grantOrganisationUser(item.organisation.id, item.user.id, false))
+        .grantOrganisationUser(item.organisation.id, item.user.id, False))
     ).subscribe(() => this.reload());
   }
 
@@ -83,7 +83,7 @@ export class OrganisationPanelComponent extends BasePanel {
 
   public grantAdmin(item: ProviderModel, grant: boolean): void {
     item.organisation.constructor['provider']
-      .grantOrganisationAdmin(item.organisation.id, item.user.id, grant)
+      .grantOrganisationAdmin(item.organisation.id, item.user.id, Bool(grant))
       .subscribe();
   }
 

@@ -50,7 +50,10 @@ export class ConfigurationFormComponent extends BaseForm<ConfigurationModel> {
     {
       name: 'portalMail',
       input: StringFieldComponent,
-      tests: [Validators.required, Validators.email]
+      tests: [
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+        Validators.required
+      ]
     },
     {
       name: 'mapCenterLongitude',

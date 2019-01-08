@@ -1,5 +1,5 @@
 import { COMMA, ENTER, SEMICOLON, SPACE } from '@angular/cdk/keycodes';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { CrudModel } from '@portal/core';
@@ -30,7 +30,8 @@ import { BaseFieldComponent } from '../base/base.field';
   `)
 })
 
-export class ChipListFieldComponent extends BaseFieldComponent {
+export class ChipListFieldComponent extends BaseFieldComponent
+  implements AfterViewInit {
 
   @ViewChild('auto')
   public auto: MatAutocomplete;
@@ -44,6 +45,13 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   public options: CrudModel[];
 
+  public ngAfterViewInit(): void {
+    this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
+    this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
+    this.search.valueChanges.pipe(map((label) => this.suggest(label)))
+      .subscribe((items) =>  this.options = items);
+  }
+
   public add(event: MatAutocompleteSelectedEvent): void {
     if (!this.value.some((item) => item.id === event.option.value)) {
       this.value = this.value.concat(this.toModel(event.option.value));
@@ -51,7 +59,9 @@ export class ChipListFieldComponent extends BaseFieldComponent {
   }
 
   public create(event: MatChipInputEvent): void {
-    const label = this.sanitize(event.value);
+    const label = event.value.trim().length < 3 ? '' :
+      event.value[0].toUpperCase() + event.value.substr(1).toLowerCase();
+
     if (label && !this.find(label)) {
       this.value = this.value.concat(this.find(label, this.field.options) ||
         Object.assign(new this.field.model(), { [this.field.label]: label }));
@@ -64,10 +74,6 @@ export class ChipListFieldComponent extends BaseFieldComponent {
 
   protected ngPostInit(): void {
     if (!this.value) { this.value = []; }
-    this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
-    this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
-    this.search.valueChanges.pipe(map((label) => this.optionalize(label)))
-      .subscribe((items) =>  this.options = items);
   }
 
   private clear(): void {
@@ -85,15 +91,9 @@ export class ChipListFieldComponent extends BaseFieldComponent {
     return items.filter((item) => this.toLabel(item).search(regex) >= 0);
   }
 
-  private optionalize(label: string = '', items = this.value): CrudModel[] {
+  private suggest(label: string = '', items = this.value): CrudModel[] {
     return !label ? [] : this.matches(label, this.field.options
       .filter((item) => !this.find(this.toLabel(item), items)));
-  }
-
-  private sanitize(label: string = ''): string {
-    // TODO: sanetize
-    return label = label.trim().length < 3 ? '' :
-      label[0].toUpperCase() + label.substr(1).toLowerCase();
   }
 
 }

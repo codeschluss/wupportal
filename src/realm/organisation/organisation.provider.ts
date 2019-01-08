@@ -1,6 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { empty, Observable } from 'rxjs';
+import { BooleanPrimitive } from '../../api/models/boolean-primitive';
 import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
@@ -70,19 +71,19 @@ export class OrganisationProvider
     .OrganisationControllerReadAllParams) => Observable<OrganisationModel[]>;
 
   public grantOrganisation:
-    (id: string, grant: boolean) => Observable<any> =
+    (id: string, grant: BooleanPrimitive) => Observable<any> =
       this.apply(this.service.organisationControllerGrantApprovalResponse);
 
   public grantOrganisationAdmin:
-    (id: string, userId: string, grant: boolean) => Observable<any> =
+    (id: string, userId: string, grant: BooleanPrimitive) => Observable<any> =
       this.apply(this.service.organisationControllerGrantAdminRightResponse);
 
   public grantOrganisationUser:
-    (id: string, userId: string, grant: boolean) => Observable<any> =
+    (id: string, userId: string, grant: BooleanPrimitive) => Observable<any> =
     this.apply(this.service.organisationControllerApproveOrRejectUserResponse);
 
-  public pasteImage:
-    (id: string, images: ImageModel, caption?: string) => Observable<any> =
+  public pasteImages:
+    (id: string, images: ImageModel[]) => Observable<any> =
       this.apply(this.service.organisationControllerAddImageResponse);
 
   public relinkAddress:

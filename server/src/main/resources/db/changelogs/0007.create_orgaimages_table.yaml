@@ -62,6 +62,8 @@ databaseChangeLog:
         constraintName: FK7g8ail9k3qemtckcvyfuykhci
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: organisations
         validate: true

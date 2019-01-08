@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -431,14 +432,16 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    */
   @PostMapping("/activities/{activityId}/schedules")
   @OwnOrOrgaActivityOrSuperUserPermission
-  public ResponseEntity<?> addSchedules(@PathVariable String activityId,
+  public Resources<?> addSchedules(@PathVariable String activityId,
       @RequestBody ScheduleEntity... schedules) {
+    validateSchedules(schedules);
     try {
-      validateSchedules(schedules);
-      scheduleService.addAllWithActivity(Arrays.asList(schedules), service.getById(activityId));
-      return readSchedules(activityId, null);
+      return scheduleService.addAllResourcesWithActivity(
+          Arrays.asList(schedules), service.getById(activityId));
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 

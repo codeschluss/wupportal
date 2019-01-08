@@ -12,6 +12,7 @@ import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resources;
@@ -103,13 +104,21 @@ public class ScheduleService extends ResourceDataService<ScheduleEntity, Schedul
   /**
    * Adds the all with activity.
    *
-   * @param schedules the as list
+   * @param schedules the schedules
    * @param activity the activity
+   * @return the resources
+   * @throws JsonParseException the json parse exception
+   * @throws JsonMappingException the json mapping exception
+   * @throws IOException Signals that an I/O exception has occurred.
    */
-  public void addAllWithActivity(List<ScheduleEntity> schedules, ActivityEntity activity) {
-    schedules.forEach(schedule -> {
+  public Resources<?> addAllResourcesWithActivity(
+      List<ScheduleEntity> schedules, ActivityEntity activity) 
+          throws JsonParseException, JsonMappingException, IOException {
+    List<ScheduleEntity> result = schedules.stream().map(schedule -> {
       schedule.setActivity(activity);
-      repo.save(schedule);
-    });
+      return repo.save(schedule);
+    }).collect(Collectors.toList());
+    
+    return assembler.entitiesToResources(result, null);
   }
 }

@@ -159,8 +159,7 @@ public class OrganisationController
     try {
       service.setApproval(organisationId, isApproved.getValue());
       if (!isApproved.getValue()) {
-        List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
-        activityService.deleteAllByProviders(providers);
+        service.delete(organisationId);
       }
       return noContent().build();
     } catch (NotFoundException e) {

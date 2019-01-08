@@ -6,6 +6,7 @@ import { filter, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
 import { UserModel } from '../../../../realm/user/user.model';
 import { ClientPackage } from '../../../../utils/package';
+import { RequestDialogComponent } from '../../dialogs/request.dialog';
 import { BasePanel } from '../base.panel';
 
 @Component({
@@ -31,9 +32,16 @@ export class AccountPanelComponent extends BasePanel {
     }
   };
 
-  public get organized(): boolean {
-    return (this.user.organisations as OrganisationModel[] || [])
-      .some((organisation) => organisation.approved);
+  public get activities(): OrganisationModel[] {
+    return (this.user || { } as any).activities || [];
+  }
+
+  public get organisations(): OrganisationModel[] {
+    return (this.user || { } as any).organisations || [];
+  }
+
+  public get provider(): boolean {
+    return this.organisations.some((organisation) => organisation.approved);
   }
 
   public get user(): UserModel {
@@ -43,6 +51,13 @@ export class AccountPanelComponent extends BasePanel {
   public admin(item: OrganisationModel): boolean {
     const claim = ClientPackage.config.jwtClaims.organisationAdmin;
     return this.route.snapshot.data.tokens.access[claim].includes(item.id);
+  }
+
+  public apply(): void {
+    this.dialog.open(RequestDialogComponent).afterClosed().pipe(
+      filter(Boolean),
+      mergeMap((i) => UserModel['provider'].linkOrganisations(this.user.id, i))
+    ).subscribe(() => this.reload());
   }
 
   public approved(item: OrganisationModel): boolean {
@@ -59,7 +74,7 @@ export class AccountPanelComponent extends BasePanel {
   }
 
   public persist(): void {
-    this.route.routeConfig.data.persist()
+    this.route.routeConfig.data.form.persist()
       .subscribe(() => this.group.markAsPristine());
   }
 

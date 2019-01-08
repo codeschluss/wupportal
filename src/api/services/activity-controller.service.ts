@@ -1,17 +1,18 @@
 /* tslint:disable */
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
 import { Observable } from 'rxjs';
-import { map as __map, filter as __filter } from 'rxjs/operators';
-
+import { filter as __filter, map as __map } from 'rxjs/operators';
+import { ApiConfiguration } from '../api-configuration';
+import { BaseService } from '../base-service';
 import { ActivityEntity } from '../models/activity-entity';
 import { ResourceActivityEntity } from '../models/resource-activity-entity';
-import { StringPrimitive } from '../models/string-primitive';
+import { ResourcesObject } from '../models/resources-object';
 import { ScheduleEntity } from '../models/schedule-entity';
+import { StringPrimitive } from '../models/string-primitive';
 import { TagEntity } from '../models/tag-entity';
+import { StrictHttpResponse } from '../strict-http-response';
+
 
 /**
  * Activity Controller
@@ -342,6 +343,57 @@ class ActivityControllerService extends BaseService {
 
   /**
    * @param activityId activityId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
+   * @return OK
+   */
+  activityControllerReadBlogsResponse(activityId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (sort != null) __params = __params.set('sort', sort.toString());
+    if (dir != null) __params = __params.set('dir', dir.toString());
+    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/${activityId}/blogs`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param activityId activityId
+   * @param sort undefined
+   * @param dir undefined
+   * @param embeddings undefined
+   * @return OK
+   */
+  activityControllerReadBlogs(activityId: string,
+    sort?: string,
+    dir?: string,
+    embeddings?: string): Observable<{}> {
+    return this.activityControllerReadBlogsResponse(activityId, sort, dir, embeddings).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param activityId activityId
    * @return OK
    */
   activityControllerReadCategoryResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
@@ -587,7 +639,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddSchedulesResponse(activityId: string,
-    schedules: Array<ScheduleEntity>): Observable<StrictHttpResponse<{}>> {
+    schedules: Array<ScheduleEntity>): Observable<StrictHttpResponse<ResourcesObject>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -606,7 +658,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as StrictHttpResponse<ResourcesObject>;
       })
     );
   }
@@ -616,9 +668,9 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddSchedules(activityId: string,
-    schedules: Array<ScheduleEntity>): Observable<{}> {
+    schedules: Array<ScheduleEntity>): Observable<ResourcesObject> {
     return this.activityControllerAddSchedulesResponse(activityId, schedules).pipe(
-      __map(_r => _r.body as {})
+      __map(_r => _r.body as ResourcesObject)
     );
   }
 
@@ -985,4 +1037,5 @@ module ActivityControllerService {
   }
 }
 
-export { ActivityControllerService }
+export { ActivityControllerService };
+

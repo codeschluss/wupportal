@@ -55,10 +55,9 @@ export class ActivityProvider
     },
     {
       field: 'blogs',
-      method: () => empty(),
+      method: this.service.activityControllerReadBlogsResponse,
       model: BlogModel
-    },
-
+    }
   ];
 
   protected methods: CrudMethods = {

@@ -23,8 +23,8 @@ export class SessionProvider {
     }).pipe(
       map((session) => session || new SessionModel()),
       tap((session) => this.session.next(session))
-    ).subscribe(() => this.value.subscribe(
-      (session) => localStorage.setItemSubscribe('clientSession', session)));
+    ).subscribe(() => this.value.subscribe((session) =>
+      localStorage.setItemSubscribe('clientSession', session)));
   }
 
   public like(id: string): void {
@@ -39,15 +39,15 @@ export class SessionProvider {
     return this.session.value.likes.includes(id);
   }
 
-  public changeLanguage(locale: string): void {
+  public changeLanguage(language: string): void {
     this.session.next(Object.assign(this.session.value, {
-      language: locale
+      language: language
     }));
   }
 
   public acceptCookies(acceptCookies: boolean): void {
     this.session.next(Object.assign(this.session.value, {
-      cookiesAccepted: acceptCookies
+      acceptCookies: acceptCookies
     }));
   }
 

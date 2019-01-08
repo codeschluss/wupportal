@@ -13,6 +13,7 @@ apk --no-cache add \
   openjdk8-jre && \
 apk --no-cache --virtual build add \
   maven \
+  ncurses \
   nodejs-npm \
   openjdk8 && \
 #
@@ -23,13 +24,14 @@ npm run strip && \
 #
 # server
 cd /tmp/server && \
-mvn install && \
+mvn -B install -DskipTests=true \
+  -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn && \
 #
 # deploy
 mkdir -p /usr/share/webapps/wupportal && \
 mv /tmp/client/target /usr/share/webapps/wupportal/client && \
 mv /tmp/server/target/*.jar /usr/share/webapps/wupportal/server.jar && \
-ln -fs /conf/application.propperties /usr/share/webapps/wupportal && \
+ln -fs /conf/application-default.properties /usr/share/webapps/wupportal && \
 #
 # cleanup
 apk del --purge build && \
@@ -40,8 +42,9 @@ EXPOSE 80
 #
 # runtime
 CMD \
-  java -jar /tmp/server/target/server.jar && \
-  nginx -c /conf/nginx.conf -g 'daemon off;'
+  nginx -c /conf/nginx.conf && \
+  cd /usr/share/webapps/wupportal && \
+  java -jar server.jar
 EOF
 
 DOCKERIGNORE<<'EOF'
@@ -54,9 +57,14 @@ client/node_modules
 client/package-lock.json
 client/target
 
+server/.gitignore
 server/.metadata
 server/.recommenders
+server/.settings
 server/bin
-server/src/main/resources
+server/src/main/resources/application-credentials.properties
+server/src/main/resources/application-existing.properties
+server/src/main/resources/db/output/*.yaml
+server/src/main/resources/db/output/*.xml
 server/target
 EOF

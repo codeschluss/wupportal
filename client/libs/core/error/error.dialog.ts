@@ -3,6 +3,9 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { CorePackage } from '../utils/package';
 
 @Component({
+  styles: [`
+    h1 { color: red; }
+  `],
   template: `
     <h1 mat-dialog-title>
       <i18n i18n="@@unhandledError">unhandledError</i18n>:
@@ -19,14 +22,11 @@ import { CorePackage } from '../utils/package';
       <a mat-button href="{{ corePackage.bugs.url }}" target="_blank">
         <i18n i18n="@@reportIssue">reportIssue</i18n>
       </a>
-      <button mat-button mat-dialog-close>
+      <button mat-button mat-dialog-close tabindex="-1">
         <i18n i18n="@@close">close</i18n>
       </button>
     </section>
-  `,
-  styles: [
-    'h1 { color: red; }'
-  ]
+  `
 })
 
 export class ErrorDialogComponent {

@@ -33,7 +33,9 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       response = joiner.graph.params.filter !== null && route.params.uuid
         ? await joiner.graph.provider.readOne(route.params.uuid).toPromise()
         : await joiner.graph.provider.readAll(joiner.graph.params).toPromise();
-    } catch (error) { }
+    } catch (error) {
+      if (error.status !== 404) { throw error; }
+    }
 
     if (response) {
       for (const item of Array.isArray(response) ? response : [response]) {
@@ -69,9 +71,12 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
             ];
 
             try {
-              value = await provider.call(link.method, ...params).pipe(map(
-                (response) => provider.cast(response, link.model))).toPromise();
-            } catch (error) { }
+              value = await provider.call(link.method, ...params).pipe(
+                map((response) => provider.cast(response, link.model))
+              ).toPromise();
+            } catch (error) {
+              if (error.status !== 404) { throw error; }
+            }
           }
 
           if (value && node.nodes.length) {

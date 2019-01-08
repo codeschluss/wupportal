@@ -155,35 +155,34 @@ const PublicRoutes = [
   {
       path: 'view/topic/:uuid',
       component: TopicViewComponent,
-        resolve: {
-          topic: CrudResolver,
-        },
-        data: {
-          topic: CrudJoiner.of(TopicModel).with('pages'),
-        }
+      resolve: {
+        topic: CrudResolver,
+      },
+      data: {
+        topic: CrudJoiner.of(TopicModel).with('pages'),
+      }
     },
   {
   path: 'view/page/:uuid',
   component: PageViewComponent,
-      resolve: {
-        page: CrudResolver,
-      },
-      data: {
-        page: CrudJoiner.of(PageModel),
-      }
+    resolve: {
+      page: CrudResolver,
+    },
+    data: {
+      page: CrudJoiner.of(PageModel),
+    }
+  },
+  {
+  path: 'search',
+  children: [
+    {
+      path: ':query',
+      component: SearchComponent,
     },
     {
-    path: 'search',
-    children: [
-      {
-        path: ':query',
-        component: SearchComponent,
-      },
-      {
-        path: '',
-        component: SearchComponent
-      }
-    ]
+      path: '',
+      component: SearchComponent
+    }]
   }
   ,
   {

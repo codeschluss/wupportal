@@ -12,6 +12,7 @@ import { AddressFormComponent } from './address/address.form';
 import { AddressProvider } from './address/address.provider';
 import { AddressStepperComponent } from './address/address.stepper';
 import { AddressTableComponent } from './address/address.table';
+import { BlogProvider } from './blog/blog.provider';
 import { CategoryFormComponent } from './category/category.form';
 import { CategoryProvider } from './category/category.provider';
 import { CategoryStepperComponent } from './category/category.stepper';
@@ -80,6 +81,7 @@ const materials: Type<any>[] = [
 const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
   ActivityProvider,
   AddressProvider,
+  BlogProvider,
   CategoryProvider,
   ConfigurationProvider,
   LanguageProvider,

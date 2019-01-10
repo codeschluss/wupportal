@@ -10,6 +10,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 import { ActivityEntity } from '../models/activity-entity';
 import { ResourceActivityEntity } from '../models/resource-activity-entity';
 import { StringPrimitive } from '../models/string-primitive';
+import { ResourcesObject } from '../models/resources-object';
 import { ScheduleEntity } from '../models/schedule-entity';
 import { TagEntity } from '../models/tag-entity';
 
@@ -551,7 +552,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddSchedulesResponse(activityId: string,
-    schedules: Array<ScheduleEntity>): Observable<StrictHttpResponse<{}>> {
+    schedules: Array<ScheduleEntity>): Observable<StrictHttpResponse<ResourcesObject>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -570,7 +571,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as StrictHttpResponse<ResourcesObject>;
       })
     );
   }
@@ -580,9 +581,9 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddSchedules(activityId: string,
-    schedules: Array<ScheduleEntity>): Observable<{}> {
+    schedules: Array<ScheduleEntity>): Observable<ResourcesObject> {
     return this.activityControllerAddSchedulesResponse(activityId, schedules).pipe(
-      __map(_r => _r.body as {})
+      __map(_r => _r.body as ResourcesObject)
     );
   }
 

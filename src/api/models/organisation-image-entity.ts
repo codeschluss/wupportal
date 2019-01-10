@@ -4,7 +4,7 @@ export interface OrganisationImageEntity {
   caption?: string;
   created?: string;
   id?: string;
-  image?: string;
+  imageData?: string;
   mimeType?: string;
   modified?: string;
 }

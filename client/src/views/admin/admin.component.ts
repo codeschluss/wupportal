@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingProvider, Pathfinder, TokenProvider } from '@portal/core';
+import { Subscription } from 'rxjs';
 import { filter, mergeMap, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { ReloginDialogComponent } from './dialogs/relogin.dialog';
@@ -17,7 +18,7 @@ import { AccountPanelComponent } from './panels/account/account.panel';
   `
 })
 
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
 
   public constructor(
     public loadingProvider: LoadingProvider,
@@ -27,6 +28,8 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private tokenProvider: TokenProvider
   ) { }
+
+  private worker: Subscription;
 
   public ngOnInit(): void {
     const claim = ClientPackage.config.jwtClaims.userId;
@@ -44,8 +47,12 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  public ngOnDestroy(): void {
+    this.worker.unsubscribe();
+  }
+
   private work(): void {
-    this.tokenProvider.value.pipe(
+    this.worker = this.tokenProvider.value.pipe(
       filter((tokens) => !tokens.refresh.raw), take(1),
       mergeMap(() => this.dialog.open(ReloginDialogComponent).afterClosed()),
       filter(Boolean)

@@ -2,6 +2,7 @@ import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { empty, Observable } from 'rxjs';
 import { BooleanPrimitive } from '../../api/models/boolean-primitive';
+import { StringPrimitive } from '../../api/models/string-primitive';
 import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
@@ -87,7 +88,7 @@ export class OrganisationProvider
       this.apply(this.service.organisationControllerAddImageResponse);
 
   public relinkAddress:
-    (id: string, addressId: string) => Observable<any> =
+    (id: string, addressId: StringPrimitive) => Observable<any> =
       this.apply(this.service.organisationControllerUpdateAddressResponse);
 
   public unlinkActivity:

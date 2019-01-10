@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatInput } from '@angular/material';
 import { combineLatest } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -12,7 +11,7 @@ import { BaseFieldComponent } from '../base/base.field';
   `],
   template: BaseFieldComponent.template(`
     <input matInput [formControlName]="field.name">
-    <input #input matInput type="url" [id]="field.name">
+    <input matInput [formControl]="input" type="url" [id]="field.name">
     <mat-select matPrefix [formControl]="select">
       <mat-option value="http://">http://</mat-option>
       <mat-option value="https://">https://</mat-option>
@@ -23,16 +22,21 @@ import { BaseFieldComponent } from '../base/base.field';
 export class UrlFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
 
-  @ViewChild('input', { read: MatInput })
-  public input: MatInput;
+  public input: FormControl = new FormControl();
 
-  public select: FormControl = new FormControl('http://');
+  public select: FormControl = new FormControl();
 
   public ngAfterViewInit(): void {
+    const value = this.value || '';
+    const protocol = value.startsWith('http://') ? 'http://' : 'https://';
+
+    this.input.patchValue(value.split(protocol).pop());
+    this.select.patchValue(protocol);
+
     combineLatest(
-      this.select.valueChanges.pipe(startWith(this.select.value)),
-      this.input.stateChanges.pipe(map(() => this.input.value))
-    ).subscribe((change) => this.value = change[1] ? change.join('') : null);
+      this.select.valueChanges.pipe(startWith(protocol)),
+      this.input.valueChanges
+    ).subscribe((change) => this.value = change.join(''));
   }
 
 }

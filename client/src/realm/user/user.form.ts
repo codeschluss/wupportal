@@ -1,7 +1,5 @@
 import { AfterViewInit, Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { TokenProvider } from '@portal/core';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { Observable } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
@@ -82,13 +80,6 @@ export class UserFormComponent extends BaseForm<UserModel>
   ];
 
   public model: Type<UserModel> = UserModel;
-
-  public constructor(
-    private tokenProvider: TokenProvider,
-    route: ActivatedRoute,
-  ) {
-    super(route);
-  }
 
   public ngAfterViewInit(): void {
     this.group.valueChanges.subscribe((change) => this.validate(change));

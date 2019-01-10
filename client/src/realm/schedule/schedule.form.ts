@@ -148,9 +148,9 @@ export class ScheduleFormComponent extends BaseForm<ScheduleModel>
 
   private values: FormGroup = new FormGroup({
     fromDate: new FormControl(moment().format(this.formats.date)),
-    fromTime: new FormControl(moment().format(this.formats.time)),
+    fromTime: new FormControl(moment().add(1, 'h').format(this.formats.time)),
     gotoDate: new FormControl(moment().format(this.formats.date)),
-    gotoTime: new FormControl(moment().add(1, 'hour').format(this.formats.time))
+    gotoTime: new FormControl(moment().add(3, 'h').format(this.formats.time))
   });
 
   public get fromDate(): AbstractControl { return this.values.get('fromDate'); }

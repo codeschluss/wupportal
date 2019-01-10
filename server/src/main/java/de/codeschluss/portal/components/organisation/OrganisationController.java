@@ -14,6 +14,7 @@ import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.BaseParams;
 import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -206,9 +207,10 @@ public class OrganisationController
   @PutMapping("/organisations/{organisationId}/address")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> updateAddress(@PathVariable String organisationId,
-      @RequestBody String addressId) {
-    if (addressService.existsById(addressId) && service.existsById(organisationId)) {
-      service.updateAddress(organisationId, addressService.getById(addressId));
+      @RequestBody StringPrimitive addressId) {
+    if (addressService.existsById(addressId.getValue())
+        && service.existsById(organisationId)) {
+      service.updateAddress(organisationId, addressService.getById(addressId.getValue()));
       return ok(readAddress(organisationId));
     } else {
       throw new BadParamsException("Organisation or Address with given ID do not exist!");

@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Box } from '@portal/core';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -111,36 +112,44 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
   public model: Type<ActivityModel> = ActivityModel;
 
   public persist(): Observable<any> {
+    const provider = this.model['provider'];
     const schedules = this.updated('schedules');
     const tags = this.updated('tags');
-    const targets = this.updated('targetGroups');
+    const targetGroups = this.updated('targetGroups');
 
     this.item.addressId = this.group.get('address').value.id;
     this.item.categoryId = this.group.get('category').value.id;
     this.item.organisationId = this.group.get('organisation').value.id;
 
     return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
-      ...schedules.add.map((s) => this.provider.pasteSchedules(i.id, [s])),
-      ...schedules.del.map((s) => this.provider.unlinkSchedule(i.id, s.id)),
-      ...tags.add.map((t) => this.provider.pasteTags(i.id, [t])),
-      ...tags.del.map((t) => this.provider.unlinkTag(i.id, t.id)),
-      ...targets.add.map((t) => this.provider.linkTargetGroups(i.id, [t.id])),
-      ...targets.del.map((t) => this.provider.unlinkTargetGroup(i.id, t.id))
+      ...schedules.add.map((s) => provider.pasteSchedules(i.id, [s])),
+      ...schedules.del.map((s) => provider.unlinkSchedule(i.id, s.id)),
+      ...tags.add.map((t) => provider.pasteTags(i.id, [t])),
+      ...tags.del.map((t) => provider.unlinkTag(i.id, t.id)),
+      ...targetGroups.add.map((t) => provider.linkTargetGroups(i.id, [t.id])),
+      ...targetGroups.del.map((t) => provider.unlinkTargetGroup(i.id, t.id)),
+      (this.item.address || { } as any).id === this.item.addressId ?
+        of(0) : provider.relinkAddress(i.id, Box(this.item.addressId)),
+      (this.item.category || { } as any).id === this.item.categoryId ?
+        of(0) : provider.relinkCategory(i.id, Box(this.item.categoryId)),
+      (this.item.organisation || { } as any).id === this.item.organisationId ?
+        of(0) : provider.relinkOrganisation(i.id, Box(this.item.organisationId))
     )).pipe(
-      map((results) => results.shift()),
-      mergeMap((r) => this.cascade(r, 'addresId', 'relinkAddress')),
-      mergeMap((r) => this.cascade(r, 'categoryId', 'relinkCategory')),
-      mergeMap((r) => this.cascade(r, 'organisatioId', 'relinkOrganisation'))
+      mergeMap((j) => this.tokenProvider.refresh().pipe(map(() => j.shift())))
     )));
   }
 
   protected ngPostInit(): void {
-    const claim = this.token[ClientPackage.config.jwtClaims.superUser];
+    if (!this.token.createdActivities.includes(this.item.id)) {
+      this.fields[5].locked = true;
+    }
 
-    this.fields[5].options = this.token[claim] ? this.fields[5].options : [
-      ...this.token[ClientPackage.config.jwtClaims.organisationAdmin],
-      ...this.token[ClientPackage.config.jwtClaims.organisationUser]
-    ].map((id) => this.fields[5].options.find((o) => o.id === id));
+    if (!this.token[ClientPackage.config.jwtClaims.superUser]) {
+      this.fields[5].options = [...new Set([
+        ...this.token[ClientPackage.config.jwtClaims.organisationAdmin],
+        ...this.token[ClientPackage.config.jwtClaims.organisationUser]
+      ])].map((id) => this.fields[5].options.find((o) => o.id === id));
+    }
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Box } from '@portal/core';
 import { BaseForm, FormField, StringFieldComponent, UrlFieldComponent } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -75,16 +76,18 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
   public model: Type<OrganisationModel> = OrganisationModel;
 
   public persist(): Observable<any> {
+    const provider = this.model['provider'];
     const images = this.updated('images');
 
     this.item.addressId = this.group.get('address').value.id;
 
     return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
-      ...images.add.map((g) => this.provider.pasteImages(i.id, [g])),
-      ...images.del.map((g) => this.provider.unlinkImage(i.id, g.id)),
+      ...images.add.map((g) => provider.pasteImages(i.id, [g])),
+      ...images.del.map((g) => provider.unlinkImage(i.id, g.id)),
+      (this.item.address || { } as any).id === this.item.addressId ?
+        of(0) : provider.relinkAddress(i.id, Box(this.item.addressId))
     )).pipe(
-      map((results) => results.shift()),
-      mergeMap((item) => this.cascade(item, 'addressId', 'relinkAddress'))
+      mergeMap((j) => this.tokenProvider.refresh().pipe(map(() => j.shift())))
     )));
   }
 

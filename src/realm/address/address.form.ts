@@ -2,9 +2,9 @@ import { AfterViewInit, Component, ElementRef, Input, Type, ViewChild } from '@a
 import { FormControl, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { CrudJoiner, CrudResolver, LocationProvider, LocationResponse } from '@portal/core';
+import { Box, CrudJoiner, CrudResolver, LocationProvider, LocationResponse, TokenProvider } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { SuburbModel } from '../suburb/suburb.model';
@@ -26,7 +26,7 @@ import { AddressModel } from './address.model';
               {{ item.houseNumber || '?' }},
               {{ item.postalCode || '?' }}
               {{ item.place || '?' }}
-              ({{ item?.suburb?.name || '?' }})
+              ({{ item.suburb?.name || '?' }})
             </mat-option>
           </ng-container>
         </mat-autocomplete>
@@ -138,8 +138,9 @@ export class AddressFormComponent extends BaseForm<AddressModel>
     private crudResolver: CrudResolver,
     private locationProvider: LocationProvider,
     route: ActivatedRoute,
+    tokenProvider: TokenProvider
   ) {
-    super(route);
+    super(route, tokenProvider);
   }
 
   public ngAfterViewInit(): void {
@@ -153,15 +154,19 @@ export class AddressFormComponent extends BaseForm<AddressModel>
   }
 
   public persist(): Observable<any> {
+    const provider = this.model['provider'];
+
     this.item.suburbId = this.group.get('suburb').value.id;
 
-    return super.persist().pipe(
-      mergeMap((item) => this.cascade(item, 'suburbId', 'relinkSuburb'))
-    );
+    return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
+      (this.item.suburb || { } as any).id === this.item.suburbId ?
+        of(0) : provider.relinkSuburb(i.id, Box(this.item.suburbId))
+    )))).pipe(map((arr) => arr.shift()));
   }
 
   public set(event: MatAutocompleteSelectedEvent): void {
     this.item = this.options[event.option.value];
+    Object.defineProperty(this, 'dirty', { value: true });
     this.group.patchValue({ ...this.item, suburb: this.item.suburb || null });
 
     this.item.suburb && this.item.suburb.id
@@ -180,7 +185,7 @@ export class AddressFormComponent extends BaseForm<AddressModel>
     const regex = city && new RegExp(city, 'i');
     const search = city ? label.concat(`, ${city}`) : label;
 
-    return this.provider.readAll({
+    return this.model['provider'].readAll({
       embeddings: CrudJoiner.to(joiner.graph),
       filter: label
     }).pipe(

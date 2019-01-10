@@ -1,6 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
+import { forkJoin, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { ConfigurationModel } from './configuration.model';
 
 @Component({
@@ -35,6 +37,8 @@ import { ConfigurationModel } from './configuration.model';
 })
 
 export class ConfigurationFormComponent extends BaseForm<ConfigurationModel> {
+
+  public item: any;
 
   public fields: FormField[] = [
     {
@@ -81,5 +85,30 @@ export class ConfigurationFormComponent extends BaseForm<ConfigurationModel> {
   ];
 
   public model: Type<ConfigurationModel> = ConfigurationModel;
+
+  public persist(): Observable<any> {
+    return forkJoin(Object.keys(this.group.controls)
+      .filter((key) => this.group.get(key).dirty)
+      .map((key) => {
+        const item = Object.assign(this.config(key), {
+          value: this.group.get(key).value
+        });
+
+        return item.id
+          ? this.model['provider'].update(item, item.id)
+          : this.model['provider'].create(item);
+      })
+    ).pipe(tap(() => this.group.markAsPristine()));
+  }
+
+  protected ngPostInit(): void {
+    this.fields.forEach((field, i) =>
+      this.fields[i].value = this.config(field.name).value);
+  }
+
+  private config(key: string): ConfigurationModel {
+    return this.item.find((configuration) => configuration.item === key)
+      || Object.assign(new ConfigurationModel(), { item: key });
+  }
 
 }

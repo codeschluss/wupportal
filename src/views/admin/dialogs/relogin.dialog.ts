@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { TokenProvider } from '@portal/core';
-import { of } from 'rxjs';
+import { empty } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Component({
@@ -69,7 +69,7 @@ export class ReloginDialogComponent implements OnInit {
       catchError(() => {
         this.password.patchValue(null);
         this.username.patchValue(null);
-        return of();
+        return empty();
       })
     ).subscribe(() => this.dialogRef.close(true));
   }

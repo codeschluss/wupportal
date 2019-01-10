@@ -1,6 +1,20 @@
 <mat-toolbar color="primary">
-  <h2><i18n i18n="@@accountPanel">accountPanel</i18n></h2>
+  <h2><i18n i18n="@@accountPanel">accountPanel</i18n></h2>:
   <h1>{{ group?.get('name')?.value || '...' }}</h1>
+  <button mat-button [matMenuTriggerFor]="actions">
+    <i18n i18n="@@actions">actions</i18n>
+  </button>
+  <mat-menu #actions="matMenu">
+    <button mat-menu-item [disabled]="!provides" (click)="create('activity')">
+      <i18n i18n="@@createActivity">createActivity</i18n>
+    </button>
+    <button mat-menu-item (click)="request()">
+      <i18n i18n="@@joinOrganisations">joinOrganisations</i18n>
+    </button>
+    <button mat-menu-item (click)="create('organisation')">
+      <i18n i18n="@@createOrganisation">createOrganisation</i18n>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-tab-group [selectedIndex]="index">
@@ -11,8 +25,8 @@
     <ng-template matTabContent>
       <user-form #form [group]="group" [item]="user"></user-form>
       <mat-divider></mat-divider>
-      <button mat-button color="primary" [disabled]="!form.valid"
-        (click)="persist()">
+      <button mat-button color="primary" [disabled]="!form.valid || !form.dirty"
+        (click)="form.persist().subscribe()">
         <i18n i18n="@@persist">persist</i18n>
       </button>
     </ng-template>
@@ -21,12 +35,6 @@
   <mat-tab id="organisations" [disabled]="!organisations.length">
     <ng-template matTabLabel>
       <i18n i18n="@@userOrganisations">userOrganisations</i18n>
-      <button mat-icon-button color="primary" (click)="apply()">
-        <fa-icon icon="sign-in-alt"></fa-icon>
-      </button>
-      <button mat-icon-button color="primary" (click)="create('organisation')">
-        <fa-icon icon="plus-square"></fa-icon>
-      </button>
     </ng-template>
     <ng-template matTabContent>
       <organisation-table [items]="organisations">
@@ -53,7 +61,15 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="warn" (click)="demoteUser(item)">
+            <ng-container *ngIf="admin(item)">
+              <button mat-icon-button color="primary" (click)="edit(item)">
+                <fa-icon icon="pen"></fa-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="delete(item)">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </ng-container>
+            <button mat-icon-button color="warn" (click)="demote(item)">
               <fa-icon icon="sign-out-alt"></fa-icon>
             </button>
           </mat-cell>
@@ -65,10 +81,6 @@
   <mat-tab id="activities" [disabled]="!activities.length">
     <ng-template matTabLabel>
       <i18n i18n="@@userActivities">userActivities</i18n>
-        <button mat-icon-button color="primary" [disabled]="!provider"
-          (click)="create('activity')">
-          <fa-icon icon="plus-square"></fa-icon>
-        </button>
     </ng-template>
     <ng-template matTabContent>
       <activity-table [items]="activities">
@@ -77,11 +89,11 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button (click)="update(item)">
+            <button mat-icon-button color="primary" (click)="edit(item)">
               <fa-icon icon="pen"></fa-icon>
             </button>
             <button mat-icon-button color="warn" (click)="delete(item)">
-              <fa-icon icon="trash"></fa-icon>
+              <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>

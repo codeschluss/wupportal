@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, Type, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatInput } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Box, CrudJoiner, CrudResolver, LocationProvider, LocationResponse, TokenProvider } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
@@ -14,11 +14,11 @@ import { AddressModel } from './address.model';
   selector: 'address-form',
   template: BaseForm.template(`
     <section>
-      <label class="mat-body-strong">
+      <label class="mat-body-strong" for="sr">
         <i18n i18n="@@search">search</i18n>
       </label>
       <nav class="output"><mat-form-field>
-        <input #input matInput [formControl]="search" [matAutocomplete]="auto">
+        <input matInput id="sr" [formControl]="search" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete"(optionSelected)="set($event)">
           <ng-container *ngFor="let item of options; let i = index">
             <mat-option [value]="i">
@@ -67,10 +67,10 @@ export class AddressFormComponent extends BaseForm<AddressModel>
   @Input()
   public admin: boolean;
 
-  @ViewChild('auto')
+  @ViewChild(MatAutocomplete)
   public auto: MatAutocomplete;
 
-  @ViewChild('input')
+  @ViewChild(MatInput, { read: ElementRef })
   public input: ElementRef<HTMLInputElement>;
 
   public fields: FormField[] = [
@@ -130,6 +130,8 @@ export class AddressFormComponent extends BaseForm<AddressModel>
 
   public search: FormControl = new FormControl();
 
+  private untouched: AddressModel;
+
   public get valid(): boolean {
     return Object.values(this.group.getRawValue()).every(Boolean);
   }
@@ -149,19 +151,18 @@ export class AddressFormComponent extends BaseForm<AddressModel>
     this.search.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged(),
-      mergeMap((label) =>  label ? this.suggest(label) : of([]))
+      mergeMap((value) =>  value ? this.suggest(value) : of([]))
     ).subscribe((items) => this.options = items);
   }
 
   public persist(): Observable<any> {
-    const provider = this.model['provider'];
-
     this.item.suburbId = this.group.get('suburb').value.id;
 
-    return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
-      (this.item.suburb || { } as any).id === this.item.suburbId ?
-        of(0) : provider.relinkSuburb(i.id, Box(this.item.suburbId))
-    )))).pipe(map((arr) => arr.shift()));
+    return super.persist();
+  }
+
+  public reset(): void {
+    this.group.patchValue(this.untouched);
   }
 
   public set(event: MatAutocompleteSelectedEvent): void {
@@ -172,6 +173,27 @@ export class AddressFormComponent extends BaseForm<AddressModel>
     this.item.suburb && this.item.suburb.id
       ? this.group.get('suburb').disable()
       : this.group.get('suburb').enable();
+  }
+
+  protected ngPostInit(): void {
+    this.untouched = Object.assign(new AddressModel(), this.item);
+  }
+
+  protected cascade(item: AddressModel): Observable<any> {
+    const provider = this.model['provider'];
+
+    const links = [];
+
+    if (this.item.id) {
+      const suburbId = this.item.suburb && this.item.suburb.id;
+
+      links.push(
+        suburbId === this.item.suburbId ? of (null) : provider
+          .relinkSuburb(item.id, Box(this.item.suburbId))
+      );
+    }
+
+    return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
   }
 
   private clear(): void {

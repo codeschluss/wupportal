@@ -32,6 +32,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   private worker: Subscription;
 
   public ngOnInit(): void {
+    console.log('AdminComponent.ngOnInit()');
+
     const claim = ClientPackage.config.jwtClaims.userId;
     const userId = this.route.snapshot.data.tokens.access[claim];
 
@@ -48,6 +50,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    console.log('AdminComponent.ngOnDestroy()');
+
     this.worker.unsubscribe();
   }
 

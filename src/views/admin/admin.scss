@@ -51,12 +51,12 @@ main#admin {
         background-color: rgba(0, 0, 0, .02);
       }
 
-      label {
+      & > label {
         flex-shrink: 0;
         width: 160px;
       }
 
-      nav {
+      & > nav {
         align-items: center;
         display: flex;
 
@@ -65,8 +65,8 @@ main#admin {
         }
       }
 
-      nav.output,
-      output {
+      & > nav.output,
+      & > output {
         flex-grow: 1;
 
         mat-chip-list > *.mat-chip-list-wrapper {

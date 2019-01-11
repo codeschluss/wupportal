@@ -400,7 +400,7 @@ public class OrganisationController
   @DeleteMapping("/organisations/{organisationId}/images/{imageId}")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> deleteImages(@PathVariable String organisationId,
-      @PathVariable List<String> imageId) {
+      List<String> imageId) {
     try {
       organisationImageService.deleteAll(imageId);
       return noContent().build();

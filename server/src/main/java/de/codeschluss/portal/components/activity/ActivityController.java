@@ -331,7 +331,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @DeleteMapping("/activities/{activityId}/tags/{tagId}")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteTags(@PathVariable String activityId,
-      @PathVariable List<String> tagIds) {
+      List<String> tagIds) {
     try {
       service.deleteTags(activityId, tagIds);
       return noContent().build();
@@ -393,7 +393,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @DeleteMapping("/activities/{activityId}/targetgroups/{targetGroupId}")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteTargetGroups(@PathVariable String activityId,
-      @PathVariable List<String> targetGroupId) {
+      List<String> targetGroupId) {
     try {
       service.deleteTargetGroup(activityId, targetGroupId);
       return noContent().build();
@@ -467,7 +467,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @DeleteMapping("/activities/{activityId}/schedules/{scheduleId}")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteSchedules(@PathVariable String activityId,
-      @PathVariable List<String> scheduleId) {
+      List<String> scheduleId) {
     try {
       scheduleService.deleteAll(scheduleId);
       return noContent().build();

@@ -33,13 +33,14 @@ import { ImageModel } from './image.model';
           <button mat-button color="warn" tabindex="-1" (click)="delete(item)">
             <i18n i18n="@@delete">delete</i18n>
           </button>
-          <button mat-button (click)="edit(item)">
+          <button mat-button [disabled]="caption.value || image"
+            (click)="edit(item)">
             <i18n i18n="@@edit">edit</i18n>
           </button>
         </mat-card-actions>
       </mat-card>
     </ng-container>
-    <ng-container *ngIf="value.length < 5">
+    <ng-container *ngIf="!(value?.length >= 5)">
       <mat-card>
         <mat-card-content>
           <ng-container *ngIf="image">
@@ -61,10 +62,11 @@ import { ImageModel } from './image.model';
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-button [disabled]="!image" (click)="reset()">
+          <button mat-button [disabled]="!image" (click)="clear()">
             <i18n i18n="@@reset">reset</i18n>
           </button>
-          <button mat-button [disabled]="!image" (click)="create()">
+          <button mat-button color="primary" [disabled]="!image"
+            (click)="create()">
             <i18n i18n="@@create">create</i18n>
           </button>
         </mat-card-actions>
@@ -87,7 +89,7 @@ export class ImageFieldComponent extends BaseFieldComponent
 
   public ngAfterViewInit(): void {
     this.file.valueChanges.pipe(
-      map((change) => change.item(0)),
+      map((value) => value.item(0)),
       filter(Boolean),
       mergeMap((file) => {
         const reader = new FileReader();
@@ -96,7 +98,7 @@ export class ImageFieldComponent extends BaseFieldComponent
         return fromEvent(reader, 'load').pipe(map((event) =>
           Object.assign(new ImageModel(), {
             caption: this.caption.value || file.name,
-            image: btoa((event.target as any).result),
+            imageData: btoa((event.target as any).result),
             mimeType: file.type
           })
         ));
@@ -107,12 +109,17 @@ export class ImageFieldComponent extends BaseFieldComponent
     });
   }
 
+  public clear(): void {
+    this.caption.patchValue(null);
+    this.image = null;
+  }
+
   public create(): void {
     this.value = this.value.concat(Object.assign(this.image, {
       caption: this.caption.value || this.image.caption
     }));
 
-    this.reset();
+    this.clear();
   }
 
   public delete(item: ImageModel): void {
@@ -143,18 +150,11 @@ export class ImageFieldComponent extends BaseFieldComponent
 
   public edit(item: ImageModel): void {
     this.caption.patchValue(item.caption);
-    this.image = item;
-
-    this.delete(item);
-  }
-
-  public reset(): void {
-    this.caption.patchValue(null);
-    this.image = null;
+    this.delete(this.image = item);
   }
 
   public source(item: ImageModel): string {
-    return `url(data:${item.mimeType};base64,${item.image})`;
+    return `url(data:${item.mimeType};base64,${item.imageData})`;
   }
 
   protected ngPostInit(): void {

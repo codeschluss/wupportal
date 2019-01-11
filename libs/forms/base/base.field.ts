@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, HostBinding, Input, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { CrudModel } from '@portal/core';
 import { FormField } from './base.form';
 
@@ -32,6 +32,9 @@ export class BaseFieldComponent implements OnInit {
               <ng-container *ngSwitchCase="'missmatch'">
                 <i18n i18n="@@fieldErrorMissmatch">fieldErrorMissmatch</i18n>
               </ng-container>
+              <ng-container *ngSwitchCase="'either'">
+                <i18n i18n="@@fieldErrorEither">fieldErrorEither</i18n>
+              </ng-container>
               <ng-container *ngSwitchCase="'pattern'">
                 <i18n i18n="@@fieldErrorPattern">fieldErrorPattern</i18n>
               </ng-container>
@@ -45,16 +48,21 @@ export class BaseFieldComponent implements OnInit {
     `;
   }
 
+  public get control(): AbstractControl {
+    return this.group.get(this.field.name);
+  }
+
   public get errors(): string[] {
-    const errors = this.group.get(this.field.name).errors;
+    const errors = this.control.errors;
     return errors ? Object.keys(errors) : [];
   }
 
-  public get value(): any { return this.group.get(this.field.name).value; }
+  public get value(): any {
+    return this.control.value;
+  }
   public set value(value: any) {
-    this.group.get(this.field.name).markAsDirty();
-    this.group.get(this.field.name).markAsTouched();
-    this.group.get(this.field.name).patchValue(value);
+    this.control.markAsDirty();
+    this.control.patchValue(value);
   }
 
   public constructor(

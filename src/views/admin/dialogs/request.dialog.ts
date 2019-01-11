@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatInput, MatSelectionListChange } from '@angular/material';
+import { MatDialogRef, MatInput, MatSelectionListChange } from '@angular/material';
 import { TokenProvider } from '@portal/core';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, mergeMap, startWith, take } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, mergeMap, startWith, switchMap, take } from 'rxjs/operators';
 import { OrganisationModel } from '../../../realm/organisation/organisation.model';
 import { OrganisationProvider } from '../../../realm/organisation/organisation.provider';
+import { UserProvider } from '../../../realm/user/user.provider';
 
 @Component({
   styles: [`
-    cdk-virtual-scroll-viewport { height: 50vh; width: 480px; }
+    :host { display: block; width: 480px; }
     mat-form-field { width: 100%; }
-    mat-selection-list { padding-top: 0; }
   `],
   template: `
     <h1 mat-dialog-title>
@@ -21,23 +21,21 @@ import { OrganisationProvider } from '../../../realm/organisation/organisation.p
         <mat-label><i18n i18n="@@search">search</i18n></mat-label>
         <input matInput type="search">
       </mat-form-field>
-      <cdk-virtual-scroll-viewport [itemSize]="height">
-        <mat-selection-list (selectionChange)="select($event)">
-          <ng-container *cdkVirtualFor="let item of items">
-            <mat-list-option [value]="item.id">
-              {{ item.name }}
-            </mat-list-option>
-          </ng-container>
-        </mat-selection-list>
-      </cdk-virtual-scroll-viewport>
+      <mat-selection-list (selectionChange)="select($event)">
+        <ng-container *ngFor="let item of items">
+          <mat-list-option [value]="item.id">
+            {{ item.name }}
+          </mat-list-option>
+        </ng-container>
+      </mat-selection-list>
     </section>
     <section mat-dialog-actions>
       <button mat-button mat-dialog-close tabindex="-1">
         <i18n i18n="@@close">close</i18n>
       </button>
       <button mat-button color="primary" [disabled]="!ids.length"
-        [mat-dialog-close]="ids">
-        <i18n i18n="@@apply">apply</i18n>
+        (click)="request()">
+        <i18n i18n="@@joinOrganisations">joinOrganisations</i18n>
       </button>
     </section>
   `
@@ -48,15 +46,15 @@ export class RequestDialogComponent implements OnInit {
   @ViewChild(MatInput)
   public filter: MatInput;
 
-  public height: number = 48;
-
   public ids: string[] = [];
 
   public items: OrganisationModel[];
 
   public constructor(
+    private dialog: MatDialogRef<RequestDialogComponent>,
     private organisationProvider: OrganisationProvider,
-    private tokenProvider: TokenProvider
+    private tokenProvider: TokenProvider,
+    private userProvider: UserProvider
   ) { }
 
   public ngOnInit(): void {
@@ -67,6 +65,12 @@ export class RequestDialogComponent implements OnInit {
       distinctUntilChanged(),
       mergeMap((label) => this.suggest(label)),
     ).subscribe((items) => this.items = items);
+  }
+
+  public request(): void {
+    this.tokenProvider.value.pipe(take(1)).pipe(switchMap((tokens) =>
+      this.userProvider.linkOrganisations(tokens.access.id, this.ids))
+    ).subscribe(() => this.dialog.close(true));
   }
 
   public select(event: MatSelectionListChange): void {
@@ -81,7 +85,9 @@ export class RequestDialogComponent implements OnInit {
       this.tokenProvider.value.pipe(take(1))
     ).pipe(
       map(([items, tokens]) => items.filter((item) =>
-        !tokens.access.approvedOrgas.includes(item.id))),
+        !tokens.access.adminOrgas.includes(item.id) &&
+        !tokens.access.approvedOrgas.includes(item.id)
+      )),
       catchError(() => of([]))
     );
   }

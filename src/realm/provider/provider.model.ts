@@ -14,4 +14,8 @@ export class ProviderModel
   public organisation: OrganisationModel & Observable<OrganisationModel>;
   public user: UserModel & Observable<UserModel>;
 
+  public get name(): string {
+    return `${this.user.name} @ ${this.organisation.name}`;
+  }
+
 }

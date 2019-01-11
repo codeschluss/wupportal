@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <h2><i18n i18n="@@organisationPanel">organisationPanel</i18n></h2>
+  <h2><i18n i18n="@@organisationPanel">organisationPanel</i18n></h2>:
   <h1>{{ 'HEADER' }}</h1>
 </mat-toolbar>
 
@@ -15,11 +15,11 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button (click)="update(item)">
+            <button mat-icon-button color="primary" (click)="edit(item)">
               <fa-icon icon="pen"></fa-icon>
             </button>
             <button mat-icon-button color="warn" (click)="delete(item)">
-              <fa-icon icon="trash"></fa-icon>
+              <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -38,11 +38,11 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button (click)="update(item)">
+            <button mat-icon-button color="primary" (click)="edit(item)">
               <fa-icon icon="pen"></fa-icon>
             </button>
             <button mat-icon-button color="warn" (click)="delete(item)">
-              <fa-icon icon="trash"></fa-icon>
+              <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
@@ -62,7 +62,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <mat-slide-toggle [checked]="item.admin"
-              (change)="grantAdmin(item, $event.checked)">
+              (change)="grant(item, $event.checked)">
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
@@ -71,7 +71,7 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="warn" (click)="demoteUser(item)">
+            <button mat-icon-button color="warn" (click)="demote(item)">
               <fa-icon icon="sign-out-alt"></fa-icon>
             </button>
           </mat-cell>
@@ -80,9 +80,9 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="requests" *ngIf="requests && requests.length">
+  <mat-tab id="requests" [disabled]="!requests.length">
     <ng-template matTabLabel>
-      <span matBadgeOverlap="false" [matBadge]="requests.length">
+      <span matBadgeOverlap="false" [matBadge]="requests.length || null">
         <i18n i18n="@@providerRequests">providerRequests</i18n>
       </span>
     </ng-template>
@@ -93,10 +93,10 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button (click)="approveUser(item)">
+            <button mat-icon-button (click)="approve(item)">
               <fa-icon icon="check"></fa-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="blockUser(item)">
+            <button mat-icon-button color="warn" (click)="block(item)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>

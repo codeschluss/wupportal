@@ -8,6 +8,9 @@ import { ActivityModel } from './activity.model';
   template: BaseTable.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
+        <ng-container *ngSwitchCase="'address'">
+          <i18n i18n="@@address">address</i18n>
+        </ng-container>
         <ng-container *ngSwitchCase="'category'">
           <i18n i18n="@@category">category</i18n>
         </ng-container>
@@ -43,10 +46,16 @@ export class ActivityTableComponent extends BaseTable<ActivityModel> {
     {
       name: 'category',
       value: (item) => item.category.name
+    },
+    {
+      name: 'address',
+      // TODO: non-optional address
+      value: (item) => item.address ? item.address.name : ''
     }
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
+    .with('address').yield('suburb')
     .with('category')
     .with('provider').yield('organisation');
 

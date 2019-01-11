@@ -9,6 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { OrganisationEntity } from '../models/organisation-entity';
 import { ResourceOrganisationEntity } from '../models/resource-organisation-entity';
+import { StringPrimitive } from '../models/string-primitive';
 import { BooleanPrimitive } from '../models/boolean-primitive';
 import { OrganisationImageEntity } from '../models/organisation-image-entity';
 
@@ -381,7 +382,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerUpdateAddressResponse(organisationId: string,
-    addressId: string): Observable<StrictHttpResponse<{}>> {
+    addressId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -410,7 +411,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerUpdateAddress(organisationId: string,
-    addressId: string): Observable<{}> {
+    addressId: StringPrimitive): Observable<{}> {
     return this.organisationControllerUpdateAddressResponse(organisationId, addressId).pipe(
       __map(_r => _r.body as {})
     );

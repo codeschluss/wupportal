@@ -108,7 +108,8 @@ import { ScheduleModel } from './schedule.model';
           </strong>
           <input matInput type="time" [formControl]="gotoTime">
         </mat-form-field>
-        <button mat-button [disabled]="!scheduled" (click)="create()">
+        <button mat-button color="primary" [disabled]="!scheduled"
+          (click)="create()">
           <i18n i18n="@@createSchedules">createSchedules</i18n>
         </button>
       </nav>
@@ -148,9 +149,9 @@ export class ScheduleFormComponent extends BaseForm<ScheduleModel>
 
   private values: FormGroup = new FormGroup({
     fromDate: new FormControl(moment().format(this.formats.date)),
-    fromTime: new FormControl(moment().format(this.formats.time)),
+    fromTime: new FormControl(moment().add(1, 'h').format(this.formats.time)),
     gotoDate: new FormControl(moment().format(this.formats.date)),
-    gotoTime: new FormControl(moment().add(1, 'hour').format(this.formats.time))
+    gotoTime: new FormControl(moment().add(3, 'h').format(this.formats.time))
   });
 
   public get fromDate(): AbstractControl { return this.values.get('fromDate'); }
@@ -240,6 +241,10 @@ export class ScheduleFormComponent extends BaseForm<ScheduleModel>
 
   public persist(): Observable<any> {
     return of(this.group.get('schedules').value);
+  }
+
+  public reset(): void {
+    this.group.reset({ schedules: this.item });
   }
 
   protected ngPostInit(): void {

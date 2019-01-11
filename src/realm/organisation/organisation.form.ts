@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Box } from '@portal/core';
 import { BaseForm, FormField, StringFieldComponent, UrlFieldComponent } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -75,17 +76,32 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
   public model: Type<OrganisationModel> = OrganisationModel;
 
   public persist(): Observable<any> {
-    const images = this.updated('images');
-
     this.item.addressId = this.group.get('address').value.id;
 
-    return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
-      ...images.add.map((g) => this.provider.pasteImages(i.id, [g])),
-      ...images.del.map((g) => this.provider.unlinkImage(i.id, g.id)),
-    )).pipe(
-      map((results) => results.shift()),
-      mergeMap((item) => this.cascade(item, 'addressId', 'relinkAddress'))
-    )));
+    return super.persist().pipe(
+      mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item)))
+    );
+  }
+
+  protected cascade(item: OrganisationModel): Observable<any> {
+    const provider = this.model['provider'];
+    const images = this.updated('images');
+
+    const links = [
+      ...images.add.map((i) => provider.pasteImages(item.id, [i])),
+      ...images.del.map((i) => provider.unlinkImage(item.id, i.id)),
+    ];
+
+    if (this.item.id) {
+      const addrId = this.item.address && this.item.address.id;
+
+      links.push(
+        addrId === this.item.addressId ? of(null) : provider
+          .relinkAddress(item.id, Box(this.item.addressId))
+      );
+    }
+
+    return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
   }
 
 }

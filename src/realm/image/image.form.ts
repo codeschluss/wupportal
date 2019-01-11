@@ -32,6 +32,10 @@ export class ImageFormComponent extends BaseForm<ImageModel> {
     return of(this.group.get('images').value);
   }
 
+  public reset(): void {
+    this.group.reset({ images: this.item });
+  }
+
   protected ngPostInit(): void {
     this.fields[0].value = Array.isArray(this.item) ? this.item : [];
   }

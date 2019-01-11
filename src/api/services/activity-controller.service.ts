@@ -7,6 +7,7 @@ import { ApiConfiguration } from '../api-configuration';
 import { BaseService } from '../base-service';
 import { ActivityEntity } from '../models/activity-entity';
 import { ResourceActivityEntity } from '../models/resource-activity-entity';
+import { StringPrimitive } from '../models/string-primitive';
 import { ResourcesObject } from '../models/resources-object';
 import { ScheduleEntity } from '../models/schedule-entity';
 import { StringPrimitive } from '../models/string-primitive';

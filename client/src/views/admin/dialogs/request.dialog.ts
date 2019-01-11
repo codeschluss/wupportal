@@ -85,7 +85,9 @@ export class RequestDialogComponent implements OnInit {
       this.tokenProvider.value.pipe(take(1))
     ).pipe(
       map(([items, tokens]) => items.filter((item) =>
-        !tokens.access.approvedOrgas.includes(item.id))),
+        !tokens.access.adminOrgas.includes(item.id) &&
+        !tokens.access.approvedOrgas.includes(item.id)
+      )),
       catchError(() => of([]))
     );
   }

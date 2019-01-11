@@ -20,6 +20,7 @@ export class AccountPanelComponent extends BasePanel {
 
   protected resolve: object = {
     user: CrudJoiner.of(UserModel)
+      .with('activities').yield('address').yield('suburb')
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
       .with('organisations').yield('address').yield('suburb')

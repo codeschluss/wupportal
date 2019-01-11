@@ -108,7 +108,8 @@ import { ScheduleModel } from './schedule.model';
           </strong>
           <input matInput type="time" [formControl]="gotoTime">
         </mat-form-field>
-        <button mat-button [disabled]="!scheduled" (click)="create()">
+        <button mat-button color="primary" [disabled]="!scheduled"
+          (click)="create()">
           <i18n i18n="@@createSchedules">createSchedules</i18n>
         </button>
       </nav>
@@ -240,6 +241,10 @@ export class ScheduleFormComponent extends BaseForm<ScheduleModel>
 
   public persist(): Observable<any> {
     return of(this.group.get('schedules').value);
+  }
+
+  public reset(): void {
+    this.group.reset({ schedules: this.item });
   }
 
   protected ngPostInit(): void {

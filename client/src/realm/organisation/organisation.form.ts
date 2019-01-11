@@ -76,19 +76,32 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
   public model: Type<OrganisationModel> = OrganisationModel;
 
   public persist(): Observable<any> {
+    this.item.addressId = this.group.get('address').value.id;
+
+    return super.persist().pipe(
+      mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item)))
+    );
+  }
+
+  protected cascade(item: OrganisationModel): Observable<any> {
     const provider = this.model['provider'];
     const images = this.updated('images');
 
-    this.item.addressId = this.group.get('address').value.id;
+    const links = [
+      ...images.add.map((i) => provider.pasteImages(item.id, [i])),
+      ...images.del.map((i) => provider.unlinkImage(item.id, i.id)),
+    ];
 
-    return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
-      ...images.add.map((g) => provider.pasteImages(i.id, [g])),
-      ...images.del.map((g) => provider.unlinkImage(i.id, g.id)),
-      (this.item.address || { } as any).id === this.item.addressId ?
-        of(0) : provider.relinkAddress(i.id, Box(this.item.addressId))
-    )).pipe(
-      mergeMap((j) => this.tokenProvider.refresh().pipe(map(() => j.shift())))
-    )));
+    if (this.item.id) {
+      const addrId = this.item.address && this.item.address.id;
+
+      links.push(
+        addrId === this.item.addressId ? of(null) : provider
+          .relinkAddress(item.id, Box(this.item.addressId))
+      );
+    }
+
+    return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
   }
 
 }

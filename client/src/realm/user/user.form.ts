@@ -82,7 +82,7 @@ export class UserFormComponent extends BaseForm<UserModel>
   public model: Type<UserModel> = UserModel;
 
   public ngAfterViewInit(): void {
-    this.group.valueChanges.subscribe((change) => this.validate(change));
+    this.group.valueChanges.subscribe((value) => this.validate(value));
   }
 
   public persist(): Observable<any> {

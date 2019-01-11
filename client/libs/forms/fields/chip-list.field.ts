@@ -33,7 +33,7 @@ import { BaseFieldComponent } from '../base/base.field';
 export class ChipListFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
 
-  @ViewChild('auto')
+  @ViewChild(MatAutocomplete)
   public auto: MatAutocomplete;
 
   @ViewChild('input')
@@ -46,9 +46,9 @@ export class ChipListFieldComponent extends BaseFieldComponent
   public options: CrudModel[];
 
   public ngAfterViewInit(): void {
-    this.group.get(this.field.name).valueChanges.subscribe(() => this.clear());
+    this.control.valueChanges.subscribe(() => this.clear());
     this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
-    this.search.valueChanges.pipe(map((label) => this.suggest(label)))
+    this.search.valueChanges.pipe(map((value) => this.suggest(value)))
       .subscribe((items) =>  this.options = items);
   }
 

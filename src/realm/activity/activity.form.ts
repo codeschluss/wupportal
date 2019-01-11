@@ -1,5 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Box } from '@portal/core';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -25,7 +26,7 @@ import { ActivityModel } from './activity.model';
           <i18n i18n="@@description">description</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mail'">
-          <i18n i18n="@@mail">mail</i18n>
+          <i18n i18n="@@mail">mail</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
           <i18n i18n="@@title">title</i18n>
@@ -34,7 +35,7 @@ import { ActivityModel } from './activity.model';
           <i18n i18n="@@organisation">organisation</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'phone'">
-          <i18n i18n="@@phone">phone</i18n>
+          <i18n i18n="@@phone">phone</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'tags'">
           <i18n i18n="@@tags">tags</i18n>
@@ -73,10 +74,7 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
     {
       name: 'mail',
       input: StringFieldComponent,
-      tests: [
-        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
-        Validators.required
-      ],
+      tests: [Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
       type: 'email'
     },
     {
@@ -111,36 +109,70 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
   public model: Type<ActivityModel> = ActivityModel;
 
   public persist(): Observable<any> {
-    const schedules = this.updated('schedules');
-    const tags = this.updated('tags');
-    const targets = this.updated('targetGroups');
-
     this.item.addressId = this.group.get('address').value.id;
     this.item.categoryId = this.group.get('category').value.id;
     this.item.organisationId = this.group.get('organisation').value.id;
 
-    return super.persist().pipe(mergeMap((i) => forkJoin([of(i)].concat(
-      ...schedules.add.map((s) => this.provider.pasteSchedules(i.id, [s])),
-      ...schedules.del.map((s) => this.provider.unlinkSchedule(i.id, s.id)),
-      ...tags.add.map((t) => this.provider.pasteTags(i.id, [t])),
-      ...tags.del.map((t) => this.provider.unlinkTag(i.id, t.id)),
-      ...targets.add.map((t) => this.provider.linkTargetGroups(i.id, [t.id])),
-      ...targets.del.map((t) => this.provider.unlinkTargetGroup(i.id, t.id))
-    )).pipe(
-      map((results) => results.shift()),
-      mergeMap((r) => this.cascade(r, 'addresId', 'relinkAddress')),
-      mergeMap((r) => this.cascade(r, 'categoryId', 'relinkCategory')),
-      mergeMap((r) => this.cascade(r, 'organisatioId', 'relinkOrganisation'))
-    )));
+    return super.persist().pipe(
+      mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item)))
+    );
   }
 
   protected ngPostInit(): void {
-    const claim = this.token[ClientPackage.config.jwtClaims.superUser];
+    this.group.valueChanges.subscribe(() => this.validate());
 
-    this.fields[5].options = this.token[claim] ? this.fields[5].options : [
-      ...this.token[ClientPackage.config.jwtClaims.organisationAdmin],
-      ...this.token[ClientPackage.config.jwtClaims.organisationUser]
-    ].map((id) => this.fields[5].options.find((o) => o.id === id));
+    if (this.item.id && !this.token.createdActivities.includes(this.item.id)) {
+      this.fields[5].locked = true;
+    }
+
+    if (!this.token[ClientPackage.config.jwtClaims.superUser]) {
+      this.fields[5].options = [...new Set([
+        ...this.token[ClientPackage.config.jwtClaims.organisationAdmin],
+        ...this.token[ClientPackage.config.jwtClaims.organisationUser]
+      ])].map((id) => this.fields[5].options.find((o) => o.id === id));
+    }
+  }
+
+  protected cascade(item: ActivityModel): Observable<any> {
+    const provider = this.model['provider'];
+    const schedules = this.updated('schedules');
+    const tags = this.updated('tags');
+    const targets = this.updated('targetGroups');
+
+    const links = [
+      ...schedules.add.map((s) => provider.pasteSchedules(item.id, [s])),
+      ...schedules.del.map((s) => provider.unlinkSchedule(item.id, s.id)),
+      ...tags.add.map((t) => provider.pasteTags(item.id, [t])),
+      ...tags.del.map((t) => provider.unlinkTag(item.id, t.id)),
+      ...targets.add.map((t) => provider.linkTargetGroups(item.id, [t.id])),
+      ...targets.del.map((t) => provider.unlinkTargetGroup(item.id, t.id)),
+    ];
+
+    if (this.item.id) {
+      const addrId = this.item.address && this.item.address.id;
+      const catId = this.item.category && this.item.category.id;
+      const orgaId = this.item.organisation && this.item.organisation.id;
+
+      links.push(
+        addrId === this.item.addressId ? of(null) : provider
+          .relinkAddress(item.id, Box(this.item.addressId)),
+        catId === this.item.categoryId ? of(null) : provider
+          .relinkCategory(item.id, Box(this.item.categoryId)),
+        orgaId === this.item.organisationId ? of(null) : provider
+          .relinkOrganisation(item.id, Box(this.item.organisationId))
+      );
+    }
+
+    return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
+  }
+
+  private validate(): void {
+    const either = ['mail', 'phone']
+      .map((e) => this.group.get(e)).filter(Boolean);
+
+    either.some((e) => e && e.value)
+      ? either.forEach((e) => e.updateValueAndValidity({ emitEvent: false }))
+      : either.forEach((e) => e.setErrors({ either: true }));
   }
 
 }

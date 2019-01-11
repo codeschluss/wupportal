@@ -1,38 +1,54 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatInput } from '@angular/material';
-import { combineLatest } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
   styles: [`
     input:first-child { display: none; }
-    mat-select { width: 75px; }
   `],
   template: BaseFieldComponent.template(`
-    <input matInput [formControlName]="field.name">
-    <input #input matInput type="url" [id]="field.name">
-    <mat-select matPrefix [formControl]="select">
-      <mat-option value="http://">http://</mat-option>
-      <mat-option value="https://">https://</mat-option>
-    </mat-select>
+    <input [id]="field.name">
+    <input matInput [formControl]="input" [name]="field.name">
+    <span matPrefix>{{ transport }}</span>
+    <mat-slide-toggle matSuffix [formControl]="toggle">
+      <i18n i18n="@@encryptedConnection">encryptedConnection</i18n>
+    </mat-slide-toggle>
   `)
 })
 
 export class UrlFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
 
-  @ViewChild('input', { read: MatInput })
-  public input: MatInput;
+  public input: FormControl = new FormControl();
 
-  public select: FormControl = new FormControl('http://');
+  public toggle: FormControl = new FormControl();
+
+  public transport: string;
 
   public ngAfterViewInit(): void {
-    combineLatest(
-      this.select.valueChanges.pipe(startWith(this.select.value)),
-      this.input.stateChanges.pipe(map(() => this.input.value))
-    ).subscribe((change) => this.value = change[1] ? change.join('') : null);
+    this.control.statusChanges.subscribe(() =>
+      this.input.setErrors(this.control.errors));
+
+    this.input.valueChanges.subscribe((value) =>
+      this.value = value ? this.transport + value : null);
+
+    this.toggle.valueChanges.subscribe((value) => {
+      this.transport = value ? 'https://' : 'http://';
+      this.input.patchValue(this.input.value);
+    });
+  }
+
+  protected ngPostInit(): void {
+    this.control.valueChanges
+      .pipe(startWith(this.control.value))
+      .subscribe((value) => this.update(value || ''));
+  }
+
+  private update(value: string): void {
+    this.input.patchValue(value.split('://').pop(), { emitEvent: false });
+    this.toggle.patchValue(value.startsWith('https://'), { emitEvent: false });
+    this.transport = this.toggle.value ? 'https://' : 'http://';
   }
 
 }

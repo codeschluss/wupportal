@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
+import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
 import { forkJoin, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { BaseForm } from './base.form';
@@ -25,8 +25,6 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
   public abstract steps: FormStep[];
 
-  protected provider: CrudProvider<BaseService, Model> & any;
-
   protected abstract joiner: CrudJoiner;
 
   protected abstract model: Type<Model>;
@@ -36,7 +34,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       <mat-toolbar color="primary">
         <h2><ng-container *ngTemplateOutlet="label; context: {
           case: { name: item?.id ? 'edit' : 'create' }
-        }"></ng-container></h2>
+        }"></ng-container></h2>:
         <h1>{{ title || '...' }}</h1>
       </mat-toolbar>
       <nav mat-tab-nav-bar>
@@ -51,7 +49,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       ${template}
       <router-outlet></router-outlet>
       <mat-divider></mat-divider>
-      <button mat-button color="warn" tabindex="-1" (click)="location.back()">
+      <button mat-button tabindex="-1" (click)="location.back()">
         <i18n i18n="@@close">close</i18n>
       </button>
       <button mat-button tabindex="-1" (click)="reset()">
@@ -70,12 +68,17 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         </button>
       </ng-container>
       <ng-container *ngIf="!has('+1')">
-        <button mat-button color="primary" [disabled]="!valid"
+        <button mat-button color="primary" [disabled]="!valid || !dirty"
           (click)="persist()">
           <i18n i18n="@@persist">persist</i18n>
         </button>
       </ng-container>
     `;
+  }
+
+  public get dirty(): boolean {
+    const routes = this.route.snapshot.routeConfig.children;
+    return routes.some((route) => route.data.form && route.data.form.dirty);
   }
 
   public get index(): number {
@@ -122,8 +125,6 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       || this.route.snapshot.data.item
       || new this.model();
 
-    this.provider = this.model['provider'];
-
     this.router.config = this.walk(this.router.config, this.routes());
     this.router.navigate([this.steps[this.index].name], {
       relativeTo: this.route,
@@ -163,11 +164,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     const control = (field, value) => root.data.group
       .addControl(field, new FormControl(value));
 
-    forkJoin([of(null)].concat(routes.filter((r) => r !== root).map((route) =>
+    forkJoin([of(0)].concat(routes.filter((r) => r !== root).map((route) =>
       route.data.form.persist().pipe(map((item) => [route.path, item]))
     ))).pipe(
-      map((items) => items.slice(1)),
-      tap((items) => items.forEach((item) => control(item[0], item[1]))),
+      tap((items) => items.slice(1).forEach((i) => control(i[0], i[1]))),
       mergeMap(() => root.data.form.persist())
     ).subscribe(() => this.location.back());
   }
@@ -177,7 +177,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       const fields = new step.form().fields.filter((field) => field.model);
 
       return {
-        path: `${step.name}`,
+        path: step.name,
         component: step.form,
         resolve: fields.reduce((obj, field) => Object.assign(obj, {
           [field.name]: CrudResolver,

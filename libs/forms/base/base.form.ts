@@ -1,9 +1,9 @@
 import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AccessTokenModel, BaseService, CrudModel, CrudProvider } from '@portal/core';
+import { AccessTokenModel, CrudModel, TokenProvider } from '@portal/core';
 import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { mergeMap, tap } from 'rxjs/operators';
 import { BaseFieldComponent } from './base.field';
 import { BaseStepper } from './base.stepper';
 
@@ -39,8 +39,6 @@ export abstract class BaseForm<Model extends CrudModel>
 
   public abstract model: Type<Model>;
 
-  protected provider: CrudProvider<BaseService, Model> & any;
-
   protected static template(template: string): string {
     return `
       <form [formGroup]="group">
@@ -61,16 +59,20 @@ export abstract class BaseForm<Model extends CrudModel>
     `;
   }
 
+  public get dirty(): boolean {
+    return this.group.dirty;
+  }
+
   public get valid(): boolean {
     return this.group.valid;
   }
 
   public constructor(
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected tokenProvider: TokenProvider
   ) { }
 
   public ngOnInit(): void {
-    this.provider = this.model['provider'];
     this.route.routeConfig.data.form = this;
 
     this.group = this.group
@@ -106,6 +108,25 @@ export abstract class BaseForm<Model extends CrudModel>
     }
   }
 
+  public persist(): Observable<any> {
+    const item = Object.assign(new this.model(), this.item);
+    this.fields.forEach((field) => Object.assign(item, {
+      [field.name]: this.group.get(field.name).value
+    }));
+
+    if (this.group.dirty && this.model['provider']) {
+      return (item.id
+        ? this.model['provider'].update(item, item.id)
+        : this.model['provider'].create(item)
+      ).pipe(
+        mergeMap((persisted: Model) => this.cascade(persisted)),
+        tap(() => this.group.markAsPristine())
+      );
+    }
+
+    return of(item);
+  }
+
   public required(field: FormField): boolean {
     return field.tests && field.tests.includes(Validators.required);
   }
@@ -116,26 +137,8 @@ export abstract class BaseForm<Model extends CrudModel>
 
   protected ngPostInit(): void { }
 
-  public persist(): Observable<any> {
-    const item = Object.assign(new this.model(), this.item);
-    this.fields.forEach((field) => Object.assign(item, {
-      [field.name]: this.group.get(field.name).value
-    }));
-
-    if (this.group.dirty && this.provider) {
-      return (
-        this.item.id
-          ? this.provider.update(item, this.item.id)
-          : this.provider.create(item)
-      ).pipe(tap(() => this.group.markAsPristine()));
-    }
-
+  protected cascade(item: Model): Observable<any> {
     return of(item);
-  }
-
-  protected cascade(item: Model, field: string, call: string): Observable<any> {
-    return item[field] === this.item[field] ? of(item) :
-     this.provider[call](item.id, this.item[field]).pipe(map(() => item));
   }
 
   protected updated(field: string):

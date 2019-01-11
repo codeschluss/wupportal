@@ -119,30 +119,15 @@ public class OrganisationController
       throws URISyntaxException {
     validateCreate(newOrga);
     
-    Resource<OrganisationEntity> resource = service.convertToResource(
-        createOrgaWithAdmin(newOrga));
+    try {
+      newOrga.setAddress(addressService.getById(newOrga.getAddressId()));
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Need existing Address!");
+    }
     
+    Resource<OrganisationEntity> resource = service.addResource(newOrga);
+    providerService.addAdmin(resource.getContent(), authService.getCurrentUser());
     return created(new URI(resource.getId().expand().getHref())).body(resource);
-  }
-
-  /**
-   * Creates the orga with admin.
-   *
-   * @param newOrga the new orga
-   * @return the organisation entity
-   */
-  private OrganisationEntity createOrgaWithAdmin(OrganisationEntity newOrga) {
-    newOrga.setApproved(false);
-    OrganisationEntity orga = service.add(newOrga);
-    
-    ProviderEntity admin = new ProviderEntity();
-    admin.setApproved(true);
-    admin.setAdmin(true);
-    admin.setOrganisation(orga);
-    admin.setUser(authService.getCurrentUser());
-    
-    providerService.add(admin);
-    return orga;
   }
   
   /**

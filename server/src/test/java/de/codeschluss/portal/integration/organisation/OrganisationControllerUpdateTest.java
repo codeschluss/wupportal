@@ -38,7 +38,7 @@ public class OrganisationControllerUpdateTest {
     String organisationId = "00000000-0000-0000-0008-300000000000";
     OrganisationEntity organisation = newOrganisation(true, "updateSuperUserOk",
         "updateSuperUserOk", "updateSuperUserOk", "123456789", "updateSuperUserOk",
-        "updateSuperUserOk");
+        "updateSuperUserOk", "00000000-0000-0000-0006-100000000000");
 
     controller.update(organisation, organisationId);
 
@@ -52,19 +52,29 @@ public class OrganisationControllerUpdateTest {
   public void updateOwnOrganisationOk() throws URISyntaxException {
     OrganisationEntity organisation = newOrganisation(true, "updateOwnOrganisationOk",
         "updateOwnOrganisationOk", "organisation1", "123456789", "updateOwnOrganisationOk",
-        "updateOwnOrganisationOk");
+        "updateOwnOrganisationOk", "00000000-0000-0000-0006-100000000000");
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
 
     assertThat(service.existsByName(organisation.getName()));
   }
-  
+
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidOk() throws URISyntaxException {
-    OrganisationEntity organisation = newOrganisation(true, "createSuperUserOk",
-        "create@SuperUserOk", null, "123456789", "createSuperUserOk",
-        "createSuperUserOk");
+  public void updateNotValidNameOk() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(true, "updateNotValidNameOk",
+        "update@SuperUserOk", null, "123456789", "updateNotValidNameOk", "updateNotValidNameOk",
+        "00000000-0000-0000-0006-100000000000");
+
+    controller.update(organisation, "00000000-0000-0000-0008-100000000000");
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void updateNotValidAddressOk() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(true, "updateNotValidAddressOk",
+        "update@NotValidAddressOk", null, "123456789", "updateNotValidAddressOk",
+        "updateNotValidAddressOk", null);
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }
@@ -74,7 +84,8 @@ public class OrganisationControllerUpdateTest {
   public void updateOtherOrganisationDenied() throws URISyntaxException {
     OrganisationEntity organisation = newOrganisation(true, "updateOtherOrganisationDenied",
         "updateOtherOrganisationDenied", "updateOtherOrganisationDenied", "123456789",
-        "updateOtherOrganisationDenied", "updateOtherOrganisationDenied");
+        "updateOtherOrganisationDenied", "updateOtherOrganisationDenied",
+        "00000000-0000-0000-0006-100000000000");
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }
@@ -82,13 +93,14 @@ public class OrganisationControllerUpdateTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateOtherNotRegisteredOrganisationDenied() throws URISyntaxException {
     OrganisationEntity organisation = newOrganisation(true, "updateOtherOrganisationDenied",
-        "organisation1", "organisation1", "123456789", "organisation1", "organisation1");
+        "organisation1", "organisation1", "123456789", "organisation1", "organisation1",
+        "00000000-0000-0000-0006-100000000000");
 
     controller.update(organisation, "00000000-0000-0000-0008-100000000000");
   }
 
   private OrganisationEntity newOrganisation(boolean approved, String description, String mail,
-      String name, String phone, String videoUrl, String website) {
+      String name, String phone, String videoUrl, String website, String addressId) {
     OrganisationEntity organisation = new OrganisationEntity();
     organisation.setApproved(approved);
     organisation.setDescription(description);
@@ -97,6 +109,7 @@ public class OrganisationControllerUpdateTest {
     organisation.setPhone(phone);
     organisation.setVideoUrl(videoUrl);
     organisation.setWebsite(website);
+    organisation.setAddressId(addressId);
 
     return organisation;
   }

@@ -62,6 +62,10 @@ public class OrganisationEntity extends BaseResource {
   
   private static final long serialVersionUID = 1L;
   
+  @Transient
+  @JsonDeserialize
+  private String addressId;
+  
   @ManyToOne
   @JsonIgnore
   @ToString.Exclude

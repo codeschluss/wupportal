@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,6 @@ public abstract class BaseResource extends BaseEntity {
   
   @JsonProperty("_embedded")
   @Transient
-  @JsonSerialize
   @JsonDeserialize
   @JsonInclude(Include.NON_NULL)
   protected Map<String,Object> embeddings;

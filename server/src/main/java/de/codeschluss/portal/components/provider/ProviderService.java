@@ -352,4 +352,19 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
 
     repo.save(provider);
   }
+
+  /**
+   * Adds the admin.
+   *
+   * @param orga the orga
+   * @param currentUser the current user
+   */
+  public void addAdmin(OrganisationEntity orga, UserEntity currentUser) {
+    ProviderEntity admin = new ProviderEntity();
+    admin.setApproved(true);
+    admin.setAdmin(true);
+    admin.setOrganisation(orga);
+    admin.setUser(currentUser);
+    repo.save(admin);
+  }
 }

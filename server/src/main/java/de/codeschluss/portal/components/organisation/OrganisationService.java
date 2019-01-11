@@ -67,7 +67,8 @@ public class OrganisationService
   
   @Override
   public boolean validCreateFieldConstraints(OrganisationEntity newOrga) {
-    return validFields(newOrga);
+    return validFields(newOrga)
+        && newOrga.getAddressId() != null && !newOrga.getAddressId().isEmpty();
   }
   
   @Override

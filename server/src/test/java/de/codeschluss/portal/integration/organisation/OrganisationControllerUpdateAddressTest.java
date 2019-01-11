@@ -34,7 +34,7 @@ public class OrganisationControllerUpdateAddressTest {
 
     controller.updateAddress(orgaId, addressId);
 
-    assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId);
+    assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId.getValue());
   }
 
   @Test
@@ -45,7 +45,7 @@ public class OrganisationControllerUpdateAddressTest {
 
     controller.updateAddress(orgaId, addressId);
 
-    assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId);
+    assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId.getValue());
   }
 
   @Test(expected = BadParamsException.class)

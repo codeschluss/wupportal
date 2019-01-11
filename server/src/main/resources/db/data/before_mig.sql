@@ -84,8 +84,8 @@ INSERT INTO `organisations` (`id`, `name`, `description`, `website`, `mail`, `ph
 ('00000000-0000-0000-0008-800000000000', 'orgaMail', 'orgaMail', 'www.orgaMail.com', 'orgaMail@orgaMail.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-900000000000', 'orgaMap', 'orgaMap', 'www.orgaMap.com', 'orgaMap@orgaMap.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
 ('00000000-0000-0000-0008-110000000000', 'mapfilterAllWithoutFree', 'mapfilterAllWithoutFree', 'www.mapfilterAllWithoutFree.com', 'orgaMap@mapfilterAllWithoutFree.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
-('00000000-0000-0000-0008-120000000000', 'organisationToDeleteSuperUser2', 'organisationToDeleteSuperUser2', 'www.organisationToDeleteSuperUser2.com', 'organisationToDeleteSuperUser2@organisationToDeleteSuperUser2.com', '09876543210', null, null),
-('00000000-0000-0000-0008-130000000000', 'organisationToDeleteOrgaAdmin2', 'organisationToDeleteOrgaAdmin2', 'www.organisationToDeleteOrgaAdmin2.com', 'organisationToDeleteOrgaAdmin2@Delete.com', '09876543210', null, null);
+('00000000-0000-0000-0008-120000000000', 'organisationToDeleteSuperUser2', 'organisationToDeleteSuperUser2', 'www.organisationToDeleteSuperUser2.com', 'organisationToDeleteSuperUser2@organisationToDeleteSuperUser2.com', '09876543210', null, '00000000-0000-0000-0006-100000000000'),
+('00000000-0000-0000-0008-130000000000', 'organisationToDeleteOrgaAdmin2', 'organisationToDeleteOrgaAdmin2', 'www.organisationToDeleteOrgaAdmin2.com', 'organisationToDeleteOrgaAdmin2@Delete.com', '09876543210', null, '00000000-0000-0000-0006-100000000000');
 
 INSERT INTO `providers` (`id`, `organisation_id`, `user_id`, `admin`, `approved`) VALUES
 ('00000000-0000-0000-0009-100000000000', '00000000-0000-0000-0008-100000000000', '00000000-0000-0000-0004-200000000000', 1, 1),

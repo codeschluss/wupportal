@@ -3,10 +3,11 @@ package de.codeschluss.portal.integration.activity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.activity.ActivityController;
-import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.schedule.ScheduleEntity;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.assertj.core.api.Condition;
 import org.junit.Test;
@@ -34,7 +35,8 @@ public class ActivityControllerDeleteSchedulesTest {
   @Test
   @WithUserDetails("super@user")
   public void deleteSchedulesSuperUserOk() throws URISyntaxException {
-    String scheduleId = "00000000-0000-0000-0011-160000000000";
+    List<String> scheduleId = new ArrayList<>();
+    scheduleId.add("00000000-0000-0000-0011-160000000000");
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     assertContaining(activityId, scheduleId);
@@ -47,13 +49,12 @@ public class ActivityControllerDeleteSchedulesTest {
   @Test
   @WithUserDetails("provider1@user")
   public void deleteSchedulesProviderOk() throws URISyntaxException {
-    String scheduleId = "00000000-0000-0000-0011-170000000000";
+    List<String> scheduleId = new ArrayList<>();
+    scheduleId.add("00000000-0000-0000-0011-170000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
-    assertThat(result.getContent().getSchedules())
-        .haveAtLeastOne(new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
-
+    assertContaining(activityId, scheduleId);
+    
     controller.deleteSchedules(activityId, scheduleId);
 
     assertNotContaining(activityId, scheduleId);
@@ -62,13 +63,12 @@ public class ActivityControllerDeleteSchedulesTest {
   @Test
   @WithUserDetails("admin@user")
   public void deleteSchedulesAdminOk() throws URISyntaxException {
-    String scheduleId = "00000000-0000-0000-0011-180000000000";
+    List<String> scheduleId = new ArrayList<>();
+    scheduleId.add("00000000-0000-0000-0011-190000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
-    Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
-    assertThat(result.getContent().getSchedules())
-        .haveAtLeastOne(new Condition<>(t -> t.getId().equals(scheduleId), "schedule exists"));
-
+    assertContaining(activityId, scheduleId);
+    
     controller.deleteSchedules(activityId, scheduleId);
 
     assertNotContaining(activityId, scheduleId);
@@ -77,7 +77,8 @@ public class ActivityControllerDeleteSchedulesTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void deleteSchedulesOtherProviderDenied() throws URISyntaxException {
-    String scheduleId = "00000000-0000-0000-0011-100000000000";
+    List<String> scheduleId = new ArrayList<>();
+    scheduleId.add("00000000-0000-0000-0011-100000000000");
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.deleteSchedules(activityId, scheduleId);
@@ -85,24 +86,25 @@ public class ActivityControllerDeleteSchedulesTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void deleteSchedulesNoUserDenied() throws URISyntaxException {
-    String scheduleId = "00000000-0000-0000-0011-100000000000";
+    List<String> scheduleId = new ArrayList<>();
+    scheduleId.add("00000000-0000-0000-0011-100000000000");
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.deleteSchedules(activityId, scheduleId);
   }
 
   @SuppressWarnings("unchecked")
-  private void assertContaining(String activityId, String scheduleId) {
+  private void assertContaining(String activityId, List<String> scheduleIds) {
     Resources<Resource<ScheduleEntity>> result = (Resources<Resource<ScheduleEntity>>) controller
         .readSchedules(activityId, null).getBody();
     assertThat(result.getContent()).haveAtLeastOne(
-        new Condition<>(t -> t.getContent().getId().equals(scheduleId), "schedule exists"));
+        new Condition<>(t -> scheduleIds.contains(t.getContent().getId()), "schedule exists"));
   }
 
   @SuppressWarnings("unchecked")
-  private void assertNotContaining(String activityId, String scheduleId) {
+  private void assertNotContaining(String activityId, List<String> scheduleIds) {
     Resources<Resource<ScheduleEntity>> result = (Resources<Resource<ScheduleEntity>>) controller
         .readSchedules(activityId, null).getBody();
-    assertThat(result.getContent()).noneMatch(t -> t.getContent().getId().equals(scheduleId));
+    assertThat(result.getContent()).noneMatch(t -> scheduleIds.contains(t.getContent().getId()));
   }
 }

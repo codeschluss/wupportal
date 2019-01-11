@@ -9,6 +9,9 @@ import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.image.ImageService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,15 +42,18 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   @SuppressWarnings("unchecked")
   public void addAndDeleteImagesSuperUserOk() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
+    
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()));
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes())));
+    
     Resources<Resource<OrganisationImageEntity>> result = 
         ((Resources<Resource<OrganisationImageEntity>>) controller
             .addImage(organisationId, imageInput).getBody());
-    String resultId = result.getContent().iterator().next().getContent().getId();
-    
-    controller.deleteImages(organisationId, resultId);
+   
+    controller.deleteImages(organisationId, result.getContent().stream().map(
+        imageRes -> imageRes.getContent().getId()).collect(Collectors.toList()));
     
     try {
       controller.readImages(organisationId);
@@ -62,15 +68,18 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   @SuppressWarnings("unchecked")
   public void addAndDeleteImagesOwnOrgaOk() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
+    
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()));
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes())));
+    
     Resources<Resource<OrganisationImageEntity>> result = 
         ((Resources<Resource<OrganisationImageEntity>>) controller
             .addImage(organisationId, imageInput).getBody());
-    String resultId = result.getContent().iterator().next().getContent().getId();
-    
-    controller.deleteImages(organisationId, resultId);
+   
+    controller.deleteImages(organisationId, result.getContent().stream().map(
+        imageRes -> imageRes.getContent().getId()).collect(Collectors.toList()));
     
     try {
       controller.readImages(organisationId);
@@ -85,30 +94,36 @@ public class OrganisationControllerCreateAndDeleteImagesTest {
   @SuppressWarnings("unchecked")
   public void addAndFindImagesOtherOrgaDenied() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
+    
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()));
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes())));
+    
     Resources<Resource<OrganisationImageEntity>> result = 
         ((Resources<Resource<OrganisationImageEntity>>) controller
             .addImage(organisationId, imageInput).getBody());
-    String resultId = result.getContent().iterator().next().getContent().getId();
-    
-    controller.deleteImages(organisationId, resultId);
+   
+    controller.deleteImages(organisationId, result.getContent().stream().map(
+        imageRes -> imageRes.getContent().getId()).collect(Collectors.toList()));
   }
   
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   @SuppressWarnings("unchecked")
   public void addAndFindImagesNotRegisteredDenied() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
+    
     String organisationId = "00000000-0000-0000-0008-100000000000";
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()));
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes())));
+    
     Resources<Resource<OrganisationImageEntity>> result = 
         ((Resources<Resource<OrganisationImageEntity>>) controller
             .addImage(organisationId, imageInput).getBody());
-    String resultId = result.getContent().iterator().next().getContent().getId();
-    
-    controller.deleteImages(organisationId, resultId);
+   
+    controller.deleteImages(organisationId, result.getContent().stream().map(
+        imageRes -> imageRes.getContent().getId()).collect(Collectors.toList()));
   }
   
   private OrganisationImageEntity newOrganisationImageEntity(String caption, String data) {

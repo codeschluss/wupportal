@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.hateoas.Resource;
@@ -372,8 +371,8 @@ public class OrganisationController
   @PostMapping("/organisations/{organisationId}/images")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> addImage(@PathVariable String organisationId,
-      @RequestBody OrganisationImageEntity... image) {
-    if (image == null || image.length == 0) {
+      @RequestBody List<OrganisationImageEntity> image) {
+    if (image == null || image.isEmpty()) {
       throw new BadParamsException("Image File must not be null");
     }
     
@@ -401,9 +400,9 @@ public class OrganisationController
   @DeleteMapping("/organisations/{organisationId}/images/{imageId}")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> deleteImages(@PathVariable String organisationId,
-      @PathVariable String... imageId) {
+      @PathVariable List<String> imageId) {
     try {
-      organisationImageService.deleteAll(Arrays.asList(imageId));
+      organisationImageService.deleteAll(imageId);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Organisation does not exist");

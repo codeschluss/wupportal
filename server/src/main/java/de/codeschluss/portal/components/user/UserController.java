@@ -22,7 +22,6 @@ import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -171,10 +170,10 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @PostMapping("/users/{userId}/organisations")
   @OwnUserOrSuperUserPermission
   public ResponseEntity<?> addOrganisation(@PathVariable String userId,
-      @RequestBody String... organisationParam) {
+      @RequestBody List<String> organisationParam) {
     try {
       return ok(providerService.createApplication(
-          service.getById(userId), Arrays.asList(organisationParam)));
+          service.getById(userId), organisationParam));
     } catch (NotFoundException | NullPointerException e) {
       throw new BadParamsException("User or Organisation are null or do not exist!");
     }

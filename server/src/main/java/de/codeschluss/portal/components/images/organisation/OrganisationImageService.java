@@ -123,7 +123,7 @@ public class OrganisationImageService
    */
   public Resources<?> addResources(
       OrganisationEntity organisation,
-      OrganisationImageEntity... images) throws IOException {
+      List<OrganisationImageEntity> images) throws IOException {
     List<Resource<?>> savedImages = new ArrayList<>();
     for (OrganisationImageEntity image : images) {
       savedImages.add(addResource(image, organisation));

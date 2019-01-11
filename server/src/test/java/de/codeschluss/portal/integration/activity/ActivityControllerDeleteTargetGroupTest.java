@@ -6,6 +6,8 @@ import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.activity.ActivityEntity;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.assertj.core.api.Condition;
 import org.junit.Test;
@@ -32,7 +34,8 @@ public class ActivityControllerDeleteTargetGroupTest {
   @Test
   @WithUserDetails("super@user")
   public void deleteTargetGroupsSuperUserOk() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-200000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-200000000000");
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     assertContaining(activityId, targetGroupId);
@@ -45,7 +48,8 @@ public class ActivityControllerDeleteTargetGroupTest {
   @Test
   @WithUserDetails("provider1@user")
   public void deleteTargetGroupsProviderOk() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-200000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-200000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     assertContaining(activityId, targetGroupId);
@@ -58,7 +62,8 @@ public class ActivityControllerDeleteTargetGroupTest {
   @Test
   @WithUserDetails("admin@user")
   public void deleteTargetGroupsAdminOk() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-300000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-300000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     assertContaining(activityId, targetGroupId);
@@ -71,7 +76,8 @@ public class ActivityControllerDeleteTargetGroupTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider2@user")
   public void deleteTargetGroupsOtherProviderDenied() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-100000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-100000000000");
     String activityId = "00000000-0000-0000-0010-900000000000";
 
     controller.deleteTargetGroups(activityId, targetGroupId);
@@ -79,21 +85,22 @@ public class ActivityControllerDeleteTargetGroupTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void deleteTargetGroupsNoUserDenied() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-100000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-100000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.deleteTargetGroups(activityId, targetGroupId);
   }
 
-  private void assertContaining(String activityId, String targetGroupId) {
+  private void assertContaining(String activityId, List<String> targetGroupIds) {
     Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTargetGroups()).haveAtLeastOne(
-        new Condition<>(t -> t.getId().equals(targetGroupId), "targetGroup exists"));
+        new Condition<>(t -> targetGroupIds.contains(t.getId()), "targetGroup exists"));
   }
 
-  private void assertNotContaining(String activityId, String targetGroupId) {
+  private void assertNotContaining(String activityId, List<String> targetGroupIds) {
     Resource<ActivityEntity> result = (Resource<ActivityEntity>) controller.readOne(activityId);
     assertThat(result.getContent().getTargetGroups())
-        .noneMatch(t -> t.getId().equals(targetGroupId));
+        .noneMatch(t -> targetGroupIds.contains(t.getId()));
   }
 }

@@ -10,6 +10,8 @@ import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.image.ImageService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,8 +40,10 @@ public class OrganisationControllerCreateAndFindImagesTest {
   @WithUserDetails("super@user")
   public void addAndFindImagesSuperUserOk() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()), "image/png");
+    
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes()), "image/png"));
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
     
     Resources<?> result = (Resources<?>) controller
@@ -52,8 +56,10 @@ public class OrganisationControllerCreateAndFindImagesTest {
   @WithUserDetails("admin@user")
   public void addAndFindImagesOwnOrgaOk() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn("test".getBytes());
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()), "image/png");
+    
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes()), "image/png"));
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
 
     Resources<?> result = (Resources<?>) controller
@@ -66,8 +72,11 @@ public class OrganisationControllerCreateAndFindImagesTest {
   @WithUserDetails("admin@user")
   public void addNotValidImageDenied() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn(null);
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", null, "image/png");
+    
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", null, "image/png"));
+    
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
   }
   
@@ -75,8 +84,11 @@ public class OrganisationControllerCreateAndFindImagesTest {
   @WithUserDetails("admin@user")
   public void addNullMimeTypeDenied() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn(null);
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", "test", null);
+    
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", "test", null));
+    
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
   }
   
@@ -84,23 +96,30 @@ public class OrganisationControllerCreateAndFindImagesTest {
   @WithUserDetails("admin@user")
   public void addNotValidMimeTypeDenied() throws IOException {
     given(this.imageService.resize(Mockito.any(), Mockito.any())).willReturn(null);
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", "test", "notvalid");
+    
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", "test", "notvalid"));
+    
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
   }
   
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addAndFindImagesOtherOrgaDenied() throws IOException {
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()), "test");
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes()), "test"));
+    
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
   }
   
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addAndFindImagesNotRegisteredDenied() throws IOException {
-    OrganisationImageEntity imageInput = newOrganisationImageEntity(
-        "test", Base64Utils.encodeToString("test".getBytes()), "test");
+    List<OrganisationImageEntity> imageInput = new ArrayList<>();
+    imageInput.add(newOrganisationImageEntity(
+        "test", Base64Utils.encodeToString("test".getBytes()), "test"));
+    
     controller.addImage("00000000-0000-0000-0008-100000000000", imageInput);
   }
 

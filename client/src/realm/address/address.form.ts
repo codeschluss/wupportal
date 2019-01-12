@@ -180,17 +180,13 @@ export class AddressFormComponent extends BaseForm<AddressModel>
   }
 
   protected cascade(item: AddressModel): Observable<any> {
+    const links = [];
     const provider = this.model['provider'];
 
-    const links = [];
-
     if (this.item.id) {
-      const suburbId = this.item.suburb && this.item.suburb.id;
-
-      links.push(
-        suburbId === this.item.suburbId ? of (null) : provider
-          .relinkSuburb(item.id, Box(this.item.suburbId))
-      );
+      const surbId = this.item.suburb && this.item.suburb.id;
+      if (surbId !== this.item.suburbId) { links.push(provider
+        .relinkSuburb(item.id, Box(this.item.suburbId))); }
     }
 
     return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));

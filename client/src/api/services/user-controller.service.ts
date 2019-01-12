@@ -372,22 +372,13 @@ class UserControllerService extends BaseService {
 
   /**
    * @param userId userId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
    * @return OK
    */
-  userControllerReadOrganisationsResponse(userId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+  userControllerReadOrganisationsResponse(userId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/users/${userId}/organisations`,
@@ -407,16 +398,10 @@ class UserControllerService extends BaseService {
   }
   /**
    * @param userId userId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
    * @return OK
    */
-  userControllerReadOrganisations(userId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): Observable<{}> {
-    return this.userControllerReadOrganisationsResponse(userId, sort, dir, embeddings).pipe(
+  userControllerReadOrganisations(userId: string): Observable<{}> {
+    return this.userControllerReadOrganisationsResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
   }

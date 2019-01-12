@@ -33,7 +33,7 @@ export class ImageFormComponent extends BaseForm<ImageModel> {
   }
 
   public reset(): void {
-    this.group.reset({ images: this.item });
+    this.group.reset({ images: this.item || [] });
   }
 
   protected ngPostInit(): void {

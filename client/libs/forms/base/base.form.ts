@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { AccessTokenModel, CrudModel, TokenProvider } from '@portal/core';
 import { Observable, of } from 'rxjs';
-import { mergeMap, tap } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { BaseFieldComponent } from './base.field';
 import { BaseStepper } from './base.stepper';
 
@@ -110,21 +110,15 @@ export abstract class BaseForm<Model extends CrudModel>
 
   public persist(): Observable<any> {
     const item = Object.assign(new this.model(), this.item);
+
     this.fields.forEach((field) => Object.assign(item, {
       [field.name]: this.group.get(field.name).value
     }));
 
-    if (this.group.dirty && this.model['provider']) {
-      return (item.id
-        ? this.model['provider'].update(item, item.id)
-        : this.model['provider'].create(item)
-      ).pipe(
-        mergeMap((persisted: Model) => this.cascade(persisted)),
-        tap(() => this.group.markAsPristine())
-      );
-    }
-
-    return of(item);
+    return (!this.model['provider'] || !this.group.dirty ? of(item) : item.id
+      ? this.model['provider'].update(item, item.id)
+      : this.model['provider'].create(item)
+    ).pipe(mergeMap((persisted: Model) => this.cascade(persisted)));
   }
 
   public required(field: FormField): boolean {

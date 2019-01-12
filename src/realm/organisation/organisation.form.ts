@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Box } from '@portal/core';
-import { BaseForm, FormField, StringFieldComponent, UrlFieldComponent } from '@portal/forms';
+import { BaseForm, FormField, StringFieldComponent, Tests, UrlFieldComponent } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -15,13 +15,13 @@ import { OrganisationModel } from '../organisation/organisation.model';
           <i18n i18n="@@description">description</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mail'">
-          <i18n i18n="@@mail">mail</i18n>
+          <i18n i18n="@@mail">mail</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
           <i18n i18n="@@title">title</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'phone'">
-          <i18n i18n="@@phone">phone</i18n>
+          <i18n i18n="@@phone">phone</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'videoUrl'">
           <i18n i18n="@@videoUrl">videoUrl</i18n>
@@ -57,12 +57,16 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
     {
       name: 'phone',
       input: StringFieldComponent,
+      tests: [Tests.either('phone', 'mail')],
       type: 'tel'
     },
     {
       name: 'mail',
       input: StringFieldComponent,
-      tests: [Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
+      tests: [
+        Tests.either('phone', 'mail'),
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+      ],
       type: 'email'
     },
     {
@@ -84,21 +88,19 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
   }
 
   protected cascade(item: OrganisationModel): Observable<any> {
+    const links = [];
     const provider = this.model['provider'];
-    const images = this.updated('images');
 
-    const links = [
-      ...images.add.map((i) => provider.pasteImages(item.id, [i])),
-      ...images.del.map((i) => provider.unlinkImage(item.id, i.id)),
-    ];
+    const images = this.updated('images');
+    if (images.add.length) { links.push(provider
+      .pasteImages(item.id, images.add)); }
+    if (images.del.length) { links.push(provider
+      .unlinkImages(item.id, images.del.map((i) => i.id))); }
 
     if (this.item.id) {
       const addrId = this.item.address && this.item.address.id;
-
-      links.push(
-        addrId === this.item.addressId ? of(null) : provider
-          .relinkAddress(item.id, Box(this.item.addressId))
-      );
+      if (addrId !== this.item.addressId) { links.push(provider
+        .relinkAddress(item.id, Box(this.item.addressId))); }
     }
 
     return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));

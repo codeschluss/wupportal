@@ -112,16 +112,16 @@ export class ActivityProvider
     (id: string, organisationId: StringPrimitive) => Observable<any> =
       this.apply(this.service.activityControllerUpdateOrganisationResponse);
 
-  public unlinkSchedule:
-    (id: string, scheduleId: string) => Observable<any> =
+  public unlinkSchedules:
+    (id: string, scheduleId: string[]) => Observable<any> =
       this.apply(this.service.activityControllerDeleteSchedulesResponse);
 
-  public unlinkTag:
-    (id: string, tagId: string) => Observable<any> =
+  public unlinkTags:
+    (id: string, tagIds: string[]) => Observable<any> =
       this.apply(this.service.activityControllerDeleteTagsResponse);
 
-  public unlinkTargetGroup:
-    (id: string, targetGroupId: string) => Observable<any> =
+  public unlinkTargetGroups:
+    (id: string, targetGroupIds: string[]) => Observable<any> =
       this.apply(this.service.activityControllerDeleteTargetGroupsResponse);
 
 }

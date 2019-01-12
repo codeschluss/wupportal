@@ -161,8 +161,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   protected persist(): void {
     const routes = this.route.snapshot.routeConfig.children;
     const root = routes.find((route) => route.path === this.root);
-    const control = (field, value) => root.data.group
-      .addControl(field, new FormControl(value));
+    const control = (field, value) => root.data
+      .group.addControl(field, new FormControl(value));
 
     forkJoin([of(0)].concat(routes.filter((r) => r !== root).map((route) =>
       route.data.form.persist().pipe(map((item) => [route.path, item]))

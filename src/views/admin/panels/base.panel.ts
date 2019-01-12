@@ -1,7 +1,7 @@
 import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MatTab, MatTabGroup } from '@angular/material';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudModel, CrudResolver, Pathfinder, Selfrouter, TokenResolver } from '@portal/core';
+import { CrudModel, CrudResolver, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@portal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../../utils/package';
@@ -63,7 +63,8 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     protected dialog: MatDialog,
     protected pathfinder: Pathfinder,
     protected route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    protected tokenProvider: TokenProvider
   ) {
     super();
   }
@@ -112,10 +113,12 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   }
 
   protected reload(): void {
-    this.router.resetConfig(this.router.config);
-    this.router.navigate([], {
-      preserveQueryParams: true,
-      skipLocationChange: true
+    this.tokenProvider.refresh().subscribe(() => {
+      this.router.resetConfig(this.router.config);
+      this.router.navigate([], {
+        preserveQueryParams: true,
+        skipLocationChange: true
+      });
     });
   }
 

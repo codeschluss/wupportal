@@ -9,3 +9,4 @@ export * from './fields/string.field';
 export * from './fields/url.field';
 export * from './utils/module';
 export * from './utils/pager';
+export * from './utils/tests';

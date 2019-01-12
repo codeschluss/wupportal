@@ -4,6 +4,7 @@ import { CrudJoiner } from '@portal/core';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/activity/activity.model';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
+import { ProviderModel } from '../../../../realm/provider/provider.model';
 import { UserModel } from '../../../../realm/user/user.model';
 import { RequestDialogComponent } from '../../dialogs/request.dialog';
 import { BasePanel } from '../base.panel';
@@ -24,6 +25,7 @@ export class AccountPanelComponent extends BasePanel {
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
       .with('organisations').yield('address').yield('suburb')
+      .with('organisations').yield('provider')
   };
 
   public get activities(): ActivityModel[] {
@@ -50,11 +52,10 @@ export class AccountPanelComponent extends BasePanel {
     return this.organisationAdmin.includes(item.id);
   }
 
-  // TODO: get provider
   public demote(item: OrganisationModel): void {
     const provider = UserModel['provider'];
 
-    this.confirm(item).pipe(
+    this.confirm(this.provided(item)).pipe(
       mergeMap(() => provider.unlinkOrganisation(this.userId, item.id))
     ).subscribe(() => this.reload());
   }
@@ -62,6 +63,13 @@ export class AccountPanelComponent extends BasePanel {
   public request(): void {
     this.dialog.open(RequestDialogComponent).afterClosed()
       .pipe(filter(Boolean)).subscribe(() => this.reload());
+  }
+
+  private provided(item: OrganisationModel): ProviderModel {
+    return Object.assign(item.provider, {
+      organisation: item,
+      user: this.user
+    });
   }
 
 }

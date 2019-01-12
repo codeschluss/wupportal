@@ -13,6 +13,7 @@ import { ImageModel } from './image.model';
     label {
       align-items: center;
       border: 1px dotted rgba(0, 0, 0, 0.87);
+      cursor: pointer;
       display: flex;
       height: 180px;
       justify-content: center;
@@ -155,10 +156,6 @@ export class ImageFieldComponent extends BaseFieldComponent
 
   public source(item: ImageModel): string {
     return `url(data:${item.mimeType};base64,${item.imageData})`;
-  }
-
-  protected ngPostInit(): void {
-    if (!this.value) { this.value = []; }
   }
 
 }

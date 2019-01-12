@@ -32,7 +32,7 @@ export class OrganisationProvider
       model: ImageModel
     },
     {
-      field: 'providers',
+      field: 'provider',
       method: () => empty(),
       model: ProviderModel
     },
@@ -95,8 +95,8 @@ export class OrganisationProvider
     (id: string, activityId: string) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteActivityResponse);
 
-  public unlinkImage:
-    (id: string, imageId: string) => Observable<any> =
+  public unlinkImages:
+    (id: string, imageIds: string[]) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteImagesResponse);
 
   public unlinkUser:

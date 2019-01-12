@@ -48,6 +48,7 @@ export class UrlFieldComponent extends BaseFieldComponent
   private update(value: string): void {
     this.input.patchValue(value.split('://').pop(), { emitEvent: false });
     this.toggle.patchValue(value.startsWith('https://'), { emitEvent: false });
+    this.toggle[value ? 'enable' : 'disable']({ emitEvent: false });
     this.transport = this.toggle.value ? 'https://' : 'http://';
   }
 

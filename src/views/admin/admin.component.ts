@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingProvider, Pathfinder, TokenProvider } from '@portal/core';
-import { Subscription } from 'rxjs';
+import { empty, Subscription } from 'rxjs';
 import { filter, mergeMap, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { ReloginDialogComponent } from './dialogs/relogin.dialog';
@@ -29,11 +29,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     private tokenProvider: TokenProvider
   ) { }
 
-  private worker: Subscription;
+  private worker: Subscription = empty().subscribe();
 
   public ngOnInit(): void {
-    console.log('AdminComponent.ngOnInit()');
-
     const claim = ClientPackage.config.jwtClaims.userId;
     const userId = this.route.snapshot.data.tokens.access[claim];
 
@@ -50,8 +48,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    console.log('AdminComponent.ngOnDestroy()');
-
     this.worker.unsubscribe();
   }
 

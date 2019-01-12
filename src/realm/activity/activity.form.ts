@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Box } from '@portal/core';
-import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
@@ -69,12 +69,16 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
     {
       name: 'phone',
       input: StringFieldComponent,
+      tests: [Tests.either('phone', 'mail')],
       type: 'tel'
     },
     {
       name: 'mail',
       input: StringFieldComponent,
-      tests: [Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
+      tests: [
+        Tests.either('phone', 'mail'),
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+      ],
       type: 'email'
     },
     {
@@ -119,8 +123,6 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
   }
 
   protected ngPostInit(): void {
-    this.group.valueChanges.subscribe(() => this.validate());
-
     if (this.item.id && !this.token.createdActivities.includes(this.item.id)) {
       this.fields[5].locked = true;
     }
@@ -134,45 +136,42 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
   }
 
   protected cascade(item: ActivityModel): Observable<any> {
+    const links = [];
     const provider = this.model['provider'];
-    const schedules = this.updated('schedules');
-    const tags = this.updated('tags');
-    const targets = this.updated('targetGroups');
 
-    const links = [
-      ...schedules.add.map((s) => provider.pasteSchedules(item.id, [s])),
-      ...schedules.del.map((s) => provider.unlinkSchedule(item.id, s.id)),
-      ...tags.add.map((t) => provider.pasteTags(item.id, [t])),
-      ...tags.del.map((t) => provider.unlinkTag(item.id, t.id)),
-      ...targets.add.map((t) => provider.linkTargetGroups(item.id, [t.id])),
-      ...targets.del.map((t) => provider.unlinkTargetGroup(item.id, t.id)),
-    ];
+    const schedules = this.updated('schedules');
+    if (schedules.add.length) { links.push(provider
+      .pasteSchedules(item.id, schedules.add)); }
+    if (schedules.del.length) { links.push(provider
+      .unlinkSchedules(item.id, schedules.del.map((i) => i.id))); }
+
+    const tags = this.updated('tags');
+    if (tags.add.length) { links.push(provider
+      .pasteTags(item.id, tags.add)); }
+    if (tags.del.length) { links.push(provider
+      .unlinkTags(item.id, tags.del.map((i) => i.id))); }
+
+    const targetGroups = this.updated('targetGroups');
+    if (targetGroups.add.length) { links.push(provider
+      .linkTargetGroups(item.id, targetGroups.add.map((i) => i.id))); }
+    if (targetGroups.del.length) { links.push(provider
+      .unlinkTargetGroups(item.id, targetGroups.del.map((i) => i.id))); }
 
     if (this.item.id) {
       const addrId = this.item.address && this.item.address.id;
-      const catId = this.item.category && this.item.category.id;
-      const orgaId = this.item.organisation && this.item.organisation.id;
+      if (addrId !== this.item.addressId) { links.push(provider
+        .relinkAddress(item.id, Box(this.item.addressId))); }
 
-      links.push(
-        addrId === this.item.addressId ? of(null) : provider
-          .relinkAddress(item.id, Box(this.item.addressId)),
-        catId === this.item.categoryId ? of(null) : provider
-          .relinkCategory(item.id, Box(this.item.categoryId)),
-        orgaId === this.item.organisationId ? of(null) : provider
-          .relinkOrganisation(item.id, Box(this.item.organisationId))
-      );
+      const goryId = this.item.category && this.item.category.id;
+      if (goryId !== this.item.categoryId) { links.push(provider
+        .relinkCategory(item.id, Box(this.item.categoryId))); }
+
+      const orgaId = this.item.organisation && this.item.organisation.id;
+      if (orgaId !== this.item.organisationId) { links.push(provider
+        .relinkOrganisation(item.id, Box(this.item.organisationId))); }
     }
 
     return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
-  }
-
-  private validate(): void {
-    const either = ['mail', 'phone']
-      .map((e) => this.group.get(e)).filter(Boolean);
-
-    either.some((e) => e && e.value)
-      ? either.forEach((e) => e.updateValueAndValidity({ emitEvent: false }))
-      : either.forEach((e) => e.setErrors({ either: true }));
   }
 
 }

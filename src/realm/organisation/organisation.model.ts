@@ -23,7 +23,7 @@ export class OrganisationModel
   public activities: ActivityModel[] & Observable<ActivityModel[]>;
   public address: AddressModel & Observable<AddressModel>;
   public images: ImageModel[] & Observable<ImageModel[]>;
-  public providers: ProviderModel[] & Observable<ProviderModel[]>;
+  public provider: ProviderModel & Observable<ProviderModel>;
   public users: UserModel[] & Observable<UserModel[]>;
 
 }

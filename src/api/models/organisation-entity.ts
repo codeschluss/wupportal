@@ -2,10 +2,11 @@
 export interface OrganisationEntity {
   mail?: string;
   _embedded?: {};
+  approved?: boolean;
   created?: string;
   description?: string;
   id?: string;
-  approved?: boolean;
+  addressId?: string;
   modified?: string;
   name?: string;
   phone?: string;

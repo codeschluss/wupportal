@@ -397,7 +397,7 @@ public class OrganisationController
    * @param imageIds the image ids
    * @return the response entity
    */
-  @DeleteMapping("/organisations/{organisationId}/images/{imageId}")
+  @DeleteMapping("/organisations/{organisationId}/images")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> deleteImages(@PathVariable String organisationId,
       @RequestParam(value = "imageIds", required = true) List<String> imageIds) {

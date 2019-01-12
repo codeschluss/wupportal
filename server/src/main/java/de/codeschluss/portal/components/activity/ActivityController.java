@@ -461,7 +461,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @param scheduleIds the schedule ids
    * @return the response entity
    */
-  @DeleteMapping("/activities/{activityId}/schedules/{scheduleId}")
+  @DeleteMapping("/activities/{activityId}/schedules")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteSchedules(@PathVariable String activityId,
       @RequestParam(value = "scheduleIds", required = true) List<String> scheduleIds) {

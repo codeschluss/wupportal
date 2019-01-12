@@ -148,7 +148,7 @@ public class UserController extends CrudController<UserEntity, UserService> {
    * @return the response entity
    */
   @GetMapping("/users/{userId}/organisations")
-//  @OwnUserOrSuperUserPermission
+  @OwnUserOrSuperUserPermission
   public ResponseEntity<?> readOrganisations(
       @PathVariable String userId) {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);

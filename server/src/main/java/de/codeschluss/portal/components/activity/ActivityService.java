@@ -73,7 +73,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    */
   private boolean validContactData(ActivityEntity newActivity) {
     return (newActivity.getMail() != null && !newActivity.getMail().isEmpty())
-        || (newActivity.getPhone() != null && !newActivity.getMail().isEmpty());
+        || (newActivity.getPhone() != null && !newActivity.getPhone().isEmpty());
   }
 
   /**

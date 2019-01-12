@@ -1,19 +1,18 @@
 /* tslint:disable */
-import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { filter as __filter, map as __map } from 'rxjs/operators';
-import { ApiConfiguration } from '../api-configuration';
+import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { BaseService } from '../base-service';
+import { ApiConfiguration } from '../api-configuration';
+import { StrictHttpResponse } from '../strict-http-response';
+import { Observable } from 'rxjs';
+import { map as __map, filter as __filter } from 'rxjs/operators';
+
 import { ActivityEntity } from '../models/activity-entity';
 import { ResourceActivityEntity } from '../models/resource-activity-entity';
 import { StringPrimitive } from '../models/string-primitive';
 import { ResourcesObject } from '../models/resources-object';
 import { ScheduleEntity } from '../models/schedule-entity';
-import { StringPrimitive } from '../models/string-primitive';
 import { TagEntity } from '../models/tag-entity';
-import { StrictHttpResponse } from '../strict-http-response';
-
 
 /**
  * Activity Controller
@@ -1038,5 +1037,4 @@ module ActivityControllerService {
   }
 }
 
-export { ActivityControllerService };
-
+export { ActivityControllerService }

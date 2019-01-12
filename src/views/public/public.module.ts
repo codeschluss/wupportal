@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatBottomSheetModule, MatCardModule, MatDatepickerModule, MatExpansionModule, MatListModule, MatPaginatorModule } from '@angular/material';
+import { MatBottomSheetModule, MatButtonModule, MatCardModule, MatDatepickerModule, MatExpansionModule, MatInputModule, MatListModule, MatPaginatorModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -66,6 +66,9 @@ const PublicDeclarations = [
 
 const PublicImports = [
   MatSelectModule,
+  MatInputModule,
+  FormsModule,
+  MatButtonModule,
   MatChipsModule,
   MatListModule,
   MatCardModule,

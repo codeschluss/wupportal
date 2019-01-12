@@ -36,7 +36,8 @@ const PublicRoutes = [
         size: 15,
         dir: 'asc',
         page: 0,
-        sort: 'schedules.startDate'
+        sort: 'schedules.startDate',
+        current: true
       })
         .with('category')
         .with('address').yield('suburb')

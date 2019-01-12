@@ -15,7 +15,10 @@ import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -136,16 +139,25 @@ public class OrganisationService
 
     return assembler.entitiesToResources(result, params);
   }
-
+  
   /**
-   * Convert to resource.
+   * Convert to resources embedded providers.
    *
-   * @param provider
-   *          the provider
-   * @return the resource
+   * @param providers the providers
+   * @return the resources
    */
-  public Resource<OrganisationEntity> convertToResource(ProviderEntity provider) {
-    return assembler.toResource(provider.getOrganisation());
+  public Resources<?> convertToResourcesEmbeddedProviders(List<ProviderEntity> providers) {
+    if (providers == null || providers.isEmpty()) {
+      throw new NotFoundException("No member exists");
+    }
+    
+    List<Resource<?>> embeddedOrgas = providers.stream().map(provider -> {
+      Map<String, Object> embedded = new HashMap<>();
+      embedded.put("provider", provider);
+      return assembler.resourceWithEmbeddable(provider.getOrganisation(), embedded);
+    }).collect(Collectors.toList());
+    
+    return assembler.toListResources(embeddedOrgas, null);
   }
 
   /**

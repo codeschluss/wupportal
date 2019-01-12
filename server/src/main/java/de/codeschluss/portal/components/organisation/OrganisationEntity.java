@@ -116,7 +116,7 @@ public class OrganisationEntity extends BaseResource {
     links.add(linkTo(methodOn(OrganisationController.class)
         .readActivities(id, null)).withRel("activities"));
     links.add(linkTo(methodOn(OrganisationController.class)
-        .readUsers(id, null)).withRel("users"));
+        .readUsers(id)).withRel("users"));
     links.add(linkTo(methodOn(OrganisationController.class)
         .readAddress(id)).withRel("address"));
     links.add(linkTo(methodOn(OrganisationController.class)

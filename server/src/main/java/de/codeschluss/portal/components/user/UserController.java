@@ -148,16 +148,11 @@ public class UserController extends CrudController<UserEntity, UserService> {
    * @return the response entity
    */
   @GetMapping("/users/{userId}/organisations")
-  @OwnUserOrSuperUserPermission
+//  @OwnUserOrSuperUserPermission
   public ResponseEntity<?> readOrganisations(
-      @PathVariable String userId,
-      BaseParams params) {
+      @PathVariable String userId) {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
-    try {
-      return ok(organisationService.getByProviders(providers, params));
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage());
-    }
+    return ok(organisationService.convertToResourcesEmbeddedProviders(providers));
   }
 
   /**

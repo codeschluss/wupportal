@@ -253,8 +253,7 @@ public class OrganisationController
   @GetMapping("/organisations/{organisationId}/users")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> readUsers(
-      @PathVariable String organisationId,
-      BaseParams params) {
+      @PathVariable String organisationId) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
     return ok(userService.convertToResourcesEmbeddedProviders(providers));
   }

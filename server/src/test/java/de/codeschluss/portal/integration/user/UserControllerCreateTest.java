@@ -108,7 +108,7 @@ public class UserControllerCreateTest {
   @SuppressWarnings("unchecked")
   private void assertContaining(String userId, String... orgaId) {
     Resources<Resource<OrganisationEntity>> result = (Resources<Resource<OrganisationEntity>>) 
-        controller.readOrganisations(userId, null).getBody();
+        controller.readOrganisations(userId).getBody();
     assertThat(result.getContent()).haveExactly(orgaId.length, new Condition<>(
         p -> Arrays.asList(orgaId).contains(p.getContent().getId()), 
         "new organisation with given orga exists"));

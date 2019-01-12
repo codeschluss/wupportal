@@ -81,7 +81,7 @@ public class UserEntity extends BaseResource {
     links.add(linkTo(methodOn(UserController.class)
         .readOne(getId())).withSelfRel());
     links.add(linkTo(methodOn(UserController.class)
-        .readOrganisations(id, null)).withRel("organisations"));
+        .readOrganisations(id)).withRel("organisations"));
     links.add(linkTo(methodOn(UserController.class)
         .readActivities(id, null)).withRel("activities"));
 

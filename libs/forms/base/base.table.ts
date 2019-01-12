@@ -135,9 +135,12 @@ export abstract class BaseTable<Model extends CrudModel>
     const column = this.columns.find((c) => c.name === this.sorter.active);
     const field = column ? column.value : (item) => item[this.sorter.active];
     const regex = this.searcher.value && new RegExp(this.searcher.value, 'i');
-    const items = this.items.filter((item) => !regex || Object.values(item)
-      .some((value) => typeof value === 'string' && value.search(regex) >= 0));
+    const matcher = (item) => !regex || Object.values(item).some((value) =>
+      value instanceof CrudModel
+        ? matcher(value) : typeof value === 'string'
+        ? value.search(regex) >= 0 : false);
 
+    const items = this.items.filter((item) => matcher(item));
     this.pager.length = items.length;
     this.source.next(items.sort((a, b) => this.sorter.direction === 'asc'
       ? (field(a) || '').localeCompare(field(b) || '')

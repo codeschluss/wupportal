@@ -537,19 +537,19 @@ class OrganisationControllerService extends BaseService {
 
   /**
    * @param organisationId organisationId
-   * @param imageId imageId
+   * @param imageIds imageIds
    * @return OK
    */
   organisationControllerDeleteImagesResponse(organisationId: string,
-    imageId: string): Observable<StrictHttpResponse<{}>> {
+    imageIds: Array<string>): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
+    (imageIds || []).forEach(val => {if (val != null) __params = __params.append('imageIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${organisationId}/images/${imageId}`,
+      this.rootUrl + `/organisations/${organisationId}/images`,
       __body,
       {
         headers: __headers,
@@ -566,12 +566,12 @@ class OrganisationControllerService extends BaseService {
   }
   /**
    * @param organisationId organisationId
-   * @param imageId imageId
+   * @param imageIds imageIds
    * @return OK
    */
   organisationControllerDeleteImages(organisationId: string,
-    imageId: string): Observable<{}> {
-    return this.organisationControllerDeleteImagesResponse(organisationId, imageId).pipe(
+    imageIds: Array<string>): Observable<{}> {
+    return this.organisationControllerDeleteImagesResponse(organisationId, imageIds).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -614,22 +614,13 @@ class OrganisationControllerService extends BaseService {
 
   /**
    * @param organisationId organisationId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
    * @return OK
    */
-  organisationControllerReadUsersResponse(organisationId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadUsersResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/organisations/${organisationId}/users`,
@@ -649,16 +640,10 @@ class OrganisationControllerService extends BaseService {
   }
   /**
    * @param organisationId organisationId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
    * @return OK
    */
-  organisationControllerReadUsers(organisationId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): Observable<{}> {
-    return this.organisationControllerReadUsersResponse(organisationId, sort, dir, embeddings).pipe(
+  organisationControllerReadUsers(organisationId: string): Observable<{}> {
+    return this.organisationControllerReadUsersResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
   }

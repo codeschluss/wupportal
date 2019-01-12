@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 // TODO: Auto-generated Javadoc
@@ -328,10 +329,10 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
    * @param tagIds the tag ids
    * @return the response entity
    */
-  @DeleteMapping("/activities/{activityId}/tags/{tagId}")
+  @DeleteMapping("/activities/{activityId}/tags")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteTags(@PathVariable String activityId,
-      List<String> tagIds) {
+      @RequestParam(value = "tagIds", required = true) List<String> tagIds) {
     try {
       service.deleteTags(activityId, tagIds);
       return noContent().build();
@@ -384,18 +385,16 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Delete target groups.
    *
-   * @param activityId
-   *          the activity id
-   * @param targetGroupId
-   *          the target group id
+   * @param activityId the activity id
+   * @param targetGroupIds the target group ids
    * @return the response entity
    */
-  @DeleteMapping("/activities/{activityId}/targetgroups/{targetGroupId}")
+  @DeleteMapping("/activities/{activityId}/targetgroups")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteTargetGroups(@PathVariable String activityId,
-      List<String> targetGroupId) {
+      @RequestParam(value = "targetGroupIds", required = true) List<String> targetGroupIds) {
     try {
-      service.deleteTargetGroup(activityId, targetGroupId);
+      service.deleteTargetGroup(activityId, targetGroupIds);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");
@@ -458,18 +457,16 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   /**
    * Delete schedules.
    *
-   * @param activityId
-   *          the activity id
-   * @param scheduleId
-   *          the schedule id
+   * @param activityId the activity id
+   * @param scheduleIds the schedule ids
    * @return the response entity
    */
   @DeleteMapping("/activities/{activityId}/schedules/{scheduleId}")
   @OwnOrOrgaActivityOrSuperUserPermission
   public ResponseEntity<?> deleteSchedules(@PathVariable String activityId,
-      List<String> scheduleId) {
+      @RequestParam(value = "scheduleIds", required = true) List<String> scheduleIds) {
     try {
-      scheduleService.deleteAll(scheduleId);
+      scheduleService.deleteAll(scheduleIds);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Activity does not exist");

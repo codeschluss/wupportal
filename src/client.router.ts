@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CrudJoiner, CrudResolver, I18nResolver, SessionResolver } from 'libs/core';
-import { OrganisationModel } from './realm/organisation/organisation.model';
+import { I18nResolver, SessionResolver } from 'libs/core';
 import { LayoutComponent } from './views/layout/layout.component';
 import { LoginComponent } from './views/public/login/login.component';
 import { RegisterComponent } from './views/public/login/register.component';
@@ -32,13 +31,7 @@ const ClientRoutes = [
       },
       {
         path: 'register',
-        component: RegisterComponent,
-        resolve: {
-          organisations: CrudResolver
-        },
-        data: {
-          organisations: CrudJoiner.of(OrganisationModel)
-        }
+        component: RegisterComponent
       },
       {
         path: '**',

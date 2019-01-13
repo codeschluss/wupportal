@@ -1,8 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { empty, Observable } from 'rxjs';
-import { BooleanPrimitive } from '../../api/models/boolean-primitive';
-import { StringPrimitive } from '../../api/models/string-primitive';
+import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive';
+import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -59,11 +59,11 @@ export class UserProvider
     .UserControllerReadAllParams) => Observable<UserModel[]>;
 
   public grantSuperUser:
-    (id: string, grant: BooleanPrimitive) => Observable<any> =
+    (id: string, grant: Boolean) => Observable<any> =
       this.apply(this.service.userControllerGrantSuperuserRightResponse);
 
   public resetPassword:
-    (username: StringPrimitive) => Observable<any> =
+    (username: String) => Observable<any> =
       this.apply(this.service.userControllerResetPasswordResponse);
 
   public linkOrganisations:
@@ -71,11 +71,11 @@ export class UserProvider
       this.apply(this.service.userControllerAddOrganisationResponse);
 
   public unlinkActivity:
-    (id: string, activityId: string) => Observable<any> =
+    (id: string, activityId: String) => Observable<any> =
       this.apply(this.service.userControllerDeleteActivityResponse);
 
   public unlinkOrganisation:
-    (id: string, organisationId) => Observable<any> =
+    (id: string, organisationId: String) => Observable<any> =
       this.apply(this.service.userControllerDeleteOrganisationResponse);
 
 }

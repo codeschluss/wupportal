@@ -44,6 +44,9 @@
       <trans-unit id="register" datatype="html">
         <target>register</target>
       </trans-unit>
+      <trans-unit id="applyAsBlogger" datatype="html">
+        <target>Apply as blogger</target>
+      </trans-unit>
       <trans-unit id="forgetPassword" datatype="html">
         <target>forget your password?</target>
       </trans-unit>

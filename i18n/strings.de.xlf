@@ -50,6 +50,9 @@
       <trans-unit id="enterUserName" datatype="html">
         <target>Bitte Username eingeben</target>
       </trans-unit>
+      <trans-unit id="applyAsBlogger" datatype="html">
+        <target>Als Blogger bewerben</target>
+      </trans-unit>
       <trans-unit id="login" datatype="html">
         <target>Anmelden</target>
       </trans-unit>

@@ -71,11 +71,11 @@ export class UserProvider
       this.apply(this.service.userControllerAddOrganisationResponse);
 
   public unlinkActivity:
-    (id: string, activityId: String) => Observable<any> =
+    (id: string, activityId: string) => Observable<any> =
       this.apply(this.service.userControllerDeleteActivityResponse);
 
   public unlinkOrganisation:
-    (id: string, organisationId: String) => Observable<any> =
+    (id: string, organisationId: string) => Observable<any> =
       this.apply(this.service.userControllerDeleteOrganisationResponse);
 
 }

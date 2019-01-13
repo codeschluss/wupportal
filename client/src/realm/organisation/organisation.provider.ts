@@ -92,7 +92,7 @@ export class OrganisationProvider
       this.apply(this.service.organisationControllerUpdateAddressResponse);
 
   public unlinkActivity:
-    (id: string, activityId: String) => Observable<any> =
+    (id: string, activityId: string) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteActivityResponse);
 
   public unlinkImages:
@@ -100,7 +100,7 @@ export class OrganisationProvider
       this.apply(this.service.organisationControllerDeleteImagesResponse);
 
   public unlinkUser:
-    (id: string, userId: String) => Observable<any> =
+    (id: string, userId: string) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteUserResponse);
 
 }

@@ -35,6 +35,9 @@
       <trans-unit id="blogs" datatype="html">
         <target>Blogs</target>
       </trans-unit>
+      <trans-unit id="blogAboutActivity" datatype="html">
+        <target>Blog zur Veranstaltung</target>
+      </trans-unit>
       <trans-unit id="noBrowserSupportVideo" datatype="html">
         <target>Leider unterstützt dein Browser die Wiedergabe von Videos nicht</target>
       </trans-unit>
@@ -53,6 +56,9 @@
       <trans-unit id="logOut" datatype="html">
         <target>Abmelden</target>
       </trans-unit>
+      <trans-unit id="successfullyLoggedOut" datatype="html">
+        <target>Erfolgreich abgemeldet</target>
+      </trans-unit>
       <trans-unit id="wrongUserNameOrPassword" datatype="html">
         <target>Passwort oder Username falsch</target>
       </trans-unit>
@@ -60,7 +66,7 @@
         <target>Es scheint ein Problem mit dem Server vorzuligen. Bitte versuchen Sie es später nochmal.</target>
       </trans-unit>
       <trans-unit id="back" datatype="html">
-        <target>zurück</target>
+        <target>Zurück</target>
       </trans-unit>
       <trans-unit id="notSamePassword" datatype="html">
         <target>Die eingegebenen Passwörter stimmen nicht überein</target>
@@ -107,8 +113,8 @@
       <trans-unit id="createMissingOrganisation" datatype="html">
         <target>Bitte erstellen Sie die fehlende Organisation</target>
       </trans-unit>
-      <trans-unit id="orgaDoesNotExist" datatype="html">
-        <target>Meine Organisation ist nicht dabei</target>
+      <trans-unit id="createNewOrganisation" datatype="html">
+        <target>Neue Organisation anlegen</target>
       </trans-unit>
       <trans-unit id="createdAt" datatype="html">
         <target>erstellt am</target>
@@ -116,7 +122,6 @@
       <trans-unit id="noResults" datatype="html">
         <target>Keine Ergebnisse</target>
       </trans-unit>
-
       <trans-unit id="aboutWupportal" datatype="html">
 				<target>Über das Wupportal</target>
       </trans-unit>

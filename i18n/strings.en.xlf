@@ -35,6 +35,9 @@
       <trans-unit id="blogs" datatype="html">
         <target>Blogs</target>
       </trans-unit>
+      <trans-unit id="blogAboutActivity" datatype="html">
+        <target>Blog about activity</target>
+      </trans-unit>
       <trans-unit id="noBrowserSupportVideo" datatype="html">
         <target>No browser support for video</target>
       </trans-unit>
@@ -52,6 +55,9 @@
       </trans-unit>
       <trans-unit id="logOut" datatype="html">
         <target>Log out</target>
+      </trans-unit>
+      <trans-unit id="successfullyLoggedOut" datatype="html">
+        <target>Successfully logged out</target>
       </trans-unit>
       <trans-unit id="wrongUserNameOrPassword" datatype="html">
         <target>Password or user name wrong</target>
@@ -107,8 +113,8 @@
       <trans-unit id="createMissingOrganisation" datatype="html">
         <target>Please create the missing organisation</target>
       </trans-unit>
-      <trans-unit id="orgaDoesNotExist" datatype="html">
-        <target>Can't find my organisation</target>
+      <trans-unit id="createNewOrganisation" datatype="html">
+        <target>Create new organisation</target>
       </trans-unit>
       <trans-unit id="createdAt" datatype="html">
         <target>created at</target>
@@ -116,9 +122,6 @@
       <trans-unit id="noResults" datatype="html">
         <target>No results</target>
       </trans-unit>
-
-
-
       <trans-unit id="aboutWupportal" datatype="html">
         <target>About Wupportal</target>
       </trans-unit>

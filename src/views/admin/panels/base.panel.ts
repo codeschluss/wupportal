@@ -4,6 +4,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CrudModel, CrudResolver, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@portal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
+import { UserProvider } from '../../../realm/user/user.provider';
 import { ClientPackage } from '../../../utils/package';
 import { DeleteDialogComponent } from '../dialogs/delete.dialog';
 
@@ -64,7 +65,8 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     protected pathfinder: Pathfinder,
     protected route: ActivatedRoute,
     protected router: Router,
-    protected tokenProvider: TokenProvider
+    protected tokenProvider: TokenProvider,
+    protected userProvider: UserProvider
   ) {
     super();
   }

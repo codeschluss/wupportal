@@ -12,7 +12,10 @@ import { AddressFormComponent } from './address/address.form';
 import { AddressProvider } from './address/address.provider';
 import { AddressStepperComponent } from './address/address.stepper';
 import { AddressTableComponent } from './address/address.table';
+import { BlogFormComponent } from './blog/blog.form';
 import { BlogProvider } from './blog/blog.provider';
+import { BlogStepperComponent } from './blog/blog.stepper';
+import { BlogTableComponent } from './blog/blog.table';
 import { CategoryFormComponent } from './category/category.form';
 import { CategoryProvider } from './category/category.provider';
 import { CategoryStepperComponent } from './category/category.stepper';
@@ -29,7 +32,10 @@ import { OrganisationFormComponent } from './organisation/organisation.form';
 import { OrganisationProvider } from './organisation/organisation.provider';
 import { OrganisationStepperComponent } from './organisation/organisation.stepper';
 import { OrganisationTableComponent } from './organisation/organisation.table';
+import { PageFormComponent } from './page/page.form';
 import { PageProvider } from './page/page.provider';
+import { PageStepperComponent } from './page/page.stepper';
+import { PageTableComponent } from './page/page.table';
 import { ProviderProvider } from './provider/provider.provider';
 import { ProviderTableComponent } from './provider/provider.table';
 import { ScheduleFieldComponent } from './schedule/schedule.field';
@@ -46,7 +52,10 @@ import { TargetGroupFormComponent } from './target-group/target-group.form';
 import { TargetGroupProvider } from './target-group/target-group.provider';
 import { TargetGroupStepperComponent } from './target-group/target-group.stepper';
 import { TargetGroupTableComponent } from './target-group/target-group.table';
+import { TopicFormComponent } from './topic/topic.form';
 import { TopicProvider } from './topic/topic.provider';
+import { TopicStepperComponent } from './topic/topic.stepper';
+import { TopicTableComponent } from './topic/topic.table';
 import { TranslationFormComponent } from './translation/translation.form';
 import { TranslationProvider } from './translation/translation.provider';
 import { UserFormComponent } from './user/user.form';
@@ -62,15 +71,18 @@ const fields: Type<BaseFieldComponent>[] = [
 const forms: Type<BaseForm<CrudModel>>[] = [
   ActivityFormComponent,
   AddressFormComponent,
+  BlogFormComponent,
   CategoryFormComponent,
   ConfigurationFormComponent,
   ImageFormComponent,
   LanguageFormComponent,
   OrganisationFormComponent,
+  PageFormComponent,
   ScheduleFormComponent,
   SuburbFormComponent,
   TagFormComponent,
   TargetGroupFormComponent,
+  TopicFormComponent,
   TranslationFormComponent,
   UserFormComponent
 ];
@@ -102,25 +114,31 @@ const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
 const steppers: Type<BaseStepper<CrudModel>>[] = [
   ActivityStepperComponent,
   AddressStepperComponent,
+  BlogStepperComponent,
   CategoryStepperComponent,
   LanguageStepperComponent,
   OrganisationStepperComponent,
+  PageStepperComponent,
   SuburbStepperComponent,
   TagStepperComponent,
   TargetGroupStepperComponent,
+  TopicStepperComponent,
   UserStepperComponent
 ];
 
 const tables: Type<BaseTable<CrudModel>>[] = [
   ActivityTableComponent,
   AddressTableComponent,
+  BlogTableComponent,
   CategoryTableComponent,
   LanguageTableComponent,
   OrganisationTableComponent,
+  PageTableComponent,
   ProviderTableComponent,
   SuburbTableComponent,
   TagTableComponent,
   TargetGroupTableComponent,
+  TopicTableComponent,
   UserTableComponent
 ];
 

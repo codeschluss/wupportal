@@ -9,6 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { PageEntity } from '../models/page-entity';
 import { ResourcePageEntity } from '../models/resource-page-entity';
+import { StringPrimitive } from '../models/string-primitive';
 
 /**
  * Page Controller
@@ -272,6 +273,47 @@ class PageControllerService extends BaseService {
    */
   pageControllerReadTopic(pageId: string): Observable<{}> {
     return this.pageControllerReadTopicResponse(pageId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param pageId pageId
+   * @param topicId topicId
+   * @return OK
+   */
+  pageControllerUpdateTopicResponse(pageId: string,
+    topicId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = topicId;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/pages/${pageId}/topic`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param pageId pageId
+   * @param topicId topicId
+   * @return OK
+   */
+  pageControllerUpdateTopic(pageId: string,
+    topicId: StringPrimitive): Observable<{}> {
+    return this.pageControllerUpdateTopicResponse(pageId, topicId).pipe(
       __map(_r => _r.body as {})
     );
   }

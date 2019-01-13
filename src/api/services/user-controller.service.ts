@@ -472,6 +472,78 @@ class UserControllerService extends BaseService {
 
   /**
    * @param userId userId
+   * @return OK
+   */
+  userControllerReadBloggerResponse(userId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/users/${userId}/blogger`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param userId userId
+   * @return OK
+   */
+  userControllerReadBlogger(userId: string): Observable<{}> {
+    return this.userControllerReadBloggerResponse(userId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param userId userId
+   * @return OK
+   */
+  userControllerDeleteBloggerResponse(userId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/users/${userId}/blogger`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param userId userId
+   * @return OK
+   */
+  userControllerDeleteBlogger(userId: string): Observable<{}> {
+    return this.userControllerDeleteBloggerResponse(userId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param userId userId
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
@@ -568,7 +640,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerGrantBloggerRightResponse(userId: string,
-    isBlogger: boolean): Observable<StrictHttpResponse<{}>> {
+    isBlogger: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -597,7 +669,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerGrantBloggerRight(userId: string,
-    isBlogger: boolean): Observable<{}> {
+    isBlogger: BooleanPrimitive): Observable<{}> {
     return this.userControllerGrantBloggerRightResponse(userId, isBlogger).pipe(
       __map(_r => _r.body as {})
     );
@@ -605,22 +677,13 @@ class UserControllerService extends BaseService {
 
   /**
    * @param userId userId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
    * @return OK
    */
-  userControllerReadOrganisationsResponse(userId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+  userControllerReadOrganisationsResponse(userId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/users/${userId}/organisations`,
@@ -640,16 +703,10 @@ class UserControllerService extends BaseService {
   }
   /**
    * @param userId userId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
    * @return OK
    */
-  userControllerReadOrganisations(userId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): Observable<{}> {
-    return this.userControllerReadOrganisationsResponse(userId, sort, dir, embeddings).pipe(
+  userControllerReadOrganisations(userId: string): Observable<{}> {
+    return this.userControllerReadOrganisationsResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
   }

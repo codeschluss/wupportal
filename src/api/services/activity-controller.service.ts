@@ -676,19 +676,19 @@ class ActivityControllerService extends BaseService {
 
   /**
    * @param activityId activityId
-   * @param scheduleId scheduleId
+   * @param scheduleIds scheduleIds
    * @return OK
    */
   activityControllerDeleteSchedulesResponse(activityId: string,
-    scheduleId: string): Observable<StrictHttpResponse<{}>> {
+    scheduleIds: Array<string>): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
+    (scheduleIds || []).forEach(val => {if (val != null) __params = __params.append('scheduleIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/activities/${activityId}/schedules/${scheduleId}`,
+      this.rootUrl + `/activities/${activityId}/schedules`,
       __body,
       {
         headers: __headers,
@@ -705,12 +705,12 @@ class ActivityControllerService extends BaseService {
   }
   /**
    * @param activityId activityId
-   * @param scheduleId scheduleId
+   * @param scheduleIds scheduleIds
    * @return OK
    */
   activityControllerDeleteSchedules(activityId: string,
-    scheduleId: string): Observable<{}> {
-    return this.activityControllerDeleteSchedulesResponse(activityId, scheduleId).pipe(
+    scheduleIds: Array<string>): Observable<{}> {
+    return this.activityControllerDeleteSchedulesResponse(activityId, scheduleIds).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -809,19 +809,19 @@ class ActivityControllerService extends BaseService {
 
   /**
    * @param activityId activityId
-   * @param tagId tagId
+   * @param tagIds tagIds
    * @return OK
    */
   activityControllerDeleteTagsResponse(activityId: string,
-    tagId: string): Observable<StrictHttpResponse<{}>> {
+    tagIds: Array<string>): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
+    (tagIds || []).forEach(val => {if (val != null) __params = __params.append('tagIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/activities/${activityId}/tags/${tagId}`,
+      this.rootUrl + `/activities/${activityId}/tags`,
       __body,
       {
         headers: __headers,
@@ -838,12 +838,12 @@ class ActivityControllerService extends BaseService {
   }
   /**
    * @param activityId activityId
-   * @param tagId tagId
+   * @param tagIds tagIds
    * @return OK
    */
   activityControllerDeleteTags(activityId: string,
-    tagId: string): Observable<{}> {
-    return this.activityControllerDeleteTagsResponse(activityId, tagId).pipe(
+    tagIds: Array<string>): Observable<{}> {
+    return this.activityControllerDeleteTagsResponse(activityId, tagIds).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -942,19 +942,19 @@ class ActivityControllerService extends BaseService {
 
   /**
    * @param activityId activityId
-   * @param targetGroupId targetGroupId
+   * @param targetGroupIds targetGroupIds
    * @return OK
    */
   activityControllerDeleteTargetGroupsResponse(activityId: string,
-    targetGroupId: string): Observable<StrictHttpResponse<{}>> {
+    targetGroupIds: Array<string>): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-
+    (targetGroupIds || []).forEach(val => {if (val != null) __params = __params.append('targetGroupIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/activities/${activityId}/targetgroups/${targetGroupId}`,
+      this.rootUrl + `/activities/${activityId}/targetgroups`,
       __body,
       {
         headers: __headers,
@@ -971,12 +971,12 @@ class ActivityControllerService extends BaseService {
   }
   /**
    * @param activityId activityId
-   * @param targetGroupId targetGroupId
+   * @param targetGroupIds targetGroupIds
    * @return OK
    */
   activityControllerDeleteTargetGroups(activityId: string,
-    targetGroupId: string): Observable<{}> {
-    return this.activityControllerDeleteTargetGroupsResponse(activityId, targetGroupId).pipe(
+    targetGroupIds: Array<string>): Observable<{}> {
+    return this.activityControllerDeleteTargetGroupsResponse(activityId, targetGroupIds).pipe(
       __map(_r => _r.body as {})
     );
   }

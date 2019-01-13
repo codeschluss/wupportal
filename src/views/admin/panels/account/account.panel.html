@@ -8,7 +8,17 @@
     <button mat-menu-item [disabled]="!provides" (click)="create('activity')">
       <i18n i18n="@@createActivity">createActivity</i18n>
     </button>
-    <button mat-menu-item (click)="request()">
+    <ng-container *ngIf="user.blogger" ngProjectAs="mat-menu-item">
+      <button mat-menu-item (click)="create('blog')">
+        <i18n i18n="@@createBlog">createBlog</i18n>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!user.blogger" ngProjectAs="mat-menu-item">
+      <button mat-menu-item (click)="joinBloggers()">
+        <i18n i18n="@@joinBloggers">joinBloggers</i18n>
+      </button>
+    </ng-container>
+    <button mat-menu-item (click)="joinOrganisations()">
       <i18n i18n="@@joinOrganisations">joinOrganisations</i18n>
     </button>
     <button mat-menu-item (click)="create('organisation')">
@@ -98,6 +108,29 @@
           </mat-cell>
         </ng-container>
       </activity-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="blogs" [disabled]="!blogs.length">
+    <ng-template matTabLabel>
+      <i18n i18n="@@blogs">blogs</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <blog-table [items]="blogs">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </blog-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

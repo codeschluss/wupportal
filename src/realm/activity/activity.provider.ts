@@ -24,6 +24,11 @@ export class ActivityProvider
       model: AddressModel
     },
     {
+      field: 'blogs',
+      method: this.service.activityControllerReadBlogsResponse,
+      model: BlogModel
+    },
+    {
       field: 'category',
       method: this.service.activityControllerReadCategoryResponse,
       model: CategoryModel

@@ -20,14 +20,21 @@ export class ApplicationPanelComponent extends BasePanel {
   protected resolve: object = {
     configuration: CrudJoiner.of(ConfigurationModel),
     organisations: CrudJoiner.of(OrganisationModel, { approved: false })
-      .with('address').yield('suburb')
+      .with('address').yield('suburb'),
+    users: CrudJoiner.of(UserModel)
+      .with('blogger')
   };
+
+  public get bloggers(): UserModel[] {
+    return this.route.snapshot.data.users
+      .filter((user) => user.blogger && !user.blogger.approved);
+  }
 
   public get configuration(): ConfigurationModel[] {
     return this.route.snapshot.data.configuration || [];
   }
 
-  public get requests(): OrganisationModel[] {
+  public get organisations(): OrganisationModel[] {
     return this.route.snapshot.data.organisations || [];
   }
 
@@ -38,17 +45,36 @@ export class ApplicationPanelComponent extends BasePanel {
     return `${title ? title.value : '...'} - ${sub ? sub.value : '...'}`;
   }
 
-  public approve(item: OrganisationModel): void {
-    const provider = OrganisationModel['provider'];
+  public approve(item: OrganisationModel | UserModel): void {
+    const provider = item.constructor['provider'];
 
-    provider.grantOrganisation(item.id, True).subscribe(() => this.reload());
+    if (item instanceof OrganisationModel) {
+      provider.grantOrganisation(item.id, True).subscribe(() => this.reload());
+    } else if (item instanceof UserModel) {
+      provider.grantBlogger(item.id, True).subscribe(() => this.reload());
+    }
   }
 
-  public block(item: OrganisationModel): void {
-    const provider = OrganisationModel['provider'];
+  public block(item: OrganisationModel | UserModel): void {
+    const provider = item.constructor['provider'];
+
+    if (item instanceof OrganisationModel) {
+      this.confirm(item).pipe(
+        mergeMap(() => provider.grantOrganisation(item.id, False))
+      ).subscribe(() => this.reload());
+    } else if (item instanceof UserModel) {
+      this.confirm(item).pipe(
+        mergeMap(() => provider.grantBlogger(item.id, False))
+      ).subscribe(() => this.reload());
+    }
+
+  }
+
+  public demote(item: UserModel): void {
+    const provider = UserModel['provider'];
 
     this.confirm(item).pipe(
-      mergeMap(() => provider.grantOrganisation(item.id, False))
+      mergeMap(() => provider.unlinkBlogger(item.id))
     ).subscribe(() => this.reload());
   }
 

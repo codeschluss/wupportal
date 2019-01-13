@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudProvider } from '@portal/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { Observable } from 'rxjs';
 import { BaseService } from 'src/api/base-service';
 import { TopicControllerService } from 'src/api/services/topic-controller.service';
@@ -10,17 +10,6 @@ import { TopicModel } from './topic.model';
 export class TopicProvider
   extends CrudProvider<BaseService, TopicModel> {
 
-  public create: (model: TopicModel) => Observable<any>;
-
-  public update: (model: TopicModel, id: string) => Observable<any>;
-
-  public delete: (id: string) => Observable<any>;
-
-  public readOne: (id: string) => Observable<TopicModel>;
-
-  public readAll: (params?: TopicControllerService
-    .TopicControllerReadAllParams) => Observable<TopicModel[]>;
-
   protected linked: CrudLink[] = [
     {
       field: 'pages',
@@ -29,7 +18,7 @@ export class TopicProvider
     }
   ];
 
-  protected methods = {
+  protected methods: CrudMethods = {
     create: this.service.topicControllerCreateResponse,
     delete: this.service.topicControllerDeleteResponse,
     readAll: this.service.topicControllerReadAllResponse,
@@ -45,5 +34,16 @@ export class TopicProvider
   ) {
     super();
   }
+
+  public create: (model: TopicModel) => Observable<any>;
+
+  public update: (model: TopicModel, id: string) => Observable<any>;
+
+  public delete: (id: string) => Observable<any>;
+
+  public readOne: (id: string) => Observable<TopicModel>;
+
+  public readAll: (params?: TopicControllerService
+    .TopicControllerReadAllParams) => Observable<TopicModel[]>;
 
 }

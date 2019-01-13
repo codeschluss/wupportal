@@ -3,12 +3,15 @@ import { RouterModule } from '@angular/router';
 import { TokenResolver } from '@portal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { AddressStepperComponent } from '../../realm/address/address.stepper';
+import { BlogStepperComponent } from '../../realm/blog/blog.stepper';
 import { CategoryStepperComponent } from '../../realm/category/category.stepper';
 import { LanguageStepperComponent } from '../../realm/language/language.stepper';
 import { OrganisationStepperComponent } from '../../realm/organisation/organisation.stepper';
+import { PageStepperComponent } from '../../realm/page/page.stepper';
 import { SuburbStepperComponent } from '../../realm/suburb/suburb.stepper';
 import { TagStepperComponent } from '../../realm/tag/tag.stepper';
 import { TargetGroupStepperComponent } from '../../realm/target-group/target-group.stepper';
+import { TopicStepperComponent } from '../../realm/topic/topic.stepper';
 import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { AdminComponent } from './admin.component';
 import { AccountPanelComponent } from './panels/account/account.panel';
@@ -34,12 +37,15 @@ import { OrganisationPanelComponent } from './panels/organisation/organisation.p
           children: [
             ActivityStepperComponent.routing,
             AddressStepperComponent.routing,
+            BlogStepperComponent.routing,
             CategoryStepperComponent.routing,
             LanguageStepperComponent.routing,
             OrganisationStepperComponent.routing,
+            PageStepperComponent.routing,
             SuburbStepperComponent.routing,
             TagStepperComponent.routing,
             TargetGroupStepperComponent.routing,
+            TopicStepperComponent.routing,
             UserStepperComponent.routing
           ]
         }

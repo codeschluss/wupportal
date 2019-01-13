@@ -1,6 +1,6 @@
 import { CrudModel } from '@portal/core';
-import { TopicEntity } from 'src/api/models/topic-entity';
 import { Observable } from 'rxjs';
+import { TopicEntity } from 'src/api/models/topic-entity';
 import { PageModel } from '../page/page.model';
 
 export class TopicModel
@@ -8,6 +8,6 @@ export class TopicModel
 
     public name: string;
 
-    public pages: Observable<PageModel[]>;
+    public pages: PageModel[] & Observable<PageModel[]>;
 
   }

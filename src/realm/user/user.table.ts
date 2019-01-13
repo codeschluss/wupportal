@@ -39,7 +39,8 @@ export class UserTableComponent extends BaseTable<UserModel> {
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(UserModel);
+  protected joiner: CrudJoiner = CrudJoiner.of(UserModel)
+    .with('blogger');
 
   protected model: Type<UserModel> = UserModel;
 

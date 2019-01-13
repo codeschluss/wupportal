@@ -5,6 +5,8 @@ import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive'
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../activity/activity.model';
+import { BlogModel } from '../blog/blog.model';
+import { BloggerModel } from '../blogger/blogger.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { ProviderModel } from '../provider/provider.model';
 import { UserModel } from './user.model';
@@ -18,6 +20,16 @@ export class UserProvider
       field: 'activities',
       method: this.service.userControllerReadActivitiesResponse,
       model: ActivityModel
+    },
+    {
+      field: 'blogger',
+      method: this.service.userControllerReadBloggerResponse,
+      model: BloggerModel
+    },
+    {
+      field: 'blogs',
+      method: this.service.userControllerReadBlogsResponse,
+      model: BlogModel
     },
     {
       field: 'organisations',
@@ -58,6 +70,10 @@ export class UserProvider
   public readAll: (params?: UserControllerService
     .UserControllerReadAllParams) => Observable<UserModel[]>;
 
+  public grantBlogger:
+    (id: string, grant: Boolean) => Observable<any> =
+      this.apply(this.service.userControllerGrantBloggerRightResponse);
+
   public grantSuperUser:
     (id: string, grant: Boolean) => Observable<any> =
       this.apply(this.service.userControllerGrantSuperuserRightResponse);
@@ -66,6 +82,10 @@ export class UserProvider
     (username: String) => Observable<any> =
       this.apply(this.service.userControllerResetPasswordResponse);
 
+  public linkBlogger:
+    () => Observable<any> =
+      this.apply(this.service.userControllerApplyAsBloggerResponse);
+
   public linkOrganisations:
     (id: string, organisationIds: string[]) => Observable<any> =
       this.apply(this.service.userControllerAddOrganisationResponse);
@@ -73,6 +93,14 @@ export class UserProvider
   public unlinkActivity:
     (id: string, activityId: string) => Observable<any> =
       this.apply(this.service.userControllerDeleteActivityResponse);
+
+  public unlinkBlog:
+      (id: string, blogId: string) => Observable<any> =
+        this.apply(this.service.userControllerDeleteBlogResponse);
+
+  public unlinkBlogger:
+      (id: string) => Observable<any> =
+        this.apply(this.service.userControllerDeleteBloggerResponse);
 
   public unlinkOrganisation:
     (id: string, organisationId: string) => Observable<any> =

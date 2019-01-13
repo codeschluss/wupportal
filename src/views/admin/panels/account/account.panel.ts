@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { CrudJoiner } from '@portal/core';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/activity/activity.model';
+import { BlogModel } from '../../../../realm/blog/blog.model';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
 import { ProviderModel } from '../../../../realm/provider/provider.model';
 import { UserModel } from '../../../../realm/user/user.model';
@@ -24,12 +25,18 @@ export class AccountPanelComponent extends BasePanel {
       .with('activities').yield('address').yield('suburb')
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
+      .with('blogger')
+      .with('blogs').yield('activity')
       .with('organisations').yield('address').yield('suburb')
       .with('organisations').yield('provider')
   };
 
   public get activities(): ActivityModel[] {
     return this.user.activities || [];
+  }
+
+  public get blogs(): BlogModel[] {
+    return this.user.blogs || [];
   }
 
   public get organisations(): OrganisationModel[] {
@@ -60,7 +67,11 @@ export class AccountPanelComponent extends BasePanel {
     ).subscribe(() => this.reload());
   }
 
-  public request(): void {
+  public joinBloggers(): void {
+    this.userProvider.linkBlogger().subscribe(() => this.reload());
+  }
+
+  public joinOrganisations(): void {
     this.dialog.open(RequestDialogComponent).afterClosed()
       .pipe(filter(Boolean)).subscribe(() => this.reload());
   }

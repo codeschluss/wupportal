@@ -1,7 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { empty, Observable } from 'rxjs';
-import { StringPrimitive } from '../../api/models/string-primitive';
+import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
 import { AddressModel } from '../address/address.model';
 import { BlogModel } from '../blog/blog.model';
@@ -101,15 +101,15 @@ export class ActivityProvider
       this.apply(this.service.activityControllerAddTagsResponse);
 
   public relinkAddress:
-    (id: string, addressId: StringPrimitive) => Observable<any> =
+    (id: string, addressId: String) => Observable<any> =
       this.apply(this.service.activityControllerUpdateAddressResponse);
 
   public relinkCategory:
-    (id: string, categoryId: StringPrimitive) => Observable<any> =
+    (id: string, categoryId: String) => Observable<any> =
       this.apply(this.service.activityControllerUpdateCategoryResponse);
 
   public relinkOrganisation:
-    (id: string, organisationId: StringPrimitive) => Observable<any> =
+    (id: string, organisationId: String) => Observable<any> =
       this.apply(this.service.activityControllerUpdateOrganisationResponse);
 
   public unlinkSchedules:

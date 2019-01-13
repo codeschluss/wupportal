@@ -7,7 +7,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../organisation/organisation.model';
 
 @Component({
-  selector: 'activity-form',
+  selector: 'organisation-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">

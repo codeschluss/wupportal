@@ -1,8 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
 import { empty, Observable } from 'rxjs';
-import { BooleanPrimitive } from '../../api/models/boolean-primitive';
-import { StringPrimitive } from '../../api/models/string-primitive';
+import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive';
+import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
@@ -72,15 +72,15 @@ export class OrganisationProvider
     .OrganisationControllerReadAllParams) => Observable<OrganisationModel[]>;
 
   public grantOrganisation:
-    (id: string, grant: BooleanPrimitive) => Observable<any> =
+    (id: string, grant: Boolean) => Observable<any> =
       this.apply(this.service.organisationControllerGrantApprovalResponse);
 
   public grantOrganisationAdmin:
-    (id: string, userId: string, grant: BooleanPrimitive) => Observable<any> =
+    (id: string, userId: String, grant: Boolean) => Observable<any> =
       this.apply(this.service.organisationControllerGrantAdminRightResponse);
 
   public grantOrganisationUser:
-    (id: string, userId: string, grant: BooleanPrimitive) => Observable<any> =
+    (id: string, userId: String, grant: Boolean) => Observable<any> =
     this.apply(this.service.organisationControllerApproveOrRejectUserResponse);
 
   public pasteImages:
@@ -88,11 +88,11 @@ export class OrganisationProvider
       this.apply(this.service.organisationControllerAddImageResponse);
 
   public relinkAddress:
-    (id: string, addressId: StringPrimitive) => Observable<any> =
+    (id: string, addressId: String) => Observable<any> =
       this.apply(this.service.organisationControllerUpdateAddressResponse);
 
   public unlinkActivity:
-    (id: string, activityId: string) => Observable<any> =
+    (id: string, activityId: String) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteActivityResponse);
 
   public unlinkImages:
@@ -100,7 +100,7 @@ export class OrganisationProvider
       this.apply(this.service.organisationControllerDeleteImagesResponse);
 
   public unlinkUser:
-    (id: string, userId: string) => Observable<any> =
+    (id: string, userId: String) => Observable<any> =
       this.apply(this.service.organisationControllerDeleteUserResponse);
 
 }

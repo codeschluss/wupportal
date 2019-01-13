@@ -4,7 +4,7 @@ import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { CategoryModel } from './category.model';
 
 @Component({
-  selector: 'address-form',
+  selector: 'category-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">

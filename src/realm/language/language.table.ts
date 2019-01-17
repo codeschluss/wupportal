@@ -11,6 +11,9 @@ import { LanguageModel } from './language.model';
         <ng-container *ngSwitchCase="'locale'">
           <i18n i18n="@@locale">locale</i18n>
         </ng-container>
+        <ng-container *ngSwitchCase="'machineTranslated'">
+          <i18n i18n="@@machineTranslated">machineTranslated</i18n>
+        </ng-container>
         <ng-container *ngSwitchCase="'name'">
           <i18n i18n="@@title">title</i18n>
         </ng-container>
@@ -29,6 +32,10 @@ export class LanguageTableComponent extends BaseTable<LanguageModel> {
     {
       name: 'locale',
       value: (item) => item.locale
+    },
+    {
+      name: 'machineTranslated',
+      value: (item) => item.machineTranslated
     }
   ];
 

@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, BooleanFieldComponent, FormField, StringFieldComponent } from '@portal/forms';
+import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
 import { LanguageModel } from './language.model';
 
 @Component({
@@ -37,7 +37,7 @@ export class LanguageFormComponent extends BaseForm<LanguageModel> {
     },
     {
       name: 'machineTranslated',
-      input: BooleanFieldComponent
+      input: StringFieldComponent
     }
   ];
 

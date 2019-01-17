@@ -16,11 +16,11 @@ import { catchError } from 'rxjs/operators';
     </h1>
     <section mat-dialog-content>
       <mat-form-field>
-        <mat-label><i18n i18n="username">username</i18n></mat-label>
+        <mat-label><i18n i18n="@@username">username</i18n></mat-label>
         <input matInput [formControl]="username">
       </mat-form-field>
       <mat-form-field>
-        <mat-label><i18n i18n="password">password</i18n></mat-label>
+        <mat-label><i18n i18n="@@password">password</i18n></mat-label>
         <input matInput type="password" [formControl]="password">
       </mat-form-field>
     </section>

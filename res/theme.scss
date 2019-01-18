@@ -119,12 +119,24 @@ $custom-theme: mat-light-theme($custom-primary, $custom-secondary);
 
 .h2 {
   font-size: 35px;
+  font-weight: bold;
 }
 
 .h2 * {
   font-size: 35px;
+  font-weight: bold;
 }
 
+.h3 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+.h3 * {
+  font-size: 30px;
+  font-weight: bold;
+}
 
 h2 {
   font-size: 35px;
@@ -139,6 +151,10 @@ h4 {
 }
 
 .smallText{
+  font-size: 11px;
+}
+
+.smallText * {
   font-size: 11px;
 }
 

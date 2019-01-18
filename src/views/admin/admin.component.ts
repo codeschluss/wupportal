@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LoadingProvider, Pathfinder, TokenProvider } from '@portal/core';
 import { empty, Subscription } from 'rxjs';
-import { filter, mergeMap, take } from 'rxjs/operators';
+import { filter, map, mergeMap, startWith, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { ReloginDialogComponent } from './dialogs/relogin.dialog';
 import { AccountPanelComponent } from './panels/account/account.panel';
@@ -20,6 +20,8 @@ import { AccountPanelComponent } from './panels/account/account.panel';
 
 export class AdminComponent implements OnInit, OnDestroy {
 
+  private userId: string;
+
   public constructor(
     public loadingProvider: LoadingProvider,
     private dialog: MatDialog,
@@ -29,25 +31,28 @@ export class AdminComponent implements OnInit, OnDestroy {
     private tokenProvider: TokenProvider
   ) { }
 
+  private navigator: Subscription = empty().subscribe();
+
   private worker: Subscription = empty().subscribe();
 
   public ngOnInit(): void {
     const claim = ClientPackage.config.jwtClaims.userId;
     const userId = this.route.snapshot.data.tokens.access[claim];
+    const route = this.pathfinder.to(AccountPanelComponent).concat(userId);
+    userId ? this.work() : this.router.navigateByUrl('/');
 
     if (userId) {
-      this.work();
-
-      if (!this.route.snapshot.firstChild) {
-        const path = this.pathfinder.to(AccountPanelComponent).concat(userId);
-        this.router.navigate(path);
-      }
-    } else {
-      this.router.navigateByUrl('/');
+      this.navigator = this.router.events.pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => !this.route.firstChild),
+        startWith(!this.route.firstChild),
+        filter(Boolean)
+      ).subscribe(() => this.router.navigate(route));
     }
   }
 
   public ngOnDestroy(): void {
+    this.navigator.unsubscribe();
     this.worker.unsubscribe();
   }
 

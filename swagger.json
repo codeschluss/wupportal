@@ -10,7 +10,7 @@
   "removeStaleFiles": false,
   "modelIndex": false,
   "serviceIndex": false,
-  "apiModule": true,
-  "enumModule": true,
+  "apiModule": false,
+  "enumModule": false,
   "generateExamples": false
 }

@@ -6,7 +6,6 @@ import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
 import { CoreModule, CoreSettings } from '@portal/core';
 import { ApiConfiguration } from './api/api-configuration';
-import { ApiModule } from './api/api.module';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { RealmModule } from './realm/realm.module';
@@ -22,7 +21,6 @@ fontawesome.add(freeicons);
     LayoutComponent
   ],
   imports: [
-    ApiModule,
     BrowserModule,
     BrowserAnimationsModule,
     ClientRouter,

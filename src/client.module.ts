@@ -10,7 +10,6 @@ import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
 import { CoreModule, CoreSettings } from '@portal/core';
 import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
 import { ApiConfiguration } from './api/api-configuration';
-import { ApiModule } from './api/api.module';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { RealmModule } from './realm/realm.module';
@@ -44,7 +43,6 @@ fontawesome.add(freeicons);
   imports: [
     // TODO: move
     BrowserAnimationsModule,
-    ApiModule,
     BrowserModule,
     ClientRouter,
     CoreModule,

@@ -1594,11 +1594,25 @@
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="successfullyLoggedOut" datatype="html">
+        <source>successfullyLoggedOut</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/public/login/info.bottomsheet.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="successfullyLoggedIn" datatype="html">
+        <source>successfullyLoggedIn</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/public/login/info.bottomsheet.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="createMissingOrganisation" datatype="html">
         <source>createMissingOrganisation</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/public/login/info.bottomsheet.component.ts</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="welcomeTo" datatype="html">
@@ -1631,6 +1645,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/public/login/login.component.html</context>
           <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">136</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/admin/dialogs/relogin.dialog.ts</context>
@@ -1716,46 +1734,131 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">71</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="&quot; + routeLink.label" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{routeLink.label}}"/></source>
+      <trans-unit id="timer" datatype="html">
+        <source>timer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">107</context>
         </context-group>
-        <note priority="1" from="description">&quot;</note>
       </trans-unit>
-      <trans-unit id="&quot; + route.label" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{route.label}}"/></source>
+      <trans-unit id="organisations" datatype="html">
+        <source>organisations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">28</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">110</context>
         </context-group>
-        <note priority="1" from="description">&quot;</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/public/organisation/organisation.list.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="worthKnowing" datatype="html">
+        <source>worthKnowing</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/public/worthKnowing/topics.list.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="blogs" datatype="html">
+        <source>blogs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">271</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accountPanel" datatype="html">
+        <source>accountPanel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="applicationPanel" datatype="html">
+        <source>applicationPanel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="organisationPanel" datatype="html">
+        <source>organisationPanel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="logout" datatype="html">
         <source>logout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">68</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/layout/navbar.component.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">147</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/admin/dialogs/relogin.dialog.ts</context>
@@ -1815,13 +1918,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/admin/dialogs/delete.dialog.ts</context>
           <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="accountPanel" datatype="html">
-        <source>accountPanel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
-          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="actions" datatype="html">
@@ -1939,35 +2035,6 @@
           <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="blogs" datatype="html">
-        <source>blogs</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
-          <context context-type="linenumber">116</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
-          <context context-type="linenumber">271</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="organisationPanel" datatype="html">
-        <source>organisationPanel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="organisations" datatype="html">
-        <source>organisations</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/public/organisation/organisation.list.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="activities" datatype="html">
         <source>activities</source>
         <context-group purpose="location">
@@ -1987,13 +2054,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
           <context context-type="linenumber">86</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="applicationPanel" datatype="html">
-        <source>applicationPanel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
-          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration" datatype="html">
@@ -2084,21 +2144,21 @@
         <source>clickForMorePictures</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/public/organisation/organisation.view.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="enteredActivities" datatype="html">
         <source>enteredActivities</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/public/organisation/organisation.view.component.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="toActivity" datatype="html">
         <source>toActivity</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/public/organisation/organisation.view.component.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="newActivities" datatype="html">
@@ -2129,18 +2189,18 @@
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="blogAboutactivity" datatype="html">
+      <trans-unit id="blogAboutActivity" datatype="html">
         <source>blogAboutactivity</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/public/blog/blog.listitem.component.html</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="readMore" datatype="html">
         <source>readMore</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/public/blog/blog.listitem.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="by" datatype="html">
@@ -2155,13 +2215,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/views/public/search/search.component.html</context>
           <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="worthKnowing" datatype="html">
-        <source>worthKnowing</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/views/public/worthKnowing/topics.list.component.html</context>
-          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="noResults" datatype="html">

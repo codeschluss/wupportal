@@ -11,21 +11,21 @@
     "url": "https://github.com/codeschluss/wupportal/issues"
   },
   "peerDependencies": {
-    "@angular-devkit/build-ng-packagr": "0.11.4",
-    "@angular/animations": "7.1.4",
-    "@angular/cdk": "7.2.0",
-    "@angular/common": "7.1.4",
-    "@angular/cli": "7.1.4",
-    "@angular/compiler": "7.1.4",
-    "@angular/compiler-cli": "7.1.4",
-    "@angular/core": "7.1.4",
-    "@angular/forms": "7.1.4",
-    "@angular/material": "7.2.0",
-    "@angular/platform-browser": "7.1.4",
+    "@angular-devkit/build-ng-packagr": "0.12.2",
+    "@angular/animations": "7.2.1",
+    "@angular/cdk": "7.2.1",
+    "@angular/common": "7.2.1",
+    "@angular/cli": "7.2.2",
+    "@angular/compiler": "7.2.1",
+    "@angular/compiler-cli": "7.2.1",
+    "@angular/core": "7.2.1",
+    "@angular/forms": "7.2.1",
+    "@angular/material": "7.2.1",
+    "@angular/platform-browser": "7.2.1",
     "@portal/core": "0.0.3",
-    "ng-packagr": "4.4.5",
+    "ng-packagr": "4.6.0",
     "rxjs": "6.3.3",
     "tsickle": "0.34.0",
-    "typescript": "3.1.6"
+    "typescript": "3.2.2"
   }
 }

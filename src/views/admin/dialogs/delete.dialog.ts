@@ -10,7 +10,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
       <mat-list>
         <mat-list-item>
           <strong mat-line>{{ data.item.name }}</strong>
-          <em mat-line><i18n i18n="@@title">title</i18n></em>
+          <em mat-line><i18n i18n="@@name">name</i18n></em>
         </mat-list-item>
         <mat-list-item *ngIf="data.item.description">
           <strong mat-line>{{ data.item.description }}</strong>

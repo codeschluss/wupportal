@@ -9,7 +9,7 @@ import { SuburbModel } from './suburb.model';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n i18n="@@name">name</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

@@ -12,7 +12,7 @@ import { CategoryModel } from './category.model';
           <i18n i18n="@@description">description</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n i18n="@@name">name</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

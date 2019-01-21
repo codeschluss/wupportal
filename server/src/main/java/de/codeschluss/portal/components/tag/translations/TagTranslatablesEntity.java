@@ -53,7 +53,7 @@ public class TagTranslatablesEntity extends TranslatableEntity<TagEntity> {
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(TagController.class)
-        .readTranslations(getId())).withSelfRel());
+        .readTranslations(parent.getId())).withSelfRel());
 
     return links;
   }

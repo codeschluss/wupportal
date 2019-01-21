@@ -50,7 +50,7 @@ public class OrganisationTranslatablesEntity extends TranslatableEntity<Organisa
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(OrganisationController.class)
-        .readTranslations(getId())).withSelfRel());
+        .readTranslations(parent.getId())).withSelfRel());
 
     return links;
   }

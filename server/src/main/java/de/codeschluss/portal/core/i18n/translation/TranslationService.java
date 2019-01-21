@@ -21,9 +21,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.aspectj.lang.annotation.Around;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -212,14 +214,29 @@ public class TranslationService {
 
     if (repo instanceof TranslationRepository<?>) {
       TranslationRepository<?> translationRepo = (TranslationRepository<?>) repo;
-      Method findByParent = translationRepo.getClass().getMethod("findByParent",
-          parent.getClass().getSuperclass());
-
-      return assembler.entitiesToResources(
-          (List<TranslatableEntity<?>>) findByParent.invoke(translationRepo, parent), null);
+      List<TranslatableEntity<?>> result = (List<TranslatableEntity<?>>) 
+          translationRepo.getClass()
+          .getMethod("findByParent", parent.getClass().getSuperclass())
+          .invoke(translationRepo, parent);
+      
+      return assembler.toListResources(mapToEmbeddedLanguage(result), null);
     }
     throw new RuntimeException(
         "Repository of Translation must inherit from " + TranslationRepository.class);
+  }
+
+  /**
+   * Map to embedded language.
+   *
+   * @param result the result
+   * @return the list
+   */
+  private List<Resource<?>> mapToEmbeddedLanguage(List<TranslatableEntity<?>> result) {
+    return result.stream().map(translatable -> {
+      Map<String, Object> embedded = new HashMap<>();
+      embedded.put("language", translatable.getLanguage().toResource());
+      return assembler.resourceWithEmbeddable(translatable, embedded);
+    }).collect(Collectors.toList());
   }
 
   /**

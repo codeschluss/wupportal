@@ -48,7 +48,7 @@ public class CategoryTranslatablesEntity extends TranslatableEntity<CategoryEnti
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(CategoryController.class)
-        .readTranslations(getId())).withSelfRel());
+        .readTranslations(parent.getId())).withSelfRel());
 
     return links;
   }

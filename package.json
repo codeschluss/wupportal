@@ -27,6 +27,9 @@
       "city": "Wuppertal",
       "endpoint": "https://nominatim.openstreetmap.org/search",
       "params": "format=json&addressdetails=1"
+    },
+    "translations": {
+      "defaultLocale": "de"
     }
   },
   "repository": {

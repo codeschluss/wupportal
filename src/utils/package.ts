@@ -26,6 +26,9 @@ export class ClientPackage {
       city: string,
       endpoint: string,
       params: string
+    },
+    translations: {
+      defaultLocale: string
     }
   } {
     return this.packageJson.config;

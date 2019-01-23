@@ -49,7 +49,7 @@ export class ChipListFieldComponent extends BaseFieldComponent
     this.control.valueChanges.subscribe(() => this.clear());
     this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
     this.search.valueChanges.pipe(map((value) => this.suggest(value)))
-      .subscribe((items) =>  this.options = items);
+      .subscribe((items) => this.options = items);
   }
 
   public add(event: MatAutocompleteSelectedEvent): void {

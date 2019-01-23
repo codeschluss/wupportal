@@ -73,7 +73,7 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   public constructor(
-    private resolver: CrudResolver,
+    private crudResolver: CrudResolver,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -116,10 +116,12 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   private fetch(): void {
+    const graph = this.joiner.graph;
     const provider = this.model['provider'].system;
+
     provider.call(provider.methods.readAll, {
       dir: this.sorter.direction,
-      embeddings: CrudJoiner.to(this.joiner.graph),
+      embeddings: CrudJoiner.to(graph),
       filter: this.searcher.value,
       page: this.pager.pageIndex,
       size: this.pager.pageSize,
@@ -127,7 +129,7 @@ export abstract class BaseTable<Model extends CrudModel>
     }).pipe(
       tap((response) => this.paginate(response as StrictHttpResponse<any>)),
       map((response) => provider.cast(response)),
-      mergeMap((items) => this.resolver.refine(items as any, this.joiner.graph))
+      mergeMap((items) => this.crudResolver.refine(items as any, graph))
     ).subscribe((items) => this.source.next(items), () => this.source.next([]));
   }
 

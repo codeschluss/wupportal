@@ -116,9 +116,9 @@ export abstract class BaseForm<Model extends CrudModel>
     }));
 
     return (!this.model['provider'] || !this.group.dirty ? of(item) : item.id
-      ? this.model['provider'].update(item, item.id)
+      ? this.model['provider'].update(item)
       : this.model['provider'].create(item)
-    ).pipe(mergeMap((persisted: Model) => this.cascade(persisted)));
+    ).pipe(mergeMap((persisted) => this.cascade(persisted as Model)));
   }
 
   public required(field: FormField): boolean {

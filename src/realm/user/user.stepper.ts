@@ -15,9 +15,8 @@ import { UserModel } from './user.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editUser">editUser</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'user'">
-          <i18n i18n="@@user">user</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -27,11 +26,11 @@ import { UserModel } from './user.model';
 export class UserStepperComponent
   extends BaseStepper<UserModel> {
 
-  public root: string = 'user';
+  public root: string = 'users';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: UserFormComponent
     }
   ];

@@ -18,15 +18,15 @@ import { OrganisationModel } from './organisation.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editOrganisation">editOrganisation</i18n>
         </ng-container>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
+        </ng-container>
 
         <ng-container *ngSwitchCase="'address'">
           <i18n i18n="@@address">address</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'images'">
           <i18n i18n="@@images">images</i18n>
-        </ng-container>
-        <ng-container *ngSwitchCase="'organisation'">
-          <i18n i18n="@@organisation">organisation</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'translations'">
           <i18n i18n="@@translations">translations</i18n>
@@ -39,11 +39,11 @@ import { OrganisationModel } from './organisation.model';
 export class OrganisationStepperComponent
   extends BaseStepper<OrganisationModel> {
 
-  public root: string = 'organisation';
+  public root: string = 'organisations';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: OrganisationFormComponent
     },
     {
@@ -62,7 +62,8 @@ export class OrganisationStepperComponent
 
   protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
     .with('address').yield('suburb')
-    .with('images');
+    .with('images')
+    .with('translations').yield('language');
 
   protected model: Type<OrganisationModel> = OrganisationModel;
 

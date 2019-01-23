@@ -1,10 +1,8 @@
-import { CrudModel } from '@portal/core';
 import { TranslationResult } from '../../api/models/translation-result';
 
-export class TranslationModel
-  extends CrudModel implements TranslationResult {
+export class TranslationModel implements TranslationResult {
 
-  public lang: string;
-  public translations: { [key: string]: string };
+  public lang?: string;
+  public translations?: { [key: string]: string };
 
 }

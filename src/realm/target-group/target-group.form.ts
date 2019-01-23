@@ -1,6 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
+import { TranslationBase } from '../translation/translation.base';
 import { TargetGroupModel } from './target-group.model';
 
 @Component({
@@ -19,7 +20,8 @@ import { TargetGroupModel } from './target-group.model';
   `)
 })
 
-export class TargetGroupFormComponent extends BaseForm<TargetGroupModel> {
+export class TargetGroupFormComponent
+  extends TranslationBase<TargetGroupModel> {
 
   public fields: FormField[] = [
     {

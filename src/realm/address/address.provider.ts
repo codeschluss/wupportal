@@ -36,7 +36,7 @@ export class AddressProvider
 
   public create: (model: AddressModel) => Observable<any>;
 
-  public update: (model: AddressModel, id: string) => Observable<any>;
+  public update: (model: AddressModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

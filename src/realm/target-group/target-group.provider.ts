@@ -1,7 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 import { TargetGroupControllerService } from '../../api/services/target-group-controller.service';
+import { LanguageModel } from '../language/language.model';
 import { TargetGroupModel } from './target-group.model';
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +11,7 @@ export class TargetGroupProvider
 
   public create: (model: TargetGroupModel) => Observable<any>;
 
-  public update: (model: TargetGroupModel, id: string) => Observable<any>;
+  public update: (model: TargetGroupModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
@@ -19,14 +20,24 @@ export class TargetGroupProvider
   public readAll: (params?: TargetGroupControllerService
     .TargetGroupControllerReadAllParams) => Observable<TargetGroupModel[]>;
 
-  protected linked: CrudLink[] = [];
+  protected linked: CrudLink[] = [
+    {
+      field: 'language',
+      method: () => empty(),
+      model: LanguageModel
+    },
+    {
+      field: 'translations',
+      method: this.service.targetGroupControllerReadTranslationsResponse,
+      model: TargetGroupModel
+    }
+  ];
 
   protected methods: CrudMethods = {
     create: this.service.targetGroupControllerCreateResponse,
     delete: this.service.targetGroupControllerDeleteResponse,
     readAll: this.service.targetGroupControllerReadAllResponse,
     readOne: this.service.targetGroupControllerReadOneResponse,
-    translate: this.service.targetGroupControllerReadTranslationsResponse,
     update: this.service.targetGroupControllerUpdateResponse
   };
 

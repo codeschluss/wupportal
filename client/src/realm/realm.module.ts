@@ -45,7 +45,6 @@ import { TargetGroupProvider } from './target-group/target-group.provider';
 import { TargetGroupStepperComponent } from './target-group/target-group.stepper';
 import { TargetGroupTableComponent } from './target-group/target-group.table';
 import { TranslationFormComponent } from './translation/translation.form';
-import { TranslationProvider } from './translation/translation.provider';
 import { UserFormComponent } from './user/user.form';
 import { UserProvider } from './user/user.provider';
 import { UserStepperComponent } from './user/user.stepper';
@@ -89,7 +88,6 @@ const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
   SuburbProvider,
   TagProvider,
   TargetGroupProvider,
-  TranslationProvider,
   UserProvider
 ];
 

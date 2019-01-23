@@ -36,7 +36,8 @@ import { ConfigurationModel } from './configuration.model';
   `)
 })
 
-export class ConfigurationFormComponent extends BaseForm<ConfigurationModel> {
+export class ConfigurationFormComponent
+  extends BaseForm<ConfigurationModel> {
 
   public item: any;
 
@@ -95,7 +96,7 @@ export class ConfigurationFormComponent extends BaseForm<ConfigurationModel> {
         });
 
         return item.id
-          ? this.model['provider'].update(item, item.id)
+          ? this.model['provider'].update(item)
           : this.model['provider'].create(item);
       })
     ).pipe(tap(() => this.group.markAsPristine()));

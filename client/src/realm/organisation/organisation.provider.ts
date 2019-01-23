@@ -7,6 +7,7 @@ import { OrganisationControllerService } from '../../api/services/organisation-c
 import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
 import { ImageModel } from '../image/image.model';
+import { LanguageModel } from '../language/language.model';
 import { ProviderModel } from '../provider/provider.model';
 import { UserModel } from '../user/user.model';
 import { OrganisationModel } from './organisation.model';
@@ -32,9 +33,19 @@ export class OrganisationProvider
       model: ImageModel
     },
     {
+      field: 'language',
+      method: () => empty(),
+      model: LanguageModel
+    },
+    {
       field: 'provider',
       method: () => empty(),
       model: ProviderModel
+    },
+    {
+      field: 'translations',
+      method: this.service.organisationControllerReadTranslationsResponse,
+      model: OrganisationModel
     },
     {
       field: 'users',
@@ -48,7 +59,6 @@ export class OrganisationProvider
     delete: this.service.organisationControllerDeleteResponse,
     readAll: this.service.organisationControllerReadAllResponse,
     readOne: this.service.organisationControllerReadOneResponse,
-    translate: this.service.organisationControllerReadTranslationsResponse,
     update: this.service.organisationControllerUpdateResponse
   };
 
@@ -62,7 +72,7 @@ export class OrganisationProvider
 
   public create: (model: OrganisationModel) => Observable<any>;
 
-  public update: (model: OrganisationModel, id: string) => Observable<any>;
+  public update: (model: OrganisationModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

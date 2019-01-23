@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, Type } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
-import { Observable } from 'rxjs';
+import { empty, Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { UserModel } from './user.model';
 
@@ -30,8 +30,9 @@ import { UserModel } from './user.model';
   `)
 })
 
-export class UserFormComponent extends BaseForm<UserModel>
-  implements AfterViewInit {
+export class UserFormComponent
+  extends BaseForm<UserModel>
+  implements AfterViewInit, OnDestroy {
 
   public fields: FormField[] = [
     {
@@ -58,10 +59,10 @@ export class UserFormComponent extends BaseForm<UserModel>
       name: 'password',
       input: StringFieldComponent,
       tests: [
-        Validators.minLength(10),
-        Validators.pattern(/(?=(?:[^0-9]*[0-9]){2})/),
-        Validators.pattern(/(?=(?:[^A-Z]*[A-Z]){2})/),
-        Validators.pattern(/(?=(?:[^a-z]*[a-z]){2})/)
+        Validators.minLength(8),
+        Validators.pattern(/(?=(?:[^0-9]*[0-9]){1})/),
+        Validators.pattern(/(?=(?:[^A-Z]*[A-Z]){1})/),
+        Validators.pattern(/(?=(?:[^a-z]*[a-z]){1})/)
       ],
       type: 'password'
     },
@@ -70,10 +71,10 @@ export class UserFormComponent extends BaseForm<UserModel>
       input: StringFieldComponent,
       locked: true,
       tests: [
-        Validators.minLength(10),
-        Validators.pattern(/(?=(?:[^0-9]*[0-9]){2})/),
-        Validators.pattern(/(?=(?:[^A-Z]*[A-Z]){2})/),
-        Validators.pattern(/(?=(?:[^a-z]*[a-z]){2})/)
+        Validators.minLength(8),
+        Validators.pattern(/(?=(?:[^0-9]*[0-9]){1})/),
+        Validators.pattern(/(?=(?:[^A-Z]*[A-Z]){1})/),
+        Validators.pattern(/(?=(?:[^a-z]*[a-z]){1})/)
       ],
       type: 'password'
     }
@@ -81,8 +82,14 @@ export class UserFormComponent extends BaseForm<UserModel>
 
   public model: Type<UserModel> = UserModel;
 
+  private changes: Subscription = empty().subscribe();
+
   public ngAfterViewInit(): void {
-    this.group.valueChanges.subscribe((value) => this.validate(value));
+    this.changes = this.group.valueChanges.subscribe((v) => this.validate(v));
+  }
+
+  public ngOnDestroy(): void {
+    this.changes.unsubscribe();
   }
 
   public persist(): Observable<any> {

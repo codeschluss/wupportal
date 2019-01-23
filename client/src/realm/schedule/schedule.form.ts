@@ -125,7 +125,8 @@ import { ScheduleModel } from './schedule.model';
   `)
 })
 
-export class ScheduleFormComponent extends BaseForm<ScheduleModel>
+export class ScheduleFormComponent
+  extends BaseForm<ScheduleModel>
   implements AfterViewInit {
 
   @ViewChild(MatChipList)

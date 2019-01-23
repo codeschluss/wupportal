@@ -16,7 +16,8 @@ import { SuburbModel } from './suburb.model';
   `)
 })
 
-export class SuburbFormComponent extends BaseForm<SuburbModel> {
+export class SuburbFormComponent
+  extends BaseForm<SuburbModel> {
 
   public fields: FormField[] = [
     {

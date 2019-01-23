@@ -5,6 +5,7 @@ import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
 import { AddressModel } from '../address/address.model';
 import { CategoryModel } from '../category/category.model';
+import { LanguageModel } from '../language/language.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { ProviderModel } from '../provider/provider.model';
 import { ScheduleModel } from '../schedule/schedule.model';
@@ -26,6 +27,11 @@ export class ActivityProvider
       field: 'category',
       method: this.service.activityControllerReadCategoryResponse,
       model: CategoryModel
+    },
+    {
+      field: 'language',
+      method: () => empty(),
+      model: LanguageModel
     },
     {
       field: 'organisation',
@@ -51,6 +57,11 @@ export class ActivityProvider
       field: 'targetGroups',
       method: this.service.activityControllerReadTargetGroupsResponse,
       model: TargetGroupModel
+    },
+    {
+      field: 'translations',
+      method: this.service.activityControllerReadTranslationsResponse,
+      model: ActivityModel
     }
   ];
 
@@ -59,7 +70,6 @@ export class ActivityProvider
     delete: this.service.activityControllerDeleteResponse,
     readAll: this.service.activityControllerReadAllResponse,
     readOne: this.service.activityControllerReadOneResponse,
-    translate: this.service.activityControllerReadTranslationsResponse,
     update: this.service.activityControllerUpdateResponse
   };
 
@@ -73,7 +83,7 @@ export class ActivityProvider
 
   public create: (model: ActivityModel) => Observable<any>;
 
-  public update: (model: ActivityModel, id: string) => Observable<any>;
+  public update: (model: ActivityModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

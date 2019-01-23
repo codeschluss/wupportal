@@ -22,7 +22,8 @@ import { LanguageModel } from './language.model';
   `)
 })
 
-export class LanguageFormComponent extends BaseForm<LanguageModel> {
+export class LanguageFormComponent
+  extends BaseForm<LanguageModel> {
 
   public fields: FormField[] = [
     {

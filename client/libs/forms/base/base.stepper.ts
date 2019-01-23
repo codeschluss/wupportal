@@ -97,7 +97,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   protected get routing(this: any): Route {
-    Object.defineProperty(this.model, 'stepper', { value: this.constructor });
+    Object.defineProperty(this.model, 'stepper', { value: this });
 
     return {
       path: `${this.root}/:uuid`,
@@ -160,7 +160,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
   protected persist(): void {
     const routes = this.route.snapshot.routeConfig.children;
-    const root = routes.find((route) => route.path === this.root);
+    const root = routes.find((route) => route.path === 'main');
     const control = (field, value) => root.data
       .group.addControl(field, new FormControl(value));
 
@@ -184,7 +184,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         }), { }),
         data: Object.assign({
           group: new FormGroup({ }),
-          item: step.name === this.root ? this.item : this.item[step.name],
+          item: step.name === 'main' ? this.item : this.item[step.name],
           tokens: this.route.snapshot.data.tokens
         }, ...fields.map((field) => ({
           [field.name]: CrudJoiner.of(field.model, { filter: null })

@@ -15,9 +15,8 @@ import { LanguageModel } from './language.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editLanguage">editLanguage</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'language'">
-          <i18n i18n="@@language">language</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -27,11 +26,11 @@ import { LanguageModel } from './language.model';
 export class LanguageStepperComponent
   extends BaseStepper<LanguageModel> {
 
-  public root: string = 'language';
+  public root: string = 'languages';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: LanguageFormComponent
     }
   ];

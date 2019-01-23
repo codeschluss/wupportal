@@ -17,8 +17,14 @@ export class I18nInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
+    const headers = {
+      'Accept-Language': this.language,
+      'Content-Language': request.headers
+        .get('Content-Language') || this.language
+    };
+
     return next.handle(!this.language ? request : request.clone({
-      setHeaders: { 'Accept-Language': this.language }
+      setHeaders: headers
     }));
   }
 

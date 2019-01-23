@@ -125,6 +125,11 @@
 			<artifactId>imgscalr-lib</artifactId>
 			<version>${imgscalr.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail</artifactId>
+			<version>${greenmail.version}</version>
+		</dependency>
 
 		<dependency>
 			<scope>test</scope>
@@ -135,12 +140,6 @@
 			<scope>test</scope>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.icegreen</groupId>
-			<artifactId>greenmail</artifactId>
-			<version>${greenmail.version}</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

@@ -15,7 +15,6 @@ export interface CrudMethods {
   delete: (id: string) => Observable<StrictHttpResponse<any>>;
   readAll: (params?: ReadAllParams) => Observable<StrictHttpResponse<any>>;
   readOne: (id: string) => Observable<StrictHttpResponse<any>>;
-  translate?: (id: string) => Observable<StrictHttpResponse<any>>;
   update: (item: CrudModel, id: string) => Observable<StrictHttpResponse<any>>;
 }
 
@@ -66,8 +65,8 @@ export abstract class CrudProvider
       tap((response) => this.link(response)));
   }
 
-  public update(item: Model, id: string): Observable<any> {
-    return this.call(this.methods.update, item, id).pipe(
+  public update(item: Model): Observable<any> {
+    return this.call(this.methods.update, item, item.id).pipe(
       map((response) => this.cast<Model[]>(response)),
       tap((response) => this.link(response)));
   }

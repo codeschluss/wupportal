@@ -17,7 +17,8 @@ import { ImageModel } from './image.model';
   `)
 })
 
-export class ImageFormComponent extends BaseForm<ImageModel> {
+export class ImageFormComponent
+  extends BaseForm<ImageModel> {
 
   public fields: FormField[] = [
     {

@@ -1,7 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 import { TagControllerService } from '../../api/services/tag-controller.service';
+import { LanguageModel } from '../language/language.model';
 import { TagModel } from './tag.model';
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +11,7 @@ export class TagProvider
 
   public create: (model: TagModel) => Observable<any>;
 
-  public update: (model: TagModel, id: string) => Observable<any>;
+  public update: (model: TagModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
@@ -19,14 +20,24 @@ export class TagProvider
   public readAll: (params?: TagControllerService
     .TagControllerReadAllParams) => Observable<TagModel[]>;
 
-  protected linked: CrudLink[] = [];
+  protected linked: CrudLink[] = [
+    {
+      field: 'language',
+      method: () => empty(),
+      model: LanguageModel
+    },
+    {
+      field: 'translations',
+      method: this.service.tagControllerReadTranslationsResponse,
+      model: TagModel
+    }
+  ];
 
   protected methods: CrudMethods = {
     create: this.service.tagControllerCreateResponse,
     delete: this.service.tagControllerDeleteResponse,
     readAll: this.service.tagControllerReadAllResponse,
     readOne: this.service.tagControllerReadOneResponse,
-    translate: this.service.tagControllerReadTranslationsResponse,
     update: this.service.tagControllerUpdateResponse
   };
 

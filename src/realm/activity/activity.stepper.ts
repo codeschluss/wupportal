@@ -18,10 +18,10 @@ import { ActivityModel } from './activity.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editActivity">editActivity</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'activity'">
-          <i18n i18n="@@activity">activity</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
+
         <ng-container *ngSwitchCase="'address'">
           <i18n i18n="@@address">address</i18n>
         </ng-container>
@@ -39,11 +39,11 @@ import { ActivityModel } from './activity.model';
 export class ActivityStepperComponent
   extends BaseStepper<ActivityModel> {
 
-  public root: string = 'activity';
+  public root: string = 'activities';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: ActivityFormComponent
     },
     {
@@ -66,7 +66,8 @@ export class ActivityStepperComponent
     .with('organisation')
     .with('schedules')
     .with('tags')
-    .with('targetGroups');
+    .with('targetGroups')
+    .with('translations').yield('language');
 
   protected model: Type<ActivityModel> = ActivityModel;
 

@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef, Input, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, Type, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatInput } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Box, CrudJoiner, CrudResolver, LocationProvider, LocationResponse, TokenProvider } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
-import { forkJoin, Observable, of } from 'rxjs';
+import { empty, forkJoin, Observable, of, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { SuburbModel } from '../suburb/suburb.model';
@@ -61,8 +61,9 @@ import { AddressModel } from './address.model';
   `)
 })
 
-export class AddressFormComponent extends BaseForm<AddressModel>
-  implements AfterViewInit {
+export class AddressFormComponent
+  extends BaseForm<AddressModel>
+  implements AfterViewInit, OnDestroy {
 
   @Input()
   public admin: boolean;
@@ -130,6 +131,8 @@ export class AddressFormComponent extends BaseForm<AddressModel>
 
   public search: FormControl = new FormControl();
 
+  private changes: Subscription = empty().subscribe();
+
   private untouched: AddressModel;
 
   public get valid(): boolean {
@@ -146,13 +149,17 @@ export class AddressFormComponent extends BaseForm<AddressModel>
   }
 
   public ngAfterViewInit(): void {
-    this.group.valueChanges.subscribe(() => this.clear());
+    this.changes = this.group.valueChanges.subscribe(() => this.clear());
     this.input.nativeElement.onblur = () => this.auto.isOpen || this.clear();
     this.search.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged(),
-      mergeMap((value) =>  value ? this.suggest(value) : of([]))
+      mergeMap((value) => value ? this.suggest(value) : of([]))
     ).subscribe((items) => this.options = items);
+  }
+
+  public ngOnDestroy(): void {
+    this.changes.unsubscribe();
   }
 
   public persist(): Observable<any> {
@@ -189,7 +196,7 @@ export class AddressFormComponent extends BaseForm<AddressModel>
         .relinkSuburb(item.id, Box(this.item.suburbId))); }
     }
 
-    return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
+    return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));
   }
 
   private clear(): void {
@@ -207,7 +214,7 @@ export class AddressFormComponent extends BaseForm<AddressModel>
       embeddings: CrudJoiner.to(joiner.graph),
       filter: label
     }).pipe(
-      mergeMap((items: any) => this.crudResolver.refine(items, joiner.graph)),
+      mergeMap((items) => this.crudResolver.refine(items as any, joiner.graph)),
       catchError(() => this.locationProvider.locate(search).pipe(map((items) =>
         items.filter((i) => !regex || i.place && i.place.search(regex) === 0)
       )))

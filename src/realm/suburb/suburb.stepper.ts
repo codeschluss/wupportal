@@ -15,9 +15,8 @@ import { SuburbModel } from './suburb.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editSuburb">editSuburb</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'suburb'">
-          <i18n i18n="@@suburb">suburb</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -27,11 +26,11 @@ import { SuburbModel } from './suburb.model';
 export class SuburbStepperComponent
   extends BaseStepper<SuburbModel> {
 
-  public root: string = 'suburb';
+  public root: string = 'suburbs';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: SuburbFormComponent
     }
   ];

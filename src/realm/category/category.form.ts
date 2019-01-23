@@ -1,6 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
+import { TranslationBase } from '../translation/translation.base';
 import { CategoryModel } from './category.model';
 
 @Component({
@@ -15,14 +16,15 @@ import { CategoryModel } from './category.model';
           <i18n i18n="@@description">description</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n i18n="@@name">name</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
   `)
 })
 
-export class CategoryFormComponent extends BaseForm<CategoryModel> {
+export class CategoryFormComponent
+  extends TranslationBase<CategoryModel> {
 
   public fields: FormField[] = [
     {

@@ -16,10 +16,10 @@ import { CategoryModel } from './category.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editCategory">editCategory</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'category'">
-          <i18n i18n="@@category">category</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
+
         <ng-container *ngSwitchCase="'translations'">
           <i18n i18n="@@translations">translations</i18n>
         </ng-container>
@@ -31,11 +31,11 @@ import { CategoryModel } from './category.model';
 export class CategoryStepperComponent
   extends BaseStepper<CategoryModel> {
 
-  public root: string = 'category';
+  public root: string = 'categories';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: CategoryFormComponent
     },
     {
@@ -44,7 +44,8 @@ export class CategoryStepperComponent
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(CategoryModel);
+  protected joiner: CrudJoiner = CrudJoiner.of(CategoryModel)
+    .with('translations').yield('language');
 
   protected model: Type<CategoryModel> = CategoryModel;
 

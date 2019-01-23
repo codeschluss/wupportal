@@ -9,14 +9,16 @@ import { ProviderModel } from '../provider/provider.model';
 import { ScheduleModel } from '../schedule/schedule.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
+import { Translatable } from '../translation/translation.base';
 
 export class ActivityModel
   extends CrudModel implements ActivityEntity {
 
+  @Translatable() public description: string;
+  @Translatable() public name: string;
+
   public contactName: string;
-  public description: string;
   public mail: string;
-  public name: string;
   public phone: string;
 
   public addressId: string;

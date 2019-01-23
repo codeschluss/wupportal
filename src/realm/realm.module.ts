@@ -57,7 +57,6 @@ import { TopicProvider } from './topic/topic.provider';
 import { TopicStepperComponent } from './topic/topic.stepper';
 import { TopicTableComponent } from './topic/topic.table';
 import { TranslationFormComponent } from './translation/translation.form';
-import { TranslationProvider } from './translation/translation.provider';
 import { UserFormComponent } from './user/user.form';
 import { UserProvider } from './user/user.provider';
 import { UserStepperComponent } from './user/user.stepper';
@@ -107,7 +106,6 @@ const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
   TagProvider,
   TargetGroupProvider,
   TopicProvider,
-  TranslationProvider,
   UserProvider
 ];
 

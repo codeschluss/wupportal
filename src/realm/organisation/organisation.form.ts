@@ -2,9 +2,10 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Box } from '@portal/core';
 import { BaseForm, FormField, StringFieldComponent, Tests, UrlFieldComponent } from '@portal/forms';
-import { forkJoin, Observable, of } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../organisation/organisation.model';
+import { TranslationBase } from '../translation/translation.base';
 
 @Component({
   selector: 'organisation-form',
@@ -18,7 +19,7 @@ import { OrganisationModel } from '../organisation/organisation.model';
           <i18n i18n="@@mail">mail</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n i18n="@@name">name</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'phone'">
           <i18n i18n="@@phone">phone</i18n><sup>#</sup>
@@ -34,7 +35,8 @@ import { OrganisationModel } from '../organisation/organisation.model';
   `)
 })
 
-export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
+export class OrganisationFormComponent
+  extends TranslationBase<OrganisationModel> {
 
   public fields: FormField[] = [
     {
@@ -103,7 +105,7 @@ export class OrganisationFormComponent extends BaseForm<OrganisationModel> {
         .relinkAddress(item.id, Box(this.item.addressId))); }
     }
 
-    return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
+    return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));
   }
 
 }

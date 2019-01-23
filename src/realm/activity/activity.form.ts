@@ -2,13 +2,14 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Box } from '@portal/core';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@portal/forms';
-import { forkJoin, Observable, of } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { CategoryModel } from '../category/category.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
+import { TranslationBase } from '../translation/translation.base';
 import { ActivityModel } from './activity.model';
 
 @Component({
@@ -29,7 +30,7 @@ import { ActivityModel } from './activity.model';
           <i18n i18n="@@mail">mail</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n i18n="@@name">name</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'organisation'">
           <i18n i18n="@@organisation">organisation</i18n>
@@ -48,7 +49,8 @@ import { ActivityModel } from './activity.model';
   `)
 })
 
-export class ActivityFormComponent extends BaseForm<ActivityModel> {
+export class ActivityFormComponent
+  extends TranslationBase<ActivityModel> {
 
   public fields: FormField[] = [
     {
@@ -171,7 +173,7 @@ export class ActivityFormComponent extends BaseForm<ActivityModel> {
         .relinkOrganisation(item.id, Box(this.item.organisationId))); }
     }
 
-    return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
+    return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));
   }
 
 }

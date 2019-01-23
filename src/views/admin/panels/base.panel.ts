@@ -97,8 +97,8 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   }
 
   public edit(item: CrudModel): void {
-    this.router.navigate(this.pathfinder
-      .to(item.constructor['stepper']).concat(item.id));
+    const stepper = item.constructor['stepper'].constructor;
+    this.router.navigate(this.pathfinder.to(stepper).concat(item.id));
   }
 
   public delete(item: CrudModel): void {

@@ -15,14 +15,15 @@ import { LanguageModel } from './language.model';
           <i18n i18n="@@machineTranslated">machineTranslated</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n i18n="@@name">name</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
   `)
 })
 
-export class LanguageFormComponent extends BaseForm<LanguageModel> {
+export class LanguageFormComponent
+  extends BaseForm<LanguageModel> {
 
   public fields: FormField[] = [
     {

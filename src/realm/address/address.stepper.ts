@@ -15,9 +15,8 @@ import { AddressModel } from './address.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editAddress">editAddress</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'address'">
-          <i18n i18n="@@address">address</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -27,11 +26,11 @@ import { AddressModel } from './address.model';
 export class AddressStepperComponent
   extends BaseStepper<AddressModel> {
 
-  public root: string = 'address';
+  public root: string = 'addresses';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: AddressFormComponent
     }
   ];

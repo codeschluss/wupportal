@@ -61,7 +61,7 @@ export class UserProvider
 
   public create: (model: UserModel) => Observable<any>;
 
-  public update: (model: UserModel, id: string) => Observable<any>;
+  public update: (model: UserModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

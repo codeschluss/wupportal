@@ -35,6 +35,9 @@
       <trans-unit id="blogs" datatype="html">
         <target>Blogs</target>
       </trans-unit>
+      <trans-unit id="blog" datatype="html">
+        <target>Blog</target>
+      </trans-unit>
       <trans-unit id="blogAboutActivity" datatype="html">
         <target>Blog zur Veranstaltung</target>
       </trans-unit>
@@ -56,7 +59,7 @@
       <trans-unit id="login" datatype="html">
         <target>Anmelden</target>
       </trans-unit>
-      <trans-unit id="logOut" datatype="html">
+      <trans-unit id="logout" datatype="html">
         <target>Abmelden</target>
       </trans-unit>
       <trans-unit id="successfullyLoggedOut" datatype="html">
@@ -99,7 +102,7 @@
         <target>zur Veranstaltung</target>
       </trans-unit>
       <trans-unit id="enteredActivities" datatype="html">
-        <target>eingetragene Veranstaltungen</target>
+        <target>Eingetragene Veranstaltungen</target>
       </trans-unit>
       <trans-unit id="waitingForMap" datatype="html">
         <target>Karte kommt...</target>

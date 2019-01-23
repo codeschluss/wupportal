@@ -157,7 +157,7 @@ const PublicRoutes = [
     }
   },
   {
-  path: 'view/page/:uuid',
+  path: 'view/pages/:uuid',
   component: PageViewComponent,
     resolve: {
       page: CrudResolver,

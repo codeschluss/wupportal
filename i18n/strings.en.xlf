@@ -35,6 +35,9 @@
       <trans-unit id="blogs" datatype="html">
         <target>Blogs</target>
       </trans-unit>
+      <trans-unit id="blog" datatype="html">
+        <target>Blog</target>
+      </trans-unit>
       <trans-unit id="blogAboutActivity" datatype="html">
         <target>Blog about activity</target>
       </trans-unit>
@@ -56,7 +59,7 @@
       <trans-unit id="login" datatype="html">
         <target>login</target>
       </trans-unit>
-      <trans-unit id="logOut" datatype="html">
+      <trans-unit id="logout" datatype="html">
         <target>Log out</target>
       </trans-unit>
       <trans-unit id="successfullyLoggedOut" datatype="html">

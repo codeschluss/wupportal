@@ -29,7 +29,7 @@ import { OrganisationViewComponent } from './organisation/organisation.view.comp
 import { PublicComponent } from './public.component';
 import { PublicRouter } from './public.router';
 import { SearchComponent } from './search/search.component';
-import { SearchResultListComponent } from './search/searchresult.list.component';
+import { SearchListComponent } from './search/searchresult.list.component';
 import { PageListComponent } from './worthKnowing/page.list.component';
 import { PageViewComponent } from './worthKnowing/page.view.component';
 import { TopicListItemComponent } from './worthKnowing/topic.listitem.component';
@@ -55,8 +55,8 @@ const PublicDeclarations = [
   BlogListComponent,
   BlogListItemComponent,
   BlogViewComponent,
-  SearchResultListComponent,
   SearchComponent,
+  SearchListComponent,
   SocialMediaComponent,
   TopicsListComponent,
   TopicListItemComponent,
@@ -81,8 +81,6 @@ const PublicImports = [
   MappingComponent.imports,
   FlexLayoutModule,
   FontAwesomeModule,
-  SearchResultListComponent.imports,
-  SearchComponent.imports,
   FormsModule,
   JwSocialButtonsModule,
   CoreModule,

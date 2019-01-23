@@ -102,10 +102,10 @@ $mat-custom-accent: (
 
 
 $custom-primary: mat-palette($mat-custom-red, 500, 100, 700);
-$custom-secondary: mat-palette($mat-custom-yellow, 500, 100, 700);
 $custom-accent:  mat-palette($mat-custom-accent, 500, 100, 700);
+$custom-secondary: mat-palette($mat-custom-yellow, 500, 100, 700);
 
-$custom-theme: mat-light-theme($custom-primary, $custom-secondary);
+$custom-theme: mat-light-theme($custom-primary, $custom-accent);
 
 @include angular-material-theme($custom-theme);
 
@@ -113,8 +113,27 @@ $custom-theme: mat-light-theme($custom-primary, $custom-secondary);
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 * {
-  font-family: Open Sans, Regular;
+  font-family: "Open Sans";
   font-size: 18px;
+}
+
+// b {
+//   font-family: "Open Sans, bold";
+// }
+
+@font-face {
+  font-family: "Open Sans, regular";
+  src: url('https://fonts.googleapis.com/css?family=Open+Sans');
+}
+@font-face {
+  font-family: "Open Sans, bold";
+  src: url('https://fonts.googleapis.com/css?family=Open+Sans');
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Open Sans, italique";
+  src: url('https://fonts.googleapis.com/css?family=Open+Sans');
+  font-style: italic;
 }
 
 .h2 {
@@ -136,6 +155,10 @@ $custom-theme: mat-light-theme($custom-primary, $custom-secondary);
 .h3 * {
   font-size: 30px;
   font-weight: bold;
+}
+
+.h4 * {
+  font-size: 25px;
 }
 
 h2 {
@@ -246,6 +269,8 @@ h4 {
 .mat-step-header .mat-step-icon {
   display: none;
 }
+
+
 
 // customizing expansion panel
 

@@ -22,7 +22,7 @@ export class LoadingIndicatorComponent implements AfterViewInit {
     private loadingProvider: LoadingProvider
   ) { }
 
-  public ngAfterViewInit(): void  {
+  public ngAfterViewInit(): void {
     this.loadingProvider.value.subscribe((loading) => {
       this.indicator.nativeElement.style.height = loading ? null : '0px';
     });

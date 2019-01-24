@@ -6,7 +6,8 @@ import { Translatable } from '../translation/translation.base';
 export class TagModel
   extends CrudModel implements TagEntity {
 
-  @Translatable() public description: string;
   @Translatable() public name: string;
+
+  public description: string;
 
 }

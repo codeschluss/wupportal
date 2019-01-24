@@ -2,7 +2,6 @@ import { ActivatedRoute } from '@angular/router';
 import { CrudModel, TokenProvider } from '@portal/core';
 import { BaseForm } from '@portal/forms';
 import { forkJoin, Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
 import { TranslationProvider } from './translation.provider';
 
 export function Translatable() {
@@ -26,10 +25,11 @@ export abstract class TranslationBase<Model extends CrudModel>
   }
 
   protected cascade(item: Model): Observable<any> {
-    return super.cascade(item).pipe(mergeMap(() => forkJoin(
-      this.group.get('translations').value.map((t) =>
-        this.translationProvider.update(Object.assign(t, { id: item.id })))
-    )));
+    return forkJoin(this.group.get('translations').value.map((translation) => {
+      const { id, ...rest } = translation;
+      translation = Object.assign(Object.create(item), item, rest);
+      return this.translationProvider.update(translation);
+    }));
   }
 
 }

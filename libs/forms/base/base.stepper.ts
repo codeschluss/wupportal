@@ -31,12 +31,12 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
   protected static template(template: string): string {
     return `
-      <mat-toolbar color="primary">
+      <header class="mat-body">
         <h2><ng-container *ngTemplateOutlet="label; context: {
           case: { name: item?.id ? 'edit' : 'create' }
         }"></ng-container></h2>:
         <h1>{{ title || '...' }}</h1>
-      </mat-toolbar>
+      </header>
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
           <a mat-tab-link replaceUrl [disabled]="!can(i)" [routerLink]="link(i)"
@@ -49,26 +49,26 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       ${template}
       <router-outlet></router-outlet>
       <mat-divider></mat-divider>
-      <button mat-button tabindex="-1" (click)="location.back()">
+      <button mat-raised-button color="warn" tabindex="-1" (click)="quit()">
         <i18n i18n="@@close">close</i18n>
       </button>
-      <button mat-button tabindex="-1" (click)="reset()">
+      <button mat-raised-button color="warn" tabindex="-1" (click)="reset()">
         <i18n i18n="@@reset">reset</i18n>
       </button>
       <ng-container *ngIf="has('-1')">
-        <button mat-button replaceUrl [disabled]="!can(index - 1)"
+        <button mat-raised-button replaceUrl [disabled]="!can(index - 1)"
           [routerLink]="link('-1')">
           <i18n i18n="@@previous">previous</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="has('+1')">
-        <button mat-button replaceUrl [disabled]="!can(index + 1)"
+        <button mat-raised-button replaceUrl [disabled]="!can(index + 1)"
           [routerLink]="link('+1')">
           <i18n i18n="@@next">next</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="!has('+1')">
-        <button mat-button color="primary" [disabled]="!valid || !dirty"
+        <button mat-raised-button color="primary" [disabled]="!valid || !dirty"
           (click)="persist()">
           <i18n i18n="@@persist">persist</i18n>
         </button>
@@ -113,9 +113,9 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   public constructor(
-    public location: Location,
     protected route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    private location: Location
   ) {
     super();
   }
@@ -151,6 +151,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     return typeof index === 'string'
       ? this.steps[parseInt(index, 10) + this.index].name
       : this.steps[index].name;
+  }
+
+  public quit(): void {
+    this.location.back();
   }
 
   public reset(): void {

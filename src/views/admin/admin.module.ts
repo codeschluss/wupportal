@@ -1,7 +1,7 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
-import { MatBadgeModule, MatButtonModule, MatDialogModule, MatDividerModule, MatListModule, MatMenuModule, MatPaginatorIntl, MatSlideToggleModule, MatTabsModule, MatToolbarModule, MAT_TABS_CONFIG } from '@angular/material';
+import { MatBadgeModule, MatButtonModule, MatDialogModule, MatDividerModule, MatListModule, MatMenuModule, MatPaginatorIntl, MatSlideToggleModule, MatTabsModule, MAT_TABS_CONFIG } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule } from '@portal/core';
 import { MatPagerIntl } from '@portal/forms';
@@ -37,7 +37,6 @@ const materials: Type<any>[] = [
   MatMenuModule,
   MatSlideToggleModule,
   MatTabsModule,
-  MatToolbarModule,
   ScrollingModule
 ];
 

@@ -1,9 +1,11 @@
-<mat-toolbar color="primary">
-  <h2><i18n i18n="@@applicationPanel">applicationPanel</i18n></h2>:
-  <h1>{{ title }}</h1>
-  <button mat-button [matMenuTriggerFor]="actions">
+<header class="mat-body">
+  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
     <i18n i18n="@@actions">actions</i18n>
   </button>
+
+  <h2><i18n i18n="@@applicationPanel">applicationPanel</i18n></h2>
+  <h1>{{ title }}</h1>
+
   <mat-menu #actions="matMenu">
     <button mat-menu-item (click)="create('languages')">
       <i18n i18n="@@createLanguage">createLanguage</i18n>
@@ -24,7 +26,7 @@
       <i18n i18n="@@createPage">createPage</i18n>
     </button>
   </mat-menu>
-</mat-toolbar>
+</header>
 
 <mat-tab-group [selectedIndex]="index">
   <mat-tab id="configuration">
@@ -35,7 +37,8 @@
       <configuration-form #form [group]="group" [item]="configuration">
       </configuration-form>
       <mat-divider></mat-divider>
-      <button mat-button color="primary" [disabled]="!form.valid || !form.dirty"
+      <button mat-raised-button color="primary"
+        [disabled]="!form.valid || !form.dirty"
         (click)="form.persist().subscribe()">
         <i18n i18n="@@persist">persist</i18n>
       </button>

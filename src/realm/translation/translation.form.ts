@@ -17,7 +17,7 @@ import { TranslationProvider } from './translation.provider';
         <i18n i18n="@@compilation">compilation</i18n>
       </label>
       <output>
-        <button mat-button (click)="this.translate()">
+        <button mat-button color="primary" (click)="this.translate()">
           <i18n i18n="@@autoTranslate">autoTranslate</i18n>
         </button>
       </output>

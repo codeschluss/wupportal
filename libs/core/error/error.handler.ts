@@ -16,7 +16,10 @@ export class CoreErrorHandler implements ErrorHandler {
   }
 
   public handleError(error: any): void {
-    if (error.message === 'ResizeObserver loop limit exceeded') { return; }
+    if (
+      error === 'ResizeObserver loop limit exceeded' ||
+      error.message === 'ResizeObserver loop limit exceeded'
+    ) { return; }
 
     console.error(error);
     this.throwError(Object.assign(new ErrorModel(), {

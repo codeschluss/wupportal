@@ -6,9 +6,6 @@
   <button mat-raised-button color="primary" [matMenuTriggerFor]="actions">
     <i18n i18n="@@actions">actions</i18n>
   </button>
-
-  <h2><i18n i18n="@@accountPanel">accountPanel</i18n></h2>
-  <h1>{{ group?.get('name')?.value || '...' }}</h1>
 </header>
 
 <mat-menu #actions="matMenu">

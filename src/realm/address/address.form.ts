@@ -30,6 +30,7 @@ import { AddressModel } from './address.model';
             </mat-option>
           </ng-container>
         </mat-autocomplete>
+        <span matPrefix>{{'🔍'}}&nbsp;</span>
       </mat-form-field></nav>
     </section>
 

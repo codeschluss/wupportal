@@ -9,6 +9,9 @@ import { ScheduleModel } from './schedule.model';
 
 @Component({
   selector: 'schedule-form',
+  styles: [`
+    mat-chip { cursor: pointer; }
+  `],
   template: BaseForm.template(`
     <section>
       <label class="mat-body-strong">
@@ -57,7 +60,7 @@ import { ScheduleModel } from './schedule.model';
             </mat-chip>
             <mat-chip #friday="matChip" value="friday"
               (click)="friday.toggleSelected()">
-              <i18n i18n="@@firday">firday</i18n>
+              <i18n i18n="@@friday">friday</i18n>
             </mat-chip>
             <mat-chip #saturday="matChip" value="saturday"
               (click)="saturday.toggleSelected()">

@@ -52,7 +52,6 @@ export class UserFormComponent
     {
       name: 'phone',
       input: StringFieldComponent,
-      tests: [Validators.required],
       type: 'tel'
     },
     {

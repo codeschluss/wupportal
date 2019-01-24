@@ -8,7 +8,12 @@ import { ImageModel } from './image.model';
 @Component({
   styles: [`
     :host { align-items: center; display: flex; flex-wrap: wrap; }
-    img { background-position: center; background-size: cover; height: 240px; }
+    img {
+      background-position: center;
+      background-size: cover;
+      display: block;
+      height: 240px;
+    }
     input[type=file] { display: none; }
     label {
       align-items: center;
@@ -91,7 +96,7 @@ export class ImageFieldComponent extends BaseFieldComponent
   public ngAfterViewInit(): void {
     this.file.valueChanges.pipe(
       map((value) => value.item(0)),
-      filter(Boolean),
+      filter((file) => file && file.type.startsWith('image/')),
       mergeMap((file) => {
         const reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -138,11 +143,7 @@ export class ImageFieldComponent extends BaseFieldComponent
   }
 
   public drop(event: Event & any): void {
-    const files = event.dataTransfer.files as FileList;
-
-    if (files.length === 1 && files.item(0).type.startsWith('image/')) {
-      this.file.patchValue(files);
-    }
+    this.file.patchValue(event.dataTransfer.files);
 
     event.preventDefault();
     event.dataTransfer.clearData();

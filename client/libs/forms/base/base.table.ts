@@ -54,7 +54,10 @@ export abstract class BaseTable<Model extends CrudModel>
 
   protected static template(template: string): string {
     return template + `
-      <mat-form-field><input matInput type="search"></mat-form-field>
+      <mat-form-field>
+        <input matInput type="search">
+        <span matPrefix>{{'🔍'}}&nbsp;</span>
+      </mat-form-field>
       <mat-table matSort [dataSource]="source.asObservable()">
         <mat-header-row *matHeaderRowDef="collate"></mat-header-row>
         <mat-row *matRowDef="let item; columns: collate"></mat-row>

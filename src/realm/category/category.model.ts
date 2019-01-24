@@ -5,8 +5,9 @@ import { Translatable } from '../translation/translation.base';
 export class CategoryModel
   extends CrudModel implements CategoryEntity {
 
-  @Translatable() public description: string;
   @Translatable() public name: string;
+
+  public description: string;
 
   public color: string;
 

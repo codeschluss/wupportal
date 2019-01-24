@@ -8,7 +8,8 @@ import { BaseFieldComponent } from '../base/base.field';
     <ng-template #txt>
       <textarea matInput matTextareaAutosize
         [formControlName]="field.name"
-        [id]="field.name">
+        [id]="field.name"
+        [matAutosizeMinRows]="2">
       </textarea>
     </ng-template>
     <ng-template #str>

@@ -5,7 +5,8 @@ import { Translatable } from '../translation/translation.base';
 export class TargetGroupModel
   extends CrudModel implements TargetGroupEntity {
 
-  @Translatable() public description: string;
   @Translatable() public name: string;
+
+  public description: string;
 
 }

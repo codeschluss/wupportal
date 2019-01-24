@@ -59,6 +59,15 @@ export class TranslationFormComponent<Model extends CrudModel>
 
   private values: Subscription = empty().subscribe();
 
+  public get valid(): boolean {
+    return Object.keys(this.group.controls)
+      .filter((key) => key !== 'language' && this.fields
+        .find((f) => f.name === key).tests.includes(Validators.required))
+      .every((key) => this.translations
+        .filter((t) => t.language.id !== this.language.id)
+        .every((t) => t[key]));
+  }
+
   private get translations(): Model[] {
     if (!this.route.routeConfig.data.translations) {
       this.route.routeConfig.data.translations = this.route.snapshot.data

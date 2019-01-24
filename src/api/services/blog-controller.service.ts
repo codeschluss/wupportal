@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { BlogEntity } from '../models/blog-entity';
+import { StringPrimitive } from '../models/string-primitive';
 import { ResourceBlogEntity } from '../models/resource-blog-entity';
 
 /**
@@ -133,7 +134,7 @@ class BlogControllerService extends BaseService {
    * @return OK
    */
   blogControllerUpdateActivityResponse(blogId: string,
-    activityId: string): Observable<StrictHttpResponse<{}>> {
+    activityId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -162,7 +163,7 @@ class BlogControllerService extends BaseService {
    * @return OK
    */
   blogControllerUpdateActivity(blogId: string,
-    activityId: string): Observable<{}> {
+    activityId: StringPrimitive): Observable<{}> {
     return this.blogControllerUpdateActivityResponse(blogId, activityId).pipe(
       __map(_r => _r.body as {})
     );

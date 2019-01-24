@@ -16,6 +16,8 @@ export class CoreErrorHandler implements ErrorHandler {
   }
 
   public handleError(error: any): void {
+    if (error.message === 'ResizeObserver loop limit exceeded') { return; }
+
     console.error(error);
     this.throwError(Object.assign(new ErrorModel(), {
       error: error.constructor.name,
@@ -34,17 +36,8 @@ export class CoreErrorHandler implements ErrorHandler {
   }
 
   public throwError(error: ErrorModel, stacktrace?: string): void {
-    // workaround for chrome bug concerning video tag in html5
-    if (!error.path.endsWith('/home')
-      && error.message !== '{ isTrusted: [Getter] }') {
-      this.dialog.open(ErrorDialogComponent, {
-        data: {
-          error: error,
-          stacktrace: stacktrace || null
-        }
-      });
-    }
-}
-
+    const data = { error: error, stacktrace: stacktrace };
+    this.zone.run(() => this.dialog.open(ErrorDialogComponent, { data: data }));
+  }
 
 }

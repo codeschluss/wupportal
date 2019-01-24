@@ -34,7 +34,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       <header class="mat-body">
         <h2><ng-container *ngTemplateOutlet="label; context: {
           case: { name: item?.id ? 'edit' : 'create' }
-        }"></ng-container></h2>:
+        }"></ng-container></h2>
         <h1>{{ title || '...' }}</h1>
       </header>
       <nav mat-tab-nav-bar>

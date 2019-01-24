@@ -8,11 +8,14 @@ main#admin {
   }
 
   header.mat-body {
-    & > button {
-      float: right;
+    align-items: center;
+    display: flex;
+
+    & > * + * {
+      margin-left: 24px;
     }
 
-    & > h2 {
+    h2 {
       color: grey;
     }
   }

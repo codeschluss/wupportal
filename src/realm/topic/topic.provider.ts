@@ -1,8 +1,9 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 import { BaseService } from 'src/api/base-service';
 import { TopicControllerService } from 'src/api/services/topic-controller.service';
+import { LanguageModel } from '../language/language.model';
 import { PageModel } from '../page/page.model';
 import { TopicModel } from './topic.model';
 
@@ -12,9 +13,19 @@ export class TopicProvider
 
   protected linked: CrudLink[] = [
     {
+      field: 'language',
+      method: () => empty(),
+      model: LanguageModel
+    },
+    {
       field: 'pages',
       method: this.service.topicControllerReadPagesResponse,
       model: PageModel
+    },
+    {
+      field: 'translations',
+      method: this.service.topicControllerReadTranslationsResponse,
+      model: TopicModel
     }
   ];
 
@@ -23,7 +34,6 @@ export class TopicProvider
     delete: this.service.topicControllerDeleteResponse,
     readAll: this.service.topicControllerReadAllResponse,
     readOne: this.service.topicControllerReadOneResponse,
-    translate: this.service.topicControllerReadTranslationsResponse,
     update: this.service.topicControllerUpdateResponse
   };
 
@@ -37,7 +47,7 @@ export class TopicProvider
 
   public create: (model: TopicModel) => Observable<any>;
 
-  public update: (model: TopicModel, id: string) => Observable<any>;
+  public update: (model: TopicModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

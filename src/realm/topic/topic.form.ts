@@ -1,6 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
+import { TranslationBase } from '../translation/translation.base';
 import { TopicModel } from './topic.model';
 
 @Component({
@@ -16,7 +17,8 @@ import { TopicModel } from './topic.model';
   `)
 })
 
-export class TopicFormComponent extends BaseForm<TopicModel> {
+export class TopicFormComponent
+  extends TranslationBase<TopicModel> {
 
   public fields: FormField[] = [
     {

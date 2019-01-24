@@ -1,9 +1,10 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { BlogControllerService } from '../../api/services/blog-controller.service';
 import { ActivityModel } from '../activity/activity.model';
+import { LanguageModel } from '../language/language.model';
 import { BlogModel } from './blog.model';
 
 @Injectable({ providedIn: 'root' })
@@ -15,6 +16,16 @@ export class BlogProvider
       field: 'activity',
       method: this.service.blogControllerReadActivityResponse,
       model: ActivityModel
+    },
+    {
+      field: 'language',
+      method: () => empty(),
+      model: LanguageModel
+    },
+    {
+      field: 'translations',
+      method: this.service.blogControllerReadTranslationsResponse,
+      model: BlogModel
     }
   ];
 
@@ -23,7 +34,6 @@ export class BlogProvider
     delete: this.service.blogControllerDeleteResponse,
     readAll: this.service.blogControllerReadAllResponse,
     readOne: this.service.blogControllerReadOneResponse,
-    translate: this.service.blogControllerReadTranslationsResponse,
     update: this.service.blogControllerUpdateResponse
   };
 
@@ -37,7 +47,7 @@ export class BlogProvider
 
   public create: (model: BlogModel) => Observable<any>;
 
-  public update: (model: BlogModel, id: string) => Observable<any>;
+  public update: (model: BlogModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

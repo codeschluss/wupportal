@@ -16,10 +16,10 @@ import { PageModel } from './page.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editPage">editPage</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'page'">
-          <i18n i18n="@@Page">Page</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
+
         <ng-container *ngSwitchCase="'translations'">
           <i18n i18n="@@translations">translations</i18n>
         </ng-container>
@@ -31,11 +31,11 @@ import { PageModel } from './page.model';
 export class PageStepperComponent
   extends BaseStepper<PageModel> {
 
-  public root: string = 'page';
+  public root: string = 'pages';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: PageFormComponent,
     },
     {
@@ -45,7 +45,8 @@ export class PageStepperComponent
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(PageModel)
-    .with('topic');
+    .with('topic')
+    .with('translations').yield('language');
 
   protected model: Type<PageModel> = PageModel;
 

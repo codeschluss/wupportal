@@ -1,8 +1,9 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 import { PageControllerService } from 'src/api/services/page-controller.service';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
+import { LanguageModel } from '../language/language.model';
 import { TopicModel } from '../topic/topic.model';
 import { PageModel } from './page.model';
 
@@ -12,9 +13,19 @@ export class PageProvider
 
   protected linked: CrudLink[] = [
     {
+      field: 'language',
+      method: () => empty(),
+      model: LanguageModel
+    },
+    {
       field: 'topic',
       method: this.service.pageControllerReadTopicResponse,
       model: TopicModel
+    },
+    {
+      field: 'translations',
+      method: this.service.pageControllerReadTranslationsResponse,
+      model: PageModel
     }
   ];
 
@@ -23,7 +34,6 @@ export class PageProvider
     delete: this.service.pageControllerDeleteResponse,
     readAll: this.service.pageControllerReadAllResponse,
     readOne: this.service.pageControllerReadOneResponse,
-    translate: this.service.pageControllerReadTranslationsResponse,
     update: this.service.pageControllerUpdateResponse
   };
 
@@ -37,7 +47,7 @@ export class PageProvider
 
   public create: (model: PageModel) => Observable<any>;
 
-  public update: (model: PageModel, id: string) => Observable<any>;
+  public update: (model: PageModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 

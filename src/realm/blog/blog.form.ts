@@ -5,6 +5,7 @@ import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from 
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityModel } from '../activity/activity.model';
+import { TranslationBase } from '../translation/translation.base';
 import { BlogModel } from './blog.model';
 
 @Component({
@@ -29,7 +30,8 @@ import { BlogModel } from './blog.model';
   `)
 })
 
-export class BlogFormComponent extends BaseForm<BlogModel> {
+export class BlogFormComponent
+  extends TranslationBase<BlogModel> {
 
   public fields: FormField[] = [
     {
@@ -59,7 +61,7 @@ export class BlogFormComponent extends BaseForm<BlogModel> {
   public model: Type<BlogModel> = BlogModel;
 
   public persist(): Observable<any> {
-    this.item.activityId = this.group.get('activity').value.id;
+    this.item.activityId = (this.group.get('activity').value || { }).id;
 
     return super.persist();
   }

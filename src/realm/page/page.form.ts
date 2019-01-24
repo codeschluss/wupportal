@@ -5,6 +5,7 @@ import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from 
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TopicModel } from '../topic/topic.model';
+import { TranslationBase } from '../translation/translation.base';
 import { PageModel } from './page.model';
 
 @Component({
@@ -26,7 +27,8 @@ import { PageModel } from './page.model';
   `)
 })
 
-export class PageFormComponent extends BaseForm<PageModel> {
+export class PageFormComponent
+  extends TranslationBase<PageModel> {
 
   public fields: FormField[] = [
     {

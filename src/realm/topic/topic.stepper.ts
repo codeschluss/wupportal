@@ -16,10 +16,10 @@ import { TopicModel } from './topic.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editTopic">editTopic</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'topic'">
-          <i18n i18n="@@topic">topic</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
+
         <ng-container *ngSwitchCase="'translations'">
           <i18n i18n="@@translations">translations</i18n>
         </ng-container>
@@ -31,11 +31,11 @@ import { TopicModel } from './topic.model';
 export class TopicStepperComponent
   extends BaseStepper<TopicModel> {
 
-  public root: string = 'topic';
+  public root: string = 'topics';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: TopicFormComponent
     },
     {
@@ -44,7 +44,8 @@ export class TopicStepperComponent
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(TopicModel);
+  protected joiner: CrudJoiner = CrudJoiner.of(TopicModel)
+    .with('translations').yield('language');
 
   protected model: Type<TopicModel> = TopicModel;
 

@@ -16,10 +16,10 @@ import { BlogModel } from './blog.model';
         <ng-container *ngSwitchCase="'edit'">
           <i18n i18n="@@editBlog">editBlog</i18n>
         </ng-container>
-
-        <ng-container *ngSwitchCase="'blog'">
-          <i18n i18n="@@blog">blog</i18n>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
         </ng-container>
+
         <ng-container *ngSwitchCase="'translations'">
           <i18n i18n="@@translations">translations</i18n>
         </ng-container>
@@ -31,11 +31,11 @@ import { BlogModel } from './blog.model';
 export class BlogStepperComponent
   extends BaseStepper<BlogModel> {
 
-  public root: string = 'blog';
+  public root: string = 'blogs';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: BlogFormComponent
     },
     {
@@ -45,7 +45,8 @@ export class BlogStepperComponent
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(BlogModel)
-    .with('activity');
+    .with('activity')
+    .with('translations').yield('language');
 
   protected model: Type<BlogModel> = BlogModel;
 

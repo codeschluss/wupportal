@@ -1,32 +1,36 @@
 <header class="mat-body">
+  <div>
+    <h2><i18n i18n="@@applicationPanel">applicationPanel</i18n></h2>
+    <h1>{{ title }}</h1>
+  </div>
   <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
     <i18n i18n="@@actions">actions</i18n>
   </button>
 
   <h2><i18n i18n="@@applicationPanel">applicationPanel</i18n></h2>
   <h1>{{ title }}</h1>
-
-  <mat-menu #actions="matMenu">
-    <button mat-menu-item (click)="create('languages')">
-      <i18n i18n="@@createLanguage">createLanguage</i18n>
-    </button>
-    <button mat-menu-item (click)="create('categories')">
-      <i18n i18n="@@createCategory">createCategory</i18n>
-    </button>
-    <button mat-menu-item (click)="create('targetgroups')">
-      <i18n i18n="@@createTargetGroup">createTargetGroup</i18n>
-    </button>
-    <button mat-menu-item (click)="create('suburbs')">
-      <i18n i18n="@@createSuburb">createSuburb</i18n>
-    </button>
-    <button mat-menu-item (click)="create('topic')">
-      <i18n i18n="@@createTopic">createTopic</i18n>
-    </button>
-    <button mat-menu-item (click)="create('page')">
-      <i18n i18n="@@createPage">createPage</i18n>
-    </button>
-  </mat-menu>
 </header>
+
+<mat-menu #actions="matMenu">
+  <button mat-menu-item (click)="create('languages')">
+    <i18n i18n="@@createLanguage">createLanguage</i18n>
+  </button>
+  <button mat-menu-item (click)="create('categories')">
+    <i18n i18n="@@createCategory">createCategory</i18n>
+  </button>
+  <button mat-menu-item (click)="create('targetgroups')">
+    <i18n i18n="@@createTargetGroup">createTargetGroup</i18n>
+  </button>
+  <button mat-menu-item (click)="create('suburbs')">
+    <i18n i18n="@@createSuburb">createSuburb</i18n>
+  </button>
+  <button mat-menu-item (click)="create('topics')">
+    <i18n i18n="@@createTopic">createTopic</i18n>
+  </button>
+  <button mat-menu-item (click)="create('pages')">
+    <i18n i18n="@@createPage">createPage</i18n>
+  </button>
+</mat-menu>
 
 <mat-tab-group [selectedIndex]="index">
   <mat-tab id="configuration">

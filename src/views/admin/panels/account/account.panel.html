@@ -1,33 +1,37 @@
 <header class="mat-body">
+  <div>
+    <h2><i18n i18n="@@accountPanel">accountPanel</i18n></h2>
+    <h1>{{ group?.get('name')?.value || '...' }}</h1>
+  </div>
   <button mat-raised-button color="primary" [matMenuTriggerFor]="actions">
     <i18n i18n="@@actions">actions</i18n>
   </button>
 
   <h2><i18n i18n="@@accountPanel">accountPanel</i18n></h2>
   <h1>{{ group?.get('name')?.value || '...' }}</h1>
-
-  <mat-menu #actions="matMenu">
-    <button mat-menu-item [disabled]="!provides" (click)="create('activities')">
-      <i18n i18n="@@createActivity">createActivity</i18n>
-    </button>
-    <ng-container *ngIf="user.blogger" ngProjectAs="mat-menu-item">
-      <button mat-menu-item [disabled]="!blogger" (click)="create('blogs')">
-        <i18n i18n="@@createBlog">createBlog</i18n>
-      </button>
-    </ng-container>
-    <ng-container *ngIf="!user.blogger" ngProjectAs="mat-menu-item">
-      <button mat-menu-item (click)="joinBloggers()">
-        <i18n i18n="@@joinBloggers">joinBloggers</i18n>
-      </button>
-    </ng-container>
-    <button mat-menu-item (click)="joinOrganisations()">
-      <i18n i18n="@@joinOrganisations">joinOrganisations</i18n>
-    </button>
-    <button mat-menu-item (click)="create('organisations')">
-      <i18n i18n="@@createOrganisation">createOrganisation</i18n>
-    </button>
-  </mat-menu>
 </header>
+
+<mat-menu #actions="matMenu">
+  <button mat-menu-item [disabled]="!provides" (click)="create('activities')">
+    <i18n i18n="@@createActivity">createActivity</i18n>
+  </button>
+  <ng-container *ngIf="user.blogger" ngProjectAs="mat-menu-item">
+    <button mat-menu-item [disabled]="!blogger" (click)="create('blogs')">
+      <i18n i18n="@@createBlog">createBlog</i18n>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="!user.blogger" ngProjectAs="mat-menu-item">
+    <button mat-menu-item (click)="joinBloggers()">
+      <i18n i18n="@@joinBloggers">joinBloggers</i18n>
+    </button>
+  </ng-container>
+  <button mat-menu-item (click)="joinOrganisations()">
+    <i18n i18n="@@joinOrganisations">joinOrganisations</i18n>
+  </button>
+  <button mat-menu-item (click)="create('organisations')">
+    <i18n i18n="@@createOrganisation">createOrganisation</i18n>
+  </button>
+</mat-menu>
 
 <mat-tab-group [selectedIndex]="index">
   <mat-tab id="details" [disabled]="!user">

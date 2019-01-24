@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Box } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
-import { forkJoin, Observable, of } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TopicModel } from '../topic/topic.model';
 import { TranslationBase } from '../translation/translation.base';
@@ -69,7 +69,7 @@ export class PageFormComponent
         .relinkTopic(item.id, Box(this.item.topicId))); }
     }
 
-    return forkJoin([of(item), ...links]).pipe(map((items) => items.shift()));
+    return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));
   }
 
 }

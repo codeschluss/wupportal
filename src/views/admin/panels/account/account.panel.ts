@@ -35,6 +35,10 @@ export class AccountPanelComponent extends BasePanel {
     return this.user.activities || [];
   }
 
+  public get blogger(): boolean {
+    return this.user.blogger && this.user.blogger.approved;
+  }
+
   public get blogs(): BlogModel[] {
     return this.user.blogs || [];
   }

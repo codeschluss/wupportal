@@ -17,4 +17,8 @@ export class BlogModel
 
     public activity: ActivityModel & Observable<ActivityModel>;
 
+    public get name(): string {
+      return this.title;
+    }
+
 }

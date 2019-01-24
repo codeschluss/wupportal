@@ -14,4 +14,8 @@ export class PageModel
 
   public topic: TopicModel & Observable<TopicModel>;
 
+  public get name(): string {
+    return this.title;
+  }
+
 }

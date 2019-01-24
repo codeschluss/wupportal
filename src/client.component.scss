@@ -3,3 +3,12 @@ main#client {
     pointer-events: none;
   }
 }
+
+main#client ::ng-deep main#admin {
+  margin: 0 16px;
+
+  mat-toolbar {
+    background: transparent;
+    color: inherit;
+  }
+}

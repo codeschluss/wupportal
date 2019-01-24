@@ -9,7 +9,7 @@
       <i18n i18n="@@createActivity">createActivity</i18n>
     </button>
     <ng-container *ngIf="user.blogger" ngProjectAs="mat-menu-item">
-      <button mat-menu-item (click)="create('blog')">
+      <button mat-menu-item [disabled]="!blogger" (click)="create('blogs')">
         <i18n i18n="@@createBlog">createBlog</i18n>
       </button>
     </ng-container>

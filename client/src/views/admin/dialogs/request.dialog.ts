@@ -30,10 +30,10 @@ import { UserProvider } from '../../../realm/user/user.provider';
       </mat-selection-list>
     </section>
     <section mat-dialog-actions>
-      <button mat-button mat-dialog-close tabindex="-1">
+      <button mat-raised-button mat-dialog-close tabindex="-1">
         <i18n i18n="@@close">close</i18n>
       </button>
-      <button mat-button color="primary" [disabled]="!ids.length"
+      <button mat-raised-button color="primary" [disabled]="!ids.length"
         (click)="request()">
         <i18n i18n="@@joinOrganisations">joinOrganisations</i18n>
       </button>

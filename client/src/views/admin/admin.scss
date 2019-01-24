@@ -7,34 +7,18 @@ main#admin {
     pointer-events: none;
   }
 
-  // mat-tab-group,
-  // nav.mat-tab-nav-bar {
-  //   div.mat-tab-label,
-  //   a.mat-tab-link {
-  //     &.mat-tab-disabled,
-  //     &.mat-tab-label-active {
-  //       pointer-events: none;
-  //       opacity: 1;
-
-  //       &>.mat-ripple-element {
-  //         display: none;
-  //       }
-
-  //       button.mat-icon-button {
-  //         pointer-events: auto;
-  //       }
-  //     }
-
-  //     button.mat-icon-button {
-  //       pointer-events: none;
-  //     }
-  //   }
-  // }
-
-  mat-toolbar {
-    & > * + * {
-      margin-left: 8px;
+  header.mat-body {
+    & > button {
+      float: right;
     }
+
+    & > h2 {
+      color: grey;
+    }
+  }
+
+  *.mat-raised-button {
+    margin: 4px;
   }
 
   *.base-form {

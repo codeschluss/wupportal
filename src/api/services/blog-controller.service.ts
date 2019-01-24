@@ -25,42 +25,6 @@ class BlogControllerService extends BaseService {
   }
 
   /**
-   * @param blogId blogId
-   * @return OK
-   */
-  blogControllerReadTranslationsResponse(blogId: string): Observable<StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/activities/${blogId}/translations`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * @param blogId blogId
-   * @return OK
-   */
-  blogControllerReadTranslations(blogId: string): Observable<{}> {
-    return this.blogControllerReadTranslationsResponse(blogId).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
    * @param params The `BlogControllerService.BlogControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -385,6 +349,42 @@ class BlogControllerService extends BaseService {
    */
   blogControllerIncreaseLike(blogId: string): Observable<{}> {
     return this.blogControllerIncreaseLikeResponse(blogId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadTranslationsResponse(blogId: string): Observable<StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/${blogId}/translations`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadTranslations(blogId: string): Observable<{}> {
+    return this.blogControllerReadTranslationsResponse(blogId).pipe(
       __map(_r => _r.body as {})
     );
   }

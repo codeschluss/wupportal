@@ -1,12 +1,10 @@
-<header class="mat-body">
-  <div>
-    <h2><i18n i18n="@@accountPanel">accountPanel</i18n></h2>
-    <h1>{{ group?.get('name')?.value || '...' }}</h1>
-  </div>
-  <button mat-raised-button color="primary" [matMenuTriggerFor]="actions">
+<header class="mat-title">
+  <i18n i18n="@@accountPanel">accountPanel</i18n>
+  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
     <i18n i18n="@@actions">actions</i18n>
   </button>
 </header>
+<h1 class="mat-headline">{{ group?.get('name')?.value || '...' }}</h1>
 
 <mat-menu #actions="matMenu">
   <button mat-menu-item [disabled]="!provides" (click)="create('activities')">

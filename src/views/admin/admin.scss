@@ -7,17 +7,13 @@ main#admin {
     pointer-events: none;
   }
 
-  header.mat-body {
+  header {
     align-items: center;
+    color: grey;
     display: flex;
-    margin-bottom: 32px;
 
     & > * + * {
-      margin-left: 32px;
-    }
-
-    h2 {
-      color: grey;
+      margin-left: 32px !important;
     }
   }
 

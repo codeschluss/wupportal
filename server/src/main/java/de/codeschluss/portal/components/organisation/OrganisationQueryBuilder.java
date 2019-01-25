@@ -23,9 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "name";
-  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -35,7 +32,7 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
    * @param languageService the language service
    */
   public OrganisationQueryBuilder(LanguageService languageService) {
-    super(QOrganisationEntity.organisationEntity);
+    super(QOrganisationEntity.organisationEntity, "name");
     this.languageService = languageService;
   }
   

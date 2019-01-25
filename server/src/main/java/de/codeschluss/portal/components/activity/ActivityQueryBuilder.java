@@ -21,9 +21,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "translatables.name";
-  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -33,7 +30,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    * @param languageService the language service
    */
   public ActivityQueryBuilder(LanguageService languageService) {
-    super(QActivityEntity.activityEntity);
+    super(QActivityEntity.activityEntity, "translatables.name");
     this.languageService = languageService;
   }
   

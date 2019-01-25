@@ -18,11 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScheduleQueryBuilder extends QueryBuilder<QScheduleEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "startDate";
-  
   public ScheduleQueryBuilder() {
-    super(QScheduleEntity.scheduleEntity);
+    super(QScheduleEntity.scheduleEntity, "startDate");
   }
 
   public BooleanExpression forActivityAndCurrentOnly(String activityId) {

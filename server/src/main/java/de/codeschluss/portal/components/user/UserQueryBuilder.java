@@ -20,14 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserQueryBuilder extends QueryBuilder<QUserEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "username";
-  
   /**
    * Instantiates a new user query builder.
    */
   public UserQueryBuilder() {
-    super(QUserEntity.userEntity);
+    super(QUserEntity.userEntity, "username");
   }
 
   /**

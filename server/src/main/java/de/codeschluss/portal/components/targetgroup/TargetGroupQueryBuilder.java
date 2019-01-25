@@ -22,9 +22,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TargetGroupQueryBuilder extends QueryBuilder<QTargetGroupEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "translatables.name";
-  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -32,7 +29,7 @@ public class TargetGroupQueryBuilder extends QueryBuilder<QTargetGroupEntity> {
    * Instantiates a new target group query builder.
    */
   public TargetGroupQueryBuilder(LanguageService languageService) {
-    super(QTargetGroupEntity.targetGroupEntity);
+    super(QTargetGroupEntity.targetGroupEntity, "translatables.name");
     this.languageService = languageService;
   }
   

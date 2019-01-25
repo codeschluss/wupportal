@@ -1,12 +1,10 @@
-<header class="mat-body">
-  <div>
-    <h2><i18n i18n="@@applicationPanel">applicationPanel</i18n></h2>
-    <h1>{{ title }}</h1>
-  </div>
+<header class="mat-title">
+  <i18n i18n="@@applicationPanel">applicationPanel</i18n>
   <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
     <i18n i18n="@@actions">actions</i18n>
   </button>
 </header>
+<h1 class="mat-headline">{{ title }}</h1>
 
 <mat-menu #actions="matMenu">
   <button mat-menu-item (click)="create('languages')">
@@ -126,7 +124,7 @@
             <i18n i18n="@@color">color</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <span [style.color]="item.color">&#x2b24;</span>
+            <strong [style.color]="item.color">{{ item.color }}</strong>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">

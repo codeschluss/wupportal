@@ -15,6 +15,41 @@ import { ScheduleModel } from './schedule.model';
   template: BaseForm.template(`
     <section>
       <label class="mat-body-strong">
+        <i18n i18n="@@schedule">schedule</i18n>
+      </label>
+      <nav>
+        <mat-form-field>
+          <strong matPrefix>
+            <i18n i18n="@@startDate">startDate</i18n>&nbsp;
+          </strong>
+          <input matInput type="date" [formControl]="fromDate">
+        </mat-form-field>
+        <mat-form-field>
+          <strong matPrefix>
+            <i18n i18n="@@startTime">startTime</i18n>&nbsp;
+          </strong>
+          <input matInput type="time" [formControl]="fromTime">
+        </mat-form-field>
+        <mat-form-field>
+          <strong matPrefix>
+            <i18n i18n="@@endDate">endDate</i18n>&nbsp;
+          </strong>
+          <input matInput type="date" [formControl]="gotoDate">
+        </mat-form-field>
+        <mat-form-field>
+          <strong matPrefix>
+            <i18n i18n="@@endTime">endTime</i18n>&nbsp;
+          </strong>
+          <input matInput type="time" [formControl]="gotoTime">
+        </mat-form-field>
+        <button mat-button color="primary" [disabled]="!scheduled"
+          (click)="create()">
+          <i18n i18n="@@createSchedules">createSchedules</i18n>
+        </button>
+      </nav>
+    </section>
+    <section>
+      <label class="mat-body-strong">
         <i18n i18n="@@compilation">compilation</i18n>
       </label>
       <nav>
@@ -40,6 +75,14 @@ import { ScheduleModel } from './schedule.model';
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <ng-container *ngIf="recurrence.value !== 'once'">
+          <mat-form-field>
+            <strong matPrefix>
+              <i18n i18n="@@until">until</i18n>&nbsp;
+            </strong>
+            <input matInput type="date" [formControl]="until">
+          </mat-form-field>
+        </ng-container>
         <ng-container *ngIf="recurrence.value === 'week'">
           <mat-chip-list multiple class="mat-body">
             <mat-chip #monday="matChip" value="monday"
@@ -72,49 +115,6 @@ import { ScheduleModel } from './schedule.model';
             </mat-chip>
           </mat-chip-list>
         </ng-container>
-        <ng-container *ngIf="recurrence.value !== 'once'">
-          <mat-form-field>
-            <strong matPrefix>
-              <i18n i18n="@@until">until</i18n>&nbsp;
-            </strong>
-            <input matInput type="date" [formControl]="until">
-          </mat-form-field>
-        </ng-container>
-      </nav>
-    </section>
-    <section>
-      <label class="mat-body-strong">
-        <i18n i18n="@@schedule">schedule</i18n>
-      </label>
-      <nav>
-        <mat-form-field>
-          <strong matPrefix>
-            <i18n i18n="@@startDate">startDate</i18n>&nbsp;
-          </strong>
-          <input matInput type="date" [formControl]="fromDate">
-        </mat-form-field>
-        <mat-form-field>
-          <strong matPrefix>
-            <i18n i18n="@@startTime">startTime</i18n>&nbsp;
-          </strong>
-          <input matInput type="time" [formControl]="fromTime">
-        </mat-form-field>
-        <mat-form-field>
-          <strong matPrefix>
-            <i18n i18n="@@endDate">endDate</i18n>&nbsp;
-          </strong>
-          <input matInput type="date" [formControl]="gotoDate">
-        </mat-form-field>
-        <mat-form-field>
-          <strong matPrefix>
-            <i18n i18n="@@endTime">endTime</i18n>&nbsp;
-          </strong>
-          <input matInput type="time" [formControl]="gotoTime">
-        </mat-form-field>
-        <button mat-button color="primary" [disabled]="!scheduled"
-          (click)="create()">
-          <i18n i18n="@@createSchedules">createSchedules</i18n>
-        </button>
       </nav>
     </section>
 

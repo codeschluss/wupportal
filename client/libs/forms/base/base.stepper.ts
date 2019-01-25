@@ -31,12 +31,12 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
   protected static template(template: string): string {
     return `
-      <header class="mat-body">
-        <h2><ng-container *ngTemplateOutlet="label; context: {
+      <header class="mat-title">
+        <ng-container *ngTemplateOutlet="label; context: {
           case: { name: item?.id ? 'edit' : 'create' }
-        }"></ng-container></h2>
-        <h1>{{ title || '...' }}</h1>
+        }"></ng-container>
       </header>
+      <h1>{{ title || '...' }}</h1>
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
           <a mat-tab-link replaceUrl [disabled]="!can(i)" [routerLink]="link(i)"

@@ -1,6 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Box } from '@portal/core';
+import { ActivatedRoute } from '@angular/router';
+import { Box, TokenProvider } from '@portal/core';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@portal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
@@ -10,11 +11,28 @@ import { OrganisationModel } from '../organisation/organisation.model';
 import { TagModel } from '../tag/tag.model';
 import { TargetGroupModel } from '../target-group/target-group.model';
 import { TranslationBase } from '../translation/translation.base';
+import { TranslationProvider } from '../translation/translation.provider';
+import { UserProvider } from '../user/user.provider';
 import { ActivityModel } from './activity.model';
 
 @Component({
   selector: 'activity-form',
   template: BaseForm.template(`
+    <section>
+      <label class="mat-body-strong">
+        <i18n i18n="@@compilation">compilation</i18n>
+      </label>
+      <nav>
+        <button mat-button color="primary" (click)="contactUser()">
+          <i18n i18n="@@contactUser">contactUser</i18n>
+        </button>
+        <button mat-button color="primary" [disabled]="!this.item.organisation"
+          (click)="contactOrganisation()">
+          <i18n i18n="@@contactOrganisation">contactOrganisation</i18n>
+        </button>
+      </nav>
+    </section>
+
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'category'">
@@ -113,6 +131,29 @@ export class ActivityFormComponent
   ];
 
   public model: Type<ActivityModel> = ActivityModel;
+
+  public constructor(
+    private userProvider: UserProvider,
+    route: ActivatedRoute,
+    tokenProvider: TokenProvider,
+    translationProvider: TranslationProvider
+  ) {
+    super(translationProvider, route, tokenProvider);
+  }
+
+  public contactOrganisation(): void {
+    this.group.get('contactName').patchValue(this.item.organisation.name);
+    this.group.get('mail').patchValue(this.item.organisation.mail);
+    this.group.get('phone').patchValue(this.item.organisation.phone);
+  }
+
+  public contactUser(): void {
+    this.userProvider.readOne(this.token.id).subscribe((user) => {
+      this.group.get('contactName').patchValue(user.name);
+      this.group.get('mail').patchValue(user.username);
+      this.group.get('phone').patchValue(user.phone);
+    });
+  }
 
   public persist(): Observable<any> {
     this.item.addressId = this.group.get('address').value.id;

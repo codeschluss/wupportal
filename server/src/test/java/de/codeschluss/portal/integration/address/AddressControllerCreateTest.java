@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -42,8 +41,8 @@ public class AddressControllerCreateTest {
   }
 
   @Test
-  @WithUserDetails("provider1@user")
-  public void createProviderUserOk() throws URISyntaxException {
+  @WithUserDetails("new@user")
+  public void createRegisteredUserOk() throws URISyntaxException {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createProviderUserOk", "1111", "createProviderUserOk",
         suburbId);
@@ -78,26 +77,6 @@ public class AddressControllerCreateTest {
   public void createSuperUserDuplicated() throws URISyntaxException {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "wuppertal", "42103", "address1", suburbId);
-
-    controller.create(address);
-  }
-
-  @Test(expected = AccessDeniedException.class)
-  @WithUserDetails("new@user")
-  public void createNotApprovedProviderDenied() throws URISyntaxException {
-    String suburbId = "00000000-0000-0000-0005-100000000000";
-    AddressEntity address = newAddress("1", "createNotApprovedProviderDenied", "1111",
-        "createNotApprovedProviderDenied", suburbId);
-
-    controller.create(address);
-  }
-
-  @Test(expected = AccessDeniedException.class)
-  @WithUserDetails("notapprovedorga@user")
-  public void createNotApprovedOrgaDenied() throws URISyntaxException {
-    String suburbId = "00000000-0000-0000-0005-100000000000";
-    AddressEntity address = newAddress("1", "createNotApprovedOrgaDenied", "1111",
-        "createNotApprovedOrgaDenied", suburbId);
 
     controller.create(address);
   }

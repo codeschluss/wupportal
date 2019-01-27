@@ -369,7 +369,7 @@ public class OrganisationController
    * @return the response entity
    */
   @PostMapping("/organisations/{organisationId}/images")
-  @OrgaAdminOrSuperUserPermission
+//  @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> addImage(@PathVariable String organisationId,
       @RequestBody List<OrganisationImageEntity> image) {
     if (image == null || image.isEmpty()) {

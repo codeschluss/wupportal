@@ -1,7 +1,3 @@
-/*
- * @author Valmir Etemi
- */
-
 package de.codeschluss.portal;
 
 import org.springframework.boot.SpringApplication;
@@ -25,7 +21,8 @@ public class App {
   /**
    * The main method.
    *
-   * @param args the arguments
+   * @param args
+   *          the arguments
    */
   public static void main(String[] args) {
     SpringApplication.run(App.class, args);
@@ -40,4 +37,5 @@ public class App {
   public BCryptPasswordEncoder bcryptPasswordEncoder() {
     return new BCryptPasswordEncoder();
   }
+
 }

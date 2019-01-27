@@ -38,6 +38,7 @@ public class ImageService {
     if (image == null || image.length == 1) {
       return null;
     }
+
     ByteArrayInputStream inputStream = new ByteArrayInputStream(image);
     BufferedImage imageBuff = ImageIO.read(inputStream);
     

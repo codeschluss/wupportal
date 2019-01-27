@@ -17,6 +17,7 @@ import de.codeschluss.portal.core.service.ResourceDataService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Service;

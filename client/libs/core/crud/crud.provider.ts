@@ -15,7 +15,6 @@ export interface CrudMethods {
   delete: (id: string) => Observable<StrictHttpResponse<any>>;
   readAll: (params?: ReadAllParams) => Observable<StrictHttpResponse<any>>;
   readOne: (id: string) => Observable<StrictHttpResponse<any>>;
-  translate?: (id: string) => Observable<StrictHttpResponse<any>>;
   update: (item: CrudModel, id: string) => Observable<StrictHttpResponse<any>>;
 }
 
@@ -45,7 +44,9 @@ export abstract class CrudProvider
   protected abstract service: Service;
 
   public create(item: Model): Observable<any> {
-    return this.call(this.methods.create, item);
+    return this.call(this.methods.create, item).pipe(
+      map((response) => this.cast<Model[]>(response)),
+      tap((response) => this.link(response)));
   }
 
   public delete(id: string): Observable<any> {
@@ -64,15 +65,17 @@ export abstract class CrudProvider
       tap((response) => this.link(response)));
   }
 
-  public update(id: string, item: Model): Observable<any> {
-    return this.call(this.methods.update, id, item);
+  public update(item: Model): Observable<any> {
+    return this.call(this.methods.update, item, item.id).pipe(
+      map((response) => this.cast<Model[]>(response)),
+      tap((response) => this.link(response)));
   }
 
   protected apply(method:
     (...args: any) => Observable<StrictHttpResponse<any>>):
     (...args: any) => Observable<StrictHttpResponse<any>> {
 
-    return (...args: any) => method.call(this.service, ...args).toPromise();
+    return (...args: any) => method.call(this.service, ...args);
   }
 
   protected based(model: Type<Model>): Type<Model> {
@@ -98,11 +101,9 @@ export abstract class CrudProvider
   protected link(input: Model | Model[]): void {
     const linker = (item) => this.linked.forEach((link) => {
       const data = (item._embedded || { })[link.field];
-      const getter = () => data
+      item[link.field] = data
         ? of(Object.assign(new link.model(), data))
         : this.walk(link, item);
-
-      Object.defineProperty(item, link.field, { get: getter });
     });
 
     Array.isArray(input)
@@ -111,12 +112,10 @@ export abstract class CrudProvider
   }
 
   private walk(link: CrudLink, item: Model): Observable<any> {
-    if (link.model['provider']) {
-      const provider = link.model['provider'];
-      return this.call.apply(provider, [link.method, item.id]).pipe(
-        map((response) => this.cast.apply(provider, [response, link.model])),
-        tap((response) => this.link.apply(provider, [response])));
-    }
+    const provider = link.model['provider'];
+    return provider ? this.call.apply(provider, [link.method, item.id]).pipe(
+      map((response) => this.cast.apply(provider, [response, link.model])),
+      tap((response) => this.link.apply(provider, [response]))) : of(null);
   }
 
 }

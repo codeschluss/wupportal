@@ -5,13 +5,15 @@ import { ActivityModel } from '../activity/activity.model';
 import { AddressModel } from '../address/address.model';
 import { ImageModel } from '../image/image.model';
 import { ProviderModel } from '../provider/provider.model';
+import { Translatable } from '../translation/translation.base';
 import { UserModel } from '../user/user.model';
 
 export class OrganisationModel
   extends CrudModel implements OrganisationEntity {
 
+  @Translatable() public description: string;
+
   public approved: boolean;
-  public description: string;
   public mail: string;
   public name: string;
   public phone: string;
@@ -20,10 +22,10 @@ export class OrganisationModel
 
   public addressId: string;
 
-  public activities: Observable<ActivityModel[]>;
-  public address: Observable<AddressModel>;
-  public images: Observable<ImageModel[]>;
-  public provider: Observable<ProviderModel>;
-  public users: Observable<UserModel[]>;
+  public activities: ActivityModel[] & Observable<ActivityModel[]>;
+  public address: AddressModel & Observable<AddressModel>;
+  public images: ImageModel[] & Observable<ImageModel[]>;
+  public provider: ProviderModel & Observable<ProviderModel>;
+  public users: UserModel[] & Observable<UserModel[]>;
 
 }

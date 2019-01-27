@@ -72,7 +72,22 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
   }
   
   @Override
-  public boolean validFieldConstraints(ProviderEntity newProvider) {
+  public boolean validCreateFieldConstraints(ProviderEntity newProvider) {
+    return validFields(newProvider);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(ProviderEntity newProvider) {
+    return validFields(newProvider);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newProvider the new provider
+   * @return true, if successful
+   */
+  private boolean validFields(ProviderEntity newProvider) {
     return newProvider.getOrganisation() != null && newProvider.getUser() != null;
   }
 
@@ -307,23 +322,13 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
   /**
    * Sets the approved by user and orga.
    *
-   * @param userId
-   *          the user id
-   * @param orgaId
-   *          the orga id
-   * @param isApproved
-   *          the is approved
+   * @param userId the user id
+   * @param orgaId the orga id
    */
-  public void setApprovedByUserAndOrga(String userId, String orgaId, boolean isApproved) {
+  public void setApprovedByUserAndOrga(String userId, String orgaId) {
     ProviderEntity provider = getProviderByUserAndOrganisation(userId, orgaId);
-    provider.setApproved(isApproved);
-
-    if (!isApproved) {
-      provider.setAdmin(false);
-    } else {
-      mailService.sendApprovedUserMail(provider);
-    }
-
+    provider.setApproved(true);
+    mailService.sendApprovedUserMail(provider);
     repo.save(provider);
   }
 
@@ -346,5 +351,20 @@ public class ProviderService extends DataService<ProviderEntity, ProviderQueryBu
     }
 
     repo.save(provider);
+  }
+
+  /**
+   * Adds the admin.
+   *
+   * @param orga the orga
+   * @param currentUser the current user
+   */
+  public void addAdmin(OrganisationEntity orga, UserEntity currentUser) {
+    ProviderEntity admin = new ProviderEntity();
+    admin.setApproved(true);
+    admin.setAdmin(true);
+    admin.setOrganisation(orga);
+    admin.setUser(currentUser);
+    repo.save(admin);
   }
 }

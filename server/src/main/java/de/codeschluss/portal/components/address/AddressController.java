@@ -1,14 +1,18 @@
 package de.codeschluss.portal.components.address;
 
+import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.suburb.SuburbService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
+import de.codeschluss.portal.core.exception.NotFoundException;
+import de.codeschluss.portal.core.security.permissions.Authenticated;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.springframework.hateoas.Resource;
@@ -61,9 +65,18 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
 
   @Override
   @PostMapping("/addresses")
-  @ProviderOrSuperUserPermission
+  @Authenticated
   public ResponseEntity<?> create(@RequestBody AddressEntity newAddress) throws URISyntaxException {
-    return super.create(newAddress);
+    validateCreate(newAddress);
+
+    try {
+      newAddress.setSuburb(suburbService.getById(newAddress.getSuburbId()));
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Need existing Suburb");
+    }
+
+    Resource<AddressEntity> resource = service.addResource(newAddress);
+    return created(new URI(resource.getId().expand().getHref())).body(resource);
   }
 
   @Override
@@ -105,9 +118,9 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
   @PutMapping("/addresses/{addressId}/suburb")
   @SuperUserPermission
   public ResponseEntity<Resource<?>> updateSuburb(@PathVariable String addressId,
-      @RequestBody String suburbId) {
-    if (service.existsById(addressId) && suburbService.existsById(suburbId)) {
-      service.updateSuburb(addressId, suburbService.getById(suburbId));
+      @RequestBody StringPrimitive suburbId) {
+    if (service.existsById(addressId) && suburbService.existsById(suburbId.getValue())) {
+      service.updateSuburb(addressId, suburbService.getById(suburbId.getValue()));
       return ok(suburbService.getResourceByAddress(addressId));
     } else {
       throw new BadParamsException("Address or Suburb with given ID do not exist!");

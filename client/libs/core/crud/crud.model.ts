@@ -7,6 +7,9 @@ export abstract class CrudModel implements ResourceObject {
   public created: string;
   public modified: string;
 
+  public language?: CrudModel;
+  public translations?: CrudModel[];
+
   public _embedded?: object;
   public _links?: Link[];
 

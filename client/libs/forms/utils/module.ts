@@ -1,54 +1,64 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatDividerModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
 import { CoreModule } from '@portal/core';
 import { BaseFieldComponent } from '../base/base.field';
-import { BooleanFieldComponent } from '../field/boolean.field';
-import { ChipListFieldComponent } from '../field/chip-list.field';
-import { DatetimeFieldComponent } from '../field/datetime.field';
-import { SelectFieldComponent } from '../field/select.field';
-import { StringFieldComponent } from '../field/string.field';
+import { BooleanFieldComponent } from '../fields/boolean.field';
+import { ChipListFieldComponent } from '../fields/chip-list.field';
+import { SelectFieldComponent } from '../fields/select.field';
+import { StringFieldComponent } from '../fields/string.field';
+import { UrlFieldComponent } from '../fields/url.field';
+import { FileValueAccessorDirective } from './accesor';
 
-const ModuleLoop = [
+const declarations: Type<any>[] = [
+  BaseFieldComponent,
+  FileValueAccessorDirective
+];
+
+const fields: Type<BaseFieldComponent>[] = [
+  BooleanFieldComponent,
+  ChipListFieldComponent,
+  SelectFieldComponent,
+  StringFieldComponent,
+  UrlFieldComponent
+];
+
+const materials: Type<any>[] = [
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
-  MatDatepickerModule,
+  MatDividerModule,
   MatFormFieldModule,
-  MatIconModule,
   MatInputModule,
+  MatPaginatorModule,
   MatSelectModule,
   MatSlideToggleModule,
-  MatTabsModule,
-
-  MatTableModule,
-  MatPaginatorModule,
   MatSortModule,
-
-  ReactiveFormsModule
-];
-
-const Components = [
-  BaseFieldComponent,
-  BooleanFieldComponent,
-  ChipListFieldComponent,
-  DatetimeFieldComponent,
-  SelectFieldComponent,
-  StringFieldComponent
+  MatTableModule,
+  MatTabsModule
 ];
 
 @NgModule({
-  declarations: Components,
-  entryComponents: [Components],
+  declarations: [
+    ...declarations,
+    ...fields
+  ],
+  entryComponents: [
+    ...fields
+  ],
   exports: [
-    BaseFieldComponent,
-    ...ModuleLoop
+    ...declarations,
+    ...materials,
+    ReactiveFormsModule
   ],
   imports: [
+    ...materials,
     CommonModule,
     CoreModule,
-    ...ModuleLoop
+    ReactiveFormsModule,
+    RouterModule
   ]
 })
 

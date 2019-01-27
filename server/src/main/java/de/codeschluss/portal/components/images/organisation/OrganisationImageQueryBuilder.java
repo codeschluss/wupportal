@@ -16,16 +16,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrganisationImageQueryBuilder extends QueryBuilder<QOrganisationImageEntity> {
-
-  /** The default sort prop. */
-  protected final String defaultSortProp = "caption";
   
   /**
    * Instantiates a new organisation image query builder.
    *
    */
   public OrganisationImageQueryBuilder() {
-    super(QOrganisationImageEntity.organisationImageEntity);
+    super(QOrganisationImageEntity.organisationImageEntity, "caption");
   }
 
   @Override

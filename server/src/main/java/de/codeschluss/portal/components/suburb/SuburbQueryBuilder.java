@@ -18,11 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SuburbQueryBuilder extends QueryBuilder<QSuburbEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "name";
-  
   public SuburbQueryBuilder() {
-    super(QSuburbEntity.suburbEntity);
+    super(QSuburbEntity.suburbEntity, "name");
   }
   
   public BooleanExpression withName(String name) {

@@ -46,6 +46,6 @@ public class OrganisationQueryParam extends FilterSortPaginate {
   @Override
   public boolean isEmptyQuery() {
     return super.isEmptyQuery()
-        && (approved == null || !approved);
+        && approved == null;
   }  
 }

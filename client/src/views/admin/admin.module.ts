@@ -1,88 +1,65 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCheckboxModule, MatTabsModule } from '@angular/material';
+import { NgModule, Type } from '@angular/core';
+import { MatBadgeModule, MatButtonModule, MatDialogModule, MatDividerModule, MatListModule, MatMenuModule, MatPaginatorIntl, MatSlideToggleModule, MatTabsModule, MAT_TABS_CONFIG } from '@angular/material';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule } from '@portal/core';
-import { FormsModule } from '@portal/forms';
-import { ActivityFormComponent } from '../../realm/activity/activity.form';
-import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
-import { ActivityTableComponent } from '../../realm/activity/activity.table';
-import { AddressFormComponent } from '../../realm/address/address.form';
-import { AddressTableComponent } from '../../realm/address/address.table';
-import { CategoryTableComponent } from '../../realm/category/category.table';
-import { ConfigurationFormComponent } from '../../realm/configuration/configuration.form';
-import { ImageFormComponent } from '../../realm/image/image.form';
-import { LanguageTableComponent } from '../../realm/language/language.table';
-import { OrganisationFormComponent } from '../../realm/organisation/organisation.form';
-import { OrganisationStepperComponent } from '../../realm/organisation/organisation.stepper';
-import { OrganisationTableComponent } from '../../realm/organisation/organisation.table';
-import { ScheduleFormComponent } from '../../realm/schedule/schedule.form';
-import { SuburbTableComponent } from '../../realm/suburb/suburb.table';
-import { TagTableComponent } from '../../realm/tag/tag.table';
-import { TargetGroupTableComponent } from '../../realm/target-group/target-group.table';
-import { TranslationFormComponent } from '../../realm/translation/translation.form';
-import { UserFormComponent } from '../../realm/user/user.form';
-import { UserTableComponent } from '../../realm/user/user.table';
-import { AccountPanelComponent } from './account/account.panel';
+import { MatPagerIntl } from '@portal/forms';
+import { RealmModule } from '../../realm/realm.module';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
-import { ApplicationPanelComponent } from './application/application.panel';
-import { OrganisationPanelComponent } from './organisation/organisation.panel';
+import { DeleteDialogComponent } from './dialogs/delete.dialog';
+import { ReloginDialogComponent } from './dialogs/relogin.dialog';
+import { RequestDialogComponent } from './dialogs/request.dialog';
+import { AccountPanelComponent } from './panels/account/account.panel';
+import { ApplicationPanelComponent } from './panels/application/application.panel';
+import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 
-const forms = [
-  ActivityFormComponent,
-  AddressFormComponent,
-  ConfigurationFormComponent,
-  ImageFormComponent,
-  OrganisationFormComponent,
-  ScheduleFormComponent,
-  TranslationFormComponent,
-  UserFormComponent
+const dialogs: Type<any>[] = [
+  DeleteDialogComponent,
+  ReloginDialogComponent,
+  RequestDialogComponent
 ];
 
-const panels = [
+const panels: Type<any>[] = [
   AccountPanelComponent,
   ApplicationPanelComponent,
   OrganisationPanelComponent
 ];
 
-const steppers = [
-  ActivityStepperComponent,
-  OrganisationStepperComponent
-];
-
-const tables = [
-  ActivityTableComponent,
-  AddressTableComponent,
-  CategoryTableComponent,
-  LanguageTableComponent,
-  OrganisationTableComponent,
-  SuburbTableComponent,
-  TagTableComponent,
-  TargetGroupTableComponent,
-  UserTableComponent
+const materials: Type<any>[] = [
+  FontAwesomeModule,
+  MatBadgeModule,
+  MatButtonModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatListModule,
+  MatMenuModule,
+  MatSlideToggleModule,
+  MatTabsModule,
+  ScrollingModule
 ];
 
 @NgModule({
   entryComponents: [
-    ...forms,
-    ...panels,
-    ...steppers
+    ...dialogs,
+    ...panels
   ],
   declarations: [
-    AdminComponent,
-    ...forms,
+    ...dialogs,
     ...panels,
-    ...steppers,
-    ...tables
+    AdminComponent
   ],
   imports: [
+    ...materials,
     AdminRouter,
     CommonModule,
     CoreModule,
-    FormsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatTabsModule
+    RealmModule
+  ],
+  providers: [
+    { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '0ms' } },
+    { provide: MatPaginatorIntl, useClass: MatPagerIntl }
   ]
 })
 

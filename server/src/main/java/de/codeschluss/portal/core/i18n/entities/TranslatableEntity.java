@@ -32,5 +32,9 @@ public abstract class TranslatableEntity<P extends BaseResource> extends BaseRes
   @JsonIgnore
   @JoinColumn(name = "parent_id", nullable = false)
   protected P parent;
+  
+  public LanguageEntity getLanguage() {
+    return this.language;
+  }
 
 }

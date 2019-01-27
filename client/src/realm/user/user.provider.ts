@@ -1,6 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
+import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive';
+import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
@@ -23,8 +25,8 @@ export class UserProvider
       model: OrganisationModel
     },
     {
-      field: 'providers',
-      method: null,
+      field: 'provider',
+      method: () => empty(),
       model: ProviderModel
     }
   ];
@@ -47,7 +49,7 @@ export class UserProvider
 
   public create: (model: UserModel) => Observable<any>;
 
-  public update: (id: string, model: UserModel) => Observable<any>;
+  public update: (model: UserModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
@@ -57,11 +59,11 @@ export class UserProvider
     .UserControllerReadAllParams) => Observable<UserModel[]>;
 
   public grantSuperUser:
-    (id: string, grant: boolean) => Observable<any> =
+    (id: string, grant: Boolean) => Observable<any> =
       this.apply(this.service.userControllerGrantSuperuserRightResponse);
 
   public resetPassword:
-    (username: string) => Observable<any> =
+    (username: String) => Observable<any> =
       this.apply(this.service.userControllerResetPasswordResponse);
 
   public linkOrganisations:
@@ -73,7 +75,7 @@ export class UserProvider
       this.apply(this.service.userControllerDeleteActivityResponse);
 
   public unlinkOrganisation:
-    (id: string, organisationId) => Observable<any> =
+    (id: string, organisationId: string) => Observable<any> =
       this.apply(this.service.userControllerDeleteOrganisationResponse);
 
 }

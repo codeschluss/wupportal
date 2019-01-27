@@ -1,6 +1,4 @@
 import { Component, Type } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner } from '@portal/core';
 import { BaseStepper, FormStep } from '@portal/forms';
 import { AddressFormComponent } from '../address/address.form';
@@ -14,11 +12,25 @@ import { OrganisationModel } from './organisation.model';
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <i18n *ngSwitchCase="'activity'" i18n="@@activity">activity</i18n>
-        <i18n *ngSwitchCase="'address'" i18n="@@address">address</i18n>
-        <i18n *ngSwitchCase="'schedules'" i18n="@@schedules">schedules</i18n>
-        <i18n *ngSwitchCase="'translations'"
-          i18n="@@translations">translations</i18n>
+        <ng-container *ngSwitchCase="'create'">
+          <i18n i18n="@@createOrganisation">createOrganisation</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'edit'">
+          <i18n i18n="@@editOrganisation">editOrganisation</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'main'">
+          <i18n i18n="@@main">main</i18n>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'address'">
+          <i18n i18n="@@address">address</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'images'">
+          <i18n i18n="@@images">images</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'translations'">
+          <i18n i18n="@@translations">translations</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)
@@ -27,11 +39,11 @@ import { OrganisationModel } from './organisation.model';
 export class OrganisationStepperComponent
   extends BaseStepper<OrganisationModel> {
 
-  public root: string = 'activity';
+  public root: string = 'organisations';
 
   public steps: FormStep[] = [
     {
-      name: this.root,
+      name: 'main',
       form: OrganisationFormComponent
     },
     {
@@ -50,20 +62,9 @@ export class OrganisationStepperComponent
 
   protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
     .with('address').yield('suburb')
-    .with('category')
-    .with('organisation')
-    .with('schedules')
-    .with('tags')
-    .with('targetGroups');
+    .with('images')
+    .with('translations').yield('language');
 
   protected model: Type<OrganisationModel> = OrganisationModel;
-
-  public constructor(
-    protected builder: FormBuilder,
-    protected route: ActivatedRoute,
-    protected router: Router
-  ) {
-    super();
-  }
 
 }

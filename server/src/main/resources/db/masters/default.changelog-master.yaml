@@ -29,3 +29,5 @@ databaseChangeLog:
         file: classpath:db/changelogs/0012.drop_showuser_column.yaml
     - include:
         file: classpath:db/changelogs/0013.rename_fullname_column.yaml
+    - include:
+        file: classpath:db/changelogs/0014.add_addressnotnull_constraint.yaml

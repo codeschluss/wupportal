@@ -38,7 +38,22 @@ public class SuburbService extends ResourceDataService<SuburbEntity, SuburbQuery
   }
   
   @Override
-  public boolean validFieldConstraints(SuburbEntity newSuburb) {
+  public boolean validCreateFieldConstraints(SuburbEntity newSuburb) {
+    return validFields(newSuburb);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(SuburbEntity newSuburb) {
+    return validFields(newSuburb);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newSuburb the new suburb
+   * @return true, if successful
+   */
+  private boolean validFields(SuburbEntity newSuburb) {
     return newSuburb.getName() != null && !newSuburb.getName().isEmpty();
   }
 

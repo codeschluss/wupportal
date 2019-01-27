@@ -40,7 +40,7 @@ public class OrganisationControllerCreateTest {
   public void createSuperUserOk() throws URISyntaxException {
     OrganisationEntity organisation = newOrganisation(true, "createSuperUserOk",
         "create@SuperUserOk", "createSuperUserOk", "123456789", "createSuperUserOk",
-        "createSuperUserOk");
+        "createSuperUserOk", "00000000-0000-0000-0006-100000000000");
 
     controller.create(organisation);
 
@@ -53,7 +53,7 @@ public class OrganisationControllerCreateTest {
   public void createCreateOrgaOk() throws URISyntaxException {
     OrganisationEntity organisation = newOrganisation(false, "createCreateOrgaOk",
         "createCreateOrgaOk@createCreateOrgaOk", "createCreateOrgaOk", "123456789",
-        "createCreateOrgaOk", "createCreateOrgaOk");
+        "createCreateOrgaOk", "createCreateOrgaOk", "00000000-0000-0000-0006-100000000000");
 
     OrganisationEntity savedOrga = ((Resource<OrganisationEntity>) controller.create(organisation)
         .getBody()).getContent();
@@ -64,13 +64,23 @@ public class OrganisationControllerCreateTest {
     assertThat(providerService.getProvidersByOrganisation(savedOrga.getId())).haveAtLeastOne(
         new Condition<>(p -> p.getUser().getUsername().equals("createorga@user"), "user exists"));
   }
-  
+
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidOk() throws URISyntaxException {
-    OrganisationEntity organisation = newOrganisation(true, "createSuperUserOk",
-        "create@SuperUserOk", null, "123456789", "createSuperUserOk",
-        "createSuperUserOk");
+  public void createNotValidNameOk() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(true, "createNotValidOk", "create@NotValidOk",
+        null, "123456789", "createNotValidOk", "createSuperNotValidOk",
+        "00000000-0000-0000-0006-100000000000");
+
+    controller.create(organisation);
+  }
+
+  @Test(expected = BadParamsException.class)
+  @WithUserDetails("super@user")
+  public void createNotValidAddressOk() throws URISyntaxException {
+    OrganisationEntity organisation = newOrganisation(true, "createNotValidAddressOk",
+        "create@NotValidAddressOk", "createNotValidAddressOk", "123456789",
+        "createNotValidAddressOk", "createNotValidAddressOk", null);
 
     controller.create(organisation);
   }
@@ -79,13 +89,13 @@ public class OrganisationControllerCreateTest {
   public void createNoUserDenied() throws URISyntaxException {
     OrganisationEntity organisation = newOrganisation(true, "createNoUserDenied",
         "createNoUserDenied", "createNoUserDenied", "123456789", "createNoUserDenied",
-        "createNoUserDenied");
+        "createNoUserDenied", "00000000-0000-0000-0006-100000000000");
 
     controller.create(organisation);
   }
 
   private OrganisationEntity newOrganisation(boolean approved, String description, String mail,
-      String name, String phone, String videoUrl, String website) {
+      String name, String phone, String videoUrl, String website, String addressId) {
     OrganisationEntity organisation = new OrganisationEntity();
     organisation.setApproved(approved);
     organisation.setDescription(description);
@@ -94,6 +104,7 @@ public class OrganisationControllerCreateTest {
     organisation.setPhone(phone);
     organisation.setVideoUrl(videoUrl);
     organisation.setWebsite(website);
+    organisation.setAddressId(addressId);
 
     return organisation;
   }

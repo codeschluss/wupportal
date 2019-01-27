@@ -17,14 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddressQueryBuilder extends QueryBuilder<QAddressEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "street";
-  
   /**
    * Instantiates a new address query builder.
    */
   public AddressQueryBuilder() {
-    super(QAddressEntity.addressEntity);
+    super(QAddressEntity.addressEntity, "street");
   }
 
   /**

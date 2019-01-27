@@ -23,9 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TagQueryBuilder extends QueryBuilder<QTagEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "translatables.name";
-  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -33,7 +30,7 @@ public class TagQueryBuilder extends QueryBuilder<QTagEntity> {
    * Instantiates a new tag query builder.
    */
   public TagQueryBuilder(LanguageService languageService) {
-    super(QTagEntity.tagEntity);
+    super(QTagEntity.tagEntity, "translatables.name");
     this.languageService = languageService;
   }
   

@@ -46,7 +46,22 @@ public class TargetGroupService
   }
   
   @Override
-  public boolean validFieldConstraints(TargetGroupEntity newTargetGroup) {
+  public boolean validCreateFieldConstraints(TargetGroupEntity newTargetGroup) {
+    return validFields(newTargetGroup);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(TargetGroupEntity newTargetGroup) {
+    return validFields(newTargetGroup);
+  }
+
+  /**
+   * Valid fields.
+   *
+   * @param newTargetGroup the new target group
+   * @return true, if successful
+   */
+  private boolean validFields(TargetGroupEntity newTargetGroup) {
     return newTargetGroup.getName() != null && !newTargetGroup.getName().isEmpty();
   }
 

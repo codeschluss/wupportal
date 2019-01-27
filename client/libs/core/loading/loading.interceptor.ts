@@ -8,34 +8,34 @@ import { LoadingProvider } from './loading.provider';
 export class LoadingInterceptor implements HttpInterceptor {
 
   public constructor(
-    private loadingProvicer: LoadingProvider
+    private loadingProvider: LoadingProvider
   ) { }
 
   public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    this.loadingProvicer.enqueue(request);
+    this.loadingProvider.enqueue(request);
 
     return Observable.create((observer) => {
       const subscription = next.handle(request).pipe(
         filter((event) => event instanceof HttpResponse)
       ).subscribe(
         (event) => {
-          this.loadingProvicer.finished(request);
+          this.loadingProvider.finished(request);
           observer.next(event);
         },
         (error) => {
-          this.loadingProvicer.finished(request);
+          this.loadingProvider.finished(request);
           observer.error(error);
         },
         () => {
-          this.loadingProvicer.finished(request);
+          this.loadingProvider.finished(request);
           observer.complete();
         }
       );
 
       return () => {
-        this.loadingProvicer.finished(request);
+        this.loadingProvider.finished(request);
         subscription.unsubscribe();
       };
     });

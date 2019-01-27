@@ -48,7 +48,7 @@ public class TargetGroupTranslatablesEntity extends TranslatableEntity<TargetGro
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(TargetGroupController.class)
-        .readTranslations(getId())).withSelfRel());
+        .readTranslations(parent.getId())).withSelfRel());
 
     return links;
   }

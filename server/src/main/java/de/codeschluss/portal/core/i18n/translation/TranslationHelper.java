@@ -24,36 +24,39 @@ import org.springframework.data.domain.Page;
  *
  */
 public class TranslationHelper {
-  
+
   /**
    * Creates the iterable.
    *
-   * @param result the result
+   * @param result
+   *          the result
    * @return the iterable
    */
   public static List<?> convertToList(Object result) {
-    return result instanceof Page<?>
-      ? ((Page<?>) result).getContent()
-      : (List<?>) result;
+    return result instanceof Page<?> ? ((Page<?>) result).getContent() : (List<?>) result;
   }
 
   /**
    * Checks if is localizable.
    *
-   * @param entity the entity
+   * @param entity
+   *          the entity
    * @return true, if is localizable
    */
   public static boolean isLocalizable(Object entity) {
     return entity != null && entity.getClass().getAnnotation(Localized.class) != null;
   }
-  
+
   /**
    * Localize.
    *
-   * @param entity the entity
-   * @param locale the locale
+   * @param entity
+   *          the entity
+   * @param locale
+   *          the locale
    * @return true, if successful
-   * @throws Throwable the throwable
+   * @throws Throwable
+   *           the throwable
    */
   public static boolean localize(Object entity, String locale) throws Throwable {
     Map<String, String> translations = mapTranslations(getTranslatableProperty(entity), locale);
@@ -74,17 +77,19 @@ public class TranslationHelper {
     }
     return touched;
   }
-  
+
   /**
    * Gets the translatables.
    *
-   * @param entity the entity
+   * @param entity
+   *          the entity
    * @return the translatables
-   * @throws IllegalArgumentException the illegal argument exception
-   * @throws IllegalAccessException the illegal access exception
+   * @throws IllegalArgumentException
+   *           the illegal argument exception
+   * @throws IllegalAccessException
+   *           the illegal access exception
    */
-  public static Collection<?> getTranslatableProperty(Object entity) 
-       throws Throwable {
+  public static Collection<?> getTranslatableProperty(Object entity) throws Throwable {
     for (Field field : entity.getClass().getDeclaredFields()) {
       if (getTranslatableType(field.getGenericType()) != null) {
         field.setAccessible(true);
@@ -94,12 +99,14 @@ public class TranslationHelper {
     throw new RuntimeException(
         "Missing TranslatableEntity Entity for given entity: " + entity.getClass());
   }
-  
+
   /**
    * Gets the translations.
    *
-   * @param translatables the translatables
-   * @param locale the locale
+   * @param translatables
+   *          the translatables
+   * @param locale
+   *          the locale
    * @return the translations
    */
   public static Map<String, String> mapTranslations(Collection<?> translatables, String locale)
@@ -111,7 +118,7 @@ public class TranslationHelper {
           for (Field field : translatable.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             Object fieldValue = field.get(translatable);
-            
+
             if (fieldValue instanceof String) {
               translations.put(field.getName(), fieldValue.toString());
             }
@@ -126,15 +133,18 @@ public class TranslationHelper {
   /**
    * Language matched.
    *
-   * @param locale the locale
-   * @param translatable the translatable
+   * @param locale
+   *          the locale
+   * @param translatable
+   *          the translatable
    * @return true, if successful
-   * @throws Throwable the throwable
+   * @throws Throwable
+   *           the throwable
    */
   private static boolean languageMatched(String locale, Object translatable) throws Throwable {
     for (Field field : translatable.getClass().getSuperclass().getDeclaredFields()) {
       field.setAccessible(true);
-      Object fieldValue = field.get(translatable);    
+      Object fieldValue = field.get(translatable);
       if (fieldValue instanceof LanguageEntity) {
         LanguageEntity language = (LanguageEntity) fieldValue;
         return language.getLocale().equals(locale);
@@ -142,18 +152,18 @@ public class TranslationHelper {
     }
     return false;
   }
-  
+
   /**
    * Gets the translatable type.
    *
-   * @param entity the entity
+   * @param entity
+   *          the entity
    * @return the translatable type
    */
   public static Class<TranslatableEntity<?>> getTranslatableType(BaseEntity entity) {
     for (Field field : entity.getClass().getDeclaredFields()) {
       field.setAccessible(true);
-      Class<TranslatableEntity<?>> translatableClass = 
-          getTranslatableType(field.getGenericType());
+      Class<TranslatableEntity<?>> translatableClass = getTranslatableType(field.getGenericType());
       if (translatableClass != null) {
         return translatableClass;
       }
@@ -165,7 +175,8 @@ public class TranslationHelper {
   /**
    * Gets the translatable type.
    *
-   * @param fieldType the field type
+   * @param fieldType
+   *          the field type
    * @return the translatable type
    */
   @SuppressWarnings("unchecked")
@@ -183,15 +194,17 @@ public class TranslationHelper {
   /**
    * Fill translations.
    *
-   * @param translatableObject the translatable object
-   * @param savedEntity the saved entity
-   * @param lang the lang
-   * @throws Throwable the throwable
+   * @param translatableObject
+   *          the translatable object
+   * @param savedEntity
+   *          the saved entity
+   * @param lang
+   *          the lang
+   * @throws Throwable
+   *           the throwable
    */
-  public static void setTranslations(
-      TranslatableEntity<?> translatableObject, 
-      BaseEntity savedEntity,
-      LanguageEntity lang) throws Throwable {
+  public static void setTranslations(TranslatableEntity<?> translatableObject,
+      BaseEntity savedEntity, LanguageEntity lang) throws Throwable {
     setParentProperties(translatableObject, savedEntity, lang);
     setTranslationFields(translatableObject, savedEntity);
   }
@@ -199,15 +212,17 @@ public class TranslationHelper {
   /**
    * Fill parent properties.
    *
-   * @param translatableObject the translatable object
-   * @param savedEntity the saved entity
-   * @param lang the lang
-   * @throws Throwable the throwable
+   * @param translatableObject
+   *          the translatable object
+   * @param savedEntity
+   *          the saved entity
+   * @param lang
+   *          the lang
+   * @throws Throwable
+   *           the throwable
    */
-  private static void setParentProperties(
-      TranslatableEntity<?> translatableObject,
-      BaseEntity savedEntity,
-      LanguageEntity lang) throws Throwable {
+  private static void setParentProperties(TranslatableEntity<?> translatableObject,
+      BaseEntity savedEntity, LanguageEntity lang) throws Throwable {
     for (Field field : translatableObject.getClass().getSuperclass().getDeclaredFields()) {
       field.setAccessible(true);
       if (field.getType().isAssignableFrom(LanguageEntity.class)) {
@@ -218,22 +233,23 @@ public class TranslationHelper {
       }
     }
   }
-  
+
   /**
    * Fill translation fields.
    *
-   * @param translatableObject the translatable object
-   * @param savedEntity the saved entity
-   * @throws Throwable the throwable
+   * @param translatableObject
+   *          the translatable object
+   * @param savedEntity
+   *          the saved entity
+   * @throws Throwable
+   *           the throwable
    */
-  private static void setTranslationFields(
-      TranslatableEntity<?> translatableObject,
+  private static void setTranslationFields(TranslatableEntity<?> translatableObject,
       BaseEntity savedEntity) throws Throwable {
     for (Field field : translatableObject.getClass().getDeclaredFields()) {
       field.setAccessible(true);
       if (!isId(field) && field.getType().isAssignableFrom(String.class)) {
-        field.set(
-            translatableObject, 
+        field.set(translatableObject,
             getCurrentTranslationFromEntity(savedEntity, field.getName()));
       }
     }
@@ -242,22 +258,24 @@ public class TranslationHelper {
   /**
    * Checks if is id field.
    *
-   * @param field the field
+   * @param field
+   *          the field
    * @return true, if is id
    */
   public static boolean isId(Field field) {
     return field.getAnnotation(Id.class) != null;
   }
-  
-
 
   /**
    * Gets the current translation from entity.
    *
-   * @param entity the entity
-   * @param translatableFieldName the translatable field name
+   * @param entity
+   *          the entity
+   * @param translatableFieldName
+   *          the translatable field name
    * @return the current translation from entity
-   * @throws Throwable the throwable
+   * @throws Throwable
+   *           the throwable
    */
   public static String getCurrentTranslationFromEntity(Object entity, String translatableFieldName)
       throws Throwable {

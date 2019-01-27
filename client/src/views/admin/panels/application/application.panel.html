@@ -1,0 +1,241 @@
+<header class="mat-title">
+  <i18n i18n="@@applicationPanel">applicationPanel</i18n>
+  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
+    <i18n i18n="@@actions">actions</i18n>
+  </button>
+</header>
+<h1 class="mat-headline">{{ title }}</h1>
+
+<mat-menu #actions="matMenu">
+  <button mat-menu-item (click)="create('languages')">
+    <i18n i18n="@@createLanguage">createLanguage</i18n>
+  </button>
+  <button mat-menu-item (click)="create('categories')">
+    <i18n i18n="@@createCategory">createCategory</i18n>
+  </button>
+  <button mat-menu-item (click)="create('targetgroups')">
+    <i18n i18n="@@createTargetGroup">createTargetGroup</i18n>
+  </button>
+  <button mat-menu-item (click)="create('suburbs')">
+    <i18n i18n="@@createSuburb">createSuburb</i18n>
+  </button>
+</mat-menu>
+
+<mat-tab-group [selectedIndex]="index">
+  <mat-tab id="configuration">
+    <ng-template matTabLabel>
+      <i18n i18n="@@configuration">configuration</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <configuration-form #form [group]="group" [item]="configuration">
+      </configuration-form>
+      <mat-divider></mat-divider>
+      <button mat-raised-button color="primary"
+        [disabled]="!form.valid || !form.dirty"
+        (click)="form.persist().subscribe()">
+        <i18n i18n="@@persist">persist</i18n>
+      </button>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="users">
+    <ng-template matTabLabel>
+      <i18n i18n="@@users">users</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <user-table>
+        <ng-container matColumnDef="superUser">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@superUser">superUser</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle [checked]="item.superuser"
+              (change)="grant(item, $event.checked)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </user-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="languages">
+    <ng-template matTabLabel>
+      <i18n i18n="@@languages">languages</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <language-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </language-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="categories">
+    <ng-template matTabLabel>
+      <i18n i18n="@@categories">categories</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <category-table>
+        <ng-container matColumnDef="color">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@color">color</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <strong [style.color]="item.color">{{ item.color }}</strong>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </category-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="targetGroups">
+    <ng-template matTabLabel>
+      <i18n i18n="@@targetGroups">targetGroups</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <target-group-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </target-group-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="tags">
+    <ng-template matTabLabel>
+      <i18n i18n="@@tags">tags</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <tag-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </tag-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="suburbs">
+    <ng-template matTabLabel>
+      <i18n i18n="@@suburbs">suburbs</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <suburb-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </suburb-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="addresses">
+    <ng-template matTabLabel>
+      <i18n i18n="@@addresses">addresses</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <address-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </address-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="requests" [disabled]="!requests.length">
+    <ng-template matTabLabel>
+      <span matBadgeOverlap="false" [matBadge]="requests.length || null">
+        <i18n i18n="@@organisationRequests">organisationRequests</i18n>
+      </span>
+    </ng-template>
+    <ng-template matTabContent>
+      <organisation-table [items]="requests">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button (click)="approve(item)">
+              <fa-icon icon="check"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="block(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </organisation-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

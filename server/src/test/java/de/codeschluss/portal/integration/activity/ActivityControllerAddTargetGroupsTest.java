@@ -6,6 +6,8 @@ import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.assertj.core.api.Condition;
 import org.junit.Test;
@@ -18,9 +20,11 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class ActivityControllerAddTargetGroupsTest {
 
   @Autowired
@@ -29,7 +33,8 @@ public class ActivityControllerAddTargetGroupsTest {
   @Test
   @WithUserDetails("super@user")
   public void addTargetGroupsSuperUserOk() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-100000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-100000000000");
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     controller.addTargetGroups(activityId, targetGroupId);
@@ -40,7 +45,8 @@ public class ActivityControllerAddTargetGroupsTest {
   @Test
   @WithUserDetails("provider1@user")
   public void addTargetGroupsProviderOk() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-100000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-100000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.addTargetGroups(activityId, targetGroupId);
@@ -51,7 +57,8 @@ public class ActivityControllerAddTargetGroupsTest {
   @Test
   @WithUserDetails("admin@user")
   public void addTargetGroupsAdminOk() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-200000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-200000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.addTargetGroups(activityId, targetGroupId);
@@ -62,7 +69,8 @@ public class ActivityControllerAddTargetGroupsTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void addTargetGroupsOtherProviderDenied() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-200000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-200000000000");
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.addTargetGroups(activityId, targetGroupId);
@@ -70,18 +78,19 @@ public class ActivityControllerAddTargetGroupsTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void addTargetGroupsNoUserDenied() throws URISyntaxException {
-    String targetGroupId = "00000000-0000-0000-0003-200000000000";
+    List<String> targetGroupId = new ArrayList<>();
+    targetGroupId.add("00000000-0000-0000-0003-200000000000");
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.addTargetGroups(activityId, targetGroupId);
   }
 
   @SuppressWarnings("unchecked")
-  private void assertContaining(String targetGroupId, String activityId) {
+  private void assertContaining(List<String> targetGroupIds, String activityId) {
     Resources<Resource<TargetGroupEntity>> result = (Resources<Resource<TargetGroupEntity>>) 
         controller.readTargetGroups(activityId, null).getBody();
     
     assertThat(result.getContent()).haveAtLeastOne(new Condition<>(
-        t -> t.getContent().getId().equals(targetGroupId), "targetGroup exists"));
+        t -> targetGroupIds.contains(t.getContent().getId()), "targetGroup exists"));
   }
 }

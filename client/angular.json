@@ -25,6 +25,7 @@
             "outputHashing": "none",
             "outputPath": "target",
             "serviceWorker": true,
+            "sourceMap": false,
             "tsConfig": "tsconfig.json",
             "vendorChunk": true,
             "assets": [
@@ -32,11 +33,6 @@
                 "glob": "manifest.json",
                 "input": "",
                 "output": "/"
-              },
-              {
-                "glob": "*.css",
-                "input": "res",
-                "output": "/css"
               },
               {
                 "glob": "*.xlf",
@@ -59,8 +55,7 @@
           "configurations": {
             "production": {
               "buildOptimizer": true,
-              "optimization": true,
-              "sourceMap": false
+              "optimization": true
             }
           }
         },

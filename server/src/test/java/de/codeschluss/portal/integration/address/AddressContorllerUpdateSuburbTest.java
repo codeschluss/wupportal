@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.address.AddressController;
 import de.codeschluss.portal.components.address.AddressService;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
 import org.junit.Test;
@@ -31,18 +32,18 @@ public class AddressContorllerUpdateSuburbTest {
   @WithUserDetails("super@user")
   public void updateSuburbSuperUserOk() {
     String addressId = "00000000-0000-0000-0006-100000000000";
-    String suburbId = "00000000-0000-0000-0005-200000000000";
+    StringPrimitive suburbId = new StringPrimitive("00000000-0000-0000-0005-200000000000");
 
     controller.updateSuburb(addressId, suburbId);
 
-    assertThat(service.getById(addressId).getSuburb().getId()).isEqualTo(suburbId);
+    assertThat(service.getById(addressId).getSuburb().getId()).isEqualTo(suburbId.getValue());
   }
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
   public void updateSuburbSuperUserWrongAddressDenied() {
     String addressId = "00000000-0000-0000-0006-XX0000000000";
-    String suburbId = "00000000-0000-0000-0005-200000000000";
+    StringPrimitive suburbId = new StringPrimitive("00000000-0000-0000-0005-200000000000");
 
     controller.updateSuburb(addressId, suburbId);
   }
@@ -51,7 +52,7 @@ public class AddressContorllerUpdateSuburbTest {
   @WithUserDetails("super@user")
   public void updateSuburbSuperUserWrongSuburbDenied() {
     String addressId = "00000000-0000-0000-0006-100000000000";
-    String suburbId = "00000000-0000-0000-0005-XX0000000000";
+    StringPrimitive suburbId = new StringPrimitive("00000000-0000-0000-0005-XX0000000000");
 
     controller.updateSuburb(addressId, suburbId);
   }
@@ -60,7 +61,7 @@ public class AddressContorllerUpdateSuburbTest {
   @WithUserDetails("provider1@user")
   public void updateSuburbProviderUserDenied() {
     String addressId = "00000000-0000-0000-0006-200000000000";
-    String suburbId = "00000000-0000-0000-0005-300000000000";
+    StringPrimitive suburbId = new StringPrimitive("00000000-0000-0000-0005-300000000000");
 
     controller.updateSuburb(addressId, suburbId);
   }
@@ -68,7 +69,7 @@ public class AddressContorllerUpdateSuburbTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateSuburbNoUserDenied() {
     String addressId = "00000000-0000-0000-0006-200000000000";
-    String suburbId = "00000000-0000-0000-0005-300000000000";
+    StringPrimitive suburbId = new StringPrimitive("00000000-0000-0000-0005-300000000000");
 
     controller.updateSuburb(addressId, suburbId);
   }

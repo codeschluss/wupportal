@@ -53,7 +53,7 @@ public class ActivityTranslatablesEntity extends TranslatableEntity<ActivityEnti
     List<Link> links = new ArrayList<Link>();
 
     links.add(linkTo(methodOn(ActivityController.class)
-        .readTranslations(getId())).withSelfRel());
+        .readTranslations(parent.getId())).withSelfRel());
 
     return links;
   }

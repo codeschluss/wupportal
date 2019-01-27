@@ -21,7 +21,7 @@ import org.springframework.data.domain.Sort.Direction;
  */
 public abstract class QueryBuilder<T> {
   
-  protected final String defaultSortProp = "id";
+  protected String defaultSortProp;
 
   /** The query. */
   protected final T query;
@@ -34,6 +34,18 @@ public abstract class QueryBuilder<T> {
    */
   public QueryBuilder(T query) {
     this.query = query;
+    this.defaultSortProp = "id";
+  }
+  
+  /**
+   * Instantiates a new query builder.
+   *
+   * @param query the query
+   * @param defaultSortProp the default sort prop
+   */
+  public QueryBuilder(T query, String defaultSortProp) {
+    this.query = query;
+    this.defaultSortProp = defaultSortProp;
   }
   
   /**

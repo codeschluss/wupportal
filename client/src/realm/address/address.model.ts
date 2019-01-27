@@ -15,6 +15,17 @@ export class AddressModel
 
   public suburbId: string;
 
-  public suburb: Observable<SuburbModel>;
+  public suburb: SuburbModel & Observable<SuburbModel>;
+
+  public get name(): string {
+    // TODO: non-optional suburb
+    return `
+      ${this.street}
+      ${this.houseNumber},
+      ${this.postalCode}
+      ${this.place}
+      (${this.suburb ? this.suburb.name : ''})
+    `;
+  }
 
 }

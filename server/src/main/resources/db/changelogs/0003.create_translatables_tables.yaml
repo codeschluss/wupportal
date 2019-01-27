@@ -229,6 +229,8 @@ databaseChangeLog:
         constraintName: FK83ixvh6hfy2r5mss5pwcbdjsy
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: organisations
         validate: true
@@ -252,6 +254,8 @@ databaseChangeLog:
         constraintName: FKobhihw1sv00yktugiclc7lbdr
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: languages
         validate: true
@@ -399,6 +403,8 @@ databaseChangeLog:
         constraintName: FKidfmy43ne0pta21235adkeebf
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: target_groups
         validate: true
@@ -422,6 +428,8 @@ databaseChangeLog:
         constraintName: FKjco53xf5a7o1gogivfult1plj
         deferrable: false
         initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
         referencedColumnNames: id
         referencedTableName: languages
         validate: true

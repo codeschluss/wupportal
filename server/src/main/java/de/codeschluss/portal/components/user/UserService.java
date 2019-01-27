@@ -79,9 +79,18 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
   }
   
   @Override
-  public boolean validFieldConstraints(UserEntity newUser) {
-    return newUser.getUsername() != null && !newUser.getUsername().isEmpty()
+  public boolean validCreateFieldConstraints(UserEntity newUser) {
+    return validBaseFields(newUser)
         && newUser.getPassword() != null && !newUser.getPassword().isEmpty();
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(UserEntity newUser) {
+    return validBaseFields(newUser);
+  }
+
+  private boolean validBaseFields(UserEntity newUser) {
+    return newUser.getUsername() != null && !newUser.getUsername().isEmpty();
   }
 
   /**
@@ -107,8 +116,12 @@ public class UserService extends ResourceDataService<UserEntity, UserQueryBuilde
     return repo.findById(id).map(user -> {
       user.setUsername(newUser.getUsername());
       user.setName(newUser.getName());
-      user.setPassword(bcryptPasswordEncoder.encode(newUser.getPassword()));
       user.setPhone(newUser.getPhone());
+      
+      if (newUser.getPassword() != null && !newUser.getPassword().isEmpty()) {
+        user.setPassword(bcryptPasswordEncoder.encode(newUser.getPassword()));
+      }
+      
       return repo.save(user);
     }).orElseGet(() -> {
       newUser.setId(id);

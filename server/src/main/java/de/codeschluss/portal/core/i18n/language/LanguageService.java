@@ -58,11 +58,20 @@ public class LanguageService extends ResourceDataService<LanguageEntity, Languag
   }
   
   @Override
-  public boolean validFieldConstraints(LanguageEntity newLanguage) {
+  public boolean validCreateFieldConstraints(LanguageEntity newLanguage) {
+    return validFields(newLanguage);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(LanguageEntity newLanguage) {
+    return validFields(newLanguage);
+  }
+  
+  private boolean validFields(LanguageEntity newLanguage) {
     return newLanguage.getLocale() != null && !newLanguage.getLocale().isEmpty()
         && newLanguage.getName() != null && !newLanguage.getName().isEmpty();
   }
-  
+
   public boolean existsByLocales(List<String> locales) {
     return repo.exists(entities.withLocaleIn(locales));
   }

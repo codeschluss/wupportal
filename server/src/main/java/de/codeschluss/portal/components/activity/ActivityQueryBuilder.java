@@ -21,9 +21,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "translatables.name";
-  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -33,7 +30,7 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
    * @param languageService the language service
    */
   public ActivityQueryBuilder(LanguageService languageService) {
-    super(QActivityEntity.activityEntity);
+    super(QActivityEntity.activityEntity, "translatables.name");
     this.languageService = languageService;
   }
   
@@ -171,13 +168,13 @@ public class ActivityQueryBuilder extends QueryBuilder<QActivityEntity> {
   public Predicate advancedSearch(ActivityQueryParam params, BooleanBuilder search) {
     BooleanBuilder advancedSearch = new BooleanBuilder();
     if (params.getCategories() != null && !params.getCategories().isEmpty()) {
-      advancedSearch.or(withAnyOfCategories(params.getCategories()));
+      advancedSearch.and(withAnyOfCategories(params.getCategories()));
     }
     if (params.getSuburbs() != null && !params.getSuburbs().isEmpty()) {
-      advancedSearch.or(withAnyOfSuburbs(params.getSuburbs()));
+      advancedSearch.and(withAnyOfSuburbs(params.getSuburbs()));
     }
     if (params.getTargetgroups() != null && !params.getTargetgroups().isEmpty()) {
-      advancedSearch.or(withAnyOfTargetGroups(params.getTargetgroups()));
+      advancedSearch.and(withAnyOfTargetGroups(params.getTargetgroups()));
     }    
     return search.and(advancedSearch).getValue();
   }

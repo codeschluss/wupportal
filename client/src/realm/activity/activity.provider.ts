@@ -1,9 +1,11 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
+import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
 import { AddressModel } from '../address/address.model';
 import { CategoryModel } from '../category/category.model';
+import { LanguageModel } from '../language/language.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { ProviderModel } from '../provider/provider.model';
 import { ScheduleModel } from '../schedule/schedule.model';
@@ -27,13 +29,18 @@ export class ActivityProvider
       model: CategoryModel
     },
     {
+      field: 'language',
+      method: () => empty(),
+      model: LanguageModel
+    },
+    {
       field: 'organisation',
       method: this.service.activityControllerReadOrganisationResponse,
       model: OrganisationModel
     },
     {
       field: 'provider',
-      method: null,
+      method: () => empty(),
       model: ProviderModel
     },
     {
@@ -50,6 +57,11 @@ export class ActivityProvider
       field: 'targetGroups',
       method: this.service.activityControllerReadTargetGroupsResponse,
       model: TargetGroupModel
+    },
+    {
+      field: 'translations',
+      method: this.service.activityControllerReadTranslationsResponse,
+      model: ActivityModel
     }
   ];
 
@@ -58,7 +70,6 @@ export class ActivityProvider
     delete: this.service.activityControllerDeleteResponse,
     readAll: this.service.activityControllerReadAllResponse,
     readOne: this.service.activityControllerReadOneResponse,
-    translate: this.service.activityControllerReadTranslationsResponse,
     update: this.service.activityControllerUpdateResponse
   };
 
@@ -72,7 +83,7 @@ export class ActivityProvider
 
   public create: (model: ActivityModel) => Observable<any>;
 
-  public update: (id: string, model: ActivityModel) => Observable<any>;
+  public update: (model: ActivityModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
@@ -94,27 +105,27 @@ export class ActivityProvider
       this.apply(this.service.activityControllerAddTagsResponse);
 
   public relinkAddress:
-    (id: string, addressId: string) => Observable<any> =
+    (id: string, addressId: String) => Observable<any> =
       this.apply(this.service.activityControllerUpdateAddressResponse);
 
   public relinkCategory:
-    (id: string, categoryId: string) => Observable<any> =
+    (id: string, categoryId: String) => Observable<any> =
       this.apply(this.service.activityControllerUpdateCategoryResponse);
 
   public relinkOrganisation:
-    (id: string, organisationId: string) => Observable<any> =
+    (id: string, organisationId: String) => Observable<any> =
       this.apply(this.service.activityControllerUpdateOrganisationResponse);
 
-  public unlinkSchedule:
-    (id: string, scheduleId: string) => Observable<any> =
+  public unlinkSchedules:
+    (id: string, scheduleId: string[]) => Observable<any> =
       this.apply(this.service.activityControllerDeleteSchedulesResponse);
 
-  public unlinkTag:
-    (id: string, tagId: string) => Observable<any> =
+  public unlinkTags:
+    (id: string, tagIds: string[]) => Observable<any> =
       this.apply(this.service.activityControllerDeleteTagsResponse);
 
-  public unlinkTargetGroup:
-    (id: string, targetGroupId: string) => Observable<any> =
+  public unlinkTargetGroups:
+    (id: string, targetGroupIds: string[]) => Observable<any> =
       this.apply(this.service.activityControllerDeleteTargetGroupsResponse);
 
 }

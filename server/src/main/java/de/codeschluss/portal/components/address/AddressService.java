@@ -37,7 +37,23 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
   }
   
   @Override
-  public boolean validFieldConstraints(AddressEntity newAddress) {
+  public boolean validCreateFieldConstraints(AddressEntity newAddress) {
+    return validBaseFields(newAddress)
+        && newAddress.getSuburbId() != null && !newAddress.getSuburbId().isEmpty();
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(AddressEntity newAddress) {
+    return validBaseFields(newAddress);
+  }
+
+  /**
+   * Valid base fields.
+   *
+   * @param newAddress the new address
+   * @return true, if successful
+   */
+  private boolean validBaseFields(AddressEntity newAddress) {
     return newAddress.getPlace() != null && !newAddress.getPlace().isEmpty()
         && newAddress.getPostalCode() != null && !newAddress.getPostalCode().isEmpty()
         && newAddress.getStreet() != null && !newAddress.getStreet().isEmpty();

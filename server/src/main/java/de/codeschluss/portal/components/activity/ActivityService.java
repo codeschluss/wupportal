@@ -7,7 +7,6 @@ import com.querydsl.core.types.Predicate;
 import de.codeschluss.portal.components.address.AddressEntity;
 import de.codeschluss.portal.components.category.CategoryEntity;
 import de.codeschluss.portal.components.provider.ProviderEntity;
-import de.codeschluss.portal.components.schedule.ScheduleEntity;
 import de.codeschluss.portal.components.tag.TagEntity;
 import de.codeschluss.portal.components.targetgroup.TargetGroupEntity;
 import de.codeschluss.portal.components.user.UserEntity;
@@ -53,7 +52,16 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
   }
   
   @Override
-  public boolean validFieldConstraints(ActivityEntity newActivity) {
+  public boolean validCreateFieldConstraints(ActivityEntity newActivity) {
+    return newActivity.getName() != null && !newActivity.getName().isEmpty()
+        && newActivity.getAddressId() != null && !newActivity.getAddressId().isEmpty()
+        && newActivity.getCategoryId() != null && !newActivity.getCategoryId().isEmpty()
+        && newActivity.getOrganisationId() != null && !newActivity.getOrganisationId().isEmpty()
+        && validContactData(newActivity);
+  }
+  
+  @Override
+  public boolean validUpdateFieldConstraints(ActivityEntity newActivity) {
     return newActivity.getName() != null && !newActivity.getName().isEmpty()
         && validContactData(newActivity);
   }
@@ -66,7 +74,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
    */
   private boolean validContactData(ActivityEntity newActivity) {
     return (newActivity.getMail() != null && !newActivity.getMail().isEmpty())
-        || (newActivity.getPhone() != null && !newActivity.getMail().isEmpty());
+        || (newActivity.getPhone() != null && !newActivity.getPhone().isEmpty());
   }
 
   /**
@@ -126,7 +134,7 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
       activity.setDescription(newActivity.getDescription());
       activity.setContactName(newActivity.getContactName());
       activity.setPhone(newActivity.getPhone());
-      activity.setMail(activity.getMail());
+      activity.setMail(newActivity.getMail());
       return repo.save(activity);
     }).orElseGet(() -> {
       newActivity.setId(id);
@@ -247,40 +255,6 @@ public class ActivityService extends ResourceDataService<ActivityEntity, Activit
         .removeIf(targetGroup -> targetGroupIds.contains(targetGroup.getId()));
     // TODO: Check if target groups are nullable and throw exception if last target
     // group is deleted
-    repo.save(activity);
-  }
-
-  /**
-   * Adds the schedules.
-   *
-   * @param activityId
-   *          the activity id
-   * @param schedules
-   *          the schedules
-   * @return the list
-   */
-  public Set<ScheduleEntity> addSchedules(String activityId, List<ScheduleEntity> schedules) {
-    ActivityEntity activity = getById(activityId);
-    schedules.stream().forEach(scheduleToAdd -> {
-      if (activity.getSchedules().stream()
-          .noneMatch(schedule -> schedule.getId().equals(scheduleToAdd.getId()))) {
-        activity.getSchedules().add(scheduleToAdd);
-      }
-    });
-    return repo.save(activity).getSchedules();
-  }
-
-  /**
-   * Delete schedule.
-   *
-   * @param activityId
-   *          the activity id
-   * @param scheduleIds
-   *          the schedule ids
-   */
-  public void deleteSchedule(String activityId, List<String> scheduleIds) {
-    ActivityEntity activity = getById(activityId);
-    activity.getSchedules().removeIf(schedule -> scheduleIds.contains(schedule.getId()));
     repo.save(activity);
   }
 

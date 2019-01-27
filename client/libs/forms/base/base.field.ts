@@ -1,5 +1,5 @@
-import { Component, ComponentFactoryResolver, Input, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, ComponentFactoryResolver, HostBinding, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { CrudModel } from '@portal/core';
 import { FormField } from './base.form';
 
@@ -9,6 +9,9 @@ import { FormField } from './base.form';
 })
 
 export class BaseFieldComponent implements OnInit {
+
+  @HostBinding('class')
+  public class: string = 'base-field';
 
   @Input()
   public field: FormField;
@@ -20,22 +23,52 @@ export class BaseFieldComponent implements OnInit {
     return `
       <mat-form-field [formGroup]="group">
         ${template}
-        <ng-container *ngFor="let test of field.tests" ngProjectAs="mat-error">
-          <mat-error *ngIf="group.get(field.name).hasError(test.name)">
-            {{ test.name }}
+        <ng-container *ngFor="let error of errors" ngProjectAs="mat-error">
+          <mat-error>
+            <ng-container [ngSwitch]="error">
+              <ng-container *ngSwitchCase="'minLength'">
+                <i18n i18n="@@fieldErrorMinLength">fieldErrorMinLength</i18n>
+              </ng-container>
+              <ng-container *ngSwitchCase="'missmatch'">
+                <i18n i18n="@@fieldErrorMissmatch">fieldErrorMissmatch</i18n>
+              </ng-container>
+              <ng-container *ngSwitchCase="'either'">
+                <i18n i18n="@@fieldErrorEither">fieldErrorEither</i18n>
+              </ng-container>
+              <ng-container *ngSwitchCase="'pattern'">
+                <i18n i18n="@@fieldErrorPattern">fieldErrorPattern</i18n>
+              </ng-container>
+              <ng-container *ngSwitchCase="'required'">
+                <i18n i18n="@@fieldErrorRequired">fieldErrorRequired</i18n>
+              </ng-container>
+            </ng-container>
           </mat-error>
         </ng-container>
       </mat-form-field>
     `;
   }
 
+  public get control(): AbstractControl {
+    return this.group.get(this.field.name);
+  }
+
+  public get errors(): string[] {
+    const errors = this.control.errors;
+    return errors ? Object.keys(errors) : [];
+  }
+
+  public get value(): any {
+    return this.control.value;
+  }
+  public set value(value: any) {
+    this.control.markAsDirty();
+    this.control.patchValue(value);
+  }
+
   public constructor(
     private container: ViewContainerRef,
     private factories: ComponentFactoryResolver
   ) { }
-
-  public get value(): any { return this.group.get(this.field.name).value; }
-  public set value(set: any) { this.group.get(this.field.name).setValue(set); }
 
   public ngOnInit(): void {
     if (this.constructor === BaseFieldComponent) {
@@ -52,13 +85,15 @@ export class BaseFieldComponent implements OnInit {
   public toId(input: CrudModel): string;
   public toId(input: CrudModel[]): string[];
   public toId(input: CrudModel | CrudModel[]): string | string[] {
-    return Array.isArray(input) ? input.map((item) => item.id) : input.id;
+    return !input ? null : Array.isArray(input)
+      ? input.map((item) => item.id)
+      : input.id;
   }
 
   public toLabel(input: CrudModel): string;
   public toLabel(input: CrudModel[]): string[];
   public toLabel(input: CrudModel | CrudModel[]): string | string[] {
-    return Array.isArray(input)
+    return !input ? null : Array.isArray(input)
       ? input.map((item) => item[this.field.label])
       : input[this.field.label];
   }
@@ -66,10 +101,10 @@ export class BaseFieldComponent implements OnInit {
   public toModel(input: string): CrudModel;
   public toModel(input: string[]): CrudModel[];
   public toModel(input: string | string[]): CrudModel | CrudModel[] {
-    const modeler = (id: string) =>
-      this.field.options.find((item) => item.id === id);
+    const modeler = (id: string) => this.field.options
+      .find((item) => item.id === id);
 
-    return Array.isArray(input)
+    return !input ? null : Array.isArray(input)
       ? input.map((id) => modeler(id))
       : modeler(input);
   }

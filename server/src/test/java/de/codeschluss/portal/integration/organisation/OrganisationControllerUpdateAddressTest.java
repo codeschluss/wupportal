@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.organisation.OrganisationController;
 import de.codeschluss.portal.components.organisation.OrganisationService;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
 import org.junit.Test;
@@ -29,29 +30,29 @@ public class OrganisationControllerUpdateAddressTest {
   @WithUserDetails("super@user")
   public void updateAddressSuperUserOk() {
     String orgaId = "00000000-0000-0000-0008-300000000000";
-    String addressId = "00000000-0000-0000-0006-100000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-100000000000");
 
     controller.updateAddress(orgaId, addressId);
 
-    assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId);
+    assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId.getValue());
   }
 
   @Test
   @WithUserDetails("admin@user")
   public void updateAddressOwnOrgaOk() {
     String orgaId = "00000000-0000-0000-0008-100000000000";
-    String addressId = "00000000-0000-0000-0006-400000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-400000000000");
 
     controller.updateAddress(orgaId, addressId);
 
-    assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId);
+    assertThat(service.getById(orgaId).getAddress().getId()).isEqualTo(addressId.getValue());
   }
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
   public void updateAddressSuperUserWrongOrgaDenied() {
     String orgaId = "00000000-0000-0000-0008-XX0000000000";
-    String addressId = "00000000-0000-0000-0006-100000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-100000000000");
 
     controller.updateAddress(orgaId, addressId);
   }
@@ -60,7 +61,7 @@ public class OrganisationControllerUpdateAddressTest {
   @WithUserDetails("admin@user")
   public void updateAddressOwnOrgaWrongAddressDenied() {
     String orgaId = "00000000-0000-0000-0008-100000000000";
-    String addressId = "00000000-0000-0000-0006-XX0000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-XX0000000000");
 
     controller.updateAddress(orgaId, addressId);
   }
@@ -69,7 +70,7 @@ public class OrganisationControllerUpdateAddressTest {
   @WithUserDetails("provider1@user")
   public void updateAddressOtherOrgaDenied() {
     String orgaId = "00000000-0000-0000-0008-300000000000";
-    String addressId = "00000000-0000-0000-0006-400000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-400000000000");
 
     controller.updateAddress(orgaId, addressId);
   }
@@ -77,7 +78,7 @@ public class OrganisationControllerUpdateAddressTest {
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateAddressNoUserDenied() {
     String orgaId = "00000000-0000-0000-0008-300000000000";
-    String addressId = "00000000-0000-0000-0006-400000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-400000000000");
 
     controller.updateAddress(orgaId, addressId);
   }

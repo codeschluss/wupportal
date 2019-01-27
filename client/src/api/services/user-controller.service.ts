@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { UserEntity } from '../models/user-entity';
+import { StringPrimitive } from '../models/string-primitive';
 import { ResourceUserEntity } from '../models/resource-user-entity';
+import { BooleanPrimitive } from '../models/boolean-primitive';
 
 /**
  * User Controller
@@ -131,7 +133,7 @@ class UserControllerService extends BaseService {
    * @param username username
    * @return OK
    */
-  userControllerResetPasswordResponse(username: string): Observable<StrictHttpResponse<{}>> {
+  userControllerResetPasswordResponse(username: StringPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -157,7 +159,7 @@ class UserControllerService extends BaseService {
    * @param username username
    * @return OK
    */
-  userControllerResetPassword(username: string): Observable<{}> {
+  userControllerResetPassword(username: StringPrimitive): Observable<{}> {
     return this.userControllerResetPasswordResponse(username).pipe(
       __map(_r => _r.body as {})
     );
@@ -370,22 +372,13 @@ class UserControllerService extends BaseService {
 
   /**
    * @param userId userId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
    * @return OK
    */
-  userControllerReadOrganisationsResponse(userId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+  userControllerReadOrganisationsResponse(userId: string): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/users/${userId}/organisations`,
@@ -405,16 +398,10 @@ class UserControllerService extends BaseService {
   }
   /**
    * @param userId userId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
    * @return OK
    */
-  userControllerReadOrganisations(userId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): Observable<{}> {
-    return this.userControllerReadOrganisationsResponse(userId, sort, dir, embeddings).pipe(
+  userControllerReadOrganisations(userId: string): Observable<{}> {
+    return this.userControllerReadOrganisationsResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -507,7 +494,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerGrantSuperuserRightResponse(userId: string,
-    isSuperuser: boolean): Observable<StrictHttpResponse<{}>> {
+    isSuperuser: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -536,7 +523,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerGrantSuperuserRight(userId: string,
-    isSuperuser: boolean): Observable<{}> {
+    isSuperuser: BooleanPrimitive): Observable<{}> {
     return this.userControllerGrantSuperuserRightResponse(userId, isSuperuser).pipe(
       __map(_r => _r.body as {})
     );

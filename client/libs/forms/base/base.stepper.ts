@@ -1,8 +1,10 @@
-import { OnDestroy, OnInit, Type } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Location } from '@angular/common';
+import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, SessionResolver } from '@portal/core';
-import { Observable, of } from 'rxjs';
+import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
+import { forkJoin, of } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { BaseForm } from './base.form';
 
 export interface FormStep {
@@ -10,161 +12,189 @@ export interface FormStep {
   form: Type<BaseForm<CrudModel>>;
 }
 
-export abstract class BaseStepper<Model extends CrudModel>
+export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   implements OnInit, OnDestroy {
+
+  @HostBinding('class')
+  public class: string = 'base-stepper';
+
+  @Input()
+  public item: Model;
 
   public abstract root: string;
 
   public abstract steps: FormStep[];
 
-  protected abstract builder: FormBuilder;
-
   protected abstract joiner: CrudJoiner;
 
   protected abstract model: Type<Model>;
 
-  protected abstract route: ActivatedRoute;
-
-  protected abstract router: Router;
-
-  public static get routing(this: any): Route {
-    const self = new this();
-    self.model = self.stepped(self.model);
-
-    return {
-      path: `${self.root}/:uuid`,
-      component: this,
-      resolve: {
-        item: CrudResolver,
-        session: SessionResolver
-      },
-      data: {
-        item: self.joiner
-      }
-    };
-  }
-
   protected static template(template: string): string {
-    return template + `
+    return `
+      <header class="mat-title">
+        <ng-container *ngTemplateOutlet="label; context: {
+          case: { name: item?.id ? 'edit' : 'create' }
+        }"></ng-container>
+      </header>
+      <h1>{{ title || '...' }}</h1>
       <nav mat-tab-nav-bar>
-        <ng-container *ngFor="let step of steps">
-          <a mat-tab-link [disabled]="!isValid" [routerLink]="step.name"
+        <ng-container *ngFor="let step of steps; let i = index">
+          <a mat-tab-link replaceUrl [disabled]="!can(i)" [routerLink]="link(i)"
             #tab="routerLinkActive" routerLinkActive [active]="tab.isActive">
             <ng-container *ngTemplateOutlet="label; context: { case: step }">
             </ng-container>
           </a>
         </ng-container>
       </nav>
-
+      ${template}
       <router-outlet></router-outlet>
-
-      <ng-container *ngIf="hasPrev">
-        <button mat-button [disabled]="!isValid" [routerLink]="get(-1)?.name">
-          <i18n i18n="@@prevForm">prevForm</i18n>
+      <mat-divider></mat-divider>
+      <button mat-raised-button color="warn" tabindex="-1" (click)="quit()">
+        <i18n i18n="@@close">close</i18n>
+      </button>
+      <button mat-raised-button color="warn" tabindex="-1" (click)="reset()">
+        <i18n i18n="@@reset">reset</i18n>
+      </button>
+      <ng-container *ngIf="has('-1')">
+        <button mat-raised-button replaceUrl [disabled]="!can(index - 1)"
+          [routerLink]="link('-1')">
+          <i18n i18n="@@previous">previous</i18n>
         </button>
       </ng-container>
-      <ng-container *ngIf="hasNext">
-        <button mat-button [disabled]="!isValid" [routerLink]="get(+1)?.name">
-          <i18n i18n="@@nextForm">nextForm</i18n>
+      <ng-container *ngIf="has('+1')">
+        <button mat-raised-button replaceUrl [disabled]="!can(index + 1)"
+          [routerLink]="link('+1')">
+          <i18n i18n="@@next">next</i18n>
         </button>
       </ng-container>
-      <ng-container *ngIf="hasSave">
-        <button mat-button [disabled]="!isValid" (click)="save()">
-          <i18n i18n="@@saveForms">saveForms</i18n>
+      <ng-container *ngIf="!has('+1')">
+        <button mat-raised-button color="primary" [disabled]="!valid || !dirty"
+          (click)="persist()">
+          <i18n i18n="@@persist">persist</i18n>
         </button>
       </ng-container>
     `;
   }
 
-  public get hasNext() {
-    return this.steps.indexOf(this.get()) < this.steps.length - 1;
+  public get dirty(): boolean {
+    const routes = this.route.snapshot.routeConfig.children;
+    return routes.some((route) => route.data.form && route.data.form.dirty);
   }
 
-  public get hasPrev() {
-    return this.steps.indexOf(this.get()) > 0;
-  }
-  public get hasSave() {
-    return this.steps.indexOf(this.get()) === this.steps.length - 1;
+  public get index(): number {
+    return !this.route.snapshot.firstChild ? 0 : this.steps.findIndex((step) =>
+      step.name === this.route.snapshot.firstChild.routeConfig.path);
   }
 
-  public get isValid(): boolean {
-    return this.route.snapshot.routeConfig.children
-        .every((child) => child.data.group.valid);
+  public get title(): string {
+    const data = this.route.snapshot.routeConfig.children[0].data;
+    return data.form && data.form.group.get('name').value;
+  }
+
+  public get valid(): boolean {
+    const routes = this.route.snapshot.routeConfig.children;
+    return routes.every((route) => route.data.form && route.data.form.valid);
+  }
+
+  protected get routing(this: any): Route {
+    Object.defineProperty(this.model, 'stepper', { value: this });
+
+    return {
+      path: `${this.root}/:uuid`,
+      component: this.constructor,
+      resolve: {
+        item: CrudResolver,
+        tokens: TokenResolver
+      },
+      data: {
+        item: this.joiner
+      }
+    };
+  }
+
+  public constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    private location: Location
+  ) {
+    super();
   }
 
   public ngOnInit(): void {
-    if (!this.route.snapshot.routeConfig.children) {
-      this.router.config = this.router.config
-        .map((route) => this.walk(route, this.routes()));
-    }
+    this.item = this.item
+      || this.route.snapshot.data.item
+      || new this.model();
 
-    if (!this.route.snapshot.children.length) {
-      this.router.navigate([this.get().name], {
-        relativeTo: this.route,
-        replaceUrl: true
-      });
-    }
+    this.router.config = this.walk(this.router.config, this.routes());
+    this.router.navigate([this.steps[this.index].name], {
+      relativeTo: this.route,
+      replaceUrl: true
+    });
   }
 
   public ngOnDestroy(): void {
-    this.router.config = this.router.config
-      .map((route) => this.walk(route, []));
+    this.router.config = this.walk(this.router.config, null);
   }
 
-  public get(index: number = 0): FormStep {
-    if (this.route.snapshot.firstChild) {
-      index = index + this.steps.findIndex((step) =>
-        step.name === this.route.snapshot.firstChild.routeConfig.path);
-    }
-
-    return this.steps[index];
+  public can(index: number): boolean {
+    const route = this.route.snapshot.routeConfig.children[this.index];
+    const valid = route && route.data.form && route.data.form.valid;
+    return index <= this.index || (--index === this.index && valid);
   }
 
-  public save(): Observable<any> {
-    return of(this.route.snapshot.routeConfig.children
-      .forEach((i) => console.log(i.data.group.value)));
+  public has(index: number | string): boolean {
+    index = typeof index === 'string' ? parseInt(index, 10) : index;
+    return index > 0 ? this.index < this.steps.length - 1 : this.index > 0;
   }
 
-  protected stepped(model: Type<Model>): Type<Model> {
-    return Object.defineProperty(model, 'stepper', { value: this.constructor });
+  public link(index: number | string): string {
+    return typeof index === 'string'
+      ? this.steps[parseInt(index, 10) + this.index].name
+      : this.steps[index].name;
+  }
+
+  public quit(): void {
+    this.location.back();
+  }
+
+  public reset(): void {
+    const route = this.route.snapshot.routeConfig.children[this.index];
+    if (route && route.data.form) { route.data.form.reset(); }
+  }
+
+  protected persist(): void {
+    const routes = this.route.snapshot.routeConfig.children;
+    const root = routes.find((route) => route.path === 'main');
+    const control = (field, value) => root.data
+      .group.addControl(field, new FormControl(value));
+
+    forkJoin([of(0)].concat(routes.filter((r) => r !== root).map((route) =>
+      route.data.form.persist().pipe(map((item) => [route.path, item]))
+    ))).pipe(
+      tap((items) => items.slice(1).forEach((i) => control(i[0], i[1]))),
+      mergeMap(() => root.data.form.persist())
+    ).subscribe(() => this.location.back());
   }
 
   private routes(): Route[] {
     return this.steps.map((step) => {
-      const form = new step.form();
-      const fields = form.fields.filter((field) => field.model);
+      const fields = new step.form().fields.filter((field) => field.model);
 
       return {
-        path: `${step.name}`,
+        path: step.name,
         component: step.form,
         resolve: fields.reduce((obj, field) => Object.assign(obj, {
           [field.name]: CrudResolver,
         }), { }),
         data: Object.assign({
-          group: this.builder.group({ }),
-          item: step.name === this.root
-            ? this.route.snapshot.data.item
-            : this.route.snapshot.data.item[step.name],
-          session: this.route.snapshot.data.session
+          group: new FormGroup({ }),
+          item: step.name === 'main' ? this.item : this.item[step.name],
+          tokens: this.route.snapshot.data.tokens
         }, ...fields.map((field) => ({
           [field.name]: CrudJoiner.of(field.model, { filter: null })
         })))
       };
     });
-  }
-
-  private walk(route: Route, children: Route[]): Route {
-    if ((route['_loadedConfig'] || { }).routes) {
-      route['_loadedConfig'].routes = route['_loadedConfig'].routes
-        .map((child) => this.walk(child, children));
-    } else if (route.children) {
-      route.children = route.children
-        .map((child) => this.walk(child, children));
-    } else if (route.component === this.constructor) {
-      route.children = children;
-    }
-
-    return route;
   }
 
 }

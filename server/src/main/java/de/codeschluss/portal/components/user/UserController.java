@@ -10,7 +10,9 @@ import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.BaseParams;
+import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.security.permissions.OwnUserOrSuperUserPermission;
@@ -20,7 +22,6 @@ import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -131,9 +132,9 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @PutMapping("/users/{userId}/superuser")
   @SuperUserPermission
   public ResponseEntity<?> grantSuperuserRight(@PathVariable String userId,
-      @RequestBody Boolean isSuperuser) {
+      @RequestBody BooleanPrimitive isSuperuser) {
     try {
-      service.grantSuperUser(userId, isSuperuser);
+      service.grantSuperUser(userId, isSuperuser.getValue());
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist!");
@@ -149,14 +150,9 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @GetMapping("/users/{userId}/organisations")
   @OwnUserOrSuperUserPermission
   public ResponseEntity<?> readOrganisations(
-      @PathVariable String userId,
-      BaseParams params) {
+      @PathVariable String userId) {
     List<ProviderEntity> providers = providerService.getProvidersByUser(userId);
-    try {
-      return ok(organisationService.getByProviders(providers, params));
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage());
-    }
+    return ok(organisationService.convertToResourcesEmbeddedProviders(providers));
   }
 
   /**
@@ -169,10 +165,10 @@ public class UserController extends CrudController<UserEntity, UserService> {
   @PostMapping("/users/{userId}/organisations")
   @OwnUserOrSuperUserPermission
   public ResponseEntity<?> addOrganisation(@PathVariable String userId,
-      @RequestBody String... organisationParam) {
+      @RequestBody List<String> organisationParam) {
     try {
       return ok(providerService.createApplication(
-          service.getById(userId), Arrays.asList(organisationParam)));
+          service.getById(userId), organisationParam));
     } catch (NotFoundException | NullPointerException e) {
       throw new BadParamsException("User or Organisation are null or do not exist!");
     }
@@ -244,8 +240,9 @@ public class UserController extends CrudController<UserEntity, UserService> {
    * @throws MessagingException the messaging exception
    */
   @PutMapping("/users/resetpassword")
-  public ResponseEntity<?> resetPassword(@RequestBody String username) throws MessagingException {
-    if (service.resetPassword(username)) {
+  public ResponseEntity<?> resetPassword(@RequestBody StringPrimitive username) 
+      throws MessagingException {
+    if (service.resetPassword(username.getValue())) {
       return noContent().build();
     } else {
       throw new BadParamsException(

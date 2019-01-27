@@ -6,12 +6,15 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import de.codeschluss.portal.components.activity.ActivityService;
 import de.codeschluss.portal.components.address.AddressService;
+import de.codeschluss.portal.components.images.organisation.OrganisationImageEntity;
 import de.codeschluss.portal.components.images.organisation.OrganisationImageService;
 import de.codeschluss.portal.components.provider.ProviderEntity;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.components.user.UserService;
 import de.codeschluss.portal.core.api.CrudController;
 import de.codeschluss.portal.core.api.dto.BaseParams;
+import de.codeschluss.portal.core.api.dto.BooleanPrimitive;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
 import de.codeschluss.portal.core.i18n.translation.TranslationService;
@@ -24,10 +27,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +40,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -117,30 +119,15 @@ public class OrganisationController
       throws URISyntaxException {
     validateCreate(newOrga);
     
-    Resource<OrganisationEntity> resource = service.convertToResource(
-        createOrgaWithAdmin(newOrga));
+    try {
+      newOrga.setAddress(addressService.getById(newOrga.getAddressId()));
+    } catch (NotFoundException e) {
+      throw new BadParamsException("Need existing Address!");
+    }
     
+    Resource<OrganisationEntity> resource = service.addResource(newOrga);
+    providerService.addAdmin(resource.getContent(), authService.getCurrentUser());
     return created(new URI(resource.getId().expand().getHref())).body(resource);
-  }
-
-  /**
-   * Creates the orga with admin.
-   *
-   * @param newOrga the new orga
-   * @return the organisation entity
-   */
-  private OrganisationEntity createOrgaWithAdmin(OrganisationEntity newOrga) {
-    newOrga.setApproved(false);
-    OrganisationEntity orga = service.add(newOrga);
-    
-    ProviderEntity admin = new ProviderEntity();
-    admin.setApproved(true);
-    admin.setAdmin(true);
-    admin.setOrganisation(orga);
-    admin.setUser(authService.getCurrentUser());
-    
-    providerService.add(admin);
-    return orga;
   }
   
   /**
@@ -154,12 +141,11 @@ public class OrganisationController
   @SuperUserPermission
   public ResponseEntity<?> grantApproval(
       @PathVariable String organisationId,
-      @RequestBody Boolean isApproved) {
+      @RequestBody BooleanPrimitive isApproved) {
     try {
-      service.setApproval(organisationId, isApproved);
-      if (!isApproved) {
-        List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
-        activityService.deleteAllByProviders(providers);
+      service.setApproval(organisationId, isApproved.getValue());
+      if (!isApproved.getValue()) {
+        service.delete(organisationId);
       }
       return noContent().build();
     } catch (NotFoundException e) {
@@ -206,9 +192,10 @@ public class OrganisationController
   @PutMapping("/organisations/{organisationId}/address")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> updateAddress(@PathVariable String organisationId,
-      @RequestBody String addressId) {
-    if (addressService.existsById(addressId) && service.existsById(organisationId)) {
-      service.updateAddress(organisationId, addressService.getById(addressId));
+      @RequestBody StringPrimitive addressId) {
+    if (addressService.existsById(addressId.getValue())
+        && service.existsById(organisationId)) {
+      service.updateAddress(organisationId, addressService.getById(addressId.getValue()));
       return ok(readAddress(organisationId));
     } else {
       throw new BadParamsException("Organisation or Address with given ID do not exist!");
@@ -266,8 +253,7 @@ public class OrganisationController
   @GetMapping("/organisations/{organisationId}/users")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> readUsers(
-      @PathVariable String organisationId,
-      BaseParams params) {
+      @PathVariable String organisationId) {
     List<ProviderEntity> providers = providerService.getProvidersByOrganisation(organisationId);
     return ok(userService.convertToResourcesEmbeddedProviders(providers));
   }
@@ -286,9 +272,13 @@ public class OrganisationController
   @PutMapping("/organisations/{organisationId}/users/{userId}/approve")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> approveOrRejectUser(@PathVariable String organisationId,
-      @PathVariable String userId, @RequestBody Boolean isApproved) {
+      @PathVariable String userId, @RequestBody BooleanPrimitive isApproved) {
     try {
-      providerService.setApprovedByUserAndOrga(userId, organisationId, isApproved);
+      if (isApproved.getValue()) {
+        providerService.setApprovedByUserAndOrga(userId, organisationId);
+      } else {
+        providerService.deleteForUserAndOrga(userId, organisationId);
+      }
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist in given Organisation!");
@@ -309,9 +299,9 @@ public class OrganisationController
   @PutMapping("/organisations/{organisationId}/users/{userId}/admin")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> grantAdminRight(@PathVariable String organisationId,
-      @PathVariable String userId, @RequestBody Boolean isAdmin) {
+      @PathVariable String userId, @RequestBody BooleanPrimitive isAdmin) {
     try {
-      providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin);
+      providerService.setAdminByUserAndOrga(userId, organisationId, isAdmin.getValue());
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("User with given ID does not exist in given Organisation!");
@@ -375,18 +365,21 @@ public class OrganisationController
    * Adds the image.
    *
    * @param organisationId the organisation id
-   * @param caption the caption
-   * @param imageFile the image file
+   * @param image the image
    * @return the response entity
    */
   @PostMapping("/organisations/{organisationId}/images")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> addImage(@PathVariable String organisationId,
-      @RequestParam(name = "caption", required = false) String caption, 
-      @RequestParam("file") MultipartFile imageFile) {
+      @RequestBody List<OrganisationImageEntity> image) {
+    if (image == null || image.isEmpty()) {
+      throw new BadParamsException("Image File must not be null");
+    }
+    
     try {
-      Resource<?> saved = organisationImageService.addResource(
-          imageFile, caption, service.getById(organisationId));
+      Resources<?> saved = organisationImageService.addResources(
+          service.getById(organisationId),
+          image);
       return ok(saved);
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Organisation does not exist");
@@ -395,21 +388,20 @@ public class OrganisationController
     }
   }
 
+
   /**
    * Delete images.
    *
-   * @param organisationId
-   *          the organisation id
-   * @param imageId
-   *          the image id
+   * @param organisationId the organisation id
+   * @param imageIds the image ids
    * @return the response entity
    */
-  @DeleteMapping("/organisations/{organisationId}/images/{imageId}")
+  @DeleteMapping("/organisations/{organisationId}/images")
   @OrgaAdminOrSuperUserPermission
   public ResponseEntity<?> deleteImages(@PathVariable String organisationId,
-      @PathVariable String... imageId) {
+      @RequestParam(value = "imageIds", required = true) List<String> imageIds) {
     try {
-      organisationImageService.deleteAll(Arrays.asList(imageId));
+      organisationImageService.deleteAll(imageIds);
       return noContent().build();
     } catch (NotFoundException e) {
       throw new BadParamsException("Given Organisation does not exist");

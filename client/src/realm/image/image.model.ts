@@ -4,7 +4,7 @@ export class ImageModel
   extends CrudModel {
 
   public caption: string;
-  public image: string;
+  public imageData: string | Blob;
   public mimeType: string;
 
 }

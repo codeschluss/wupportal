@@ -1,15 +1,15 @@
 package de.codeschluss.portal.core.image;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * The Class ImageService.
@@ -29,27 +29,29 @@ public class ImageService {
   /**
    * Resize.
    *
-   * @param imageFile
-   *          the image file
+   * @param image the image
+   * @param formatType the format type
    * @return the byte[]
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
+   * @throws IOException Signals that an I/O exception has occurred.
    */
-  public byte[] resize(MultipartFile imageFile) throws IOException {
-    if (imageFile.getBytes() == null || imageFile.getBytes().length == 1) {
+  public byte[] resize(byte[] image, String formatType) throws IOException {
+    if (image == null || image.length == 1) {
       return null;
     }
+
+    ByteArrayInputStream inputStream = new ByteArrayInputStream(image);
+    BufferedImage imageBuff = ImageIO.read(inputStream);
     
-    BufferedImage imageBuff = ImageIO.read(imageFile.getInputStream());
-    Image image = imageBuff.getScaledInstance(config.getMaxWidth(), -1, Image.SCALE_SMOOTH);
-
-    BufferedImage bimage = new BufferedImage(image.getWidth(null), image.getHeight(null),
-        BufferedImage.TYPE_3BYTE_BGR);
-
-    Graphics2D neGraphic = bimage.createGraphics();
-    neGraphic.drawImage(image, 0, 0, null);
-    neGraphic.dispose();
-    return ((DataBufferByte) bimage.getData().getDataBuffer()).getData();
+    if (imageBuff.getHeight() <= config.getMaxHeight()
+        && imageBuff.getWidth() <= config.getMaxWidth()) {
+      return image;
+    }
+    BufferedImage resized = Scalr.resize(
+        imageBuff, Method.ULTRA_QUALITY, config.getMaxWidth(), config.getMaxWidth());
+    
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    ImageIO.write(resized, formatType, outputStream);
+    return outputStream.toByteArray();
   }
 
 }

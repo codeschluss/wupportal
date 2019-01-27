@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.codeschluss.portal.components.activity.ActivityController;
 import de.codeschluss.portal.components.address.AddressEntity;
+import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
 import java.net.URISyntaxException;
@@ -28,7 +29,7 @@ public class ActivityControllerUpdateAddressTest {
   @Test
   @WithUserDetails("super@user")
   public void updateAddressSuperUserOk() throws URISyntaxException {
-    String addressId = "00000000-0000-0000-0006-400000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-400000000000");
     String activityId = "00000000-0000-0000-0010-100000000000";
 
     controller.updateAddress(activityId, addressId);
@@ -39,7 +40,7 @@ public class ActivityControllerUpdateAddressTest {
   @Test
   @WithUserDetails("provider1@user")
   public void updateProviderOk() throws URISyntaxException {
-    String addressId = "00000000-0000-0000-0006-200000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-200000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.updateAddress(activityId, addressId);
@@ -50,7 +51,7 @@ public class ActivityControllerUpdateAddressTest {
   @Test
   @WithUserDetails("admin@user")
   public void updateAdminOk() throws URISyntaxException {
-    String addressId = "00000000-0000-0000-0006-300000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-300000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.updateAddress(activityId, addressId);
@@ -61,7 +62,7 @@ public class ActivityControllerUpdateAddressTest {
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
   public void updateSuperActivityBadParam() throws URISyntaxException {
-    String addressId = "00000000-0000-0000-0006-300000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-300000000000");
     String activityId = "00000000-0000-0000-0010-XX0000000000";
 
     controller.updateAddress(activityId, addressId);
@@ -70,7 +71,7 @@ public class ActivityControllerUpdateAddressTest {
   @Test(expected = BadParamsException.class)
   @WithUserDetails("provider1@user")
   public void updateProviderAddressBadParam() throws URISyntaxException {
-    String addressId = "00000000-0000-0000-0006-XX0000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-XX0000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.updateAddress(activityId, addressId);
@@ -79,7 +80,7 @@ public class ActivityControllerUpdateAddressTest {
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
   public void updateOtherProviderDenied() throws URISyntaxException {
-    String addressId = "00000000-0000-0000-0006-300000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-300000000000");
     String activityId = "00000000-0000-0000-0010-300000000000";
 
     controller.updateAddress(activityId, addressId);
@@ -87,16 +88,16 @@ public class ActivityControllerUpdateAddressTest {
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
   public void updateNoUserDenied() throws URISyntaxException {
-    String addressId = "00000000-0000-0000-0006-300000000000";
+    StringPrimitive addressId = new StringPrimitive("00000000-0000-0000-0006-300000000000");
     String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.updateAddress(activityId, addressId);
   }
 
   @SuppressWarnings("unchecked")
-  private void assertContaining(String activityId, String addressId) {
+  private void assertContaining(String activityId, StringPrimitive addressId) {
     Resource<AddressEntity> result = (Resource<AddressEntity>) controller.readAddress(activityId)
         .getBody();
-    assertThat(result.getContent().getId()).isEqualTo(addressId);
+    assertThat(result.getContent().getId()).isEqualTo(addressId.getValue());
   }
 }

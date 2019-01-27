@@ -23,9 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> {
   
-  /** The default sort prop. */
-  protected final String defaultSortProp = "name";
-  
   /** The language service. */
   private final LanguageService languageService;
   
@@ -35,7 +32,7 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
    * @param languageService the language service
    */
   public OrganisationQueryBuilder(LanguageService languageService) {
-    super(QOrganisationEntity.organisationEntity);
+    super(QOrganisationEntity.organisationEntity, "name");
     this.languageService = languageService;
   }
   
@@ -113,28 +110,34 @@ public class OrganisationQueryBuilder extends QueryBuilder<QOrganisationEntity> 
    * @return the predicate
    */
   private Predicate searchFiltered(BooleanBuilder search, OrganisationQueryParam params) {
-    if (params.getApproved() != null && params.getApproved()) {
-      search.and(withApprovedOnly());
+    if (params.getApproved() != null) {
+      search.and(withApproved(params.getApproved()));
     }
-    String filter = prepareFilter(params.getFilter());
-    return search.and(
-        query.name.likeIgnoreCase(filter)
-        .or(likeDescription(filter))
-        .or(query.mail.likeIgnoreCase(filter))
-        .or(query.phone.likeIgnoreCase(filter))
-        .or(query.website.likeIgnoreCase(filter))
-        .or(query.address.houseNumber.likeIgnoreCase(filter))
-        .or(query.address.place.likeIgnoreCase(filter))
-        .or(query.address.street.likeIgnoreCase(filter)));
+    
+    if (params.getFilter() != null && !params.getFilter().isEmpty()) {
+      String filter = prepareFilter(params.getFilter());
+      search.and(
+          query.name.likeIgnoreCase(filter)
+          .or(likeDescription(filter))
+          .or(query.mail.likeIgnoreCase(filter))
+          .or(query.phone.likeIgnoreCase(filter))
+          .or(query.website.likeIgnoreCase(filter))
+          .or(query.address.houseNumber.likeIgnoreCase(filter))
+          .or(query.address.place.likeIgnoreCase(filter))
+          .or(query.address.street.likeIgnoreCase(filter)));
+    }
+    
+    return search;
   }
   
   /**
-   * With approved only.
+   * With approved.
    *
+   * @param approved the approved
    * @return the predicate
    */
-  private BooleanExpression withApprovedOnly() {
-    return query.approved.isTrue();
+  private BooleanExpression withApproved(boolean approved) {
+    return query.approved.eq(approved);
   }
 
   /**

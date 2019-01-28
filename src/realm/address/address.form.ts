@@ -80,47 +80,40 @@ export class AddressFormComponent
       name: 'suburb',
       input: SelectFieldComponent,
       label: 'name',
-      locked: true,
       model: SuburbModel,
       tests: [Validators.required]
     },
     {
       name: 'street',
       input: StringFieldComponent,
-      locked: true,
       tests: [Validators.required]
     },
     {
       name: 'houseNumber',
       input: StringFieldComponent,
-      locked: true,
       tests: [Validators.required]
     },
     {
       name: 'postalCode',
       input: StringFieldComponent,
-      locked: true,
       tests: [Validators.required],
       type: 'number'
     },
     {
       name: 'place',
       input: StringFieldComponent,
-      locked: true,
       tests: [Validators.required],
       value: ClientPackage.config.nominatim.city
     },
     {
       name: 'longitude',
       input: StringFieldComponent,
-      locked: true,
       tests: [Validators.required],
       type: 'number'
     },
     {
       name: 'latitude',
       input: StringFieldComponent,
-      locked: true,
       tests: [Validators.required],
       type: 'number'
     }

@@ -248,7 +248,7 @@ export class ScheduleFormComponent
   }
 
   public reset(): void {
-    this.group.reset({ schedules: this.item });
+    this.group.reset({ schedules: Array.isArray(this.item) ? this.item : [] });
   }
 
   protected ngPostInit(): void {

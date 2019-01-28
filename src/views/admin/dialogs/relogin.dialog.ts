@@ -25,11 +25,10 @@ import { catchError } from 'rxjs/operators';
       </mat-form-field>
     </section>
     <section mat-dialog-actions>
-      <button mat-raised-button tabindex="-1" (click)="logout()">
+      <button mat-button tabindex="-1" (click)="logout()">
         <i18n i18n="@@logout">logout</i18n>
       </button>
-      <button mat-raised-button color="primary" [disabled]="!valid"
-        (click)="login()">
+      <button mat-button color="primary" [disabled]="!valid" (click)="login()">
         <i18n i18n="@@login">login</i18n>
       </button>
     </section>

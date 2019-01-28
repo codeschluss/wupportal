@@ -136,9 +136,12 @@ export class TranslationFormComponent<Model extends CrudModel>
         .filter((lang) => lang.id !== this.language.id)
         .map((lang) => lang.locale),
       this.language.locale
-    ).subscribe((items) =>
-      this.route.routeConfig.data.translations = this.translations.map((t) =>
-        Object.assign(t, items.find((i) => i.lang === t.language['locale']))));
+    ).subscribe((items) => {
+      const translations = this.translations.map((t) => Object.assign(t, items
+        .find((i) => i.lang === t.language['locale']).translations));
+
+      this.route.routeConfig.data.translations = translations;
+    });
   }
 
   protected ngPostInit(): void {

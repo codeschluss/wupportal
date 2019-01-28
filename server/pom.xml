@@ -21,6 +21,7 @@
 		<oauth.version>3.4.0</oauth.version>
 		<greenmail.version>1.5.5</greenmail.version>
 		<imgscalr.version>4.2</imgscalr.version>
+		<twelvemonkeys.imageio>3.3.2</twelvemonkeys.imageio>
 	</properties>
 
 	<parent>
@@ -132,22 +133,22 @@
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-core</artifactId>
-			<version>3.3.2</version>
+			<version>${twelvemonkeys.imageio}</version>
 		</dependency>		
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-jpeg</artifactId>
-			<version>3.3.2</version>
+			<version>${twelvemonkeys.imageio}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-tiff</artifactId>
-			<version>3.3.2</version>
+			<version>${twelvemonkeys.imageio}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.twelvemonkeys.servlet</groupId>
 			<artifactId>servlet</artifactId>
-			<version>3.3.2</version>
+			<version>${twelvemonkeys.imageio}</version>
 		</dependency>
 
 		<dependency>

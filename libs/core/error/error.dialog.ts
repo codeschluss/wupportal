@@ -19,10 +19,10 @@ import { CorePackage } from '../utils/package';
       <pre><strong>Exception:</strong><br>{{ data.error.message }}</pre>
     </section>
     <section mat-dialog-actions>
-      <a mat-raised-button href="{{ corePackage.bugs.url }}" target="_blank">
+      <a mat-button href="{{ corePackage.bugs.url }}" target="_blank">
         <i18n i18n="@@reportIssue">reportIssue</i18n>
       </a>
-      <button mat-raised-button mat-dialog-close tabindex="-1">
+      <button mat-button mat-dialog-close tabindex="-1">
         <i18n i18n="@@close">close</i18n>
       </button>
     </section>

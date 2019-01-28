@@ -118,7 +118,7 @@ export class TranslationFormComponent<Model extends CrudModel>
 
   public persist(): Observable<any> {
     return of(this.translations
-        .filter((t) => t.language.id !== this.language.id));
+      .filter((t) => t.language.id !== this.language.id));
   }
 
   public reset(): void {
@@ -137,8 +137,8 @@ export class TranslationFormComponent<Model extends CrudModel>
         .map((lang) => lang.locale),
       this.language.locale
     ).subscribe((items) => {
-      const translations = this.translations.map((t) => Object.assign(t, items
-        .find((i) => i.lang === t.language['locale']).translations));
+      const translations = this.translations.map((t) => Object.assign(t, (items
+        .find((i) => i.lang === t.language['locale']) || { }).translations));
 
       this.route.routeConfig.data.translations = translations;
     });

@@ -27,8 +27,8 @@ export class ScheduleFieldComponent extends BaseFieldComponent {
   }
 
   public date(item: ScheduleModel): string {
-    const from = moment(item.startDate);
-    const goto = moment(item.endDate);
+    const from = moment.utc(item.startDate);
+    const goto = moment.utc(item.endDate);
     const until = goto.format('DD.MM.YYYY');
 
     return until === from.format('DD.MM.YYYY') ? until
@@ -44,8 +44,8 @@ export class ScheduleFieldComponent extends BaseFieldComponent {
   }
 
   public time(item: ScheduleModel): string {
-    const from = moment(item.startDate);
-    const goto = moment(item.endDate);
+    const from = moment.utc(item.startDate);
+    const goto = moment.utc(item.endDate);
     return `${from.format('HH:mm')} - ${goto.format('HH:mm')}`;
   }
 

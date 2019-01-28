@@ -186,8 +186,8 @@ export class ScheduleFormComponent
   public create(): void {
     const { gotoDate, gotoTime, fromDate, fromTime } = this.values.value;
     const format = `${this.formats.date} ${this.formats.time}`;
-    const from = moment(`${fromDate} ${fromTime}`, format);
-    const goto = moment(`${gotoDate} ${gotoTime}`, format);
+    const from = moment.utc(`${fromDate} ${fromTime}`, format);
+    const goto = moment.utc(`${gotoDate} ${gotoTime}`, format);
     const ival = goto.diff(from);
 
     const start = from.clone();

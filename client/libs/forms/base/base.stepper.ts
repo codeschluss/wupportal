@@ -36,7 +36,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
           case: { name: item?.id ? 'edit' : 'create' }
         }"></ng-container>
       </header>
-      <h1>{{ title || '...' }}</h1>
+      <h1 class="mat-headline">{{ title || '...' }}</h1>
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
           <a mat-tab-link replaceUrl [disabled]="!can(i)" [routerLink]="link(i)"

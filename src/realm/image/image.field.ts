@@ -143,11 +143,10 @@ export class ImageFieldComponent extends BaseFieldComponent
   }
 
   public drop(event: Event & any): void {
-    this.file.patchValue(event.dataTransfer.files);
-
     event.preventDefault();
-    event.dataTransfer.clearData();
     event.target.style.backgroundColor = null;
+
+    this.file.patchValue(event.dataTransfer.files);
   }
 
   public edit(item: ImageModel): void {

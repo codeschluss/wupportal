@@ -132,15 +132,19 @@ export class TranslationFormComponent<Model extends CrudModel>
         .filter((key) => this.model['translatable'].includes(key))
         .map((key) => ({ [key]: this.form.group.get(key).value }))
         .reduce((obj, v) => Object.assign(obj, v), { }),
-      this.route.snapshot.data.language
-        .filter((lang) => lang.id !== this.language.id)
-        .map((lang) => lang.locale),
+      this.route.snapshot.data.language.filter((lang) => {
+        if (lang.id === this.language.id) { return false; }
+        const value = this.translations.find((t) => t.language.id === lang.id);
+        console.log(value, this.model['translatable']);
+        return this.model['translatable'].some((t) => !value[t]);
+      }).map((lang) => lang.locale),
       this.language.locale
     ).subscribe((items) => {
       const translations = this.translations.map((t) => Object.assign(t, (items
         .find((i) => i.lang === t.language['locale']) || { }).translations));
 
       this.route.routeConfig.data.translations = translations;
+      this.group.get('language').patchValue(this.group.get('language').value);
     });
   }
 

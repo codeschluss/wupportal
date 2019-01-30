@@ -70,23 +70,30 @@ public class QueryableReadRepositoryImpl<T> extends QuerydslJpaPredicateExecutor
   }
 
   @Override
-  public Page<T> findAll(Predicate predicate, Pageable pageable) {
-    return super.findAll(predicate, pageable);
-  }
-
-  @Override
   public List<T> findAll(Predicate predicate) {
-    return super.findAll(predicate);
+    return createQuery(predicate).select(path).distinct().fetch();
   }
 
   public List<T> findAll(Sort sort) {
     return executeSorted(createQuery().select(path), sort);
   }
+  
+  @Override
+  public Page<T> findAll(Predicate predicate, Pageable pageable) {
+    final JPQLQuery<?> countQuery = createCountQuery(predicate).distinct();
+    JPQLQuery<T> query = querydsl.applyPagination(
+        pageable, createQuery(predicate).select(path).distinct());
+
+    return PageableExecutionUtils.getPage(
+        query.distinct().fetch(), 
+        pageable, 
+        countQuery::fetchCount);
+  }
 
   @Override
   public Page<T> findAll(Pageable pageable) {
-    final JPQLQuery<?> countQuery = createCountQuery();
-    JPQLQuery<T> query = querydsl.applyPagination(pageable, createQuery().select(path));
+    final JPQLQuery<?> countQuery = createCountQuery().distinct();
+    JPQLQuery<T> query = querydsl.applyPagination(pageable, createQuery().select(path).distinct());
 
     return PageableExecutionUtils.getPage(
         query.distinct().fetch(), 

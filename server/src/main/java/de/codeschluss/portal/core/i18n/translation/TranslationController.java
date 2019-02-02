@@ -3,7 +3,7 @@ package de.codeschluss.portal.core.i18n.translation;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.i18n.entities.TranslationResult;
 import de.codeschluss.portal.core.i18n.language.LanguageService;
-import de.codeschluss.portal.core.security.permissions.ProviderOrSuperUserPermission;
+import de.codeschluss.portal.core.security.permissions.Authenticated;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +39,7 @@ public class TranslationController {
    * @return the response entity
    */
   @PostMapping("/translations/translate")
-  @ProviderOrSuperUserPermission
+  @Authenticated
   public ResponseEntity<List<TranslationResult>> translate(
       TranslationQueryParam params, 
       @RequestBody Map<String, String> labels) {

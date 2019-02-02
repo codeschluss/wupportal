@@ -2,6 +2,8 @@ package de.codeschluss.portal.core.api.advice;
 
 import de.codeschluss.portal.core.api.dto.ApiError;
 
+import javax.naming.ServiceUnavailableException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,8 +25,11 @@ public class ServiceUnavailableAdvice {
    * @param ex the ex
    * @return the response entity
    */
-  @ExceptionHandler(WebClientException.class)
-  public ResponseEntity<ApiError> notAvailableHandler(WebClientException ex) {
+  @ExceptionHandler(value = {
+      WebClientException.class,
+      ServiceUnavailableException.class
+  })
+  public ResponseEntity<ApiError> notAvailableHandler(Exception ex) {
     HttpStatus status = HttpStatus.SERVICE_UNAVAILABLE;
     return new ResponseEntity<ApiError>(
         new ApiError(status, "Unavailable", ex.getMessage()), status);

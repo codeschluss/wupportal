@@ -56,7 +56,7 @@ public class TagController extends CrudController<TagEntity, TagService> {
   @Override
   @PostMapping("/tags")
   @ProviderOrSuperUserPermission
-  public ResponseEntity<?> create(@RequestBody TagEntity newTag) throws URISyntaxException {
+  public ResponseEntity<?> create(@RequestBody TagEntity newTag) throws Exception {
     return super.create(newTag);
   }
 

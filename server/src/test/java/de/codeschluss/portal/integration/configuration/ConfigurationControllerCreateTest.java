@@ -8,8 +8,6 @@ import de.codeschluss.portal.core.config.ConfigurationEntity;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +30,7 @@ public class ConfigurationControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void createSuperUserOk() throws URISyntaxException {
+  public void createSuperUserOk() throws Exception {
     ConfigurationEntity configuration = newConfiguration("createSuperUserOk", "createSuperUserOk");
 
     controller.create(configuration);
@@ -45,7 +43,7 @@ public class ConfigurationControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidItemOk() throws URISyntaxException {
+  public void createNotValidItemOk() throws Exception {
     ConfigurationEntity configuration = newConfiguration(null, "createSuperUserOk");
 
     controller.create(configuration);
@@ -53,7 +51,7 @@ public class ConfigurationControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidValueOk() throws URISyntaxException {
+  public void createNotValidValueOk() throws Exception {
     ConfigurationEntity configuration = newConfiguration("createNotValidValueOk", null);
 
     controller.create(configuration);
@@ -61,7 +59,7 @@ public class ConfigurationControllerCreateTest {
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws Exception {
     ConfigurationEntity configuration = newConfiguration("configuration1", "configuration1");
 
     controller.create(configuration);
@@ -69,7 +67,7 @@ public class ConfigurationControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void createProviderDenied() throws URISyntaxException {
+  public void createProviderDenied() throws Exception {
     ConfigurationEntity configuration = newConfiguration("createProviderDenied",
         "createProviderDenied");
 
@@ -77,7 +75,7 @@ public class ConfigurationControllerCreateTest {
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     ConfigurationEntity configuration = newConfiguration("createNoUserDenied",
         "createNoUserDenied");
 

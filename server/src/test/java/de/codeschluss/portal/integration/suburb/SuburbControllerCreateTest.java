@@ -8,8 +8,6 @@ import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +30,7 @@ public class SuburbControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void createSuperUserOk() throws URISyntaxException {
+  public void createSuperUserOk() throws Exception {
     SuburbEntity suburb = newSuburb("createSuperUserOk");
 
     controller.create(suburb);
@@ -45,7 +43,7 @@ public class SuburbControllerCreateTest {
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidDenied() throws URISyntaxException {
+  public void createNotValidDenied() throws Exception {
     SuburbEntity suburb = newSuburb(null);
 
     controller.create(suburb);
@@ -53,7 +51,7 @@ public class SuburbControllerCreateTest {
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws Exception {
     SuburbEntity suburb = newSuburb("suburb1");
 
     controller.create(suburb);
@@ -61,17 +59,17 @@ public class SuburbControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void createProviderDenied() throws URISyntaxException {
+  public void createProviderDenied() throws Exception {
     SuburbEntity suburb = newSuburb("createProviderDenied");
 
     controller.create(suburb);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     SuburbEntity suburb = newSuburb("createNoUserDenied");
 
-    controller.create(suburb);
+    controller.create(suburb);  
   }
   
   private SuburbEntity newSuburb(String name) {

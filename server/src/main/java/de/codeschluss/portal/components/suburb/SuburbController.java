@@ -44,7 +44,7 @@ public class SuburbController extends CrudController<SuburbEntity, SuburbService
   @Override
   @PostMapping("/suburbs")
   @SuperUserPermission
-  public ResponseEntity<?> create(@RequestBody SuburbEntity newSuburb) throws URISyntaxException {
+  public ResponseEntity<?> create(@RequestBody SuburbEntity newSuburb) throws Exception {
     return super.create(newSuburb);
   }
 

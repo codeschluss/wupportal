@@ -45,7 +45,7 @@ public class LanguageController extends CrudController<LanguageEntity, LanguageS
   @PostMapping("/languages")
   @SuperUserPermission
   public ResponseEntity<?> create(@RequestBody LanguageEntity newLanguage) 
-      throws URISyntaxException {
+      throws Exception {
     return super.create(newLanguage);
   }
 

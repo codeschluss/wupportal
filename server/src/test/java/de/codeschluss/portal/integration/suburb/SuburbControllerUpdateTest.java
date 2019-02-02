@@ -42,10 +42,11 @@ public class SuburbControllerUpdateTest {
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void updateNotValidDenied() throws URISyntaxException {
+  public void updateNotValidDenied() throws Exception {
     SuburbEntity suburb = newSuburb(null);
+    String suburbId = "00000000-0000-0000-0005-200000000000";
 
-    controller.create(suburb);
+    controller.update(suburb, suburbId);
   }
 
   @Test(expected = DuplicateEntryException.class)

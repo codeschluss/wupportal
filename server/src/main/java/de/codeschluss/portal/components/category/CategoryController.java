@@ -56,7 +56,7 @@ public class CategoryController extends CrudController<CategoryEntity, CategoryS
   @PostMapping("/categories")
   @SuperUserPermission
   public ResponseEntity<?> create(@RequestBody CategoryEntity newCategory) 
-      throws URISyntaxException {
+      throws Exception {
     return super.create(newCategory);
   }
 

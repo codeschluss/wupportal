@@ -9,7 +9,6 @@ import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.api.dto.StringPrimitive;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.NotFoundException;
-import de.codeschluss.portal.core.security.permissions.Authenticated;
 import de.codeschluss.portal.core.security.permissions.SuperUserPermission;
 
 import java.net.URI;
@@ -66,7 +65,7 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
   @Override
   @PostMapping("/addresses")
   @Authenticated
-  public ResponseEntity<?> create(@RequestBody AddressEntity newAddress) throws URISyntaxException {
+  public ResponseEntity<?> create(@RequestBody AddressEntity newAddress) throws Exception {
     validateCreate(newAddress);
 
     try {

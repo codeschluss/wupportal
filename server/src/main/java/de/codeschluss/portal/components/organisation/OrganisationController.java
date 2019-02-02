@@ -116,7 +116,7 @@ public class OrganisationController
   @PostMapping("/organisations")
   @Authenticated
   public ResponseEntity<?> create(@RequestBody OrganisationEntity newOrga) 
-      throws URISyntaxException {
+      throws Exception {
     validateCreate(newOrga);
     
     try {

@@ -8,8 +8,6 @@ import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +30,7 @@ public class TargetGroupControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void createSuperUserOk() throws URISyntaxException {
+  public void createSuperUserOk() throws Exception {
     TargetGroupEntity targetGroup = newTargetGroup("createSuperUserOk", "createSuperUserOk");
 
     controller.create(targetGroup);
@@ -46,7 +44,7 @@ public class TargetGroupControllerCreateTest {
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidDenied() throws URISyntaxException {
+  public void createNotValidDenied() throws Exception {
     TargetGroupEntity targetGroup = newTargetGroup("createNotValidDenied", null);
 
     controller.create(targetGroup);
@@ -54,7 +52,7 @@ public class TargetGroupControllerCreateTest {
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws Exception {
     TargetGroupEntity targetGroup = newTargetGroup("target1", "target1");
 
     controller.create(targetGroup);
@@ -62,14 +60,14 @@ public class TargetGroupControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void createProviderDenied() throws URISyntaxException {
+  public void createProviderDenied() throws Exception {
     TargetGroupEntity targetGroup = newTargetGroup("createProviderDenied", "createProviderDenied");
 
     controller.create(targetGroup);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     TargetGroupEntity targetGroup = newTargetGroup("createNoUserDenied", "createNoUserDenied");
 
     controller.create(targetGroup);

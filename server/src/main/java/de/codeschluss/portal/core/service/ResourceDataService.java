@@ -11,6 +11,8 @@ import de.codeschluss.portal.core.repository.DataRepository;
 import java.io.IOException;
 import java.util.List;
 
+import javax.naming.ServiceUnavailableException;
+
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -47,11 +49,11 @@ public abstract class ResourceDataService<E extends BaseResource, B extends Quer
   /**
    * Adds the resource.
    *
-   * @param newEntity
-   *          the new entity
+   * @param newEntity the new entity
    * @return the resource
+   * @throws ServiceUnavailableException the service unavailable exception
    */
-  public Resource<E> addResource(E newEntity) {
+  public Resource<E> addResource(E newEntity) throws ServiceUnavailableException {
     return convertToResource(add(newEntity));
   }
 

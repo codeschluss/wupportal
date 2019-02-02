@@ -109,7 +109,8 @@ public abstract class CrudController<E extends BaseResource, S extends ResourceD
    * @throws URISyntaxException
    *           the URI syntax exception
    */
-  public ResponseEntity<?> create(@RequestBody E newEntity) throws URISyntaxException {
+  public ResponseEntity<?> create(@RequestBody E newEntity) 
+      throws Exception {
     validateCreate(newEntity);
     
     Resource<E> resource = service.addResource(newEntity);

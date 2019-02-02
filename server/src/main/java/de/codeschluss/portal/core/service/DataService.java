@@ -8,6 +8,8 @@ import de.codeschluss.portal.core.repository.DataRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.naming.ServiceUnavailableException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -111,8 +113,9 @@ public abstract class DataService<E extends BaseEntity, B extends QueryBuilder<?
    *
    * @param newEntity the new entity
    * @return the e
+   * @throws ServiceUnavailableException the service unavailable exception
    */
-  public E add(E newEntity) {
+  public E add(E newEntity) throws ServiceUnavailableException {
     E duplicate = getExisting(newEntity);
     return duplicate != null ? duplicate : repo.save(newEntity);
   }

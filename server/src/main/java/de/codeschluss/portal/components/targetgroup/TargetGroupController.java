@@ -56,7 +56,7 @@ public class TargetGroupController extends CrudController<TargetGroupEntity, Tar
   @PostMapping("/targetgroups")
   @SuperUserPermission
   public ResponseEntity<?> create(@RequestBody TargetGroupEntity newTargetGroup)
-      throws URISyntaxException {
+      throws Exception {
     return super.create(newTargetGroup);
   }
 

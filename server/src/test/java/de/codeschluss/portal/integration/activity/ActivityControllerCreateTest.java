@@ -7,8 +7,6 @@ import de.codeschluss.portal.components.activity.ActivityEntity;
 import de.codeschluss.portal.components.activity.ActivityQueryParam;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +28,7 @@ public class ActivityControllerCreateTest {
 
   @Test
   @WithUserDetails("provider1@user")
-  public void createProviderOk() throws URISyntaxException {
+  public void createProviderOk() throws Exception {
     ActivityEntity activity = createActivity("createProviderOk");
 
     controller.create(activity);
@@ -40,7 +38,7 @@ public class ActivityControllerCreateTest {
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("provider1@user")
-  public void createNotValidContactDenied() throws URISyntaxException {
+  public void createNotValidContactDenied() throws Exception {
     String addressId = "00000000-0000-0000-0006-100000000000";
     String categoryId = "00000000-0000-0000-0007-100000000000";
     String organisationId = "00000000-0000-0000-0008-100000000000";
@@ -55,7 +53,7 @@ public class ActivityControllerCreateTest {
   
   @Test(expected = BadParamsException.class)
   @WithUserDetails("provider1@user")
-  public void createNotValidNameDenied() throws URISyntaxException {
+  public void createNotValidNameDenied() throws Exception {
     String addressId = "00000000-0000-0000-0006-100000000000";
     String categoryId = "00000000-0000-0000-0007-100000000000";
     String organisationId = "00000000-0000-0000-0008-100000000000";
@@ -71,7 +69,7 @@ public class ActivityControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserIsNoProviderDenied() throws URISyntaxException {
+  public void createSuperUserIsNoProviderDenied() throws Exception {
     ActivityEntity activity = createActivity("createSuperUserOk");
 
     controller.create(activity);
@@ -79,7 +77,7 @@ public class ActivityControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("new@user")
-  public void createNotApprovedProviderDenied() throws URISyntaxException {
+  public void createNotApprovedProviderDenied() throws Exception {
     ActivityEntity activity = createActivity("createNotApprovedProviderDenied");
 
     controller.create(activity);
@@ -87,14 +85,14 @@ public class ActivityControllerCreateTest {
   
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("notapprovedorga@user")
-  public void createNotApprovedOrgaDenied() throws URISyntaxException {
+  public void createNotApprovedOrgaDenied() throws Exception {
     ActivityEntity activity = createActivity("createNotApprovedOrgaDenied");
 
     controller.create(activity);
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     ActivityEntity activity = createActivity("createNoUserDenied");
 
     controller.create(activity);

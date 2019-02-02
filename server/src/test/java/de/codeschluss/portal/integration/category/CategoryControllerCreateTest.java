@@ -8,8 +8,6 @@ import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +30,7 @@ public class CategoryControllerCreateTest {
   @Test
   @WithUserDetails("super@user")
   @SuppressWarnings("unchecked")
-  public void createSuperUserOk() throws URISyntaxException {
+  public void createSuperUserOk() throws Exception {
     CategoryEntity category = newCategory("createSuperUserOk", "createSuperUserOk",
         "createSuperUserOk");
 
@@ -46,7 +44,7 @@ public class CategoryControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidNameDenied() throws URISyntaxException {
+  public void createNotValidNameDenied() throws Exception {
     CategoryEntity category = newCategory("createNotValidNameDenied", "createNotValidNameDenied",
         null);
 
@@ -55,7 +53,7 @@ public class CategoryControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidColorDenied() throws URISyntaxException {
+  public void createNotValidColorDenied() throws Exception {
     CategoryEntity category = newCategory(null, "createNotValidColorDenied",
         "createNotValidColorDenied");
 
@@ -64,7 +62,7 @@ public class CategoryControllerCreateTest {
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws Exception {
     CategoryEntity category = newCategory("createSuperUserDuplicatedName",
         "createSuperUserDuplicatedName", "category1");
 
@@ -73,7 +71,7 @@ public class CategoryControllerCreateTest {
 
   @Test(expected = AccessDeniedException.class)
   @WithUserDetails("provider1@user")
-  public void createProviderDenied() throws URISyntaxException {
+  public void createProviderDenied() throws Exception {
     CategoryEntity category = newCategory("createProviderDenied", "createProviderDenied",
         "createProviderDenied");
 
@@ -81,7 +79,7 @@ public class CategoryControllerCreateTest {
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     CategoryEntity category = newCategory("createNoUserDenied", "createNoUserDenied",
         "createNoUserDenied");
 

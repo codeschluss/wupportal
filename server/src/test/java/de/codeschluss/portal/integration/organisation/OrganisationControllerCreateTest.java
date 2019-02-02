@@ -8,8 +8,6 @@ import de.codeschluss.portal.components.organisation.OrganisationService;
 import de.codeschluss.portal.components.provider.ProviderService;
 import de.codeschluss.portal.core.exception.BadParamsException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +35,7 @@ public class OrganisationControllerCreateTest {
 
   @Test
   @WithUserDetails("super@user")
-  public void createSuperUserOk() throws URISyntaxException {
+  public void createSuperUserOk() throws Exception {
     OrganisationEntity organisation = newOrganisation(true, "createSuperUserOk",
         "create@SuperUserOk", "createSuperUserOk", "123456789", "createSuperUserOk",
         "createSuperUserOk", "00000000-0000-0000-0006-100000000000");
@@ -50,7 +48,7 @@ public class OrganisationControllerCreateTest {
   @Test
   @WithUserDetails("createorga@user")
   @SuppressWarnings("unchecked")
-  public void createCreateOrgaOk() throws URISyntaxException {
+  public void createCreateOrgaOk() throws Exception {
     OrganisationEntity organisation = newOrganisation(false, "createCreateOrgaOk",
         "createCreateOrgaOk@createCreateOrgaOk", "createCreateOrgaOk", "123456789",
         "createCreateOrgaOk", "createCreateOrgaOk", "00000000-0000-0000-0006-100000000000");
@@ -67,7 +65,7 @@ public class OrganisationControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidNameOk() throws URISyntaxException {
+  public void createNotValidNameOk() throws Exception {
     OrganisationEntity organisation = newOrganisation(true, "createNotValidOk", "create@NotValidOk",
         null, "123456789", "createNotValidOk", "createSuperNotValidOk",
         "00000000-0000-0000-0006-100000000000");
@@ -77,7 +75,7 @@ public class OrganisationControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidAddressOk() throws URISyntaxException {
+  public void createNotValidAddressOk() throws Exception {
     OrganisationEntity organisation = newOrganisation(true, "createNotValidAddressOk",
         "create@NotValidAddressOk", "createNotValidAddressOk", "123456789",
         "createNotValidAddressOk", "createNotValidAddressOk", null);
@@ -86,7 +84,7 @@ public class OrganisationControllerCreateTest {
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     OrganisationEntity organisation = newOrganisation(true, "createNoUserDenied",
         "createNoUserDenied", "createNoUserDenied", "123456789", "createNoUserDenied",
         "createNoUserDenied", "00000000-0000-0000-0006-100000000000");
@@ -98,7 +96,7 @@ public class OrganisationControllerCreateTest {
       String name, String phone, String videoUrl, String website, String addressId) {
     OrganisationEntity organisation = new OrganisationEntity();
     organisation.setApproved(approved);
-    organisation.setDescription(description);
+    organisation.setDescription(description); 
     organisation.setMail(mail);
     organisation.setName(name);
     organisation.setPhone(phone);

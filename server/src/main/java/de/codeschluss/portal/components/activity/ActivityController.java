@@ -140,7 +140,7 @@ public class ActivityController extends CrudController<ActivityEntity, ActivityS
   @PostMapping("/activities")
   @ProviderPermission
   public ResponseEntity<?> create(@RequestBody ActivityEntity newActivity)
-      throws URISyntaxException {
+      throws Exception {
     validateCreate(newActivity);
 
     try {

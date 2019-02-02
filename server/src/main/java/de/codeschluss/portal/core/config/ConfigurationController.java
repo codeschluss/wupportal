@@ -49,7 +49,7 @@ public class ConfigurationController
   @PostMapping("/configurations")
   @SuperUserPermission
   public ResponseEntity<?> create(@RequestBody ConfigurationEntity newConfiguration)
-      throws URISyntaxException {
+      throws Exception {
     super.create(newConfiguration);
     return status(HttpStatus.METHOD_NOT_ALLOWED).build();
   }

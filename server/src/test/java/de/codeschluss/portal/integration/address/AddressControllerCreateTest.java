@@ -8,8 +8,6 @@ import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
 import de.codeschluss.portal.core.exception.DuplicateEntryException;
 
-import java.net.URISyntaxException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +28,7 @@ public class AddressControllerCreateTest {
 
   @Test
   @WithUserDetails("super@user")
-  public void createSuperUserOk() throws URISyntaxException {
+  public void createSuperUserOk() throws Exception {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createSuperUserOk", "1111", "createSuperUserOk",
         suburbId);
@@ -42,7 +40,7 @@ public class AddressControllerCreateTest {
 
   @Test
   @WithUserDetails("new@user")
-  public void createRegisteredUserOk() throws URISyntaxException {
+  public void createRegisteredUserOk() throws Exception {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createProviderUserOk", "1111", "createProviderUserOk",
         suburbId);
@@ -54,7 +52,7 @@ public class AddressControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidPlaceDenied() throws URISyntaxException {
+  public void createNotValidPlaceDenied() throws Exception {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", null, "42103", "createNotValidPostalCodeDenied",
         suburbId);
@@ -64,7 +62,7 @@ public class AddressControllerCreateTest {
 
   @Test(expected = BadParamsException.class)
   @WithUserDetails("super@user")
-  public void createNotValidPostalCodeDenied() throws URISyntaxException {
+  public void createNotValidPostalCodeDenied() throws Exception {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createNotValidPostalCodeDenied", null,
         "createNotValidPostalCodeDenied", suburbId);
@@ -74,7 +72,7 @@ public class AddressControllerCreateTest {
 
   @Test(expected = DuplicateEntryException.class)
   @WithUserDetails("super@user")
-  public void createSuperUserDuplicated() throws URISyntaxException {
+  public void createSuperUserDuplicated() throws Exception {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "wuppertal", "42103", "address1", suburbId);
 
@@ -82,7 +80,7 @@ public class AddressControllerCreateTest {
   }
 
   @Test(expected = AuthenticationCredentialsNotFoundException.class)
-  public void createNoUserDenied() throws URISyntaxException {
+  public void createNoUserDenied() throws Exception {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createNoUserDenied", "1111", "createNoUserDenied",
         suburbId);

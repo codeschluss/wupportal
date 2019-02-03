@@ -11,7 +11,6 @@ export * from './error/error.model';
 export * from './i18n/i18n.component';
 export * from './i18n/i18n.resolver';
 export * from './loading/loading.provider';
-export * from './location/location.provider';
 export * from './position/position.provider';
 export * from './position/position.resolver';
 export * from './session/session.model';

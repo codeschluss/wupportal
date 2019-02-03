@@ -26,7 +26,7 @@ import { ActivityModel } from './activity.model';
         <button mat-button color="primary" (click)="contactUser()">
           <i18n i18n="@@contactUser">contactUser</i18n>
         </button>
-        <button mat-button color="primary" [disabled]="!this.item.organisation"
+        <button mat-button color="primary" [disabled]="!this.organisation"
           (click)="contactOrganisation()">
           <i18n i18n="@@contactOrganisation">contactOrganisation</i18n>
         </button>
@@ -132,6 +132,10 @@ export class ActivityFormComponent
 
   public model: Type<ActivityModel> = ActivityModel;
 
+  public get organisation(): OrganisationModel {
+    return this.group.get('organisation').value;
+  }
+
   public constructor(
     private userProvider: UserProvider,
     route: ActivatedRoute,
@@ -142,9 +146,10 @@ export class ActivityFormComponent
   }
 
   public contactOrganisation(): void {
-    this.group.get('contactName').patchValue(this.item.organisation.name);
-    this.group.get('mail').patchValue(this.item.organisation.mail);
-    this.group.get('phone').patchValue(this.item.organisation.phone);
+    const organisation = this.group.get('organisation').value;
+    this.group.get('contactName').patchValue(organisation.name);
+    this.group.get('mail').patchValue(organisation.mail);
+    this.group.get('phone').patchValue(organisation.phone);
   }
 
   public contactUser(): void {

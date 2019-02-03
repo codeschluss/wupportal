@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="root" datatype="plaintext" original="ng2.template">
     <body>
@@ -65,8 +65,11 @@
       <trans-unit id="targetGroups" datatype="html">
         <source>targetGroups</source><target>Zielgruppen</target>
       </trans-unit>
-      <trans-unit id="search" datatype="html">
-        <source>search</source><target>Suchen</target>
+      <trans-unit id="edit" datatype="html">
+        <source>edit</source><target>Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="autoLocate" datatype="html">
+        <source>autoLocate</source><target>Adresse lokalisieren</target>
       </trans-unit>
       <trans-unit id="houseNumber" datatype="html">
         <source>houseNumber</source><target>Hausnummer</target>
@@ -125,9 +128,6 @@
       <trans-unit id="delete" datatype="html">
         <source>delete</source><target>Löschen</target>
       </trans-unit>
-      <trans-unit id="edit" datatype="html">
-        <source>edit</source><target>Bearbeiten</target>
-      </trans-unit>
       <trans-unit id="selectOrDropImage" datatype="html">
         <source>selectOrDropImage</source><target>Klicken oder Drag &amp; Drop</target>
       </trans-unit>
@@ -158,6 +158,24 @@
       <trans-unit id="topic" datatype="html">
         <source>topic</source><target>Thema</target>
       </trans-unit>
+      <trans-unit id="schedule" datatype="html">
+        <source>schedule</source><target>NÃ¤chste Termin</target>
+      </trans-unit>
+      <trans-unit id="startDate" datatype="html">
+        <source>startDate</source><target>Anfangsdatum</target>
+      </trans-unit>
+      <trans-unit id="startTime" datatype="html">
+        <source>startTime</source><target>Anfang Uhrzeit </target>
+      </trans-unit>
+      <trans-unit id="endDate" datatype="html">
+        <source>endDate</source><target>Enddatum</target>
+      </trans-unit>
+      <trans-unit id="endTime" datatype="html">
+        <source>endTime</source><target>Ende Uhrzeit</target>
+      </trans-unit>
+      <trans-unit id="createSchedules" datatype="html">
+        <source>createSchedules</source><target>Erstelle Termine</target>
+      </trans-unit>
       <trans-unit id="recurrence" datatype="html">
         <source>recurrence</source><target>Wiederholung</target>
       </trans-unit>
@@ -175,6 +193,9 @@
       </trans-unit>
       <trans-unit id="yearly" datatype="html">
         <source>yearly</source><target>jährlich</target>
+      </trans-unit>
+      <trans-unit id="until" datatype="html">
+        <source>until</source><target>bis</target>
       </trans-unit>
       <trans-unit id="monday" datatype="html">
         <source>monday</source><target>Montag</target>
@@ -196,27 +217,6 @@
       </trans-unit>
       <trans-unit id="sunday" datatype="html">
         <source>sunday</source><target>Sonntag</target>
-      </trans-unit>
-      <trans-unit id="until" datatype="html">
-        <source>until</source><target>bis</target>
-      </trans-unit>
-      <trans-unit id="schedule" datatype="html">
-        <source>schedule</source><target>Nächste Termin</target>
-      </trans-unit>
-      <trans-unit id="startDate" datatype="html">
-        <source>startDate</source><target>Anfangsdatum</target>
-      </trans-unit>
-      <trans-unit id="startTime" datatype="html">
-        <source>startTime</source><target>Anfang Uhrzeit </target>
-      </trans-unit>
-      <trans-unit id="endDate" datatype="html">
-        <source>endDate</source><target>Enddatum</target>
-      </trans-unit>
-      <trans-unit id="endTime" datatype="html">
-        <source>endTime</source><target>Ende Uhrzeit</target>
-      </trans-unit>
-      <trans-unit id="createSchedules" datatype="html">
-        <source>createSchedules</source><target>Erstelle Termine</target>
       </trans-unit>
       <trans-unit id="schedules" datatype="html">
         <source>schedules</source><target>Alle Termine</target>
@@ -448,6 +448,9 @@
       </trans-unit>
       <trans-unit id="selectOrganisation" datatype="html">
         <source>selectOrganisation</source><target>Organisation auswählen</target>
+      </trans-unit>
+      <trans-unit id="search" datatype="html">
+        <source>search</source><target>Suchen</target>
       </trans-unit>
       <trans-unit id="joinOrganisations" datatype="html">
         <source>joinOrganisations</source><target>Organisation beitreten</target>

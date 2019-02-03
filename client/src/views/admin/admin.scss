@@ -49,8 +49,7 @@ main#admin {
         }
       }
 
-      & > nav.output,
-      & > output {
+      & > nav {
         flex-grow: 1;
 
         mat-chip-list > *.mat-chip-list-wrapper {

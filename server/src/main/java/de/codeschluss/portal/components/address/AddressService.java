@@ -157,6 +157,13 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
     return repo.save(newAddress);
   }
 
+  /**
+   * Retrieve external address.
+   *
+   * @param newAddress the new address
+   * @return the address entity
+   * @throws ServiceUnavailableException the service unavailable exception
+   */
   private AddressEntity retrieveExternalAddress(AddressEntity newAddress) 
       throws ServiceUnavailableException {
     BingMapResult result = geoLocationClient.method(HttpMethod.GET).uri(createUri(newAddress))
@@ -168,6 +175,12 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
     return transformResultToAddress(result, newAddress);
   }
   
+  /**
+   * Creates the uri.
+   *
+   * @param newAddress the new address
+   * @return the uri
+   */
   private URI createUri(AddressEntity newAddress) {
     return UriComponentsBuilder.fromUriString(config.getServiceUrl())
         .path(newAddress.getPostalCode())
@@ -177,6 +190,12 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
         .build().encode().toUri();
   }
   
+  /**
+   * Check result.
+   *
+   * @param result the result
+   * @throws ServiceUnavailableException the service unavailable exception
+   */
   private void checkResult(BingMapResult result) throws ServiceUnavailableException {
     if (result.getStatusCode() != 200 
         || !result.getAuthenticationResultCode().equals("ValidCredentials")) {
@@ -184,6 +203,13 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
     }
   }
   
+  /**
+   * Transform result to address.
+   *
+   * @param result the result
+   * @param givenAddress the given address
+   * @return the address entity
+   */
   private AddressEntity transformResultToAddress(BingMapResult result, AddressEntity givenAddress) {
     for (ResourceSet resourceSet : result.getResourceSets()) {
       if (resourceSet.getEstimatedTotal() > 0) {
@@ -200,6 +226,14 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
     throw new NotFoundException("Address not found");
   }
   
+  /**
+   * Creates the address.
+   *
+   * @param givenAddress the given address
+   * @param address the address
+   * @param point the point
+   * @return the address entity
+   */
   private AddressEntity createAddress(
       AddressEntity givenAddress,
       Address address, 
@@ -208,9 +242,9 @@ public class AddressService extends ResourceDataService<AddressEntity, AddressQu
     
     newAddress.setPostalCode(address.getPostalCode());
     newAddress.setPlace(address.getLocality());
-    newAddress.setSuburb(givenAddress.getSuburb());
-    newAddress.setStreet(address.getStreet());
     newAddress.setHouseNumber(address.getHousenumber());
+    newAddress.setStreet(address.getStreet());
+    newAddress.setSuburb(givenAddress.getSuburb());
     newAddress.setLatitude(point.getLatitude());
     newAddress.setLongitude(point.getLongitude());
     

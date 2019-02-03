@@ -67,7 +67,9 @@ public class AddressController extends CrudController<AddressEntity, AddressServ
   @PostMapping("/addresses")
   @Authenticated
   public ResponseEntity<?> create(@RequestBody AddressEntity newAddress) throws Exception {
-    validateCreate(newAddress);
+    if (!service.validCreateFieldConstraints(newAddress)) {
+      throw new BadParamsException("Required Fields not satisfied");
+    }
 
     try {
       newAddress.setSuburb(suburbService.getById(newAddress.getSuburbId()));

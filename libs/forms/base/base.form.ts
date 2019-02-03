@@ -127,6 +127,7 @@ export abstract class BaseForm<Model extends CrudModel>
 
   public reset(): void {
     this.group.reset(this.item);
+    this.group.markAsPristine();
   }
 
   protected ngPostInit(): void { }

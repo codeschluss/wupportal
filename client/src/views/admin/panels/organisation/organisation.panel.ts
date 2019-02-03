@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Box as Box, CrudJoiner, False, True } from '@portal/core';
+import { Box, CrudJoiner, False, True } from '@portal/core';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/activity/activity.model';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';

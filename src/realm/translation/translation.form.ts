@@ -16,11 +16,11 @@ import { TranslationProvider } from './translation.provider';
       <label class="mat-body-strong">
         <i18n i18n="@@compilation">compilation</i18n>
       </label>
-      <output>
+      <nav>
         <button mat-button color="primary" (click)="this.translate()">
           <i18n i18n="@@autoTranslate">autoTranslate</i18n>
         </button>
-      </output>
+      </nav>
     </section>
 
     <ng-template #label let-case="case">
@@ -135,7 +135,6 @@ export class TranslationFormComponent<Model extends CrudModel>
       this.route.snapshot.data.language.filter((lang) => {
         if (lang.id === this.language.id) { return false; }
         const value = this.translations.find((t) => t.language.id === lang.id);
-        console.log(value, this.model['translatable']);
         return this.model['translatable'].some((t) => !value[t]);
       }).map((lang) => lang.locale),
       this.language.locale

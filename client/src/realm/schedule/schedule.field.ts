@@ -50,7 +50,7 @@ export class ScheduleFieldComponent extends BaseFieldComponent {
   }
 
   protected ngPostInit(): void {
-    if (!this.value) { this.value = []; }
+    if (!this.value) { this.control.patchValue([], { emitEvent: false }); }
   }
 
 }

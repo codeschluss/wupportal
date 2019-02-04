@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="root" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="unhandledError" datatype="html">
+        <source>unhandledError</source><target>Unbekannter Fehler</target>
+      </trans-unit>
+      <trans-unit id="reportIssue" datatype="html">
+        <source>reportIssue</source><target>Fehler melden</target>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <source>close</source><target>Schließen</target>
+      </trans-unit>
+      <trans-unit id="fieldErrorMinLength" datatype="html">
+        <source>fieldErrorMinLength</source><target>Feldinhalt zu kurz</target>
+      </trans-unit>
+      <trans-unit id="fieldErrorMissmatch" datatype="html">
+        <source>fieldErrorMissmatch</source><target>Stimmen nicht überein</target>
+      </trans-unit>
+      <trans-unit id="fieldErrorEither" datatype="html">
+        <source>fieldErrorEither</source><target>Mindestens ein Feld befüllen</target>
+      </trans-unit>
+      <trans-unit id="fieldErrorPattern" datatype="html">
+        <source>fieldErrorPattern</source><target>Feldinhalt erfüllt Vorgaben nicht</target>
+      </trans-unit>
+      <trans-unit id="fieldErrorRequired" datatype="html">
+        <source>fieldErrorRequired</source><target>Feld muss befüllt werden</target>
+      </trans-unit>
+      <trans-unit id="encryptedConnection" datatype="html">
+        <source>encryptedConnection</source><target>verschlüsselt (https)</target>
+      </trans-unit>
+      <trans-unit id="compilation" datatype="html">
+        <source>compilation</source><target>Erstellung</target>
+      </trans-unit>
+      <trans-unit id="contactUser" datatype="html">
+        <source>contactUser</source><target>Eigene Kontaktdaten einfügen</target>
+      </trans-unit>
+      <trans-unit id="contactOrganisation" datatype="html">
+        <source>contactOrganisation</source><target>Organisations-Kontaktdaten enifügen</target>
+      </trans-unit>
+      <trans-unit id="category" datatype="html">
+        <source>category</source><target>Kategorie</target>
+      </trans-unit>
+      <trans-unit id="contactName" datatype="html">
+        <source>contactName</source><target>Kontaktname</target>
+      </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <source>description</source><target>Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="mail" datatype="html">
+        <source>mail</source><target>Mail</target>
+      </trans-unit>
+      <trans-unit id="name" datatype="html">
+        <source>name</source><target>Name</target>
+      </trans-unit>
+      <trans-unit id="organisation" datatype="html">
+        <source>organisation</source><target>Organisation</target>
+      </trans-unit>
+      <trans-unit id="phone" datatype="html">
+        <source>phone</source><target>Telefon</target>
+      </trans-unit>
+      <trans-unit id="tags" datatype="html">
+        <source>tags</source><target>Schlagworte</target>
+      </trans-unit>
+      <trans-unit id="targetGroups" datatype="html">
+        <source>targetGroups</source><target>Zielgruppen</target>
+      </trans-unit>
+      <trans-unit id="search" datatype="html">
+        <source>search</source><target>Suchen</target>
+      </trans-unit>
+      <trans-unit id="houseNumber" datatype="html">
+        <source>houseNumber</source><target>Hausnummer</target>
+      </trans-unit>
+      <trans-unit id="latitude" datatype="html">
+        <source>latitude</source><target>Breitengrad</target>
+      </trans-unit>
+      <trans-unit id="longitude" datatype="html">
+        <source>longitude</source><target>Längengrad</target>
+      </trans-unit>
+      <trans-unit id="place" datatype="html">
+        <source>place</source><target>Ort</target>
+      </trans-unit>
+      <trans-unit id="postalCode" datatype="html">
+        <source>postalCode</source><target>PLZ</target>
+      </trans-unit>
+      <trans-unit id="street" datatype="html">
+        <source>street</source><target>Straße</target>
+      </trans-unit>
+      <trans-unit id="suburb" datatype="html">
+        <source>suburb</source><target>Quartier</target>
+      </trans-unit>
+      <trans-unit id="activity" datatype="html">
+        <source>activity</source><target>Veranstaltung</target>
+      </trans-unit>
+      <trans-unit id="content" datatype="html">
+        <source>content</source><target>Inhalte</target>
+      </trans-unit>
+      <trans-unit id="title" datatype="html">
+        <source>title</source><target>Titel</target>
+      </trans-unit>
+      <trans-unit id="color" datatype="html">
+        <source>color</source><target>Farbe</target>
+      </trans-unit>
+      <trans-unit id="mapCenterLatitude" datatype="html">
+        <source>mapCenterLatitude</source><target>Kartenzentrum Breitengrad</target>
+      </trans-unit>
+      <trans-unit id="mapCenterLongitude" datatype="html">
+        <source>mapCenterLongitude</source><target>Kartenzentrum Längengrad</target>
+      </trans-unit>
+      <trans-unit id="mapProjection" datatype="html">
+        <source>mapProjection</source><target>Kartenprojektion</target>
+      </trans-unit>
+      <trans-unit id="mapZoomfactor" datatype="html">
+        <source>mapZoomfactor</source><target>Kartenzoom</target>
+      </trans-unit>
+      <trans-unit id="portalMail" datatype="html">
+        <source>portalMail</source><target>Portalmail</target>
+      </trans-unit>
+      <trans-unit id="portalName" datatype="html">
+        <source>portalName</source><target>Portalname</target>
+      </trans-unit>
+      <trans-unit id="portalSubtitle" datatype="html">
+        <source>portalSubtitle</source><target>Portaluntertitel</target>
+      </trans-unit>
+      <trans-unit id="delete" datatype="html">
+        <source>delete</source><target>Löschen</target>
+      </trans-unit>
+      <trans-unit id="edit" datatype="html">
+        <source>edit</source><target>Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="selectOrDropImage" datatype="html">
+        <source>selectOrDropImage</source><target>Klicken oder Drag &amp; Drop</target>
+      </trans-unit>
+      <trans-unit id="caption" datatype="html">
+        <source>caption</source><target>Bildunterschrift</target>
+      </trans-unit>
+      <trans-unit id="reset" datatype="html">
+        <source>reset</source><target>Zurücksetzen</target>
+      </trans-unit>
+      <trans-unit id="create" datatype="html">
+        <source>create</source><target>Erstelle</target>
+      </trans-unit>
+      <trans-unit id="images" datatype="html">
+        <source>images</source><target>Bilder</target>
+      </trans-unit>
+      <trans-unit id="locale" datatype="html">
+        <source>locale</source><target>Sprachkürzel</target>
+      </trans-unit>
+      <trans-unit id="machineTranslated" datatype="html">
+        <source>machineTranslated</source><target>Maschinell übersetzt</target>
+      </trans-unit>
+      <trans-unit id="videoUrl" datatype="html">
+        <source>videoUrl</source><target>Video-URL</target>
+      </trans-unit>
+      <trans-unit id="website" datatype="html">
+        <source>website</source><target>Website</target>
+      </trans-unit>
+      <trans-unit id="topic" datatype="html">
+        <source>topic</source><target>Thema</target>
+      </trans-unit>
+      <trans-unit id="recurrence" datatype="html">
+        <source>recurrence</source><target>Wiederholung</target>
+      </trans-unit>
+      <trans-unit id="once" datatype="html">
+        <source>once</source><target>einmalig</target>
+      </trans-unit>
+      <trans-unit id="daily" datatype="html">
+        <source>daily</source><target>täglich</target>
+      </trans-unit>
+      <trans-unit id="weekly" datatype="html">
+        <source>weekly</source><target>wöchentlich</target>
+      </trans-unit>
+      <trans-unit id="monthly" datatype="html">
+        <source>monthly</source><target>monatlich</target>
+      </trans-unit>
+      <trans-unit id="yearly" datatype="html">
+        <source>yearly</source><target>jährlich</target>
+      </trans-unit>
+      <trans-unit id="monday" datatype="html">
+        <source>monday</source><target>Montag</target>
+      </trans-unit>
+      <trans-unit id="tuesday" datatype="html">
+        <source>tuesday</source><target>Dienstag</target>
+      </trans-unit>
+      <trans-unit id="wednesday" datatype="html">
+        <source>wednesday</source><target>Mittwoch</target>
+      </trans-unit>
+      <trans-unit id="thursday" datatype="html">
+        <source>thursday</source><target>Donnerstag</target>
+      </trans-unit>
+      <trans-unit id="friday" datatype="html">
+        <source>friday</source><target>Freitag</target>
+      </trans-unit>
+      <trans-unit id="saturday" datatype="html">
+        <source>saturday</source><target>Samstag</target>
+      </trans-unit>
+      <trans-unit id="sunday" datatype="html">
+        <source>sunday</source><target>Sonntag</target>
+      </trans-unit>
+      <trans-unit id="until" datatype="html">
+        <source>until</source><target>bis</target>
+      </trans-unit>
+      <trans-unit id="schedule" datatype="html">
+        <source>schedule</source><target>Nächste Termin</target>
+      </trans-unit>
+      <trans-unit id="startDate" datatype="html">
+        <source>startDate</source><target>Anfangsdatum</target>
+      </trans-unit>
+      <trans-unit id="startTime" datatype="html">
+        <source>startTime</source><target>Anfang Uhrzeit </target>
+      </trans-unit>
+      <trans-unit id="endDate" datatype="html">
+        <source>endDate</source><target>Enddatum</target>
+      </trans-unit>
+      <trans-unit id="endTime" datatype="html">
+        <source>endTime</source><target>Ende Uhrzeit</target>
+      </trans-unit>
+      <trans-unit id="createSchedules" datatype="html">
+        <source>createSchedules</source><target>Erstelle Termine</target>
+      </trans-unit>
+      <trans-unit id="schedules" datatype="html">
+        <source>schedules</source><target>Alle Termine</target>
+      </trans-unit>
+      <trans-unit id="autoTranslate" datatype="html">
+        <source>autoTranslate</source><target>Automatisch Übersetzen</target>
+      </trans-unit>
+      <trans-unit id="language" datatype="html">
+        <source>language</source><target>Sprache</target>
+      </trans-unit>
+      <trans-unit id="fullname" datatype="html">
+        <source>fullname</source><target>Anzeigename</target>
+      </trans-unit>
+      <trans-unit id="password" datatype="html">
+        <source>password</source><target>Passwort</target>
+      </trans-unit>
+      <trans-unit id="passwordConfirm" datatype="html">
+        <source>passwordConfirm</source><target>Passwort Bestätigen</target>
+      </trans-unit>
+      <trans-unit id="username" datatype="html">
+        <source>username</source><target>Benutzername</target>
+      </trans-unit>
+      <trans-unit id="createActivity" datatype="html">
+        <source>createActivity</source><target>Erstelle Veranstaltung</target>
+      </trans-unit>
+      <trans-unit id="editActivity" datatype="html">
+        <source>editActivity</source><target>Bearbeite Veranstaltung</target>
+      </trans-unit>
+      <trans-unit id="main" datatype="html">
+        <source>main</source><target>Allgemein</target>
+      </trans-unit>
+      <trans-unit id="address" datatype="html">
+        <source>address</source><target>Adresse</target>
+      </trans-unit>
+      <trans-unit id="translations" datatype="html">
+        <source>translations</source><target>Übersetzungen</target>
+      </trans-unit>
+      <trans-unit id="previous" datatype="html">
+        <source>previous</source><target>Vorheriges</target>
+      </trans-unit>
+      <trans-unit id="next" datatype="html">
+        <source>next</source><target>Nächstes</target>
+      </trans-unit>
+      <trans-unit id="persist" datatype="html">
+        <source>persist</source><target>Speichern</target>
+      </trans-unit>
+      <trans-unit id="createAddress" datatype="html">
+        <source>createAddress</source><target>Erstelle Adresse</target>
+      </trans-unit>
+      <trans-unit id="editAddress" datatype="html">
+        <source>editAddress</source><target>bearbeite Adresse</target>
+      </trans-unit>
+      <trans-unit id="createBlog" datatype="html">
+        <source>createBlog</source><target>Erstelle Blog</target>
+      </trans-unit>
+      <trans-unit id="editBlog" datatype="html">
+        <source>editBlog</source><target>bearbeite Blog</target>
+      </trans-unit>
+      <trans-unit id="createCategory" datatype="html">
+        <source>createCategory</source><target>Erstelle Kategorie</target>
+      </trans-unit>
+      <trans-unit id="editCategory" datatype="html">
+        <source>editCategory</source><target>bearbeite Kategorie</target>
+      </trans-unit>
+      <trans-unit id="createLanguage" datatype="html">
+        <source>createLanguage</source><target>Erstelle Sprache</target>
+      </trans-unit>
+      <trans-unit id="editLanguage" datatype="html">
+        <source>editLanguage</source><target>bearbeite Sprache</target>
+      </trans-unit>
+      <trans-unit id="createOrganisation" datatype="html">
+        <source>createOrganisation</source><target>Erstelle Organisation</target>
+      </trans-unit>
+      <trans-unit id="editOrganisation" datatype="html">
+        <source>editOrganisation</source><target>bearbeite Organisation</target>
+      </trans-unit>
+      <trans-unit id="createPage" datatype="html">
+        <source>createPage</source><target>Erstelle Wissenswertes</target>
+      </trans-unit>
+      <trans-unit id="editPage" datatype="html">
+        <source>editPage</source><target>bearbeite Wissenswertes</target>
+      </trans-unit>
+      <trans-unit id="createSuburb" datatype="html">
+        <source>createSuburb</source><target>Erstelle Quartier</target>
+      </trans-unit>
+      <trans-unit id="editSuburb" datatype="html">
+        <source>editSuburb</source><target>bearbeite Quartier</target>
+      </trans-unit>
+      <trans-unit id="createTag" datatype="html">
+        <source>createTag</source><target>Erstelle Schlagwort</target>
+      </trans-unit>
+      <trans-unit id="editTag" datatype="html">
+        <source>editTag</source><target>bearbeite Schlagwort</target>
+      </trans-unit>
+      <trans-unit id="createTargetGroup" datatype="html">
+        <source>createTargetGroup</source><target>Erstelle Zielgruppe</target>
+      </trans-unit>
+      <trans-unit id="editTargetGroup" datatype="html">
+        <source>editTargetGroup</source><target>bearbeite Zielgruppe</target>
+      </trans-unit>
+      <trans-unit id="createTopic" datatype="html">
+        <source>createTopic</source><target>Erstelle Thema</target>
+      </trans-unit>
+      <trans-unit id="editTopic" datatype="html">
+        <source>editTopic</source><target>bearbeite Thema</target>
+      </trans-unit>
+      <trans-unit id="createUser" datatype="html">
+        <source>createUser</source><target>Erstelle Benutzer</target>
+      </trans-unit>
+      <trans-unit id="editUser" datatype="html">
+        <source>editUser</source><target>bearbeite Benutzer</target>
+      </trans-unit>
+      <trans-unit id="author" datatype="html">
+        <source>author</source><target>Autor</target>
+      </trans-unit>
+      <trans-unit id="admin" datatype="html">
+        <source>admin</source><target>Administrator</target>
+      </trans-unit>
+      <trans-unit id="approved" datatype="html">
+        <source>approved</source><target>bestätigt</target>
+      </trans-unit>
+      <trans-unit id="successfullResetPassword" datatype="html">
+        <source>successfullResetPassword</source><target>Dein Passwort wurde erfolgreich zurückgesetzt</target>
+      </trans-unit>
+      <trans-unit id="genericErrorMessage" datatype="html">
+        <source>genericErrorMessage</source><target>Da ist etwas schief gelaufen</target>
+      </trans-unit>
+      <trans-unit id="enterUserName" datatype="html">
+        <source>enterUserName</source><target>Bitte Benutzername eingeben</target>
+      </trans-unit>
+      <trans-unit id="successfullRegister" datatype="html">
+        <source>successfullRegister</source><target>Du hast dich erfolgreich im Portal registriert</target>
+      </trans-unit>
+      <trans-unit id="successfullyLoggedOut" datatype="html">
+        <source>successfullyLoggedOut</source><target>Erfolgreich abgemeldet</target>
+      </trans-unit>
+      <trans-unit id="successfullyLoggedIn" datatype="html">
+        <source>successfullyLoggedIn</source><target>Du hast dich erfolgreich angemeldet</target>
+      </trans-unit>
+      <trans-unit id="createMissingOrganisation" datatype="html">
+        <source>createMissingOrganisation</source><target>Bitte erstellen Sie die fehlende Organisation</target>
+      </trans-unit>
+      <trans-unit id="welcomeTo" datatype="html">
+        <source>welcomeTo</source><target>Willkommen bei</target>
+      </trans-unit>
+      <trans-unit id="register" datatype="html">
+        <source>register</source><target>Registrieren</target>
+      </trans-unit>
+      <trans-unit id="forgetPassword" datatype="html">
+        <source>forgetPassword</source><target>Passwort vergessen?</target>
+      </trans-unit>
+      <trans-unit id="login" datatype="html">
+        <source>login</source><target>Anmeldung</target>
+      </trans-unit>
+      <trans-unit id="serverNotReachable" datatype="html">
+        <source>serverNotReachable</source><target>Es scheint ein Problem mit dem Server vorzuliegen. Bitte versuche es später nochmal.</target>
+      </trans-unit>
+      <trans-unit id="wrongUserNameOrPassword" datatype="html">
+        <source>wrongUserNameOrPassword</source><target>Passwort oder Benutzername falsch</target>
+      </trans-unit>
+      <trans-unit id="registration" datatype="html">
+        <source>registration</source><target>Registrierung</target>
+      </trans-unit>
+      <trans-unit id="applyAsBlogger" datatype="html">
+        <source>applyAsBlogger</source><target>Als Blogger bewerben</target>
+      </trans-unit>
+      <trans-unit id="createNewOrganisation" datatype="html">
+        <source>createNewOrganisation</source><target>Neue Organisation anlegen</target>
+      </trans-unit>
+      <trans-unit id="back" datatype="html">
+        <source>back</source><target>Zurück</target>
+      </trans-unit>
+      <trans-unit id="notSamePassword" datatype="html">
+        <source>notSamePassword</source><target>Die eingegebenen Passwörter stimmen nicht überein</target>
+      </trans-unit>
+      <trans-unit id="publicAgencies" datatype="html">
+        <source>publicAgencies</source><target>Öffentliche Träger</target>
+      </trans-unit>
+      <trans-unit id="contactPhone" datatype="html">
+        <source>contactPhone</source><target>Telefon</target>
+      </trans-unit>
+      <trans-unit id="orgaRealisation" datatype="html">
+        <source>orgaRealisation</source><target>Organisatorische Umsetzung</target>
+      </trans-unit>
+      <trans-unit id="municipalSupport" datatype="html">
+        <source>municipalSupport</source><target>Städtische Betreuung</target>
+      </trans-unit>
+      <trans-unit id="techRealisation" datatype="html">
+        <source>techRealisation</source><target>Technische Umsetzung</target>
+      </trans-unit>
+      <trans-unit id="legalNotices" datatype="html">
+        <source>legalNotices</source><target>Rechtliche Hinweise</target>
+      </trans-unit>
+      <trans-unit id="dataProtection" datatype="html">
+        <source>dataProtection</source><target>Datenschutz</target>
+      </trans-unit>
+      <trans-unit id="imprint" datatype="html">
+        <source>imprint</source><target>Impressum</target>
+      </trans-unit>
+      <trans-unit id="selectLanguage" datatype="html">
+        <source>selectLanguage</source><target>Sprache auswählen</target>
+      </trans-unit>
+      <trans-unit id="timer" datatype="html">
+        <source>timer</source><target>Timer</target>
+      </trans-unit>
+      <trans-unit id="organisations" datatype="html">
+        <source>organisations</source><target>Organisationen</target>
+      </trans-unit>
+      <trans-unit id="worthKnowing" datatype="html">
+        <source>worthKnowing</source><target>Wissenswertes</target>
+      </trans-unit>
+      <trans-unit id="blogs" datatype="html">
+        <source>blogs</source><target>Blogs</target>
+      </trans-unit>
+      <trans-unit id="accountPanel" datatype="html">
+        <source>accountPanel</source><target>Benutzerkonto</target>
+      </trans-unit>
+      <trans-unit id="applicationPanel" datatype="html">
+        <source>applicationPanel</source><target>Applikationsverwaltung</target>
+      </trans-unit>
+      <trans-unit id="organisationPanel" datatype="html">
+        <source>organisationPanel</source><target>Organisationsverwaltung</target>
+      </trans-unit>
+      <trans-unit id="logout" datatype="html">
+        <source>logout</source><target>Abmelden</target>
+      </trans-unit>
+      <trans-unit id="authenticationExpired" datatype="html">
+        <source>authenticationExpired</source><target>Authentifizierung abgelaufen</target>
+      </trans-unit>
+      <trans-unit id="selectOrganisation" datatype="html">
+        <source>selectOrganisation</source><target>Organisation auswählen</target>
+      </trans-unit>
+      <trans-unit id="joinOrganisations" datatype="html">
+        <source>joinOrganisations</source><target>Organisation beitreten</target>
+      </trans-unit>
+      <trans-unit id="confirmDelete" datatype="html">
+        <source>confirmDelete</source><target>Löschen Bestätigen</target>
+      </trans-unit>
+      <trans-unit id="uuid" datatype="html">
+        <source>uuid</source><target>Identifikationsnummer</target>
+      </trans-unit>
+      <trans-unit id="actions" datatype="html">
+        <source>actions</source><target>Aktionen</target>
+      </trans-unit>
+      <trans-unit id="joinBloggers" datatype="html">
+        <source>joinBloggers</source><target>Als Blogger beitreten</target>
+      </trans-unit>
+      <trans-unit id="userDetails" datatype="html">
+        <source>userDetails</source><target>Benutzerdetails</target>
+      </trans-unit>
+      <trans-unit id="userOrganisations" datatype="html">
+        <source>userOrganisations</source><target>Benutzerorganisationen</target>
+      </trans-unit>
+      <trans-unit id="userActivities" datatype="html">
+        <source>userActivities</source><target>Benutzerveranstaltungen</target>
+      </trans-unit>
+      <trans-unit id="activities" datatype="html">
+        <source>activities</source><target>Veranstaltungen</target>
+      </trans-unit>
+      <trans-unit id="providers" datatype="html">
+        <source>providers</source><target>Anbieter</target>
+      </trans-unit>
+      <trans-unit id="providerRequests" datatype="html">
+        <source>providerRequests</source><target>Anbieteranfragen</target>
+      </trans-unit>
+      <trans-unit id="configuration" datatype="html">
+        <source>configuration</source><target>Konfiguration</target>
+      </trans-unit>
+      <trans-unit id="users" datatype="html">
+        <source>users</source><target>Benutzer</target>
+      </trans-unit>
+      <trans-unit id="superUser" datatype="html">
+        <source>superUser</source><target>Superuser</target>
+      </trans-unit>
+      <trans-unit id="blogger" datatype="html">
+        <source>blogger</source><target>Blogger</target>
+      </trans-unit>
+      <trans-unit id="languages" datatype="html">
+        <source>languages</source><target>Sprachen</target>
+      </trans-unit>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source><target>Kategorien</target>
+      </trans-unit>
+      <trans-unit id="suburbs" datatype="html">
+        <source>suburbs</source><target>Quartiere</target>
+      </trans-unit>
+      <trans-unit id="topics" datatype="html">
+        <source>topics</source><target>Themen</target>
+      </trans-unit>
+      <trans-unit id="pages" datatype="html">
+        <source>pages</source><target>Wissenswertes</target>
+      </trans-unit>
+      <trans-unit id="addresses" datatype="html">
+        <source>addresses</source><target>Adressen</target>
+      </trans-unit>
+      <trans-unit id="organisationRequests" datatype="html">
+        <source>organisationRequests</source><target>Organisationsanfragen</target>
+      </trans-unit>
+      <trans-unit id="bloggerRequests" datatype="html">
+        <source>bloggerRequests</source><target>Bloggeranfrage</target>
+      </trans-unit>
+      <trans-unit id="clickForMorePictures" datatype="html">
+        <source>clickForMorePictures</source><target>Klick für mehr Bilder</target>
+      </trans-unit>
+      <trans-unit id="enteredActivities" datatype="html">
+        <source>enteredActivities</source><target>Eingetragene Veranstaltungen</target>
+      </trans-unit>
+      <trans-unit id="toActivity" datatype="html">
+        <source>toActivity</source><target>zur Veranstaltung</target>
+      </trans-unit>
+      <trans-unit id="newActivities" datatype="html">
+        <source>newActivities</source><target>Neue Veranstaltungen</target>
+      </trans-unit>
+      <trans-unit id="inWuppertal" datatype="html">
+        <source>inWuppertal</source><target>in Wuppertal</target>
+      </trans-unit>
+      <trans-unit id="noBrowserSupportVideo" datatype="html">
+        <source>noBrowserSupportVideo</source><target>Leider unterstützt dein Browser die Wiedergabe von Videos nicht. Benutze einen anderen Browser.</target>
+      </trans-unit>
+      <trans-unit id="latestBlogPosts" datatype="html">
+        <source>latestBlogPosts</source><target>Neuste Blogbeiträge</target>
+      </trans-unit>
+      <trans-unit id="blogAboutActivity" datatype="html">
+        <source>blogAboutActivity</source><target>Blog zur Veranstaltung</target>
+      </trans-unit>
+      <trans-unit id="readMore" datatype="html">
+        <source>readMore</source><target>mehr lesen</target>
+      </trans-unit>
+      <trans-unit id="by" datatype="html">
+        <source>by</source><target>von</target>
+      </trans-unit>
+      <trans-unit id="resultsFor" datatype="html">
+        <source>resultsFor</source><target>Ergebnisse für</target>
+      </trans-unit>
+      <trans-unit id="blog" datatype="html">
+        <source>blog</source><target>Blog</target>
+      </trans-unit>
+      <trans-unit id="noResults" datatype="html">
+        <source>noResults</source><target>Keine Ergebnisse</target>
+      </trans-unit>
+      <trans-unit id="createdAt" datatype="html">
+        <source>createdAt</source><target>erstellt am</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -149,7 +149,7 @@ export class ScheduleFormComponent
 
   public until: FormControl = new FormControl();
 
-  private formats = { date: 'YYYY-MM-DD', time: 'HH:mm' };
+  private formats: any = { date: 'YYYY-MM-DD', time: 'HH:mm' };
 
   private values: FormGroup = new FormGroup({
     fromDate: new FormControl(moment().format(this.formats.date)),
@@ -186,12 +186,12 @@ export class ScheduleFormComponent
   public create(): void {
     const { gotoDate, gotoTime, fromDate, fromTime } = this.values.value;
     const format = `${this.formats.date} ${this.formats.time}`;
-    const from = moment.utc(`${fromDate} ${fromTime}`, format);
-    const goto = moment.utc(`${gotoDate} ${gotoTime}`, format);
+    const from = moment.utc(`${fromDate} ${fromTime}`, format, 'en');
+    const goto = moment.utc(`${gotoDate} ${gotoTime}`, format, 'en');
     const ival = goto.diff(from);
 
     const start = from.clone();
-    const until = moment(this.until.value, this.formats.date);
+    const until = moment(this.until.value, this.formats.date, 'en');
 
     const values = [Object.assign(new this.model(), {
       endDate: goto.format(),

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, Injector, NgModule, Provider, Type } from '@angular/core';
-import { MatButtonModule, MatDialogModule, MatProgressBarModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatProgressBarModule, MatSnackBarModule } from '@angular/material';
 import { RouterModule, UrlSerializer } from '@angular/router';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { TokenProvider } from '../auth/token.provider';
+import { ErrorBarComponent } from '../error/error.bar';
 import { ErrorDialogComponent } from '../error/error.dialog';
 import { CoreErrorHandler } from '../error/error.handler';
 import { I18nComponent } from '../i18n/i18n.component';
@@ -23,6 +24,7 @@ const declarations: Type<any>[] = [
 ];
 
 const dialogs: Type<any>[] = [
+  ErrorBarComponent,
   ErrorDialogComponent,
   SplashChildComponent
 ];
@@ -30,7 +32,8 @@ const dialogs: Type<any>[] = [
 const materials: Type<any>[] = [
   MatButtonModule,
   MatDialogModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatSnackBarModule
 ];
 
 const providers: Provider[] = [

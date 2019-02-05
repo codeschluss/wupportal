@@ -7,7 +7,7 @@ import { SessionProvider } from '../session/session.provider';
 @Injectable({ providedIn: 'root' })
 export class I18nResolver implements Resolve<string> {
 
-  public xlf: string;
+  public xliff: string;
 
   public constructor(
     private httpClient: HttpClient,
@@ -15,14 +15,14 @@ export class I18nResolver implements Resolve<string> {
   ) { }
 
   public async resolve(): Promise<string> {
-    return this.xlf ? Promise.resolve(this.xlf) : this.run();
+    return this.xliff ? Promise.resolve(this.xliff) : this.run();
   }
 
   private async run(): Promise<string> {
     const session = await this.sessionProvider.value.pipe(take(1)).toPromise();
-    const url = `/i18n/strings.${session.language}.xlf`;
+    const url = `/i18n/strings.${session.language}.xliff`;
     const request = this.httpClient.get(url, { responseType: 'text' });
-    return this.xlf = await request.toPromise();
+    return this.xliff = await request.toPromise();
   }
 
 }

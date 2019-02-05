@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Box, CrudJoiner, CrudResolver, TokenProvider } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { SuburbModel } from '../suburb/suburb.model';
 import { AddressModel } from './address.model';
@@ -124,14 +124,12 @@ export class AddressFormComponent
   }
 
   public address(): void {
-    const addr = Object.assign(new AddressModel(), this.item);
     const joiner = CrudJoiner.of(AddressModel).with('suburb');
 
     this.item.id = null;
     this.item.suburbId = this.group.get('suburb').value.id;
 
     super.persist().pipe(
-      catchError(() => of(addr)),
       mergeMap((item) => this.crudResolver.refine(item as any, joiner.graph)),
     ).subscribe((item) => {
       this.group.disable();

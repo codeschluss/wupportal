@@ -5,7 +5,7 @@ import { LayoutComponent } from './views/layout/layout.component';
 
 const ClientResolvers = {
   session: SessionResolver,
-  xlf: I18nResolver
+  xliff: I18nResolver
 };
 
 const ClientRoutes = [

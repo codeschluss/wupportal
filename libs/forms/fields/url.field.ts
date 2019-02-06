@@ -1,6 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { filter, startWith } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -42,7 +42,7 @@ export class UrlFieldComponent extends BaseFieldComponent
   protected ngPostInit(): void {
     this.control.valueChanges.pipe(
       startWith(this.control.value),
-      filter((value) => typeof value === 'string')
+      map((value) => value || '')
     ).subscribe((value) => {
       this.input.patchValue(value.split('://').pop(), { emitEvent: false });
       this.proto.patchValue(value.startsWith('https://'), { emitEvent: false });

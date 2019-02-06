@@ -42,15 +42,11 @@ import { ScheduleModel } from './schedule.model';
           </strong>
           <input matInput type="time" [formControl]="gotoTime">
         </mat-form-field>
-        <button mat-button color="primary" [disabled]="!scheduled"
-          (click)="create()">
-          <i18n i18n="@@createSchedules">createSchedules</i18n>
-        </button>
       </nav>
     </section>
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@compilation">compilation</i18n>
+        <i18n i18n="@@recurrance">recurrance</i18n>
       </label>
       <nav>
         <mat-form-field>
@@ -117,6 +113,20 @@ import { ScheduleModel } from './schedule.model';
         </ng-container>
       </nav>
     </section>
+    <section>
+      <label class="mat-body-strong">
+        <i18n i18n="@@compilation">compilation</i18n>
+      </label>
+      <nav>
+        <button mat-button color="warn" (click)="clear()">
+          <i18n i18n="@@deleteAll">deleteAll</i18n>
+        </button>
+        <button mat-button color="primary" [disabled]="!scheduled"
+          (click)="create()">
+          <i18n i18n="@@createSchedules">createSchedules</i18n>
+        </button>
+      </nav>
+    </section>
 
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -181,6 +191,10 @@ export class ScheduleFormComponent
 
     this.recurrence.valueChanges.subscribe((value) =>
       value === 'once' ? this.until.disable() : this.until.enable());
+  }
+
+  public clear(): void {
+    this.group.get('schedules').patchValue([]);
   }
 
   public create(): void {

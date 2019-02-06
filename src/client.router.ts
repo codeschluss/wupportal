@@ -7,7 +7,7 @@ import { RegisterComponent } from './views/public/login/register.component';
 
 const ClientResolvers = {
   session: SessionResolver,
-  xlf: I18nResolver
+  xliff: I18nResolver
 };
 
 const ClientRoutes = [

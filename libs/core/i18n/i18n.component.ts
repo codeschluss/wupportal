@@ -3,7 +3,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { I18nResolver } from './i18n.resolver';
 
 export function TRANSLATIONS_FACTORY(i18nResolver: I18nResolver) {
-  return i18nResolver.xlf;
+  return i18nResolver.xliff;
 }
 
 @Component({
@@ -16,7 +16,7 @@ export function TRANSLATIONS_FACTORY(i18nResolver: I18nResolver) {
     },
     {
       provide: TRANSLATIONS_FORMAT,
-      useValue: 'xlf'
+      useValue: 'xliff'
     }
   ],
   // tslint:disable-next-line:component-selector

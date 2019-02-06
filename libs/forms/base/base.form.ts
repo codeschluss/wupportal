@@ -39,10 +39,10 @@ export abstract class BaseForm<Model extends CrudModel>
 
   public abstract model: Type<Model>;
 
-  protected static template(template: string): string {
+  protected static template(top: string = '', end: string = ''): string {
     return `
       <form [formGroup]="group">
-        ${template}
+        ${top}
         <ng-container *ngFor="let field of fields">
           <section>
             <label class="mat-body-strong" [for]="field.name">
@@ -55,6 +55,7 @@ export abstract class BaseForm<Model extends CrudModel>
             </output>
           </section>
         </ng-container>
+        ${end}
       </form>
     `;
   }

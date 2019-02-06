@@ -59,7 +59,7 @@ export class ChipListFieldComponent extends BaseFieldComponent
   }
 
   public create(event: MatChipInputEvent): void {
-    const label = event.value.trim().length < 3 ? '' :
+    const label = event.value.trim().length < 2 ? '' :
       event.value[0].toUpperCase() + event.value.substr(1).toLowerCase();
 
     if (label && !this.find(label)) {

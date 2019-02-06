@@ -35,7 +35,7 @@
                 "output": "/"
               },
               {
-                "glob": "*.xlf",
+                "glob": "*.xliff",
                 "input": "i18n",
                 "output": "/i18n"
               },
@@ -68,9 +68,9 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "@portal/client:build",
-            "i18nFormat": "xlf",
+            "i18nFormat": "xliff",
             "i18nLocale": "root",
-            "outFile": "strings.xlf",
+            "outFile": "strings.xliff",
             "outputPath": "i18n"
           }
         },

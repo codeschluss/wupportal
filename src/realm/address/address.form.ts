@@ -12,25 +12,6 @@ import { AddressModel } from './address.model';
 @Component({
   selector: 'address-form',
   template: BaseForm.template(`
-    <section>
-      <label class="mat-body-strong" for="sr">
-        <i18n i18n="@@compilation">compilation</i18n>
-      </label>
-      <nav>
-        <ng-container *ngIf="this.group.disabled">
-          <button mat-button color="primary" (click)="this.edit()">
-            <i18n i18n="@@edit">edit</i18n>
-          </button>
-        </ng-container>
-        <ng-container *ngIf="!this.group.disabled">
-          <button mat-button color="primary" [disabled]="!this.group.valid"
-            (click)="this.address()">
-            <i18n i18n="@@autoLocate">autoLocate</i18n>
-          </button>
-        </ng-container>
-      </nav>
-    </section>
-
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'houseNumber'">
@@ -56,6 +37,25 @@ import { AddressModel } from './address.model';
         </ng-container>
       </ng-container>
     </ng-template>
+  `, `
+    <section>
+      <label class="mat-body-strong" for="sr">
+        <i18n i18n="@@compilation">compilation</i18n>
+      </label>
+      <nav>
+        <ng-container *ngIf="this.group.disabled">
+          <button mat-button color="primary" (click)="this.edit()">
+            <i18n i18n="@@edit">edit</i18n>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="!this.group.disabled">
+          <button mat-button color="primary" [disabled]="!this.group.valid"
+            (click)="this.address()">
+            <i18n i18n="@@autoLocate">autoLocate</i18n>
+          </button>
+        </ng-container>
+      </nav>
+    </section>
   `)
 })
 

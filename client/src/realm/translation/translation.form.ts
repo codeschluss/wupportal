@@ -12,6 +12,17 @@ import { TranslationProvider } from './translation.provider';
 @Component({
   selector: 'translation-form',
   template: BaseForm.template(`
+    <section>
+      <label class="mat-body-strong">
+        <i18n i18n="@@compilation">compilation</i18n>
+      </label>
+      <nav>
+        <button mat-button color="warn" (click)="clear()">
+          <i18n i18n="@@deleteAll">deleteAll</i18n>
+        </button>
+      </nav>
+    </section>
+
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'language'">
@@ -97,6 +108,12 @@ export class TranslationFormComponent<Model extends CrudModel>
   public ngOnDestroy(): void {
     this.selection.unsubscribe();
     this.values.unsubscribe();
+  }
+
+  public clear(): void {
+    this.group.patchValue({ language: this.language });
+    this.route.routeConfig.data.translations = this.route.snapshot.data
+      .language.map((lang) => this.empty(lang));
   }
 
   public persist(): Observable<any> {

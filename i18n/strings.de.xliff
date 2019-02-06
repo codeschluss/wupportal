@@ -282,67 +282,67 @@
         <source>createAddress</source><target>Erstelle Adresse</target>
       </trans-unit>
       <trans-unit id="editAddress" datatype="html">
-        <source>editAddress</source><target>bearbeite Adresse</target>
+        <source>editAddress</source><target>Bearbeite Adresse</target>
       </trans-unit>
       <trans-unit id="createBlog" datatype="html">
         <source>createBlog</source><target>Erstelle Blog</target>
       </trans-unit>
       <trans-unit id="editBlog" datatype="html">
-        <source>editBlog</source><target>bearbeite Blog</target>
+        <source>editBlog</source><target>Bearbeite Blog</target>
       </trans-unit>
       <trans-unit id="createCategory" datatype="html">
         <source>createCategory</source><target>Erstelle Kategorie</target>
       </trans-unit>
       <trans-unit id="editCategory" datatype="html">
-        <source>editCategory</source><target>bearbeite Kategorie</target>
+        <source>editCategory</source><target>Bearbeite Kategorie</target>
       </trans-unit>
       <trans-unit id="createLanguage" datatype="html">
         <source>createLanguage</source><target>Erstelle Sprache</target>
       </trans-unit>
       <trans-unit id="editLanguage" datatype="html">
-        <source>editLanguage</source><target>bearbeite Sprache</target>
+        <source>editLanguage</source><target>Bearbeite Sprache</target>
       </trans-unit>
       <trans-unit id="createOrganisation" datatype="html">
         <source>createOrganisation</source><target>Erstelle Organisation</target>
       </trans-unit>
       <trans-unit id="editOrganisation" datatype="html">
-        <source>editOrganisation</source><target>bearbeite Organisation</target>
+        <source>editOrganisation</source><target>Bearbeite Organisation</target>
       </trans-unit>
       <trans-unit id="createPage" datatype="html">
         <source>createPage</source><target>Erstelle Wissenswertes</target>
       </trans-unit>
       <trans-unit id="editPage" datatype="html">
-        <source>editPage</source><target>bearbeite Wissenswertes</target>
+        <source>editPage</source><target>Bearbeite Wissenswertes</target>
       </trans-unit>
       <trans-unit id="createSuburb" datatype="html">
         <source>createSuburb</source><target>Erstelle Stadtteil</target>
       </trans-unit>
       <trans-unit id="editSuburb" datatype="html">
-        <source>editSuburb</source><target>bearbeite Stadtteil</target>
+        <source>editSuburb</source><target>Bearbeite Stadtteil</target>
       </trans-unit>
       <trans-unit id="createTag" datatype="html">
         <source>createTag</source><target>Erstelle Schlagwort</target>
       </trans-unit>
       <trans-unit id="editTag" datatype="html">
-        <source>editTag</source><target>bearbeite Schlagwort</target>
+        <source>editTag</source><target>Bearbeite Schlagwort</target>
       </trans-unit>
       <trans-unit id="createTargetGroup" datatype="html">
         <source>createTargetGroup</source><target>Erstelle Zielgruppe</target>
       </trans-unit>
       <trans-unit id="editTargetGroup" datatype="html">
-        <source>editTargetGroup</source><target>bearbeite Zielgruppe</target>
+        <source>editTargetGroup</source><target>Bearbeite Zielgruppe</target>
       </trans-unit>
       <trans-unit id="createTopic" datatype="html">
         <source>createTopic</source><target>Erstelle Thema</target>
       </trans-unit>
       <trans-unit id="editTopic" datatype="html">
-        <source>editTopic</source><target>bearbeite Thema</target>
+        <source>editTopic</source><target>Bearbeite Thema</target>
       </trans-unit>
       <trans-unit id="createUser" datatype="html">
         <source>createUser</source><target>Erstelle Benutzer</target>
       </trans-unit>
       <trans-unit id="editUser" datatype="html">
-        <source>editUser</source><target>bearbeite Benutzer</target>
+        <source>editUser</source><target>Bearbeite Benutzer</target>
       </trans-unit>
       <trans-unit id="author" datatype="html">
         <source>author</source><target>Autor</target>

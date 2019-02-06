@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CrudModel } from '@portal/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { TranslationControllerService } from '../../api/services/translation-controller.service';
 import { TranslationModel } from './translation.model';
@@ -19,7 +19,9 @@ export class TranslationProvider {
     targets: string[],
     source: string
   ): Observable<TranslationModel[]> {
-    return this.service.translationControllerTranslate(labels, targets, source);
+    return targets.length
+      ? this.service.translationControllerTranslate(labels, targets, source)
+      : of([]);
   }
 
   public update(item: CrudModel): Observable<any> {

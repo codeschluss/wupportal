@@ -3,8 +3,8 @@ import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CrudModel, SessionProvider, TokenProvider } from '@portal/core';
 import { BaseForm, FormField, SelectFieldComponent } from '@portal/forms';
-import { empty, merge, Observable, of, Subscription } from 'rxjs';
-import { startWith, take } from 'rxjs/operators';
+import { empty, merge, Observable, Subscription } from 'rxjs';
+import { map, startWith, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { LanguageModel } from '../language/language.model';
 import { TranslationProvider } from './translation.provider';
@@ -12,17 +12,6 @@ import { TranslationProvider } from './translation.provider';
 @Component({
   selector: 'translation-form',
   template: BaseForm.template(`
-    <section>
-      <label class="mat-body-strong">
-        <i18n i18n="@@compilation">compilation</i18n>
-      </label>
-      <nav>
-        <button mat-button color="primary" (click)="this.translate()">
-          <i18n i18n="@@autoTranslate">autoTranslate</i18n>
-        </button>
-      </nav>
-    </section>
-
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'language'">
@@ -60,12 +49,7 @@ export class TranslationFormComponent<Model extends CrudModel>
   private values: Subscription = empty().subscribe();
 
   public get valid(): boolean {
-    return Object.keys(this.group.controls)
-      .filter((key) => key !== 'language' && this.fields
-        .find((f) => f.name === key).tests.includes(Validators.required))
-      .every((key) => this.translations
-        .filter((t) => t.language.id !== this.language.id)
-        .every((t) => t[key]));
+    return true;
   }
 
   private get translations(): Model[] {
@@ -106,9 +90,8 @@ export class TranslationFormComponent<Model extends CrudModel>
       this.group.patchValue(value, { emitEvent: false });
     });
 
-    this.values = merge(...controls.map((ctrl) => ctrl.valueChanges)).pipe(
-
-    ).subscribe(() => this.update(this.group.get('language').value));
+    this.values = merge(...controls.map((ctrl) => ctrl.valueChanges))
+      .subscribe(() => this.update(this.group.get('language').value));
   }
 
   public ngOnDestroy(): void {
@@ -117,17 +100,7 @@ export class TranslationFormComponent<Model extends CrudModel>
   }
 
   public persist(): Observable<any> {
-    return of(this.translations
-      .filter((t) => t.language.id !== this.language.id));
-  }
-
-  public reset(): void {
-    this.group.patchValue({ language: this.language });
-    delete this.route.routeConfig.data.translations;
-  }
-
-  public translate(): void {
-    this.translationProvider.translate(
+    return this.translationProvider.translate(
       Object.keys(this.form.group.value)
         .filter((key) => this.model['translatable'].includes(key))
         .map((key) => ({ [key]: this.form.group.get(key).value }))
@@ -138,13 +111,14 @@ export class TranslationFormComponent<Model extends CrudModel>
         return this.model['translatable'].some((t) => !value[t]);
       }).map((lang) => lang.locale),
       this.language.locale
-    ).subscribe((items) => {
-      const translations = this.translations.map((t) => Object.assign(t, (items
-        .find((i) => i.lang === t.language['locale']) || { }).translations));
+    ).pipe(map((items) => this.translations.map((t) => Object.assign(t,
+      (items.find((i) => i.lang === t.language['locale']) || { }).translations
+    )).filter((t) => t.language.id !== this.language.id)));
+  }
 
-      this.route.routeConfig.data.translations = translations;
-      this.group.get('language').patchValue(this.group.get('language').value);
-    });
+  public reset(): void {
+    this.group.patchValue({ language: this.language });
+    delete this.route.routeConfig.data.translations;
   }
 
   protected ngPostInit(): void {

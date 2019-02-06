@@ -2,6 +2,21 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="root" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="apiErrorForbidden" datatype="html">
+        <source>apiErrorForbidden</source><target>Zugriff nicht erlaubt</target>
+      </trans-unit>
+      <trans-unit id="apiErrorNotFound" datatype="html">
+        <source>apiErrorNotFound</source><target>Kein Eintrag gefunden</target>
+      </trans-unit>
+      <trans-unit id="apiErrorConflict" datatype="html">
+        <source>apiErrorConflict</source><target>Eintrag bereits vorhanden</target>
+      </trans-unit>
+      <trans-unit id="apiErrorTooLarge" datatype="html">
+        <source>apiErrorTooLarge</source><target>Übertragener Eintrag zu groß</target>
+      </trans-unit>
+      <trans-unit id="apiErrorUnavaliable" datatype="html">
+        <source>apiErrorUnavaliable</source><target>Applikation nicht verfügbar</target>
+      </trans-unit>
       <trans-unit id="unhandledError" datatype="html">
         <source>unhandledError</source><target>Unbekannter Fehler</target>
       </trans-unit>
@@ -65,12 +80,6 @@
       <trans-unit id="targetGroups" datatype="html">
         <source>targetGroups</source><target>Zielgruppen</target>
       </trans-unit>
-      <trans-unit id="edit" datatype="html">
-        <source>edit</source><target>Bearbeiten</target>
-      </trans-unit>
-      <trans-unit id="autoLocate" datatype="html">
-        <source>autoLocate</source><target>Adresse lokalisieren</target>
-      </trans-unit>
       <trans-unit id="houseNumber" datatype="html">
         <source>houseNumber</source><target>Hausnummer</target>
       </trans-unit>
@@ -91,6 +100,12 @@
       </trans-unit>
       <trans-unit id="suburb" datatype="html">
         <source>suburb</source><target>Quartier</target>
+      </trans-unit>
+      <trans-unit id="edit" datatype="html">
+        <source>edit</source><target>Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="autoLocate" datatype="html">
+        <source>autoLocate</source><target>Adresse lokalisieren</target>
       </trans-unit>
       <trans-unit id="activity" datatype="html">
         <source>activity</source><target>Veranstaltung</target>
@@ -173,9 +188,6 @@
       <trans-unit id="endTime" datatype="html">
         <source>endTime</source><target>Ende Uhrzeit</target>
       </trans-unit>
-      <trans-unit id="createSchedules" datatype="html">
-        <source>createSchedules</source><target>Erstelle Termine</target>
-      </trans-unit>
       <trans-unit id="recurrence" datatype="html">
         <source>recurrence</source><target>Wiederholung</target>
       </trans-unit>
@@ -218,11 +230,14 @@
       <trans-unit id="sunday" datatype="html">
         <source>sunday</source><target>Sonntag</target>
       </trans-unit>
+      <trans-unit id="deleteAll" datatype="html">
+        <source>deleteAll</source><target>Alle löschen</target>
+      </trans-unit>
+      <trans-unit id="createSchedules" datatype="html">
+        <source>createSchedules</source><target>Erstelle Termine</target>
+      </trans-unit>
       <trans-unit id="schedules" datatype="html">
         <source>schedules</source><target>Alle Termine</target>
-      </trans-unit>
-      <trans-unit id="autoTranslate" datatype="html">
-        <source>autoTranslate</source><target>Automatisch Übersetzen</target>
       </trans-unit>
       <trans-unit id="language" datatype="html">
         <source>language</source><target>Sprache</target>

@@ -99,7 +99,7 @@
         <source>street</source><target>Straße</target>
       </trans-unit>
       <trans-unit id="suburb" datatype="html">
-        <source>suburb</source><target>Quartier</target>
+        <source>suburb</source><target>Stadtteil</target>
       </trans-unit>
       <trans-unit id="edit" datatype="html">
         <source>edit</source><target>Bearbeiten</target>
@@ -315,10 +315,10 @@
         <source>editPage</source><target>bearbeite Wissenswertes</target>
       </trans-unit>
       <trans-unit id="createSuburb" datatype="html">
-        <source>createSuburb</source><target>Erstelle Quartier</target>
+        <source>createSuburb</source><target>Erstelle Stadtteil</target>
       </trans-unit>
       <trans-unit id="editSuburb" datatype="html">
-        <source>editSuburb</source><target>bearbeite Quartier</target>
+        <source>editSuburb</source><target>bearbeite Stadtteil</target>
       </trans-unit>
       <trans-unit id="createTag" datatype="html">
         <source>createTag</source><target>Erstelle Schlagwort</target>
@@ -519,7 +519,7 @@
         <source>categories</source><target>Kategorien</target>
       </trans-unit>
       <trans-unit id="suburbs" datatype="html">
-        <source>suburbs</source><target>Quartiere</target>
+        <source>suburbs</source><target>Stadtteile</target>
       </trans-unit>
       <trans-unit id="topics" datatype="html">
         <source>topics</source><target>Themen</target>

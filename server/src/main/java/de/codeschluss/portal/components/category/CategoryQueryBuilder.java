@@ -88,7 +88,7 @@ public class CategoryQueryBuilder extends QueryBuilder<QCategoryEntity> {
    * @return the boolean expression
    */
   public BooleanExpression withName(String name) {
-    return query.translatables.any().language.locale.in(languageService.getCurrentReadLocales())
+    return query.translatables.any().language.locale.eq(languageService.getWriteLocale())
         .and(query.translatables.any().name.eq(name));
   }
 

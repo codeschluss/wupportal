@@ -81,7 +81,7 @@ export class RequestDialogComponent implements OnInit {
 
   private suggest(label: string = ''): Observable<OrganisationModel[]> {
     return forkJoin(
-      this.organisationProvider.readAll({ filter: label }),
+      this.organisationProvider.readAll({ approved: true, filter: label }),
       this.tokenProvider.value.pipe(take(1))
     ).pipe(
       map(([items, tokens]) => items.filter((item) =>

@@ -46,7 +46,7 @@ import { ScheduleModel } from './schedule.model';
     </section>
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@recurrance">recurrance</i18n>
+        <i18n i18n="@@recurrence">recurrence</i18n>
       </label>
       <nav>
         <mat-form-field>

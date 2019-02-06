@@ -37,17 +37,17 @@ export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
     },
     {
       name: 'website',
-      value: (item) => `
+      value: (item) => item.website ? `
         <a href="${item.website}" target="_blank" title="${item.name} Website">
-          ${item.website}
+          ${item.website.split('://').pop()}
         </a>
-      `
+      ` : ''
     },
     {
       name: 'mail',
       value: (item) => `
         <a href="mailto:${item.mail}" title="${item.name} E-Mail">
-          ${item.website}
+          ${item.mail}
         </a>
       `
     },

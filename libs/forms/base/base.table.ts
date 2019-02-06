@@ -66,7 +66,9 @@ export abstract class BaseTable<Model extends CrudModel>
             <ng-container *ngTemplateOutlet="label; context: { case: col }">
             </ng-container>
           </mat-header-cell>
-          <mat-cell *matCellDef="let item">{{ col.value(item) }}</mat-cell>
+          <mat-cell *matCellDef="let item">
+            <slot [innerHTML]="col.value(item)"></slot>
+          </mat-cell>
         </ng-container>
         <ng-content></ng-content>
       </mat-table>

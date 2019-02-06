@@ -29,6 +29,12 @@ export class CategoryTableComponent extends BaseTable<CategoryModel> {
     {
       name: 'description',
       value: (item) => item.description
+    },
+    {
+      name: 'color',
+      value: (item) => `
+        <strong><font color="${item.color}">${item.color}</font></strong>
+      `
     }
   ];
 

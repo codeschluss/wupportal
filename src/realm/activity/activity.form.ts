@@ -72,6 +72,13 @@ export class ActivityFormComponent
 
   public fields: FormField[] = [
     {
+      name: 'organisation',
+      input: SelectFieldComponent,
+      label: 'name',
+      model: OrganisationModel,
+      tests: [Validators.required]
+    },
+    {
       name: 'name',
       input: StringFieldComponent,
       tests: [Validators.required]
@@ -100,13 +107,6 @@ export class ActivityFormComponent
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ],
       type: 'email'
-    },
-    {
-      name: 'organisation',
-      input: SelectFieldComponent,
-      label: 'name',
-      model: OrganisationModel,
-      tests: [Validators.required]
     },
     {
       name: 'category',
@@ -172,14 +172,14 @@ export class ActivityFormComponent
 
   protected ngPostInit(): void {
     if (this.item.id && !this.token.createdActivities.includes(this.item.id)) {
-      this.fields[5].locked = true;
+      this.fields[0].locked = true;
     }
 
     if (!this.token[ClientPackage.config.jwtClaims.superUser]) {
-      this.fields[5].options = [...new Set([
+      this.fields[0].options = [...new Set([
         ...this.token[ClientPackage.config.jwtClaims.organisationAdmin],
         ...this.token[ClientPackage.config.jwtClaims.organisationUser]
-      ])].map((id) => this.fields[5].options.find((o) => o.id === id));
+      ])].map((id) => this.fields[0].options.find((o) => o.id === id));
     }
   }
 

@@ -43,6 +43,11 @@ export class OrganisationProvider
       model: ProviderModel
     },
     {
+      field: 'providers',
+      method: () => empty(),
+      model: ProviderModel
+    },
+    {
       field: 'translations',
       method: this.service.organisationControllerReadTranslationsResponse,
       model: OrganisationModel

@@ -194,18 +194,24 @@ public class PagingAndSortingAssembler {
       if (fieldValue != null) {
         if (helper.isValidSubResource(fieldValue)) {
           E subEntity = (E) fieldValue;
-          Object resource;
-          if (node.getNodes() != null && !node.getNodes().isEmpty()) {
-            resource = toResourceWithEmbedabbles(subEntity, node.getNodes());
-          } else {
-            resource = toResource(subEntity);
-          }
+          Object resource = node.getNodes() != null && !node.getNodes().isEmpty()
+              ? toResourceWithEmbedabbles(subEntity, node.getNodes())
+              : toResource(subEntity);
+              
           embeddables.put(node.getName(), resource);
         }
         if (helper.isValidSubList(fieldValue)) {
-          List<?> subEntity = (List<?>) fieldValue;
-          Object listResource = subEntity.stream().map(subRes -> toResource((E) subRes))
-              .collect(Collectors.toList());
+          List<?> subEntities = (List<?>) fieldValue;
+          List<Object> listResource = new ArrayList<>();
+          if (node.getNodes() != null && !node.getNodes().isEmpty()) {
+            for (Object subEntity : subEntities) {
+              listResource.add(toResourceWithEmbedabbles((E) subEntity, node.getNodes()));
+            }
+          } else {
+            listResource = subEntities.stream().map(subRes -> toResource((E) subRes))
+                .collect(Collectors.toList());
+          }
+          
           embeddables.put(node.getName(), listResource);
         }
       }

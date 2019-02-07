@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { forkJoin, from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { CrudGraph, CrudJoiner } from './crud.joiner';
 import { CrudModel } from './crud.model';
 
@@ -14,12 +14,12 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     Observable<CrudModel | CrudModel[]> {
 
     return Array.isArray(input)
-      ? forkJoin(input.map((item) => from(this.run(item, graph.nodes))))
-      : from(this.run(input, graph.nodes));
+      ? forkJoin(input.map((i) => this.run(i, graph.nodes)))
+      : this.run(input, graph.nodes);
   }
 
-  public async resolve(route: ActivatedRouteSnapshot):
-    Promise<CrudModel | CrudModel[]> {
+  public resolve(route: ActivatedRouteSnapshot):
+    Observable<CrudModel | CrudModel[]> {
 
     const joiner = route.data[Object.keys(route.routeConfig.resolve)
       .filter((key) => route.routeConfig.resolve[key] === this.constructor)
@@ -29,68 +29,51 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     this.resolving.push(joiner);
     joiner.graph.params.embeddings = CrudJoiner.to(joiner.graph);
 
-    let response; try {
-      response = joiner.graph.params.filter !== null && route.params.uuid
-        ? await joiner.graph.provider.readOne(route.params.uuid).toPromise()
-        : await joiner.graph.provider.readAll(joiner.graph.params).toPromise();
-    } catch (error) {
-      if (![403, 404].includes(error.status)) { throw error; }
-    }
+    const request = joiner.graph.params.filter !== null && route.params.uuid
+      ? joiner.graph.provider.readOne(route.params.uuid)
+      : joiner.graph.provider.readAll(joiner.graph.params);
 
-    if (response) {
-      for (const item of Array.isArray(response) ? response : [response]) {
-        await this.run(item, joiner.graph.nodes);
-      }
-    }
-
-    this.resolving.splice(this.resolving.indexOf(joiner), 1);
-    return response;
+    return request.pipe(
+      mergeMap((response) => this.refine(response as any, joiner.graph)),
+      catchError((e) => e.status === 404 ? of(undefined) : throwError(e)),
+      tap(() => this.resolving.splice(this.resolving.indexOf(joiner), 1))
+    );
   }
 
-  private async run(item: CrudModel, nodes: CrudGraph[]): Promise<CrudModel> {
-    if (item.constructor['provider']) {
-      const provider = item.constructor['provider'].system;
+  private run(input: CrudModel, nodes: CrudGraph[]): Observable<CrudModel> {
+    const resolve = forkJoin(nodes.map((node) => {
+      const provider = input.constructor['provider'].system;
+      const link = provider.linked.find((l) => l.field === node.name);
 
-      for (const node of nodes) {
-        const link = provider.linked.find((l) => l.field === node.name);
-
-        if (link) {
-          let value = null;
-
-          if ((item._embedded || { })[link.field]) {
-            const embedded = item._embedded[link.field];
-            value = Array.isArray(embedded)
+      return of(input).pipe(mergeMap((item) => {
+        if ((item._embedded || { })[link.field]) {
+          const embedded = item._embedded[link.field];
+          return of(Object.assign(item, {
+            [link.field]: Array.isArray(embedded)
               ? embedded.map((e) => Object.assign(new link.model(), e))
-              : Object.assign(new link.model(), embedded);
-          } else {
-            const params = [
-              item.id,
-              node.params.sort,
-              node.params.dir,
-              CrudJoiner.to(node)
-            ];
-
-            try {
-              value = await provider.call(link.method, ...params).pipe(
-                map((response) => provider.cast(response, link.model))
-              ).toPromise();
-            } catch (error) {
-              if (![403, 404].includes(error.status)) { throw error; }
-            }
-          }
-
-          if (value && node.nodes.length) {
-            for (const child of Array.isArray(value) ? value : [value]) {
-              await this.run(child, node.nodes);
-            }
-          }
-
-          item[link.field] = value;
+              : Object.assign(new link.model(), embedded)
+          }));
+        } else {
+          return provider.call(
+            link.method,
+            item.id,
+            node.params.sort,
+            node.params.dir,
+            CrudJoiner.to(node)
+          ).pipe(
+            map((response) => provider.cast(response, link.model)),
+            catchError((e) => e.status === 404 ? of(undefined) : throwError(e)),
+            map((response) => Object.assign(item, { [link.field]: response }))
+          );
         }
-      }
-    }
+      })).pipe(mergeMap((item) => {
+        return item && item[link.field] && node.nodes.length
+          ? this.refine(item[link.field], node)
+          : of(item);
+      }));
+    })).pipe(map(() => input));
 
-    return item;
+    return input.constructor['provider'] && nodes.length ? resolve : of(input);
   }
 
 }

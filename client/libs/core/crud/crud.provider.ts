@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { BaseService, ReadAllParams, StrictHttpResponse } from '../utils/api';
+import { BaseService, ReadParams, StrictHttpResponse } from '../utils/api';
 import { CrudModel } from './crud.model';
 
 export interface CrudLink {
@@ -13,7 +13,7 @@ export interface CrudLink {
 export interface CrudMethods {
   create: (item: CrudModel) => Observable<StrictHttpResponse<any>>;
   delete: (id: string) => Observable<StrictHttpResponse<any>>;
-  readAll: (params?: ReadAllParams) => Observable<StrictHttpResponse<any>>;
+  readAll: (params?: ReadParams) => Observable<StrictHttpResponse<any>>;
   readOne: (id: string) => Observable<StrictHttpResponse<any>>;
   update: (item: CrudModel, id: string) => Observable<StrictHttpResponse<any>>;
 }
@@ -59,7 +59,7 @@ export abstract class CrudProvider
       tap((response) => this.link(response)));
   }
 
-  public readAll(params?: ReadAllParams): Observable<Model[]> {
+  public readAll(params?: ReadParams): Observable<Model[]> {
     return this.call(this.methods.readAll, params || { }).pipe(
       map((response) => this.cast<Model[]>(response)),
       tap((response) => this.link(response)));

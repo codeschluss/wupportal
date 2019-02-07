@@ -30,18 +30,13 @@ export interface Link {
   type?: string;
 }
 
-export interface ReadAllParams {
+export interface ReadParams {
   [key: string]: any;
   dir?: string;
+  embeddings?: string;
   filter?: string;
   page?: number;
   size?: number;
-  sort?: string;
-}
-
-export interface ReadEmbeddedParams {
-  [key: string]: any;
-  dir?: string;
   sort?: string;
 }
 

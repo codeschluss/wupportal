@@ -40,6 +40,11 @@ export class UserProvider
       field: 'provider',
       method: () => empty(),
       model: ProviderModel
+    },
+    {
+      field: 'providers',
+      method: () => empty(),
+      model: ProviderModel
     }
   ];
 

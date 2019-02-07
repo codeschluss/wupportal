@@ -22,5 +22,6 @@ export class UserModel
   public blogs: BlogModel[] & Observable<BlogModel[]>;
   public organisations: OrganisationModel[] & Observable<OrganisationModel[]>;
   public provider: ProviderModel & Observable<ProviderModel>;
+  public providers: ProviderModel[] & Observable<ProviderModel[]>;
 
 }

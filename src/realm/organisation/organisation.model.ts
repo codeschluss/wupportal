@@ -26,6 +26,7 @@ export class OrganisationModel
   public address: AddressModel & Observable<AddressModel>;
   public images: ImageModel[] & Observable<ImageModel[]>;
   public provider: ProviderModel & Observable<ProviderModel>;
+  public providers: ProviderModel[] & Observable<ProviderModel[]>;
   public users: UserModel[] & Observable<UserModel[]>;
 
 }

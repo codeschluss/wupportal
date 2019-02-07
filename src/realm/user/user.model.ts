@@ -17,5 +17,6 @@ export class UserModel
   public activities: ActivityModel[] & Observable<ActivityModel[]>;
   public organisations: OrganisationModel[] & Observable<OrganisationModel[]>;
   public provider: ProviderModel & Observable<ProviderModel>;
+  public providers: ProviderModel[] & Observable<ProviderModel[]>;
 
 }

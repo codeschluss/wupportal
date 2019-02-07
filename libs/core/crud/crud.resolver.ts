@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, defaultIfEmpty, map, mergeMap, tap } from 'rxjs/operators';
 import { CrudGraph, CrudJoiner } from './crud.joiner';
 import { CrudModel } from './crud.model';
 
@@ -63,7 +63,8 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
           ).pipe(
             map((response) => provider.cast(response, link.model)),
             catchError((e) => e.status === 404 ? of(undefined) : throwError(e)),
-            map((response) => Object.assign(item, { [link.field]: response }))
+            map((response) => Object.assign(item, { [link.field]: response })),
+            defaultIfEmpty(undefined)
           );
         }
       })).pipe(mergeMap((item) => {

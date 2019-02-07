@@ -93,6 +93,7 @@ export class UserFormComponent
 
   public persist(): Observable<any> {
     return super.persist().pipe(
+      tap((item) => this.group.reset(item)),
       filter((item) => item.username !== this.item.username),
       tap(() => this.tokenProvider.remove()));
   }
@@ -103,12 +104,12 @@ export class UserFormComponent
     const { password: pw1, passwordConfirm: pw2 } = change;
 
     if (pw1 && ctrl2.disabled) {
-      ctrl2.enable();
+      ctrl2.enable({ emitEvent: false });
     }
 
     if (!pw1 && ctrl2.enabled) {
       ctrl2.patchValue(null, { emitEvent: false });
-      ctrl2.disable();
+      ctrl2.disable({ emitEvent: false });
     }
 
     if (pw1 && ctrl2.enabled && pw1 !== pw2) {

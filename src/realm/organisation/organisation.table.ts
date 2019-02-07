@@ -45,11 +45,11 @@ export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
     },
     {
       name: 'mail',
-      value: (item) => `
+      value: (item) => item.mail ? `
         <a href="mailto:${item.mail}" title="${item.name} E-Mail">
           ${item.mail}
         </a>
-      `
+      ` : ''
     },
     {
       name: 'phone',

@@ -1,12 +1,12 @@
 import { Type } from '@angular/core';
-import { BaseService, ReadAllParams, ReadEmbeddedParams } from '../utils/api';
+import { BaseService, ReadParams } from '../utils/api';
 import { CrudModel } from './crud.model';
 import { CrudProvider } from './crud.provider';
 
 export interface CrudGraph {
   name: string;
   nodes: CrudGraph[];
-  params?: ReadAllParams & ReadEmbeddedParams;
+  params?: ReadParams;
   provider?: CrudProvider<BaseService, CrudModel>;
 }
 
@@ -14,7 +14,7 @@ export class CrudJoiner {
 
   private joinGraph: CrudGraph;
 
-  public static of(model: Type<CrudModel>, params?: ReadAllParams): CrudJoiner {
+  public static of(model: Type<CrudModel>, params?: ReadParams): CrudJoiner {
     const node = new this();
     node.joinGraph = {
       name: null,
@@ -56,7 +56,7 @@ export class CrudJoiner {
     return grapher(this.joinGraph);
   }
 
-  public with(field: string, params?: ReadEmbeddedParams): CrudJoiner {
+  public with(field: string, params?: ReadParams): CrudJoiner {
     this.joinGraph.nodes.push({
       name: field,
       nodes: [],
@@ -66,7 +66,7 @@ export class CrudJoiner {
     return this;
   }
 
-  public yield(field: string, params?: ReadEmbeddedParams): CrudJoiner {
+  public yield(field: string, params?: ReadParams): CrudJoiner {
     const yielder = (graph: CrudGraph) => Object.assign(graph, {
       nodes: graph.nodes.length
         ? graph.nodes.map((child) => yielder(child))

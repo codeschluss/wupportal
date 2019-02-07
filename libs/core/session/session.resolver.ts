@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { SessionModel } from './session.model';
 import { SessionProvider } from './session.provider';
@@ -11,12 +12,12 @@ export class SessionResolver implements Resolve<SessionModel> {
     private sessionProvider: SessionProvider
   ) { }
 
-  public async resolve(): Promise<SessionModel> {
+  public resolve(): Observable<SessionModel> {
     return this.run();
   }
 
-  private async run(): Promise<SessionModel> {
-    return await this.sessionProvider.value.pipe(take(1)).toPromise();
+  private run(): Observable<SessionModel> {
+    return this.sessionProvider.value.pipe(take(1));
   }
 
 }

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { mergeMap, take, tap } from 'rxjs/operators';
 import { SessionProvider } from '../session/session.provider';
 
 @Injectable({ providedIn: 'root' })
@@ -14,15 +15,18 @@ export class I18nResolver implements Resolve<string> {
     private sessionProvider: SessionProvider
   ) { }
 
-  public async resolve(): Promise<string> {
-    return this.xliff ? Promise.resolve(this.xliff) : this.run();
+  public resolve(): Observable<string> {
+    return this.xliff ? of(this.xliff) : this.run();
   }
 
-  private async run(): Promise<string> {
-    const session = await this.sessionProvider.value.pipe(take(1)).toPromise();
-    const url = `/i18n/strings.${session.language}.xliff`;
-    const request = this.httpClient.get(url, { responseType: 'text' });
-    return this.xliff = await request.toPromise();
+  private run(): Observable<string> {
+    return this.sessionProvider.value.pipe(take(1)).pipe(
+      mergeMap((session) => this.httpClient.get(
+        `/i18n/strings.${session.language}.xliff`,
+        { responseType: 'text' }
+      )),
+      tap((xliff) => this.xliff = xliff)
+    );
   }
 
 }

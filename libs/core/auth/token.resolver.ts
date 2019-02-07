@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthTokens } from '../utils/api';
 import { TokenProvider } from './token.provider';
@@ -11,12 +12,12 @@ export class TokenResolver implements Resolve<AuthTokens> {
     private tokenProvider: TokenProvider
   ) { }
 
-  public async resolve(): Promise<AuthTokens> {
+  public resolve(): Observable<AuthTokens> {
     return this.run();
   }
 
-  private async run(): Promise<AuthTokens> {
-    return await this.tokenProvider.value.pipe(take(1)).toPromise();
+  private run(): Observable<AuthTokens> {
+    return this.tokenProvider.value.pipe(take(1));
   }
 
 }

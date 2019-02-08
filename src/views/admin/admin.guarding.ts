@@ -1,89 +1,68 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
-import { JwtClaims, Pathfinder, SplashHostComponent, TokenProvider } from '@portal/core';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { TokenProvider } from '@portal/core';
 import { take } from 'rxjs/operators';
-import { ActivityFormComponent } from '../../realm/activity/activity.form';
-import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
-import { ActivityTableComponent } from '../../realm/activity/activity.table';
-import { AddressFormComponent } from '../../realm/address/address.form';
-import { ImageFormComponent } from '../../realm/image/image.form';
-import { OrganisationFormComponent } from '../../realm/organisation/organisation.form';
-import { OrganisationStepperComponent } from '../../realm/organisation/organisation.stepper';
-import { OrganisationTableComponent } from '../../realm/organisation/organisation.table';
-import { ScheduleFormComponent } from '../../realm/schedule/schedule.form';
-import { TranslationFormComponent } from '../../realm/translation/translation.form';
-import { UserFormComponent } from '../../realm/user/user.form';
-import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { ClientPackage } from '../../utils/package';
-import { AdminComponent } from './admin.component';
-import { AccountPanelComponent } from './panels/account/account.panel';
-import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuarding implements CanActivate, CanActivateChild {
 
   public constructor(
-    private pathfinder: Pathfinder,
     private router: Router,
     private tokenProvider: TokenProvider
   ) { }
 
-  public canActivate(route: ActivatedRouteSnapshot): Promise<any> {
-    return this.allow(route);
+  public canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<any> {
+    return this.allow(route, state);
   }
 
-  public canActivateChild(route: ActivatedRouteSnapshot): Promise<any> {
-    return this.allow(route);
+  public canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<any> {
+    return this.allow(route, state);
   }
 
-  private async allow(route: ActivatedRouteSnapshot): Promise<any> {
-    const claims = ClientPackage.config.jwtClaims;
+  private async allow(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<any> {
     const tokens = await this.tokenProvider.value.pipe(take(1)).toPromise();
-    const claimed = Object.keys(claims).reduce((claim, key) => Object.assign(
-      claim, { [key]: tokens.access[claims[key]] }), { }) as JwtClaims;
 
-    if ((() => {
-      switch (route.component) {
+    const claims = ClientPackage.config.jwtClaims;
+    const claimed = Object.keys(claims).reduce((claim, key) =>
+      Object.assign(claim, { [key]: tokens.access[claims[key]] }), { }) as any;
+
+    if (await (async () => {
+      switch (true) {
         default: return claimed.superUser;
 
-        case AccountPanelComponent:
+        case state.url.startsWith('/admin/account'):
         return route.params.uuid === claimed.userId;
 
-        case ActivityFormComponent:
-        case ActivityTableComponent:
-        case AddressFormComponent:
-        case AdminComponent:
-        case ImageFormComponent:
-        case OrganisationTableComponent:
-        case ScheduleFormComponent:
-        case SplashHostComponent:
-        case TranslationFormComponent:
-        case UserFormComponent:
-        return claimed.userId;
+        case state.url.startsWith('/admin/organisation'):
+        return claimed.superUser || claimed.organisationAdmin.length;
 
-        case OrganisationPanelComponent:
+        case state.url.startsWith('/admin/edit/activities/'):
         return claimed.superUser
-          || claimed.organisationAdmin.length;
+          || claimed.activityProvider.includes(this.uuid(state.url))
+          // || claimed.organisationAdmin.includes(item.organisation.id);
 
-        case ActivityStepperComponent:
+        case state.url.startsWith('/admin/edit/organisations/'):
         return claimed.superUser
-          // || claims.organisationAdmin.includes(item.organisation.id)
-          || claimed.activityProvider.includes(route.params.uuid);
-
-        case OrganisationFormComponent:
-        case OrganisationStepperComponent:
-        return claimed.superUser
-          || claimed.organisationAdmin.includes(route.params.uuid);
-
-        case UserStepperComponent:
-        return claimed.superUser
-          || claimed.userId === route.params.uuid;
+          || claimed.organisationAdmin.includes(this.uuid(state.url));
       }
     })()) { return true; }
 
-    claimed.userId
-      ? this.router.navigate(this.pathfinder.to(AdminComponent))
-      : this.router.navigateByUrl('/');
+    return this.router.navigateByUrl(claimed.userId ? '/admin' : '/');
+  }
+
+  private uuid(str: string): string | undefined {
+    const uuid = str.match(/[0-9A-F]{8}(-[0-9A-F]{4}){3}-[0-9A-F]{12}/i);
+    return uuid ? uuid.shift() : undefined;
   }
 
 }

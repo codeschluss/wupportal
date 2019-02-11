@@ -245,6 +245,9 @@
       <trans-unit id="suburbs" datatype="html">
         <target>Suburbs</target>
       </trans-unit>
+      <trans-unit id="toYouTubeChannel" datatype="html">
+        <source>toYouTubeChannel</source><target>Go to YouTube channel</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

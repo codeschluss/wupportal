@@ -542,8 +542,8 @@
       <trans-unit id="bloggerRequests" datatype="html">
         <source>bloggerRequests</source><target>Bloggeranfrage</target>
       </trans-unit>
-      <trans-unit id="clickForMorePictures" datatype="html">
-        <source>clickForMorePictures</source><target>Klick für mehr Bilder</target>
+      <trans-unit id="toYouTubeChannel" datatype="html">
+        <source>toYouTubeChannel</source><target>Zum YouTube-Channel</target>
       </trans-unit>
       <trans-unit id="enteredActivities" datatype="html">
         <source>enteredActivities</source><target>Eingetragene Veranstaltungen</target>

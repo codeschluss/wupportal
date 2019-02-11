@@ -359,6 +359,12 @@
       <trans-unit id="genericErrorMessage" datatype="html">
         <source>genericErrorMessage</source><target>Da ist etwas schief gelaufen</target>
       </trans-unit>
+      <trans-unit id="userNameAlreadyExists" datatype="html">
+        <source>userNameAlreadyExists</source><target>Der Nutzername existiert bereits</target>
+      </trans-unit>
+      <trans-unit id="unauthorized" datatype="html">
+        <source>unauthorized</source><target>Authentifizierungsfehler</target>
+      </trans-unit>
       <trans-unit id="enterUserName" datatype="html">
         <source>enterUserName</source><target>Bitte Benutzername eingeben</target>
       </trans-unit>

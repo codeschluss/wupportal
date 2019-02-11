@@ -110,6 +110,12 @@
       <trans-unit id="genericErrorMessage" datatype="html">
         <target>Something went wrong</target>
       </trans-unit>
+      <trans-unit id="userNameAlreadyExists" datatype="html">
+        <source>userNameAlreadyExists</source><target>This user name already exists</target>
+      </trans-unit>
+      <trans-unit id="unauthorized" datatype="html">
+        <source>unauthorized</source><target>Authentification failed</target>
+      </trans-unit>
       <trans-unit id="timer" datatype="html">
         <target>Timer</target>
       </trans-unit>

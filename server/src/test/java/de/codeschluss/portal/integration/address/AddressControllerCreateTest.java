@@ -1,18 +1,19 @@
 package de.codeschluss.portal.integration.address;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.mockito.BDDMockito.given;
 import de.codeschluss.portal.components.address.AddressController;
 import de.codeschluss.portal.components.address.AddressEntity;
+import de.codeschluss.portal.components.address.bingmaps.MapService;
 import de.codeschluss.portal.core.api.dto.FilterSortPaginate;
 import de.codeschluss.portal.core.exception.BadParamsException;
-import de.codeschluss.portal.core.exception.DuplicateEntryException;
-
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -26,12 +27,16 @@ public class AddressControllerCreateTest {
   @Autowired
   private AddressController controller;
 
+  @MockBean
+  private MapService mapService;
+
   @Test
   @WithUserDetails("super@user")
   public void createSuperUserOk() throws Exception {
     String suburbId = "00000000-0000-0000-0005-100000000000";
-    AddressEntity address = newAddress("1", "createSuperUserOk", "1111", "createSuperUserOk",
-        suburbId);
+    AddressEntity address =
+        newAddress("1", "createSuperUserOk", "1111", "createSuperUserOk", suburbId);
+    given(this.mapService.retrieveExternalAddress(Mockito.any())).willReturn(address);
 
     controller.create(address);
 
@@ -44,6 +49,7 @@ public class AddressControllerCreateTest {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createProviderUserOk", "1111", "createProviderUserOk",
         suburbId);
+    given(this.mapService.retrieveExternalAddress(Mockito.any())).willReturn(address);
 
     controller.create(address);
 
@@ -66,15 +72,6 @@ public class AddressControllerCreateTest {
     String suburbId = "00000000-0000-0000-0005-100000000000";
     AddressEntity address = newAddress("1", "createNotValidPostalCodeDenied", null,
         "createNotValidPostalCodeDenied", suburbId);
-
-    controller.create(address);
-  }
-
-  @Test(expected = DuplicateEntryException.class)
-  @WithUserDetails("super@user")
-  public void createSuperUserDuplicated() throws Exception {
-    String suburbId = "00000000-0000-0000-0005-100000000000";
-    AddressEntity address = newAddress("1", "wuppertal", "42103", "address1", suburbId);
 
     controller.create(address);
   }

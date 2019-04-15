@@ -34,9 +34,9 @@ const PublicRoutes = [
     data: {
       activities: CrudJoiner.of(ActivityModel, {
         size: 15,
-        dir: 'asc',
+        dir: 'desc',
         page: 0,
-        sort: 'schedules.startDate',
+        sort: 'schedules.modified',
         current: true
       })
         .with('category')

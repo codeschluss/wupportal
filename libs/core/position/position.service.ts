@@ -5,10 +5,10 @@ import { from, Observable, of } from 'rxjs';
 export class PositionService {
 
   public navigatorPositionResponse(): Observable<Position> {
-    const locator = navigator.geolocation;
+    const locator = navigator.geolocation.getCurrentPosition;
 
     if (locator) {
-      return from(new Promise((resolve, reject) => locator.getCurrentPosition(
+      return from(new Promise<Position>((resolve, reject) => locator(
         (position) => resolve(position),
         (error) => reject(error),
         { enableHighAccuracy: true }

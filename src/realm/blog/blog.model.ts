@@ -1,4 +1,4 @@
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { BlogEntity } from '../../api/models/blog-entity';
 import { ActivityModel } from '../activity/activity.model';

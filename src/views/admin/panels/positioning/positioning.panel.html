@@ -1,0 +1,57 @@
+<header class="mat-title">
+  <i18n i18n="@@positioningPanel">positioningPanel</i18n>
+  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
+    <i18n i18n="@@actions">actions</i18n>
+  </button>
+</header>
+
+<mat-menu #actions="matMenu">
+  <button mat-menu-item (click)="create('suburbs')">
+    <i18n i18n="@@createSuburb">createSuburb</i18n>
+  </button>
+</mat-menu>
+
+<mat-tab-group [selectedIndex]="index">
+  <mat-tab id="suburbs">
+    <ng-template matTabLabel>
+      <i18n i18n="@@suburbs">suburbs</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <suburb-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </suburb-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="addresses">
+    <ng-template matTabLabel>
+      <i18n i18n="@@addresses">addresses</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <address-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </address-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

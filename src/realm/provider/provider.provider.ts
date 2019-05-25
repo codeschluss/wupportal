@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
-import { BaseService, CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { empty } from 'rxjs';
+import { BaseService, CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
+import { EMPTY } from 'rxjs';
 import { ActivityModel } from '../activity/activity.model';
 import { OrganisationModel } from '../organisation/organisation.model';
 import { ProviderModel } from '../provider/provider.model';
@@ -13,17 +13,17 @@ export class ProviderProvider
   protected linked: CrudLink[] = [
     {
       field: 'activities',
-      method: () => empty(),
+      method: () => EMPTY,
       model: ActivityModel
     },
     {
       field: 'organisation',
-      method: () => empty(),
+      method: () => EMPTY,
       model: OrganisationModel
     },
     {
       field: 'user',
-      method: () => empty(),
+      method: () => EMPTY,
       model: UserModel
     }
   ];

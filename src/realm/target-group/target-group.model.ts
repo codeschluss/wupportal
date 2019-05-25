@@ -1,4 +1,4 @@
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { TargetGroupEntity } from '../../api/models/target-group-entity';
 import { Translatable } from '../translation/translation.base';
 

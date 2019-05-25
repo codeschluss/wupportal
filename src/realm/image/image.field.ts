@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BaseFieldComponent } from '@portal/forms';
+import { BaseFieldComponent } from '@wooportal/forms';
 import { fromEvent } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { ImageModel } from './image.model';

@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { empty, Observable } from 'rxjs';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
+import { EMPTY, Observable } from 'rxjs';
 import { TagControllerService } from '../../api/services/tag-controller.service';
 import { LanguageModel } from '../language/language.model';
 import { TagModel } from './tag.model';
@@ -23,7 +23,7 @@ export class TagProvider
   protected linked: CrudLink[] = [
     {
       field: 'language',
-      method: () => empty(),
+      method: () => EMPTY,
       model: LanguageModel
     },
     {

@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Box } from '@portal/core';
-import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { Box } from '@wooportal/core';
+import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityModel } from '../activity/activity.model';

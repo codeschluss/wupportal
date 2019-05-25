@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { SuburbControllerService } from '../../api/services/suburb-controller.service';
 import { SuburbModel } from './suburb.model';

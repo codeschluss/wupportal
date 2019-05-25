@@ -1,27 +1,27 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../target/@portal/core",
+  "dest": "../../target/@wooportal/core",
   "lib": {
     "entryFile": "index.ts",
     "umdModuleIds": {
-      "@angular-devkit/build-ng-packagr": "0.12.2",
-      "@angular/animations": "7.2.1",
-      "@angular/cdk": "7.2.1",
-      "@angular/common": "7.2.1",
-      "@angular/cli": "7.2.2",
-      "@angular/compiler": "7.2.1",
-      "@angular/compiler-cli": "7.2.1",
-      "@angular/core": "7.2.1",
-      "@angular/forms": "7.2.1",
-      "@angular/material": "7.2.1",
-      "@angular/platform-browser": "7.2.1",
-      "@angular/router": "7.2.1",
-      "@ngx-pwa/local-storage": "7.4.0",
+      "@angular-devkit/build-ng-packagr": "0.13.9",
+      "@angular/animations": "7.2.15",
+      "@angular/cdk": "7.3.7",
+      "@angular/common": "7.2.15",
+      "@angular/cli": "7.3.9",
+      "@angular/compiler": "7.2.15",
+      "@angular/compiler-cli": "7.2.15",
+      "@angular/core": "7.2.15",
+      "@angular/forms": "7.2.15",
+      "@angular/material": "7.3.7",
+      "@angular/platform-browser": "7.2.15",
+      "@angular/router": "7.2.15",
+      "@ngx-pwa/local-storage": "7.4.2",
       "@ngx-translate/i18n-polyfill": "1.0.0",
-      "ng-packagr": "4.6.0",
-      "rxjs": "6.3.3",
-      "tsickle": "0.34.0",
-      "typescript": "3.2.2"
+      "ng-packagr": "4.7.1",
+      "rxjs": "6.5.2",
+      "tsickle": "0.34.2",
+      "typescript": "3.2.4"
     }
   }
 }

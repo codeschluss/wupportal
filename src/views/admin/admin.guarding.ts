@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
-import { TokenProvider } from '@portal/core';
+import { TokenProvider } from '@wooportal/core';
 import { take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 
@@ -48,7 +48,7 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
 
         case state.url.startsWith('/admin/edit/activities/'):
         return claimed.superUser
-          || claimed.activityProvider.includes(this.uuid(state.url))
+          || claimed.activityProvider.includes(this.uuid(state.url));
           // || claimed.organisationAdmin.includes(item.organisation.id);
 
         case state.url.startsWith('/admin/edit/organisations/'):

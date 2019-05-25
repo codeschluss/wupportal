@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
+import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ConfigurationModel } from './configuration.model';
@@ -23,13 +23,13 @@ import { ConfigurationModel } from './configuration.model';
           <i18n i18n="@@mapZoomfactor">mapZoomfactor</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalMail'">
-          <i18n i18n="@@portalMail">portalMail</i18n>
+          <i18n i18n="@@wooportalMail">portalMail</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalName'">
-          <i18n i18n="@@portalName">portalName</i18n>
+          <i18n i18n="@@wooportalName">portalName</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalSubtitle'">
-          <i18n i18n="@@portalSubtitle">portalSubtitle</i18n>
+          <i18n i18n="@@wooportalSubtitle">portalSubtitle</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

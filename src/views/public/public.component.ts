@@ -1,11 +1,23 @@
-import { Component } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { TokenProvider } from '@wooportal/core';
 
 @Component({
-  template: `<router-outlet></router-outlet>`,
+  template: `
+    <h1>Hello World, I'm SSR!</h1>
+    <router-outlet></router-outlet>
+  `
 })
 
 export class PublicComponent {
 
-  public static readonly imports = [];
+  public constructor(
+    @Inject(PLATFORM_ID) platformId: any,
+    tokenProvider: TokenProvider
+  ) {
+    if (isPlatformBrowser(platformId)) {
+      console.log(tokenProvider);
+    }
+  }
 
- }
+}

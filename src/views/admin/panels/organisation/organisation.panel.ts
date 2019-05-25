@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Box, CrudJoiner, False, True } from '@portal/core';
+import { Box, CrudJoiner, False, True } from '@wooportal/core';
+import { flatMap } from 'lodash';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/activity/activity.model';
 import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
@@ -34,14 +35,12 @@ export class OrganisationPanelComponent extends BasePanel {
   }
 
   public get providers(): ProviderModel[] {
-    return this.organisations
-      .flatMap((organisation) => this.provided(organisation))
+    return flatMap(this.organisations, (i) => this.provided(i))
       .filter((provider) => provider.approved);
   }
 
   public get requests(): ProviderModel[] {
-    return this.organisations
-      .flatMap((organisation) => this.provided(organisation))
+    return flatMap(this.organisations, (i) => this.provided(i))
       .filter((provider) => !provider.approved);
   }
 

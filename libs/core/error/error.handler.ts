@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { inspect } from 'util';
@@ -10,11 +11,12 @@ export class CoreErrorHandler implements ErrorHandler {
 
   public constructor(
     private dialog: MatDialog,
+    private location: Location,
     private snackbar: MatSnackBar,
     private zone: NgZone
   ) {
-    window.onerror = this.handleError.bind(this);
-    window.onunhandledrejection = this.handleRejection.bind(this);
+    onerror = this.handleError.bind(this);
+    onunhandledrejection = this.handleRejection.bind(this);
   }
 
   public handleError(error: any): void {
@@ -22,7 +24,7 @@ export class CoreErrorHandler implements ErrorHandler {
     this.throwError(Object.assign(new ErrorModel(), {
       error: error.constructor.name,
       message: inspect(error),
-      path: window.location.pathname,
+      path: this.location.path(true),
       raw: error,
       status: error.status || NaN
     }), error.stack);
@@ -33,7 +35,7 @@ export class CoreErrorHandler implements ErrorHandler {
     this.throwError(Object.assign(new ErrorModel(), {
       error: rejection.reason.constructor.name,
       message: inspect(rejection.reason),
-      path: window.location.pathname,
+      path: this.location.path(true),
       raw: rejection,
       status: rejection.reason.status || NaN
     }), rejection.reason.stack);

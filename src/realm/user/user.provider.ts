@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { empty, Observable } from 'rxjs';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
+import { EMPTY, Observable } from 'rxjs';
 import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { UserControllerService } from '../../api/services/user-controller.service';
@@ -38,12 +38,12 @@ export class UserProvider
     },
     {
       field: 'provider',
-      method: () => empty(),
+      method: () => EMPTY,
       model: ProviderModel
     },
     {
       field: 'providers',
-      method: () => empty(),
+      method: () => EMPTY,
       model: ProviderModel
     }
   ];

@@ -1,4 +1,4 @@
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { LanguageEntity } from '../../api/models/language-entity';
 
 export class LanguageModel

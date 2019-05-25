@@ -1,7 +1,7 @@
 import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AccessTokenModel, CrudModel, TokenProvider } from '@portal/core';
+import { AccessTokenModel, CrudModel, TokenProvider } from '@wooportal/core';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { BaseFieldComponent } from './base.field';

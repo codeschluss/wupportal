@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Box, CrudJoiner, CrudResolver, TokenProvider } from '@portal/core';
-import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@portal/forms';
+import { Box, CrudJoiner, CrudResolver, TokenProvider } from '@wooportal/core';
+import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
@@ -90,8 +90,8 @@ export class AddressFormComponent
       name: 'place',
       input: StringFieldComponent,
       tests: [Validators.required],
-      locked: !!ClientPackage.config.nominatim.city,
-      value: ClientPackage.config.nominatim.city
+      locked: !!ClientPackage.config.position.city,
+      value: ClientPackage.config.position.city
     },
     {
       name: 'longitude',

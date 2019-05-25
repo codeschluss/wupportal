@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JSONSchemaObject, LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, combineLatest, empty, Observable, of, Subscription, timer } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, Observable, of, Subscription, timer } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AuthTokens, StrictHttpResponse } from '../utils/api';
 import { AccessTokenModel } from './access-token.model';
@@ -14,13 +14,13 @@ export class TokenProvider {
 
   private refreshToken: BehaviorSubject<RefreshTokenModel>;
 
-  private timeout: Subscription = empty().subscribe();
+  private timeout: Subscription = EMPTY.subscribe();
 
   public get value(): Observable<AuthTokens> {
-    return combineLatest(
+    return combineLatest([
       this.accessToken.pipe(filter(Boolean)),
       this.refreshToken.pipe(filter(Boolean))
-    ).pipe(map(([accessToken, refreshToken]) => ({
+    ]).pipe(map(([accessToken, refreshToken]) => ({
       access: accessToken,
       refresh: refreshToken
     })));

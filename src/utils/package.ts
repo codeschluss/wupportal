@@ -22,11 +22,9 @@ export class ClientPackage {
       superUser: string,
       userId: string
     },
-    nominatim: {
-      city: string,
-      endpoint: string,
-      params: string
-    },
+    position: {
+      city: string
+    }
     translations: {
       defaultLocale: string
     }

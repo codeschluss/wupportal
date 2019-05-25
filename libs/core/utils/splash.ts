@@ -26,7 +26,7 @@ export class SplashHostComponent implements AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void {
     if (this.route.snapshot.firstChild) {
-      this.splash = this.dialog.open(SplashChildComponent, {
+      this.splash = this.dialog.open(this.constructor.prototype, {
         data: this.content,
         maxHeight: '80vh',
         maxWidth: '80vw'

@@ -38,6 +38,10 @@ export class CrudJoiner {
   }
 
   public get graph(): CrudGraph {
+    const merger = (nodes, node) => nodes.filter((n) => n.name !== node.name)
+      .concat(nodes.filter((n) => n.name === node.name).reduce((a, b) =>
+        Object.assign(a, { nodes: a.nodes.concat(b.nodes) }), node));
+
     const grapher = (graph: CrudGraph) => {
       graph.nodes = graph.nodes.map((node) => grapher(node));
       graph.nodes = graph.nodes.reduce((nodes, node) => {
@@ -48,10 +52,6 @@ export class CrudJoiner {
 
       return graph;
     };
-
-    const merger = (nodes, node) => nodes.filter((n) => n.name !== node.name)
-      .concat(nodes.filter((n) => n.name === node.name).reduce((a, b) =>
-        Object.assign(a, { nodes: a.nodes.concat(b.nodes) }), node));
 
     return grapher(this.joinGraph);
   }

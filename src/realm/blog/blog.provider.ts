@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { empty, Observable } from 'rxjs';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
+import { EMPTY, Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { BlogControllerService } from '../../api/services/blog-controller.service';
 import { ActivityModel } from '../activity/activity.model';
@@ -19,7 +19,7 @@ export class BlogProvider
     },
     {
       field: 'language',
-      method: () => empty(),
+      method: () => EMPTY,
       model: LanguageModel
     },
     {

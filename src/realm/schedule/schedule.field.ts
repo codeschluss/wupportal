@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseFieldComponent } from '@portal/forms';
+import { BaseFieldComponent } from '@wooportal/forms';
 import * as moment from 'moment';
 import { ScheduleModel } from './schedule.model';
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CrudJoiner } from '@portal/core';
+import { CrudJoiner } from '@wooportal/core';
 import { filter, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/activity/activity.model';
 import { BlogModel } from '../../../../realm/blog/blog.model';

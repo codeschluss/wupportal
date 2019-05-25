@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
-import { TokenProvider } from '@portal/core';
-import { empty } from 'rxjs';
+import { TokenProvider } from '@wooportal/core';
+import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Component({
@@ -69,7 +69,7 @@ export class ReloginDialogComponent implements OnInit {
       catchError(() => {
         this.password.patchValue(null);
         this.username.patchValue(null);
-        return empty();
+        return EMPTY;
       })
     ).subscribe(() => this.dialogRef.close(true));
   }

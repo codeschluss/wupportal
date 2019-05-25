@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Box, TokenProvider } from '@portal/core';
-import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@portal/forms';
+import { Box, TokenProvider } from '@wooportal/core';
+import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';

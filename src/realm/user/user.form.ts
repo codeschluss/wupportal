@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
-import { empty, Observable, Subscription } from 'rxjs';
+import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
+import { EMPTY, Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { UserModel } from './user.model';
 
@@ -81,7 +81,7 @@ export class UserFormComponent
 
   public model: Type<UserModel> = UserModel;
 
-  private changes: Subscription = empty().subscribe();
+  private changes: Subscription = EMPTY.subscribe();
 
   public ngAfterViewInit(): void {
     this.changes = this.group.valueChanges.subscribe((v) => this.validate(v));

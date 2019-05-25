@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, TokenResolver } from '@portal/core';
+import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, TokenResolver } from '@wooportal/core';
 import { forkJoin, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { BaseForm } from './base.form';
@@ -97,7 +97,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   protected get routing(this: any): Route {
-    Object.defineProperty(this.model, 'stepper', { value: this });
+    Object.defineProperty(this.model, 'stepper', {
+      configurable: true,
+      value: this
+    });
 
     return {
       path: `${this.root}/:uuid`,

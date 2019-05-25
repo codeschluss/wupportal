@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { empty, Observable } from 'rxjs';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
+import { EMPTY, Observable } from 'rxjs';
 import { PageControllerService } from 'src/api/services/page-controller.service';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { LanguageModel } from '../language/language.model';
@@ -14,7 +14,7 @@ export class PageProvider
   protected linked: CrudLink[] = [
     {
       field: 'language',
-      method: () => empty(),
+      method: () => EMPTY,
       model: LanguageModel
     },
     {

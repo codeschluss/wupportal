@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { LoadingProvider, Pathfinder, TokenProvider } from '@portal/core';
-import { empty, Subscription } from 'rxjs';
+import { LoadingProvider, Pathfinder, TokenProvider } from '@wooportal/core';
+import { EMPTY, Subscription } from 'rxjs';
 import { filter, map, mergeMap, startWith, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { ReloginDialogComponent } from './dialogs/relogin.dialog';
@@ -20,8 +20,6 @@ import { AccountPanelComponent } from './panels/account/account.panel';
 
 export class AdminComponent implements OnInit, OnDestroy {
 
-  private userId: string;
-
   public constructor(
     public loadingProvider: LoadingProvider,
     private dialog: MatDialog,
@@ -31,9 +29,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     private tokenProvider: TokenProvider
   ) { }
 
-  private navigator: Subscription = empty().subscribe();
+  private home: Subscription = EMPTY.subscribe();
 
-  private worker: Subscription = empty().subscribe();
+  private worker: Subscription = EMPTY.subscribe();
 
   public ngOnInit(): void {
     const claim = ClientPackage.config.jwtClaims.userId;
@@ -42,7 +40,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     userId ? this.work() : this.router.navigateByUrl('/');
 
     if (userId) {
-      this.navigator = this.router.events.pipe(
+      this.home = this.router.events.pipe(
         filter((event) => event instanceof NavigationEnd),
         map(() => !this.route.firstChild),
         startWith(!this.route.firstChild),
@@ -52,7 +50,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.navigator.unsubscribe();
+    this.home.unsubscribe();
     this.worker.unsubscribe();
   }
 

@@ -13,9 +13,9 @@ export class PositionService {
         (error) => reject(error),
         { enableHighAccuracy: true }
       )));
-    } else {
-      return of(null);
     }
+
+    return of(null);
   }
 
 }

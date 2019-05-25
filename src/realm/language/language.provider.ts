@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { LanguageControllerService } from '../../api/services/language-controller.service';
 import { LanguageModel } from './language.model';

@@ -1,28 +1,17 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
-import { CoreModule, CoreSettings } from '@portal/core';
-import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
+import { TransferHttpCacheModule } from '@nguniversal/common';
+import { CoreModule, CoreSettings } from '@wooportal/core';
 import { ApiConfiguration } from './api/api-configuration';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { RealmModule } from './realm/realm.module';
 import { ClientPackage } from './utils/package';
-import { FooterComponent } from './views/layout/footer.component';
-import { ImprintDialogComponent } from './views/layout/imprint.dialog.component';
-import { LangaugeChooserDialogComponent } from './views/layout/languagechooser.component';
 import { LayoutComponent } from './views/layout/layout.component';
-import { NavBarComponent } from './views/layout/navbar.component';
-import { InfoBottomComponent } from './views/public/login/info.bottomsheet.component';
-import { LoginComponent } from './views/public/login/login.component';
-import { RegisterComponent } from './views/public/login/register.component';
-import { SearchInputComponent } from './views/public/search/search.input.component';
 
 fontawesome.add(freeicons);
 
@@ -30,36 +19,16 @@ fontawesome.add(freeicons);
   bootstrap: [ClientComponent],
   declarations: [
     ClientComponent,
-    LoginComponent,
-    RegisterComponent,
-    LayoutComponent,
-    InfoBottomComponent,
-    FooterComponent,
-    NavBarComponent,
-    LangaugeChooserDialogComponent,
-    SearchInputComponent,
-    ImprintDialogComponent,
+    LayoutComponent
   ],
   imports: [
-    // TODO: move
+    BrowserModule.withServerTransition({ appId: 'ssr' }),
     BrowserAnimationsModule,
-    BrowserModule,
     ClientRouter,
     CoreModule,
     HttpClientModule,
     RealmModule,
-    LoginComponent.imports,
-    RegisterComponent.imports,
-    NavBarComponent.imports,
-    JwSocialButtonsModule,
-    FontAwesomeModule,
-    FormsModule,
-    FlexLayoutModule,
-  ],
-  entryComponents: [
-    InfoBottomComponent,
-    ImprintDialogComponent,
-    LangaugeChooserDialogComponent,
+    TransferHttpCacheModule
   ]
 })
 
@@ -73,8 +42,6 @@ export class ClientModule {
     coreSettings.apiAuthUrl = ClientPackage.config.api.authUrl;
     coreSettings.apiUrl = ClientPackage.config.api.rootUrl;
     coreSettings.apiRefreshUrl = ClientPackage.config.api.refreshUrl;
-    coreSettings.nominatimEndpoint = ClientPackage.config.nominatim.endpoint;
-    coreSettings.nominatimParams = ClientPackage.config.nominatim.params;
   }
 
 }

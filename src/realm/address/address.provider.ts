@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { AddressControllerService } from '../../api/services/address-controller.service';

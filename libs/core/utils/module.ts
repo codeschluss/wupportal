@@ -72,6 +72,7 @@ export class CoreModule {
   public constructor(
     injector: Injector
   ) {
+    // tslint:disable-next-line:deprecation
     providers.forEach((provider) => injector.get(provider));
   }
 

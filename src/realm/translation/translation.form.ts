@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CrudModel, SessionProvider, TokenProvider } from '@portal/core';
-import { BaseForm, FormField, SelectFieldComponent } from '@portal/forms';
-import { empty, merge, Observable, Subscription } from 'rxjs';
+import { CrudModel, SessionProvider, TokenProvider } from '@wooportal/core';
+import { BaseForm, FormField, SelectFieldComponent } from '@wooportal/forms';
+import { EMPTY, merge, Observable, Subscription } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
 import { ClientPackage } from '../../utils/package';
 import { LanguageModel } from '../language/language.model';
@@ -55,9 +55,9 @@ export class TranslationFormComponent<Model extends CrudModel>
 
   private language: LanguageModel;
 
-  private selection: Subscription = empty().subscribe();
+  private selection: Subscription = EMPTY.subscribe();
 
-  private values: Subscription = empty().subscribe();
+  private values: Subscription = EMPTY.subscribe();
 
   public get valid(): boolean {
     return true;

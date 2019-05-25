@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, FormField, StringFieldComponent } from '@portal/forms';
+import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
 import { TranslationBase } from '../translation/translation.base';
 import { TopicModel } from './topic.model';
 

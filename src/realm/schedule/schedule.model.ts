@@ -1,4 +1,4 @@
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { ScheduleEntity } from '../../api/models/schedule-entity';
 
 export class ScheduleModel

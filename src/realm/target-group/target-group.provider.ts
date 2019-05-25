@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { empty, Observable } from 'rxjs';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
+import { EMPTY, Observable } from 'rxjs';
 import { TargetGroupControllerService } from '../../api/services/target-group-controller.service';
 import { LanguageModel } from '../language/language.model';
 import { TargetGroupModel } from './target-group.model';
@@ -23,7 +23,7 @@ export class TargetGroupProvider
   protected linked: CrudLink[] = [
     {
       field: 'language',
-      method: () => empty(),
+      method: () => EMPTY,
       model: LanguageModel
     },
     {

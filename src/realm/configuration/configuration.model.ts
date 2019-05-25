@@ -1,4 +1,4 @@
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { ConfigurationEntity } from '../../api/models/configuration-entity';
 
 export class ConfigurationModel

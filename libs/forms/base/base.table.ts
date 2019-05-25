@@ -1,7 +1,7 @@
 import { AfterViewInit, ContentChildren, HostBinding, Input, OnInit, QueryList, Type, ViewChild } from '@angular/core';
 import { MatColumnDef, MatInput, MatPaginator, MatSort, MatTable, SortDirection } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@portal/core';
+import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@wooportal/core';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, ignoreElements, map, mergeMap, tap } from 'rxjs/operators';
 

@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@portal/core';
-import { BaseTable, TableColumn } from '@portal/forms';
+import { CrudJoiner } from '@wooportal/core';
+import { BaseTable, TableColumn } from '@wooportal/forms';
 import { ProviderModel } from './provider.model';
 
 @Component({

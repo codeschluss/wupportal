@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
-import { CrudModel, TokenProvider } from '@portal/core';
-import { BaseForm } from '@portal/forms';
+import { CrudModel, TokenProvider } from '@wooportal/core';
+import { BaseForm } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { TranslationProvider } from './translation.provider';
 

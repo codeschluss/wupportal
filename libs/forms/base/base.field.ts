@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, HostBinding, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { FormField } from './base.form';
 
 @Component({

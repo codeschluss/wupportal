@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
-import { CrudLink, CrudMethods, CrudProvider } from '@portal/core';
-import { empty, Observable } from 'rxjs';
+import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
+import { EMPTY, Observable } from 'rxjs';
 import { BaseService } from 'src/api/base-service';
 import { TopicControllerService } from 'src/api/services/topic-controller.service';
 import { LanguageModel } from '../language/language.model';
@@ -14,7 +14,7 @@ export class TopicProvider
   protected linked: CrudLink[] = [
     {
       field: 'language',
-      method: () => empty(),
+      method: () => EMPTY,
       model: LanguageModel
     },
     {

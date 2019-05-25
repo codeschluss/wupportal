@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TokenResolver } from '@portal/core';
+import { TokenResolver } from '@wooportal/core';
 import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
 import { AddressStepperComponent } from '../../realm/address/address.stepper';
 import { BlogStepperComponent } from '../../realm/blog/blog.stepper';
@@ -17,6 +17,8 @@ import { AdminComponent } from './admin.component';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
+import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
+import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
 
 @NgModule({
   exports: [RouterModule],
@@ -32,6 +34,8 @@ import { OrganisationPanelComponent } from './panels/organisation/organisation.p
         AccountPanelComponent.routing,
         ApplicationPanelComponent.routing,
         OrganisationPanelComponent.routing,
+        PositioningPanelComponent.routing,
+        PrivilegesPanelComponent.routing,
         {
           path: 'edit',
           children: [

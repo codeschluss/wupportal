@@ -16,7 +16,7 @@ export class LoadingInterceptor implements HttpInterceptor {
 
     this.loadingProvider.enqueue(request);
 
-    return Observable.create((observer) => {
+    return new Observable((observer) => {
       const subscription = next.handle(request).pipe(
         filter((event) => event instanceof HttpResponse)
       ).subscribe(

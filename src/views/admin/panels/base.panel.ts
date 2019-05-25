@@ -1,7 +1,7 @@
 import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MatTab, MatTabGroup } from '@angular/material';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudModel, CrudResolver, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@portal/core';
+import { CrudModel, CrudResolver, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
 import { UserProvider } from '../../../realm/user/user.provider';
@@ -72,8 +72,8 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    const id = (index) => tabs[index].nativeElement.id;
     const tabs = this.tabs.toArray();
+    const id = (index) => tabs[index].nativeElement.id;
 
     this.route.queryParams.subscribe((params) => this.index =
       tabs.findIndex((t) => t.nativeElement.id === params.tab));

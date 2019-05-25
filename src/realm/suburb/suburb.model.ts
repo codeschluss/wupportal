@@ -1,4 +1,4 @@
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { SuburbEntity } from '../../api/models/suburb-entity';
 
 export class SuburbModel

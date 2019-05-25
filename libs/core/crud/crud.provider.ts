@@ -79,7 +79,10 @@ export abstract class CrudProvider
   }
 
   protected based(model: Type<Model>): Type<Model> {
-    return Object.defineProperty(model, 'provider', { value: this });
+    return Object.defineProperty(model, 'provider', {
+      configurable: true,
+      value: this
+    });
   }
 
   protected call(method:

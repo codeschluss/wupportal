@@ -9,8 +9,4 @@ export class CoreSettings {
 
   public apiUrl: string;
 
-  public nominatimEndpoint: string;
-
-  public nominatimParams: string;
-
 }

@@ -1,16 +1,19 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": ".",
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2018", "esnext"],
+    "sourceMap": true,
+    "outDir": "target",
+    "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",
-    "paths": { "@portal/*": [ "target/@portal/*" ] },
-    "sourceMap": true,
-    "target": "es2015",
-    "typeRoots": ["node_modules/@types"]
-  },
-  "compileOnSave": false
+    "lib": ["dom", "es2018", "esnext"],
+    "typeRoots": ["node_modules/@types"],
+    "paths": {
+      "@wooportal/*": [ "target/@wooportal/*" ]
+    }
+  }
 }

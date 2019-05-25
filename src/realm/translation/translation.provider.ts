@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { Observable, of } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { TranslationControllerService } from '../../api/services/translation-controller.service';

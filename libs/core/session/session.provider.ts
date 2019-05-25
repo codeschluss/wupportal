@@ -45,9 +45,9 @@ export class SessionProvider {
     }));
   }
 
-  public acceptCookies(isCookieAccepted: boolean): void {
+  public acceptCookies(acceptCookies: boolean): void {
     this.session.next(Object.assign(this.session.value, {
-      isCookieAccepted: isCookieAccepted
+      acceptCookies: acceptCookies
     }));
   }
 

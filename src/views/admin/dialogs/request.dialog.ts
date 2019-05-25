@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MatInput, MatSelectionListChange } from '@angular/material';
-import { TokenProvider } from '@portal/core';
+import { TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, mergeMap, startWith, switchMap, take } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, mergeMap, startWith, take } from 'rxjs/operators';
 import { OrganisationModel } from '../../../realm/organisation/organisation.model';
 import { OrganisationProvider } from '../../../realm/organisation/organisation.provider';
 import { UserProvider } from '../../../realm/user/user.provider';
 
 @Component({
   styles: [`
-    :host { display: block; width: 480px; }
+    :host { display: block; max-width: 100%; width: 480px; }
     mat-form-field { width: 100%; }
   `],
   template: `
@@ -68,7 +68,7 @@ export class RequestDialogComponent implements OnInit {
   }
 
   public request(): void {
-    this.tokenProvider.value.pipe(take(1)).pipe(switchMap((tokens) =>
+    this.tokenProvider.value.pipe(take(1)).pipe(mergeMap((tokens) =>
       this.userProvider.linkOrganisations(tokens.access.id, this.ids))
     ).subscribe(() => this.dialog.close(true));
   }
@@ -80,10 +80,10 @@ export class RequestDialogComponent implements OnInit {
   }
 
   private suggest(label: string = ''): Observable<OrganisationModel[]> {
-    return forkJoin(
+    return forkJoin([
       this.organisationProvider.readAll({ approved: true, filter: label }),
       this.tokenProvider.value.pipe(take(1))
-    ).pipe(
+    ]).pipe(
       map(([items, tokens]) => items.filter((item) =>
         !tokens.access.adminOrgas.includes(item.id) &&
         !tokens.access.approvedOrgas.includes(item.id)

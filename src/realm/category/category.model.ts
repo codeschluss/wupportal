@@ -1,4 +1,4 @@
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { CategoryEntity } from '../../api/models/category-entity';
 import { Translatable } from '../translation/translation.base';
 

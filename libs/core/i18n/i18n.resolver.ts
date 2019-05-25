@@ -8,7 +8,7 @@ import { SessionProvider } from '../session/session.provider';
 @Injectable({ providedIn: 'root' })
 export class I18nResolver implements Resolve<string> {
 
-  public xliff: string;
+  public xliff: string = '';
 
   public constructor(
     private httpClient: HttpClient,
@@ -20,13 +20,10 @@ export class I18nResolver implements Resolve<string> {
   }
 
   private run(): Observable<string> {
-    return this.sessionProvider.value.pipe(take(1)).pipe(
-      mergeMap((session) => this.httpClient.get(
-        `/i18n/strings.${session.language}.xliff`,
-        { responseType: 'text' }
-      )),
-      tap((xliff) => this.xliff = xliff)
-    );
+    return this.sessionProvider.value.pipe(take(1)).pipe(mergeMap((session) => {
+      const path = `/i18n/strings.${session.language}.xliff`;
+      return this.httpClient.get(path, { responseType: 'text' });
+    }), tap((xliff) => this.xliff = xliff));
   }
 
 }

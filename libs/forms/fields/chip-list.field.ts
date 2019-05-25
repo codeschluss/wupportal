@@ -2,7 +2,7 @@ import { COMMA, ENTER, SEMICOLON, SPACE } from '@angular/cdk/keycodes';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { map } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
 

@@ -1,5 +1,5 @@
 
-import { CrudModel } from '@portal/core';
+import { CrudModel } from '@wooportal/core';
 import { TagEntity } from '../../api/models/tag-entity';
 import { Translatable } from '../translation/translation.base';
 

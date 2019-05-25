@@ -9,8 +9,6 @@ import 'zone.js/dist/zone-node';
 enableProdMode();
 
 global['navigator'] = { };
-global['onerror'] = false;
-global['onunhandledrejection'] = false;
 
 const client = {
   engine: express(),

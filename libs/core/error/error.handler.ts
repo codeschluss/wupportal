@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
-import { ErrorHandler, Injectable, NgZone } from '@angular/core';
+import { isPlatformBrowser, Location } from '@angular/common';
+import { ErrorHandler, Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { inspect } from 'util';
 import { ErrorBarComponent } from './error.bar';
@@ -10,13 +10,17 @@ import { ErrorModel } from './error.model';
 export class CoreErrorHandler implements ErrorHandler {
 
   public constructor(
+    @Inject(PLATFORM_ID) platform: any,
+
     private dialog: MatDialog,
     private location: Location,
     private snackbar: MatSnackBar,
     private zone: NgZone
   ) {
-    onerror = this.handleError.bind(this);
-    onunhandledrejection = this.handleRejection.bind(this);
+    if (isPlatformBrowser(platform)) {
+      window.onerror = this.handleError.bind(this);
+      window.onunhandledrejection = this.handleRejection.bind(this);
+    }
   }
 
   public handleError(error: any): void {

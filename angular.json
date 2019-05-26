@@ -8,7 +8,11 @@
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
-      "schematics": {},
+      "schematics": {
+        "@nativescript/schematics:component": {
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -20,7 +24,7 @@
             "main": "src/client.ts",
             "namedChunks": false,
             "ngswConfigPath": "service.json",
-            "index": "res/index.html",
+            "index": "res/Web/index.html",
             "polyfills": "src/utils/polyfills.ts",
             "outputHashing": "none",
             "outputPath": "target/@wooportal/client",
@@ -47,7 +51,7 @@
             ],
             "styles": [
               {
-                "input": "res/theme.scss",
+                "input": "src/app.web.scss",
                 "bundleName": "css/theme"
               }
             ]

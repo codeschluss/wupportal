@@ -1,0 +1,7 @@
+{
+  "appPath": "src",
+  "appResourcesPath": "res",
+  "nsext": ".tns",
+  "shared": true,
+  "useLegacyWorkflow": false
+}

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CrudJoiner } from '@wooportal/core';
-import { ConfigurationModel } from 'src/realm/configuration/configuration.model';
+import { ConfigurationModel } from '../../../../realm/configuration/configuration.model';
 import { BasePanel } from '../base.panel';
 
 @Component({

@@ -1,6 +1,6 @@
 export class CorePackage {
 
-  private static packageJson: any = require('libs/core/package.json');
+  private static packageJson: any = require('@wooportal/core/package.json');
 
   public static get bugs(): {
     email: string,

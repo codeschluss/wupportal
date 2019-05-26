@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/utils/express.ts"],
   "compilerOptions": {
     "module": "commonjs"
-  }
+  },
+  "include": [
+    "src/utils/express.ts"
+  ]
 }

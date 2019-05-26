@@ -32,14 +32,14 @@ const ClientRoutes = [
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forRoot(
-    [{
+  imports: [RouterModule.forRoot([
+    {
       path: '',
       children: ClientRoutes,
       component: LayoutComponent,
       resolve: ClientResolvers,
-    }]
-  )]
+    }
+  ])]
 })
 
 export class ClientRouter { }

@@ -1,8 +1,8 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
-import { PageControllerService } from 'src/api/services/page-controller.service';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
+import { PageControllerService } from '../../api/services/page-controller.service';
 import { LanguageModel } from '../language/language.model';
 import { TopicModel } from '../topic/topic.model';
 import { PageModel } from './page.model';

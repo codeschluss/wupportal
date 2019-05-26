@@ -10,10 +10,21 @@
     "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",
-    "lib": ["dom", "es2018", "esnext"],
-    "typeRoots": ["node_modules/@types"],
+    "lib": [
+      "dom",
+      "es2018",
+      "esnext"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "paths": {
-      "@wooportal/*": [ "target/@wooportal/*" ]
+      "~/*": [
+        "src/*"
+      ],
+      "@wooportal/*": [
+        "target/@wooportal/*"
+      ]
     }
   }
 }

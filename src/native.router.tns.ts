@@ -5,9 +5,13 @@ import { NativeScriptRouterModule } from 'nativescript-angular/router';
   exports: [NativeScriptRouterModule],
   imports: [NativeScriptRouterModule.forRoot([
     {
-        path: '',
-        redirectTo: '/',
-        pathMatch: 'full',
+      path: '',
+      loadChildren: './views/public/public.module#PublicModule'
+    },
+    {
+      path: '**',
+      pathMatch: 'full',
+      redirectTo: ''
     }
   ])]
 })

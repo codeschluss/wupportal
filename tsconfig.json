@@ -12,6 +12,8 @@
     "moduleResolution": "node",
     "lib": [
       "dom",
+      "es6",
+      "es2015.iterable",
       "es2018",
       "esnext"
     ],

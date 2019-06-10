@@ -84,7 +84,7 @@ import { ImageModel } from './image.model';
 export class ImageFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
 
-  @ViewChild('area')
+  @ViewChild('area', { static: false })
   public area: ElementRef;
 
   public caption: FormControl = new FormControl();

@@ -1,10 +1,13 @@
+import { JSONSchema } from '@ngx-pwa/local-storage';
+
 export class RefreshTokenModel {
 
-  public static readonly schema = {
+  public static readonly schema: JSONSchema = {
+    type: 'object',
     properties: {
       exp: { type: 'integer' },
       raw: { type: 'string' },
-      scopes: { items: { const: 'refresh' } },
+      scopes: { type: 'array', items: { type: 'string', const: 'refresh' } },
       sub: { type: 'string' }
     }
   };

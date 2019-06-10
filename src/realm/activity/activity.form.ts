@@ -176,10 +176,10 @@ export class ActivityFormComponent
     }
 
     if (!this.token[ClientPackage.config.jwtClaims.superUser]) {
-      this.fields[0].options = [...new Set([
+      this.fields[0].options = Array.from(new Set([
         ...this.token[ClientPackage.config.jwtClaims.organisationAdmin],
         ...this.token[ClientPackage.config.jwtClaims.organisationUser]
-      ])].map((id) => this.fields[0].options.find((o) => o.id === id));
+      ])).map((id) => this.fields[0].options.find((o) => o.id === id));
     }
   }
 

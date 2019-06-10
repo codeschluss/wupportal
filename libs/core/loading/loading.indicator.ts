@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { MatProgressBar } from '@angular/material';
+import { MatProgressBar } from '@angular/material/progress-bar';
 import { LoadingProvider } from './loading.provider';
 
 @Component({
@@ -15,7 +15,7 @@ import { LoadingProvider } from './loading.provider';
 
 export class LoadingIndicatorComponent implements AfterViewInit {
 
-  @ViewChild(MatProgressBar, { read: ElementRef })
+  @ViewChild(MatProgressBar, { read: ElementRef, static: true })
   private indicator: ElementRef;
 
   public constructor(

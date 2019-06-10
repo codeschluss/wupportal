@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MatInput, MatSelectionListChange } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatInput } from '@angular/material/input';
+import { MatSelectionListChange } from '@angular/material/list';
 import { TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, mergeMap, startWith, take } from 'rxjs/operators';
@@ -43,7 +45,7 @@ import { UserProvider } from '../../../realm/user/user.provider';
 
 export class RequestDialogComponent implements OnInit {
 
-  @ViewChild(MatInput)
+  @ViewChild(MatInput, { static: true })
   public filter: MatInput;
 
   public ids: string[] = [];

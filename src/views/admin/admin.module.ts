@@ -1,7 +1,15 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
-import { MatBadgeModule, MatButtonModule, MatDialogModule, MatDividerModule, MatListModule, MatMenuModule, MatPaginatorIntl, MatSlideToggleModule, MatTabsModule, MAT_TABS_CONFIG } from '@angular/material';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule, MAT_TABS_CONFIG } from '@angular/material/tabs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule } from '@wooportal/core';
 import { MatPagerIntl } from '@wooportal/forms';

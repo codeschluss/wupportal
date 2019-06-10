@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Type, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatChip, MatChipList } from '@angular/material';
+import { MatChip, MatChipList } from '@angular/material/chips';
 import { BaseForm, FormField } from '@wooportal/forms';
 import * as moment from 'moment';
 import { merge, Observable, of } from 'rxjs';
@@ -142,7 +142,7 @@ export class ScheduleFormComponent
   extends BaseForm<ScheduleModel>
   implements AfterViewInit {
 
-  @ViewChild(MatChipList)
+  @ViewChild(MatChipList, { static: false })
   public days: MatChipList;
 
   public fields: FormField[] = [

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { JSONSchemaObject, LocalStorage } from '@ngx-pwa/local-storage';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { SessionModel } from './session.model';
@@ -19,10 +19,10 @@ export class SessionProvider {
     this.session = new BehaviorSubject(null);
 
     localStorage.getItem<SessionModel>('clientSession', {
-      schema: SessionModel.schema as JSONSchemaObject
+      schema: SessionModel.schema
     }).pipe(
-      map((session) => session || new SessionModel()),
-      tap((session) => this.session.next(session))
+      map((session: SessionModel) => session || new SessionModel()),
+      tap((session: SessionModel) => this.session.next(session))
     ).subscribe(() => this.value.subscribe((session) =>
       localStorage.setItemSubscribe('clientSession', session)));
   }

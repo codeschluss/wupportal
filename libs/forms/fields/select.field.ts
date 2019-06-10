@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSelect } from '@angular/material';
+import { MatSelect } from '@angular/material/select';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -20,7 +20,7 @@ import { BaseFieldComponent } from '../base/base.field';
 export class SelectFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
 
-  @ViewChild(MatSelect)
+  @ViewChild(MatSelect, { static: true })
   public input: MatSelect;
 
   public select: FormControl = new FormControl();

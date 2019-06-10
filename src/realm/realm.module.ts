@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Injector, NgModule, Type } from '@angular/core';
-import { MatCardModule, MatDialogModule, MatListModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { BaseService, CoreModule, CrudModel, CrudProvider } from '@wooportal/core';
 import { BaseFieldComponent, BaseForm, BaseStepper, BaseTable, FormsModule } from '@wooportal/forms';

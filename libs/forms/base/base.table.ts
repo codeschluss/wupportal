@@ -1,5 +1,8 @@
 import { AfterViewInit, ContentChildren, HostBinding, Input, OnInit, QueryList, Type, ViewChild } from '@angular/core';
-import { MatColumnDef, MatInput, MatPaginator, MatSort, MatTable, SortDirection } from '@angular/material';
+import { MatInput } from '@angular/material/input';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, SortDirection } from '@angular/material/sort';
+import { MatColumnDef, MatTable } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@wooportal/core';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
@@ -19,16 +22,16 @@ export abstract class BaseTable<Model extends CrudModel>
   @Input()
   public items: Model[];
 
-  @ViewChild(MatPaginator)
+  @ViewChild(MatPaginator, { static: true })
   public pager: MatPaginator;
 
-  @ViewChild(MatInput)
+  @ViewChild(MatInput, { static: true })
   public searcher: MatInput;
 
-  @ViewChild(MatSort)
+  @ViewChild(MatSort, { static: true })
   public sorter: MatSort;
 
-  @ViewChild(MatTable)
+  @ViewChild(MatTable, { static: true })
   public table: MatTable<Model>;
 
   @ContentChildren(MatColumnDef)

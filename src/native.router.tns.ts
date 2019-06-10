@@ -6,7 +6,8 @@ import { NativeScriptRouterModule } from 'nativescript-angular/router';
   imports: [NativeScriptRouterModule.forRoot([
     {
       path: '',
-      loadChildren: './views/public/public.module#PublicModule'
+      loadChildren: () => import('./views/public/public.module')
+        .then((imported) => imported.PublicModule)
     },
     {
       path: '**',

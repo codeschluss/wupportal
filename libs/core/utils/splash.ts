@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 
 export class SplashHostComponent implements AfterViewInit, OnDestroy {
 
-  @ViewChild('content')
+  @ViewChild('content', { static: true })
   public content: TemplateRef<any>;
 
   private splash: MatDialogRef<SplashChildComponent>;

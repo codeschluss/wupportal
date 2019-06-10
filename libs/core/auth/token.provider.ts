@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { JSONSchemaObject, LocalStorage } from '@ngx-pwa/local-storage';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, combineLatest, EMPTY, Observable, of, Subscription, timer } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AuthTokens, StrictHttpResponse } from '../utils/api';
@@ -34,11 +34,11 @@ export class TokenProvider {
     this.refreshToken = new BehaviorSubject(null);
 
     localStorage.getItem<RefreshTokenModel>('refreshToken', {
-        schema: RefreshTokenModel.schema as JSONSchemaObject
+        schema: RefreshTokenModel.schema
     }).pipe(
-      mergeMap((token) => this.validate(token)),
-      map((tokens) => this.update(tokens)),
-      map((tokens) => this.work(tokens))
+      mergeMap((token: RefreshTokenModel) => this.validate(token)),
+      map((tokens: AuthTokens) => this.update(tokens)),
+      tap((tokens: AuthTokens) => this.work(tokens))
     ).subscribe(() => this.refreshToken.subscribe((token) =>
       localStorage.setItemSubscribe('refreshToken', token)));
   }

@@ -26,7 +26,7 @@ export function TRANSLATIONS_FACTORY(i18nResolver: I18nResolver) {
 
 export class I18nComponent implements AfterViewInit {
 
-  @ViewChild('text')
+  @ViewChild('text', { static: true })
   private text: ElementRef;
 
   public constructor(

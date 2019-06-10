@@ -1,7 +1,8 @@
 import { COMMA, ENTER, SEMICOLON, SPACE } from '@angular/cdk/keycodes';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { CrudModel } from '@wooportal/core';
 import { map } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
@@ -33,10 +34,10 @@ import { BaseFieldComponent } from '../base/base.field';
 export class ChipListFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
 
-  @ViewChild(MatAutocomplete)
+  @ViewChild(MatAutocomplete, { static: true })
   public auto: MatAutocomplete;
 
-  @ViewChild('input')
+  @ViewChild('input', { static: true })
   public input: ElementRef<HTMLInputElement>;
 
   public keys: number[] = [COMMA, ENTER, SEMICOLON, SPACE];

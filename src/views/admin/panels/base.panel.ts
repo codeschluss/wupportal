@@ -1,5 +1,6 @@
 import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { MatDialog, MatTab, MatTabGroup } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CrudModel, CrudResolver, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
@@ -12,7 +13,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   public index: number;
 
-  @ViewChild(MatTabGroup)
+  @ViewChild(MatTabGroup, { static: true })
   public tab: MatTabGroup;
 
   @ViewChildren(MatTab, { read: ElementRef })

@@ -1,6 +1,7 @@
 import { isPlatformBrowser, Location } from '@angular/common';
 import { ErrorHandler, Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { inspect } from 'util';
 import { ErrorBarComponent } from './error.bar';
 import { ErrorDialogComponent } from './error.dialog';

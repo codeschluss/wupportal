@@ -15,11 +15,13 @@ const ClientRoutes = [
     children: [
       {
         path: '',
-        loadChildren: './views/public/public.module#PublicModule'
+        loadChildren: () => import('./views/public/public.module')
+          .then((imported) => imported.PublicModule)
       },
       {
         path: 'admin',
-        loadChildren: './views/admin/admin.module#AdminModule'
+        loadChildren: () => import('./views/admin/admin.module')
+          .then((imported) => imported.AdminModule)
       },
       {
         path: '**',

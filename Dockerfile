@@ -6,10 +6,10 @@ RUN \
 #
 # packages
 apt-get update && \
-apt-get upgrade --no-install-recommends --yes && \
 apt-get install --no-install-recommends --yes \
   ca-certificates && \
 apt-get install --no-install-recommends --yes ${TMPKG:= \
+  git \
   gnupg \
   openjdk-8-jdk \
   unzip \
@@ -21,7 +21,7 @@ apt-get install --no-install-recommends --yes ${TMPKG:= \
 export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::") && \
 #
 # nodejs
-wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key \
+wget -O- https://deb.nodesource.com/gpgkey/nodesource.gpg.key \
   | apt-key add - && \
 echo "deb https://deb.nodesource.com/node_10.x $DISTRIB_CODENAME main" \
   > /etc/apt/sources.list.d/nodejs.list && \
@@ -31,7 +31,7 @@ apt-get install --no-install-recommends --yes nodejs && \
 # android-sdk
 cd $(mktemp -d) && \
 export ANDROID_HOME="$PWD" PATH="$PATH:$PWD/tools:$PWD/platform-tools" && \
-wget -qO- https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
+wget -O- https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
   > android-sdk.zip && \
 unzip android-sdk.zip && \
 yes | tools/bin/sdkmanager --licenses && \
@@ -44,6 +44,7 @@ tools/bin/sdkmanager \
 #
 # wooportal/client
 (cd /opt/wooportal && npm install) && \
+(cd /opt/wooportal && npm run setup) && \
 (cd /opt/wooportal && npm run build:app) && \
 (cd /opt/wooportal && npm run build:ssr) && \
 (cd /opt/wooportal && npm run build:oid) && \

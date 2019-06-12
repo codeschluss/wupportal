@@ -95,7 +95,12 @@
           "options": {
             "main": "src/server.ts",
             "outputPath": "target/@wooportal/server",
-            "tsConfig": "server.json"
+            "tsConfig": "server.json",
+            "sourceMap": false,
+            "optimization": {
+              "scripts": true,
+              "styles": true
+            }
           }
         }
       }

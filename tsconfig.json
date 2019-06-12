@@ -5,6 +5,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "outDir": "target",
     "target": "es5",

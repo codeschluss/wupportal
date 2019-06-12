@@ -1,12 +1,20 @@
+import * as packageJson from '../../package.json';
+
 export class ClientPackage {
 
-  private static packageJson: any = require('package.json');
+  public static get author(): {
+    name: string,
+    email: string,
+    url: string
+  } {
+    return packageJson.author;
+  }
 
   public static get bugs(): {
     email: string,
     url: string
   } {
-    return this.packageJson.bugs;
+    return packageJson.bugs;
   }
 
   public static get config(): {
@@ -24,19 +32,19 @@ export class ClientPackage {
     },
     position: {
       city: string
-    }
+    },
     translations: {
       defaultLocale: string
     }
   } {
-    return this.packageJson.config;
+    return packageJson.config;
   }
 
   public static get repository(): {
     type: string,
     url: string
   } {
-    return this.packageJson.repository;
+    return packageJson.repository;
   }
 
 }

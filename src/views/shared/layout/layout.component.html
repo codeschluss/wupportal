@@ -1,10 +1,10 @@
 <mat-toolbar>
   <h1>{{ title | async }}</h1>
   <span style="flex-grow: 1;"></span>
-  <icon-compat
-    [id]="(drawer.visible | async) ? 'times' : 'bars'"
-    (click)="toggleDrawer()">
-  </icon-compat>
+  <button mat-icon-button (click)="toggleDrawer()">
+    <icon-compat [name]="(drawer.visible | async) ? 'times' : 'bars'">
+    </icon-compat>
+  </button>
 </mat-toolbar>
 
 <drawer-compat #drawer>

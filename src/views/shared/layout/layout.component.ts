@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { DrawerCompat } from '../compat/drawer/drawer.compat';
 
 @Component({
-  styleUrls: ['layout.component.scss'],
+  selector: 'layout-component',
   templateUrl: 'layout.component.html'
 })
 

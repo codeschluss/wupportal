@@ -17,23 +17,23 @@ export class IconCompat extends ContentView
   implements OnInit, OnChanges {
 
   @Input()
-  public id: string;
+  public name: string;
 
   public src: ImageSourceSVG;
 
   public ngOnInit(): void {
-      this.src = this.getIcon(this.id);
+      this.src = this.getIcon(this.name);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.id) {
-      this.src = this.getIcon(this.id);
+    if (changes.name) {
+      this.src = this.getIcon(this.name);
     }
   }
 
-  private getIcon(id: string): ImageSourceSVG {
+  private getIcon(name: string): ImageSourceSVG {
     return fromData(icon({
-      iconName: id as any,
+      iconName: name as any,
       prefix: 'fas'
     }).html[0]);
   }

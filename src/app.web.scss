@@ -18,10 +18,20 @@ $theme: mat-light-theme(
 
 /* -------------------------------------------------------------------------- */
 
-client-component > router-outlet + ng-component {
+layout-component {
   bottom: 0;
   left: 0;
   position: fixed;
   right: 0;
   top: 0;
+
+  & > drawer-compat {
+    mat-drawer-container {
+      height: 100%;
+
+      & > mat-drawer {
+        min-width: 240px;
+      }
+    }
+  }
 }

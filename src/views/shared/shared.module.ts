@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -16,6 +17,7 @@ const compat: Type<any>[] = [
 
 const materials: Type<any>[] = [
   FontAwesomeModule,
+  MatButtonModule,
   MatListModule,
   MatSidenavModule,
   MatToolbarModule

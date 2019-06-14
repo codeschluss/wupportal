@@ -3,10 +3,7 @@
     android.position="actionBar"
     ios.position="right"
     (tap)="toggleDrawer()">
-    <icon-compat
-      height="25"
-      width="50"
-      [id]="(drawer.visible | async) ? 'times' : 'bars'">
+    <icon-compat [name]="(drawer.visible | async) ? 'times' : 'bars'">
     </icon-compat>
   </ActionItem>
 </ActionBar>
@@ -16,13 +13,25 @@
     <page-router-outlet></page-router-outlet>
   </ng-template>
   <ng-template #menu>
-    <ScrollView row="1">
-      <StackLayout>
-        <Label text="One"></Label>
-        <Label text="Two"></Label>
-        <Label text="Three"></Label>
-        <Label text="Close" (tap)="toggleDrawer()"></Label>
-      </StackLayout>
-    </ScrollView>
+    <scroll-view>
+      <stack-layout>
+        <stack-layout orientation="horizontal">
+          <icon-compat name="home"></icon-compat>
+          <Label text="Home"></Label>
+        </stack-layout>
+        <stack-layout orientation="horizontal">
+          <icon-compat name="home"></icon-compat>
+          <Label text="Timer"></Label>
+        </stack-layout>
+        <stack-layout orientation="horizontal">
+          <icon-compat name="home"></icon-compat>
+          <Label text="Organisations"></Label>
+        </stack-layout>
+        <stack-layout orientation="horizontal">
+          <icon-compat name="home"></icon-compat>
+          <Label text="About"></Label>
+        </stack-layout>
+      </stack-layout>
+    </scroll-view>
   </ng-template>
 </drawer-compat>

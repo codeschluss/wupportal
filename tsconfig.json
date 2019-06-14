@@ -29,5 +29,10 @@
         "target/@wooportal/*"
       ]
     }
-  }
+  },
+  "exclude": [
+    "**/*.android.ts",
+    "**/*.ios.ts",
+    "**/*.tns.ts"
+  ]
 }

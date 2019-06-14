@@ -1,0 +1,41 @@
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { fromData, ImageSourceSVG } from '@teammaestro/nativescript-svg';
+import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
+import { ContentView } from 'tns-core-modules/ui/page/page';
+
+if (!isKnownView('icon-compat')) {
+  registerElement('icon-compat', () => ContentView);
+}
+
+@Component({
+  selector: 'icon-compat',
+  template: `<SVGImage [imageSource]="src"></SVGImage>`
+})
+
+export class IconCompat extends ContentView
+  implements OnInit, OnChanges {
+
+  @Input()
+  public id: string;
+
+  public src: ImageSourceSVG;
+
+  public ngOnInit(): void {
+      this.src = this.getIcon(this.id);
+  }
+
+  public ngOnChanges(changes: SimpleChanges) {
+    if (changes.id) {
+      this.src = this.getIcon(this.id);
+    }
+  }
+
+  private getIcon(id: string): ImageSourceSVG {
+    return fromData(icon({
+      iconName: id as any,
+      prefix: 'fas'
+    }).html[0]);
+  }
+
+}

@@ -9,7 +9,9 @@ export class LoadingProvider {
 
   private requests: HttpRequest<any>[] = [];
 
-  public get value(): Observable<number> { return this.loading.asObservable(); }
+  public get value(): Observable<number> {
+    return this.loading.asObservable();
+  }
 
   public enqueue(request: HttpRequest<any>): void {
     this.requests.push(request);

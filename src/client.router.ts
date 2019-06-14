@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NgModule, Type } from '@angular/core';
+import { Resolve, Route, RouterModule } from '@angular/router';
 import { I18nResolver, SessionResolver } from '@wooportal/core';
-import { LayoutComponent } from './views/layout/layout.component';
+import { LayoutComponent } from './views/shared/layout/layout.component';
 
-const ClientResolvers = {
+const resolvers: { [key: string]: Type<Resolve<any>> } = {
   session: SessionResolver,
   xliff: I18nResolver
 };
 
-const ClientRoutes = [
+const routes: Route[] = [
   {
     path: '',
-    resolve: ClientResolvers,
+    resolve: resolvers,
     children: [
       {
         path: '',
@@ -37,9 +37,9 @@ const ClientRoutes = [
   imports: [RouterModule.forRoot([
     {
       path: '',
-      children: ClientRoutes,
+      children: routes,
       component: LayoutComponent,
-      resolve: ClientResolvers,
+      resolve: resolvers,
     }
   ])]
 })

@@ -33,9 +33,6 @@ client.engine.engine('html', ngExpressEngine({
 client.engine.set('view engine', 'html');
 client.engine.set('views', `${client.root}/client`);
 
-// Example Express Rest API endpoints
-// app.get('/api/**', (req, res) => { });
-// Server static files from /browser
 client.engine.get('*.*', express.static(`${client.root}/client`, {
   maxAge: '1y'
 }));

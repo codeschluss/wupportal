@@ -1,5 +1,6 @@
 import { Type } from '@angular/core';
 import { BaseService, ReadParams } from '../utils/api';
+import { Base64 } from '../utils/base64';
 import { CrudModel } from './crud.model';
 import { CrudProvider } from './crud.provider';
 
@@ -33,7 +34,7 @@ export class CrudJoiner {
     }));
 
     return tree.nodes.length
-      ? btoa(JSON.stringify(builder(tree.nodes)))
+      ? Base64.encode(JSON.stringify(builder(tree.nodes)))
       : null;
   }
 

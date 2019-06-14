@@ -18,9 +18,9 @@ export class FileValueAccessorDirective implements ControlValueAccessor {
   @HostListener('blur')
   public onTouched = () => { }
 
-  public registerOnChange(fn: (_: any) => {}): void { this.onChange = fn; }
+  public registerOnChange(fn: (_: any) => { }): void { this.onChange = fn; }
 
-  public registerOnTouched(fn: () => {}): void { this.onTouched = fn; }
+  public registerOnTouched(fn: () => { }): void { this.onTouched = fn; }
 
   public writeValue(value): void { }
 

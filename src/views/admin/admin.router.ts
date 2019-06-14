@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TokenResolver } from '@wooportal/core';
-import { ActivityStepperComponent } from '../../realm/activity/activity.stepper';
-import { AddressStepperComponent } from '../../realm/address/address.stepper';
-import { BlogStepperComponent } from '../../realm/blog/blog.stepper';
-import { CategoryStepperComponent } from '../../realm/category/category.stepper';
-import { LanguageStepperComponent } from '../../realm/language/language.stepper';
-import { OrganisationStepperComponent } from '../../realm/organisation/organisation.stepper';
-import { PageStepperComponent } from '../../realm/page/page.stepper';
-import { SuburbStepperComponent } from '../../realm/suburb/suburb.stepper';
-import { TagStepperComponent } from '../../realm/tag/tag.stepper';
-import { TargetGroupStepperComponent } from '../../realm/target-group/target-group.stepper';
-import { TopicStepperComponent } from '../../realm/topic/topic.stepper';
-import { UserStepperComponent } from '../../realm/user/user.stepper';
 import { AdminComponent } from './admin.component';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
 import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
+import { ActivityStepperComponent } from './steppers/activity.stepper';
+import { AddressStepperComponent } from './steppers/address.stepper';
+import { BlogStepperComponent } from './steppers/blog.stepper';
+import { CategoryStepperComponent } from './steppers/category.stepper';
+import { LanguageStepperComponent } from './steppers/language.stepper';
+import { OrganisationStepperComponent } from './steppers/organisation.stepper';
+import { PageStepperComponent } from './steppers/page.stepper';
+import { SuburbStepperComponent } from './steppers/suburb.stepper';
+import { TagStepperComponent } from './steppers/tag.stepper';
+import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
+import { TopicStepperComponent } from './steppers/topic.stepper';
+import { UserStepperComponent } from './steppers/user.stepper';
 
 @NgModule({
   exports: [RouterModule],

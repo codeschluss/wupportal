@@ -15,3 +15,13 @@ $theme: mat-light-theme(
 
 @include angular-material-theme($theme);
 @include angular-material-text-color($theme);
+
+/* -------------------------------------------------------------------------- */
+
+client-component > router-outlet + ng-component {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}

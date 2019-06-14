@@ -12,9 +12,9 @@ import { AccountPanelComponent } from './panels/account/account.panel';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['admin.scss'],
   template: `
-    <main id="admin" [class.disabled]="loadingProvider.value | async">
+    <div id="admin" [class.disabled]="loadingProvider.value | async">
       <router-outlet></router-outlet>
-    </main>
+    </div>
   `
 })
 

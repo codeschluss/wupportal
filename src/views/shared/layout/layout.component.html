@@ -1,0 +1,22 @@
+<mat-toolbar>
+  <h1>{{ title | async }}</h1>
+  <span style="flex-grow: 1;"></span>
+  <icon-compat
+    [id]="(drawer.visible | async) ? 'times' : 'bars'"
+    (click)="toggleDrawer()">
+  </icon-compat>
+</mat-toolbar>
+
+<drawer-compat #drawer>
+  <ng-template #main>
+    <router-outlet></router-outlet>
+  </ng-template>
+  <ng-template #menu>
+    <mat-action-list>
+      <button mat-list-item>One</button>
+      <button mat-list-item>Two</button>
+      <button mat-list-item>Three</button>
+      <button mat-list-item (click)="toggleDrawer()">Close</button>
+    </mat-action-list>
+  </ng-template>
+</drawer-compat>

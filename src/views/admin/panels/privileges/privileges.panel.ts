@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Box, CrudJoiner, False, True } from '@wooportal/core';
 import { filter, mergeMap } from 'rxjs/operators';
-import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
-import { UserModel } from '../../../../realm/user/user.model';
+import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { UserModel } from '../../../../base/models/user.model';
 import { BasePanel } from '../base.panel';
 
 @Component({

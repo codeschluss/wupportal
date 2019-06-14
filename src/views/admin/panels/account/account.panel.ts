@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CrudJoiner } from '@wooportal/core';
 import { filter, mergeMap } from 'rxjs/operators';
-import { ActivityModel } from '../../../../realm/activity/activity.model';
-import { BlogModel } from '../../../../realm/blog/blog.model';
-import { OrganisationModel } from '../../../../realm/organisation/organisation.model';
-import { ProviderModel } from '../../../../realm/provider/provider.model';
-import { UserModel } from '../../../../realm/user/user.model';
+import { ActivityModel } from '../../../../base/models/activity.model';
+import { BlogModel } from '../../../../base/models/blog.model';
+import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { ProviderModel } from '../../../../base/models/provider.model';
+import { UserModel } from '../../../../base/models/user.model';
 import { RequestDialogComponent } from '../../dialogs/request.dialog';
 import { BasePanel } from '../base.panel';
 
@@ -53,6 +53,10 @@ export class AccountPanelComponent extends BasePanel {
 
   public get user(): UserModel {
     return this.route.snapshot.data.user || { };
+  }
+
+  public get title(): string {
+    return this.group.get('name') ? this.group.get('name').value : '...';
   }
 
   public approved(item: OrganisationModel): boolean {

@@ -2,10 +2,10 @@ import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@
 import { MatDialog } from '@angular/material/dialog';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudModel, CrudResolver, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
+import { CrudModel, CrudResolver, I18nComponent, Pathfinder, Selfrouter, Title, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
-import { UserProvider } from '../../../realm/user/user.provider';
+import { UserProvider } from '../../../base/providers/user.provider';
 import { ClientPackage } from '../../../utils/package';
 import { DeleteDialogComponent } from '../dialogs/delete.dialog';
 
@@ -18,6 +18,9 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   @ViewChildren(MatTab, { read: ElementRef })
   public tabs: QueryList<ElementRef>;
+
+  @ViewChildren(I18nComponent)
+  public translations: QueryList<I18nComponent>;
 
   protected abstract path: string;
 
@@ -61,13 +64,18 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     };
   }
 
+  public get title(): string {
+    return this.translations.first.text;
+  }
+
   public constructor(
     protected dialog: MatDialog,
     protected pathfinder: Pathfinder,
     protected route: ActivatedRoute,
     protected router: Router,
     protected tokenProvider: TokenProvider,
-    protected userProvider: UserProvider
+    protected userProvider: UserProvider,
+    private titleService: Title
   ) {
     super();
   }
@@ -75,6 +83,8 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   public ngAfterViewInit(): void {
     const tabs = this.tabs.toArray();
     const id = (index) => tabs[index].nativeElement.id;
+
+    this.titleService.set(this.title);
 
     this.route.queryParams.subscribe((params) => this.index =
       tabs.findIndex((t) => t.nativeElement.id === params.tab));

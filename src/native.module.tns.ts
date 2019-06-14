@@ -1,24 +1,41 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
+import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
+import { CoreModule, CoreSettings } from '@wooportal/core';
+import { NativeScriptAnimationsModule } from 'nativescript-angular/animations';
+import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
+import { BaseModule } from './base/base.module';
 import { NativeComponent } from './native.component.tns';
 import { NativeRouter } from './native.router.tns';
+import { ClientManifest } from './utils/manifest';
+import { SharedModule } from './views/shared/shared.module';
 
-// Uncomment and add to NgModule imports if you need to use two-way binding
-// import { NativeScriptFormsModule } from 'nativescript-angular/forms';
+fontawesome.add(freeicons);
 
 @NgModule({
-  declarations: [
-    NativeComponent
-  ],
+  bootstrap: [NativeComponent],
+  declarations: [NativeComponent],
   imports: [
+    BaseModule,
+    CoreModule,
     NativeRouter,
+    NativeScriptAnimationsModule,
+    NativeScriptFormsModule,
     NativeScriptHttpClientModule,
     NativeScriptModule,
+    SharedModule
   ],
-  providers: [],
-  bootstrap: [NativeComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
 
-export class NativeModule { }
+export class NativeModule {
+
+  public constructor(
+    coreSettings: CoreSettings
+  ) {
+    coreSettings.title = ClientManifest.shortTitle;
+  }
+
+}

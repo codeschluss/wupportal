@@ -9,6 +9,6 @@ export class PositioningPanelComponent extends BasePanel {
 
   protected path: string = 'positioning';
 
-  protected resolve: object = {};
+  protected resolve: object = { };
 
 }

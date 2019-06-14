@@ -4,7 +4,7 @@
     <i18n i18n="@@actions">actions</i18n>
   </button>
 </header>
-<h1 class="mat-headline">{{ group?.get('name')?.value || '...' }}</h1>
+<h1 class="mat-headline">{{ title }}</h1>
 
 <mat-menu #actions="matMenu">
   <button mat-menu-item [disabled]="!provides" (click)="create('activities')">

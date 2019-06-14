@@ -27,16 +27,18 @@ export function TRANSLATIONS_FACTORY(i18nResolver: I18nResolver) {
 export class I18nComponent implements AfterViewInit {
 
   @ViewChild('text', { static: true })
-  private text: ElementRef;
+  private slot: ElementRef;
+
+  public text: string;
 
   public constructor(
     private i18n: I18n
   ) { }
 
   public ngAfterViewInit(): void {
-    const text = this.text.nativeElement.innerHTML;
-    const i18n = this.i18n({ id: text, value: text });
-    this.text.nativeElement.innerHTML = i18n || text;
+    const text = this.slot.nativeElement.innerHTML;
+    this.text = this.i18n({ id: text, value: text }) || text;
+    this.slot.nativeElement.innerHTML = this.text;
   }
 
 }

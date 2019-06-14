@@ -7,27 +7,26 @@ import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 import { CoreModule, CoreSettings } from '@wooportal/core';
 import { ApiConfiguration } from './api/api-configuration';
+import { BaseModule } from './base/base.module';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
-import { RealmModule } from './realm/realm.module';
+import { ClientManifest } from './utils/manifest';
 import { ClientPackage } from './utils/package';
-import { LayoutComponent } from './views/layout/layout.component';
+import { SharedModule } from './views/shared/shared.module';
 
 fontawesome.add(freeicons);
 
 @NgModule({
   bootstrap: [ClientComponent],
-  declarations: [
-    ClientComponent,
-    LayoutComponent
-  ],
+  declarations: [ClientComponent],
   imports: [
+    BaseModule,
     BrowserModule.withServerTransition({ appId: 'ssr' }),
     BrowserAnimationsModule,
     ClientRouter,
     CoreModule,
     HttpClientModule,
-    RealmModule,
+    SharedModule,
     TransferHttpCacheModule
   ]
 })
@@ -42,6 +41,7 @@ export class ClientModule {
     coreSettings.apiAuthUrl = ClientPackage.config.api.authUrl;
     coreSettings.apiUrl = ClientPackage.config.api.rootUrl;
     coreSettings.apiRefreshUrl = ClientPackage.config.api.refreshUrl;
+    coreSettings.title = ClientManifest.shortTitle;
   }
 
 }

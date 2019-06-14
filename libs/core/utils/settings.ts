@@ -9,4 +9,6 @@ export class CoreSettings {
 
   public apiUrl: string;
 
+  public title: string;
+
 }

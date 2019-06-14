@@ -11,12 +11,11 @@ import { ErrorModel } from './error.model';
 export class CoreErrorHandler implements ErrorHandler {
 
   public constructor(
-    @Inject(PLATFORM_ID) platform: any,
-
     private dialog: MatDialog,
     private location: Location,
     private snackbar: MatSnackBar,
-    private zone: NgZone
+    private zone: NgZone,
+    @Inject(PLATFORM_ID) platform: any
   ) {
     if (isPlatformBrowser(platform)) {
       window.onerror = this.handleError.bind(this);

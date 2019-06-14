@@ -3,6 +3,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, combineLatest, EMPTY, Observable, of, Subscription, timer } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AuthTokens, StrictHttpResponse } from '../utils/api';
+import { Base64 } from '../utils/base64';
 import { AccessTokenModel } from './access-token.model';
 import { RefreshTokenModel } from './refresh-token.model';
 import { TokenService } from './token.service';
@@ -69,7 +70,8 @@ export class TokenProvider {
     const tokens = { };
 
     Object.keys(response.body).forEach((type) => {
-      const token = JSON.parse(atob(response.body[type].split('.')[1]));
+      const base64 = response.body[type].split('.')[1];
+      const token = JSON.parse(Base64.decode(base64));
 
       let item; switch (type) {
         case 'access': item = new AccessTokenModel(); break;

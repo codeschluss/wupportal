@@ -40,12 +40,12 @@
               },
               {
                 "glob": "*.xliff",
-                "input": "i18n",
+                "input": "res/All/i18n",
                 "output": "/i18n"
               },
               {
                 "glob": "**/*",
-                "input": "imgs",
+                "input": "res/All/imgs",
                 "output": "/imgs"
               }
             ],
@@ -76,7 +76,7 @@
             "i18nFormat": "xliff",
             "i18nLocale": "root",
             "outFile": "strings.xliff",
-            "outputPath": "i18n"
+            "outputPath": "res/All/i18n"
           }
         },
         "lint": {

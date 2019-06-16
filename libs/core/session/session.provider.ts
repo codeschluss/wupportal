@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
+import { CoreSettings } from '../utils/settings';
 import { SessionModel } from './session.model';
 
 @Injectable({ providedIn: 'root' })
@@ -14,14 +15,17 @@ export class SessionProvider {
   }
 
   public constructor(
+    coreSettings: CoreSettings,
     localStorage: LocalStorage
   ) {
-    this.session = new BehaviorSubject(null);
+    const start = new SessionModel();
+    start.language = coreSettings.language;
+    this.session = new BehaviorSubject(start);
 
     localStorage.getItem<SessionModel>('clientSession', {
       schema: SessionModel.schema
     }).pipe(
-      map((session: SessionModel) => session || new SessionModel()),
+      map((session: SessionModel) => session || this.session.value),
       tap((session: SessionModel) => this.session.next(session))
     ).subscribe(() => this.value.subscribe((session) =>
       localStorage.setItemSubscribe('clientSession', session)));

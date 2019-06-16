@@ -3,6 +3,7 @@ import { isKnownView, registerElement } from 'nativescript-angular/element-regis
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ContentView } from 'tns-core-modules/ui/page/page';
+import { DrawerCompat as Compat } from './drawer.compat.d';
 
 if (!isKnownView('drawer-compat')) {
   registerElement('drawer-compat', () => ContentView);
@@ -26,7 +27,7 @@ if (!isKnownView('drawer-compat')) {
   `
 })
 
-export class DrawerCompat extends ContentView {
+export class DrawerCompat extends ContentView implements Compat {
 
   @ContentChild('main', { static: true })
   public main: TemplateRef<any>;
@@ -58,5 +59,5 @@ export class DrawerCompat extends ContentView {
   public toggle(): void {
     this.instance.sideDrawer.toggleDrawerState();
   }
-
+DrawerCompat
 }

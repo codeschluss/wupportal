@@ -8,13 +8,14 @@ import 'zone.js/dist/zone-node';
 
 enableProdMode();
 
-global['navigator'] = { };
-
 const client = {
   engine: express(),
   port: process.env.PORT || 4000,
   read: bindNodeCallback(readFile),
-  root: `${process.cwd()}/target/@wooportal`
+  root: `${process.cwd()}/target/@wooportal`,
+
+  request: null,
+  response: null
 };
 
 const {
@@ -38,8 +39,8 @@ client.engine.get('*.*', express.static(`${client.root}/client`, {
 }));
 
 client.engine.get('*', (req, res) => {
-  global['navigator']['language'] = req.headers['accept-language'];
-
+  client.request = req;
+  client.response = res;
   res.render('index', { req });
 });
 

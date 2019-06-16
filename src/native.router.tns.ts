@@ -12,7 +12,7 @@ const resolvers: { [key: string]: Type<Resolve<any>> } = {
 const routes: Route[] = [
   {
     path: '',
-    resolve: resolvers,
+    // resolve: resolvers,
     children: [
       {
         path: '',
@@ -33,7 +33,7 @@ const routes: Route[] = [
   imports: [NativeScriptRouterModule.forRoot([
     {
       path: '',
-      // children: routes,
+      children: routes,
       component: LayoutComponent,
       // resolve: resolvers,
     }

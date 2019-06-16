@@ -1,5 +1,5 @@
-export declare class IconCompat {
+export interface IconCompat {
 
-  public id: string;
+  name: string;
 
 }

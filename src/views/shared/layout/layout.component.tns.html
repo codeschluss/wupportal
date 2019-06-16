@@ -10,26 +10,26 @@
 
 <drawer-compat #drawer>
   <ng-template #main>
-    <page-router-outlet></page-router-outlet>
+    <router-outlet></router-outlet>
   </ng-template>
   <ng-template #menu>
     <scroll-view>
       <stack-layout>
         <stack-layout orientation="horizontal">
           <icon-compat name="home"></icon-compat>
-          <Label text="Home"></Label>
+          <label text="Home"></label>
         </stack-layout>
         <stack-layout orientation="horizontal">
-          <icon-compat name="home"></icon-compat>
-          <Label text="Timer"></Label>
+          <icon-compat name="clock"></icon-compat>
+          <label text="Timer"></label>
         </stack-layout>
         <stack-layout orientation="horizontal">
-          <icon-compat name="home"></icon-compat>
-          <Label text="Organisations"></Label>
+          <icon-compat name="building"></icon-compat>
+          <label text="Organisations"></label>
         </stack-layout>
         <stack-layout orientation="horizontal">
-          <icon-compat name="home"></icon-compat>
-          <Label text="About"></Label>
+          <icon-compat name="info"></icon-compat>
+          <label text="About"></label>
         </stack-layout>
       </stack-layout>
     </scroll-view>

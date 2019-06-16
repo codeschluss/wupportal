@@ -1,6 +1,7 @@
 import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { DrawerCompat as Compat } from './drawer.compat.d';
 
 @Component({
   selector: 'drawer-compat',
@@ -19,7 +20,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   `
 })
 
-export class DrawerCompat {
+export class DrawerCompat implements Compat {
 
   @ContentChild('main', { static: true })
   public main: TemplateRef<any>;

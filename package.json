@@ -57,7 +57,7 @@
     "build:oid": "tns build android --bundle --env.aot --env.uglify",
     "build:lib": "ng build @wooportal/core && ng build @wooportal/forms",
     "build:ssr": "ng run @wooportal/client:server && tsc -p express.json",
-    "build:xlf": "ng xi18n && sed -i '/context/d' i18n/strings.xliff",
+    "build:xlf": "ng xi18n && sed -i '/context/d' res/All/i18n/strings.xliff",
     "setup:env": "cp package.json src && cp tsconfig.json tsconfig.tns.json",
     "setup:ios": "BUY_MAC && tns platform add ios ||:&& tns prepare ios",
     "setup:oid": "tns platform add android ||:&& tns prepare android",

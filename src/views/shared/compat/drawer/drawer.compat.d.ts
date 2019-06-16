@@ -1,20 +1,20 @@
 import { TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
-export declare class DrawerCompat {
+export interface DrawerCompat {
 
-  public main: TemplateRef<any>;
+  main: TemplateRef<any>;
 
-  public menu: TemplateRef<any>;
+  menu: TemplateRef<any>;
 
-  public instance: any;
+  instance: any;
 
-  public visible: Observable<boolean>;
+  visible: Observable<boolean>;
 
-  public hide(): void;
+  hide(): void;
 
-  public show(): void;
+  show(): void;
 
-  public toggle(): void;
+  toggle(): void;
 
 }

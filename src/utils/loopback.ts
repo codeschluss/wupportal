@@ -18,7 +18,6 @@ export class Loopback implements HttpInterceptor {
     if (request.url.startsWith(ClientPackage.config.api.rootUrl)) {
       return this.httpClient.request(request);
     } else if (request.url.startsWith('/')) {
-      // tslint:disable-next-line:deprecation
       const express = this.injector.get('express');
       const file = `${express.root}/client${request.url}`;
 

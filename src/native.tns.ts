@@ -3,4 +3,5 @@ import { platformNativeScriptDynamic } from 'nativescript-angular/platform';
 import { NativeModule } from './native.module.tns';
 
 enableProdMode();
-platformNativeScriptDynamic().bootstrapModule(NativeModule);
+platformNativeScriptDynamic({ createFrameOnBootstrap: true })
+  .bootstrapModule(NativeModule);

@@ -20,7 +20,7 @@ export class TokenInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    if (request.url.startsWith(this.coreSettings.apiUrl) && this.tokens) {
+    if (request.url.startsWith(this.coreSettings.apiRootUrl) && this.tokens) {
       switch (request.url) {
         case this.coreSettings.apiAuthUrl: break;
 

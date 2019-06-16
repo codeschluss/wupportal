@@ -12,7 +12,7 @@ export class SessionModel {
   };
 
   public acceptCookies: boolean = false;
-  public language: string = navigator.language.substr(0, 2);
+  public language: string = 'en';
   public likes: string[] = [];
 
 }

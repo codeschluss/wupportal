@@ -13,10 +13,18 @@
   </ng-template>
   <ng-template #menu>
     <mat-action-list>
-      <button mat-list-item>One</button>
-      <button mat-list-item>Two</button>
-      <button mat-list-item>Three</button>
-      <button mat-list-item (click)="toggleDrawer()">Close</button>
+      <button mat-list-item>
+        <icon-compat name="home"></icon-compat>&nbsp;Home
+      </button>
+      <button mat-list-item>
+        <icon-compat name="clock"></icon-compat>&nbsp;Timer
+      </button>
+      <button mat-list-item>
+        <icon-compat name="building"></icon-compat>&nbsp;Organisations
+      </button>
+      <button mat-list-item>
+        <icon-compat name="info"></icon-compat>&nbsp;About
+      </button>
     </mat-action-list>
   </ng-template>
 </drawer-compat>

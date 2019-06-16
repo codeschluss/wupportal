@@ -7,7 +7,9 @@ export class CoreSettings {
 
   public apiRefreshUrl: string;
 
-  public apiUrl: string;
+  public apiRootUrl: string;
+
+  public language: string;
 
   public title: string;
 

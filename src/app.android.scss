@@ -9,13 +9,15 @@ svg-image {
   width: 50;
 }
 
-RadSideDrawer {
-  stack-layout[orientation=horizontal] {
-    height: 50;
+page {
+  #TKDrawerContent {
+    stack-layout[orientation=horizontal] {
+      height: 50;
 
-    label {
-      font-weight: bold;
-      vertical-align: center;
+      label {
+        font-weight: bold;
+        vertical-align: center;
+      }
     }
   }
 }

@@ -30,7 +30,13 @@ layout-component {
       height: 100%;
 
       & > mat-drawer {
+        font-weight: bold;
         min-width: 240px;
+
+        icon-compat {
+          text-align: center;
+          width: 50px;
+        }
       }
     }
   }

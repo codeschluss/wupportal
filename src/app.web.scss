@@ -1,4 +1,8 @@
 @import '~@angular/material/theming';
+@import '~@fortawesome/fontawesome-svg-core/styles';
+
+/* -------------------------------------------------------------------------- */
+
 @include mat-core();
 
 $theme: mat-light-theme(

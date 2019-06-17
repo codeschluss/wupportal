@@ -1,4 +1,4 @@
-import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -18,22 +18,16 @@ if (!isKnownView('drawer-compat')) {
       (drawerClosing)="stateListener(false)"
       (drawerOpening)="stateListener(true)">
       <GridLayout tkMainContent>
-        <ng-container *ngTemplateOutlet="main"></ng-container>
+        <router-outlet></router-outlet>
       </GridLayout>
       <GridLayout tkDrawerContent>
-        <ng-container *ngTemplateOutlet="menu"></ng-container>
+        <ng-content></ng-content>
       </GridLayout>
     </RadSideDrawer>
   `
 })
 
 export class DrawerCompat extends ContentView implements Compat {
-
-  @ContentChild('main', { static: true })
-  public main: TemplateRef<any>;
-
-  @ContentChild('menu', { static: true })
-  public menu: TemplateRef<any>;
 
   @ViewChild(RadSideDrawerComponent, { static: true })
   public instance: RadSideDrawerComponent;

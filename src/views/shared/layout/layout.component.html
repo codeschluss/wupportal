@@ -8,23 +8,18 @@
 </mat-toolbar>
 
 <drawer-compat #drawer>
-  <ng-template #main>
-    <router-outlet></router-outlet>
-  </ng-template>
-  <ng-template #menu>
-    <mat-action-list>
-      <button mat-list-item>
-        <icon-compat name="home"></icon-compat>&nbsp;Home
-      </button>
-      <button mat-list-item>
-        <icon-compat name="clock"></icon-compat>&nbsp;Timer
-      </button>
-      <button mat-list-item>
-        <icon-compat name="building"></icon-compat>&nbsp;Organisations
-      </button>
-      <button mat-list-item>
-        <icon-compat name="info"></icon-compat>&nbsp;About
-      </button>
-    </mat-action-list>
-  </ng-template>
+  <mat-action-list>
+    <button mat-list-item>
+      <icon-compat name="home"></icon-compat>&nbsp;Home
+    </button>
+    <button mat-list-item>
+      <icon-compat name="clock"></icon-compat>&nbsp;Timer
+    </button>
+    <button mat-list-item>
+      <icon-compat name="building"></icon-compat>&nbsp;Organisations
+    </button>
+    <button mat-list-item>
+      <icon-compat name="info"></icon-compat>&nbsp;About
+    </button>
+  </mat-action-list>
 </drawer-compat>

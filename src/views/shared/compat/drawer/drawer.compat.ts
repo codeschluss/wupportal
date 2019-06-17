@@ -1,4 +1,4 @@
-import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DrawerCompat as Compat } from './drawer.compat.d';
@@ -8,25 +8,19 @@ import { DrawerCompat as Compat } from './drawer.compat.d';
   template: `
     <mat-drawer-container>
       <mat-drawer-content>
-        <ng-container *ngTemplateOutlet="main"></ng-container>
+        <router-outlet></router-outlet>
       </mat-drawer-content>
       <mat-drawer
         mode="push"
         (closedStart)="stateListener(false)"
         (openedStart)="stateListener(true)">
-        <ng-container *ngTemplateOutlet="menu"></ng-container>
+        <ng-content></ng-content>
       </mat-drawer>
     </mat-drawer-container>
   `
 })
 
 export class DrawerCompat implements Compat {
-
-  @ContentChild('main', { static: true })
-  public main: TemplateRef<any>;
-
-  @ContentChild('menu', { static: true })
-  public menu: TemplateRef<any>;
 
   @ViewChild(MatDrawer, { static: true })
   public instance: MatDrawer;

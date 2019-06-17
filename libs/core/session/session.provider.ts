@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { CoreSettings } from '../utils/settings';
+import { Platform } from '../platform/platform';
 import { SessionModel } from './session.model';
 
 @Injectable({ providedIn: 'root' })
@@ -15,12 +15,14 @@ export class SessionProvider {
   }
 
   public constructor(
-    coreSettings: CoreSettings,
-    localStorage: LocalStorage
+    localStorage: LocalStorage,
+    platform: Platform
   ) {
-    const start = new SessionModel();
-    start.language = coreSettings.language;
-    this.session = new BehaviorSubject(start);
+    this.session = new BehaviorSubject((() => {
+      const session = new SessionModel();
+      session.language = platform.language;
+      return session;
+    })());
 
     localStorage.getItem<SessionModel>('clientSession', {
       schema: SessionModel.schema
@@ -54,6 +56,5 @@ export class SessionProvider {
       acceptCookies: acceptCookies
     }));
   }
-
 
 }

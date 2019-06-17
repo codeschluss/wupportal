@@ -12,7 +12,7 @@ const resolvers: { [key: string]: Type<Resolve<any>> } = {
 const routes: Route[] = [
   {
     path: '',
-    // resolve: resolvers,
+    resolve: resolvers,
     children: [
       {
         path: '',
@@ -35,7 +35,7 @@ const routes: Route[] = [
       path: '',
       children: routes,
       component: LayoutComponent,
-      // resolve: resolvers,
+      resolve: resolvers
     }
   ])]
 })

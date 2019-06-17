@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Injector, NgModule, Type } from '@angular/core';
-import { BaseService, CoreModule, CrudModel, CrudProvider } from '@wooportal/core';
+import { BaseService, CoreModule, CoreSettings, CrudModel, CrudProvider } from '@wooportal/core';
+import { ApiConfiguration } from '../api/api-configuration';
+import { ClientManifest } from '../utils/manifest';
+import { ClientPackage } from '../utils/package';
 import { ActivityProvider } from './providers/activity.provider';
 import { AddressProvider } from './providers/address.provider';
 import { BlogProvider } from './providers/blog.provider';
@@ -43,8 +46,17 @@ const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
 export class BaseModule {
 
   public constructor(
+    apiConfiguration: ApiConfiguration,
+    coreSettings: CoreSettings,
     injector: Injector
   ) {
+    apiConfiguration.rootUrl = ClientPackage.config.api.rootUrl;
+
+    coreSettings.apiAuthUrl = ClientPackage.config.api.authUrl;
+    coreSettings.apiRefreshUrl = ClientPackage.config.api.refreshUrl;
+    coreSettings.apiRootUrl = ClientPackage.config.api.rootUrl;
+    coreSettings.title = ClientManifest.shortTitle;
+
     providers.forEach((provider) => injector.get(provider));
   }
 

@@ -1,18 +1,25 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
-import { Platform as Compat } from './platform.d';
+import { Inject, Injectable, Injector, PLATFORM_ID, Type } from '@angular/core';
+import { PlatformProvider as Compat } from './platform.provider.d';
 
 @Injectable({ providedIn: 'root' })
-export class Platform implements Compat {
+export class PlatformProvider implements Compat {
+
+  public get engine(): any {
+    switch (this.name) {
+      case 'Server':
+        return this.injector.get('express' as unknown as Type<any>);
+      default:
+        return null;
+    }
+  }
 
   public get language(): string {
     switch (this.name) {
       case 'Web':
         return navigator.language.substr(0, 2);
-
       case 'Server':
-        const request = this.injector.get('express').request;
-        return request.headers['accept-language'].substr(0, 2);
+        return this.engine.request.headers['accept-language'].substr(0, 2);
     }
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from '@wooportal/core';
+import { PlatformProvider } from '@wooportal/core';
 
 @Component({
   template: `
@@ -12,7 +12,7 @@ export class PublicComponent {
   public text: string = '';
 
   public constructor(
-    platform: Platform
+    platform: PlatformProvider
   ) {
     if (platform.name === 'Web') {
       this.text = 'Hello angular!';

@@ -18,6 +18,12 @@ const client = {
   response: null
 };
 
+const engine = {
+  deps: [],
+  provide: 'express',
+  useFactory: () => client
+};
+
 const {
   ServerModuleNgFactory,
   LAZY_MODULE_MAP
@@ -25,10 +31,7 @@ const {
 
 client.engine.engine('html', ngExpressEngine({
   bootstrap: ServerModuleNgFactory,
-  providers: [
-    provideModuleMap(LAZY_MODULE_MAP),
-    { provide: 'express', deps: [], useFactory: () => client }
-  ]
+  providers: [engine, provideModuleMap(LAZY_MODULE_MAP)]
 }));
 
 client.engine.set('view engine', 'html');

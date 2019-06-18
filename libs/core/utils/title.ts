@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Title as TitleService } from '@angular/platform-browser';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Platform } from '../platform/platform';
+import { PlatformProvider } from '../platform/platform.provider';
 import { CoreSettings } from './settings';
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +15,7 @@ export class Title {
 
   public constructor(
     private coreSettings: CoreSettings,
-    private platform: Platform,
+    private platform: PlatformProvider,
     private titleService: TitleService
   ) {
     this.title = new BehaviorSubject(this.coreSettings.title);

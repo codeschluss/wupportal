@@ -53,6 +53,7 @@ export class BaseModule {
     coreSettings.apiAuthUrl = ClientPackage.config.api.authUrl;
     coreSettings.apiRefreshUrl = ClientPackage.config.api.refreshUrl;
     coreSettings.apiRootUrl = ClientPackage.config.api.rootUrl;
+    coreSettings.rootUrl = ClientManifest.startUrl;
     coreSettings.title = ClientManifest.shortTitle;
 
     providers.forEach((provider) => injector.get(provider));

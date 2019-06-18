@@ -41,7 +41,7 @@ export interface ReadParams {
 }
 
 export interface ResourceObject {
-  _links?: Array<Link>;
+  _links?: Link[];
 }
 
 export type StrictHttpResponse<T> = HttpResponse<T> & {

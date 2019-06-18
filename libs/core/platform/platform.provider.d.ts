@@ -1,4 +1,6 @@
-export interface Platform {
+export interface PlatformProvider {
+
+  readonly engine: any;
 
   readonly language: string;
 

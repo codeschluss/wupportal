@@ -1,4 +1,3 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +9,6 @@ import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { BaseModule } from './base/base.module';
 import { NativeComponent } from './native.component.tns';
 import { NativeRouter } from './native.router.tns';
-import { Hostname } from './utils/hostname';
 import { SharedModule } from './views/shared/shared.module';
 
 fontawesome.add(freeicons);
@@ -27,9 +25,6 @@ fontawesome.add(freeicons);
     NativeScriptHttpClientModule,
     NativeScriptModule,
     SharedModule
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: Hostname, multi: true }
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

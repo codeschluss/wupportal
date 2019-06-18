@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { Platform } from '../platform/platform';
+import { PlatformProvider } from '../platform/platform.provider';
 import { SessionModel } from './session.model';
 
 @Injectable({ providedIn: 'root' })
@@ -16,11 +16,11 @@ export class SessionProvider {
 
   public constructor(
     localStorage: LocalStorage,
-    platform: Platform
+    platformProvider: PlatformProvider
   ) {
     this.session = new BehaviorSubject((() => {
       const session = new SessionModel();
-      session.language = platform.language;
+      session.language = platformProvider.language;
       return session;
     })());
 

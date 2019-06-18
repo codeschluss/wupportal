@@ -3,7 +3,7 @@ import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { inspect } from 'util';
-import { Platform } from '../platform/platform';
+import { PlatformProvider } from '../platform/platform.provider';
 import { ErrorBarComponent } from './error.bar';
 import { ErrorDialogComponent } from './error.dialog';
 import { ErrorModel } from './error.model';
@@ -16,9 +16,9 @@ export class CoreErrorHandler implements ErrorHandler {
     private location: Location,
     private snackbar: MatSnackBar,
     private zone: NgZone,
-    platform: Platform
+    platformProvider: PlatformProvider
   ) {
-    if (platform.name === 'Web') {
+    if (platformProvider.name === 'Web') {
       window.onerror = this.handleError.bind(this);
       window.onunhandledrejection = this.handleRejection.bind(this);
     }

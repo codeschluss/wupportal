@@ -1,8 +1,9 @@
-import { isPlatformBrowser, Location } from '@angular/common';
-import { ErrorHandler, Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
+import { Location } from '@angular/common';
+import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { inspect } from 'util';
+import { Platform } from '../platform/platform';
 import { ErrorBarComponent } from './error.bar';
 import { ErrorDialogComponent } from './error.dialog';
 import { ErrorModel } from './error.model';
@@ -15,9 +16,9 @@ export class CoreErrorHandler implements ErrorHandler {
     private location: Location,
     private snackbar: MatSnackBar,
     private zone: NgZone,
-    @Inject(PLATFORM_ID) platform: any
+    platform: Platform
   ) {
-    if (isPlatformBrowser(platform)) {
+    if (platform.name === 'Web') {
       window.onerror = this.handleError.bind(this);
       window.onunhandledrejection = this.handleRejection.bind(this);
     }

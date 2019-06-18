@@ -1,5 +1,5 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component } from '@angular/core';
+import { Platform } from '@wooportal/core';
 
 @Component({
   template: `
@@ -12,11 +12,11 @@ export class PublicComponent {
   public text: string = '';
 
   public constructor(
-    @Inject(PLATFORM_ID) platformId: any
+    platform: Platform
   ) {
-    if (isPlatformBrowser(platformId)) {
+    if (platform.name === 'Web') {
       this.text = 'Hello angular!';
-    } else if (isPlatformServer(platformId)) {
+    } else if (platform.name === 'Server') {
       this.text = 'Hello nguniversal!';
     }
   }

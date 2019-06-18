@@ -6,13 +6,20 @@ import { Platform as Compat } from './platform.d';
 export class Platform implements Compat {
 
   public get language(): string {
-    switch (true) {
-      case isPlatformBrowser(this.platformId):
+    switch (this.name) {
+      case 'Web':
         return navigator.language.substr(0, 2);
 
-      case isPlatformServer(this.platformId):
+      case 'Server':
         const request = this.injector.get('express').request;
         return request.headers['accept-language'].substr(0, 2);
+    }
+  }
+
+  public get name(): 'Android' | 'iOS' | 'Server' | 'Web' {
+    switch (true) {
+      case isPlatformBrowser(this.platformId): return 'Web';
+      case isPlatformServer(this.platformId): return 'Server';
     }
   }
 

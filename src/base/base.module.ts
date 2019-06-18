@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Injector, NgModule, Type } from '@angular/core';
 import { BaseService, CoreModule, CoreSettings, CrudModel, CrudProvider } from '@wooportal/core';
 import { ApiConfiguration } from '../api/api-configuration';
@@ -38,7 +37,6 @@ const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
 
 @NgModule({
   imports: [
-    CommonModule,
     CoreModule
   ]
 })

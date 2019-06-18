@@ -9,4 +9,8 @@ export class Platform implements Compat {
     return device.language;
   }
 
+  public get name(): 'Android' | 'iOS' | 'Server' | 'Web' {
+    return device.os as any;
+  }
+
 }

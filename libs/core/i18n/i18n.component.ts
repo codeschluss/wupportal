@@ -1,10 +1,7 @@
 import { AfterViewInit, Component, ElementRef, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { I18nResolver } from './i18n.resolver';
-
-export function TRANSLATIONS_FACTORY(i18nResolver: I18nResolver) {
-  return i18nResolver.xliff;
-}
+import { I18nComponent as Compat } from './i18n.component.d';
+import { I18nResolver, TRANSLATIONS_FACTORY } from './i18n.resolver';
 
 @Component({
   providers: [
@@ -21,13 +18,13 @@ export function TRANSLATIONS_FACTORY(i18nResolver: I18nResolver) {
   ],
   // tslint:disable-next-line:component-selector
   selector: 'i18n',
-  template: `<slot #text><ng-content></ng-content></slot>`
+  template: `<slot #slot><ng-content></ng-content></slot>`
 })
 
-export class I18nComponent implements AfterViewInit {
+export class I18nComponent implements Compat, AfterViewInit {
 
-  @ViewChild('text', { static: true })
-  private slot: ElementRef;
+  @ViewChild('slot', { static: true })
+  public slot: ElementRef;
 
   public text: string;
 

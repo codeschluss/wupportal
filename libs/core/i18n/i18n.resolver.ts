@@ -5,6 +5,10 @@ import { Observable, of } from 'rxjs';
 import { mergeMap, take, tap } from 'rxjs/operators';
 import { SessionProvider } from '../session/session.provider';
 
+export function TRANSLATIONS_FACTORY(i18nResolver: I18nResolver) {
+  return i18nResolver.xliff;
+}
+
 @Injectable({ providedIn: 'root' })
 export class I18nResolver implements Resolve<string> {
 

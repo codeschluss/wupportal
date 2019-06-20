@@ -42,8 +42,11 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       <h1 class="mat-headline">{{ title || '...' }}</h1>
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
-          <a mat-tab-link replaceUrl [disabled]="!can(i)" [routerLink]="link(i)"
-            #tab="routerLinkActive" routerLinkActive [active]="tab.isActive">
+          <a mat-tab-link replaceUrl routerLinkActive
+            #tab="routerLinkActive"
+            [disabled]="!can(i)"
+            [routerLink]="link(i)"
+            [active]="tab.isActive">
             <ng-container *ngTemplateOutlet="label; context: { case: step }">
             </ng-container>
           </a>
@@ -59,19 +62,23 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         <i18n i18n="@@reset">reset</i18n>
       </button>
       <ng-container *ngIf="has('-1')">
-        <button mat-raised-button replaceUrl [disabled]="!can(index - 1)"
+        <button mat-raised-button replaceUrl
+          [disabled]="!can(index - 1)"
           [routerLink]="link('-1')">
           <i18n i18n="@@previous">previous</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="has('+1')">
-        <button mat-raised-button replaceUrl [disabled]="!can(index + 1)"
+        <button mat-raised-button replaceUrl
+          [disabled]="!can(index + 1)"
           [routerLink]="link('+1')">
           <i18n i18n="@@next">next</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="!has('+1')">
-        <button mat-raised-button color="primary" [disabled]="!valid || !dirty"
+        <button mat-raised-button
+          color="primary"
+          [disabled]="!valid || !dirty"
           (click)="persist()">
           <i18n i18n="@@persist">persist</i18n>
         </button>

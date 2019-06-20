@@ -49,7 +49,9 @@ import { ClientPackage } from '../../../utils/package';
           </button>
         </ng-container>
         <ng-container *ngIf="!this.group.disabled">
-          <button mat-button color="primary" [disabled]="!this.group.valid"
+          <button mat-button
+            color="primary"
+            [disabled]="!this.group.valid"
             (click)="this.address()">
             <i18n i18n="@@autoLocate">autoLocate</i18n>
           </button>

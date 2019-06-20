@@ -26,7 +26,9 @@ import { ClientPackage } from '../../../utils/package';
         <button mat-button color="primary" (click)="contactUser()">
           <i18n i18n="@@contactUser">contactUser</i18n>
         </button>
-        <button mat-button color="primary" [disabled]="!this.organisation"
+        <button mat-button
+          color="primary"
+          [disabled]="!this.organisation"
           (click)="contactOrganisation()">
           <i18n i18n="@@contactOrganisation">contactOrganisation</i18n>
         </button>

@@ -35,7 +35,9 @@ import { UserProvider } from '../../../base/providers/user.provider';
       <button mat-button mat-dialog-close tabindex="-1">
         <i18n i18n="@@close">close</i18n>
       </button>
-      <button mat-button color="primary" [disabled]="!ids.length"
+      <button mat-button
+        color="primary"
+        [disabled]="!ids.length"
         (click)="request()">
         <i18n i18n="@@joinOrganisations">joinOrganisations</i18n>
       </button>

@@ -14,7 +14,8 @@
             <i18n i18n="@@superUser">superUser</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <mat-slide-toggle [checked]="item.superuser"
+            <mat-slide-toggle
+              [checked]="item.superuser"
               (change)="grant(item, $event.checked)">
             </mat-slide-toggle>
           </mat-cell>

@@ -40,7 +40,8 @@ import { ImageModel } from '../../../base/models/image.model';
           <button mat-button color="warn" tabindex="-1" (click)="delete(item)">
             <i18n i18n="@@delete">delete</i18n>
           </button>
-          <button mat-button [disabled]="caption.value || image"
+          <button mat-button
+            [disabled]="caption.value || image"
             (click)="edit(item)">
             <i18n i18n="@@edit">edit</i18n>
           </button>
@@ -54,9 +55,12 @@ import { ImageModel } from '../../../base/models/image.model';
             <img mat-card-image [style.backgroundImage]="source(image)">
           </ng-container>
           <ng-container *ngIf="!image">
-            <label #area mat-card-image for="image"
-              (dragenter)="drag($event, 1)" (dragleave)="drag($event, -1)"
-              (dragover)="drag($event)" (drop)="drop($event)">
+            <label #area mat-card-image
+              for="image"
+              (dragenter)="drag($event, 1)"
+              (dragleave)="drag($event, -1)"
+              (dragover)="drag($event)"
+              (drop)="drop($event)">
               <i18n i18n="@@selectOrDropImage">selectOrDropImage</i18n>
             </label>
             <input accept="image/*" id="image" type="file" [formControl]="file">
@@ -72,7 +76,9 @@ import { ImageModel } from '../../../base/models/image.model';
           <button mat-button [disabled]="!image" (click)="clear()">
             <i18n i18n="@@reset">reset</i18n>
           </button>
-          <button mat-button color="primary" [disabled]="!image"
+          <button mat-button
+            color="primary"
+            [disabled]="!image"
             (click)="create()">
             <i18n i18n="@@create">create</i18n>
           </button>

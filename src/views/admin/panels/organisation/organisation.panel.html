@@ -60,7 +60,8 @@
             <i18n i18n="@@admin">admin</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <mat-slide-toggle [checked]="item.admin"
+            <mat-slide-toggle
+              [checked]="item.admin"
               (change)="grant(item, $event.checked)">
             </mat-slide-toggle>
           </mat-cell>

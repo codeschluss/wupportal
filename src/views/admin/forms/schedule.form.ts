@@ -81,31 +81,45 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
         </ng-container>
         <ng-container *ngIf="recurrence.value === 'week'">
           <mat-chip-list multiple class="mat-body">
-            <mat-chip #monday="matChip" value="monday"
+            <mat-chip
+              #monday="matChip"
+              value="monday"
               (click)="monday.toggleSelected()">
               <i18n i18n="@@monday">monday</i18n>
             </mat-chip>
-            <mat-chip #tuesday="matChip" value="tuesday"
+            <mat-chip
+              #tuesday="matChip"
+              value="tuesday"
               (click)="tuesday.toggleSelected()">
               <i18n i18n="@@tuesday">tuesday</i18n>
             </mat-chip>
-            <mat-chip #wednesday="matChip" value="wednesday"
+            <mat-chip
+              #wednesday="matChip"
+              value="wednesday"
               (click)="wednesday.toggleSelected()">
               <i18n i18n="@@wednesday">wednesday</i18n>
             </mat-chip>
-            <mat-chip #thursday="matChip" value="thursday"
+            <mat-chip
+              #thursday="matChip"
+              value="thursday"
               (click)="thursday.toggleSelected()">
               <i18n i18n="@@thursday">thursday</i18n>
             </mat-chip>
-            <mat-chip #friday="matChip" value="friday"
+            <mat-chip
+              #friday="matChip"
+              value="friday"
               (click)="friday.toggleSelected()">
               <i18n i18n="@@friday">friday</i18n>
             </mat-chip>
-            <mat-chip #saturday="matChip" value="saturday"
+            <mat-chip
+              #saturday="matChip"
+              value="saturday"
               (click)="saturday.toggleSelected()">
               <i18n i18n="@@saturday">saturday</i18n>
             </mat-chip>
-            <mat-chip #sunday="matChip" value="sunday"
+            <mat-chip
+              #sunday="matChip"
+              value="sunday"
               (click)="sunday.toggleSelected()">
               <i18n i18n="@@sunday">sunday</i18n>
             </mat-chip>
@@ -121,7 +135,9 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
         <button mat-button color="warn" (click)="clear()">
           <i18n i18n="@@deleteAll">deleteAll</i18n>
         </button>
-        <button mat-button color="primary" [disabled]="!scheduled"
+        <button mat-button
+          color="primary"
+          [disabled]="!scheduled"
           (click)="create()">
           <i18n i18n="@@createSchedules">createSchedules</i18n>
         </button>

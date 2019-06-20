@@ -36,7 +36,8 @@
     <ng-template matTabContent>
       <user-form #form [group]="group" [item]="user"></user-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button color="primary"
+      <button mat-raised-button
+        color="primary"
         [disabled]="!form.valid || !form.dirty"
         (click)="form.persist().subscribe()">
         <i18n i18n="@@persist">persist</i18n>

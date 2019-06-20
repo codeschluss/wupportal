@@ -27,7 +27,8 @@
       <configuration-form #form [group]="group" [item]="configuration">
       </configuration-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button color="primary"
+      <button mat-raised-button
+        color="primary"
         [disabled]="!form.valid || !form.dirty"
         (click)="form.persist().subscribe()">
         <i18n i18n="@@persist">persist</i18n>

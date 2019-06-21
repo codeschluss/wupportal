@@ -1,21 +1,7 @@
-// Add your native dependencies here:
-
-// Uncomment to add recyclerview-v7 dependency
-//dependencies {
-//	compile 'com.android.support:recyclerview-v7:+'
-//}
-
 android {
   defaultConfig {
     generatedDensities = []
-    applicationId = "de.codeschluss.wooportal"
-
-    //override supported platforms
-    // ndk {
-    //       abiFilters.clear()
-    //   		abiFilters "armeabi-v7a"
- 		// }
-
+    applicationId = "de.codeschluss.wooportal.client"
   }
   aaptOptions {
     additionalParameters "--no-version-vectors"

@@ -7,9 +7,8 @@ import { NgRippleModule } from 'nativescript-ng-ripple';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
 import { IconCompatComponent } from './compat/icon/icon.compat';
-import { NavbarCompatComponent } from './compat/navbar/navbar.compat.tns';
+import { NavbarCompatComponent } from './compat/navbar/navbar.compat';
 import { LayoutComponent } from './layout/layout.component';
-
 
 const compat: Type<any>[] = [
   DrawerCompatComponent,

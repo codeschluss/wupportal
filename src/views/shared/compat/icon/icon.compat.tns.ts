@@ -3,7 +3,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
 import { fromData, ImageSourceSVG } from '@teammaestro/nativescript-svg';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { ContentView } from 'tns-core-modules/ui/page/page';
-import { IconCompat as Compat } from './icon.compat.d';
+import { IconCompat } from './icon.compat.i';
 
 if (!isKnownView('icon-compat')) {
   registerElement('icon-compat', () => ContentView);
@@ -14,8 +14,8 @@ if (!isKnownView('icon-compat')) {
   template: `<SVGImage [imageSource]="src"></SVGImage>`
 })
 
-export class IconCompat extends ContentView
-  implements Compat, OnInit, OnChanges {
+export class IconCompatComponent extends ContentView
+  implements IconCompat, OnInit, OnChanges {
 
   @Input()
   public name: string;

@@ -1,45 +1,101 @@
-@import '~@angular/material/theming';
 @import '~@fortawesome/fontawesome-svg-core/styles';
-
-/* -------------------------------------------------------------------------- */
-
-@include mat-core();
-
-$theme: mat-light-theme(
-  mat-palette($mat-blue),
-  mat-palette($mat-cyan),
-  mat-palette($mat-red)
-);
-
-@mixin angular-material-text-color($theme) {
-  .text-primary { color: mat-color(map-get($theme, primary)); }
-  .text-accent { color: mat-color(map-get($theme, accent)); }
-  .text-warn { color: mat-color(map-get($theme, warn)); }
-}
-
-@include angular-material-theme($theme);
-@include angular-material-text-color($theme);
+@import 'app.theme.scss';
 
 /* -------------------------------------------------------------------------- */
 
 layout-component {
+  display: flex;
+  flex-flow: column;
+
+  position: fixed;
   bottom: 0;
   left: 0;
-  position: fixed;
   right: 0;
   top: 0;
 
-  & > drawer-compat {
-    mat-drawer-container {
+  & > header {
+    text-align: center;
+  }
+
+  & > navbar-compat:first-of-type > mat-toolbar {
+    justify-content: space-around;
+
+    & > button:not([matSuffix]) {
       height: 100%;
 
-      & > mat-drawer {
+      font-size: 1rem !important;
+      font-weight: bold !important;
+      text-transform: uppercase;
+
+      h1 {
+        display: inline-block;
+        font: inherit !important;
+      }
+
+      icon-compat {
+        padding-right: .5rem;
+      }
+    }
+
+    & > span {
+      font-size: 1rem !important;
+      padding: .5rem 1rem 0;
+
+      & > icon-compat {
+        padding-right: .5rem;
+      }
+    }
+  }
+
+  & > drawer-compat {
+    flex-grow: 1;
+    position: relative;
+
+    mat-drawer-container {
+      position: absolute !important;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+
+      .mat-drawer-content {
+        display: flex;
+        flex-flow: column;
+
+        & > navbar-compat {
+          text-transform: uppercase;
+
+          button {
+            height: 100%;
+            text-transform: inherit;
+          }
+
+          icon-compat {
+            padding-right: .5rem;
+          }
+        }
+      }
+
+      .mat-drawer-inner-container {
+        display: flex;
+        flex-flow: column;
         font-weight: bold;
-        min-width: 240px;
+
+        mat-list-item:focus {
+          background: inherit !important;
+        }
+
+        header {
+          text-align: center;
+
+          img {
+            width: 50%;
+          }
+        }
 
         icon-compat {
           text-align: center;
-          width: 50px;
+          width: 2.5rem;
         }
       }
     }

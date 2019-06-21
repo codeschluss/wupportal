@@ -2,7 +2,7 @@ import { Component, Input, OnInit, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@an
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { ContentView } from 'tns-core-modules/ui/page/page';
-import { I18nComponent as Compat } from './i18n.component.d';
+import { I18nComponent as Compat } from './i18n.component.i';
 import { I18nResolver, TRANSLATIONS_FACTORY } from './i18n.resolver';
 
 if (!isKnownView('i18n')) {

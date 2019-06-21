@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { IconCompat as Compat } from './icon.compat.d';
+import { IconCompat } from './icon.compat.i';
 
 @Component({
   selector: 'icon-compat',
   template: `<fa-icon [icon]="name"></fa-icon>`
 })
 
-export class IconCompat implements Compat {
+export class IconCompatComponent implements IconCompat {
 
   @Input()
   public name: string;

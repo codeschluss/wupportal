@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { Title } from '@wooportal/core';
-import { Observable } from 'rxjs';
-import { DrawerCompat } from '../compat/drawer/drawer.compat';
+import { ClientManifest } from '../../../utils/manifest';
+import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
 @Component({
   selector: 'layout-component',
@@ -13,12 +12,11 @@ export class LayoutComponent {
   @ViewChild('drawer', { static: true })
   public drawer: DrawerCompat;
 
-  public title: Observable<string>;
+  public title: string = ClientManifest.shortTitle;
 
-  public constructor(
-    titleService: Title
-  ) {
-    this.title = titleService.value;
+  public search(query: string): void {
+    console.log(query);
+    this.drawer.hide();
   }
 
   public toggleDrawer(): void {

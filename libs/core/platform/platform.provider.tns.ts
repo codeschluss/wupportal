@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { device } from 'tns-core-modules/platform';
-import { PlatformProvider as Compat } from './platform.provider.d';
+import { PlatformProvider as Compat } from './platform.provider.i';
 
 @Injectable({ providedIn: 'root' })
 export class PlatformProvider implements Compat {

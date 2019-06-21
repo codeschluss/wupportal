@@ -1,25 +1,109 @@
-<mat-toolbar>
-  <h1>{{ title | async }}</h1>
-  <span style="flex-grow: 1;"></span>
+<header fxHide.lt-md>
+  <img src="/imgs/icon.png" [alt]="title" [title]="title">
+</header>
+<navbar-compat fxHide.lt-md>
+  <button mat-button routerLink="/">
+    <icon-compat name="at"></icon-compat>
+    <h1>{{ title }}</h1>
+  </button>
+  <button mat-button routerLink="/activities">
+    <icon-compat name="map-marker-alt"></icon-compat>
+    <i18n i18n="@@activities">activities</i18n>
+  </button>
+  <button mat-button routerLink="/organisations">
+    <icon-compat name="globe-europe"></icon-compat>
+    <i18n i18n="@@organisations">organisations</i18n>
+  </button>
+  <button mat-button routerLink="/blogposts">
+    <icon-compat name="comment-dots"></icon-compat>
+    <i18n i18n="@@blogposts">blogposts</i18n>
+  </button>
+  <button mat-button routerLink="/blogposts">
+    <icon-compat name="question-circle"></icon-compat>
+    <i18n i18n="@@infopages">infopages</i18n>
+  </button>
+  <span>
+    <icon-compat name="search"></icon-compat>
+    <mat-form-field>
+      <input matInput #navbarInput tabindex="-1">
+      <button mat-button mat-icon-button matSuffix
+        [disabled]="!navbarInput.value"
+        (click)="search(navbarInput.value)">
+        <icon-compat name="chevron-circle-right"></icon-compat>
+      </button>
+    </mat-form-field>
+  </span>
+</navbar-compat>
+
+<navbar-compat [title]="title" fxHide.gt-sm>
+  <span [style.flexGrow]="1"></span>
   <button mat-icon-button (click)="toggleDrawer()">
     <icon-compat [name]="(drawer.visible | async) ? 'times' : 'bars'">
     </icon-compat>
   </button>
-</mat-toolbar>
-
+</navbar-compat>
 <drawer-compat #drawer>
-  <mat-action-list>
-    <button mat-list-item>
-      <icon-compat name="home"></icon-compat>&nbsp;Home
-    </button>
-    <button mat-list-item>
-      <icon-compat name="clock"></icon-compat>&nbsp;Timer
-    </button>
-    <button mat-list-item>
-      <icon-compat name="building"></icon-compat>&nbsp;Organisations
-    </button>
-    <button mat-list-item>
-      <icon-compat name="info"></icon-compat>&nbsp;About
-    </button>
-  </mat-action-list>
+  <ng-template #drawerMain>
+    <router-outlet></router-outlet>
+    <span [style.flexGrow]="1"></span>
+    <navbar-compat fxHide.lt-md>
+      <small>&copy;&nbsp;{{ title }}</small>
+      <span [style.flexGrow]="1"></span>
+      <button mat-button routerLink="/imprint">
+        <icon-compat name="paragraph"></icon-compat>
+        <i18n i18n="@@imprint">imprint</i18n>
+      </button>
+      <button mat-button routerLink="/policies">
+        <icon-compat name="balance-scale"></icon-compat>
+        <i18n i18n="@@policies">policies</i18n>
+      </button>
+    </navbar-compat>
+  </ng-template>
+  <ng-template #drawerMenu>
+    <header><img src="/imgs/icon.png" [alt]="title" [title]="title"></header>
+    <mat-action-list>
+      <mat-list-item disableRipple>
+        <icon-compat name="search"></icon-compat>
+        <mat-form-field>
+          <input matInput #drawerInput>
+          <button mat-button mat-icon-button matSuffix
+            [disabled]="!drawerInput.value"
+            (click)="search(drawerInput.value)">
+            <icon-compat name="chevron-circle-right"></icon-compat>
+          </button>
+        </mat-form-field>
+      </mat-list-item>
+      <mat-list-item routerLink="/"(click)="drawer.hide()">
+        <icon-compat name="at"></icon-compat>
+        <span>{{ title }}</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/activities"(click)="drawer.hide()">
+        <icon-compat name="map-marker-alt"></icon-compat>
+        <i18n i18n="@@activities">activities</i18n>
+      </mat-list-item>
+      <mat-list-item routerLink="/organisations"(click)="drawer.hide()">
+        <icon-compat name="globe-europe"></icon-compat>
+        <i18n i18n="@@organisations">organisations</i18n>
+      </mat-list-item>
+      <mat-list-item routerLink="/blogposts"(click)="drawer.hide()">
+        <icon-compat name="comment-dots"></icon-compat>
+        <i18n i18n="@@blogposts">blogposts</i18n>
+      </mat-list-item>
+      <mat-list-item routerLink="/infopages"(click)="drawer.hide()">
+        <icon-compat name="question-circle"></icon-compat>
+        <i18n i18n="@@infopages">infopages</i18n>
+      </mat-list-item>
+    </mat-action-list>
+    <span [style.flexGrow]="1"></span>
+    <mat-action-list>
+      <mat-list-item routerLink="/imprint"(click)="drawer.hide()">
+        <icon-compat name="paragraph"></icon-compat>
+        <i18n i18n="@@imprint">imprint</i18n>
+      </mat-list-item>
+      <mat-list-item routerLink="/policies"(click)="drawer.hide()">
+        <icon-compat name="balance-scale"></icon-compat>
+        <i18n i18n="@@policies">policies</i18n>
+      </mat-list-item>
+    </mat-action-list>
+  </ng-template>
 </drawer-compat>

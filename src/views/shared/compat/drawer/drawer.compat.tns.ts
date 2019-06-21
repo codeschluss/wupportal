@@ -1,9 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ContentView } from 'tns-core-modules/ui/page/page';
-import { DrawerCompat as Compat } from './drawer.compat.d';
+import { DrawerCompat } from './drawer.compat.i';
 
 if (!isKnownView('drawer-compat')) {
   registerElement('drawer-compat', () => ContentView);
@@ -12,25 +12,30 @@ if (!isKnownView('drawer-compat')) {
 @Component({
   selector: 'drawer-compat',
   template: `
-    <RadSideDrawer
-      tkToggleNavButton
+    <RadSideDrawer tkToggleNavButton
       drawerTransition="PushTransition"
-      (drawerClosing)="stateListener(false)"
-      (drawerOpening)="stateListener(true)">
+      (drawerClosing)="drawn(false)"
+      (drawerOpening)="drawn(true)">
       <GridLayout tkMainContent>
-        <router-outlet></router-outlet>
+        <ng-container *ngTemplateOutlet="main"></ng-container>
       </GridLayout>
       <GridLayout tkDrawerContent>
-        <ng-content></ng-content>
+        <ng-container *ngTemplateOutlet="menu"></ng-container>
       </GridLayout>
     </RadSideDrawer>
   `
 })
 
-export class DrawerCompat extends ContentView implements Compat {
+export class DrawerCompatComponent extends ContentView implements DrawerCompat {
 
   @ViewChild(RadSideDrawerComponent, { static: true })
   public instance: RadSideDrawerComponent;
+
+  @ContentChild('drawerMain', { static: true })
+  public main: TemplateRef<any>;
+
+  @ContentChild('drawerMenu', { static: true })
+  public menu: TemplateRef<any>;
 
   private state: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -38,7 +43,7 @@ export class DrawerCompat extends ContentView implements Compat {
     return this.state.asObservable();
   }
 
-  public stateListener(state: boolean): void {
+  public drawn(state: boolean): void {
     this.state.next(state);
   }
 
@@ -53,5 +58,5 @@ export class DrawerCompat extends ContentView implements Compat {
   public toggle(): void {
     this.instance.sideDrawer.toggleDrawerState();
   }
-DrawerCompat
+
 }

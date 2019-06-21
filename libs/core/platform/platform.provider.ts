@@ -1,6 +1,6 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Inject, Injectable, Injector, PLATFORM_ID, Type } from '@angular/core';
-import { PlatformProvider as Compat } from './platform.provider.d';
+import { PlatformProvider as Compat } from './platform.provider.i';
 
 @Injectable({ providedIn: 'root' })
 export class PlatformProvider implements Compat {

@@ -1,29 +1,40 @@
 import { NgModule, Type } from '@angular/core';
 import { NativeScriptSvgModule } from '@teammaestro/nativescript-svg/angular';
+import { CoreModule } from '@wooportal/core';
 import { NativeScriptCommonModule } from 'nativescript-angular/common';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
+import { NgRippleModule } from 'nativescript-ng-ripple';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
-import { DrawerCompat } from './compat/drawer/drawer.compat';
-import { IconCompat } from './compat/icon/icon.compat';
+import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
+import { IconCompatComponent } from './compat/icon/icon.compat';
+import { NavbarCompatComponent } from './compat/navbar/navbar.compat.tns';
 import { LayoutComponent } from './layout/layout.component';
 
+
 const compat: Type<any>[] = [
-  DrawerCompat,
-  IconCompat
+  DrawerCompatComponent,
+  IconCompatComponent,
+  NavbarCompatComponent
+];
+
+const components: Type<any>[] = [
+  LayoutComponent
 ];
 
 const materials: Type<any>[] = [
   NativeScriptSvgModule,
-  NativeScriptUISideDrawerModule
+  NativeScriptUISideDrawerModule,
+  NgRippleModule
 ];
 
 @NgModule({
   declarations: [
     ...compat,
-    LayoutComponent,
+    ...components
   ],
   imports: [
     ...materials,
+    CoreModule,
     NativeScriptCommonModule,
     NativeScriptRouterModule
   ]

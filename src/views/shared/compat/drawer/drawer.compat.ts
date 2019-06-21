@@ -1,29 +1,35 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DrawerCompat as Compat } from './drawer.compat.d';
+import { DrawerCompat } from './drawer.compat.i';
 
 @Component({
   selector: 'drawer-compat',
   template: `
     <mat-drawer-container>
       <mat-drawer-content>
-        <router-outlet></router-outlet>
+        <ng-container *ngTemplateOutlet="main"></ng-container>
       </mat-drawer-content>
       <mat-drawer
         mode="push"
-        (closedStart)="stateListener(false)"
-        (openedStart)="stateListener(true)">
-        <ng-content></ng-content>
+        (closedStart)="drawn(false)"
+        (openedStart)="drawn(true)">
+        <ng-container *ngTemplateOutlet="menu"></ng-container>
       </mat-drawer>
     </mat-drawer-container>
   `
 })
 
-export class DrawerCompat implements Compat {
+export class DrawerCompatComponent implements DrawerCompat {
 
   @ViewChild(MatDrawer, { static: true })
   public instance: MatDrawer;
+
+  @ContentChild('drawerMain', { static: true })
+  public main: TemplateRef<any>;
+
+  @ContentChild('drawerMenu', { static: true })
+  public menu: TemplateRef<any>;
 
   private state: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -31,7 +37,7 @@ export class DrawerCompat implements Compat {
     return this.state.asObservable();
   }
 
-  public stateListener(state: boolean): void {
+  public drawn(state: boolean): void {
     this.state.next(state);
   }
 

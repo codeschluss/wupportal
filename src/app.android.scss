@@ -1,22 +1,54 @@
 @import '~nativescript-theme-core/scss/light';
 @import '~nativescript-theme-core/scss/index';
 @import '~nativescript-theme-core/scss/platforms/index.android';
+@import 'app.theme.scss';
 
 /* -------------------------------------------------------------------------- */
 
-svg-image {
-  height: 20;
-  width: 50;
-}
+
 
 page {
-  #TKDrawerContent {
-    stack-layout[orientation=horizontal] {
-      height: 50;
+  action-bar {
+    grid-layout {
+      border-radius: 50%;
+      width: 55;
 
-      label {
-        font-weight: bold;
-        vertical-align: center;
+      svg-image {
+        height: 20;
+      }
+    }
+  }
+
+  #TKDrawerContent {
+    scroll-view {
+      flexbox-layout {
+        flex-direction: column;
+
+        & > image {
+          horizontal-align: center;
+          stretch: aspectFit;
+          width: 50%;
+        }
+
+        & > stack-layout {
+          height: 50;
+          orientation: horizontal;
+
+          label {
+            color: black;
+            font-weight: bold;
+            vertical-align: center;
+          }
+
+          svg-image {
+            height: 20;
+            width: 50;
+          }
+
+          text-field {
+            width: 180;
+          }
+        }
       }
     }
   }

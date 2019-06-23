@@ -11,20 +11,20 @@ import { DeleteDialogComponent } from '../dialogs/delete.dialog';
 
 export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
-  public index: number;
-
-  @ViewChild(MatTabGroup, { static: true })
-  public tab: MatTabGroup;
-
-  @ViewChildren(MatTab, { read: ElementRef })
-  public tabs: QueryList<ElementRef>;
-
-  @ViewChildren(I18nComponent)
-  public translations: QueryList<I18nComponent>;
-
   protected abstract path: string;
 
   protected abstract resolve: object;
+
+  public index: number;
+
+  @ViewChild(MatTabGroup, { static: true })
+  private tab: MatTabGroup;
+
+  @ViewChildren(MatTab, { read: ElementRef })
+  private tabs: QueryList<ElementRef<HTMLElement>>;
+
+  @ViewChildren(I18nComponent)
+  private translations: QueryList<I18nComponent>;
 
   public get activityProvider(): string[] {
     const claim = ClientPackage.config.jwtClaims.activityProvider;

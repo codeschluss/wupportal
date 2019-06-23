@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Base64 } from '@wooportal/core';
 import { BaseFieldComponent } from '@wooportal/forms';
@@ -55,7 +55,7 @@ import { ImageModel } from '../../../base/models/image.model';
             <img mat-card-image [style.backgroundImage]="source(image)">
           </ng-container>
           <ng-container *ngIf="!image">
-            <label #area mat-card-image
+            <label mat-card-image
               for="image"
               (dragenter)="drag($event, 1)"
               (dragleave)="drag($event, -1)"
@@ -90,9 +90,6 @@ import { ImageModel } from '../../../base/models/image.model';
 
 export class ImageFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
-
-  @ViewChild('area', { static: false })
-  public area: ElementRef;
 
   public caption: FormControl = new FormControl();
 

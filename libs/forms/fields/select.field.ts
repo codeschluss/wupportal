@@ -20,10 +20,10 @@ import { BaseFieldComponent } from '../base/base.field';
 export class SelectFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
 
-  @ViewChild(MatSelect, { static: true })
-  public input: MatSelect;
-
   public select: FormControl = new FormControl();
+
+  @ViewChild(MatSelect, { static: true })
+  private selection: MatSelect;
 
   public get multi(): boolean {
     return this.field.multi;
@@ -49,7 +49,7 @@ export class SelectFieldComponent extends BaseFieldComponent
 
     this.select.valueChanges.subscribe((v) => this.value = this.toModel(v));
 
-    this.input.required = this.field.tests
+    this.selection.required = this.field.tests
       && this.field.tests.includes(Validators.required);
   }
 

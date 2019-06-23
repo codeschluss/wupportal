@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class SplashHostComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('content', { static: true })
-  public content: TemplateRef<any>;
+  private content: TemplateRef<any>;
 
   private splash: MatDialogRef<SplashChildComponent>;
 

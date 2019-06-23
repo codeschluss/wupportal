@@ -60,6 +60,7 @@ export class BaseFieldComponent implements OnInit {
   public get value(): any {
     return this.control.value;
   }
+
   public set value(value: any) {
     this.control.markAsDirty();
     this.control.patchValue(value);

@@ -16,7 +16,7 @@ import { LoadingProvider } from './loading.provider';
 export class LoadingIndicatorComponent implements AfterViewInit {
 
   @ViewChild(MatProgressBar, { read: ElementRef, static: true })
-  private indicator: ElementRef;
+  private indicator: ElementRef<HTMLElement>;
 
   public constructor(
     private loadingProvider: LoadingProvider

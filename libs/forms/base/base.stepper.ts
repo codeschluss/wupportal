@@ -15,15 +15,6 @@ export interface FormStep {
 export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   implements OnInit, AfterViewInit, OnDestroy {
 
-  @HostBinding('class')
-  public class: string = 'base-stepper';
-
-  @Input()
-  public item: Model;
-
-  @ViewChildren(I18nComponent)
-  public translations: QueryList<I18nComponent>;
-
   public abstract root: string;
 
   public abstract steps: FormStep[];
@@ -31,6 +22,15 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   protected abstract joiner: CrudJoiner;
 
   protected abstract model: Type<Model>;
+
+  @HostBinding('class')
+  public class: string = 'base-stepper';
+
+  @Input()
+  public item: Model;
+
+  @ViewChildren(I18nComponent)
+  private translations: QueryList<I18nComponent>;
 
   protected static template(template: string): string {
     return `

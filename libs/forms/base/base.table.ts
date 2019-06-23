@@ -16,26 +16,14 @@ export interface TableColumn {
 export abstract class BaseTable<Model extends CrudModel>
   implements OnInit, AfterViewInit {
 
+  public abstract columns: TableColumn[];
+
+  protected abstract joiner: CrudJoiner;
+
+  protected abstract model: Type<Model>;
+
   @HostBinding('class')
   public class: string = 'base-table';
-
-  @Input()
-  public items: Model[];
-
-  @ViewChild(MatPaginator, { static: true })
-  public pager: MatPaginator;
-
-  @ViewChild(MatInput, { static: true })
-  public searcher: MatInput;
-
-  @ViewChild(MatSort, { static: true })
-  public sorter: MatSort;
-
-  @ViewChild(MatTable, { static: true })
-  public table: MatTable<Model>;
-
-  @ContentChildren(MatColumnDef)
-  public views: QueryList<MatColumnDef>;
 
   public collate: string[] = [];
 
@@ -43,17 +31,29 @@ export abstract class BaseTable<Model extends CrudModel>
 
   public source: BehaviorSubject<Model[]>;
 
-  public abstract columns: TableColumn[];
-
-  protected abstract joiner: CrudJoiner;
-
-  protected abstract model: Type<Model>;
-
   public readonly viewpipe: Observable<any> = merge(
     this.route.queryParams.pipe(tap((params) => this.navigate(params)))
   ).pipe(ignoreElements());
 
-  private parameters: any;
+  @Input()
+  private items: Model[];
+
+  private navigation: any;
+
+  @ViewChild(MatPaginator, { static: true })
+  private pager: MatPaginator;
+
+  @ViewChild(MatInput, { static: true })
+  private searcher: MatInput;
+
+  @ViewChild(MatSort, { static: true })
+  private sorter: MatSort;
+
+  @ViewChild(MatTable, { static: true })
+  private table: MatTable<Model>;
+
+  @ContentChildren(MatColumnDef)
+  private views: QueryList<MatColumnDef>;
 
   protected static template(template: string): string {
     return template + `
@@ -163,9 +163,9 @@ export abstract class BaseTable<Model extends CrudModel>
 
   private navigate(params: Params) {
     const { dir, find, page, size, sort, ...rest } = params;
-    this.parameters = this.parameters || rest;
+    this.navigation = this.navigation || rest;
 
-    if (JSON.stringify(this.parameters) === JSON.stringify(rest)) {
+    if (JSON.stringify(this.navigation) === JSON.stringify(rest)) {
       this.sorter.direction = dir || null as SortDirection;
       this.searcher.value = find || null;
       this.pager.pageIndex = parseInt(page, 10) || null;

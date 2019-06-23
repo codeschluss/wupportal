@@ -18,9 +18,11 @@ export class CoreErrorHandler implements ErrorHandler {
     private zone: NgZone,
     platformProvider: PlatformProvider
   ) {
-    if (platformProvider.name === 'Web') {
-      window.onerror = this.handleError.bind(this);
-      window.onunhandledrejection = this.handleRejection.bind(this);
+    switch (platformProvider.name) {
+      case 'Web':
+        window.onerror = this.handleError.bind(this);
+        window.onunhandledrejection = this.handleRejection.bind(this);
+        break;
     }
   }
 

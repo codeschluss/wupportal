@@ -158,9 +158,6 @@ export class ScheduleFormComponent
   extends BaseForm<ScheduleModel>
   implements AfterViewInit {
 
-  @ViewChild(MatChipList, { static: false })
-  public days: MatChipList;
-
   public fields: FormField[] = [
     {
       name: 'schedules',
@@ -174,6 +171,9 @@ export class ScheduleFormComponent
   public recurrence: FormControl = new FormControl('once');
 
   public until: FormControl = new FormControl();
+
+  @ViewChild(MatChipList, { static: false })
+  private days: MatChipList;
 
   private formats: any = { date: 'YYYY-MM-DD', time: 'HH:mm' };
 

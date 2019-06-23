@@ -21,6 +21,14 @@ export interface CrudMethods {
 export abstract class CrudProvider
   <Service extends BaseService, Model extends CrudModel> {
 
+  protected abstract linked: CrudLink[];
+
+  protected abstract methods: CrudMethods;
+
+  protected abstract model: Type<Model>;
+
+  protected abstract service: Service;
+
   public system: any = Object.freeze({
     apply: this.apply.bind(this),
     based: this.based.bind(this),
@@ -34,14 +42,6 @@ export abstract class CrudProvider
     get model(): Type<Model> { return this._self.model; },
     get service(): Service { return this._self.service; }
   });
-
-  protected abstract linked: CrudLink[];
-
-  protected abstract methods: CrudMethods;
-
-  protected abstract model: Type<Model>;
-
-  protected abstract service: Service;
 
   public create(item: Model): Observable<any> {
     return this.call(this.methods.create, item).pipe(

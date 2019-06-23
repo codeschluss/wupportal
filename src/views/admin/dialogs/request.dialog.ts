@@ -47,12 +47,12 @@ import { UserProvider } from '../../../base/providers/user.provider';
 
 export class RequestDialogComponent implements OnInit {
 
-  @ViewChild(MatInput, { static: true })
-  public filter: MatInput;
-
   public ids: string[] = [];
 
   public items: OrganisationModel[];
+
+  @ViewChild(MatInput, { static: true })
+  private search: MatInput;
 
   public constructor(
     private dialog: MatDialogRef<RequestDialogComponent>,
@@ -62,8 +62,8 @@ export class RequestDialogComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.filter.stateChanges.pipe(
-      map(() => this.filter.value || null),
+    this.search.stateChanges.pipe(
+      map(() => this.search.value || null),
       debounceTime(1000),
       startWith(null),
       distinctUntilChanged(),

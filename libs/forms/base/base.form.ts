@@ -23,6 +23,10 @@ export interface FormField {
 export abstract class BaseForm<Model extends CrudModel>
   implements OnInit, OnDestroy {
 
+  public abstract fields: FormField[];
+
+  public abstract model: Type<Model>;
+
   @HostBinding('class')
   public class: string = 'base-form';
 
@@ -33,16 +37,12 @@ export abstract class BaseForm<Model extends CrudModel>
   public item: Model;
 
   @Input()
-  public token: AccessTokenModel;
+  protected token: AccessTokenModel;
 
-  public abstract fields: FormField[];
-
-  public abstract model: Type<Model>;
-
-  protected static template(top: string = '', end: string = ''): string {
+  protected static template(prefix: string = '', suffix: string = ''): string {
     return `
       <form [formGroup]="group">
-        ${top}
+        ${prefix}
         <ng-container *ngFor="let field of fields">
           <section>
             <label class="mat-body-strong" [for]="field.name">
@@ -55,7 +55,7 @@ export abstract class BaseForm<Model extends CrudModel>
             </output>
           </section>
         </ng-container>
-        ${end}
+        ${suffix}
       </form>
     `;
   }

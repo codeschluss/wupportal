@@ -34,17 +34,17 @@ import { BaseFieldComponent } from '../base/base.field';
 export class ChipListFieldComponent extends BaseFieldComponent
   implements AfterViewInit {
 
-  @ViewChild(MatAutocomplete, { static: true })
-  public auto: MatAutocomplete;
-
-  @ViewChild('input', { static: true })
-  public input: ElementRef<HTMLInputElement>;
-
   public keys: number[] = [COMMA, ENTER, SEMICOLON, SPACE];
 
   public search: FormControl = new FormControl();
 
   public options: CrudModel[];
+
+  @ViewChild(MatAutocomplete, { static: true })
+  private auto: MatAutocomplete;
+
+  @ViewChild('input', { static: true })
+  private input: ElementRef<HTMLInputElement>;
 
   public ngAfterViewInit(): void {
     this.control.valueChanges.subscribe(() => this.clear());

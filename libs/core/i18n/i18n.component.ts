@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { I18nComponent as Compat } from './i18n.component.i';
 import { I18nResolver, TRANSLATIONS_FACTORY } from './i18n.resolver';
@@ -18,24 +18,27 @@ import { I18nResolver, TRANSLATIONS_FACTORY } from './i18n.resolver';
   ],
   // tslint:disable-next-line:component-selector
   selector: 'i18n',
-  template: `<slot #slot><ng-content></ng-content></slot>`
+  template: `<slot #wrapper><ng-content></ng-content></slot>`
 })
 
-export class I18nComponent implements Compat, AfterViewInit {
-
-  @ViewChild('slot', { static: true })
-  public slot: ElementRef;
+export class I18nComponent implements Compat {
 
   public text: string;
+
+  @Input()
+  public unit: string;
+
+  @ViewChild('wrapper', { static: true })
+  private wrapper: ElementRef<HTMLElement>;
 
   public constructor(
     private i18n: I18n
   ) { }
 
   public ngAfterViewInit(): void {
-    const text = this.slot.nativeElement.innerHTML;
-    this.text = this.i18n({ id: text, value: text }) || text;
-    this.slot.nativeElement.innerHTML = this.text;
+    const unit = this.unit || this.wrapper.nativeElement.innerHTML;
+    this.text = this.i18n({ id: unit, value: unit }) || unit;
+    this.wrapper.nativeElement.innerHTML = this.text;
   }
 
 }

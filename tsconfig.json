@@ -9,7 +9,7 @@
     "sourceMap": true,
     "outDir": "target",
     "target": "es5",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "lib": [
       "dom",

@@ -36,7 +36,8 @@ const materials: Type<any>[] = [
     CoreModule,
     NativeScriptCommonModule,
     NativeScriptRouterModule
-  ]
+  ],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 
 export class SharedModule { }

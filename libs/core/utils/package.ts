@@ -1,4 +1,6 @@
-import * as packageJson from '../package.json';
+// TODO: https://github.com/angular/tsickle/pull/922
+// import * as packageJson from '../package.json';
+import * as packageJson from '@wooportal/core/package.json';
 
 export class CorePackage {
 

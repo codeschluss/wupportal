@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
+import { Component, ElementRef, Input, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
-import { ContentView } from 'tns-core-modules/ui/page/page';
+import { ContentView } from 'tns-core-modules/ui/page';
 import { I18nComponent as Compat } from './i18n.component.i';
 import { I18nResolver, TRANSLATIONS_FACTORY } from './i18n.resolver';
 
@@ -24,16 +24,18 @@ if (!isKnownView('i18n')) {
   ],
   // tslint:disable-next-line:component-selector
   selector: 'i18n',
-  template: `<label [text]="text"></label>`
+  template: `<label #wrapper></label>`
 })
 
-export class I18nComponent extends ContentView
-  implements Compat, OnInit {
+export class I18nComponent extends ContentView implements Compat {
+
+  public text: string;
 
   @Input()
   public unit: string;
 
-  public text: string;
+  @ViewChild('wrapper', { static: true })
+  private wrapper: ElementRef<any>;
 
   public constructor(
     private i18n: I18n
@@ -41,8 +43,10 @@ export class I18nComponent extends ContentView
     super();
   }
 
-  public ngOnInit(): void {
-    this.text = this.i18n({ id: this.unit, value: this.unit }) || this.unit;
+  public ngAfterViewInit(): void {
+    const unit = this.unit;
+    this.text = this.i18n({ id: unit, value: unit }) || unit;
+    this.wrapper.nativeElement.text = this.text;
   }
 
 }

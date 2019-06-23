@@ -44,6 +44,7 @@
 </navbar-compat>
 <drawer-compat #drawer>
   <ng-template #drawerMain>
+    <loading-indicator></loading-indicator>
     <router-outlet></router-outlet>
     <span [style.flexGrow]="1"></span>
     <navbar-compat fxHide.lt-md>

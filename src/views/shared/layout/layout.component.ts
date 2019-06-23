@@ -15,8 +15,10 @@ export class LayoutComponent {
   private drawer: DrawerCompat;
 
   public search(query: string): void {
-    console.log(query);
-    this.drawer.hide();
+    if (query) {
+      console.log(query);
+      this.drawer.hide();
+    }
   }
 
 }

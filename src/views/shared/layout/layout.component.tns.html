@@ -8,7 +8,10 @@
 </navbar-compat>
 <drawer-compat #drawer>
   <ng-template #drawerMain>
-    <router-outlet></router-outlet>
+    <stack-layout>
+      <loading-indicator></loading-indicator>
+      <router-outlet></router-outlet>
+    </stack-layout>
   </ng-template>
   <ng-template #drawerMenu>
     <scroll-view>

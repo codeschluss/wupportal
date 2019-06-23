@@ -24,7 +24,7 @@ if (!isKnownView('i18n')) {
   ],
   // tslint:disable-next-line:component-selector
   selector: 'i18n',
-  template: `<label #wrapper></label>`
+  template: `<Label #wrapper></Label>`
 })
 
 export class I18nComponent extends ContentView implements Compat {

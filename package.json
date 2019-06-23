@@ -89,7 +89,6 @@
     "@nguniversal/module-map-ngfactory-loader": "8.0.0-rc.1",
     "@ngx-pwa/local-storage": "8.0.2",
     "@ngx-translate/i18n-polyfill": "1.0.0",
-    "@teammaestro/nativescript-svg": "1.0.1",
     "@wooportal/core": "file:libs/core",
     "@wooportal/forms": "file:libs/forms",
     "express": "4.17.1",

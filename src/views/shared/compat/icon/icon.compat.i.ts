@@ -1,5 +1,5 @@
 export interface IconCompat {
 
-  name: string;
+  icon: string;
 
 }

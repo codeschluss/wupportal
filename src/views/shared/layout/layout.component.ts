@@ -9,18 +9,14 @@ import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
 export class LayoutComponent {
 
-  @ViewChild('drawer', { static: true })
-  public drawer: DrawerCompat;
-
   public title: string = ClientManifest.shortTitle;
+
+  @ViewChild('drawer', { static: true })
+  private drawer: DrawerCompat;
 
   public search(query: string): void {
     console.log(query);
     this.drawer.hide();
-  }
-
-  public toggleDrawer(): void {
-    this.drawer.toggle();
   }
 
 }

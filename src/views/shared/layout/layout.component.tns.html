@@ -1,7 +1,7 @@
 <navbar-compat [title]="title">
   <action-item ios.position="right">
-    <grid-layout ripple (tap)="toggleDrawer()">
-      <icon-compat [name]="(drawer.visible | async) ? 'times' : 'bars'">
+    <grid-layout ripple (tap)="drawer.toggle()">
+      <icon-compat [icon]="(drawer.visible | async) ? 'times' : 'bars'">
       </icon-compat>
     </grid-layout>
   </action-item>
@@ -14,8 +14,8 @@
     <scroll-view>
       <flexbox-layout>
         <image src="res://icon"></image>
-        <stack-layout>
-          <icon-compat name="search"></icon-compat>
+        <stack-layout class="search">
+          <icon-compat icon="search"></icon-compat>
           <text-field #input
             returnKeyType="search"
             (onLoaded)="input.blur()"
@@ -23,33 +23,33 @@
           </text-field>
         </stack-layout>
         <stack-layout ripple routerLink="/" (tap)="drawer.hide()">
-          <icon-compat name="at"></icon-compat>
+          <icon-compat icon="at"></icon-compat>
           <label [text]="title"></label>
         </stack-layout>
         <stack-layout ripple routerLink="/activities" (tap)="drawer.hide()">
-          <icon-compat name="map-marker-alt"></icon-compat>
+          <icon-compat icon="map-marker-alt"></icon-compat>
           <i18n i18n="@@activities" unit="activities"></i18n>
         </stack-layout>
         <stack-layout ripple routerLink="/organisations" (tap)="drawer.hide()">
-          <icon-compat name="globe-europe"></icon-compat>
+          <icon-compat icon="globe-europe"></icon-compat>
           <i18n i18n="@@organisations" unit="organisations"></i18n>
         </stack-layout>
         <stack-layout ripple routerLink="/blogposts" (tap)="drawer.hide()">
-          <icon-compat name="comment-dots"></icon-compat>
+          <icon-compat icon="comment-dots"></icon-compat>
           <i18n i18n="@@blogposts" unit="blogposts"></i18n>
         </stack-layout>
         <stack-layout ripple routerLink="/infopages" (tap)="drawer.hide()">
-          <icon-compat name="question-circle"></icon-compat>
+          <icon-compat icon="question-circle"></icon-compat>
           <i18n i18n="@@infopages" unit="infopages"></i18n>
         </stack-layout>
         <!-- TODO: https://github.com/NativeScript/NativeScript/issues/6114 -->
         <label flexGrow="1"></label>
         <stack-layout ripple routerLink="/imprint" (tap)="drawer.hide()">
-          <icon-compat name="paragraph"></icon-compat>
+          <icon-compat icon="paragraph"></icon-compat>
           <i18n i18n="@@imprint" unit="imprint"></i18n>
         </stack-layout>
         <stack-layout ripple routerLink="/policies" (tap)="drawer.hide()">
-          <icon-compat name="balance-scale"></icon-compat>
+          <icon-compat icon="balance-scale"></icon-compat>
           <i18n i18n="@@policies" unit="policies"></i18n>
         </stack-layout>
       </flexbox-layout>

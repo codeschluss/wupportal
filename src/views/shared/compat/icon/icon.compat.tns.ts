@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { icon } from '@fortawesome/fontawesome-svg-core';
-import { fromData, ImageSourceSVG } from '@teammaestro/nativescript-svg';
+import { PlatformProvider } from '@wooportal/core';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
-import { ContentView } from 'tns-core-modules/ui/page/page';
+import { ContentView } from 'tns-core-modules/ui/page';
+import { WebView } from 'tns-core-modules/ui/web-view';
 import { IconCompat } from './icon.compat.i';
 
 if (!isKnownView('icon-compat')) {
@@ -11,32 +12,59 @@ if (!isKnownView('icon-compat')) {
 
 @Component({
   selector: 'icon-compat',
-  template: `<SVGImage [imageSource]="src"></SVGImage>`
+  template: `<WebView [src]="source" (loaded)="init($event.object)"></WebView>`
 })
 
 export class IconCompatComponent extends ContentView
   implements IconCompat, OnInit, OnChanges {
 
   @Input()
-  public name: string;
+  public icon: string;
 
-  public src: ImageSourceSVG;
+  public source: string;
+
+  public constructor(
+    private platformProvider: PlatformProvider
+  ) {
+    super();
+  }
 
   public ngOnInit(): void {
-      this.src = this.getIcon(this.name);
+    this.source = this.getIcon(this.icon);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.name) {
-      this.src = this.getIcon(this.name);
+    if (changes.icon) {
+      this.source = this.getIcon(this.icon);
     }
   }
 
-  private getIcon(name: string): ImageSourceSVG {
-    return fromData(icon({
+  public init(view: WebView): void {
+    view.on('touch', () => true);
+
+    switch (this.platformProvider.name) {
+      case 'Android':
+        view.android.setBackgroundColor(0x00000000);
+        view.android.setHorizontalScrollBarEnabled(false);
+        view.android.setVerticalScrollBarEnabled(false);
+        view.android.getSettings().setSupportZoom(false);
+        break;
+
+      case 'iOS':
+        // TODO: BUY_MAC
+        // view.ios.opaque = false;
+        // view.ios.setDrawsBackground = false;
+        // view.ios.showsHorizontalScrollIndicator = false;
+        // view.ios.showsVerticalScrollIndicator = false;
+        break;
+    }
+  }
+
+  private getIcon(name: string): string {
+    return icon({
       iconName: name as any,
       prefix: 'fas'
-    }).html[0]);
+    }).html.join('');
   }
 
 }

@@ -3,12 +3,12 @@ import { IconCompat } from './icon.compat.i';
 
 @Component({
   selector: 'icon-compat',
-  template: `<fa-icon [icon]="name"></fa-icon>`
+  template: `<fa-icon [icon]="icon"></fa-icon>`
 })
 
 export class IconCompatComponent implements IconCompat {
 
   @Input()
-  public name: string;
+  public icon: string;
 
 }

@@ -1,5 +1,4 @@
-import { NgModule, Type } from '@angular/core';
-import { NativeScriptSvgModule } from '@teammaestro/nativescript-svg/angular';
+import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
 import { CoreModule } from '@wooportal/core';
 import { NativeScriptCommonModule } from 'nativescript-angular/common';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
@@ -21,7 +20,6 @@ const components: Type<any>[] = [
 ];
 
 const materials: Type<any>[] = [
-  NativeScriptSvgModule,
   NativeScriptUISideDrawerModule,
   NgRippleModule
 ];

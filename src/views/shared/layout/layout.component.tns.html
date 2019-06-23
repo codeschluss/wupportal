@@ -1,8 +1,10 @@
 <navbar-compat [title]="title">
   <action-item ios.position="right">
-    <grid-layout ripple (tap)="drawer.toggle()">
-      <icon-compat [icon]="(drawer.visible | async) ? 'times' : 'bars'">
-      </icon-compat>
+    <grid-layout>
+      <grid-layout ripple (tap)="drawer.toggle()">
+        <icon-compat [icon]="(drawer.visible | async) ? 'times' : 'bars'">
+        </icon-compat>
+      </grid-layout>
     </grid-layout>
   </action-item>
 </navbar-compat>

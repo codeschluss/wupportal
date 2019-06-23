@@ -7,13 +7,19 @@
 page {
   action-bar {
     grid-layout {
-      border-radius: 50%;
-      height: 50;
-      width: 50;
+      height: 40;
+      width: 55;
+      padding-right: 15;
 
-      web-view {
-        height: 35;
-        width: 30;
+      grid-layout {
+        border-radius: 50%;
+        padding-right: 0;
+        width: 40;
+
+        web-view {
+          height: 35;
+          width: 30;
+        }
       }
     }
   }

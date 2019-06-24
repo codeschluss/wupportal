@@ -14,19 +14,14 @@ const routes: Route[] = [
     resolve: resolvers,
     children: [
       {
-        path: '',
-        loadChildren: () => import('./views/public/public.module')
-          .then((imported) => imported.PublicModule)
-      },
-      {
         path: 'admin',
         loadChildren: () => import('./views/admin/admin.module')
           .then((imported) => imported.AdminModule)
       },
       {
-        path: '**',
-        pathMatch: 'full',
-        redirectTo: ''
+        path: '',
+        loadChildren: () => import('./views/public/public.module')
+          .then((imported) => imported.PublicModule)
       }
     ]
   }
@@ -40,6 +35,11 @@ const routes: Route[] = [
       children: routes,
       component: LayoutComponent,
       resolve: resolvers,
+    },
+    {
+      path: '**',
+      pathMatch: 'full',
+      redirectTo: ''
     }
   ])]
 })

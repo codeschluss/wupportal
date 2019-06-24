@@ -42,8 +42,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (userId) {
       this.home = this.router.events.pipe(
         filter((event) => event instanceof NavigationEnd),
-        map(() => !this.route.firstChild),
-        startWith(!this.route.firstChild),
+        map(() => !this.route.firstChild.firstChild),
+        startWith(!this.route.firstChild.firstChild),
         filter(Boolean)
       ).subscribe(() => this.router.navigate(route));
     }

@@ -54,7 +54,6 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   protected get routing(this: any): Route {
     return {
       path: this.path,
-      component: this.constructor,
       resolve: Object.assign({
         tokens: TokenResolver
       }, ...Object.keys(this.resolve).map((key) => ({

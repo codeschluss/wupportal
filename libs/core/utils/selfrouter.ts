@@ -5,7 +5,9 @@ export abstract class Selfrouter {
   protected abstract get routing(): Route;
 
   public static get routing(this: any): Route {
-    return new this().routing;
+    return Object.assign(new this().routing, {
+      component: this
+    });
   }
 
   protected walk(root: Route[], routes?: Route[]): Route[] {

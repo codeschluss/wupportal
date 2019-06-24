@@ -114,7 +114,6 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
     return {
       path: `${this.root}/:uuid`,
-      component: this.constructor,
       resolve: {
         item: CrudResolver,
         tokens: TokenResolver

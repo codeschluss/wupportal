@@ -18,11 +18,6 @@ const routes: Route[] = [
         path: '',
         loadChildren: () => import('./views/public/public.module')
           .then((imported) => imported.PublicModule)
-      },
-      {
-        path: '**',
-        pathMatch: 'full',
-        redirectTo: ''
       }
     ]
   }
@@ -36,6 +31,11 @@ const routes: Route[] = [
       children: routes,
       component: LayoutComponent,
       resolve: resolvers
+    },
+    {
+      path: '**',
+      pathMatch: 'full',
+      redirectTo: ''
     }
   ])]
 })

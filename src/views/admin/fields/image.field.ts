@@ -33,7 +33,7 @@ import { ImageModel } from '../../../base/models/image.model';
   template: `
     <ng-container *ngFor="let item of value">
       <mat-card>
-        <img mat-card-image [style.backgroundImage]="source(item)">
+        <img mat-card-image [style.backgroundImage]="item.source">
         <mat-card-content>{{ item.caption }}</mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
@@ -52,7 +52,7 @@ import { ImageModel } from '../../../base/models/image.model';
       <mat-card>
         <mat-card-content>
           <ng-container *ngIf="image">
-            <img mat-card-image [style.backgroundImage]="source(image)">
+            <img mat-card-image [style.backgroundImage]="image.source">
           </ng-container>
           <ng-container *ngIf="!image">
             <label mat-card-image
@@ -156,10 +156,6 @@ export class ImageFieldComponent extends BaseFieldComponent
   public edit(item: ImageModel): void {
     this.caption.patchValue(item.caption);
     this.delete(this.image = item);
-  }
-
-  public source(item: ImageModel): string {
-    return `url(data:${item.mimeType};base64,${item.imageData})`;
   }
 
 }

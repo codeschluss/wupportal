@@ -39,6 +39,10 @@ const materials: Type<any>[] = [
     ...compat,
     ...components
   ],
+  exports: [
+    CoreModule,
+    CommonModule
+  ],
   imports: [
     ...materials,
     CommonModule,

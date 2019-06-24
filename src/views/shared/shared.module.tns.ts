@@ -29,6 +29,10 @@ const materials: Type<any>[] = [
     ...compat,
     ...components
   ],
+  exports: [
+    CoreModule,
+    NativeScriptCommonModule
+  ],
   imports: [
     ...materials,
     CoreModule,

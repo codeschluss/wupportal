@@ -6,4 +6,6 @@ export interface PlatformProvider {
 
   readonly name: 'Android' | 'iOS' | 'Server' | 'Web';
 
+  readonly type: 'Browser' | 'Native';
+
 }

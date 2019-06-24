@@ -17,4 +17,8 @@ export class PlatformProvider implements Compat {
     return device.os as any;
   }
 
+  public get type(): 'Browser' | 'Native' {
+    return 'Native';
+  }
+
 }

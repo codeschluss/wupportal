@@ -1,3 +1,3 @@
 import { RouterModule } from '@angular/router';
 
-export const RouterCompat = RouterModule;
+export const PlatformRouter = RouterModule;

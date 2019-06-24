@@ -1,11 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, Injector, NgModule, Provider, Type } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterModule, UrlSerializer } from '@angular/router';
+import { UrlSerializer } from '@angular/router';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { TokenProvider } from '../auth/token.provider';
 import { ErrorBarComponent } from '../error/error.bar';
@@ -15,7 +14,9 @@ import { I18nComponent } from '../i18n/i18n.component';
 import { I18nInterceptor } from '../i18n/i18n.interceptor';
 import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
+import { PlatformCommon } from '../platform/platform.common';
 import { PlatformInterceptor } from '../platform/platform.interceptor';
+import { PlatformRouter } from '../platform/platform.router';
 import { SessionProvider } from '../session/session.provider';
 import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
@@ -59,8 +60,8 @@ const providers: Provider[] = [
   ],
   imports: [
     ...materials,
-    CommonModule,
-    RouterModule
+    PlatformCommon,
+    PlatformRouter
   ],
   providers: [
     { provide: ErrorHandler, useClass: CoreErrorHandler },

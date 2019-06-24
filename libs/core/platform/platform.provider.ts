@@ -30,6 +30,10 @@ export class PlatformProvider implements Compat {
     }
   }
 
+  public get type(): 'Browser' | 'Native' {
+    return 'Browser';
+  }
+
   public constructor(
     private injector: Injector,
     @Inject(PLATFORM_ID) private platformId: any

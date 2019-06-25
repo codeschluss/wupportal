@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,9 +7,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BaseModule } from '../../base/base.module';
+import { CoreModule, PlatformCommonModule, PlatformRouterModule } from '@wooportal/core';
 import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
 import { IconCompatComponent } from './compat/icon/icon.compat';
 import { NavbarCompatComponent } from './compat/navbar/navbar.compat';
@@ -48,9 +46,9 @@ const materials: Type<any>[] = [
   ],
   imports: [
     ...materials,
-    BaseModule,
-    CommonModule,
-    RouterModule
+    CoreModule,
+    PlatformCommonModule,
+    PlatformRouterModule
   ]
 })
 

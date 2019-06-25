@@ -5,8 +5,8 @@ import { Box, CrudJoiner, CrudResolver, TokenProvider } from '@wooportal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { AddressModel } from '../../../base/models/address.model';
-import { SuburbModel } from '../../../base/models/suburb.model';
+import { AddressModel } from '../../../realm/models/address.model';
+import { SuburbModel } from '../../../realm/models/suburb.model';
 import { ClientPackage } from '../../../utils/package';
 
 @Component({

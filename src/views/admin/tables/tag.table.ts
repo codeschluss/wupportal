@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { TagModel } from '../../../base/models/tag.model';
+import { TagModel } from '../../../realm/models/tag.model';
 
 @Component({
   selector: 'tag-table',

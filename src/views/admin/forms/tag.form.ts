@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { TagModel } from '../../../base/models/tag.model';
-import { TranslationBase } from '../../../base/translation.base';
+import { TagModel } from '../../../realm/models/tag.model';
+import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
   selector: 'tag-form',

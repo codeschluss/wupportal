@@ -25,8 +25,8 @@ export class LayoutComponent {
       filter((event) => event instanceof NavigationStart)
     ).subscribe(() => {
       switch (platformProvider.type) {
-        case 'Browser': setTimeout(() => this.drawer.hide(), 50); break;
         case 'Native': setTimeout(() => this.drawer.hide(), 150); break;
+        case 'Online': setTimeout(() => this.drawer.hide(), 50); break;
       }
     });
   }

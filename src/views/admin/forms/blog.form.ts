@@ -4,9 +4,9 @@ import { Box } from '@wooportal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivityModel } from '../../../base/models/activity.model';
-import { BlogModel } from '../../../base/models/blog.model';
-import { TranslationBase } from '../../../base/translation.base';
+import { ActivityModel } from '../../../realm/models/activity.model';
+import { BlogModel } from '../../../realm/models/blog.model';
+import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
   selector: 'blog-form',

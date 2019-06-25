@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
 import { EMPTY, Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
-import { UserModel } from '../../../base/models/user.model';
+import { UserModel } from '../../../realm/models/user.model';
 
 @Component({
   selector: 'user-form',

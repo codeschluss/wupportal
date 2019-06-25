@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Route } from '@angular/router';
 import { PlatformRouterModule } from '@wooportal/core';
-import { OrganisationMultiComponent } from './organisation/muliti/organisation.multi';
+import { OrganisationListComponent } from './organisation/list/organisation.list';
 import { PublicComponent } from './public.component';
 
 const routes: Route[] = [
   {
     path: '',
     children: [
-      OrganisationMultiComponent.routing
+      OrganisationListComponent.routing
     ]
   }
 ];

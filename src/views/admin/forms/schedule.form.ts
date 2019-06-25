@@ -4,7 +4,7 @@ import { MatChip, MatChipList } from '@angular/material/chips';
 import { BaseForm, FormField } from '@wooportal/forms';
 import * as moment from 'moment';
 import { merge, Observable, of } from 'rxjs';
-import { ScheduleModel } from '../../../base/models/schedule.model';
+import { ScheduleModel } from '../../../realm/models/schedule.model';
 import { ScheduleFieldComponent } from '../fields/schedule.field';
 
 @Component({

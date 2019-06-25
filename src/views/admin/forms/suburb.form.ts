@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { SuburbModel } from '../../../base/models/suburb.model';
+import { SuburbModel } from '../../../realm/models/suburb.model';
 
 @Component({
   selector: 'suburb-form',

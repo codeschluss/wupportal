@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { CategoryModel } from '../../../base/models/category.model';
-import { TranslationBase } from '../../../base/translation.base';
+import { CategoryModel } from '../../../realm/models/category.model';
+import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
   selector: 'category-form',

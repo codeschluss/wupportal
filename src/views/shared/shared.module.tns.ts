@@ -1,9 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
-import { NativeScriptCommonModule } from 'nativescript-angular/common';
-import { NativeScriptRouterModule } from 'nativescript-angular/router';
+import { CoreModule, PlatformRouterModule } from '@wooportal/core';
+import { NativeScriptCommonModule as PlatformCommonModule } from 'nativescript-angular/common';
 import { NgRippleModule } from 'nativescript-ng-ripple';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
-import { BaseModule } from '../../base/base.module';
 import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
 import { IconCompatComponent } from './compat/icon/icon.compat';
 import { NavbarCompatComponent } from './compat/navbar/navbar.compat';
@@ -34,9 +33,9 @@ const materials: Type<any>[] = [
   ],
   imports: [
     ...materials,
-    BaseModule,
-    NativeScriptCommonModule,
-    NativeScriptRouterModule
+    CoreModule,
+    PlatformCommonModule,
+    PlatformRouterModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

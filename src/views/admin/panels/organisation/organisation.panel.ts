@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Box, CrudJoiner, False, True } from '@wooportal/core';
 import { flatMap } from 'lodash';
 import { filter, mergeMap } from 'rxjs/operators';
-import { ActivityModel } from '../../../../base/models/activity.model';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
-import { ProviderModel } from '../../../../base/models/provider.model';
+import { ActivityModel } from '../../../../realm/models/activity.model';
+import { OrganisationModel } from '../../../../realm/models/organisation.model';
+import { ProviderModel } from '../../../../realm/models/provider.model';
 import { BasePanel } from '../base.panel';
 
 @Component({

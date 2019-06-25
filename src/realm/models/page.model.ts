@@ -1,7 +1,7 @@
 import { CrudModel } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { PageEntity } from '../../api/models/page-entity';
-import { Translatable } from '../translation.base';
+import { Translatable } from '../translations/translatable';
 import { TopicModel } from './topic.model';
 
 export class PageModel

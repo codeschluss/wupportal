@@ -1,7 +1,6 @@
 import { Injector, NgModule, Type } from '@angular/core';
-import { BaseService, CoreModule, CrudModel, CrudProvider } from '@wooportal/core';
+import { BaseService, CrudModel, CrudProvider } from '@wooportal/core';
 import { ApiConfiguration } from '../api/api-configuration';
-import { ClientManifest } from '../utils/manifest';
 import { ClientPackage } from '../utils/package';
 import { ActivityProvider } from './providers/activity.provider';
 import { AddressProvider } from './providers/address.provider';
@@ -35,18 +34,9 @@ const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
   UserProvider
 ];
 
-@NgModule({
-  exports: [CoreModule],
-  imports: [CoreModule.forRoot({
-    apiAuthUrl: ClientPackage.config.api.authUrl,
-    apiRefreshUrl: ClientPackage.config.api.refreshUrl,
-    apiRootUrl: ClientPackage.config.api.rootUrl,
-    appRootUrl: ClientManifest.startUrl,
-    appTitle: ClientManifest.shortTitle
-  })]
-})
+@NgModule()
 
-export class BaseModule {
+export class RealmModule {
 
   public constructor(
     apiConfiguration: ApiConfiguration,

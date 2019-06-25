@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { ProviderModel } from '../../../base/models/provider.model';
+import { ProviderModel } from '../../../realm/models/provider.model';
 
 @Component({
   selector: 'provider-table',

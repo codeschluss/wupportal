@@ -4,7 +4,7 @@ import { Base64 } from '@wooportal/core';
 import { BaseFieldComponent } from '@wooportal/forms';
 import { fromEvent } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { ImageModel } from '../../../base/models/image.model';
+import { ImageModel } from '../../../realm/models/image.model';
 
 @Component({
   styles: [`

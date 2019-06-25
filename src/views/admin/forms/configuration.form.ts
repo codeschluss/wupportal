@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ConfigurationModel } from '../../../base/models/configuration.model';
+import { ConfigurationModel } from '../../../realm/models/configuration.model';
 
 @Component({
   selector: 'configuration-form',

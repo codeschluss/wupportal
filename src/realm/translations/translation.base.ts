@@ -2,16 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CrudModel, TokenProvider } from '@wooportal/core';
 import { BaseForm } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
-import { TranslationProvider } from './providers/translation.provider';
-
-export function Translatable() {
-  return function(model: CrudModel, field: string): void {
-    Object.defineProperty(model.constructor, 'translatable', {
-      value: (model.constructor['translatable'] || []).concat(field),
-      configurable: true
-    });
-  };
-}
+import { TranslationProvider } from '../providers/translation.provider';
 
 export abstract class TranslationBase<Model extends CrudModel>
   extends BaseForm<Model> {

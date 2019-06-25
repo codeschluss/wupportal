@@ -4,8 +4,8 @@ import { Box } from '@wooportal/core';
 import { BaseForm, FormField, StringFieldComponent, Tests, UrlFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { OrganisationModel } from '../../../base/models/organisation.model';
-import { TranslationBase } from '../../../base/translation.base';
+import { OrganisationModel } from '../../../realm/models/organisation.model';
+import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
   selector: 'organisation-form',

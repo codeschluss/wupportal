@@ -1,0 +1,30 @@
+<section fxLayout="row wrap" fxLayoutAlign="center">
+  <ng-container *ngFor="let item of items">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ item.name }}</mat-card-title>
+        <mat-card-subtitle>{{ item.address.suburb.name }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <ng-container *ngIf="item.images?.length">
+        <img mat-card-image
+          [alt]="item.images[0].caption"
+          [style.backgroundImage]="item.images[0].source"
+          [title]="item.images[0].caption">
+        <mat-divider></mat-divider>
+      </ng-container>
+      <mat-card-content>
+        <p>{{ item.description }}</p>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button mat-button [disabled]="liked(item)" (click)="like(item)">
+          <i18n i18n="@@like">like</i18n>
+        </button>
+        <button mat-button (click)="share(item)">
+          <i18n i18n="@@share">share</i18n>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+</section>

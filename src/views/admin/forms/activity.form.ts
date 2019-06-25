@@ -5,14 +5,14 @@ import { Box, TokenProvider } from '@wooportal/core';
 import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { ActivityModel } from '../../../base/models/activity.model';
-import { CategoryModel } from '../../../base/models/category.model';
-import { OrganisationModel } from '../../../base/models/organisation.model';
-import { TagModel } from '../../../base/models/tag.model';
-import { TargetGroupModel } from '../../../base/models/target-group.model';
-import { TranslationProvider } from '../../../base/providers/translation.provider';
-import { UserProvider } from '../../../base/providers/user.provider';
-import { TranslationBase } from '../../../base/translation.base';
+import { ActivityModel } from '../../../realm/models/activity.model';
+import { CategoryModel } from '../../../realm/models/category.model';
+import { OrganisationModel } from '../../../realm/models/organisation.model';
+import { TagModel } from '../../../realm/models/tag.model';
+import { TargetGroupModel } from '../../../realm/models/target-group.model';
+import { TranslationProvider } from '../../../realm/providers/translation.provider';
+import { UserProvider } from '../../../realm/providers/user.provider';
+import { TranslationBase } from '../../../realm/translations/translation.base';
 import { ClientPackage } from '../../../utils/package';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { LanguageModel } from '../../../base/models/language.model';
+import { LanguageModel } from '../../../realm/models/language.model';
 
 @Component({
   selector: 'language-form',

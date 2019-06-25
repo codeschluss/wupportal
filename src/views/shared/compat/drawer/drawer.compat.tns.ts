@@ -1,13 +1,8 @@
 import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
-import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ContentView } from 'tns-core-modules/ui/page';
 import { DrawerCompat } from './drawer.compat.i';
-
-if (!isKnownView('drawer-compat')) {
-  registerElement('drawer-compat', () => ContentView);
-}
 
 @Component({
   selector: 'drawer-compat',

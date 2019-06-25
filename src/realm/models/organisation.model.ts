@@ -1,7 +1,7 @@
 import { CrudModel } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { OrganisationEntity } from '../../api/models/organisation-entity';
-import { Translatable } from '../translation.base';
+import { Translatable } from '../translations/translatable';
 import { ActivityModel } from './activity.model';
 import { AddressModel } from './address.model';
 import { ImageModel } from './image.model';

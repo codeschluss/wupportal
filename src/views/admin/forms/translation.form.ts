@@ -5,8 +5,8 @@ import { CrudModel, SessionProvider, TokenProvider } from '@wooportal/core';
 import { BaseForm, FormField, SelectFieldComponent } from '@wooportal/forms';
 import { EMPTY, merge, Observable, Subscription } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
-import { LanguageModel } from '../../../base/models/language.model';
-import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { LanguageModel } from '../../../realm/models/language.model';
+import { TranslationProvider } from '../../../realm/providers/translation.provider';
 import { ClientPackage } from '../../../utils/package';
 
 @Component({

@@ -24,7 +24,7 @@ $theme: mat-light-theme(
 
 layout-component {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
 
   position: fixed;
   bottom: 0;
@@ -79,7 +79,7 @@ layout-component {
 
       .mat-drawer-content {
         display: flex;
-        flex-flow: column;
+        flex-direction: column;
 
         & > loading-indicator {
           position: absolute;
@@ -108,7 +108,7 @@ layout-component {
 
       .mat-drawer-inner-container {
         display: flex;
-        flex-flow: column;
+        flex-direction: column;
         font-weight: bold;
 
         mat-list-item:focus {

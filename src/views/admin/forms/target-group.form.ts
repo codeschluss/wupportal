@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { TargetGroupModel } from '../../../base/models/target-group.model';
-import { TranslationBase } from '../../../base/translation.base';
+import { TargetGroupModel } from '../../../realm/models/target-group.model';
+import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
   selector: 'target-group-form',

@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { SuburbModel } from '../../../base/models/suburb.model';
+import { SuburbModel } from '../../../realm/models/suburb.model';
 
 @Component({
   selector: 'suburb-table',

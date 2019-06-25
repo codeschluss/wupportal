@@ -5,9 +5,9 @@ import { MatSelectionListChange } from '@angular/material/list';
 import { TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, mergeMap, startWith, take } from 'rxjs/operators';
-import { OrganisationModel } from '../../../base/models/organisation.model';
-import { OrganisationProvider } from '../../../base/providers/organisation.provider';
-import { UserProvider } from '../../../base/providers/user.provider';
+import { OrganisationModel } from '../../../realm/models/organisation.model';
+import { OrganisationProvider } from '../../../realm/providers/organisation.provider';
+import { UserProvider } from '../../../realm/providers/user.provider';
 
 @Component({
   styles: [`

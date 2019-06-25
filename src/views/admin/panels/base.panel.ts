@@ -5,7 +5,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CrudModel, CrudResolver, I18nComponent, Pathfinder, Selfrouter, Title, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
-import { UserProvider } from '../../../base/providers/user.provider';
+import { UserProvider } from '../../../realm/providers/user.provider';
 import { ClientPackage } from '../../../utils/package';
 import { DeleteDialogComponent } from '../dialogs/delete.dialog';
 

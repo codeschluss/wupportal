@@ -65,7 +65,7 @@ export class PlatformInterceptor implements HttpInterceptor {
 
     if (request.url.startsWith('/')) {
       request = request.clone({
-        url: this.coreSettings.appRootUrl + request.url
+        url: this.coreSettings.appUrl + request.url
       });
     }
 

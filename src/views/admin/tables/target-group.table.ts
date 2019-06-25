@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { TargetGroupModel } from '../../../base/models/target-group.model';
+import { TargetGroupModel } from '../../../realm/models/target-group.model';
 
 @Component({
   selector: 'target-group-table',

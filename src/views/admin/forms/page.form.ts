@@ -4,9 +4,9 @@ import { Box } from '@wooportal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PageModel } from '../../../base/models/page.model';
-import { TopicModel } from '../../../base/models/topic.model';
-import { TranslationBase } from '../../../base/translation.base';
+import { PageModel } from '../../../realm/models/page.model';
+import { TopicModel } from '../../../realm/models/topic.model';
+import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
   selector: 'page-form',

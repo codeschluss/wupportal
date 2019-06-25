@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { BlogModel } from '../../../base/models/blog.model';
+import { BlogModel } from '../../../realm/models/blog.model';
 
 @Component({
   selector: 'blog-table',

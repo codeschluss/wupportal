@@ -1,14 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { PlatformProvider } from '@wooportal/core';
-import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { ContentView } from 'tns-core-modules/ui/page';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { IconCompat } from './icon.compat.i';
-
-if (!isKnownView('icon-compat')) {
-  registerElement('icon-compat', () => ContentView);
-}
 
 @Component({
   selector: 'icon-compat',

@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { OrganisationModel } from '../../../base/models/organisation.model';
+import { OrganisationModel } from '../../../realm/models/organisation.model';
 
 @Component({
   selector: 'organisation-table',

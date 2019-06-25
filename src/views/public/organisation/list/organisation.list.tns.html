@@ -1,0 +1,29 @@
+<scroll-view>
+  <flexbox-layout>
+    <ng-container *ngFor="let item of items">
+      <stack-layout>
+        <label [text]="item.name"></label>
+        <label [text]="item.address.suburb.name"></label>
+
+        <ng-container *ngIf="item.images?.length">
+          <image [src]="item.images[0].source"></image>
+        </ng-container>
+
+        <label [text]="item.description" wrap="true"></label>
+
+        <stack-layout>
+          <stack-layout ripple
+            [isEnabled]="!liked(item)"
+            [isUserInteractionEnabled]="!liked(item)"
+            (tap)="like(item)">
+            <i18n i18n="@@like" unit="like"></i18n>
+          </stack-layout>
+
+          <stack-layout ripple (tap)="share(item)">
+            <i18n i18n="@@share" unit="share"></i18n>
+          </stack-layout>
+        </stack-layout>
+      </stack-layout>
+    </ng-container>
+  </flexbox-layout>
+</scroll-view>

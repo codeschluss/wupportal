@@ -1,7 +1,7 @@
 import { CrudModel } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { BlogEntity } from '../../api/models/blog-entity';
-import { Translatable } from '../translation.base';
+import { Translatable } from '../translations/translatable';
 import { ActivityModel } from './activity.model';
 
 export class BlogModel

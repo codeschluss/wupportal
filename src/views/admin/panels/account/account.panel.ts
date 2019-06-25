@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CrudJoiner } from '@wooportal/core';
 import { filter, mergeMap } from 'rxjs/operators';
-import { ActivityModel } from '../../../../base/models/activity.model';
-import { BlogModel } from '../../../../base/models/blog.model';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
-import { ProviderModel } from '../../../../base/models/provider.model';
-import { UserModel } from '../../../../base/models/user.model';
+import { ActivityModel } from '../../../../realm/models/activity.model';
+import { BlogModel } from '../../../../realm/models/blog.model';
+import { OrganisationModel } from '../../../../realm/models/organisation.model';
+import { ProviderModel } from '../../../../realm/models/provider.model';
+import { UserModel } from '../../../../realm/models/user.model';
 import { RequestDialogComponent } from '../../dialogs/request.dialog';
 import { BasePanel } from '../base.panel';
 

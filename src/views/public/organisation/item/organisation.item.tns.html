@@ -1,0 +1,24 @@
+<stack-layout>
+  <formatted-string>
+    <span [text]="name"></span>
+    <span [text]="suburb"></span>
+  </formatted-string>
+
+  <ng-container *ngIf="hasImage()">
+    <Image [src]="imageSource"></Image>
+  </ng-container>
+
+  <formatted-string>
+    <span [text]="description" wrap="true"></span>
+  </formatted-string>
+
+  <stack-layout>
+    <stack-layout ripple [isUserInteractionEnabled]="!hasLike()" (tap)="like()">
+      <i18n i18n="@@like" unit="like"></i18n>
+    </stack-layout>
+
+    <stack-layout ripple (tap)="share()">
+      <i18n i18n="@@share" unit="share"></i18n>
+    </stack-layout>
+  </stack-layout>
+</stack-layout>

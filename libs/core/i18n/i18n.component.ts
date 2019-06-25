@@ -18,7 +18,9 @@ import { I18nResolver, TRANSLATIONS_FACTORY } from './i18n.resolver';
   ],
   // tslint:disable-next-line:component-selector
   selector: 'i18n',
-  template: `<slot #wrapper><ng-content></ng-content></slot>`
+  template: `
+    <slot #wrapper><ng-content></ng-content></slot>
+  `
 })
 
 export class I18nComponent implements Compat {

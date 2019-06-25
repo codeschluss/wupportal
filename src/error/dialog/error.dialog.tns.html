@@ -1,0 +1,21 @@
+<StackLayout>
+  <StackLayout>
+    <i18n i18n="@@unhandledError" unit="unhandledError"></i18n>
+    <Label [text]="data.context.error"></Label>
+  </StackLayout>
+  <FormattedString>
+    <Span [text]="'Time: ' + data.context.timestamp"></Span>
+    <Span [text]="'Status: ' + data.context.status"></Span>
+    <Span [text]="'Resource: ' + data.context.path"></Span>
+    <Span [text]="'Exception: ' + data.context.message"></Span>
+    <Span [text]="'Stacktrace: ' + data.context.trace"></Span>
+  </FormattedString>
+  <StackLayout>
+    <StackLayout ripple (tap)="openUrl(package.bugs.url)">
+      <i18n i18n="@@reportIssue" unit="reportIssue"></i18n>
+    </StackLayout>
+    <StackLayout ripple (tap)="data.closeCallback()">
+      <i18n i18n="@@close" unit="close"></i18n>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>

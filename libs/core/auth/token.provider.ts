@@ -41,7 +41,7 @@ export class TokenProvider {
       map((tokens: AuthTokens) => this.update(tokens)),
       tap((tokens: AuthTokens) => this.work(tokens))
     ).subscribe(() => this.refreshToken.subscribe((token) =>
-      localStorage.setItemSubscribe('refreshToken', token)));
+      localStorage.setItem('refreshToken', token).subscribe()));
   }
 
   public login(username: string, password: string): Observable<AuthTokens> {

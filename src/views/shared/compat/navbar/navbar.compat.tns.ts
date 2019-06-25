@@ -9,7 +9,9 @@ if (!isKnownView('navbar-compat')) {
 
 @Component({
   selector: 'navbar-compat',
-  template: `<ActionBar [title]="title"><ng-content></ng-content></ActionBar>`
+  template: `
+    <ActionBar [title]="title"><ng-content></ng-content></ActionBar>
+  `
 })
 
 export class NavbarCompatComponent implements NavbarCompat {

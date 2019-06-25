@@ -62,7 +62,7 @@
     "setup:ios": "BUY_MAC && tns platform add ios ||:&& tns prepare ios",
     "setup:oid": "tns platform add android ||:&& tns prepare android",
     "start:dev": "ng serve --host 0.0.0.0 --port",
-    "start:oid": "tns debug android --clean",
+    "start:oid": "tns debug android --env.aot",
     "start:ssr": "node target/express",
     "start:tns": "tns preview"
   },
@@ -100,9 +100,9 @@
     "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.800.3",
-    "@angular-devkit/build-ng-packagr": "0.800.3",
-    "@angular/cli": "8.0.3",
+    "@angular-devkit/build-angular": "0.800.4",
+    "@angular-devkit/build-ng-packagr": "0.800.4",
+    "@angular/cli": "8.0.4",
     "@angular/compiler-cli": "8.0.2",
     "@angular/http": "8.0.0-beta.10",
     "@angular/language-service": "8.0.2",

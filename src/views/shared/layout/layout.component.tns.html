@@ -27,33 +27,33 @@
             (returnPress)="search(input.text)">
           </text-field>
         </stack-layout>
-        <stack-layout ripple routerLink="/" (tap)="drawer.hide()">
+        <stack-layout ripple (tap)="router.navigate(['/'])">
           <icon-compat icon="at"></icon-compat>
           <label [text]="title"></label>
         </stack-layout>
-        <stack-layout ripple routerLink="/activities" (tap)="drawer.hide()">
+        <stack-layout ripple (tap)="router.navigate(['/activities'])">
           <icon-compat icon="map-marker-alt"></icon-compat>
           <i18n i18n="@@activities" unit="activities"></i18n>
         </stack-layout>
-        <stack-layout ripple routerLink="/organisations" (tap)="drawer.hide()">
+        <stack-layout ripple (tap)="router.navigate(['/organisations'])">
           <icon-compat icon="globe-europe"></icon-compat>
           <i18n i18n="@@organisations" unit="organisations"></i18n>
         </stack-layout>
-        <stack-layout ripple routerLink="/blogposts" (tap)="drawer.hide()">
+        <stack-layout ripple (tap)="router.navigate(['/blogposts'])">
           <icon-compat icon="comment-dots"></icon-compat>
           <i18n i18n="@@blogposts" unit="blogposts"></i18n>
         </stack-layout>
-        <stack-layout ripple routerLink="/infopages" (tap)="drawer.hide()">
+        <stack-layout ripple (tap)="router.navigate(['/infopages'])">
           <icon-compat icon="question-circle"></icon-compat>
           <i18n i18n="@@infopages" unit="infopages"></i18n>
         </stack-layout>
         <!-- TODO: https://github.com/NativeScript/NativeScript/issues/6114 -->
         <label flexGrow="1"></label>
-        <stack-layout ripple routerLink="/imprint" (tap)="drawer.hide()">
+        <stack-layout ripple (tap)="router.navigate(['/imprint'])">
           <icon-compat icon="paragraph"></icon-compat>
           <i18n i18n="@@imprint" unit="imprint"></i18n>
         </stack-layout>
-        <stack-layout ripple routerLink="/policies" (tap)="drawer.hide()">
+        <stack-layout ripple (tap)="router.navigate(['/policies'])">
           <icon-compat icon="balance-scale"></icon-compat>
           <i18n i18n="@@policies" unit="policies"></i18n>
         </stack-layout>

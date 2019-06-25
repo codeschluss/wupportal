@@ -1,15 +1,14 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
-import { CoreModule } from '@wooportal/core';
 import { NativeScriptAnimationsModule } from 'nativescript-angular/animations';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { BaseModule } from './base/base.module';
+import { ErrorModule } from './error/error.module';
 import { NativeComponent } from './native.component.tns';
 import { NativeRouter } from './native.router.tns';
-import { SharedModule } from './views/shared/shared.module';
 
 fontawesome.add(freeicons);
 
@@ -18,13 +17,12 @@ fontawesome.add(freeicons);
   declarations: [NativeComponent],
   imports: [
     BaseModule,
-    CoreModule,
+    ErrorModule,
     NativeRouter,
     NativeScriptAnimationsModule,
     NativeScriptFormsModule,
     NativeScriptHttpClientModule,
-    NativeScriptModule,
-    SharedModule
+    NativeScriptModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

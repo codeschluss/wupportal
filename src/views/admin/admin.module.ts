@@ -11,8 +11,9 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule, MAT_TABS_CONFIG } from '@angular/material/tabs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CoreModule, CrudModel } from '@wooportal/core';
+import { CrudModel } from '@wooportal/core';
 import { BaseFieldComponent, BaseForm, BaseStepper, BaseTable, FormsModule, MatPagerIntl } from '@wooportal/forms';
+import { BaseModule } from '../../base/base.module';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
 import { DeleteDialogComponent } from './dialogs/delete.dialog';
@@ -169,8 +170,8 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   imports: [
     ...materials,
     AdminRouter,
+    BaseModule,
     CommonModule,
-    CoreModule,
     FormsModule
   ],
   providers: [

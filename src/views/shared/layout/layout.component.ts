@@ -1,4 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
+import { PlatformProvider } from '@wooportal/core';
+import { filter } from 'rxjs/operators';
 import { ClientManifest } from '../../../utils/manifest';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
@@ -14,9 +17,23 @@ export class LayoutComponent {
   @ViewChild('drawer', { static: true })
   private drawer: DrawerCompat;
 
+  public constructor(
+    public router: Router,
+    platformProvider: PlatformProvider
+  ) {
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationStart)
+    ).subscribe(() => {
+      switch (platformProvider.type) {
+        case 'Browser': setTimeout(() => this.drawer.hide(), 50); break;
+        case 'Native': setTimeout(() => this.drawer.hide(), 150); break;
+      }
+    });
+  }
+
   public search(query: string): void {
     if (query) {
-      console.log(query);
+      console.log(`query: ${query}`);
       this.drawer.hide();
     }
   }

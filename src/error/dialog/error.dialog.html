@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>
+  <i18n i18n="@@unhandledError">unhandledError</i18n>:
+  {{ data.error }}
+</h1>
+<section mat-dialog-content>
+  <pre><strong>Time:</strong><br>{{ data.timestamp }}</pre>
+  <pre><strong>Status:</strong><br>{{ data.status }}</pre>
+  <pre><strong>Resource:</strong><br>{{ data.path }}</pre>
+  <pre><strong>Exception:</strong><br>{{ data.message }}</pre>
+  <pre><strong>Stacktrace:</strong><br>{{ data.trace }}</pre>
+</section>
+<section mat-dialog-actions>
+  <a mat-button href="{{ package.bugs.url }}" target="_blank">
+    <i18n i18n="@@reportIssue">reportIssue</i18n>
+  </a>
+  <button mat-button mat-dialog-close tabindex="-1">
+    <i18n i18n="@@close">close</i18n>
+  </button>
+</section>

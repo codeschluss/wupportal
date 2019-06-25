@@ -12,7 +12,9 @@ if (!isKnownView('icon-compat')) {
 
 @Component({
   selector: 'icon-compat',
-  template: `<WebView [src]="source" (loaded)="init($event.object)"></WebView>`
+  template: `
+    <WebView [src]="source" (loaded)="init($event.object)"></WebView>
+  `
 })
 
 export class IconCompatComponent extends ContentView

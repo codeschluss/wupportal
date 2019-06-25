@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route } from '@angular/router';
-import { RouterCompat } from '../shared/compat/router/router.compat';
+import { PlatformRouterModule } from '@wooportal/core';
 import { OrganisationMultiComponent } from './organisation/muliti/organisation.multi';
 import { PublicComponent } from './public.component';
 
@@ -14,8 +14,8 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [RouterCompat],
-  imports: [RouterCompat.forChild([
+  exports: [PlatformRouterModule],
+  imports: [PlatformRouterModule.forChild([
     {
       path: '',
       children: routes,

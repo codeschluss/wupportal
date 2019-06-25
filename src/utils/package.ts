@@ -2,22 +2,18 @@ import * as packageJson from '../../package.json';
 
 export class ClientPackage {
 
-  public static get author(): {
+  public static readonly author: {
     name: string,
     email: string,
     url: string
-  } {
-    return packageJson.author;
-  }
+  } = packageJson.author;
 
-  public static get bugs(): {
+  public static readonly bugs: {
     email: string,
     url: string
-  } {
-    return packageJson.bugs;
-  }
+  } = packageJson.bugs;
 
-  public static get config(): {
+  public static readonly config: {
     api: {
       rootUrl: string,
       authUrl: string,
@@ -36,15 +32,11 @@ export class ClientPackage {
     translations: {
       defaultLocale: string
     }
-  } {
-    return packageJson.config;
-  }
+  } = packageJson.config;
 
-  public static get repository(): {
+  public static readonly repository: {
     type: string,
     url: string
-  } {
-    return packageJson.repository;
-  }
+  } = packageJson.repository;
 
 }

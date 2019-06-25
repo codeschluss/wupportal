@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SessionProvider } from '@wooportal/core';
+import { PlatformProvider, SessionProvider } from '@wooportal/core';
 import { OrganisationModel } from '../../../../base/models/organisation.model';
 
 @Component({
@@ -22,8 +22,11 @@ export class OrganisationItemComponent {
   }
 
   public get imageSource(): string {
-    const image = this.item.images[0];
-    return `url(data:${image.mimeType};base64,${image.imageData})`;
+    switch (this.platformProvider.type) {
+      case 'Browser': return this.item.images[0].source;
+      // TODO: native image handling without compiler bail
+      // case 'Native': return fromBase64(this.item.images[0].imageData);
+    }
   }
 
   public get name(): string {
@@ -35,11 +38,12 @@ export class OrganisationItemComponent {
   }
 
   public constructor(
+    private platformProvider: PlatformProvider,
     private sessionProvider: SessionProvider
   ) { }
 
   public hasImage(): boolean {
-    return !!this.item.images.length;
+    return this.item.images.length > 0;
   }
 
   public hasLike(): boolean {
@@ -51,7 +55,7 @@ export class OrganisationItemComponent {
   }
 
   public share(): void {
-    console.log(this.item);
+    console.log(`share: ${this.item.id}`);
   }
 
 }

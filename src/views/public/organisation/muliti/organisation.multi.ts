@@ -5,6 +5,7 @@ import { OrganisationModel } from '../../../../base/models/organisation.model';
 
 @Component({
   selector: 'organisation-multi',
+  styleUrls: ['organisation.multi.scss'],
   templateUrl: 'organisation.multi.html'
 })
 

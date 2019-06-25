@@ -30,7 +30,7 @@ export class SessionProvider {
       map((session: SessionModel) => session || this.session.value),
       tap((session: SessionModel) => this.session.next(session))
     ).subscribe(() => this.value.subscribe((session) =>
-      localStorage.setItemSubscribe('clientSession', session)));
+      localStorage.setItem('clientSession', session).subscribe()));
   }
 
   public like(id: string): void {

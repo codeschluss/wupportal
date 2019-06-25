@@ -5,11 +5,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
 import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
 import { TransferHttpCacheModule } from '@nguniversal/common';
-import { CoreModule } from '@wooportal/core';
 import { BaseModule } from './base/base.module';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
-import { SharedModule } from './views/shared/shared.module';
+import { ErrorModule } from './error/error.module';
 
 fontawesome.add(freeicons);
 
@@ -21,9 +20,8 @@ fontawesome.add(freeicons);
     BrowserModule.withServerTransition({ appId: 'ssr' }),
     BrowserAnimationsModule,
     ClientRouter,
-    CoreModule,
+    ErrorModule,
     HttpClientModule,
-    SharedModule,
     TransferHttpCacheModule
   ]
 })

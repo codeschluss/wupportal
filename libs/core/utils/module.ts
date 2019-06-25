@@ -1,70 +1,43 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorHandler, Injector, NgModule, Provider, Type } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { ModuleWithProviders } from '@angular/compiler/src/core';
+import { Injector, NgModule, Provider, Type } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UrlSerializer } from '@angular/router';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { TokenProvider } from '../auth/token.provider';
-import { ErrorBarComponent } from '../error/error.bar';
-import { ErrorDialogComponent } from '../error/error.dialog';
-import { CoreErrorHandler } from '../error/error.handler';
 import { I18nComponent } from '../i18n/i18n.component';
 import { I18nInterceptor } from '../i18n/i18n.interceptor';
 import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
-import { PlatformCommon } from '../platform/platform.common';
 import { PlatformInterceptor } from '../platform/platform.interceptor';
-import { PlatformRouter } from '../platform/platform.router';
+import { PlatformCommonModule, PlatformRouterModule } from '../platform/platform.modules';
 import { SessionProvider } from '../session/session.provider';
 import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
-import { SplashChildComponent, SplashHostComponent } from './splash';
 
 const declarations: Type<any>[] = [
   I18nComponent,
-  LoadingIndicatorComponent,
-  SplashHostComponent
-];
-
-const dialogs: Type<any>[] = [
-  ErrorBarComponent,
-  ErrorDialogComponent,
-  SplashChildComponent
-];
-
-const materials: Type<any>[] = [
-  MatButtonModule,
-  MatDialogModule,
-  MatProgressBarModule,
-  MatSnackBarModule
+  LoadingIndicatorComponent
 ];
 
 const providers: Provider[] = [
-  CoreSettings,
   SessionProvider,
   TokenProvider
 ];
 
 @NgModule({
   declarations: [
-    ...declarations,
-    ...dialogs
-  ],
-  entryComponents: [
-    ...dialogs
+    ...declarations
   ],
   exports: [
     ...declarations
   ],
   imports: [
-    ...materials,
-    PlatformCommon,
-    PlatformRouter
+    MatProgressBarModule,
+    PlatformCommonModule,
+    PlatformRouterModule
   ],
   providers: [
-    { provide: ErrorHandler, useClass: CoreErrorHandler },
     { provide: UrlSerializer, useClass: CoreUrlSerializer },
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
@@ -74,6 +47,13 @@ const providers: Provider[] = [
 })
 
 export class CoreModule {
+
+  static forRoot(settings: CoreSettings): ModuleWithProviders {
+    return {
+      ngModule: CoreModule,
+      providers: [{ provide: CoreSettings, useValue: settings }]
+    };
+  }
 
   public constructor(
     injector: Injector

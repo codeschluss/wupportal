@@ -3,11 +3,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
   selector: 'input[type=file]',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: FileValueAccessorDirective,
-    multi: true
-  }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: FileValueAccessorDirective,
+      multi: true
+    }
+  ]
 })
 
 export class FileValueAccessorDirective implements ControlValueAccessor {

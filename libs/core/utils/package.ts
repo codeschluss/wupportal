@@ -4,26 +4,20 @@ import * as packageJson from '@wooportal/core/package.json';
 
 export class CorePackage {
 
-  public static get author(): {
+  public static readonly author: {
     name: string,
     email: string,
     url: string
-  } {
-    return packageJson.author;
-  }
+  } = packageJson.author;
 
-  public static get bugs(): {
+  public static readonly bugs: {
     email: string,
     url: string
-  } {
-    return packageJson.bugs;
-  }
+  } = packageJson.bugs;
 
-  public static get repository(): {
+  public static readonly repository: {
     type: string,
     url: string
-  } {
-    return packageJson.repository;
-  }
+  } = packageJson.repository;
 
 }

@@ -2,37 +2,46 @@
   <img src="/imgs/icon.png" [alt]="title" [title]="title">
 </header>
 <navbar-compat fxHide.lt-md>
-  <button mat-button (click)="router.navigate(['/'])">
+  <button mat-button
+    [class.active]="router.url === '/'"
+    (click)="router.navigate(['/'])">
     <icon-compat icon="at"></icon-compat>
     <h1>{{ title }}</h1>
   </button>
-  <button mat-button (click)="router.navigate(['/activities'])">
+  <button mat-button
+    [class.active]="router.url.startsWith('/activities')"
+    (click)="router.navigate(['/activities'])">
     <icon-compat icon="map-marker-alt"></icon-compat>
     <i18n i18n="@@activities">activities</i18n>
   </button>
-  <button mat-button (click)="router.navigate(['/organisations'])">
+  <button mat-button
+    [class.active]="router.url.startsWith('/organisations')"
+    (click)="router.navigate(['/organisations'])">
     <icon-compat icon="globe-europe"></icon-compat>
     <i18n i18n="@@organisations">organisations</i18n>
   </button>
-  <button mat-button (click)="router.navigate(['/blogposts'])">
+  <button mat-button
+    [class.active]="router.url.startsWith('/blogposts')"
+    (click)="router.navigate(['/blogposts'])">
     <icon-compat icon="comment-dots"></icon-compat>
     <i18n i18n="@@blogposts">blogposts</i18n>
   </button>
-  <button mat-button (click)="router.navigate(['/blogposts'])">
+  <button mat-button
+    [class.active]="router.url.startsWith('/infopages')"
+    (click)="router.navigate(['/infopages'])">
     <icon-compat icon="question-circle"></icon-compat>
     <i18n i18n="@@infopages">infopages</i18n>
   </button>
-  <span>
-    <icon-compat icon="search"></icon-compat>
-    <mat-form-field>
-      <input #navbarInput matInput tabindex="-1">
-      <button mat-button mat-icon-button matSuffix
-        [disabled]="!navbarInput.value"
-        (click)="search(navbarInput.value)">
-        <icon-compat icon="chevron-circle-right"></icon-compat>
-      </button>
-    </mat-form-field>
-  </span>
+  <mat-form-field [class.text-primary]="router.url.startsWith('/search')">
+    <icon-compat matPrefix icon="search"></icon-compat>
+    <input #navbarInput matInput tabindex="-1">
+    <mat-label><i18n i18n="@@search">search</i18n></mat-label>
+    <button mat-button mat-icon-button matSuffix
+      [disabled]="!navbarInput.value"
+      (click)="router.navigate(['/search', navbarInput.value])">
+      <icon-compat icon="chevron-circle-right"></icon-compat>
+    </button>
+  </mat-form-field>
 </navbar-compat>
 
 <navbar-compat [title]="title" fxHide.gt-sm>
@@ -50,11 +59,15 @@
     <navbar-compat fxHide.lt-md>
       <small>&copy;&nbsp;{{ title }}</small>
       <span [style.flexGrow]="1"></span>
-      <button mat-button (click)="router.navigate(['/imprint'])">
+      <button mat-button
+        [class.active]="router.url.startsWith('/imprint')"
+        (click)="router.navigate(['/imprint'])">
         <icon-compat icon="paragraph"></icon-compat>
         <i18n i18n="@@imprint">imprint</i18n>
       </button>
-      <button mat-button (click)="router.navigate(['/policies'])">
+      <button mat-button
+        [class.active]="router.url.startsWith('/policies')"
+        (click)="router.navigate(['/policies'])">
         <icon-compat icon="balance-scale"></icon-compat>
         <i18n i18n="@@policies">policies</i18n>
       </button>
@@ -63,45 +76,61 @@
   <ng-template #drawerMenu>
     <header><img src="/imgs/icon.png" [alt]="title" [title]="title"></header>
     <mat-action-list>
-      <mat-list-item disableRipple>
+      <mat-list-item disableRipple
+        [class.active]="router.url.startsWith('/search')">
         <icon-compat icon="search"></icon-compat>
-        <mat-form-field>
+        <mat-form-field [class.text-primary]="router.url.startsWith('/search')">
           <input #drawerInput matInput tabindex="-1">
+          <mat-label><i18n i18n="@@search">search</i18n></mat-label>
           <button mat-button mat-icon-button matSuffix
             [disabled]="!drawerInput.value"
-            (click)="search(drawerInput.value)">
+            (click)="router.navigate(['/search', drawerInput.value])">
             <icon-compat icon="chevron-circle-right"></icon-compat>
           </button>
         </mat-form-field>
       </mat-list-item>
-      <mat-list-item (click)="router.navigate(['/'])">
+      <mat-list-item
+        [class.active]="router.url === '/'"
+        (click)="router.navigate(['/'])">
         <icon-compat icon="at"></icon-compat>
         <span>{{ title }}</span>
       </mat-list-item>
-      <mat-list-item (click)="router.navigate(['/activities'])">
+      <mat-list-item
+        [class.active]="router.url.startsWith('/activities')"
+        (click)="router.navigate(['/activities'])">
         <icon-compat icon="map-marker-alt"></icon-compat>
         <i18n i18n="@@activities">activities</i18n>
       </mat-list-item>
-      <mat-list-item (click)="router.navigate(['/organisations'])">
+      <mat-list-item
+        [class.active]="router.url.startsWith('/organisations')"
+        (click)="router.navigate(['/organisations'])">
         <icon-compat icon="globe-europe"></icon-compat>
         <i18n i18n="@@organisations">organisations</i18n>
       </mat-list-item>
-      <mat-list-item (click)="router.navigate(['/blogposts'])">
+      <mat-list-item
+        [class.active]="router.url.startsWith('/blogposts')"
+        (click)="router.navigate(['/blogposts'])">
         <icon-compat icon="comment-dots"></icon-compat>
         <i18n i18n="@@blogposts">blogposts</i18n>
       </mat-list-item>
-      <mat-list-item (click)="router.navigate(['/infopages'])">
+      <mat-list-item
+        [class.active]="router.url.startsWith('/infopages')"
+        (click)="router.navigate(['/infopages'])">
         <icon-compat icon="question-circle"></icon-compat>
         <i18n i18n="@@infopages">infopages</i18n>
       </mat-list-item>
     </mat-action-list>
     <span [style.flexGrow]="1"></span>
     <mat-action-list>
-      <mat-list-item (click)="router.navigate(['/imprint'])">
+      <mat-list-item
+        [class.active]="router.url.startsWith('/imprint')"
+        (click)="router.navigate(['/imprint'])">
         <icon-compat icon="paragraph"></icon-compat>
         <i18n i18n="@@imprint">imprint</i18n>
       </mat-list-item>
-      <mat-list-item (click)="router.navigate(['/policies'])">
+      <mat-list-item
+        [class.active]="router.url.startsWith('/policies')"
+        (click)="router.navigate(['/policies'])">
         <icon-compat icon="balance-scale"></icon-compat>
         <i18n i18n="@@policies">policies</i18n>
       </mat-list-item>

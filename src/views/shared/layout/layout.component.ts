@@ -38,13 +38,6 @@ export class LayoutComponent {
     }
   }
 
-  public search(query: string): void {
-    if (query) {
-      console.log(`query: ${query}`);
-      this.drawer.hide();
-    }
-  }
-
   private topoff(event: UIEvent): void {
     const height = this.header.nativeElement.clientHeight;
     const scroll = (event.target as HTMLElement).scrollTop;

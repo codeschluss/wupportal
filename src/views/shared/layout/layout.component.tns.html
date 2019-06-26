@@ -25,7 +25,7 @@
           <text-field #input
             returnKeyType="search"
             (onLoaded)="input.blur()"
-            (returnPress)="search(input.text)">
+            (returnPress)="router.navigate(['/', input.text])">
           </text-field>
         </stack-layout>
         <stack-layout ripple (tap)="router.navigate(['/'])">

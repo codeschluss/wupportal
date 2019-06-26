@@ -41,16 +41,21 @@ layout-component {
   & > navbar-compat:first-of-type > mat-toolbar {
     justify-content: space-around;
 
+    * {
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
     & > button:not([matSuffix]) {
       height: 100%;
 
-      font-size: 1rem !important;
-      font-weight: bold !important;
-      text-transform: uppercase;
+      &.active {
+        @extend .text-primary;
+      }
 
       h1 {
         display: inline-block;
-        font: inherit !important;
       }
 
       icon-compat {
@@ -58,11 +63,10 @@ layout-component {
       }
     }
 
-    & > span {
-      font-size: 1rem !important;
-      padding: .5rem 1rem 0;
+    & > mat-form-field {
+      margin-bottom: -.54rem;
 
-      & > icon-compat {
+      .mat-form-field-prefix {
         padding-right: .5rem;
       }
     }
@@ -90,14 +94,14 @@ layout-component {
           top: 0;
         }
 
-        & > navbar-compat {
-          text-transform: uppercase;
+        & > navbar-compat:last-child > mat-toolbar {
+          margin: 25px 0;
 
-          &:last-of-type {
-            margin: 25px 0;
+          * {
+            text-transform: uppercase;
           }
 
-          button {
+          & > button {
             height: 100%;
             text-transform: inherit;
           }
@@ -113,15 +117,44 @@ layout-component {
         flex-direction: column;
         font-weight: bold;
 
-        mat-list-item:focus {
-          background: inherit !important;
-        }
-
-        header {
+        & > header {
           text-align: center;
 
           img {
             width: 50%;
+          }
+        }
+
+        & > mat-action-list {
+          mat-list-item {
+            * {
+              font-weight: bold;
+              text-transform: uppercase;
+            }
+
+            &:focus {
+              background: inherit !important;
+            }
+
+            &.active {
+              @extend .text-primary;
+            }
+
+            .mat-form-field-label {
+              color: inherit !important;
+            }
+
+            .mat-input-element {
+              caret-color: currentColor;
+            }
+
+            .mat-form-field-underline {
+              background-color: currentColor;
+
+              .mat-form-field-ripple {
+                background-color: currentColor;
+              }
+            }
           }
         }
 

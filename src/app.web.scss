@@ -33,7 +33,9 @@ layout-component {
   top: 0;
 
   & > header {
+    max-height: 12.5rem;
     text-align: center;
+    transition: max-height 250ms;
   }
 
   & > navbar-compat:first-of-type > mat-toolbar {

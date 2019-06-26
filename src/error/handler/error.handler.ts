@@ -19,8 +19,8 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     platformProvider: PlatformProvider
   ) {
     if (platformProvider.name === 'Web') {
-      window.onerror = this.handleError.bind(this);
-      window.onunhandledrejection = this.handleRejection.bind(this);
+      addEventListener('error', this.handleError.bind(this));
+      addEventListener('unhandledrejection', this.handleRejection.bind(this));
     }
   }
 

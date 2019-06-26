@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
 import { filter } from 'rxjs/operators';
@@ -17,6 +17,9 @@ export class LayoutComponent {
   @ViewChild('drawer', { static: true })
   private drawer: DrawerCompat;
 
+  @ViewChild('header', { static: true })
+  private header: ElementRef<HTMLElement>;
+
   public constructor(
     public router: Router,
     platformProvider: PlatformProvider
@@ -29,12 +32,29 @@ export class LayoutComponent {
         case 'Online': setTimeout(() => this.drawer.hide(), 50); break;
       }
     });
+
+    if (platformProvider.name === 'Web') {
+      addEventListener('scroll', this.topoff.bind(this), true);
+    }
   }
 
   public search(query: string): void {
     if (query) {
       console.log(`query: ${query}`);
       this.drawer.hide();
+    }
+  }
+
+  private topoff(event: UIEvent): void {
+    const height = this.header.nativeElement.clientHeight;
+    const scroll = (event.target as HTMLElement).scrollTop;
+
+    if (height) {
+      if (scroll > height) {
+        this.header.nativeElement.style.maxHeight = '0px';
+      }
+    } else if (!scroll) {
+      this.header.nativeElement.style.maxHeight = null;
     }
   }
 

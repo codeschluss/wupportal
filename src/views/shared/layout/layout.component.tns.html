@@ -20,13 +20,22 @@
     <scroll-view>
       <flexbox-layout>
         <image src="res://icon"></image>
-        <stack-layout class="search">
+        <stack-layout [class.active]="router.url.startsWith('/search')">
           <icon-compat icon="search"></icon-compat>
-          <text-field #input
-            returnKeyType="search"
-            (onLoaded)="input.blur()"
-            (returnPress)="router.navigate(['/', input.text])">
-          </text-field>
+          <absolute-layout #search>
+            <text-field #input
+              returnKeyType="search"
+              (blur)="search.className = input.text ? 'float-label' : null"
+              (focus)="search.className = 'float-label'"
+              (returnPress)="router.navigate(['/search', input.text])"
+              (textChange)="submit.className = input.text ? null : 'gray'">
+            </text-field>
+            <i18n i18n="@@search" unit="search"></i18n>
+            <grid-layout #submit ripple class="gray"
+              (tap)="input.text && router.navigate(['/search', input.text])">
+              <icon-compat icon="chevron-circle-right"></icon-compat>
+            </grid-layout>
+          </absolute-layout>
         </stack-layout>
         <stack-layout ripple
           [class.active]="router.url === '/'"

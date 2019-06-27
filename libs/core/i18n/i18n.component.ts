@@ -30,7 +30,7 @@ export class I18nComponent implements Compat {
   @Input()
   public unit: string;
 
-  @ViewChild('wrapper', { static: true })
+  @ViewChild('wrapper', { read: ElementRef, static: true })
   private wrapper: ElementRef<HTMLElement>;
 
   public constructor(

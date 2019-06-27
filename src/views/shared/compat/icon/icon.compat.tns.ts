@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { PlatformProvider } from '@wooportal/core';
-import { ContentView } from 'tns-core-modules/ui/page';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { IconCompat } from './icon.compat.i';
 
@@ -12,8 +11,7 @@ import { IconCompat } from './icon.compat.i';
   `
 })
 
-export class IconCompatComponent extends ContentView
-  implements IconCompat, AfterViewInit {
+export class IconCompatComponent implements IconCompat, AfterViewInit {
 
   @Input()
   public icon: string;
@@ -29,16 +27,17 @@ export class IconCompatComponent extends ContentView
       styles: {
         color: this.webview.nativeElement.style.color
           ? this.webview.nativeElement.style.color.hex
-          : 'inherit'
+          : 'inherit',
+        'fill-opacity': this.webview.nativeElement.style.color
+          ? (this.webview.nativeElement.style.color.a / 255).toString()
+          : '100%',
       }
     }).html.join('');
   }
 
   public constructor(
     private platformProvider: PlatformProvider
-  ) {
-    super();
-  }
+  ) { }
 
   public ngAfterViewInit(): void {
     switch (this.platformProvider.name) {

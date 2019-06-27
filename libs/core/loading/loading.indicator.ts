@@ -7,7 +7,7 @@ import { LoadingProvider } from './loading.provider';
 @Component({
   selector: 'loading-indicator',
   styles: [`
-    mat-progress-bar { height: 2px; transition: height 200ms; }
+    mat-progress-bar { height: 2px; }
   `],
   template: `
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>

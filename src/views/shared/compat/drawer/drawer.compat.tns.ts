@@ -1,7 +1,6 @@
 import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ContentView } from 'tns-core-modules/ui/page';
 import { DrawerCompat } from './drawer.compat.i';
 
 @Component({
@@ -21,7 +20,7 @@ import { DrawerCompat } from './drawer.compat.i';
   `
 })
 
-export class DrawerCompatComponent extends ContentView implements DrawerCompat {
+export class DrawerCompatComponent implements DrawerCompat {
 
   @ViewChild(RadSideDrawerComponent, { static: true })
   public instance: RadSideDrawerComponent;

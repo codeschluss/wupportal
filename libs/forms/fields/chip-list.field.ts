@@ -43,7 +43,7 @@ export class ChipListFieldComponent extends BaseFieldComponent
   @ViewChild(MatAutocomplete, { static: true })
   private auto: MatAutocomplete;
 
-  @ViewChild('input', { static: true })
+  @ViewChild('input', { read: ElementRef, static: true })
   private input: ElementRef<HTMLInputElement>;
 
   public ngAfterViewInit(): void {

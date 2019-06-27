@@ -38,18 +38,66 @@ page {
           height: 50;
           orientation: horizontal;
 
-          &.active > * {
-            @extend .text-primary;
+          color: rgba(0, 0, 0, .87);
+
+          &.active {
+            color: $primary;
+
+            text-field {
+              border-bottom-color: $primary;
+            }
           }
 
-          &.search {
-            web-view {
-              margin: 0 5 0 10;
+          absolute-layout {
+            @keyframes float {
+              from { transform: scale(1, 1) translate(0, 0); }
+              to { transform: scale(.66, .66) translate(-10, -20); }
+            }
+
+            &.float-label {
+              label {
+                animation-direction: forwards;
+                animation-duration: $duration;
+                animation-fill-mode: forwards;
+                animation-name: float;
+              }
+            }
+
+            label {
+              margin-left: 0;
+              margin-top: 15;
+
+              animation-direction: reverse;
+              animation-duration: $duration;
+              animation-fill-mode: reverse;
+              animation-name: float;
+            }
+
+            text-field {
+              border-bottom-color: rgba(0, 0, 0, .87);
+              border-bottom-width: 2;
+              padding: 12 25 3 0;
+              width: 205;
+            }
+
+            grid-layout {
+              margin-left: 170;
+              margin-top: 10;
+
+              &.gray {
+                web-view {
+                  color: rgba(0, 0, 0, .26);
+                }
+              }
+
+              web-view {
+                height: 30;
+                width: 30;
+              }
             }
           }
 
           label {
-            color: black;
             font-weight: bold;
             text-transform: uppercase;
             vertical-align: center;
@@ -59,10 +107,6 @@ page {
             height: 35;
             width: 35;
             margin: 0 10;
-          }
-
-          text-field {
-            width: 185;
           }
         }
       }

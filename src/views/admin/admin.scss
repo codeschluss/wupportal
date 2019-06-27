@@ -1,6 +1,8 @@
+@import '../../app.theme.scss';
+
 div#admin {
   filter: grayscale(0);
-  transition: filter 200ms;
+  transition: filter $duration;
 
   &.disabled {
     filter: grayscale(1);
@@ -13,20 +15,20 @@ div#admin {
     display: flex;
 
     & > * + * {
-      margin-left: 32px !important;
+      margin-left: 2rem !important;
     }
   }
 
   *.mat-raised-button {
-    margin: 4px;
+    margin: .25rem;
   }
 
   *.base-form {
     section {
       align-items: center;
       display: flex;
-      min-height: 65px;
-      padding: 0 16px;
+      min-height: 4rem;
+      padding: 0 1rem;
 
       &:nth-of-type(even) {
         background-color: rgba(0, 0, 0, .005);
@@ -37,7 +39,7 @@ div#admin {
 
       & > label {
         flex-shrink: 0;
-        width: 160px;
+        width: 10rem;
       }
 
       & > nav {
@@ -45,7 +47,7 @@ div#admin {
         display: flex;
 
         & > * + * {
-          margin-left: 16px;
+          margin-left: 1rem;
         }
       }
 
@@ -108,7 +110,7 @@ div#admin {
         margin-bottom: -1.25em;
 
         div.mat-form-field-flex {
-          padding: 0 16px;
+          padding: 0 1rem;
         }
       }
     }

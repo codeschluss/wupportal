@@ -24,17 +24,17 @@ export class LayoutComponent {
     public router: Router,
     platformProvider: PlatformProvider
   ) {
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationStart)
-    ).subscribe(() => {
-      switch (platformProvider.type) {
-        case 'Native': setTimeout(() => this.drawer.hide(), 150); break;
-        case 'Online': setTimeout(() => this.drawer.hide(), 50); break;
-      }
-    });
+    switch (platformProvider.name) {
+      case 'Web':
+        addEventListener('scroll', this.topoff.bind(this), true);
 
-    if (platformProvider.name === 'Web') {
-      addEventListener('scroll', this.topoff.bind(this), true);
+      // tslint:disable-next-line: no-switch-case-fall-through
+      case 'Android':
+      case 'iOS':
+      case 'Web':
+        this.router.events.pipe(
+          filter((event) => event instanceof NavigationStart)
+        ).subscribe(() => this.drawer.hide());
     }
   }
 

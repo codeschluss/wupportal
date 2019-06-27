@@ -46,6 +46,10 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     return this.route.snapshot.data.tokens.access[claim];
   }
 
+  public get title(): string {
+    return this.translations.first.text;
+  }
+
   public get userId(): string {
     const claim = ClientPackage.config.jwtClaims.userId;
     return this.route.snapshot.data.tokens.access[claim];
@@ -61,10 +65,6 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
       }))),
       data: this.resolve
     };
-  }
-
-  public get title(): string {
-    return this.translations.first.text;
   }
 
   public constructor(

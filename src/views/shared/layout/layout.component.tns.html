@@ -2,7 +2,7 @@
   <action-item ios.position="right">
     <grid-layout>
       <grid-layout ripple (tap)="drawer.toggle()">
-        <icon-compat [icon]="(drawer.visible | async) ? 'times' : 'bars'">
+        <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
         </icon-compat>
       </grid-layout>
     </grid-layout>
@@ -28,33 +28,47 @@
             (returnPress)="router.navigate(['/', input.text])">
           </text-field>
         </stack-layout>
-        <stack-layout ripple (tap)="router.navigate(['/'])">
+        <stack-layout ripple
+          [class.active]="router.url === '/'"
+          (tap)="router.navigate(['/'])">
           <icon-compat icon="at"></icon-compat>
           <label [text]="title"></label>
         </stack-layout>
-        <stack-layout ripple (tap)="router.navigate(['/activities'])">
+        <stack-layout ripple
+          [class.active]="router.url.startsWith('/activities')"
+          (tap)="router.navigate(['/activities'])">
           <icon-compat icon="map-marker-alt"></icon-compat>
           <i18n i18n="@@activities" unit="activities"></i18n>
         </stack-layout>
-        <stack-layout ripple (tap)="router.navigate(['/organisations'])">
+        <stack-layout ripple
+          [class.active]="router.url.startsWith('/organisations')"
+          (tap)="router.navigate(['/organisations'])">
           <icon-compat icon="globe-europe"></icon-compat>
           <i18n i18n="@@organisations" unit="organisations"></i18n>
         </stack-layout>
-        <stack-layout ripple (tap)="router.navigate(['/blogposts'])">
+        <stack-layout ripple
+          [class.active]="router.url.startsWith('/blogposts')"
+          (tap)="router.navigate(['/blogposts'])">
           <icon-compat icon="comment-dots"></icon-compat>
           <i18n i18n="@@blogposts" unit="blogposts"></i18n>
         </stack-layout>
-        <stack-layout ripple (tap)="router.navigate(['/infopages'])">
+        <stack-layout ripple
+          [class.active]="router.url.startsWith('/infopages')"
+          (tap)="router.navigate(['/infopages'])">
           <icon-compat icon="question-circle"></icon-compat>
           <i18n i18n="@@infopages" unit="infopages"></i18n>
         </stack-layout>
         <!-- TODO: https://github.com/NativeScript/NativeScript/issues/6114 -->
         <label flexGrow="1"></label>
-        <stack-layout ripple (tap)="router.navigate(['/imprint'])">
+        <stack-layout ripple
+          [class.active]="router.url.startsWith('/imprint')"
+          (tap)="router.navigate(['/imprint'])">
           <icon-compat icon="paragraph"></icon-compat>
           <i18n i18n="@@imprint" unit="imprint"></i18n>
         </stack-layout>
-        <stack-layout ripple (tap)="router.navigate(['/policies'])">
+        <stack-layout ripple
+          [class.active]="router.url.startsWith('/policies')"
+          (tap)="router.navigate(['/policies'])">
           <icon-compat icon="balance-scale"></icon-compat>
           <i18n i18n="@@policies" unit="policies"></i18n>
         </stack-layout>

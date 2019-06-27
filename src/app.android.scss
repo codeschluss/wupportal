@@ -1,8 +1,7 @@
 @import '~nativescript-theme-core/scss/light';
 @import '~nativescript-theme-core/scss/index';
 @import '~nativescript-theme-core/scss/platforms/index.android';
-
-/* -------------------------------------------------------------------------- */
+@import 'app.theme.scss';
 
 page {
   action-bar {
@@ -17,7 +16,7 @@ page {
         width: 40;
 
         web-view {
-          height: 35;
+          height: 33;
           width: 30;
         }
       }
@@ -39,6 +38,10 @@ page {
           height: 50;
           orientation: horizontal;
 
+          &.active > * {
+            @extend .text-primary;
+          }
+
           &.search {
             web-view {
               margin: 0 5 0 10;
@@ -48,6 +51,7 @@ page {
           label {
             color: black;
             font-weight: bold;
+            text-transform: uppercase;
             vertical-align: center;
           }
 

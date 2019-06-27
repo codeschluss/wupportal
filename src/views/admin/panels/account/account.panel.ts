@@ -51,12 +51,12 @@ export class AccountPanelComponent extends BasePanel {
     return this.organisations.some((item) => item.approved);
   }
 
-  public get user(): UserModel {
-    return this.route.snapshot.data.user || { };
-  }
-
   public get title(): string {
     return this.group.get('name') ? this.group.get('name').value : '...';
+  }
+
+  public get user(): UserModel {
+    return this.route.snapshot.data.user || { };
   }
 
   public approved(item: OrganisationModel): boolean {

@@ -47,7 +47,7 @@
 <navbar-compat [title]="title" fxHide.gt-sm>
   <span [style.flexGrow]="1"></span>
   <button mat-icon-button (click)="drawer.toggle()">
-    <icon-compat [icon]="(drawer.visible | async) ? 'times' : 'bars'">
+    <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
     </icon-compat>
   </button>
 </navbar-compat>

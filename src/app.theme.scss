@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+
+$theme: mat-light-theme(
+  mat-palette($mat-blue),
+  mat-palette($mat-cyan),
+  mat-palette($mat-red)
+);
+
+@mixin angular-material-text-color($theme) {
+  .text-primary { color: mat-color(map-get($theme, primary)); }
+  .text-accent { color: mat-color(map-get($theme, accent)); }
+  .text-warn { color: mat-color(map-get($theme, warn)); }
+}
+
+@include angular-material-text-color($theme);

@@ -27,8 +27,13 @@ export class LoadingIndicatorComponent implements Compat {
     switch (this.platformProvider.name) {
       case 'Android':
         // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
-        this.indicator.nativeElement.once('loaded', () =>
-          this.indicator.nativeElement.android.setIndeterminate(true));
+        if (!this.indicator.nativeElement.android) {
+          return this.indicator.nativeElement.once('loaded', () => {
+            this.ngAfterViewInit();
+          });
+        }
+
+        this.indicator.nativeElement.android.setIndeterminate(true);
         break;
 
       case 'iOS':
@@ -37,7 +42,9 @@ export class LoadingIndicatorComponent implements Compat {
     }
 
     this.loadingProvider.value.subscribe((loading) => {
-      this.indicator.nativeElement.style.height = loading ? 4 : 0;
+      this.indicator.nativeElement.animate({
+        scale: { x: 1, y: loading ? 1 : 0 }
+      });
     });
   }
 

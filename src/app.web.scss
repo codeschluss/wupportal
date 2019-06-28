@@ -18,7 +18,7 @@ layout-component {
   & > header {
     max-height: 12.5rem;
     text-align: center;
-    transition: max-height $duration;
+    transition: max-height $animation-duration;
   }
 
   & > navbar-compat:first-of-type > mat-toolbar {
@@ -34,7 +34,7 @@ layout-component {
       height: 100%;
 
       &.active {
-        color: $primary;
+        color: $color-primary;
       }
 
       h1 {
@@ -48,7 +48,7 @@ layout-component {
 
     & > mat-form-field {
       margin-bottom: -.54rem;
-      transition: width $duration;
+      transition: width $animation-duration;
       width: 10rem;
 
       &.mat-form-field-should-float {
@@ -77,7 +77,7 @@ layout-component {
         flex-direction: column;
 
         & > loading-indicator {
-          transition: height $duration;
+          transition: height $animation-duration;
           position: absolute;
           left: 0;
           right: 0;
@@ -127,7 +127,7 @@ layout-component {
             }
 
             &.active {
-              color: $primary;
+              color: $color-primary;
             }
 
             .mat-form-field-label {

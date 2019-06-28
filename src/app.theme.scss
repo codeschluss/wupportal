@@ -6,12 +6,14 @@ $theme: mat-light-theme(
   mat-palette($mat-red)
 );
 
-$primary: mat-color(map-get($theme, primary));
-$accent: mat-color(map-get($theme, accent));
-$warn: mat-color(map-get($theme, warn));
+$color-primary: mat-color(map-get($theme, primary));
+$color-accent: mat-color(map-get($theme, accent));
+$color-warn: mat-color(map-get($theme, warn));
+$color-text: rgba(0, 0, 0, .87);
 
-.text-primary { color: $primary; }
-.text-accent { color: $accent; }
-.text-warn { color: $warn; }
+.text-primary { color: $color-primary; }
+.text-accent { color: $color-accent; }
+.text-warn { color: $color-warn; }
+.text { color: $color-text; }
 
-$duration: .25s;
+$animation-duration: .25s;

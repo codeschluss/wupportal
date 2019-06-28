@@ -2,7 +2,7 @@
 
 div#admin {
   filter: grayscale(0);
-  transition: filter $duration;
+  transition: filter $animation-duration;
 
   &.disabled {
     filter: grayscale(1);

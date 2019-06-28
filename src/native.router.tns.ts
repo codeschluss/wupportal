@@ -1,18 +1,15 @@
-import { NgModule, Type } from '@angular/core';
-import { Resolve, Route } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Route } from '@angular/router';
 import { I18nResolver, SessionResolver } from '@wooportal/core';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { LayoutComponent } from './views/shared/layout/layout.component';
 
-const resolvers: { [key: string]: Type<Resolve<any>> } = {
-  session: SessionResolver,
-  xliff: I18nResolver
-};
-
 const routes: Route[] = [
   {
     path: '',
-    resolve: resolvers,
+    resolve: {
+      session: SessionResolver,
+    },
     children: [
       {
         path: '',
@@ -30,7 +27,9 @@ const routes: Route[] = [
       path: '',
       children: routes,
       component: LayoutComponent,
-      resolve: resolvers
+      resolve: {
+        xliff: I18nResolver
+      }
     },
     {
       path: '**',

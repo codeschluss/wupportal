@@ -42,6 +42,13 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
   public ngAfterViewInit(): void {
     switch (this.platformProvider.name) {
       case 'Android':
+        // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
+        if (!this.webview.nativeElement.android) {
+          return this.webview.nativeElement.once('loaded', () => {
+            this.ngAfterViewInit();
+          });
+        }
+
         this.webview.nativeElement.android.setBackgroundColor(0x00000000);
         this.webview.nativeElement.android.setHorizontalScrollBarEnabled(false);
         this.webview.nativeElement.android.setVerticalScrollBarEnabled(false);

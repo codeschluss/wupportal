@@ -34,7 +34,7 @@
   </button>
   <mat-form-field [class.text-primary]="router.url.startsWith('/search')">
     <icon-compat matPrefix icon="search"></icon-compat>
-    <input #navbarInput matInput tabindex="-1">
+    <input #navbarInput matInput tabindex="-1" value="{{ query }}">
     <mat-label><i18n i18n="@@search">search</i18n></mat-label>
     <button mat-button mat-icon-button matSuffix
       [disabled]="!navbarInput.value"
@@ -80,7 +80,7 @@
         [class.active]="router.url.startsWith('/search')">
         <icon-compat icon="search"></icon-compat>
         <mat-form-field [class.text-primary]="router.url.startsWith('/search')">
-          <input #drawerInput matInput tabindex="-1">
+          <input #drawerInput matInput tabindex="-1" value="{{ query }}">
           <mat-label><i18n i18n="@@search">search</i18n></mat-label>
           <button mat-button mat-icon-button matSuffix
             [disabled]="!drawerInput.value"

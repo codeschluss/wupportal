@@ -9,8 +9,10 @@ export class CoreSettings {
 
   public apiRootUrl: string;
 
-  public appTitle: string;
-
   public appUrl: string;
+
+  public defaultLocale: string;
+
+  public defaultTitle: string;
 
 }

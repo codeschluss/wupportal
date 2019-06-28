@@ -1,24 +1,59 @@
 import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
 import { CoreModule, PlatformCommonModule } from '@wooportal/core';
 import { SharedModule } from '../shared/shared.module';
-import { OrganisationItemComponent } from './organisation/item/organisation.item';
-import { OrganisationListComponent } from './organisation/list/organisation.list';
+import { ActivityListComponent } from './lists/activities/activity.list';
+import { BlogpostListComponent } from './lists/blogposts/blogpost.list';
+import { InfopageListComponent } from './lists/infopages/infopage.list';
+import { OrganisationListComponent } from './lists/organisations/organisation.list';
+import { ActivityObjectComponent } from './objects/activity/activity.object';
+import { BlogpostObjectComponent } from './objects/blogpost/blogpost.object';
+import { InfopageObjectComponent } from './objects/infopage/infopage.object';
+import { OrganisationObjectComponent } from './objects/organisation/organisation.object';
+import { HomePageComponent } from './pages/home/home.page';
+import { ImprintPageComponent } from './pages/imprint/imprint.page';
+import { PoliciesPageComponent } from './pages/policies/policies.page';
 import { PublicComponent } from './public.component';
 import { materials } from './public.materials';
 import { PublicRouter } from './public.router';
+import { SearchDummyComponent } from './search/search.dummy';
 
-const components: Type<any>[] = [
-  OrganisationItemComponent,
+const lists: Type<any>[] = [
+  ActivityListComponent,
+  BlogpostListComponent,
+  InfopageListComponent,
   OrganisationListComponent,
-  PublicComponent
+];
+
+const objects: Type<any>[] = [
+  ActivityObjectComponent,
+  BlogpostObjectComponent,
+  InfopageObjectComponent,
+  OrganisationObjectComponent,
+];
+
+const pages: Type<any>[] = [
+  HomePageComponent,
+  ImprintPageComponent,
+  PoliciesPageComponent
 ];
 
 @NgModule({
   declarations: [
-    ...components
+    ...lists,
+    ...objects,
+    ...pages,
+    PublicComponent,
+
+    // TODO: remove
+    SearchDummyComponent
   ],
   entryComponents: [
-    OrganisationListComponent
+    ...lists,
+    ...objects,
+    ...pages,
+
+    // TODO: remove
+    SearchDummyComponent
   ],
   imports: [
     ...materials,

@@ -10,7 +10,7 @@ export abstract class Selfrouter {
     });
   }
 
-  protected walk(root: Route[], routes?: Route[]): Route[] {
+  protected walk(root: Route[], routes: Route[]): Route[] {
     const walker = (route, children) => {
       if (route.component === this.constructor) {
         children

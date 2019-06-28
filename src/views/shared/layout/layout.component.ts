@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router, UrlSerializer } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
+import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { filter } from 'rxjs/operators';
 import { ClientManifest } from '../../../utils/manifest';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
@@ -19,6 +20,16 @@ export class LayoutComponent {
 
   @ViewChild('header', { static: true })
   private header: ElementRef<HTMLElement>;
+
+  private serializer: UrlSerializer = new CoreUrlSerializer();
+
+  public get query(): string {
+    const tree = this.serializer.parse(this.router.url);
+
+    return this.router.url.startsWith('/search')
+      ? tree.root.children.primary.segments[1].path
+      : '';
+  }
 
   public constructor(
     public router: Router,

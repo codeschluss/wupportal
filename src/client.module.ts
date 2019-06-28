@@ -26,8 +26,9 @@ fontawesome.add(freeicons);
       apiAuthUrl: ClientPackage.config.api.authUrl,
       apiRefreshUrl: ClientPackage.config.api.refreshUrl,
       apiRootUrl: ClientPackage.config.api.rootUrl,
-      appTitle: ClientManifest.shortTitle,
-      appUrl: ClientManifest.startUrl
+      appUrl: ClientManifest.startUrl,
+      defaultLocale: ClientPackage.config.translations.defaultLocale,
+      defaultTitle: ClientManifest.shortTitle
     }),
     ErrorModule,
     HttpClientModule,

@@ -45,6 +45,9 @@ import 'core-js/es6/reflect';
 /** Evergreen browsers require these. **/
 import 'core-js/es7/reflect';
 
+/** Because IE is even needier */
+import 'core-js/es7/array';
+
 /**
  * Web Animations `@angular/platform-browser/animations`
  * Only required if AnimationBuilder is used within the application and using

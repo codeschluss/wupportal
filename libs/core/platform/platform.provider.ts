@@ -1,5 +1,6 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Inject, Injectable, Injector, PLATFORM_ID, Type } from '@angular/core';
+import { CoreSettings } from '../utils/settings';
 import { PlatformProvider as Compat } from './platform.provider.i';
 
 @Injectable({ providedIn: 'root' })
@@ -22,12 +23,20 @@ export class PlatformProvider implements Compat {
   }
 
   public get language(): string {
+    let language;
+
     switch (this.name) {
       case 'Web':
-        return navigator.language.substr(0, 2);
+        language = navigator.language;
+        break;
       case 'Server':
-        return this.engine.request.headers['accept-language'].substr(0, 2);
+        language = this.engine.request.headers['accept-language'];
+        break;
     }
+
+    return language
+      ? language.substr(0, 2)
+      : this.coreSettings.defaultLocale;
   }
 
   public get name(): 'Android' | 'iOS' | 'Server' | 'Web' {
@@ -42,6 +51,7 @@ export class PlatformProvider implements Compat {
   }
 
   public constructor(
+    private coreSettings: CoreSettings,
     private injector: Injector,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }

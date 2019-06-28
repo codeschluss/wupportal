@@ -18,13 +18,13 @@ export class Title {
     private platform: PlatformProvider,
     private titleService: TitleService
   ) {
-    this.title = new BehaviorSubject(this.coreSettings.appTitle);
+    this.title = new BehaviorSubject(this.coreSettings.defaultTitle);
   }
 
   public set(title?: string): void {
     title = title
-      ? `${title} | ${this.coreSettings.appTitle}`
-      : this.coreSettings.appTitle;
+      ? `${title} | ${this.coreSettings.defaultTitle}`
+      : this.coreSettings.defaultTitle;
 
     this.title.next(title);
 

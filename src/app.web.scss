@@ -51,8 +51,8 @@ layout-component {
       transition: width $duration;
       width: 10rem;
 
-      &.mat-focused {
-        width: 20rem;
+      &.mat-form-field-should-float {
+        width: 15rem;
       }
 
       .mat-form-field-prefix {

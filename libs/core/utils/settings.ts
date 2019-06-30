@@ -11,7 +11,7 @@ export class CoreSettings {
 
   public appUrl: string;
 
-  public defaultLocale: string;
+  public defaultLanguage: string;
 
   public defaultTitle: string;
 

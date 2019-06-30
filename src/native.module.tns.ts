@@ -23,7 +23,7 @@ fontawesome.add(freeicons);
       apiRefreshUrl: ClientPackage.config.api.refreshUrl,
       apiRootUrl: ClientPackage.config.api.rootUrl,
       appUrl: ClientManifest.startUrl,
-      defaultLocale: ClientPackage.config.translations.defaultLocale,
+      defaultLanguage: ClientPackage.config.defaults.language,
       defaultTitle: ClientManifest.shortTitle,
     }),
     ErrorModule,

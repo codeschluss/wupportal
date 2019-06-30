@@ -1,10 +1,8 @@
 <navbar-compat [title]="title">
   <action-item ios.position="right">
-    <grid-layout>
-      <grid-layout ripple (tap)="drawer.toggle()">
-        <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
-        </icon-compat>
-      </grid-layout>
+    <grid-layout (tap)="drawer.toggle()">
+      <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
+      </icon-compat>
     </grid-layout>
   </action-item>
 </navbar-compat>
@@ -20,7 +18,7 @@
     <scroll-view>
       <flexbox-layout>
         <image src="res://icon"></image>
-        <stack-layout [class.active]="router.url.startsWith('/search')">
+        <stack-layout [class.active]="url.startsWith('/search')">
           <icon-compat icon="search"></icon-compat>
           <absolute-layout #search>
             <text-field #input
@@ -28,57 +26,55 @@
               text="{{ query }}"
               (blur)="search.className = input.text ? 'float-label' : null"
               (focus)="search.className = 'float-label'"
-              (returnPress)="router.navigate(['/search', input.text])"
+              (returnPress)="input.text && navigate('/search', input.text)"
               (textChange)="submit.className = input.text ? null : 'gray'">
             </text-field>
             <i18n i18n="@@search" unit="search"></i18n>
             <grid-layout #submit ripple class="gray"
-              (tap)="input.text && router.navigate(['/search', input.text])">
+              (tap)="input.text && navigate('/search', input.text)">
               <icon-compat icon="chevron-circle-right"></icon-compat>
             </grid-layout>
           </absolute-layout>
         </stack-layout>
-        <stack-layout ripple
-          [class.active]="router.url === '/'"
-          (tap)="router.navigate(['/'])">
+        <stack-layout ripple [class.active]="url === '/'" (tap)="navigate('/')">
           <icon-compat icon="at"></icon-compat>
           <label [text]="title"></label>
         </stack-layout>
         <stack-layout ripple
-          [class.active]="router.url.startsWith('/activities')"
-          (tap)="router.navigate(['/activities'])">
+          [class.active]="url.startsWith('/activities')"
+          (tap)="navigate('/activities')">
           <icon-compat icon="map-marker-alt"></icon-compat>
           <i18n i18n="@@activities" unit="activities"></i18n>
         </stack-layout>
         <stack-layout ripple
-          [class.active]="router.url.startsWith('/organisations')"
-          (tap)="router.navigate(['/organisations'])">
+          [class.active]="url.startsWith('/organisations')"
+          (tap)="navigate('/organisations')">
           <icon-compat icon="globe-europe"></icon-compat>
           <i18n i18n="@@organisations" unit="organisations"></i18n>
         </stack-layout>
         <stack-layout ripple
-          [class.active]="router.url.startsWith('/blogposts')"
-          (tap)="router.navigate(['/blogposts'])">
+          [class.active]="url.startsWith('/blogposts')"
+          (tap)="navigate('/blogposts')">
           <icon-compat icon="comment-dots"></icon-compat>
           <i18n i18n="@@blogposts" unit="blogposts"></i18n>
         </stack-layout>
         <stack-layout ripple
-          [class.active]="router.url.startsWith('/infopages')"
-          (tap)="router.navigate(['/infopages'])">
+          [class.active]="url.startsWith('/infopages')"
+          (tap)="navigate('/infopages')">
           <icon-compat icon="question-circle"></icon-compat>
           <i18n i18n="@@infopages" unit="infopages"></i18n>
         </stack-layout>
         <!-- TODO: https://github.com/NativeScript/NativeScript/issues/6114 -->
         <label flexGrow="1"></label>
         <stack-layout ripple
-          [class.active]="router.url.startsWith('/imprint')"
-          (tap)="router.navigate(['/imprint'])">
+          [class.active]="url.startsWith('/imprint')"
+          (tap)="navigate('/imprint')">
           <icon-compat icon="paragraph"></icon-compat>
           <i18n i18n="@@imprint" unit="imprint"></i18n>
         </stack-layout>
         <stack-layout ripple
-          [class.active]="router.url.startsWith('/policies')"
-          (tap)="router.navigate(['/policies'])">
+          [class.active]="url.startsWith('/policies')"
+          (tap)="navigate('/policies')">
           <icon-compat icon="balance-scale"></icon-compat>
           <i18n i18n="@@policies" unit="policies"></i18n>
         </stack-layout>

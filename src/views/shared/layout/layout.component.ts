@@ -1,8 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavigationStart, Router, UrlSerializer } from '@angular/router';
+import { Router, UrlSerializer } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
-import { filter } from 'rxjs/operators';
 import { ClientManifest } from '../../../utils/manifest';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
@@ -31,22 +30,22 @@ export class LayoutComponent {
       : '';
   }
 
+  public get url(): string {
+    return this.router.url;
+  }
+
   public constructor(
-    public router: Router,
+    private router: Router,
     platformProvider: PlatformProvider
   ) {
-    switch (platformProvider.name) {
-      case 'Web':
-        addEventListener('scroll', this.topoff.bind(this), true);
-
-      // tslint:disable-next-line: no-switch-case-fall-through
-      case 'Android':
-      case 'iOS':
-      case 'Web':
-        this.router.events.pipe(
-          filter((event) => event instanceof NavigationStart)
-        ).subscribe(() => this.drawer.hide());
+    if (platformProvider.name === 'Web') {
+      addEventListener('scroll', this.topoff.bind(this), true);
     }
+  }
+
+  public navigate(...path: string[]): void {
+    this.router.navigate(path);
+    this.drawer.hide();
   }
 
   private topoff(event: UIEvent): void {
@@ -55,10 +54,10 @@ export class LayoutComponent {
 
     if (height) {
       if (scroll > height) {
-        this.header.nativeElement.style.maxHeight = '0px';
+        this.header.nativeElement.style.height = '0px';
       }
     } else if (!scroll) {
-      this.header.nativeElement.style.maxHeight = null;
+      this.header.nativeElement.style.height = null;
     }
   }
 

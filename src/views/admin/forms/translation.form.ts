@@ -148,7 +148,7 @@ export class TranslationFormComponent<Model extends CrudModel>
 
     this.sessionProvider.value.pipe(take(1)).subscribe((session) => {
       const fallback = this.route.snapshot.data.language.find((lang) =>
-        lang.locale === ClientPackage.config.translations.defaultLocale);
+        lang.locale === ClientPackage.config.defaults.language);
       const selected = this.route.snapshot.data.language.find((lang) =>
         lang.locale === session.language);
 

@@ -3,7 +3,7 @@
 @import 'app.theme.scss';
 
 @include mat-core();
-@include angular-material-theme($theme);
+@include angular-material-theme($theme-palette);
 
 layout-component {
   display: flex;
@@ -16,9 +16,13 @@ layout-component {
   top: 0;
 
   & > header {
-    max-height: 12.5rem;
+    height: 12.5rem;
     text-align: center;
-    transition: max-height $animation-duration;
+    transition: height $animation-duration;
+
+    img {
+      max-height: 12.5rem;
+    }
   }
 
   & > navbar-compat:first-of-type > mat-toolbar {
@@ -61,6 +65,10 @@ layout-component {
     }
   }
 
+  & > navbar-compat:last-of-type > mat-toolbar {
+    @extend .mat-primary;
+  }
+
   & > drawer-compat {
     flex-grow: 1;
     position: relative;
@@ -94,6 +102,10 @@ layout-component {
           & > button {
             height: 100%;
             text-transform: inherit;
+
+            &.active {
+              color: $color-primary;
+            }
           }
 
           icon-compat {
@@ -111,7 +123,7 @@ layout-component {
           text-align: center;
 
           img {
-            width: 50%;
+            max-height: 10rem;
           }
         }
 

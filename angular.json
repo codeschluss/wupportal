@@ -45,7 +45,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "res/All/imgs",
+                "input": "res/Web/imgs",
                 "output": "/imgs"
               }
             ],

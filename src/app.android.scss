@@ -5,20 +5,17 @@
 
 page {
   action-bar {
+    color: $color-light;
+
     grid-layout {
-      height: 40;
-      width: 55;
       padding-right: 15;
 
-      grid-layout {
-        border-radius: 50%;
-        padding-right: 0;
-        width: 40;
+      height: 50;
+      width: 50;
 
-        web-view {
-          height: 33;
-          width: 30;
-        }
+      web-view {
+        height: 33;
+        width: 30;
       }
     }
   }
@@ -38,13 +35,22 @@ page {
           height: 50;
           orientation: horizontal;
 
-          color: $color-text;
+          color: $color-dark;
 
           &.active {
             color: $color-primary;
 
-            text-field {
-              border-bottom-color: $color-primary;
+            absolute-layout {
+              text-field {
+                border-bottom-color: $color-primary;
+              }
+
+              &.float-label {
+                label {
+                  transform: scale(.66, .66) translate(-10, -20);
+                  animation-name: none;
+                }
+              }
             }
           }
 
@@ -74,7 +80,7 @@ page {
             }
 
             text-field {
-              border-bottom-color: $color-text;
+              border-bottom-color: $color-dark;
               border-bottom-width: 2;
               padding: 12 25 3 0;
               width: 205;

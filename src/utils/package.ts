@@ -26,11 +26,9 @@ export class ClientPackage {
       superUser: string,
       userId: string
     },
-    position: {
-      city: string
-    },
-    translations: {
-      defaultLocale: string
+    defaults: {
+      city: string,
+      language: string
     }
   } = packageJson.config;
 

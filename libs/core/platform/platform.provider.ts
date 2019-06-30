@@ -36,7 +36,7 @@ export class PlatformProvider implements Compat {
 
     return language
       ? language.substr(0, 2)
-      : this.coreSettings.defaultLocale;
+      : this.coreSettings.defaultLanguage;
   }
 
   public get name(): 'Android' | 'iOS' | 'Server' | 'Web' {

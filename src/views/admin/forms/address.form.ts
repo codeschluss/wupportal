@@ -92,8 +92,8 @@ export class AddressFormComponent
       name: 'place',
       input: StringFieldComponent,
       tests: [Validators.required],
-      locked: !!ClientPackage.config.position.city,
-      value: ClientPackage.config.position.city
+      locked: !!ClientPackage.config.defaults.city,
+      value: ClientPackage.config.defaults.city
     },
     {
       name: 'longitude',

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">wooportal</string>
-  <string name="title_activity_kimera">wooportal</string>
+  <string name="defaultTitle">wooportal</string>
 </resources>

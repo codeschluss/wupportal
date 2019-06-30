@@ -1,19 +1,121 @@
 @import '~@angular/material/theming';
 
-$theme: mat-light-theme(
-  mat-palette($mat-blue),
-  mat-palette($mat-cyan),
-  mat-palette($mat-red)
+$animation-duration: .25s;
+
+$color-dark: rgba(black, .87);
+$color-light: white;
+
+$theme-palette-primary: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #2196f3,
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+  A100: #82b1ff,
+  A200: #448aff,
+  A400: #2979ff,
+  A700: #2962ff,
+  contrast: (
+    50: $color-dark,
+    100: $color-dark,
+    200: $color-dark,
+    300: $color-dark,
+    400: $color-dark,
+    500: $color-light,
+    600: $color-light,
+    700: $color-light,
+    800: $color-light,
+    900: $color-light,
+    A100: $color-dark,
+    A200: $color-light,
+    A400: $color-light,
+    A700: $color-light,
+  )
 );
 
-$color-primary: mat-color(map-get($theme, primary));
-$color-accent: mat-color(map-get($theme, accent));
-$color-warn: mat-color(map-get($theme, warn));
-$color-text: rgba(0, 0, 0, .87);
+$theme-palette-accent: (
+  50: #e0f7fa,
+  100: #b2ebf2,
+  200: #80deea,
+  300: #4dd0e1,
+  400: #26c6da,
+  500: #00bcd4,
+  600: #00acc1,
+  700: #0097a7,
+  800: #00838f,
+  900: #006064,
+  A100: #84ffff,
+  A200: #18ffff,
+  A400: #00e5ff,
+  A700: #00b8d4,
+  contrast: (
+    50: $color-dark,
+    100: $color-dark,
+    200: $color-dark,
+    300: $color-dark,
+    400: $color-dark,
+    500: $color-light,
+    600: $color-light,
+    700: $color-light,
+    800: $color-light,
+    900: $color-light,
+    A100: $color-dark,
+    A200: $color-dark,
+    A400: $color-dark,
+    A700: $color-dark,
+  )
+);
 
+$theme-palette-warn: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #f44336,
+  600: #e53935,
+  700: #d32f2f,
+  800: #c62828,
+  900: #b71c1c,
+  A100: #ff8a80,
+  A200: #ff5252,
+  A400: #ff1744,
+  A700: #d50000,
+  contrast: (
+    50: $color-dark,
+    100: $color-dark,
+    200: $color-dark,
+    300: $color-dark,
+    400: $color-dark,
+    500: $color-light,
+    600: $color-light,
+    700: $color-light,
+    800: $color-light,
+    900: $color-light,
+    A100: $color-dark,
+    A200: $color-light,
+    A400: $color-light,
+    A700: $color-light,
+  )
+);
+
+$theme-palette: mat-light-theme(
+  mat-palette($theme-palette-primary),
+  mat-palette($theme-palette-accent),
+  mat-palette($theme-palette-warn)
+);
+
+$color-primary: mat-color(map-get($theme-palette, primary));
+$color-accent: mat-color(map-get($theme-palette, accent));
+$color-warn: mat-color(map-get($theme-palette, warn));
+
+.text-dark { color: $color-dark; }
+.text-light { color: $color-light; }
 .text-primary { color: $color-primary; }
 .text-accent { color: $color-accent; }
 .text-warn { color: $color-warn; }
-.text { color: $color-text; }
-
-$animation-duration: .25s;

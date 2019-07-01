@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
@@ -9,6 +9,7 @@ import { CoreModule } from '@wooportal/core';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
 import { ErrorModule } from './error/error.module';
+import { ClientErrorHandler } from './error/handler/error.handler';
 import { RealmModule } from './realm/realm.module';
 import { ClientManifest } from './utils/manifest';
 import { ClientPackage } from './utils/package';
@@ -34,6 +35,9 @@ fontawesome.add(freeicons);
     HttpClientModule,
     RealmModule,
     TransferHttpCacheModule
+  ],
+  providers: [
+    { provide: ErrorHandler, useClass: ClientErrorHandler }
   ]
 })
 

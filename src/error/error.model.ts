@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { inspect } from 'util';
 
 export class ErrorModel {
@@ -11,23 +10,13 @@ export class ErrorModel {
   public timestamp: string = new Date().toISOString();
   public trace?: string;
 
-  public static fromError(error: Error & HttpErrorResponse): ErrorModel {
+  public static from(error: any): ErrorModel {
     return Object.assign(new ErrorModel(), {
       error: error.constructor.name,
       message: inspect(error),
       raw: error,
       status: error.status || NaN,
       trace: error.stack
-    });
-  }
-
-  public static fromRejection(error: PromiseRejectionEvent): ErrorModel {
-    return Object.assign(new ErrorModel(), {
-      error: error.reason.constructor.name,
-      message: inspect(error.reason),
-      raw: error,
-      status: error.reason.status || NaN,
-      trace: error.reason.stack
     });
   }
 

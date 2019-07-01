@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PlatformProvider } from '@wooportal/core';
 import { ErrorBarComponent } from '../bar/error.bar';
 import { ErrorDialogComponent } from '../dialog/error.dialog';
 import { ErrorModel } from '../error.model';
@@ -15,32 +14,22 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     private bar: MatSnackBar,
     private dialog: MatDialog,
     private location: Location,
-    private zone: NgZone,
-    platformProvider: PlatformProvider
-  ) {
-    if (platformProvider.name === 'Web') {
-      addEventListener('error', this.handleError.bind(this));
-      addEventListener('unhandledrejection', this.handleRejection.bind(this));
-    }
-  }
+    private zone: NgZone
+  ) { }
 
   public handleError(error: any): void {
     console.error('ClientErrorHandler.handleError', error);
-    this.throwError(ErrorModel.fromError(error));
+    this.throwError(ErrorModel.from(error));
   }
 
-  public handleRejection(error: PromiseRejectionEvent): void {
-    console.error('ClientErrorHandler.handleRejection', error);
-    this.throwError(ErrorModel.fromRejection(error));
-  }
+  public throwError(reason: ErrorModel): any {
+    reason.path = this.location.path(true) || '/';
 
-  public throwError(error: ErrorModel): any {
-    error.path = this.location.path(true) || '/';
-
-    if (!error.ignored) {
-      this.zone.run(() => error.breaking
-        ? this.dialog.open(ErrorDialogComponent, { data: error })
-        : this.bar.openFromComponent(ErrorBarComponent, { data: error }));
+    if (!reason.ignored) {
+      this.zone.run(() => !reason.breaking
+        ? this.bar.openFromComponent(ErrorBarComponent, { data: reason })
+        : this.dialog.open(ErrorDialogComponent, { data: reason })
+          .afterClosed().subscribe(() => location.reload()));
     }
   }
 

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'native-component',
   template: `
-    <router-outlet></router-outlet>
+    <page-router-outlet></page-router-outlet>
   `
 })
 

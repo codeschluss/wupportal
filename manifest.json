@@ -6,11 +6,11 @@
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#683ab7",
+  "theme_color": "#0d47a1",
   "icons": [
     {
       "src": "imgs/icon.png",
-      "sizes": "192x192",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]

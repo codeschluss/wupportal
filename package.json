@@ -29,11 +29,9 @@
       "superUser": "superuser",
       "userId": "id"
     },
-    "position": {
-      "city": ""
-    },
-    "translations": {
-      "defaultLocale": "de"
+    "defaults": {
+      "city": "",
+      "language": "en"
     }
   },
   "android": {
@@ -100,9 +98,9 @@
     "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.800.4",
-    "@angular-devkit/build-ng-packagr": "0.800.4",
-    "@angular/cli": "8.0.4",
+    "@angular-devkit/build-angular": "0.800.6",
+    "@angular-devkit/build-ng-packagr": "0.800.6",
+    "@angular/cli": "8.0.6",
     "@angular/compiler-cli": "8.0.3",
     "@angular/http": "8.0.0-beta.10",
     "@angular/language-service": "8.0.3",

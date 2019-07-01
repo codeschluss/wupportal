@@ -15,10 +15,8 @@ export class PlatformProvider implements Compat {
 
   public get engine(): any {
     switch (this.name) {
-      case 'Server':
-        return this.injector.get('express' as unknown as Type<any>);
-      default:
-        return null;
+      case 'Server': return this.injector.get('express' as any as Type<any>);
+      default: return null;
     }
   }
 

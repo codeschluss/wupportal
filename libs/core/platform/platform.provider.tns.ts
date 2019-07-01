@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { connectionType, getConnectionType } from 'tns-core-modules/connectivity';
 import { device } from 'tns-core-modules/platform';
+import { CoreSettings } from '../utils/settings';
 import { PlatformProvider as Compat } from './platform.provider.i';
 
 @Injectable({ providedIn: 'root' })
@@ -23,7 +24,7 @@ export class PlatformProvider implements Compat {
   }
 
   public get language(): string {
-    return device.language;
+    return device.language || this.coreSettings.defaultLanguage;
   }
 
   public get name(): 'Android' | 'iOS' | 'Server' | 'Web' {
@@ -33,5 +34,9 @@ export class PlatformProvider implements Compat {
   public get type(): 'Online' | 'Native' {
     return 'Native';
   }
+
+  public constructor(
+    private coreSettings: CoreSettings
+  ) { }
 
 }

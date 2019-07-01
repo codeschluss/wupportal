@@ -1,16 +1,18 @@
 <navbar-compat [title]="title">
   <action-item ios.position="right">
-    <grid-layout (tap)="drawer.toggle()">
-      <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
-      </icon-compat>
-    </grid-layout>
+    <stack-layout>
+      <activity-indicator [busy]="busy"></activity-indicator>
+      <grid-layout (tap)="drawer.toggle()">
+        <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
+        </icon-compat>
+      </grid-layout>
+    </stack-layout>
   </action-item>
 </navbar-compat>
 
 <drawer-compat #drawer>
   <ng-template #drawerMain>
     <stack-layout>
-      <loading-indicator></loading-indicator>
       <router-outlet></router-outlet>
     </stack-layout>
   </ng-template>
@@ -65,7 +67,7 @@
           <i18n i18n="@@infopages" unit="infopages"></i18n>
         </stack-layout>
         <!-- TODO: https://github.com/NativeScript/NativeScript/issues/6114 -->
-        <label flexGrow="1"></label>
+        <stack-layout flexGrow="1"></stack-layout>
         <stack-layout ripple
           [class.active]="url.startsWith('/imprint')"
           (tap)="navigate('/imprint')">

@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router, UrlSerializer } from '@angular/router';
-import { PlatformProvider } from '@wooportal/core';
+import { LoadingProvider, PlatformProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { ClientManifest } from '../../../utils/manifest';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
@@ -12,12 +12,14 @@ import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
 export class LayoutComponent {
 
+  public busy: 0 | 1;
+
   public title: string = ClientManifest.shortTitle;
 
   @ViewChild('drawer', { static: true })
   private drawer: DrawerCompat;
 
-  @ViewChild('header', { static: true })
+  @ViewChild('header', { read: ElementRef, static: true })
   private header: ElementRef<HTMLElement>;
 
   private serializer: UrlSerializer = new CoreUrlSerializer();
@@ -36,10 +38,17 @@ export class LayoutComponent {
 
   public constructor(
     private router: Router,
+    loadingProvider: LoadingProvider,
     platformProvider: PlatformProvider
   ) {
-    if (platformProvider.name === 'Web') {
-      addEventListener('scroll', this.topoff.bind(this), true);
+    if (platformProvider.name === 'Server') {
+      this.busy = 1;
+    } else {
+      loadingProvider.value.subscribe((loading) => this.busy = loading && 1);
+
+      if (platformProvider.name === 'Web') {
+        addEventListener('scroll', this.topoff.bind(this), true);
+      }
     }
   }
 
@@ -49,16 +58,19 @@ export class LayoutComponent {
   }
 
   private topoff(event: UIEvent): void {
-    const height = this.header.nativeElement.clientHeight;
-    const scroll = (event.target as HTMLElement).scrollTop;
+    if ((event.target as HTMLElement).className === 'mat-drawer-content') {
+      const height = this.header.nativeElement.clientHeight;
+      const scroll = (event.target as HTMLElement).scrollTop;
 
-    if (height) {
-      if (scroll > height) {
-        this.header.nativeElement.style.height = '0px';
+      if (height) {
+        if (scroll > height) {
+          this.header.nativeElement.style.height = '0px';
+        }
+      } else if (!scroll) {
+        this.header.nativeElement.style.height = null;
       }
-    } else if (!scroll) {
-      this.header.nativeElement.style.height = null;
     }
+
   }
 
 }

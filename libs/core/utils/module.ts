@@ -1,13 +1,11 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { Injector, NgModule, Provider, Type } from '@angular/core';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UrlSerializer } from '@angular/router';
 import { TokenInterceptor } from '../auth/token.interceptor';
 import { TokenProvider } from '../auth/token.provider';
 import { I18nComponent } from '../i18n/i18n.component';
 import { I18nInterceptor } from '../i18n/i18n.interceptor';
-import { LoadingIndicatorComponent } from '../loading/loading.indicator';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
 import { PlatformInterceptor } from '../platform/platform.interceptor';
 import { PlatformCommonModule, PlatformRouterModule } from '../platform/platform.modules';
@@ -16,8 +14,7 @@ import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
 
 const declarations: Type<any>[] = [
-  I18nComponent,
-  LoadingIndicatorComponent
+  I18nComponent
 ];
 
 const providers: Provider[] = [
@@ -33,7 +30,6 @@ const providers: Provider[] = [
     ...declarations
   ],
   imports: [
-    MatProgressBarModule,
     PlatformCommonModule,
     PlatformRouterModule
   ],

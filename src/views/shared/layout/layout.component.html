@@ -42,8 +42,10 @@
   </mat-form-field>
 </navbar-compat>
 
-<navbar-compat class="mat-primary" [title]="title" fxHide.gt-sm>
+<navbar-compat [title]="title" fxHide.gt-sm>
   <span [style.flexGrow]="1"></span>
+  <mat-progress-spinner mode="indeterminate" [style.opacity]="busy">
+  </mat-progress-spinner>
   <button mat-icon-button (click)="drawer.toggle()">
     <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
     </icon-compat>
@@ -51,7 +53,8 @@
 </navbar-compat>
 <drawer-compat #drawer>
   <ng-template #drawerMain>
-    <loading-indicator></loading-indicator>
+    <mat-progress-bar fxHide.lt-md mode="indeterminate" [style.opacity]="busy">
+    </mat-progress-bar>
     <router-outlet></router-outlet>
     <span [style.flexGrow]="1"></span>
     <navbar-compat fxHide.lt-md>
@@ -116,7 +119,7 @@
         <i18n i18n="@@infopages">infopages</i18n>
       </mat-list-item>
     </mat-action-list>
-    <span [style.flexGrow]="1"></span>
+    <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
     <mat-action-list>
       <mat-list-item
         [class.active]="url.startsWith('/imprint')"

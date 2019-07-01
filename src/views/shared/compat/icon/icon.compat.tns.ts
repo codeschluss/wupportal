@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { PlatformProvider } from '@wooportal/core';
 import { WebView } from 'tns-core-modules/ui/web-view';
@@ -36,6 +36,7 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
   }
 
   public constructor(
+    private changeDetection: ChangeDetectorRef,
     private platformProvider: PlatformProvider
   ) { }
 
@@ -49,6 +50,7 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
           });
         }
 
+        this.changeDetection.detectChanges();
         this.webview.nativeElement.android.setBackgroundColor(0x00000000);
         this.webview.nativeElement.android.setHorizontalScrollBarEnabled(false);
         this.webview.nativeElement.android.setVerticalScrollBarEnabled(false);

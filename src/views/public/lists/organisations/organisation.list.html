@@ -2,8 +2,14 @@
   <ng-container *ngFor="let item of items">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{ item.name }}</mat-card-title>
-        <mat-card-subtitle>{{ item.address.suburb.name }}</mat-card-subtitle>
+        <mat-card-title>
+          <a [routerLink]="[item.id]">
+            {{ item.name }}
+          </a>
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ item.address.suburb.name }}
+        </mat-card-subtitle>
       </mat-card-header>
       <mat-divider></mat-divider>
       <ng-container *ngIf="item.images?.length">
@@ -18,11 +24,17 @@
       </mat-card-content>
       <mat-divider></mat-divider>
       <mat-card-actions>
+        <a mat-button [routerLink]="[item.id]">
+          <icon-compat icon="globe-europe"></icon-compat>
+          &nbsp;<i18n i18n="@@details">details</i18n>
+        </a>
         <button mat-button [disabled]="liked(item)" (click)="like(item)">
-          <i18n i18n="@@like">like</i18n>
+          <icon-compat icon="heart"></icon-compat>
+          &nbsp;<i18n i18n="@@like">like</i18n>
         </button>
         <button mat-button (click)="share(item)">
-          <i18n i18n="@@share">share</i18n>
+          <icon-compat icon="share-alt"></icon-compat>
+          &nbsp;<i18n i18n="@@share">share</i18n>
         </button>
       </mat-card-actions>
     </mat-card>

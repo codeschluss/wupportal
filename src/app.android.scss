@@ -4,23 +4,39 @@
 @import 'app.theme.scss';
 
 page {
+  // background-image: url('res://icon');
+  // background-position: center;
+  // background-repeat: no-repeat;
+
   action-bar {
     color: $color-light;
 
-    grid-layout {
-      padding-right: 15;
+    stack-layout {
+      orientation: horizontal;
 
-      height: 50;
-      width: 50;
+      activity-indicator {
+        height: 20;
+        width: 20;
+        margin-right: 15;
+      }
 
-      web-view {
-        height: 33;
-        width: 30;
+      grid-layout {
+        height: 50;
+        width: 50;
+        padding-right: 15;
+
+        web-view {
+          height: 33;
+          width: 30;
+        }
       }
     }
   }
 
   #TKDrawerContent {
+    $background: map-get($theme-palette, background);
+    background-color: mat-color($background, dialog);
+
     scroll-view {
       flexbox-layout {
         flex-direction: column;
@@ -34,7 +50,6 @@ page {
         & > stack-layout {
           height: 50;
           orientation: horizontal;
-
           color: $color-dark;
 
           &.active {
@@ -120,8 +135,8 @@ page {
   }
 
   #TKMainContent {
-    progress {
-      height: 4;
-    }
+    $background: map-get($theme-palette, background);
+    background-color: mat-color($background, background);
   }
+
 }

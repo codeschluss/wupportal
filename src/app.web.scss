@@ -65,8 +65,40 @@ layout-component {
     }
   }
 
+  @media screen and (max-width: 959.99px) and (min-width: 0px) {
+    & > navbar-compat:last-of-type { display: block !important; }
+  }
+
   & > navbar-compat:last-of-type > mat-toolbar {
     @extend .mat-primary;
+
+    mat-progress-spinner {
+      height: 1rem !important;
+      width: 1rem !important;
+      margin-right: 1rem;
+
+      transition: opacity $animation-duration;
+
+      &._mat-animation-noopable[mode=indeterminate] {
+        animation:
+          mat-progress-spinner-linear-rotate
+          2000ms linear infinite !important;
+
+        circle {
+          animation-duration: 4s !important;
+          animation-iteration-count: infinite !important;
+        }
+      }
+
+      svg {
+        height: inherit !important;
+        width: inherit !important;
+
+        circle {
+          stroke: currentColor;
+        }
+      }
+    }
   }
 
   & > drawer-compat {
@@ -84,12 +116,31 @@ layout-component {
         display: flex;
         flex-direction: column;
 
-        & > loading-indicator {
-          transition: height $animation-duration;
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
+        mat-progress-bar {
+          &._mat-animation-noopable[mode=indeterminate] {
+            .mat-progress-bar-primary {
+              &::after {
+                animation:
+                  mat-progress-bar-primary-indeterminate-scale
+                  2000ms infinite linear !important;
+              }
+
+              animation:
+                mat-progress-bar-primary-indeterminate-translate
+                2000ms infinite linear !important;
+            }
+            .mat-progress-bar-secondary {
+              &::after {
+                animation:
+                  mat-progress-bar-secondary-indeterminate-scale
+                  2000ms infinite linear !important;
+              }
+
+              animation:
+                mat-progress-bar-secondary-indeterminate-translate
+                2000ms infinite linear !important
+            }
+          }
         }
 
         & > navbar-compat:last-child > mat-toolbar {

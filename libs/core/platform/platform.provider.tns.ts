@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { connectionType, getConnectionType } from 'tns-core-modules/connectivity';
+import { Observable } from 'rxjs';
+import { publish, refCount } from 'rxjs/operators';
+import { connectionType, getConnectionType, startMonitoring, stopMonitoring } from 'tns-core-modules/connectivity';
 import { device } from 'tns-core-modules/platform';
 import { CoreSettings } from '../utils/settings';
 import { PlatformProvider as Compat } from './platform.provider.i';
@@ -8,15 +10,14 @@ import { PlatformProvider as Compat } from './platform.provider.i';
 export class PlatformProvider implements Compat {
 
   public get connected(): boolean {
-    switch (getConnectionType()) {
-      case connectionType.ethernet:
-      case connectionType.mobile:
-      case connectionType.wifi:
-        return true;
-      default:
-      case connectionType.none:
-        return false;
-    }
+    return this.connectionTypeMap(getConnectionType());
+  }
+
+  public get connection(): Observable<boolean> {
+    return new Observable((watch) => {
+      startMonitoring((change) => watch.next(this.connectionTypeMap(change)));
+      return () => stopMonitoring();
+    }).pipe(publish(), refCount());
   }
 
   public get engine(): any {
@@ -38,5 +39,17 @@ export class PlatformProvider implements Compat {
   public constructor(
     private coreSettings: CoreSettings
   ) { }
+
+  private connectionTypeMap(type: connectionType): boolean {
+    switch (type) {
+      case connectionType.ethernet:
+      case connectionType.mobile:
+      case connectionType.wifi:
+        return true;
+      default:
+      case connectionType.none:
+        return false;
+    }
+  }
 
 }

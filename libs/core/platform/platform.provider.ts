@@ -1,5 +1,7 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Inject, Injectable, Injector, PLATFORM_ID, Type } from '@angular/core';
+import { fromEvent, merge, Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { CoreSettings } from '../utils/settings';
 import { PlatformProvider as Compat } from './platform.provider.i';
 
@@ -11,6 +13,14 @@ export class PlatformProvider implements Compat {
       case 'Server': return true;
       case 'Web': return navigator.onLine;
     }
+  }
+
+  public get connection(): Observable<boolean> {
+    return merge(
+      fromEvent(document, 'offline').pipe(map(() => false)),
+      fromEvent(document, 'online').pipe(map(() => true)),
+      startWith(this.connected)
+    );
   }
 
   public get engine(): any {

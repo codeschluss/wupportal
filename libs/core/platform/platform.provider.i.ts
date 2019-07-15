@@ -1,6 +1,10 @@
+import { Observable } from 'rxjs';
+
 export interface PlatformProvider {
 
   readonly connected: boolean;
+
+  readonly connection: Observable<boolean>;
 
   readonly engine: any;
 

@@ -16,7 +16,9 @@ export class ActivityObjectComponent extends Selfrouter {
       activity: CrudResolver
     },
     data: {
-      activity: CrudJoiner.of(ActivityModel)
+      resolve: {
+        activity: CrudJoiner.of(ActivityModel)
+      }
     }
   };
 

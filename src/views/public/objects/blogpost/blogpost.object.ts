@@ -16,7 +16,9 @@ export class BlogpostObjectComponent extends Selfrouter {
       blogpost: CrudResolver
     },
     data: {
-      blogpost: CrudJoiner.of(BlogModel)
+      resolve: {
+        blogpost: CrudJoiner.of(BlogModel)
+      }
     }
   };
 

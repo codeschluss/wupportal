@@ -16,7 +16,9 @@ export class OrganisationObjectComponent extends Selfrouter {
       organisation: CrudResolver
     },
     data: {
-      organisation: CrudJoiner.of(OrganisationModel)
+      resolve: {
+        organisation: CrudJoiner.of(OrganisationModel)
+      }
     }
   };
 

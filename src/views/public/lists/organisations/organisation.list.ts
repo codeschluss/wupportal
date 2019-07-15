@@ -16,9 +16,11 @@ export class OrganisationListComponent extends Selfrouter {
       organisations: CrudResolver
     },
     data: {
-      organisations: CrudJoiner.of(OrganisationModel)
-        .with('address').yield('suburb')
-        .with('images')
+      resolve: {
+        organisations: CrudJoiner.of(OrganisationModel)
+          .with('address').yield('suburb')
+          .with('images')
+      }
     }
   };
 

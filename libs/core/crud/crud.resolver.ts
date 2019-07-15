@@ -21,10 +21,10 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
   public resolve(route: ActivatedRouteSnapshot):
     Observable<CrudModel | CrudModel[]> {
 
-    const joiner = route.data[Object.keys(route.routeConfig.resolve)
+    const joiner = route.data.resolve[Object.keys(route.routeConfig.resolve)
       .filter((key) => route.routeConfig.resolve[key] === this.constructor)
-      .filter((key) => route.data[key] instanceof CrudJoiner)
-      .find((key) => !this.resolving.includes(route.data[key]))];
+      .filter((key) => route.data.resolve[key] instanceof CrudJoiner)
+      .find((key) => !this.resolving.includes(route.data.resolve[key]))];
 
     this.resolving.push(joiner);
     joiner.graph.params.embeddings = CrudJoiner.to(joiner.graph);

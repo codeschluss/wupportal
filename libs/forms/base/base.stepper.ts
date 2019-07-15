@@ -119,7 +119,9 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         tokens: TokenResolver
       },
       data: {
-        item: this.joiner
+        resolve: {
+          item: this.joiner
+        }
       }
     };
   }
@@ -203,13 +205,14 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         resolve: fields.reduce((obj, field) => Object.assign(obj, {
           [field.name]: CrudResolver,
         }), { }),
-        data: Object.assign({
+        data: {
           group: new FormGroup({ }),
+          tokens: this.route.snapshot.data.tokens,
           item: step.name === 'main' ? this.item : this.item[step.name],
-          tokens: this.route.snapshot.data.tokens
-        }, ...fields.map((field) => ({
-          [field.name]: CrudJoiner.of(field.model, { filter: null })
-        })))
+          resolve: fields.reduce((obj, field) => Object.assign(obj, {
+            [field.name]: CrudJoiner.of(field.model, { filter: null })
+          }), { })
+        }
       };
     });
   }

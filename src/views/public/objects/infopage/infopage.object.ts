@@ -16,7 +16,9 @@ export class InfopageObjectComponent extends Selfrouter {
       infopage: CrudResolver
     },
     data: {
-      infopage: CrudJoiner.of(PageModel)
+      resolve: {
+        infopage: CrudJoiner.of(PageModel)
+      }
     }
   };
 

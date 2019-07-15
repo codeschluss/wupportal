@@ -63,7 +63,9 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
       }, ...Object.keys(this.resolve).map((key) => ({
         [key]: CrudResolver
       }))),
-      data: this.resolve
+      data: {
+        resolve: this.resolve
+      }
     };
   }
 

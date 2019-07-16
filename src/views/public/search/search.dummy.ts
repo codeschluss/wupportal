@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  template: `<label [text]="query | async">{{ query | async }}</label>`
+  template: `
+    <main><label [text]="query | async">{{ query | async }}</label></main>
+  `
 })
 
 export class SearchDummyComponent extends Selfrouter implements OnInit {

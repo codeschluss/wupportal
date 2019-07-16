@@ -1,6 +1,6 @@
 @import '../../app.theme.scss';
 
-div#admin {
+main#admin {
   filter: grayscale(0);
   transition: filter $animation-duration;
 

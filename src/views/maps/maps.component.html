@@ -1,58 +1,60 @@
-<aol-map [loadTilesWhileAnimating]="true" [loadTilesWhileInteracting]="true">
-  <aol-interaction-default>
-  </aol-interaction-default>
+<main>
+  <aol-map [loadTilesWhileAnimating]="true" [loadTilesWhileInteracting]="true">
+    <aol-interaction-default>
+    </aol-interaction-default>
 
-  <aol-view [enableRotation]="true" [zoom]="zoomfactor">
-    <aol-coordinate
-      [srid]="projection"
-      [x]="longitude"
-      [y]="latitude">
-    </aol-coordinate>
-  </aol-view>
+    <aol-view [enableRotation]="true" [zoom]="zoomfactor">
+      <aol-coordinate
+        [srid]="projection"
+        [x]="longitude"
+        [y]="latitude">
+      </aol-coordinate>
+    </aol-view>
 
-  <aol-layer-tile>
-    <aol-source-osm>
-    </aol-source-osm>
-  </aol-layer-tile>
+    <aol-layer-tile>
+      <aol-source-osm>
+      </aol-source-osm>
+    </aol-layer-tile>
 
-  <aol-layer-vector>
-    <aol-source-cluster [distance]="cluster">
-      <aol-source-vector [overlaps]="true">
-        <ng-container *ngFor="let item of items">
-          <aol-feature [id]="item.id">
-            <aol-geometry-point>
-              <aol-coordinate
-                [srid]="projection"
-                [x]="item.address.longitude"
-                [y]="item.address.latitude">
-              </aol-coordinate>
-            </aol-geometry-point>
-          </aol-feature>
-        </ng-container>
-      </aol-source-vector>
-    </aol-source-cluster>
-  </aol-layer-vector>
-</aol-map>
-<fa-icon matRipple
-  class="text-primary"
-  icon="circle"
-  matRippleColor="currentColor"
-  [class.show]="!attached.closed">
-</fa-icon>
-<nav #dialer>
-  <button color mat-fab (click)="dialer.classList.toggle('open')">
-    <fa-icon icon="plus"></fa-icon>
-  </button>
-  <button #attach color mat-fab (click)="handleAttach()">
-    <i18n i18n="@@followPosition">followPosition</i18n>
-    <fa-icon icon="location-arrow"></fa-icon>
-  </button>
-  <button color mat-fab (click)="handleReset()">
-    <i18n i18n="@@autofitView">autofitView</i18n>
-    <fa-icon icon="expand"></fa-icon>
-  </button>
-  <button color mat-fab (click)="handleReset()">
-    <i18n i18n="@@resetView">resetView</i18n>
-    <fa-icon icon="undo-alt"></fa-icon>
-  </button>
-</nav>
+    <aol-layer-vector>
+      <aol-source-cluster [distance]="cluster">
+        <aol-source-vector [overlaps]="true">
+          <ng-container *ngFor="let item of items">
+            <aol-feature [id]="item.id">
+              <aol-geometry-point>
+                <aol-coordinate
+                  [srid]="projection"
+                  [x]="item.address.longitude"
+                  [y]="item.address.latitude">
+                </aol-coordinate>
+              </aol-geometry-point>
+            </aol-feature>
+          </ng-container>
+        </aol-source-vector>
+      </aol-source-cluster>
+    </aol-layer-vector>
+  </aol-map>
+  <fa-icon matRipple
+    class="text-primary"
+    icon="circle"
+    matRippleColor="currentColor"
+    [class.show]="!attached.closed">
+  </fa-icon>
+  <nav #dialer>
+    <button color mat-fab (click)="dialer.classList.toggle('open')">
+      <fa-icon icon="plus"></fa-icon>
+    </button>
+    <button #attach color mat-fab (click)="handleAttach()">
+      <i18n i18n="@@followPosition">followPosition</i18n>
+      <fa-icon icon="location-arrow"></fa-icon>
+    </button>
+    <button color mat-fab (click)="handleReset()">
+      <i18n i18n="@@autofitView">autofitView</i18n>
+      <fa-icon icon="expand"></fa-icon>
+    </button>
+    <button color mat-fab (click)="handleReset()">
+      <i18n i18n="@@resetView">resetView</i18n>
+      <fa-icon icon="undo-alt"></fa-icon>
+    </button>
+  </nav>
+</main>

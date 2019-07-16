@@ -1,5 +1,5 @@
-import { NgModule, Type } from '@angular/core';
-import { Resolve, Route, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
 import { TokenResolver } from '@wooportal/core';
 import { AdminComponent } from './admin.component';
 import { AccountPanelComponent } from './panels/account/account.panel';
@@ -20,14 +20,12 @@ import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
 import { TopicStepperComponent } from './steppers/topic.stepper';
 import { UserStepperComponent } from './steppers/user.stepper';
 
-const resolvers: { [key: string]: Type<Resolve<any>> } = {
-  tokens: TokenResolver
-};
-
 const routes: Route[] = [
   {
     path: '',
-    resolve: resolvers,
+    resolve: {
+      tokens: TokenResolver
+    },
     // canActivateChild: [AdminGuarding],
     children: [
       AccountPanelComponent.routing,
@@ -63,7 +61,9 @@ const routes: Route[] = [
       path: '',
       children: routes,
       component: AdminComponent,
-      resolve: resolvers
+      resolve: {
+        tokens: TokenResolver
+      }
     },
     {
       path: '**',

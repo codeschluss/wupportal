@@ -15,16 +15,17 @@ export class CrudJoiner {
 
   private joinGraph: CrudGraph;
 
-  public static of(model: Type<CrudModel>, params?: ReadParams): CrudJoiner {
-    const node = new this();
-    node.joinGraph = {
-      name: null,
-      nodes: [],
-      params: params || { },
-      provider: model['provider']
-    };
+  private navigationId: number = 0;
 
-    return node;
+  public static of(model: Type<CrudModel>, params?: ReadParams): CrudJoiner {
+    return Object.assign(new this(), {
+      joinGraph: {
+        name: null,
+        nodes: [],
+        params: params || { },
+        provider: model['provider']
+      }
+    });
   }
 
   public static to(tree: CrudGraph): string {
@@ -55,6 +56,12 @@ export class CrudJoiner {
     };
 
     return grapher(this.joinGraph);
+  }
+
+  public navigate(navigationId: number): boolean {
+    return navigationId > this.navigationId
+      ? (this.navigationId = navigationId) === navigationId
+      : false;
   }
 
   public with(field: string, params?: ReadParams): CrudJoiner {

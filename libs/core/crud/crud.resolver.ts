@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { catchError, defaultIfEmpty, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, defaultIfEmpty, map, mergeMap } from 'rxjs/operators';
 import { CrudGraph, CrudJoiner } from './crud.joiner';
 import { CrudModel } from './crud.model';
 
 @Injectable({ providedIn: 'root' })
 export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
 
-  private resolving: CrudJoiner[] = [];
+  public constructor(
+    private router: Router
+  ) { }
 
   public refine(input: CrudModel | CrudModel[], graph: CrudGraph):
     Observable<CrudModel | CrudModel[]> {
@@ -21,12 +23,12 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
   public resolve(route: ActivatedRouteSnapshot):
     Observable<CrudModel | CrudModel[]> {
 
+    const navigationId = (this.router as any).navigationId;
     const joiner = route.data.resolve[Object.keys(route.routeConfig.resolve)
       .filter((key) => route.routeConfig.resolve[key] === this.constructor)
       .filter((key) => route.data.resolve[key] instanceof CrudJoiner)
-      .find((key) => !this.resolving.includes(route.data.resolve[key]))];
+      .find((key) => route.data.resolve[key].navigate(navigationId))];
 
-    this.resolving.push(joiner);
     joiner.graph.params.embeddings = CrudJoiner.to(joiner.graph);
 
     const request = joiner.graph.params.filter !== null && route.params.uuid
@@ -35,8 +37,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
 
     return request.pipe(
       mergeMap((response) => this.refine(response as any, joiner.graph)),
-      catchError((e) => this.unbound(e) ? of(undefined) : throwError(e)),
-      tap(() => this.resolving.splice(this.resolving.indexOf(joiner), 1))
+      catchError((e) => this.unbound(e) ? of(undefined) : throwError(e))
     );
   }
 

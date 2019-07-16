@@ -62,12 +62,6 @@ nav {
       opacity: 0;
     }
 
-    fa-icon {
-      display: block;
-      font-size: 1.25rem;
-      transition: all 250ms;
-    }
-
     i18n {
       pointer-events: none;
 
@@ -78,6 +72,17 @@ nav {
 
       position: absolute;
       right: 5rem;
+    }
+    &[disabled=true] {
+      i18n {
+        opacity: .24;
+      }
+    }
+
+    fa-icon {
+      display: block;
+      font-size: 1.25rem;
+      transition: all 250ms;
     }
   }
 

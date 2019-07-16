@@ -88,6 +88,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.layer.instance.setStyle((feature) => this.styling(feature));
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
+    setTimeout(() => this.maps.instance.updateSize(), 1);
   }
 
   public handleAttach(): void {
@@ -98,6 +99,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
     this.attachment(false);
     this.view.instance.animate({
       center: fromLonLat([this.longitude, this.latitude]),
+      rotation: 0,
       zoom: this.zoomfactor
     });
   }
@@ -111,17 +113,17 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       this.attach.color = 'primary';
       this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
       this.attached = this.positionProvider.locate().subscribe((coords) => {
-        if (coords && coords.longitude && coords.latitude) {
-          this.attach.ripple.launch({ centered: true });
-          this.center.launch({ centered: true });
-          this.view.instance.animate({
-            center: fromLonLat([coords.longitude, coords.latitude]),
-            duration: 1000,
-            zoom: 17.5
-          });
-        } else {
-          this.attachment(false);
-        }
+        this.attach.ripple.launch({ centered: true });
+        this.center.launch({ centered: true });
+        this.view.instance.animate({
+          center: fromLonLat([coords.longitude, coords.latitude]),
+          duration: 1000,
+          zoom: 17.5
+        });
+      }, () => {
+        this.attachment(false);
+        this.attach.disabled = true;
+        this.attach._getHostElement().style.pointerEvents = 'none';
       });
     } else {
       this.attach.color = null;
@@ -160,11 +162,11 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       }),
       text: multi && new Text({
         fill: new Fill(fontColor),
-        font: 'bold 1.25rem monospace',
+        font: 'bold 1rem monospace',
         text: colors.length.toString(),
         textAlign: 'center',
 
-        offsetY: -32.5
+        offsetY: -30
       })
     });
   }

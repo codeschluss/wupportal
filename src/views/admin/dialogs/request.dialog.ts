@@ -11,7 +11,7 @@ import { UserProvider } from '../../../realm/providers/user.provider';
 
 @Component({
   styles: [`
-    :host { display: block; max-width: 100%; width: 480px; }
+    :host { display: block; max-width: 100%; width: 30rem; }
     mat-form-field { width: 100%; }
   `],
   template: `

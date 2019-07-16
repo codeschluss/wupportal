@@ -5,7 +5,7 @@ import { ScheduleModel } from '../../../realm/models/schedule.model';
 
 @Component({
   styles: [`
-    input[readonly] { flex: none; margin: 4px 0; width: 0; }
+    input[readonly] { flex: none; margin: .25rem 0; width: 0; }
   `],
   template: BaseFieldComponent.template(`
     <mat-chip-list #chips class="mat-body-strong">

@@ -13,22 +13,22 @@ import { ImageModel } from '../../../realm/models/image.model';
       background-position: center;
       background-size: cover;
       display: block;
-      height: 240px;
+      height: 15rem;
     }
     input[type=file] { display: none; }
     label {
       align-items: center;
-      border: 1px dotted rgba(0, 0, 0, 0.87);
+      border: .05rem dotted rgba(0, 0, 0, 0.87);
       cursor: pointer;
       display: flex;
-      height: 180px;
+      height: 12.5rem;
       justify-content: center;
-      margin: 0 0 16px !important;
+      margin: 0 0 1rem !important;
       width: auto !important;
     }
     label > i18n { pointer-events: none; }
-    mat-card { display: inline-block; margin: 8px; width: 360px; }
-    mat-form-field ::ng-deep .mat-form-field-wrapper { margin-bottom: -1.25em; }
+    mat-card { display: inline-block; margin: .5rem; width: 25rem; }
+    mat-form-field::ng-deep .mat-form-field-wrapper { margin-bottom: -1.25rem; }
   `],
   template: `
     <ng-container *ngFor="let item of value">

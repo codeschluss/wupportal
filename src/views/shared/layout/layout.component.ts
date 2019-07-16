@@ -64,7 +64,7 @@ export class LayoutComponent {
 
       if (height) {
         if (scroll > height) {
-          this.header.nativeElement.style.height = '0px';
+          this.header.nativeElement.style.height = '0';
         }
       } else if (!scroll) {
         this.header.nativeElement.style.height = null;

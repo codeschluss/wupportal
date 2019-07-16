@@ -144,7 +144,7 @@ layout-component {
         }
 
         & > navbar-compat:last-child > mat-toolbar {
-          margin: 25px 0;
+          margin-bottom: 1.5rem;
 
           * {
             text-transform: uppercase;

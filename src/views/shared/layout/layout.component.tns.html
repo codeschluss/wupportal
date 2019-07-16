@@ -39,7 +39,7 @@
           </absolute-layout>
         </stack-layout>
         <stack-layout ripple [class.active]="url === '/'" (tap)="navigate('/')">
-          <icon-compat icon="at"></icon-compat>
+          <icon-compat icon="play-circle"></icon-compat>
           <label [text]="title"></label>
         </stack-layout>
         <stack-layout ripple
@@ -51,7 +51,7 @@
         <stack-layout ripple
           [class.active]="url.startsWith('/organisations')"
           (tap)="navigate('/organisations')">
-          <icon-compat icon="globe-europe"></icon-compat>
+          <icon-compat icon="at"></icon-compat>
           <i18n i18n="@@organisations" unit="organisations"></i18n>
         </stack-layout>
         <stack-layout ripple

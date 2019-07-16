@@ -15,6 +15,12 @@ layout-component {
   right: 0;
   top: 0;
 
+  body.embedded & {
+    & > header, navbar-compat {
+      display: none;
+    }
+  }
+
   & > header {
     height: 12.5rem;
     text-align: center;
@@ -65,8 +71,9 @@ layout-component {
     }
   }
 
+  // TODO: fix ssr fxHide/fxShow
   @media screen and (max-width: 959.99px) and (min-width: 0px) {
-    & > navbar-compat:last-of-type { display: block !important; }
+    & > navbar-compat:last-of-type { display: block; }
   }
 
   & > navbar-compat:last-of-type > mat-toolbar {
@@ -117,6 +124,9 @@ layout-component {
         flex-direction: column;
 
         mat-progress-bar {
+          position: fixed;
+          z-index: 1000;
+
           &._mat-animation-noopable[mode=indeterminate] {
             .mat-progress-bar-primary {
               &::after {

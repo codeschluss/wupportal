@@ -1,0 +1,97 @@
+:host {
+  flex-grow: 1000;
+  position: relative;
+}
+
+aol-map {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+fa-icon[matRipple] {
+  pointer-events: none;
+  border-radius: 50%;
+  font-size: 1rem;
+  height: 5rem;
+  width: 5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  transition-delay: 0;
+  transition: opacity 250ms;
+
+  position: absolute;
+  right: calc(50% - 2.5rem);
+  top: calc(50% - 2.5rem);
+
+  &.show {
+    opacity: .87;
+    transition-delay: 1000ms;
+  }
+
+  &::ng-deep .mat-ripple-element {
+    opacity: .24;
+  }
+}
+
+nav {
+  display: flex;
+  flex-flow: column-reverse;
+
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+
+
+  & > [mat-fab] {
+    transition: all 250ms;
+
+    &:first-child {
+      z-index: 2;
+    }
+
+    & + [mat-fab] {
+      pointer-events: none;
+      margin: 0 0 -3.5rem 0;
+      opacity: 0;
+    }
+
+    fa-icon {
+      display: block;
+      font-size: 1.25rem;
+      transition: all 250ms;
+    }
+
+    i18n {
+      pointer-events: none;
+
+      background-color: rgba(0, 0, 0, .87);
+      border-radius: 10%;
+      color: #ffffff;
+      padding: 0 .25rem;
+
+      position: absolute;
+      right: 5rem;
+    }
+  }
+
+  &.open {
+    & > [mat-fab] {
+      &:first-child fa-icon {
+        transform: rotate(135deg);
+      }
+
+      & + [mat-fab] {
+        pointer-events: auto;
+        margin: 0 0 .5rem 0;
+        opacity: 1;
+      }
+    }
+  }
+}

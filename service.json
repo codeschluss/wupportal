@@ -8,17 +8,17 @@
         "files": [
           "/",
           "/manifest.json",
-          "/css/*.css",
           "/*.js"
         ]
       }
     },
     {
       "name": "assets",
-      "installMode": "lazy",
+      "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
         "files": [
+          "/css/*.css",
           "/i18n/**",
           "/imgs/**"
         ]
@@ -33,7 +33,7 @@
       ],
       "cacheConfig": {
         "strategy": "freshness",
-        "timeout":"30s",
+        "timeout":"5m",
         "maxAge": "1d"
       }
     }

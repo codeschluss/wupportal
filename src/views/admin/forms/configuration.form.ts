@@ -10,11 +10,14 @@ import { ConfigurationModel } from '../../../realm/models/configuration.model';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <ng-container *ngSwitchCase="'mapCenterLatitude'">
-          <i18n i18n="@@mapCenterLatitude">mapCenterLatitude</i18n>
+        <ng-container *ngSwitchCase="'mapCluster'">
+          <i18n i18n="@@mapCluster">mapCluster</i18n>
         </ng-container>
-        <ng-container *ngSwitchCase="'mapCenterLongitude'">
-          <i18n i18n="@@mapCenterLongitude">mapCenterLongitude</i18n>
+        <ng-container *ngSwitchCase="'mapLatitude'">
+          <i18n i18n="@@mapLatitude">mapLatitude</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'mapLongitude'">
+          <i18n i18n="@@mapLongitude">mapLongitude</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mapProjection'">
           <i18n i18n="@@mapProjection">mapProjection</i18n>
@@ -61,13 +64,13 @@ export class ConfigurationFormComponent
       ]
     },
     {
-      name: 'mapCenterLongitude',
+      name: 'mapLongitude',
       input: StringFieldComponent,
       tests: [Validators.required],
       type: 'number'
     },
     {
-      name: 'mapCenterLatitude',
+      name: 'mapLatitude',
       input: StringFieldComponent,
       tests: [Validators.required],
       type: 'number'
@@ -82,6 +85,12 @@ export class ConfigurationFormComponent
       name: 'mapProjection',
       input: StringFieldComponent,
       tests: [Validators.required]
+    },
+    {
+      name: 'mapCluster',
+      input: StringFieldComponent,
+      tests: [Validators.required],
+      type: 'number'
     }
   ];
 

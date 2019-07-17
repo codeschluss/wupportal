@@ -39,11 +39,12 @@ main {
   nav {
     display: flex;
     flex-flow: column-reverse;
+    transition: transform 250ms;
+    transform: scale(0);
 
     position: absolute;
     bottom: 1rem;
     right: 1rem;
-
 
     & > [mat-fab] {
       transition: all 250ms;

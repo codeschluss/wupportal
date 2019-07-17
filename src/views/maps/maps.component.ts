@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route } from '@angular/router';
@@ -8,7 +8,7 @@ import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayer
 import { Feature, MapBrowserPointerEvent } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, Text } from 'ol/style';
-import { EMPTY, Subscription } from 'rxjs';
+import { EMPTY, Observable, Subscription } from 'rxjs';
 import { ActivityModel } from '../../realm/models/activity.model';
 import { ConfigurationModel } from '../../realm/models/configuration.model';
 
@@ -19,39 +19,41 @@ import { ConfigurationModel } from '../../realm/models/configuration.model';
 
 export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
-  public attached: Subscription = EMPTY.subscribe();
+  public followed: Subscription = EMPTY.subscribe();
 
-  public cluster: number;
+  public items: ActivityModel[] = [];
 
-  public latitude: number;
-
-  public longitude: number;
-
-  public projection: string;
-
-  public zoomfactor: number;
+  public mapconf: {
+    cluster: number;
+    latitude: number;
+    longitude: number;
+    projection: string;
+    zoomfactor: number;
+  };
 
   protected routing: Route = {
     path: '',
     resolve: {
-      activities: CrudResolver,
       configuration: CrudResolver
     },
     data: {
       resolve: {
-        activities: CrudJoiner.of(ActivityModel)
-          .with('address')
-          .with('category'),
         configuration: CrudJoiner.of(ConfigurationModel)
       }
     }
   };
 
-  @ViewChild('attach', { static: true })
-  private attach: MatButton;
-
   @ViewChild(MatRipple, { static: true })
   private center: MatRipple;
+
+  @ViewChild('dialer', { read: ElementRef, static: true })
+  private dialer: ElementRef<HTMLElement>;
+
+  @ViewChild('fill', { static: true })
+  private fill: MatButton;
+
+  @ViewChild('follow', { static: true })
+  private follow: MatButton;
 
   @ViewChild(LayerVectorComponent, { static: true })
   private layer: LayerVectorComponent;
@@ -62,11 +64,21 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   @ViewChild(ViewComponent, { static: true })
   private view: ViewComponent;
 
-  public get items(): ActivityModel[] {
-    return this.route.snapshot.data.activities || [];
+  public get filled(): boolean {
+    switch (true) {
+      case 'fullscreenElement' in document:
+        return (document as any).fullscreenElement !== null;
+      case 'webkitFullscreenElement' in document:
+        return (document as any).webkitFullscreenElement !== null;
+      case 'mozFullScreenElement' in document:
+        return (document as any).mozFullScreenElement !== null;
+      case 'msFullscreenElement' in document:
+        return (document as any).msFullscreenElement !== null;
+    }
   }
 
   public constructor(
+    private element: ElementRef<HTMLElement>,
     private positionProvider: PositionProvider,
     private route: ActivatedRoute
   ) {
@@ -74,11 +86,13 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
-    this.cluster = parseFloat(this.configuration('mapCluster'));
-    this.latitude = parseFloat(this.configuration('mapLatitude'));
-    this.longitude = parseFloat(this.configuration('mapLongitude'));
-    this.projection = this.configuration('mapProjection');
-    this.zoomfactor = parseFloat(this.configuration('mapZoomfactor'));
+    this.mapconf = {
+      cluster: parseFloat(this.configuration('mapCluster')),
+      latitude: parseFloat(this.configuration('mapLatitude')),
+      longitude: parseFloat(this.configuration('mapLongitude')),
+      projection: this.configuration('mapProjection'),
+      zoomfactor: parseFloat(this.configuration('mapZoomfactor'))
+    };
 
     if (this.route.snapshot.queryParams.embed === 'true') {
       document.body.classList.add('embedded');
@@ -88,46 +102,108 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.layer.instance.setStyle((feature) => this.styling(feature));
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
-    setTimeout(() => this.maps.instance.updateSize(), 1);
-  }
+    this.maps.instance.once('loaded', () => this.maps.instance.updateSize());
+    this.maps.instance.once('rendercomplete', () =>
+      this.dialer.nativeElement.style.transform = 'scale(1)');
 
-  public handleAttach(): void {
-    this.attachment(this.attached.closed);
-  }
+    if (parent !== window) {
+      this.postMessage({ items: null });
+    }
 
-  public handleReset(): void {
-    this.attachment(false);
-    this.view.instance.animate({
-      center: fromLonLat([this.longitude, this.latitude]),
-      rotation: 0,
-      zoom: this.zoomfactor
-    });
+    console.log(this.element);
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {
     console.log(this.maps.instance.getFeaturesAtPixel(event.pixel));
   }
 
-  private attachment(enable: boolean): void {
+  public handleFill(): void {
+    this.filling(!this.filled);
+  }
+
+  public handleFollow(): void {
+    this.following(this.followed.closed);
+  }
+
+  @HostListener('window:message', ['$event'])
+  public handleMessage(event: MessageEvent): void {
+    Object.keys(event.data).forEach((key) => {
+      switch (key) {
+        case 'focus': return console.log('focus', event.data[key]);
+        case 'items': return !event.data[key]
+          ? this.postMessage({ items: this.items })
+          : this.items = []; // event.data[key];
+      }
+    });
+  }
+
+  public handleReset(): void {
+    this.filling(false);
+    this.following(false);
+    this.view.instance.animate({
+      center: fromLonLat([
+        this.mapconf.longitude,
+        this.mapconf.latitude
+      ]),
+      rotation: 0,
+      zoom: this.mapconf.zoomfactor
+    });
+  }
+
+  private filling(enable: boolean): void {
+    try {
+      if (enable) {
+        const elem = this.element.nativeElement as any;
+
+        switch (true) {
+          case typeof elem.mozRequestFullScreen === 'function':
+            return elem.mozRequestFullScreen();
+          case typeof elem.msRequestFullscreen === 'function':
+            return elem.msRequestFullscreen();
+          case typeof elem.requestFullscreen === 'function':
+            return elem.requestFullscreen();
+          case typeof elem.webkitRequestFullscreen === 'function':
+            return elem.webkitRequestFullscreen();
+        }
+      } else {
+        const elem = document as any;
+
+        switch (true) {
+          case typeof elem.exitFullscreen === 'function':
+            return elem.exitFullscreen();
+          case typeof elem.msExitFullscreen === 'function':
+            return elem.msExitFullscreen();
+          case typeof elem.mozCancelFullScreen === 'function':
+            return elem.mozCancelFullScreen();
+          case typeof elem.webkitExitFullscreen === 'function':
+            return elem.webkitExitFullscreen();
+        }
+      }
+    } catch {
+      this.fill.disabled = true;
+    }
+  }
+
+  private following(enable: boolean): void {
     if (enable) {
-      this.attach.color = 'primary';
       this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
-      this.attached = this.positionProvider.locate().subscribe((coords) => {
-        this.attach.ripple.launch({ centered: true });
+      this.followed = this.positionProvider.locate().subscribe((coords) => {
+        this.follow.ripple.launch({ centered: true });
         this.center.launch({ centered: true });
         this.view.instance.animate({
-          center: fromLonLat([coords.longitude, coords.latitude]),
+          center: fromLonLat([
+            coords.longitude,
+            coords.latitude
+          ]),
           duration: 1000,
           zoom: 17.5
         });
       }, () => {
-        this.attachment(false);
-        this.attach.disabled = true;
-        this.attach._getHostElement().style.pointerEvents = 'none';
+        this.following(false);
+        this.follow.disabled = true;
       });
     } else {
-      this.attach.color = null;
-      this.attached.unsubscribe();
+      this.followed.unsubscribe();
       this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
     }
   }
@@ -135,6 +211,13 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   private configuration(item: string): string {
     return this.route.snapshot.data.configuration
       .find((config) => config.item === item).value;
+  }
+
+  private postMessage(message: any): void {
+    const data = JSON.parse(JSON.stringify(message, (key, value) =>
+      key.startsWith('_') || value instanceof Observable ? undefined : value));
+
+    parent.postMessage(data, window.origin);
   }
 
   private styling(feature: Feature): Style {

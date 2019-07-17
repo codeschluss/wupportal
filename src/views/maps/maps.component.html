@@ -8,21 +8,23 @@
       <aol-source-osm>
       </aol-source-osm>
     </aol-layer-tile>
-    <aol-view [enableRotation]="true" [zoom]="zoomfactor">
+    <aol-view
+      [enableRotation]="true"
+      [zoom]="mapconf.zoomfactor">
       <aol-coordinate
-        [srid]="projection"
-        [x]="longitude"
-        [y]="latitude">
+        [srid]="mapconf.projection"
+        [x]="mapconf.longitude"
+        [y]="mapconf.latitude">
       </aol-coordinate>
     </aol-view>
     <aol-layer-vector>
-      <aol-source-cluster [distance]="cluster">
+      <aol-source-cluster [distance]="mapconf.cluster">
         <aol-source-vector [overlaps]="true">
           <ng-container *ngFor="let item of items">
             <aol-feature [id]="item.id">
               <aol-geometry-point>
                 <aol-coordinate
-                  [srid]="projection"
+                  [srid]="mapconf.projection"
                   [x]="item.address.longitude"
                   [y]="item.address.latitude">
                 </aol-coordinate>
@@ -37,22 +39,26 @@
     class="text-primary"
     icon="circle"
     matRippleColor="currentColor"
-    [class.show]="!attached.closed">
+    [class.show]="!followed.closed">
   </fa-icon>
   <nav #dialer>
     <button color mat-fab (click)="dialer.classList.toggle('open')">
       <fa-icon icon="plus"></fa-icon>
     </button>
-    <button #attach color mat-fab (click)="handleAttach()">
+    <button #follow mat-fab
+      [color]="!followed.closed ? 'primary' : null"
+      (click)="handleFollow()">
       <i18n i18n="@@followPosition">followPosition</i18n>
       <fa-icon icon="location-arrow"></fa-icon>
     </button>
-    <button color mat-fab (click)="handleReset()">
-      <i18n i18n="@@autofitView">autofitView</i18n>
-      <fa-icon icon="expand"></fa-icon>
+    <button #fill mat-fab
+      [color]="filled ? 'primary' : null"
+      (click)="handleFill()">
+      <i18n i18n="@@fullscreen">fullscreen</i18n>
+      <fa-icon [icon]="filled ? 'compress' : 'expand'"></fa-icon>
     </button>
     <button color mat-fab (click)="handleReset()">
-      <i18n i18n="@@resetView">resetView</i18n>
+      <i18n i18n="@@reset">reset</i18n>
       <fa-icon icon="undo-alt"></fa-icon>
     </button>
   </nav>

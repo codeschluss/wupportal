@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatRipple } from '@angular/material/core';
 import * as colorConvert from 'color-convert';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { BaseCard } from '../base.card';
@@ -12,6 +13,9 @@ import { BaseCard } from '../base.card';
 export class ActivityCardComponent extends BaseCard<ActivityModel> {
 
   public readonly dateFormat: string = 'dd.MM.yyyy, HH:mm';
+
+  @ViewChild(MatRipple, { static: true })
+  public ripple: MatRipple;
 
   public colors(base: string): Partial<CSSStyleDeclaration> {
     const rgb = colorConvert.keyword.rgb(base) || colorConvert.hex.rgb(base);

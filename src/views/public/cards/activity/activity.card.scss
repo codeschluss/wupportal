@@ -6,10 +6,6 @@ mat-card {
       float: right;
       font-size: 4rem;
     }
-
-    & > small {
-      display: block;
-    }
   }
 
   & > mat-card-header {
@@ -28,14 +24,33 @@ mat-card {
   }
 
   & > mat-card-actions {
+    margin-bottom: -.5rem;
+    padding-bottom: 0;
+
     button[disabled] {
       color: inherit;
-      opacity: .38;
+      opacity: .36;
+    }
+
+    icon-compat {
+      padding-right: .5rem;
     }
   }
 
   & > mat-divider {
     border-top-color: inherit;
-    opacity: .38;
+    opacity: .36;
+  }
+
+  &::ng-deep .mat-ripple-element {
+    opacity: .12;
+
+    transform-origin: 0 0;
+    border-radius: 0 0 100% 0;
+
+    height: 150% !important;
+    width: 150% !important;
+    left: 0 !important;
+    top: 0 !important;
   }
 }

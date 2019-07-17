@@ -1,11 +1,12 @@
-<mat-card [ngStyle]="colors(item.category.color)">
+<mat-card matRipple
+  matRippleColor="currentColor"
+  [matRippleDisabled]="true"
+  [ngStyle]="colors(item.category.color)">
   <mat-card-content>
     <icon-compat [icon]="item.category.icon"></icon-compat>
     <small>
-      {{ item.schedules[0]?.startDate | date: dateFormat }}&nbsp;
-    </small>
-    <small>
-      {{ item.address?.suburb?.name }}&nbsp;
+      {{ item.schedules[0]?.startDate | date: dateFormat }}
+      <br>{{ item.address?.place }} {{ item.address?.suburb?.name }}
     </small>
   </mat-card-content>
   <mat-card-header>
@@ -19,15 +20,15 @@
   <mat-card-actions>
     <a mat-button [routerLink]="[item.id]">
       <icon-compat icon="map-marker-alt"></icon-compat>
-      &nbsp;<i18n i18n="@@details">details</i18n>
+      <i18n i18n="@@details">details</i18n>
     </a>
     <button mat-button [disabled]="liked(item)" (click)="like(item)">
       <icon-compat icon="heart"></icon-compat>
-      &nbsp;<i18n i18n="@@like">like</i18n>
+      <i18n i18n="@@like">like</i18n>
     </button>
     <button mat-button (click)="share(item)">
       <icon-compat icon="share-alt"></icon-compat>
-      &nbsp;<i18n i18n="@@share">share</i18n>
+      <i18n i18n="@@share">share</i18n>
     </button>
   </mat-card-actions>
 </mat-card>

@@ -12,7 +12,26 @@ mat-card {
     }
   }
 
-  & > mat-card-content {
-    margin-top: 1rem;
+  & > [mat-card-image] {
+    height: 12.5rem;
+    font-size: 4rem;
+    color: rgba(0, 0, 0, .36);
+
+    background-color: rgba(0, 0, 0, .12);
+    background-position: center;
+    background-size: cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & > mat-card-actions {
+    margin-bottom: -.5rem;
+    padding-bottom: 0;
+
+    icon-compat {
+      padding-right: .5rem;
+    }
   }
 }

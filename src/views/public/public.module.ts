@@ -1,10 +1,14 @@
 import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
 import { CoreModule, PlatformCommonModule } from '@wooportal/core';
 import { SharedModule } from '../shared/shared.module';
-import { ActivityListComponent } from './lists/activities/activity.list';
-import { BlogpostListComponent } from './lists/blogposts/blogpost.list';
-import { InfopageListComponent } from './lists/infopages/infopage.list';
-import { OrganisationListComponent } from './lists/organisations/organisation.list';
+import { ActivityCardComponent } from './cards/activity/activity.card';
+import { BlogpostCardComponent } from './cards/blogpost/blogpost.card';
+import { InfopageCardComponent } from './cards/infopage/infopage.card';
+import { OrganisationCardComponent } from './cards/organisation/organisation.card';
+import { ActivityListingComponent } from './listings/activities/activity.listing';
+import { BlogpostListingComponent } from './listings/blogposts/blogpost.listing';
+import { InfopageListingComponent } from './listings/infopages/infopage.listing';
+import { OrganisationListingComponent } from './listings/organisations/organisation.listing';
 import { ActivityObjectComponent } from './objects/activity/activity.object';
 import { BlogpostObjectComponent } from './objects/blogpost/blogpost.object';
 import { InfopageObjectComponent } from './objects/infopage/infopage.object';
@@ -17,11 +21,18 @@ import { materials } from './public.materials';
 import { PublicRouter } from './public.router';
 import { SearchDummyComponent } from './search/search.dummy';
 
-const lists: Type<any>[] = [
-  ActivityListComponent,
-  BlogpostListComponent,
-  InfopageListComponent,
-  OrganisationListComponent,
+const cards: Type<any>[] = [
+  ActivityCardComponent,
+  BlogpostCardComponent,
+  InfopageCardComponent,
+  OrganisationCardComponent
+];
+
+const listings: Type<any>[] = [
+  ActivityListingComponent,
+  BlogpostListingComponent,
+  InfopageListingComponent,
+  OrganisationListingComponent,
 ];
 
 const objects: Type<any>[] = [
@@ -39,7 +50,8 @@ const pages: Type<any>[] = [
 
 @NgModule({
   declarations: [
-    ...lists,
+    ...cards,
+    ...listings,
     ...objects,
     ...pages,
     PublicComponent,
@@ -48,7 +60,7 @@ const pages: Type<any>[] = [
     SearchDummyComponent
   ],
   entryComponents: [
-    ...lists,
+    ...listings,
     ...objects,
     ...pages,
 

@@ -123,7 +123,7 @@ layout-component {
         display: flex;
         flex-direction: column;
 
-        mat-progress-bar {
+        & > mat-progress-bar {
           position: fixed;
           z-index: 1000;
 
@@ -153,24 +153,36 @@ layout-component {
           }
         }
 
-        & > navbar-compat:last-child > mat-toolbar {
-          margin-bottom: 1.5rem;
+        & > ng-component {
+          flex-grow: 1000;
+          position: relative;
+        }
 
-          * {
-            text-transform: uppercase;
-          }
+        & > navbar-compat:last-child {
+          flex-grow: 1;
 
-          & > button {
-            height: 100%;
-            text-transform: inherit;
+          display: flex;
+          align-items: flex-end;
 
-            &.active {
-              color: $color-primary;
+          & > mat-toolbar {
+            margin-bottom: 1.5rem;
+
+            * {
+              text-transform: uppercase;
             }
-          }
 
-          icon-compat {
-            padding-right: .5rem;
+            & > button {
+              height: 100%;
+              text-transform: inherit;
+
+              &.active {
+                color: $color-primary;
+              }
+            }
+
+            icon-compat {
+              padding-right: .5rem;
+            }
           }
         }
       }

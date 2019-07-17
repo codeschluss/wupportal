@@ -1,0 +1,10 @@
+<main fxLayout="row" fxLayoutAlign="stretch">
+  <section fxHide.lt-md>
+    <iframe src="/maps?embed=true"></iframe>
+  </section>
+  <section fxLayout="row wrap" fxLayoutAlign="center center">
+    <ng-container *ngFor="let item of items">
+      <activity-card [item]="item"></activity-card>
+    </ng-container>
+  </section>
+</main>

@@ -11,4 +11,7 @@ export class CategoryModel
 
   public color: string;
 
+  // TODO: move to db
+  public icon: string = 'icons';
+
 }

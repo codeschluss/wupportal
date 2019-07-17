@@ -1,0 +1,37 @@
+main {
+  padding: 1rem;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  section {
+    &:first-of-type {
+      width: 33.33%;
+
+      & > iframe {
+        margin: 1rem;
+        height: 100%;
+        width: 100%;
+
+        border: none;
+        border-radius: .5rem;
+
+        box-shadow:
+          0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+          0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+          0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      }
+    }
+
+    &:last-of-type {
+      width: 66.66%;
+
+      & > activity-card {
+        margin: 1rem;
+      }
+    }
+  }
+}

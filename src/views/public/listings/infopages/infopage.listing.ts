@@ -4,11 +4,11 @@ import { CrudJoiner, CrudResolver, Selfrouter } from '@wooportal/core';
 import { TopicModel } from '../../../../realm/models/topic.model';
 
 @Component({
-  styleUrls: ['infopage.list.scss'],
-  templateUrl: 'infopage.list.html'
+  styleUrls: ['infopage.listing.scss'],
+  templateUrl: 'infopage.listing.html'
 })
 
-export class InfopageListComponent extends Selfrouter {
+export class InfopageListingComponent extends Selfrouter {
 
   protected routing: Route = {
     path: 'infopages',

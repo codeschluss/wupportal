@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Route } from '@angular/router';
 import { PlatformRouterModule } from '@wooportal/core';
-import { ActivityListComponent } from './lists/activities/activity.list';
-import { BlogpostListComponent } from './lists/blogposts/blogpost.list';
-import { InfopageListComponent } from './lists/infopages/infopage.list';
-import { OrganisationListComponent } from './lists/organisations/organisation.list';
+import { ActivityListingComponent } from './listings/activities/activity.listing';
+import { BlogpostListingComponent } from './listings/blogposts/blogpost.listing';
+import { InfopageListingComponent } from './listings/infopages/infopage.listing';
+import { OrganisationListingComponent } from './listings/organisations/organisation.listing';
 import { ActivityObjectComponent } from './objects/activity/activity.object';
 import { BlogpostObjectComponent } from './objects/blogpost/blogpost.object';
 import { InfopageObjectComponent } from './objects/infopage/infopage.object';
@@ -19,15 +19,15 @@ const routes: Route[] = [
   {
     path: '',
     children: [
-      ActivityListComponent.routing,
+      ActivityListingComponent.routing,
       ActivityObjectComponent.routing,
-      BlogpostListComponent.routing,
+      BlogpostListingComponent.routing,
       BlogpostObjectComponent.routing,
       HomePageComponent.routing,
       ImprintPageComponent.routing,
-      InfopageListComponent.routing,
+      InfopageListingComponent.routing,
       InfopageObjectComponent.routing,
-      OrganisationListComponent.routing,
+      OrganisationListingComponent.routing,
       OrganisationObjectComponent.routing,
       PoliciesPageComponent.routing,
 

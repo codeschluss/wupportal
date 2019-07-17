@@ -1,10 +1,14 @@
 <main fxLayout="row" fxLayoutAlign="stretch">
   <section fxHide.lt-md>
-    <iframe src="/maps?embed=true"></iframe>
+    <iframe #maps src="/maps?embed=true"></iframe>
   </section>
   <section class="topoff" fxLayout="row wrap" fxLayoutAlign="center start">
-    <ng-container *ngFor="let item of items">
-      <activity-card [item]="item"></activity-card>
+    <ng-container *ngFor="let item of items | async">
+      <activity-card
+        [item]="item"
+        (mouseenter)="handleFocus(item, $event)"
+        (mouseleave)="handleFocus(item, $event)">
+      </activity-card>
     </ng-container>
   </section>
 </main>

@@ -1,37 +1,24 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfrouter } from '@wooportal/core';
+import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@wooportal/core';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
+import { BaseListing } from '../base.listing';
 
 @Component({
   styleUrls: ['organisation.listing.scss'],
   templateUrl: 'organisation.listing.html'
 })
 
-export class OrganisationListingComponent extends Selfrouter {
+export class OrganisationListingComponent
+  extends BaseListing<OrganisationModel> {
 
-  protected routing: Route = {
-    path: 'organisations',
-    resolve: {
-      organisations: CrudResolver
-    },
-    data: {
-      resolve: {
-        organisations: CrudJoiner.of(OrganisationModel)
-          .with('address').yield('suburb')
-          .with('images')
-      }
-    }
-  };
+  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
+    .with('address').yield('suburb')
+    .with('images');
 
-  public get items(): OrganisationModel[] {
-    return this.route.snapshot.data.organisations.slice(0, 8) || [];
-  }
+  protected model: Type<OrganisationModel> = OrganisationModel;
 
-  public constructor(
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
+  protected path: string = 'organisations';
+
+  protected size: number = 8;
 
 }

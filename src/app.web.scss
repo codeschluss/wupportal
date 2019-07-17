@@ -154,35 +154,28 @@ layout-component {
         }
 
         & > ng-component {
-          flex-grow: 1000;
+          flex-grow: 1;
           position: relative;
         }
 
-        & > navbar-compat:last-child {
-          flex-grow: 1;
+        & > navbar-compat:last-child mat-toolbar {
+          margin-bottom: 1.5rem;
 
-          display: flex;
-          align-items: flex-end;
+          * {
+            text-transform: uppercase;
+          }
 
-          & > mat-toolbar {
-            margin-bottom: 1.5rem;
+          & > button {
+            height: 100%;
+            text-transform: inherit;
 
-            * {
-              text-transform: uppercase;
+            &.active {
+              color: $color-primary;
             }
+          }
 
-            & > button {
-              height: 100%;
-              text-transform: inherit;
-
-              &.active {
-                color: $color-primary;
-              }
-            }
-
-            icon-compat {
-              padding-right: .5rem;
-            }
+          icon-compat {
+            padding-right: .5rem;
           }
         }
       }

@@ -25,7 +25,7 @@ export class OrganisationListingComponent extends Selfrouter {
   };
 
   public get items(): OrganisationModel[] {
-    return this.route.snapshot.data.organisations.slice(0, 6) || [];
+    return this.route.snapshot.data.organisations.slice(0, 8) || [];
   }
 
   public constructor(

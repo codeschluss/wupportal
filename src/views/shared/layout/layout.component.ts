@@ -58,7 +58,7 @@ export class LayoutComponent {
   }
 
   private topoff(event: UIEvent): void {
-    if ((event.target as HTMLElement).className === 'mat-drawer-content') {
+    if ((event.target as HTMLElement).classList.contains('topoff')) {
       const height = this.header.nativeElement.clientHeight;
       const scroll = (event.target as HTMLElement).scrollTop;
 

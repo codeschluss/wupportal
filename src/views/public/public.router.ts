@@ -19,17 +19,19 @@ const routes: Route[] = [
   {
     path: '',
     children: [
-      ActivityListingComponent.routing,
-      ActivityObjectComponent.routing,
-      BlogpostListingComponent.routing,
-      BlogpostObjectComponent.routing,
       HomePageComponent.routing,
       ImprintPageComponent.routing,
-      InfopageListingComponent.routing,
-      InfopageObjectComponent.routing,
-      OrganisationListingComponent.routing,
-      OrganisationObjectComponent.routing,
       PoliciesPageComponent.routing,
+
+      ActivityListingComponent.routing,
+      BlogpostListingComponent.routing,
+      InfopageListingComponent.routing,
+      OrganisationListingComponent.routing,
+
+      ActivityObjectComponent.routing,
+      BlogpostObjectComponent.routing,
+      InfopageObjectComponent.routing,
+      OrganisationObjectComponent.routing,
 
       // TODO: remove
       SearchDummyComponent.routing

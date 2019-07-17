@@ -1,8 +1,13 @@
 <main>
-  <aol-map [loadTilesWhileAnimating]="true" [loadTilesWhileInteracting]="true">
+  <aol-map
+    [loadTilesWhileAnimating]="true"
+    [loadTilesWhileInteracting]="true">
     <aol-interaction-default>
     </aol-interaction-default>
-
+    <aol-layer-tile>
+      <aol-source-osm>
+      </aol-source-osm>
+    </aol-layer-tile>
     <aol-view [enableRotation]="true" [zoom]="zoomfactor">
       <aol-coordinate
         [srid]="projection"
@@ -10,12 +15,6 @@
         [y]="latitude">
       </aol-coordinate>
     </aol-view>
-
-    <aol-layer-tile>
-      <aol-source-osm>
-      </aol-source-osm>
-    </aol-layer-tile>
-
     <aol-layer-vector>
       <aol-source-cluster [distance]="cluster">
         <aol-source-vector [overlaps]="true">

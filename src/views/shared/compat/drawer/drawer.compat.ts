@@ -7,7 +7,7 @@ import { DrawerCompat } from './drawer.compat.i';
   selector: 'drawer-compat',
   template: `
     <mat-drawer-container>
-      <mat-drawer-content>
+      <mat-drawer-content class="topoff">
         <ng-container *ngTemplateOutlet="main"></ng-container>
       </mat-drawer-content>
       <mat-drawer

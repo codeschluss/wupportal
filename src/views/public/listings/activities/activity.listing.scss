@@ -9,6 +9,7 @@ main {
 
   section {
     &:first-of-type {
+      flex-grow: 1;
       width: 33.33%;
 
       & > iframe {
@@ -27,7 +28,9 @@ main {
     }
 
     &:last-of-type {
+      flex-grow: 1;
       width: 66.66%;
+      overflow-y: auto;
 
       & > activity-card {
         margin: 1rem;

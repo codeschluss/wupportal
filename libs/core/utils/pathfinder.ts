@@ -1,6 +1,5 @@
 import { Injectable, Type } from '@angular/core';
 import { Router } from '@angular/router';
-import { flatMap } from 'lodash';
 
 @Injectable({ providedIn: 'root' })
 export class Pathfinder {
@@ -11,7 +10,7 @@ export class Pathfinder {
 
   public to(component: Type<any>): string[] {
     const finder = (route, path = ['/']) => {
-      const mapper = (r) => flatMap(r, (i) => finder(i, path.concat(i.path)));
+      const mapper = (r) => r.flatMap((i) => finder(i, path.concat(i.path)));
 
       if (route.component === component) {
         return path;
@@ -22,7 +21,7 @@ export class Pathfinder {
       }
     };
 
-    const paths = flatMap(this.router.config, (i) => finder(i)).filter(Boolean);
+    const paths = this.router.config.flatMap((i) => finder(i)).filter(Boolean);
     paths.push(((path) => (path || '').replace('/:uuid', ''))(paths.pop()));
 
     return paths;

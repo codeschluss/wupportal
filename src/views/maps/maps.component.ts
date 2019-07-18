@@ -102,15 +102,13 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.layer.instance.setStyle((feature) => this.styling(feature));
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
-    this.maps.instance.once('loaded', () => this.maps.instance.updateSize());
+    this.maps.instance.once('postcompose', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () =>
       this.dialer.nativeElement.style.transform = 'scale(1)');
 
     if (parent !== window) {
       this.postMessage({ items: null });
     }
-
-    console.log(this.element);
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {
@@ -138,7 +136,6 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   }
 
   public handleReset(): void {
-    this.filling(false);
     this.following(false);
     this.view.instance.animate({
       center: fromLonLat([

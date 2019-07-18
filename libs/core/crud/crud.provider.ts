@@ -1,21 +1,21 @@
 import { Type } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { BaseService, ReadParams, StrictHttpResponse } from '../utils/api';
+import { BaseService, ReadParams, Response, StrictHttpResponse } from '../utils/api';
 import { CrudModel } from './crud.model';
 
 export interface CrudLink {
   field: string;
-  method: (...args: any) => Observable<StrictHttpResponse<any>>;
+  method: (...args: any) => Response;
   model: Type<CrudModel>;
 }
 
 export interface CrudMethods {
-  create: (item: CrudModel) => Observable<StrictHttpResponse<any>>;
-  delete: (id: string) => Observable<StrictHttpResponse<any>>;
-  readAll: (params?: ReadParams) => Observable<StrictHttpResponse<any>>;
-  readOne: (id: string) => Observable<StrictHttpResponse<any>>;
-  update: (item: CrudModel, id: string) => Observable<StrictHttpResponse<any>>;
+  create: (item: CrudModel) => Response;
+  delete: (id: string) => Response;
+  readAll: (params?: ReadParams) => Response;
+  readOne: (id: string) => Response;
+  update: (item: CrudModel, id: string) => Response;
 }
 
 export abstract class CrudProvider
@@ -71,10 +71,7 @@ export abstract class CrudProvider
       tap((response) => this.link(response)));
   }
 
-  protected apply(method:
-    (...args: any) => Observable<StrictHttpResponse<any>>):
-    (...args: any) => Observable<StrictHttpResponse<any>> {
-
+  protected apply(method: (...args: any) => Response): typeof method {
     return (...args: any) => method.call(this.service, ...args);
   }
 
@@ -85,10 +82,7 @@ export abstract class CrudProvider
     });
   }
 
-  protected call(method:
-    (...args: any) => Observable<StrictHttpResponse<any>>, ...args: any[]):
-    Observable<StrictHttpResponse<any>> {
-
+  protected call(method: (...args: any) => Response, ...args: any[]): Response {
     return method.call(this.service, ...args);
   }
 

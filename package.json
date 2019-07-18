@@ -47,6 +47,7 @@
   "scripts": {
     "ng": "ng",
     "tns": "tns",
+    "lint": "ng lint",
     "start": "npm run start:dev",
     "setup": "update-ns-webpack --configs && run-s setup:*",
     "build": "run-s setup build:app build:ssr build:ios build:oid",
@@ -90,7 +91,6 @@
     "@wooportal/core": "file:libs/core",
     "@wooportal/forms": "file:libs/forms",
     "express": "4.17.1",
-    "lodash": "4.17.14",
     "moment": "2.24.0",
     "nativescript-ui-sidedrawer": "7.0.0",
     "ngx-openlayers": "1.0.0-next.9",

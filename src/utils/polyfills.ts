@@ -1,4 +1,4 @@
-/**
+/*
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
  *
@@ -16,11 +16,10 @@
  * Learn more in https://angular.io/docs/ts/latest/guide/browser-support.html
  */
 
-/*******************************************************************************
- * BROWSER POLYFILLS
+/*
+ * CoreJS
+ * IE9, IE10 and IE11 requires all of the following polyfills.
  */
-
-/** IE9, IE10 and IE11 requires all of the following polyfills. **/
 import 'core-js/es/array';
 import 'core-js/es/date';
 import 'core-js/es/function';
@@ -37,25 +36,29 @@ import 'core-js/es/string';
 import 'core-js/es/symbol';
 import 'core-js/es/weak-map';
 
-/** IE10 and IE11 requires the following for NgClass support on SVG elements */
+/*
+ * Classlist.js
+ * IE10 and IE11 requires the following for NgClass support on SVG elements
+ */
 import 'classlist.js';
 
-/**
- * Web Animations `@angular/platform-browser/animations`
+/*
+ * Web Animations
  * Only required if AnimationBuilder is used within the application and using
- * IE/Edge or Safari. Standard animation support in Angular DOES NOT require any
- * polyfills (as of Angular 6.0).
- **/
+ * IE/Edge or Safari. Standard animation support in Angular DOES NOT require
+ * any polyfills (as of Angular 6.0).
+ */
 import 'web-animations-js';
 
-/**
- * Hammer.js `hammerjs`
+/*
+ * Hammer.js
  * Some components rely on HammerJS for gestures. In order to get the full
  * feature-set of these components, HammerJS must be loaded.
- **/
+ */
 import 'hammerjs';
 
-/*******************************************************************************
- * Zone JS is required by default for Angular itself.
+/*
+ * ZoneJS
+ * By default, ZoneJS is required for Angular and included with Angular CLI.
  */
-import 'zone.js/dist/zone'; // Included with Angular CLI.
+import 'zone.js/dist/zone';

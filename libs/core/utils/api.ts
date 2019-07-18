@@ -1,4 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { AccessTokenModel } from '../auth/access-token.model';
 import { RefreshTokenModel } from '../auth/refresh-token.model';
 
@@ -43,6 +44,8 @@ export interface ReadParams {
 export interface ResourceObject {
   _links?: Link[];
 }
+
+export type Response = Observable<StrictHttpResponse<any>>;
 
 export type StrictHttpResponse<T> = HttpResponse<T> & {
   readonly body: T;

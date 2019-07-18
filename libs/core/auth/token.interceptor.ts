@@ -22,15 +22,20 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if (request.url.startsWith(this.coreSettings.apiRootUrl) && this.tokens) {
       switch (request.url) {
-        case this.coreSettings.apiAuthUrl: break;
+        case this.coreSettings.apiAuthUrl:
+          break;
 
-        case this.coreSettings.apiRefreshUrl: request = request.clone({
-            setHeaders: { 'Authorization': `Bearer ${this.tokens.refresh.raw}` }
-        }); break;
+        case this.coreSettings.apiRefreshUrl:
+          request = request.clone({
+            setHeaders: { authorization: `Bearer ${this.tokens.refresh.raw}` }
+          });
+          break;
 
-        default: request = request.clone({
-          setHeaders: { 'Authorization': `Bearer ${this.tokens.access.raw}` }
-        }); break;
+        default:
+          request = request.clone({
+            setHeaders: { authorization: `Bearer ${this.tokens.access.raw}` }
+          });
+          break;
       }
     }
 

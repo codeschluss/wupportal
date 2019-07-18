@@ -40,8 +40,10 @@ layout-component {
       text-transform: uppercase;
     }
 
-    & > button:not([matSuffix]) {
+    & > .mat-button {
       height: 100%;
+      display: flex;
+      align-items: center;
 
       &.active {
         color: $color-primary;
@@ -165,9 +167,10 @@ layout-component {
             text-transform: uppercase;
           }
 
-          & > button {
+          & > .mat-button {
             height: 100%;
-            text-transform: inherit;
+            display: flex;
+            align-items: center;
 
             &.active {
               color: $color-primary;
@@ -194,7 +197,9 @@ layout-component {
         }
 
         & > mat-action-list {
-          mat-list-item {
+          .mat-list-item {
+            text-decoration: none;
+
             * {
               font-weight: bold;
               text-transform: uppercase;

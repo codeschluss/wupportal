@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Router, UrlSerializer } from '@angular/router';
+import { NavigationStart, Router, UrlSerializer } from '@angular/router';
 import { LoadingProvider, PlatformProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
+import { filter } from 'rxjs/operators';
 import { ClientManifest } from '../../../utils/manifest';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
@@ -45,6 +46,9 @@ export class LayoutComponent {
       this.busy = 1;
     } else {
       loadingProvider.value.subscribe((loading) => this.busy = loading && 1);
+      router.events
+        .pipe(filter((e) => e instanceof NavigationStart))
+        .subscribe(() => this.drawer.hide());
 
       if (platformProvider.name === 'Web') {
         addEventListener('scroll', this.topoff.bind(this), true);
@@ -52,9 +56,9 @@ export class LayoutComponent {
     }
   }
 
+  // TODO: drop from this.tns.html
   public navigate(...path: string[]): void {
     this.router.navigate(path);
-    this.drawer.hide();
   }
 
   private topoff(event: UIEvent): void {

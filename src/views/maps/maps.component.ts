@@ -1,14 +1,16 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { CrudJoiner, CrudResolver, PositionProvider, Selfrouter } from '@wooportal/core';
 import * as colorConvert from 'color-convert';
-import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
+import { MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
+import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
-import { Fill, Icon, Style, Text } from 'ol/style';
-import { EMPTY, Observable, Subscription } from 'rxjs';
+import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
+import { BehaviorSubject, EMPTY, Observable, Subscription } from 'rxjs';
 import { ActivityModel } from '../../realm/models/activity.model';
 import { ConfigurationModel } from '../../realm/models/configuration.model';
 
@@ -21,9 +23,12 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
   public followed: Subscription = EMPTY.subscribe();
 
-  public items: ActivityModel[] = [];
+  public items: BehaviorSubject<ActivityModel[]>;
 
   public mapconf: {
+    geomFn: GeometryFunction;
+    styleFn: StyleFunction;
+
     cluster: number;
     latitude: number;
     longitude: number;
@@ -55,9 +60,6 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   @ViewChild('follow', { static: true })
   private follow: MatButton;
 
-  @ViewChild(LayerVectorComponent, { static: true })
-  private layer: LayerVectorComponent;
-
   @ViewChild(MapComponent, { static: true })
   private maps: MapComponent;
 
@@ -66,18 +68,19 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
   public get filled(): boolean {
     switch (true) {
-      case 'fullscreenElement' in document:
-        return (document as any).fullscreenElement !== null;
-      case 'webkitFullscreenElement' in document:
-        return (document as any).webkitFullscreenElement !== null;
-      case 'mozFullScreenElement' in document:
-        return (document as any).mozFullScreenElement !== null;
-      case 'msFullscreenElement' in document:
-        return (document as any).msFullscreenElement !== null;
+      case 'fullscreenElement' in this.document:
+        return (this.document as any).fullscreenElement !== null;
+      case 'webkitFullscreenElement' in this.document:
+        return (this.document as any).webkitFullscreenElement !== null;
+      case 'mozFullScreenElement' in this.document:
+        return (this.document as any).mozFullScreenElement !== null;
+      case 'msFullscreenElement' in this.document:
+        return (this.document as any).msFullscreenElement !== null;
     }
   }
 
   public constructor(
+    @Inject(DOCUMENT) private document: Document,
     private element: ElementRef<HTMLElement>,
     private positionProvider: PositionProvider,
     private route: ActivatedRoute
@@ -86,7 +89,12 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
+    this.items = new BehaviorSubject<ActivityModel[]>([]);
+
     this.mapconf = {
+      geomFn: this.geometry.bind(this),
+      styleFn: this.styling.bind(this),
+
       cluster: parseFloat(this.configuration('mapCluster')),
       latitude: parseFloat(this.configuration('mapLatitude')),
       longitude: parseFloat(this.configuration('mapLongitude')),
@@ -95,12 +103,11 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
     };
 
     if (this.route.snapshot.queryParams.embed === 'true') {
-      document.body.classList.add('embedded');
+      this.document.body.classList.add('embedded');
     }
   }
 
   public ngAfterViewInit(): void {
-    this.layer.instance.setStyle((feature) => this.styling(feature));
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
     this.maps.instance.once('postcompose', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () =>
@@ -130,7 +137,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
         case 'focus': return console.log('focus', event.data[key]);
         case 'items': return !event.data[key]
           ? this.postMessage({ items: this.items })
-          : this.items = []; // event.data[key];
+          : this.items.next(event.data[key]);
       }
     });
   }
@@ -145,6 +152,11 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       rotation: 0,
       zoom: this.mapconf.zoomfactor
     });
+  }
+
+  private configuration(item: string): string {
+    return this.route.snapshot.data.configuration
+      .find((config) => config.item === item).value;
   }
 
   private filling(enable: boolean): void {
@@ -163,7 +175,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
             return elem.webkitRequestFullscreen();
         }
       } else {
-        const elem = document as any;
+        const elem = this.document as any;
 
         switch (true) {
           case typeof elem.exitFullscreen === 'function':
@@ -205,9 +217,9 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
     }
   }
 
-  private configuration(item: string): string {
-    return this.route.snapshot.data.configuration
-      .find((config) => config.item === item).value;
+  private geometry(feature: Feature): Point {
+    const point = feature.getGeometry();
+    return point && point instanceof Point ? point : null;
   }
 
   private postMessage(message: any): void {
@@ -219,10 +231,10 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
   private styling(feature: Feature): Style {
     const colors = feature.get('features').map((feat) => {
-      const activity = this.items.find((item) => feat.getId() === item.id);
+      const item = this.items.value.find((i) => i.id === feat.getId());
 
-      return colorConvert.keyword.rgb(activity.category.color)
-        || colorConvert.hex.rgb(activity.category.color);
+      return colorConvert.keyword.rgb(item.category.color)
+        || colorConvert.hex.rgb(item.category.color);
     });
 
     const multi = colors.length > 1;

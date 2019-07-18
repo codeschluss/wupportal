@@ -17,10 +17,12 @@
         [y]="mapconf.latitude">
       </aol-coordinate>
     </aol-view>
-    <aol-layer-vector>
-      <aol-source-cluster [distance]="mapconf.cluster">
+    <aol-layer-vector [style]="mapconf.styleFn">
+      <aol-source-cluster
+        [distance]="mapconf.cluster"
+        [geometryFunction]="mapconf.geomFn">
         <aol-source-vector [overlaps]="true">
-          <ng-container *ngFor="let item of items">
+          <ng-container *ngFor="let item of items | async">
             <aol-feature [id]="item.id">
               <aol-geometry-point>
                 <aol-coordinate

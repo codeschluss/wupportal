@@ -4,7 +4,7 @@ import { BaseCard } from '../base.card';
 
 @Component({
   selector: 'infopage-card',
-  styleUrls: ['infopage.card.scss'],
+  styleUrls: ['../base.card.scss', 'infopage.card.scss'],
   templateUrl: 'infopage.card.html'
 })
 

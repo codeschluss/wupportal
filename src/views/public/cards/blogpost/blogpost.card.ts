@@ -4,7 +4,7 @@ import { BaseCard } from '../base.card';
 
 @Component({
   selector: 'blogpost-card',
-  styleUrls: ['blogpost.card.scss'],
+  styleUrls: ['../base.card.scss', 'blogpost.card.scss'],
   templateUrl: 'blogpost.card.html'
 })
 

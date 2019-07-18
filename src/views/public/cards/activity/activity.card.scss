@@ -1,5 +1,9 @@
 mat-card {
-  width: 20rem;
+  & > mat-card-header {
+    display: flex;
+    align-items: flex-end;
+    min-height: 5rem;
+  }
 
   & > mat-card-content {
     & > icon-compat {
@@ -8,38 +12,16 @@ mat-card {
     }
   }
 
-  & > mat-card-header {
-    display: flex;
-    align-items: flex-end;
-    min-height: 5rem;
-
-    &::ng-deep .mat-card-header-text {
-      margin: 0;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+  & > mat-divider {
+    border-top-color: inherit;
+    opacity: .36;
   }
 
   & > mat-card-actions {
-    margin-bottom: -.5rem;
-    padding-bottom: 0;
-
     button[disabled] {
       color: inherit;
       opacity: .36;
     }
-
-    icon-compat {
-      padding-right: .5rem;
-    }
-  }
-
-  & > mat-divider {
-    border-top-color: inherit;
-    opacity: .36;
   }
 
   &::ng-deep .mat-ripple-element {

@@ -1,6 +1,7 @@
 main {
   & > organisation-card {
     margin: 1rem;
+    max-width: calc(100% - 2rem);
   }
 
   & > pager-compat {

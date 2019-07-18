@@ -6,7 +6,7 @@ import { BaseCard } from '../base.card';
 
 @Component({
   selector: 'activity-card',
-  styleUrls: ['activity.card.scss'],
+  styleUrls: ['../base.card.scss', 'activity.card.scss'],
   templateUrl: 'activity.card.html'
 })
 

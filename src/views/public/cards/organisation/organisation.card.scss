@@ -1,17 +1,4 @@
 mat-card {
-  width: 20rem;
-
-  & > mat-card-header {
-    &::ng-deep .mat-card-header-text {
-      margin: 0;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-  }
-
   & > [mat-card-image] {
     height: 12.5rem;
     font-size: 4rem;
@@ -24,14 +11,5 @@ mat-card {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  & > mat-card-actions {
-    margin-bottom: -.5rem;
-    padding-bottom: 0;
-
-    icon-compat {
-      padding-right: .5rem;
-    }
   }
 }

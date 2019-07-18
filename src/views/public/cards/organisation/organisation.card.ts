@@ -7,7 +7,7 @@ import { BaseCard } from '../base.card';
 
 @Component({
   selector: 'organisation-card',
-  styleUrls: ['organisation.card.scss'],
+  styleUrls: ['../base.card.scss', 'organisation.card.scss'],
   templateUrl: 'organisation.card.html'
 })
 

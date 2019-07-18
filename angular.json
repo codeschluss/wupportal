@@ -100,7 +100,21 @@
             "optimization": {
               "scripts": true,
               "styles": true
-            }
+            },
+            "fileReplacements": [
+              {
+                "replace": "src/views/maps/maps.component.ts",
+                "with": "src/views/maps/maps.mockup.ts"
+              },
+              {
+                "replace": "src/views/maps/maps.module.ts",
+                "with": "src/views/maps/maps.mockup.ts"
+              },
+              {
+                "replace": "src/views/maps/maps.router.ts",
+                "with": "src/views/maps/maps.mockup.ts"
+              }
+            ]
           }
         }
       }

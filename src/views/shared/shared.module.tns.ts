@@ -6,12 +6,14 @@ import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angul
 import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
 import { IconCompatComponent } from './compat/icon/icon.compat';
 import { NavbarCompatComponent } from './compat/navbar/navbar.compat';
+import { PagerCompatComponent } from './compat/pager/pager.compat.tns';
 import { LayoutComponent } from './layout/layout.component';
 
 const compat: Type<any>[] = [
   DrawerCompatComponent,
   IconCompatComponent,
-  NavbarCompatComponent
+  NavbarCompatComponent,
+  PagerCompatComponent
 ];
 
 const components: Type<any>[] = [

@@ -17,6 +17,15 @@ export abstract class BaseListing<Model extends CrudModel>
 
   public items: BehaviorSubject<Model[]>;
 
+  public get next(): boolean {
+    const page = (this.items.value as any).page;
+    return page.number < page.totalPages - 1;
+  }
+
+  public get prev(): boolean {
+    return (this.items.value as any).page.number > 0;
+  }
+
   protected get routing(): Route {
     this.joiner.graph.params.page = 0;
     this.joiner.graph.params.size = this.size;
@@ -32,15 +41,6 @@ export abstract class BaseListing<Model extends CrudModel>
         }
       }
     };
-  }
-
-  protected get next(): boolean {
-    const page = (this.items.value as any).page;
-    return page.number < page.totalPages - 1;
-  }
-
-  protected get prev(): boolean {
-    return (this.items.value as any).page.number > 0;
   }
 
   public constructor(

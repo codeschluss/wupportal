@@ -5,6 +5,10 @@ main {
     left: 0;
     right: 0;
     top: 0;
+
+    &::ng-deep canvas {
+      background-color: #FAFAFA;
+    }
   }
 
   fa-icon[matRipple] {

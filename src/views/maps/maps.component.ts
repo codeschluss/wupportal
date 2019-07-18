@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route } from '@angular/router';
@@ -10,9 +10,10 @@ import { Feature, MapBrowserPointerEvent } from 'ol';
 import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
-import { BehaviorSubject, EMPTY, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, EMPTY, Subscription } from 'rxjs';
 import { ActivityModel } from '../../realm/models/activity.model';
 import { ConfigurationModel } from '../../realm/models/configuration.model';
+import { MapsConnection } from './maps.connection';
 
 @Component({
   styleUrls: ['maps.component.scss'],
@@ -22,6 +23,8 @@ import { ConfigurationModel } from '../../realm/models/configuration.model';
 export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
   public followed: Subscription = EMPTY.subscribe();
+
+  public focus: BehaviorSubject<ActivityModel[]>;
 
   public items: BehaviorSubject<ActivityModel[]>;
 
@@ -48,8 +51,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
     }
   };
 
-  @ViewChild(MatRipple, { static: true })
-  private center: MatRipple;
+  private connection: MapsConnection;
 
   @ViewChild('dialer', { read: ElementRef, static: true })
   private dialer: ElementRef<HTMLElement>;
@@ -59,6 +61,9 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
   @ViewChild('follow', { static: true })
   private follow: MatButton;
+
+  @ViewChild(MatRipple, { static: true })
+  private location: MatRipple;
 
   @ViewChild(MapComponent, { static: true })
   private maps: MapComponent;
@@ -89,8 +94,6 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
-    this.items = new BehaviorSubject<ActivityModel[]>([]);
-
     this.mapconf = {
       geomFn: this.geometry.bind(this),
       styleFn: this.styling.bind(this),
@@ -108,18 +111,27 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
+    const source = this.document.defaultView;
+    this.connection = new MapsConnection(source, source.parent);
+
+    this.focus = new BehaviorSubject<ActivityModel[]>([]);
+    this.items = new BehaviorSubject<ActivityModel[]>([]);
+
+    this.connection.focus.subscribe((focus) => this.focus.next(focus));
+    this.connection.items.subscribe((items) => this.items.next(items));
+
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
     this.maps.instance.once('postcompose', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () =>
       this.dialer.nativeElement.style.transform = 'scale(1)');
-
-    if (parent !== window) {
-      this.postMessage({ items: null });
-    }
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {
-    console.log(this.maps.instance.getFeaturesAtPixel(event.pixel));
+    const feature = this.maps.instance.getFeaturesAtPixel(event.pixel);
+    const items = !feature ? [] : feature[0].get('features').map((feat) =>
+      this.items.value.find((item) => item.id === feat.getId()));
+
+    this.connection.nextFocus(items);
   }
 
   public handleFill(): void {
@@ -128,18 +140,6 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
   public handleFollow(): void {
     this.following(this.followed.closed);
-  }
-
-  @HostListener('window:message', ['$event'])
-  public handleMessage(event: MessageEvent): void {
-    Object.keys(event.data).forEach((key) => {
-      switch (key) {
-        case 'focus': return console.log('focus', event.data[key]);
-        case 'items': return !event.data[key]
-          ? this.postMessage({ items: this.items })
-          : this.items.next(event.data[key]);
-      }
-    });
   }
 
   public handleReset(): void {
@@ -198,7 +198,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
       this.followed = this.positionProvider.locate().subscribe((coords) => {
         this.follow.ripple.launch({ centered: true });
-        this.center.launch({ centered: true });
+        this.location.launch({ centered: true });
         this.view.instance.animate({
           center: fromLonLat([
             coords.longitude,
@@ -220,13 +220,6 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   private geometry(feature: Feature): Point {
     const point = feature.getGeometry();
     return point && point instanceof Point ? point : null;
-  }
-
-  private postMessage(message: any): void {
-    const data = JSON.parse(JSON.stringify(message, (key, value) =>
-      key.startsWith('_') || value instanceof Observable ? undefined : value));
-
-    parent.postMessage(data, window.origin);
   }
 
   private styling(feature: Feature): Style {

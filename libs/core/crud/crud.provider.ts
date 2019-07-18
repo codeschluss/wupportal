@@ -96,9 +96,13 @@ export abstract class CrudProvider
     const caster = (item) => Object.assign(new (t || this.model)(), item);
     const data = (response.body['_embedded'] || { })['data'] || response.body;
 
-    return Array.isArray(data)
+    const casted = Array.isArray(data)
       ? data.map((item) => caster(item))
       : caster(data);
+
+    return Object.defineProperties(casted, {
+      page: { value: response.body['page'] }
+    });
   }
 
   protected link(input: Model | Model[]): void {

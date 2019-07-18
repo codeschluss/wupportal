@@ -15,9 +15,15 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
   public refine(input: CrudModel | CrudModel[], graph: CrudGraph):
     Observable<CrudModel | CrudModel[]> {
 
-    return Array.isArray(input)
+    const meta = Object.getOwnPropertyNames(input).filter((p) =>
+      !Object.keys(input).includes(p) && !(p in Object.getPrototypeOf(input)))
+      .reduce((o, p) => Object.assign(o, { [p]: { value: input[p] } }), { });
+
+    const refined: Observable<CrudModel | CrudModel[]> = Array.isArray(input)
       ? forkJoin(input.map((i) => this.run(i, graph.nodes)))
       : this.run(input, graph.nodes);
+
+    return refined.pipe(map((output) => Object.defineProperties(output, meta)));
   }
 
   public resolve(route: ActivatedRouteSnapshot):

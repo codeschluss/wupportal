@@ -2,4 +2,9 @@
   <ng-container *ngFor="let item of items | async">
     <organisation-card [item]="item"></organisation-card>
   </ng-container>
+  <pager-compat
+    [next]="next"
+    [prev]="prev"
+    (goto)="goto($event)">
+  </pager-compat>
 </main>

@@ -1,7 +1,8 @@
 import { OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, Selfrouter } from '@wooportal/core';
+import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, Selfrouter } from '@wooportal/core';
 import { BehaviorSubject } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 export abstract class BaseListing<Model extends CrudModel>
   extends Selfrouter implements OnInit {
@@ -16,10 +17,8 @@ export abstract class BaseListing<Model extends CrudModel>
 
   public items: BehaviorSubject<Model[]>;
 
-  protected page: number = 0;
-
   protected get routing(): Route {
-    this.joiner.graph.params.page = this.page;
+    this.joiner.graph.params.page = 0;
     this.joiner.graph.params.size = this.size;
 
     return {
@@ -35,17 +34,17 @@ export abstract class BaseListing<Model extends CrudModel>
     };
   }
 
-  private length: number = 0;
-
   protected get next(): boolean {
-    return !this.length || this.page < this.length - 1;
+    const page = (this.items.value as any).page;
+    return page.number < page.totalPages - 1;
   }
 
   protected get prev(): boolean {
-    return this.page > 0;
+    return (this.items.value as any).page.number > 0;
   }
 
   public constructor(
+    private crudResolver: CrudResolver,
     private route: ActivatedRoute
   ) {
     super();
@@ -53,6 +52,17 @@ export abstract class BaseListing<Model extends CrudModel>
 
   public ngOnInit(): void {
     this.items = new BehaviorSubject<Model[]>(this.route.snapshot.data.items);
+  }
+
+  public goto(num: number): void {
+    const provider = this.model['provider'] as CrudProvider<BaseService, Model>;
+    this.joiner.graph.params.embeddings = CrudJoiner.to(this.joiner.graph);
+    this.joiner.graph.params.page = (this.items.value as any).page.number + num;
+    this.joiner.graph.params.size = this.size;
+
+    provider.readAll(this.joiner.graph.params).pipe(
+      mergeMap((items) => this.crudResolver.refine(items, this.joiner.graph))
+    ).subscribe((items) => this.items.next(items as Model[]));
   }
 
 }

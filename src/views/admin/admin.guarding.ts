@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
-import { PlatformProvider, TokenProvider } from '@wooportal/core';
+import { TokenProvider } from '@wooportal/core';
 import { map, mergeMap, take } from 'rxjs/operators';
 import { ActivityProvider } from '../../realm/providers/activity.provider';
 import { ClientPackage } from '../../utils/package';
@@ -10,7 +10,6 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
 
   public constructor(
     private activityProvider: ActivityProvider,
-    private platformProvider: PlatformProvider,
     private router: Router,
     private tokenProvider: TokenProvider
   ) { }
@@ -19,18 +18,14 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<any> {
-    return this.platformProvider.name === 'Server'
-      ? this.router.navigate(['/error', 403])
-      : this.allow(route, state);
+    return this.allow(route, state);
   }
 
   public canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<any> {
-    return this.platformProvider.name === 'Server'
-      ? this.router.navigate(['/error', 403])
-      : this.allow(route, state);
+    return this.allow(route, state);
   }
 
   private async allow(
@@ -58,16 +53,18 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
 
         case state.url.startsWith('/admin/edit/activities/'):
         return claimed.superUser
+          || (claimed.userId && !this.uuid(state.url))
           || claimed.activityProvider.includes(this.uuid(state.url))
           || claimed.organisationAdmin.includes(await this.orga(state.url));
 
         case state.url.startsWith('/admin/edit/organisations/'):
         return claimed.superUser
+          || (claimed.userId && !this.uuid(state.url))
           || claimed.organisationAdmin.includes(this.uuid(state.url));
       }
     })()) { return true; }
 
-    return this.router.navigateByUrl(claimed.userId ? '/admin' : '/');
+    return this.router.navigateByUrl(claimed.userId ? '/admin' : '/error/403');
   }
 
   private orga(url: string): Promise<string> {

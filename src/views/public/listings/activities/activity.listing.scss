@@ -9,7 +9,8 @@ main {
     &:first-of-type {
       flex-grow: 1;
       margin: 1rem;
-      width: 33.33%;
+      width: 33%;
+      min-width: 33rem;
 
       & > iframe {
         height: 100%;
@@ -17,6 +18,9 @@ main {
 
         border: none;
         border-radius: .5rem;
+
+        color: rgba(0, 0, 0, .87);
+        background-color: rgba(0, 0, 0, .12);
 
         box-shadow:
           0px 2px 1px -1px rgba(0, 0, 0, 0.2),
@@ -27,7 +31,7 @@ main {
 
     &:last-of-type {
       flex-grow: 1;
-      width: 66.66%;
+      width: 66%;
       overflow-y: auto;
 
       & > activity-card {

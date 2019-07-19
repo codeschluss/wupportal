@@ -10,10 +10,12 @@
         (mouseleave)="handleFocus(item, $event)">
       </activity-card>
     </ng-container>
-    <pager-compat
-      [next]="next"
-      [prev]="prev"
-      (goto)="goto($event)">
-    </pager-compat>
+    <ng-container *ngIf="next || prev">
+      <pager-compat
+        [next]="next"
+        [prev]="prev"
+        (goto)="goto($event)">
+      </pager-compat>
+    </ng-container>
   </section>
 </main>

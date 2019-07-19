@@ -6,9 +6,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   styles: [`
-    fa-icon { color: rgba(0, 0, 0, .87); font-size: 4rem; }
     main {
+      font-size: 4rem;
+      color: rgba(0, 0, 0, .87);
       background-color: rgba(0, 0, 0, .12);
+
       position: absolute;
       bottom: 0;
       left: 0;

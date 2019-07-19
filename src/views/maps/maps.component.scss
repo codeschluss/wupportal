@@ -1,17 +1,19 @@
 main {
-  aol-map {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
+  background-color: #FAFAFA;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
 
-    &::ng-deep canvas {
-      background-color: #FAFAFA;
-    }
+  & > aol-map {
+    background-color: rgba(0, 0, 0, .12);
+    display: block;
+    height: 100%;
+    width: 100%;
   }
 
-  fa-icon[matRipple] {
+  & > fa-icon[matRipple] {
     pointer-events: none;
     border-radius: 50%;
     font-size: 1rem;
@@ -40,7 +42,7 @@ main {
     }
   }
 
-  nav {
+  & > nav {
     display: flex;
     flex-flow: column-reverse;
     transition: transform 250ms;

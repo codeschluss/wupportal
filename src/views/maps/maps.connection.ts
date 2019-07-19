@@ -1,5 +1,5 @@
 import { EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivityModel } from '../../realm/models/activity.model';
 
 export class MapsConnection {
@@ -8,21 +8,29 @@ export class MapsConnection {
 
   public items: EventEmitter<ActivityModel[]>;
 
+  public ready: BehaviorSubject<boolean>;
+
   public constructor(
     private source: Window,
     private target: Window
   ) {
     this.focus = new EventEmitter<ActivityModel[]>();
     this.items = new EventEmitter<ActivityModel[]>();
+    this.ready = new BehaviorSubject<boolean>(false);
+
     this.source.onmessage = this.incoming.bind(this);
   }
 
   public nextFocus(focus: ActivityModel[]): void {
-    this.outgoing({ focus: focus });
+    this.outgoing({ focus });
   }
 
   public nextItems(items: ActivityModel[]): void {
-    this.outgoing({ items: items });
+    this.outgoing({ items });
+  }
+
+  public nextReady(ready: boolean): void {
+    this.outgoing({ ready });
   }
 
   private incoming(event: MessageEvent): void {
@@ -30,6 +38,7 @@ export class MapsConnection {
       switch (key) {
         case 'focus': return this.focus.emit(event.data[key]);
         case 'items': return this.items.emit(event.data[key]);
+        case 'ready': return this.ready.next(event.data[key]);
       }
     });
   }

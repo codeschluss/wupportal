@@ -5,7 +5,7 @@ import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { CrudJoiner, CrudResolver, PositionProvider, Selfrouter } from '@wooportal/core';
 import * as colorConvert from 'color-convert';
-import { MapComponent, ViewComponent } from 'ngx-openlayers';
+import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
 import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
@@ -68,6 +68,9 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   @ViewChild(MapComponent, { static: true })
   private maps: MapComponent;
 
+  @ViewChild(LayerVectorComponent, { static: true })
+  private vector: LayerVectorComponent;
+
   @ViewChild(ViewComponent, { static: true })
   private view: ViewComponent;
 
@@ -113,13 +116,14 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     const source = this.document.defaultView;
     this.connection = new MapsConnection(source, source.parent);
-
     this.focus = new BehaviorSubject<ActivityModel[]>([]);
     this.items = new BehaviorSubject<ActivityModel[]>([]);
 
     this.connection.focus.subscribe((focus) => this.focus.next(focus));
     this.connection.items.subscribe((items) => this.items.next(items));
+    this.connection.nextReady(true);
 
+    this.focus.subscribe(() => this.vector.instance.changed());
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
     this.maps.instance.once('postcompose', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () =>
@@ -132,6 +136,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       this.items.value.find((item) => item.id === feat.getId()));
 
     this.connection.nextFocus(items);
+    this.focus.next(items);
   }
 
   public handleFill(): void {
@@ -223,18 +228,21 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   }
 
   private styling(feature: Feature): Style {
-    const colors = feature.get('features').map((feat) => {
-      const item = this.items.value.find((i) => i.id === feat.getId());
+    const focus = this.focus.value.map((i) => i.id);
+    const items = feature.get('features').map((feat) =>
+      this.items.value.find((item) => item.id === feat.getId()));
 
+    const rgb = items.map((item) => {
       return colorConvert.keyword.rgb(item.category.color)
         || colorConvert.hex.rgb(item.category.color);
     });
 
-    const multi = colors.length > 1;
-    const r = colors.reduce((i, j) => i + j[0], 0) / colors.length;
-    const g = colors.reduce((i, j) => i + j[1], 0) / colors.length;
-    const b = colors.reduce((i, j) => i + j[2], 0) / colors.length;
-    const fontColor = { color: r + g + b > 382 ? '#000' : '#FFF' };
+    const multi = rgb.length > 1;
+    const focused = items.some((i) => focus.includes(i.id));
+    const r = rgb.reduce((i, j) => i + j[0], 0) / rgb.length;
+    const g = rgb.reduce((i, j) => i + j[1], 0) / rgb.length;
+    const b = rgb.reduce((i, j) => i + j[2], 0) / rgb.length;
+    const color = r + g + b > 382 ? '#000' : '#FFF';
 
     return new Style({
       image: new Icon({
@@ -243,15 +251,16 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
         anchor: [.5, 1],
         imgSize: [60, 96],
-        scale: 1 / 2
+        scale: focused ? .66 : .5
       }),
       text: multi && new Text({
-        fill: new Fill(fontColor),
+        fill: new Fill({ color }),
         font: 'bold 1rem monospace',
-        text: colors.length.toString(),
+        text: rgb.length.toString(),
         textAlign: 'center',
 
-        offsetY: -30
+        offsetY: focused ? -40 : -30,
+        scale: focused ? 1.33 : 1
       })
     });
   }

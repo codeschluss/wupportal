@@ -17,7 +17,10 @@
         [y]="mapconf.latitude">
       </aol-coordinate>
     </aol-view>
-    <aol-layer-vector [style]="mapconf.styleFn">
+    <aol-layer-vector
+      [updateWhileAnimating]="true"
+      [updateWhileInteracting]="true"
+      [style]="mapconf.styleFn">
       <aol-source-cluster
         [distance]="mapconf.cluster"
         [geometryFunction]="mapconf.geomFn">

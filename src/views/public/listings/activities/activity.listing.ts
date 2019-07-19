@@ -1,8 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Inject, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CrudJoiner, CrudResolver, PlatformProvider } from '@wooportal/core';
-import { BehaviorSubject } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { MapsConnection } from '../../../maps/maps.connection';
 import { ActivityCardComponent } from '../../cards/activity/activity.card';
@@ -29,8 +29,6 @@ export class ActivityListingComponent
 
   private connection: MapsConnection;
 
-  private focus: BehaviorSubject<ActivityModel[]>;
-
   @ViewChildren(ActivityCardComponent)
   private cards: QueryList<ActivityCardComponent>;
 
@@ -41,43 +39,44 @@ export class ActivityListingComponent
     @Inject(DOCUMENT) private document: Document,
     private platformProvider: PlatformProvider,
     crudResolver: CrudResolver,
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    router: Router
   ) {
-    super(crudResolver, route);
+    super(route, router, crudResolver);
   }
 
   public ngAfterViewInit(): void {
-    this.focus = new BehaviorSubject<ActivityModel[]>([]);
-
     if (this.platformProvider.name === 'Web') {
       const source = this.document.defaultView;
       const target = this.maps.nativeElement.contentWindow;
+
       this.connection = new MapsConnection(source, target);
+      this.connection.focus.subscribe((focus) => this.focusing(focus));
+      // this.connection.items.subscribe((items) => this.items.next(items));
+      this.connection.nextReady(true);
 
-      target.onload = () => {
-        this.connection.focus.subscribe((focus) => this.focus.next(focus));
-        this.connection.items.subscribe((items) => this.items.next(items));
-
-        this.focus.subscribe((focus) => this.connection.nextFocus(focus));
-        this.items.subscribe((items) => this.connection.nextItems(items));
-      }
+      this.connection.ready.pipe(filter(Boolean), take(1)).subscribe(() =>
+        this.items.subscribe((items) => this.connection.nextItems(items)));
     }
   }
 
   public handleFocus(item: ActivityModel, event: Event): void {
-    const card = this.cards.find((c) => c.item.id === item.id);
-
     switch (event.type) {
-      case 'mouseenter':
-        card.ripple.launch({ persistent: true });
-        this.connection.nextFocus([item]);
-        break;
-
-      case 'mouseleave':
-        this.connection.nextFocus([]);
-        card.ripple.fadeOutAll();
-        break;
+      case 'mouseenter': return this.connection.nextFocus(this.focusing(item));
+      case 'mouseleave': return this.connection.nextFocus(this.focusing(null));
     }
+  }
+
+  private focusing(input: ActivityModel | ActivityModel[]): ActivityModel[] {
+    this.cards.forEach((card) => card.ripple.fadeOutAll());
+    const items = (Array.isArray(input) ? input : [input]);
+
+    if (input) {
+      items.map((i) => this.cards.find((c) => c.item.id === i.id).ripple)
+        .forEach((ripple) => ripple.launch({ persistent: true }));
+    }
+
+    return input ? items : [];
   }
 
 }

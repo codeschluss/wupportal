@@ -122,7 +122,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   protected confirm(item: CrudModel): Observable<boolean> {
     return this.dialog.open(DeleteDialogComponent, {
-      data: { item: item }
+      data: { item }
     }).afterClosed().pipe(filter(Boolean));
   }
 

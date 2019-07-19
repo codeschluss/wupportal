@@ -86,8 +86,8 @@ export class OrganisationPanelComponent extends BasePanel {
     const users = organisation.users as any || [];
 
     return users.map((user) => Object.assign(user.provider, {
-      organisation: organisation,
-      user: user
+      organisation,
+      user
     }));
   }
 

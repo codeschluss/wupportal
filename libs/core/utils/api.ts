@@ -51,6 +51,6 @@ export type StrictHttpResponse<T> = HttpResponse<T> & {
   readonly body: T;
 };
 
-export const Box = (value: boolean | number | string) => ({ value: value });
+export const Box = (value: boolean | number | string) => ({ value });
 export const True = { value: true };
 export const False = { value: false };

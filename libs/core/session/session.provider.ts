@@ -46,15 +46,11 @@ export class SessionProvider {
   }
 
   public changeLanguage(language: string): void {
-    this.session.next(Object.assign(this.session.value, {
-      language: language
-    }));
+    this.session.next(Object.assign(this.session.value, { language }));
   }
 
   public acceptCookies(acceptCookies: boolean): void {
-    this.session.next(Object.assign(this.session.value, {
-      acceptCookies: acceptCookies
-    }));
+    this.session.next(Object.assign(this.session.value, { acceptCookies }));
   }
 
 }

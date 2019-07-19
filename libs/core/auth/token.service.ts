@@ -18,8 +18,8 @@ export class TokenService {
       'POST',
       this.coreSettings.apiAuthUrl,
       {
-        username: username,
-        password: password
+        username,
+        password
       },
       {
         headers: new HttpHeaders(),

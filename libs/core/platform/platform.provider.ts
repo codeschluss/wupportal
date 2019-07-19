@@ -1,4 +1,4 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Inject, Injectable, Injector, PLATFORM_ID, Type } from '@angular/core';
 import { fromEvent, merge, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -17,8 +17,8 @@ export class PlatformProvider implements Compat {
 
   public get connection(): Observable<boolean> {
     return merge(
-      fromEvent(document, 'offline').pipe(map(() => false)),
-      fromEvent(document, 'online').pipe(map(() => true)),
+      fromEvent(this.document, 'offline').pipe(map(() => false)),
+      fromEvent(this.document, 'online').pipe(map(() => true)),
       startWith(this.connected)
     );
   }
@@ -60,6 +60,7 @@ export class PlatformProvider implements Compat {
 
   public constructor(
     private coreSettings: CoreSettings,
+    @Inject(DOCUMENT) private document: Document,
     private injector: Injector,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }

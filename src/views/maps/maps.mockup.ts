@@ -42,8 +42,10 @@ export class MapsComponent implements OnInit {
 @NgModule({
   exports: [RouterModule],
   imports: [RouterModule.forChild([
-    { path: '', component: MapsComponent },
-    { path: '**', pathMatch: 'full', redirectTo: '' }
+    {
+      path: '',
+      component: MapsComponent
+    }
   ])]
 })
 
@@ -51,8 +53,14 @@ export class MapsRouter { }
 
 
 @NgModule({
-  declarations: [MapsComponent],
-  imports: [FlexLayoutModule, FontAwesomeModule, MapsRouter]
+  declarations: [
+    MapsComponent
+  ],
+  imports: [
+    FlexLayoutModule,
+    FontAwesomeModule,
+    MapsRouter
+  ]
 })
 
 export class MapsModule { }

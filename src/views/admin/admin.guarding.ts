@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
-import { TokenProvider } from '@wooportal/core';
-import { take } from 'rxjs/operators';
+import { PlatformProvider, TokenProvider } from '@wooportal/core';
+import { map, mergeMap, take } from 'rxjs/operators';
+import { ActivityProvider } from '../../realm/providers/activity.provider';
 import { ClientPackage } from '../../utils/package';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuarding implements CanActivate, CanActivateChild {
 
   public constructor(
+    private activityProvider: ActivityProvider,
+    private platformProvider: PlatformProvider,
     private router: Router,
     private tokenProvider: TokenProvider
   ) { }
@@ -16,14 +19,18 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<any> {
-    return this.allow(route, state);
+    return this.platformProvider.name === 'Server'
+      ? this.router.navigate(['/error', 403])
+      : this.allow(route, state);
   }
 
   public canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<any> {
-    return this.allow(route, state);
+    return this.platformProvider.name === 'Server'
+      ? this.router.navigate(['/error', 403])
+      : this.allow(route, state);
   }
 
   private async allow(
@@ -38,6 +45,9 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
 
     if (await (async () => {
       switch (true) {
+        case state.url.startsWith('/admin/application'):
+        case state.url.startsWith('/admin/positioning'):
+        case state.url.startsWith('/admin/privileges'):
         default: return claimed.superUser;
 
         case state.url.startsWith('/admin/account'):
@@ -48,8 +58,8 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
 
         case state.url.startsWith('/admin/edit/activities/'):
         return claimed.superUser
-          || claimed.activityProvider.includes(this.uuid(state.url));
-          // || claimed.organisationAdmin.includes(item.organisation.id);
+          || claimed.activityProvider.includes(this.uuid(state.url))
+          || claimed.organisationAdmin.includes(await this.orga(state.url));
 
         case state.url.startsWith('/admin/edit/organisations/'):
         return claimed.superUser
@@ -60,8 +70,13 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
     return this.router.navigateByUrl(claimed.userId ? '/admin' : '/');
   }
 
-  private uuid(str: string): string | undefined {
-    const uuid = str.match(/[0-9A-F]{8}(-[0-9A-F]{4}){3}-[0-9A-F]{12}/i);
+  private orga(url: string): Promise<string> {
+    return this.activityProvider.readOne(this.uuid(url))
+      .pipe(mergeMap((i) => i.organisation), map((i) => i.id)).toPromise();
+  }
+
+  private uuid(url: string): string | undefined {
+    const uuid = url.match(/[0-9A-F]{8}(-[0-9A-F]{4}){3}-[0-9A-F]{12}/i);
     return uuid ? uuid.shift() : undefined;
   }
 

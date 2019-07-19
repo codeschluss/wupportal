@@ -3,7 +3,12 @@ import { Route, RouterModule } from '@angular/router';
 import { MapsComponent } from './maps.component';
 
 const routes: Route[] = [
-  MapsComponent.routing
+  MapsComponent.routing,
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({
@@ -12,11 +17,6 @@ const routes: Route[] = [
     {
       path: '',
       children: routes
-    },
-    {
-      path: '**',
-      pathMatch: 'full',
-      redirectTo: ''
     }
   ])]
 })

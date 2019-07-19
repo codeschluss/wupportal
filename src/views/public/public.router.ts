@@ -36,6 +36,11 @@ const routes: Route[] = [
       // TODO: remove
       SearchDummyComponent.routing
     ]
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: '/error/404'
   }
 ];
 
@@ -46,11 +51,6 @@ const routes: Route[] = [
       path: '',
       children: routes,
       component: PublicComponent
-    },
-    {
-      path: '**',
-      pathMatch: 'full',
-      redirectTo: ''
     }
   ])]
 })

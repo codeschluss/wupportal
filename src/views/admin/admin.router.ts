@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { TokenResolver } from '@wooportal/core';
 import { AdminComponent } from './admin.component';
+import { AdminGuarding } from './admin.guarding';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
@@ -23,10 +24,10 @@ import { UserStepperComponent } from './steppers/user.stepper';
 const routes: Route[] = [
   {
     path: '',
+    canActivateChild: [AdminGuarding],
     resolve: {
       tokens: TokenResolver
     },
-    // canActivateChild: [AdminGuarding],
     children: [
       AccountPanelComponent.routing,
       ApplicationPanelComponent.routing,
@@ -51,6 +52,11 @@ const routes: Route[] = [
         ]
       }
     ]
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: ''
   }
 ];
 
@@ -61,14 +67,10 @@ const routes: Route[] = [
       path: '',
       children: routes,
       component: AdminComponent,
+      canActivate: [AdminGuarding],
       resolve: {
         tokens: TokenResolver
       }
-    },
-    {
-      path: '**',
-      pathMatch: 'full',
-      redirectTo: ''
     }
   ])]
 })

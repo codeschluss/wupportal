@@ -11,6 +11,11 @@ const routes: Route[] = [
     },
     children: [
       {
+        path: 'error',
+        loadChildren: () => import('./error/error.module')
+          .then((imported) => imported.ErrorModule)
+      },
+      {
         path: 'admin',
         loadChildren: () => import('./views/admin/admin.module')
           .then((imported) => imported.AdminModule)
@@ -39,11 +44,6 @@ const routes: Route[] = [
       resolve: {
         xliff: I18nResolver
       },
-    },
-    {
-      path: '**',
-      pathMatch: 'full',
-      redirectTo: ''
     }
   ], {
     initialNavigation: 'enabled'

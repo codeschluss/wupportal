@@ -1,10 +1,18 @@
 import { NgModule, Type } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule, PlatformCommonModule } from '@wooportal/core';
 import { ErrorBarComponent } from './bar/error.bar';
 import { ErrorDialogComponent } from './dialog/error.dialog';
+import { ErrorRouter } from './error.router';
+import { ErrorResponseComponent } from './response/error.response';
+
+const components: Type<any>[] = [
+  ErrorResponseComponent
+];
 
 const dialogs: Type<any>[] = [
   ErrorBarComponent,
@@ -12,6 +20,8 @@ const dialogs: Type<any>[] = [
 ];
 
 const materials: Type<any>[] = [
+  FlexLayoutModule,
+  FontAwesomeModule,
   MatButtonModule,
   MatDialogModule,
   MatSnackBarModule
@@ -19,6 +29,7 @@ const materials: Type<any>[] = [
 
 @NgModule({
   declarations: [
+    ...components,
     ...dialogs
   ],
   entryComponents: [
@@ -27,6 +38,7 @@ const materials: Type<any>[] = [
   imports: [
     ...materials,
     CoreModule,
+    ErrorRouter,
     PlatformCommonModule
   ]
 })

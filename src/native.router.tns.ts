@@ -17,6 +17,11 @@ const routes: Route[] = [
           .then((imported) => imported.PublicModule)
       }
     ]
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: ''
   }
 ];
 
@@ -30,11 +35,6 @@ const routes: Route[] = [
       resolve: {
         xliff: I18nResolver
       }
-    },
-    {
-      path: '**',
-      pathMatch: 'full',
-      redirectTo: ''
     }
   ])]
 })

@@ -46,8 +46,7 @@ export class LayoutComponent {
       this.busy = 1;
     } else {
       loadingProvider.value.subscribe((loading) => this.busy = loading && 1);
-      router.events
-        .pipe(filter((e) => e instanceof NavigationStart))
+      router.events.pipe(filter((event) => event instanceof NavigationStart))
         .subscribe(() => this.drawer.hide());
 
       if (platformProvider.name === 'Web') {

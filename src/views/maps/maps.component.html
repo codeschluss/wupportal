@@ -9,7 +9,7 @@
       </aol-source-osm>
     </aol-layer-tile>
     <ng-container *ngIf="(!embedded || filled) && (focus | async).length">
-      <nav fxLayout="row" fxLayoutAlign="start" ngClass.lt-md="snap">
+      <nav fxLayout="row" fxLayoutAlign="start" ngClass.xs="snap">
         <ng-container *ngFor="let item of focus | async">
           <activity-card #card
             fxLayout="row"

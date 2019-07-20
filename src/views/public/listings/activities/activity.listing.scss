@@ -2,7 +2,8 @@ main {
   & > header {
     width: 100%;
     padding: 0 1rem;
-    margin: 1rem 0;
+    margin: 1rem auto;
+    max-width: 100rem;
 
     & > mat-form-field {
       width: 15rem;
@@ -31,6 +32,9 @@ main {
   }
 
   & > section {
+    margin: 0 auto;
+    max-width: 100rem;
+
     aside {
       width: 33%;
       margin: 1rem;

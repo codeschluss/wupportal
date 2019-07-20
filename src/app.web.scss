@@ -34,6 +34,7 @@ layout-component {
 
   & > navbar-compat:first-of-type > mat-toolbar {
     justify-content: space-between;
+    padding: 0 calc((100% - 100rem) / 2);
 
     * {
       font-size: 1rem;
@@ -167,6 +168,7 @@ layout-component {
         }
 
         & > navbar-compat:last-child mat-toolbar {
+          padding: 0 calc((100% - 100rem) / 2);
           margin-bottom: 1.5rem;
 
           * {

@@ -1,48 +1,80 @@
 main {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
+  & > header {
+    width: 100%;
+    padding: 0 1rem;
+    margin: 1rem 0;
 
-  section {
-    &:first-of-type {
-      flex-grow: 1;
-      margin: 1rem;
+    & > mat-form-field {
+      width: 15rem;
+    }
+
+    & > mat-chip-list {
+      &::ng-deep .mat-chip-list-wrapper {
+        justify-content: center;
+      }
+
+      mat-chip {
+        border: .25rem solid;
+        cursor: pointer;
+
+        &:focus:not(:hover)::after {
+          opacity: 0;
+        }
+
+        &:not(.mat-chip-selected) {
+          background-color: transparent !important;
+        }
+      }
+    }
+  }
+
+  & > section {
+    aside {
       width: 33%;
-      min-width: 33rem;
+      margin: 1rem;
 
-      & > iframe {
-        height: 100%;
-        width: 100%;
+      & > div {
+        height: 0;
+        padding-top: 100%;
+        position: relative;
 
-        border: none;
-        border-radius: .5rem;
+        iframe {
+          height: 100%;
+          width: 100%;
 
-        color: rgba(0, 0, 0, .87);
-        background-color: rgba(0, 0, 0, .12);
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          top: 0;
 
-        box-shadow:
-          0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-          0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-          0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+          border: none;
+          border-radius: .5rem;
+
+          color: rgba(0, 0, 0, .87);
+          background-color: rgba(0, 0, 0, .12);
+
+          box-shadow:
+            0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+            0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+        }
       }
     }
 
-    &:last-of-type {
-      flex-grow: 1;
+    nav {
       width: 66%;
-      overflow-y: auto;
+      flex: 1 0 auto;
 
       & > activity-card {
         margin: 1rem;
         max-width: calc(100% - 2rem);
       }
-    }
 
-    & > pager-compat {
-      margin: 1rem 1rem 2rem 1rem;
-      width: 100%;
+      & > pager-compat {
+        margin: 1rem 1rem 2rem 1rem;
+        width: 100%;
+      }
     }
   }
 }

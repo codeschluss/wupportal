@@ -1,9 +1,11 @@
-<main fxLayout="row wrap" fxLayoutAlign="center start">
+<main class="boxed" fxLayout="row wrap" fxLayoutAlign="center start">
   <ng-container *ngFor="let item of items | async">
     <organisation-card [item]="item"></organisation-card>
   </ng-container>
   <ng-container *ngIf="next || prev">
     <pager-compat
+      fxLayout="row"
+      fxLayoutAlign="center center"
       [next]="next"
       [prev]="prev"
       (goto)="goto($event)">

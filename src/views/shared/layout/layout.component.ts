@@ -1,7 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { NavigationStart, Router, UrlSerializer } from '@angular/router';
 import { LoadingProvider, PlatformProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
+import { fromEvent } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ClientManifest } from '../../../utils/manifest';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
@@ -13,7 +15,7 @@ import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
 export class LayoutComponent {
 
-  public busy: 0 | 1;
+  public busy: 0 | 1 = 1;
 
   public title: string = ClientManifest.shortTitle;
 
@@ -39,19 +41,18 @@ export class LayoutComponent {
 
   public constructor(
     private router: Router,
+    @Inject(DOCUMENT) document: Document,
     loadingProvider: LoadingProvider,
     platformProvider: PlatformProvider
   ) {
-    if (platformProvider.name === 'Server') {
-      this.busy = 1;
-    } else {
-      loadingProvider.value.subscribe((loading) => this.busy = loading && 1);
-      router.events.pipe(filter((event) => event instanceof NavigationStart))
-        .subscribe(() => this.drawer.hide());
+    router.events.pipe(filter((event) => event instanceof NavigationStart))
+    .subscribe(() => this.drawer.hide());
 
-      if (platformProvider.name === 'Web') {
-        addEventListener('scroll', this.topoff.bind(this), true);
-      }
+    if (platformProvider.name === 'Web') {
+      loadingProvider.value.subscribe((loading) => this.busy = loading && 1);
+
+      fromEvent(document, 'scroll', { capture: true, passive: true })
+        .subscribe((event) => this.topoff(event));
     }
   }
 
@@ -60,7 +61,7 @@ export class LayoutComponent {
     this.router.navigate(path);
   }
 
-  private topoff(event: UIEvent): void {
+  private topoff(event: Event): void {
     if ((event.target as HTMLElement).classList.contains('topoff')) {
       const height = this.header.nativeElement.clientHeight;
       const scroll = (event.target as HTMLElement).scrollTop;

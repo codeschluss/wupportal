@@ -1,8 +1,8 @@
 import { OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, Selfrouter } from '@wooportal/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { mergeMap, tap } from 'rxjs/operators';
+import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, ReadParams, Selfrouter } from '@wooportal/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, mergeMap, tap } from 'rxjs/operators';
 
 export abstract class BaseListing<Model extends CrudModel>
   extends Selfrouter implements OnInit {
@@ -16,6 +16,8 @@ export abstract class BaseListing<Model extends CrudModel>
   protected abstract size: number;
 
   public items: BehaviorSubject<Model[]>;
+
+  protected params: BehaviorSubject<ReadParams>;
 
   public get next(): boolean {
     const page = (this.items.value as any).page;
@@ -43,30 +45,47 @@ export abstract class BaseListing<Model extends CrudModel>
 
   public ngOnInit(): void {
     this.items = new BehaviorSubject<Model[]>([]);
+    this.params = new BehaviorSubject<ReadParams>(Object.assign(
+      this.mapParams(this.route.snapshot.queryParams),
+      {
+        embeddings: CrudJoiner.to(this.joiner.graph),
+        page: this.route.snapshot.queryParams.page || 0,
+        size: this.size
+      }
+    ));
 
-    this.joiner.graph.params.embeddings = CrudJoiner.to(this.joiner.graph);
-    this.joiner.graph.params.size = this.size;
+    this.params.subscribe((params) => this.router.navigate([], {
+      queryParams: this.mapParams(params),
+      relativeTo: this.route
+    }));
 
-    this.fetch(this.route.snapshot.queryParams.page)
-      .subscribe((items) => this.items.next(items as Model[]));
+    this.ngPostInit();
+    this.fetch().subscribe((items) => this.items.next(items));
   }
 
   public goto(rel: number): void {
-    this.fetch((this.items.value as any).page.number + rel).pipe(
-      tap((items) => this.router.navigate([], {
-        queryParams: { page: (items as any).page.number },
-        relativeTo: this.route
-      }))
-    ).subscribe((items) => this.items.next(items as Model[]));
+    this.fetch({
+      page: (this.items.value as any).page.number + rel
+    }).subscribe((items) => this.items.next(items));
   }
 
-  private fetch(page: number = 0): Observable<Model[]> {
+  protected fetch(params?: ReadParams): Observable<Model[]> {
     const provider = this.model['provider'] as CrudProvider<BaseService, Model>;
-    this.joiner.graph.params.page = page;
+    params = Object.assign(this.params.value, params);
 
-    return provider.readAll(this.joiner.graph.params).pipe(
-      mergeMap((items) => this.crudResolver.refine(items, this.joiner.graph))
+    return provider.readAll(params).pipe(
+      mergeMap((items) => this.crudResolver.refine(items, this.joiner.graph)),
+      tap(() => this.params.next(params)),
+      catchError(() => of([]))
     ) as Observable<Model[]>;
   }
+
+  protected mapParams(params: ReadParams): ReadParams {
+    return {
+      page: params.page || null
+    };
+  }
+
+  protected ngPostInit(): void { }
 
 }

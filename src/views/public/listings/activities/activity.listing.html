@@ -1,21 +1,61 @@
-<main fxLayout="row" fxLayoutAlign="stretch">
-  <section fxHide.lt-md>
-    <iframe #maps src="/maps?embed=true"></iframe>
-  </section>
-  <section class="topoff" fxLayout="row wrap" fxLayoutAlign="center start">
-    <ng-container *ngFor="let item of items | async">
-      <activity-card
-        [item]="item"
-        (mouseenter)="handleFocus(item, $event)"
-        (mouseleave)="handleFocus(item, $event)">
-      </activity-card>
-    </ng-container>
-    <ng-container *ngIf="next || prev">
-      <pager-compat
-        [next]="next"
-        [prev]="prev"
-        (goto)="goto($event)">
-      </pager-compat>
-    </ng-container>
+<main class="boxed">
+  <header fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <mat-form-field>
+      <mat-label><i18n i18n="@@suburbs">suburbs</i18n></mat-label>
+      <mat-select multiple [formControl]="suburbCtrl">
+        <ng-container *ngFor="let item of suburbs">
+          <mat-option [value]="item.id">
+            {{ item.name }}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label><i18n i18n="@@targetGroups">targetGroups</i18n></mat-label>
+      <mat-select multiple [formControl]="targetGroupCtrl">
+        <ng-container *ngFor="let item of targetGroups">
+          <mat-option [value]="item.id">
+            {{ item.name }}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <mat-chip-list multiple selectable>
+      <ng-container *ngFor="let item of categories" ngProjectAs="mat-chip">
+        <mat-chip
+          #chip="matChip"
+          class="mat-body"
+          [style.borderColor]="item.color"
+          [style.backgroundColor]="item.color"
+          [style.color]="chip.selected ? handleColor(item.color) : null"
+          [value]="item.id"
+          (click)="chip.toggleSelected()">
+          {{ item.name }}
+        </mat-chip>
+      </ng-container>
+    </mat-chip-list>
+  </header>
+  <section fxLayout="row" fxLayoutAlign="stretch">
+    <aside fxHide.lt-lg>
+      <div><iframe #maps src="/maps?embed=true"></iframe></div>
+    </aside>
+    <nav class="topoff" fxLayout="row wrap" fxLayoutAlign="center start">
+      <ng-container *ngFor="let item of items | async">
+        <activity-card
+          [item]="item"
+          (mouseenter)="handleFocus(item, $event)"
+          (mouseleave)="handleFocus(item, $event)">
+        </activity-card>
+      </ng-container>
+      <ng-container *ngIf="next || prev">
+        <pager-compat
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          [next]="next"
+          [prev]="prev"
+          (goto)="goto($event)">
+        </pager-compat>
+      </ng-container>
+    </nav>
   </section>
 </main>

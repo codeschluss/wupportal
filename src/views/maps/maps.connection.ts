@@ -47,7 +47,7 @@ export class MapsConnection {
     const data = JSON.parse(JSON.stringify(message, (key, value) =>
       key.startsWith('_') || value instanceof Observable ? undefined : value));
 
-    this.target.postMessage(data, this.target.origin);
+    this.target.postMessage(data, this.target.origin || '*');
   }
 
 }

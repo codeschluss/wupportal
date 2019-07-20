@@ -23,6 +23,7 @@ layout-component {
 
   & > header {
     height: 10rem;
+    overflow: hidden;
     text-align: center;
     transition: height $animation-duration;
 
@@ -111,7 +112,7 @@ layout-component {
   }
 
   & > drawer-compat {
-    flex-grow: 1;
+    flex: 1 0 auto;
     position: relative;
 
     mat-drawer-container {
@@ -156,11 +157,11 @@ layout-component {
         }
 
         & > ng-component {
-          flex-grow: 1;
+          flex: 1 0 auto;
           position: relative;
 
-          main {
-            max-width: 1800px;
+          main.boxed {
+            max-width: 100rem;
             margin: 0 auto;
           }
         }

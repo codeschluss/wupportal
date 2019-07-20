@@ -115,19 +115,21 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
   public ngAfterViewInit(): void {
     const source = this.document.defaultView;
-    this.connection = new MapsConnection(source, source.parent);
     this.focus = new BehaviorSubject<ActivityModel[]>([]);
     this.items = new BehaviorSubject<ActivityModel[]>([]);
-
-    this.connection.focus.subscribe((focus) => this.focus.next(focus));
-    this.connection.items.subscribe((items) => this.items.next(items));
-    this.connection.nextReady(true);
 
     this.focus.subscribe(() => this.vector.instance.changed());
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
     this.maps.instance.once('postcompose', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () =>
       this.dialer.nativeElement.style.transform = 'scale(1)');
+
+    if (source !== source.parent) {
+      this.connection = new MapsConnection(source, source.parent);
+      this.connection.focus.subscribe((focus) => this.focus.next(focus));
+      this.connection.items.subscribe((items) => this.items.next(items));
+      this.connection.nextReady(true);
+    }
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {
@@ -255,7 +257,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       }),
       text: multi && new Text({
         fill: new Fill({ color }),
-        font: 'bold 1rem monospace',
+        font: 'bold 16px monospace',
         text: rgb.length.toString(),
         textAlign: 'center',
 

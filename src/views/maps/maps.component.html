@@ -8,6 +8,18 @@
       <aol-source-osm>
       </aol-source-osm>
     </aol-layer-tile>
+    <ng-container *ngIf="(!embedded || filled) && (focus | async).length">
+      <nav fxLayout="row" fxLayoutAlign="start" ngClass.lt-md="snap">
+        <ng-container *ngFor="let item of focus | async">
+          <activity-card #card
+            fxLayout="row"
+            fxLayoutAlign="center"
+            [item]="item"
+            (mouseenter)="card.ripple.launch(null)">
+          </activity-card>
+        </ng-container>
+      </nav>
+    </ng-container>
     <aol-view
       [enableRotation]="true"
       [zoom]="mapconf.zoomfactor">
@@ -60,7 +72,8 @@
       [color]="filled ? 'primary' : null"
       (click)="handleFill()">
       <i18n i18n="@@fullscreen">fullscreen</i18n>
-      <fa-icon [icon]="filled ? 'compress' : 'expand'"></fa-icon>
+      <fa-icon [icon]="filled ? 'compress-arrows-alt' : 'expand-arrows-alt'">
+      </fa-icon>
     </button>
     <button color mat-fab (click)="handleReset()">
       <i18n i18n="@@reset">reset</i18n>

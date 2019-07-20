@@ -9,7 +9,7 @@ import { PagerCompat } from './pager.compat.i';
       display: flex;
       justify-content: space-between;
       max-width: 25rem;
-      width: 100%
+      width: calc(100% - 3rem);
     }
 
     div { background-color: rgba(0, 0, 0, .12); width: 7.5rem; }

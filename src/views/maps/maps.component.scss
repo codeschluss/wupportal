@@ -12,6 +12,28 @@ main {
     display: block;
     height: 100%;
     width: 100%;
+
+    nav {
+      overflow-x: scroll;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+
+      &.snap {
+        scroll-snap-type: x mandatory;
+
+        & > activity-card {
+          min-width: 100%;
+        }
+      }
+
+      & > activity-card {
+        margin: 0 auto;
+        padding: 1rem;
+        scroll-snap-align: start;
+      }
+    }
   }
 
   & > fa-icon[matRipple] {

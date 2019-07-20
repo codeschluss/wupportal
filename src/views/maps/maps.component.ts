@@ -3,16 +3,18 @@ import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from 
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, PositionProvider, Selfrouter } from '@wooportal/core';
+import { CrudJoiner, CrudResolver, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import * as colorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
 import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
-import { BehaviorSubject, EMPTY, Subscription } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../realm/models/activity.model';
 import { ConfigurationModel } from '../../realm/models/configuration.model';
+import { ActivityProvider } from '../../realm/providers/activity.provider';
 import { MapsConnection } from './maps.connection';
 
 @Component({
@@ -53,6 +55,11 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
 
   private connection: MapsConnection;
 
+  private depends: CrudJoiner = CrudJoiner.of(ActivityModel)
+    .with('address').yield('suburb')
+    .with('category')
+    .with('schedules');
+
   @ViewChild('dialer', { read: ElementRef, static: true })
   private dialer: ElementRef<HTMLElement>;
 
@@ -74,6 +81,10 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   @ViewChild(ViewComponent, { static: true })
   private view: ViewComponent;
 
+  public get embedded(): boolean {
+    return this.route.snapshot.queryParams.embed === 'true';
+  }
+
   public get filled(): boolean {
     switch (true) {
       case 'fullscreenElement' in this.document:
@@ -88,6 +99,8 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   }
 
   public constructor(
+    private activityProvider: ActivityProvider,
+    private crudResolver: CrudResolver,
     @Inject(DOCUMENT) private document: Document,
     private element: ElementRef<HTMLElement>,
     private positionProvider: PositionProvider,
@@ -97,6 +110,9 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   }
 
   public ngOnInit(): void {
+    this.focus = new BehaviorSubject<ActivityModel[]>([]);
+    this.items = new BehaviorSubject<ActivityModel[]>([]);
+
     this.mapconf = {
       geomFn: this.geometry.bind(this),
       styleFn: this.styling.bind(this),
@@ -108,27 +124,29 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       zoomfactor: parseFloat(this.configuration('mapZoomfactor'))
     };
 
-    if (this.route.snapshot.queryParams.embed === 'true') {
+    if (this.embedded) {
       this.document.body.classList.add('embedded');
     }
   }
 
   public ngAfterViewInit(): void {
-    const source = this.document.defaultView;
-    this.focus = new BehaviorSubject<ActivityModel[]>([]);
-    this.items = new BehaviorSubject<ActivityModel[]>([]);
-
     this.focus.subscribe(() => this.vector.instance.changed());
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
+    this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
     this.maps.instance.once('postcompose', (e) => e.target.updateSize());
-    this.maps.instance.once('rendercomplete', () =>
-      this.dialer.nativeElement.style.transform = 'scale(1)');
+    this.maps.instance.once('rendercomplete', () => {
+      this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
+      this.dialer.nativeElement.style.transform = 'scale(1)';
+    });
 
+    const source = this.document.defaultView;
     if (source !== source.parent) {
       this.connection = new MapsConnection(source, source.parent);
       this.connection.focus.subscribe((focus) => this.focus.next(focus));
       this.connection.items.subscribe((items) => this.items.next(items));
       this.connection.nextReady(true);
+    } else {
+      this.fetch().subscribe((items) => this.items.next(items));
     }
   }
 
@@ -137,8 +155,11 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
     const items = !feature ? [] : feature[0].get('features').map((feat) =>
       this.items.value.find((item) => item.id === feat.getId()));
 
-    this.connection.nextFocus(items);
     this.focus.next(items);
+
+    if (this.connection) {
+      this.connection.nextFocus(items);
+    }
   }
 
   public handleFill(): void {
@@ -164,6 +185,17 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   private configuration(item: string): string {
     return this.route.snapshot.data.configuration
       .find((config) => config.item === item).value;
+  }
+
+  private fetch(params?: ReadParams): Observable<ActivityModel[]> {
+    params = Object.assign({
+      embeddings: CrudJoiner.to(this.depends.graph)
+    }, params);
+
+    return this.activityProvider.readAll(params).pipe(
+      mergeMap((items) => this.crudResolver.refine(items, this.depends.graph)),
+      catchError(() => of([]))
+    ) as Observable<ActivityModel[]>;
   }
 
   private filling(enable: boolean): void {

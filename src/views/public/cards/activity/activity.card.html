@@ -11,14 +11,14 @@
   </mat-card-content>
   <mat-card-header>
     <mat-card-title>
-      <a [routerLink]="[item.id]">
+      <a [routerLink]="['/activities', item.id]">
         {{ item.name }}
       </a>
     </mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-actions>
-    <a mat-button [routerLink]="[item.id]">
+    <a mat-button [routerLink]="['/activities', item.id]">
       <icon-compat icon="map-marker-alt"></icon-compat>
       <i18n i18n="@@details">details</i18n>
     </a>

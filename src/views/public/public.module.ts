@@ -67,6 +67,9 @@ const pages: Type<any>[] = [
     // TODO: remove
     SearchDummyComponent
   ],
+  exports: [
+    ...cards
+  ],
   imports: [
     ...materials,
     CoreModule,

@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule } from '@wooportal/core';
 import { AngularOpenlayersModule } from 'ngx-openlayers';
+import { PublicModule } from '../public/public.module';
 import { MapsComponent } from './maps.component';
 import { MapsRouter } from './maps.router';
 
@@ -14,6 +16,7 @@ const components: Type<any>[] = [
 
 const materials: Type<any>[] = [
   AngularOpenlayersModule,
+  FlexLayoutModule,
   FontAwesomeModule,
   MatButtonModule,
   MatRippleModule
@@ -30,7 +33,8 @@ const materials: Type<any>[] = [
     ...materials,
     CommonModule,
     CoreModule,
-    MapsRouter
+    MapsRouter,
+    PublicModule
   ]
 })
 

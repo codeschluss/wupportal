@@ -4,12 +4,17 @@ import { PagerCompat } from './pager.compat.i';
 @Component({
   selector: 'pager-compat',
   styles: [`
-    nav { display: flex; justify-content: center; }
     i18n { font-size: 1rem; padding: 0 .5rem; vertical-align: middle; }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      max-width: 25rem;
+      width: 100%
+    }
 
     div { background-color: rgba(0, 0, 0, .12); width: 7.5rem; }
-    div:first-of-type { margin-right: 1rem; text-align: left; }
-    div:last-of-type { margin-left: 1rem; text-align: right; }
+    div:first-of-type { text-align: left; }
+    div:last-of-type { text-align: right; }
 
     div:first-of-type > button { margin-left: -1.5rem; }
     div:last-of-type > button { margin-right: -1.5rem; }

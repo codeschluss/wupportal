@@ -52,7 +52,7 @@ main#admin {
       }
 
       & > output {
-        flex-grow: 1;
+        flex: 1 0 auto;
 
         mat-chip-list > *.mat-chip-list-wrapper {
           margin: 0;

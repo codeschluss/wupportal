@@ -107,7 +107,7 @@ export abstract class CrudProvider
         : this.walk(link, item);
     });
 
-    Array.isArray(input)
+    return Array.isArray(input)
       ? input.forEach((item) => linker(item))
       : linker(input);
   }

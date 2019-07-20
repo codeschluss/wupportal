@@ -9,8 +9,10 @@ main {
     }
 
     & > mat-chip-list {
-      &::ng-deep .mat-chip-list-wrapper {
-        justify-content: center;
+      &::ng-deep {
+        .mat-chip-list-wrapper {
+          justify-content: center;
+        }
       }
 
       mat-chip {

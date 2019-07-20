@@ -2,8 +2,10 @@ mat-card {
   max-width: calc(100% - 2rem);
 
   & > mat-card-header {
-    &::ng-deep .mat-card-header-text {
-      margin: 0;
+    &::ng-deep {
+      .mat-card-header-text {
+        margin: 0;
+      }
     }
 
     a {

@@ -55,13 +55,15 @@ main {
     right: calc(50% - 2.5rem);
     top: calc(50% - 2.5rem);
 
+    &::ng-deep {
+      .mat-ripple-element {
+        opacity: .24;
+      }
+    }
+
     &.show {
       opacity: .87;
       transition-delay: 1000ms;
-    }
-
-    &::ng-deep .mat-ripple-element {
-      opacity: .24;
     }
   }
 

@@ -31,6 +31,7 @@ main {
       & > activity-card {
         margin: 0 auto;
         padding: 1rem;
+        flex: 0 0 auto;
         scroll-snap-align: start;
       }
     }

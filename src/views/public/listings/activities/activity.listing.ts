@@ -91,7 +91,6 @@ export class ActivityListingComponent
 
   public ngAfterViewInit(): void {
     const params = this.mapParams(this.route.snapshot.queryParams);
-
     this.suburbCtrl.setValue(params.suburbs, { emitEvent: false });
     this.targetGroupCtrl.setValue(params.targetgroups, { emitEvent: false });
     this.chips._setSelectionByValue(params.categories, false);

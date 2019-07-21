@@ -17,7 +17,7 @@ import { HomePageComponent } from './pages/home/home.page';
 import { ImprintPageComponent } from './pages/imprint/imprint.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
 import { PublicComponent } from './public.component';
-import { materials } from './public.materials';
+import { materials } from './public.imports';
 import { PublicRouter } from './public.router';
 import { SearchDummyComponent } from './search/search.dummy';
 

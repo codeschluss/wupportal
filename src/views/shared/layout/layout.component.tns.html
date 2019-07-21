@@ -9,7 +9,6 @@
     </stack-layout>
   </action-item>
 </navbar-compat>
-
 <drawer-compat #drawer>
   <ng-template #drawerMain>
     <stack-layout>
@@ -41,6 +40,12 @@
         <stack-layout ripple [class.active]="url === '/'" (tap)="navigate('/')">
           <icon-compat icon="play-circle"></icon-compat>
           <label [text]="title"></label>
+        </stack-layout>
+        <stack-layout ripple
+          [class.active]="url.startsWith('/maps')"
+          (tap)="navigate('/maps')">
+          <icon-compat icon="globe"></icon-compat>
+          <i18n i18n="@@mapView" unit="mapView"></i18n>
         </stack-layout>
         <stack-layout ripple
           [class.active]="url.startsWith('/activities')"

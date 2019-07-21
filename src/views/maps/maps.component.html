@@ -8,7 +8,7 @@
       <aol-source-osm>
       </aol-source-osm>
     </aol-layer-tile>
-    <ng-container *ngIf="(!embedded || filled) && (focus | async).length">
+    <ng-container *ngIf="cards && (focus | async).length">
       <nav fxLayout="row" fxLayoutAlign="start" ngClass.xs="snap">
         <ng-container *ngFor="let item of focus | async">
           <activity-card #card
@@ -68,13 +68,15 @@
       <i18n i18n="@@followPosition">followPosition</i18n>
       <fa-icon icon="location-arrow"></fa-icon>
     </button>
-    <button #fill mat-fab
-      [color]="filled ? 'primary' : null"
-      (click)="handleFill()">
-      <i18n i18n="@@fullscreen">fullscreen</i18n>
-      <fa-icon [icon]="filled ? 'compress-arrows-alt' : 'expand-arrows-alt'">
-      </fa-icon>
-    </button>
+    <ng-container *ngIf="!native">
+      <button #fill mat-fab
+        [color]="filled ? 'primary' : null"
+        (click)="handleFill()">
+        <i18n i18n="@@fullscreen">fullscreen</i18n>
+        <fa-icon [icon]="filled ? 'compress-arrows-alt' : 'expand-arrows-alt'">
+        </fa-icon>
+      </button>
+    </ng-container>
     <button color mat-fab (click)="handleReset()">
       <i18n i18n="@@reset">reset</i18n>
       <fa-icon icon="undo-alt"></fa-icon>

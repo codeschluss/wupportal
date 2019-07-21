@@ -81,8 +81,8 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   @ViewChild(ViewComponent, { static: true })
   private view: ViewComponent;
 
-  public get embedded(): boolean {
-    return this.route.snapshot.queryParams.embed === 'true';
+  public get cards(): boolean {
+    return this.route.snapshot.queryParams.embed !== 'true' || this.filled;
   }
 
   public get filled(): boolean {
@@ -96,6 +96,10 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       case 'msFullscreenElement' in this.document:
         return (this.document as any).msFullscreenElement !== null;
     }
+  }
+
+  public get native(): boolean {
+    return this.route.snapshot.queryParams.embed === 'native';
   }
 
   public constructor(
@@ -123,10 +127,6 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       projection: this.configuration('mapProjection'),
       zoomfactor: parseFloat(this.configuration('mapZoomfactor'))
     };
-
-    if (this.embedded) {
-      this.document.body.classList.add('embedded');
-    }
   }
 
   public ngAfterViewInit(): void {

@@ -1,25 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { NgModule, Type } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatButtonModule } from '@angular/material/button';
-import { MatRippleModule } from '@angular/material/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CoreModule } from '@wooportal/core';
-import { AngularOpenlayersModule } from 'ngx-openlayers';
+import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
+import { CoreModule, PlatformCommonModule } from '@wooportal/core';
 import { PublicModule } from '../public/public.module';
 import { MapsComponent } from './maps.component';
+import { materials } from './maps.imports';
 import { MapsRouter } from './maps.router';
 
 const components: Type<any>[] = [
   MapsComponent
-];
-
-const materials: Type<any>[] = [
-  AngularOpenlayersModule,
-  FlexLayoutModule,
-  FontAwesomeModule,
-  MatButtonModule,
-  MatRippleModule
 ];
 
 @NgModule({
@@ -31,11 +18,12 @@ const materials: Type<any>[] = [
   ],
   imports: [
     ...materials,
-    CommonModule,
     CoreModule,
     MapsRouter,
+    PlatformCommonModule,
     PublicModule
-  ]
+  ],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 
 export class MapsModule { }

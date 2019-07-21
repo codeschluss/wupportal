@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { NavigationStart, Router, UrlSerializer } from '@angular/router';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router, UrlSerializer } from '@angular/router';
 import { LoadingProvider, PlatformProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { fromEvent } from 'rxjs';
@@ -13,9 +13,11 @@ import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
   templateUrl: 'layout.component.html'
 })
 
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
 
   public busy: 0 | 1 = 1;
+
+  public navigate: Function;
 
   public title: string = ClientPackage.config.defaults.title;
 
@@ -40,25 +42,31 @@ export class LayoutComponent {
   }
 
   public constructor(
-    private router: Router,
-    @Inject(DOCUMENT) document: Document,
-    loadingProvider: LoadingProvider,
-    platformProvider: PlatformProvider
-  ) {
-    router.events.pipe(filter((event) => event instanceof NavigationStart))
+    @Inject(DOCUMENT) private document: Document,
+    private loadingProvider: LoadingProvider,
+    private platformProvider: PlatformProvider,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
+
+  public ngOnInit(): void {
+    this.navigate = (...path: string[]) => this.router.navigate(path);
+
+    this.router.events.pipe(filter((event) => event instanceof NavigationStart))
       .subscribe(() => this.drawer.hide());
 
-    if (platformProvider.name === 'Web') {
-      loadingProvider.value.subscribe((loading) => this.busy = loading && 1);
-
-      fromEvent(document, 'scroll', { capture: true, passive: true })
-        .subscribe((event) => this.topoff(event));
+    if ('embed' in this.route.snapshot.queryParams) {
+      this.document.body.classList.add('embedded');
     }
-  }
 
-  // TODO: drop from this.tns.html
-  public navigate(...path: string[]): void {
-    this.router.navigate(path);
+    if (this.platformProvider.name !== 'Server') {
+      this.loadingProvider.value.subscribe((loads) => this.busy = loads && 1);
+
+      if (this.platformProvider.name === 'Web') {
+        fromEvent(this.document, 'scroll', { capture: true, passive: true })
+          .subscribe((event) => this.topoff(event));
+      }
+    }
   }
 
   private topoff(event: Event): void {

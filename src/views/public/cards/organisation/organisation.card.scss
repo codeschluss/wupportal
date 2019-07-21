@@ -1,12 +1,14 @@
+@import '../../../../app.theme.scss';
+
 mat-card {
   width: 20rem;
 
   & > [mat-card-image] {
     height: 12.5rem;
     font-size: 4rem;
-    color: rgba(0, 0, 0, .36);
+    color: $color-bg-dark;
 
-    background-color: rgba(0, 0, 0, .12);
+    background-color: $color-bg-light;
     background-position: center;
     background-size: cover;
 

@@ -1,9 +1,11 @@
+@import '../../../../app.theme.scss';
+
 main {
   & > header {
     width: 100%;
     padding: 0 1rem;
     margin: 1rem auto;
-    max-width: 100rem;
+    max-width: $viewport-width;
 
     & > mat-form-field {
       width: 15rem;
@@ -33,7 +35,7 @@ main {
 
   & > section {
     margin: 0 auto;
-    max-width: 100rem;
+    max-width: $viewport-width;
 
     aside {
       width: 33%;
@@ -57,13 +59,15 @@ main {
           border: none;
           border-radius: .5rem;
 
-          color: rgba(0, 0, 0, .87);
-          background-color: rgba(0, 0, 0, .12);
+          color: $color-dark;
+          background-color: $color-bg-light;
 
-          box-shadow:
-            0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-            0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-            0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+          @include _mat-theme-overridable-elevation(1, $theme-palette);
+
+          // box-shadow:
+          //   0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+          //   0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+          //   0px 1px 3px 0px rgba(0, 0, 0, 0.12);
         }
       }
     }

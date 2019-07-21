@@ -1,9 +1,14 @@
-@import '~@angular/material/theming';
 @import '~@fortawesome/fontawesome-svg-core/styles';
 @import 'app.theme.scss';
 
 @include mat-core();
 @include angular-material-theme($theme-palette);
+
+.text-dark { color: $color-dark; }
+.text-light { color: $color-light; }
+.text-primary { color: $color-primary; }
+.text-accent { color: $color-accent; }
+.text-warn { color: $color-warn; }
 
 layout-component {
   display: flex;
@@ -34,7 +39,7 @@ layout-component {
 
   & > navbar-compat:first-of-type > mat-toolbar {
     justify-content: space-between;
-    padding: 0 calc((100% - 100rem) / 2);
+    padding: 0 calc((100% - $viewport-width) / 2);
 
     * {
       font-size: 1rem;
@@ -162,13 +167,13 @@ layout-component {
           position: relative;
 
           main.boxed {
-            max-width: 100rem;
+            max-width: $viewport-width;
             margin: 0 auto;
           }
         }
 
         & > navbar-compat:last-child mat-toolbar {
-          padding: 0 calc((100% - 100rem) / 2);
+          padding: 0 calc((100% - $viewport-width) / 2);
           margin-bottom: 1.5rem;
 
           * {

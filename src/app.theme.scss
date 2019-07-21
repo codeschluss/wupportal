@@ -5,6 +5,12 @@ $animation-duration: .25s;
 $color-dark: rgba(black, .87);
 $color-light: white;
 
+$color-bg-light: rgba(black, .12);
+$color-bg-dark: rgba(black, .36);
+$color-bg-drawer: #FAFAFA;
+
+$viewport-width: 100rem;
+
 $theme-palette-primary: (
   50: #e3f2fd,
   100: #bbdefb,
@@ -113,9 +119,3 @@ $theme-palette: mat-light-theme(
 $color-primary: mat-color(map-get($theme-palette, primary));
 $color-accent: mat-color(map-get($theme-palette, accent));
 $color-warn: mat-color(map-get($theme-palette, warn));
-
-.text-dark { color: $color-dark; }
-.text-light { color: $color-light; }
-.text-primary { color: $color-primary; }
-.text-accent { color: $color-accent; }
-.text-warn { color: $color-warn; }

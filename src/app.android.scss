@@ -1,6 +1,5 @@
-@import '~nativescript-theme-core/scss/light';
-@import '~nativescript-theme-core/scss/index';
-@import '~nativescript-theme-core/scss/platforms/index.android';
+@import '~nativescript-theme-core/core';
+@import '~nativescript-theme-core/light';
 @import 'app.theme.scss';
 
 page {

@@ -1,6 +1,8 @@
+@import '../../app.theme.scss';
+
 main {
-  color: rgba(0, 0, 0, .87);
-  background-color: rgba(0, 0, 0, .12);
+  color: $color-dark;
+  background-color: $color-bg-light;
 
   position: absolute;
   bottom: 0;

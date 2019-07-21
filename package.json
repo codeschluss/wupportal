@@ -30,8 +30,10 @@
       "userId": "id"
     },
     "defaults": {
+      "appUrl": "https://wooportal.test.codeschluss.de",
       "city": "",
-      "language": "en"
+      "language": "en",
+      "title": "wooportal"
     }
   },
   "android": {

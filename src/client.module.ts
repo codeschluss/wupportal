@@ -11,7 +11,6 @@ import { ClientRouter } from './client.router';
 import { ErrorModule } from './error/error.module';
 import { ClientErrorHandler } from './error/handler/error.handler';
 import { RealmModule } from './realm/realm.module';
-import { ClientManifest } from './utils/manifest';
 import { ClientPackage } from './utils/package';
 
 fontawesome.add(freeicons);
@@ -27,9 +26,9 @@ fontawesome.add(freeicons);
       apiAuthUrl: ClientPackage.config.api.authUrl,
       apiRefreshUrl: ClientPackage.config.api.refreshUrl,
       apiRootUrl: ClientPackage.config.api.rootUrl,
-      appUrl: ClientManifest.startUrl,
+      appUrl: ClientPackage.config.defaults.appUrl,
       defaultLanguage: ClientPackage.config.defaults.language,
-      defaultTitle: ClientManifest.shortTitle
+      defaultTitle: ClientPackage.config.defaults.title
     }),
     ErrorModule,
     HttpClientModule,

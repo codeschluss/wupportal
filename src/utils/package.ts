@@ -27,8 +27,10 @@ export class ClientPackage {
       userId: string
     },
     defaults: {
+      appUrl: string,
       city: string,
-      language: string
+      language: string,
+      title: string
     }
   } = packageJson.config;
 

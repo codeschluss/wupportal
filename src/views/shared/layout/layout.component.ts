@@ -5,7 +5,7 @@ import { LoadingProvider, PlatformProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { fromEvent } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { ClientManifest } from '../../../utils/manifest';
+import { ClientPackage } from '../../../utils/package';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
 @Component({
@@ -17,7 +17,7 @@ export class LayoutComponent {
 
   public busy: 0 | 1 = 1;
 
-  public title: string = ClientManifest.shortTitle;
+  public title: string = ClientPackage.config.defaults.title;
 
   @ViewChild('drawer', { static: true })
   private drawer: DrawerCompat;

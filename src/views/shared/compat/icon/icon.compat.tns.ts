@@ -41,10 +41,9 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
   public ngAfterViewInit(): void {
     const wv = this.webview.nativeElement;
 
+    // tslint:disable-next-line
+    if(!wv.nativeView){return wv.once('loaded',()=>this.ngAfterViewInit());}
     // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
-    if (this.platformProvider.name === 'Android' && !wv.android) {
-      return wv.once('loaded', () => this.ngAfterViewInit());
-    }
 
     switch (this.platformProvider.name) {
       case 'Android':

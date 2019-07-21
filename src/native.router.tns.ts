@@ -12,6 +12,11 @@ const routes: Route[] = [
     },
     children: [
       {
+        path: 'maps',
+        loadChildren: () => import('./views/maps/maps.module')
+          .then((imported) => imported.MapsModule)
+      },
+      {
         path: '',
         loadChildren: () => import('./views/public/public.module')
           .then((imported) => imported.PublicModule)

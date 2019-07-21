@@ -50,7 +50,10 @@ page {
         & > stack-layout {
           height: 50;
           orientation: horizontal;
-          color: $color-dark;
+
+          web-view {
+            background-color: transparent;
+          }
 
           &.active {
             color: $color-primary;

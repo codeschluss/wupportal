@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterEvent } from '@angular/router';
 import { CrudJoiner, CrudResolver, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import * as colorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
@@ -108,7 +108,8 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
     @Inject(DOCUMENT) private document: Document,
     private element: ElementRef<HTMLElement>,
     private positionProvider: PositionProvider,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     super();
   }
@@ -127,6 +128,11 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       projection: this.configuration('mapProjection'),
       zoomfactor: parseFloat(this.configuration('mapZoomfactor'))
     };
+
+    if (this.native) {
+      this.router.events.subscribe((event: RouterEvent) =>
+        this.document.defaultView.location.href = event.url);
+    }
   }
 
   public ngAfterViewInit(): void {

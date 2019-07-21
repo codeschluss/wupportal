@@ -3,6 +3,11 @@ import { CoreModule, PlatformCommonModule } from '@wooportal/core';
 import { NgRippleModule } from 'nativescript-ng-ripple';
 import { ErrorBarComponent } from './bar/error.bar';
 import { ErrorDialogComponent } from './dialog/error.dialog';
+import { ErrorResponseComponent } from './response/error.response';
+
+const components: Type<any>[] = [
+  ErrorResponseComponent
+];
 
 const dialogs: Type<any>[] = [
   ErrorBarComponent,
@@ -15,6 +20,7 @@ const materials: Type<any>[] = [
 
 @NgModule({
   declarations: [
+    ...components,
     ...dialogs
   ],
   entryComponents: [

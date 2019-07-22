@@ -90,34 +90,36 @@ export class ActivityListingComponent
   }
 
   public ngAfterViewInit(): void {
-    const params = this.mapParams(this.route.snapshot.queryParams);
-    this.suburbCtrl.setValue(params.suburbs, { emitEvent: false });
-    this.targetGroupCtrl.setValue(params.targetgroups, { emitEvent: false });
-    this.chips._setSelectionByValue(params.categories, false);
+    if (this.platformProvider.type === 'Online') {
+      const params = this.mapParams(this.route.snapshot.queryParams);
+      this.suburbCtrl.setValue(params.suburbs, { emitEvent: false });
+      this.targetGroupCtrl.setValue(params.targetgroups, { emitEvent: false });
+      this.chips._setSelectionByValue(params.categories, false);
 
-    merge(
-      this.chips.chipSelectionChanges.pipe(map(() => ({
-        categories: Arr(this.chips.selected).map((chip) => chip.value)
-      }))),
-      this.suburbCtrl.valueChanges.pipe(map((value) => ({
-        suburbs: Arr(value)
-      }))),
-      this.targetGroupCtrl.valueChanges.pipe(map((value) => ({
-        targetgroups: Arr(value)
-      })))
-    ).pipe(map((p) => Object.assign(p, { page: 0 }))).subscribe((p) =>
-      this.fetch(p).subscribe((items) => this.items.next(items)));
+      merge(
+        this.chips.chipSelectionChanges.pipe(map(() => ({
+          categories: Arr(this.chips.selected).map((chip) => chip.value)
+        }))),
+        this.suburbCtrl.valueChanges.pipe(map((value) => ({
+          suburbs: Arr(value)
+        }))),
+        this.targetGroupCtrl.valueChanges.pipe(map((value) => ({
+          targetgroups: Arr(value)
+        })))
+      ).pipe(map((p) => Object.assign(p, { page: 0 }))).subscribe((p) =>
+        this.fetch(p).subscribe((items) => this.items.next(items)));
 
-    if (this.platformProvider.name === 'Web') {
-      const source = this.document.defaultView;
-      const target = this.maps.nativeElement.contentWindow;
+      if (this.platformProvider.name === 'Web') {
+        const source = this.document.defaultView;
+        const target = this.maps.nativeElement.contentWindow;
 
-      this.connection = new MapsConnection(source, target);
-      this.connection.focus.subscribe((focus) => this.focusing(focus));
-      this.connection.nextReady(true);
+        this.connection = new MapsConnection(source, target);
+        this.connection.focus.subscribe((focus) => this.focusing(focus));
+        this.connection.nextReady(true);
 
-      this.connection.ready.pipe(filter(Boolean), take(1)).subscribe(() =>
-        this.items.subscribe((items) => this.connection.nextItems(items)));
+        this.connection.ready.pipe(filter(Boolean), take(1)).subscribe(() =>
+          this.items.subscribe((items) => this.connection.nextItems(items)));
+      }
     }
   }
 

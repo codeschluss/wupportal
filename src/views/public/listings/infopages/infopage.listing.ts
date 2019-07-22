@@ -1,25 +1,23 @@
-import { Component } from '@angular/core';
-import { Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfrouter } from '@wooportal/core';
-import { TopicModel } from '../../../../realm/models/topic.model';
+import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@wooportal/core';
+import { PageModel } from '../../../../realm/models/page.model';
+import { BaseListing } from '../base.listing';
 
 @Component({
   styleUrls: ['infopage.listing.scss'],
   templateUrl: 'infopage.listing.html'
 })
 
-export class InfopageListingComponent extends Selfrouter {
+export class InfopageListingComponent
+  extends BaseListing<PageModel> {
 
-  protected routing: Route = {
-    path: 'infopages',
-    resolve: {
-      infopages: CrudResolver
-    },
-    data: {
-      resolve: {
-        infopages: CrudJoiner.of(TopicModel)
-      }
-    }
-  };
+  protected joiner: CrudJoiner = CrudJoiner.of(PageModel)
+    .with('topic');
+
+  protected model: Type<PageModel> = PageModel;
+
+  protected path: string = 'infopages';
+
+  protected size: number = 8;
 
 }

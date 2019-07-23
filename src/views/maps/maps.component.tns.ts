@@ -33,10 +33,10 @@ export class MapsComponent extends Selfrouter
   }
 
   public ngOnInit(): void {
-    const request = Object.create(HttpRequest);
-    this.loadingProvider.enqueue(request);
+    const block = Object.create(HttpRequest);
+    this.loadingProvider.enqueue(block);
     this.webview.nativeElement.once('loadFinished', () =>
-      this.loadingProvider.finished(request));
+      this.loadingProvider.finished(block));
   }
 
   public ngAfterViewInit(): void {

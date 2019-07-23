@@ -1,9 +1,10 @@
 import { DOCUMENT } from '@angular/common';
+import { HttpRequest } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route, Router, RouterEvent } from '@angular/router';
-import { CrudJoiner, CrudResolver, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
+import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import * as colorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
@@ -52,6 +53,8 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       }
     }
   };
+
+  private block: HttpRequest<any> = Object.create(HttpRequest);
 
   private connection: MapsConnection;
 
@@ -107,6 +110,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
     private crudResolver: CrudResolver,
     @Inject(DOCUMENT) private document: Document,
     private element: ElementRef<HTMLElement>,
+    private loadingProvider: LoadingProvider,
     private positionProvider: PositionProvider,
     private route: ActivatedRoute,
     private router: Router
@@ -117,6 +121,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
   public ngOnInit(): void {
     this.focus = new BehaviorSubject<ActivityModel[]>([]);
     this.items = new BehaviorSubject<ActivityModel[]>([]);
+    this.loadingProvider.enqueue(this.block);
 
     this.mapconf = {
       geomFn: this.geometry.bind(this),
@@ -143,6 +148,7 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
     this.maps.instance.once('rendercomplete', () => {
       this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
       this.dialer.nativeElement.style.transform = 'scale(1)';
+      this.loadingProvider.finished(this.block);
     });
 
     const source = this.document.defaultView;

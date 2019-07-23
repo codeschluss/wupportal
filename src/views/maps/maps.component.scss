@@ -16,13 +16,24 @@ main {
     width: 100%;
 
     nav {
-      overflow-x: scroll;
+      direction: rtl;
+      overflow: hidden scroll;
+
       position: absolute;
+      bottom: 0;
       left: 0;
-      right: 0;
       top: 0;
 
+      &.rowed {
+        direction: ltr;
+        overflow: scroll hidden;
+
+        bottom: auto;
+        right: 0;
+      }
+
       &.snap {
+        @extend .rowed;
         scroll-snap-type: x mandatory;
 
         & > activity-card {
@@ -34,6 +45,8 @@ main {
         margin: 0 auto;
         padding: 1rem;
         flex: 0 0 auto;
+
+        direction: ltr;
         scroll-snap-align: start;
       }
     }

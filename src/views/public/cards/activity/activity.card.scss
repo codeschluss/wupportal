@@ -1,44 +1,48 @@
 @import '../../../../app.theme.scss';
 
-mat-card {
-  width: 17.5rem;
+a {
+  text-decoration: inherit;
 
-  & > mat-card-header {
-    display: flex;
-    align-items: flex-end;
-    min-height: 5rem;
-  }
+  & > mat-card {
+    width: 17.5rem;
 
-  & > mat-card-content {
-    & > icon-compat {
-      float: right;
-      font-size: 4rem;
+    & > mat-card-header {
+      display: flex;
+      align-items: flex-end;
+      min-height: 5rem;
     }
-  }
 
-  & > mat-divider {
-    border-top-color: inherit;
-    opacity: .36;
-  }
+    & > mat-card-content {
+      & > icon-compat {
+        float: right;
+        font-size: 4rem;
+      }
+    }
 
-  & > mat-card-actions {
-    button[disabled] {
-      color: inherit;
+    & > mat-divider {
+      border-top-color: inherit;
       opacity: .36;
     }
-  }
 
-  &::ng-deep {
-    .mat-ripple-element {
-      opacity: .12;
+    & > mat-card-actions {
+      button[disabled] {
+        color: inherit;
+        opacity: .36;
+      }
+    }
 
-      transform-origin: 0 0;
-      border-radius: 0 0 100% 0;
+    &::ng-deep {
+      .mat-ripple-element {
+        opacity: .12;
 
-      height: 150% !important;
-      width: 150% !important;
-      left: 0 !important;
-      top: 0 !important;
+        transform-origin: 0 0;
+        border-radius: 0 0 100% 0;
+
+        height: 150% !important;
+        width: 150% !important;
+        left: 0 !important;
+        top: 0 !important;
+      }
     }
   }
 }

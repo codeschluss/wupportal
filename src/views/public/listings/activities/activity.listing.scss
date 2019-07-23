@@ -22,6 +22,9 @@ main {
         border: .25rem solid;
         cursor: pointer;
 
+        flex-grow: 1;
+        justify-content: center;
+
         &:focus:not(:hover)::after {
           opacity: 0;
         }

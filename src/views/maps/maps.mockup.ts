@@ -6,6 +6,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   styles: [`
+    @keyframes fade {
+      from { opacity: .36; }
+      to { opacity: .87; }
+    }
+    fa-icon {
+      animation: fade .5s infinite alternate;
+    }
     main {
       font-size: 4rem;
       color: rgba(0, 0, 0, .87);

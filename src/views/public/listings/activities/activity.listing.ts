@@ -23,9 +23,11 @@ import { BaseListing } from '../base.listing';
 export class ActivityListingComponent
   extends BaseListing<ActivityModel> implements AfterViewInit {
 
-  public suburbCtrl = new FormControl();
+  public ellipsis: boolean = true;
 
-  public targetGroupCtrl = new FormControl();
+  public suburbCtrl: FormControl = new FormControl();
+
+  public targetGroupCtrl: FormControl = new FormControl();
 
   protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
     .with('address').yield('suburb')
@@ -36,7 +38,7 @@ export class ActivityListingComponent
 
   protected path: string = 'activities';
 
-  protected size: number = 9;
+  protected size: number = 12;
 
   private connection: MapsConnection;
 
@@ -50,7 +52,9 @@ export class ActivityListingComponent
   private maps: ElementRef<HTMLIFrameElement>;
 
   public get categories(): SuburbModel[] {
-    return this.route.snapshot.data.categories || [];
+    return this.ellipsis
+      ? (this.route.snapshot.data.categories || []).slice(0, 5)
+      : this.route.snapshot.data.categories || [];
   }
 
   public get suburbs(): SuburbModel[] {

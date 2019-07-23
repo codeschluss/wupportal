@@ -117,10 +117,11 @@ export class ActivityListingComponent
 
         this.connection = new MapsConnection(source, target);
         this.connection.focus.subscribe((focus) => this.focusing(focus));
-        this.connection.nextReady(true);
-
+        this.connection.route.subscribe((r) => this.router.navigateByUrl(r));
         this.connection.ready.pipe(filter(Boolean), take(1)).subscribe(() =>
           this.items.subscribe((items) => this.connection.nextItems(items)));
+
+        this.connection.nextReady(true);
       }
     }
   }

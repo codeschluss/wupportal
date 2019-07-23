@@ -50,7 +50,6 @@ export class MapsComponent extends Selfrouter
     wv.on('loadStarted', (event: LoadEventData) => {
       if (event.url !== this.source) {
         wv.stopLoading();
-        wv.disposeNativeView();
 
         if (event.url.startsWith(url)) {
           this.router.navigateByUrl(event.url.replace(url, ''));

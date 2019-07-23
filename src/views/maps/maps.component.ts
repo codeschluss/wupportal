@@ -133,11 +133,6 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       projection: this.configuration('mapProjection'),
       zoomfactor: parseFloat(this.configuration('mapZoomfactor'))
     };
-
-    if (this.native) {
-      this.router.events.subscribe((event: RouterEvent) =>
-        this.document.defaultView.location.href = event.url);
-    }
   }
 
   public ngAfterViewInit(): void {
@@ -159,6 +154,14 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
       this.connection.nextReady(true);
     } else {
       this.fetch().subscribe((items) => this.items.next(items));
+    }
+
+    if (this.route.snapshot.queryParams.embed) {
+      this.router.events.subscribe((event: RouterEvent) => {
+        return this.connection
+          ? this.connection.nextRoute(event.url)
+          : this.document.defaultView.location.href = event.url;
+      });
     }
   }
 

@@ -10,7 +10,7 @@ import { ScheduleModel } from '../../../realm/models/schedule.model';
   template: BaseFieldComponent.template(`
     <mat-chip-list #chips class="mat-body-strong">
       <input readonly [id]="field.name" [matChipInputFor]="chips">
-      <ng-container *ngFor="let item of sorted" ngProjectAs="mat-chip">
+      <ng-container ngProjectAs="mat-chip" *ngFor="let item of sorted">
         <mat-chip [selectable]="false" (removed)="delete(item)">
           <strong>{{ date(item) }}</strong>&nbsp;{{ time(item) }}
           <span matChipRemove>&#x274c;</span>

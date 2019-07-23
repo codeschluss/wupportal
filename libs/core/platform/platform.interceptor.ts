@@ -64,9 +64,9 @@ export class PlatformInterceptor implements HttpInterceptor {
     Observable<HttpEvent<any>> {
 
     if (request.url.startsWith('/')) {
-      request = request.clone({
+      return next.handle(request.clone({
         url: this.coreSettings.appUrl + request.url
-      });
+      }));
     }
 
     return next.handle(request);

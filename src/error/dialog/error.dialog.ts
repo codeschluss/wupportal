@@ -9,7 +9,7 @@ import { ClientPackage } from '../../utils/package';
 
 export class ErrorDialogComponent {
 
-  public package = ClientPackage;
+  public package: ClientPackage = ClientPackage;
 
   public constructor(
     @Inject(MAT_DIALOG_DATA) public data: any

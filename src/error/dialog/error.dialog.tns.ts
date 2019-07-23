@@ -10,9 +10,9 @@ import { ClientPackage } from '../../utils/package';
 
 export class ErrorDialogComponent {
 
-  public openUrl = openUrl;
+  public openUrl: Function = openUrl;
 
-  public package = ClientPackage;
+  public package: ClientPackage = ClientPackage;
 
   public constructor(
     public data: ModalDialogParams

@@ -1,16 +1,19 @@
+import { JSONSchema } from '@ngx-pwa/local-storage';
+
 export class AccessTokenModel {
 
-  public static readonly schema = {
+  public static readonly schema: JSONSchema = {
+    type: 'object',
     properties: {
       exp: { type: 'integer' },
       id: { type: 'string' },
       raw: { type: 'string' },
-      scopes: { items: { const: 'access' } },
+      scopes: {  type: 'array', items: { const: 'access', type: 'string' } },
       sub: { type: 'string' },
 
-      adminOrgas: { items: { type: 'string' } },
-      approvedOrgas: { items: { type: 'string' } },
-      createdActivities: { items: { type: 'string' } },
+      adminOrgas: { type: 'array', items: { type: 'string' } },
+      approvedOrgas: { type: 'array', items: { type: 'string' } },
+      createdActivities: { type: 'array', items: { type: 'string' } },
       superuser: { type: 'boolean' }
     }
   };

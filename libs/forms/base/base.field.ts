@@ -23,7 +23,7 @@ export class BaseFieldComponent implements OnInit {
     return `
       <mat-form-field [formGroup]="group">
         ${template}
-        <ng-container *ngFor="let error of errors" ngProjectAs="mat-error">
+        <ng-container ngProjectAs="mat-error" *ngFor="let error of errors">
           <mat-error>
             <ng-container [ngSwitch]="error">
               <ng-container *ngSwitchCase="'minLength'">

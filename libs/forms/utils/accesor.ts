@@ -15,15 +15,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class FileValueAccessorDirective implements ControlValueAccessor {
 
   @HostListener('change', ['$event.target.files'])
-  public onChange = (_: any) => { }
+  public onChange: (_: any) => void = (_: any) => { }
 
   @HostListener('blur')
-  public onTouched = () => { }
+  public onTouched: () => void = () => { }
 
   public registerOnChange(fn: (_: any) => { }): void { this.onChange = fn; }
 
   public registerOnTouched(fn: () => { }): void { this.onTouched = fn; }
 
-  public writeValue(value): void { }
+  public writeValue(_: any): void { }
 
 }

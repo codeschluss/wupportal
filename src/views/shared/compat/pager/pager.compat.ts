@@ -4,7 +4,7 @@ import { PagerCompat } from './pager.compat.i';
 @Component({
   selector: 'pager-compat',
   styles: [`
-    i18n { font-size: 1rem; padding: 0 .5rem; vertical-align: middle; }
+    i18n { font-size: 1rem; vertical-align: middle; }
     nav {
       display: flex;
       justify-content: space-between;
@@ -16,8 +16,8 @@ import { PagerCompat } from './pager.compat.i';
     div:first-of-type { text-align: left; }
     div:last-of-type { text-align: right; }
 
-    div:first-of-type > button { margin-left: -1.5rem; }
-    div:last-of-type > button { margin-right: -1.5rem; }
+    div:first-of-type > button { margin-left: -1.5rem; margin-right: .5rem; }
+    div:last-of-type > button { margin-left: .5rem; margin-right: -1.5rem; }
     button[disabled] { background: #888 !important; color: #FFF !important; }
 
     span { border: 1.25rem solid transparent; }

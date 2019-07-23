@@ -173,7 +173,7 @@ layout-component {
         }
 
         & > navbar-compat:last-child mat-toolbar {
-          padding: 0 calc((100% - $viewport-width) / 2);
+          padding: 0 calc((100% - #{$viewport-width}) / 2);
           margin-bottom: 1.5rem;
 
           * {

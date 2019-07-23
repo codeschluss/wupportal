@@ -10,7 +10,7 @@ import { BaseFieldComponent } from '../base/base.field';
 @Component({
   template: BaseFieldComponent.template(`
     <mat-chip-list #chips>
-      <ng-container *ngFor="let item of value" ngProjectAs="mat-chip">
+      <ng-container ngProjectAs="mat-chip" *ngFor="let item of value">
         <mat-chip [selectable]="false" (removed)="delete(item)">
           {{ toLabel(item) }}<span matChipRemove>&#x274c;</span>
         </mat-chip>

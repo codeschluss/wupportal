@@ -106,7 +106,7 @@ main {
         opacity: 0;
       }
 
-      i18n {
+      [compat=i18n] {
         pointer-events: none;
 
         background-color: $color-dark;
@@ -118,7 +118,7 @@ main {
         right: 5rem;
       }
       &[disabled=true] {
-        i18n {
+        [compat=i18n] {
           opacity: .24;
         }
       }

@@ -28,10 +28,10 @@
               (blur)="search.className = input.text ? 'float-label' : null"
               (focus)="search.className = 'float-label'"
               (returnPress)="input.text && navigate('/search', input.text)"
-              (textChange)="submit.className = input.text ? null : 'gray'">
+              (textChange)="submit.className = input.text ? null : 'off'">
             </text-field>
             <i18n i18n="@@search" unit="search"></i18n>
-            <grid-layout #submit ripple class="gray"
+            <grid-layout #submit ripple class="off"
               (tap)="input.text && navigate('/search', input.text)">
               <icon-compat icon="chevron-circle-right"></icon-compat>
             </grid-layout>

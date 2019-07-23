@@ -23,7 +23,7 @@ export abstract class BaseTable<Model extends CrudModel>
   protected abstract model: Type<Model>;
 
   @HostBinding('class')
-  public class: string = 'base-table';
+  public readonly class: string = 'base-table';
 
   public collate: string[] = [];
 

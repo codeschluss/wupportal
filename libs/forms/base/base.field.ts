@@ -11,7 +11,7 @@ import { FormField } from './base.form';
 export class BaseFieldComponent implements OnInit {
 
   @HostBinding('class')
-  public class: string = 'base-field';
+  public readonly class: string = 'base-field';
 
   @Input()
   public field: FormField;

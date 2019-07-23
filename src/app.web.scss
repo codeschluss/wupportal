@@ -21,7 +21,7 @@ layout-component {
   top: 0;
 
   body.embedded & {
-    & > header, navbar-compat {
+    & > header, [compat=navbar] {
       display: none;
     }
   }
@@ -37,9 +37,9 @@ layout-component {
     }
   }
 
-  & > navbar-compat:first-of-type > mat-toolbar {
+  & > [compat=navbar]:first-of-type > mat-toolbar {
     justify-content: space-between;
-    padding: 0 calc((100% - $viewport-width) / 2);
+    padding: 0 calc((100% - #{$viewport-width}) / 2);
 
     * {
       font-size: 1rem;
@@ -60,7 +60,7 @@ layout-component {
         display: inline-block;
       }
 
-      icon-compat {
+     [compat=icon] {
         padding-right: .5rem;
       }
     }
@@ -82,10 +82,10 @@ layout-component {
 
   // TODO: fix ssr fxHide/fxShow
   @media screen and (max-width: 959.99px) and (min-width: 0px) {
-    & > navbar-compat:last-of-type { display: block; }
+    & > [compat=navbar]:last-of-type { display: block; }
   }
 
-  & > navbar-compat:last-of-type > mat-toolbar {
+  & > [compat=navbar]:last-of-type > mat-toolbar {
     @extend .mat-primary;
 
     mat-progress-spinner {
@@ -117,7 +117,7 @@ layout-component {
     }
   }
 
-  & > drawer-compat {
+  & > [compat=drawer] {
     flex: 1 0 auto;
     position: relative;
 
@@ -172,7 +172,7 @@ layout-component {
           }
         }
 
-        & > navbar-compat:last-child mat-toolbar {
+        & > [compat=navbar]:last-child mat-toolbar {
           padding: 0 calc((100% - #{$viewport-width}) / 2);
           margin-bottom: 1.5rem;
 
@@ -190,7 +190,7 @@ layout-component {
             }
           }
 
-          icon-compat {
+         [compat=icon] {
             padding-right: .5rem;
           }
         }
@@ -244,7 +244,7 @@ layout-component {
           }
         }
 
-        icon-compat {
+       [compat=icon] {
           text-align: center;
           width: 2.5rem;
         }

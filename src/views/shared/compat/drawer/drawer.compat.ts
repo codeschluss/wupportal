@@ -1,4 +1,4 @@
-import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ContentChild, HostBinding, TemplateRef, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DrawerCompat } from './drawer.compat.i';
@@ -21,6 +21,9 @@ import { DrawerCompat } from './drawer.compat.i';
 })
 
 export class DrawerCompatComponent implements DrawerCompat {
+
+  @HostBinding('attr.compat')
+  public readonly compat: string = 'drawer';
 
   @ViewChild(MatDrawer, { static: true })
   public instance: MatDrawer;

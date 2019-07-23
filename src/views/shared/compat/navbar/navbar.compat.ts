@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { NavbarCompat } from './navbar.compat.i';
 
 @Component({
@@ -14,6 +14,9 @@ import { NavbarCompat } from './navbar.compat.i';
 })
 
 export class NavbarCompatComponent implements NavbarCompat {
+
+  @HostBinding('attr.compat')
+  public readonly compat: string = 'navbar';
 
   @Input()
   public title: string;

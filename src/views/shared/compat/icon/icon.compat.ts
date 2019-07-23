@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { IconCompat } from './icon.compat.i';
 
 @Component({
@@ -9,6 +9,9 @@ import { IconCompat } from './icon.compat.i';
 })
 
 export class IconCompatComponent implements IconCompat {
+
+  @HostBinding('attr.compat')
+  public readonly compat: string = 'icon';
 
   @Input()
   public icon: string;

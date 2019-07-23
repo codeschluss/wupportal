@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 
 export interface DrawerCompat {
 
+  readonly compat: string;
+
   instance: any;
 
   main: TemplateRef<any>;

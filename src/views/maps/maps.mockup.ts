@@ -47,7 +47,6 @@ export class MapsComponent implements OnInit {
 
 }
 
-
 @NgModule({
   exports: [RouterModule],
   imports: [RouterModule.forChild([
@@ -59,7 +58,6 @@ export class MapsComponent implements OnInit {
 })
 
 export class MapsRouter { }
-
 
 @NgModule({
   declarations: [

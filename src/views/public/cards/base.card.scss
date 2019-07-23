@@ -20,7 +20,7 @@ mat-card {
     margin-bottom: -.5rem;
     padding-bottom: 0;
 
-    icon-compat {
+    [compat=icon] {
       padding-right: .5rem;
     }
   }

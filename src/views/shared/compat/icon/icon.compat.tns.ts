@@ -1,8 +1,14 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { PlatformProvider } from '@wooportal/core';
+import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
+import { ContentView } from 'tns-core-modules/ui/page';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { IconCompat } from './icon.compat.i';
+
+if (!isKnownView('icon-compat')) {
+  registerElement('icon-compat', () => ContentView);
+}
 
 @Component({
   selector: 'icon-compat',
@@ -12,6 +18,9 @@ import { IconCompat } from './icon.compat.i';
 })
 
 export class IconCompatComponent implements IconCompat, AfterViewInit {
+
+  @HostBinding('attr.compat')
+  public readonly compat: string = 'icon';
 
   @Input()
   public icon: string;

@@ -66,7 +66,7 @@ export class RequestDialogComponent implements OnInit {
       map(() => this.search.value || null),
       debounceTime(1000),
       // https://github.com/ReactiveX/rxjs/issues/4772
-      // tslint:disable-next-line: deprecation
+      // tslint:disable-next-line:deprecation
       startWith(null),
       distinctUntilChanged(),
       mergeMap((label) => this.suggest(label)),

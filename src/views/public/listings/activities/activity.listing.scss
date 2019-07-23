@@ -84,7 +84,7 @@ main {
         max-width: calc(100% - 2rem);
       }
 
-      & > pager-compat {
+      & > [compat=pager] {
         margin: 1rem 1rem 2rem 1rem;
         width: 100%;
       }

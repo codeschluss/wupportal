@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { PagerCompat } from './pager.compat.i';
 
 @Component({
@@ -59,6 +59,9 @@ import { PagerCompat } from './pager.compat.i';
 })
 
 export class PagerCompatComponent implements PagerCompat {
+
+  @HostBinding('attr.compat')
+  public readonly compat: string = 'pager';
 
   @Output()
   public goto: EventEmitter<number> = new EventEmitter<number>();

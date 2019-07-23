@@ -1,8 +1,14 @@
-import { AfterViewInit, Component, ElementRef, Input, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, Input, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { Label } from 'tns-core-modules/ui/label';
+import { ContentView } from 'tns-core-modules/ui/page';
 import { I18nComponent as Compat } from './i18n.component.i';
 import { I18nResolver, TRANSLATIONS_FACTORY } from './i18n.resolver';
+
+if (!isKnownView('i18n')) {
+  registerElement('i18n', () => ContentView);
+}
 
 @Component({
   providers: [
@@ -25,6 +31,9 @@ import { I18nResolver, TRANSLATIONS_FACTORY } from './i18n.resolver';
 })
 
 export class I18nComponent implements Compat, AfterViewInit {
+
+  @HostBinding('attr.compat')
+  public readonly compat: string = 'i18n';
 
   public text: string;
 

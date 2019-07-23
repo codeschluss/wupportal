@@ -12,7 +12,7 @@ export class ErrorDialogComponent {
 
   public openUrl: Function = openUrl;
 
-  public package: ClientPackage = ClientPackage;
+  public package: typeof ClientPackage = ClientPackage;
 
   public constructor(
     public data: ModalDialogParams

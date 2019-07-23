@@ -52,9 +52,7 @@ export class ActivityListingComponent
   private maps: ElementRef<HTMLIFrameElement>;
 
   public get categories(): SuburbModel[] {
-    return this.ellipsis
-      ? (this.route.snapshot.data.categories || []).slice(0, 5)
-      : this.route.snapshot.data.categories || [];
+    return this.route.snapshot.data.categories || [];
   }
 
   public get suburbs(): SuburbModel[] {

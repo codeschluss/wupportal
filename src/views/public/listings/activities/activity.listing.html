@@ -21,23 +21,26 @@
       </mat-select>
     </mat-form-field>
     <mat-chip-list multiple selectable>
-      <ng-container ngProjectAs="mat-chip" *ngFor="let item of categories">
+      <ng-container *ngFor="let item of categories; let i = index">
         <mat-chip
           #chip="matChip"
           class="mat-body"
           [style.borderColor]="item.color"
           [style.backgroundColor]="item.color"
           [style.color]="chip.selected ? handleColor(item.color) : null"
+          [style.display]="ellipsis && i > 5 ? 'none' : null"
           [value]="item.id"
           (click)="chip.toggleSelected()">
           {{ item.name }}
         </mat-chip>
       </ng-container>
-      <ng-container *ngIf="ellipsis">
-        <mat-chip class="mat-body" (click)="ellipsis = false">
-          <icon-compat icon="ellipsis-h"></icon-compat>
-        </mat-chip>
-      </ng-container>
+      <mat-chip
+        #chip="matChip"
+        class="mat-body"
+        [style.display]="ellipsis || categories.length < 5 ? null : 'none'"
+        (click)="ellipsis = false">
+        <icon-compat icon="ellipsis-h"></icon-compat>
+      </mat-chip>
     </mat-chip-list>
   </header>
   <section fxLayout="row" fxLayoutAlign="stretch">

@@ -5,6 +5,7 @@ import { LoadingProvider, PlatformProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { fromEvent } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { AndroidActivityBackPressedEventData } from 'tns-core-modules/application';
 import { ClientPackage } from '../../../utils/package';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
@@ -65,6 +66,12 @@ export class LayoutComponent implements OnInit {
       if (this.platformProvider.name === 'Web') {
         fromEvent(this.document, 'scroll', { capture: true, passive: true })
           .subscribe((event) => this.topoff(event));
+      } else if (this.platformProvider.name === 'Android') {
+        fromEvent(this.platformProvider.engine, 'activityBackPressed')
+          .subscribe((event: AndroidActivityBackPressedEventData) => {
+            event.cancel = true;
+            this.drawer.toggle();
+          });
       }
     }
   }

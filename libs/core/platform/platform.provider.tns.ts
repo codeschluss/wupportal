@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { publish, refCount } from 'rxjs/operators';
+import { android, ios } from 'tns-core-modules/application';
 import { connectionType, getConnectionType, startMonitoring, stopMonitoring } from 'tns-core-modules/connectivity';
 import { device } from 'tns-core-modules/platform';
 import { CoreSettings } from '../utils/settings';
@@ -21,7 +22,10 @@ export class PlatformProvider implements Compat {
   }
 
   public get engine(): any {
-    return null;
+    switch (this.name) {
+      case 'Android': return android;
+      case 'iOS': return ios;
+    }
   }
 
   public get language(): string {

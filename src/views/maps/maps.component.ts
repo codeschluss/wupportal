@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpRequest } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route, Router, RouterEvent } from '@angular/router';
@@ -23,7 +23,8 @@ import { MapsConnection } from './maps.connection';
   templateUrl: 'maps.component.html'
 })
 
-export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
+export class MapsComponent
+  extends Selfrouter implements OnInit, AfterViewInit, OnDestroy {
 
   public followed: Subscription = EMPTY.subscribe();
 
@@ -163,6 +164,10 @@ export class MapsComponent extends Selfrouter implements OnInit, AfterViewInit {
           : this.document.defaultView.location.href = event.url;
       });
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.loadingProvider.finished(this.block);
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {

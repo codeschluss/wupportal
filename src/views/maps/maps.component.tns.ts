@@ -1,7 +1,8 @@
 import { HttpRequest } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { LoadingProvider, PlatformProvider, Selfrouter } from '@wooportal/core';
+import { fromEvent } from 'rxjs';
 import { LoadEventData, WebView } from 'tns-core-modules/ui/web-view';
 import { ClientPackage } from '../../utils/package';
 
@@ -10,12 +11,14 @@ import { ClientPackage } from '../../utils/package';
   templateUrl: 'maps.component.html'
 })
 
-export class MapsComponent extends Selfrouter
-  implements OnInit, AfterViewInit {
+export class MapsComponent
+  extends Selfrouter implements OnInit, AfterViewInit, OnDestroy {
 
   protected routing: Route = {
     path: ''
   };
+
+  private block: HttpRequest<any> = Object.create(HttpRequest);
 
   @ViewChild('webview', { read: ElementRef, static: true })
   private webview: ElementRef<WebView>;
@@ -33,10 +36,9 @@ export class MapsComponent extends Selfrouter
   }
 
   public ngOnInit(): void {
-    const block = Object.create(HttpRequest);
-    this.loadingProvider.enqueue(block);
+    this.loadingProvider.enqueue(this.block);
     this.webview.nativeElement.once('loadFinished', () =>
-      this.loadingProvider.finished(block));
+      this.loadingProvider.finished(this.block));
   }
 
   public ngAfterViewInit(): void {
@@ -47,8 +49,9 @@ export class MapsComponent extends Selfrouter
     if(!wv.nativeView){return wv.once('loaded',()=>this.ngAfterViewInit());}
     // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
 
-    wv.on('loadStarted', (event: LoadEventData) => {
+    fromEvent(wv, 'loadStarted').subscribe((event: LoadEventData) => {
       if (event.url !== this.source) {
+        wv.style.visibility = 'hidden';
         wv.stopLoading();
 
         if (event.url.startsWith(url)) {
@@ -59,6 +62,7 @@ export class MapsComponent extends Selfrouter
 
     switch (this.platformProvider.name) {
       case 'Android':
+        wv.android.getSettings().setGeolocationEnabled(true);
         wv.android.getSettings().setJavaScriptEnabled(true);
         return;
 
@@ -66,6 +70,10 @@ export class MapsComponent extends Selfrouter
         // TODO: BUY_MAC
         return;
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.loadingProvider.finished(this.block);
   }
 
 }

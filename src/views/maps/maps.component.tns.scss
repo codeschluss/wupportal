@@ -1,6 +1,8 @@
+@import '../../app.theme.scss';
+
 grid-layout {
-  web-view {
-    height: 100%;
-    width: 100%;
-  }
+  height: 100%;
+  width: 100%;
+
+  background-color: $color-bg-drawer;
 }

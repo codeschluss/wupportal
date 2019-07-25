@@ -49,7 +49,9 @@
 </navbar-compat>
 <navbar-compat [title]="title" fxHide.gt-sm>
   <span [style.flexGrow]="1"></span>
-  <mat-progress-spinner mode="indeterminate" [style.opacity]="busy">
+  <mat-progress-spinner
+    mode="indeterminate"
+    [style.opacity]="busy | async">
   </mat-progress-spinner>
   <button mat-icon-button (click)="drawer.toggle()">
     <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
@@ -58,7 +60,9 @@
 </navbar-compat>
 <drawer-compat #drawer>
   <ng-template #drawerMain>
-    <mat-progress-bar fxHide.lt-md mode="indeterminate" [style.opacity]="busy">
+    <mat-progress-bar fxHide.lt-md
+      mode="indeterminate"
+      [style.opacity]="busy | async">
     </mat-progress-bar>
     <router-outlet></router-outlet>
     <navbar-compat fxHide.lt-md>

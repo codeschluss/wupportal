@@ -1,7 +1,7 @@
 <navbar-compat [title]="title">
   <action-item ios.position="right">
     <stack-layout>
-      <activity-indicator [busy]="busy"></activity-indicator>
+      <activity-indicator [busy]="busy | async"></activity-indicator>
       <grid-layout (tap)="drawer.toggle()">
         <icon-compat [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
         </icon-compat>

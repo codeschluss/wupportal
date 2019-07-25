@@ -3,7 +3,7 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, NavigationStart, Router, UrlSerializer } from '@angular/router';
 import { LoadingProvider, PlatformProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
-import { fromEvent } from 'rxjs';
+import { BehaviorSubject, fromEvent } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData } from 'tns-core-modules/application';
 import { ClientPackage } from '../../../utils/package';
@@ -16,7 +16,7 @@ import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
 export class LayoutComponent implements OnInit {
 
-  public busy: 0 | 1 = 1;
+  public busy: BehaviorSubject<number>;
 
   public navigate: Function;
 
@@ -51,6 +51,7 @@ export class LayoutComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    this.busy = new BehaviorSubject<number>(1);
     this.navigate = (...path: string[]) => this.router.navigate(path);
 
     this.router.events.pipe(filter((event) => event instanceof NavigationStart))
@@ -61,7 +62,7 @@ export class LayoutComponent implements OnInit {
     }
 
     if (this.platformProvider.name !== 'Server') {
-      this.loadingProvider.value.subscribe((loads) => this.busy = loads && 1);
+      this.loadingProvider.value.subscribe((l) => this.busy.next(l && 1));
 
       if (this.platformProvider.name === 'Web') {
         fromEvent(this.document, 'scroll', { capture: true, passive: true })

@@ -11,6 +11,14 @@ main {
       width: 15rem;
     }
 
+    // TODO: fix ssr fxHide/fxShow
+    @media screen and (min-width: 600px) {
+      & > mat-form-field {
+        flex-grow: 0 !important;
+        width: 15rem !important;
+      }
+    }
+
     & > mat-chip-list {
       &::ng-deep {
         .mat-chip-list-wrapper {

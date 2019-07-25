@@ -210,6 +210,11 @@ layout-component {
         }
 
         & > mat-action-list {
+          [compat=icon] {
+             text-align: center;
+             width: 2.5rem;
+           }
+
           .mat-list-item {
             text-decoration: none;
 
@@ -242,11 +247,6 @@ layout-component {
               }
             }
           }
-        }
-
-       [compat=icon] {
-          text-align: center;
-          width: 2.5rem;
         }
       }
     }

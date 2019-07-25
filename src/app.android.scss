@@ -4,11 +4,8 @@
 @import 'app.theme.scss';
 
 page {
-  // background-image: url('res://icon');
-  // background-position: center;
-  // background-repeat: no-repeat;
-
-  action-bar {
+  /* [compat=navbar] */
+  & > action-bar {
     color: $color-light;
 
     stack-layout {
@@ -25,7 +22,7 @@ page {
         width: 50;
         padding-right: 15;
 
-        web-view {
+        [compat=icon] {
           height: 33;
           width: 30;
         }
@@ -33,113 +30,111 @@ page {
     }
   }
 
-  #TKDrawerContent {
-    $background: map-get($theme-palette, background);
-    background-color: mat-color($background, dialog);
+  [compat=drawer] {
+    #TKDrawerContent {
+      scroll-view {
+        flexbox-layout {
+          flex-direction: column;
 
-    scroll-view {
-      flexbox-layout {
-        flex-direction: column;
-
-        & > image {
-          horizontal-align: center;
-          stretch: aspectFit;
-          width: 50%;
-        }
-
-        & > stack-layout {
-          height: 50;
-          orientation: horizontal;
-
-          web-view {
-            background-color: transparent;
+          & > image {
+            horizontal-align: center;
+            stretch: aspectFit;
+            width: 50%;
           }
 
-          &.active {
-            color: $color-primary;
+          & > stack-layout {
+            height: 50;
+            orientation: horizontal;
+
+            [compat=icon] {
+              background-color: transparent;
+            }
+
+            &.active {
+              color: $color-primary;
+
+              absolute-layout {
+                text-field {
+                  border-bottom-color: $color-primary;
+                }
+
+                &.float-label {
+                  label {
+                    transform: scale(.66, .66) translate(-10, -20);
+                    animation-name: none;
+                  }
+                }
+              }
+            }
 
             absolute-layout {
-              text-field {
-                border-bottom-color: $color-primary;
+              @keyframes float {
+                from { transform: scale(1, 1) translate(0, 0); }
+                to { transform: scale(.66, .66) translate(-10, -20); }
               }
 
               &.float-label {
                 label {
-                  transform: scale(.66, .66) translate(-10, -20);
-                  animation-name: none;
+                  animation-direction: forwards;
+                  animation-duration: $animation-duration;
+                  animation-fill-mode: forwards;
+                  animation-name: float;
                 }
               }
-            }
-          }
 
-          absolute-layout {
-            @keyframes float {
-              from { transform: scale(1, 1) translate(0, 0); }
-              to { transform: scale(.66, .66) translate(-10, -20); }
-            }
-
-            &.float-label {
               label {
-                animation-direction: forwards;
+                margin-left: 0;
+                margin-top: 15;
+
+                animation-direction: reverse;
                 animation-duration: $animation-duration;
-                animation-fill-mode: forwards;
+                animation-fill-mode: reverse;
                 animation-name: float;
+              }
+
+              text-field {
+                border-bottom-color: $color-dark;
+                border-bottom-width: 2;
+                padding: 12 25 3 0;
+                width: 205;
+              }
+
+              grid-layout {
+                margin-left: 170;
+                margin-top: 10;
+
+                &.off {
+                  [compat=icon] {
+                    color: rgba(0, 0, 0, .26);
+                  }
+                }
+
+                [compat=icon] {
+                  height: 30;
+                  width: 30;
+                }
               }
             }
 
             label {
-              margin-left: 0;
-              margin-top: 15;
-
-              animation-direction: reverse;
-              animation-duration: $animation-duration;
-              animation-fill-mode: reverse;
-              animation-name: float;
+              font-weight: bold;
+              text-transform: uppercase;
+              vertical-align: center;
             }
 
-            text-field {
-              border-bottom-color: $color-dark;
-              border-bottom-width: 2;
-              padding: 12 25 3 0;
-              width: 205;
+            [compat=icon] {
+              height: 35;
+              width: 35;
+              margin: 0 10;
             }
-
-            grid-layout {
-              margin-left: 170;
-              margin-top: 10;
-
-              &.off {
-                web-view {
-                  color: rgba(0, 0, 0, .26);
-                }
-              }
-
-              web-view {
-                height: 30;
-                width: 30;
-              }
-            }
-          }
-
-          label {
-            font-weight: bold;
-            text-transform: uppercase;
-            vertical-align: center;
-          }
-
-          web-view {
-            height: 35;
-            width: 35;
-            margin: 0 10;
           }
         }
       }
     }
-  }
 
-  #TKMainContent {
-    $background: map-get($theme-palette, background);
-    background-color: mat-color($background, background);
+    #TKMainContent {
+      background-color: $color-bg-drawer;
+    }
   }
 
 }

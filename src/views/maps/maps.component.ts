@@ -5,7 +5,7 @@ import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route, Router, RouterEvent } from '@angular/router';
 import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
-import * as colorConvert from 'color-convert';
+import * as ColorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
 import { GeometryFunction, Point } from 'ol/geom';
@@ -287,8 +287,8 @@ export class MapsComponent
       this.items.value.find((item) => item.id === feat.getId()));
 
     const rgb = items.map((item) => {
-      return colorConvert.keyword.rgb(item.category.color)
-        || colorConvert.hex.rgb(item.category.color);
+      return ColorConvert.keyword.rgb(item.category.color)
+        || ColorConvert.hex.rgb(item.category.color);
     });
 
     const multi = rgb.length > 1;
@@ -300,7 +300,7 @@ export class MapsComponent
 
     return new Style({
       image: new Icon({
-        color: '#' + colorConvert.rgb.hex(r, g, b),
+        color: '#' + ColorConvert.rgb.hex(r, g, b),
         src: `/imgs/pin-${multi ? 'full' : 'hole'}.png`,
 
         anchor: [.5, 1],

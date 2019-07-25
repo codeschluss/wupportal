@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatChipList } from '@angular/material/chips';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { Arr, CrudJoiner, CrudResolver, PlatformProvider, ReadParams } from '@wooportal/core';
-import * as colorConvert from 'color-convert';
+import * as ColorConvert from 'color-convert';
 import { merge } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/models/activity.model';
@@ -131,7 +131,7 @@ export class ActivityListingComponent
   }
 
   public handleColor(color: string): string {
-    const rgb = colorConvert.keyword.rgb(color) || colorConvert.hex.rgb(color);
+    const rgb = ColorConvert.keyword.rgb(color) || ColorConvert.hex.rgb(color);
     return rgb[0] + rgb[1] + rgb[2] > 382 ? '#000' : '#FFF';
   }
 

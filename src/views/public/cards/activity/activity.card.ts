@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
-import * as colorConvert from 'color-convert';
+import * as ColorConvert from 'color-convert';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { BaseCard } from '../base.card';
 
@@ -18,20 +18,20 @@ export class ActivityCardComponent extends BaseCard<ActivityModel> {
   public ripple: MatRipple;
 
   public colors(base: string): Partial<CSSStyleDeclaration> {
-    const rgb = colorConvert.keyword.rgb(base) || colorConvert.hex.rgb(base);
+    const rgb = ColorConvert.keyword.rgb(base) || ColorConvert.hex.rgb(base);
     const light = rgb[0] + rgb[1] + rgb[2] > 382;
 
-    const burned = colorConvert.rgb.hex([
+    const burned = ColorConvert.rgb.hex(
       Math.min(255, rgb[0] + 25),
       Math.min(255, rgb[1] + 25),
       Math.min(255, rgb[2] + 25)
-    ]);
+    );
 
-    const dimmed = colorConvert.rgb.hex([
+    const dimmed = ColorConvert.rgb.hex(
       Math.max(0, rgb[0] - 25),
       Math.max(0, rgb[1] - 25),
       Math.max(0, rgb[2] - 25)
-    ]);
+    );
 
     const one = light ? burned : dimmed;
     const two = !light ? burned : dimmed;

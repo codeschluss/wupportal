@@ -44,11 +44,8 @@ page {
 
           & > stack-layout {
             height: 50;
+            color: $color-dark;
             orientation: horizontal;
-
-            [compat=icon] {
-              background-color: transparent;
-            }
 
             &.active {
               color: $color-primary;

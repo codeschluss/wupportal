@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { PlatformProvider } from '@wooportal/core';
+import * as ColorConvert from 'color-convert';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { ContentView } from 'tns-core-modules/ui/page';
 import { WebView } from 'tns-core-modules/ui/web-view';
@@ -36,7 +37,7 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
       prefix: 'fas'
     }, {
       styles: {
-        color: color ? color.hex : 'inherit',
+        color: color ? ColorConvert.rgb.hex(color.r, color.g, color.b) : '#000',
         'fill-opacity': color ? (color.a / 255).toString() : '100%',
       }
     }).html.join('');

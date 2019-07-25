@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Inject, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatChipList } from '@angular/material/chips';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { Arr, CrudJoiner, CrudResolver, PlatformProvider, ReadParams } from '@wooportal/core';
 import * as colorConvert from 'color-convert';
 import { merge } from 'rxjs';
@@ -46,7 +46,7 @@ export class ActivityListingComponent
   private cards: QueryList<ActivityCardComponent>;
 
   @ViewChild(MatChipList, { static: true })
-  private chips: MatChipList;
+  private chipList: MatChipList;
 
   @ViewChild('maps', { read: ElementRef, static: true })
   private maps: ElementRef<HTMLIFrameElement>;
@@ -93,14 +93,19 @@ export class ActivityListingComponent
 
   public ngAfterViewInit(): void {
     if (this.platformProvider.type === 'Online') {
-      const params = this.mapParams(this.route.snapshot.queryParams);
-      this.suburbCtrl.setValue(params.suburbs, { emitEvent: false });
-      this.targetGroupCtrl.setValue(params.targetgroups, { emitEvent: false });
-      this.chips._setSelectionByValue(params.categories, false);
+      this.route.queryParams.pipe(
+        map((params) => this.mapParams(params))
+      ).subscribe((params) => {
+        const { categories, suburbs, targetgroups } = params;
+        this.suburbCtrl.setValue(suburbs || [], { emitEvent: false });
+        this.targetGroupCtrl.setValue(targetgroups || [], { emitEvent: false });
+        this.chipList.chips.forEach((chip) =>
+          chip.selected = (categories || []).includes(chip.value));
+      });
 
       merge(
-        this.chips.chipSelectionChanges.pipe(map(() => ({
-          categories: Arr(this.chips.selected).map((chip) => chip.value)
+        this.chipList.chipSelectionChanges.pipe(map(() => ({
+          categories: Arr(this.chipList.selected).map((chip) => chip.value)
         }))),
         this.suburbCtrl.valueChanges.pipe(map((value) => ({
           suburbs: Arr(value)
@@ -108,8 +113,7 @@ export class ActivityListingComponent
         this.targetGroupCtrl.valueChanges.pipe(map((value) => ({
           targetgroups: Arr(value)
         })))
-      ).pipe(map((p) => Object.assign(p, { page: 0 }))).subscribe((p) =>
-        this.fetch(p).subscribe((items) => this.items.next(items)));
+      ).subscribe((params) => this.filter(params));
 
       if (this.platformProvider.name === 'Web') {
         const source = this.document.defaultView;
@@ -138,13 +142,11 @@ export class ActivityListingComponent
     }
   }
 
-  protected mapParams(params: ReadParams): ReadParams {
-    const mapper = (p) => Arr(p).length ? Arr(p) : null;
-
+  protected mapParams(params: Params): ReadParams {
     return Object.assign(super.mapParams(params), {
-      categories: mapper(params.categories),
-      suburbs: mapper(params.suburbs),
-      targetgroups: mapper(params.targetgroups)
+      categories: params.categories ? Arr(params.categories) : null,
+      suburbs: params.suburbs ? Arr(params.suburbs) : null,
+      targetgroups: params.targetgroups ? Arr(params.targetgroups) : null
     });
   }
 

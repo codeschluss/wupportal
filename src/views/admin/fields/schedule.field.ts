@@ -8,8 +8,8 @@ import { ScheduleModel } from '../../../realm/models/schedule.model';
     input[readonly] { flex: none; margin: .25rem 0; width: 0; }
   `],
   template: BaseFieldComponent.template(`
-    <mat-chip-list #chips class="mat-body-strong">
-      <input readonly [id]="field.name" [matChipInputFor]="chips">
+    <mat-chip-list #chipList class="mat-body-strong">
+      <input readonly [id]="field.name" [matChipInputFor]="chipList">
       <ng-container ngProjectAs="mat-chip" *ngFor="let item of sorted">
         <mat-chip [selectable]="false" (removed)="delete(item)">
           <strong>{{ date(item) }}</strong>&nbsp;{{ time(item) }}

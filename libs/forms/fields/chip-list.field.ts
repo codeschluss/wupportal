@@ -9,7 +9,7 @@ import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
   template: BaseFieldComponent.template(`
-    <mat-chip-list #chips>
+    <mat-chip-list #chipList>
       <ng-container ngProjectAs="mat-chip" *ngFor="let item of value">
         <mat-chip [selectable]="false" (removed)="delete(item)">
           {{ toLabel(item) }}<span matChipRemove>&#x274c;</span>
@@ -19,7 +19,7 @@ import { BaseFieldComponent } from '../base/base.field';
         [formControl]="search"
         [id]="field.name"
         [matAutocomplete]="auto"
-        [matChipInputFor]="chips"
+        [matChipInputFor]="chipList"
         [matChipInputSeparatorKeyCodes]="keys"
         (matChipInputTokenEnd)="create($event)">
     </mat-chip-list>

@@ -1,1 +1,27 @@
 @import '../../../../app.theme.scss';
+
+.organisation-card {
+  width: 340;
+
+  & > .card-content {
+    & > stack-layout {
+      width: 100%;
+      orientation: horizontal;
+
+      & > label + label {
+        padding-left: 5;
+      }
+    }
+  }
+
+  & > .card-image {
+    color: $color-bg-dark;
+    background-color: $color-bg-light;
+
+    // TODO: [compat=icon]
+    & > [icon=image] {
+      height: 75;
+      width: 75;
+    }
+  }
+}

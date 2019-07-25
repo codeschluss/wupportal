@@ -1,0 +1,41 @@
+<stack-layout class="base-card organisation-card">
+  <stack-layout class="card-content">
+    <stack-layout>
+      <label [text]="item.address?.street"></label>
+      <label [text]="item.address?.houseNumber"></label>
+    </stack-layout>
+    <stack-layout>
+      <label [text]="item.address?.place"></label>
+      <label [text]="item.address?.suburb?.name"></label>
+    </stack-layout>
+  </stack-layout>
+  <grid-layout class="card-image">
+    <ng-container *ngIf="item.images?.length">
+      <!-- <image [src]="item.images[0].source"></image> -->
+    </ng-container>
+    <ng-container *ngIf="!item.images?.length">
+      <icon-compat icon="image"></icon-compat>
+    </ng-container>
+  </grid-layout>
+  <label
+    [text]="item.name"
+    (tap)="router.navigate(['/organisations', item.id])">
+  </label>
+  <stack-layout class="card-actions">
+    <stack-layout ripple (tap)="router.navigate(['/organisations', item.id])">
+      <icon-compat icon="at"></icon-compat>
+      <i18n i18n="@@details" unit="details"></i18n>
+    </stack-layout>
+    <stack-layout ripple
+      [isEnabled]="!liked(item)"
+      [isUserInteractionEnabled]="!liked(item)"
+      (tap)="like(item)">
+      <icon-compat icon="heart"></icon-compat>
+      <i18n i18n="@@like" unit="like"></i18n>
+    </stack-layout>
+    <stack-layout ripple (tap)="share(item)">
+      <icon-compat icon="share-alt"></icon-compat>
+      <i18n i18n="@@share" unit="share"></i18n>
+    </stack-layout>
+  </stack-layout>
+</stack-layout>

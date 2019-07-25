@@ -1,21 +1,10 @@
 @import '../../../../app.theme.scss';
 
 scroll-view {
+  height: 100%;
+
   flexbox-layout {
-    flex-direction: column;
-
-    stack-layout {
-      // formatted-string {}
-
-      // image {}
-
-      stack-layout {
-        orientation: horizontal;
-
-        // stack-layout {
-
-        // }
-      }
-    }
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

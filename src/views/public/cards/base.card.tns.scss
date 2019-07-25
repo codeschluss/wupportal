@@ -1,0 +1,56 @@
+@import '../../../app.theme.scss';
+
+.base-card {
+  margin: 15;
+
+  android-elevation: 2;
+  border-radius: 5;
+  color: $color-dark;
+
+  & > label {
+    font-size: 20;
+    padding: 15;
+  }
+
+  & > .card-image {
+    width: 100%;
+    height: 200;
+
+    & > image {
+      horizontal-align: center;
+      stretch: aspectFill;
+    }
+  }
+
+  & > .card-content {
+    font-size: 12.5;
+    padding: 15;
+  }
+
+  & > .card-actions {
+    orientation: horizontal;
+
+    border-top-color: $color-bg-light;
+    border-top-width: 1;
+    padding: 5;
+
+    & > stack-layout {
+      orientation: horizontal;
+
+      border-radius: 5;
+      font-size: 15;
+      padding: 5 15 5 5;
+
+      // TODO: [compat=i18n]
+      [unit] {
+        vertical-align: center;
+      }
+
+      // TODO: [compat=icon]
+      [icon] {
+        height: 28;
+        width: 30;
+      }
+    }
+  }
+}

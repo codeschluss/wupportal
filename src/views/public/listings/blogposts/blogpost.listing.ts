@@ -4,7 +4,7 @@ import { BlogModel } from '../../../../realm/models/blog.model';
 import { BaseListing } from '../base.listing';
 
 @Component({
-  styleUrls: ['blogpost.listing.scss'],
+  styleUrls: ['../base.listing.scss', 'blogpost.listing.scss'],
   templateUrl: 'blogpost.listing.html'
 })
 

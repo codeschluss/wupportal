@@ -1,6 +1,7 @@
-import { OnInit, Type } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
-import { Arr, BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, ReadParams, Selfrouter } from '@wooportal/core';
+import { Arr, BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, PlatformProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
@@ -34,6 +35,8 @@ export abstract class BaseListing<Model extends CrudModel>
   }
 
   public constructor(
+    @Inject(DOCUMENT) protected document: Document,
+    protected platformProvider: PlatformProvider,
     protected route: ActivatedRoute,
     protected router: Router,
     private crudResolver: CrudResolver
@@ -67,6 +70,14 @@ export abstract class BaseListing<Model extends CrudModel>
 
   private fetch(params?: ReadParams): void {
     const provider = this.model['provider'] as CrudProvider<BaseService, Model>;
+
+    // if (this.platformProvider.name === 'Web') {
+    //   const topoff = this.document.getElementsByClassName('topoff');
+    //   Array.from(topoff).forEach((element) => element.scrollTo({
+    //     behavior: 'smooth',
+    //     top: 0
+    //   }));
+    // }
 
     provider.readAll(Object.assign(params, {
       embeddings: CrudJoiner.to(this.joiner.graph),

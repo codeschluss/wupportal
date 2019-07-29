@@ -1,9 +1,8 @@
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Inject, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatChipList } from '@angular/material/chips';
-import { ActivatedRoute, Params, Route, Router } from '@angular/router';
-import { Arr, CrudJoiner, CrudResolver, PlatformProvider, ReadParams } from '@wooportal/core';
+import { Params, Route } from '@angular/router';
+import { Arr, CrudJoiner, CrudResolver, ReadParams } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { merge } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
@@ -16,7 +15,7 @@ import { ActivityCardComponent } from '../../cards/activity/activity.card';
 import { BaseListing } from '../base.listing';
 
 @Component({
-  styleUrls: ['activity.listing.scss'],
+  styleUrls: ['../base.listing.scss', 'activity.listing.scss'],
   templateUrl: 'activity.listing.html'
 })
 
@@ -79,16 +78,6 @@ export class ActivityListingComponent
         }
       }
     };
-  }
-
-  public constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private platformProvider: PlatformProvider,
-    crudResolver: CrudResolver,
-    route: ActivatedRoute,
-    router: Router
-  ) {
-    super(route, router, crudResolver);
   }
 
   public ngAfterViewInit(): void {

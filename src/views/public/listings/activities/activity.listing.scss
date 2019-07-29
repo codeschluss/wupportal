@@ -86,16 +86,6 @@ main {
     nav {
       width: 66%;
       flex: 1 0 auto;
-
-      & > activity-card {
-        margin: 1rem;
-        max-width: calc(100% - 2rem);
-      }
-
-      & > [compat=pager] {
-        margin: 1rem 1rem 2rem 1rem;
-        width: 100%;
-      }
     }
   }
 }

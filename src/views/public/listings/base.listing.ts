@@ -46,10 +46,6 @@ export abstract class BaseListing<Model extends CrudModel>
     this.route.queryParams.subscribe((p) => this.fetch(this.mapParams(p)));
   }
 
-  public goto(rel: number): void {
-    this.filter({ page: (this.items.value as any).page.number + rel });
-  }
-
   public filter(params: Params): void {
     Object.keys(params).forEach((key) => {
       params.page = key === 'page' ? params[key] : null;

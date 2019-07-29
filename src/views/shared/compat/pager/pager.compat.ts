@@ -1,4 +1,5 @@
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { PagerCompat } from './pager.compat.i';
 
 @Component({
@@ -16,9 +17,13 @@ import { PagerCompat } from './pager.compat.i';
     div:first-of-type { text-align: left; }
     div:last-of-type { text-align: right; }
 
-    div:first-of-type > button { margin-left: -1.5rem; margin-right: .5rem; }
-    div:last-of-type > button { margin-left: .5rem; margin-right: -1.5rem; }
-    button[disabled] { background: #888 !important; color: #FFF !important; }
+    div:first-of-type > a { margin-left: -1.5rem; margin-right: .5rem; }
+    div:last-of-type > a { margin-left: .5rem; margin-right: -1.5rem; }
+    a[disabled] {
+      background: #888 !important;
+      color: #FFF !important;
+      pointer-events: none;
+    }
 
     span { border: 1.25rem solid transparent; }
     div:first-of-type > span {
@@ -35,24 +40,28 @@ import { PagerCompat } from './pager.compat.i';
   template: `
     <nav>
       <div>
-        <button mat-mini-fab
+        <a mat-mini-fab
           color="primary"
+          queryParamsHandling="merge"
           [disabled]="!prev"
-          (click)="goto.emit(-1)">
+          [queryParams]="prevLink"
+          [routerLink]="this.route.snapshot.url">
           <icon-compat icon="angle-double-left"></icon-compat>
-        </button>
+        </a>
         <i18n class="mat-caption" i18n="@@previous">previous</i18n>
         <span></span>
       </div>
       <div>
         <span></span>
         <i18n class="mat-caption" i18n="@@following">following</i18n>
-        <button mat-mini-fab
+        <a mat-mini-fab
           color="primary"
+          queryParamsHandling="merge"
           [disabled]="!next"
-          (click)="goto.emit(+1)">
+          [queryParams]="nextLink"
+          [routerLink]="this.route.snapshot.url">
           <icon-compat icon="angle-double-right"></icon-compat>
-        </button>
+        </a>
       </div>
     </nav>
   `
@@ -63,13 +72,26 @@ export class PagerCompatComponent implements PagerCompat {
   @HostBinding('attr.compat')
   public readonly compat: string = 'pager';
 
-  @Output()
-  public goto: EventEmitter<number> = new EventEmitter<number>();
-
   @Input()
   public next: boolean;
 
   @Input()
   public prev: boolean;
+
+  public get nextLink(): object {
+    return {
+      page: parseInt(this.route.snapshot.queryParams.page, 10) || 0 + 1
+    };
+  }
+
+  public get prevLink(): object {
+    return {
+      page: parseInt(this.route.snapshot.queryParams.page, 10) - 1 || null
+    };
+  }
+
+  public constructor(
+    public route: ActivatedRoute
+  ) { }
 
 }

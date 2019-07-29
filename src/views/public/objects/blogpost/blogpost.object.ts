@@ -1,25 +1,20 @@
-import { Component } from '@angular/core';
-import { Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfrouter } from '@wooportal/core';
+import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@wooportal/core';
 import { BlogModel } from '../../../../realm/models/blog.model';
+import { BaseObject } from '../base.object';
 
 @Component({
   styleUrls: ['blogpost.object.scss'],
   templateUrl: 'blogpost.object.html'
 })
 
-export class BlogpostObjectComponent extends Selfrouter {
+export class BlogpostObjectComponent extends BaseObject<BlogModel> {
 
-  protected routing: Route = {
-    path: 'blogposts/:uuid',
-    resolve: {
-      blogpost: CrudResolver
-    },
-    data: {
-      resolve: {
-        blogpost: CrudJoiner.of(BlogModel)
-      }
-    }
-  };
+  protected joiner: CrudJoiner = CrudJoiner.of(BlogModel)
+    .with('activity');
+
+    protected model: Type<BlogModel> = BlogModel;
+
+    protected path: string = 'blogposts';
 
 }

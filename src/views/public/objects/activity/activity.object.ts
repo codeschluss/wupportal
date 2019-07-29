@@ -1,25 +1,27 @@
-import { Component } from '@angular/core';
-import { Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfrouter } from '@wooportal/core';
+import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@wooportal/core';
 import { ActivityModel } from '../../../../realm/models/activity.model';
+import { BaseObject } from '../base.object';
 
 @Component({
   styleUrls: ['activity.object.scss'],
   templateUrl: 'activity.object.html'
 })
 
-export class ActivityObjectComponent extends Selfrouter {
+export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
-  protected routing: Route = {
-    path: 'activities/:uuid',
-    resolve: {
-      activity: CrudResolver
-    },
-    data: {
-      resolve: {
-        activity: CrudJoiner.of(ActivityModel)
-      }
-    }
-  };
+  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
+    .with('address').yield('suburb')
+    .with('blogs')
+    .with('category')
+    .with('organisation')
+    .with('provider')
+    .with('schedules')
+    .with('tags')
+    .with('targetGroups');
+
+    protected model: Type<ActivityModel> = ActivityModel;
+
+    protected path: string = 'activities';
 
 }

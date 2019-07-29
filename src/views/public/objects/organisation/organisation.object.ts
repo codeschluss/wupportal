@@ -1,25 +1,22 @@
-import { Component } from '@angular/core';
-import { Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Selfrouter } from '@wooportal/core';
+import { Component, Type } from '@angular/core';
+import { CrudJoiner } from '@wooportal/core';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
+import { BaseObject } from '../base.object';
 
 @Component({
   styleUrls: ['organisation.object.scss'],
   templateUrl: 'organisation.object.html'
 })
 
-export class OrganisationObjectComponent extends Selfrouter {
+export class OrganisationObjectComponent extends BaseObject<OrganisationModel> {
 
-  protected routing: Route = {
-    path: 'organisations/:uuid',
-    resolve: {
-      organisation: CrudResolver
-    },
-    data: {
-      resolve: {
-        organisation: CrudJoiner.of(OrganisationModel)
-      }
-    }
-  };
+  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
+    .with('activities')
+    .with('address').yield('suburb')
+    .with('images');
+
+    protected model: Type<OrganisationModel> = OrganisationModel;
+
+    protected path: string = 'organisations';
 
 }

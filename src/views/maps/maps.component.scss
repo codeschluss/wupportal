@@ -2,6 +2,7 @@
 
 main {
   background-color: $color-bg-drawer;
+  max-width: 100% !important;
 
   position: absolute;
   bottom: 0;
@@ -43,7 +44,6 @@ main {
 
       & > activity-card {
         margin: 0 auto;
-        padding: 1rem;
         flex: 0 0 auto;
 
         direction: ltr;

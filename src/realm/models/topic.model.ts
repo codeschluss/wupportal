@@ -7,8 +7,8 @@ import { PageModel } from './page.model';
 export class TopicModel
   extends CrudModel implements TopicEntity {
 
-    @Translatable() public name: string;
+  @Translatable() public name: string;
 
-    public pages: PageModel[] & Observable<PageModel[]>;
+  public pages: PageModel[] & Observable<PageModel[]>;
 
-  }
+}

@@ -105,7 +105,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   }
 
   public create(alias: string) {
-    this.router.navigateByUrl(`/admin/edit/${alias}/new`);
+    this.router.navigate(['/', 'admin', 'edit', alias, 'new']);
   }
 
   public edit(item: CrudModel): void {

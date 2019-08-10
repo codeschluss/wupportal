@@ -8,31 +8,31 @@
   </a>
   <a mat-button
     [class.active]="url.startsWith('/maps')"
-    [routerLink]="['/maps']">
+    [routerLink]="['/', 'maps']">
     <icon-compat fxHide.lt-lg icon="globe"></icon-compat>
     <i18n i18n="@@mapView">mapView</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/activities')"
-    [routerLink]="['/activities']">
+    [routerLink]="['/', 'activities']">
     <icon-compat fxHide.lt-lg icon="map-marker-alt"></icon-compat>
     <i18n i18n="@@activities">activities</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/organisations')"
-    [routerLink]="['/organisations']">
+    [routerLink]="['/', 'organisations']">
     <icon-compat fxHide.lt-lg icon="at"></icon-compat>
     <i18n i18n="@@organisations">organisations</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/blogposts')"
-    [routerLink]="['/blogposts']">
+    [routerLink]="['/', 'blogposts']">
     <icon-compat fxHide.lt-lg icon="comment-dots"></icon-compat>
     <i18n i18n="@@blogposts">blogposts</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/infopages')"
-    [routerLink]="['/infopages']">
+    [routerLink]="['/', 'infopages']">
     <icon-compat fxHide.lt-lg icon="question-circle"></icon-compat>
     <i18n i18n="@@infopages">infopages</i18n>
   </a>
@@ -42,7 +42,7 @@
     <mat-label><i18n i18n="@@search">search</i18n></mat-label>
     <button mat-button mat-icon-button matSuffix
       [disabled]="!navbarInput.value"
-      [routerLink]="['/search', navbarInput.value]">
+      [routerLink]="['/', 'search', navbarInput.value]">
       <icon-compat icon="chevron-circle-right"></icon-compat>
     </button>
   </mat-form-field>
@@ -70,13 +70,13 @@
       <span [style.flexGrow]="1"></span>
       <a mat-button
         [class.active]="url.startsWith('/imprint')"
-        [routerLink]="['/imprint']">
+        [routerLink]="['/', 'imprint']">
         <icon-compat fxHide.lt-lg icon="paragraph"></icon-compat>
         <i18n i18n="@@imprint">imprint</i18n>
       </a>
       <a mat-button
         [class.active]="url.startsWith('/policies')"
-        [routerLink]="['/policies']">
+        [routerLink]="['/', 'policies']">
         <icon-compat fxHide.lt-lg icon="balance-scale"></icon-compat>
         <i18n i18n="@@policies">policies</i18n>
       </a>
@@ -93,7 +93,7 @@
           <mat-label><i18n i18n="@@search">search</i18n></mat-label>
           <button mat-button mat-icon-button matSuffix
             [disabled]="!drawerInput.value"
-            [routerLink]="['/search', drawerInput.value]">
+            [routerLink]="['/', 'search', drawerInput.value]">
             <icon-compat icon="chevron-circle-right"></icon-compat>
           </button>
         </mat-form-field>
@@ -104,31 +104,31 @@
       </a>
       <a mat-list-item
         [class.active]="url.startsWith('/maps')"
-        [routerLink]="['/maps']">
+        [routerLink]="['/', 'maps']">
         <icon-compat icon="globe"></icon-compat>
         <i18n i18n="@@mapView">mapView</i18n>
       </a>
       <a mat-list-item
         [class.active]="url.startsWith('/activities')"
-        [routerLink]="['/activities']">
+        [routerLink]="['/', 'activities']">
         <icon-compat icon="map-marker-alt"></icon-compat>
         <i18n i18n="@@activities">activities</i18n>
       </a>
       <a mat-list-item
         [class.active]="url.startsWith('/organisations')"
-        [routerLink]="['/organisations']">
+        [routerLink]="['/', 'organisations']">
         <icon-compat icon="at"></icon-compat>
         <i18n i18n="@@organisations">organisations</i18n>
       </a>
       <a mat-list-item
         [class.active]="url.startsWith('/blogposts')"
-        [routerLink]="['/blogposts']">
+        [routerLink]="['/', 'blogposts']">
         <icon-compat icon="comment-dots"></icon-compat>
         <i18n i18n="@@blogposts">blogposts</i18n>
       </a>
       <a mat-list-item
         [class.active]="url.startsWith('/infopages')"
-        [routerLink]="['/infopages']">
+        [routerLink]="['/', 'infopages']">
         <icon-compat icon="question-circle"></icon-compat>
         <i18n i18n="@@infopages">infopages</i18n>
       </a>
@@ -137,13 +137,13 @@
     <mat-action-list>
       <a mat-list-item
         [class.active]="url.startsWith('/imprint')"
-        [routerLink]="['/imprint']">
+        [routerLink]="['/', 'imprint']">
         <icon-compat icon="paragraph"></icon-compat>
         <i18n i18n="@@imprint">imprint</i18n>
       </a>
       <a mat-list-item
         [class.active]="url.startsWith('/policies')"
-        [routerLink]="['/policies']">
+        [routerLink]="['/', 'policies']">
         <icon-compat icon="balance-scale"></icon-compat>
         <i18n i18n="@@policies">policies</i18n>
       </a>

@@ -75,7 +75,7 @@ export class ReloginDialogComponent implements OnInit {
   }
 
   public logout(): void {
-    this.router.navigateByUrl('/').then(() => this.dialogRef.close(false));
+    this.router.navigate(['/']).then(() => this.dialogRef.close(false));
   }
 
 }

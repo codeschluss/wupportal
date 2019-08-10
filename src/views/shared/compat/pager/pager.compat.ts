@@ -45,7 +45,7 @@ import { PagerCompat } from './pager.compat.i';
           queryParamsHandling="merge"
           [disabled]="!prev"
           [queryParams]="prevLink"
-          [routerLink]="this.route.snapshot.url">
+          [routerLink]="[]">
           <icon-compat icon="angle-double-left"></icon-compat>
         </a>
         <i18n class="mat-caption" i18n="@@previous">previous</i18n>
@@ -59,7 +59,7 @@ import { PagerCompat } from './pager.compat.i';
           queryParamsHandling="merge"
           [disabled]="!next"
           [queryParams]="nextLink"
-          [routerLink]="this.route.snapshot.url">
+          [routerLink]="[]">
           <icon-compat icon="angle-double-right"></icon-compat>
         </a>
       </div>
@@ -91,7 +91,7 @@ export class PagerCompatComponent implements PagerCompat {
   }
 
   public constructor(
-    public route: ActivatedRoute
+    private route: ActivatedRoute
   ) { }
 
 }

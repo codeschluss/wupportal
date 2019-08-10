@@ -64,7 +64,7 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
       }
     })()) { return true; }
 
-    return this.router.navigateByUrl(claimed.userId ? '/admin' : '/error/403');
+    return this.router.navigate(claimed.userId ? ['admin'] : ['error', '403']);
   }
 
   private orga(url: string): Promise<string> {

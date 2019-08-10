@@ -37,7 +37,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     const claim = ClientPackage.config.jwtClaims.userId;
     const userId = this.route.snapshot.data.tokens.access[claim];
     const route = this.pathfinder.to(AccountPanelComponent).concat(userId);
-    userId ? this.work() : this.router.navigateByUrl('/');
+    userId ? this.work() : this.router.navigate(['/']);
 
     if (userId) {
       this.home = this.router.events.pipe(

@@ -16,14 +16,14 @@
   </ng-container>
   <mat-card-header>
     <mat-card-title>
-      <a [routerLink]="['/organisations', item.id]">
+      <a [routerLink]="['/', 'organisations', item.id]">
         {{ item.name }}
       </a>
     </mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-actions>
-    <a mat-button [routerLink]="['/organisations', item.id]">
+    <a mat-button [routerLink]="['/', 'organisations', item.id]">
       <icon-compat icon="at"></icon-compat>
       <i18n i18n="@@details">details</i18n>
     </a>

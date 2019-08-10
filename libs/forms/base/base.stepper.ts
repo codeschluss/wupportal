@@ -45,7 +45,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
           <a mat-tab-link replaceUrl routerLinkActive
             #tab="routerLinkActive"
             [disabled]="!can(i)"
-            [routerLink]="link(i)"
+            [routerLink]="[link(i)]"
             [active]="tab.isActive">
             <ng-container *ngTemplateOutlet="label; context: { case: step }">
             </ng-container>
@@ -64,14 +64,14 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       <ng-container *ngIf="has('-1')">
         <button mat-raised-button replaceUrl
           [disabled]="!can(index - 1)"
-          [routerLink]="link('-1')">
+          [routerLink]="[link('-1')]">
           <i18n i18n="@@previous">previous</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="has('+1')">
         <button mat-raised-button replaceUrl
           [disabled]="!can(index + 1)"
-          [routerLink]="link('+1')">
+          [routerLink]="[link('+1')]">
           <i18n i18n="@@next">next</i18n>
         </button>
       </ng-container>

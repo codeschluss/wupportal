@@ -48,7 +48,8 @@ const materials: Type<any>[] = [
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
-  MatTabsModule
+  MatTabsModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({
@@ -61,14 +62,12 @@ const materials: Type<any>[] = [
   ],
   exports: [
     ...declarations,
-    ...materials,
-    ReactiveFormsModule
+    ...materials
   ],
   imports: [
     ...materials,
     CommonModule,
     CoreModule,
-    ReactiveFormsModule,
     RouterModule
   ]
 })

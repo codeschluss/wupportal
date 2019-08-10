@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   styleUrls: ['error.response.scss'],
@@ -9,7 +11,9 @@ import { PlatformProvider } from '@wooportal/core';
 
 export class ErrorResponseComponent implements OnInit {
 
-  public code: number;
+  public get code(): Observable<number> {
+    return this.route.params.pipe(map((params) => parseInt(params.code, 10)));
+  }
 
   public constructor(
     private platformProvider: PlatformProvider,
@@ -17,8 +21,6 @@ export class ErrorResponseComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.code = parseInt(this.route.snapshot.params.code, 10) || 500;
-
     if (this.platformProvider.name === 'Server') {
       this.platformProvider.engine.response.status(this.code);
     }

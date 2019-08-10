@@ -66,8 +66,25 @@
     </mat-progress-bar>
     <router-outlet></router-outlet>
     <navbar-compat fxHide.lt-md>
-      <small>&copy;&nbsp;{{ title }}</small>
+      <small>
+        <icon-compat icon="copyright"></icon-compat>
+        {{ title }}
+      </small>
       <span [style.flexGrow]="1"></span>
+      <button mat-button [matMenuTriggerFor]="languageMenu">
+        <icon-compat icon="language"></icon-compat>
+        <i18n i18n="@@language">language</i18n>
+      </button>
+      <mat-menu #languageMenu="matMenu" xPosition="before">
+        <ng-container *ngFor="let item of languages">
+          <button mat-menu-item
+            [class.active]="language === item.locale"
+            (click)="translate(item.locale)">
+            <pre>{{ item.locale }}</pre>
+            {{ item.name }}
+          </button>
+        </ng-container>
+      </mat-menu>
       <a mat-button
         [class.active]="url.startsWith('/imprint')"
         [routerLink]="['/', 'imprint']">
@@ -80,6 +97,62 @@
         <icon-compat fxHide.lt-lg icon="balance-scale"></icon-compat>
         <i18n i18n="@@policies">policies</i18n>
       </a>
+      <ng-container *ngIf="claimed?.userId">
+        <button mat-button
+          [class.active]="url.startsWith('/admin')"
+          [matMenuTriggerFor]="adminMenu">
+          <icon-compat fxHide.lt-lg icon="cog"></icon-compat>
+          <i18n i18n="@@admin">admin</i18n>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="!claimed?.userId">
+        <a mat-button
+          [class.active]="url.startsWith('/login')"
+          [routerLink]="['/', 'login']">
+          <icon-compat fxHide.lt-lg icon="unlock"></icon-compat>
+          <i18n i18n="@@login">login</i18n>
+        </a>
+      </ng-container>
+      <mat-menu #adminMenu="matMenu" xPosition="before">
+        <button mat-menu-item
+          [class.active]="url.startsWith('/admin/account')"
+          [routerLink]="['/', 'admin', 'account']">
+          <icon-compat fxHide.lt-lg icon="user"></icon-compat>
+          <i18n i18n="@@account">account</i18n>
+        </button>
+        <button mat-menu-item
+          [class.active]="url.startsWith('/admin/organisation')"
+          [disabled]="!claimed?.organisationAdmin.length && !claimed?.superUser"
+          [routerLink]="['/', 'admin', 'organisation']">
+          <icon-compat fxHide.lt-lg icon="sitemap"></icon-compat>
+          <i18n i18n="@@organisation">organisation</i18n>
+        </button>
+        <ng-container *ngIf="claimed?.superUser">
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/application')"
+            [routerLink]="['/', 'admin', 'application']">
+            <icon-compat fxHide.lt-lg icon="sliders-h"></icon-compat>
+            <i18n i18n="@@application">application</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/positioning')"
+            [routerLink]="['/', 'admin', 'positioning']">
+            <icon-compat fxHide.lt-lg icon="directions"></icon-compat>
+            <i18n i18n="@@positioning">positioning</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/privileges')"
+            [routerLink]="['/', 'admin', 'privileges']">
+            <icon-compat fxHide.lt-lg icon="shield-alt"></icon-compat>
+            <i18n i18n="@@privileges">privileges</i18n>
+          </button>
+        </ng-container>
+        <mat-divider></mat-divider>
+        <button mat-menu-item [routerLink]="['/', 'logout']">
+          <icon-compat fxHide.lt-lg icon="lock"></icon-compat>
+          <i18n i18n="@@logout">logout</i18n>
+        </button>
+      </mat-menu>
     </navbar-compat>
   </ng-template>
   <ng-template #drawerMenu>
@@ -135,6 +208,20 @@
     </mat-action-list>
     <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
     <mat-action-list>
+      <button mat-list-item [matMenuTriggerFor]="languageMenu">
+        <icon-compat icon="language"></icon-compat>
+        <i18n i18n="@@language">language</i18n>
+      </button>
+      <mat-menu #languageMenu="matMenu" xPosition="before">
+        <ng-container *ngFor="let item of languages">
+          <button mat-menu-item
+            [class.active]="language === item.locale"
+            (click)="translate(item.locale)">
+            <pre>{{ item.locale }}</pre>
+            {{ item.name }}
+          </button>
+        </ng-container>
+      </mat-menu>
       <a mat-list-item
         [class.active]="url.startsWith('/imprint')"
         [routerLink]="['/', 'imprint']">

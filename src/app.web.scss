@@ -10,6 +10,39 @@
 .text-accent { color: $color-accent; }
 .text-warn { color: $color-warn; }
 
+.cdk-overlay-container {
+  .mat-menu-panel {
+    .mat-menu-content {
+      .mat-menu-item {
+        &.active {
+          color: $color-primary;
+
+          pre {
+            background-color: $color-primary;
+          }
+        }
+
+        [compat=icon] {
+          font-size: 1rem;
+          margin-right: .5rem;
+          vertical-align: middle;
+        }
+
+        pre {
+          background-color: $color-bg-dark;
+          border-radius: .5rem;
+          color: $color-light;
+          display: inline;
+          font-weight: bold;
+
+          margin: 0 .5rem 0 0;
+          padding: .25rem;
+        }
+      }
+    }
+  }
+}
+
 layout-component {
   display: flex;
   flex-direction: column;

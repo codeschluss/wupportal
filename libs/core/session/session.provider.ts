@@ -11,7 +11,7 @@ export class SessionProvider {
   private session: BehaviorSubject<SessionModel>;
 
   public get value(): Observable<SessionModel> {
-    return this.session.pipe(filter(Boolean));
+    return this.session.pipe(filter(Boolean)) as Observable<SessionModel>;
   }
 
   public constructor(

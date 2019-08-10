@@ -31,10 +31,10 @@ const routes: Route[] = [
       ActivityObjectComponent.routing,
       BlogpostObjectComponent.routing,
       InfopageObjectComponent.routing,
-      OrganisationObjectComponent.routing,
+      OrganisationObjectComponent.routing
 
       // TODO: remove
-      SearchDummyComponent.routing
+      , SearchDummyComponent.routing
     ]
   },
   {

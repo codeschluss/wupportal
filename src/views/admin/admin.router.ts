@@ -24,10 +24,6 @@ import { UserStepperComponent } from './steppers/user.stepper';
 const routes: Route[] = [
   {
     path: '',
-    canActivateChild: [AdminGuarding],
-    resolve: {
-      tokens: TokenResolver
-    },
     children: [
       AccountPanelComponent.routing,
       ApplicationPanelComponent.routing,
@@ -68,6 +64,7 @@ const routes: Route[] = [
       children: routes,
       component: AdminComponent,
       canActivate: [AdminGuarding],
+      canActivateChild: [AdminGuarding],
       resolve: {
         tokens: TokenResolver
       }

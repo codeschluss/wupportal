@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
@@ -34,6 +35,9 @@ fontawesome.add(freeicons);
     HttpClientModule,
     RealmModule,
     TransferHttpCacheModule
+
+    // TODO: remove
+    , MatMenuModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: ClientErrorHandler }

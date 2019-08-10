@@ -18,6 +18,7 @@ if (!isKnownView('icon-compat')) {
   `
 })
 
+// TODO: https://github.com/NativeScript/NativeScript/issues/944
 export class IconCompatComponent implements IconCompat, AfterViewInit {
 
   @HostBinding('attr.compat')

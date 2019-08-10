@@ -54,18 +54,18 @@ const pages: Type<any>[] = [
     ...listings,
     ...objects,
     ...pages,
-    PublicComponent,
+    PublicComponent
 
     // TODO: remove
-    SearchDummyComponent
+    , SearchDummyComponent
   ],
   entryComponents: [
     ...listings,
     ...objects,
-    ...pages,
+    ...pages
 
     // TODO: remove
-    SearchDummyComponent
+    , SearchDummyComponent
   ],
   exports: [
     ...cards

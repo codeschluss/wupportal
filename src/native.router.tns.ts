@@ -7,9 +7,6 @@ import { LayoutComponent } from './views/shared/layout/layout.component';
 const routes: Route[] = [
   {
     path: '',
-    resolve: {
-      session: SessionResolver,
-    },
     children: [
       {
         path: 'maps',
@@ -38,6 +35,7 @@ const routes: Route[] = [
       children: routes,
       component: LayoutComponent,
       resolve: {
+        session: SessionResolver,
         xliff: I18nResolver
       }
     }

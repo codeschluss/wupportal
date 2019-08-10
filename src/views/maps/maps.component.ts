@@ -161,7 +161,7 @@ export class MapsComponent
       this.router.events.subscribe((event: RouterEvent) => {
         return this.connection
           ? this.connection.nextRoute(event.url)
-          : this.document.defaultView.location.href = event.url;
+          : this.document.location.href = event.url;
       });
     }
   }

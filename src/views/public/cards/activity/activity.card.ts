@@ -12,8 +12,6 @@ import { BaseCard } from '../base.card';
 
 export class ActivityCardComponent extends BaseCard<ActivityModel> {
 
-  public readonly dateFormat: string = 'dd.MM.yyyy, HH:mm';
-
   @ViewChild(MatRipple, { static: true })
   public ripple: MatRipple;
 

@@ -1,1 +1,13 @@
 @import '../../../../app.theme.scss';
+
+mat-card {
+  width: 100%;
+
+  & > mat-card-header {
+    justify-content: space-between;
+
+    & > time {
+      font-size: small;
+    }
+  }
+}

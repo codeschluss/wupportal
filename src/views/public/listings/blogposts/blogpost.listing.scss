@@ -1,1 +1,8 @@
 @import '../../../../app.theme.scss';
+
+main {
+  & > blogpost-card {
+    display: flex;
+    width: calc(#{$viewport-width} / 2);
+  }
+}

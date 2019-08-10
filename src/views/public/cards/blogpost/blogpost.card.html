@@ -1,0 +1,45 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <a [routerLink]="['/', 'blogposts', item.id]">
+        {{ item.name }}
+        <small>
+          <i18n i18n="@@by">by</i18n>
+          {{ item.author }}
+        </small>
+      </a>
+    </mat-card-title>
+    <ng-container ngProjectAs="mat-card-subtitle" *ngIf="item.activity">
+      <mat-card-subtitle>
+        <a [routerLink]="['/', 'activities', item.activity.id]">
+          <i18n i18n="@@activity">activity</i18n>:
+          {{ item.activity.name }}
+        </a>
+      </mat-card-subtitle>
+    </ng-container>
+    <time [datetime]="item.created">
+      {{ item.created | date: dateFormat }}
+    </time>
+  </mat-card-header>
+  <mat-card-content>
+    {{ item.content | slice:100 }}&hellip;
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <a mat-button [routerLink]="['/', 'blogposts', item.id]">
+      <icon-compat icon="comment-dots"></icon-compat>
+      <i18n i18n="@@details">details</i18n>
+    </a>
+    <button mat-button (click)="share(item)">
+      <icon-compat icon="share-alt"></icon-compat>
+      <i18n i18n="@@share">share</i18n>
+    </button>
+    <button mat-button
+      [disabled]="liked(item)"
+      [matBadge]="item.likes || 0"
+      (click)="like(item)">
+      <icon-compat icon="heart"></icon-compat>
+      <i18n i18n="@@like">like</i18n>
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -20,6 +20,6 @@ export class BlogpostListingComponent
 
   protected path: string = 'blogposts';
 
-  protected size: number = 8;
+  protected size: number = 6;
 
 }

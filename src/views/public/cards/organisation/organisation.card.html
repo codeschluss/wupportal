@@ -27,13 +27,16 @@
       <icon-compat icon="at"></icon-compat>
       <i18n i18n="@@details">details</i18n>
     </a>
-    <button mat-button [disabled]="liked(item)" (click)="like(item)">
-      <icon-compat icon="heart"></icon-compat>
-      <i18n i18n="@@like">like</i18n>
-    </button>
     <button mat-button (click)="share(item)">
       <icon-compat icon="share-alt"></icon-compat>
       <i18n i18n="@@share">share</i18n>
+    </button>
+    <button mat-button
+      [disabled]="liked(item)"
+      [matBadge]="0"
+      (click)="like(item)">
+      <icon-compat icon="heart"></icon-compat>
+      <i18n i18n="@@like">like</i18n>
     </button>
   </mat-card-actions>
 </mat-card>

@@ -4,6 +4,8 @@ import { CrudModel, SessionProvider } from '@wooportal/core';
 
 export abstract class BaseCard<Model extends CrudModel> {
 
+  public readonly dateFormat: string = 'dd.MM.yyyy, HH:mm';
+
   @Input()
   public item: Model;
 

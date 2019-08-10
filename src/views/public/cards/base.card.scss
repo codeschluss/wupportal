@@ -24,5 +24,9 @@ mat-card {
     [compat=icon] {
       padding-right: .5rem;
     }
+
+    .mat-badge-content {
+      top: 0;
+    }
   }
 }

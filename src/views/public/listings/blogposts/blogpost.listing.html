@@ -1,1 +1,13 @@
-<main><label>blogpost.listing</label></main>
+<main fxLayout="row wrap" fxLayoutAlign="center start">
+  <ng-container *ngFor="let item of items | async">
+    <blogpost-card [item]="item"></blogpost-card>
+  </ng-container>
+  <ng-container *ngIf="next || prev">
+    <pager-compat
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      [next]="next"
+      [prev]="prev">
+    </pager-compat>
+  </ng-container>
+</main>

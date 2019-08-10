@@ -22,8 +22,8 @@ export class TokenProvider {
       this.accessToken.pipe(filter(Boolean)),
       this.refreshToken.pipe(filter(Boolean))
     ]).pipe(map(([accessToken, refreshToken]) => ({
-      access: accessToken,
-      refresh: refreshToken
+      access: accessToken as AccessTokenModel,
+      refresh: refreshToken as RefreshTokenModel
     })));
   }
 

@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import { Route } from '@angular/router';
-import { Selfrouter } from '@wooportal/core';
+import { BasePage } from '../base.page';
 
 @Component({
-  styleUrls: ['imprint.page.scss'],
+  styleUrls: ['../base.page.scss', 'imprint.page.scss'],
   templateUrl: 'imprint.page.html'
 })
 
-export class ImprintPageComponent extends Selfrouter {
+export class ImprintPageComponent extends BasePage {
 
-  protected routing: Route = {
-    path: 'imprint'
-  };
+  protected path: string = 'imprint';
 
 }

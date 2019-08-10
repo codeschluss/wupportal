@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import { Route } from '@angular/router';
-import { Selfrouter } from '@wooportal/core';
+import { BasePage } from '../base.page';
 
 @Component({
-  styleUrls: ['policies.page.scss'],
+  styleUrls: ['../base.page.scss', 'policies.page.scss'],
   templateUrl: 'policies.page.html'
 })
 
-export class PoliciesPageComponent extends Selfrouter {
+export class PoliciesPageComponent extends BasePage {
 
-  protected routing: Route = {
-    path: 'policies'
-  };
+  protected path: string = 'policies';
 
 }

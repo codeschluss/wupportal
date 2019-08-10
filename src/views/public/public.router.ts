@@ -11,7 +11,10 @@ import { InfopageObjectComponent } from './objects/infopage/infopage.object';
 import { OrganisationObjectComponent } from './objects/organisation/organisation.object';
 import { HomePageComponent } from './pages/home/home.page';
 import { ImprintPageComponent } from './pages/imprint/imprint.page';
+import { LoginPageComponent } from './pages/login/login.page';
+import { LogoutPageComponent } from './pages/logout/logout.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
+import { RegisterPageComponent } from './pages/register/register.page';
 import { PublicComponent } from './public.component';
 import { SearchDummyComponent } from './search/search.dummy';
 
@@ -21,7 +24,10 @@ const routes: Route[] = [
     children: [
       HomePageComponent.routing,
       ImprintPageComponent.routing,
+      LoginPageComponent.routing,
+      LogoutPageComponent.routing,
       PoliciesPageComponent.routing,
+      RegisterPageComponent.routing,
 
       ActivityListingComponent.routing,
       BlogpostListingComponent.routing,

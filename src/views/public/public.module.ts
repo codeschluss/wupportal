@@ -15,7 +15,10 @@ import { InfopageObjectComponent } from './objects/infopage/infopage.object';
 import { OrganisationObjectComponent } from './objects/organisation/organisation.object';
 import { HomePageComponent } from './pages/home/home.page';
 import { ImprintPageComponent } from './pages/imprint/imprint.page';
+import { LoginPageComponent } from './pages/login/login.page';
+import { LogoutPageComponent } from './pages/logout/logout.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
+import { RegisterPageComponent } from './pages/register/register.page';
 import { PublicComponent } from './public.component';
 import { materials } from './public.imports';
 import { PublicRouter } from './public.router';
@@ -45,7 +48,10 @@ const objects: Type<any>[] = [
 const pages: Type<any>[] = [
   HomePageComponent,
   ImprintPageComponent,
-  PoliciesPageComponent
+  LoginPageComponent,
+  LogoutPageComponent,
+  PoliciesPageComponent,
+  RegisterPageComponent
 ];
 
 @NgModule({

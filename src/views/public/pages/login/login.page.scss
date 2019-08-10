@@ -1,0 +1,28 @@
+@import '../../../../app.theme.scss';
+
+main {
+  max-width: 20rem !important;
+
+  mat-card {
+    margin: 1rem;
+
+    & > mat-card-header {
+      &::ng-deep {
+        .mat-card-header-text {
+          margin: 0;
+        }
+      }
+    }
+
+    & > mat-card-content {
+      & > mat-form-field {
+        width: 100%;
+      }
+    }
+
+    & > mat-card-actions {
+      margin-bottom: -.5rem;
+      padding-bottom: 0;
+    }
+  }
+}

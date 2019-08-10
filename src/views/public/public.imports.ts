@@ -8,6 +8,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 export const materials: Type<any>[] = [
@@ -19,6 +20,7 @@ export const materials: Type<any>[] = [
   MatChipsModule,
   MatDividerModule,
   MatFormFieldModule,
+  MatInputModule,
   MatSelectModule,
   MatRippleModule,
   ReactiveFormsModule

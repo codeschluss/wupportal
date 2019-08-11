@@ -18,6 +18,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       color: rgba(0, 0, 0, .87);
       background-color: rgba(0, 0, 0, .12);
 
+      max-width: 100% !important;
       position: absolute;
       bottom: 0;
       left: 0;

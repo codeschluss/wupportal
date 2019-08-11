@@ -49,8 +49,7 @@ export class ActivityTableComponent extends BaseTable<ActivityModel> {
     },
     {
       name: 'address',
-      // TODO: non-optional address
-      value: (item) => item.address ? item.address.name : ''
+      value: (item) => item.address.name
     }
   ];
 

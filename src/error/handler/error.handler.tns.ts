@@ -36,7 +36,8 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
           okButtonText: 'Close'
         }) : this.dialog.showModal(ErrorDialogComponent, {
           context: reason,
-          viewContainerRef: null // TODO: get root ref
+          // TODO: get root ref
+          viewContainerRef: null
         }));
     }
   }

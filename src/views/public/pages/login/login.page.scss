@@ -1,10 +1,14 @@
 @import '../../../../app.theme.scss';
 
 main {
-  max-width: 20rem !important;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   mat-card {
     margin: 1rem;
+    max-width: 20rem !important;
 
     & > mat-card-header {
       &::ng-deep {

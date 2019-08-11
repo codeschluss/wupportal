@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 export class ErrorResponseComponent implements OnInit {
 
   public get code(): Observable<number> {
-    return this.route.params.pipe(map((params) => parseInt(params.code, 10)));
+    return this.route.params.pipe(map((params) => this.status(params)));
   }
 
   public constructor(
@@ -22,8 +22,12 @@ export class ErrorResponseComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.platformProvider.name === 'Server') {
-      this.platformProvider.engine.response.status(this.code);
+      this.platformProvider.engine.response.status(this.status());
     }
+  }
+
+  private status(params?: Params): number {
+    return parseInt((params || this.route.snapshot.params).code, 10) || 400;
   }
 
 }

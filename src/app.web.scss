@@ -23,8 +23,12 @@
         }
 
         [compat=icon] {
+          display: inline-block;
           font-size: 1rem;
           margin-right: .5rem;
+          width: 1.5rem;
+
+          text-align: center;
           vertical-align: middle;
         }
 
@@ -225,6 +229,11 @@ layout-component {
 
          [compat=icon] {
             padding-right: .5rem;
+          }
+
+          small {
+            font-size: .875rem;
+            padding: 0 1rem;
           }
         }
       }

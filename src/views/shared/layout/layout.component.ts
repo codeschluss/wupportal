@@ -20,6 +20,8 @@ export class LayoutComponent implements OnInit {
 
   public busy: BehaviorSubject<number>;
 
+  public date: Date = new Date();
+
   public claimed: JwtClaims;
 
   public language: string;

@@ -18,11 +18,12 @@
       </mat-card-subtitle>
     </ng-container>
     <time [datetime]="item.created">
-      {{ item.created | date: dateFormat }}
+      {{ item.created | date: 'dd.MM.yyyy' }}
     </time>
   </mat-card-header>
   <mat-card-content>
-    {{ item.content | slice:100 }}&hellip;
+    {{ item.content | slice:0:500 }}
+    {{ item.content.length > 500 ? ' [&hellip;]' : '' }}
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions>

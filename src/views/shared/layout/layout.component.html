@@ -66,16 +66,11 @@
     </mat-progress-bar>
     <router-outlet></router-outlet>
     <navbar-compat fxHide.lt-md>
-      <small>
-        <icon-compat icon="copyright"></icon-compat>
-        {{ title }}
-      </small>
-      <span [style.flexGrow]="1"></span>
       <button mat-button [matMenuTriggerFor]="languageMenu">
         <icon-compat icon="language"></icon-compat>
         <i18n i18n="@@language">language</i18n>
       </button>
-      <mat-menu #languageMenu="matMenu" xPosition="before">
+      <mat-menu #languageMenu="matMenu" xPosition="after">
         <ng-container *ngFor="let item of languages">
           <button mat-menu-item
             [class.active]="language === item.locale"
@@ -97,6 +92,11 @@
         <icon-compat fxHide.lt-lg icon="balance-scale"></icon-compat>
         <i18n i18n="@@policies">policies</i18n>
       </a>
+      <span [style.flexGrow]="1"></span>
+      <small>
+        <icon-compat icon="copyright"></icon-compat>
+        {{ title }} 2017-{{ date | date: 'yyyy' }}
+      </small>
       <ng-container *ngIf="claimed?.userId">
         <button mat-button
           [class.active]="url.startsWith('/admin')"
@@ -117,7 +117,7 @@
         <button mat-menu-item
           [class.active]="url.startsWith('/admin/account')"
           [routerLink]="['/', 'admin', 'account']">
-          <icon-compat fxHide.lt-lg icon="user"></icon-compat>
+          <icon-compat fxHide.lt-lg icon="chalkboard-teacher"></icon-compat>
           <i18n i18n="@@account">account</i18n>
         </button>
         <button mat-menu-item
@@ -137,7 +137,7 @@
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/positioning')"
             [routerLink]="['/', 'admin', 'positioning']">
-            <icon-compat fxHide.lt-lg icon="directions"></icon-compat>
+            <icon-compat fxHide.lt-lg icon="sign"></icon-compat>
             <i18n i18n="@@positioning">positioning</i18n>
           </button>
           <button mat-menu-item

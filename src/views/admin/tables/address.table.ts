@@ -49,8 +49,7 @@ export class AddressTableComponent extends BaseTable<AddressModel> {
     },
     {
       name: 'suburb',
-      // TODO: non-optional suburb
-      value: (item) => item.suburb ? item.suburb.name : ''
+      value: (item) => item.suburb.name
     },
   ];
 

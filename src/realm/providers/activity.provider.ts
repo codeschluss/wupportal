@@ -98,6 +98,10 @@ export class ActivityProvider
   public readAll: (params?: ActivityControllerService
     .ActivityControllerReadAllParams) => Observable<ActivityModel[]>;
 
+  public like:
+    (id: string) => Observable<any> =
+      this.apply(this.service.activityControllerIncreaseLikeResponse);
+
   public linkTargetGroups:
     (id: string, targetGroupIds: string[]) => Observable<any> =
       this.apply(this.service.activityControllerAddTargetGroupsResponse);

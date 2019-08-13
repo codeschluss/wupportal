@@ -56,6 +56,10 @@ export class BlogProvider
   public readAll: (params?: BlogControllerService
     .BlogControllerReadAllParams) => Observable<BlogModel[]>;
 
+  public like:
+    (id: string) => Observable<any> =
+      this.apply(this.service.blogControllerIncreaseLikeResponse);
+
   public relinkActivity:
     (id: string, activityId: String) => Observable<any> =
       this.apply(this.service.blogControllerUpdateActivityResponse);

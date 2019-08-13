@@ -27,13 +27,13 @@
       <i18n i18n="@@details" unit="details"></i18n>
     </stack-layout>
     <stack-layout ripple
-      [isEnabled]="!liked(item)"
-      [isUserInteractionEnabled]="!liked(item)"
-      (tap)="like(item)">
+      [isEnabled]="!liked"
+      [isUserInteractionEnabled]="!liked"
+      (tap)="like()">
       <icon-compat icon="heart"></icon-compat>
       <i18n i18n="@@like" unit="like"></i18n>
     </stack-layout>
-    <stack-layout ripple (tap)="share(item)">
+    <stack-layout ripple (tap)="share()">
       <icon-compat icon="share-alt"></icon-compat>
       <i18n i18n="@@share" unit="share"></i18n>
     </stack-layout>

@@ -18,6 +18,7 @@ export class ActivityModel
   @Translatable() public name: string;
 
   public contactName: string;
+  public likes: number;
   public mail: string;
   public phone: string;
 

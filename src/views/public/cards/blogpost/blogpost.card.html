@@ -31,14 +31,14 @@
       <icon-compat icon="comment-dots"></icon-compat>
       <i18n i18n="@@details">details</i18n>
     </a>
-    <button mat-button (click)="share(item)">
+    <button mat-button (click)="share()">
       <icon-compat icon="share-alt"></icon-compat>
       <i18n i18n="@@share">share</i18n>
     </button>
     <button mat-button
-      [disabled]="liked(item)"
+      [disabled]="liked"
       [matBadge]="item.likes || 0"
-      (click)="like(item)">
+      (click)="like()">
       <icon-compat icon="heart"></icon-compat>
       <i18n i18n="@@like">like</i18n>
     </button>

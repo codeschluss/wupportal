@@ -32,7 +32,7 @@ public class ConfigurationControllerUpdateTest {
   @WithUserDetails("super@user")
   public void updateSuperUserOk() throws URISyntaxException {
     ConfigurationEntity configuration = newConfiguration("updateSuperUserOk", "updateSuperUserOk");
-    String configurationId = "00000000-0000-0000-0001-000000000008";
+    String configurationId = "00000000-0000-0000-0001-000000000009";
 
     controller.update(configuration, configurationId);
 

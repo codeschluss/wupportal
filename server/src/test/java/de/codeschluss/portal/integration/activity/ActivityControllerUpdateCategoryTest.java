@@ -32,7 +32,7 @@ public class ActivityControllerUpdateCategoryTest {
   @WithUserDetails("super@user")
   public void updateCategorySuperUserOk() throws URISyntaxException {
     StringPrimitive categoryId = new StringPrimitive("00000000-0000-0000-0007-300000000000");
-    String activityId = "00000000-0000-0000-0010-100000000000";
+    String activityId = "00000000-0000-0000-0010-200000000000";
 
     controller.updateCategory(activityId, categoryId);
 

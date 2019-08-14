@@ -7,9 +7,15 @@ a {
     width: 17.5rem;
 
     & > mat-card-header {
+      height: 5rem;
       display: flex;
-      align-items: flex-end;
-      min-height: 5rem;
+      flex-direction: column;
+
+      &::ng-deep {
+        .mat-card-header-text {
+          margin: auto 0 0 0;
+        }
+      }
     }
 
     & > mat-card-content {

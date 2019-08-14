@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 
 $animation-duration: .25s;
+$viewport-width: 100rem;
 
 $color-dark: rgba(black, .87);
 $color-light: white;
@@ -8,8 +9,6 @@ $color-light: white;
 $color-bg-light: rgba(black, .12);
 $color-bg-dark: rgba(black, .36);
 $color-bg-drawer: #FAFAFA;
-
-$viewport-width: 100rem;
 
 $theme-palette-primary: (
   50: #e3f2fd,

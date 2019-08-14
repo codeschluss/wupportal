@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 import { CoreModule } from '@wooportal/core';
@@ -13,8 +13,6 @@ import { ErrorModule } from './error/error.module';
 import { ClientErrorHandler } from './error/handler/error.handler';
 import { RealmModule } from './realm/realm.module';
 import { ClientPackage } from './utils/package';
-
-fontawesome.add(freeicons);
 
 @NgModule({
   bootstrap: [ClientComponent],
@@ -44,4 +42,10 @@ fontawesome.add(freeicons);
   ]
 })
 
-export class ClientModule { }
+export class ClientModule {
+
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(freeicons);
+  }
+
+}

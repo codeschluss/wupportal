@@ -1,5 +1,5 @@
 import { ErrorHandler, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { library as fontawesome } from '@fortawesome/fontawesome-svg-core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
 import { CoreModule } from '@wooportal/core';
 import { NativeScriptAnimationsModule } from 'nativescript-angular/animations';
@@ -11,8 +11,6 @@ import { NativeComponent } from './native.component.tns';
 import { NativeRouter } from './native.router.tns';
 import { RealmModule } from './realm/realm.module';
 import { ClientPackage } from './utils/package';
-
-fontawesome.add(freeicons);
 
 @NgModule({
   bootstrap: [NativeComponent],
@@ -39,4 +37,10 @@ fontawesome.add(freeicons);
   schemas: [NO_ERRORS_SCHEMA]
 })
 
-export class NativeModule { }
+export class NativeModule {
+
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(freeicons);
+  }
+
+}

@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { PageModel } from '../../../../realm/models/page.model';
+import { TopicModel } from '../../../../realm/models/topic.model';
 import { BaseListing } from '../base.listing';
 
 @Component({
@@ -9,15 +9,15 @@ import { BaseListing } from '../base.listing';
 })
 
 export class InfopageListingComponent
-  extends BaseListing<PageModel> {
+  extends BaseListing<TopicModel> {
 
-  protected joiner: CrudJoiner = CrudJoiner.of(PageModel)
-    .with('topic');
+  protected joiner: CrudJoiner = CrudJoiner.of(TopicModel)
+    .with('pages');
 
-  protected model: Type<PageModel> = PageModel;
+  protected model: Type<TopicModel> = TopicModel;
 
   protected path: string = 'infopages';
 
-  protected size: number = 8;
+  protected size: number = 10;
 
 }

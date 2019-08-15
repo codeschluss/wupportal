@@ -1,1 +1,15 @@
 @import '../../../../app.theme.scss';
+
+a {
+  margin: .5rem;
+  display: block;
+  text-decoration: inherit;
+
+  [compat=icon] {
+    padding-right: .5rem;
+  }
+
+  span {
+    font-size: 1rem;
+  }
+}

@@ -1,1 +1,58 @@
 @import '../../../../app.theme.scss';
+
+main {
+  & > mat-accordion {
+    display: block;
+    margin: 1rem auto;
+    max-width: calc(100% - 2rem);
+
+    & > mat-expansion-panel {
+      border: 1px solid transparent;
+      border-radius: .25rem;
+      transition: all $animation-duration;
+
+      &.mat-expanded {
+        border-color: $color-primary;
+
+        & > mat-expansion-panel-header {
+          background-color: $color-primary;
+
+          &::ng-deep {
+            .mat-expansion-indicator::after {
+              color: $color-light;
+            }
+          }
+
+          mat-panel-title {
+            color: $color-light;
+          }
+        }
+      }
+
+      & + mat-expansion-panel {
+        margin-top: 1rem;
+      }
+
+      & > mat-expansion-panel-header {
+        border-radius: 0;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all $animation-duration;
+      }
+
+      &::ng-deep {
+        .mat-expansion-panel-body {
+          padding: .5rem;
+
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+      }
+
+      infopage-card {
+        flex-grow: 1;
+      }
+    }
+  }
+}

@@ -19,6 +19,7 @@ export const materials: Type<any>[] = [
   MatCardModule,
   MatChipsModule,
   MatDividerModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,

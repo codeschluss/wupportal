@@ -30,6 +30,8 @@ export class LayoutComponent implements OnInit {
 
   public navigate: (...path: string[]) => Promise<boolean>;
 
+  public search: (filter: string) => Promise<boolean>;
+
   @ViewChild('drawer', { static: true })
   private drawer: DrawerCompat;
 
@@ -38,7 +40,7 @@ export class LayoutComponent implements OnInit {
 
   private serializer: UrlSerializer = new CoreUrlSerializer();
 
-  public get query(): string {
+  public get filter(): string {
     const tree = this.serializer.parse(this.router.url);
 
     return this.router.url.startsWith('/search')
@@ -69,6 +71,7 @@ export class LayoutComponent implements OnInit {
     this.busy = new BehaviorSubject<number>(1);
     this.languageProvider.readAll().subscribe((l) => this.languages = l);
     this.navigate = (...path: string[]) => this.router.navigate(path);
+    this.search = (input: string) => this.navigate('/', 'search', input);
     this.sessionProvider.value.subscribe((s) => this.language = s.language);
 
     this.router.events.pipe(filter((event) => event instanceof NavigationStart))

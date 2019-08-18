@@ -38,7 +38,10 @@
   </a>
   <mat-form-field [class.text-primary]="url.startsWith('/search')">
     <icon-compat fxHide.lt-lg matPrefix icon="search"></icon-compat>
-    <input #navbarInput matInput tabindex="-1" value="{{ query }}">
+    <input #navbarInput matInput
+      tabindex="-1"
+      value="{{ filter }}"
+      (keydown.enter)="navbarInput.value && search(navbarInput.value)">
     <mat-label><i18n i18n="@@search">search</i18n></mat-label>
     <button mat-button mat-icon-button matSuffix
       [disabled]="!navbarInput.value"
@@ -162,7 +165,10 @@
         [class.active]="url.startsWith('/search')">
         <icon-compat icon="search"></icon-compat>
         <mat-form-field [class.text-primary]="url.startsWith('/search')">
-          <input #drawerInput matInput tabindex="-1" value="{{ query }}">
+          <input #drawerInput matInput
+            tabindex="-1"
+            value="{{ filter }}"
+            (keydown.enter)="drawerInput.value && search(drawerInput.value)">
           <mat-label><i18n i18n="@@search">search</i18n></mat-label>
           <button mat-button mat-icon-button matSuffix
             [disabled]="!drawerInput.value"

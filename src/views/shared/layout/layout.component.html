@@ -33,7 +33,7 @@
   <a mat-button
     [class.active]="url.startsWith('/infopages')"
     [routerLink]="['/', 'infopages']">
-    <icon-compat fxHide.lt-lg icon="question-circle"></icon-compat>
+    <icon-compat fxHide.lt-lg icon="info-circle"></icon-compat>
     <i18n i18n="@@infopages">infopages</i18n>
   </a>
   <mat-form-field [class.text-primary]="url.startsWith('/search')">
@@ -202,7 +202,7 @@
       <a mat-list-item
         [class.active]="url.startsWith('/infopages')"
         [routerLink]="['/', 'infopages']">
-        <icon-compat icon="question-circle"></icon-compat>
+        <icon-compat icon="info-circle"></icon-compat>
         <i18n i18n="@@infopages">infopages</i18n>
       </a>
     </mat-action-list>

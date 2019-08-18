@@ -1,7 +1,8 @@
 @import '../../../app.theme.scss';
 
 :host {
-  margin: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
   max-width: calc(100% - 2rem);
 
   mat-card {

@@ -2,7 +2,6 @@
 
 main {
   & > blogpost-card {
-    display: flex;
     width: calc(#{$viewport-width} / 2);
   }
 }

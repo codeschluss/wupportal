@@ -27,7 +27,7 @@
           class="mat-body"
           [style.borderColor]="item.color"
           [style.backgroundColor]="item.color"
-          [style.color]="chip.selected ? handleColor(item.color) : null"
+          [style.color]="chip.selected ? color(item.color) : null"
           [style.display]="ellipsis && i > 5 ? 'none' : null"
           [value]="item.id"
           (click)="chip.toggleSelected()">
@@ -45,14 +45,14 @@
   </header>
   <section fxLayout="row" fxLayoutAlign="stretch">
     <aside fxHide.lt-lg>
-      <div><iframe #maps src="/maps?embed=true"></iframe></div>
+      <div><iframe #frame src="/maps?embed=true"></iframe></div>
     </aside>
     <nav class="topoff" fxLayout="row wrap" fxLayoutAlign="center start">
       <ng-container *ngFor="let item of items | async">
         <activity-card
           [item]="item"
-          (mouseenter)="handleFocus(item, $event)"
-          (mouseleave)="handleFocus(item, $event)">
+          (mouseenter)="focus(item, $event)"
+          (mouseleave)="focus(item, $event)">
         </activity-card>
       </ng-container>
       <ng-container *ngIf="next || prev">

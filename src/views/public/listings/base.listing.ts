@@ -46,23 +46,23 @@ export abstract class BaseListing<Model extends CrudModel>
 
   public ngOnInit(): void {
     this.items = new BehaviorSubject<Model[]>([]);
-    this.route.queryParams.subscribe((p) => this.fetch(this.mapParams(p)));
+    this.route.queryParams.subscribe((p) => this.fetch(this.params(p)));
   }
 
-  public filter(params: Params): void {
+  protected navigate(params: Params): Promise<boolean> {
     Object.keys(params).forEach((key) => {
       params.page = key === 'page' ? params[key] : null;
       params[key] = Arr(params[key]).length ? params[key] : null;
     });
 
-    this.router.navigate([], {
+    return this.router.navigate([], {
       queryParams: params,
       queryParamsHandling: 'merge',
       relativeTo: this.route
     });
   }
 
-  protected mapParams(params: Params): ReadParams {
+  protected params(params: Params): ReadParams {
     return {
       page: params.page || null
     };

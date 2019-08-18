@@ -12,9 +12,7 @@ export class BlogpostListingComponent
   extends BaseListing<BlogModel> {
 
   protected joiner: CrudJoiner = CrudJoiner.of(BlogModel)
-    .with('activity').yield('address').yield('suburb')
-    .with('activity').yield('category')
-    .with('activity').yield('schedules');
+    .with('activity');
 
   protected model: Type<BlogModel> = BlogModel;
 

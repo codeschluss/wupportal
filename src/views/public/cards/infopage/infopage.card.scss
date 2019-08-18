@@ -1,9 +1,13 @@
 @import '../../../../app.theme.scss';
 
 a {
-  margin: .5rem;
+  margin: 1rem;
   display: block;
-  text-decoration: inherit;
+  text-align: left;
+
+  & + a {
+    margin-left: 0;
+  }
 
   [compat=icon] {
     padding-right: .5rem;

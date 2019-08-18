@@ -10,4 +10,8 @@ mat-card {
       font-size: small;
     }
   }
+
+  mat-card-content {
+    text-align: justify;
+  }
 }

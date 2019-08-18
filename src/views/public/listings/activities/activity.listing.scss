@@ -27,8 +27,8 @@ main {
       }
 
       mat-chip {
-        border: .25rem solid;
         cursor: pointer;
+        border: .25rem solid;
 
         flex-grow: 1;
         justify-content: center;
@@ -51,6 +51,7 @@ main {
     aside {
       width: 33%;
       margin: 1rem;
+      flex: 1 0 auto;
 
       & > div {
         height: 0;

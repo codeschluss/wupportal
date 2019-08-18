@@ -37,7 +37,7 @@ export class ActivityListingComponent
 
   protected path: string = 'activities';
 
-  protected size: number = 12;
+  protected size: number = 9;
 
   private connection: MapsConnection;
 
@@ -47,8 +47,8 @@ export class ActivityListingComponent
   @ViewChild(MatChipList, { static: true })
   private chipList: MatChipList;
 
-  @ViewChild('maps', { read: ElementRef, static: true })
-  private maps: ElementRef<HTMLIFrameElement>;
+  @ViewChild('frame', { read: ElementRef, static: true })
+  private frame: ElementRef<HTMLIFrameElement>;
 
   public get categories(): SuburbModel[] {
     return this.route.snapshot.data.categories || [];
@@ -83,7 +83,7 @@ export class ActivityListingComponent
   public ngAfterViewInit(): void {
     if (this.platformProvider.type === 'Online') {
       this.route.queryParams.pipe(
-        map((params) => this.mapParams(params))
+        map((params) => this.params(params))
       ).subscribe((params) => {
         const { categories, suburbs, targetgroups } = params;
         this.suburbCtrl.setValue(suburbs || [], { emitEvent: false });
@@ -102,11 +102,11 @@ export class ActivityListingComponent
         this.targetGroupCtrl.valueChanges.pipe(map((value) => ({
           targetgroups: Arr(value)
         })))
-      ).subscribe((params) => this.filter(params));
+      ).subscribe((params) => this.navigate(params));
 
       if (this.platformProvider.name === 'Web') {
         const source = this.document.defaultView;
-        const target = this.maps.nativeElement.contentWindow;
+        const target = this.frame.nativeElement.contentWindow;
 
         this.connection = new MapsConnection(source, target);
         this.connection.focus.subscribe((focus) => this.focusing(focus));
@@ -119,20 +119,20 @@ export class ActivityListingComponent
     }
   }
 
-  public handleColor(color: string): string {
+  public color(color: string): string {
     const rgb = ColorConvert.keyword.rgb(color) || ColorConvert.hex.rgb(color);
     return rgb[0] + rgb[1] + rgb[2] > 382 ? '#000' : '#FFF';
   }
 
-  public handleFocus(item: ActivityModel, event: Event): void {
+  public focus(item: ActivityModel, event: Event): void {
     switch (event.type) {
       case 'mouseenter': return this.connection.nextFocus(this.focusing(item));
       case 'mouseleave': return this.connection.nextFocus(this.focusing(null));
     }
   }
 
-  protected mapParams(params: Params): ReadParams {
-    return Object.assign(super.mapParams(params), {
+  protected params(params: Params): ReadParams {
+    return Object.assign(super.params(params), {
       categories: params.categories ? Arr(params.categories) : null,
       suburbs: params.suburbs ? Arr(params.suburbs) : null,
       targetgroups: params.targetgroups ? Arr(params.targetgroups) : null

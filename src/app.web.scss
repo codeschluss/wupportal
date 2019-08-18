@@ -103,9 +103,10 @@ layout-component {
     }
 
     & > mat-form-field {
+      width: 10rem;
+      padding: 0 1rem;
       margin-bottom: -.54rem;
       transition: width $animation-duration;
-      width: 10rem;
 
       &.mat-form-field-should-float {
         width: 15rem;

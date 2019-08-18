@@ -18,7 +18,7 @@ import { ClientPackage } from './utils/package';
   bootstrap: [ClientComponent],
   declarations: [ClientComponent],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ssr' }),
+    BrowserModule.withServerTransition({ appId: 'wooportal' }),
     BrowserAnimationsModule,
     ClientRouter,
     CoreModule.forRoot({

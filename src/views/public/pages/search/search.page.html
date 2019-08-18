@@ -1,0 +1,113 @@
+<main>
+  <mat-accordion>
+    <ng-container *ngIf="items.activities.length">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i18n i18n="@@activities">activities</i18n>
+            <small>({{ items.activities.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.activities">
+          <activity-card [item]="item"></activity-card>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+    <ng-container *ngIf="items.organisations.length">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i18n i18n="@@organisations">organisations</i18n>
+            <small>({{ items.organisations.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.organisations">
+          <organisation-card [item]="item"></organisation-card>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+    <ng-container *ngIf="items.blogposts.length">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i18n i18n="@@blogposts">blogposts</i18n>
+            <small>({{ items.blogposts.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.blogposts">
+          <blogpost-card [item]="item"></blogpost-card>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+    <ng-container *ngIf="items.infopages.length">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i18n i18n="@@infopages">infopages</i18n>
+            <small>({{ items.infopages.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.infopages">
+          <infopage-card [item]="item"></infopage-card>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+    <ng-container *ngIf="items.categories.length">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i18n i18n="@@categories">categories</i18n>
+            <small>({{ items.categories.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-chip-list multiple selectable>
+          <ng-container *ngFor="let item of items.categories">
+            <mat-chip
+              class="mat-body"
+              [queryParams]="{ categories: item.id }"
+              [routerLink]="['/', 'activities']"
+              [style.borderColor]="item.color">
+              {{ item.name }}
+            </mat-chip>
+          </ng-container>
+        </mat-chip-list>
+      </mat-expansion-panel>
+    </ng-container>
+    <ng-container *ngIf="items.suburbs.length">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i18n i18n="@@suburbs">suburbs</i18n>
+            <small>({{ items.suburbs.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.suburbs">
+          <a mat-stroked-button
+            [queryParams]="{ suburbs: item.id }"
+            [routerLink]="['/', 'activities']">
+            <icon-compat icon="city"></icon-compat>
+            <span>{{ item.name }}</span>
+          </a>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+    <ng-container *ngIf="items.targetGroups.length">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i18n i18n="@@targetGroups">targetGroups</i18n>
+            <small>({{ items.targetGroups.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.targetGroups">
+          <a mat-stroked-button
+            [queryParams]="{ targetgroups: item.id }"
+            [routerLink]="['/', 'activities']">
+            <icon-compat icon="users"></icon-compat>
+            <span>{{ item.name }}</span>
+          </a>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-accordion>
+</main>

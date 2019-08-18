@@ -15,8 +15,8 @@ import { LoginPageComponent } from './pages/login/login.page';
 import { LogoutPageComponent } from './pages/logout/logout.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
 import { RegisterPageComponent } from './pages/register/register.page';
+import { SearchPageComponent } from './pages/search/search.page';
 import { PublicComponent } from './public.component';
-import { SearchDummyComponent } from './search/search.dummy';
 
 const routes: Route[] = [
   {
@@ -28,6 +28,7 @@ const routes: Route[] = [
       LogoutPageComponent.routing,
       PoliciesPageComponent.routing,
       RegisterPageComponent.routing,
+      SearchPageComponent.routing,
 
       ActivityListingComponent.routing,
       BlogpostListingComponent.routing,
@@ -38,9 +39,6 @@ const routes: Route[] = [
       BlogpostObjectComponent.routing,
       InfopageObjectComponent.routing,
       OrganisationObjectComponent.routing
-
-      // TODO: remove
-      , SearchDummyComponent.routing
     ]
   },
   {

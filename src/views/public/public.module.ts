@@ -19,10 +19,10 @@ import { LoginPageComponent } from './pages/login/login.page';
 import { LogoutPageComponent } from './pages/logout/logout.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
 import { RegisterPageComponent } from './pages/register/register.page';
+import { SearchPageComponent } from './pages/search/search.page';
 import { PublicComponent } from './public.component';
 import { materials } from './public.imports';
 import { PublicRouter } from './public.router';
-import { SearchDummyComponent } from './search/search.dummy';
 
 const cards: Type<any>[] = [
   ActivityCardComponent,
@@ -51,7 +51,8 @@ const pages: Type<any>[] = [
   LoginPageComponent,
   LogoutPageComponent,
   PoliciesPageComponent,
-  RegisterPageComponent
+  RegisterPageComponent,
+  SearchPageComponent
 ];
 
 @NgModule({
@@ -61,17 +62,11 @@ const pages: Type<any>[] = [
     ...objects,
     ...pages,
     PublicComponent
-
-    // TODO: remove
-    , SearchDummyComponent
   ],
   entryComponents: [
     ...listings,
     ...objects,
     ...pages
-
-    // TODO: remove
-    , SearchDummyComponent
   ],
   exports: [
     ...cards

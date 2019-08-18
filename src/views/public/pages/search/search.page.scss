@@ -1,0 +1,105 @@
+@import '../../../../app.theme.scss';
+
+main {
+  & > mat-accordion {
+    display: block;
+    margin: 1rem auto;
+    max-width: calc(100% - 2rem);
+
+    & > mat-expansion-panel {
+      border: 1px solid transparent;
+      border-radius: .25rem;
+      transition: all $animation-duration;
+
+      &.mat-expanded {
+        border-color: $color-primary;
+
+        & > mat-expansion-panel-header {
+          background-color: $color-primary;
+
+          &::ng-deep {
+            .mat-expansion-indicator::after {
+              color: $color-light;
+            }
+          }
+
+          mat-panel-title {
+            color: $color-light;
+          }
+        }
+      }
+
+      & + mat-expansion-panel {
+        margin-top: 1rem;
+      }
+
+      & > mat-expansion-panel-header {
+        border-radius: 0;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all $animation-duration;
+
+        mat-panel-title {
+          & > small {
+            font-weight: lighter;
+            line-height: 1rem;
+            padding-left: .5rem;
+          }
+        }
+      }
+
+      &::ng-deep {
+        .mat-expansion-panel-body {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+
+          overflow-x: auto;
+          padding: .5rem;
+
+          & > a {
+            margin: 1rem;
+            display: block;
+            text-align: left;
+
+            & + a {
+              margin-left: 0;
+            }
+
+            [compat=icon] {
+              padding-right: .5rem;
+            }
+          }
+
+          & > mat-chip-list {
+            &::ng-deep {
+              .mat-chip-list-wrapper {
+                flex-wrap: nowrap;
+              }
+            }
+
+            mat-chip {
+              cursor: pointer;
+              border: .25rem solid;
+              margin: 1rem;
+
+              white-space: nowrap;
+
+              & + mat-chip {
+                margin-left: 0;
+              }
+
+              &:focus:not(:hover)::after {
+                opacity: 0;
+              }
+
+              &:not(.mat-chip-selected) {
+                background-color: transparent !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

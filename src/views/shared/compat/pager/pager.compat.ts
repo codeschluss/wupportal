@@ -80,7 +80,7 @@ export class PagerCompatComponent implements PagerCompat {
 
   public get nextLink(): object {
     return {
-      page: parseInt(this.route.snapshot.queryParams.page, 10) || 0 + 1
+      page: (parseInt(this.route.snapshot.queryParams.page, 10) || 0) + 1
     };
   }
 

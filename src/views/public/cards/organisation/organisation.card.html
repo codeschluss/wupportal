@@ -6,10 +6,11 @@
     </small>
   </mat-card-content>
   <ng-container *ngIf="item.images?.length">
-    <img mat-card-image
+    <figure mat-card-image
       [alt]="item.images[0].caption"
       [style.backgroundImage]="item.images[0].source"
       [title]="item.images[0].caption">
+    </figure>
   </ng-container>
   <ng-container *ngIf="!item.images?.length">
     <icon-compat mat-card-image icon="image"></icon-compat>

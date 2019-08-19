@@ -55,19 +55,21 @@ main {
           flex-wrap: nowrap;
 
           overflow-x: auto;
-          padding: .5rem;
+          padding: 0;
 
-          & > a {
-            margin: 1rem;
-            display: block;
-            text-align: left;
-
-            & + a {
-              margin-left: 0;
+          & > activity-card {
+            & + activity-card {
+              mat-card {
+                margin-left: 0;
+              }
             }
+          }
 
-            [compat=icon] {
-              padding-right: .5rem;
+          & > organisation-card {
+            & + organisation-card {
+              mat-card {
+                margin-left: 0;
+              }
             }
           }
 
@@ -96,6 +98,20 @@ main {
               &:not(.mat-chip-selected) {
                 background-color: transparent !important;
               }
+            }
+          }
+
+          & > a {
+            margin: 1rem;
+            display: block;
+            text-align: left;
+
+            & + a {
+              margin-left: 0;
+            }
+
+            [compat=icon] {
+              padding-right: .5rem;
             }
           }
         }

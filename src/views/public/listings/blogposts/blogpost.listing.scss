@@ -3,5 +3,11 @@
 main {
   & > blogpost-card {
     width: calc(#{$viewport-width} / 2);
+
+    &::ng-deep {
+      & > mat-card {
+        box-sizing: border-box;
+      }
+    }
   }
 }

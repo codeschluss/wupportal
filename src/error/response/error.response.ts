@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { PlatformProvider } from '@wooportal/core';
+import { PlatformProvider, Title } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,10 +17,13 @@ export class ErrorResponseComponent implements OnInit {
 
   public constructor(
     private platformProvider: PlatformProvider,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: Title
   ) { }
 
   public ngOnInit(): void {
+    this.code.subscribe((code) => this.titleService.set(`Error ${code}`));
+
     if (this.platformProvider.name === 'Server') {
       this.platformProvider.engine.response.status(this.status());
     }

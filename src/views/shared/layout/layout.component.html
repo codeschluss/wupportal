@@ -7,10 +7,10 @@
     <h1>{{ title }}</h1>
   </a>
   <a mat-button
-    [class.active]="url.startsWith('/maps')"
-    [routerLink]="['/', 'maps']">
+    [class.active]="url.startsWith('/mapview')"
+    [routerLink]="['/', 'mapview']">
     <icon-compat fxHide.lt-lg icon="globe"></icon-compat>
-    <i18n i18n="@@mapView">mapView</i18n>
+    <i18n i18n="@@mapview">mapview</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/activities')"
@@ -182,10 +182,10 @@
         <span>{{ title }}</span>
       </a>
       <a mat-list-item
-        [class.active]="url.startsWith('/maps')"
-        [routerLink]="['/', 'maps']">
+        [class.active]="url.startsWith('/mapview')"
+        [routerLink]="['/', 'mapview']">
         <icon-compat icon="globe"></icon-compat>
-        <i18n i18n="@@mapView">mapView</i18n>
+        <i18n i18n="@@mapview">mapview</i18n>
       </a>
       <a mat-list-item
         [class.active]="url.startsWith('/activities')"

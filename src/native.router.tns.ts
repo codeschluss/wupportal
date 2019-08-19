@@ -9,7 +9,7 @@ const routes: Route[] = [
     path: '',
     children: [
       {
-        path: 'maps',
+        path: 'mapview',
         loadChildren: () => import('./views/maps/maps.module')
           .then((imported) => imported.MapsModule)
       },

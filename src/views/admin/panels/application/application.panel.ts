@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CrudJoiner } from '@wooportal/core';
 import { ConfigurationModel } from '../../../../realm/models/configuration.model';
-import { ClientPackage } from '../../../../utils/package';
 import { BasePanel } from '../base.panel';
 
 @Component({
@@ -23,9 +22,11 @@ export class ApplicationPanelComponent extends BasePanel {
     return this.route.snapshot.data.configuration || [];
   }
 
-  public get title(): string {
-    const title = this.configuration.find((c) => c.item === 'portalName');
-    return title ? title.value : ClientPackage.config.defaults.title;
+  public get name(): string {
+    const name = this.configuration.find((c) => c.item === 'portalName');
+    const slug = this.configuration.find((c) => c.item === 'portalSubtitle');
+
+    return `${name ? name.value : '...'} - ${slug ? slug.value : '...'}`;
   }
 
 }

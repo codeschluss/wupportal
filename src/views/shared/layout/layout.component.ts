@@ -1,10 +1,11 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router, UrlSerializer } from '@angular/router';
-import { JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, TokenProvider } from '@wooportal/core';
+import { Component, ElementRef, Inject, OnInit, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { I18nResolver, JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, Title, TokenProvider, TRANSLATIONS_FACTORY } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { BehaviorSubject, fromEvent } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, startWith, tap } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData } from 'tns-core-modules/application';
 import { LanguageModel } from '../../../realm/models/language.model';
 import { LanguageProvider } from '../../../realm/providers/language.provider';
@@ -12,6 +13,18 @@ import { ClientPackage } from '../../../utils/package';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
 @Component({
+  providers: [
+    I18n,
+    {
+      deps: [I18nResolver],
+      provide: TRANSLATIONS,
+      useFactory: TRANSLATIONS_FACTORY
+    },
+    {
+      provide: TRANSLATIONS_FORMAT,
+      useValue: 'xliff'
+    }
+  ],
   selector: 'layout-component',
   templateUrl: 'layout.component.html'
 })
@@ -58,12 +71,14 @@ export class LayoutComponent implements OnInit {
 
   public constructor(
     @Inject(DOCUMENT) private document: Document,
+    private i18n: I18n,
     private languageProvider: LanguageProvider,
     private loadingProvider: LoadingProvider,
     private platformProvider: PlatformProvider,
     private route: ActivatedRoute,
     private router: Router,
     private sessionProvider: SessionProvider,
+    private titleService: Title,
     private tokenProvider: TokenProvider
   ) { }
 
@@ -74,8 +89,14 @@ export class LayoutComponent implements OnInit {
     this.search = (input: string) => this.navigate('/', 'search', input);
     this.sessionProvider.value.subscribe((s) => this.language = s.language);
 
-    this.router.events.pipe(filter((event) => event instanceof NavigationStart))
-      .subscribe(() => this.drawer.hide());
+    this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationStart),
+      tap(() => this.drawer.hide()),
+      map((event) => event.url),
+      startWith(this.router.url),
+      filter((url) => !url.startsWith('/admin')),
+      map((url) => this.i18n({ id: url.slice(1), value: url.slice(1) }) || null)
+    ).subscribe((url) => this.titleService.set(url));
 
     if ('embed' in this.route.snapshot.queryParams) {
       this.document.body.classList.add('embedded');

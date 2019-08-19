@@ -42,10 +42,10 @@
           <label [text]="title"></label>
         </stack-layout>
         <stack-layout ripple
-          [class.active]="url.startsWith('/maps')"
-          (tap)="navigate('/maps')">
+          [class.active]="url.startsWith('/mapview')"
+          (tap)="navigate('/mapview')">
           <icon-compat icon="globe"></icon-compat>
-          <i18n i18n="@@mapView" unit="mapView"></i18n>
+          <i18n i18n="@@mapview" unit="mapview"></i18n>
         </stack-layout>
         <stack-layout ripple
           [class.active]="url.startsWith('/activities')"

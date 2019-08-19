@@ -51,7 +51,7 @@ export class AccountPanelComponent extends BasePanel {
     return this.organisations.some((item) => item.approved);
   }
 
-  public get title(): string {
+  public get name(): string {
     return this.group.get('name') ? this.group.get('name').value : '...';
   }
 

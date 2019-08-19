@@ -81,14 +81,16 @@
             <small>({{ items.suburbs.length }})</small>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <ng-container *ngFor="let item of items.suburbs">
-          <a mat-stroked-button
-            [queryParams]="{ suburbs: item.id }"
-            [routerLink]="['/', 'activities']">
-            <icon-compat icon="city"></icon-compat>
-            <span>{{ item.name }}</span>
-          </a>
-        </ng-container>
+        <div fxLayout="row">
+          <ng-container *ngFor="let item of items.suburbs">
+            <button mat-stroked-button
+              [queryParams]="{ suburbs: item.id }"
+              [routerLink]="['/', 'activities']">
+              <icon-compat icon="city"></icon-compat>
+              <span>{{ item.name }}</span>
+            </button>
+          </ng-container>
+        </div>
       </mat-expansion-panel>
     </ng-container>
     <ng-container *ngIf="items.targetGroups.length">
@@ -99,14 +101,16 @@
             <small>({{ items.targetGroups.length }})</small>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <ng-container *ngFor="let item of items.targetGroups">
-          <a mat-stroked-button
-            [queryParams]="{ targetgroups: item.id }"
-            [routerLink]="['/', 'activities']">
-            <icon-compat icon="users"></icon-compat>
-            <span>{{ item.name }}</span>
-          </a>
-        </ng-container>
+        <div fxLayout="row">
+          <ng-container *ngFor="let item of items.targetGroups">
+            <button mat-stroked-button
+              [queryParams]="{ targetgroups: item.id }"
+              [routerLink]="['/', 'activities']">
+              <icon-compat icon="users"></icon-compat>
+              <span>{{ item.name }}</span>
+            </button>
+          </ng-container>
+        </div>
       </mat-expansion-panel>
     </ng-container>
   </mat-accordion>

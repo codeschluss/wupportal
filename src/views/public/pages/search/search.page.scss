@@ -54,8 +54,9 @@ main {
           flex-direction: row;
           flex-wrap: nowrap;
 
-          overflow-x: auto;
           padding: 0;
+          overflow-x: auto;
+          overflow-y: hidden;
 
           & > activity-card {
             & + activity-card {
@@ -101,17 +102,20 @@ main {
             }
           }
 
-          & > a {
-            margin: 1rem;
-            display: block;
-            text-align: left;
+          & > div {
+            & > button {
+              margin: 1rem;
+              // display: block;
+              flex: 0 0 auto;
+              text-align: left;
 
-            & + a {
-              margin-left: 0;
-            }
+              & + button {
+                margin-left: 0;
+              }
 
-            [compat=icon] {
-              padding-right: .5rem;
+              [compat=icon] {
+                padding-right: .5rem;
+              }
             }
           }
         }

@@ -1,9 +1,12 @@
-import { Input } from '@angular/core';
+import { HostBinding, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseService, CrudModel, CrudProvider, SessionProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
 
 export abstract class BaseCard<Model extends CrudModel> {
+
+  @HostBinding('class')
+  public readonly class: string = 'base-card';
 
   @Input()
   public item: Model;

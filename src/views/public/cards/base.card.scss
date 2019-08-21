@@ -1,32 +1,41 @@
 @import '../../../app.theme.scss';
 
-mat-card {
-  margin: 1rem;
+:host {
+  padding: 1rem;
   max-width: calc(100% - 2rem);
 
-  & > mat-card-header {
-    &::ng-deep {
-      .mat-card-header-text {
-        margin: 0;
+  mat-card {
+    box-sizing: border-box;
+    max-width: 100%;
+
+    & > mat-card-header {
+      &::ng-deep {
+        .mat-card-header-text {
+          margin: 0;
+        }
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
       }
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-  }
+    & > mat-card-actions {
+      margin-bottom: -.5rem;
+      padding-bottom: 0;
 
-  & > mat-card-actions {
-    margin-bottom: -.5rem;
-    padding-bottom: 0;
+      [compat=icon] {
+        padding-right: .5rem;
+      }
 
-    [compat=icon] {
-      padding-right: .5rem;
-    }
+      .mat-badge-content {
+        top: 0;
+      }
 
-    .mat-badge-content {
-      top: 0;
+      .mat-button {
+        margin: 0;
+      }
     }
   }
 }

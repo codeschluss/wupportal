@@ -178,7 +178,7 @@ layout-component {
 
         & > mat-progress-bar {
           position: fixed;
-          z-index: 1000;
+          z-index: 1;
 
           &._mat-animation-noopable[mode=indeterminate] {
             .mat-progress-bar-primary {

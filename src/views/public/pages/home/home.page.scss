@@ -47,6 +47,10 @@ main {
       & > nav {
         overflow-x: auto;
 
+        & > activity-card {
+          box-sizing: border-box;
+        }
+
         // TODO: https://github.com/angular/flex-layout/issues/1065
         @media screen and (max-width: 959.99px) and (min-width: 0px) {
           &.snap {
@@ -69,10 +73,10 @@ main {
                 font-size: 5rem;
                 text-align: center;
                 text-shadow:
-                  -.125rem -.125rem 0 $color-light,
-                  .125rem -.125rem 0 $color-light,
-                  -.125rem .125rem 0 $color-light,
-                  .125rem .125rem 0 $color-light;
+                  -.125rem -.125rem 0 $color-bg-drawer,
+                  .125rem -.125rem 0 $color-bg-drawer,
+                  -.125rem .125rem 0 $color-bg-drawer,
+                  .125rem .125rem 0 $color-bg-drawer;
 
                 position: absolute;
                 left: -1rem;

@@ -1,4 +1,4 @@
-import { OnInit, Type } from '@angular/core';
+import { HostBinding, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, Title } from '@wooportal/core';
 
@@ -10,6 +10,9 @@ export abstract class BaseObject<Model extends CrudModel>
   protected abstract joiner: CrudJoiner;
 
   protected abstract path: string;
+
+  @HostBinding('class')
+  public readonly class: string = 'base-object';
 
   public get item(): Model {
     return this.route.snapshot.data.item;

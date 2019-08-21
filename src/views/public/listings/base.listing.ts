@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, OnInit, Type } from '@angular/core';
+import { HostBinding, Inject, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { Arr, BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, PlatformProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import { BehaviorSubject, of } from 'rxjs';
@@ -15,6 +15,9 @@ export abstract class BaseListing<Model extends CrudModel>
   protected abstract path: string;
 
   protected abstract size: number;
+
+  @HostBinding('class')
+  public readonly class: string = 'base-listing';
 
   public items: BehaviorSubject<Model[]>;
 

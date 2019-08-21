@@ -2,9 +2,10 @@
 
 a {
   text-decoration: inherit;
+  width: 100%;
 
   & > mat-card {
-    width: 17.5rem;
+    width: 20rem;
 
     & > mat-card-header {
       height: 5rem;

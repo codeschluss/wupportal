@@ -39,8 +39,14 @@ main {
         scroll-snap-type: x mandatory;
 
         & > activity-card {
-          min-width: 100%;
+          width: 100%;
           position: relative;
+
+          &::ng-deep {
+            mat-card {
+              width: 100% !important;
+            }
+          }
 
           & + activity-card::before {
             color: $color-primary;
@@ -48,10 +54,10 @@ main {
             font-size: 5rem;
             text-align: center;
             text-shadow:
-              -.125rem -.125rem 0 $color-light,
-              .125rem -.125rem 0 $color-light,
-              -.125rem .125rem 0 $color-light,
-              .125rem .125rem 0 $color-light;
+              -.125rem -.125rem 0 $color-bg-drawer,
+              .125rem -.125rem 0 $color-bg-drawer,
+              -.125rem .125rem 0 $color-bg-drawer,
+              .125rem .125rem 0 $color-bg-drawer;
 
             position: absolute;
             left: -1rem;
@@ -63,6 +69,7 @@ main {
       & > activity-card {
         margin: 0 auto;
         flex: 0 0 auto;
+        max-width: 100%;
 
         direction: ltr;
         scroll-snap-align: start;
@@ -115,7 +122,7 @@ main {
       transition: all $animation-duration;
 
       &:first-child {
-        z-index: 2;
+        z-index: 1;
       }
 
       & + [mat-fab] {

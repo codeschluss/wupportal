@@ -11,11 +11,11 @@ main {
   right: 0;
   top: 0;
 
-  fa-icon {
+  & > fa-icon {
     font-size: 4rem;
   }
 
-  strong {
+  & > strong {
     font-size: 2rem;
     margin-top: 1rem;
   }

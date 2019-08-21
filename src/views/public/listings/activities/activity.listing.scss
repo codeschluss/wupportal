@@ -11,7 +11,7 @@ main {
       width: 15rem;
     }
 
-    // TODO: fix ssr fxHide/fxShow
+    // TODO: https://github.com/angular/flex-layout/issues/1065
     @media screen and (min-width: 600px) {
       & > mat-form-field {
         flex-grow: 0 !important;
@@ -71,7 +71,7 @@ main {
           top: 0;
 
           border: 0;
-          border-radius: .5rem;
+          border-radius: .25rem;
 
           color: $color-dark;
           background-color: $color-bg-light;

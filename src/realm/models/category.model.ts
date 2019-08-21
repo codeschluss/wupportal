@@ -11,7 +11,7 @@ export class CategoryModel
 
   public color: string;
 
-  // TODO: move to db
+  // TODO: https://board.codeschluss.de/project/wooportal/us/13
   public icon: string = 'icons';
 
 }

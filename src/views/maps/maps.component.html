@@ -18,7 +18,7 @@
         <ng-container *ngFor="let item of focus | async">
           <activity-card #card
             fxLayout="row"
-            fxLayoutAlign="center"
+            fxLayoutAlign="center center"
             [item]="item"
             (mouseenter)="card.ripple.launch(null)">
           </activity-card>

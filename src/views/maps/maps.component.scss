@@ -27,7 +27,8 @@ main {
 
       &.rowed {
         direction: ltr;
-        overflow: scroll hidden;
+        overflow-x: auto;
+        overflow-y: hidden;
 
         bottom: auto;
         right: 0;
@@ -110,7 +111,7 @@ main {
         pointer-events: none;
 
         background-color: $color-dark;
-        border-radius: 10%;
+        border-radius: .25rem;
         color: $color-light;
         padding: 0 .25rem;
 

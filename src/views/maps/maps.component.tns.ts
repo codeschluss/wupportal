@@ -67,7 +67,7 @@ export class MapsComponent
         return;
 
       case 'iOS':
-        // TODO: BUY_MAC
+        // TODO: https://board.codeschluss.de/project/wooportal/us/37
         return;
     }
   }

@@ -12,7 +12,7 @@ import { ClientModule } from './client.module';
     FlexLayoutServerModule,
     ModuleMapLoaderModule,
     ServerSideRenderingModule,
-    ServerTransferStateModule,
+    ServerTransferStateModule
   ]
 })
 

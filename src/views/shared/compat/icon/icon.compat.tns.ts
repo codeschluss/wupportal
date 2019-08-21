@@ -66,7 +66,7 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
         return;
 
       case 'iOS':
-        // TODO: BUY_MAC
+        // TODO: https://board.codeschluss.de/project/wooportal/us/37
         wv.ios.opaque = false;
         wv.ios.setDrawsBackground = false;
         wv.ios.showsHorizontalScrollIndicator = false;

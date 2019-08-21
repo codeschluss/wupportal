@@ -35,7 +35,7 @@
 
         pre {
           background-color: $color-bg-dark;
-          border-radius: .5rem;
+          border-radius: .25rem;
           color: $color-light;
           display: inline;
           font-weight: bold;
@@ -62,6 +62,11 @@ layout-component {
     & > header, [compat=navbar] {
       display: none;
     }
+  }
+
+  &.fadeout {
+    opacity: 0;
+    transition: opacity $animation-duration;
   }
 
   & > header {
@@ -119,7 +124,7 @@ layout-component {
     }
   }
 
-  // TODO: fix ssr fxHide/fxShow
+  // TODO: https://github.com/angular/flex-layout/issues/1065
   @media screen and (max-width: 959.99px) and (min-width: 0px) {
     & > [compat=navbar]:nth-of-type(2) { display: block; }
   }

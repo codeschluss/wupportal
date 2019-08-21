@@ -40,6 +40,23 @@ main {
 
         & > activity-card {
           min-width: 100%;
+          position: relative;
+
+          & + activity-card::before {
+            color: $color-primary;
+            content: '\2022';
+            font-size: 5rem;
+            text-align: center;
+            text-shadow:
+              -.125rem -.125rem 0 $color-light,
+              .125rem -.125rem 0 $color-light,
+              -.125rem .125rem 0 $color-light,
+              .125rem .125rem 0 $color-light;
+
+            position: absolute;
+            left: -1rem;
+            width: 2rem;
+          }
         }
       }
 

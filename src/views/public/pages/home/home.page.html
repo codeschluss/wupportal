@@ -1,1 +1,90 @@
-<main><label>home.page</label></main>
+<main>
+  <section>
+    <aside>
+      <h2 class="mat-headline">
+        {{ title }} &mdash;
+        <i18n i18n="@@newActivities">newActivities</i18n>
+      </h2>
+      <strong
+        class="mat-title"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        ngClass.xs="small">
+        <i18n i18n="@@welcomeMessage">welcomeMessage</i18n>
+      </strong>
+      <nav fxLayout="row" ngClass.xs="snap">
+        <ng-container *ngFor="let item of activities">
+          <activity-card [item]="item"></activity-card>
+        </ng-container>
+      </nav>
+    </aside>
+  </section>
+  <section
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutAlign="center center">
+    <article>
+      <h2 class="mat-headline">Lorem Ipsum</h2>
+      <p class="mat-title">
+        Aut eum quo aperiam. Optio inventore ab quia repudiandae eaque eos.
+        Molestiae ad qui nulla quia. Est similique rem tenetur ad ut. Ut ab
+        ipsum ipsa illum omnis. Et quae sit cupiditate. Nam ullam et nihil
+        dolorum consequuntur placeat. Quia similique laudantium et non repellat
+        suscipit. Quis in magnam aspernatur exercitationem voluptatem
+        voluptatem. Natus deserunt labore velit rerum qui officiis. Deleniti
+        illum non excepturi itaque non.
+      </p>
+      <p class="mat-title">
+      </p>
+      <p class="mat-title">
+        Facere aliquid odit tenetur repellendus sunt occaecati aut. Ea quis et
+        sunt in laborum veniam et. Qui dignissimos voluptatem esse nobis minus
+        qui. Reiciendis rerum alias ut autem nihil omnis ducimus magni. Ut quia
+        quia magnam et consequatur laudantium quia doloremque. Alias non quas
+        quas. Rerum nulla sed quos reiciendis aut. Quo neque est aut in quo.
+        Voluptas vel et eveniet ipsum laudantium minima. Enim commodi porro eos
+        ipsa quisquam repellat et error. Ducimus quia labore qui velit. Commodi
+        rerum excepturi distinctio in porro.
+      </p>
+    </article>
+    <span
+      [style.flex]="'0 0 auto'"
+      [style.height]="0"
+      [style.width]="'1rem'">
+    </span>
+    <aside>
+      <figure>
+<!--
+        <video controls>
+          <source src="/videos/intro.mp4" type="video/mp4">
+        </video>
+-->
+        <figcaption fxLayout="column" fxLayoutAlign="center center">
+          <icon-compat icon="poo"></icon-compat>
+          <strong class="mat-title">
+            <i18n i18n="@@videoError">videoError</i18n>
+          </strong>
+        </figcaption>
+      </figure>
+    </aside>
+  </section>
+  <mat-divider></mat-divider>
+  <section fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <figure>
+      <img alt="Sponsor One" src="/imgs/icon.png" title="Sponsor One">
+      <figcaption class="mat-body-strong">Sponsor One</figcaption>
+    </figure>
+    <figure>
+      <img alt="Sponsor Two" src="/imgs/icon.png" title="Sponsor Two">
+      <figcaption class="mat-body-strong">Sponsor Two</figcaption>
+    </figure>
+    <figure>
+      <img alt="Sponsor Three" src="/imgs/icon.png" title="Sponsor Three">
+      <figcaption class="mat-body-strong">Sponsor Three</figcaption>
+    </figure>
+    <figure>
+      <img alt="Sponsor Four" src="/imgs/icon.png" title="Sponsor Four">
+      <figcaption class="mat-body-strong">Sponsor Four</figcaption>
+    </figure>
+  </section>
+</main>

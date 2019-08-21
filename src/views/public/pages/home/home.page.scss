@@ -1,1 +1,172 @@
 @import '../../../../app.theme.scss';
+
+main {
+  max-width: 100% !important;
+
+  & > section:nth-of-type(1) {
+    background-color: rgba($color-primary, .24);
+
+    & > aside {
+      margin: 5rem auto 2.5rem auto;
+      max-width: $viewport-width;
+      padding: 5rem 0 2.5rem 0;
+      position: relative;
+
+      & > h2 {
+        font-weight: bold;
+        padding-right: 7.5rem;
+
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+      }
+
+      & > strong {
+        color: $color-light;
+        background-color: $color-primary;
+        border-radius: 50%;
+
+        position: absolute;
+        right: 1rem;
+        top: -2.5rem;
+
+        width: 10rem;
+        height: 10rem;
+
+        z-index: 1;
+
+        // TODO: https://github.com/angular/flex-layout/issues/1065
+        @media screen and (max-width: 959.99px) and (min-width: 0px) {
+          &.small {
+            transform: scale(.75);
+            transform-origin: top right;
+          }
+        }
+      }
+
+      & > nav {
+        overflow-x: auto;
+
+        // TODO: https://github.com/angular/flex-layout/issues/1065
+        @media screen and (max-width: 959.99px) and (min-width: 0px) {
+          &.snap {
+            scroll-snap-type: x mandatory;
+
+            & > activity-card {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              margin: 0 auto;
+              min-width: 100%;
+
+              position: relative;
+              scroll-snap-align: start;
+
+              & + activity-card::before {
+                color: $color-primary;
+                content: '\2022';
+                font-size: 5rem;
+                text-align: center;
+                text-shadow:
+                  -.125rem -.125rem 0 $color-light,
+                  .125rem -.125rem 0 $color-light,
+                  -.125rem .125rem 0 $color-light,
+                  .125rem .125rem 0 $color-light;
+
+                position: absolute;
+                left: -1rem;
+                width: 2rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  & > section:nth-of-type(2) {
+    margin: 2.5rem auto;
+    width: calc(100% - 2rem);
+    max-width: $viewport-width;
+
+    & > article {
+      width: 100%;
+      flex: 1 1 auto;
+
+      text-align: justify;
+
+      & > h2 {
+        font-weight: bold;
+      }
+    }
+
+    & > aside {
+      width: 100%;
+      margin: 1rem;
+      flex: 1 1 auto;
+
+      background-color: $color-bg-light;
+      border-radius: .25rem;
+      overflow: hidden;
+
+      & > figure {
+        height: 0;
+        margin: 0;
+        padding-top: 56.25%;
+        position: relative;
+
+        & > video {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          top: 0;
+
+          width: 100%;
+          height: 100%;
+
+          z-index: 1;
+        }
+
+        & > figcaption {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          top: 0;
+
+          & > [compat=icon] {
+            font-size: 4rem;
+          }
+
+          & > strong {
+            font-size: 2rem;
+            margin-top: 1rem;
+          }
+        }
+      }
+    }
+  }
+
+  & > section:nth-of-type(3) {
+    margin: 2.5rem auto;
+    max-width: $viewport-width;
+
+    & > figure {
+      text-align: center;
+
+      & > img {
+        width: auto;
+        height: auto;
+
+        max-width: 10rem;
+        max-height: 5rem;
+      }
+
+      & > figcaption {
+        white-space: nowrap;
+      }
+    }
+  }
+}

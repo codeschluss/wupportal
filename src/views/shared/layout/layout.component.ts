@@ -43,7 +43,7 @@ export class LayoutComponent implements OnInit {
 
   public navigate: (...path: string[]) => Promise<boolean>;
 
-  public search: (filter: string) => Promise<boolean>;
+  public search: (filter: string) => Promise<any>;
 
   @ViewChild('drawer', { static: true })
   private drawer: DrawerCompat;
@@ -52,14 +52,6 @@ export class LayoutComponent implements OnInit {
   private header: ElementRef<HTMLElement>;
 
   private serializer: UrlSerializer = new CoreUrlSerializer();
-
-  public get filter(): string {
-    const tree = this.serializer.parse(this.router.url);
-
-    return this.router.url.startsWith('/search')
-      ? tree.root.children.primary.segments[1].path
-      : '';
-  }
 
   public get title(): string {
     return ClientPackage.config.defaults.title;
@@ -71,6 +63,7 @@ export class LayoutComponent implements OnInit {
 
   public constructor(
     @Inject(DOCUMENT) private document: Document,
+    private element: ElementRef<HTMLElement>,
     private i18n: I18n,
     private languageProvider: LanguageProvider,
     private loadingProvider: LoadingProvider,
@@ -84,19 +77,19 @@ export class LayoutComponent implements OnInit {
 
   public ngOnInit(): void {
     this.busy = new BehaviorSubject<number>(1);
-    this.languageProvider.readAll().subscribe((l) => this.languages = l);
     this.navigate = (...path: string[]) => this.router.navigate(path);
-    this.search = (input: string) => this.navigate('/', 'search', input);
+    this.search = (input: string) => this.navigate('/', 'search', input)
+      .then(() => setTimeout(() => this.drawer.hide(), 0));
+
+    this.languageProvider.readAll().subscribe((l) => this.languages = l);
     this.sessionProvider.value.subscribe((s) => this.language = s.language);
 
     this.router.events.pipe(
       filter((event: RouterEvent) => event instanceof NavigationStart),
       tap(() => this.drawer.hide()),
       map((event) => event.url),
-      startWith(this.router.url),
-      filter((url) => !url.startsWith('/admin')),
-      map((url) => this.i18n({ id: url.slice(1), value: url.slice(1) }) || null)
-    ).subscribe((url) => this.titleService.set(url));
+      startWith(this.router.url)
+    ).subscribe((url) => this.navigating(url));
 
     if ('embed' in this.route.snapshot.queryParams) {
       this.document.body.classList.add('embedded');
@@ -126,10 +119,35 @@ export class LayoutComponent implements OnInit {
     }
   }
 
+  public filter(url: string = this.router.url): string {
+    return url.startsWith('/search')
+      ? this.serializer.parse(url).root.children.primary.segments[1].path
+      : '';
+  }
+
   public translate(language: string): void {
     this.sessionProvider.changeLanguage(language);
+    this.element.nativeElement.classList.add('fadeout');
+    setTimeout(() => this.document.location.reload(), 250);
+  }
 
-    // TODO: reinitialize w/ new xliff
+  private navigating(url: string): void {
+    let title = null;
+    const path = url.slice(1).split('/');
+
+    switch (path[0]) {
+      case 'admin':
+        return;
+      case 'search':
+        title = this.i18n({ id: path[0], value: path[0] });
+        title += `: ${this.filter(url)}`;
+        break;
+      default:
+        title = this.i18n({ id: path[0], value: path[0] });
+        break;
+    }
+
+    this.titleService.set(title);
   }
 
   private topoff(event: Event): void {
@@ -145,7 +163,6 @@ export class LayoutComponent implements OnInit {
         this.header.nativeElement.style.height = null;
       }
     }
-
   }
 
 }

@@ -24,7 +24,7 @@
           <absolute-layout #search>
             <text-field #input
               returnKeyType="search"
-              text="{{ query }}"
+              text="{{ filter() }}"
               (blur)="search.className = input.text ? 'float-label' : null"
               (focus)="search.className = 'float-label'"
               (returnPress)="input.text && navigate('/search', input.text)"

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { PlatformProvider, Title } from '@wooportal/core';
+import { I18nComponent, PlatformProvider, Title } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,11 +9,14 @@ import { map } from 'rxjs/operators';
   templateUrl: 'error.response.html'
 })
 
-export class ErrorResponseComponent implements OnInit {
+export class ErrorResponseComponent implements OnInit, AfterViewInit {
 
   public get code(): Observable<number> {
     return this.route.params.pipe(map((params) => this.status(params)));
   }
+
+  @ViewChild(I18nComponent, { static: true })
+  private title: I18nComponent;
 
   public constructor(
     private platformProvider: PlatformProvider,
@@ -22,11 +25,14 @@ export class ErrorResponseComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.code.subscribe((code) => this.titleService.set(`Error ${code}`));
-
     if (this.platformProvider.name === 'Server') {
       this.platformProvider.engine.response.status(this.status());
     }
+  }
+
+  public ngAfterViewInit(): void {
+    this.code.subscribe((code) =>
+      this.titleService.set(`${this.title.text}: ${code}`));
   }
 
   private status(params?: Params): number {

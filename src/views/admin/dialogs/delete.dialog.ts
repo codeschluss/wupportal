@@ -3,9 +3,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   template: `
-    <h1 mat-dialog-title>
+    <h2 mat-dialog-title>
       <i18n i18n="@@confirmDelete">confirmDelete</i18n>
-    </h1>
+    </h2>
     <section mat-dialog-content>
       <mat-list>
         <mat-list-item>

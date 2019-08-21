@@ -11,9 +11,9 @@ import { catchError } from 'rxjs/operators';
     mat-form-field { display: block; }
   `],
   template: `
-    <h1 mat-dialog-title>
+    <h2 mat-dialog-title>
       <i18n i18n="@@authenticationExpired">authenticationExpired</i18n>
-    </h1>
+    </h2>
     <section mat-dialog-content>
       <mat-form-field>
         <mat-label><i18n i18n="@@username">username</i18n></mat-label>

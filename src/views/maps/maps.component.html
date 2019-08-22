@@ -11,10 +11,7 @@
     <ng-container *ngIf="cards && (focus | async).length">
       <nav>
         <ng-container *ngFor="let item of focus | async">
-          <activity-card #card
-            [item]="item"
-            (mouseenter)="card.ripple.launch(null)">
-          </activity-card>
+          <activity-card #card [item]="item"></activity-card>
         </ng-container>
       </nav>
     </ng-container>

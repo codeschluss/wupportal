@@ -149,11 +149,11 @@ layout-component {
         &._mat-animation-noopable[mode=indeterminate] {
           animation:
             mat-progress-spinner-linear-rotate
-            calc(#{$animation-duration} * 8) linear infinite !important;
+            ($animation-duration * 8) linear infinite !important;
 
           & > svg {
             & > circle {
-              animation-duration: calc(#{$animation-duration} * 16) !important;
+              animation-duration: ($animation-duration * 16) !important;
               animation-iteration-count: infinite !important;
             }
           }
@@ -249,24 +249,24 @@ layout-component {
             & .mat-progress-bar-primary {
               animation:
                 mat-progress-bar-primary-indeterminate-translate
-                calc(#{$animation-duration} * 8) infinite linear !important;
+                ($animation-duration * 8) infinite linear !important;
 
                 &::after {
                   animation:
                     mat-progress-bar-primary-indeterminate-scale
-                    calc(#{$animation-duration} * 8) infinite linear !important;
+                    ($animation-duration * 8) infinite linear !important;
                 }
             }
 
             & .mat-progress-bar-secondary {
               animation:
                 mat-progress-bar-secondary-indeterminate-translate
-                calc(#{$animation-duration} * 8) infinite linear !important;
+                ($animation-duration * 8) infinite linear !important;
 
               &::after {
                 animation:
                   mat-progress-bar-secondary-indeterminate-scale
-                  calc(#{$animation-duration} * 8) infinite linear !important;
+                  ($animation-duration * 8) infinite linear !important;
               }
             }
           }

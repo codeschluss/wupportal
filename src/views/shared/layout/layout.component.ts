@@ -133,11 +133,12 @@ export class LayoutComponent implements OnInit {
 
   private navigating(url: string): void {
     let title = null;
-    const path = url.slice(1).split('/');
+    const path = url.replace(/\?.*$/, '').slice(1).split('/');
 
     switch (path[0]) {
       case 'admin':
-        return;
+        title = null;
+        break;
       case 'search':
         title = this.i18n({ id: path[0], value: path[0] });
         title += `: ${this.filter(url)}`;
@@ -147,7 +148,9 @@ export class LayoutComponent implements OnInit {
         break;
     }
 
-    this.titleService.set(title);
+    if (title) {
+      this.titleService.set(title);
+    }
   }
 
   private topoff(event: Event): void {

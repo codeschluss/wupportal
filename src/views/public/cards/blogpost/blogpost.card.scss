@@ -1,15 +1,15 @@
 @import '../../../../app.theme.scss';
 
 mat-card {
+  & > mat-card-content {
+    text-align: justify;
+  }
+
   & > mat-card-header {
     justify-content: space-between;
 
     & > time {
       font-size: small;
     }
-  }
-
-  mat-card-content {
-    text-align: justify;
   }
 }

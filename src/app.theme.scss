@@ -118,3 +118,82 @@ $theme-palette: mat-light-theme(
 $color-primary: mat-color(map-get($theme-palette, primary));
 $color-accent: mat-color(map-get($theme-palette, accent));
 $color-warn: mat-color(map-get($theme-palette, warn));
+
+@mixin deep {
+  &::ng-deep { @content; }
+}
+
+@mixin flex($direction, $main-axis: normal, $cross-axis: normal) {
+  @if not $direction {
+    @error 'missing param to flex() mixin';
+  }
+
+  display: flex;
+  align-items: $cross-axis;
+  justify-content: $main-axis;
+
+  @if $direction == wrap {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  @else {
+    flex-direction: $direction;
+    flex-wrap: nowrap;
+  }
+}
+
+@mixin media($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: 599px) { @content; }
+  }
+  @if $breakpoint == sm {
+    @media (min-width: 600px) and (max-width: 959px) { @content; }
+  }
+  @if $breakpoint == md {
+    @media (min-width: 960px) and (max-width: 1279px) { @content; }
+  }
+  @if $breakpoint == lg {
+    @media (min-width: 1280px) and (max-width: 1919px) { @content; }
+  }
+  @if $breakpoint == xl {
+    @media (min-width: 1920px) and (max-width: 5000px) { @content; }
+  }
+  @if $breakpoint == lt-sm {
+    @media (max-width: 599px) { @content; }
+  }
+  @if $breakpoint == lt-md {
+    @media (max-width: 959px) { @content; }
+  }
+  @if $breakpoint == lt-lg {
+    @media (max-width: 1279px) { @content; }
+  }
+  @if $breakpoint == lt-xl {
+    @media (max-width: 1919px) { @content; }
+  }
+  @if $breakpoint == gt-xs {
+    @media (min-width: 600px) { @content; }
+  }
+  @if $breakpoint == gt-sm {
+    @media (min-width: 960px) { @content; }
+  }
+  @if $breakpoint == gt-md {
+    @media (min-width: 1280px) { @content; }
+  }
+  @if $breakpoint == gt-lg {
+    @media (min-width: 1920px) { @content; }
+  }
+}
+
+@mixin position($value, $top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: $value;
+  bottom: $bottom;
+  left: $left;
+  right: $right;
+  top: $top;
+}
+
+.text-dark { color: $color-dark; }
+.text-light { color: $color-light; }
+.text-primary { color: $color-primary; }
+.text-accent { color: $color-accent; }
+.text-warn { color: $color-warn; }

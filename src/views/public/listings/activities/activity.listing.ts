@@ -50,6 +50,12 @@ export class ActivityListingComponent
   @ViewChild('frame', { read: ElementRef, static: true })
   private frame: ElementRef<HTMLIFrameElement>;
 
+  @ViewChild('map', { read: ElementRef, static: true })
+  private map: ElementRef<HTMLElement>;
+
+  @ViewChild('nav', { read: ElementRef, static: true })
+  private nav: ElementRef<HTMLElement>;
+
   public get categories(): SuburbModel[] {
     return this.route.snapshot.data.categories || [];
   }

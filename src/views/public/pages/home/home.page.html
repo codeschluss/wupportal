@@ -5,24 +5,17 @@
         {{ title }} &mdash;
         <i18n i18n="@@newActivities">newActivities</i18n>
       </h2>
-      <strong
-        class="mat-title"
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        ngClass.xs="small">
+      <strong class="mat-title">
         <i18n i18n="@@welcomeMessage">welcomeMessage</i18n>
       </strong>
-      <nav fxLayout="row" ngClass.xs="snap">
+      <nav>
         <ng-container *ngFor="let item of activities">
           <activity-card [item]="item"></activity-card>
         </ng-container>
       </nav>
     </aside>
   </section>
-  <section
-    fxLayout="row"
-    fxLayout.lt-md="column"
-    fxLayoutAlign="center center">
+  <section>
     <article>
       <h2 class="mat-headline">Lorem Ipsum</h2>
       <p class="mat-title">
@@ -47,19 +40,13 @@
         rerum excepturi distinctio in porro.
       </p>
     </article>
-    <span
-      [style.flex]="'0 0 auto'"
-      [style.height]="0"
-      [style.width]="'1rem'">
-    </span>
+    <span></span>
     <aside>
       <figure>
-<!--
         <video controls>
           <source src="/videos/intro.mp4" type="video/mp4">
         </video>
--->
-        <figcaption fxLayout="column" fxLayoutAlign="center center">
+        <figcaption>
           <icon-compat icon="poo"></icon-compat>
           <strong class="mat-title">
             <i18n i18n="@@videoError">videoError</i18n>
@@ -68,8 +55,7 @@
       </figure>
     </aside>
   </section>
-  <mat-divider></mat-divider>
-  <section fxLayout="row wrap" fxLayoutAlign="space-around center">
+  <section>
     <figure>
       <img alt="Sponsor One" src="/imgs/icon.png" title="Sponsor One">
       <figcaption class="mat-body-strong">Sponsor One</figcaption>

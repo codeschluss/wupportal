@@ -2,36 +2,25 @@
 
 main {
   & > header {
-    width: 100%;
-    padding: 0 1rem;
-    margin: 1rem auto;
+    @include flex(wrap, space-around, center);
+    box-sizing: border-box;
+    margin: 0 auto 1rem auto;
     max-width: $viewport-width;
-
-    & > mat-form-field {
-      width: 15rem;
-    }
-
-    // TODO: https://github.com/angular/flex-layout/issues/1065
-    @media screen and (min-width: 600px) {
-      & > mat-form-field {
-        flex-grow: 0 !important;
-        width: 15rem !important;
-      }
-    }
+    padding: 0 1rem;
+    width: 100%;
 
     & > mat-chip-list {
-      &::ng-deep {
-        .mat-chip-list-wrapper {
-          justify-content: center;
+      @include deep {
+        & > .mat-chip-list-wrapper {
+          @include flex(wrap, center, center);
         }
       }
 
-      mat-chip {
-        cursor: pointer;
+      & mat-chip {
+        @include flex(row, center, center);
         border: .25rem solid;
-
-        flex-grow: 1;
-        justify-content: center;
+        cursor: pointer;
+        flex: 1 0 auto;
 
         &:focus:not(:hover)::after {
           opacity: 0;
@@ -42,46 +31,53 @@ main {
         }
       }
     }
+
+    & > mat-form-field {
+      width: 15rem;
+
+      @include media(xs) {
+        flex: 1 0 auto;
+        width: 100%;
+      }
+    }
   }
 
   & > section {
+    @include flex(row, center, flex-start);
     margin: 0 auto;
     max-width: $viewport-width;
 
-    aside {
-      width: 33%;
-      margin: 1rem;
+    & > aside {
       flex: 1 0 auto;
+      margin: 1rem;
+      width: 33%;
+
+      @include media(lt-lg) {
+        display: none;
+      }
 
       & > div {
+        @include position(relative);
         height: 0;
         padding-top: 100%;
-        position: relative;
 
-        iframe {
+        & > iframe {
           @include _mat-theme-overridable-elevation(1, $theme-palette);
-
-          height: 100%;
-          width: 100%;
-
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          top: 0;
-
+          @include position(absolute, 0, 0, 0, 0);
+          background-color: $color-bg-light;
           border: 0;
           border-radius: .25rem;
-
           color: $color-dark;
-          background-color: $color-bg-light;
+          height: 100%;
+          width: 100%;
         }
       }
     }
 
-    nav {
-      width: 66%;
+    & > nav {
+      @include flex(wrap, center, flex-start);
       flex: 1 0 auto;
+      width: 66%;
     }
   }
 }

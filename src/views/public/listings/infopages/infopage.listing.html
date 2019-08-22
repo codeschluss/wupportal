@@ -14,11 +14,6 @@
     </ng-container>
   </mat-accordion>
   <ng-container *ngIf="next || prev">
-    <pager-compat
-      fxLayout="row"
-      fxLayoutAlign="center center"
-      [next]="next"
-      [prev]="prev">
-    </pager-compat>
+    <pager-compat [next]="next" [prev]="prev"></pager-compat>
   </ng-container>
 </main>

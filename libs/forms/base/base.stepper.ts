@@ -55,10 +55,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       ${template}
       <router-outlet></router-outlet>
       <mat-divider></mat-divider>
-      <button mat-raised-button color="warn" tabindex="-1" (click)="quit()">
+      <button mat-raised-button color="warn" (click)="quit()">
         <i18n i18n="@@close">close</i18n>
       </button>
-      <button mat-raised-button color="warn" tabindex="-1" (click)="reset()">
+      <button mat-raised-button color="warn" (click)="reset()">
         <i18n i18n="@@reset">reset</i18n>
       </button>
       <ng-container *ngIf="has('-1')">

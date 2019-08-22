@@ -9,16 +9,9 @@
       </aol-source-osm>
     </aol-layer-tile>
     <ng-container *ngIf="cards && (focus | async).length">
-      <nav
-        fxLayout="column"
-        fxLayout.lt-md="row"
-        fxLayoutAlign="start"
-        ngClass.lt-md="rowed"
-        ngClass.xs="snap">
+      <nav>
         <ng-container *ngFor="let item of focus | async">
           <activity-card #card
-            fxLayout="row"
-            fxLayoutAlign="center center"
             [item]="item"
             (mouseenter)="card.ripple.launch(null)">
           </activity-card>

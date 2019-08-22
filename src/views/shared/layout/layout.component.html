@@ -1,45 +1,44 @@
-<header #header fxHide.lt-md>
+<header #header>
   <img src="/imgs/icon.png" [alt]="title" [title]="title">
 </header>
-<navbar-compat fxHide.lt-md>
+<navbar-compat>
   <a mat-button [class.active]="url === '/'" [routerLink]="['/']">
-    <icon-compat fxHide.lt-lg icon="play-circle"></icon-compat>
+    <icon-compat icon="play-circle"></icon-compat>
     <h1>{{ title }}</h1>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/mapview')"
     [routerLink]="['/', 'mapview']">
-    <icon-compat fxHide.lt-lg icon="globe"></icon-compat>
+    <icon-compat icon="globe"></icon-compat>
     <i18n i18n="@@mapview">mapview</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/activities')"
     [routerLink]="['/', 'activities']">
-    <icon-compat fxHide.lt-lg icon="map-marker-alt"></icon-compat>
+    <icon-compat icon="map-marker-alt"></icon-compat>
     <i18n i18n="@@activities">activities</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/organisations')"
     [routerLink]="['/', 'organisations']">
-    <icon-compat fxHide.lt-lg icon="at"></icon-compat>
+    <icon-compat icon="at"></icon-compat>
     <i18n i18n="@@organisations">organisations</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/blogposts')"
     [routerLink]="['/', 'blogposts']">
-    <icon-compat fxHide.lt-lg icon="comment-dots"></icon-compat>
+    <icon-compat icon="comment-dots"></icon-compat>
     <i18n i18n="@@blogposts">blogposts</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/infopages')"
     [routerLink]="['/', 'infopages']">
-    <icon-compat fxHide.lt-lg icon="info-circle"></icon-compat>
+    <icon-compat icon="info-circle"></icon-compat>
     <i18n i18n="@@infopages">infopages</i18n>
   </a>
   <mat-form-field [class.text-primary]="url.startsWith('/search')">
-    <icon-compat fxHide.lt-lg matPrefix icon="search"></icon-compat>
+    <icon-compat matPrefix icon="search"></icon-compat>
     <input #navbarInput matInput
-      tabindex="-1"
       value="{{ filter() }}"
       (keydown.enter)="navbarInput.value && search(navbarInput.value)">
     <mat-label><i18n i18n="@@search">search</i18n></mat-label>
@@ -50,7 +49,7 @@
     </button>
   </mat-form-field>
 </navbar-compat>
-<navbar-compat [title]="title" fxHide.gt-sm>
+<navbar-compat [title]="title">
   <span [style.flexGrow]="1"></span>
   <mat-progress-spinner
     mode="indeterminate"
@@ -63,12 +62,12 @@
 </navbar-compat>
 <drawer-compat #drawer>
   <ng-template #drawerMain>
-    <mat-progress-bar fxHide.lt-md
+    <mat-progress-bar
       mode="indeterminate"
       [style.opacity]="busy | async">
     </mat-progress-bar>
     <router-outlet></router-outlet>
-    <navbar-compat fxHide.lt-md>
+    <navbar-compat>
       <button mat-button [matMenuTriggerFor]="languageMenu">
         <icon-compat icon="language"></icon-compat>
         <i18n i18n="@@language">language</i18n>
@@ -86,13 +85,13 @@
       <a mat-button
         [class.active]="url.startsWith('/imprint')"
         [routerLink]="['/', 'imprint']">
-        <icon-compat fxHide.lt-lg icon="paragraph"></icon-compat>
+        <icon-compat icon="paragraph"></icon-compat>
         <i18n i18n="@@imprint">imprint</i18n>
       </a>
       <a mat-button
         [class.active]="url.startsWith('/policies')"
         [routerLink]="['/', 'policies']">
-        <icon-compat fxHide.lt-lg icon="balance-scale"></icon-compat>
+        <icon-compat icon="balance-scale"></icon-compat>
         <i18n i18n="@@policies">policies</i18n>
       </a>
       <span [style.flexGrow]="1"></span>
@@ -104,7 +103,7 @@
         <button mat-button
           [class.active]="url.startsWith('/admin')"
           [matMenuTriggerFor]="adminMenu">
-          <icon-compat fxHide.lt-lg icon="cog"></icon-compat>
+          <icon-compat icon="cog"></icon-compat>
           <i18n i18n="@@admin">admin</i18n>
         </button>
       </ng-container>
@@ -112,7 +111,7 @@
         <a mat-button
           [class.active]="url.startsWith('/login')"
           [routerLink]="['/', 'login']">
-          <icon-compat fxHide.lt-lg icon="unlock"></icon-compat>
+          <icon-compat icon="unlock"></icon-compat>
           <i18n i18n="@@login">login</i18n>
         </a>
       </ng-container>
@@ -120,39 +119,39 @@
         <button mat-menu-item
           [class.active]="url.startsWith('/admin/account')"
           [routerLink]="['/', 'admin', 'account']">
-          <icon-compat fxHide.lt-lg icon="chalkboard-teacher"></icon-compat>
+          <icon-compat icon="chalkboard-teacher"></icon-compat>
           <i18n i18n="@@account">account</i18n>
         </button>
         <button mat-menu-item
           [class.active]="url.startsWith('/admin/organisation')"
           [disabled]="!claimed?.organisationAdmin.length && !claimed?.superUser"
           [routerLink]="['/', 'admin', 'organisation']">
-          <icon-compat fxHide.lt-lg icon="sitemap"></icon-compat>
+          <icon-compat icon="sitemap"></icon-compat>
           <i18n i18n="@@organisation">organisation</i18n>
         </button>
         <ng-container *ngIf="claimed?.superUser">
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/application')"
             [routerLink]="['/', 'admin', 'application']">
-            <icon-compat fxHide.lt-lg icon="sliders-h"></icon-compat>
+            <icon-compat icon="sliders-h"></icon-compat>
             <i18n i18n="@@application">application</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/positioning')"
             [routerLink]="['/', 'admin', 'positioning']">
-            <icon-compat fxHide.lt-lg icon="sign"></icon-compat>
+            <icon-compat icon="sign"></icon-compat>
             <i18n i18n="@@positioning">positioning</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/privileges')"
             [routerLink]="['/', 'admin', 'privileges']">
-            <icon-compat fxHide.lt-lg icon="shield-alt"></icon-compat>
+            <icon-compat icon="shield-alt"></icon-compat>
             <i18n i18n="@@privileges">privileges</i18n>
           </button>
         </ng-container>
         <mat-divider></mat-divider>
         <button mat-menu-item [routerLink]="['/', 'logout']">
-          <icon-compat fxHide.lt-lg icon="lock"></icon-compat>
+          <icon-compat icon="lock"></icon-compat>
           <i18n i18n="@@logout">logout</i18n>
         </button>
       </mat-menu>

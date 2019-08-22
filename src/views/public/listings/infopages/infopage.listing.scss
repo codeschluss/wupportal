@@ -1,15 +1,33 @@
 @import '../../../../app.theme.scss';
 
 main {
+  @include flex(column, flex-start, center);
+
   & > mat-accordion {
     display: block;
     margin: 1rem auto;
-    max-width: calc(100% - 2rem);
+    max-width: $viewport-width;
+    width: calc(100% - 2rem);
 
     & > mat-expansion-panel {
       border: 1px solid transparent;
       border-radius: .25rem;
       transition: all $animation-duration;
+
+      @include deep {
+        & .mat-expansion-panel-body {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding: 0;
+
+          & > infopage-card {
+            & + infopage-card {
+              padding-left: 0;
+            }
+          }
+        }
+      }
 
       &.mat-expanded {
         border-color: $color-primary;
@@ -17,20 +35,20 @@ main {
         & > mat-expansion-panel-header {
           background-color: $color-primary;
 
-          &::ng-deep {
-            .mat-expansion-indicator::after {
+          @include deep {
+            & > .mat-expansion-indicator::after {
               color: $color-light;
             }
           }
 
-          mat-panel-title {
+          & mat-panel-title {
             color: $color-light;
           }
         }
       }
 
       & + mat-expansion-panel {
-        margin-top: 1rem;
+        margin-top: 2rem;
       }
 
       & > mat-expansion-panel-header {
@@ -38,24 +56,6 @@ main {
         font-weight: bold;
         text-transform: uppercase;
         transition: all $animation-duration;
-      }
-
-      &::ng-deep {
-        .mat-expansion-panel-body {
-          padding: 0;
-
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-
-          & > infopage-card {
-            & + infopage-card {
-              & > a{
-                margin-left: 0;
-              }
-            }
-          }
-        }
       }
     }
   }

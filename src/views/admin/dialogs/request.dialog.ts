@@ -32,7 +32,7 @@ import { UserProvider } from '../../../realm/providers/user.provider';
       </mat-selection-list>
     </section>
     <section mat-dialog-actions>
-      <button mat-button mat-dialog-close tabindex="-1">
+      <button mat-button mat-dialog-close>
         <i18n i18n="@@close">close</i18n>
       </button>
       <button mat-button

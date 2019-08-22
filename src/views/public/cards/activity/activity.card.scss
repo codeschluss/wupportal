@@ -1,21 +1,22 @@
 @import '../../../../app.theme.scss';
 
 a {
+  @include flex(row, center, center);
   text-decoration: inherit;
   width: 100%;
 
   & > mat-card {
     width: 20rem;
 
-    & > mat-card-header {
-      height: 5rem;
-      display: flex;
-      flex-direction: column;
-
-      &::ng-deep {
-        .mat-card-header-text {
-          margin: auto 0 0 0;
-        }
+    @include deep {
+      & > .mat-ripple-element {
+        border-radius: 0 0 100% 0;
+        height: 150% !important;
+        left: 0 !important;
+        opacity: .12;
+        top: 0 !important;
+        transform-origin: 0 0;
+        width: 150% !important;
       }
     }
 
@@ -26,29 +27,14 @@ a {
       }
     }
 
-    & > mat-divider {
-      border-top-color: inherit;
-      opacity: .36;
-    }
+    & > mat-card-header {
+      @include flex(column);
+      height: 5rem;
 
-    & > mat-card-actions {
-      button[disabled] {
-        color: inherit;
-        opacity: .36;
-      }
-    }
-
-    &::ng-deep {
-      .mat-ripple-element {
-        opacity: .12;
-
-        transform-origin: 0 0;
-        border-radius: 0 0 100% 0;
-
-        height: 150% !important;
-        width: 150% !important;
-        left: 0 !important;
-        top: 0 !important;
+      @include deep {
+        & > .mat-card-header-text {
+          margin: auto 0 0 0;
+        }
       }
     }
   }

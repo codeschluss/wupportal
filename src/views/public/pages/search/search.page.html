@@ -81,7 +81,7 @@
             <small>({{ items.suburbs.length }})</small>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div fxLayout="row">
+        <section>
           <ng-container *ngFor="let item of items.suburbs">
             <button mat-stroked-button
               [queryParams]="{ suburbs: item.id }"
@@ -90,7 +90,7 @@
               <span>{{ item.name }}</span>
             </button>
           </ng-container>
-        </div>
+        </section>
       </mat-expansion-panel>
     </ng-container>
     <ng-container *ngIf="items.targetGroups.length">
@@ -101,7 +101,7 @@
             <small>({{ items.targetGroups.length }})</small>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div fxLayout="row">
+        <section>
           <ng-container *ngFor="let item of items.targetGroups">
             <button mat-stroked-button
               [queryParams]="{ targetgroups: item.id }"
@@ -110,7 +110,7 @@
               <span>{{ item.name }}</span>
             </button>
           </ng-container>
-        </div>
+        </section>
       </mat-expansion-panel>
     </ng-container>
   </mat-accordion>

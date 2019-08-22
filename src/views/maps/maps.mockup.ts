@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, NgModule, OnInit } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -14,20 +13,22 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       animation: fade .5s infinite alternate;
     }
     main {
-      font-size: 4rem;
-      color: rgba(0, 0, 0, .87);
+      align-items: center;
       background-color: rgba(0, 0, 0, .12);
-
+      bottom: 0;
+      color: rgba(0, 0, 0, .87);
+      display: flex;
+      font-size: 4rem;
+      justify-content: center;
+      left: 0;
       max-width: 100% !important;
       position: absolute;
-      bottom: 0;
-      left: 0;
       right: 0;
       top: 0;
     }
   `],
   template: `
-    <main fxLayout="row" fxLayoutAlign="center center">
+    <main>
       <fa-icon icon="map-marked-alt"></fa-icon>
     </main>
   `
@@ -65,7 +66,6 @@ export class MapsRouter { }
     MapsComponent
   ],
   imports: [
-    FlexLayoutModule,
     FontAwesomeModule,
     MapsRouter
   ]

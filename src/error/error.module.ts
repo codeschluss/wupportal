@@ -1,5 +1,4 @@
 import { NgModule, Type } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -20,7 +19,6 @@ const dialogs: Type<any>[] = [
 ];
 
 const materials: Type<any>[] = [
-  FlexLayoutModule,
   FontAwesomeModule,
   MatButtonModule,
   MatDialogModule,

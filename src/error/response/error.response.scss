@@ -1,15 +1,11 @@
 @import '../../app.theme.scss';
 
 main {
-  color: $color-dark;
+  @include flex(column, center, center);
+  @include position(absolute, 0, 0, 0, 0);
   background-color: $color-bg-light;
-
+  color: $color-dark;
   max-width: 100% !important;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
 
   & > fa-icon {
     font-size: 4rem;

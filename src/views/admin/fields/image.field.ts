@@ -8,7 +8,10 @@ import { ImageModel } from '../../../realm/models/image.model';
 
 @Component({
   styles: [`
-    :host { align-items: center; display: flex; flex-wrap: wrap; }
+    :host {
+      align-items: center;
+      display: flex; flex-wrap: wrap;
+    }
     img {
       background-position: center;
       background-size: cover;
@@ -26,9 +29,16 @@ import { ImageModel } from '../../../realm/models/image.model';
       margin: 0 0 1rem !important;
       width: auto !important;
     }
-    label > i18n { pointer-events: none; }
-    mat-card { display: inline-block; margin: .5rem; width: 25rem; }
-    mat-form-field::ng-deep .mat-form-field-wrapper { margin-bottom: -1.25rem; }
+    label > i18n {
+      pointer-events: none;
+    }
+    mat-card {
+      display: inline-block;
+      margin: .5rem; width: 25rem;
+    }
+    mat-form-field::ng-deep > .mat-form-field-wrapper {
+      margin-bottom: -1.25rem;
+    }
   `],
   template: `
     <ng-container *ngFor="let item of value">
@@ -37,7 +47,7 @@ import { ImageModel } from '../../../realm/models/image.model';
         <mat-card-content>{{ item.caption }}</mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-button color="warn" tabindex="-1" (click)="delete(item)">
+          <button mat-button color="warn" (click)="delete(item)">
             <i18n i18n="@@delete">delete</i18n>
           </button>
           <button mat-button

@@ -1,6 +1,6 @@
 <main>
-  <header fxLayout="row wrap" fxLayoutAlign="space-around center">
-    <mat-form-field ngStyle.xs="flex-grow: 1; width: 100%">
+  <header>
+    <mat-form-field>
       <mat-label><i18n i18n="@@suburbs">suburbs</i18n></mat-label>
       <mat-select multiple [formControl]="suburbCtrl">
         <ng-container *ngFor="let item of suburbs">
@@ -10,7 +10,7 @@
         </ng-container>
       </mat-select>
     </mat-form-field>
-    <mat-form-field ngStyle.xs="flex-grow: 1; width: 100%">
+    <mat-form-field>
       <mat-label><i18n i18n="@@targetGroups">targetGroups</i18n></mat-label>
       <mat-select multiple [formControl]="targetGroupCtrl">
         <ng-container *ngFor="let item of targetGroups">
@@ -43,11 +43,11 @@
       </mat-chip>
     </mat-chip-list>
   </header>
-  <section fxLayout="row" fxLayoutAlign="stretch">
-    <aside fxHide.lt-lg>
+  <section>
+    <aside>
       <div><iframe #frame src="/mapview?embed=true"></iframe></div>
     </aside>
-    <nav class="topoff" fxLayout="row wrap" fxLayoutAlign="center start">
+    <nav class="topoff">
       <ng-container *ngFor="let item of items | async">
         <activity-card
           [item]="item"
@@ -56,12 +56,7 @@
         </activity-card>
       </ng-container>
       <ng-container *ngIf="next || prev">
-        <pager-compat
-          fxLayout="row"
-          fxLayoutAlign="center center"
-          [next]="next"
-          [prev]="prev">
-        </pager-compat>
+        <pager-compat [next]="next" [prev]="prev"></pager-compat>
       </ng-container>
     </nav>
   </section>

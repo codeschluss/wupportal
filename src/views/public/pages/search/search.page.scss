@@ -17,20 +17,20 @@ main {
         & > mat-expansion-panel-header {
           background-color: $color-primary;
 
-          &::ng-deep {
-            .mat-expansion-indicator::after {
+          @include deep {
+            & .mat-expansion-indicator::after {
               color: $color-light;
             }
           }
 
-          mat-panel-title {
+          & mat-panel-title {
             color: $color-light;
           }
         }
       }
 
       & + mat-expansion-panel {
-        margin-top: 1rem;
+        margin-top: 2rem;
       }
 
       & > mat-expansion-panel-header {
@@ -39,7 +39,7 @@ main {
         text-transform: uppercase;
         transition: all $animation-duration;
 
-        mat-panel-title {
+        & mat-panel-title {
           & > small {
             font-weight: lighter;
             line-height: 1rem;
@@ -48,49 +48,31 @@ main {
         }
       }
 
-      &::ng-deep {
-        .mat-expansion-panel-body {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: nowrap;
-
-          padding: 0;
+      @include deep {
+        & .mat-expansion-panel-body {
+          @include flex(row);
           overflow-x: auto;
           overflow-y: hidden;
+          padding: 0;
 
-          & > activity-card {
-            & + activity-card {
-              mat-card {
-                margin-left: 0;
-              }
-            }
-          }
-
-          & > organisation-card {
-            & + organisation-card {
-              mat-card {
-                margin-left: 0;
-              }
+          & > .base-card {
+            & + .base-card {
+              padding-left: 0;
             }
           }
 
           & > mat-chip-list {
-            &::ng-deep {
-              .mat-chip-list-wrapper {
+            @include deep {
+              & .mat-chip-list-wrapper {
                 flex-wrap: nowrap;
               }
             }
 
-            mat-chip {
-              cursor: pointer;
+            & mat-chip {
               border: .25rem solid;
+              cursor: pointer;
               margin: 1rem;
-
               white-space: nowrap;
-
-              & + mat-chip {
-                margin-left: 0;
-              }
 
               &:focus:not(:hover)::after {
                 opacity: 0;
@@ -99,21 +81,26 @@ main {
               &:not(.mat-chip-selected) {
                 background-color: transparent !important;
               }
+
+              & + mat-chip {
+                margin-left: 0;
+              }
             }
           }
 
-          & > div {
+          & > section {
+            @include flex(row, flex-start, center);
+
             & > button {
-              margin: 1rem;
-              // display: block;
               flex: 0 0 auto;
+              margin: 1rem;
               text-align: left;
 
               & + button {
                 margin-left: 0;
               }
 
-              [compat=icon] {
+              & [compat=icon] {
                 padding-right: .5rem;
               }
             }

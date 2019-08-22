@@ -1,13 +1,8 @@
-<main fxLayout="row wrap" fxLayoutAlign="center start">
+<main>
   <ng-container *ngFor="let item of items | async">
     <organisation-card [item]="item"></organisation-card>
   </ng-container>
   <ng-container *ngIf="next || prev">
-    <pager-compat
-      fxLayout="row"
-      fxLayoutAlign="center center"
-      [next]="next"
-      [prev]="prev">
-    </pager-compat>
+    <pager-compat [next]="next" [prev]="prev"></pager-compat>
   </ng-container>
 </main>

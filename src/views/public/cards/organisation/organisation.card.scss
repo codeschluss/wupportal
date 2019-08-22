@@ -4,16 +4,12 @@ mat-card {
   width: 22.5rem;
 
   & > [mat-card-image] {
-    height: 12.5rem;
-    font-size: 4rem;
-    color: $color-bg-dark;
-
+    @include flex(row, center, center);
     background-color: $color-bg-light;
     background-position: center;
     background-size: cover;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: $color-bg-dark;
+    font-size: 4rem;
+    height: 12.5rem;
   }
 }

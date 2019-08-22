@@ -5,64 +5,53 @@
 @include mat-core();
 @include angular-material-theme($theme-palette);
 
-.text-dark { color: $color-dark; }
-.text-light { color: $color-light; }
-.text-primary { color: $color-primary; }
-.text-accent { color: $color-accent; }
-.text-warn { color: $color-warn; }
-
 .cdk-overlay-container {
-  .mat-menu-panel {
-    .mat-menu-content {
-      .mat-menu-item {
-        &.active {
-          color: $color-primary;
+  & .mat-menu-item {
+    &.active {
+      color: $color-primary;
 
-          pre {
-            background-color: $color-primary;
-          }
-        }
+      & > pre {
+        background-color: $color-primary;
+      }
+    }
 
-        [compat=icon] {
-          display: inline-block;
-          font-size: 1rem;
-          margin-right: .5rem;
-          width: 1.5rem;
+    & > pre {
+      background-color: $color-bg-dark;
+      border-radius: .25rem;
+      color: $color-light;
+      display: inline;
+      font-weight: bold;
+      margin: 0 .5rem 0 0;
+      padding: .25rem;
 
-          text-align: center;
-          vertical-align: middle;
-        }
+      @include media(lt-lg) {
+        display: none;
+      }
+    }
 
-        pre {
-          background-color: $color-bg-dark;
-          border-radius: .25rem;
-          color: $color-light;
-          display: inline;
-          font-weight: bold;
+    & > [compat=icon] {
+      display: inline-block;
+      font-size: 1rem;
+      margin-right: .5rem;
+      text-align: center;
+      vertical-align: middle;
+      width: 1.5rem;
 
-          margin: 0 .5rem 0 0;
-          padding: .25rem;
-        }
+      @include media(lt-lg) {
+        display: none;
       }
     }
   }
 }
 
 layout-component {
-  display: flex;
-  flex-direction: column;
-
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-
   body.embedded & {
-    & > header, [compat=navbar] {
-      display: none;
-    }
+    & > header { display: none; }
+    & [compat=navbar] { display: none; }
   }
+
+  @include flex(column);
+  @include position(fixed, 0, 0, 0, 0);
 
   &.fadeout {
     opacity: 0;
@@ -75,224 +64,258 @@ layout-component {
     text-align: center;
     transition: height $animation-duration;
 
-    img {
+    @include media(lt-md) {
+      display: none;
+    }
+
+    & > img {
       max-height: 10rem;
     }
   }
 
-  & > [compat=navbar]:nth-of-type(1) > mat-toolbar {
-    justify-content: space-between;
-    padding: 0 calc((100% - #{$viewport-width}) / 2);
-
-    * {
-      font-size: 1rem;
-      font-weight: bold;
-      text-transform: uppercase;
+  & > [compat=navbar]:nth-of-type(1) {
+    @include media(lt-md) {
+      display: none;
     }
 
-    & > .mat-button {
-      height: 100%;
-      display: flex;
-      align-items: center;
+    & > mat-toolbar {
+      @include flex(nowrap, space-between, center);
+      padding: 0 calc((100% - #{$viewport-width}) / 2);
 
-      &.active {
-        color: $color-primary;
-      }
+      & > mat-form-field {
+        width: 10rem;
+        padding: 0 1rem;
+        margin-bottom: -.54rem;
+        transition: width $animation-duration;
 
-      h1 {
-        display: inline-block;
-      }
+        &.mat-form-field-should-float {
+          width: 15rem;
+        }
 
-     [compat=icon] {
-        padding-right: .5rem;
-      }
-    }
+        & [compat=icon][icon=search] {
+          @include media(lt-lg) {
+            display: none;
+          }
+        }
 
-    & > mat-form-field {
-      width: 10rem;
-      padding: 0 1rem;
-      margin-bottom: -.54rem;
-      transition: width $animation-duration;
-
-      &.mat-form-field-should-float {
-        width: 15rem;
-      }
-
-      .mat-form-field-prefix {
-        padding-right: .5rem;
-      }
-    }
-  }
-
-  // TODO: https://github.com/angular/flex-layout/issues/1065
-  @media screen and (max-width: 959.99px) and (min-width: 0px) {
-    & > [compat=navbar]:nth-of-type(2) { display: block; }
-  }
-
-  & > [compat=navbar]:nth-of-type(2) > mat-toolbar {
-    @extend .mat-primary;
-
-    mat-progress-spinner {
-      height: 1rem !important;
-      width: 1rem !important;
-      margin-right: 1rem;
-
-      transition: opacity $animation-duration;
-
-      &._mat-animation-noopable[mode=indeterminate] {
-        animation:
-          mat-progress-spinner-linear-rotate
-          2000ms linear infinite !important;
-
-        circle {
-          animation-duration: 4s !important;
-          animation-iteration-count: infinite !important;
+        & .mat-form-field-prefix {
+          padding-right: .5rem;
         }
       }
 
-      svg {
-        height: inherit !important;
-        width: inherit !important;
+      & > [mat-button] {
+        @include flex(row, normal, center);
+        height: 100%;
 
-        circle {
-          stroke: currentColor;
+        &.active {
+          color: $color-primary;
+        }
+
+        & h1 {
+          display: inline-block;
+        }
+
+        & [compat=icon] {
+          padding-right: .5rem;
+
+          @include media(lt-lg) {
+            display: none;
+          }
+        }
+      }
+
+      & * {
+        font-size: 1rem;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+    }
+  }
+
+  & > [compat=navbar]:nth-of-type(2) {
+    @include media(gt-sm) {
+      display: none;
+    }
+
+    & > mat-toolbar {
+      @extend .mat-primary;
+
+      & > mat-progress-spinner {
+        height: 1rem !important;
+        margin-right: 1rem;
+        transition: opacity $animation-duration;
+        width: 1rem !important;
+
+        &._mat-animation-noopable[mode=indeterminate] {
+          animation:
+            mat-progress-spinner-linear-rotate
+            calc(#{$animation-duration} * 8) linear infinite !important;
+
+          & > svg {
+            & > circle {
+              animation-duration: calc(#{$animation-duration} * 16) !important;
+              animation-iteration-count: infinite !important;
+            }
+          }
+        }
+
+        & > svg {
+          height: inherit !important;
+          width: inherit !important;
+
+          & > circle {
+            stroke: currentColor;
+          }
         }
       }
     }
   }
+
 
   & > [compat=drawer] {
+    @include position(relative);
     flex: 1 0 auto;
-    position: relative;
 
-    mat-drawer-container {
-      position: absolute !important;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      top: 0;
+    & > mat-drawer-container {
+      @include position(absolute !important, 0, 0, 0, 0);
 
-      .mat-drawer-content {
-        display: flex;
-        flex-direction: column;
+      & > mat-drawer {
+        & > .mat-drawer-inner-container {
+          @include flex(column);
+          font-weight: bold;
 
-        & > mat-progress-bar {
-          position: fixed;
-          z-index: 1;
+          & > header {
+            text-align: center;
 
-          &._mat-animation-noopable[mode=indeterminate] {
-            .mat-progress-bar-primary {
-              &::after {
-                animation:
-                  mat-progress-bar-primary-indeterminate-scale
-                  2000ms infinite linear !important;
+            & > img {
+              max-height: 10rem;
+            }
+          }
+
+          & > mat-action-list {
+            & [compat=icon] {
+              text-align: center;
+              width: 2.5rem;
+            }
+
+            & > .mat-list-item {
+              text-decoration: none;
+
+              &:focus {
+                background: inherit !important;
               }
 
+              &.active {
+                color: $color-primary;
+              }
+
+              & * {
+                font-weight: bold;
+                text-transform: uppercase;
+              }
+
+              & .mat-form-field-label {
+                color: inherit !important;
+              }
+
+              & .mat-form-field-underline {
+                background-color: currentColor;
+
+                & .mat-form-field-ripple {
+                  background-color: currentColor;
+                }
+              }
+
+              & .mat-input-element {
+                caret-color: currentColor;
+              }
+            }
+          }
+        }
+      }
+
+      & > mat-drawer-content {
+        @include flex(column);
+
+        & > mat-progress-bar {
+          @include position(fixed);
+          z-index: 1;
+
+          @include media(lt-md) {
+            display: none;
+          }
+
+          &._mat-animation-noopable[mode=indeterminate] {
+            & .mat-progress-bar-primary {
               animation:
                 mat-progress-bar-primary-indeterminate-translate
-                2000ms infinite linear !important;
+                calc(#{$animation-duration} * 8) infinite linear !important;
+
+                &::after {
+                  animation:
+                    mat-progress-bar-primary-indeterminate-scale
+                    calc(#{$animation-duration} * 8) infinite linear !important;
+                }
             }
-            .mat-progress-bar-secondary {
+
+            & .mat-progress-bar-secondary {
+              animation:
+                mat-progress-bar-secondary-indeterminate-translate
+                calc(#{$animation-duration} * 8) infinite linear !important;
+
               &::after {
                 animation:
                   mat-progress-bar-secondary-indeterminate-scale
-                  2000ms infinite linear !important;
+                  calc(#{$animation-duration} * 8) infinite linear !important;
               }
-
-              animation:
-                mat-progress-bar-secondary-indeterminate-translate
-                2000ms infinite linear !important
             }
           }
         }
 
         & > ng-component {
+          @include position(relative);
           flex: 1 0 auto;
-          position: relative;
+          padding: 1rem 0;
 
-          main {
+          & main {
+            height: 100%;
             margin: 0 auto;
             max-width: $viewport-width;
           }
         }
 
-        & > [compat=navbar]:last-child mat-toolbar {
-          padding: 0 calc((100% - #{$viewport-width}) / 2);
-          margin-bottom: 1.5rem;
-
-          * {
-            text-transform: uppercase;
+        & > [compat=navbar]:last-child {
+          @include media(lt-md) {
+            display: none;
           }
 
-          & > .mat-button {
-            height: 100%;
-            display: flex;
-            align-items: center;
+          & > mat-toolbar {
+            margin-bottom: 1.5rem;
+            padding: 0 calc((100% - #{$viewport-width}) / 2);
 
-            &.active {
-              color: $color-primary;
+            & > [mat-button] {
+              @include flex(row, normal, center);
+              height: 100%;
+
+              &.active {
+                color: $color-primary;
+              }
             }
-          }
 
-         [compat=icon] {
-            padding-right: .5rem;
-          }
-
-          small {
-            font-size: .875rem;
-            padding: 0 1rem;
-          }
-        }
-      }
-
-      .mat-drawer-inner-container {
-        display: flex;
-        flex-direction: column;
-        font-weight: bold;
-
-        & > header {
-          text-align: center;
-
-          img {
-            max-height: 10rem;
-          }
-        }
-
-        & > mat-action-list {
-          [compat=icon] {
-             text-align: center;
-             width: 2.5rem;
-           }
-
-          .mat-list-item {
-            text-decoration: none;
-
-            * {
-              font-weight: bold;
+            & * {
               text-transform: uppercase;
             }
 
-            &:focus {
-              background: inherit !important;
+            & small {
+              font-size: .875rem;
+              padding: 0 1rem;
             }
 
-            &.active {
-              color: $color-primary;
-            }
+            & [compat=icon] {
+              padding-right: .5rem;
 
-            .mat-form-field-label {
-              color: inherit !important;
-            }
-
-            .mat-input-element {
-              caret-color: currentColor;
-            }
-
-            .mat-form-field-underline {
-              background-color: currentColor;
-
-              .mat-form-field-ripple {
-                background-color: currentColor;
+              @include media(lt-lg) {
+                display: none;
               }
             }
           }

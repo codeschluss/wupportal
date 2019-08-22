@@ -1,18 +1,15 @@
 @import '../../../../app.theme.scss';
 
 main {
-  height: 100%;
+  @include flex(row, center, center);
 
-  mat-card {
+  & > mat-card {
     margin: 1rem;
-    max-width: 20rem !important;
+    max-width: 20rem;
 
-    & > mat-card-header {
-      &::ng-deep {
-        .mat-card-header-text {
-          margin: 0;
-        }
-      }
+    & > mat-card-actions {
+      margin-bottom: -.5rem;
+      padding-bottom: 0;
     }
 
     & > mat-card-content {
@@ -21,9 +18,12 @@ main {
       }
     }
 
-    & > mat-card-actions {
-      margin-bottom: -.5rem;
-      padding-bottom: 0;
+    & > mat-card-header {
+      @include deep {
+        & > .mat-card-header-text {
+          margin: 0;
+        }
+      }
     }
   }
 }

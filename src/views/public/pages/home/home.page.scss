@@ -5,83 +5,71 @@ main {
 
   & > section:nth-of-type(1) {
     background-color: rgba($color-primary, .24);
+    margin: 2.5rem auto;
 
     & > aside {
-      margin: 5rem auto 2.5rem auto;
+      @include position(relative);
+      margin: 0 auto;
       max-width: $viewport-width;
       padding: 5rem 0 2.5rem 0;
-      position: relative;
 
       & > h2 {
+        @include position(absolute, 1rem, auto, auto, 1rem);
         font-weight: bold;
         padding-right: 7.5rem;
-
-        position: absolute;
-        left: 1rem;
-        top: 1rem;
       }
 
       & > strong {
+        @include flex(row, center, center);
+        @include position(absolute, -2.5rem, 1rem);
         color: $color-light;
         background-color: $color-primary;
         border-radius: 50%;
-
-        position: absolute;
-        right: 1rem;
-        top: -2.5rem;
-
-        width: 10rem;
         height: 10rem;
-
+        width: 10rem;
         z-index: 1;
 
-        // TODO: https://github.com/angular/flex-layout/issues/1065
-        @media screen and (max-width: 959.99px) and (min-width: 0px) {
-          &.small {
-            transform: scale(.75);
-            transform-origin: top right;
-          }
+        @include media(xs) {
+          transform: scale(.75);
+          transform-origin: top right;
         }
       }
 
       & > nav {
+        @include flex(row);
         overflow-x: auto;
 
-        & > activity-card {
-          box-sizing: border-box;
+        @include media(xs) {
+          scroll-snap-type: x mandatory;
         }
 
-        // TODO: https://github.com/angular/flex-layout/issues/1065
-        @media screen and (max-width: 959.99px) and (min-width: 0px) {
-          &.snap {
-            scroll-snap-type: x mandatory;
+        & > activity-card {
+          @include flex(row, center, center);
+          @include position(relative);
+          scroll-snap-align: start;
 
-            & > activity-card {
-              display: flex;
-              justify-content: center;
-              align-items: center;
+          @include media(gt-xs) {
+            & + activity-card {
+              padding-left: 0;
+            }
+          }
 
-              margin: 0 auto;
-              min-width: 100%;
+          @include media(xs) {
+            box-sizing: border-box;
+            min-width: 100%;
 
-              position: relative;
-              scroll-snap-align: start;
-
-              & + activity-card::before {
-                color: $color-primary;
-                content: '\2022';
-                font-size: 5rem;
-                text-align: center;
-                text-shadow:
-                  -.125rem -.125rem 0 $color-bg-drawer,
-                  .125rem -.125rem 0 $color-bg-drawer,
-                  -.125rem .125rem 0 $color-bg-drawer,
-                  .125rem .125rem 0 $color-bg-drawer;
-
-                position: absolute;
-                left: -1rem;
-                width: 2rem;
-              }
+            & + activity-card::before {
+              @include position(absolute, auto, auto, auto, -1rem);
+              color: $color-primary;
+              content: '\2022';
+              font-size: 5rem;
+              text-align: center;
+              text-shadow:
+                -.125rem -.125rem 0 $color-bg-drawer,
+                .125rem -.125rem 0 $color-bg-drawer,
+                -.125rem .125rem 0 $color-bg-drawer,
+                .125rem .125rem 0 $color-bg-drawer;
+              width: 2rem;
             }
           }
         }
@@ -90,15 +78,19 @@ main {
   }
 
   & > section:nth-of-type(2) {
+    @include flex(row, center, center);
     margin: 2.5rem auto;
-    width: calc(100% - 2rem);
     max-width: $viewport-width;
+    width: calc(100% - 2rem);
+
+    @include media(lt-md) {
+      @include flex(column, center, center);
+    }
 
     & > article {
-      width: 100%;
       flex: 1 1 auto;
-
       text-align: justify;
+      width: 100%;
 
       & > h2 {
         font-weight: bold;
@@ -106,54 +98,52 @@ main {
     }
 
     & > aside {
-      width: 100%;
-      margin: 1rem;
-      flex: 1 1 auto;
-
       background-color: $color-bg-light;
       border-radius: .25rem;
+      flex: 1 1 auto;
+      margin: 1rem;
       overflow: hidden;
+      width: 100%;
 
       & > figure {
+        @include position(relative);
         height: 0;
         margin: 0;
         padding-top: 56.25%;
-        position: relative;
 
         & > video {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          top: 0;
-
-          width: 100%;
+          @include position(absolute, 0, 0, 0, 0);
           height: 100%;
-
+          width: 100%;
           z-index: 1;
         }
 
         & > figcaption {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          top: 0;
-
-          & > [compat=icon] {
-            font-size: 4rem;
-          }
+          @include flex(column, center, center);
+          @include position(absolute, 0, 0, 0, 0);
+          margin: 0;
 
           & > strong {
             font-size: 2rem;
             margin-top: 1rem;
           }
+
+          & > [compat=icon] {
+            font-size: 4rem;
+          }
         }
       }
+    }
+
+    & > span {
+      flex: 0 0 auto;
+      height: 0;
+      width: 1rem;
     }
   }
 
   & > section:nth-of-type(3) {
+    @include flex(wrap, space-around, center);
     margin: 2.5rem auto;
     max-width: $viewport-width;
 
@@ -161,11 +151,10 @@ main {
       text-align: center;
 
       & > img {
-        width: auto;
         height: auto;
-
-        max-width: 10rem;
         max-height: 5rem;
+        max-width: 10rem;
+        width: auto;
       }
 
       & > figcaption {

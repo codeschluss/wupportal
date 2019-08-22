@@ -1,6 +1,6 @@
 {
   "name": "@wooportal/client",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "client for wooportal - conventional event mapping",
   "homepage": "https://github.com/wooportal/client",
   "author": {
@@ -95,7 +95,7 @@
     "moment": "2.24.0",
     "nativescript-ui-sidedrawer": "7.0.0",
     "ngx-md": "8.0.0",
-    "ngx-openlayers": "1.0.0-next.9",
+    "ngx-openlayers": "1.0.0-next.11",
     "ol": "5.3.3",
     "rxjs": "6.5.2",
     "tns-core-modules": "6.0.6",
@@ -106,7 +106,6 @@
     "@angular-devkit/build-ng-packagr": "0.802.2",
     "@angular/cli": "8.2.2",
     "@angular/compiler-cli": "8.2.3",
-    "@angular/http": "8.0.0-beta.10",
     "@angular/language-service": "8.2.3",
     "@nativescript/schematics": "0.7.1",
     "@types/node": "12.7.2",
@@ -116,7 +115,7 @@
     "hammerjs": "2.0.8",
     "nativescript": "6.0.3",
     "nativescript-angular": "8.2.0",
-    "nativescript-dev-webpack": "1.1.0",
+    "nativescript-dev-webpack": "1.1.1",
     "nativescript-ng-ripple": "2.0.1",
     "nativescript-theme-core": "1.0.6",
     "ng-packagr": "5.5.0",

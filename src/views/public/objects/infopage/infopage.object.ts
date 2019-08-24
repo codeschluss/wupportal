@@ -4,7 +4,7 @@ import { PageModel } from '../../../../realm/models/page.model';
 import { BaseObject } from '../base.object';
 
 @Component({
-  styleUrls: ['infopage.object.scss'],
+  styleUrls: ['../base.object.scss', 'infopage.object.scss'],
   templateUrl: 'infopage.object.html'
 })
 

@@ -1,1 +1,23 @@
-<main><label>blogpost.object</label></main>
+<main>
+  <h2 class="mat-headline">
+    {{ item.name }}
+    <small>
+      <i18n i18n="@@by">by</i18n>
+      {{ item.author }}
+    </small>
+  </h2>
+  <mat-divider></mat-divider>
+  <button mat-button>
+    <icon-compat icon="clock"></icon-compat>
+    <time [datetime]="item.created">
+      {{ item.created | date: 'dd.MM.yyyy' }}
+    </time>
+  </button>
+  <share-piece [item]="item"></share-piece>
+  <like-piece [item]="item"></like-piece>
+  <mat-divider></mat-divider>
+  <ng-container *ngIf="item.activity">
+    <activity-card [item]="item.activity"></activity-card>
+  </ng-container>
+  <ngx-md class="mat-title" [data]="item.content"></ngx-md>
+</main>

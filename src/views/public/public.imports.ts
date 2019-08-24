@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxMdModule } from 'ngx-md';
 
 export const materials: Type<any>[] = [
   FormsModule,
@@ -25,5 +26,6 @@ export const materials: Type<any>[] = [
   MatMenuModule,
   MatSelectModule,
   MatRippleModule,
+  NgxMdModule,
   ReactiveFormsModule
 ];

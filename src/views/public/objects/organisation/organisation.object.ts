@@ -4,7 +4,7 @@ import { OrganisationModel } from '../../../../realm/models/organisation.model';
 import { BaseObject } from '../base.object';
 
 @Component({
-  styleUrls: ['organisation.object.scss'],
+  styleUrls: ['../base.object.scss', 'organisation.object.scss'],
   templateUrl: 'organisation.object.html'
 })
 

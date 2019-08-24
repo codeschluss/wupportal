@@ -1,0 +1,21 @@
+@import '../../../app.theme.scss';
+
+main {
+  padding: 0 1rem;
+
+  & > mat-divider {
+    margin: 1rem 0;
+  }
+
+  & > ngx-md {
+    text-align: justify;
+  }
+
+  & > .mat-button {
+    margin: 0;
+
+    & [compat=icon] {
+      padding-right: .5rem;
+    }
+  }
+}

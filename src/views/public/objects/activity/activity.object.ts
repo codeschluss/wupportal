@@ -4,7 +4,7 @@ import { ActivityModel } from '../../../../realm/models/activity.model';
 import { BaseObject } from '../base.object';
 
 @Component({
-  styleUrls: ['activity.object.scss'],
+  styleUrls: ['../base.object.scss', 'activity.object.scss'],
   templateUrl: 'activity.object.html'
 })
 

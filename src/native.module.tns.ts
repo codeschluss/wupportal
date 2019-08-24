@@ -1,6 +1,7 @@
 import { ErrorHandler, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { CoreModule } from '@wooportal/core';
 import { NativeScriptAnimationsModule } from 'nativescript-angular/animations';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
@@ -40,7 +41,7 @@ import { ClientPackage } from './utils/package';
 export class NativeModule {
 
   constructor(library: FaIconLibrary) {
-    library.addIconPacks(freeicons);
+    library.addIconPacks(fab, fas);
   }
 
 }

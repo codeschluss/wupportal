@@ -4,7 +4,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fas as freeicons } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 import { CoreModule } from '@wooportal/core';
 import { ClientComponent } from './client.component';
@@ -45,7 +46,7 @@ import { ClientPackage } from './utils/package';
 export class ClientModule {
 
   constructor(library: FaIconLibrary) {
-    library.addIconPacks(freeicons);
+    library.addIconPacks(fab, fas);
   }
 
 }

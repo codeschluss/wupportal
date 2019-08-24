@@ -20,6 +20,8 @@ import { LogoutPageComponent } from './pages/logout/logout.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
 import { RegisterPageComponent } from './pages/register/register.page';
 import { SearchPageComponent } from './pages/search/search.page';
+import { LikePieceComponent } from './pieces/like/like.piece';
+import { SharePieceComponent } from './pieces/share/share.piece';
 import { PublicComponent } from './public.component';
 import { materials } from './public.imports';
 import { PublicRouter } from './public.router';
@@ -55,12 +57,18 @@ const pages: Type<any>[] = [
   SearchPageComponent
 ];
 
+const pieces: Type<any>[] = [
+  LikePieceComponent,
+  SharePieceComponent
+];
+
 @NgModule({
   declarations: [
     ...cards,
     ...listings,
     ...objects,
     ...pages,
+    ...pieces,
     PublicComponent
   ],
   entryComponents: [

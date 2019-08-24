@@ -26,13 +26,7 @@
       margin-bottom: -.5rem;
       padding-bottom: 0;
 
-      & > [mat-button] {
-        margin: 0;
-
-        & > .mat-badge-content {
-          top: 0;
-        }
-
+      & > .mat-button {
         & [compat=icon] {
           padding-right: .5rem;
         }

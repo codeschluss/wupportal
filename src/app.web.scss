@@ -103,7 +103,7 @@ layout-component {
         }
       }
 
-      & > [mat-button] {
+      & > .mat-button {
         @include flex(row, normal, center);
         height: 100%;
 
@@ -293,7 +293,7 @@ layout-component {
             margin-bottom: 1.5rem;
             padding: 0 calc((100% - #{$viewport-width}) / 2);
 
-            & > [mat-button] {
+            & > .mat-button {
               @include flex(row, normal, center);
               height: 100%;
 

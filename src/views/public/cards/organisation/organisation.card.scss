@@ -3,7 +3,7 @@
 mat-card {
   width: 22.5rem;
 
-  & > [mat-card-image] {
+  & > .mat-card-image {
     @include flex(row, center, center);
     background-color: $color-bg-light;
     background-position: center;

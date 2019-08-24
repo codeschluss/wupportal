@@ -4,7 +4,7 @@ import { IconCompat } from './icon.compat.i';
 @Component({
   selector: 'icon-compat',
   template: `
-    <fa-icon [icon]="icon"></fa-icon>
+    <fa-icon [icon]="[pack, icon]"></fa-icon>
   `
 })
 
@@ -15,5 +15,8 @@ export class IconCompatComponent implements IconCompat {
 
   @Input()
   public icon: string;
+
+  @Input()
+  public pack: string = 'fas';
 
 }

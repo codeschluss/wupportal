@@ -4,4 +4,6 @@ export interface IconCompat {
 
   icon: string;
 
+  pack: string;
+
 }

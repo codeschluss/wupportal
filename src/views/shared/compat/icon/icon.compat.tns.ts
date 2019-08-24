@@ -27,6 +27,9 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
   @Input()
   public icon: string;
 
+  @Input()
+  public pack: string = 'fas';
+
   @ViewChild('webview', { read: ElementRef, static: true })
   private webview: ElementRef<WebView>;
 
@@ -35,7 +38,7 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
 
     return icon({
       iconName: this.icon as any,
-      prefix: 'fas'
+      prefix: this.pack as any
     }, {
       styles: {
         color: color ? ColorConvert.rgb.hex(color.r, color.g, color.b) : '#000',

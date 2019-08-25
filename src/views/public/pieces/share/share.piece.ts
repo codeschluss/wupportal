@@ -1,8 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
-import { RealmMap } from '../../../../realm/realm.map';
+import { ActivityModel } from '../../../../realm/models/activity.model';
+import { BlogModel } from '../../../../realm/models/blog.model';
+import { OrganisationModel } from '../../../../realm/models/organisation.model';
+import { PageModel } from '../../../../realm/models/page.model';
+import { ClientPackage } from '../../../../utils/package';
 import { BasePiece } from '../base.piece';
 
 interface Service {
@@ -44,20 +47,26 @@ export class SharePieceComponent extends BasePiece {
 
   public constructor(
     @Inject(DOCUMENT) private document: Document,
-    private platformProvider: PlatformProvider,
-    private router: Router
+    private platformProvider: PlatformProvider
   ) {
     super();
   }
 
   public share(service: Service): void {
-    const url = service.url + new RealmMap(this.item).permalink;
+    const url = ClientPackage.config.defaults.appUrl + (() => {
+      switch (this.item.constructor) {
+        case ActivityModel: return '/activities/';
+        case BlogModel: return '/blogposts/';
+        case OrganisationModel: return '/organisations/';
+        case PageModel: return '/infopages/';
+      }
+    })() + this.item.id;
 
     switch (this.platformProvider.type) {
       case 'Native':
         break;
       case 'Online':
-        this.document.defaultView.open(url, '_blank');
+        this.document.defaultView.open(service.url + url, '_blank');
         break;
     }
   }

@@ -4,3 +4,10 @@ strong {
   color: $color-warn;
   font-weight: bold
 }
+
+button {
+  @include position(absolute, 0, 0);
+  font-size: 2rem;
+  font-weight: bold;
+  transform: scale(.5);
+}

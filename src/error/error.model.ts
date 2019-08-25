@@ -13,10 +13,11 @@ export class ErrorModel {
   public static from(error: any): ErrorModel {
     return Object.assign(new ErrorModel(), {
       error: error.constructor.name,
-      message: inspect(error),
+      message: error.status ? error.error.message : error.message,
+      path: error.url,
       raw: error,
       status: error.status || NaN,
-      trace: error.stack
+      trace: error.stack || inspect(error)
     });
   }
 

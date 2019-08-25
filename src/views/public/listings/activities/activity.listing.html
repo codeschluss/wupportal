@@ -1,7 +1,10 @@
 <main>
   <header>
     <mat-form-field>
-      <mat-label><i18n i18n="@@suburbs">suburbs</i18n></mat-label>
+      <mat-label>
+        <icon-compat icon="city"></icon-compat>
+        <i18n i18n="@@suburbs">suburbs</i18n>
+      </mat-label>
       <mat-select multiple [formControl]="suburbCtrl">
         <ng-container *ngFor="let item of suburbs">
           <mat-option [value]="item.id">
@@ -11,7 +14,10 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-label><i18n i18n="@@targetGroups">targetGroups</i18n></mat-label>
+      <mat-label>
+        <icon-compat icon="users"></icon-compat>
+        <i18n i18n="@@targetGroups">targetGroups</i18n>
+      </mat-label>
       <mat-select multiple [formControl]="targetGroupCtrl">
         <ng-container *ngFor="let item of targetGroups">
           <mat-option [value]="item.id">

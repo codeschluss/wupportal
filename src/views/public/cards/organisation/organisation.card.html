@@ -1,8 +1,8 @@
 <mat-card>
   <mat-card-content>
     <small>
-      {{ item.address?.street }} {{ item.address?.houseNumber }}
-      <br>{{ item.address?.place }} {{ item.address?.suburb?.name }}
+      {{ item.address.street }} {{ item.address.houseNumber }}
+      <br>{{ item.address.place }} {{ item.address.suburb.name }}
     </small>
   </mat-card-content>
   <ng-container *ngIf="item.images?.length">

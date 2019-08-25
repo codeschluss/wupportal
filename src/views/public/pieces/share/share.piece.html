@@ -1,8 +1,8 @@
-<button mat-button [matMenuTriggerFor]="menu">
+<button mat-button [matMenuTriggerFor]="actions">
   <icon-compat icon="share-alt"></icon-compat>
   <i18n i18n="@@share">share</i18n>
 </button>
-<mat-menu #menu="matMenu">
+<mat-menu #actions="matMenu">
   <ng-container *ngFor="let item of items">
     <button mat-menu-item (click)="share(item)">
       <icon-compat pack="fab" [icon]="item.icon"></icon-compat>

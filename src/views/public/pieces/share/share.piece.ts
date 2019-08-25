@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
-import { ClientPackage } from '../../../../utils/package';
+import { RealmMap } from '../../../../realm/realm.map';
 import { BasePiece } from '../base.piece';
 
 interface Service {
@@ -51,18 +51,13 @@ export class SharePieceComponent extends BasePiece {
   }
 
   public share(service: Service): void {
-    const url = !this.router.url.endsWith(this.item.id)
-      ? `${this.router.url}/${this.item.id}`
-      : this.router.url;
+    const url = service.url + new RealmMap(this.item).permalink;
 
     switch (this.platformProvider.type) {
       case 'Native':
         break;
       case 'Online':
-        this.document.defaultView.open(
-          service.url + ClientPackage.config.defaults.appUrl + url,
-          '_blank'
-        );
+        this.document.defaultView.open(url, '_blank');
         break;
     }
   }

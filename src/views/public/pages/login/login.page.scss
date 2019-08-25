@@ -12,18 +12,16 @@ main {
       padding-bottom: 0;
     }
 
-    & > mat-card-content {
-      & > mat-form-field {
-        width: 100%;
-      }
-    }
-
     & > mat-card-header {
       @include deep {
         & > .mat-card-header-text {
           margin: 0;
         }
       }
+    }
+
+    & mat-form-field {
+      width: 100%;
     }
   }
 }

@@ -117,6 +117,14 @@ main#admin {
         }
       }
 
+      & > mat-header-row {
+        & > mat-header-cell {
+          &:last-of-type {
+            @include flex(row, flex-end, center);
+          }
+        }
+      }
+
       & > mat-row {
         &:nth-of-type(even) {
           background-color: rgba(0, 0, 0, .005);
@@ -138,12 +146,6 @@ main#admin {
               text-overflow: ellipsis;
               white-space: nowrap;
             }
-          }
-        }
-
-        & > mat-header-cell {
-          &:last-of-type {
-            @include flex(row, flex-end, center);
           }
         }
       }

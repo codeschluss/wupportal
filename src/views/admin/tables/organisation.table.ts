@@ -12,7 +12,7 @@ import { OrganisationModel } from '../../../realm/models/organisation.model';
           <i18n i18n="@@address">address</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mail'">
-          <i18n i18n="@@mail">mail</i18n>
+          <i18n i18n="@@email">email</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
           <i18n i18n="@@name">name</i18n>

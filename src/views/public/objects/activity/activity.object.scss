@@ -1,1 +1,21 @@
 @import '../../../../app.theme.scss';
+
+main {
+  & > aside {
+    & > mat-chip-list {
+      display: inline-block;
+      flex: 0 0 auto;
+      padding: 0 1rem;
+
+      & mat-chip {
+        background-color: transparent;
+        border: .25rem solid;
+        cursor: pointer;
+
+        &::after {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}

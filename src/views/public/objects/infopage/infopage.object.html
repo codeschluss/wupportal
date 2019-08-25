@@ -1,1 +1,19 @@
-<main><label>infopage.object</label></main>
+<main>
+  <h2 class="mat-headline">
+    {{ item.name }}
+  </h2>
+  <mat-divider></mat-divider>
+  <aside>
+    <share-piece [item]="item"></share-piece>
+    <like-piece [item]="item"></like-piece>
+    <span [style.flexGrow]="1"></span>
+    <button mat-button disabled>
+      <icon-compat icon="clock"></icon-compat>
+      <time [datetime]="item.created">
+        {{ item.created | date: 'dd.MM.yyyy' }}
+      </time>
+    </button>
+  </aside>
+  <mat-divider></mat-divider>
+  <ngx-md class="mat-title" [data]="item.content"></ngx-md>
+</main>

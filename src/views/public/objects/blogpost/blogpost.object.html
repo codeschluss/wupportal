@@ -7,14 +7,17 @@
     </small>
   </h2>
   <mat-divider></mat-divider>
-  <button mat-button>
-    <icon-compat icon="clock"></icon-compat>
-    <time [datetime]="item.created">
-      {{ item.created | date: 'dd.MM.yyyy' }}
-    </time>
-  </button>
-  <share-piece [item]="item"></share-piece>
-  <like-piece [item]="item"></like-piece>
+  <aside>
+    <share-piece [item]="item"></share-piece>
+    <like-piece [item]="item"></like-piece>
+    <span [style.flexGrow]="1"></span>
+    <button mat-button disabled>
+      <icon-compat icon="clock"></icon-compat>
+      <time [datetime]="item.created">
+        {{ item.created | date: 'dd.MM.yyyy' }}
+      </time>
+    </button>
+  </aside>
   <mat-divider></mat-divider>
   <ng-container *ngIf="item.activity">
     <activity-card [item]="item.activity"></activity-card>

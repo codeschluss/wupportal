@@ -3,6 +3,27 @@
 main {
   padding: 0 1rem;
 
+  & > aside {
+    @include flex(row, flex-start, center);
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    & > .mat-button {
+      flex: 0 0 auto;
+      margin: 0;
+
+      &:last-child {
+        @include media(lt-md) {
+          display: none;
+        }
+      }
+
+      & [compat=icon] {
+        padding-right: .5rem;
+      }
+    }
+  }
+
   & > mat-divider {
     margin: 1rem 0;
   }
@@ -11,11 +32,14 @@ main {
     text-align: justify;
   }
 
-  & > .mat-button {
-    margin: 0;
+  & > .base-card {
+    @include flex(row, center);
+    max-width: 100%;
+    padding: 0;
 
-    & [compat=icon] {
-      padding-right: .5rem;
+    @include media(gt-sm) {
+      float: right;
+      margin: 1rem;
     }
   }
 }

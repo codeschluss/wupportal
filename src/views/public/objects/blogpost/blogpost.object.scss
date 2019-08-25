@@ -1,9 +1,1 @@
 @import '../../../../app.theme.scss';
-
-main {
-  & > activity-card {
-    @include media(gt-sm) {
-      float: right;
-    }
-  }
-}

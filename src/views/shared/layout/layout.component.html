@@ -118,7 +118,7 @@
       <mat-menu #adminMenu="matMenu" xPosition="before">
         <button mat-menu-item
           [class.active]="url.startsWith('/admin/account')"
-          [routerLink]="['/', 'admin', 'account']">
+          [routerLink]="['/', 'admin', 'account', claimed?.userId]">
           <icon-compat icon="chalkboard-teacher"></icon-compat>
           <i18n i18n="@@account">account</i18n>
         </button>

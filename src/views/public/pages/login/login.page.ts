@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TokenProvider } from '@wooportal/core';
 import { EMPTY } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { catchError, filter, map, take } from 'rxjs/operators';
 import { ClientPackage } from '../../../../utils/package';
 import { BasePage } from '../base.page';
 
@@ -34,7 +34,9 @@ export class LoginPageComponent extends BasePage implements OnInit {
   }
 
   public get valid(): boolean {
-    return this.password.valid && this.username.valid;
+    return true
+      && this.password.valid
+      && this.username.valid;
   }
 
   public constructor(
@@ -45,18 +47,22 @@ export class LoginPageComponent extends BasePage implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.tokenProvider.value.pipe(take(1)).subscribe((tokens) =>
-      tokens.access.id && this.router.navigate(['/', 'admin', 'account']));
+    this.tokenProvider.value.pipe(
+      take(1),
+      map((tokens) => tokens.access.id),
+      filter(Boolean)
+    ).subscribe((id) => this.router.navigate(['/', 'admin', 'account', id]));
   }
 
   public login(): void {
     this.tokenProvider.login(this.username.value, this.password.value).pipe(
+      map((tokens) => tokens.access.id),
       catchError(() => {
         this.password.patchValue(null);
         this.username.patchValue(null);
         return EMPTY;
       })
-    ).subscribe(() => this.router.navigate(['/', 'admin', 'account']));
+    ).subscribe((id) => this.router.navigate(['/', 'admin', 'account', id]));
   }
 
 }

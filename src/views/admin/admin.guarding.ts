@@ -48,7 +48,7 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
         default: return claimed.superUser;
 
         case state.url.startsWith('/admin/account'):
-        return route.params.uuid === claimed.userId;
+        return claimed.userId === this.uuid(state.url);
 
         case state.url.startsWith('/admin/organisation'):
         return claimed.superUser || claimed.organisationAdmin.length;
@@ -66,7 +66,11 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
       }
     })()) { return true; }
 
-    return this.router.navigate(claimed.userId ? ['admin'] : ['error', 403]);
+    return this.router.navigate(
+      claimed.userId
+        ? ['/', 'admin', 'account', claimed.userId]
+        : ['/', 'error', 403]
+    );
   }
 
   private orga(url: string): Promise<string> {

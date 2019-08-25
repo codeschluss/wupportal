@@ -63,7 +63,6 @@ const routes: Route[] = [
       path: '',
       children: routes,
       component: AdminComponent,
-      canActivate: [AdminGuarding],
       canActivateChild: [AdminGuarding],
       resolve: {
         tokens: TokenResolver

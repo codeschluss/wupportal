@@ -29,33 +29,41 @@ export class AdminComponent implements OnInit, OnDestroy {
     private tokenProvider: TokenProvider
   ) { }
 
-  private home: Subscription = EMPTY.subscribe();
+  private base: string[];
 
-  private worker: Subscription = EMPTY.subscribe();
+  private homing: Subscription = EMPTY.subscribe();
+
+  private working: Subscription = EMPTY.subscribe();
 
   public ngOnInit(): void {
     const claim = ClientPackage.config.jwtClaims.userId;
     const userId = this.route.snapshot.data.tokens.access[claim];
-    const route = this.pathfinder.to(AccountPanelComponent).concat(userId);
-    userId ? this.work() : this.router.navigate(['/']);
+    this.base = this.pathfinder.to(AccountPanelComponent).concat(userId);
 
     if (userId) {
-      this.home = this.router.events.pipe(
-        filter((event) => event instanceof NavigationEnd),
-        map(() => !this.route.firstChild.firstChild),
-        startWith(!this.route.firstChild.firstChild),
-        filter(Boolean)
-      ).subscribe(() => this.router.navigate(route));
+      this.home();
+      this.work();
+    } else {
+      this.router.navigate(['/']);
     }
   }
 
   public ngOnDestroy(): void {
-    this.home.unsubscribe();
-    this.worker.unsubscribe();
+    this.homing.unsubscribe();
+    this.working.unsubscribe();
+  }
+
+  private home(): void {
+    this.homing = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => !this.route.firstChild.firstChild),
+      startWith(!this.route.firstChild.firstChild),
+      filter(Boolean)
+    ).subscribe(() => this.router.navigate(this.base));
   }
 
   private work(): void {
-    this.worker = this.tokenProvider.value.pipe(
+    this.working = this.tokenProvider.value.pipe(
       filter((tokens) => !tokens.refresh.raw), take(1),
       mergeMap(() => this.dialog.open(ReloginDialogComponent).afterClosed()),
       filter(Boolean)

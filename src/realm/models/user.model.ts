@@ -12,6 +12,7 @@ export class UserModel
 
   public applyBlogger: boolean;
   public name: string;
+  public organisationRegistrations: string[];
   public password: string;
   public phone: string;
   public superuser: boolean;

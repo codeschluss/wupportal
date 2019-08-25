@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
@@ -18,6 +19,7 @@ export const materials: Type<any>[] = [
   MatBadgeModule,
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
   MatChipsModule,
   MatDividerModule,
   MatExpansionModule,

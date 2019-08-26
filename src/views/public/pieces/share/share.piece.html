@@ -3,9 +3,13 @@
   <i18n i18n="@@share">share</i18n>
 </button>
 <mat-menu #actions="matMenu">
+  <button mat-menu-item (click)="copy()">
+    <icon-compat icon="link"></icon-compat>
+    <i18n i18n="@@copyLink">copyLink</i18n>
+  </button>
   <ng-container *ngFor="let item of items">
     <button mat-menu-item (click)="share(item)">
-      <icon-compat pack="fab" [icon]="item.icon"></icon-compat>
+      <icon-compat [icon]="item.icon" [pack]="item.pack"></icon-compat>
       {{ item.name }}
     </button>
   </ng-container>

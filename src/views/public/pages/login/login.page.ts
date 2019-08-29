@@ -15,10 +15,10 @@ import { BasePage } from '../base.page';
 export class LoginPageComponent extends BasePage implements OnInit {
 
   public password: FormControl = new FormControl(null, [
-    // Validators.minLength(10),
-    // Validators.pattern(/(?=(?:[^0-9]*[0-9]){2})/),
-    // Validators.pattern(/(?=(?:[^A-Z]*[A-Z]){2})/),
-    // Validators.pattern(/(?=(?:[^a-z]*[a-z]){2})/),
+    // Validators.minLength(8),
+    // Validators.pattern(/(?=(?:[^0-9]*[0-9]){1})/),
+    // Validators.pattern(/(?=(?:[^A-Z]*[A-Z]){1})/),
+    // Validators.pattern(/(?=(?:[^a-z]*[a-z]){1})/),
     Validators.required
   ]);
 

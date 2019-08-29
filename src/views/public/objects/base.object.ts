@@ -1,9 +1,11 @@
-import { HostBinding, OnInit, Type } from '@angular/core';
+import { AfterViewInit, HostBinding, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, Title } from '@wooportal/core';
+import { ExpandCompatComponent } from '../../shared/compat/expand/expand.compat';
+import { ExpandCompat } from '../../shared/compat/expand/expand.compat.i';
 
 export abstract class BaseObject<Model extends CrudModel>
-  extends Selfrouter implements OnInit {
+  extends Selfrouter implements OnInit, AfterViewInit {
 
   protected abstract model: Type<Model>;
 
@@ -32,6 +34,9 @@ export abstract class BaseObject<Model extends CrudModel>
     };
   }
 
+  @ViewChildren(ExpandCompatComponent)
+  private expands: QueryList<ExpandCompat>;
+
   public constructor(
     private route: ActivatedRoute,
     private titleService: Title
@@ -41,6 +46,19 @@ export abstract class BaseObject<Model extends CrudModel>
 
   public ngOnInit(): void {
     this.titleService.set(this.item.name);
+    this.ngPostInit();
   }
+
+  public ngAfterViewInit(): void {
+    if (this.expands.first) {
+      this.expands.first.open();
+    }
+  }
+
+  public expanded(expand: ExpandCompat): void {
+    this.expands.filter((e) => e !== expand).forEach((e) => e.close());
+  }
+
+  protected ngPostInit(): void { }
 
 }

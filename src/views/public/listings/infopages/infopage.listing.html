@@ -2,6 +2,7 @@
   <ng-container *ngFor="let item of items | async">
     <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
+        <icon-compat icon="info-circle"></icon-compat>
         {{ item.name }}
         <small>({{ item.pages.length }})</small>
       </ng-template>

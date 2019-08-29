@@ -3,72 +3,19 @@
     {{ item.name }}
     <small>
       <i18n i18n="@@by">by</i18n>
-      {{ item.organisation.name }}
+      <a [routerLink]="['/', 'organisations', item.organisation.id]">
+        {{ item.organisation.name }}
+      </a>
+      <i18n i18n="@@at">at</i18n>
+      <a
+        [queryParams]="{ suburbs: item.address.suburb.id }"
+        [routerLink]="['/', 'activities']">
+        {{ item.address.place }} {{ item.address.suburb.name }}
+      </a>
     </small>
   </h2>
   <mat-divider></mat-divider>
-  <aside>
-    <mat-chip-list>
-      <mat-chip
-        class="mat-body"
-        [queryParams]="{ categories: item.category.id }"
-        [routerLink]="['/', 'activities']"
-        [style.borderColor]="item.category.color">
-        {{ item.category.name }}
-      </mat-chip>
-    </mat-chip-list>
-    <ng-container *ngFor="let targetGroup of item.targetGroups">
-      <a mat-button
-        [queryParams]="{ targetgroups: targetGroup.id }"
-        [routerLink]="['/', 'activities']">
-        <icon-compat icon="users"></icon-compat>
-        {{ targetGroup.name }}
-      </a>
-    </ng-container>
-    <a mat-button
-      [queryParams]="{ suburbs: item.address.suburb.id }"
-      [routerLink]="['/', 'activities']">
-      <icon-compat icon="city"></icon-compat>
-      {{ item.address.suburb.name }}
-    </a>
-    <button mat-button [matMenuTriggerFor]="schedules">
-      <icon-compat icon="history"></icon-compat>
-      <i18n i18n="@@schedules">schedules</i18n>
-    </button>
-    <mat-menu #schedules="matMenu" xPosition="after">
-      <ng-container *ngFor="let schedule of item.schedules">
-        <button mat-menu-item disabled>
-          <icon-compat icon="history" [ngStyle]="{
-            'font-size': '14px',
-            'width': 'auto'
-          }"></icon-compat>
-          {{ schedule.startDate | date: 'dd.MM.yyyy, HH:mm' }}
-        </button>
-      </ng-container>
-    </mat-menu>
-    <a mat-button
-      [queryParams]="{ items: item.id }"
-      [routerLink]="['/', 'mapview']">
-      <icon-compat icon="map-marked-alt"></icon-compat>
-      <i18n i18n="@@mapview">mapview</i18n>
-    </a>
-    <button mat-button
-      [disabled]="!item.blogs || item.blogs.length === 0"
-      [matMenuTriggerFor]="blogposts">
-      <icon-compat icon="comment-dots"></icon-compat>
-      <i18n i18n="@@blogposts">blogposts</i18n>
-    </button>
-    <mat-menu #blogposts="matMenu" xPosition="after">
-      <ng-container *ngFor="let blogpost of item.blogs">
-        <a mat-menu-item [routerLink]="['/', 'blogposts', blogpost.id]">
-          <icon-compat icon="comment-dots" [ngStyle]="{
-            'font-size': '14px',
-            'width': 'auto'
-          }"></icon-compat>
-          {{ blogpost.name }}
-        </a>
-      </ng-container>
-    </mat-menu>
+  <nav>
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
     <span [style.flexGrow]="1"></span>
@@ -78,8 +25,43 @@
         {{ item.created | date: 'dd.MM.yyyy' }}
       </time>
     </button>
-  </aside>
+  </nav>
   <mat-divider></mat-divider>
-  <organisation-card [item]="item.organisation"></organisation-card>
-  <ngx-md class="mat-title" [data]="item.description"></ngx-md>
+  <section>
+    <ngx-md class="mat-body" [data]="item.description"></ngx-md>
+    <aside>
+      <expand-compat #mapview (changed)="$event && expanded(mapview)">
+        <ng-template #expandHeader>
+          <icon-compat icon="globe"></icon-compat>
+          <i18n i18n="@@mapview">mapview</i18n>
+        </ng-template>
+        <ng-template #expandContent>
+          <iframe [src]="source"></iframe>
+        </ng-template>
+      </expand-compat>
+      <expand-compat #organisation (changed)="$event && expanded(organisation)">
+        <ng-template #expandHeader>
+          <icon-compat icon="at"></icon-compat>
+          <i18n i18n="@@organisation">organisation</i18n>
+        </ng-template>
+        <ng-template #expandContent>
+          <organisation-card [item]="item.organisation"></organisation-card>
+        </ng-template>
+      </expand-compat>
+      <ng-container *ngIf="item.blogs">
+        <expand-compat #blogposts (changed)="$event && expanded(blogposts)">
+          <ng-template #expandHeader>
+            <icon-compat icon="at"></icon-compat>
+            <i18n i18n="@@blogposts">blogposts</i18n>
+            <small>({{ item.blogs.length }})</small>
+          </ng-template>
+          <ng-template #expandContent>
+            <ng-container *ngFor="let blogpost of item.blogs">
+              <blogpost-card [item]="blogpost"></blogpost-card>
+            </ng-container>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
+    </aside>
+  </section>
 </main>

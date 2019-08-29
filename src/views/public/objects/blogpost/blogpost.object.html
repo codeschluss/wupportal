@@ -4,10 +4,16 @@
     <small>
       <i18n i18n="@@by">by</i18n>
       {{ item.author }}
+      <ng-container *ngIf="item.activity">
+        <i18n i18n="@@about">about</i18n>
+        <a [routerLink]="['/', 'activities', item.activity.id]">
+          {{ item.activity.name }}
+        </a>
+      </ng-container>
     </small>
   </h2>
   <mat-divider></mat-divider>
-  <aside>
+  <nav>
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
     <span [style.flexGrow]="1"></span>
@@ -17,10 +23,22 @@
         {{ item.created | date: 'dd.MM.yyyy' }}
       </time>
     </button>
-  </aside>
+  </nav>
   <mat-divider></mat-divider>
-  <ng-container *ngIf="item.activity">
-    <activity-card [item]="item.activity"></activity-card>
-  </ng-container>
-  <ngx-md class="mat-title" [data]="item.content"></ngx-md>
+  <section>
+    <ngx-md class="mat-body" [data]="item.content"></ngx-md>
+    <ng-container *ngIf="item.activity">
+      <aside>
+        <expand-compat #activity (changed)="$event && expanded(activity)">
+          <ng-template #expandHeader>
+            <icon-compat icon="map-marker-alt"></icon-compat>
+            <i18n i18n="@@activity">activity</i18n>
+          </ng-template>
+          <ng-template #expandContent>
+            <activity-card [item]="item.activity"></activity-card>
+          </ng-template>
+        </expand-compat>
+      </aside>
+    </ng-container>
+  </section>
 </main>

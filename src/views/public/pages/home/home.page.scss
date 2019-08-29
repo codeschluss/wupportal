@@ -62,8 +62,7 @@ main {
           }
 
           @include media(xs) {
-            box-sizing: border-box;
-            min-width: 100%;
+            width: 100%;
 
             & + activity-card::before {
               @include position(absolute, auto, auto, auto, -.75rem);

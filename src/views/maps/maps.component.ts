@@ -137,6 +137,9 @@ export class MapsComponent
   }
 
   public ngAfterViewInit(): void {
+    const ids = this.route.snapshot.queryParams.items;
+    const source = this.document.defaultView;
+
     this.focus.subscribe(() => this.vector.instance.changed());
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
     this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
@@ -147,19 +150,16 @@ export class MapsComponent
       this.loadingProvider.finished(this.block);
     });
 
-    const ids = this.route.snapshot.queryParams.items;
-    const source = this.document.defaultView;
-
-    if (source !== source.parent) {
-      this.connection = new MapsConnection(source, source.parent);
-      this.connection.focus.subscribe((focus) => this.focus.next(focus));
-      this.connection.items.subscribe((items) => this.items.next(items));
-      this.connection.nextReady(true);
-    } else if (ids) {
+    if (ids) {
       this.filter(Arr(ids)).subscribe((items) => {
         this.focus.next(items);
         this.items.next(items);
       });
+    } else if (source !== source.parent) {
+      this.connection = new MapsConnection(source, source.parent);
+      this.connection.focus.subscribe((focus) => this.focus.next(focus));
+      this.connection.items.subscribe((items) => this.items.next(items));
+      this.connection.nextReady(true);
     } else {
       this.fetch().subscribe((items) => this.items.next(items));
     }
@@ -199,14 +199,20 @@ export class MapsComponent
 
   public handleReset(): void {
     this.following(false);
-    this.view.instance.animate({
-      center: fromLonLat([
-        this.mapconf.longitude,
-        this.mapconf.latitude
-      ]),
-      rotation: 0,
-      zoom: this.mapconf.zoomfactor
-    });
+
+    if (this.route.snapshot.queryParams.items) {
+      this.filter(Arr(this.route.snapshot.queryParams.items))
+        .subscribe((items) => this.focus.next(items));
+    } else {
+      this.view.instance.animate({
+        center: fromLonLat([
+          this.mapconf.longitude,
+          this.mapconf.latitude
+        ]),
+        rotation: 0,
+        zoom: this.mapconf.zoomfactor
+      });
+    }
   }
 
   private configuration(item: string): string {

@@ -1,7 +1,8 @@
 <main>
   <ng-container *ngIf="items.activities.length">
-    <expand-compat #expand (changed)="$event && expanded(expand)">
+    <expand-compat #activities (changed)="$event && expanded(activities)">
       <ng-template #expandHeader>
+        <icon-compat icon="map-marker-alt"></icon-compat>
         <i18n i18n="@@activities">activities</i18n>
         <small>({{ items.activities.length }})</small>
       </ng-template>
@@ -13,8 +14,9 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.organisations.length">
-    <expand-compat #expand (changed)="$event && expanded(expand)">
+    <expand-compat #organisations (changed)="$event && expanded(organisations)">
       <ng-template #expandHeader>
+        <icon-compat icon="at"></icon-compat>
         <i18n i18n="@@organisations">organisations</i18n>
         <small>({{ items.organisations.length }})</small>
       </ng-template>
@@ -26,8 +28,9 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.blogposts.length">
-    <expand-compat #expand (changed)="$event && expanded(expand)">
+    <expand-compat #blogposts (changed)="$event && expanded(blogposts)">
       <ng-template #expandHeader>
+        <icon-compat icon="comment-dots"></icon-compat>
         <i18n i18n="@@blogposts">blogposts</i18n>
         <small>({{ items.blogposts.length }})</small>
       </ng-template>
@@ -39,8 +42,9 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.infopages.length">
-    <expand-compat #expand (changed)="$event && expanded(expand)">
+    <expand-compat #infopages (changed)="$event && expanded(infopages)">
       <ng-template #expandHeader>
+        <icon-compat icon="info-circle"></icon-compat>
         <i18n i18n="@@infopages">infopages</i18n>
         <small>({{ items.infopages.length }})</small>
       </ng-template>
@@ -52,8 +56,9 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.categories.length">
-    <expand-compat #expand (changed)="$event && expanded(expand)">
+    <expand-compat #categories (changed)="$event && expanded(categories)">
       <ng-template #expandHeader>
+        <icon-compat icon="dot-circle"></icon-compat>
         <i18n i18n="@@categories">categories</i18n>
         <small>({{ items.categories.length }})</small>
       </ng-template>
@@ -73,8 +78,9 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.suburbs.length">
-    <expand-compat #expand (changed)="$event && expanded(expand)">
+    <expand-compat #suburbs (changed)="$event && expanded(suburbs)">
       <ng-template #expandHeader>
+        <icon-compat icon="city"></icon-compat>
         <i18n i18n="@@suburbs">suburbs</i18n>
         <small>({{ items.suburbs.length }})</small>
       </ng-template>
@@ -93,8 +99,9 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.targetGroups.length">
-    <expand-compat #expand (changed)="$event && expanded(expand)">
+    <expand-compat #targetGroups (changed)="$event && expanded(targetGroups)">
       <ng-template #expandHeader>
+        <icon-compat icon="users"></icon-compat>
         <i18n i18n="@@targetGroups">targetGroups</i18n>
         <small>({{ items.targetGroups.length }})</small>
       </ng-template>

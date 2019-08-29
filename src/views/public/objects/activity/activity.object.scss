@@ -1,19 +1,21 @@
 @import '../../../../app.theme.scss';
 
 main {
-  & > aside {
-    & > mat-chip-list {
-      display: inline-block;
-      flex: 0 0 auto;
-      padding: 0 1rem;
-
-      & mat-chip {
-        background-color: transparent;
-        border: .25rem solid;
-        cursor: pointer;
-
-        &::after {
-          opacity: 0;
+  & > section {
+    & > aside {
+      & > [compat=expand] {
+        @include deep {
+          & > mat-expansion-panel {
+            & .mat-expansion-panel-body {
+              & > iframe {
+                border: 0;
+                border-radius: .25rem;
+                height: 20rem;
+                margin: 1rem;
+                width: 100%;
+              }
+            }
+          }
         }
       }
     }

@@ -1,9 +1,13 @@
 <main>
   <h2 class="mat-headline">
     {{ item.name }}
+    <small>
+      <i18n i18n="@@ofTopic">ofTopic</i18n>
+      {{ item.topic.name }}
+    </small>
   </h2>
   <mat-divider></mat-divider>
-  <aside>
+  <nav>
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
     <span [style.flexGrow]="1"></span>
@@ -13,7 +17,9 @@
         {{ item.created | date: 'dd.MM.yyyy' }}
       </time>
     </button>
-  </aside>
+  </nav>
   <mat-divider></mat-divider>
-  <ngx-md class="mat-title" [data]="item.content"></ngx-md>
+  <section>
+    <ngx-md class="mat-body" [data]="item.content"></ngx-md>
+  </section>
 </main>

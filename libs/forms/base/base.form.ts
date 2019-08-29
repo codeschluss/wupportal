@@ -27,8 +27,8 @@ export abstract class BaseForm<Model extends CrudModel>
 
   public abstract model: Type<Model>;
 
-  @HostBinding('class')
-  public readonly class: string = 'base-form';
+  @HostBinding('attr.base')
+  public readonly base: string = 'form';
 
   @Input()
   public group: FormGroup;

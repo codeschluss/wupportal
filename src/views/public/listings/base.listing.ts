@@ -16,8 +16,8 @@ export abstract class BaseListing<Model extends CrudModel>
 
   protected abstract size: number;
 
-  @HostBinding('class')
-  public readonly class: string = 'base-listing';
+  @HostBinding('attr.base')
+  public readonly base: string = 'listing';
 
   public items: BehaviorSubject<Model[]>;
 

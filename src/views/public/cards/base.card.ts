@@ -4,8 +4,8 @@ import { CrudModel } from '@wooportal/core';
 
 export abstract class BaseCard<Model extends CrudModel> {
 
-  @HostBinding('class')
-  public readonly class: string = 'base-card';
+  @HostBinding('attr.base')
+  public readonly base: string = 'card';
 
   @Input()
   public item: Model;

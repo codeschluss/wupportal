@@ -6,8 +6,8 @@ export abstract class BasePage extends Selfrouter {
 
   protected abstract path: string;
 
-  @HostBinding('class')
-  public readonly class: string = 'base-page';
+  @HostBinding('attr.base')
+  public readonly base: string = 'page';
 
   protected get routing(): Route {
     return {

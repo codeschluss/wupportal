@@ -23,8 +23,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
 
   protected abstract model: Type<Model>;
 
-  @HostBinding('class')
-  public readonly class: string = 'base-stepper';
+  @HostBinding('attr.base')
+  public readonly base: string = 'stepper';
 
   @Input()
   public item: Model;

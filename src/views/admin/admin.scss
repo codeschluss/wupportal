@@ -28,7 +28,7 @@ main#admin {
     margin: .25rem;
   }
 
-   & .base-form {
+   & [base=form] {
     & > form {
       & > section {
         @include flex(row, normal, center);
@@ -93,7 +93,7 @@ main#admin {
     }
   }
 
-  & .base-table {
+  & [base=table] {
     & > mat-form-field {
       width: 100%;
 

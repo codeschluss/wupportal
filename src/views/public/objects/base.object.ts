@@ -11,8 +11,8 @@ export abstract class BaseObject<Model extends CrudModel>
 
   protected abstract path: string;
 
-  @HostBinding('class')
-  public readonly class: string = 'base-object';
+  @HostBinding('attr.base')
+  public readonly base: string = 'object';
 
   public get item(): Model {
     return this.route.snapshot.data.item;

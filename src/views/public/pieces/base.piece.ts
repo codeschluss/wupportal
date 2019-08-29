@@ -3,8 +3,8 @@ import { CrudModel } from '@wooportal/core';
 
 export abstract class BasePiece {
 
-  @HostBinding('class')
-  public readonly class: string = 'base-piece';
+  @HostBinding('attr.base')
+  public readonly base: string = 'piece';
 
   @Input()
   public item: CrudModel & { likes: number };

@@ -55,19 +55,21 @@ main {
             scroll-snap-type: x mandatory;
           }
 
-          & > .base-card {
+          & > [base=card] {
             @include flex(row, center, center);
             @include position(relative);
             scroll-snap-align: start;
 
             @include media(gt-xs) {
-              & + .base-card {
+              & + [base=card] {
                 padding-left: 0;
               }
             }
 
             @include media(xs) {
-              & + .base-card::before {
+              width: 100%;
+
+              & + [base=card]::before {
                 @include position(absolute, auto, auto, auto, -.75rem);
                 background-color: $color-primary;
                 border-radius: 50%;

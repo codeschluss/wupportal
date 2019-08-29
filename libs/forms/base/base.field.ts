@@ -10,8 +10,8 @@ import { FormField } from './base.form';
 
 export class BaseFieldComponent implements OnInit {
 
-  @HostBinding('class')
-  public readonly class: string = 'base-field';
+  @HostBinding('attr.base')
+  public readonly base: string = 'field';
 
   @Input()
   public field: FormField;

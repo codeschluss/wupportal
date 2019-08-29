@@ -1,6 +1,6 @@
 <main>
   <ng-container *ngFor="let item of items | async">
-    <expand-compat>
+    <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
         {{ item.name }}
         <small>({{ item.pages.length }})</small>

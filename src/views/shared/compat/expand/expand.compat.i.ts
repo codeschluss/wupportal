@@ -1,7 +1,9 @@
-import { TemplateRef } from '@angular/core';
+import { EventEmitter, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface ExpandCompat {
+
+  changed: EventEmitter<boolean>;
 
   readonly compat: string;
 
@@ -11,14 +13,14 @@ export interface ExpandCompat {
 
   instance: any;
 
-  visible: Observable<boolean>;
+  expanded: Observable<boolean>;
 
-  expanded(state: boolean): void;
+  close(): void;
 
-  hide(): void;
-
-  show(): void;
+  open(): void;
 
   toggle(): void;
+
+  update(state: boolean): void;
 
 }

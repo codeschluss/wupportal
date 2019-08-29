@@ -1,6 +1,6 @@
 <main>
   <ng-container *ngIf="items.activities.length">
-    <expand-compat>
+    <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
         <i18n i18n="@@activities">activities</i18n>
         <small>({{ items.activities.length }})</small>
@@ -13,7 +13,7 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.organisations.length">
-    <expand-compat>
+    <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
         <i18n i18n="@@organisations">organisations</i18n>
         <small>({{ items.organisations.length }})</small>
@@ -26,7 +26,7 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.blogposts.length">
-    <expand-compat>
+    <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
         <i18n i18n="@@blogposts">blogposts</i18n>
         <small>({{ items.blogposts.length }})</small>
@@ -39,7 +39,7 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.infopages.length">
-    <expand-compat>
+    <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
         <i18n i18n="@@infopages">infopages</i18n>
         <small>({{ items.infopages.length }})</small>
@@ -52,7 +52,7 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.categories.length">
-    <expand-compat>
+    <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
         <i18n i18n="@@categories">categories</i18n>
         <small>({{ items.categories.length }})</small>
@@ -73,7 +73,7 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.suburbs.length">
-    <expand-compat>
+    <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
         <i18n i18n="@@suburbs">suburbs</i18n>
         <small>({{ items.suburbs.length }})</small>
@@ -93,7 +93,7 @@
     </expand-compat>
   </ng-container>
   <ng-container *ngIf="items.targetGroups.length">
-    <expand-compat>
+    <expand-compat #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
         <i18n i18n="@@targetGroups">targetGroups</i18n>
         <small>({{ items.targetGroups.length }})</small>

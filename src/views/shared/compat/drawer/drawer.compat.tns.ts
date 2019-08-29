@@ -1,4 +1,4 @@
-import { Component, ContentChild, HostBinding, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ContentChild, EventEmitter, HostBinding, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -26,7 +26,10 @@ if (!isKnownView('drawer-compat')) {
   `
 })
 
-export class DrawerCompatComponent implements DrawerCompat {
+export class DrawerCompatComponent implements DrawerCompat, OnInit {
+
+  @Output()
+  public changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @HostBinding('attr.compat')
   public readonly compat: string = 'drawer';
@@ -44,6 +47,10 @@ export class DrawerCompatComponent implements DrawerCompat {
 
   public get visible(): Observable<boolean> {
     return this.state.asObservable();
+  }
+
+  public ngOnInit(): void {
+    this.state.subscribe((state) => this.changed.emit(state));
   }
 
   public drawn(state: boolean): void {

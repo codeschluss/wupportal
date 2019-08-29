@@ -1,7 +1,9 @@
-import { TemplateRef } from '@angular/core';
+import { EventEmitter, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface DrawerCompat {
+
+  changed: EventEmitter<boolean>;
 
   readonly compat: string;
 

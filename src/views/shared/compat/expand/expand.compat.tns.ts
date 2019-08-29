@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, HostBinding, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ContentChild, ElementRef, EventEmitter, HostBinding, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ContentView } from 'tns-core-modules/ui/page';
@@ -13,7 +13,10 @@ if (!isKnownView('drawer-compat')) {
   template: ``
 })
 
-export class ExpandCompatComponent implements ExpandCompat {
+export class ExpandCompatComponent implements ExpandCompat, OnInit {
+
+  @Output()
+  public changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @HostBinding('attr.compat')
   public readonly compat: string = 'expand';
@@ -29,24 +32,28 @@ export class ExpandCompatComponent implements ExpandCompat {
 
   private state: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  public get visible(): Observable<boolean> {
+  public get expanded(): Observable<boolean> {
     return this.state.asObservable();
   }
 
-  public expanded(state: boolean): void {
-    this.state.next(state);
+  public ngOnInit(): void {
+    this.state.subscribe((state) => this.changed.emit(state));
   }
 
-  public hide(): void {
+  public close(): void {
     this.state.next(false);
   }
 
-  public show(): void {
+  public open(): void {
     this.state.next(true);
   }
 
   public toggle(): void {
     this.state.next(!this.state.value);
+  }
+
+  public update(state: boolean): void {
+    this.state.next(state);
   }
 
 }

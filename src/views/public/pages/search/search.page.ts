@@ -1,4 +1,4 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver } from '@wooportal/core';
 import { forkJoin, Observable, of } from 'rxjs';
@@ -10,6 +10,8 @@ import { OrganisationModel } from '../../../../realm/models/organisation.model';
 import { PageModel } from '../../../../realm/models/page.model';
 import { SuburbModel } from '../../../../realm/models/suburb.model';
 import { TargetGroupModel } from '../../../../realm/models/target-group.model';
+import { ExpandCompatComponent } from '../../../shared/compat/expand/expand.compat';
+import { ExpandCompat } from '../../../shared/compat/expand/expand.compat.i';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -39,6 +41,9 @@ export class SearchPageComponent extends BasePage implements OnInit {
 
   protected path: string = 'search/:filter';
 
+  @ViewChildren(ExpandCompatComponent)
+  private expands: QueryList<ExpandCompat>;
+
   public constructor(
     private crudResolver: CrudResolver,
     private route: ActivatedRoute
@@ -65,6 +70,10 @@ export class SearchPageComponent extends BasePage implements OnInit {
           map((items) => this.items.targetGroups = items))
       ]))
     ).subscribe();
+  }
+
+  public expanded(expand: ExpandCompat): void {
+    this.expands.filter((e) => e !== expand).forEach((e) => e.close());
   }
 
   private search(filter: string, model: Type<CrudModel>): Observable<any> {

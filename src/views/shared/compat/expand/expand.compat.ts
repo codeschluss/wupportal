@@ -1,4 +1,4 @@
-import { Component, ContentChild, HostBinding, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ContentChild, EventEmitter, HostBinding, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ExpandCompat } from './expand.compat.i';
@@ -7,8 +7,8 @@ import { ExpandCompat } from './expand.compat.i';
   selector: 'expand-compat',
   template: `
     <mat-expansion-panel
-      (closed)="expanded(false)"
-      (opened)="expanded(true)">
+      (closed)="update(false)"
+      (opened)="update(true)">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <ng-container *ngTemplateOutlet="header"></ng-container>
@@ -19,7 +19,10 @@ import { ExpandCompat } from './expand.compat.i';
   `
 })
 
-export class ExpandCompatComponent implements ExpandCompat {
+export class ExpandCompatComponent implements ExpandCompat, OnInit {
+
+  @Output()
+  public changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @HostBinding('attr.compat')
   public readonly compat: string = 'expand';
@@ -35,24 +38,28 @@ export class ExpandCompatComponent implements ExpandCompat {
 
   private state: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  public get visible(): Observable<boolean> {
+  public get expanded(): Observable<boolean> {
     return this.state.asObservable();
   }
 
-  public expanded(state: boolean): void {
-    this.state.next(state);
+  public ngOnInit(): void {
+    this.state.subscribe((state) => this.changed.emit(state));
   }
 
-  public hide(): void {
+  public close(): void {
     this.instance.close();
   }
 
-  public show(): void {
+  public open(): void {
     this.instance.open();
   }
 
   public toggle(): void {
     this.instance.toggle();
+  }
+
+  public update(state: boolean): void {
+    this.state.next(state);
   }
 
 }

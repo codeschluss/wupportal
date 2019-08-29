@@ -1,4 +1,3 @@
-
 export interface PagerCompat {
 
   readonly compat: string;

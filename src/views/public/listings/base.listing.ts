@@ -74,14 +74,6 @@ export abstract class BaseListing<Model extends CrudModel>
   private fetch(params?: ReadParams): void {
     const provider = this.model['provider'] as CrudProvider<BaseService, Model>;
 
-    // if (this.platformProvider.name === 'Web') {
-    //   const topoff = this.document.getElementsByClassName('topoff');
-    //   Array.from(topoff).forEach((element) => element.scrollTo({
-    //     behavior: 'smooth',
-    //     top: 0
-    //   }));
-    // }
-
     provider.readAll(Object.assign(params, {
       embeddings: CrudJoiner.to(this.joiner.graph),
       page: params.page || 0,

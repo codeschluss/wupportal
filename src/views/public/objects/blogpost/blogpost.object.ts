@@ -15,8 +15,8 @@ export class BlogpostObjectComponent extends BaseObject<BlogModel> {
     .with('activity').yield('category')
     .with('activity').yield('schedules');
 
-    protected model: Type<BlogModel> = BlogModel;
+  protected model: Type<BlogModel> = BlogModel;
 
-    protected path: string = 'blogposts';
+  protected path: string = 'blogposts';
 
 }

@@ -13,8 +13,8 @@ export class InfopageObjectComponent extends BaseObject<PageModel> {
   protected joiner: CrudJoiner = CrudJoiner.of(PageModel)
     .with('topic');
 
-    protected model: Type<PageModel> = PageModel;
+  protected model: Type<PageModel> = PageModel;
 
-    protected path: string = 'infopages';
+  protected path: string = 'infopages';
 
 }

@@ -15,8 +15,8 @@ export class OrganisationObjectComponent extends BaseObject<OrganisationModel> {
     .with('address').yield('suburb')
     .with('images');
 
-    protected model: Type<OrganisationModel> = OrganisationModel;
+  protected model: Type<OrganisationModel> = OrganisationModel;
 
-    protected path: string = 'organisations';
+  protected path: string = 'organisations';
 
 }

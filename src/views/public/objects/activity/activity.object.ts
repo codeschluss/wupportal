@@ -21,8 +21,8 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     .with('tags')
     .with('targetGroups');
 
-    protected model: Type<ActivityModel> = ActivityModel;
+  protected model: Type<ActivityModel> = ActivityModel;
 
-    protected path: string = 'activities';
+  protected path: string = 'activities';
 
 }

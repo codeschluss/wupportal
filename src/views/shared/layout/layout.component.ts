@@ -91,7 +91,7 @@ export class LayoutComponent implements OnInit {
       startWith(this.router.url)
     ).subscribe((url) => this.navigating(url));
 
-    if ('embed' in this.route.snapshot.queryParams) {
+    if (this.route.snapshot.queryParams.embed) {
       this.document.body.classList.add('embedded');
     }
 
@@ -150,6 +150,14 @@ export class LayoutComponent implements OnInit {
 
     if (title) {
       this.titleService.set(title);
+    }
+
+    if (this.platformProvider.name === 'Web') {
+      const topoff = this.document.getElementsByClassName('topoff');
+      Array.from(topoff).forEach((element) => element.scrollTo({
+        behavior: 'smooth',
+        top: 0
+      }));
     }
   }
 

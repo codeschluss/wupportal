@@ -3,22 +3,50 @@
 main {
   @include flex(column, flex-start, center);
 
-  & > mat-accordion {
-    display: block;
+  & > [compat=expand] {
     margin: 1rem auto;
-    max-width: $viewport-width;
+    // max-width: $viewport-width;
     width: calc(100% - 2rem);
 
-    & > mat-expansion-panel {
-      border: 1px solid transparent;
-      border-radius: .25rem;
-      transition: all $animation-duration;
+    @include deep {
+      & > mat-expansion-panel {
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        transition: all $animation-duration;
 
-      @include deep {
+        &.mat-expanded {
+          border-color: $color-primary;
+
+          & > mat-expansion-panel-header {
+            background-color: $color-primary;
+
+            & > .mat-expansion-indicator::after {
+              color: $color-light;
+            }
+
+            & mat-panel-title {
+              color: $color-light;
+            }
+          }
+        }
+
+        & > mat-expansion-panel-header {
+          border-radius: 0;
+          font-weight: bold;
+          text-transform: uppercase;
+          transition: all $animation-duration;
+
+          & mat-panel-title {
+            & > small {
+              font-weight: lighter;
+              line-height: 1rem;
+              padding-left: .5rem;
+            }
+          }
+        }
+
         & .mat-expansion-panel-body {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
+          @include flex(wrap);
           padding: 0;
 
           & > infopage-card {
@@ -27,35 +55,6 @@ main {
             }
           }
         }
-      }
-
-      &.mat-expanded {
-        border-color: $color-primary;
-
-        & > mat-expansion-panel-header {
-          background-color: $color-primary;
-
-          @include deep {
-            & > .mat-expansion-indicator::after {
-              color: $color-light;
-            }
-          }
-
-          & mat-panel-title {
-            color: $color-light;
-          }
-        }
-      }
-
-      & + mat-expansion-panel {
-        margin-top: 2rem;
-      }
-
-      & > mat-expansion-panel-header {
-        border-radius: 0;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: all $animation-duration;
       }
     }
   }

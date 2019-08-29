@@ -1,18 +1,17 @@
 <main>
-  <mat-accordion>
-    <ng-container *ngFor="let item of items | async">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ item.name }}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+  <ng-container *ngFor="let item of items | async">
+    <expand-compat>
+      <ng-template #expandHeader>
+        {{ item.name }}
+        <small>({{ item.pages.length }})</small>
+      </ng-template>
+      <ng-template #expandContent>
         <ng-container *ngFor="let page of item.pages">
           <infopage-card [item]="page"></infopage-card>
         </ng-container>
-      </mat-expansion-panel>
-    </ng-container>
-  </mat-accordion>
+      </ng-template>
+    </expand-compat>
+  </ng-container>
   <ng-container *ngIf="next || prev">
     <pager-compat [next]="next" [prev]="prev"></pager-compat>
   </ng-container>

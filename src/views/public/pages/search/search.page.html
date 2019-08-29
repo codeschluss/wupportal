@@ -1,65 +1,63 @@
 <main>
-  <mat-accordion>
-    <ng-container *ngIf="items.activities.length">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i18n i18n="@@activities">activities</i18n>
-            <small>({{ items.activities.length }})</small>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+  <ng-container *ngIf="items.activities.length">
+    <expand-compat>
+      <ng-template #expandHeader>
+        <i18n i18n="@@activities">activities</i18n>
+        <small>({{ items.activities.length }})</small>
+      </ng-template>
+      <ng-template #expandContent>
         <ng-container *ngFor="let item of items.activities">
           <activity-card [item]="item"></activity-card>
         </ng-container>
-      </mat-expansion-panel>
-    </ng-container>
-    <ng-container *ngIf="items.organisations.length">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i18n i18n="@@organisations">organisations</i18n>
-            <small>({{ items.organisations.length }})</small>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      </ng-template>
+    </expand-compat>
+  </ng-container>
+  <ng-container *ngIf="items.organisations.length">
+    <expand-compat>
+      <ng-template #expandHeader>
+        <i18n i18n="@@organisations">organisations</i18n>
+        <small>({{ items.organisations.length }})</small>
+      </ng-template>
+      <ng-template #expandContent>
         <ng-container *ngFor="let item of items.organisations">
           <organisation-card [item]="item"></organisation-card>
         </ng-container>
-      </mat-expansion-panel>
-    </ng-container>
-    <ng-container *ngIf="items.blogposts.length">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i18n i18n="@@blogposts">blogposts</i18n>
-            <small>({{ items.blogposts.length }})</small>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      </ng-template>
+    </expand-compat>
+  </ng-container>
+  <ng-container *ngIf="items.blogposts.length">
+    <expand-compat>
+      <ng-template #expandHeader>
+        <i18n i18n="@@blogposts">blogposts</i18n>
+        <small>({{ items.blogposts.length }})</small>
+      </ng-template>
+      <ng-template #expandContent>
         <ng-container *ngFor="let item of items.blogposts">
           <blogpost-card [item]="item"></blogpost-card>
         </ng-container>
-      </mat-expansion-panel>
-    </ng-container>
-    <ng-container *ngIf="items.infopages.length">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i18n i18n="@@infopages">infopages</i18n>
-            <small>({{ items.infopages.length }})</small>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      </ng-template>
+    </expand-compat>
+  </ng-container>
+  <ng-container *ngIf="items.infopages.length">
+    <expand-compat>
+      <ng-template #expandHeader>
+        <i18n i18n="@@infopages">infopages</i18n>
+        <small>({{ items.infopages.length }})</small>
+      </ng-template>
+      <ng-template #expandContent>
         <ng-container *ngFor="let item of items.infopages">
           <infopage-card [item]="item"></infopage-card>
         </ng-container>
-      </mat-expansion-panel>
-    </ng-container>
-    <ng-container *ngIf="items.categories.length">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i18n i18n="@@categories">categories</i18n>
-            <small>({{ items.categories.length }})</small>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      </ng-template>
+    </expand-compat>
+  </ng-container>
+  <ng-container *ngIf="items.categories.length">
+    <expand-compat>
+      <ng-template #expandHeader>
+        <i18n i18n="@@categories">categories</i18n>
+        <small>({{ items.categories.length }})</small>
+      </ng-template>
+      <ng-template #expandContent>
         <mat-chip-list multiple selectable>
           <ng-container *ngFor="let item of items.categories">
             <mat-chip
@@ -71,16 +69,16 @@
             </mat-chip>
           </ng-container>
         </mat-chip-list>
-      </mat-expansion-panel>
-    </ng-container>
-    <ng-container *ngIf="items.suburbs.length">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i18n i18n="@@suburbs">suburbs</i18n>
-            <small>({{ items.suburbs.length }})</small>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      </ng-template>
+    </expand-compat>
+  </ng-container>
+  <ng-container *ngIf="items.suburbs.length">
+    <expand-compat>
+      <ng-template #expandHeader>
+        <i18n i18n="@@suburbs">suburbs</i18n>
+        <small>({{ items.suburbs.length }})</small>
+      </ng-template>
+      <ng-template #expandContent>
         <section>
           <ng-container *ngFor="let item of items.suburbs">
             <button mat-stroked-button
@@ -91,16 +89,16 @@
             </button>
           </ng-container>
         </section>
-      </mat-expansion-panel>
-    </ng-container>
-    <ng-container *ngIf="items.targetGroups.length">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <i18n i18n="@@targetGroups">targetGroups</i18n>
-            <small>({{ items.targetGroups.length }})</small>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      </ng-template>
+    </expand-compat>
+  </ng-container>
+  <ng-container *ngIf="items.targetGroups.length">
+    <expand-compat>
+      <ng-template #expandHeader>
+        <i18n i18n="@@targetGroups">targetGroups</i18n>
+        <small>({{ items.targetGroups.length }})</small>
+      </ng-template>
+      <ng-template #expandContent>
         <section>
           <ng-container *ngFor="let item of items.targetGroups">
             <button mat-stroked-button
@@ -111,7 +109,7 @@
             </button>
           </ng-container>
         </section>
-      </mat-expansion-panel>
-    </ng-container>
-  </mat-accordion>
+      </ng-template>
+    </expand-compat>
+  </ng-container>
 </main>

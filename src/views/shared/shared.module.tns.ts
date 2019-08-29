@@ -4,6 +4,7 @@ import { NativeScriptCommonModule as PlatformCommonModule } from 'nativescript-a
 import { NgRippleModule } from 'nativescript-ng-ripple';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
+import { ExpandCompatComponent } from './compat/expand/expand.compat';
 import { IconCompatComponent } from './compat/icon/icon.compat';
 import { NavbarCompatComponent } from './compat/navbar/navbar.compat';
 import { PagerCompatComponent } from './compat/pager/pager.compat';
@@ -11,6 +12,7 @@ import { LayoutComponent } from './layout/layout.component';
 
 const compat: Type<any>[] = [
   DrawerCompatComponent,
+  ExpandCompatComponent,
   IconCompatComponent,
   NavbarCompatComponent,
   PagerCompatComponent

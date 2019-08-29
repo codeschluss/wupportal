@@ -1,54 +1,50 @@
 @import '../../../../app.theme.scss';
 
 main {
-  & > mat-accordion {
-    display: block;
+  @include flex(column, flex-start, center);
+
+  & > [compat=expand] {
     margin: 1rem auto;
-    max-width: calc(100% - 2rem);
+    // max-width: $viewport-width;
+    width: calc(100% - 2rem);
 
-    & > mat-expansion-panel {
-      border: 1px solid transparent;
-      border-radius: .25rem;
-      transition: all $animation-duration;
+    @include deep {
+      & > mat-expansion-panel {
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        transition: all $animation-duration;
 
-      &.mat-expanded {
-        border-color: $color-primary;
+        &.mat-expanded {
+          border-color: $color-primary;
 
-        & > mat-expansion-panel-header {
-          background-color: $color-primary;
+          & > mat-expansion-panel-header {
+            background-color: $color-primary;
 
-          @include deep {
-            & .mat-expansion-indicator::after {
+            & > .mat-expansion-indicator::after {
+              color: $color-light;
+            }
+
+            & mat-panel-title {
               color: $color-light;
             }
           }
+        }
+
+        & > mat-expansion-panel-header {
+          border-radius: 0;
+          font-weight: bold;
+          text-transform: uppercase;
+          transition: all $animation-duration;
 
           & mat-panel-title {
-            color: $color-light;
+            & > small {
+              font-weight: lighter;
+              line-height: 1rem;
+              padding-left: .5rem;
+            }
           }
         }
-      }
 
-      & + mat-expansion-panel {
-        margin-top: 2rem;
-      }
-
-      & > mat-expansion-panel-header {
-        border-radius: 0;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: all $animation-duration;
-
-        & mat-panel-title {
-          & > small {
-            font-weight: lighter;
-            line-height: 1rem;
-            padding-left: .5rem;
-          }
-        }
-      }
-
-      @include deep {
         & .mat-expansion-panel-body {
           @include flex(row);
           overflow-x: auto;
@@ -84,10 +80,8 @@ main {
           }
 
           & > mat-chip-list {
-            @include deep {
-              & .mat-chip-list-wrapper {
-                flex-wrap: nowrap;
-              }
+            & .mat-chip-list-wrapper {
+              flex-wrap: nowrap;
             }
 
             & mat-chip {

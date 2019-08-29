@@ -43,6 +43,13 @@ main {
           scroll-snap-type: x mandatory;
         }
 
+        &::after {
+          background-color: $color-primary;
+          content: '';
+          height: .25rem;
+          width: 100%;
+        }
+
         & > activity-card {
           @include flex(row, center, center);
           @include position(relative);
@@ -59,17 +66,13 @@ main {
             min-width: 100%;
 
             & + activity-card::before {
-              @include position(absolute, auto, auto, auto, -1rem);
-              color: $color-primary;
-              content: '\2022';
-              font-size: 5rem;
-              text-align: center;
-              text-shadow:
-                -.125rem -.125rem 0 $color-bg-drawer,
-                .125rem -.125rem 0 $color-bg-drawer,
-                -.125rem .125rem 0 $color-bg-drawer,
-                .125rem .125rem 0 $color-bg-drawer;
-              width: 2rem;
+              @include position(absolute, auto, auto, auto, -.75rem);
+              background-color: $color-primary;
+              border-radius: 50%;
+              box-sizing: border-box;
+              content: '';
+              height: 1.5rem;
+              width: 1.5rem;
             }
           }
         }
@@ -91,6 +94,10 @@ main {
       flex: 1 1 auto;
       text-align: justify;
       width: 100%;
+
+      @include media(gt-sm) {
+        padding-right: 1rem;
+      }
 
       & > h2 {
         font-weight: bold;
@@ -133,12 +140,6 @@ main {
           }
         }
       }
-    }
-
-    & > span {
-      flex: 0 0 auto;
-      height: 0;
-      width: 1rem;
     }
   }
 

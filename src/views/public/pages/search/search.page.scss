@@ -55,9 +55,31 @@ main {
           overflow-y: hidden;
           padding: 0;
 
+          @include media(xs) {
+            scroll-snap-type: x mandatory;
+          }
+
           & > .base-card {
-            & + .base-card {
-              padding-left: 0;
+            @include flex(row, center, center);
+            @include position(relative);
+            scroll-snap-align: start;
+
+            @include media(gt-xs) {
+              & + .base-card {
+                padding-left: 0;
+              }
+            }
+
+            @include media(xs) {
+              & + .base-card::before {
+                @include position(absolute, auto, auto, auto, -.75rem);
+                background-color: $color-primary;
+                border-radius: 50%;
+                box-sizing: border-box;
+                content: '';
+                height: 1.5rem;
+                width: 1.5rem;
+              }
             }
           }
 

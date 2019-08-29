@@ -53,17 +53,13 @@ main {
           min-width: 100%;
 
           & + activity-card::before {
-            @include position(absolute, auto, auto, auto, -1rem);
-            color: $color-primary;
-            content: '\2022';
-            font-size: 5rem;
-            text-align: center;
-            text-shadow:
-              -.125rem -.125rem 0 $color-bg-drawer,
-              .125rem -.125rem 0 $color-bg-drawer,
-              -.125rem .125rem 0 $color-bg-drawer,
-              .125rem .125rem 0 $color-bg-drawer;
-            width: 2rem;
+            @include position(absolute, auto, auto, auto, -.75rem);
+            background-color: $color-primary;
+            border-radius: 50%;
+            box-sizing: border-box;
+            content: '';
+            height: 1.5rem;
+            width: 1.5rem;
           }
         }
       }

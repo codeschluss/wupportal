@@ -4,15 +4,15 @@ import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewCh
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route, Router, RouterEvent } from '@angular/router';
-import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
+import { Arr, CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
 import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
-import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
-import { catchError, mergeMap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, forkJoin, Observable, of, Subscription } from 'rxjs';
+import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { ActivityModel } from '../../realm/models/activity.model';
 import { ConfigurationModel } from '../../realm/models/configuration.model';
 import { ActivityProvider } from '../../realm/providers/activity.provider';
@@ -59,7 +59,7 @@ export class MapsComponent
 
   private connection: MapsConnection;
 
-  private depends: CrudJoiner = CrudJoiner.of(ActivityModel)
+  private joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
     .with('address').yield('suburb')
     .with('category')
     .with('schedules');
@@ -147,12 +147,19 @@ export class MapsComponent
       this.loadingProvider.finished(this.block);
     });
 
+    const ids = this.route.snapshot.queryParams.items;
     const source = this.document.defaultView;
+
     if (source !== source.parent) {
       this.connection = new MapsConnection(source, source.parent);
       this.connection.focus.subscribe((focus) => this.focus.next(focus));
       this.connection.items.subscribe((items) => this.items.next(items));
       this.connection.nextReady(true);
+    } else if (ids) {
+      this.filter(Arr(ids)).subscribe((items) => {
+        this.focus.next(items);
+        this.items.next(items);
+      });
     } else {
       this.fetch().subscribe((items) => this.items.next(items));
     }
@@ -209,11 +216,11 @@ export class MapsComponent
 
   private fetch(params?: ReadParams): Observable<ActivityModel[]> {
     params = Object.assign({
-      embeddings: CrudJoiner.to(this.depends.graph)
+      embeddings: CrudJoiner.to(this.joiner.graph)
     }, params);
 
     return this.activityProvider.readAll(params).pipe(
-      mergeMap((items) => this.crudResolver.refine(items, this.depends.graph)),
+      mergeMap((items) => this.crudResolver.refine(items, this.joiner.graph)),
       catchError(() => of([]))
     ) as Observable<ActivityModel[]>;
   }
@@ -250,6 +257,24 @@ export class MapsComponent
     } catch {
       this.fill.disabled = true;
     }
+  }
+
+  private filter(ids: string[]): Observable<ActivityModel[]> {
+    return forkJoin(ids.map((id) => this.activityProvider.readOne(id).pipe(
+      mergeMap((item) => this.crudResolver.refine(item, this.joiner.graph))
+    ))).pipe(tap((items: ActivityModel[]) => {
+      const latitude = items.reduce((num, i) => num += i.address.latitude, 0);
+      const longitude = items.reduce((num, i) => num += i.address.longitude, 0);
+
+      this.view.instance.animate({
+        center: fromLonLat([
+          longitude / items.length,
+          latitude / items.length
+        ]),
+        rotation: 0,
+        zoom: this.mapconf.zoomfactor
+      });
+    })) as Observable<ActivityModel[]>;
   }
 
   private following(enable: boolean): void {

@@ -99,6 +99,46 @@ main {
                 scroll-snap-type: x mandatory;
               }
 
+              & > table {
+                margin: 0 auto;
+                padding: .5rem;
+
+                & > tr {
+                  & > td {
+                    padding: .5rem;
+
+                    &:first-child {
+                      font-weight: bold;
+                      text-align: right;
+
+                      & > [compat=i18n] {
+                        &::after {
+                          content: ':';
+                        }
+                      }
+                    }
+
+                    & > mat-chip-list {
+                      & mat-chip {
+                        background-color: transparent;
+                        border: .25rem solid;
+                        cursor: pointer;
+
+                        &::after {
+                          opacity: 0;
+                        }
+                      }
+                    }
+
+                    & > .mat-button-base {
+                      & [compat=icon] {
+                        padding-right: .5rem;
+                      }
+                    }
+                  }
+                }
+              }
+
               & > [base=card] {
                 @include flex(row, center, center);
                 @include position(relative);

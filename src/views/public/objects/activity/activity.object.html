@@ -30,6 +30,113 @@
   <section>
     <ngx-md class="mat-body" [data]="item.description"></ngx-md>
     <aside>
+      <expand-compat #details (changed)="$event && expanded(details)">
+        <ng-template #expandHeader>
+          <icon-compat icon="map-marker-alt"></icon-compat>
+          <i18n i18n="@@details">details</i18n>
+        </ng-template>
+        <ng-template #expandContent>
+          <table>
+            <tr>
+              <td [style.verticalAlign]="'top'">
+                <i18n i18n="@@address">address</i18n>
+              </td>
+              <td>
+                  {{ item.address.street }} {{ item.address.houseNumber }}
+                  <br>{{ item.address.place }} {{ item.address.suburb.name }}
+              </td>
+            </tr>
+            <ng-container *ngIf="item.phone">
+              <tr>
+                <td><i18n i18n="@@phone">phone</i18n></td>
+                <td>
+                  <a mat-button target="_blank" [href]="'tel:' + item.phone">
+                    <icon-compat icon="phone"></icon-compat>
+                    {{ item.phone }}
+                  </a>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="item.mail">
+              <tr>
+                <td><i18n i18n="@@email">email</i18n></td>
+                <td>
+                  <a mat-button target="_blank" [href]="'mailto:' + item.mail">
+                    <icon-compat icon="envelope"></icon-compat>
+                    {{ item.mail }}
+                  </a>
+                </td>
+              </tr>
+            </ng-container>
+            <tr>
+              <td><i18n i18n="@@category">category</i18n></td>
+              <td>
+                <mat-chip-list>
+                  <mat-chip
+                    class="mat-body"
+                    [queryParams]="{ categories: item.category.id }"
+                    [routerLink]="['/', 'activities']"
+                    [style.borderColor]="item.category.color">
+                    {{ item.category.name }}
+                  </mat-chip>
+                </mat-chip-list>
+              </td>
+            </tr>
+            <tr>
+              <td><i18n i18n="@@suburb">suburb</i18n></td>
+              <td>
+                <a mat-stroked-button
+                  [queryParams]="{ suburbs: item.address.suburb.id }"
+                  [routerLink]="['/', 'activities']">
+                  <icon-compat icon="city"></icon-compat>
+                  {{ item.address.suburb.name }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td><i18n i18n="@@targetGroups">targetGroups</i18n></td>
+              <td>
+                <ng-container *ngFor="let targetGroup of item.targetGroups">
+                  <a mat-stroked-button
+                    [queryParams]="{ targetgroups: targetGroup.id }"
+                    [routerLink]="['/', 'activities']">
+                    <icon-compat icon="users"></icon-compat>
+                    {{ targetGroup.name }}
+                  </a>
+                </ng-container>
+              </td>
+            </tr>
+          </table>
+        </ng-template>
+      </expand-compat>
+      <expand-compat #schedules (changed)="$event && expanded(schedules)">
+        <ng-template #expandHeader>
+          <icon-compat icon="history"></icon-compat>
+          <i18n i18n="@@schedules">schedules</i18n>
+          <small>({{ item.schedules.length }})</small>
+        </ng-template>
+        <ng-template #expandContent>
+          <section>
+            <mat-calendar
+              [dateFilter]="dateFilter"
+              [startAt]="startDate"
+              (click)="click($event)"
+              (selectedChange)="selected($event)">
+            </mat-calendar>
+            <mat-divider></mat-divider>
+            <aside>
+              <ng-container *ngIf="selection">
+                <i18n i18n="@@selectedSchedule">selectedSchedule</i18n>
+                <time>{{ selection.datetime }}</time>
+              </ng-container>
+              <ng-container *ngIf="!selection">
+                <i18n i18n="@@nextSchedule">nextSchedule</i18n>
+                <time>{{ item.schedules[0].datetime }}</time>
+              </ng-container>
+            </aside>
+          </section>
+        </ng-template>
+      </expand-compat>
       <expand-compat #mapview (changed)="$event && expanded(mapview)">
         <ng-template #expandHeader>
           <icon-compat icon="globe"></icon-compat>

@@ -84,6 +84,16 @@ main {
       @include flex(wrap, center, flex-start);
       flex: 1 0 auto;
       width: 66%;
+
+      @include deep {
+        & mat-card {
+          & > .mat-ripple-element {
+            @include media(lt-lg) {
+              display: none;
+            }
+          }
+        }
+      }
     }
   }
 }

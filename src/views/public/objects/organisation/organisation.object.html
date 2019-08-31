@@ -26,20 +26,69 @@
   <section>
     <ngx-md class="mat-body" [data]="item.description"></ngx-md>
     <aside>
-      <ng-container *ngIf="item.activities">
-        <expand-compat #activities (changed)="$event && expanded(activities)">
-          <ng-template #expandHeader>
-            <icon-compat icon="map-marker-alt"></icon-compat>
-            <i18n i18n="@@activities">activities</i18n>
-            <small>({{ item.activities.length }})</small>
-          </ng-template>
-          <ng-template #expandContent>
-            <ng-container *ngFor="let activity of item.activities">
-              <activity-card [item]="activity"></activity-card>
+      <expand-compat #details (changed)="$event && expanded(details)">
+        <ng-template #expandHeader>
+          <icon-compat icon="at"></icon-compat>
+          <i18n i18n="@@details">details</i18n>
+        </ng-template>
+        <ng-template #expandContent>
+          <table>
+            <tr>
+              <td [style.verticalAlign]="'top'">
+                <i18n i18n="@@address">address</i18n>
+              </td>
+              <td>
+                  {{ item.address.street }} {{ item.address.houseNumber }}
+                  <br>{{ item.address.place }} {{ item.address.suburb.name }}
+              </td>
+            </tr>
+            <ng-container *ngIf="item.website">
+              <tr>
+                <td><i18n i18n="@@website">website</i18n></td>
+                <td>
+                  <a mat-button target="_blank" [href]="item.website">
+                    <icon-compat icon="link"></icon-compat>
+                    {{ item.website }}
+                  </a>
+                </td>
+              </tr>
             </ng-container>
-          </ng-template>
-        </expand-compat>
-      </ng-container>
+            <ng-container *ngIf="item.phone">
+              <tr>
+                <td><i18n i18n="@@phone">phone</i18n></td>
+                <td>
+                  <a mat-button target="_blank" [href]="'tel:' + item.phone">
+                    <icon-compat icon="phone"></icon-compat>
+                    {{ item.phone }}
+                  </a>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="item.mail">
+              <tr>
+                <td><i18n i18n="@@email">email</i18n></td>
+                <td>
+                  <a mat-button target="_blank" [href]="'mailto:' + item.mail">
+                    <icon-compat icon="envelope"></icon-compat>
+                    {{ item.mail }}
+                  </a>
+                </td>
+              </tr>
+            </ng-container>
+            <tr>
+              <td><i18n i18n="@@suburb">suburb</i18n></td>
+              <td>
+                <a mat-stroked-button
+                  [queryParams]="{ suburbs: item.address.suburb.id }"
+                  [routerLink]="['/', 'activities']">
+                  <icon-compat icon="city"></icon-compat>
+                  {{ item.address.suburb.name }}
+                </a>
+              </td>
+            </tr>
+          </table>
+        </ng-template>
+      </expand-compat>
       <ng-container *ngIf="item.images">
         <expand-compat #images (changed)="$event && expanded(images)">
           <ng-template #expandHeader>
@@ -56,6 +105,20 @@
                   [title]="image.caption">
                 </content>
               </figure>
+            </ng-container>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
+      <ng-container *ngIf="item.activities">
+        <expand-compat #activities (changed)="$event && expanded(activities)">
+          <ng-template #expandHeader>
+            <icon-compat icon="map-marker-alt"></icon-compat>
+            <i18n i18n="@@activities">activities</i18n>
+            <small>({{ item.activities.length }})</small>
+          </ng-template>
+          <ng-template #expandContent>
+            <ng-container *ngFor="let activity of item.activities">
+              <activity-card [item]="activity"></activity-card>
             </ng-container>
           </ng-template>
         </expand-compat>

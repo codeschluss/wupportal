@@ -1,6 +1,6 @@
 import { AfterViewInit, HostBinding, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, Selfrouter, Title } from '@wooportal/core';
+import { CrudJoiner, CrudModel, CrudResolver, PlatformProvider, Selfrouter, Title } from '@wooportal/core';
 import { ExpandCompatComponent } from '../../shared/compat/expand/expand.compat';
 import { ExpandCompat } from '../../shared/compat/expand/expand.compat.i';
 
@@ -38,6 +38,7 @@ export abstract class BaseObject<Model extends CrudModel>
   private expands: QueryList<ExpandCompat>;
 
   public constructor(
+    private platformProvider: PlatformProvider,
     private route: ActivatedRoute,
     private titleService: Title
   ) {
@@ -50,7 +51,7 @@ export abstract class BaseObject<Model extends CrudModel>
   }
 
   public ngAfterViewInit(): void {
-    if (this.expands.first) {
+    if (this.expands.length && this.platformProvider.name !== 'Server') {
       this.expands.first.open();
     }
   }

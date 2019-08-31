@@ -10,7 +10,7 @@
   <pre><strong>Stacktrace:</strong><br>{{ data.trace }}</pre>
 </section>
 <section mat-dialog-actions>
-  <a mat-button href="{{ package.bugs.url }}" target="_blank">
+  <a mat-button target="_blank" [href]="package.bugs.url">
     <i18n i18n="@@reportIssue">reportIssue</i18n>
   </a>
   <button mat-button mat-dialog-close>

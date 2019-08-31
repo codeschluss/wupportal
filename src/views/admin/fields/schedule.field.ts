@@ -12,7 +12,7 @@ import { ScheduleModel } from '../../../realm/models/schedule.model';
       <input readonly [id]="field.name" [matChipInputFor]="chipList">
       <ng-container ngProjectAs="mat-chip" *ngFor="let item of sorted">
         <mat-chip [selectable]="false" (removed)="delete(item)">
-          <strong>{{ date(item) }}</strong>&nbsp;{{ time(item) }}
+          <time>{{ item.datetime }}</time>
           <span matChipRemove>&#x274c;</span>
         </mat-chip>
       </ng-container>
@@ -26,27 +26,8 @@ export class ScheduleFieldComponent extends BaseFieldComponent {
     return this.value.sort((a, b) => moment(a.startDate).diff(b.startDate));
   }
 
-  public date(item: ScheduleModel): string {
-    const from = moment.utc(item.startDate);
-    const goto = moment.utc(item.endDate);
-    const until = goto.format('DD.MM.YYYY');
-
-    return until === from.format('DD.MM.YYYY') ? until
-      : until.endsWith(from.format('.MM.YYYY'))
-        ? `${from.format('DD.')} - ${until}`
-      : until.endsWith(from.format('.YYYY'))
-        ? `${from.format('DD.MM.')} - ${until}`
-      : `${from.format('DD.MM.YYYY')} - ${until}`;
-  }
-
   public delete(item: ScheduleModel): void {
     this.value = this.value.filter((value) => value !== item);
-  }
-
-  public time(item: ScheduleModel): string {
-    const from = moment.utc(item.startDate);
-    const goto = moment.utc(item.endDate);
-    return `${from.format('HH:mm')} - ${goto.format('HH:mm')}`;
   }
 
   protected ngPostInit(): void {

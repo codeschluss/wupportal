@@ -47,6 +47,8 @@ export interface ResourceObject {
 
 export type Response = Observable<StrictHttpResponse<any>>;
 
+export type ResponseMethod = (...args: any) => Response;
+
 export type StrictHttpResponse<T> = HttpResponse<T> & {
   readonly body: T;
 };

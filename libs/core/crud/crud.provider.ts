@@ -1,12 +1,12 @@
 import { Type } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { BaseService, ReadParams, Response, StrictHttpResponse } from '../utils/api';
+import { BaseService, ReadParams, Response, ResponseMethod, StrictHttpResponse } from '../utils/api';
 import { CrudModel } from './crud.model';
 
 export interface CrudLink {
   field: string;
-  method: (...args: any) => Response;
+  method: ResponseMethod;
   model: Type<CrudModel>;
 }
 
@@ -71,7 +71,7 @@ export abstract class CrudProvider
       tap((response) => this.link(response)));
   }
 
-  protected apply(method: (...args: any) => Response): typeof method {
+  protected apply(method: ResponseMethod): ResponseMethod {
     return (...args: any) => method.call(this.service, ...args);
   }
 
@@ -82,7 +82,7 @@ export abstract class CrudProvider
     });
   }
 
-  protected call(method: (...args: any) => Response, ...args: any[]): Response {
+  protected call(method: ResponseMethod, ...args: any[]): Response {
     return method.call(this.service, ...args);
   }
 

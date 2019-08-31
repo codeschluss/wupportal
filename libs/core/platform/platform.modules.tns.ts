@@ -1,5 +1,2 @@
-import { NativeScriptCommonModule } from 'nativescript-angular/common';
-import { NativeScriptRouterModule } from 'nativescript-angular/router';
-
-export { NativeScriptCommonModule as PlatformCommonModule };
-export { NativeScriptRouterModule as PlatformRouterModule };
+export { NativeScriptCommonModule as PlatformCommonModule } from 'nativescript-angular/common';
+export { NativeScriptRouterModule as PlatformRouterModule } from 'nativescript-angular/router';

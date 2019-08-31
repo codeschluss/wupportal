@@ -103,13 +103,13 @@
     "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.803.1",
-    "@angular-devkit/build-ng-packagr": "0.803.1",
-    "@angular/cli": "8.3.1",
+    "@angular-devkit/build-angular": "0.803.2",
+    "@angular-devkit/build-ng-packagr": "0.803.2",
+    "@angular/cli": "8.3.2",
     "@angular/compiler-cli": "8.2.4",
     "@angular/language-service": "8.2.4",
     "@nativescript/schematics": "0.7.1",
-    "@types/node": "12.7.2",
+    "@types/node": "12.7.3",
     "classlist.js": "1.1.20150312",
     "codelyzer": "5.1.0",
     "core-js": "3.2.1",

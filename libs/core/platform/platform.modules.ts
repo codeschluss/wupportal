@@ -1,5 +1,2 @@
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
-export { CommonModule as PlatformCommonModule };
-export { RouterModule as PlatformRouterModule };
+export { CommonModule as PlatformCommonModule } from '@angular/common';
+export { RouterModule as PlatformRouterModule } from '@angular/router';

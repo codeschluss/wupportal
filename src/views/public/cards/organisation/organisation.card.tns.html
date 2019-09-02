@@ -26,16 +26,7 @@
       <icon-compat icon="at"></icon-compat>
       <i18n i18n="@@details" unit="details"></i18n>
     </stack-layout>
-    <stack-layout ripple
-      [isEnabled]="!liked"
-      [isUserInteractionEnabled]="!liked"
-      (tap)="like()">
-      <icon-compat icon="heart"></icon-compat>
-      <i18n i18n="@@like" unit="like"></i18n>
-    </stack-layout>
-    <stack-layout ripple (tap)="share()">
-      <icon-compat icon="share-alt"></icon-compat>
-      <i18n i18n="@@share" unit="share"></i18n>
-    </stack-layout>
+    <share-piece [item]="item"></share-piece>
+    <like-piece [item]="item"></like-piece>
   </stack-layout>
 </stack-layout>

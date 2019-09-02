@@ -1,10 +1,9 @@
 @import '../../../app.theme.scss';
 
-// [base=card]
 .base-card {
   margin: 15;
 
-  android-elevation: 2;
+  android-elevation: 1;
   border-radius: 5;
   color: $color-dark;
 

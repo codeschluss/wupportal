@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { publish, refCount } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { multicast, refCount } from 'rxjs/operators';
 import { android, ios } from 'tns-core-modules/application';
 import { connectionType, getConnectionType, startMonitoring, stopMonitoring } from 'tns-core-modules/connectivity';
 import { device } from 'tns-core-modules/platform';
@@ -11,14 +11,14 @@ import { PlatformProvider as Compat } from './platform.provider.i';
 export class PlatformProvider implements Compat {
 
   public get connected(): boolean {
-    return this.connectionTypeMap(getConnectionType());
+    return this.online(getConnectionType());
   }
 
   public get connection(): Observable<boolean> {
-    return new Observable((watch) => {
-      startMonitoring((change) => watch.next(this.connectionTypeMap(change)));
+    return new Observable((observer) => {
+      startMonitoring((change) => observer.next(this.online(change)));
       return () => stopMonitoring();
-    }).pipe(publish(), refCount());
+    }).pipe(multicast(() => new ReplaySubject<boolean>(1)), refCount());
   }
 
   public get engine(): any {
@@ -44,7 +44,7 @@ export class PlatformProvider implements Compat {
     private coreSettings: CoreSettings
   ) { }
 
-  private connectionTypeMap(type: connectionType): boolean {
+  private online(type: connectionType): boolean {
     switch (type) {
       case connectionType.ethernet:
       case connectionType.mobile:

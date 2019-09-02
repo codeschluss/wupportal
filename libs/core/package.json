@@ -29,7 +29,7 @@
     "@angular/material": "8.1.4",
     "@angular/platform-browser": "8.2.4",
     "@angular/router": "8.2.4",
-    "@ngx-pwa/local-storage": "8.2.1",
+    "@ngx-pwa/local-storage": "8.2.2",
     "@ngx-translate/i18n-polyfill": "1.0.0",
     "ng-packagr": "5.5.0",
     "rxjs": "6.5.2",

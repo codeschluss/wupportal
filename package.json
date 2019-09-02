@@ -42,7 +42,7 @@
   "nativescript": {
     "id": "de.codeschluss.wooportal.client",
     "tns-android": {
-      "version": "6.0.1"
+      "version": "6.0.2"
     }
   },
   "main": "native.js",
@@ -87,15 +87,15 @@
     "@nguniversal/common": "8.1.1",
     "@nguniversal/express-engine": "8.1.1",
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
-    "@ngx-pwa/local-storage": "8.2.1",
+    "@ngx-pwa/local-storage": "8.2.2",
     "@ngx-translate/i18n-polyfill": "1.0.0",
     "@wooportal/core": "file:libs/core",
     "@wooportal/forms": "file:libs/forms",
     "color-convert": "1.9.3",
     "express": "4.17.1",
     "moment": "2.24.0",
-    "nativescript-ui-sidedrawer": "7.0.0",
-    "ngx-md": "8.0.0",
+    "nativescript-ui-sidedrawer": "7.0.1",
+    "ngx-markdown": "8.1.0",
     "ngx-openlayers": "1.0.0-next.11",
     "ol": "5.3.3",
     "rxjs": "6.5.2",

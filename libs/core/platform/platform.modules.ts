@@ -1,5 +1,5 @@
-const fromBase64 = void 0;
+const mock = void 0;
 
 export { CommonModule as PlatformCommonModule } from '@angular/common';
 export { RouterModule as PlatformRouterModule } from '@angular/router';
-export { fromBase64 };
+export { mock as fromBase64 };

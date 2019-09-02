@@ -1,4 +1,4 @@
-import { CrudModel } from '@wooportal/core';
+import { CrudModel, fromBase64 } from '@wooportal/core';
 
 export class ImageModel
   extends CrudModel {
@@ -9,6 +9,10 @@ export class ImageModel
 
   public get source(): string {
     return `url(data:${this.mimeType};base64,${this.imageData})`;
+  }
+
+  public get nativeSource(): any {
+    return fromBase64(this.imageData);
   }
 
 }

@@ -1,4 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { PlatformProvider } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
@@ -36,10 +37,10 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
   public get source(): string {
     const color = this.webview.nativeElement.style.color;
 
-    return icon({
-      iconName: this.icon as any,
-      prefix: this.pack as any
-    }, {
+    return icon(this.iconLibrary.getIconDefinition(
+      this.pack as any,
+      this.icon as any
+    ), {
       styles: {
         color: color ? ColorConvert.rgb.hex(color.r, color.g, color.b) : '#000',
         'fill-opacity': color ? (color.a / 255).toString() : '100%',
@@ -49,6 +50,7 @@ export class IconCompatComponent implements IconCompat, AfterViewInit {
 
   public constructor(
     private changeDetection: ChangeDetectorRef,
+    private iconLibrary: FaIconLibrary,
     private platformProvider: PlatformProvider
   ) { }
 

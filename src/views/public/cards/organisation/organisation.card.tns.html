@@ -11,7 +11,7 @@
   </stack-layout>
   <grid-layout class="card-image">
     <ng-container *ngIf="item.images?.length">
-      <!-- <image [src]="item.images[0].source"></image> -->
+      <image [src]="item.images[0].nativeSource"></image>
     </ng-container>
     <ng-container *ngIf="!item.images?.length">
       <icon-compat icon="image"></icon-compat>

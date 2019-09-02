@@ -24,7 +24,7 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <ngx-md class="mat-body" [data]="item.description"></ngx-md>
+    <markdown class="mat-body" [data]="item.description"></markdown>
     <aside>
       <expand-compat #details (changed)="$event && expanded(details)">
         <ng-template #expandHeader>

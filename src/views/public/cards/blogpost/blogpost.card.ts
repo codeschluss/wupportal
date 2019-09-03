@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
-import { MarkdownService } from 'ngx-markdown';
+import * as marked from 'marked';
 import { BlogModel } from '../../../../realm/models/blog.model';
 import { BaseCard } from '../base.card';
 
@@ -15,8 +15,7 @@ import { BaseCard } from '../base.card';
 export class BlogpostCardComponent extends BaseCard<BlogModel> {
 
   public get preview(): string {
-    const content = this.markdownService
-      .compile(this.item.content).replace(/<[^>]*>/g, '');
+    const content = marked(this.item.content).replace(/<[^>]*>/g, '');
     let preview = '';
 
     switch (this.platformProvider.type) {
@@ -38,7 +37,6 @@ export class BlogpostCardComponent extends BaseCard<BlogModel> {
 
   public constructor(
     @Inject(DOCUMENT) private document: Document,
-    private markdownService: MarkdownService,
     private platformProvider: PlatformProvider,
     router: Router,
   ) {

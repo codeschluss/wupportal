@@ -13,7 +13,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { MarkdownModule } from 'ngx-markdown';
 
 export const materials: Type<any>[] = [
   FormsModule,
@@ -31,6 +30,5 @@ export const materials: Type<any>[] = [
   MatNativeDateModule,
   MatSelectModule,
   MatRippleModule,
-  MarkdownModule,
   ReactiveFormsModule
 ];

@@ -1,6 +1,5 @@
 import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
 import { CoreModule, PlatformCommonModule } from '@wooportal/core';
-import { MarkdownService, MarkedOptions } from 'ngx-markdown';
 import { SharedModule } from '../shared/shared.module';
 import { ActivityCardComponent } from './cards/activity/activity.card';
 import { BlogpostCardComponent } from './cards/blogpost/blogpost.card';
@@ -86,21 +85,6 @@ const pieces: Type<any>[] = [
     PublicRouter,
     PlatformCommonModule,
     SharedModule
-  ],
-  providers: [
-    MarkdownService,
-    {
-      provide: MarkedOptions,
-      useValue: {
-        breaks: false,
-        gfm: true,
-        pedantic: false,
-        tables: true,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false,
-      }
-    }
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

@@ -4,6 +4,10 @@ export interface PagerCompat {
 
   next: boolean;
 
+  nextLink: object;
+
   prev: boolean;
+
+  prevLink: object;
 
 }

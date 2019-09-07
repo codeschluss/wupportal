@@ -7,7 +7,7 @@ export class PositionService {
 
   public navigatorPositionResponse(): Observable<Position> {
     if (navigator.geolocation.watchPosition) {
-      return new Observable((observer) => {
+      return new Observable<Position>((observer) => {
         const id = navigator.geolocation.watchPosition(
           (position) => observer.next(position),
           (error) => observer.error(error),

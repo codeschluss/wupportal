@@ -18,7 +18,7 @@ export class Title {
     private platform: PlatformProvider,
     private titleService: TitleService
   ) {
-    this.title = new BehaviorSubject(this.coreSettings.defaultTitle);
+    this.title = new BehaviorSubject<string>(this.coreSettings.defaultTitle);
   }
 
   public set(title?: string): void {

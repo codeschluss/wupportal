@@ -37,7 +37,7 @@ export class DrawerCompatComponent implements DrawerCompat, OnInit {
   @ContentChild('drawerMenu', { static: true })
   public menu: TemplateRef<any>;
 
-  private state: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private state: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public get visible(): Observable<boolean> {
     return this.state.asObservable();

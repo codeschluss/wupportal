@@ -18,7 +18,7 @@ export class SessionProvider {
     localStorage: LocalStorage,
     platformProvider: PlatformProvider
   ) {
-    this.session = new BehaviorSubject((() => {
+    this.session = new BehaviorSubject<SessionModel>((() => {
       const session = new SessionModel();
       session.language = platformProvider.language;
       return session;

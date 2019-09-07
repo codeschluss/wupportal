@@ -36,7 +36,7 @@ export class ExpandCompatComponent implements ExpandCompat, OnInit {
   @ViewChild(MatExpansionPanel, { static: true })
   public instance: MatExpansionPanel;
 
-  private state: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private state: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public get expanded(): Observable<boolean> {
     return this.state.asObservable();

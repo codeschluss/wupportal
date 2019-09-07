@@ -87,7 +87,7 @@ export abstract class BaseTable<Model extends CrudModel>
   ) { }
 
   public ngOnInit(): void {
-    this.source = new BehaviorSubject([]);
+    this.source = new BehaviorSubject<Model[]>([]);
     this.items = this.items || this.route.snapshot.data.items;
   }
 

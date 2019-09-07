@@ -31,8 +31,8 @@ export class TokenProvider {
     private tokenService: TokenService,
     localStorage: LocalStorage
   ) {
-    this.accessToken = new BehaviorSubject(null);
-    this.refreshToken = new BehaviorSubject(null);
+    this.accessToken = new BehaviorSubject<AccessTokenModel>(null);
+    this.refreshToken = new BehaviorSubject<RefreshTokenModel>(null);
 
     localStorage.getItem<RefreshTokenModel>('refreshToken', {
         schema: RefreshTokenModel.schema

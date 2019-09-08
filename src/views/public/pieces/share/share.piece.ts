@@ -1,14 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { PlatformProvider, SocialShare } from '@wooportal/core';
-import { ActivityModel } from '../../../../realm/models/activity.model';
-import { BlogModel } from '../../../../realm/models/blog.model';
-import { OrganisationModel } from '../../../../realm/models/organisation.model';
-import { PageModel } from '../../../../realm/models/page.model';
 import { ClientPackage } from '../../../../utils/package';
 import { BasePiece } from '../base.piece';
 
-interface Service {
+interface ShareTarget {
   name: string;
   icon: string;
   pack: string;
@@ -23,7 +19,7 @@ interface Service {
 
 export class SharePieceComponent extends BasePiece {
 
-  public items: Service[] = [
+  public items: ShareTarget[] = [
     {
       name: 'E-Mail',
       icon: 'envelope',
@@ -56,15 +52,9 @@ export class SharePieceComponent extends BasePiece {
     }
   ];
 
-  public get href(): string {
-    return ClientPackage.config.defaults.appUrl + (() => {
-      switch (this.item.constructor) {
-        case ActivityModel: return '/activities/';
-        case BlogModel: return '/blogposts/';
-        case OrganisationModel: return '/organisations/';
-        case PageModel: return '/infopages/';
-      }
-    })() + this.item.id;
+  private get href(): string {
+    return ClientPackage.config.defaults.appUrl
+      + `/${this.namespace}/${this.item.id}`;
   }
 
   public constructor(
@@ -75,36 +65,27 @@ export class SharePieceComponent extends BasePiece {
   }
 
   public copy(): void {
-    switch (this.platformProvider.type) {
-      case 'Native':
-        break;
-      case 'Online':
-        const clipboard = this.document.createElement('textarea');
-        clipboard.style.opacity = '0';
-        clipboard.style.position = 'absolute';
-        clipboard.value = this.href;
-        this.document.body.appendChild(clipboard);
+    const clipboard = this.document.createElement('textarea');
+    clipboard.style.opacity = '0';
+    clipboard.style.position = 'absolute';
+    clipboard.value = this.href;
+    this.document.body.appendChild(clipboard);
 
-        clipboard.focus();
-        clipboard.select();
-        this.document.execCommand('copy');
-        this.document.body.removeChild(clipboard);
-        break;
-    }
+    clipboard.focus();
+    clipboard.select();
+    this.document.execCommand('copy');
+    this.document.body.removeChild(clipboard);
   }
 
-  public share(service: Service): void {
+  public share(target?: ShareTarget): void {
     switch (this.platformProvider.type) {
       case 'Native':
+        SocialShare.shareUrl(this.href, this.item.name);
         break;
       case 'Online':
-        this.document.defaultView.open(service.url + this.href, '_blank');
+        this.document.defaultView.open(target.url + this.href, '_blank');
         break;
     }
-  }
-
-  public shareNative(): void {
-    SocialShare.shareUrl(this.href, this.item.name);
   }
 
 }

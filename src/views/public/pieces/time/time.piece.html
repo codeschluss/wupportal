@@ -1,0 +1,6 @@
+<button mat-button disabled>
+  <icon-compat icon="clock"></icon-compat>
+  <time [datetime]="item.created">
+    {{ item.created | date: 'dd.MM.yyyy' }}
+  </time>
+</button>

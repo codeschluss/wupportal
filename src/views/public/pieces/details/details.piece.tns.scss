@@ -1,0 +1,8 @@
+@import '../../../../app.vars.scss';
+
+stack-layout {
+  & > .icon {
+    height: rem(2);
+    width: rem(2);
+  }
+}

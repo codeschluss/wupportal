@@ -5,12 +5,11 @@ absolute-layout {
 
   & > stack-layout {
     orientation: horizontal;
-    padding: rem(.25) rem(.5) rem(.25) 0;
-    vertical-align: center;
+    padding-right: rem(.5);
     width: auto;
 
-    & > grid-layout {
-      height: 100%;
+    & > label {
+      vertical-align: center;
     }
 
     & > [icon] {

@@ -23,10 +23,7 @@
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions>
-    <a mat-button [routerLink]="['/', 'blogposts', item.id]">
-      <icon-compat icon="comment-dots"></icon-compat>
-      <i18n i18n="@@details">details</i18n>
-    </a>
+    <details-piece [item]="item"></details-piece>
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
   </mat-card-actions>

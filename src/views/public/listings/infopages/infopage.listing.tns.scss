@@ -6,14 +6,14 @@ scroll-view {
       width: 100%;
 
       label  + label {
-        font-size: 12;
+        font-size: rem(.75);
         font-weight: 300;
         padding-left: rem(.5);
       }
 
       [icon=info-circle] {
-        height: 28;
-        width: 30;
+        height: rem(2);
+        width: rem(2);
       }
     }
   }

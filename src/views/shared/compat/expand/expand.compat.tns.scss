@@ -40,9 +40,9 @@ StackLayout.expand {
       GridLayout {
         border-color: $color-medium;
         border-width: 0 2 2 0;
-        height: 8;
+        height: rem(.5);
         transform: rotate(45deg);
-        width: 8;
+        width: rem(.5);
       }
     }
   }

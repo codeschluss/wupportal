@@ -1,0 +1,16 @@
+@import '../../../../app.vars.scss';
+
+stack-layout {
+  opacity: .24;
+  orientation: horizontal;
+
+  & > [icon=clock] {
+    height: rem(2);
+    padding-right: rem(.5);
+    width: rem(2);
+  }
+
+  & > label {
+    vertical-align: center;
+  }
+}

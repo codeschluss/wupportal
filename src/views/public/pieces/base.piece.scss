@@ -1,6 +1,7 @@
 @import '../../../app.vars.scss';
 
 .mat-button-base {
+  flex: 0 0 auto;
   margin: 0;
 
   [compat=icon] {

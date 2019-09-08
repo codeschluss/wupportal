@@ -1,6 +1,6 @@
 <absolute-layout>
-  <stack-layout ripple (tap)="router.navigate(['/infopages', item.id])">
+  <stack-layout ripple (tap)="router.navigate(['/', 'infopages', item.id])">
     <icon-compat icon="info-circle"></icon-compat>
-    <grid-layout><label [text]="item.name"></label></grid-layout>
+    <label [text]="item.name"></label>
   </stack-layout>
 </absolute-layout>

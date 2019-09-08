@@ -1,6 +1,8 @@
 @import '../../../../app.vars.scss';
 
 stack-layout {
+  padding-right: rem(.5);
+
   &.disabled {
     & > [icon] {
       opacity: .24;

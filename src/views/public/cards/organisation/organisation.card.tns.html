@@ -25,10 +25,7 @@
       </label>
     </stack-layout>
     <stack-layout class="card-actions">
-      <stack-layout ripple (tap)="router.navigate(['/organisations', item.id])">
-        <icon-compat icon="at"></icon-compat>
-        <i18n i18n="@@details" unit="details"></i18n>
-      </stack-layout>
+      <details-piece [item]="item"></details-piece>
       <share-piece [item]="item"></share-piece>
       <like-piece [item]="item"></like-piece>
     </stack-layout>

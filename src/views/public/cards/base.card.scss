@@ -26,12 +26,6 @@
     & > mat-card-actions {
       margin-bottom: -.5rem;
       padding-bottom: 0;
-
-      & > .mat-button-base {
-        [compat=icon] {
-          padding-right: .5rem;
-        }
-      }
     }
   }
 }

@@ -42,22 +42,6 @@ absolute-layout {
       color: $color-dark;
       orientation: horizontal;
       padding: rem(.5);
-
-      & > stack-layout {
-        border-radius: rem(.25);
-        font-size: 14;
-        orientation: horizontal;
-        padding: rem(.25) rem(1) rem(.25) rem(.25);
-
-        & > [unit] {
-          vertical-align: center;
-        }
-
-        & > [icon] {
-          height: 28;
-          width: 30;
-        }
-      }
     }
   }
 }

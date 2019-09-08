@@ -15,12 +15,7 @@
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
     <span [style.flexGrow]="1"></span>
-    <button mat-button disabled>
-      <icon-compat icon="clock"></icon-compat>
-      <time [datetime]="item.created">
-        {{ item.created | date: 'dd.MM.yyyy' }}
-      </time>
-    </button>
+    <time-piece [item]="item"></time-piece>
   </nav>
   <mat-divider></mat-divider>
   <section>

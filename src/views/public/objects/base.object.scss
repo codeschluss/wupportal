@@ -20,15 +20,6 @@ main {
     @include flex(row, flex-start, center);
     overflow-x: auto;
     overflow-y: hidden;
-
-    & > .mat-button-base {
-      flex: 0 0 auto;
-      margin: 0;
-
-      [compat=icon] {
-        padding-right: .5rem;
-      }
-    }
   }
 
   & > section {

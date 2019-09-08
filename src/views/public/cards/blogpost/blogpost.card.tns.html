@@ -2,7 +2,7 @@
   <stack-layout>
     <stack-layout
       class="card-title"
-      (tap)="router.navigate(['/blogposts', item.id])">
+      (tap)="router.navigate(['/', 'blogposts', item.id])">
       <label textWrap="true">
         <FormattedString>
           <i18n #by i18n="@@by" unit="by"></i18n>
@@ -15,7 +15,7 @@
     <ng-container *ngIf="item.activity">
       <stack-layout
         class="card-subtitle"
-        (tap)="router.navigate(['/activities', item.activity.id])">
+        (tap)="router.navigate(['/', 'activities', item.activity.id])">
         <label textWrap="true">
           <FormattedString>
             <i18n #about i18n="@@about" unit="about"></i18n>
@@ -29,10 +29,7 @@
       <label textWrap="true" [text]="preview"></label>
     </stack-layout>
     <stack-layout class="card-actions">
-      <stack-layout ripple (tap)="router.navigate(['/blogposts', item.id])">
-        <icon-compat icon="comment-dots"></icon-compat>
-        <i18n i18n="@@details" unit="details"></i18n>
-      </stack-layout>
+      <details-piece [item]="item"></details-piece>
       <share-piece [item]="item"></share-piece>
       <like-piece [item]="item"></like-piece>
     </stack-layout>

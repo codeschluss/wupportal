@@ -5,6 +5,7 @@ import { ExpandCompat } from './expand.compat.i';
 
 @Component({
   selector: 'expand-compat',
+  styleUrls: ['expand.compat.scss'],
   template: `
     <mat-expansion-panel
       (closed)="update(false)"

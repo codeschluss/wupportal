@@ -21,6 +21,4 @@ export interface ExpandCompat {
 
   toggle(): void;
 
-  update(state: boolean): void;
-
 }

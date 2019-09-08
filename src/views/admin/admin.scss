@@ -1,4 +1,4 @@
-@import '../../app.theme.scss';
+@import '../../app.vars.scss';
 
 main#admin {
   filter: grayscale(0);
@@ -9,7 +9,7 @@ main#admin {
     pointer-events: none;
   }
 
-  & header {
+  header {
     align-items: center;
     color: gray;
     display: flex;
@@ -24,11 +24,11 @@ main#admin {
     }
   }
 
-  & .mat-raised-button {
+  .mat-raised-button {
     margin: .25rem;
   }
 
-   & [base=form] {
+   [base=form] {
     & > form {
       & > section {
         @include flex(row, normal, center);
@@ -59,7 +59,7 @@ main#admin {
         & > output {
           flex: 1 0 auto;
 
-          & mat-chip-list {
+          mat-chip-list {
             & > .mat-chip-list-wrapper {
               margin: 0;
 
@@ -73,7 +73,7 @@ main#admin {
             }
           }
 
-          & mat-form-field {
+          mat-form-field {
             width: 100%;
           }
         }
@@ -93,7 +93,7 @@ main#admin {
     }
   }
 
-  & [base=table] {
+  [base=table] {
     & > mat-form-field {
       width: 100%;
 
@@ -110,7 +110,7 @@ main#admin {
       background-color: inherit;
 
       & > mat-form-field {
-        & .mat-form-field-infix {
+        .mat-form-field-infix {
           border-bottom-color: transparent;
           border-bottom-style: solid;
           border-width: .5rem;
@@ -154,7 +154,7 @@ main#admin {
     & > mat-paginator {
       background-color: inherit;
 
-      & .mat-paginator-page-size {
+      .mat-paginator-page-size {
         display: none;
       }
     }

@@ -1,12 +1,12 @@
 @import '~normalize.css/normalize.css';
 @import '~@fortawesome/fontawesome-svg-core/styles';
-@import 'app.theme.scss';
+@import 'app.vars.scss';
 
 @include mat-core();
 @include angular-material-theme($theme-palette);
 
 .cdk-overlay-container {
-  & .mat-menu-item {
+  .mat-menu-item {
     &.active {
       color: $color-primary;
 
@@ -47,7 +47,7 @@
 layout-component {
   body.embedded & {
     & > header { display: none; }
-    & [compat=navbar] { display: none; }
+    [compat=navbar] { display: none; }
   }
 
   @include flex(column);
@@ -92,13 +92,13 @@ layout-component {
           width: 15rem;
         }
 
-        & [compat=icon][icon=search] {
+        [compat=icon][icon=search] {
           @include media(lt-lg) {
             display: none;
           }
         }
 
-        & .mat-form-field-prefix {
+        .mat-form-field-prefix {
           padding-right: .5rem;
         }
       }
@@ -111,11 +111,11 @@ layout-component {
           color: $color-primary;
         }
 
-        & h1 {
+        h1 {
           display: inline-block;
         }
 
-        & [compat=icon] {
+        [compat=icon] {
           padding-right: .5rem;
 
           @include media(lt-lg) {
@@ -124,7 +124,7 @@ layout-component {
         }
       }
 
-      & * {
+      * {
         font-size: 1rem;
         text-transform: uppercase;
         font-weight: bold;
@@ -193,7 +193,7 @@ layout-component {
           }
 
           & > mat-action-list {
-            & [compat=icon] {
+            [compat=icon] {
               text-align: center;
               width: 2.5rem;
             }
@@ -209,24 +209,24 @@ layout-component {
                 color: $color-primary;
               }
 
-              & * {
+              * {
                 font-weight: bold;
                 text-transform: uppercase;
               }
 
-              & .mat-form-field-label {
+              .mat-form-field-label {
                 color: inherit !important;
               }
 
-              & .mat-form-field-underline {
+              .mat-form-field-underline {
                 background-color: currentColor;
 
-                & .mat-form-field-ripple {
+                .mat-form-field-ripple {
                   background-color: currentColor;
                 }
               }
 
-              & .mat-input-element {
+              .mat-input-element {
                 caret-color: currentColor;
               }
             }
@@ -246,7 +246,7 @@ layout-component {
           }
 
           &._mat-animation-noopable[mode=indeterminate] {
-            & .mat-progress-bar-primary {
+            .mat-progress-bar-primary {
               animation:
                 mat-progress-bar-primary-indeterminate-translate
                 ($animation-duration * 8) infinite linear !important;
@@ -258,7 +258,7 @@ layout-component {
                 }
             }
 
-            & .mat-progress-bar-secondary {
+            .mat-progress-bar-secondary {
               animation:
                 mat-progress-bar-secondary-indeterminate-translate
                 ($animation-duration * 8) infinite linear !important;
@@ -277,7 +277,7 @@ layout-component {
           flex: 1 0 auto;
           padding: 1rem 0;
 
-          & main {
+          main {
             margin: 0 auto;
             max-width: $viewport-width;
           }
@@ -301,16 +301,16 @@ layout-component {
               }
             }
 
-            & * {
+            * {
               text-transform: uppercase;
             }
 
-            & small {
+            small {
               font-size: .875rem;
               padding: 0 1rem;
             }
 
-            & [compat=icon] {
+            [compat=icon] {
               padding-right: .5rem;
 
               @include media(lt-lg) {

@@ -51,7 +51,7 @@
             ],
             "styles": [
               {
-                "input": "src/app.web.scss",
+                "input": "src/app.scss",
                 "bundleName": "css/theme"
               }
             ]

@@ -1,7 +1,7 @@
-@import '../../../app.theme.scss';
+@import '../../../app.vars.scss';
 
 main {
-  & [compat=pager] {
+  [compat=pager] {
     @include flex(row, center, center);
     margin: 1rem;
     width: 100%;

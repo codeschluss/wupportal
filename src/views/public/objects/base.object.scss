@@ -1,4 +1,4 @@
-@import '../../../app.theme.scss';
+@import '../../../app.vars.scss';
 
 main {
   padding: 0 1rem;
@@ -25,7 +25,7 @@ main {
       flex: 0 0 auto;
       margin: 0;
 
-      & [compat=icon] {
+      [compat=icon] {
         padding-right: .5rem;
       }
     }
@@ -64,7 +64,7 @@ main {
                   color: $color-light;
                 }
 
-                & mat-panel-title {
+                mat-panel-title {
                   color: $color-light;
                 }
               }
@@ -76,20 +76,20 @@ main {
               text-transform: uppercase;
               transition: all $animation-duration;
 
-              & mat-panel-title {
+              mat-panel-title {
                 & > small {
                   font-weight: lighter;
                   line-height: 1rem;
                   padding-left: .5rem;
                 }
 
-                & [compat=icon] {
+                [compat=icon] {
                   padding-right: .5rem;
                 }
               }
             }
 
-            & .mat-expansion-panel-body {
+            .mat-expansion-panel-body {
               @include flex(row);
               overflow-x: auto;
               overflow-y: hidden;
@@ -119,7 +119,7 @@ main {
                     }
 
                     & > mat-chip-list {
-                      & mat-chip {
+                      mat-chip {
                         background-color: transparent;
                         border: .25rem solid;
                         cursor: pointer;
@@ -131,7 +131,7 @@ main {
                     }
 
                     & > .mat-button-base {
-                      & [compat=icon] {
+                      [compat=icon] {
                         padding-right: .5rem;
                       }
                     }

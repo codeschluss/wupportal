@@ -5,6 +5,7 @@ $viewport-width: 100rem;
 
 $color-dark: rgba(black, .87);
 $color-light: white;
+$color-medium: rgba(black, .54);
 
 $color-bg-light: rgba(black, .12);
 $color-bg-dark: rgba(black, .36);
@@ -123,6 +124,14 @@ $color-warn: mat-color(map-get($theme-palette, warn));
   &::ng-deep { @content; }
 }
 
+@mixin elevation {
+  android-elevation: 1;
+  background-color: $color-light;
+  border-color: $color-bg-light;
+  border-radius: 4;
+  border-width: 1;
+}
+
 @mixin flex($direction, $main-axis: normal, $cross-axis: normal) {
   @if not $direction {
     @error 'missing param to flex() mixin';
@@ -190,6 +199,10 @@ $color-warn: mat-color(map-get($theme-palette, warn));
   left: $left;
   right: $right;
   top: $top;
+}
+
+@function rem($num) {
+  @return $num * 16;
 }
 
 .text-dark { color: $color-dark; }

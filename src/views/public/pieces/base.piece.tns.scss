@@ -1,19 +1,16 @@
-@import '../../../app.theme.scss';
+@import '../../../app.vars.scss';
 
 stack-layout {
+  border-radius: rem(.25);
+  font-size: 14;
   orientation: horizontal;
+  padding: rem(.25) rem(1) rem(.25) rem(.25);
 
-  border-radius: 5;
-  font-size: 15;
-  padding: 5 15 5 5;
-
-  // [compat=i18n]
-  [unit] {
+  & > [unit] {
     vertical-align: center;
   }
 
-  // [compat=icon]
-  [icon] {
+  & > [icon] {
     height: 28;
     width: 30;
   }

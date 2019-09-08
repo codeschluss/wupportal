@@ -1,4 +1,4 @@
-@import '../../../../app.theme.scss';
+@import '../../../../app.vars.scss';
 
 main {
   & > header {
@@ -16,7 +16,7 @@ main {
         }
       }
 
-      & mat-chip {
+      mat-chip {
         @include flex(row, center, center);
         border: .25rem solid;
         cursor: pointer;
@@ -40,7 +40,7 @@ main {
         width: 100%;
       }
 
-      & mat-label {
+      mat-label {
         & > icon-compat {
           padding-right: .5rem;
         }
@@ -86,7 +86,7 @@ main {
       width: 66%;
 
       @include deep {
-        & mat-card {
+        mat-card {
           & > .mat-ripple-element {
             @include media(lt-lg) {
               display: none;

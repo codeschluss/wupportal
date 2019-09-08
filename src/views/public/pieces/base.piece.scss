@@ -1,9 +1,9 @@
-@import '../../../app.theme.scss';
+@import '../../../app.vars.scss';
 
 .mat-button-base {
   margin: 0;
 
-  & [compat=icon] {
+  [compat=icon] {
     padding-right: .5rem;
   }
 }

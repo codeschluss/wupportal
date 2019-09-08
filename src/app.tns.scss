@@ -1,30 +1,31 @@
-@import '~nativescript-theme-core/scss/light';
-@import '~nativescript-theme-core/scss/index';
-@import '~nativescript-theme-core/scss/platforms/index.android';
-@import 'app.theme.scss';
+@import 'app.vars.scss';
 
 page {
-  // [compat=navbar]
+  color: $color-dark;
+  background-color: $color-light;
+
   & > action-bar {
+    background-color: $color-primary;
     color: $color-light;
+    font-weight: normal;
 
     stack-layout {
       orientation: horizontal;
 
       activity-indicator {
-        height: 20;
-        margin-right: 15;
-        width: 20;
+        height: rem(1.25);
+        margin-right: rem(1);
+        width: rem(1.25);
       }
 
       grid-layout {
-        height: 50;
-        padding-right: 15;
-        width: 50;
+        height: rem(3);
+        padding-right: rem(1);
+        width: rem(3);
 
         [compat=icon] {
-          height: 33;
-          width: 30;
+          height: rem(2);
+          width: rem(1.75);
         }
       }
     }
@@ -43,15 +44,16 @@ page {
           }
 
           & > stack-layout {
-            color: $color-dark;
-            height: 50;
+            height: rem(3.25);
             orientation: horizontal;
+            padding-left: rem(1);
+            vertical-align: center;
 
             &.active {
               color: $color-primary;
 
-              absolute-layout {
-                text-field {
+              & > absolute-layout {
+                & > text-field {
                   border-bottom-color: $color-primary;
                 }
 
@@ -66,8 +68,12 @@ page {
 
             absolute-layout {
               @keyframes float {
-                from { transform: scale(1, 1) translate(0, 0); }
-                to { transform: scale(.66, .66) translate(-10, -20); }
+                from {
+                  transform: scale(1, 1) translate(0, 0);
+                }
+                to {
+                  transform: scale(.66, .66) translate(-10, -20);
+                }
               }
 
               &.float-label {
@@ -80,13 +86,12 @@ page {
               }
 
               label {
-                margin-left: 0;
-                margin-top: 15;
-
                 animation-direction: reverse;
                 animation-duration: $animation-duration;
                 animation-fill-mode: reverse;
                 animation-name: float;
+                margin-left: 0;
+                margin-top: rem(1);
               }
 
               text-field {
@@ -102,13 +107,13 @@ page {
 
                 &.off {
                   [compat=icon] {
-                    color: rgba(0, 0, 0, .26);
+                    color: $color-bg-dark;
                   }
                 }
 
                 [compat=icon] {
-                  height: 30;
-                  width: 30;
+                  height: rem(2);
+                  width: rem(2);
                 }
               }
             }
@@ -120,9 +125,9 @@ page {
             }
 
             [compat=icon] {
-              height: 35;
-              margin: 0 10;
-              width: 35;
+              height: rem(2);
+              margin-right: rem(.5);
+              width: rem(2);
             }
           }
         }

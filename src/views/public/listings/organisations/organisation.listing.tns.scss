@@ -1,10 +1,1 @@
-@import '../../../../app.theme.scss';
-
-scroll-view {
-  height: 100%;
-
-  flexbox-layout {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
+@import '../../../../app.vars.scss';

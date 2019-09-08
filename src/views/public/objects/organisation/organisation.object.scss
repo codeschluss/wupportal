@@ -1,4 +1,4 @@
-@import '../../../../app.theme.scss';
+@import '../../../../app.vars.scss';
 
 main {
   & > section {
@@ -6,7 +6,7 @@ main {
       & > [compat=expand] {
         @include deep {
           & > mat-expansion-panel {
-            & .mat-expansion-panel-body {
+            .mat-expansion-panel-body {
               & > figure {
                 @include flex(row, center, center);
                 @include position(relative);

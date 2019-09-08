@@ -1,27 +1,25 @@
 @import '../../../../app.vars.scss';
 
-.organisation-card {
-  width: 340;
+absolute-layout {
+  & > stack-layout {
+    color: $color-dark;
+    max-width: rem(22.5);
 
-  & > .card-content {
-    & > stack-layout {
+    & > .card-image {
+      background-color: $color-bg-light;
+      color: $color-bg-dark;
+      height: rem(12.5);
       width: 100%;
-      orientation: horizontal;
 
-      & > label + label {
-        padding-left: 5;
+      & > image {
+        horizontal-align: center;
+        stretch: aspectFill;
       }
-    }
-  }
 
-  & > .card-image {
-    color: $color-bg-dark;
-    background-color: $color-bg-light;
-
-    // [compat=icon]
-    & > [icon=image] {
-      height: 75;
-      width: 75;
+      & > [icon] {
+        height: rem(5);
+        width: rem(5);
+      }
     }
   }
 }

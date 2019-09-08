@@ -1,1 +1,22 @@
 @import '../../../../app.vars.scss';
+
+absolute-layout {
+  width: auto;
+
+  & > stack-layout {
+    orientation: horizontal;
+    padding: rem(.25) rem(.5) rem(.25) 0;
+    vertical-align: center;
+    width: auto;
+
+    & > grid-layout {
+      height: 100%;
+    }
+
+    & > [icon] {
+      height: rem(2);
+      padding-right: rem(.5);
+      width: rem(2);
+    }
+  }
+}

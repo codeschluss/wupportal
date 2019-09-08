@@ -12,14 +12,11 @@
     <ng-container ngProjectAs="mat-card-subtitle" *ngIf="item.activity">
       <mat-card-subtitle>
         <a [routerLink]="['/', 'activities', item.activity.id]">
-          <i18n i18n="@@activity">activity</i18n>:
+          <i18n i18n="@@about">about</i18n>
           {{ item.activity.name }}
         </a>
       </mat-card-subtitle>
     </ng-container>
-    <time [datetime]="item.created">
-      {{ item.created | date: 'dd.MM.yyyy' }}
-    </time>
   </mat-card-header>
   <mat-card-content>
     {{ preview }}

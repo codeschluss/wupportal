@@ -1,1 +1,11 @@
 @import '../../../../app.vars.scss';
+
+absolute-layout {
+  & > stack-layout {
+    color: $color-dark;
+
+    & > .card-title {
+      padding-bottom: rem(.25);
+    }
+  }
+}

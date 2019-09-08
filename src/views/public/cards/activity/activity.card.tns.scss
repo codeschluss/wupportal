@@ -1,1 +1,26 @@
 @import '../../../../app.vars.scss';
+
+absolute-layout {
+  width: rem(20);
+
+  & > stack-layout {
+    & > .card-title {
+      font-weight: 500;
+      height: rem(5);
+      margin-top: rem(1);
+    }
+
+    & > .card-content {
+      font-size: rem(.75);
+      font-weight: 300;
+    }
+  }
+
+  & > .card-image {
+    height: rem(5);
+    left: rem(14);
+    top: rem(1);
+    width: rem(5);
+    z-index: 2;
+  }
+}

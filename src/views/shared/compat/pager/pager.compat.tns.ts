@@ -10,6 +10,7 @@ if (!isKnownView('pager-compat')) {
 
 @Component({
   selector: 'pager-compat',
+  styleUrls: ['pager.compat.scss'],
   template: ``
 })
 

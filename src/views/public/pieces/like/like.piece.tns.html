@@ -1,7 +1,9 @@
 <stack-layout ripple
   [isEnabled]="!liked"
   [isUserInteractionEnabled]="!liked"
+  [ngClass]="{ disabled: liked }"
   (tap)="like()">
   <icon-compat icon="heart"></icon-compat>
   <i18n i18n="@@like" unit="like"></i18n>
+  <label [text]="item.likes || 0"></label>
 </stack-layout>

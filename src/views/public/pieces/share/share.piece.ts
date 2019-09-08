@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { PlatformProvider } from '@wooportal/core';
+import { PlatformProvider, SocialShare } from '@wooportal/core';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { BlogModel } from '../../../../realm/models/blog.model';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
@@ -101,6 +101,10 @@ export class SharePieceComponent extends BasePiece {
         this.document.defaultView.open(service.url + this.href, '_blank');
         break;
     }
+  }
+
+  public shareNative(): void {
+    SocialShare.shareUrl(this.href, this.item.name);
   }
 
 }

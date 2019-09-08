@@ -26,7 +26,7 @@ export class LikePieceComponent extends BasePiece {
       ['provider'] as CrudProvider<BaseService, CrudModel>
         & { like: (id: string) => Observable<any> };
 
-    if ('like' in provider) {
+    if (provider.like) {
       provider.like(this.item.id).subscribe(() => {
         this.sessionProvider.like(this.item.id);
         (this.item as any).likes++;

@@ -1,1 +1,25 @@
 @import '../../../../app.vars.scss';
+
+stack-layout {
+  &.disabled {
+    & > [icon] {
+      opacity: .24;
+    }
+
+    & > [unit] {
+      opacity: .24;
+    }
+  }
+
+  & > label {
+    background-color: $color-primary;
+    border-radius: 50%;
+    color: $color-light;
+    font-size: rem(.75);
+    height: rem(1.25);
+    margin: 0 0 rem(.75) rem(.25);
+    padding-top: 1;
+    text-align: center;
+    width: rem(1.25);
+  }
+}

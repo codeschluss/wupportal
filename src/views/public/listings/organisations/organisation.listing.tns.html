@@ -1,12 +1,10 @@
 <scroll-view>
   <flexbox-layout>
-    <ng-container *ngFor="let item of (items | async)">
+    <ng-container *ngFor="let item of items | async">
       <organisation-card [item]="item"></organisation-card>
     </ng-container>
+    <ng-container *ngIf="next || prev">
+      <pager-compat [next]="next" [prev]="prev"></pager-compat>
+    </ng-container>
   </flexbox-layout>
-<!--
-  <ng-container *ngIf="next || prev">
-    <pager-compat [next]="next" [prev]="prev"></pager-compat>
-  </ng-container>
--->
 </scroll-view>

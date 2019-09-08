@@ -1,1 +1,20 @@
 @import '../../../../app.vars.scss';
+
+scroll-view {
+  & > flexbox-layout {
+    & > .expand-compat {
+      width: 100%;
+
+      label  + label {
+        font-size: 12;
+        font-weight: 300;
+        padding-left: rem(.5);
+      }
+
+      [icon=info-circle] {
+        height: 28;
+        width: 30;
+      }
+    }
+  }
+}

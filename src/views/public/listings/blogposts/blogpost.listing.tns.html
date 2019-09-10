@@ -1,10 +1,12 @@
 <scroll-view>
-  <flexbox-layout>
+  <stack-layout>
     <ng-container *ngFor="let item of items | async">
-      <blogpost-card [item]="item"></blogpost-card>
+      <grid-layout>
+        <blogpost-card [item]="item"></blogpost-card>
+      </grid-layout>
     </ng-container>
     <ng-container *ngIf="next || prev">
       <pager-compat [next]="next" [prev]="prev"></pager-compat>
     </ng-container>
-  </flexbox-layout>
+  </stack-layout>
 </scroll-view>

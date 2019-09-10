@@ -1,47 +1,52 @@
 @import '../../../app.vars.scss';
 
-absolute-layout {
-  margin: rem(1);
+grid-layout {
   width: 100%;
 
   & > stack-layout {
     @include elevation;
     width: 100%;
 
-    & > .card-title {
-      font-size: rem(1.25);
-      padding: rem(1);
+    & > stack-layout {
+      &.card-title {
+        font-size: rem(1.25);
+        padding: rem(1);
 
-      .small {
-        font-size: rem(1);
-      }
-    }
-
-    & > .card-subtitle {
-      color: $color-medium;
-      font-size: rem(.75);
-      padding: 0 rem(1);
-    }
-
-    & > .card-content {
-      font-size: rem(.75);
-      padding: rem(1);
-
-      & > stack-layout {
-        orientation: horizontal;
-
-        & > label + label {
-          padding-left: rem(.25);
+        & > label {
+          .small {
+            font-size: rem(1);
+          }
         }
       }
-    }
 
-    & > .card-actions {
-      border-top-color: $color-bg-light;
-      border-top-width: 1;
-      color: $color-dark;
-      orientation: horizontal;
-      padding: rem(.5);
+      &.card-subtitle {
+        color: $color-medium;
+        font-size: rem(.75);
+        padding: 0 rem(1);
+      }
+
+      &.card-content {
+        font-size: rem(.75);
+        padding: rem(1);
+
+        & > stack-layout {
+          orientation: horizontal;
+
+          & > label {
+            & + label {
+              padding-left: rem(.25);
+            }
+          }
+        }
+      }
+
+      &.card-actions {
+        border-top-color: $color-bg-light;
+        border-top-width: 1;
+        color: $color-dark;
+        orientation: horizontal;
+        padding: rem(.5);
+      }
     }
   }
 }

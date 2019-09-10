@@ -1,11 +1,13 @@
 @import '../../../../app.vars.scss';
 
-absolute-layout {
+grid-layout {
   & > stack-layout {
     color: $color-dark;
 
-    & > .card-title {
-      padding-bottom: rem(.25);
+    & > stack-layout {
+      &.card-title {
+        padding-bottom: rem(.25);
+      }
     }
   }
 }

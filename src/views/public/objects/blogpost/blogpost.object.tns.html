@@ -1,1 +1,41 @@
-<label text="blogpost.object"></label>
+<scroll-view>
+  <stack-layout>
+    <grid-layout>
+      <label textWrap="true">
+        <FormattedString>
+          <i18n #about i18n="@@about" unit="about"></i18n>
+          <i18n #by i18n="@@by" unit="by"></i18n>
+          <span [text]="item.name"></span>
+          <span class="small" [text]="' ' + by.text + ' '"></span>
+          <span class="small" [text]="item.author"></span>
+          <ng-container *ngIf="item.activity">
+            <span class="small" [text]="' ' + about.text + ' '"></span>
+            <span class="small" [text]="item.activity.name"></span>
+          </ng-container>
+        </FormattedString>
+      </label>
+    </grid-layout>
+    <flexbox-layout>
+      <share-piece [item]="item"></share-piece>
+      <like-piece [item]="item"></like-piece>
+      <label flexGrow="1"></label>
+      <time-piece [item]="item"></time-piece>
+    </flexbox-layout>
+    <stack-layout>
+      <marked-compat class="mat-body" [data]="item.content"></marked-compat>
+      <ng-container *ngIf="item.activity">
+        <expand-compat #activity
+          class="expand-compat"
+          (changed)="$event && expanded(activity)">
+          <ng-template #expandHeader>
+            <icon-compat icon="map-marker-alt"></icon-compat>
+            <i18n i18n="@@activity" unit="activity"></i18n>
+          </ng-template>
+          <ng-template #expandContent>
+            <activity-card [item]="item.activity"></activity-card>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
+    </stack-layout>
+  </stack-layout>
+</scroll-view>

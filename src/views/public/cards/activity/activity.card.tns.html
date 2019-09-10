@@ -1,4 +1,4 @@
-<absolute-layout (tap)="router.navigate(['/', 'activities', item.id])">
+<grid-layout (tap)="router.navigate(['/', 'activities', item.id])">
   <stack-layout [ngStyle]="colors(item.category.color)">
     <stack-layout class="card-content">
       <stack-layout>
@@ -13,14 +13,14 @@
         <label [text]="item.address.place"></label>
         <label [text]="item.address.suburb.name"></label>
       </stack-layout>
+      <icon-compat
+        class="card-image"
+        [icon]="item.category.icon"
+        [style.color]="colors(item.category.color).color">
+      </icon-compat>
     </stack-layout>
     <stack-layout class="card-title">
       <label textWrap="true" [text]="item.name"></label>
     </stack-layout>
   </stack-layout>
-  <icon-compat
-    class="card-image"
-    [icon]="item.category.icon"
-    [style.color]="colors(item.category.color).color">
-  </icon-compat>
-</absolute-layout>
+</grid-layout>

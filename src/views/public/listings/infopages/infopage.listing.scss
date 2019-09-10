@@ -4,7 +4,7 @@ main {
   @include flex(column, flex-start, center);
 
   & > [compat=expand] {
-    margin: 1rem auto;
+    margin: 1rem auto 0 auto;
     width: calc(100% - 2rem);
 
     @include deep {

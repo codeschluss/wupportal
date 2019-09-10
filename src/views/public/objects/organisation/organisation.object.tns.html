@@ -1,1 +1,67 @@
-<label text="organisation.object"></label>
+<scroll-view>
+  <stack-layout>
+    <grid-layout>
+      <label textWrap="true">
+        <FormattedString>
+          <i18n #at i18n="@@at" unit="at"></i18n>
+          <span [text]="item.name"></span>
+          <span class="small" [text]="' ' + at.text + ' '"></span>
+          <span class="small" [text]="item.address.place + ' '"></span>
+          <span class="small" [text]="item.address.suburb.name"></span>
+        </FormattedString>
+      </label>
+    </grid-layout>
+    <flexbox-layout>
+      <share-piece [item]="item"></share-piece>
+      <like-piece [item]="item"></like-piece>
+      <label flexGrow="1"></label>
+      <time-piece [item]="item"></time-piece>
+    </flexbox-layout>
+    <stack-layout>
+      <marked-compat class="mat-body" [data]="item.description"></marked-compat>
+      <expand-compat #details
+        class="expand-compat"
+        (changed)="$event && expanded(details)">
+        <ng-template #expandHeader>
+          <icon-compat icon="at"></icon-compat>
+          <i18n i18n="@@details" unit="details"></i18n>
+        </ng-template>
+        <ng-template #expandContent>
+
+        </ng-template>
+      </expand-compat>
+      <ng-container *ngIf="item.images">
+        <expand-compat #images
+          class="expand-compat"
+          (changed)="$event && expanded(images)">
+          <ng-template #expandHeader>
+            <icon-compat icon="image"></icon-compat>
+            <i18n i18n="@@images" unit="images"></i18n>
+            <label [text]="'(' + item.images.length + ')'"></label>
+          </ng-template>
+          <ng-template #expandContent>
+            <ng-container *ngFor="let image of item.images">
+
+            </ng-container>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
+      <ng-container *ngIf="item.activities">
+        <expand-compat #activities
+          class="expand-compat"
+          (changed)="$event && expanded(activities)">
+          <ng-template #expandHeader>
+            <icon-compat icon="map-marker-alt"></icon-compat>
+            <i18n i18n="@@activities" unit="activities"></i18n>
+            <label [text]="'(' + item.activities.length + ')'"></label>
+          </ng-template>
+          <ng-template #expandContent>
+            <ng-container *ngFor="let activity of item.activities">
+              <activity-card [item]="activity"></activity-card>
+            </ng-container>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
+    </stack-layout>
+  </stack-layout>
+</scroll-view>

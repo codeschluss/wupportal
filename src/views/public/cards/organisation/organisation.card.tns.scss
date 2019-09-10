@@ -1,6 +1,6 @@
 @import '../../../../app.vars.scss';
 
-absolute-layout {
+grid-layout {
   & > stack-layout {
     color: $color-dark;
     max-width: rem(22.5);

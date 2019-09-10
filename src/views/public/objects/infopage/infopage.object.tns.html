@@ -1,1 +1,23 @@
-<label text="infopage.object"></label>
+<scroll-view>
+  <stack-layout>
+    <grid-layout>
+      <label textWrap="true">
+        <FormattedString>
+          <i18n #ofTopic i18n="@@ofTopic" unit="ofTopic"></i18n>
+          <span [text]="item.name"></span>
+          <span class="small" [text]="' ' + ofTopic.text + ' '"></span>
+          <span class="small" [text]="item.topic.name"></span>
+        </FormattedString>
+      </label>
+    </grid-layout>
+    <flexbox-layout>
+      <share-piece [item]="item"></share-piece>
+      <like-piece [item]="item"></like-piece>
+      <label flexGrow="1"></label>
+      <time-piece [item]="item"></time-piece>
+    </flexbox-layout>
+    <stack-layout>
+      <marked-compat class="mat-body" [data]="item.content"></marked-compat>
+    </stack-layout>
+  </stack-layout>
+</scroll-view>

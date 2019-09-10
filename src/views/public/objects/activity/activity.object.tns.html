@@ -1,1 +1,88 @@
-<label text="activity.object"></label>
+<scroll-view>
+  <stack-layout>
+    <grid-layout>
+      <label textWrap="true">
+        <FormattedString>
+          <i18n #at i18n="@@at" unit="at"></i18n>
+          <i18n #by i18n="@@by" unit="by"></i18n>
+          <span [text]="item.name"></span>
+          <span class="small" [text]="' ' + by.text + ' '"></span>
+          <span class="small" [text]="item.organisation.name"></span>
+          <span class="small" [text]="' ' + at.text + ' '"></span>
+          <span class="small" [text]="item.address.place + ' '"></span>
+          <span class="small" [text]="item.address.suburb.name"></span>
+        </FormattedString>
+      </label>
+    </grid-layout>
+    <flexbox-layout>
+      <share-piece [item]="item"></share-piece>
+      <like-piece [item]="item"></like-piece>
+      <label flexGrow="1"></label>
+      <time-piece [item]="item"></time-piece>
+    </flexbox-layout>
+    <stack-layout>
+      <marked-compat class="mat-body" [data]="item.description"></marked-compat>
+      <expand-compat #details
+        class="expand-compat"
+        (changed)="$event && expanded(details)">
+        <ng-template #expandHeader>
+          <icon-compat icon="at"></icon-compat>
+          <i18n i18n="@@details" unit="details"></i18n>
+        </ng-template>
+        <ng-template #expandContent>
+
+        </ng-template>
+      </expand-compat>
+      <expand-compat #schedules
+        class="expand-compat"
+        (changed)="$event && expanded(schedules)">
+        <ng-template #expandHeader>
+          <icon-compat icon="history"></icon-compat>
+          <i18n i18n="@@schedules" unit="schedules"></i18n>
+          <label [text]="'(' + item.schedules.length + ')'"></label>
+        </ng-template>
+        <ng-template #expandContent>
+
+        </ng-template>
+      </expand-compat>
+      <expand-compat #mapview
+        class="expand-compat"
+        (changed)="$event && expanded(mapview)">
+        <ng-template #expandHeader>
+          <icon-compat icon="globe"></icon-compat>
+          <i18n i18n="@@mapview" unit="mapview"></i18n>
+        </ng-template>
+        <ng-template #expandContent>
+          <web-view [src]="source"></web-view>
+        </ng-template>
+      </expand-compat>
+      <expand-compat #organisation
+        class="expand-compat"
+        (changed)="$event && expanded(organisation)">
+        <ng-template #expandHeader>
+          <icon-compat icon="at"></icon-compat>
+          <i18n i18n="@@organisation" unit="organisation"></i18n>
+        </ng-template>
+        <ng-template #expandContent>
+          <organisation-card [item]="item.organisation"></organisation-card>
+        </ng-template>
+      </expand-compat>
+      <ng-container *ngIf="item.blogs">
+        <expand-compat #blogposts
+          class="expand-compat"
+          (changed)="$event && expanded(blogposts)">
+          <ng-template #expandHeader>
+            <icon-compat icon="at"></icon-compat>
+            <i18n i18n="@@blogposts" unit="blogposts"></i18n>
+            <label [text]="'(' + item.blogs.length + ')'"></label>
+          </ng-template>
+          <ng-template #expandContent>
+            <ng-container *ngFor="let blogpost of item.blogs">
+              <blogpost-card [item]="blogpost"></blogpost-card>
+            </ng-container>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
+    </stack-layout>
+  </stack-layout>
+</scroll-view>

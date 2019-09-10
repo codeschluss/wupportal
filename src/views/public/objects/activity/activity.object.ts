@@ -1,9 +1,10 @@
-import { Component, Type } from '@angular/core';
+import { Component, Optional, Type } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { CrudJoiner, PlatformProvider, Title } from '@wooportal/core';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { ScheduleModel } from '../../../../realm/models/schedule.model';
+import { ClientPackage } from '../../../../utils/package';
 import { BaseObject } from '../base.object';
 
 @Component({
@@ -17,7 +18,7 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   public selection: ScheduleModel;
 
-  public source: SafeResourceUrl;
+  public source: SafeResourceUrl | string;
 
   protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
     .with('address').yield('suburb')
@@ -39,7 +40,7 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   }
 
   public constructor(
-    private sanitizer: DomSanitizer,
+    @Optional() private sanitizer: DomSanitizer,
     platformProvider: PlatformProvider,
     route: ActivatedRoute,
     titleService: Title
@@ -61,7 +62,12 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   protected ngPostInit(): void {
     const url = `/mapview?embed=true&items=${this.item.id}`;
-    this.source = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
+    if (this.platformProvider.type === 'Online') {
+      this.source = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    } else {
+      this.source = ClientPackage.config.defaults.appUrl + url;
+    }
   }
 
   private selectable(date: Date): boolean {

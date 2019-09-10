@@ -38,7 +38,7 @@ export abstract class BaseObject<Model extends CrudModel>
   private expands: QueryList<ExpandCompat>;
 
   public constructor(
-    private platformProvider: PlatformProvider,
+    protected platformProvider: PlatformProvider,
     private route: ActivatedRoute,
     private titleService: Title
   ) {

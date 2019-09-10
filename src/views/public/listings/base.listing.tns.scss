@@ -1,10 +1,13 @@
 @import '../../../app.vars.scss';
 
 scroll-view {
-  height: 100%;
+  & > stack-layout {
+    & > grid-layout {
+      margin: rem(1);
 
-  & > flexbox-layout {
-    flex-wrap: wrap;
-    justify-content: center;
+      & + grid-layout {
+        margin-top: 0;
+      }
+    }
   }
 }

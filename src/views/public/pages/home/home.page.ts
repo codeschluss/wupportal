@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver } from '@wooportal/core';
+import { CrudJoiner, CrudResolver, Title } from '@wooportal/core';
+import { Observable } from 'rxjs';
 import { ActivityModel } from '../../../../realm/models/activity.model';
-import { ClientPackage } from '../../../../utils/package';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -18,8 +18,8 @@ export class HomePageComponent extends BasePage {
     return this.route.snapshot.data.activities;
   }
 
-  public get title(): string {
-    return ClientPackage.config.defaults.title;
+  public get name(): Observable<string> {
+    return this.titleService.name;
   }
 
   protected get routing(): Route {
@@ -40,7 +40,8 @@ export class HomePageComponent extends BasePage {
   }
 
   public constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: Title
   ) {
     super();
   }

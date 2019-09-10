@@ -7,7 +7,13 @@ import { CoreSettings } from './settings';
 @Injectable({ providedIn: 'root' })
 export class Title {
 
+  private base: BehaviorSubject<string>;
+
   private title: BehaviorSubject<string>;
+
+  public get name(): Observable<string> {
+    return this.base.asObservable();
+  }
 
   public get value(): Observable<string> {
     return this.title.asObservable();
@@ -18,19 +24,20 @@ export class Title {
     private platform: PlatformProvider,
     private titleService: TitleService
   ) {
-    this.title = new BehaviorSubject<string>(this.coreSettings.defaultTitle);
+    this.base = new BehaviorSubject<string>(this.coreSettings.defaultTitle);
+    this.title = new BehaviorSubject<string>(this.base.value);
   }
 
   public set(title?: string): void {
-    title = title
-      ? `${title} | ${this.coreSettings.defaultTitle}`
-      : this.coreSettings.defaultTitle;
-
-    this.title.next(title);
+    this.title.next(title ? `${title} | ${this.base.value}` : this.base.value);
 
     if (['Server', 'Web'].includes(this.platform.name)) {
-      this.titleService.setTitle(title);
+      this.titleService.setTitle(this.title.value);
     }
+  }
+
+  public setBase(base: string): void {
+    this.base.next(base);
   }
 
 }

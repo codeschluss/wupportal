@@ -1,4 +1,4 @@
-<navbar-compat [title]="title">
+<navbar-compat [title]="name | async">
   <action-item ios.position="right">
     <stack-layout>
       <activity-indicator [busy]="busy | async"></activity-indicator>
@@ -39,7 +39,7 @@
         </stack-layout>
         <stack-layout ripple [class.active]="url === '/'" (tap)="navigate('/')">
           <icon-compat icon="play-circle"></icon-compat>
-          <label [text]="title"></label>
+          <label [text]="name | async"></label>
         </stack-layout>
         <stack-layout ripple
           [class.active]="url.startsWith('/mapview')"

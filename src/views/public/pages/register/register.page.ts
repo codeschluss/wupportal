@@ -1,13 +1,12 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudResolver, TokenProvider } from '@wooportal/core';
-import { merge } from 'rxjs';
+import { CrudJoiner, CrudResolver, Title, TokenProvider } from '@wooportal/core';
+import { merge, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
 import { UserModel } from '../../../../realm/models/user.model';
 import { UserProvider } from '../../../../realm/providers/user.provider';
-import { ClientPackage } from '../../../../utils/package';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -57,12 +56,12 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
 
   protected path: string = 'register';
 
-  public get organisations(): OrganisationModel[] {
-    return this.route.snapshot.data.organisations;
+  public get name(): Observable<string> {
+    return this.titleService.name;
   }
 
-  public get title(): string {
-    return ClientPackage.config.defaults.title;
+  public get organisations(): OrganisationModel[] {
+    return this.route.snapshot.data.organisations;
   }
 
   public get valid(): boolean {
@@ -91,6 +90,7 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
   public constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private titleService: Title,
     private tokenProvider: TokenProvider,
     private userProvider: UserProvider
   ) {

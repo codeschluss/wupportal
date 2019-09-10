@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TokenProvider } from '@wooportal/core';
-import { EMPTY } from 'rxjs';
+import { Title, TokenProvider } from '@wooportal/core';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError, filter, map, take } from 'rxjs/operators';
-import { ClientPackage } from '../../../../utils/package';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -29,8 +28,8 @@ export class LoginPageComponent extends BasePage implements OnInit {
 
   protected path: string = 'login';
 
-  public get title(): string {
-    return ClientPackage.config.defaults.title;
+  public get name(): Observable<string> {
+    return this.titleService.name;
   }
 
   public get valid(): boolean {
@@ -41,6 +40,7 @@ export class LoginPageComponent extends BasePage implements OnInit {
 
   public constructor(
     private router: Router,
+    private titleService: Title,
     private tokenProvider: TokenProvider
   ) {
     super();

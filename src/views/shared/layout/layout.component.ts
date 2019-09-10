@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } f
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { I18nResolver, JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, Title, TokenProvider, TRANSLATIONS_FACTORY } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
-import { BehaviorSubject, fromEvent } from 'rxjs';
+import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData } from 'tns-core-modules/application';
 import { LanguageModel } from '../../../realm/models/language.model';
@@ -53,8 +53,8 @@ export class LayoutComponent implements OnInit {
 
   private serializer: UrlSerializer = new CoreUrlSerializer();
 
-  public get title(): string {
-    return ClientPackage.config.defaults.title;
+  public get name(): Observable<string> {
+    return this.titleService.name;
   }
 
   public get url(): string {

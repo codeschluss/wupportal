@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route } from '@angular/router';
-import { PlatformRouterModule } from '@wooportal/core';
+import { CrudJoiner, CrudResolver, PlatformRouterModule } from '@wooportal/core';
+import { ConfigurationModel } from '../../realm/models/configuration.model';
 import { ActivityListingComponent } from './listings/activities/activity.listing';
 import { BlogpostListingComponent } from './listings/blogposts/blogpost.listing';
 import { InfopageListingComponent } from './listings/infopages/infopage.listing';
@@ -54,7 +55,15 @@ const routes: Route[] = [
     {
       path: '',
       children: routes,
-      component: PublicComponent
+      component: PublicComponent,
+      resolve: {
+        configuration: CrudResolver
+      },
+      data: {
+        resolve: {
+          configuration: CrudJoiner.of(ConfigurationModel)
+        }
+      }
     }
   ])]
 })

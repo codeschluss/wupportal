@@ -1,15 +1,9 @@
 @import '../../../app.vars.scss';
 
 main {
-  & > [base=card] {
-    & + [base=card] {
-      padding-top: 0;
-    }
-  }
-
-  & > [compat=pager] {
+  [compat=pager] {
     @include flex(row, center, center);
-    margin: 0 1rem 1rem 1rem;
+    margin: 1rem;
     width: 100%;
   }
 }

@@ -88,6 +88,10 @@ layout-component {
         margin-bottom: -.54rem;
         transition: width $animation-duration;
 
+        &.active {
+          color: $color-primary;
+        }
+
         &.mat-form-field-should-float {
           width: 15rem;
         }
@@ -214,20 +218,26 @@ layout-component {
                 text-transform: uppercase;
               }
 
-              .mat-form-field-label {
-                color: inherit !important;
-              }
-
-              .mat-form-field-underline {
-                background-color: currentColor;
-
-                .mat-form-field-ripple {
-                  background-color: currentColor;
+              mat-form-field {
+                &.active {
+                  color: $color-primary;
                 }
-              }
 
-              .mat-input-element {
-                caret-color: currentColor;
+                .mat-form-field-label {
+                  color: inherit !important;
+                }
+
+                .mat-form-field-underline {
+                  background-color: currentColor;
+
+                  .mat-form-field-ripple {
+                    background-color: currentColor;
+                  }
+                }
+
+                .mat-input-element {
+                  caret-color: currentColor;
+                }
               }
             }
           }

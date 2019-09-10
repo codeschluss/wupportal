@@ -204,9 +204,3 @@ $color-warn: mat-color(map-get($theme-palette, warn));
 @function rem($num) {
   @return $num * 16;
 }
-
-.text-dark { color: $color-dark; }
-.text-light { color: $color-light; }
-.text-primary { color: $color-primary; }
-.text-accent { color: $color-accent; }
-.text-warn { color: $color-warn; }

@@ -19,10 +19,8 @@ export class LoadingProvider {
   }
 
   public finished(request: HttpRequest<any>): void {
-    if (this.requests.includes(request)) {
-      this.requests = this.requests.filter((r) => r !== request);
-      this.loading.next(this.requests.length);
-    }
+    this.requests.splice(this.requests.indexOf(request), 1);
+    this.loading.next(this.requests.length);
   }
 
 }

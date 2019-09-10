@@ -37,6 +37,7 @@
     }
   },
   "android": {
+    "markingMode": "none",
     "v8Flags": "--expose_gc"
   },
   "nativescript": {

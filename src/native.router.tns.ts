@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Route } from '@angular/router';
+import { PreloadAllModules, Route } from '@angular/router';
 import { I18nResolver, SessionResolver } from '@wooportal/core';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { LayoutComponent } from './views/shared/layout/layout.component';
@@ -39,7 +39,9 @@ const routes: Route[] = [
         xliff: I18nResolver
       }
     }
-  ])]
+  ], {
+    preloadingStrategy: PreloadAllModules
+  })]
 })
 
 export class NativeRouter { }

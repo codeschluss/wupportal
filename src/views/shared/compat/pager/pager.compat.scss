@@ -38,10 +38,14 @@ nav {
       }
     }
 
-    & > a[disabled] {
-      background: $color-bg-dark !important;
+    & > a {
+      background: $color-primary !important;
       color: $color-light !important;
-      pointer-events: none;
+
+      &[disabled] {
+        filter: grayscale(1);
+        pointer-events: none;
+      }
     }
 
     & > i18n {

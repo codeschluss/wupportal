@@ -36,7 +36,7 @@
     <icon-compat icon="info-circle"></icon-compat>
     <i18n i18n="@@infopages">infopages</i18n>
   </a>
-  <mat-form-field [class.text-primary]="url.startsWith('/search')">
+  <mat-form-field [class.active]="url.startsWith('/search')">
     <icon-compat matPrefix icon="search"></icon-compat>
     <input #navbarInput matInput
       value="{{ filter() }}"
@@ -85,7 +85,7 @@
       <a mat-button
         [class.active]="url.startsWith('/imprint')"
         [routerLink]="['/', 'imprint']">
-        <icon-compat icon="paragraph"></icon-compat>
+        <icon-compat icon="bullhorn"></icon-compat>
         <i18n i18n="@@imprint">imprint</i18n>
       </a>
       <a mat-button
@@ -165,7 +165,7 @@
       <mat-list-item disableRipple
         [class.active]="url.startsWith('/search')">
         <icon-compat icon="search"></icon-compat>
-        <mat-form-field [class.text-primary]="url.startsWith('/search')">
+        <mat-form-field [class.active]="url.startsWith('/search')">
           <input #drawerInput matInput
             tabindex="-1"
             value="{{ filter() }}"
@@ -232,7 +232,7 @@
       <a mat-list-item
         [class.active]="url.startsWith('/imprint')"
         [routerLink]="['/', 'imprint']">
-        <icon-compat icon="paragraph"></icon-compat>
+        <icon-compat icon="bullhorn"></icon-compat>
         <i18n i18n="@@imprint">imprint</i18n>
       </a>
       <a mat-list-item

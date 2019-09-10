@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import * as marked from 'marked';
 import { MarkedCompat } from './marked.compat.i';
 
@@ -9,7 +9,8 @@ import { MarkedCompat } from './marked.compat.i';
   `
 })
 
-export class MarkedCompatComponent implements MarkedCompat, OnChanges {
+export class MarkedCompatComponent
+  implements MarkedCompat, OnInit {
 
   @HostBinding('attr.compat')
   public readonly compat: string = 'marked';
@@ -19,7 +20,7 @@ export class MarkedCompatComponent implements MarkedCompat, OnChanges {
 
   public html: string;
 
-  public ngOnChanges() {
+  public ngOnInit() {
     this.html = marked(this.data);
   }
 

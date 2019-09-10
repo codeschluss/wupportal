@@ -45,7 +45,9 @@ import { ClientPackage } from './utils/package';
 
 export class ClientModule {
 
-  constructor(iconLibrary: FaIconLibrary) {
+  constructor(
+    iconLibrary: FaIconLibrary
+  ) {
     iconLibrary.addIconPacks(fab, fas);
   }
 

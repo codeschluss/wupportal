@@ -40,7 +40,9 @@ import { ClientPackage } from './utils/package';
 
 export class NativeModule {
 
-  constructor(iconLibrary: FaIconLibrary) {
+  constructor(
+    iconLibrary: FaIconLibrary
+  ) {
     iconLibrary.addIconPacks(fab, fas);
   }
 

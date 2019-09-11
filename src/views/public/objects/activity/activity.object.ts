@@ -1,6 +1,7 @@
 import { Component, Optional, Type } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CrudJoiner, PlatformProvider, Title } from '@wooportal/core';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { ScheduleModel } from '../../../../realm/models/schedule.model';
@@ -41,11 +42,12 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   public constructor(
     @Optional() private sanitizer: DomSanitizer,
+    i18n: I18n,
     platformProvider: PlatformProvider,
     route: ActivatedRoute,
     titleService: Title
   ) {
-    super(platformProvider, route, titleService);
+    super(platformProvider, i18n, route, titleService);
   }
 
   public click(event: Event): void {

@@ -3,12 +3,10 @@
     <grid-layout>
       <label textWrap="true">
         <FormattedString>
-          <i18n #at i18n="@@at" unit="at"></i18n>
-          <i18n #by i18n="@@by" unit="by"></i18n>
           <span [text]="item.name"></span>
-          <span class="small" [text]="' ' + by.text + ' '"></span>
+          <span class="small" [text]="' ' + string('by') + ' '"></span>
           <span class="small" [text]="item.organisation.name"></span>
-          <span class="small" [text]="' ' + at.text + ' '"></span>
+          <span class="small" [text]="' ' + string('at') + ' '"></span>
           <span class="small" [text]="item.address.place + ' '"></span>
           <span class="small" [text]="item.address.suburb.name"></span>
         </FormattedString>

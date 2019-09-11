@@ -3,9 +3,8 @@
     <grid-layout>
       <label textWrap="true">
         <FormattedString>
-          <i18n #ofTopic i18n="@@ofTopic" unit="ofTopic"></i18n>
           <span [text]="item.name"></span>
-          <span class="small" [text]="' ' + ofTopic.text + ' '"></span>
+          <span class="small" [text]="' ' + string('ofTopic') + ' '"></span>
           <span class="small" [text]="item.topic.name"></span>
         </FormattedString>
       </label>

@@ -1,5 +1,6 @@
 import { AfterViewInit, HostBinding, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CrudJoiner, CrudModel, CrudResolver, PlatformProvider, Selfrouter, Title } from '@wooportal/core';
 import { ExpandCompatComponent } from '../../shared/compat/expand/expand.compat';
 import { ExpandCompat } from '../../shared/compat/expand/expand.compat.i';
@@ -39,6 +40,7 @@ export abstract class BaseObject<Model extends CrudModel>
 
   public constructor(
     protected platformProvider: PlatformProvider,
+    private i18n: I18n,
     private route: ActivatedRoute,
     private titleService: Title
   ) {
@@ -57,7 +59,13 @@ export abstract class BaseObject<Model extends CrudModel>
   }
 
   public expanded(expand: ExpandCompat): void {
-    this.expands.filter((e) => e !== expand).forEach((e) => e.close());
+    if (this.expands.length && this.platformProvider.name !== 'Server') {
+      this.expands.filter((e) => e !== expand).forEach((e) => e.close());
+    }
+  }
+
+  public string(id: string): string {
+    return this.i18n({ id, value: id }) || id;
   }
 
   protected ngPostInit(): void { }

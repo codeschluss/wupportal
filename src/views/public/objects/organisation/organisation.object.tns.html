@@ -3,9 +3,8 @@
     <grid-layout>
       <label textWrap="true">
         <FormattedString>
-          <i18n #at i18n="@@at" unit="at"></i18n>
           <span [text]="item.name"></span>
-          <span class="small" [text]="' ' + at.text + ' '"></span>
+          <span class="small" [text]="' ' + string('at') + ' '"></span>
           <span class="small" [text]="item.address.place + ' '"></span>
           <span class="small" [text]="item.address.suburb.name"></span>
         </FormattedString>

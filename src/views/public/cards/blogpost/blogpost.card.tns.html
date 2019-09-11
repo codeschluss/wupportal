@@ -5,9 +5,8 @@
       (tap)="router.navigate(['/', 'blogposts', item.id])">
       <label textWrap="true">
         <FormattedString>
-          <i18n #by i18n="@@by" unit="by"></i18n>
           <span [text]="item.name"></span>
-          <span class="small" [text]="' ' + by.text + ' '"></span>
+          <span class="small" [text]="' ' + string('by') + ' '"></span>
           <span class="small" [text]="item.author"></span>
         </FormattedString>
       </label>
@@ -18,8 +17,7 @@
         (tap)="router.navigate(['/', 'activities', item.activity.id])">
         <label textWrap="true">
           <FormattedString>
-            <i18n #about i18n="@@about" unit="about"></i18n>
-            <span [text]="about.text + ' '"></span>
+            <span [text]="string('about') + ' '"></span>
             <span [text]="item.activity.name"></span>
           </FormattedString>
         </label>

@@ -1,8 +1,8 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, OnInit, TRANSLATIONS, TRANSLATIONS_FORMAT, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { I18nResolver, JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, Title, TokenProvider, TRANSLATIONS_FACTORY } from '@wooportal/core';
+import { JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, Title, TokenProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
@@ -13,18 +13,6 @@ import { ClientPackage } from '../../../utils/package';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
 
 @Component({
-  providers: [
-    I18n,
-    {
-      deps: [I18nResolver],
-      provide: TRANSLATIONS,
-      useFactory: TRANSLATIONS_FACTORY
-    },
-    {
-      provide: TRANSLATIONS_FORMAT,
-      useValue: 'xliff'
-    }
-  ],
   selector: 'layout-component',
   templateUrl: 'layout.component.html'
 })

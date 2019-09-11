@@ -1,4 +1,5 @@
 import { DOCUMENT } from '@angular/common';
+import { HttpRequest } from '@angular/common/http';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
@@ -28,10 +29,6 @@ export class LayoutComponent implements OnInit {
   public language: string;
 
   public languages: LanguageModel[] = [];
-
-  public navigate: (...path: string[]) => Promise<boolean>;
-
-  public search: (filter: string) => Promise<any>;
 
   @ViewChild('drawer', { static: true })
   private drawer: DrawerCompat;
@@ -65,10 +62,6 @@ export class LayoutComponent implements OnInit {
 
   public ngOnInit(): void {
     this.busy = new BehaviorSubject<number>(1);
-    this.navigate = (...path: string[]) => this.router.navigate(path);
-    this.search = (input: string) => this.navigate('/', 'search', input)
-      .then(() => setTimeout(() => this.drawer.hide(), 0));
-
     this.languageProvider.readAll().subscribe((l) => this.languages = l);
     this.sessionProvider.value.subscribe((s) => this.language = s.language);
 
@@ -77,7 +70,7 @@ export class LayoutComponent implements OnInit {
       tap(() => this.drawer.hide()),
       map((event) => event.url),
       startWith(this.router.url)
-    ).subscribe((url) => this.navigating(url));
+    ).subscribe((url) => this.transition(url));
 
     if (this.route.snapshot.queryParams.embed) {
       this.document.body.classList.add('embedded');
@@ -113,13 +106,47 @@ export class LayoutComponent implements OnInit {
       : '';
   }
 
+  public navigate(...path: string[]): Promise<boolean> {
+    const block = Object.create(HttpRequest);
+    this.loadingProvider.enqueue(block);
+
+    const navigation = new Promise((resolve) => {
+      this.drawer.hide();
+      setTimeout(resolve, (() => {
+        switch (this.platformProvider.name) {
+          case 'Android': return 500;
+          default: return 0;
+        }
+      })());
+    });
+
+    return navigation
+      .then(() => this.router.navigate(path))
+      .finally(() => setTimeout(() => this.loadingProvider.finished(block)));
+  }
+
   public translate(language: string): void {
     this.sessionProvider.changeLanguage(language);
     this.element.nativeElement.classList.add('fadeout');
-    setTimeout(() => this.document.location.reload(), 250);
+    setTimeout(() => this.document.location.reload(), 500);
   }
 
-  private navigating(url: string): void {
+  private topoff(event: Event): void {
+    if ((event.target as HTMLElement).classList.contains('topoff')) {
+      const height = this.header.nativeElement.clientHeight;
+      const scroll = (event.target as HTMLElement).scrollTop;
+
+      if (height) {
+        if (scroll > height) {
+          this.header.nativeElement.style.height = '0';
+        }
+      } else if (!scroll) {
+        this.header.nativeElement.style.height = null;
+      }
+    }
+  }
+
+  private transition(url: string): void {
     let title = null;
     const path = url.replace(/\?.*$/, '').slice(1).split('/');
 
@@ -142,25 +169,10 @@ export class LayoutComponent implements OnInit {
 
     if (this.platformProvider.name === 'Web') {
       const topoff = this.document.getElementsByClassName('topoff');
-      Array.from(topoff).forEach((element) => element.scrollTo({
+      Array.from(topoff).forEach((e) => e.scrollTo ? e.scrollTo({
         behavior: 'smooth',
         top: 0
-      }));
-    }
-  }
-
-  private topoff(event: Event): void {
-    if ((event.target as HTMLElement).classList.contains('topoff')) {
-      const height = this.header.nativeElement.clientHeight;
-      const scroll = (event.target as HTMLElement).scrollTop;
-
-      if (height) {
-        if (scroll > height) {
-          this.header.nativeElement.style.height = '0';
-        }
-      } else if (!scroll) {
-        this.header.nativeElement.style.height = null;
-      }
+      }) : e.scrollTop = 0);
     }
   }
 

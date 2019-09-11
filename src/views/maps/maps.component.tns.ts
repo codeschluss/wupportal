@@ -1,7 +1,6 @@
-import { HttpRequest } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { LoadingProvider, PlatformProvider, Selfrouter } from '@wooportal/core';
+import { PlatformProvider, Selfrouter } from '@wooportal/core';
 import { fromEvent } from 'rxjs';
 import { LoadEventData, WebView } from 'tns-core-modules/ui/web-view';
 import { ClientPackage } from '../../utils/package';
@@ -12,13 +11,11 @@ import { ClientPackage } from '../../utils/package';
 })
 
 export class MapsComponent
-  extends Selfrouter implements OnInit, AfterViewInit, OnDestroy {
+  extends Selfrouter implements AfterViewInit {
 
   protected routing: Route = {
     path: ''
   };
-
-  private block: HttpRequest<any> = Object.create(HttpRequest);
 
   @ViewChild('webview', { read: ElementRef, static: true })
   private webview: ElementRef<WebView>;
@@ -28,17 +25,10 @@ export class MapsComponent
   }
 
   public constructor(
-    private loadingProvider: LoadingProvider,
     private platformProvider: PlatformProvider,
     private router: Router
   ) {
     super();
-  }
-
-  public ngOnInit(): void {
-    this.loadingProvider.enqueue(this.block);
-    this.webview.nativeElement.once('loadFinished', () =>
-      this.loadingProvider.finished(this.block));
   }
 
   public ngAfterViewInit(): void {
@@ -70,10 +60,6 @@ export class MapsComponent
         // TODO: https://board.codeschluss.de/project/wooportal/us/37
         return;
     }
-  }
-
-  public ngOnDestroy(): void {
-    this.loadingProvider.finished(this.block);
   }
 
 }

@@ -2,7 +2,6 @@
 
 page {
   color: $color-dark;
-  background-color: $color-light;
 
   & > action-bar {
     background-color: $color-primary;
@@ -33,6 +32,8 @@ page {
 
   [compat=drawer] {
     #TKDrawerContent {
+      background-color: $color-light;
+
       scroll-view {
         flexbox-layout {
           flex-direction: column;

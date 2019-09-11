@@ -40,7 +40,8 @@
     <icon-compat matPrefix icon="search"></icon-compat>
     <input #navbarInput matInput
       value="{{ filter() }}"
-      (keydown.enter)="navbarInput.value && search(navbarInput.value)">
+      (keydown.enter)="navbarInput.value
+        && navigate('/', 'search', navbarInput.value)">
     <mat-label><i18n i18n="@@search">search</i18n></mat-label>
     <button mat-button mat-icon-button matSuffix
       [disabled]="!navbarInput.value"
@@ -169,7 +170,8 @@
           <input #drawerInput matInput
             tabindex="-1"
             value="{{ filter() }}"
-            (keydown.enter)="drawerInput.value && search(drawerInput.value)">
+            (keydown.enter)="drawerInput.value
+              && navigate('/', 'search', drawerInput.value)">
           <mat-label><i18n i18n="@@search">search</i18n></mat-label>
           <button mat-button mat-icon-button matSuffix
             [disabled]="!drawerInput.value"

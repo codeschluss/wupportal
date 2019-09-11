@@ -40,6 +40,7 @@
               </label>
               <label>
                 <FormattedString>
+                  <span [text]="item.address.postalCode + ' '"></span>
                   <span [text]="item.address.place + ' '"></span>
                   <span [text]="item.address.suburb.name"></span>
                 </FormattedString>

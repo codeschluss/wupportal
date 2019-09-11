@@ -37,8 +37,12 @@
                 <i18n i18n="@@address">address</i18n>
               </td>
               <td>
-                  {{ item.address.street }} {{ item.address.houseNumber }}
-                  <br>{{ item.address.place }} {{ item.address.suburb.name }}
+                  {{ item.address.street }}
+                  {{ item.address.houseNumber }}
+                  <br>
+                  {{ item.address.postalCode }}
+                  {{ item.address.place }}
+                  {{ item.address.suburb.name }}
               </td>
             </tr>
             <ng-container *ngIf="item.phone">

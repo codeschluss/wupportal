@@ -64,11 +64,11 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   }
 
   protected ngPostInit(): void {
-    const url = `/mapview?embed=true&items=${this.item.id}`;
+    const url = `/mapview?embed&items=${this.item.id}`;
 
     switch (this.platformProvider.type) {
       case 'Native':
-        this.source = ClientPackage.config.defaults.appUrl + url;
+        this.source = ClientPackage.config.defaults.appUrl + url + '&native';
         break;
 
       case 'Online':

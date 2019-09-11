@@ -21,7 +21,7 @@ export class MapsComponent
   private webview: ElementRef<WebView>;
 
   public get source(): string {
-    return `${ClientPackage.config.defaults.appUrl}/mapview?embed=native`;
+    return `${ClientPackage.config.defaults.appUrl}/mapview?embed&native`;
   }
 
   public constructor(

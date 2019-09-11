@@ -46,6 +46,9 @@
 
 layout-component {
   body.embedded & {
+    border-radius: .25rem;
+    overflow: hidden;
+
     & > header { display: none; }
     [compat=navbar] { display: none; }
   }

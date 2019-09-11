@@ -86,7 +86,7 @@ export class MapsComponent
   private view: ViewComponent;
 
   public get cards(): boolean {
-    return this.route.snapshot.queryParams.embed !== 'true' || this.filled;
+    return !this.route.snapshot.queryParamMap.has('embed') || this.filled;
   }
 
   public get filled(): boolean {
@@ -106,7 +106,7 @@ export class MapsComponent
   }
 
   public get native(): boolean {
-    return this.route.snapshot.queryParams.embed === 'native';
+    return this.route.snapshot.queryParamMap.has('native');
   }
 
   public constructor(
@@ -154,6 +154,7 @@ export class MapsComponent
     });
 
     if (ids) {
+      this.maps.instance.getInteractions().clear();
       this.filter(Arr(ids)).subscribe((items) => {
         this.focus.next(items);
         this.items.next(items);
@@ -167,7 +168,7 @@ export class MapsComponent
       this.fetch().subscribe((items) => this.items.next(items));
     }
 
-    if (this.route.snapshot.queryParams.embed) {
+    if (this.route.snapshot.queryParamMap.has('embed')) {
       this.router.events.subscribe((event: RouterEvent) => {
         return this.connection
           ? this.connection.nextRoute(event.url)

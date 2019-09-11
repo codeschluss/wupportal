@@ -42,7 +42,7 @@ export class MapsComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    if (this.route.snapshot.queryParams.embed === 'true') {
+    if (this.route.snapshot.queryParamMap.has('embed')) {
       this.document.body.classList.add('embedded');
     }
   }

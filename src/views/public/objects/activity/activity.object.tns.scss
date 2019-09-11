@@ -1,1 +1,14 @@
 @import '../../../../app.vars.scss';
+
+scroll-view {
+  & > stack-layout {
+    & > stack-layout {
+      & > .expand-compat {
+        web-view {
+          height: rem(20);
+          width: rem(20);
+        }
+      }
+    }
+  }
+}

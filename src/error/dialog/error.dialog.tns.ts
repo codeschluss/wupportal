@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { openUrl } from '@wooportal/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
-import { openUrl } from 'tns-core-modules/utils/utils';
 import { ClientPackage } from '../../utils/package';
 
 @Component({

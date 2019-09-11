@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, defaultIfEmpty, map, mergeMap } from 'rxjs/operators';
 import { CrudGraph, CrudJoiner } from './crud.joiner';
@@ -7,10 +7,6 @@ import { CrudModel } from './crud.model';
 
 @Injectable({ providedIn: 'root' })
 export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
-
-  public constructor(
-    private router: Router
-  ) { }
 
   public refine(input: CrudModel | CrudModel[], graph: CrudGraph):
     Observable<CrudModel | CrudModel[]> {
@@ -26,14 +22,14 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
     return refined.pipe(map((output) => Object.defineProperties(output, meta)));
   }
 
-  public resolve(route: ActivatedRouteSnapshot):
+  public resolve(route: ActivatedRouteSnapshot & { resolved: object }):
     Observable<CrudModel | CrudModel[]> {
 
-    const navigationId = (this.router as any).navigationId;
+    route.resolved = route.resolved || { };
     const joiner = route.data.resolve[Object.keys(route.routeConfig.resolve)
       .filter((key) => route.routeConfig.resolve[key] === this.constructor)
       .filter((key) => route.data.resolve[key] instanceof CrudJoiner)
-      .find((key) => route.data.resolve[key].navigate(navigationId))];
+      .find((key) => !route.resolved[key] && (route.resolved[key] = true))];
 
     joiner.graph.params.embeddings = CrudJoiner.to(joiner.graph);
 

@@ -15,8 +15,6 @@ export class CrudJoiner {
 
   private joinGraph: CrudGraph;
 
-  private navigationId: number = 0;
-
   public static of(model: Type<CrudModel>, params?: ReadParams): CrudJoiner {
     return Object.assign(new this(), {
       joinGraph: {
@@ -56,12 +54,6 @@ export class CrudJoiner {
     };
 
     return grapher(this.joinGraph);
-  }
-
-  public navigate(navigationId: number): boolean {
-    return navigationId > this.navigationId
-      ? (this.navigationId = navigationId) === navigationId
-      : false;
   }
 
   public with(field: string, params?: ReadParams): CrudJoiner {

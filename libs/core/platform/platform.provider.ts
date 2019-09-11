@@ -37,6 +37,7 @@ export class PlatformProvider implements Compat {
       case 'Web':
         language = navigator.language;
         break;
+
       case 'Server':
         language = this.engine.request.headers['accept-language'];
         break;

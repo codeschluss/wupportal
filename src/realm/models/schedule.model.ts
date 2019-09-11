@@ -17,12 +17,15 @@ export class ScheduleModel
       case until === from.format('DD.MM.YYYY'):
         return `${until}, ${from.format('HH:mm')}
           - ${goto.format('HH:mm')}`;
+
       case until.endsWith(from.format('.MM.YYYY')):
         return `${from.format('DD., HH:mm')}
           - ${until}, ${goto.format('HH:mm')}`;
+
       case until.endsWith(from.format('.YYYY')):
         return `${from.format('DD.MM., HH:mm')}
           - ${until}, ${goto.format('HH:mm')}`;
+
       default:
         return `${from.format('DD.MM.YYYY, HH:mm')}
           - ${until}, ${goto.format('HH:mm')}`;

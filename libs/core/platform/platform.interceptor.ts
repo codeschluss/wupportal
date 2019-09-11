@@ -41,14 +41,12 @@ export class PlatformInterceptor implements HttpInterceptor {
         case request.url.startsWith(this.coreSettings.apiRootUrl):
           const host = engine.request.hostname;
           const prot = engine.request.protocol;
-
           return next.handle(request.clone({
             url: `${prot}://${host}${request.url}`
           }));
 
         default:
           const file = `${engine.root}/client${request.url}`;
-
           return engine.read(file).pipe(map((buffer) => new HttpResponse<any>({
             body: buffer.toString(),
             status: 200,

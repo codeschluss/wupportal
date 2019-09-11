@@ -154,10 +154,12 @@ export class LayoutComponent implements OnInit {
       case 'admin':
         title = null;
         break;
+
       case 'search':
         title = this.i18n({ id: path[0], value: path[0] });
         title += `: ${this.filter(url)}`;
         break;
+
       default:
         title = this.i18n({ id: path[0], value: path[0] });
         break;

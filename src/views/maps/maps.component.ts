@@ -93,10 +93,13 @@ export class MapsComponent
     switch (true) {
       case 'fullscreenElement' in this.document:
         return (this.document as any).fullscreenElement !== null;
+
       case 'webkitFullscreenElement' in this.document:
         return (this.document as any).webkitFullscreenElement !== null;
+
       case 'mozFullScreenElement' in this.document:
         return (this.document as any).mozFullScreenElement !== null;
+
       case 'msFullscreenElement' in this.document:
         return (this.document as any).msFullscreenElement !== null;
     }

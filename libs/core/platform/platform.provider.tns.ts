@@ -50,6 +50,7 @@ export class PlatformProvider implements Compat {
       case connectionType.mobile:
       case connectionType.wifi:
         return true;
+
       default:
       case connectionType.none:
         return false;

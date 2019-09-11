@@ -85,6 +85,7 @@ export class SharePieceComponent extends BasePiece {
         this.titleService.name.pipe(take(1)).subscribe((name) =>
           SocialShare.shareUrl(this.href, `${this.item.name} | ${name}`));
         break;
+
       case 'Online':
         this.document.defaultView.open(target.url + this.href, '_blank');
         break;

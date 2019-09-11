@@ -101,12 +101,6 @@ main {
                     &:first-child {
                       font-weight: bold;
                       text-align: right;
-
-                      & > [compat=i18n] {
-                        &::after {
-                          content: ':';
-                        }
-                      }
                     }
 
                     & > mat-chip-list {

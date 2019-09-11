@@ -28,7 +28,74 @@
           <i18n i18n="@@details" unit="details"></i18n>
         </ng-template>
         <ng-template #expandContent>
-
+          <stack-layout class="detail">
+            <i18n i18n="@@address" unit="address" verticalAlignment="top">
+            </i18n>
+            <stack-layout>
+              <label>
+                <FormattedString>
+                  <span [text]="item.address.street + ' '"></span>
+                  <span [text]="item.address.houseNumber"></span>
+                </FormattedString>
+              </label>
+              <label>
+                <FormattedString>
+                  <span [text]="item.address.place + ' '"></span>
+                  <span [text]="item.address.suburb.name"></span>
+                </FormattedString>
+              </label>
+            </stack-layout>
+          </stack-layout>
+          <ng-container *ngIf="item.phone">
+            <stack-layout class="detail">
+              <i18n i18n="@@phone" unit="phone"></i18n>
+              <stack-layout ripple (tap)="openUrl('tel:' + item.phone)">
+                <icon-compat icon="phone"></icon-compat>
+                <label [text]="item.phone"></label>
+              </stack-layout>
+            </stack-layout>
+          </ng-container>
+          <ng-container *ngIf="item.mail">
+            <stack-layout class="detail">
+              <i18n i18n="@@email" unit="email"></i18n>
+              <stack-layout ripple (tap)="openUrl('mailto:' + item.mail)">
+                <icon-compat icon="envelope"></icon-compat>
+                <label [text]="item.mail"></label>
+              </stack-layout>
+            </stack-layout>
+          </ng-container>
+          <stack-layout class="detail">
+            <i18n i18n="@@category" unit="category"></i18n>
+            <stack-layout ripple
+              class="category"
+              [borderColor]="item.category.color"
+              (tap)="router.navigate(['/', 'activities'],
+                { queryParams: { categories: item.category.id } })">
+              <label [text]="item.category.name"></label>
+            </stack-layout>
+          </stack-layout>
+          <stack-layout class="detail">
+            <i18n i18n="@@suburb" unit="suburb"></i18n>
+            <stack-layout ripple
+              (tap)="router.navigate(['/', 'activities'],
+                { queryParams: { suburbs: item.address.suburb.id } })">
+              <icon-compat icon="city"></icon-compat>
+              <label [text]="item.address.suburb.name"></label>
+            </stack-layout>
+          </stack-layout>
+          <stack-layout class="detail">
+            <i18n i18n="@@targetGroups" unit="targetGroups"></i18n>
+            <stack-layout>
+              <ng-container *ngFor="let targetGroup of item.targetGroups">
+                <stack-layout ripple
+                  (tap)="router.navigate(['/', 'activities'],
+                    { queryParams: { targetgroups: targetGroup.id } })">
+                  <icon-compat icon="users"></icon-compat>
+                  <label [text]="targetGroup.name"></label>
+                </stack-layout>
+              </ng-container>
+            </stack-layout>
+          </stack-layout>
         </ng-template>
       </expand-compat>
       <expand-compat #schedules

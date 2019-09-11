@@ -80,7 +80,7 @@
             <tr>
               <td><i18n i18n="@@suburb">suburb</i18n></td>
               <td>
-                <a mat-stroked-button
+                <a mat-button
                   [queryParams]="{ suburbs: item.address.suburb.id }"
                   [routerLink]="['/', 'activities']">
                   <icon-compat icon="city"></icon-compat>
@@ -92,7 +92,7 @@
               <td><i18n i18n="@@targetGroups">targetGroups</i18n></td>
               <td>
                 <ng-container *ngFor="let targetGroup of item.targetGroups">
-                  <a mat-stroked-button
+                  <a mat-button
                     [queryParams]="{ targetgroups: targetGroup.id }"
                     [routerLink]="['/', 'activities']">
                     <icon-compat icon="users"></icon-compat>

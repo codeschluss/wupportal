@@ -36,6 +36,35 @@ scroll-view {
           font-weight: 300;
           padding-left: rem(.5);
         }
+
+        .detail {
+          orientation: horizontal;
+          padding: rem(.25) 0;
+
+          & > [unit] {
+            font-weight: bold;
+            margin-right: rem(1);
+            text-align: right;
+            vertical-align: center;
+            width: 27.5%;
+          }
+
+          [ripple] {
+            border-radius: rem(.25);
+            orientation: horizontal;
+            padding: rem(.25) rem(.5) rem(.25) rem(.25);
+
+            &[borderColor] {
+              border-radius: rem(1);
+              border-width: rem(.25);
+              padding: rem(.25) rem(.5);
+            }
+
+            & > label {
+              vertical-align: center;
+            }
+          }
+        }
       }
     }
   }

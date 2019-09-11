@@ -1,6 +1,6 @@
 import { Component, Optional, Type } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CrudJoiner, PlatformProvider, Title } from '@wooportal/core';
 import { ActivityModel } from '../../../../realm/models/activity.model';
@@ -45,9 +45,10 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     i18n: I18n,
     platformProvider: PlatformProvider,
     route: ActivatedRoute,
+    router: Router,
     titleService: Title
   ) {
-    super(platformProvider, i18n, route, titleService);
+    super(router, platformProvider, i18n, route, titleService);
   }
 
   public click(event: Event): void {

@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { PlatformProvider, SocialShare } from '@wooportal/core';
+import { PlatformProvider, SocialShare, Title } from '@wooportal/core';
+import { take } from 'rxjs/operators';
 import { ClientPackage } from '../../../../utils/package';
 import { BasePiece } from '../base.piece';
 
@@ -24,7 +25,7 @@ export class SharePieceComponent extends BasePiece {
       name: 'E-Mail',
       icon: 'envelope',
       pack: 'fas',
-      url: 'mailto:?body='
+      url: 'mailto:?subject=&body='
     },
     {
       name: 'Facebook',
@@ -59,7 +60,8 @@ export class SharePieceComponent extends BasePiece {
 
   public constructor(
     @Inject(DOCUMENT) private document: Document,
-    private platformProvider: PlatformProvider
+    private platformProvider: PlatformProvider,
+    private titleService: Title
   ) {
     super();
   }
@@ -80,7 +82,8 @@ export class SharePieceComponent extends BasePiece {
   public share(target?: ShareTarget): void {
     switch (this.platformProvider.type) {
       case 'Native':
-        SocialShare.shareUrl(this.href, this.item.name);
+        this.titleService.name.pipe(take(1)).subscribe((name) =>
+          SocialShare.shareUrl(this.href, `${this.item.name} | ${name}`));
         break;
       case 'Online':
         this.document.defaultView.open(target.url + this.href, '_blank');

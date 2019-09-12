@@ -115,6 +115,7 @@ export class LayoutComponent implements OnInit {
       setTimeout(resolve, (() => {
         switch (this.platformProvider.name) {
           case 'Android': return 500;
+          case 'Web': return 400;
           default: return 0;
         }
       })());

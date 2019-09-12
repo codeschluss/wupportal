@@ -175,45 +175,47 @@
           <mat-label><i18n i18n="@@search">search</i18n></mat-label>
           <button mat-button mat-icon-button matSuffix
             [disabled]="!drawerInput.value"
-            [routerLink]="['/', 'search', drawerInput.value]">
+            (click)="navigate('/', 'search', drawerInput.value)">
             <icon-compat icon="chevron-circle-right"></icon-compat>
           </button>
         </mat-form-field>
       </mat-list-item>
-      <a mat-list-item [class.active]="url === '/'" [routerLink]="['/']">
+      <button mat-list-item
+        [class.active]="url === '/'"
+        (click)="navigate('/')">
         <icon-compat icon="play-circle"></icon-compat>
         <span>{{ name | async }}</span>
-      </a>
-      <a mat-list-item
+      </button>
+      <button mat-list-item
         [class.active]="url.startsWith('/mapview')"
-        [routerLink]="['/', 'mapview']">
+        (click)="navigate('/', 'mapview')">
         <icon-compat icon="globe"></icon-compat>
         <i18n i18n="@@mapview">mapview</i18n>
-      </a>
-      <a mat-list-item
+      </button>
+      <button mat-list-item
         [class.active]="url.startsWith('/activities')"
-        [routerLink]="['/', 'activities']">
+        (click)="navigate('/', 'activities')">
         <icon-compat icon="map-marker-alt"></icon-compat>
         <i18n i18n="@@activities">activities</i18n>
-      </a>
-      <a mat-list-item
+      </button>
+      <button mat-list-item
         [class.active]="url.startsWith('/organisations')"
-        [routerLink]="['/', 'organisations']">
+        (click)="navigate('/', 'organisations')">
         <icon-compat icon="at"></icon-compat>
         <i18n i18n="@@organisations">organisations</i18n>
-      </a>
-      <a mat-list-item
+      </button>
+      <button mat-list-item
         [class.active]="url.startsWith('/blogposts')"
-        [routerLink]="['/', 'blogposts']">
+        (click)="navigate('/', 'blogposts')">
         <icon-compat icon="comment-dots"></icon-compat>
         <i18n i18n="@@blogposts">blogposts</i18n>
-      </a>
-      <a mat-list-item
+      </button>
+      <button mat-list-item
         [class.active]="url.startsWith('/infopages')"
-        [routerLink]="['/', 'infopages']">
+        (click)="navigate('/', 'infopages')">
         <icon-compat icon="info-circle"></icon-compat>
         <i18n i18n="@@infopages">infopages</i18n>
-      </a>
+      </button>
     </mat-action-list>
     <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
     <mat-action-list>
@@ -231,18 +233,18 @@
           </button>
         </ng-container>
       </mat-menu>
-      <a mat-list-item
+      <button mat-list-item
         [class.active]="url.startsWith('/imprint')"
-        [routerLink]="['/', 'imprint']">
+        (click)="navigate('/', 'imprint')">
         <icon-compat icon="bullhorn"></icon-compat>
         <i18n i18n="@@imprint">imprint</i18n>
-      </a>
-      <a mat-list-item
+      </button>
+      <button mat-list-item
         [class.active]="url.startsWith('/policies')"
-        [routerLink]="['/', 'policies']">
+        (click)="navigate('/', 'policies')">
         <icon-compat icon="balance-scale"></icon-compat>
         <i18n i18n="@@policies">policies</i18n>
-      </a>
+      </button>
     </mat-action-list>
   </ng-template>
 </drawer-compat>

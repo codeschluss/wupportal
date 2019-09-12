@@ -8,6 +8,16 @@ grid-layout {
       &.card-title {
         padding-bottom: rem(.25);
       }
+
+      &.card-subtitle {
+        font-size: 14;
+      }
+
+      &.card-content {
+        font-size: 14;
+        font-weight: 300;
+        line-height: rem(1);
+      }
     }
   }
 }

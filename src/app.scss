@@ -290,6 +290,10 @@ layout-component {
           flex: 1 0 auto;
           padding: 1rem 0;
 
+          @include media(lt-md) {
+            padding-bottom: 0;
+          }
+
           main {
             margin: 0 auto;
             max-width: $viewport-width;

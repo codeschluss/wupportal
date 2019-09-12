@@ -6,6 +6,10 @@
   max-width: calc(100% - 2rem);
   padding: 1rem;
 
+  @include media(lt-md) {
+    padding-top: 0;
+  }
+
   mat-card {
     box-sizing: border-box;
     max-width: 100%;

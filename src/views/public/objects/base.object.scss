@@ -93,6 +93,8 @@ main {
               & > table {
                 margin: 0 auto;
                 padding: .5rem;
+                table-layout: fixed;
+                width: 100%;
 
                 & > tr {
                   & > td {
@@ -101,6 +103,7 @@ main {
                     &:first-child {
                       font-weight: bold;
                       text-align: right;
+                      width: 30%;
                     }
 
                     & > mat-chip-list {
@@ -116,6 +119,10 @@ main {
                     }
 
                     & > .mat-button-base {
+                      max-width: 100%;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+
                       [compat=icon] {
                         padding-right: .5rem;
                       }

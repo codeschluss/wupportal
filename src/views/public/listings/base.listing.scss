@@ -5,5 +5,9 @@ main {
     @include flex(row, center, center);
     margin: 1rem;
     width: 100%;
+
+    @include media(lt-md) {
+      margin-top: 0;
+    }
   }
 }

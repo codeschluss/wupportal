@@ -172,16 +172,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       : this.steps[index].name;
   }
 
-  public quit(): void {
-    this.location.back();
-  }
-
-  public reset(): void {
-    const route = this.route.snapshot.routeConfig.children[this.index];
-    if (route && route.data.form) { route.data.form.reset(); }
-  }
-
-  protected persist(): void {
+  public persist(): void {
     const routes = this.route.snapshot.routeConfig.children;
     const root = routes.find((route) => route.path === 'main');
     const control = (field, value) => root.data
@@ -193,6 +184,15 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       tap((items) => items.slice(1).forEach((i) => control(i[0], i[1]))),
       mergeMap(() => root.data.form.persist())
     ).subscribe(() => this.location.back());
+  }
+
+  public quit(): void {
+    this.location.back();
+  }
+
+  public reset(): void {
+    const route = this.route.snapshot.routeConfig.children[this.index];
+    if (route && route.data.form) { route.data.form.reset(); }
   }
 
   private routes(): Route[] {

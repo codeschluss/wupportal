@@ -86,7 +86,8 @@ export class MapsComponent
   private view: ViewComponent;
 
   public get cards(): boolean {
-    return !this.route.snapshot.queryParamMap.has('embed') || this.filled;
+    const params = this.route.snapshot.queryParamMap;
+    return this.filled || !(params.has('embed') || params.has('items'));
   }
 
   public get filled(): boolean {

@@ -10,7 +10,9 @@
           </ng-template>
           <ng-template #expandContent>
             <ng-container *ngFor="let page of item.pages">
-              <infopage-card [item]="page"></infopage-card>
+              <grid-layout>
+                <infopage-card [item]="page"></infopage-card>
+              </grid-layout>
             </ng-container>
           </ng-template>
         </expand-compat>

@@ -3,10 +3,18 @@
 scroll-view {
   & > stack-layout {
     & > grid-layout {
-      label + label {
-        font-size: rem(.75);
-        font-weight: 300;
-        padding-left: rem(.5);
+      grid-layout {
+        & + grid-layout {
+          margin-top: rem(1);
+        }
+      }
+
+      label {
+        & + label {
+          font-size: rem(.75);
+          font-weight: 300;
+          padding-left: rem(.5);
+        }
       }
 
       [icon=info-circle] {

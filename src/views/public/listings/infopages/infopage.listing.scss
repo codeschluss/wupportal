@@ -53,12 +53,12 @@ main {
         }
 
         .mat-expansion-panel-body {
-          @include flex(wrap);
+          @include flex(column);
           padding: 0;
 
           & > infopage-card {
             & + infopage-card {
-              padding-left: 0;
+              padding-top: 0;
             }
           }
         }

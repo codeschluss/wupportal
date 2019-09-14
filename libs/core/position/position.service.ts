@@ -14,7 +14,10 @@ export class PositionService {
           { enableHighAccuracy: true }
         );
 
-        return () => navigator.geolocation.clearWatch(id);
+        return () => {
+          navigator.geolocation.clearWatch(id);
+          observer.complete();
+        };
       }).pipe(multicast(() => new ReplaySubject<Position>(1)), refCount());
     }
 

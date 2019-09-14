@@ -17,7 +17,11 @@ export class PlatformProvider implements Compat {
   public get connection(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
       startMonitoring((change) => observer.next(this.online(change)));
-      return () => stopMonitoring();
+
+      return () => {
+        stopMonitoring();
+        observer.complete();
+      };
     }).pipe(multicast(() => new ReplaySubject<boolean>(1)), refCount());
   }
 

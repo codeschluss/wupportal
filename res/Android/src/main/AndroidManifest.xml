@@ -30,6 +30,7 @@
     <activity
       android:name="com.tns.NativeScriptActivity"
       android:label="@string/defaultTitle"
+      android:launchMode="singleTask"
       android:configChanges="keyboardHidden|orientation|screenSize"
       android:theme="@style/LaunchScreenTheme">
 
@@ -40,6 +41,14 @@
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:host="@string/defaultAppUrl"/>
+        <data android:scheme="https"/>
       </intent-filter>
     </activity>
     <activity android:name="com.tns.ErrorReportActivity"/>

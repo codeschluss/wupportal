@@ -1,13 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpRequest } from '@angular/common/http';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, Title, TokenProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
-import { AndroidActivityBackPressedEventData } from 'tns-core-modules/application';
+import { AndroidActivityBackPressedEventData as BackPressedEvent } from 'tns-core-modules/application';
 import { LanguageModel } from '../../../realm/models/language.model';
 import { LanguageProvider } from '../../../realm/providers/language.provider';
 import { ClientPackage } from '../../../utils/package';
@@ -47,6 +47,7 @@ export class LayoutComponent implements OnInit {
   }
 
   public constructor(
+    private changeDetection: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: Document,
     private element: ElementRef<HTMLElement>,
     private i18n: I18n,
@@ -91,11 +92,9 @@ export class LayoutComponent implements OnInit {
         fromEvent(this.document, 'scroll', { capture: true, passive: true })
           .subscribe((event) => this.topoff(event));
       } else if (this.platformProvider.name === 'Android') {
-        fromEvent(this.platformProvider.engine, 'activityBackPressed')
-          .subscribe((event: AndroidActivityBackPressedEventData) => {
-            event.cancel = true;
-            this.drawer.toggle();
-          });
+        fromEvent(this.platformProvider.engine, 'activityBackPressed').pipe(
+          tap((event: BackPressedEvent) => event.cancel = true)
+        ).subscribe(() => this.drawer.toggle());
       }
     }
   }
@@ -110,7 +109,7 @@ export class LayoutComponent implements OnInit {
     const block = Object.create(HttpRequest);
     this.loadingProvider.enqueue(block);
 
-    const navigation = new Promise((resolve) => {
+    return new Promise((resolve) => {
       this.drawer.hide();
       setTimeout(resolve, (() => {
         switch (this.platformProvider.name) {
@@ -119,11 +118,10 @@ export class LayoutComponent implements OnInit {
           default: return 0;
         }
       })());
-    });
-
-    return navigation
-      .then(() => this.router.navigate(path))
-      .finally(() => setTimeout(() => this.loadingProvider.finished(block)));
+    }).then(() => this.router.navigate(path)).finally(() => setTimeout(() => {
+      this.loadingProvider.finished(block);
+      this.changeDetection.detectChanges();
+    }));
   }
 
   public translate(language: string): void {

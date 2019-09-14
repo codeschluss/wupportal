@@ -45,7 +45,7 @@ export class NativeStorageDatabase implements LocalDatabase {
   public keys(): Observable<string> {
     return new Observable<string>((observer) => {
       nativeStorage.getAllKeys().forEach((key) => observer.next(key));
-      observer.complete();
+      return () => observer.complete();
     }).pipe(observeOn(asyncScheduler));
   }
 

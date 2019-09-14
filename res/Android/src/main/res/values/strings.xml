@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="defaultAppUrl">wooportal.test.codeschluss.de</string>
   <string name="defaultTitle">wooportal</string>
 </resources>

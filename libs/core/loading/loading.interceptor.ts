@@ -16,19 +16,12 @@ export class LoadingInterceptor implements HttpInterceptor {
     this.loadingProvider.enqueue(request);
 
     return new Observable<HttpEvent<any>>((observer) => {
-      const subscription = next.handle(request).subscribe(
-        (event) => observer.next(event),
-        (error) => {
-          this.loadingProvider.finished(request);
-          observer.error(error);
-        },
-        () => {
-          this.loadingProvider.finished(request);
-          observer.complete();
-        }
-      );
+      next.handle(request).subscribe(observer);
 
-      return () => subscription.unsubscribe();
+      return () => {
+        this.loadingProvider.finished(request);
+        observer.complete();
+      };
     });
   }
 

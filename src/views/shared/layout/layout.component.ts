@@ -73,7 +73,8 @@ export class LayoutComponent implements OnInit {
       startWith(this.router.url)
     ).subscribe((url) => this.transition(url));
 
-    if (this.route.snapshot.queryParamMap.has('embed')) {
+    const params = this.route.snapshot.queryParamMap;
+    if (params.has('embed') || params.has('native')) {
       this.document.body.classList.add('embedded');
     }
 

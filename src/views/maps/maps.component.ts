@@ -4,7 +4,7 @@ import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewCh
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, Route, Router, RouterEvent } from '@angular/router';
-import { Arr, CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
+import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
@@ -141,7 +141,7 @@ export class MapsComponent
   }
 
   public ngAfterViewInit(): void {
-    const ids = this.route.snapshot.queryParams.items;
+    const params = this.route.snapshot.queryParamMap;
     const source = this.document.defaultView;
 
     this.focus.subscribe(() => this.vector.instance.changed());
@@ -154,9 +154,9 @@ export class MapsComponent
       this.loadingProvider.finished(this.block);
     });
 
-    if (ids) {
+    if (params.has('items')) {
       this.maps.instance.getInteractions().clear();
-      this.filter(Arr(ids)).subscribe((items) => {
+      this.filter(params.getAll('items')).subscribe((items) => {
         this.focus.next(items);
         this.items.next(items);
       });
@@ -205,8 +205,8 @@ export class MapsComponent
   public handleReset(): void {
     this.following(false);
 
-    if (this.route.snapshot.queryParams.items) {
-      this.filter(Arr(this.route.snapshot.queryParams.items))
+    if (this.route.snapshot.queryParamMap.has('items')) {
+      this.filter(this.route.snapshot.queryParamMap.getAll('items'))
         .subscribe((items) => this.focus.next(items));
     } else {
       this.view.instance.animate({

@@ -32,7 +32,7 @@ export class MapsComponent
   }
 
   public ngAfterViewInit(): void {
-    const wv = this.webview.nativeElement;
+    let wv = this.webview.nativeElement as any;
     const url = ClientPackage.config.defaults.appUrl;
 
     // tslint:disable-next-line
@@ -52,8 +52,9 @@ export class MapsComponent
 
     switch (this.platformProvider.name) {
       case 'Android':
-        wv.android.getSettings().setGeolocationEnabled(true);
-        wv.android.getSettings().setJavaScriptEnabled(true);
+        wv = wv.android;
+        wv.getSettings().setGeolocationEnabled(true);
+        wv.getSettings().setJavaScriptEnabled(true);
         return;
 
       case 'iOS':

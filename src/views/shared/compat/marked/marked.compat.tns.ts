@@ -34,7 +34,7 @@ export class MarkedCompatComponent
   }
 
   public ngAfterViewInit(): void {
-    const wv = this.webview.nativeElement;
+    let wv = this.webview.nativeElement as any;
 
     // tslint:disable-next-line
     if(!wv.nativeView){return wv.once('loaded',()=>this.ngAfterViewInit());}
@@ -42,18 +42,20 @@ export class MarkedCompatComponent
 
     switch (this.platformProvider.name) {
       case 'Android':
-        wv.android.setBackgroundColor(0x00000000);
-        wv.android.setHorizontalScrollBarEnabled(false);
-        wv.android.setVerticalScrollBarEnabled(false);
-        wv.android.getSettings().setSupportZoom(false);
+        wv = wv.android;
+        wv.setBackgroundColor(0x00000000);
+        wv.setHorizontalScrollBarEnabled(false);
+        wv.setVerticalScrollBarEnabled(false);
+        wv.getSettings().setSupportZoom(false);
         return;
 
       case 'iOS':
         // TODO: https://board.codeschluss.de/project/wooportal/us/37
-        wv.ios.opaque = false;
-        wv.ios.setDrawsBackground = false;
-        wv.ios.showsHorizontalScrollIndicator = false;
-        wv.ios.showsVerticalScrollIndicator = false;
+        wv = wv.ios;
+        wv.opaque = false;
+        wv.setDrawsBackground = false;
+        wv.showsHorizontalScrollIndicator = false;
+        wv.showsVerticalScrollIndicator = false;
         return;
     }
   }

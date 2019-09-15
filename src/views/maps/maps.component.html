@@ -47,10 +47,9 @@
       </aol-source-cluster>
     </aol-layer-vector>
   </aol-map>
-  <fa-icon matRipple
+  <fa-icon #center matRipple
     icon="circle"
-    matRippleColor="currentColor"
-    [class.show]="!followed.closed">
+    matRippleColor="currentColor">
   </fa-icon>
   <nav #dialer>
     <button color mat-fab (click)="dialer.classList.toggle('open')">

@@ -64,6 +64,9 @@ export class MapsComponent
     .with('category')
     .with('schedules');
 
+  @ViewChild('center', { read: ElementRef, static: true })
+  private center: ElementRef<HTMLElement>;
+
   @ViewChild('dialer', { read: ElementRef, static: true })
   private dialer: ElementRef<HTMLElement>;
 
@@ -283,7 +286,7 @@ export class MapsComponent
           latitude / items.length
         ]),
         rotation: 0,
-        zoom: this.mapconf.zoomfactor
+        zoom: 17.5
       });
     })) as Observable<ActivityModel[]>;
   }
@@ -292,6 +295,7 @@ export class MapsComponent
     if (enable) {
       this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
       this.followed = this.positionProvider.locate().subscribe((coords) => {
+        this.center.nativeElement.classList.add('show');
         this.follow.ripple.launch({ centered: true });
         this.location.launch({ centered: true });
         this.view.instance.animate({
@@ -308,6 +312,7 @@ export class MapsComponent
       });
     } else {
       this.followed.unsubscribe();
+      this.center.nativeElement.classList.remove('show');
       this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
     }
   }

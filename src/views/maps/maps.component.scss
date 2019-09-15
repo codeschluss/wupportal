@@ -78,7 +78,6 @@ main {
     height: 5rem;
     opacity: 0;
     pointer-events: none;
-    transition-delay: 0;
     transition: opacity $animation-duration;
     width: 5rem;
 
@@ -90,7 +89,6 @@ main {
 
     &.show {
       opacity: .87;
-      transition-delay: 1000ms;
     }
   }
 

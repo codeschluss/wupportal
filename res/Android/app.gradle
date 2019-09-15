@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 android {
   defaultConfig {
     generatedDensities = []
@@ -7,3 +9,24 @@ android {
     additionalParameters "--no-version-vectors"
   }
 }
+
+project.ext.nativescriptDependencies = new JsonSlurper().parseText('''
+  [
+    {
+      "name": "nativescript-ui-core",
+      "directory": "../../node_modules/nativescript-ui-core"
+    },
+    {
+      "name": "nativescript-ui-sidedrawer",
+      "directory": "../../node_modules/nativescript-ui-sidedrawer"
+    },
+    {
+      "name": "tns-core-modules",
+      "directory": "../../node_modules/tns-core-modules"
+    },
+    {
+      "name": "tns-core-modules-widgets",
+      "directory": "../../node_modules/tns-core-modules-widgets"
+    }
+  ]
+''')

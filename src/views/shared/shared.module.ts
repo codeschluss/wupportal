@@ -1,5 +1,7 @@
 import { NgModule, Type } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -13,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CoreModule, PlatformCommonModule, PlatformRouterModule } from '@wooportal/core';
+import { CalendarCompatComponent } from './compat/calendar/calendar.compat';
 import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
 import { ExpandCompatComponent } from './compat/expand/expand.compat';
 import { IconCompatComponent } from './compat/icon/icon.compat';
@@ -22,6 +25,7 @@ import { PagerCompatComponent } from './compat/pager/pager.compat';
 import { LayoutComponent } from './layout/layout.component';
 
 const compat: Type<any>[] = [
+  CalendarCompatComponent,
   DrawerCompatComponent,
   ExpandCompatComponent,
   IconCompatComponent,
@@ -37,6 +41,7 @@ const components: Type<any>[] = [
 const materials: Type<any>[] = [
   FontAwesomeModule,
   MatButtonModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
   MatExpansionModule,
@@ -44,6 +49,7 @@ const materials: Type<any>[] = [
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatNativeDateModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatSidenavModule,

@@ -15,9 +15,7 @@ import { BaseObject } from '../base.object';
 
 export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
-  public dateFilter: (date: Date) => boolean = this.selectable.bind(this);
-
-  public selection: ScheduleModel;
+  public schedule: ScheduleModel;
 
   public source: SafeResourceUrl | string;
 
@@ -36,10 +34,6 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   protected path: string = 'activities';
 
-  public get startDate(): Date {
-    return new Date(this.item.schedules[0].startDate);
-  }
-
   public constructor(
     @Optional() private sanitizer: DomSanitizer,
     i18n: I18n,
@@ -49,18 +43,6 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     titleService: Title
   ) {
     super(router, platformProvider, i18n, route, titleService);
-  }
-
-  public click(event: Event): void {
-    const cell = (event.target as HTMLElement).parentElement;
-
-    if (cell.classList.contains('mat-calendar-body-disabled')) {
-      this.selection = null;
-    }
-  }
-
-  public selected(date: Date): void {
-    this.selection = this.schedule(date);
   }
 
   protected ngPostInit(): void {
@@ -75,15 +57,6 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
         this.source = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         break;
     }
-  }
-
-  private selectable(date: Date): boolean {
-    return this.schedule(date) ? true : false;
-  }
-
-  private schedule(date: Date): ScheduleModel {
-    return this.item.schedules.find((schedule) =>
-      !(+new Date(schedule.startDate).setHours(0, 0, 0, 0) - +date));
   }
 
 }

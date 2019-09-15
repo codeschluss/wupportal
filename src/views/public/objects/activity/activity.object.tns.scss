@@ -4,9 +4,25 @@ scroll-view {
   & > stack-layout {
     & > stack-layout {
       & > .expand-compat {
+        .datetime {
+          border-color: $color-bg-light;
+          border-top-width: 1;
+          margin-top: rem(1);
+          padding-top: rem(1);
+
+          & > label {
+            horizontal-align: center;
+          }
+
+          & > [unit] {
+            font-weight: bold;
+            horizontal-align: center;
+          }
+        }
+
         web-view {
           height: rem(20);
-          width: rem(20);
+          width: 100%;
         }
       }
     }

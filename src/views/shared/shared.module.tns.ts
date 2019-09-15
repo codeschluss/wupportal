@@ -2,7 +2,9 @@ import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
 import { CoreModule, PlatformRouterModule } from '@wooportal/core';
 import { NativeScriptCommonModule as PlatformCommonModule } from 'nativescript-angular/common';
 import { NgRippleModule } from 'nativescript-ng-ripple';
+import { NativeScriptUICalendarModule } from 'nativescript-ui-calendar/angular/calendar-directives';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
+import { CalendarCompatComponent } from './compat/calendar/calendar.compat';
 import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
 import { ExpandCompatComponent } from './compat/expand/expand.compat';
 import { IconCompatComponent } from './compat/icon/icon.compat';
@@ -12,6 +14,7 @@ import { PagerCompatComponent } from './compat/pager/pager.compat';
 import { LayoutComponent } from './layout/layout.component';
 
 const compat: Type<any>[] = [
+  CalendarCompatComponent,
   DrawerCompatComponent,
   ExpandCompatComponent,
   IconCompatComponent,
@@ -25,6 +28,7 @@ const components: Type<any>[] = [
 ];
 
 const materials: Type<any>[] = [
+  NativeScriptUICalendarModule,
   NativeScriptUISideDrawerModule,
   NgRippleModule
 ];

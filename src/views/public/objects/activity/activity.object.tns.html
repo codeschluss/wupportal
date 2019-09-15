@@ -108,7 +108,20 @@
           <label [text]="'(' + item.schedules.length + ')'"></label>
         </ng-template>
         <ng-template #expandContent>
-
+          <calendar-compat
+            [item]="item"
+            (changed)="schedule = $event">
+          </calendar-compat>
+          <stack-layout class="datetime">
+            <ng-container *ngIf="schedule">
+              <i18n i18n="@@selectedSchedule" unit="selectedSchedule"></i18n>
+              <label [text]="schedule.datetime"></label>
+            </ng-container>
+            <ng-container *ngIf="!schedule">
+              <i18n i18n="@@nextSchedule" unit="nextSchedule"></i18n>
+              <label [text]="item.schedules[0].datetime"></label>
+            </ng-container>
+          </stack-layout>
         </ng-template>
       </expand-compat>
       <expand-compat #mapview

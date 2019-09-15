@@ -116,19 +116,17 @@
         </ng-template>
         <ng-template #expandContent>
           <section>
-            <mat-calendar
-              [dateFilter]="dateFilter"
-              [startAt]="startDate"
-              (click)="click($event)"
-              (selectedChange)="selected($event)">
-            </mat-calendar>
+            <calendar-compat
+              [item]="item"
+              (changed)="schedule = $event">
+            </calendar-compat>
             <mat-divider></mat-divider>
             <aside>
-              <ng-container *ngIf="selection">
+              <ng-container *ngIf="schedule">
                 <i18n i18n="@@selectedSchedule">selectedSchedule</i18n>
-                <time>{{ selection.datetime }}</time>
+                <time>{{ schedule.datetime }}</time>
               </ng-container>
-              <ng-container *ngIf="!selection">
+              <ng-container *ngIf="!schedule">
                 <i18n i18n="@@nextSchedule">nextSchedule</i18n>
                 <time>{{ item.schedules[0].datetime }}</time>
               </ng-container>

@@ -13,6 +13,10 @@ android {
 project.ext.nativescriptDependencies = new JsonSlurper().parseText('''
   [
     {
+      "name": "nativescript-ui-calendar",
+      "directory": "../../node_modules/nativescript-ui-calendar"
+    },
+    {
       "name": "nativescript-ui-core",
       "directory": "../../node_modules/nativescript-ui-core"
     },

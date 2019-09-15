@@ -11,24 +11,21 @@ export class ScheduleModel
   public get datetime(): string {
     const from = moment.utc(this.startDate);
     const goto = moment.utc(this.endDate);
+    const time = goto.format('HH:mm');
     const until = goto.format('DD.MM.YYYY');
 
     switch (true) {
       case until === from.format('DD.MM.YYYY'):
-        return `${until}, ${from.format('HH:mm')}
-          - ${goto.format('HH:mm')}`;
+        return `${until}, ${from.format('HH:mm')} - ${time}`;
 
       case until.endsWith(from.format('.MM.YYYY')):
-        return `${from.format('DD., HH:mm')}
-          - ${until}, ${goto.format('HH:mm')}`;
+        return `${from.format('DD., HH:mm')} - ${until}, ${time}`;
 
       case until.endsWith(from.format('.YYYY')):
-        return `${from.format('DD.MM., HH:mm')}
-          - ${until}, ${goto.format('HH:mm')}`;
+        return `${from.format('DD.MM., HH:mm')} - ${until}, ${time}`;
 
       default:
-        return `${from.format('DD.MM.YYYY, HH:mm')}
-          - ${until}, ${goto.format('HH:mm')}`;
+        return `${from.format('DD.MM.YYYY, HH:mm')} - ${until}, ${time}`;
     }
   }
 

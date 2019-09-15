@@ -109,7 +109,8 @@
         </ng-template>
         <ng-template #expandContent>
           <calendar-compat
-            [item]="item"
+            [items]="item.schedules"
+            [name]="item.name"
             (changed)="schedule = $event">
           </calendar-compat>
           <stack-layout class="datetime">

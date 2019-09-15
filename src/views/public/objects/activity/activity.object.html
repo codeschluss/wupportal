@@ -117,7 +117,8 @@
         <ng-template #expandContent>
           <section>
             <calendar-compat
-              [item]="item"
+              [items]="item.schedules"
+              [name]="item.name"
               (changed)="schedule = $event">
             </calendar-compat>
             <mat-divider></mat-divider>

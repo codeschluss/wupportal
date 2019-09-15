@@ -1,6 +1,5 @@
 import { Component, EventEmitter, HostBinding, Input, Output, ViewChild } from '@angular/core';
 import { MatCalendar } from '@angular/material/datepicker';
-import { CrudModel } from '@wooportal/core';
 import { ScheduleModel as Schedule } from '../../../../realm/models/schedule.model';
 import { CalendarCompat } from './calendar.compat.i';
 
@@ -29,12 +28,15 @@ export class CalendarCompatComponent implements CalendarCompat {
   public instance: MatCalendar<Date>;
 
   @Input()
-  public item: CrudModel & { schedules: Schedule[] };
+  public items: Schedule[];
+
+  @Input()
+  public name: string;
 
   public selectable: (date: Date) => boolean = this.scheduled.bind(this);
 
   public get startdate(): Date {
-    return new Date(this.item.schedules[0].startDate);
+    return new Date(this.items[0].startDate);
   }
 
   public click(event: Event): void {
@@ -50,7 +52,7 @@ export class CalendarCompatComponent implements CalendarCompat {
   }
 
   private schedule(date: Date): Schedule {
-    return this.item.schedules.find((schedule) =>
+    return this.items.find((schedule) =>
       !(+new Date(schedule.startDate).setHours(0, 0, 0, 0) - +date));
   }
 

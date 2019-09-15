@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { PlatformProvider, Selfrouter } from '@wooportal/core';
 import * as geolocation from 'nativescript-geolocation';
@@ -26,7 +26,6 @@ export class MapsComponent
   }
 
   public constructor(
-    private changeDetection: ChangeDetectorRef,
     private platformProvider: PlatformProvider,
     private router: Router,
     private zone: NgZone
@@ -48,7 +47,11 @@ export class MapsComponent
     switch (this.platformProvider.name) {
       case 'Android':
         const WebChromeClient = WebChromeClientFactory();
-        const WebViewClient = WebViewClientFactory(this.navigate.bind(this));
+        const WebViewClient = WebViewClientFactory((url) => {
+          if (!url.startsWith(this.router.url)) {
+            this.zone.run(() => this.router.navigateByUrl(url));
+          }
+        });
 
         wv = wv.android;
         wv.getSettings().setGeolocationEnabled(true);
@@ -61,12 +64,6 @@ export class MapsComponent
         wv = wv.ios;
         // TODO: https://board.codeschluss.de/project/wooportal/us/37
         return;
-    }
-  }
-
-  private navigate(url: string): void {
-    if (!url.startsWith(this.router.url)) {
-      this.zone.run(() => this.router.navigateByUrl(url));
     }
   }
 

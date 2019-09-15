@@ -1,7 +1,7 @@
-import { Component, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { CrudModel } from '@wooportal/core';
+import { AfterViewInit, Component, EventEmitter, HostBinding, Input, Output, ViewChild } from '@angular/core';
 import { CalendarEvent, CalendarSelectionEventData, CalendarYearViewStyle, MonthCellStyle } from 'nativescript-ui-calendar';
 import { RadCalendarComponent } from 'nativescript-ui-calendar/angular/calendar-directives';
+import { Color } from 'tns-core-modules/color/color';
 import { ScheduleModel as Schedule } from '../../../../realm/models/schedule.model';
 import { CalendarCompat } from './calendar.compat.i';
 
@@ -9,17 +9,19 @@ import { CalendarCompat } from './calendar.compat.i';
   selector: 'calendar-compat',
   styleUrls: ['calendar.compat.scss'],
   template: `
-    <RadCalendar
-      eventsViewMode="Inline"
-      selectionMode="Single"
-      [eventSource]="events"
-      [yearViewStyle]="styles.yearViewStyle"
-      (dateSelected)="select($event)">
-    </RadCalendar>
+    <GridLayout>
+      <RadCalendar
+        eventsViewMode="Inline"
+        selectionMode="Single"
+        [eventSource]="events"
+        [yearViewStyle]="styles.yearViewStyle"
+        (dateSelected)="select($event)">
+      </RadCalendar>
+    </GridLayout>
   `
 })
 
-export class CalendarCompatComponent implements CalendarCompat, OnInit {
+export class CalendarCompatComponent implements CalendarCompat, AfterViewInit {
 
   @Output()
   public changed: EventEmitter<Schedule> = new EventEmitter<Schedule>();
@@ -31,7 +33,10 @@ export class CalendarCompatComponent implements CalendarCompat, OnInit {
   public instance: RadCalendarComponent;
 
   @Input()
-  public item: CrudModel & { schedules: Schedule[] };
+  public items: Schedule[];
+
+  @Input()
+  public name: string;
 
   public styles: any = {
     yearViewStyle: Object.assign(new CalendarYearViewStyle(), {
@@ -42,20 +47,27 @@ export class CalendarCompatComponent implements CalendarCompat, OnInit {
   };
 
   public get events(): CalendarEvent[] {
-    return this.item.schedules.map((item) => new CalendarEvent(
-      this.item.name,
+    return this.items.map((item) => new CalendarEvent(
+      `${this.name}\n${item.datetime}`,
       new Date(item.startDate),
       new Date(item.startDate),
-      true
+      true,
+      new Color(222, 0, 0, 0)
     ));
   }
 
   public get startdate(): Date {
-    return new Date(this.item.schedules[0].startDate);
+    return new Date(this.items[0].startDate);
   }
 
-  public ngOnInit(): void {
-    this.instance.calendar.goToDate(this.startdate);
+  public ngAfterViewInit(): void {
+    const cal = this.instance.calendar;
+
+    // tslint:disable-next-line
+    if(!cal.isLoaded){return cal.once('loaded',()=>this.ngAfterViewInit());}
+    // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
+
+    cal.goToDate(this.startdate);
   }
 
   public select(event: CalendarSelectionEventData): void {
@@ -63,7 +75,7 @@ export class CalendarCompatComponent implements CalendarCompat, OnInit {
   }
 
   private schedule(date: Date): Schedule {
-    return this.item.schedules.find((schedule) =>
+    return this.items.find((schedule) =>
       !(+new Date(schedule.startDate).setHours(0, 0, 0, 0) - +date));
   }
 

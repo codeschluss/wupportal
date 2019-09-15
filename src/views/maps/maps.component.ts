@@ -3,7 +3,7 @@ import { HttpRequest } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
-import { ActivatedRoute, Route, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent } from '@angular/router';
 import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
@@ -12,7 +12,7 @@ import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
 import { BehaviorSubject, EMPTY, forkJoin, Observable, of, Subscription } from 'rxjs';
-import { catchError, mergeMap, tap } from 'rxjs/operators';
+import { catchError, filter, mergeMap, tap } from 'rxjs/operators';
 import { ActivityModel } from '../../realm/models/activity.model';
 import { ConfigurationModel } from '../../realm/models/configuration.model';
 import { ActivityProvider } from '../../realm/providers/activity.provider';
@@ -141,6 +141,18 @@ export class MapsComponent
       projection: this.configuration('mapProjection'),
       zoomfactor: parseFloat(this.configuration('mapZoomfactor'))
     };
+
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationStart)
+    ).subscribe((event: RouterEvent) => {
+      if (this.connection) {
+        this.connection.nextRoute(event.url);
+      } else if (this.native) {
+        this.document.location.href = event.url;
+      } else if (this.route.snapshot.queryParamMap.has('embed')) {
+        this.router.navigate(this.route.snapshot.url);
+      }
+    });
   }
 
   public ngAfterViewInit(): void {
@@ -170,14 +182,6 @@ export class MapsComponent
       this.connection.nextReady(true);
     } else {
       this.fetch().subscribe((items) => this.items.next(items));
-    }
-
-    if (this.route.snapshot.queryParamMap.has('embed')) {
-      this.router.events.subscribe((event: RouterEvent) => {
-        return this.connection
-          ? this.connection.nextRoute(event.url)
-          : this.document.location.href = event.url;
-      });
     }
   }
 

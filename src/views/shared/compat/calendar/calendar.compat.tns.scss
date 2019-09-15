@@ -1,6 +1,11 @@
 @import '../../../../app.vars.scss';
 
-RadCalendar {
+GridLayout {
   height: rem(20);
-  width: 100%;
+  width: rem(20);
+
+  & > RadCalendar {
+    height: 100%;
+    width: 100%;
+  }
 }

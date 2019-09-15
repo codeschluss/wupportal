@@ -1,5 +1,4 @@
 import { EventEmitter } from '@angular/core';
-import { CrudModel } from '@wooportal/core';
 import { ScheduleModel as Schedule } from '../../../../realm/models/schedule.model';
 
 export interface CalendarCompat {
@@ -10,7 +9,9 @@ export interface CalendarCompat {
 
   instance: any;
 
-  item: CrudModel & { schedules: Schedule[] };
+  items: Schedule[];
+
+  name: string;
 
   startdate: Date;
 

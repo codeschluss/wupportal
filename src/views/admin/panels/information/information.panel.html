@@ -1,42 +1,23 @@
 <header class="mat-title">
-  <i18n i18n="@@applicationPanel">applicationPanel</i18n>
+  <i18n i18n="@@informationPanel">informationPanel</i18n>
   <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
     <i18n i18n="@@actions">actions</i18n>
   </button>
-  <span [style.flexGrow]="1"></span>
-  <h2 class="mat-headline">{{ name }}</h2>
 </header>
 
 <mat-menu #actions="matMenu">
-  <button mat-menu-item (click)="create('languages')">
-    <i18n i18n="@@createLanguage">createLanguage</i18n>
+  <button mat-menu-item (click)="create('pages')">
+    <i18n i18n="@@createPage">createPage</i18n>
   </button>
 </mat-menu>
 
 <mat-tab-group [selectedIndex]="index">
-  <mat-tab id="configuration">
+  <mat-tab id="pages">
     <ng-template matTabLabel>
-      <i18n i18n="@@configuration">configuration</i18n>
+      <i18n i18n="@@pages">pages</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <configuration-form #form [group]="group" [item]="configuration">
-      </configuration-form>
-      <mat-divider></mat-divider>
-      <button mat-raised-button
-        color="primary"
-        [disabled]="!form.valid || !form.dirty"
-        (click)="form.persist().subscribe()">
-        <i18n i18n="@@persist">persist</i18n>
-      </button>
-    </ng-template>
-  </mat-tab>
-
-  <mat-tab id="languages">
-    <ng-template matTabLabel>
-      <i18n i18n="@@languages">languages</i18n>
-    </ng-template>
-    <ng-template matTabContent>
-      <language-table>
+      <page-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
@@ -54,7 +35,34 @@
             </button>
           </mat-cell>
         </ng-container>
-      </language-table>
+      </page-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="blogs">
+    <ng-template matTabLabel>
+      <i18n i18n="@@blogs">blogs</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <blog-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </blog-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

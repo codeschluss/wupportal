@@ -14,10 +14,14 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="primary" (click)="edit(item)">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
               <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="delete(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
@@ -37,10 +41,14 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="primary" (click)="edit(item)">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
               <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="delete(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
@@ -62,7 +70,7 @@
           <mat-cell *matCellDef="let item">
             <mat-slide-toggle
               [checked]="item.admin"
-              (change)="grant(item, $event.checked)">
+              (change)="grantOrganisationAdmin(item, $event.checked)">
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
@@ -71,7 +79,9 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="warn" (click)="demote(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="unlinkUser(item)">
               <fa-icon icon="sign-out-alt"></fa-icon>
             </button>
           </mat-cell>
@@ -93,10 +103,14 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button (click)="approve(item)">
+            <button mat-icon-button
+              color="primary"
+              (click)="grantOrganisationUser(item, true)">
               <fa-icon icon="check"></fa-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="block(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="grantOrganisationUser(item, false)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>

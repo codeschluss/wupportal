@@ -23,10 +23,14 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="primary" (click)="edit(item)">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
               <fa-icon icon="pen"></fa-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="delete(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
@@ -46,7 +50,9 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="warn" (click)="delete(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>

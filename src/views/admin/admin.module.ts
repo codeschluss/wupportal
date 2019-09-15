@@ -38,9 +38,11 @@ import { TranslationFormComponent } from './forms/translation.form';
 import { UserFormComponent } from './forms/user.form';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
+import { InformationPanelComponent } from './panels/information/information.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
 import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
+import { TaxonomyPanelComponent } from './panels/taxonomy/taxonomy.panel';
 import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
 import { BlogStepperComponent } from './steppers/blog.stepper';
@@ -113,9 +115,11 @@ const materials: Type<any>[] = [
 const panels: Type<any>[] = [
   AccountPanelComponent,
   ApplicationPanelComponent,
+  InformationPanelComponent,
   OrganisationPanelComponent,
   PositioningPanelComponent,
-  PrivilegesPanelComponent
+  PrivilegesPanelComponent,
+  TaxonomyPanelComponent
 ];
 
 const steppers: Type<BaseStepper<CrudModel>>[] = [

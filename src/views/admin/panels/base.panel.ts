@@ -2,9 +2,12 @@ import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@
 import { MatDialog } from '@angular/material/dialog';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudModel, CrudResolver, I18nComponent, Pathfinder, Selfrouter, Title, TokenProvider, TokenResolver } from '@wooportal/core';
+import { Box, CrudModel, CrudResolver, I18nComponent, Pathfinder, Selfrouter, Title, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
+import { OrganisationModel } from '../../../realm/models/organisation.model';
+import { ProviderModel } from '../../../realm/models/provider.model';
+import { UserModel } from '../../../realm/models/user.model';
 import { UserProvider } from '../../../realm/providers/user.provider';
 import { ClientPackage } from '../../../utils/package';
 import { DeleteDialogComponent } from '../dialogs/delete.dialog';
@@ -108,11 +111,6 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     this.router.navigate(['/', 'admin', 'edit', alias, 'new']);
   }
 
-  public edit(item: CrudModel): void {
-    const stepper = item.constructor['stepper'].constructor;
-    this.router.navigate(this.pathfinder.to(stepper).concat(item.id));
-  }
-
   public delete(item: CrudModel): void {
     this.confirm(item).pipe(
       filter(Boolean),
@@ -120,10 +118,94 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     ).subscribe(() => this.reload());
   }
 
+  public edit(item: CrudModel): void {
+    const stepper = item.constructor['stepper'].constructor;
+    this.router.navigate(this.pathfinder.to(stepper).concat(item.id));
+  }
+
+  public grantBlogger(item: UserModel, grant: boolean): void {
+    UserModel['provider'].grantBlogger(
+      item.id,
+      Box(grant)
+    ).subscribe(() => this.reload());
+  }
+
+  public grantOrganisation(item: OrganisationModel, grant: boolean): void {
+    OrganisationModel['provider'].grantOrganisationAdmin(
+      item.id,
+      Box(grant)
+    ).subscribe(() => this.reload());
+  }
+
+  public grantOrganisationAdmin(item: ProviderModel, grant: boolean): void {
+    OrganisationModel['provider'].grantOrganisationAdmin(
+      item.organisation.id,
+      item.user.id,
+      Box(grant)
+    ).pipe(
+      filter(() => item.user.id === this.userId)
+    ).subscribe(() => this.reload());
+  }
+
+  public grantOrganisationUser(item: ProviderModel, grant: boolean): void {
+    OrganisationModel['provider'].grantOrganisationUser(
+      item.organisation.id,
+      item.user.id,
+      Box(grant)
+    ).subscribe(() => this.reload());
+  }
+
+  public grantSuperUser(item: UserModel, grant: boolean): void {
+    UserModel['provider'].grantSuperUser(
+      item.id,
+      Box(grant)
+    ).pipe(
+      filter(() => item.id === this.userId)
+    ).subscribe(() => this.reload());
+  }
+
+  public unlinkBlogger(item: UserModel): void {
+    this.confirm(item).pipe(
+      mergeMap(() => UserModel['provider'].unlinkBlogger(
+        item.id
+      ))
+    ).subscribe(() => this.reload());
+  }
+
+  public unlinkOrganisation(item: OrganisationModel, user: UserModel): void {
+    this.confirm(Object.assign(item.provider, {
+      organisation: item,
+      user
+    })).pipe(
+      mergeMap(() => UserModel['provider'].unlinkOrganisation(
+        this.userId,
+        item.id
+      ))
+    ).subscribe(() => this.reload());
+  }
+
+  public unlinkUser(item: ProviderModel): void {
+    this.confirm(item).pipe(
+      mergeMap(() => OrganisationModel['provider'].unlinkUser(
+        item.organisation.id,
+        item.user.id
+      ))
+    ).subscribe(() => this.reload());
+  }
+
   protected confirm(item: CrudModel): Observable<boolean> {
     return this.dialog.open(DeleteDialogComponent, {
       data: { item }
     }).afterClosed().pipe(filter(Boolean)) as Observable<boolean>;
+  }
+
+  protected provided(organisation: OrganisationModel): ProviderModel[] {
+    const users = organisation.users as any || [];
+
+    return users.map((user) => Object.assign(user.provider, {
+      organisation,
+      user
+    }));
   }
 
   protected reload(): void {

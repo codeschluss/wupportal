@@ -16,7 +16,7 @@
           <mat-cell *matCellDef="let item">
             <mat-slide-toggle
               [checked]="item.superuser"
-              (change)="grant(item, $event.checked)">
+              (change)="grantSuperUser(item, $event.checked)">
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
@@ -37,11 +37,15 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <ng-container *ngIf="item.blogger && item.blogger.approved">
-              <button mat-icon-button color="warn" (click)="demote(item)">
+              <button mat-icon-button
+                color="warn"
+                (click)="unlinkBlogger(item)">
                 <fa-icon icon="comment-slash"></fa-icon>
               </button>
             </ng-container>
-            <button mat-icon-button color="warn" (click)="delete(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
@@ -63,15 +67,48 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="primary" (click)="approve(item)">
+            <button mat-icon-button
+              color="primary"
+              (click)="grantOrganisation(item, true)">
               <fa-icon icon="check"></fa-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="block(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="grantOrganisation(item, false)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
       </organisation-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="providers" [disabled]="!providers.length">
+    <ng-template matTabLabel>
+      <span matBadgeOverlap="false" [matBadge]="providers.length || null">
+        <i18n i18n="@@providerRequests">providerRequests</i18n>
+      </span>
+    </ng-template>
+    <ng-template matTabContent>
+      <provider-table [items]="providers">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="grantOrganisationUser(item, true)">
+              <fa-icon icon="check"></fa-icon>
+            </button>
+            <button mat-icon-button
+              color="warn"
+              (click)="grantOrganisationUser(item, false)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </provider-table>
     </ng-template>
   </mat-tab>
 
@@ -88,10 +125,14 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <button mat-icon-button color="primary" (click)="approve(item)">
+            <button mat-icon-button
+              color="primary"
+              (click)="grantBlogger(item, true)">
               <fa-icon icon="check"></fa-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="block(item)">
+            <button mat-icon-button
+              color="warn"
+              (click)="grantBlogger(item, false)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>

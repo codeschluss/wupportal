@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Box, CrudJoiner, False, True } from '@wooportal/core';
-import { filter, mergeMap } from 'rxjs/operators';
+import { CrudJoiner } from '@wooportal/core';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
+import { ProviderModel } from '../../../../realm/models/provider.model';
 import { UserModel } from '../../../../realm/models/user.model';
 import { BasePanel } from '../base.panel';
 
@@ -16,6 +16,8 @@ export class PrivilegesPanelComponent extends BasePanel {
   protected resolve: object = {
     organisations: CrudJoiner.of(OrganisationModel, { approved: false })
       .with('address').yield('suburb'),
+    providers: CrudJoiner.of(OrganisationModel, { approved: true })
+      .with('users').yield('provider'),
     users: CrudJoiner.of(UserModel)
       .with('blogger')
   };
@@ -29,45 +31,9 @@ export class PrivilegesPanelComponent extends BasePanel {
     return this.route.snapshot.data.organisations || [];
   }
 
-  public approve(item: OrganisationModel | UserModel): void {
-    const provider = item.constructor['provider'];
-
-    if (item instanceof OrganisationModel) {
-      provider.grantOrganisation(item.id, True).subscribe(() => this.reload());
-    } else if (item instanceof UserModel) {
-      provider.grantBlogger(item.id, True).subscribe(() => this.reload());
-    }
-  }
-
-  public block(item: OrganisationModel | UserModel): void {
-    const provider = item.constructor['provider'];
-
-    if (item instanceof OrganisationModel) {
-      this.confirm(item).pipe(
-        mergeMap(() => provider.grantOrganisation(item.id, False))
-      ).subscribe(() => this.reload());
-    } else if (item instanceof UserModel) {
-      this.confirm(item).pipe(
-        mergeMap(() => provider.grantBlogger(item.id, False))
-      ).subscribe(() => this.reload());
-    }
-
-  }
-
-  public demote(item: UserModel): void {
-    const provider = UserModel['provider'];
-
-    this.confirm(item).pipe(
-      mergeMap(() => provider.unlinkBlogger(item.id))
-    ).subscribe(() => this.reload());
-  }
-
-  public grant(item: UserModel, grant: boolean): void {
-    const provider = UserModel['provider'];
-
-    provider.grantSuperUser(item.id, Box(grant)).pipe(
-      filter(() => item.id === this.userId)
-    ).subscribe(() => this.reload());
+  public get providers(): ProviderModel[] {
+    return this.route.snapshot.data.providers.flatMap((i) => this.provided(i))
+      .filter((provider) => !provider.approved);
   }
 
 }

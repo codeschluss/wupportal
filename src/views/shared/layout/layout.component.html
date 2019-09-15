@@ -131,11 +131,18 @@
           <i18n i18n="@@organisation">organisation</i18n>
         </button>
         <ng-container *ngIf="claimed?.superUser">
+          <mat-divider></mat-divider>
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/application')"
             [routerLink]="['/', 'admin', 'application']">
             <icon-compat icon="sliders-h"></icon-compat>
             <i18n i18n="@@application">application</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/information')"
+            [routerLink]="['/', 'admin', 'information']">
+            <icon-compat icon="book"></icon-compat>
+            <i18n i18n="@@information">information</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/positioning')"
@@ -148,6 +155,12 @@
             [routerLink]="['/', 'admin', 'privileges']">
             <icon-compat icon="shield-alt"></icon-compat>
             <i18n i18n="@@privileges">privileges</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/taxonomy')"
+            [routerLink]="['/', 'admin', 'taxonomy']">
+            <icon-compat icon="tags"></icon-compat>
+            <i18n i18n="@@taxonomy">taxonomy</i18n>
           </button>
         </ng-container>
         <mat-divider></mat-divider>

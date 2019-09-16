@@ -1,6 +1,8 @@
 @import '../../../../app.vars.scss';
 
 grid-layout {
+  width: rem(22.5);
+
   & > stack-layout {
     color: $color-dark;
     max-width: rem(22.5);

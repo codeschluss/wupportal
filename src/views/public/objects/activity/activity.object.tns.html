@@ -157,9 +157,15 @@
             <label [text]="'(' + item.blogs.length + ')'"></label>
           </ng-template>
           <ng-template #expandContent>
-            <ng-container *ngFor="let blogpost of item.blogs">
-              <blogpost-card [item]="blogpost"></blogpost-card>
-            </ng-container>
+            <scroll-view #scrollBlogposts>
+              <flexbox-layout>
+                <ng-container *ngFor="let blogpost of item.blogs">
+                  <grid-layout [width]="scrollBlogposts.getActualSize().width">
+                    <blogpost-card [item]="blogpost"></blogpost-card>
+                  </grid-layout>
+                </ng-container>
+              </flexbox-layout>
+            </scroll-view>
           </ng-template>
         </expand-compat>
       </ng-container>

@@ -23,18 +23,36 @@ scroll-view {
     }
 
     & > stack-layout {
+      width: rem(25);
+
       & > .expand-compat {
         margin-top: rem(1);
+
+        scroll-view {
+          orientation: horizontal;
+
+          & > flexbox-layout {
+            orientation: horizontal;
+
+            & > grid-layout {
+              & + grid-layout {
+                margin-left: rem(1);
+              }
+            }
+          }
+        }
 
         [icon] {
           height: rem(2);
           width: rem(2);
         }
 
-        [unit] + label {
-          font-size: rem(.75);
-          font-weight: 300;
-          padding-left: rem(.5);
+        [unit] {
+          & + label {
+            font-size: rem(.75);
+            font-weight: 300;
+            padding-left: rem(.5);
+          }
         }
 
         .detail {

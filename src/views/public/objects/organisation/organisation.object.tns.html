@@ -93,9 +93,15 @@
             <label [text]="'(' + item.images.length + ')'"></label>
           </ng-template>
           <ng-template #expandContent>
-            <ng-container *ngFor="let image of item.images">
-
-            </ng-container>
+            <scroll-view #scrollImages>
+              <flexbox-layout>
+                <ng-container *ngFor="let image of item.images">
+                  <grid-layout [width]="scrollImages.getActualSize().width">
+                    <image [src]="image.nativeSource"></image>
+                  </grid-layout>
+                </ng-container>
+              </flexbox-layout>
+            </scroll-view>
           </ng-template>
         </expand-compat>
       </ng-container>
@@ -109,9 +115,15 @@
             <label [text]="'(' + item.activities.length + ')'"></label>
           </ng-template>
           <ng-template #expandContent>
-            <ng-container *ngFor="let activity of item.activities">
-              <activity-card [item]="activity"></activity-card>
-            </ng-container>
+            <scroll-view #scrollActivities>
+              <flexbox-layout>
+                <ng-container *ngFor="let activity of item.activities">
+                  <grid-layout [width]="scrollActivities.getActualSize().width">
+                    <activity-card [item]="activity"></activity-card>
+                  </grid-layout>
+                </ng-container>
+              </flexbox-layout>
+            </scroll-view>
           </ng-template>
         </expand-compat>
       </ng-container>

@@ -1,1 +1,24 @@
 @import '../../../../app.vars.scss';
+
+scroll-view {
+  & > stack-layout {
+    & > stack-layout {
+      & > .expand-compat {
+        scroll-view {
+          & > flexbox-layout {
+            & > grid-layout {
+              & > image {
+                border-radius: rem(.25);
+                stretch: aspectFill;
+
+                & + image {
+                  margin-left: rem(1);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

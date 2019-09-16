@@ -1,1 +1,61 @@
 @import '../../../../app.vars.scss';
+
+StackLayout {
+  padding: 0 rem(1) rem(1) rem(1);
+  orientation: horizontal;
+  width: 100%;
+
+  & > AbsoluteLayout {
+    height: rem(2.5);
+
+    &.next {
+      horizontal-align: right;
+      transform: rotate(180deg);
+
+      & > [icon] {
+        transform: rotate(180deg);
+      }
+
+      & > [unit] {
+        text-align: right;
+        transform: rotate(180deg);
+      }
+    }
+
+    &.prev {
+      horizontal-align: left;
+    }
+
+    & > GridLayout {
+      background-color: $color-bg-drawer;
+      height: rem(2.5);
+      left: rem(8.5);
+      transform: rotate(45deg);
+      width: rem(2.5);
+    }
+
+    & > [icon] {
+      @include elevation;
+      background-color: $color-primary;
+      border-radius: 50%;
+      color: $color-light;
+      height: rem(2.5);
+      left: 0;
+      padding: 2;
+      width: rem(2.5);
+
+      &.disabled {
+        background-color: desaturate($color-primary, 100%);
+      }
+    }
+
+    & > [unit] {
+      background-color: $color-bg-light;
+      font-size: rem(1);
+      height: 100%;
+      margin-left: rem(1.25);
+      padding: rem(.5) 0 0 rem(1.75);
+      width: rem(8.5);
+    }
+  }
+}

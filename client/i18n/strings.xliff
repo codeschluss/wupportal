@@ -1,0 +1,1705 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="root" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="apiErrorForbidden" datatype="html">
+        <source>apiErrorForbidden</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/core/error/error.bar.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/core/error/error.bar.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="apiErrorNotFound" datatype="html">
+        <source>apiErrorNotFound</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/core/error/error.bar.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/core/error/error.bar.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="apiErrorConflict" datatype="html">
+        <source>apiErrorConflict</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/core/error/error.bar.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/core/error/error.bar.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="apiErrorTooLarge" datatype="html">
+        <source>apiErrorTooLarge</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/core/error/error.bar.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/core/error/error.bar.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="apiErrorUnavaliable" datatype="html">
+        <source>apiErrorUnavaliable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/core/error/error.bar.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/core/error/error.bar.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unhandledError" datatype="html">
+        <source>unhandledError</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/core/error/error.dialog.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/core/error/error.dialog.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reportIssue" datatype="html">
+        <source>reportIssue</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/core/error/error.dialog.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/core/error/error.dialog.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <source>close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/core/error/error.dialog.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/core/error/error.dialog.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.stepper.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.stepper.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.stepper.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.stepper.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/request.dialog.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/delete.dialog.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fieldErrorMinLength" datatype="html">
+        <source>fieldErrorMinLength</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.field.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fieldErrorMissmatch" datatype="html">
+        <source>fieldErrorMissmatch</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.field.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fieldErrorEither" datatype="html">
+        <source>fieldErrorEither</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.field.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fieldErrorPattern" datatype="html">
+        <source>fieldErrorPattern</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.field.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fieldErrorRequired" datatype="html">
+        <source>fieldErrorRequired</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/chip-list.field.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/select.field.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/string.field.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.field.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="encryptedConnection" datatype="html">
+        <source>encryptedConnection</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">libs/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@portal/forms/fields/url.field.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="compilation" datatype="html">
+        <source>compilation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/translation/translation.form.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contactUser" datatype="html">
+        <source>contactUser</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contactOrganisation" datatype="html">
+        <source>contactOrganisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="category" datatype="html">
+        <source>category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contactName" datatype="html">
+        <source>contactName</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.table.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <source>description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/delete.dialog.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mail" datatype="html">
+        <source>mail</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="name" datatype="html">
+        <source>name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.form.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.form.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.form.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.table.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.table.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.table.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/delete.dialog.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="organisation" datatype="html">
+        <source>organisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.table.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/provider/provider.table.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="phone" datatype="html">
+        <source>phone</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.form.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.form.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.table.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tags" datatype="html">
+        <source>tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="targetGroups" datatype="html">
+        <source>targetGroups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.form.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="edit" datatype="html">
+        <source>edit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/image/image.field.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="autoLocate" datatype="html">
+        <source>autoLocate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="houseNumber" datatype="html">
+        <source>houseNumber</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="latitude" datatype="html">
+        <source>latitude</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="longitude" datatype="html">
+        <source>longitude</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="place" datatype="html">
+        <source>place</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="postalCode" datatype="html">
+        <source>postalCode</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.table.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="street" datatype="html">
+        <source>street</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.table.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="suburb" datatype="html">
+        <source>suburb</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.form.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.table.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="color" datatype="html">
+        <source>color</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mapCenterLatitude" datatype="html">
+        <source>mapCenterLatitude</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/configuration/configuration.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mapCenterLongitude" datatype="html">
+        <source>mapCenterLongitude</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/configuration/configuration.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mapProjection" datatype="html">
+        <source>mapProjection</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/configuration/configuration.form.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mapZoomfactor" datatype="html">
+        <source>mapZoomfactor</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/configuration/configuration.form.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="portalMail" datatype="html">
+        <source>portalMail</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/configuration/configuration.form.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="portalName" datatype="html">
+        <source>portalName</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/configuration/configuration.form.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="portalSubtitle" datatype="html">
+        <source>portalSubtitle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/configuration/configuration.form.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="delete" datatype="html">
+        <source>delete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/image/image.field.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/delete.dialog.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="selectOrDropImage" datatype="html">
+        <source>selectOrDropImage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/image/image.field.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="caption" datatype="html">
+        <source>caption</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/image/image.field.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reset" datatype="html">
+        <source>reset</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/image/image.field.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.stepper.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.stepper.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.stepper.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.stepper.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="create" datatype="html">
+        <source>create</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/image/image.field.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="images" datatype="html">
+        <source>images</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/image/image.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="locale" datatype="html">
+        <source>locale</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="machineTranslated" datatype="html">
+        <source>machineTranslated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="videoUrl" datatype="html">
+        <source>videoUrl</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.form.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="website" datatype="html">
+        <source>website</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.form.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.table.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="schedule" datatype="html">
+        <source>schedule</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="startDate" datatype="html">
+        <source>startDate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="startTime" datatype="html">
+        <source>startTime</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="endDate" datatype="html">
+        <source>endDate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="endTime" datatype="html">
+        <source>endTime</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrance" datatype="html">
+        <source>recurrance</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence" datatype="html">
+        <source>recurrence</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="once" datatype="html">
+        <source>once</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="daily" datatype="html">
+        <source>daily</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weekly" datatype="html">
+        <source>weekly</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="monthly" datatype="html">
+        <source>monthly</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="yearly" datatype="html">
+        <source>yearly</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="until" datatype="html">
+        <source>until</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="monday" datatype="html">
+        <source>monday</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tuesday" datatype="html">
+        <source>tuesday</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="wednesday" datatype="html">
+        <source>wednesday</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="thursday" datatype="html">
+        <source>thursday</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="friday" datatype="html">
+        <source>friday</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="saturday" datatype="html">
+        <source>saturday</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sunday" datatype="html">
+        <source>sunday</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createSchedules" datatype="html">
+        <source>createSchedules</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="schedules" datatype="html">
+        <source>schedules</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/schedule/schedule.form.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="autoTranslate" datatype="html">
+        <source>autoTranslate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/translation/translation.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="language" datatype="html">
+        <source>language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/translation/translation.form.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fullname" datatype="html">
+        <source>fullname</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.form.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/provider/provider.table.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password" datatype="html">
+        <source>password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.form.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/relogin.dialog.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="passwordConfirm" datatype="html">
+        <source>passwordConfirm</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.form.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="username" datatype="html">
+        <source>username</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.form.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/provider/provider.table.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.table.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/relogin.dialog.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createActivity" datatype="html">
+        <source>createActivity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editActivity" datatype="html">
+        <source>editActivity</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="main" datatype="html">
+        <source>main</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.stepper.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="address" datatype="html">
+        <source>address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="translations" datatype="html">
+        <source>translations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="previous" datatype="html">
+        <source>previous</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.stepper.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.stepper.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.stepper.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.stepper.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="next" datatype="html">
+        <source>next</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.stepper.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.stepper.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.stepper.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.stepper.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="persist" datatype="html">
+        <source>persist</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/activity/activity.stepper.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.stepper.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.stepper.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.stepper.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.stepper.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createAddress" datatype="html">
+        <source>createAddress</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editAddress" datatype="html">
+        <source>editAddress</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/address/address.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createCategory" datatype="html">
+        <source>createCategory</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editCategory" datatype="html">
+        <source>editCategory</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/category/category.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createLanguage" datatype="html">
+        <source>createLanguage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editLanguage" datatype="html">
+        <source>editLanguage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/language/language.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createOrganisation" datatype="html">
+        <source>createOrganisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editOrganisation" datatype="html">
+        <source>editOrganisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/organisation/organisation.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createSuburb" datatype="html">
+        <source>createSuburb</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editSuburb" datatype="html">
+        <source>editSuburb</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/suburb/suburb.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createTag" datatype="html">
+        <source>createTag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editTag" datatype="html">
+        <source>editTag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/tag/tag.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createTargetGroup" datatype="html">
+        <source>createTargetGroup</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editTargetGroup" datatype="html">
+        <source>editTargetGroup</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/target-group/target-group.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createUser" datatype="html">
+        <source>createUser</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.stepper.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="editUser" datatype="html">
+        <source>editUser</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/user/user.stepper.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="admin" datatype="html">
+        <source>admin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/provider/provider.table.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="approved" datatype="html">
+        <source>approved</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/realm/provider/provider.table.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="authenticationExpired" datatype="html">
+        <source>authenticationExpired</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/relogin.dialog.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="logout" datatype="html">
+        <source>logout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/relogin.dialog.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login" datatype="html">
+        <source>login</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/relogin.dialog.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="selectOrganisation" datatype="html">
+        <source>selectOrganisation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/request.dialog.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="search" datatype="html">
+        <source>search</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/request.dialog.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="joinOrganisations" datatype="html">
+        <source>joinOrganisations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/request.dialog.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="confirmDelete" datatype="html">
+        <source>confirmDelete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/delete.dialog.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="uuid" datatype="html">
+        <source>uuid</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/dialogs/delete.dialog.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accountPanel" datatype="html">
+        <source>accountPanel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actions" datatype="html">
+        <source>actions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">194</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">216</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="userDetails" datatype="html">
+        <source>userDetails</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="userOrganisations" datatype="html">
+        <source>userOrganisations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="userActivities" datatype="html">
+        <source>userActivities</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/account/account.panel.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="organisationPanel" datatype="html">
+        <source>organisationPanel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="organisations" datatype="html">
+        <source>organisations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="activities" datatype="html">
+        <source>activities</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="providers" datatype="html">
+        <source>providers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="providerRequests" datatype="html">
+        <source>providerRequests</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/organisation/organisation.panel.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="applicationPanel" datatype="html">
+        <source>applicationPanel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration" datatype="html">
+        <source>configuration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="users" datatype="html">
+        <source>users</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="superUser" datatype="html">
+        <source>superUser</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="languages" datatype="html">
+        <source>languages</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="suburbs" datatype="html">
+        <source>suburbs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">165</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addresses" datatype="html">
+        <source>addresses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="organisationRequests" datatype="html">
+        <source>organisationRequests</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/views/admin/panels/application/application.panel.html</context>
+          <context context-type="linenumber">209</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

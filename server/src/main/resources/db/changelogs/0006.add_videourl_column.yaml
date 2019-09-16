@@ -1,0 +1,11 @@
+databaseChangeLog:
+- changeSet:
+    id: 0006.add_videourl_column
+    author: vetemi
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: video_url
+            type: varchar(255)
+        tableName: organisations

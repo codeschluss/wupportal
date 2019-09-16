@@ -1,0 +1,140 @@
+{
+  "$schema": "node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "defaultProject": "@portal/client",
+  "projects": {
+    "@portal/client": {
+      "prefix": "",
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "aot": true,
+            "deleteOutputPath": false,
+            "extractCss": true,
+            "extractLicenses": false,
+            "main": "src/client.ts",
+            "namedChunks": false,
+            "ngswConfigPath": "service.json",
+            "index": "res/index.html",
+            "polyfills": "src/utils/polyfills.ts",
+            "outputHashing": "none",
+            "outputPath": "target",
+            "serviceWorker": true,
+            "sourceMap": false,
+            "tsConfig": "tsconfig.json",
+            "vendorChunk": true,
+            "assets": [
+              {
+                "glob": "manifest.json",
+                "input": "",
+                "output": "/"
+              },
+              {
+                "glob": "*.xliff",
+                "input": "i18n",
+                "output": "/i18n"
+              },
+              {
+                "glob": "**/*",
+                "input": "imgs",
+                "output": "/imgs"
+              }
+            ],
+            "styles": [
+              {
+                "input": "res/theme.scss",
+                "bundleName": "css/theme"
+              }
+            ]
+          },
+          "configurations": {
+            "production": {
+              "buildOptimizer": true,
+              "optimization": true
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "@portal/client:build",
+            "i18nFormat": "xliff",
+            "i18nLocale": "root",
+            "outFile": "strings.xliff",
+            "outputPath": "i18n"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@portal/core": {
+      "root": "libs/core",
+      "sourceRoot": "libs/core",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.json",
+            "project": "libs/core/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json",
+              "libs/core/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@portal/forms": {
+      "root": "libs/forms",
+      "sourceRoot": "libs/forms",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/forms/tsconfig.json",
+            "project": "libs/forms/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json",
+              "libs/forms/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

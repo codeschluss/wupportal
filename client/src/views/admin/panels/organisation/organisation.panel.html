@@ -1,0 +1,106 @@
+<header class="mat-title">
+  <i18n i18n="@@organisationPanel">organisationPanel</i18n>
+</header>
+
+<mat-tab-group [selectedIndex]="index">
+  <mat-tab id="organisations">
+    <ng-template matTabLabel>
+      <i18n i18n="@@organisations">organisations</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <organisation-table [items]="organisations">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </organisation-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="activities">
+    <ng-template matTabLabel>
+      <i18n i18n="@@activities">activities</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <activity-table [items]="activities">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="primary" (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </activity-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="providers">
+    <ng-template matTabLabel>
+      <i18n i18n="@@providers">providers</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <provider-table [items]="providers">
+        <ng-container matColumnDef="admin">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@admin">admin</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle [checked]="item.admin"
+              (change)="grant(item, $event.checked)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="warn" (click)="demote(item)">
+              <fa-icon icon="sign-out-alt"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </provider-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="requests" [disabled]="!requests.length">
+    <ng-template matTabLabel>
+      <span matBadgeOverlap="false" [matBadge]="requests.length || null">
+        <i18n i18n="@@providerRequests">providerRequests</i18n>
+      </span>
+    </ng-template>
+    <ng-template matTabContent>
+      <provider-table [items]="requests">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button (click)="approve(item)">
+              <fa-icon icon="check"></fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="block(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </provider-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -3,55 +3,35 @@ DOCKERFILE<<'EOF'
 # codeschluss/wupportal
 FROM alpine:latest
 LABEL maintainer info@codeschluss.de
-COPY backend /tmp/backend
-COPY frontend /tmp/frontend
+COPY client /tmp/client
+COPY server /tmp/server
 RUN \
 #
 # packages
 apk --no-cache add \
   nginx \
-  php7 \
-  php7-ctype \
-  php7-curl \
-  php7-dom \
-  php7-fpm \
-  php7-gd \
-  php7-intl \
-  php7-json \
-  php7-mbstring \
-  php7-pdo \
-  php7-pdo_mysql \
-  php7-simplexml \
-  php7-session \
-  php7-tokenizer \
-  php7-xml \
-  php7-xmlreader \
-  php7-xmlwriter \
-  php7-zlib && \
+  openjdk8-jre && \
 apk --no-cache --virtual build add \
-  bash \
-  curl \
+  maven \
+  ncurses \
   nodejs-npm \
-  php7-phar && \
+  openjdk8 && \
 #
-# composer
-cd $(mktemp -d) && \
-curl -sS https://getcomposer.org/installer | php && \
-export COMPOSER_BIN=$(pwd)/composer.phar && \
-#
-# frontend
-cd /tmp/frontend && \
+# client
+cd /tmp/client && \
 npm install && \
 npm run strip && \
 #
-# backend
-cd /tmp/backend && \
-${COMPOSER_BIN} install --no-dev --optimize-autoloader && \
+# server
+cd /tmp/server && \
+mvn -B install -DskipTests=true \
+  -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn && \
 #
 # deploy
-mkdir -p /usr/share/webapps && \
-mv /tmp/backend /usr/share/webapps/wupportal && \
-ln -fs /conf/app.php /usr/share/webapps/wupportal/config/app.php && \
+mkdir -p /usr/share/webapps/wupportal && \
+mv /tmp/client/target /usr/share/webapps/wupportal/client && \
+mv /tmp/server/target/*.jar /usr/share/webapps/wupportal/server.jar && \
+ln -fs /conf/application-default.properties /usr/share/webapps/wupportal && \
 #
 # cleanup
 apk del --purge build && \
@@ -62,8 +42,9 @@ EXPOSE 80
 #
 # runtime
 CMD \
-  php-fpm7 -R -c /conf/php-fpm.ini -y /conf/php-fpm.conf && \
-  nginx -c /conf/nginx.conf -g 'daemon off;'
+  nginx -c /conf/nginx.conf && \
+  cd /usr/share/webapps/wupportal && \
+  java -jar server.jar
 EOF
 
 DOCKERIGNORE<<'EOF'
@@ -72,16 +53,18 @@ DOCKERIGNORE<<'EOF'
 .dockerignore
 Dockerfile
 
-backend/bin
-backend/config/app.php
-backend/composer.lock
-backend/logs/*.log
-backend/tests
-backend/tmp
-backend/vendor
-backend/webroot/js
+client/node_modules
+client/package-lock.json
+client/target
 
-frontend/node_modules
-frontend/npm-debug.log
-frontend/package-lock.json
+server/.gitignore
+server/.metadata
+server/.recommenders
+server/.settings
+server/bin
+server/src/main/resources/application-credentials.properties
+server/src/main/resources/application-existing.properties
+server/src/main/resources/db/output/*.yaml
+server/src/main/resources/db/output/*.xml
+server/target
 EOF

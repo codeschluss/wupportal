@@ -1,0 +1,13 @@
+
+databaseChangeLog:
+- changeSet:
+    id: 0002.add_machinetranslated_column
+    author: vetemi
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: machine_translated
+            type: varchar(255)
+        tableName: languages
+

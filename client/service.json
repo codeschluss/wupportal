@@ -1,0 +1,41 @@
+{
+  "index": "/",
+  "assetGroups": [
+    {
+      "name": "client",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/",
+          "/manifest.json",
+          "/css/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/i18n/**",
+          "/imgs/**"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api",
+      "urls": [
+        "/api/**"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout":"30s",
+        "maxAge": "1d"
+      }
+    }
+  ]
+}

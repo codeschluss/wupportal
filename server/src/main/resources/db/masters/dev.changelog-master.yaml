@@ -1,0 +1,34 @@
+databaseChangeLog:
+    - include:
+        file: classpath:db/changelogs/dev.intialdb.yaml
+    - include:
+        file: classpath:db/changelogs/dev.intialdata.yaml
+    - include:
+        file: classpath:db/changelogs/0001.rename_translations_table.yaml
+    - include:
+        file: classpath:db/changelogs/0002.add_machinetranslated_column.yaml
+    - include:
+        file: classpath:db/changelogs/0003.create_translatables_tables.yaml
+    - include:
+        file: classpath:db/changelogs/0004.transfrom_translatable_data.yaml
+    - include:
+        file: classpath:db/changelogs/0005.drop_translatables_columns.yaml
+    - include:
+        file: classpath:db/changelogs/0006.add_videourl_column.yaml
+    - include:
+        file: classpath:db/changelogs/0007.create_orgaimages_table.yaml
+    - include:
+        file: classpath:db/changelogs/0008.drop_orgaimages_column.yaml
+    - include:
+        file: classpath:db/changelogs/0009.add_orgapproved_column.yaml
+    - include:
+        file: classpath:db/changelogs/0010.add_accontact_column.yaml
+    # - include:
+    #     file: classpath:db/changelogs/0011.transfrom_activitycontact_data.yaml
+    - include:
+        file: classpath:db/changelogs/0012.drop_showuser_column.yaml
+    - include:
+        file: classpath:db/changelogs/0013.rename_fullname_column.yaml
+
+    - include:
+        file: classpath:db/changelogs/dev.aftermigdata.yaml

@@ -1,0 +1,31 @@
+databaseChangeLog:
+- changeSet:
+    id: 1544653700468-11
+    author: vetemi (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: contact_name
+            type: VARCHAR(255)
+        tableName: activities
+- changeSet:
+    id: 1544653700468-12
+    author: vetemi (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: mail
+            type: VARCHAR(255)
+        tableName: activities
+- changeSet:
+    id: 1544653700468-13
+    author: vetemi (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: phone
+            type: VARCHAR(255)
+        tableName: activities

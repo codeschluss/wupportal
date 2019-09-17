@@ -68,7 +68,6 @@
           <stack-layout class="detail">
             <i18n i18n="@@category" unit="category"></i18n>
             <stack-layout ripple
-              class="category"
               [borderColor]="item.category.color"
               (tap)="router.navigate(['/', 'activities'],
                 { queryParams: { categories: item.category.id } })">

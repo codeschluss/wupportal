@@ -27,7 +27,7 @@ if (!isKnownView('pager-compat')) {
     <AbsoluteLayout class="next">
       <i18n i18n="@@following" unit="following"></i18n>
       <icon-compat ripple
-        icon="angle-double-right"
+        icon="angle-double-left"
         [isEnabled]="next"
         [isUserInteractionEnabled]="next"
         [ngClass]="{ disabled: !next }"

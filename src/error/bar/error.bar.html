@@ -6,9 +6,6 @@
 <small class="mat-small">
   {{ data.message }}
 </small>
-<button mat-mini-fab color="warn" (click)="snackbar.dismiss()">
-  &times;
-</button>
 
 <ng-template #label let-case="case">
   <ng-container [ngSwitch]="case.status">

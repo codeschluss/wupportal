@@ -10,7 +10,9 @@ export class ErrorBarComponent {
 
   public constructor(
     @Inject(MAT_SNACK_BAR_DATA) public data: any,
-    public snackbar: MatSnackBarRef<ErrorBarComponent>
-  ) { }
+    snackbar: MatSnackBarRef<ErrorBarComponent>
+  ) {
+    setTimeout(() => snackbar.dismiss(), 5000);
+  }
 
 }

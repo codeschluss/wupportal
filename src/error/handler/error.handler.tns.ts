@@ -31,14 +31,13 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     if (!reason.ignored) {
       // TODO: global ViewContainerRef
       this.zone.run(() => !reason.breaking || true ? alert({
-          title:
-          reason.error,
-          message: reason.message,
-          okButtonText: 'Close'
-        }) : this.dialog.showModal(ErrorDialogComponent, {
-          context: reason,
-          viewContainerRef: null
-        }));
+        title: reason.error,
+        message: reason.message,
+        okButtonText: 'Close'
+      }) : this.dialog.showModal(ErrorDialogComponent, {
+        context: reason,
+        viewContainerRef: null
+      }));
     }
   }
 

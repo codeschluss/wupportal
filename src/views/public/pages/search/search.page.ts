@@ -73,7 +73,9 @@ export class SearchPageComponent extends BasePage implements OnInit {
   }
 
   public expanded(expand: ExpandCompat): void {
-    this.expands.filter((e) => e !== expand).forEach((e) => e.close());
+    if (this.expands.length) {
+      this.expands.filter((e) => e !== expand).forEach((e) => e.close());
+    }
   }
 
   private search(filter: string, model: Type<CrudModel>): Observable<any> {

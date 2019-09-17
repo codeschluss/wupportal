@@ -102,8 +102,7 @@ export class LayoutComponent implements OnInit {
 
   public filter(url: string = this.router.url): string {
     return url.startsWith('/search')
-      ? this.serializer.parse(url).root.children.primary.segments[1].path
-      : '';
+      ? this.serializer.parse(url).root.children.primary.segments[1].path : '';
   }
 
   public navigate(...path: string[]): Promise<boolean> {

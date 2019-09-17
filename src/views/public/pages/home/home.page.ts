@@ -22,6 +22,11 @@ export class HomePageComponent extends BasePage {
     return this.titleService.name;
   }
 
+  public get tagline(): string {
+    return this.route.snapshot.data.configuration
+      .find((c) => c.item === 'portalSubtitle').value;
+  }
+
   protected get routing(): Route {
     return {
       path: this.path,

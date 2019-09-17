@@ -1,29 +1,22 @@
 @import '../../../../app.vars.scss';
 
 StackLayout {
-  padding: 0 rem(1) rem(1) rem(1);
+  horizontal-align: center;
+  margin: 0 rem(1) rem(1) rem(1);
   orientation: horizontal;
-  width: 100%;
 
   & > AbsoluteLayout {
     height: rem(2.5);
+    horizontal-align: left;
 
-    &.next {
+    & + AbsoluteLayout {
       horizontal-align: right;
       transform: rotate(180deg);
-
-      & > [icon] {
-        transform: rotate(180deg);
-      }
 
       & > [unit] {
         text-align: right;
         transform: rotate(180deg);
       }
-    }
-
-    &.prev {
-      horizontal-align: left;
     }
 
     & > GridLayout {

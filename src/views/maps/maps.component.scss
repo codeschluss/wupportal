@@ -36,10 +36,6 @@ main {
         direction: ltr;
         scroll-snap-align: start;
 
-        @include media(lt-md) {
-          padding-top: 1rem;
-        }
-
         @include media(gt-sm) {
           & + activity-card {
             padding-top: 0;

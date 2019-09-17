@@ -32,6 +32,7 @@ scroll-view {
           orientation: horizontal;
 
           & > flexbox-layout {
+            align-items: center;
             orientation: horizontal;
 
             & > grid-layout {
@@ -67,16 +68,10 @@ scroll-view {
             width: 30%;
           }
 
-          [ripple] {
+          & > [ripple] {
             border-radius: rem(.25);
             orientation: horizontal;
             padding: rem(.25) rem(.5) rem(.25) rem(.25);
-
-            &[borderColor] {
-              border-radius: rem(1);
-              border-width: rem(.25);
-              padding: rem(.25) rem(.5);
-            }
 
             & > label {
               vertical-align: center;

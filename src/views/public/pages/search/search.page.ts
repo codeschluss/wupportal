@@ -1,5 +1,5 @@
 import { Component, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver } from '@wooportal/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
@@ -39,12 +39,15 @@ export class SearchPageComponent extends BasePage implements OnInit {
     targetGroups: []
   };
 
+  public results: number = -1;
+
   protected path: string = 'search/:filter';
 
   @ViewChildren(ExpandCompatComponent)
   private expands: QueryList<ExpandCompat>;
 
   public constructor(
+    public router: Router,
     private crudResolver: CrudResolver,
     private route: ActivatedRoute
   ) {
@@ -55,21 +58,21 @@ export class SearchPageComponent extends BasePage implements OnInit {
     this.route.paramMap.pipe(map((params) => params.get('filter'))).pipe(
       mergeMap((filter) => forkJoin([
         this.search(filter, ActivityModel).pipe(
-          map((items) => this.items.activities = items)),
+          map((items) => (this.items.activities = items).length)),
         this.search(filter, BlogModel).pipe(
-          map((items) => this.items.blogposts = items)),
+          map((items) => (this.items.blogposts = items).length)),
         this.search(filter, CategoryModel).pipe(
-          map((items) => this.items.categories = items)),
+          map((items) => (this.items.categories = items).length)),
         this.search(filter, OrganisationModel).pipe(
-          map((items) => this.items.organisations = items)),
+          map((items) => (this.items.organisations = items).length)),
         this.search(filter, PageModel).pipe(
-          map((items) => this.items.infopages = items)),
+          map((items) => (this.items.infopages = items).length)),
         this.search(filter, SuburbModel).pipe(
-          map((items) => this.items.suburbs = items)),
+          map((items) => (this.items.suburbs = items).length)),
         this.search(filter, TargetGroupModel).pipe(
-          map((items) => this.items.targetGroups = items))
+          map((items) => (this.items.targetGroups = items).length))
       ]))
-    ).subscribe();
+    ).subscribe((length) => this.results = length.reduce((num, i) => num + i));
   }
 
   public expanded(expand: ExpandCompat): void {

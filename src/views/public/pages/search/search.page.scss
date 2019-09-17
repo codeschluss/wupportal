@@ -3,9 +3,22 @@
 main {
   @include flex(column, flex-start, center);
 
+  & > strong {
+    font-size: 1.5rem;
+    padding-top: .5rem;
+  }
+
+  & > [compat=icon] {
+    font-size: 3rem;
+  }
+
   & > [compat=expand] {
     margin: 1rem auto;
     width: calc(100% - 2rem);
+
+    @include media(lt-md) {
+      margin-top: 0;
+    }
 
     @include deep {
       & > mat-expansion-panel {

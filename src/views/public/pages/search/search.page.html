@@ -1,122 +1,137 @@
 <main>
-  <ng-container *ngIf="items.activities.length">
-    <expand-compat #activities (changed)="$event && expanded(activities)">
-      <ng-template #expandHeader>
-        <icon-compat icon="map-marker-alt"></icon-compat>
-        <i18n i18n="@@activities">activities</i18n>
-        <small>({{ items.activities.length }})</small>
-      </ng-template>
-      <ng-template #expandContent>
-        <ng-container *ngFor="let item of items.activities">
-          <activity-card [item]="item"></activity-card>
-        </ng-container>
-      </ng-template>
-    </expand-compat>
+  <ng-container *ngIf="results === 0">
+    <icon-compat icon="poo"></icon-compat>
+    <strong class="mat-title">
+      <i18n i18n="@@apiErrorNotFound">apiErrorNotFound</i18n>
+    </strong>
   </ng-container>
-  <ng-container *ngIf="items.organisations.length">
-    <expand-compat #organisations (changed)="$event && expanded(organisations)">
-      <ng-template #expandHeader>
-        <icon-compat icon="at"></icon-compat>
-        <i18n i18n="@@organisations">organisations</i18n>
-        <small>({{ items.organisations.length }})</small>
-      </ng-template>
-      <ng-template #expandContent>
-        <ng-container *ngFor="let item of items.organisations">
-          <organisation-card [item]="item"></organisation-card>
-        </ng-container>
-      </ng-template>
-    </expand-compat>
-  </ng-container>
-  <ng-container *ngIf="items.blogposts.length">
-    <expand-compat #blogposts (changed)="$event && expanded(blogposts)">
-      <ng-template #expandHeader>
-        <icon-compat icon="comment-dots"></icon-compat>
-        <i18n i18n="@@blogposts">blogposts</i18n>
-        <small>({{ items.blogposts.length }})</small>
-      </ng-template>
-      <ng-template #expandContent>
-        <ng-container *ngFor="let item of items.blogposts">
-          <blogpost-card [item]="item"></blogpost-card>
-        </ng-container>
-      </ng-template>
-    </expand-compat>
-  </ng-container>
-  <ng-container *ngIf="items.infopages.length">
-    <expand-compat #infopages (changed)="$event && expanded(infopages)">
-      <ng-template #expandHeader>
-        <icon-compat icon="info-circle"></icon-compat>
-        <i18n i18n="@@infopages">infopages</i18n>
-        <small>({{ items.infopages.length }})</small>
-      </ng-template>
-      <ng-template #expandContent>
-        <ng-container *ngFor="let item of items.infopages">
-          <infopage-card [item]="item"></infopage-card>
-        </ng-container>
-      </ng-template>
-    </expand-compat>
-  </ng-container>
-  <ng-container *ngIf="items.categories.length">
-    <expand-compat #categories (changed)="$event && expanded(categories)">
-      <ng-template #expandHeader>
-        <icon-compat icon="dot-circle"></icon-compat>
-        <i18n i18n="@@categories">categories</i18n>
-        <small>({{ items.categories.length }})</small>
-      </ng-template>
-      <ng-template #expandContent>
-        <mat-chip-list multiple selectable>
-          <ng-container *ngFor="let item of items.categories">
-            <mat-chip
-              class="mat-body"
-              [queryParams]="{ categories: item.id }"
-              [routerLink]="['/', 'activities']"
-              [style.borderColor]="item.color">
-              {{ item.name }}
-            </mat-chip>
+  <ng-container *ngIf="results > 0">
+    <ng-container *ngIf="items.activities.length">
+      <expand-compat #activities
+        (changed)="$event && expanded(activities)">
+        <ng-template #expandHeader>
+          <icon-compat icon="map-marker-alt"></icon-compat>
+          <i18n i18n="@@activities">activities</i18n>
+          <small>({{ items.activities.length }})</small>
+        </ng-template>
+        <ng-template #expandContent>
+          <ng-container *ngFor="let item of items.activities">
+            <activity-card [item]="item"></activity-card>
           </ng-container>
-        </mat-chip-list>
-      </ng-template>
-    </expand-compat>
-  </ng-container>
-  <ng-container *ngIf="items.suburbs.length">
-    <expand-compat #suburbs (changed)="$event && expanded(suburbs)">
-      <ng-template #expandHeader>
-        <icon-compat icon="city"></icon-compat>
-        <i18n i18n="@@suburbs">suburbs</i18n>
-        <small>({{ items.suburbs.length }})</small>
-      </ng-template>
-      <ng-template #expandContent>
-        <section>
-          <ng-container *ngFor="let item of items.suburbs">
-            <button mat-stroked-button
-              [queryParams]="{ suburbs: item.id }"
-              [routerLink]="['/', 'activities']">
-              <icon-compat icon="city"></icon-compat>
-              <span>{{ item.name }}</span>
-            </button>
+        </ng-template>
+      </expand-compat>
+    </ng-container>
+    <ng-container *ngIf="items.organisations.length">
+      <expand-compat #organisations
+        (changed)="$event && expanded(organisations)">
+        <ng-template #expandHeader>
+          <icon-compat icon="at"></icon-compat>
+          <i18n i18n="@@organisations">organisations</i18n>
+          <small>({{ items.organisations.length }})</small>
+        </ng-template>
+        <ng-template #expandContent>
+          <ng-container *ngFor="let item of items.organisations">
+            <organisation-card [item]="item"></organisation-card>
           </ng-container>
-        </section>
-      </ng-template>
-    </expand-compat>
-  </ng-container>
-  <ng-container *ngIf="items.targetGroups.length">
-    <expand-compat #targetGroups (changed)="$event && expanded(targetGroups)">
-      <ng-template #expandHeader>
-        <icon-compat icon="users"></icon-compat>
-        <i18n i18n="@@targetGroups">targetGroups</i18n>
-        <small>({{ items.targetGroups.length }})</small>
-      </ng-template>
-      <ng-template #expandContent>
-        <section>
-          <ng-container *ngFor="let item of items.targetGroups">
-            <button mat-stroked-button
-              [queryParams]="{ targetgroups: item.id }"
-              [routerLink]="['/', 'activities']">
-              <icon-compat icon="users"></icon-compat>
-              <span>{{ item.name }}</span>
-            </button>
+        </ng-template>
+      </expand-compat>
+    </ng-container>
+    <ng-container *ngIf="items.blogposts.length">
+      <expand-compat #blogposts
+        (changed)="$event && expanded(blogposts)">
+        <ng-template #expandHeader>
+          <icon-compat icon="comment-dots"></icon-compat>
+          <i18n i18n="@@blogposts">blogposts</i18n>
+          <small>({{ items.blogposts.length }})</small>
+        </ng-template>
+        <ng-template #expandContent>
+          <ng-container *ngFor="let item of items.blogposts">
+            <blogpost-card [item]="item"></blogpost-card>
           </ng-container>
-        </section>
-      </ng-template>
-    </expand-compat>
+        </ng-template>
+      </expand-compat>
+    </ng-container>
+    <ng-container *ngIf="items.infopages.length">
+      <expand-compat #infopages
+        (changed)="$event && expanded(infopages)">
+        <ng-template #expandHeader>
+          <icon-compat icon="info-circle"></icon-compat>
+          <i18n i18n="@@infopages">infopages</i18n>
+          <small>({{ items.infopages.length }})</small>
+        </ng-template>
+        <ng-template #expandContent>
+          <ng-container *ngFor="let item of items.infopages">
+            <infopage-card [item]="item"></infopage-card>
+          </ng-container>
+        </ng-template>
+      </expand-compat>
+    </ng-container>
+    <ng-container *ngIf="items.categories.length">
+      <expand-compat #categories
+        (changed)="$event && expanded(categories)">
+        <ng-template #expandHeader>
+          <icon-compat icon="dot-circle"></icon-compat>
+          <i18n i18n="@@categories">categories</i18n>
+          <small>({{ items.categories.length }})</small>
+        </ng-template>
+        <ng-template #expandContent>
+          <mat-chip-list multiple selectable>
+            <ng-container *ngFor="let item of items.categories">
+              <mat-chip
+                class="mat-body"
+                [queryParams]="{ categories: item.id }"
+                [routerLink]="['/', 'activities']"
+                [style.borderColor]="item.color">
+                {{ item.name }}
+              </mat-chip>
+            </ng-container>
+          </mat-chip-list>
+        </ng-template>
+      </expand-compat>
+    </ng-container>
+    <ng-container *ngIf="items.suburbs.length">
+      <expand-compat #suburbs
+        (changed)="$event && expanded(suburbs)">
+        <ng-template #expandHeader>
+          <icon-compat icon="city"></icon-compat>
+          <i18n i18n="@@suburbs">suburbs</i18n>
+          <small>({{ items.suburbs.length }})</small>
+        </ng-template>
+        <ng-template #expandContent>
+          <section>
+            <ng-container *ngFor="let item of items.suburbs">
+              <button mat-button
+                [queryParams]="{ suburbs: item.id }"
+                [routerLink]="['/', 'activities']">
+                <icon-compat icon="city"></icon-compat>
+                <span>{{ item.name }}</span>
+              </button>
+            </ng-container>
+          </section>
+        </ng-template>
+      </expand-compat>
+    </ng-container>
+    <ng-container *ngIf="items.targetGroups.length">
+      <expand-compat #targetGroups
+        (changed)="$event && expanded(targetGroups)">
+        <ng-template #expandHeader>
+          <icon-compat icon="users"></icon-compat>
+          <i18n i18n="@@targetGroups">targetGroups</i18n>
+          <small>({{ items.targetGroups.length }})</small>
+        </ng-template>
+        <ng-template #expandContent>
+          <section>
+            <ng-container *ngFor="let item of items.targetGroups">
+              <button mat-button
+                [queryParams]="{ targetgroups: item.id }"
+                [routerLink]="['/', 'activities']">
+                <icon-compat icon="users"></icon-compat>
+                <span>{{ item.name }}</span>
+              </button>
+            </ng-container>
+          </section>
+        </ng-template>
+      </expand-compat>
+    </ng-container>
   </ng-container>
 </main>

@@ -8,6 +8,7 @@ import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData as BackPressedEvent } from 'tns-core-modules/application';
+import { ScrollView } from 'tns-core-modules/ui/scroll-view';
 import { LanguageModel } from '../../../realm/models/language.model';
 import { LanguageProvider } from '../../../realm/providers/language.provider';
 import { ClientPackage } from '../../../utils/package';
@@ -171,11 +172,11 @@ export class LayoutComponent implements OnInit {
 
     if (this.platformProvider.name === 'Web') {
       Array.from(this.document.getElementsByClassName('topoff'))
-        .forEach((element) => element.scrollTo
+        .forEach((element: HTMLElement) => element.scrollTo
           ? element.scrollTo({ behavior: 'smooth', top: 0 })
           : element.scrollTop = 0);
     } else if (this.platformProvider.type === 'Native') {
-      eachDescendant(getRootView(), (element) =>
+      eachDescendant(getRootView(), (element: ScrollView) =>
         element.cssClasses.has('topoff')
           ? element.scrollToVerticalOffset(0, true)
           : true);

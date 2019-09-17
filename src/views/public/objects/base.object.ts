@@ -1,9 +1,10 @@
 import { AfterViewInit, HostBinding, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { CrudJoiner, CrudModel, CrudResolver, openUrl, PlatformProvider, Selfrouter, Title } from '@wooportal/core';
+import { CrudJoiner, CrudModel, CrudResolver, PlatformProvider, Selfrouter, Title } from '@wooportal/core';
 import { ExpandCompatComponent } from '../../shared/compat/expand/expand.compat';
 import { ExpandCompat } from '../../shared/compat/expand/expand.compat.i';
+import { openUrl } from '../../shared/shared.imports';
 
 export abstract class BaseObject<Model extends CrudModel>
   extends Selfrouter implements OnInit, AfterViewInit {
@@ -17,7 +18,7 @@ export abstract class BaseObject<Model extends CrudModel>
   @HostBinding('attr.base')
   public readonly base: string = 'object';
 
-  public openUrl: Function = openUrl;
+  public openUrl: (url: string) => boolean = openUrl;
 
   public get item(): Model {
     return this.route.snapshot.data.item;

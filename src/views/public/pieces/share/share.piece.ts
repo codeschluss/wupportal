@@ -1,8 +1,9 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { PlatformProvider, SocialShare, Title } from '@wooportal/core';
+import { PlatformProvider, Title } from '@wooportal/core';
 import { take } from 'rxjs/operators';
 import { ClientPackage } from '../../../../utils/package';
+import { SocialShare } from '../../../shared/shared.imports';
 import { BasePiece } from '../base.piece';
 
 interface ShareTarget {

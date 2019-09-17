@@ -1,4 +1,5 @@
-import { CrudModel, fromBase64 } from '@wooportal/core';
+import { CrudModel } from '@wooportal/core';
+import { fromBase64 } from '../../views/shared/shared.imports';
 
 export class ImageModel
   extends CrudModel {

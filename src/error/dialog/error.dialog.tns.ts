@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { openUrl } from '@wooportal/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 import { ClientPackage } from '../../utils/package';
+import { openUrl } from '../../views/shared/shared.imports';
 
 @Component({
   styleUrls: ['error.dialog.scss'],
@@ -10,7 +10,7 @@ import { ClientPackage } from '../../utils/package';
 
 export class ErrorDialogComponent {
 
-  public openUrl: Function = openUrl;
+  public openUrl: (url: string) => boolean = openUrl;
 
   public package: typeof ClientPackage = ClientPackage;
 

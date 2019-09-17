@@ -1,4 +1,4 @@
-import { openUrl } from '@wooportal/core';
+import { openUrl } from '../views/shared/shared.imports';
 import { ClientPackage } from './package';
 
 declare const android: any;

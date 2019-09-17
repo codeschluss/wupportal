@@ -12,6 +12,7 @@ import { LanguageModel } from '../../../realm/models/language.model';
 import { LanguageProvider } from '../../../realm/providers/language.provider';
 import { ClientPackage } from '../../../utils/package';
 import { DrawerCompat } from '../compat/drawer/drawer.compat.i';
+import { eachDescendant, getRootView } from '../shared.imports';
 
 @Component({
   selector: 'layout-component',
@@ -169,11 +170,15 @@ export class LayoutComponent implements OnInit {
     }
 
     if (this.platformProvider.name === 'Web') {
-      const topoff = this.document.getElementsByClassName('topoff');
-      Array.from(topoff).forEach((e) => e.scrollTo ? e.scrollTo({
-        behavior: 'smooth',
-        top: 0
-      }) : e.scrollTop = 0);
+      Array.from(this.document.getElementsByClassName('topoff'))
+        .forEach((element) => element.scrollTo
+          ? element.scrollTo({ behavior: 'smooth', top: 0 })
+          : element.scrollTop = 0);
+    } else if (this.platformProvider.type === 'Native') {
+      eachDescendant(getRootView(), (element) =>
+        element.cssClasses.has('topoff')
+          ? element.scrollToVerticalOffset(0, true)
+          : true);
     }
   }
 

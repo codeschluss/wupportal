@@ -11,6 +11,7 @@ import { I18nResolver, TRANSLATIONS_FACTORY } from '../i18n/i18n.resolver';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
 import { PlatformInterceptor } from '../platform/platform.interceptor';
 import { PlatformCommonModule, PlatformRouterModule } from '../platform/platform.modules';
+import { PlatformProvider } from '../platform/platform.provider';
 import { SessionProvider } from '../session/session.provider';
 import { CoreUrlSerializer } from './serializer';
 import { CoreSettings } from './settings';
@@ -43,6 +44,7 @@ const interceptors: Provider[] = [
 ];
 
 const providers: Provider[] = [
+  PlatformProvider,
   SessionProvider,
   TokenProvider
 ];

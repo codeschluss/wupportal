@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
-import { multicast, refCount } from 'rxjs/operators';
+import { filter, multicast, refCount } from 'rxjs/operators';
 import { android, ios } from 'tns-core-modules/application';
 import { connectionType, getConnectionType, startMonitoring, stopMonitoring } from 'tns-core-modules/connectivity';
 import { device } from 'tns-core-modules/platform';
@@ -45,8 +46,12 @@ export class PlatformProvider implements Compat {
   }
 
   public constructor(
-    private coreSettings: CoreSettings
-  ) { }
+    private coreSettings: CoreSettings,
+    router: Router
+  ) {
+    this.connection.pipe(filter((state) => !state))
+      .subscribe(() => router.navigate(['/', 'offline']));
+  }
 
   private online(type: connectionType): boolean {
     switch (type) {

@@ -1,0 +1,39 @@
+@import '../../app.vars.scss';
+
+mat-toolbar {
+  background-color: $color-primary;
+  color: $color-light;
+
+  @include media(gt-sm) {
+    display: none;
+  }
+}
+
+main {
+  @include flex(column, center, center);
+  background-color: $color-bg-light;
+  height: 100%;
+
+  & > button {
+    font-size: 2rem;
+    margin-top: 5rem;
+    padding: 1rem;
+  }
+
+  & > .icon {
+    @include flex(row, center, center);
+    border: .25rem solid $color-dark;
+    border-radius: 1rem;
+    color: $color-warn;
+    font-size: 10rem;
+    height: 10rem;
+    overflow: hidden;
+    width: 10rem;
+  }
+
+  & > .text {
+    color: $color-dark;
+    font-size: 2rem;
+    padding-top: .5rem;
+  }
+}

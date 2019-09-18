@@ -9,6 +9,7 @@ export * from './crud/crud.resolver';
 export * from './i18n/i18n.component';
 export * from './i18n/i18n.resolver';
 export * from './loading/loading.provider';
+export * from './platform/platform.guarding';
 export * from './platform/platform.modules';
 export * from './platform/platform.provider';
 export * from './position/position.provider';

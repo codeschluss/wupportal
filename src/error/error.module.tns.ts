@@ -3,9 +3,11 @@ import { CoreModule, PlatformCommonModule } from '@wooportal/core';
 import { NgRippleModule } from 'nativescript-ng-ripple';
 import { ErrorBarComponent } from './bar/error.bar';
 import { ErrorDialogComponent } from './dialog/error.dialog';
+import { ErrorNetsplitComponent } from './netsplit/error.netsplit';
 import { ErrorResponseComponent } from './response/error.response';
 
 const components: Type<any>[] = [
+  ErrorNetsplitComponent,
   ErrorResponseComponent
 ];
 

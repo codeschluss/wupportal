@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { I18nResolver, SessionResolver } from '@wooportal/core';
+import { I18nResolver, PlatformGuarding, SessionResolver } from '@wooportal/core';
+import { ErrorNetsplitComponent } from './error/netsplit/error.netsplit';
 import { LayoutComponent } from './views/shared/layout/layout.component';
 
 const routes: Route[] = [
@@ -35,9 +36,15 @@ const routes: Route[] = [
   exports: [RouterModule],
   imports: [RouterModule.forRoot([
     {
+      path: 'offline',
+      canDeactivate: [PlatformGuarding],
+      component: ErrorNetsplitComponent
+    },
+    {
       path: '',
       children: routes,
       component: LayoutComponent,
+      canActivate: [PlatformGuarding],
       resolve: {
         session: SessionResolver,
         xliff: I18nResolver

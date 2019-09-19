@@ -22,7 +22,9 @@ import { BaseListing } from '../base.listing';
 export class ActivityListingComponent
   extends BaseListing<ActivityModel> implements AfterViewInit {
 
-  public ellipsis: boolean = true;
+  public blank: boolean = true;
+
+  public categoryCtrl: FormControl = new FormControl();
 
   public suburbCtrl: FormControl = new FormControl();
 
@@ -62,6 +64,17 @@ export class ActivityListingComponent
     return this.route.snapshot.data.targetGroups || [];
   }
 
+  public get values(): { suburbs: string, targetGroups: string } {
+    return {
+      suburbs: (this.suburbCtrl.value || [])
+        .map((id) => this.suburbs.find((item) => item.id === id))
+        .map((i) => i.name).join(', '),
+      targetGroups: (this.targetGroupCtrl.value || [])
+        .map((id) => this.targetGroups.find((item) => item.id === id))
+        .map((item) => item.name).join(', ')
+    };
+  }
+
   protected get routing(): Route {
     return {
       path: this.path,
@@ -82,27 +95,11 @@ export class ActivityListingComponent
 
   public ngAfterViewInit(): void {
     if (this.platformProvider.type === 'Online') {
-      this.route.queryParams.pipe(
-        map((params) => this.params(params))
-      ).subscribe((params) => {
-        const { categories, suburbs, targetgroups } = params;
-        this.suburbCtrl.setValue(suburbs || [], { emitEvent: false });
-        this.targetGroupCtrl.setValue(targetgroups || [], { emitEvent: false });
-        this.chipList.chips.forEach((chip) =>
-          chip.selected = (categories || []).includes(chip.value));
-      });
+      this.categoryCtrl.valueChanges.subscribe((value) => this.chipList
+        .chips.forEach((chip) => chip.selected = value.includes(chip.value)));
 
-      merge(
-        this.chipList.chipSelectionChanges.pipe(map(() => ({
-          categories: Arr(this.chipList.selected).map((chip) => chip.value)
-        }))),
-        this.suburbCtrl.valueChanges.pipe(map((value) => ({
-          suburbs: Arr(value)
-        }))),
-        this.targetGroupCtrl.valueChanges.pipe(map((value) => ({
-          targetgroups: Arr(value)
-        })))
-      ).subscribe((params) => this.navigate(params));
+      this.chipList.chipSelectionChanges.subscribe(() => this.categoryCtrl
+        .setValue(Arr(this.chipList.selected).map((chip) => chip.value)));
 
       if (this.platformProvider.name === 'Web') {
         const source = this.document.defaultView;
@@ -117,6 +114,27 @@ export class ActivityListingComponent
         this.connection.nextReady(true);
       }
     }
+
+    this.route.queryParams.pipe(
+      map((params) => this.params(params))
+    ).subscribe((params) => {
+      const { categories, suburbs, targetgroups } = params;
+      this.categoryCtrl.setValue(categories || []);
+      this.suburbCtrl.setValue(suburbs || []);
+      this.targetGroupCtrl.setValue(targetgroups || []);
+    });
+
+    merge(
+      this.categoryCtrl.valueChanges.pipe(map((value) => ({
+        categories: Arr(value)
+      }))),
+      this.suburbCtrl.valueChanges.pipe(map((value) => ({
+        suburbs: Arr(value)
+      }))),
+      this.targetGroupCtrl.valueChanges.pipe(map((value) => ({
+        targetgroups: Arr(value)
+      })))
+    ).subscribe((params) => this.navigate(params));
   }
 
   public color(color: string): string {
@@ -129,6 +147,20 @@ export class ActivityListingComponent
       case 'mouseenter': return this.connection.nextFocus(this.focusing(item));
       case 'mouseleave': return this.connection.nextFocus(this.focusing(null));
     }
+  }
+
+  public has(id: string): boolean {
+    const ids = this.categoryCtrl.value || [];
+    return ids.includes(id);
+  }
+
+  public toggle(id: string): void {
+    const ids = this.categoryCtrl.value || [];
+    this.categoryCtrl.setValue(
+      ids.includes(id)
+        ? ids.filter((i) => i !== id)
+        : ids.concat(id)
+    );
   }
 
   protected params(params: Params): ReadParams {

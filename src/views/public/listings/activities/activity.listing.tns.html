@@ -1,5 +1,52 @@
 <scroll-view class="topoff">
   <stack-layout>
+    <select-compat
+      [formControl]="suburbCtrl"
+      [items]="suburbs"
+      [multiple]="true">
+      <absolute-layout ripple>
+        <stack-layout [ngClass]="{ float: suburbCtrl.value?.length }">
+          <icon-compat icon="city"></icon-compat>
+          <i18n i18n="@@suburbs" unit="suburbs"></i18n>
+        </stack-layout>
+        <flexbox-layout>
+          <label [text]="values.suburbs"></label>
+          <grid-layout></grid-layout>
+        </flexbox-layout>
+      </absolute-layout>
+    </select-compat>
+    <select-compat
+      [formControl]="targetGroupCtrl"
+      [items]="targetGroups"
+      [multiple]="true">
+      <absolute-layout ripple>
+        <stack-layout [ngClass]="{ float: targetGroupCtrl.value?.length }">
+          <icon-compat icon="users"></icon-compat>
+          <i18n i18n="@@targetGroups" unit="targetGroups"></i18n>
+        </stack-layout>
+        <flexbox-layout>
+          <label [text]="values.targetGroups"></label>
+          <grid-layout></grid-layout>
+        </flexbox-layout>
+      </absolute-layout>
+    </select-compat>
+    <flexbox-layout>
+      <ng-container *ngFor="let item of categories; let i = index">
+        <stack-layout ripple
+          [borderColor]="item.color"
+          [style.backgroundColor]="has(item.id) ? item.color : null"
+          [style.color]="has(item.id) ? color(item.color) : null"
+          [visibility]="blank && i > 5 ? 'collapse' : 'visible'"
+          (tap)="toggle(item.id)">
+          <label [text]="item.name"></label>
+        </stack-layout>
+      </ng-container>
+      <stack-layout ripple
+        [visibility]="blank || categories.length < 5 ? 'visible' : 'collapse'"
+        (tap)="blank = false">
+        <icon-compat icon="ellipsis-h"></icon-compat>
+      </stack-layout>
+    </flexbox-layout>
     <ng-container *ngFor="let item of items | async">
       <grid-layout>
         <activity-card [item]="item"></activity-card>

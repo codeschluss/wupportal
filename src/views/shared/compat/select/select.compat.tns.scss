@@ -1,0 +1,44 @@
+@import '../../../../app.vars.scss';
+
+AbsoluteLayout {
+  border-radius: rem(.25);
+  transform: rotate(180deg);
+
+  & > ScrollView {
+    height: 100%;
+    padding-top: rem(4);
+    top: rem(3.5);
+    transform: rotate(180deg);
+    width: 100%;
+
+    & > StackLayout {
+      & > [ripple] {
+        orientation: horizontal;
+        padding: rem(1);
+
+        & > Label {
+          padding-left: rem(.5);
+          vertical-align: center;
+        }
+
+        & > Switch {
+          vertical-align: center;
+        }
+      }
+    }
+  }
+
+  & > StackLayout {
+    background-color: $color-primary;
+    padding: rem(.25);
+    width: 100%;
+
+    & > [icon] {
+      color: $color-light;
+      height: rem(3);
+      transform: rotate(180deg);
+      vertical-align: center;
+      width: rem(3);
+    }
+  }
+}

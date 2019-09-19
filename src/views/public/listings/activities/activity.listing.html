@@ -34,7 +34,7 @@
           [style.borderColor]="item.color"
           [style.backgroundColor]="item.color"
           [style.color]="chip.selected ? color(item.color) : null"
-          [style.display]="ellipsis && i > 5 ? 'none' : null"
+          [style.display]="blank && i > 5 ? 'none' : null"
           [value]="item.id"
           (click)="chip.toggleSelected()">
           {{ item.name }}
@@ -43,8 +43,8 @@
       <mat-chip
         #chip="matChip"
         class="mat-body"
-        [style.display]="ellipsis || categories.length < 5 ? null : 'none'"
-        (click)="ellipsis = false">
+        [style.display]="blank || categories.length < 5 ? null : 'none'"
+        (click)="blank = false">
         <icon-compat icon="ellipsis-h"></icon-compat>
       </mat-chip>
     </mat-chip-list>

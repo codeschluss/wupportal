@@ -11,6 +11,7 @@ import { IconCompatComponent } from './compat/icon/icon.compat';
 import { MarkedCompatComponent } from './compat/marked/marked.compat';
 import { NavbarCompatComponent } from './compat/navbar/navbar.compat';
 import { PagerCompatComponent } from './compat/pager/pager.compat';
+import { SelectCompatComponent, SelectCompatDialogComponent } from './compat/select/select.compat.tns';
 import { LayoutComponent } from './layout/layout.component';
 
 const compat: Type<any>[] = [
@@ -20,11 +21,16 @@ const compat: Type<any>[] = [
   IconCompatComponent,
   MarkedCompatComponent,
   NavbarCompatComponent,
-  PagerCompatComponent
+  PagerCompatComponent,
+  SelectCompatComponent
 ];
 
 const components: Type<any>[] = [
   LayoutComponent
+];
+
+const dialogs: Type<any>[] = [
+  SelectCompatDialogComponent
 ];
 
 const materials: Type<any>[] = [
@@ -36,7 +42,11 @@ const materials: Type<any>[] = [
 @NgModule({
   declarations: [
     ...compat,
-    ...components
+    ...components,
+    ...dialogs
+  ],
+  entryComponents: [
+    ...dialogs
   ],
   exports: [
     ...compat

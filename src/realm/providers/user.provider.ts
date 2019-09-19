@@ -5,8 +5,8 @@ import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive'
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { UserControllerService } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../models/activity.model';
-import { BlogModel } from '../models/blog.model';
 import { BloggerModel } from '../models/blogger.model';
+import { BlogpostModel } from '../models/blogpost.model';
 import { OrganisationModel } from '../models/organisation.model';
 import { ProviderModel } from '../models/provider.model';
 import { UserModel } from '../models/user.model';
@@ -29,7 +29,7 @@ export class UserProvider
     {
       field: 'blogs',
       method: this.service.userControllerReadBlogsResponse,
-      model: BlogModel
+      model: BlogpostModel
     },
     {
       field: 'organisations',

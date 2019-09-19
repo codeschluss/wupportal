@@ -38,8 +38,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         <ng-container *ngTemplateOutlet="label; context: {
           case: { name: item?.id ? 'edit' : 'create' }
         }"></ng-container>
+        <h2 class="mat-headline">{{ title || '...' }}</h2>
       </header>
-      <h2 class="mat-headline">{{ title || '...' }}</h2>
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
           <a mat-tab-link replaceUrl routerLinkActive
@@ -72,7 +72,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         <button mat-raised-button replaceUrl
           [disabled]="!can(index + 1)"
           [routerLink]="[link('+1')]">
-          <i18n i18n="@@next">next</i18n>
+          <i18n i18n="@@following">following</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="!has('+1')">
@@ -106,6 +106,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     return routes.every((route) => route.data.form && route.data.form.valid);
   }
 
+  protected get path(): string {
+    return this.root;
+  }
+
   protected get routing(this: any): Route {
     Object.defineProperty(this.model, 'stepper', {
       configurable: true,
@@ -113,7 +117,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     });
 
     return {
-      path: `${this.root}/:uuid`,
+      path: `${this.path}/:uuid`,
       resolve: {
         item: CrudResolver,
         tokens: TokenResolver
@@ -183,7 +187,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     ))).pipe(
       tap((items) => items.slice(1).forEach((i) => control(i[0], i[1]))),
       mergeMap(() => root.data.form.persist())
-    ).subscribe(() => this.location.back());
+    ).subscribe(() => this.quit());
   }
 
   public quit(): void {

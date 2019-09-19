@@ -12,13 +12,13 @@ import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
 import { TaxonomyPanelComponent } from './panels/taxonomy/taxonomy.panel';
 import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
-import { BlogStepperComponent } from './steppers/blog.stepper';
+import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
+import { InfopageStepperComponent } from './steppers/infopage.stepper';
+import { KeywordsStepperComponent } from './steppers/keyword.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
-import { PageStepperComponent } from './steppers/page.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
-import { TagStepperComponent } from './steppers/tag.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
 import { TopicStepperComponent } from './steppers/topic.stepper';
 import { UserStepperComponent } from './steppers/user.stepper';
@@ -39,13 +39,13 @@ const routes: Route[] = [
         children: [
           ActivityStepperComponent.routing,
           AddressStepperComponent.routing,
-          BlogStepperComponent.routing,
+          BlogpostStepperComponent.routing,
           CategoryStepperComponent.routing,
+          InfopageStepperComponent.routing,
+          KeywordsStepperComponent.routing,
           LanguageStepperComponent.routing,
           OrganisationStepperComponent.routing,
-          PageStepperComponent.routing,
           SuburbStepperComponent.routing,
-          TagStepperComponent.routing,
           TargetGroupStepperComponent.routing,
           TopicStepperComponent.routing,
           UserStepperComponent.routing

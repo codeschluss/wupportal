@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import * as marked from 'marked';
-import { BlogModel } from '../../../../realm/models/blog.model';
+import { BlogpostModel } from '../../../../realm/models/blogpost.model';
 import { BaseCard } from '../base.card';
 
 @Component({
@@ -9,7 +9,7 @@ import { BaseCard } from '../base.card';
   templateUrl: 'blogpost.card.html'
 })
 
-export class BlogpostCardComponent extends BaseCard<BlogModel> {
+export class BlogpostCardComponent extends BaseCard<BlogpostModel> {
 
   public get preview(): string {
     const preview = marked(this.item.content)

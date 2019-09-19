@@ -5,11 +5,11 @@ import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from 
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityModel } from '../../../realm/models/activity.model';
-import { BlogModel } from '../../../realm/models/blog.model';
+import { BlogpostModel } from '../../../realm/models/blogpost.model';
 import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
-  selector: 'blog-form',
+  selector: 'blogpost-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -27,8 +27,8 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
   `)
 })
 
-export class BlogFormComponent
-  extends TranslationBase<BlogModel> {
+export class BlogpostFormComponent
+  extends TranslationBase<BlogpostModel> {
 
   public fields: FormField[] = [
     {
@@ -50,7 +50,7 @@ export class BlogFormComponent
     }
   ];
 
-  public model: Type<BlogModel> = BlogModel;
+  public model: Type<BlogpostModel> = BlogpostModel;
 
   public persist(): Observable<any> {
     this.item.activityId = (this.group.get('activity').value || { }).id;
@@ -63,7 +63,7 @@ export class BlogFormComponent
       .map((a) => Object.assign(a, { name: `${a.name} (${a.description})` }));
   }
 
-  protected cascade(item: BlogModel): Observable<any> {
+  protected cascade(item: BlogpostModel): Observable<any> {
     const links = [];
     const provider = this.model['provider'];
 

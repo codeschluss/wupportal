@@ -5,13 +5,13 @@ import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { ActivityControllerService } from '../../api/services/activity-controller.service';
 import { ActivityModel } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
-import { BlogModel } from '../models/blog.model';
+import { BlogpostModel } from '../models/blogpost.model';
 import { CategoryModel } from '../models/category.model';
+import { KeywordModel } from '../models/keyword.model';
 import { LanguageModel } from '../models/language.model';
 import { OrganisationModel } from '../models/organisation.model';
 import { ProviderModel } from '../models/provider.model';
 import { ScheduleModel } from '../models/schedule.model';
-import { TagModel } from '../models/tag.model';
 import { TargetGroupModel } from '../models/target-group.model';
 
 @Injectable({ providedIn: 'root' })
@@ -27,7 +27,7 @@ export class ActivityProvider
     {
       field: 'blogs',
       method: this.service.activityControllerReadBlogsResponse,
-      model: BlogModel
+      model: BlogpostModel
     },
     {
       field: 'category',
@@ -57,7 +57,7 @@ export class ActivityProvider
     {
       field: 'tags',
       method: this.service.activityControllerReadTagsResponse,
-      model: TagModel
+      model: KeywordModel
     },
     {
       field: 'targetGroups',
@@ -111,7 +111,7 @@ export class ActivityProvider
       this.apply(this.service.activityControllerAddSchedulesResponse);
 
   public pasteTags:
-    (id: string, tags: TagModel[]) => Observable<any> =
+    (id: string, tags: KeywordModel[]) => Observable<any> =
       this.apply(this.service.activityControllerAddTagsResponse);
 
   public relinkAddress:

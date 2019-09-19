@@ -4,10 +4,10 @@ import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver } from '
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/models/activity.model';
-import { BlogModel } from '../../../../realm/models/blog.model';
+import { BlogpostModel } from '../../../../realm/models/blogpost.model';
 import { CategoryModel } from '../../../../realm/models/category.model';
+import { InfopageModel } from '../../../../realm/models/infopage.model';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
-import { PageModel } from '../../../../realm/models/page.model';
 import { SuburbModel } from '../../../../realm/models/suburb.model';
 import { TargetGroupModel } from '../../../../realm/models/target-group.model';
 import { ExpandCompatComponent } from '../../../shared/compat/expand/expand.compat';
@@ -23,10 +23,10 @@ export class SearchPageComponent extends BasePage implements OnInit {
 
   public items: {
     activities: ActivityModel[],
-    blogposts: BlogModel[],
+    blogposts: BlogpostModel[],
     categories: CategoryModel[],
     organisations: OrganisationModel[],
-    infopages: PageModel[],
+    infopages: InfopageModel[],
     suburbs: SuburbModel[],
     targetGroups: TargetGroupModel[]
   } = {
@@ -59,14 +59,14 @@ export class SearchPageComponent extends BasePage implements OnInit {
       mergeMap((filter) => forkJoin([
         this.search(filter, ActivityModel).pipe(
           map((items) => (this.items.activities = items).length)),
-        this.search(filter, BlogModel).pipe(
+        this.search(filter, BlogpostModel).pipe(
           map((items) => (this.items.blogposts = items).length)),
         this.search(filter, CategoryModel).pipe(
           map((items) => (this.items.categories = items).length)),
+        this.search(filter, InfopageModel).pipe(
+          map((items) => (this.items.infopages = items).length)),
         this.search(filter, OrganisationModel).pipe(
           map((items) => (this.items.organisations = items).length)),
-        this.search(filter, PageModel).pipe(
-          map((items) => (this.items.infopages = items).length)),
         this.search(filter, SuburbModel).pipe(
           map((items) => (this.items.suburbs = items).length)),
         this.search(filter, TargetGroupModel).pipe(
@@ -93,7 +93,7 @@ export class SearchPageComponent extends BasePage implements OnInit {
           .with('schedules');
         break;
 
-      case BlogModel:
+      case BlogpostModel:
         joiner
           .with('activity');
         break;

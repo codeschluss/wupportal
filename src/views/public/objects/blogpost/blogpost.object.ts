@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BlogModel } from '../../../../realm/models/blog.model';
+import { BlogpostModel } from '../../../../realm/models/blogpost.model';
 import { BaseObject } from '../base.object';
 
 @Component({
@@ -8,14 +8,14 @@ import { BaseObject } from '../base.object';
   templateUrl: 'blogpost.object.html'
 })
 
-export class BlogpostObjectComponent extends BaseObject<BlogModel> {
+export class BlogpostObjectComponent extends BaseObject<BlogpostModel> {
 
-  protected joiner: CrudJoiner = CrudJoiner.of(BlogModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
     .with('activity').yield('address').yield('suburb')
     .with('activity').yield('category')
     .with('activity').yield('schedules');
 
-  protected model: Type<BlogModel> = BlogModel;
+  protected model: Type<BlogpostModel> = BlogpostModel;
 
   protected path: string = 'blogposts';
 

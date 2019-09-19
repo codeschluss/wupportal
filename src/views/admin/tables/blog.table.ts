@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { BlogModel } from '../../../realm/models/blog.model';
+import { BlogpostModel } from '../../../realm/models/blogpost.model';
 
 @Component({
   selector: 'blog-table',
@@ -22,7 +22,7 @@ import { BlogModel } from '../../../realm/models/blog.model';
   `)
 })
 
-export class BlogTableComponent extends BaseTable<BlogModel> {
+export class BlogTableComponent extends BaseTable<BlogpostModel> {
 
   public columns: TableColumn[] = [
     {
@@ -39,9 +39,9 @@ export class BlogTableComponent extends BaseTable<BlogModel> {
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(BlogModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
     .with('activity');
 
-  protected model: Type<BlogModel> = BlogModel;
+  protected model: Type<BlogpostModel> = BlogpostModel;
 
 }

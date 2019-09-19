@@ -59,14 +59,14 @@ export class OrganisationFormComponent
     {
       name: 'phone',
       input: StringFieldComponent,
-      tests: [Tests.either('phone', 'mail')],
+      tests: [Tests.neither('phone', 'mail')],
       type: 'tel'
     },
     {
       name: 'mail',
       input: StringFieldComponent,
       tests: [
-        Tests.either('phone', 'mail'),
+        Tests.neither('phone', 'mail'),
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ],
       type: 'email'

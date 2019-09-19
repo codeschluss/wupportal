@@ -2,23 +2,23 @@ import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { TagControllerService } from '../../api/services/tag-controller.service';
+import { KeywordModel } from '../models/keyword.model';
 import { LanguageModel } from '../models/language.model';
-import { TagModel } from '../models/tag.model';
 
 @Injectable({ providedIn: 'root' })
 export class TagProvider
-  extends CrudProvider<TagControllerService, TagModel> {
+  extends CrudProvider<TagControllerService, KeywordModel> {
 
-  public create: (model: TagModel) => Observable<any>;
+  public create: (model: KeywordModel) => Observable<any>;
 
-  public update: (model: TagModel) => Observable<any>;
+  public update: (model: KeywordModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<TagModel>;
+  public readOne: (id: string) => Observable<KeywordModel>;
 
   public readAll: (params?: TagControllerService
-    .TagControllerReadAllParams) => Observable<TagModel[]>;
+    .TagControllerReadAllParams) => Observable<KeywordModel[]>;
 
   protected linked: CrudLink[] = [
     {
@@ -29,7 +29,7 @@ export class TagProvider
     {
       field: 'translations',
       method: this.service.tagControllerReadTranslationsResponse,
-      model: TagModel
+      model: KeywordModel
     }
   ];
 
@@ -41,7 +41,7 @@ export class TagProvider
     update: this.service.tagControllerUpdateResponse
   };
 
-  protected model: Type<TagModel> = this.based(TagModel);
+  protected model: Type<KeywordModel> = this.based(KeywordModel);
 
   public constructor(
     protected service: TagControllerService

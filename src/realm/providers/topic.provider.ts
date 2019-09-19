@@ -3,8 +3,8 @@ import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { BaseService } from '../../api/base-service';
 import { TopicControllerService } from '../../api/services/topic-controller.service';
+import { InfopageModel } from '../models/infopage.model';
 import { LanguageModel } from '../models/language.model';
-import { PageModel } from '../models/page.model';
 import { TopicModel } from '../models/topic.model';
 
 @Injectable({ providedIn: 'root' })
@@ -20,7 +20,7 @@ export class TopicProvider
     {
       field: 'pages',
       method: this.service.topicControllerReadPagesResponse,
-      model: PageModel
+      model: InfopageModel
     },
     {
       field: 'translations',

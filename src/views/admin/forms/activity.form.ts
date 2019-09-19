@@ -7,8 +7,8 @@ import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../realm/models/activity.model';
 import { CategoryModel } from '../../../realm/models/category.model';
+import { KeywordModel } from '../../../realm/models/keyword.model';
 import { OrganisationModel } from '../../../realm/models/organisation.model';
-import { TagModel } from '../../../realm/models/tag.model';
 import { TargetGroupModel } from '../../../realm/models/target-group.model';
 import { TranslationProvider } from '../../../realm/providers/translation.provider';
 import { UserProvider } from '../../../realm/providers/user.provider';
@@ -59,7 +59,7 @@ import { ClientPackage } from '../../../utils/package';
           <i18n i18n="@@phone">phone</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'tags'">
-          <i18n i18n="@@tags">tags</i18n>
+          <i18n i18n="@@keywords">keywords</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'targetGroups'">
           <i18n i18n="@@targetGroups">targetGroups</i18n>
@@ -98,14 +98,14 @@ export class ActivityFormComponent
     {
       name: 'phone',
       input: StringFieldComponent,
-      tests: [Tests.either('phone', 'mail')],
+      tests: [Tests.neither('phone', 'mail')],
       type: 'tel'
     },
     {
       name: 'mail',
       input: StringFieldComponent,
       tests: [
-        Tests.either('phone', 'mail'),
+        Tests.neither('phone', 'mail'),
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ],
       type: 'email'
@@ -128,7 +128,7 @@ export class ActivityFormComponent
       name: 'tags',
       input: ChipListFieldComponent,
       label: 'name',
-      model: TagModel
+      model: KeywordModel
     }
   ];
 

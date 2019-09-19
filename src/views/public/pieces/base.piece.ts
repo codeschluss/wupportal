@@ -1,9 +1,9 @@
 import { HostBinding, Input } from '@angular/core';
 import { CrudModel } from '@wooportal/core';
 import { ActivityModel } from '../../../realm/models/activity.model';
-import { BlogModel } from '../../../realm/models/blog.model';
+import { BlogpostModel } from '../../../realm/models/blogpost.model';
+import { InfopageModel } from '../../../realm/models/infopage.model';
 import { OrganisationModel } from '../../../realm/models/organisation.model';
-import { PageModel } from '../../../realm/models/page.model';
 
 export abstract class BasePiece {
 
@@ -16,9 +16,9 @@ export abstract class BasePiece {
   public get namespace(): string {
     switch (this.item.constructor) {
       case ActivityModel: return 'activities';
-      case BlogModel: return 'blogposts';
+      case BlogpostModel: return 'blogposts';
+      case InfopageModel: return 'infopages';
       case OrganisationModel: return 'organisations';
-      case PageModel: return 'infopages';
     }
   }
 

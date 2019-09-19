@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { PageModel } from '../../../realm/models/page.model';
+import { InfopageModel } from '../../../realm/models/infopage.model';
 
 @Component({
   selector: 'page-table',
@@ -19,7 +19,7 @@ import { PageModel } from '../../../realm/models/page.model';
   `)
 })
 
-export class PageTableComponent extends BaseTable<PageModel> {
+export class PageTableComponent extends BaseTable<InfopageModel> {
 
   public columns: TableColumn[] = [
     {
@@ -32,9 +32,9 @@ export class PageTableComponent extends BaseTable<PageModel> {
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(PageModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(InfopageModel)
     .with('topic');
 
-  protected model: Type<PageModel> = PageModel;
+  protected model: Type<InfopageModel> = InfopageModel;
 
 }

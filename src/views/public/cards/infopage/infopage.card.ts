@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PageModel } from '../../../../realm/models/page.model';
+import { InfopageModel } from '../../../../realm/models/infopage.model';
 import { BaseCard } from '../base.card';
 
 @Component({
@@ -8,4 +8,4 @@ import { BaseCard } from '../base.card';
   templateUrl: 'infopage.card.html'
 })
 
-export class InfopageCardComponent extends BaseCard<PageModel> { }
+export class InfopageCardComponent extends BaseCard<InfopageModel> { }

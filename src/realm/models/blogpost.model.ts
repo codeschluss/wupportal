@@ -4,7 +4,7 @@ import { BlogEntity } from '../../api/models/blog-entity';
 import { Translatable } from '../translations/translatable';
 import { ActivityModel } from './activity.model';
 
-export class BlogModel
+export class BlogpostModel
   extends CrudModel implements BlogEntity {
 
   @Translatable() public content: string;

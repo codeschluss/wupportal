@@ -2,7 +2,7 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export class Tests {
 
-  public static either(...fields: string[]): ValidatorFn {
+  public static neither(...fields: string[]): ValidatorFn {
     return (control: AbstractControl) => {
       if (control.parent) {
         const controls = fields
@@ -10,15 +10,15 @@ export class Tests {
           .filter((field) => field !== control);
 
         if (control.value || controls.some((ctrl) => ctrl.value)) {
-          controls.filter((ctrl) => ctrl.hasError('either'))
+          controls.filter((ctrl) => ctrl.hasError('neither'))
             .forEach((ctrl) => ctrl.setErrors(null));
 
           return null;
         } else {
-          controls.filter((ctrl) => !ctrl.hasError('either'))
-            .forEach((ctrl) => ctrl.setErrors({ either: true }));
+          controls.filter((ctrl) => !ctrl.hasError('neither'))
+            .forEach((ctrl) => ctrl.setErrors({ neither: true }));
 
-          return { either: true };
+          return { neither: true };
         }
       }
     };

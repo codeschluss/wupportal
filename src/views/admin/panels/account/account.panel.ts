@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { CrudJoiner } from '@wooportal/core';
 import { filter } from 'rxjs/operators';
 import { ActivityModel } from '../../../../realm/models/activity.model';
-import { BlogModel } from '../../../../realm/models/blog.model';
+import { BlogpostModel } from '../../../../realm/models/blogpost.model';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
 import { UserModel } from '../../../../realm/models/user.model';
 import { RequestDialogComponent } from '../../dialogs/request.dialog';
@@ -38,7 +38,7 @@ export class AccountPanelComponent extends BasePanel {
     return this.user.blogger && this.user.blogger.approved;
   }
 
-  public get blogs(): BlogModel[] {
+  public get blogposts(): BlogpostModel[] {
     return this.user.blogs || [];
   }
 

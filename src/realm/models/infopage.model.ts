@@ -4,7 +4,7 @@ import { PageEntity } from '../../api/models/page-entity';
 import { Translatable } from '../translations/translatable';
 import { TopicModel } from './topic.model';
 
-export class PageModel
+export class InfopageModel
   extends CrudModel implements PageEntity {
 
   @Translatable() public content: string;

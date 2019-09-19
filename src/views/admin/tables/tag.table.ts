@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { TagModel } from '../../../realm/models/tag.model';
+import { KeywordModel } from '../../../realm/models/keyword.model';
 
 @Component({
   selector: 'tag-table',
@@ -19,7 +19,7 @@ import { TagModel } from '../../../realm/models/tag.model';
   `)
 })
 
-export class TagTableComponent extends BaseTable<TagModel> {
+export class TagTableComponent extends BaseTable<KeywordModel> {
 
   public columns: TableColumn[] = [
     {
@@ -32,8 +32,8 @@ export class TagTableComponent extends BaseTable<TagModel> {
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(TagModel);
+  protected joiner: CrudJoiner = CrudJoiner.of(KeywordModel);
 
-  protected model: Type<TagModel> = TagModel;
+  protected model: Type<KeywordModel> = KeywordModel;
 
 }

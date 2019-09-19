@@ -9,11 +9,11 @@
   <button mat-menu-item (click)="create('categories')">
     <i18n i18n="@@createCategory">createCategory</i18n>
   </button>
+  <button mat-menu-item (click)="create('keywords')">
+    <i18n i18n="@@createKeyword">createKeyword</i18n>
+  </button>
   <button mat-menu-item (click)="create('targetgroups')">
     <i18n i18n="@@createTargetGroup">createTargetGroup</i18n>
-  </button>
-  <button mat-menu-item (click)="create('tags')">
-    <i18n i18n="@@createTag">createTag</i18n>
   </button>
   <button mat-menu-item (click)="create('topics')">
     <i18n i18n="@@createTopic">createTopic</i18n>
@@ -44,9 +44,9 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="tags">
+  <mat-tab id="keywords">
     <ng-template matTabLabel>
-      <i18n i18n="@@tags">tags</i18n>
+      <i18n i18n="@@keywords">keywords</i18n>
     </ng-template>
     <ng-template matTabContent>
       <tag-table>

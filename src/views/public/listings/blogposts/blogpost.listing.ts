@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BlogModel } from '../../../../realm/models/blog.model';
+import { BlogpostModel } from '../../../../realm/models/blogpost.model';
 import { BaseListing } from '../base.listing';
 
 @Component({
@@ -9,12 +9,12 @@ import { BaseListing } from '../base.listing';
 })
 
 export class BlogpostListingComponent
-  extends BaseListing<BlogModel> {
+  extends BaseListing<BlogpostModel> {
 
-  protected joiner: CrudJoiner = CrudJoiner.of(BlogModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
     .with('activity');
 
-  protected model: Type<BlogModel> = BlogModel;
+  protected model: Type<BlogpostModel> = BlogpostModel;
 
   protected path: string = 'blogposts';
 

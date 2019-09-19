@@ -22,16 +22,16 @@ import { ImageFieldComponent } from './fields/image.field';
 import { ScheduleFieldComponent } from './fields/schedule.field';
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
-import { BlogFormComponent } from './forms/blog.form';
+import { BlogpostFormComponent } from './forms/blogpost.form';
 import { CategoryFormComponent } from './forms/category.form';
 import { ConfigurationFormComponent } from './forms/configuration.form';
 import { ImageFormComponent } from './forms/image.form';
+import { InfopageFormComponent } from './forms/infopage.form';
+import { KeywordFormComponent } from './forms/keyword.form';
 import { LanguageFormComponent } from './forms/language.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
-import { PageFormComponent } from './forms/page.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
 import { SuburbFormComponent } from './forms/suburb.form';
-import { TagFormComponent } from './forms/tag.form';
 import { TargetGroupFormComponent } from './forms/target-group.form';
 import { TopicFormComponent } from './forms/topic.form';
 import { TranslationFormComponent } from './forms/translation.form';
@@ -45,13 +45,13 @@ import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
 import { TaxonomyPanelComponent } from './panels/taxonomy/taxonomy.panel';
 import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
-import { BlogStepperComponent } from './steppers/blog.stepper';
+import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
+import { InfopageStepperComponent } from './steppers/infopage.stepper';
+import { KeywordsStepperComponent } from './steppers/keyword.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
-import { PageStepperComponent } from './steppers/page.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
-import { TagStepperComponent } from './steppers/tag.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
 import { TopicStepperComponent } from './steppers/topic.stepper';
 import { UserStepperComponent } from './steppers/user.stepper';
@@ -83,16 +83,16 @@ const fields: Type<BaseFieldComponent>[] = [
 const forms: Type<BaseForm<CrudModel>>[] = [
   ActivityFormComponent,
   AddressFormComponent,
-  BlogFormComponent,
+  BlogpostFormComponent,
   CategoryFormComponent,
   ConfigurationFormComponent,
   ImageFormComponent,
+  InfopageFormComponent,
+  KeywordFormComponent,
   LanguageFormComponent,
   OrganisationFormComponent,
-  PageFormComponent,
   ScheduleFormComponent,
   SuburbFormComponent,
-  TagFormComponent,
   TargetGroupFormComponent,
   TopicFormComponent,
   TranslationFormComponent,
@@ -125,13 +125,13 @@ const panels: Type<any>[] = [
 const steppers: Type<BaseStepper<CrudModel>>[] = [
   ActivityStepperComponent,
   AddressStepperComponent,
-  BlogStepperComponent,
+  BlogpostStepperComponent,
   CategoryStepperComponent,
+  InfopageStepperComponent,
+  KeywordsStepperComponent,
   LanguageStepperComponent,
   OrganisationStepperComponent,
-  PageStepperComponent,
   SuburbStepperComponent,
-  TagStepperComponent,
   TargetGroupStepperComponent,
   TopicStepperComponent,
   UserStepperComponent

@@ -4,12 +4,12 @@ import { Box } from '@wooportal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PageModel } from '../../../realm/models/page.model';
+import { InfopageModel } from '../../../realm/models/infopage.model';
 import { TopicModel } from '../../../realm/models/topic.model';
 import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
-  selector: 'page-form',
+  selector: 'infopage-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -27,8 +27,8 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
   `)
 })
 
-export class PageFormComponent
-  extends TranslationBase<PageModel> {
+export class InfopageFormComponent
+  extends TranslationBase<InfopageModel> {
 
   public fields: FormField[] = [
     {
@@ -51,7 +51,7 @@ export class PageFormComponent
     }
   ];
 
-  public model: Type<PageModel> = PageModel;
+  public model: Type<InfopageModel> = InfopageModel;
 
   public persist(): Observable<any> {
     this.item.topicId = this.group.get('topic').value.id;
@@ -59,7 +59,7 @@ export class PageFormComponent
     return super.persist();
   }
 
-  protected cascade(item: PageModel): Observable<any> {
+  protected cascade(item: InfopageModel): Observable<any> {
     const links = [];
     const provider = this.model['provider'];
 

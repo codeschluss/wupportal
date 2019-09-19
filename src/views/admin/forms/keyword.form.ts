@@ -1,11 +1,11 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { TagModel } from '../../../realm/models/tag.model';
+import { KeywordModel } from '../../../realm/models/keyword.model';
 import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
-  selector: 'tag-form',
+  selector: 'keyword-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -20,8 +20,8 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
   `)
 })
 
-export class TagFormComponent
-  extends TranslationBase<TagModel> {
+export class KeywordFormComponent
+  extends TranslationBase<KeywordModel> {
 
   public fields: FormField[] = [
     {
@@ -37,6 +37,6 @@ export class TagFormComponent
     }
   ];
 
-  public model: Type<TagModel> = TagModel;
+  public model: Type<KeywordModel> = KeywordModel;
 
 }

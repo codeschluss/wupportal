@@ -6,15 +6,15 @@
 </header>
 
 <mat-menu #actions="matMenu">
-  <button mat-menu-item (click)="create('pages')">
-    <i18n i18n="@@createPage">createPage</i18n>
+  <button mat-menu-item (click)="create('infopages')">
+    <i18n i18n="@@createInfopage">createInfopage</i18n>
   </button>
 </mat-menu>
 
 <mat-tab-group [selectedIndex]="index">
-  <mat-tab id="pages">
+  <mat-tab id="infopages">
     <ng-template matTabLabel>
-      <i18n i18n="@@pages">pages</i18n>
+      <i18n i18n="@@infopages">infopages</i18n>
     </ng-template>
     <ng-template matTabContent>
       <page-table>
@@ -39,9 +39,9 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="blogs">
+  <mat-tab id="blogposts">
     <ng-template matTabLabel>
-      <i18n i18n="@@blogs">blogs</i18n>
+      <i18n i18n="@@blogposts">blogposts</i18n>
     </ng-template>
     <ng-template matTabContent>
       <blog-table>

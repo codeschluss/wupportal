@@ -3,13 +3,13 @@ import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { PageControllerService } from '../../api/services/page-controller.service';
+import { InfopageModel } from '../models/infopage.model';
 import { LanguageModel } from '../models/language.model';
-import { PageModel } from '../models/page.model';
 import { TopicModel } from '../models/topic.model';
 
 @Injectable({ providedIn: 'root' })
 export class PageProvider
-  extends CrudProvider<PageControllerService, PageModel> {
+  extends CrudProvider<PageControllerService, InfopageModel> {
 
   protected linked: CrudLink[] = [
     {
@@ -25,7 +25,7 @@ export class PageProvider
     {
       field: 'translations',
       method: this.service.pageControllerReadTranslationsResponse,
-      model: PageModel
+      model: InfopageModel
     }
   ];
 
@@ -37,7 +37,7 @@ export class PageProvider
     update: this.service.pageControllerUpdateResponse
   };
 
-  protected model: Type<PageModel> = this.based(PageModel);
+  protected model: Type<InfopageModel> = this.based(InfopageModel);
 
   public constructor(
     protected service: PageControllerService
@@ -45,16 +45,16 @@ export class PageProvider
     super();
   }
 
-  public create: (model: PageModel) => Observable<any>;
+  public create: (model: InfopageModel) => Observable<any>;
 
-  public update: (model: PageModel) => Observable<any>;
+  public update: (model: InfopageModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<PageModel>;
+  public readOne: (id: string) => Observable<InfopageModel>;
 
   public readAll: (params?: PageControllerService
-    .PageControllerReadAllParams) => Observable<PageModel[]>;
+    .PageControllerReadAllParams) => Observable<InfopageModel[]>;
 
   public relinkTopic:
     (id: string, topicId: String) => Observable<any> =

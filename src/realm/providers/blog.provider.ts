@@ -4,12 +4,12 @@ import { EMPTY, Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { BlogControllerService } from '../../api/services/blog-controller.service';
 import { ActivityModel } from '../models/activity.model';
-import { BlogModel } from '../models/blog.model';
+import { BlogpostModel } from '../models/blogpost.model';
 import { LanguageModel } from '../models/language.model';
 
 @Injectable({ providedIn: 'root' })
 export class BlogProvider
-  extends CrudProvider<BlogControllerService, BlogModel> {
+  extends CrudProvider<BlogControllerService, BlogpostModel> {
 
   protected linked: CrudLink[] = [
     {
@@ -25,7 +25,7 @@ export class BlogProvider
     {
       field: 'translations',
       method: this.service.blogControllerReadTranslationsResponse,
-      model: BlogModel
+      model: BlogpostModel
     }
   ];
 
@@ -37,7 +37,7 @@ export class BlogProvider
     update: this.service.blogControllerUpdateResponse
   };
 
-  protected model: Type<BlogModel> = this.based(BlogModel);
+  protected model: Type<BlogpostModel> = this.based(BlogpostModel);
 
   public constructor(
     protected service: BlogControllerService
@@ -45,16 +45,16 @@ export class BlogProvider
     super();
   }
 
-  public create: (model: BlogModel) => Observable<any>;
+  public create: (model: BlogpostModel) => Observable<any>;
 
-  public update: (model: BlogModel) => Observable<any>;
+  public update: (model: BlogpostModel) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<BlogModel>;
+  public readOne: (id: string) => Observable<BlogpostModel>;
 
   public readAll: (params?: BlogControllerService
-    .BlogControllerReadAllParams) => Observable<BlogModel[]>;
+    .BlogControllerReadAllParams) => Observable<BlogpostModel[]>;
 
   public like:
     (id: string) => Observable<any> =

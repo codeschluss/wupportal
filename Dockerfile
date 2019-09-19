@@ -1,20 +1,19 @@
+#
+# PHASE 0: wooportal.client.apk
 FROM ubuntu:latest
-LABEL maintainer info@codeschluss.de
+ADD / /tmp/wooportal.client
 ENV DEBIAN_FRONTEND noninteractive
-ADD / /opt/wooportal.client/
 RUN \
 #
 # packages
 apt-get -qy update && \
 apt-get -qy install --no-install-recommends \
-  ca-certificates && \
-apt-get -qy install --no-install-recommends ${TMPKG:= \
+  gcc-multilib \
   git \
   gnupg \
   openjdk-8-jdk \
   unzip \
-  wget \
-} && \
+  wget && \
 #
 # buildenv
 . /etc/lsb-release && \
@@ -31,7 +30,7 @@ apt-get -qy install --no-install-recommends nodejs && \
 # android-sdk
 cd $(mktemp -d) && \
 export ANDROID_HOME="$PWD" PATH="$PATH:$PWD/tools:$PWD/platform-tools" && \
-wget -qqO- https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
+wget -qO- https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
   > android-sdk.zip && \
 unzip -qq android-sdk.zip && \
 yes | tools/bin/sdkmanager --licenses > /dev/null && \
@@ -43,19 +42,46 @@ tools/bin/sdkmanager \
   "extras;android;m2repository" && \
 #
 # wooportal/client
-(cd /opt/wooportal.client && npm install) && \
-(cd /opt/wooportal.client && npm run setup) && \
-(cd /opt/wooportal.client && npm run build:app) && \
-(cd /opt/wooportal.client && npm run build:ssr) && \
-(cd /opt/wooportal.client && npm run build:oid) && \
-mv $(find /opt/wooportal.client/platforms -name "*.apk") \
-  /opt/wooportal.client/target/@wooportal/client/wooportal.client.apk && \
+cd /tmp/wooportal.client && \
+npm install && \
+npm run setup && \
+npm run -- tns build android \
+  --bundle \
+  --env.aot \
+  --env.snapshot \
+  --env.uglify \
+  --key-store-alias=dev \
+  --key-store-alias-password=password \
+  --key-store-password=password \
+  --key-store-path=res/Android/dev.keystore \
+  --release && \
+mv $(find platforms/android -name "*.apk") /wooportal.client.apk
+#
+# PHASE 1: wooportal.client.ssr
+FROM alpine:latest
+LABEL maintainer info@codeschluss.de
+ADD / /opt/wooportal.client/
+COPY --from=0 /wooportal.client.apk /
+RUN \
+#
+# packages
+apk --no-cache add \
+  nodejs && \
+apk --no-cache --virtual build add \
+  nodejs-npm && \
+#
+# wooportal/client
+cd /opt/wooportal.client && \
+npm install && \
+npm run build:lib && \
+npm run build:app && \
+npm run build:ssr && \
+npm prune --production && \
+mv /wooportal.client.apk target/@wooportal/client && \
 #
 # cleanup
-apt-get -qy purge --autoremove $TMPKG && apt-get -qy clean all && \
-(cd /opt/wooportal.client && npm run tns platform remove android) && \
-(cd /opt/wooportal.client && npm prune --production) && \
-find /root /tmp /var/lib/apt/lists -mindepth 1 -delete
+apk del --purge build && \
+find /root /tmp -mindepth 1 -delete
 #
 # runtime
 EXPOSE 4000

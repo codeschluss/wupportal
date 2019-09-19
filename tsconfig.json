@@ -1,8 +1,15 @@
 {
   "compileOnSave": false,
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  },
   "compilerOptions": {
     "baseUrl": ".",
-    "declaration": false,
+    "declaration": true,
+    "importHelpers": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,

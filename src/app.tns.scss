@@ -1,11 +1,11 @@
 @import 'app.vars.scss';
 
 page {
-  color: $color-dark;
+  color: $color-darkest;
 
   & > action-bar {
     background-color: $color-primary;
-    color: $color-light;
+    color: $color-lightest;
     font-weight: normal;
 
     stack-layout {
@@ -32,7 +32,7 @@ page {
 
   [compat=drawer] {
     #TKDrawerContent {
-      background-color: $color-light;
+      background-color: $color-lightest;
 
       scroll-view {
         flexbox-layout {
@@ -91,7 +91,7 @@ page {
               }
 
               text-field {
-                border-bottom-color: $color-dark;
+                border-bottom-color: $color-darkest;
                 border-bottom-width: 2;
                 padding: 12 25 3 0;
                 width: 205;
@@ -103,7 +103,7 @@ page {
 
                 &.off {
                   [compat=icon] {
-                    color: $color-bg-dark;
+                    color: $color-dark;
                   }
                 }
 
@@ -131,7 +131,7 @@ page {
     }
 
     #TKMainContent {
-      background-color: $color-bg-drawer;
+      background-color: $color-lighter;
     }
   }
 }

@@ -8,12 +8,12 @@ StackLayout.expand {
 
     & > FlexboxLayout {
       background-color: $color-primary;
-      color: $color-light;
+      color: $color-lightest;
       height: rem(4);
 
       & > .indicator {
         GridLayout {
-          border-color: $color-light;
+          border-color: $color-lightest;
           transform: rotate(225deg);
         }
       }
@@ -26,10 +26,10 @@ StackLayout.expand {
 
   & > FlexboxLayout {
     align-items: center;
-    background-color: $color-light;
+    background-color: $color-lightest;
     border-top-left-radius: rem(.25);
     border-top-right-radius: rem(.25);
-    color: $color-dark;
+    color: $color-darkest;
     font-weight: bold;
     height: rem(3);
     padding: 0 rem(1);
@@ -39,7 +39,7 @@ StackLayout.expand {
       width: rem(3);
 
       & > GridLayout {
-        border-color: $color-medium;
+        border-color: $color-darker;
         border-width: 0 2 2 0;
         height: rem(.5);
         transform: rotate(45deg);

@@ -7,7 +7,7 @@ mat-calendar {
     .mat-calendar-body-cell:not(.mat-calendar-body-disabled) {
       & > .mat-calendar-body-cell-content {
         background-color: $color-primary !important;
-        color: $color-light !important;
+        color: $color-lightest !important;
         font-weight: bold;
       }
     }

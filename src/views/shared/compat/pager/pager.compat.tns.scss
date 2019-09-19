@@ -20,7 +20,7 @@ StackLayout {
     }
 
     & > GridLayout {
-      background-color: $color-bg-drawer;
+      background-color: $color-lighter;
       height: rem(2.5);
       left: rem(8.5);
       transform: rotate(45deg);
@@ -31,7 +31,7 @@ StackLayout {
       @include elevation;
       background-color: $color-primary;
       border-radius: 50%;
-      color: $color-light;
+      color: $color-lightest;
       height: rem(2.5);
       left: 0;
       padding: 2;
@@ -43,7 +43,7 @@ StackLayout {
     }
 
     & > [unit] {
-      background-color: $color-bg-light;
+      background-color: $color-light;
       font-size: rem(1);
       height: 100%;
       margin-left: rem(1.25);

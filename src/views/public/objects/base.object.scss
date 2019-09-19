@@ -52,11 +52,11 @@ main {
                 background-color: $color-primary;
 
                 & > .mat-expansion-indicator::after {
-                  color: $color-light;
+                  color: $color-lightest;
                 }
 
                 mat-panel-title {
-                  color: $color-light;
+                  color: $color-lightest;
                 }
               }
             }

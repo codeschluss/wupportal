@@ -2,14 +2,14 @@
 
 flexbox-layout {
   align-items: center;
-  background-color: $color-bg-light;
+  background-color: $color-light;
   flex-direction: column;
   justify-content: center;
 
   & > [ripple] {
     background-color: $color-primary;
     border-radius: rem(.25);
-    color: $color-light;
+    color: $color-lightest;
     font-size: rem(3);
     font-weight: bold;
     height: rem(4);
@@ -23,7 +23,7 @@ flexbox-layout {
   }
 
   & > .icon {
-    border-color: $color-dark;
+    border-color: $color-darkest;
     border-radius: rem(1);
     border-width: rem(.25);
     color: $color-warn;
@@ -38,7 +38,7 @@ flexbox-layout {
   }
 
   & > .text {
-    color: $color-dark;
+    color: $color-darkest;
     font-size: rem(2);
   }
 }

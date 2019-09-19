@@ -3,13 +3,12 @@
 $animation-duration: .25s;
 $viewport-width: 100rem;
 
-$color-dark: rgba(black, .87);
-$color-light: white;
-$color-medium: rgba(black, .54);
-
-$color-bg-light: rgba(black, .12);
-$color-bg-dark: rgba(black, .36);
-$color-bg-drawer: #FAFAFA;
+$color-lightest: scale-color(white, $lightness: -0%);
+$color-lighter: scale-color(white, $lightness: -2%);
+$color-light: scale-color(white, $lightness: -12%);
+$color-dark: scale-color(white, $lightness: -36%);
+$color-darker: scale-color(white, $lightness: -54%);
+$color-darkest: scale-color(white, $lightness: -87%);
 
 $theme-palette-primary: (
   50: #e3f2fd,
@@ -27,20 +26,20 @@ $theme-palette-primary: (
   A400: #2979ff,
   A700: #2962ff,
   contrast: (
-    50: $color-dark,
-    100: $color-dark,
-    200: $color-dark,
-    300: $color-dark,
-    400: $color-dark,
-    500: $color-light,
-    600: $color-light,
-    700: $color-light,
-    800: $color-light,
-    900: $color-light,
-    A100: $color-dark,
-    A200: $color-light,
-    A400: $color-light,
-    A700: $color-light,
+    50: $color-darkest,
+    100: $color-darkest,
+    200: $color-darkest,
+    300: $color-darkest,
+    400: $color-darkest,
+    500: $color-lightest,
+    600: $color-lightest,
+    700: $color-lightest,
+    800: $color-lightest,
+    900: $color-lightest,
+    A100: $color-darkest,
+    A200: $color-lightest,
+    A400: $color-lightest,
+    A700: $color-lightest,
   )
 );
 
@@ -60,20 +59,20 @@ $theme-palette-accent: (
   A400: #00e5ff,
   A700: #00b8d4,
   contrast: (
-    50: $color-dark,
-    100: $color-dark,
-    200: $color-dark,
-    300: $color-dark,
-    400: $color-dark,
-    500: $color-light,
-    600: $color-light,
-    700: $color-light,
-    800: $color-light,
-    900: $color-light,
-    A100: $color-dark,
-    A200: $color-dark,
-    A400: $color-dark,
-    A700: $color-dark,
+    50: $color-darkest,
+    100: $color-darkest,
+    200: $color-darkest,
+    300: $color-darkest,
+    400: $color-darkest,
+    500: $color-lightest,
+    600: $color-lightest,
+    700: $color-lightest,
+    800: $color-lightest,
+    900: $color-lightest,
+    A100: $color-darkest,
+    A200: $color-darkest,
+    A400: $color-darkest,
+    A700: $color-darkest,
   )
 );
 
@@ -93,20 +92,20 @@ $theme-palette-warn: (
   A400: #ff1744,
   A700: #d50000,
   contrast: (
-    50: $color-dark,
-    100: $color-dark,
-    200: $color-dark,
-    300: $color-dark,
-    400: $color-dark,
-    500: $color-light,
-    600: $color-light,
-    700: $color-light,
-    800: $color-light,
-    900: $color-light,
-    A100: $color-dark,
-    A200: $color-light,
-    A400: $color-light,
-    A700: $color-light,
+    50: $color-darkest,
+    100: $color-darkest,
+    200: $color-darkest,
+    300: $color-darkest,
+    400: $color-darkest,
+    500: $color-lightest,
+    600: $color-lightest,
+    700: $color-lightest,
+    800: $color-lightest,
+    900: $color-lightest,
+    A100: $color-darkest,
+    A200: $color-lightest,
+    A400: $color-lightest,
+    A700: $color-lightest,
   )
 );
 
@@ -126,17 +125,13 @@ $color-warn: mat-color(map-get($theme-palette, warn));
 
 @mixin elevation {
   android-elevation: 1;
-  background-color: $color-light;
-  border-color: $color-bg-light;
+  background-color: $color-lightest;
+  border-color: $color-light;
   border-radius: 4;
   border-width: 1;
 }
 
 @mixin flex($direction, $main-axis: normal, $cross-axis: normal) {
-  @if not $direction {
-    @error 'missing param to flex() mixin';
-  }
-
   display: flex;
   align-items: $cross-axis;
   justify-content: $main-axis;

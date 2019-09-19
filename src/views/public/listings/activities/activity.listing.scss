@@ -70,10 +70,10 @@ main {
         & > iframe {
           @include _mat-theme-overridable-elevation(1, $theme-palette);
           @include position(absolute, 0, 0, 0, 0);
-          background-color: $color-bg-light;
+          background-color: $color-light;
           border: 0;
           border-radius: .25rem;
-          color: $color-dark;
+          color: $color-darkest;
           height: 100%;
           width: 100%;
         }

@@ -4,7 +4,7 @@ grid-layout {
   width: rem(25);
 
   & > stack-layout {
-    color: $color-dark;
+    color: $color-darkest;
 
     & > stack-layout {
       &.card-title {

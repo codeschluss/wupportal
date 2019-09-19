@@ -7,7 +7,7 @@ nav {
   width: calc(100% - 3rem);
 
   & > div {
-    background-color: $color-bg-light;
+    background-color: $color-light;
     width: 7.5rem;
 
     &:first-of-type {
@@ -18,7 +18,7 @@ nav {
       }
 
       & > span {
-        border-right-color: $color-bg-drawer;
+        border-right-color: $color-lighter;
         border-left: none;
         float: right;
       }
@@ -32,7 +32,7 @@ nav {
       }
 
       & > span {
-        border-left-color: $color-bg-drawer;
+        border-left-color: $color-lighter;
         border-right: none;
         float: left;
       }
@@ -40,7 +40,7 @@ nav {
 
     & > a {
       background: $color-primary !important;
-      color: $color-light !important;
+      color: $color-lightest !important;
 
       &[disabled] {
         filter: grayscale(1);

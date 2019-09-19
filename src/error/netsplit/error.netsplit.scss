@@ -2,7 +2,7 @@
 
 mat-toolbar {
   background-color: $color-primary;
-  color: $color-light;
+  color: $color-lightest;
 
   @include media(gt-sm) {
     display: none;
@@ -11,7 +11,7 @@ mat-toolbar {
 
 main {
   @include flex(column, center, center);
-  background-color: $color-bg-light;
+  background-color: $color-light;
   height: 100%;
 
   & > button {
@@ -22,7 +22,7 @@ main {
 
   & > .icon {
     @include flex(row, center, center);
-    border: .25rem solid $color-dark;
+    border: .25rem solid $color-darkest;
     border-radius: 1rem;
     color: $color-warn;
     font-size: 10rem;
@@ -32,7 +32,7 @@ main {
   }
 
   & > .text {
-    color: $color-dark;
+    color: $color-darkest;
     font-size: 2rem;
     padding-top: .5rem;
   }

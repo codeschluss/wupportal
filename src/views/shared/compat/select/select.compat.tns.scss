@@ -34,7 +34,7 @@ AbsoluteLayout {
     width: 100%;
 
     & > [icon] {
-      color: $color-light;
+      color: $color-lightest;
       height: rem(3);
       transform: rotate(180deg);
       vertical-align: center;

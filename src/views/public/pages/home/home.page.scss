@@ -22,7 +22,7 @@ main {
       & > strong {
         @include flex(row, center, center);
         @include position(absolute, -2.5rem, 1rem);
-        color: $color-light;
+        color: $color-lightest;
         background-color: $color-primary;
         border-radius: 50%;
         height: 10rem;
@@ -105,7 +105,7 @@ main {
     }
 
     & > aside {
-      background-color: $color-bg-light;
+      background-color: $color-light;
       border-radius: .25rem;
       flex: 1 1 auto;
       margin: 1rem;

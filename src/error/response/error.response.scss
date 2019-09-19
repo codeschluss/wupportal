@@ -3,8 +3,8 @@
 main {
   @include flex(column, center, center);
   @include position(absolute, 0, 0, 0, 0);
-  background-color: $color-bg-light;
-  color: $color-dark;
+  background-color: $color-light;
+  color: $color-darkest;
   max-width: 100% !important;
 
   & > fa-icon {

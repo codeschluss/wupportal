@@ -2,11 +2,11 @@
 
 main {
   @include position(absolute, 0, 0, 0, 0);
-  background-color: $color-bg-drawer;
+  background-color: $color-lighter;
   max-width: 100% !important;
 
   & > aol-map {
-    background-color: $color-bg-light;
+    background-color: $color-light;
     display: block;
     height: 100%;
     width: 100%;
@@ -131,9 +131,9 @@ main {
 
       [compat=i18n] {
         @include position(absolute, auto, 5rem);
-        background-color: $color-dark;
+        background-color: $color-darkest;
         border-radius: .25rem;
-        color: $color-light;
+        color: $color-lightest;
         padding: 0 .25rem;
         pointer-events: none;
       }

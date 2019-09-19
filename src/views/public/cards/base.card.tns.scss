@@ -20,7 +20,7 @@ grid-layout {
       }
 
       &.card-subtitle {
-        color: $color-medium;
+        color: $color-darker;
         font-size: rem(.75);
         padding: 0 rem(1);
       }
@@ -41,9 +41,9 @@ grid-layout {
       }
 
       &.card-actions {
-        border-top-color: $color-bg-light;
+        border-top-color: $color-light;
         border-top-width: 1;
-        color: $color-dark;
+        color: $color-darkest;
         orientation: horizontal;
         padding: rem(.5);
       }

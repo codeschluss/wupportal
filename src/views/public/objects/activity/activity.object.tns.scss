@@ -5,7 +5,7 @@ scroll-view {
     & > stack-layout {
       & > .expand-compat {
         .datetime {
-          border-color: $color-bg-light;
+          border-color: $color-light;
           border-top-width: 1;
           margin-top: rem(1);
           padding-top: rem(1);

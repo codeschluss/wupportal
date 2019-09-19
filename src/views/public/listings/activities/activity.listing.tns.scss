@@ -30,7 +30,7 @@ scroll-view {
 
     absolute-layout {
       border-bottom-width: 1;
-      border-color: $color-medium;
+      border-color: $color-darker;
       height: rem(3);
       margin: rem(1) rem(1) 0 rem(1);
 
@@ -51,7 +51,7 @@ scroll-view {
           border-left-width: rem(.25);
           border-right-color: transparent;
           border-right-width: rem(.25);
-          border-top-color: $color-medium;
+          border-top-color: $color-darker;
           border-top-width: rem(.25);
           height: rem(.25);
           margin: rem(.25);
@@ -60,7 +60,7 @@ scroll-view {
       }
 
       & > stack-layout {
-        color: $color-medium;
+        color: $color-darker;
         orientation: horizontal;
         origin-x: 0;
         origin-y: 0;

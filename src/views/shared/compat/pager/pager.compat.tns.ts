@@ -17,6 +17,7 @@ if (!isKnownView('pager-compat')) {
       <i18n i18n="@@previous" unit="previous"></i18n>
       <icon-compat ripple
         icon="angle-double-left"
+        rippleColor="#fff"
         [isEnabled]="prev"
         [isUserInteractionEnabled]="prev"
         [ngClass]="{ disabled: !prev }"
@@ -28,6 +29,7 @@ if (!isKnownView('pager-compat')) {
       <i18n i18n="@@following" unit="following"></i18n>
       <icon-compat ripple
         icon="angle-double-left"
+        rippleColor="#fff"
         [isEnabled]="next"
         [isUserInteractionEnabled]="next"
         [ngClass]="{ disabled: !next }"

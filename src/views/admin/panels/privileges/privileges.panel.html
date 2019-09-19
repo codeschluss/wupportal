@@ -36,7 +36,7 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <ng-container *ngIf="item.blogger && item.blogger.approved">
+            <ng-container *ngIf="item.blogger?.approved">
               <button mat-icon-button
                 color="warn"
                 (click)="unlinkBlogger(item)">

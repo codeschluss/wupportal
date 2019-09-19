@@ -66,11 +66,11 @@ page {
                   transform: scale(1, 1) translate(0, 0);
                 }
                 to {
-                  transform: scale(.66, .66) translate(-10, -20);
+                  transform: scale(.66, .66) translate(0, rem(-1));
                 }
               }
 
-              &.float-label {
+              &.float {
                 label {
                   animation-direction: forwards;
                   animation-duration: $animation-duration;
@@ -86,6 +86,8 @@ page {
                 animation-name: float;
                 margin-left: 0;
                 margin-top: rem(1);
+                origin-x: 0;
+                origin-y: 0;
               }
 
               text-field {

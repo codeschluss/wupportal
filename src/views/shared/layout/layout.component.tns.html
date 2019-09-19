@@ -25,8 +25,8 @@
             <text-field #input
               returnKeyType="search"
               text="{{ filter() }}"
-              (blur)="search.className = input.text ? 'float-label' : null"
-              (focus)="search.className = 'float-label'"
+              (blur)="search.className = input.text ? 'float' : null"
+              (focus)="search.className = 'float'"
               (returnPress)="input.text && navigate('/', 'search', input.text)"
               (textChange)="submit.className = input.text ? null : 'off'">
             </text-field>

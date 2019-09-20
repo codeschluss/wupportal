@@ -102,6 +102,12 @@ main {
       & > h2 {
         font-weight: bold;
       }
+
+      & > img {
+        max-width: 50rem;
+        padding-bottom: 1rem;
+        width: 100%;
+      }
     }
 
     & > aside {
@@ -144,7 +150,7 @@ main {
   }
 
   & > section:nth-of-type(3) {
-    @include flex(wrap, space-around, center);
+    @include flex(wrap, space-around, flex-end);
     margin: 2.5rem auto;
     max-width: $viewport-width;
 
@@ -154,12 +160,19 @@ main {
       & > img {
         height: auto;
         max-height: 5rem;
-        max-width: 10rem;
+        max-width: 15rem;
         width: auto;
       }
 
       & > figcaption {
         white-space: nowrap;
+
+        & > a {
+          border-bottom: 1px dotted $color-darkest;
+          color:  $color-darkest;;
+          font-weight: bold;
+          text-decoration: none;
+        }
       }
     }
   }

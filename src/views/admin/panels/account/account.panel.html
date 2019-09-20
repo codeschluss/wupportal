@@ -32,7 +32,7 @@
 <mat-tab-group [selectedIndex]="index">
   <mat-tab id="details" [disabled]="!user">
     <ng-template matTabLabel>
-      <i18n i18n="@@userDetails">userDetails</i18n>
+      <i18n i18n="@@main">main</i18n>
     </ng-template>
     <ng-template matTabContent>
       <user-form #form [group]="group" [item]="user"></user-form>
@@ -48,7 +48,7 @@
 
   <mat-tab id="organisations" [disabled]="!organisations.length">
     <ng-template matTabLabel>
-      <i18n i18n="@@userOrganisations">userOrganisations</i18n>
+      <i18n i18n="@@organisations">organisations</i18n>
     </ng-template>
     <ng-template matTabContent>
       <organisation-table [items]="organisations">
@@ -58,7 +58,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <mat-slide-toggle disabled
-              [checked]="organisationUser.includes(item)">
+              [checked]="organisationUser.includes(item.id)">
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
@@ -68,7 +68,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <mat-slide-toggle disabled
-              [checked]="organisationAdmin.includes(item)">
+              [checked]="organisationAdmin.includes(item.id)">
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
@@ -77,7 +77,7 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <ng-container *ngIf="organisationAdmin.includes(item)">
+            <ng-container *ngIf="organisationAdmin.includes(item.id)">
               <button mat-icon-button
                 color="primary"
                 (click)="edit(item)">
@@ -102,7 +102,7 @@
 
   <mat-tab id="activities" [disabled]="!activities.length">
     <ng-template matTabLabel>
-      <i18n i18n="@@userActivities">userActivities</i18n>
+      <i18n i18n="@@activities">activities</i18n>
     </ng-template>
     <ng-template matTabContent>
       <activity-table [items]="activities">

@@ -139,8 +139,8 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
     }
 
     if (ctrl1.value && ctrl2.enabled && ctrl1.value !== ctrl2.value) {
-      ctrl1.setErrors({ missmatch: true });
-      ctrl2.setErrors({ missmatch: true });
+      ctrl1.setErrors({ mismatch: true });
+      ctrl2.setErrors({ mismatch: true });
     } else {
       ctrl1.updateValueAndValidity({ emitEvent: false });
       ctrl2.updateValueAndValidity({ emitEvent: false });

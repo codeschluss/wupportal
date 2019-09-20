@@ -29,8 +29,8 @@ export class BaseFieldComponent implements OnInit {
               <ng-container *ngSwitchCase="'minLength'">
                 <i18n i18n="@@minLengthError">minLengthError</i18n>
               </ng-container>
-              <ng-container *ngSwitchCase="'missmatch'">
-                <i18n i18n="@@missmatchError">missmatchError</i18n>
+              <ng-container *ngSwitchCase="'mismatch'">
+                <i18n i18n="@@mismatchError">mismatchError</i18n>
               </ng-container>
               <ng-container *ngSwitchCase="'neither'">
                 <i18n i18n="@@neitherError">neitherError</i18n>

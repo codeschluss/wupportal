@@ -26,13 +26,13 @@ import { ConfigurationModel } from '../../../realm/models/configuration.model';
           <i18n i18n="@@mapZoomfactor">mapZoomfactor</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalMail'">
-          <i18n i18n="@@portalMail">portalMail</i18n>
+          <i18n i18n="@@email">email</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalName'">
-          <i18n i18n="@@portalName">portalName</i18n>
+          <i18n i18n="@@title">title</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalSubtitle'">
-          <i18n i18n="@@portalSubtitle">portalSubtitle</i18n>
+          <i18n i18n="@@tagline">tagline</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

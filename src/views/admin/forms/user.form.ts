@@ -113,8 +113,8 @@ export class UserFormComponent
     }
 
     if (pw1 && ctrl2.enabled && pw1 !== pw2) {
-      ctrl1.setErrors({ missmatch: true });
-      ctrl2.setErrors({ missmatch: true });
+      ctrl1.setErrors({ mismatch: true });
+      ctrl2.setErrors({ mismatch: true });
     } else {
       ctrl1.updateValueAndValidity({ emitEvent: false });
       ctrl2.updateValueAndValidity({ emitEvent: false });

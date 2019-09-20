@@ -16,7 +16,7 @@ import { UserProvider } from '../../../realm/providers/user.provider';
   `],
   template: `
     <h2 mat-dialog-title>
-      <i18n i18n="@@selectOrganisation">selectOrganisation</i18n>
+      <i18n i18n="@@selectOrganisations">selectOrganisations</i18n>
     </h2>
     <section mat-dialog-content>
       <mat-form-field>

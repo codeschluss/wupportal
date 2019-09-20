@@ -23,14 +23,16 @@ import { ClientPackage } from '../../../utils/package';
         <i18n i18n="@@compilation">compilation</i18n>
       </label>
       <nav>
-        <button mat-button color="primary" (click)="contactUser()">
-          <i18n i18n="@@contactUser">contactUser</i18n>
+        <button mat-button
+          color="primary"
+          (click)="fillUserData()">
+          <i18n i18n="@@fillUserData">fillUserData</i18n>
         </button>
         <button mat-button
           color="primary"
           [disabled]="!this.organisation"
-          (click)="contactOrganisation()">
-          <i18n i18n="@@contactOrganisation">contactOrganisation</i18n>
+          (click)="fillOrganisationData()">
+          <i18n i18n="@@fillOrganisationData">fillOrganisationData</i18n>
         </button>
       </nav>
     </section>
@@ -147,14 +149,14 @@ export class ActivityFormComponent
     super(translationProvider, route, tokenProvider);
   }
 
-  public contactOrganisation(): void {
+  public fillOrganisationData(): void {
     const organisation = this.group.get('organisation').value;
     this.group.get('contactName').patchValue(organisation.name);
     this.group.get('mail').patchValue(organisation.mail);
     this.group.get('phone').patchValue(organisation.phone);
   }
 
-  public contactUser(): void {
+  public fillUserData(): void {
     this.userProvider.readOne(this.token.id).subscribe((user) => {
       this.group.get('contactName').patchValue(user.name);
       this.group.get('mail').patchValue(user.username);

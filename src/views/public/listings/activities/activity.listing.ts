@@ -95,11 +95,12 @@ export class ActivityListingComponent
 
   public ngAfterViewInit(): void {
     if (this.platformProvider.type === 'Online') {
-      this.categoryCtrl.valueChanges.subscribe((value) => this.chipList
-        .chips.forEach((chip) => chip.selected = value.includes(chip.value)));
-
       this.chipList.chipSelectionChanges.subscribe(() => this.categoryCtrl
         .setValue(Arr(this.chipList.selected).map((chip) => chip.value)));
+
+      this.route.queryParams.pipe(map((p) => this.params(p).categories || []))
+        .subscribe((categories) => this.chipList.chips.forEach((chip) =>
+          chip.selected = categories.includes(chip.value)));
 
       if (this.platformProvider.name === 'Web') {
         const source = this.document.defaultView;
@@ -119,9 +120,9 @@ export class ActivityListingComponent
       map((params) => this.params(params))
     ).subscribe((params) => {
       const { categories, suburbs, targetgroups } = params;
-      this.categoryCtrl.setValue(categories || []);
-      this.suburbCtrl.setValue(suburbs || []);
-      this.targetGroupCtrl.setValue(targetgroups || []);
+      this.categoryCtrl.setValue(categories || [], { emitEvent: false });
+      this.suburbCtrl.setValue(suburbs || [], { emitEvent: false });
+      this.targetGroupCtrl.setValue(targetgroups || [], { emitEvent: false });
     });
 
     merge(

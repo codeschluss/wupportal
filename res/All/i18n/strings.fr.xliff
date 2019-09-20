@@ -1,534 +1,533 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="root" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="minLengthError" datatype="html">
-        <source>minLengthError</source>
+        <source>minLengthError</source><target>Donnée trop courte</target>
       </trans-unit>
       <trans-unit id="mismatchError" datatype="html">
-        <source>mismatchError</source>
+        <source>mismatchError</source><target>Donnée non correspondante</target>
       </trans-unit>
       <trans-unit id="neitherError" datatype="html">
-        <source>neitherError</source>
+        <source>neitherError</source><target>Nécessairement une donnée</target>
       </trans-unit>
       <trans-unit id="patternError" datatype="html">
-        <source>patternError</source>
+        <source>patternError</source><target>Erreur de format</target>
       </trans-unit>
       <trans-unit id="requiredError" datatype="html">
-        <source>requiredError</source>
+        <source>requiredError</source><target>Donnée necessaire</target>
       </trans-unit>
       <trans-unit id="encryptedConnection" datatype="html">
-        <source>encryptedConnection</source>
+        <source>encryptedConnection</source><target>Crypté en HTTPS</target>
       </trans-unit>
       <trans-unit id="mapview" datatype="html">
-        <source>mapview</source>
+        <source>mapview</source><target>Plan</target>
       </trans-unit>
       <trans-unit id="activities" datatype="html">
-        <source>activities</source>
+        <source>activities</source><target>Activités</target>
       </trans-unit>
       <trans-unit id="organisations" datatype="html">
-        <source>organisations</source>
+        <source>organisations</source><target>Organisations</target>
       </trans-unit>
       <trans-unit id="blogposts" datatype="html">
-        <source>blogposts</source>
+        <source>blogposts</source><target>Articles de blog</target>
       </trans-unit>
       <trans-unit id="infopages" datatype="html">
-        <source>infopages</source>
+        <source>infopages</source><target>Pages d'information</target>
       </trans-unit>
       <trans-unit id="search" datatype="html">
-        <source>search</source>
+        <source>search</source><target>Chercher</target>
       </trans-unit>
       <trans-unit id="language" datatype="html">
-        <source>language</source>
+        <source>language</source><target>Langue</target>
       </trans-unit>
       <trans-unit id="imprint" datatype="html">
-        <source>imprint</source>
+        <source>imprint</source><target>Empreinte</target>
       </trans-unit>
       <trans-unit id="policies" datatype="html">
-        <source>policies</source>
+        <source>policies</source><target>Mentions légales</target>
       </trans-unit>
       <trans-unit id="administration" datatype="html">
-        <source>administration</source>
+        <source>administration</source><target>Administration</target>
       </trans-unit>
       <trans-unit id="login" datatype="html">
-        <source>login</source>
+        <source>login</source><target>Identifier</target>
       </trans-unit>
       <trans-unit id="account" datatype="html">
-        <source>account</source>
+        <source>account</source><target>Compte</target>
       </trans-unit>
       <trans-unit id="organisation" datatype="html">
-        <source>organisation</source>
+        <source>organisation</source><target>Organisation</target>
       </trans-unit>
       <trans-unit id="application" datatype="html">
-        <source>application</source>
+        <source>application</source><target>Application</target>
       </trans-unit>
       <trans-unit id="information" datatype="html">
-        <source>information</source>
+        <source>information</source><target>Contenu</target>
       </trans-unit>
       <trans-unit id="positioning" datatype="html">
-        <source>positioning</source>
+        <source>positioning</source><target>Localités</target>
       </trans-unit>
       <trans-unit id="privileges" datatype="html">
-        <source>privileges</source>
+        <source>privileges</source><target>Privilèges d'accès</target>
       </trans-unit>
       <trans-unit id="taxonomy" datatype="html">
-        <source>taxonomy</source>
+        <source>taxonomy</source><target>Taxonomie</target>
       </trans-unit>
       <trans-unit id="logout" datatype="html">
-        <source>logout</source>
+        <source>logout</source><target>Déconnecter</target>
       </trans-unit>
       <trans-unit id="locationError" datatype="html">
-        <source>locationError</source>
+        <source>locationError</source><target>Erreur de navigation</target>
       </trans-unit>
       <trans-unit id="forbiddenError" datatype="html">
-        <source>forbiddenError</source>
+        <source>forbiddenError</source><target>Accès refusé</target>
       </trans-unit>
       <trans-unit id="notFoundError" datatype="html">
-        <source>notFoundError</source>
+        <source>notFoundError</source><target>Pas de résultats</target>
       </trans-unit>
       <trans-unit id="conflictError" datatype="html">
-        <source>conflictError</source>
+        <source>conflictError</source><target>Objet déjà existant</target>
       </trans-unit>
       <trans-unit id="tooLargeError" datatype="html">
-        <source>tooLargeError</source>
+        <source>tooLargeError</source><target>Erreur de taille de fichier</target>
       </trans-unit>
       <trans-unit id="serverError" datatype="html">
-        <source>serverError</source>
+        <source>serverError</source><target>Erreur du serveur</target>
       </trans-unit>
       <trans-unit id="unhandledError" datatype="html">
-        <source>unhandledError</source>
+        <source>unhandledError</source><target>Erreur pas traité</target>
       </trans-unit>
       <trans-unit id="reportIssue" datatype="html">
-        <source>reportIssue</source>
+        <source>reportIssue</source><target>Alerter l'erreur</target>
       </trans-unit>
       <trans-unit id="close" datatype="html">
-        <source>close</source>
+        <source>close</source><target>Fermer</target>
       </trans-unit>
       <trans-unit id="confirmDelete" datatype="html">
-        <source>confirmDelete</source>
+        <source>confirmDelete</source><target>Confirmer l'éffacement</target>
       </trans-unit>
       <trans-unit id="name" datatype="html">
-        <source>name</source>
+        <source>name</source><target>Nom</target>
       </trans-unit>
       <trans-unit id="description" datatype="html">
-        <source>description</source>
+        <source>description</source><target>Déscription</target>
       </trans-unit>
       <trans-unit id="uuid" datatype="html">
-        <source>uuid</source>
+        <source>uuid</source><target>Clé d'objet</target>
       </trans-unit>
       <trans-unit id="delete" datatype="html">
-        <source>delete</source>
+        <source>delete</source><target>Éffacer</target>
       </trans-unit>
       <trans-unit id="authenticationExpired" datatype="html">
-        <source>authenticationExpired</source>
+        <source>authenticationExpired</source><target>Session expirée</target>
       </trans-unit>
       <trans-unit id="username" datatype="html">
-        <source>username</source>
+        <source>username</source><target>Nom d'utilisateur</target>
       </trans-unit>
       <trans-unit id="password" datatype="html">
-        <source>password</source>
+        <source>password</source><target>Mot d'accès</target>
       </trans-unit>
       <trans-unit id="selectOrganisations" datatype="html">
-        <source>selectOrganisations</source>
+        <source>selectOrganisations</source><target>Choisir des organisations</target>
       </trans-unit>
       <trans-unit id="joinOrganisations" datatype="html">
-        <source>joinOrganisations</source>
+        <source>joinOrganisations</source><target>Affilier à des organisations</target>
       </trans-unit>
       <trans-unit id="edit" datatype="html">
-        <source>edit</source>
+        <source>edit</source><target>Éditer</target>
       </trans-unit>
       <trans-unit id="selectOrDropImage" datatype="html">
-        <source>selectOrDropImage</source>
+        <source>selectOrDropImage</source><target>Choisir une image</target>
       </trans-unit>
       <trans-unit id="caption" datatype="html">
-        <source>caption</source>
+        <source>caption</source><target>Légende</target>
       </trans-unit>
       <trans-unit id="reset" datatype="html">
-        <source>reset</source>
+        <source>reset</source><target>Réinitialiser</target>
       </trans-unit>
       <trans-unit id="create" datatype="html">
-        <source>create</source>
+        <source>create</source><target>Créer</target>
       </trans-unit>
       <trans-unit id="compilation" datatype="html">
-        <source>compilation</source>
+        <source>compilation</source><target>Création</target>
       </trans-unit>
       <trans-unit id="fillUserData" datatype="html">
-        <source>fillUserData</source>
+        <source>fillUserData</source><target>Importer les coordonnées d'utilisateur</target>
       </trans-unit>
       <trans-unit id="fillOrganisationData" datatype="html">
-        <source>fillOrganisationData</source>
+        <source>fillOrganisationData</source><target>Importer les coordonnées d'organisation</target>
       </trans-unit>
       <trans-unit id="category" datatype="html">
-        <source>category</source>
+        <source>category</source><target>Catégorie</target>
       </trans-unit>
       <trans-unit id="contactName" datatype="html">
-        <source>contactName</source>
+        <source>contactName</source><target>Contacte</target>
       </trans-unit>
       <trans-unit id="email" datatype="html">
-        <source>email</source>
+        <source>email</source><target>E-mail</target>
       </trans-unit>
       <trans-unit id="phone" datatype="html">
-        <source>phone</source>
+        <source>phone</source><target>Téléphone</target>
       </trans-unit>
       <trans-unit id="keywords" datatype="html">
-        <source>keywords</source>
+        <source>keywords</source><target>Mots-Clés</target>
       </trans-unit>
       <trans-unit id="targetGroups" datatype="html">
-        <source>targetGroups</source>
+        <source>targetGroups</source><target>Groupes cibles</target>
       </trans-unit>
       <trans-unit id="houseNumber" datatype="html">
-        <source>houseNumber</source>
+        <source>houseNumber</source><target>Numéro</target>
       </trans-unit>
       <trans-unit id="latitude" datatype="html">
-        <source>latitude</source>
+        <source>latitude</source><target>Latitude</target>
       </trans-unit>
       <trans-unit id="longitude" datatype="html">
-        <source>longitude</source>
+        <source>longitude</source><target>Longitude</target>
       </trans-unit>
       <trans-unit id="place" datatype="html">
-        <source>place</source>
+        <source>place</source><target>Ville</target>
       </trans-unit>
       <trans-unit id="postalCode" datatype="html">
-        <source>postalCode</source>
+        <source>postalCode</source><target>Code postal</target>
       </trans-unit>
       <trans-unit id="street" datatype="html">
-        <source>street</source>
+        <source>street</source><target>Rue</target>
       </trans-unit>
       <trans-unit id="suburb" datatype="html">
-        <source>suburb</source>
+        <source>suburb</source><target>Quartier</target>
       </trans-unit>
       <trans-unit id="autoLocate" datatype="html">
-        <source>autoLocate</source>
+        <source>autoLocate</source><target>Localiser</target>
       </trans-unit>
       <trans-unit id="activity" datatype="html">
-        <source>activity</source>
+        <source>activity</source><target>Activité</target>
       </trans-unit>
       <trans-unit id="content" datatype="html">
-        <source>content</source>
+        <source>content</source><target>Texte</target>
       </trans-unit>
       <trans-unit id="title" datatype="html">
-        <source>title</source>
+        <source>title</source><target>Title</target>
       </trans-unit>
       <trans-unit id="color" datatype="html">
-        <source>color</source>
+        <source>color</source><target>Couleur</target>
       </trans-unit>
       <trans-unit id="mapCluster" datatype="html">
-        <source>mapCluster</source>
+        <source>mapCluster</source><target>Limites du cluster</target>
       </trans-unit>
       <trans-unit id="mapLatitude" datatype="html">
-        <source>mapLatitude</source>
+        <source>mapLatitude</source><target>Centre du plan (latitude)</target>
       </trans-unit>
       <trans-unit id="mapLongitude" datatype="html">
-        <source>mapLongitude</source>
+        <source>mapLongitude</source><target>Centre du plan (longitude)</target>
       </trans-unit>
       <trans-unit id="mapProjection" datatype="html">
-        <source>mapProjection</source>
+        <source>mapProjection</source><target>Projection du plan</target>
       </trans-unit>
       <trans-unit id="mapZoomfactor" datatype="html">
-        <source>mapZoomfactor</source>
+        <source>mapZoomfactor</source><target>Zoom du plan</target>
       </trans-unit>
       <trans-unit id="tagline" datatype="html">
-        <source>tagline</source>
+        <source>tagline</source><target>Devise</target>
       </trans-unit>
       <trans-unit id="images" datatype="html">
-        <source>images</source>
+        <source>images</source><target>Images</target>
       </trans-unit>
       <trans-unit id="topic" datatype="html">
-        <source>topic</source>
+        <source>topic</source><target>Sujet</target>
       </trans-unit>
       <trans-unit id="locale" datatype="html">
-        <source>locale</source>
+        <source>locale</source><target>Abbréviation</target>
       </trans-unit>
       <trans-unit id="machineTranslated" datatype="html">
-        <source>machineTranslated</source>
+        <source>machineTranslated</source><target>Note de traduction</target>
       </trans-unit>
       <trans-unit id="videoUrl" datatype="html">
-        <source>videoUrl</source>
+        <source>videoUrl</source><target>Lien du vidéo</target>
       </trans-unit>
       <trans-unit id="website" datatype="html">
-        <source>website</source>
+        <source>website</source><target>Site web</target>
       </trans-unit>
       <trans-unit id="schedule" datatype="html">
-        <source>schedule</source>
+        <source>schedule</source><target>Date</target>
       </trans-unit>
       <trans-unit id="startDate" datatype="html">
-        <source>startDate</source>
+        <source>startDate</source><target>Date de début</target>
       </trans-unit>
       <trans-unit id="startTime" datatype="html">
-        <source>startTime</source>
+        <source>startTime</source><target>Temps de début</target>
       </trans-unit>
       <trans-unit id="endDate" datatype="html">
-        <source>endDate</source>
+        <source>endDate</source><target>Date de fin</target>
       </trans-unit>
       <trans-unit id="endTime" datatype="html">
-        <source>endTime</source>
+        <source>endTime</source><target>Temps de fin</target>
       </trans-unit>
       <trans-unit id="recurrence" datatype="html">
-        <source>recurrence</source>
+        <source>recurrence</source><target>Roulement</target>
       </trans-unit>
       <trans-unit id="once" datatype="html">
-        <source>once</source>
+        <source>once</source><target>une fois</target>
       </trans-unit>
       <trans-unit id="daily" datatype="html">
-        <source>daily</source>
+        <source>daily</source><target>journalier</target>
       </trans-unit>
       <trans-unit id="weekly" datatype="html">
-        <source>weekly</source>
+        <source>weekly</source><target>hebdomadaire</target>
       </trans-unit>
       <trans-unit id="monthly" datatype="html">
-        <source>monthly</source>
+        <source>monthly</source><target>mensuel</target>
       </trans-unit>
       <trans-unit id="yearly" datatype="html">
-        <source>yearly</source>
+        <source>yearly</source><target>annuel</target>
       </trans-unit>
       <trans-unit id="until" datatype="html">
-        <source>until</source>
+        <source>until</source><target>jusqu'à</target>
       </trans-unit>
       <trans-unit id="monday" datatype="html">
-        <source>monday</source>
+        <source>monday</source><target>Lundi</target>
       </trans-unit>
       <trans-unit id="tuesday" datatype="html">
-        <source>tuesday</source>
+        <source>tuesday</source><target>Mardi</target>
       </trans-unit>
       <trans-unit id="wednesday" datatype="html">
-        <source>wednesday</source>
+        <source>wednesday</source><target>Mercredi</target>
       </trans-unit>
       <trans-unit id="thursday" datatype="html">
-        <source>thursday</source>
+        <source>thursday</source><target>Jeudi</target>
       </trans-unit>
       <trans-unit id="friday" datatype="html">
-        <source>friday</source>
+        <source>friday</source><target>Vendredi</target>
       </trans-unit>
       <trans-unit id="saturday" datatype="html">
-        <source>saturday</source>
+        <source>saturday</source><target>Samedi</target>
       </trans-unit>
       <trans-unit id="sunday" datatype="html">
-        <source>sunday</source>
+        <source>sunday</source><target>Dimanche</target>
       </trans-unit>
       <trans-unit id="deleteAll" datatype="html">
-        <source>deleteAll</source>
+        <source>deleteAll</source><target>Éffacer tous</target>
       </trans-unit>
       <trans-unit id="createSchedules" datatype="html">
-        <source>createSchedules</source>
+        <source>createSchedules</source><target>Créer des dates</target>
       </trans-unit>
       <trans-unit id="schedules" datatype="html">
-        <source>schedules</source>
+        <source>schedules</source><target>Dates</target>
       </trans-unit>
       <trans-unit id="fullname" datatype="html">
-        <source>fullname</source>
+        <source>fullname</source><target>Nom</target>
       </trans-unit>
       <trans-unit id="passwordConfirm" datatype="html">
-        <source>passwordConfirm</source>
+        <source>passwordConfirm</source><target>Confirmer le mot d'accès</target>
       </trans-unit>
       <trans-unit id="accountPanel" datatype="html">
-        <source>accountPanel</source>
+        <source>accountPanel</source><target>Administrer le compte</target>
       </trans-unit>
       <trans-unit id="actions" datatype="html">
-        <source>actions</source>
+        <source>actions</source><target>Actions</target>
       </trans-unit>
       <trans-unit id="createActivity" datatype="html">
-        <source>createActivity</source>
+        <source>createActivity</source><target>Créer un activité</target>
       </trans-unit>
       <trans-unit id="createBlogpost" datatype="html">
-        <source>createBlogpost</source>
+        <source>createBlogpost</source><target>Créer un article de blog</target>
       </trans-unit>
       <trans-unit id="joinBloggers" datatype="html">
-        <source>joinBloggers</source>
+        <source>joinBloggers</source><target>Devenir blogueur</target>
       </trans-unit>
       <trans-unit id="createOrganisation" datatype="html">
-        <source>createOrganisation</source>
+        <source>createOrganisation</source><target>Créer une organisation</target>
       </trans-unit>
       <trans-unit id="main" datatype="html">
-        <source>main</source>
+        <source>main</source><target>Données de base</target>
       </trans-unit>
       <trans-unit id="persist" datatype="html">
-        <source>persist</source>
+        <source>persist</source><target>Sauver</target>
       </trans-unit>
       <trans-unit id="approved" datatype="html">
-        <source>approved</source>
+        <source>approved</source><target>Approuvé</target>
       </trans-unit>
       <trans-unit id="admin" datatype="html">
-        <source>admin</source>
+        <source>admin</source><target>Manager</target>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
-        <source>applicationPanel</source>
+        <source>applicationPanel</source><target>Administrer l'application</target>
       </trans-unit>
       <trans-unit id="createLanguage" datatype="html">
-        <source>createLanguage</source>
+        <source>createLanguage</source><target>Créer une langue</target>
       </trans-unit>
       <trans-unit id="configuration" datatype="html">
-        <source>configuration</source>
+        <source>configuration</source><target>Configuration</target>
       </trans-unit>
       <trans-unit id="languages" datatype="html">
-        <source>languages</source>
+        <source>languages</source><target>Langues</target>
       </trans-unit>
       <trans-unit id="informationPanel" datatype="html">
-        <source>informationPanel</source>
+        <source>informationPanel</source><target>Administrer le contenu</target>
       </trans-unit>
       <trans-unit id="createInfopage" datatype="html">
-        <source>createInfopage</source>
+        <source>createInfopage</source><target>Créer un page d'information</target>
       </trans-unit>
       <trans-unit id="organisationPanel" datatype="html">
-        <source>organisationPanel</source>
+        <source>organisationPanel</source><target>Administrer l'organisation</target>
       </trans-unit>
       <trans-unit id="providers" datatype="html">
-        <source>providers</source>
+        <source>providers</source><target>Associés</target>
       </trans-unit>
       <trans-unit id="providerRequests" datatype="html">
-        <source>providerRequests</source>
+        <source>providerRequests</source><target>Admission des associés</target>
       </trans-unit>
       <trans-unit id="positioningPanel" datatype="html">
-        <source>positioningPanel</source>
+        <source>positioningPanel</source><target>Administrer les localités</target>
       </trans-unit>
       <trans-unit id="createSuburb" datatype="html">
-        <source>createSuburb</source>
+        <source>createSuburb</source><target>Créer un quartier</target>
       </trans-unit>
       <trans-unit id="suburbs" datatype="html">
-        <source>suburbs</source>
+        <source>suburbs</source><target>Quartiers</target>
       </trans-unit>
       <trans-unit id="addresses" datatype="html">
-        <source>addresses</source>
+        <source>addresses</source><target>Adresses</target>
       </trans-unit>
       <trans-unit id="privilegesPanel" datatype="html">
-        <source>privilegesPanel</source>
+        <source>privilegesPanel</source><target>Administrer des privilèges d'accès</target>
       </trans-unit>
       <trans-unit id="users" datatype="html">
-        <source>users</source>
+        <source>users</source><target>Utilisateurs</target>
       </trans-unit>
       <trans-unit id="superUser" datatype="html">
-        <source>superUser</source>
+        <source>superUser</source><target>Administrateur</target>
       </trans-unit>
       <trans-unit id="blogger" datatype="html">
-        <source>blogger</source>
+        <source>blogger</source><target>Blogueur</target>
       </trans-unit>
       <trans-unit id="organisationRequests" datatype="html">
-        <source>organisationRequests</source>
+        <source>organisationRequests</source><target>Admission des organisations</target>
       </trans-unit>
       <trans-unit id="bloggerRequests" datatype="html">
-        <source>bloggerRequests</source>
+        <source>bloggerRequests</source><target>Admission des blogueurs</target>
       </trans-unit>
       <trans-unit id="taxonomyPanel" datatype="html">
-        <source>taxonomyPanel</source>
+        <source>taxonomyPanel</source><target>Administrer les taxonomies</target>
       </trans-unit>
       <trans-unit id="createCategory" datatype="html">
-        <source>createCategory</source>
+        <source>createCategory</source><target>Créer une catégorie</target>
       </trans-unit>
       <trans-unit id="createKeyword" datatype="html">
-        <source>createKeyword</source>
+        <source>createKeyword</source><target>Créer un mot-clé</target>
       </trans-unit>
       <trans-unit id="createTargetGroup" datatype="html">
-        <source>createTargetGroup</source>
+        <source>createTargetGroup</source><target>Créer un groupe cible</target>
       </trans-unit>
       <trans-unit id="createTopic" datatype="html">
-        <source>createTopic</source>
+        <source>createTopic</source><target>Créer un sujet</target>
       </trans-unit>
       <trans-unit id="categories" datatype="html">
-        <source>categories</source>
+        <source>categories</source><target>Catégories</target>
       </trans-unit>
       <trans-unit id="topics" datatype="html">
-        <source>topics</source>
+        <source>topics</source><target>Sujets</target>
       </trans-unit>
       <trans-unit id="editActivity" datatype="html">
-        <source>editActivity</source>
+        <source>editActivity</source><target>Éditer l'activité</target>
       </trans-unit>
       <trans-unit id="address" datatype="html">
-        <source>address</source>
+        <source>address</source><target>Adresse</target>
       </trans-unit>
       <trans-unit id="translations" datatype="html">
-        <source>translations</source>
+        <source>translations</source><target>Traductions</target>
       </trans-unit>
       <trans-unit id="previous" datatype="html">
-        <source>previous</source>
+        <source>previous</source><target>Dernier</target>
       </trans-unit>
       <trans-unit id="following" datatype="html">
-        <source>following</source>
+        <source>following</source><target>Prochain</target>
       </trans-unit>
       <trans-unit id="createAddress" datatype="html">
-        <source>createAddress</source>
+        <source>createAddress</source><target>Créer un adresse</target>
       </trans-unit>
       <trans-unit id="editAddress" datatype="html">
-        <source>editAddress</source>
+        <source>editAddress</source><target>Éditer l'adresse</target>
       </trans-unit>
       <trans-unit id="editBlogpost" datatype="html">
-        <source>editBlogpost</source>
+        <source>editBlogpost</source><target>Éditer l'article de blog</target>
       </trans-unit>
       <trans-unit id="editCategory" datatype="html">
-        <source>editCategory</source>
+        <source>editCategory</source><target>Éditer la catégorie</target>
       </trans-unit>
       <trans-unit id="editInfopage" datatype="html">
-        <source>editInfopage</source>
+        <source>editInfopage</source><target>Éditer le page d'information</target>
       </trans-unit>
       <trans-unit id="editKeyword" datatype="html">
-        <source>editKeyword</source>
+        <source>editKeyword</source><target>Éditer le mot-clé</target>
       </trans-unit>
       <trans-unit id="editLanguage" datatype="html">
-        <source>editLanguage</source>
+        <source>editLanguage</source><target>Éditer la langue</target>
       </trans-unit>
       <trans-unit id="editOrganisation" datatype="html">
-        <source>editOrganisation</source>
+        <source>editOrganisation</source><target>Éditer l'organisation</target>
       </trans-unit>
       <trans-unit id="editSuburb" datatype="html">
-        <source>editSuburb</source>
+        <source>editSuburb</source><target>Éditer un quartier</target>
       </trans-unit>
       <trans-unit id="editTargetGroup" datatype="html">
-        <source>editTargetGroup</source>
+        <source>editTargetGroup</source><target>Éditer le groupe cible</target>
       </trans-unit>
       <trans-unit id="editTopic" datatype="html">
-        <source>editTopic</source>
+        <source>editTopic</source><target>Éditer le sujet</target>
       </trans-unit>
       <trans-unit id="createUser" datatype="html">
-        <source>createUser</source>
+        <source>createUser</source><target>Créer un utilisateur</target>
       </trans-unit>
       <trans-unit id="editUser" datatype="html">
-        <source>editUser</source>
+        <source>editUser</source><target>Éditer l'utilisateur</target>
       </trans-unit>
       <trans-unit id="author" datatype="html">
-        <source>author</source>
+        <source>author</source><target>Auteur</target>
       </trans-unit>
       <trans-unit id="by" datatype="html">
-        <source>by</source>
+        <source>by</source><target>de</target>
       </trans-unit>
       <trans-unit id="about" datatype="html">
-        <source>about</source>
+        <source>about</source><target>sur</target>
       </trans-unit>
       <trans-unit id="followPosition" datatype="html">
-        <source>followPosition</source>
+        <source>followPosition</source><target>Suiver l'emplacement</target>
       </trans-unit>
       <trans-unit id="fullscreen" datatype="html">
-        <source>fullscreen</source>
+        <source>fullscreen</source><target>Plein écran</target>
       </trans-unit>
       <trans-unit id="at" datatype="html">
-        <source>at</source>
+        <source>at</source><target>à</target>
       </trans-unit>
       <trans-unit id="details" datatype="html">
-        <source>details</source>
+        <source>details</source><target>Détails</target>
       </trans-unit>
       <trans-unit id="selectedSchedule" datatype="html">
-        <source>selectedSchedule</source>
+        <source>selectedSchedule</source><target>Date choisie</target>
       </trans-unit>
       <trans-unit id="nextSchedule" datatype="html">
-        <source>nextSchedule</source>
+        <source>nextSchedule</source><target>Prochaine date</target>
       </trans-unit>
       <trans-unit id="ofTopic" datatype="html">
-        <source>ofTopic</source>
+        <source>ofTopic</source><target>à propos de</target>
       </trans-unit>
       <trans-unit id="newActivities" datatype="html">
-        <source>newActivities</source>
+        <source>newActivities</source><target>Activités nouvelles</target>
       </trans-unit>
       <trans-unit id="videoError" datatype="html">
-        <source>videoError</source>
+        <source>videoError</source><target>Erreur de vidéo</target>
       </trans-unit>
       <trans-unit id="register" datatype="html">
-        <source>register</source>
+        <source>register</source><target>Enregistrer</target>
       </trans-unit>
       <trans-unit id="like" datatype="html">
-        <source>like</source>
+        <source>like</source><target>Liker</target>
       </trans-unit>
       <trans-unit id="share" datatype="html">
-        <source>share</source>
+        <source>share</source><target>Partager</target>
       </trans-unit>
       <trans-unit id="copyLink" datatype="html">
-        <source>copyLink</source>
+        <source>copyLink</source><target>Copier lien</target>
       </trans-unit>
     </body>
   </file>

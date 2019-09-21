@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { PlatformProvider, Selfrouter } from '@wooportal/core';
-import * as geolocation from 'nativescript-geolocation';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { WebChromeClientFactory, WebViewClientFactory } from '../../utils/clients';
 import { ClientPackage } from '../../utils/package';
+import { geolocation } from '../shared/shared.imports';
 
 @Component({
   styleUrls: ['maps.component.scss'],

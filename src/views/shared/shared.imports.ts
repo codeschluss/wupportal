@@ -4,4 +4,5 @@ export { mock as fromBase64 };
 export { mock as SocialShare };
 export { mock as openUrl };
 export { mock as eachDescendant };
+export { mock as geolocation };
 export { mock as getRootView };

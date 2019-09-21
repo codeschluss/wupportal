@@ -1,11 +1,14 @@
-import { Component, Optional, Type } from '@angular/core';
+import { Component, ElementRef, NgZone, Optional, Type, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CrudJoiner, PlatformProvider, Title } from '@wooportal/core';
+import { WebView } from 'tns-core-modules/ui/web-view';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { ScheduleModel } from '../../../../realm/models/schedule.model';
+import { WebChromeClientFactory, WebViewClientFactory } from '../../../../utils/clients';
 import { ClientPackage } from '../../../../utils/package';
+import { geolocation } from '../../../shared/shared.imports';
 import { BaseObject } from '../base.object';
 
 @Component({
@@ -34,8 +37,12 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   protected path: string = 'activities';
 
+  @ViewChild('webview', { read: ElementRef, static: false })
+  private webview: ElementRef<WebView>;
+
   public constructor(
     @Optional() private sanitizer: DomSanitizer,
+    private zone: NgZone,
     i18n: I18n,
     platformProvider: PlatformProvider,
     route: ActivatedRoute,
@@ -50,12 +57,45 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
     switch (this.platformProvider.type) {
       case 'Native':
+        geolocation.enableLocationRequest().catch(() => null);
         this.source = ClientPackage.config.defaults.appUrl + url + '&native';
         break;
 
       case 'Online':
         this.source = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         break;
+    }
+  }
+
+  protected ngPostViewInit(): void {
+    if (this.platformProvider.type === 'Native') {
+      let wv = this.webview.nativeElement as any;
+
+      // tslint:disable-next-line
+      if(!wv.nativeView){return wv.once('loaded',()=>this.ngAfterViewInit());}
+      // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
+
+      switch (this.platformProvider.name) {
+        case 'Android':
+          const WebChromeClient = WebChromeClientFactory();
+          const WebViewClient = WebViewClientFactory((url) => {
+            if (!url.startsWith(this.router.url)) {
+              this.zone.run(() => this.router.navigateByUrl(url));
+            }
+          });
+
+          wv = wv.android;
+          wv.getSettings().setGeolocationEnabled(true);
+          wv.getSettings().setJavaScriptEnabled(true);
+          wv.setWebChromeClient(new WebChromeClient());
+          wv.setWebViewClient(new WebViewClient());
+          return;
+
+        case 'iOS':
+          wv = wv.ios;
+          // TODO: https://board.codeschluss.de/project/wooportal/us/37
+          return;
+      }
     }
   }
 

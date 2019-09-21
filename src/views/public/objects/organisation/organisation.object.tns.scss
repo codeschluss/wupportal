@@ -6,6 +6,8 @@ scroll-view {
       & > .expand-compat {
         scroll-view {
           & > flexbox-layout {
+            align-items: stretch;
+
             & > grid-layout {
               & > image {
                 border-radius: rem(.25);

@@ -47,7 +47,7 @@ scroll-view {
             &[ripple] {
               border-radius: rem(.25);
               orientation: horizontal;
-              padding: rem(.25) rem(.5) rem(.25) rem(.25);
+              padding: rem(.25) rem(.75) rem(.25) rem(.25);
 
               &[borderColor] {
                 border-radius: rem(1);

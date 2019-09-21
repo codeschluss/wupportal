@@ -1,4 +1,4 @@
-<scroll-view class="topoff">
+<scroll-view>
   <stack-layout>
     <grid-layout>
       <label textWrap="true">
@@ -132,7 +132,7 @@
           <i18n i18n="@@mapview" unit="mapview"></i18n>
         </ng-template>
         <ng-template #expandContent>
-          <web-view [src]="source"></web-view>
+          <web-view #webview [src]="source"></web-view>
         </ng-template>
       </expand-compat>
       <expand-compat #organisation

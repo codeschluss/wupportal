@@ -60,6 +60,8 @@ export abstract class BaseObject<Model extends CrudModel>
     if (this.expands.length && this.platformProvider.name !== 'Server') {
       this.expands.first.open();
     }
+
+    this.ngPostViewInit();
   }
 
   public expanded(expand: ExpandCompat): void {
@@ -73,5 +75,7 @@ export abstract class BaseObject<Model extends CrudModel>
   }
 
   protected ngPostInit(): void { }
+
+  protected ngPostViewInit(): void { }
 
 }

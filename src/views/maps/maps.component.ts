@@ -358,7 +358,7 @@ export class MapsComponent
     return new Style({
       image: new Icon({
         color: '#' + ColorConvert.rgb.hex(r, g, b),
-        src: `/imgs/pin-${multi ? 'full' : 'hole'}.png`,
+        src: `/images/pin-${multi ? 'full' : 'hole'}.png`,
 
         anchor: [.5, 1],
         imgSize: [60, 96],

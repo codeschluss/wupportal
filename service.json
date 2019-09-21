@@ -20,7 +20,8 @@
         "files": [
           "/css/*.css",
           "/i18n/**",
-          "/imgs/**"
+          "/images/**",
+          "/videos/**"
         ]
       }
     }

@@ -45,8 +45,13 @@
               },
               {
                 "glob": "**/*",
-                "input": "res/Web/imgs",
-                "output": "/imgs"
+                "input": "res/Web/images",
+                "output": "/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "res/Web/videos",
+                "output": "/videos"
               }
             ],
             "styles": [

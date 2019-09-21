@@ -190,14 +190,16 @@ export class MapsComponent
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {
-    const feature = this.maps.instance.getFeaturesAtPixel(event.pixel);
-    const items = !feature ? [] : feature[0].get('features').map((feat) =>
-      this.items.value.find((item) => item.id === feat.getId()));
+    if (!this.route.snapshot.queryParamMap.has('items')) {
+      const feature = this.maps.instance.getFeaturesAtPixel(event.pixel);
+      const items = !feature ? [] : feature[0].get('features').map((feat) =>
+        this.items.value.find((item) => item.id === feat.getId()));
 
-    this.focus.next(items);
+      this.focus.next(items);
 
-    if (this.connection) {
-      this.connection.nextFocus(items);
+      if (this.connection) {
+        this.connection.nextFocus(items);
+      }
     }
   }
 
@@ -310,13 +312,23 @@ export class MapsComponent
           duration: 1000,
           zoom: 17.5
         });
+
+        if (this.route.snapshot.queryParamMap.has('items')) {
+          this.center.nativeElement.classList.add('arrow');
+          this.center.nativeElement.style.transform = `rotate(${Math.atan2(
+            coords.latitude - 1 / this.focus.value.length * this.focus.value
+              .reduce((num, i) => num += i.address.latitude, 0),
+            coords.longitude - 1 / this.focus.value.length * this.focus.value
+              .reduce((num, i) => num += i.address.longitude, 0)
+          ) * -180 / Math.PI}deg)`;
+        }
       }, () => {
         this.following(false);
         this.follow.disabled = true;
       });
     } else {
       this.followed.unsubscribe();
-      this.center.nativeElement.classList.remove('show');
+      this.center.nativeElement.classList.remove('arrow', 'show');
       this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
     }
   }

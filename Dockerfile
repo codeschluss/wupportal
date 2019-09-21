@@ -1,5 +1,5 @@
 #
-# PHASE 0: wooportal.client.apk
+# PHASE 0
 FROM ubuntu:latest
 ADD / /tmp/wooportal.client
 ENV DEBIAN_FRONTEND noninteractive
@@ -20,7 +20,7 @@ apt-get -qy install --no-install-recommends \
 export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::") && \
 #
 # nodejs
-wget -qqO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key \
+wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key \
   | apt-key add - && \
 echo "deb https://deb.nodesource.com/node_10.x $DISTRIB_CODENAME main" \
   > /etc/apt/sources.list.d/nodejs.list && \
@@ -35,11 +35,11 @@ wget -qO- https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
 unzip -qq android-sdk.zip && \
 yes | tools/bin/sdkmanager --licenses > /dev/null && \
 tools/bin/sdkmanager \
-  "tools" \
+  "build-tools;29.0.2" \
+  "extras;android;m2repository" \
+  "platforms;android-29" \
   "platform-tools" \
-  "platforms;android-28" \
-  "build-tools;28.0.3" \
-  "extras;android;m2repository" && \
+  "tools" && \
 #
 # wooportal/client
 cd /tmp/wooportal.client && \
@@ -55,13 +55,13 @@ npm run -- tns build android \
   --key-store-password=password \
   --key-store-path=res/Android/dev.keystore \
   --release && \
-mv $(find platforms/android -name "*.apk") /wooportal.client.apk
+mv $(find platforms/android -name "*.apk") /client.apk
 #
-# PHASE 1: wooportal.client.ssr
+# PHASE 1
 FROM alpine:latest
 LABEL maintainer info@codeschluss.de
 ADD / /opt/wooportal.client/
-COPY --from=0 /wooportal.client.apk /
+COPY --from=0 /client.apk /
 RUN \
 #
 # packages
@@ -77,7 +77,7 @@ npm run build:lib && \
 npm run build:app && \
 npm run build:ssr && \
 npm prune --production && \
-mv /wooportal.client.apk target/@wooportal/client && \
+mv /client.apk target/@wooportal/client && \
 #
 # cleanup
 apk del --purge build && \

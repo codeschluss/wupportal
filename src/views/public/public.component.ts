@@ -16,6 +16,8 @@ export class PublicComponent {
   ) {
     titleService.setBase(route.snapshot.data.
       configuration.find((c) => c.item === 'portalName').value);
+
+    titleService.set(null);
   }
 
 }

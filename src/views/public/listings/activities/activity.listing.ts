@@ -30,7 +30,7 @@ export class ActivityListingComponent
 
   public targetGroupCtrl: FormControl = new FormControl();
 
-  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel, { current: true })
     .with('address').yield('suburb')
     .with('category')
     .with('schedules');

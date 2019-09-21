@@ -35,7 +35,11 @@ export class HomePageComponent extends BasePage {
       },
       data: {
         resolve: {
-          activities: CrudJoiner.of(ActivityModel, { page: 0, size: 10 })
+          activities: CrudJoiner.of(ActivityModel, {
+            current: true,
+            page: 0,
+            size: 10
+          })
             .with('address').yield('suburb')
             .with('category')
             .with('schedules')

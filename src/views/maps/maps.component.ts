@@ -236,6 +236,7 @@ export class MapsComponent
 
   private fetch(params?: ReadParams): Observable<ActivityModel[]> {
     params = Object.assign({
+      current: true,
       embeddings: CrudJoiner.to(this.joiner.graph)
     }, params);
 

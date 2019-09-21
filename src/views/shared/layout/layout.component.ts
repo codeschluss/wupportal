@@ -148,27 +148,7 @@ export class LayoutComponent implements OnInit {
   }
 
   private transition(url: string): void {
-    let title = null;
-    const path = url.replace(/\?.*$/, '').slice(1).split('/');
-
-    switch (path[0]) {
-      case 'admin':
-        title = null;
-        break;
-
-      case 'search':
-        title = this.i18n({ id: path[0], value: path[0] });
-        title += `: ${this.filter(url)}`;
-        break;
-
-      default:
-        title = this.i18n({ id: path[0], value: path[0] });
-        break;
-    }
-
-    if (title) {
-      this.titleService.set(title);
-    }
+    const path = url.replace(/\?.*$/, '').slice(1).split('/')[0];
 
     if (this.platformProvider.name === 'Web') {
       Array.from(this.document.getElementsByClassName('topoff'))
@@ -180,6 +160,22 @@ export class LayoutComponent implements OnInit {
         element.cssClasses.has('topoff')
           ? element.scrollToVerticalOffset(0, true)
           : true);
+    }
+
+    switch (path) {
+      case '':
+        return this.titleService.set(null);
+
+      case 'admin':
+        return;
+
+      case 'search':
+        return this.titleService.set(
+          this.i18n({ id: path, value: path }) + `: ${this.filter(url)}`
+        );
+
+      default:
+        return this.titleService.set(this.i18n({ id: path, value: path }));
     }
   }
 

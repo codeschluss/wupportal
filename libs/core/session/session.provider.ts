@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { PlatformProvider } from '../platform/platform.provider';
 import { SessionModel } from './session.model';
 
@@ -18,19 +18,18 @@ export class SessionProvider {
     localStorage: LocalStorage,
     platformProvider: PlatformProvider
   ) {
-    this.session = new BehaviorSubject<SessionModel>((() => {
-      const session = new SessionModel();
-      session.language = platformProvider.language;
-      return session;
-    })());
+    this.session = new BehaviorSubject<SessionModel>(null);
 
     localStorage.getItem<SessionModel>('clientSession', {
       schema: SessionModel.schema
-    }).pipe(
-      map((session: SessionModel) => session || this.session.value),
-      tap((session: SessionModel) => this.session.next(session))
-    ).subscribe(() => this.value.subscribe((session) =>
-      localStorage.setItem('clientSession', session).subscribe()));
+    }).subscribe((session) => {
+      this.session.next(session || Object.assign(new SessionModel(), {
+        language: platformProvider.language
+      }));
+
+      this.value.subscribe((value) =>
+        localStorage.setItem('clientSession', value).subscribe());
+    });
   }
 
   public like(id: string): void {
@@ -47,10 +46,6 @@ export class SessionProvider {
 
   public changeLanguage(language: string): void {
     this.session.next(Object.assign(this.session.value, { language }));
-  }
-
-  public acceptCookies(acceptCookies: boolean): void {
-    this.session.next(Object.assign(this.session.value, { acceptCookies }));
   }
 
 }

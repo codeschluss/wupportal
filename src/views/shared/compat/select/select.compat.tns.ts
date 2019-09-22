@@ -11,19 +11,20 @@ import { SelectCompat } from './select.compat.i';
       <ScrollView>
         <StackLayout>
           <ng-container *ngFor="let item of data.context.items">
-            <StackLayout ripple (tap)="toggle(item.id)">
+            <StackLayout ripple (tap)="toggle(item[data.context.key])">
               <Switch
                 isUserInteractionEnabled="false"
-                [checked]="selection.includes(item.id)">
+                [checked]="active(item[data.context.key])">
               </Switch>
               <Label [text]="item.name"></Label>
             </StackLayout>
           </ng-container>
+          <GridLayout></GridLayout>
         </StackLayout>
       </ScrollView>
       <StackLayout ripple
         rippleColor="#fff"
-        (tap)="data.closeCallback(selection)">
+        (tap)="data.closeCallback(data.context.selected)">
         <icon-compat icon="check-circle"></icon-compat>
       </StackLayout>
     </AbsoluteLayout>
@@ -32,25 +33,34 @@ import { SelectCompat } from './select.compat.i';
 
 export class SelectCompatDialogComponent {
 
-  public selection: string[] = this.data.context.selection;
-
   public constructor(
     public data: ModalDialogParams
   ) { }
 
-  public toggle(id: string): void {
-    if (this.data.context.multiple) {
-      this.selection.includes(id)
-        ? this.selection.splice(this.selection.indexOf(id), 1)
-        : this.selection.push(id);
+  public active(value: string): boolean {
+    const context = this.data.context;
+
+    return context.multiple
+      ? context.selected.includes(value)
+      : context.selected === value;
+  }
+
+  public toggle(value: string): void {
+    const context = this.data.context;
+
+    if (!context.multiple) {
+      context.selected = value;
     } else {
-      this.selection = [id];
+      context.selected.includes(value)
+        ? context.selected.splice(context.selected.indexOf(value), 1)
+        : context.selected.push(value);
     }
   }
 
 }
 
 @Component({
+  entryComponents: [SelectCompatDialogComponent],
   selector: 'select-compat',
   template: `
     <GridLayout (tap)="open()">
@@ -71,6 +81,9 @@ export class SelectCompatComponent implements SelectCompat {
   public items: CrudModel[];
 
   @Input()
+  public key: string;
+
+  @Input()
   public multiple: boolean;
 
   public constructor(
@@ -82,11 +95,18 @@ export class SelectCompatComponent implements SelectCompat {
     this.dialog.showModal(SelectCompatDialogComponent, {
       context: {
         items: this.items,
+        key: this.key || 'id',
         multiple: this.multiple,
-        selection: (this.formControl.value || []).slice()
+        selected: this.multiple
+          ? (this.formControl.value || []).slice()
+          : this.formControl.value
       },
       viewContainerRef: this.container
-    }).then((ids) => setTimeout(() => this.formControl.setValue(ids)));
+    }).then((selection) => {
+      if (selection && selection !== this.formControl.value) {
+        setTimeout(() => this.formControl.setValue(selection));
+      }
+    });
   }
 
 }

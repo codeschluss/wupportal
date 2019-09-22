@@ -6,12 +6,14 @@ AbsoluteLayout {
 
   & > ScrollView {
     height: 100%;
-    padding-top: rem(4);
-    top: rem(3.5);
     transform: rotate(180deg);
     width: 100%;
 
     & > StackLayout {
+      & > GridLayout {
+        height: rem(3.5);
+      }
+
       & > [ripple] {
         orientation: horizontal;
         padding: rem(1);
@@ -28,7 +30,7 @@ AbsoluteLayout {
     }
   }
 
-  & > StackLayout {
+  & > [ripple] {
     background-color: $color-primary;
     padding: rem(.25);
     width: 100%;

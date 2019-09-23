@@ -32,6 +32,10 @@ export class SessionProvider {
     });
   }
 
+  public isLiked(id: string): boolean {
+    return this.session.value.likes.includes(id);
+  }
+
   public like(id: string): void {
     if (!this.isLiked(id)) {
       this.session.next(Object.assign(this.session.value, {
@@ -40,11 +44,7 @@ export class SessionProvider {
     }
   }
 
-  public isLiked(id: string): boolean {
-    return this.session.value.likes.includes(id);
-  }
-
-  public changeLanguage(language: string): void {
+  public setLanguage(language: string): void {
     this.session.next(Object.assign(this.session.value, { language }));
   }
 

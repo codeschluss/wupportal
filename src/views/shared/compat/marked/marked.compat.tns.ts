@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnInit, ViewC
 import { PlatformProvider } from '@wooportal/core';
 import * as marked from 'marked';
 import { WebView } from 'tns-core-modules/ui/web-view';
-import { WebViewClientFactory } from '../../../../utils/clients';
 import { MarkedCompat } from './marked.compat.i';
 
 @Component({
@@ -43,12 +42,10 @@ export class MarkedCompatComponent
 
     switch (this.platformProvider.name) {
       case 'Android':
-        const WebViewClient = WebViewClientFactory();
-
         wv = wv.android;
         wv.setBackgroundColor(0x00000000);
         wv.getSettings().setSupportZoom(false);
-        wv.setWebViewClient(new WebViewClient());
+        wv.setWebViewClient(new this.platformProvider.viewClient());
         return;
 
       case 'iOS':

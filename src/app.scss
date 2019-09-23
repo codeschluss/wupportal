@@ -56,11 +56,6 @@ layout-component {
   @include flex(column);
   @include position(fixed, 0, 0, 0, 0);
 
-  &.fadeout {
-    opacity: 0;
-    transition: opacity $animation-duration;
-  }
-
   & > header {
     height: 10rem;
     overflow: hidden;

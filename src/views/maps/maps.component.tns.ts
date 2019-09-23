@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Route } from '@angular/router';
 import { PlatformProvider, Selfrouter } from '@wooportal/core';
 import { WebView } from 'tns-core-modules/ui/web-view';
-import { WebChromeClientFactory, WebViewClientFactory } from '../../utils/clients';
 import { ClientPackage } from '../../utils/package';
 import { geolocation } from '../shared/shared.imports';
 
@@ -26,9 +25,7 @@ export class MapsComponent
   }
 
   public constructor(
-    private platformProvider: PlatformProvider,
-    private router: Router,
-    private zone: NgZone
+    private platformProvider: PlatformProvider
   ) {
     super();
   }
@@ -46,18 +43,11 @@ export class MapsComponent
 
     switch (this.platformProvider.name) {
       case 'Android':
-        const WebChromeClient = WebChromeClientFactory();
-        const WebViewClient = WebViewClientFactory((url) => {
-          if (!url.startsWith(this.router.url)) {
-            this.zone.run(() => this.router.navigateByUrl(url));
-          }
-        });
-
         wv = wv.android;
         wv.getSettings().setGeolocationEnabled(true);
         wv.getSettings().setJavaScriptEnabled(true);
-        wv.setWebChromeClient(new WebChromeClient());
-        wv.setWebViewClient(new WebViewClient());
+        wv.setWebChromeClient(new this.platformProvider.chromeClient());
+        wv.setWebViewClient(new this.platformProvider.viewClient());
         return;
 
       case 'iOS':

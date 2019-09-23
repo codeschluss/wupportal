@@ -2,6 +2,8 @@ import { Observable } from 'rxjs';
 
 export interface PlatformProvider {
 
+  readonly chromeClient: any;
+
   readonly connected: boolean;
 
   readonly connection: Observable<boolean>;
@@ -13,5 +15,9 @@ export interface PlatformProvider {
   readonly name: 'Android' | 'iOS' | 'Server' | 'Web';
 
   readonly type: 'Native' | 'Online';
+
+  readonly viewClient: any;
+
+  reload(): void;
 
 }

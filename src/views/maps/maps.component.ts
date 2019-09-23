@@ -148,7 +148,7 @@ export class MapsComponent
       if (this.connection) {
         this.connection.nextRoute(event.url);
       } else if (this.native) {
-        this.document.location.href = event.url;
+        this.document.defaultView.location.href = event.url;
       } else if (this.route.snapshot.queryParamMap.has('embed')) {
         this.router.navigate(this.route.snapshot.url);
       }

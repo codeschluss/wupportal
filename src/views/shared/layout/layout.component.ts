@@ -1,12 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpRequest } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, Title, TokenProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
-import { filter, map, startWith, tap } from 'rxjs/operators';
+import { filter, map, startWith, take, tap } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData as BackPressedEvent } from 'tns-core-modules/application';
 import { ScrollView } from 'tns-core-modules/ui/scroll-view';
 import { LanguageModel } from '../../../realm/models/language.model';
@@ -28,7 +29,7 @@ export class LayoutComponent implements OnInit {
 
   public claimed: JwtClaims;
 
-  public language: string;
+  public language: FormControl = new FormControl();
 
   public languages: LanguageModel[] = [];
 
@@ -51,7 +52,6 @@ export class LayoutComponent implements OnInit {
   public constructor(
     private changeDetection: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: Document,
-    private element: ElementRef<HTMLElement>,
     private i18n: I18n,
     private languageProvider: LanguageProvider,
     private loadingProvider: LoadingProvider,
@@ -66,7 +66,13 @@ export class LayoutComponent implements OnInit {
   public ngOnInit(): void {
     this.busy = new BehaviorSubject<number>(1);
     this.languageProvider.readAll().subscribe((l) => this.languages = l);
-    this.sessionProvider.value.subscribe((s) => this.language = s.language);
+    this.sessionProvider.value.pipe(take(1)).subscribe((session) => {
+      this.language.setValue(session.language);
+      this.language.valueChanges.subscribe((language) => {
+        setTimeout(() => this.platformProvider.reload(), 250);
+        this.sessionProvider.setLanguage(language);
+      });
+    });
 
     this.router.events.pipe(
       filter((event: RouterEvent) => event instanceof NavigationStart),
@@ -124,12 +130,6 @@ export class LayoutComponent implements OnInit {
       this.loadingProvider.finished(block);
       this.changeDetection.detectChanges();
     }));
-  }
-
-  public translate(language: string): void {
-    this.sessionProvider.changeLanguage(language);
-    this.element.nativeElement.classList.add('fadeout');
-    setTimeout(() => this.document.location.reload(), 500);
   }
 
   private topoff(event: Event): void {

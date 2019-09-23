@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, Optional, Type, ViewChild } from '@angular/core';
+import { Component, ElementRef, Optional, Type, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
@@ -6,7 +6,6 @@ import { CrudJoiner, PlatformProvider, Title } from '@wooportal/core';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { ScheduleModel } from '../../../../realm/models/schedule.model';
-import { WebChromeClientFactory, WebViewClientFactory } from '../../../../utils/clients';
 import { ClientPackage } from '../../../../utils/package';
 import { geolocation } from '../../../shared/shared.imports';
 import { BaseObject } from '../base.object';
@@ -42,7 +41,6 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   public constructor(
     @Optional() private sanitizer: DomSanitizer,
-    private zone: NgZone,
     i18n: I18n,
     platformProvider: PlatformProvider,
     route: ActivatedRoute,
@@ -57,7 +55,7 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
     switch (this.platformProvider.type) {
       case 'Native':
-        geolocation.enableLocationRequest().catch(() => null);
+        geolocation.enableLocationRequest().catch(() => { });
         this.source = ClientPackage.config.defaults.appUrl + url + '&native';
         break;
 
@@ -77,18 +75,11 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
       switch (this.platformProvider.name) {
         case 'Android':
-          const WebChromeClient = WebChromeClientFactory();
-          const WebViewClient = WebViewClientFactory((url) => {
-            if (!url.startsWith(this.router.url)) {
-              this.zone.run(() => this.router.navigateByUrl(url));
-            }
-          });
-
           wv = wv.android;
           wv.getSettings().setGeolocationEnabled(true);
           wv.getSettings().setJavaScriptEnabled(true);
-          wv.setWebChromeClient(new WebChromeClient());
-          wv.setWebViewClient(new WebViewClient());
+          wv.setWebChromeClient(new this.platformProvider.chromeClient());
+          wv.setWebViewClient(new this.platformProvider.viewClient());
           return;
 
         case 'iOS':

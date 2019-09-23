@@ -76,8 +76,8 @@
       <mat-menu #languageMenu="matMenu" xPosition="after">
         <ng-container *ngFor="let item of languages">
           <button mat-menu-item
-            [class.active]="language === item.locale"
-            (click)="translate(item.locale)">
+            [class.active]="item.locale === this.language.value"
+            (click)="this.language.setValue(item.locale)">
             <pre>{{ item.locale }}</pre>
             {{ item.name }}
           </button>
@@ -239,8 +239,8 @@
       <mat-menu #languageMenu="matMenu" xPosition="before">
         <ng-container *ngFor="let item of languages">
           <button mat-menu-item
-            [class.active]="language === item.locale"
-            (click)="translate(item.locale)">
+            [class.active]="item.locale === this.language.value"
+            (click)="this.language.setValue(item.locale)">
             <pre>{{ item.locale }}</pre>
             {{ item.name }}
           </button>

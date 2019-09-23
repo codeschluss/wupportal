@@ -36,7 +36,9 @@ export class CalendarCompatComponent implements CalendarCompat {
   public selectable: (date: Date) => boolean = this.scheduled.bind(this);
 
   public get startdate(): Date {
-    return new Date(this.items[0].startDate);
+    return this.items.length
+      ? new Date(this.items[0].startDate)
+      : new Date();
   }
 
   public click(event: Event): void {

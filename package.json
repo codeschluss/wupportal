@@ -1,8 +1,8 @@
 {
-  "name": "@wooportal/client",
+  "name": "wupportal",
   "version": "0.1.0",
-  "description": "client for wooportal - conventional event mapping",
-  "homepage": "https://github.com/wooportal/client",
+  "description": "An informative portal for new citizens in Wuppertal",
+  "homepage": "https://www.wupportal.org",
   "author": {
     "name": "codeschluss",
     "email": "info@codeschluss.de",
@@ -10,11 +10,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wooportal/client"
+    "url": "https://github.com/codeschluss/wupportal"
   },
   "bugs": {
     "email": "info@codeschluss.de",
-    "url": "https://github.com/wooportal/client/issues"
+    "url": "https://github.com/codeschluss/wupportal/issues"
   },
   "config": {
     "api": {
@@ -30,10 +30,10 @@
       "userId": "id"
     },
     "defaults": {
-      "appUrl": "https://wooportal.test.codeschluss.de",
-      "city": "",
-      "language": "en",
-      "title": "wooportal"
+      "appUrl": "https://www.wupportal.org",
+      "city": "Wuppertal",
+      "language": "de",
+      "title": "Wupportal"
     }
   },
   "android": {
@@ -41,7 +41,7 @@
     "v8Flags": "--expose_gc"
   },
   "nativescript": {
-    "id": "de.codeschluss.wooportal.client",
+    "id": "de.codeschluss.wupportal",
     "tns-android": {
       "version": "6.1.1"
     }

@@ -1,12 +1,12 @@
 {
-  "short_name": "wooportal",
-  "name": "@wooportal/client",
-  "description": "client for wooportal - conventional event mapping",
+  "short_name": "Wupportal",
+  "name": "Wupportal",
+  "description": "An informative portal for new citizens in Wuppertal",
 
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#0d47a1",
+  "theme_color": "#003d42",
   "icons": [
     {
       "src": "/images/icon.png",

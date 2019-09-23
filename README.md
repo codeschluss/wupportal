@@ -1,3 +1,3 @@
-# @wooportal/client
+# Wupportal
 
-client for wooportal - conventional event mapping
+An informative portal for new citizens in Wuppertal

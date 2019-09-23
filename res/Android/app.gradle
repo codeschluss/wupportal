@@ -3,7 +3,7 @@ import groovy.json.JsonSlurper
 android {
   defaultConfig {
     generatedDensities = []
-    applicationId = "de.codeschluss.wooportal.client"
+    applicationId = "de.codeschluss.wupportal"
   }
   aaptOptions {
     additionalParameters "--no-version-vectors"

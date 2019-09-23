@@ -35,4 +35,10 @@ export class ActivityModel
   public blogs: BlogpostModel[] & Observable<BlogpostModel[]>;
   public targetGroups: TargetGroupModel[] & Observable<TargetGroupModel[]>;
 
+  public get dates(): ScheduleModel[] {
+    return !this.schedules ? [] : this.schedules
+      .filter((s) => +new Date(s.startDate) > +new Date())
+      .sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
+  }
+
 }

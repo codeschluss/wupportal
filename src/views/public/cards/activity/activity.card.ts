@@ -15,10 +15,6 @@ export class ActivityCardComponent extends BaseCard<ActivityModel> {
   @ViewChild(MatRipple, { static: true })
   public ripple: MatRipple;
 
-  public get schedule(): string {
-    return this.item.schedules[0].startDate;
-  }
-
   public colors(base: string): Partial<CSSStyleDeclaration> {
     const rgb = ColorConvert.keyword.rgb(base) || ColorConvert.hex.rgb(base);
     const light = rgb[0] + rgb[1] + rgb[2] > 382;

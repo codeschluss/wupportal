@@ -112,12 +112,12 @@
         <ng-template #expandHeader>
           <icon-compat icon="history"></icon-compat>
           <i18n i18n="@@schedules">schedules</i18n>
-          <small>({{ item.schedules.length }})</small>
+          <small>({{ item.dates.length }})</small>
         </ng-template>
         <ng-template #expandContent>
           <section>
             <calendar-compat
-              [items]="item.schedules"
+              [items]="item.dates"
               [name]="item.name"
               (changed)="schedule = $event">
             </calendar-compat>
@@ -129,7 +129,7 @@
               </ng-container>
               <ng-container *ngIf="!schedule">
                 <i18n i18n="@@nextSchedule">nextSchedule</i18n>
-                <time>{{ item.schedules[0].datetime }}</time>
+                <time>{{ item.dates[0]?.datetime }}</time>
               </ng-container>
             </aside>
           </section>

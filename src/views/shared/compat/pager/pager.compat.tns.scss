@@ -30,7 +30,7 @@ StackLayout {
     & > [icon] {
       @include elevation;
       background-color: $color-primary;
-      border-radius: 50%;
+      border-radius: rem(2.5);
       color: $color-lightest;
       height: rem(2.5);
       left: 0;

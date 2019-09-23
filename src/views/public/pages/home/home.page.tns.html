@@ -1,5 +1,51 @@
 <scroll-view class="topoff">
   <stack-layout>
+    <absolute-layout>
+      <stack-layout>
+        <label [text]="(name | async) + ' &mdash;'"></label>
+        <i18n i18n="@@newActivities" unit="newActivities"></i18n>
+      </stack-layout>
+      <absolute-layout>
+        <stack-layout>
+          <label textWrap="true" [text]="tagline"></label>
+        </stack-layout>
+      </absolute-layout>
+    </absolute-layout>
+    <grid-layout>
+      <scroll-view>
+        <flexbox-layout>
+          <ng-container *ngFor="let item of activities">
+            <grid-layout>
+              <activity-card [item]="item"></activity-card>
+            </grid-layout>
+          </ng-container>
+        </flexbox-layout>
+      </scroll-view>
+    </grid-layout>
+    <stack-layout>
+      <marked-compat [data]="'
 
+# Home Page
+
+      '"></marked-compat>
+    </stack-layout>
+    <flexbox-layout>
+      <stack-layout>
+        <img [src]="src('/images/icon.png')">
+        <label text="Sponsor One"></label>
+      </stack-layout>
+      <stack-layout>
+        <img [src]="src('/images/icon.png')">
+        <label text="Sponsor Two"></label>
+      </stack-layout>
+      <stack-layout>
+        <img [src]="src('/images/icon.png')">
+        <label text="Sponsor Three"></label>
+      </stack-layout>
+      <stack-layout>
+        <img [src]="src('/images/icon.png')">
+        <label text="Sponsor Four"></label>
+      </stack-layout>
+    </flexbox-layout>
   </stack-layout>
 </scroll-view>

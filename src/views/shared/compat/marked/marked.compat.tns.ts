@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
 import * as marked from 'marked';
 import { WebView } from 'tns-core-modules/ui/web-view';
@@ -28,8 +27,7 @@ export class MarkedCompatComponent
   private webview: ElementRef<WebView>;
 
   public constructor(
-    private platformProvider: PlatformProvider,
-    private router: Router
+    private platformProvider: PlatformProvider
   ) { }
 
   public ngOnInit() {

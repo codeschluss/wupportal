@@ -1,4 +1,4 @@
-<scroll-view>
+<scroll-view class="topoff">
   <stack-layout>
     <grid-layout>
       <label textWrap="true">
@@ -19,7 +19,7 @@
       <time-piece [item]="item"></time-piece>
     </flexbox-layout>
     <stack-layout>
-      <marked-compat class="mat-body" [data]="item.description"></marked-compat>
+      <marked-compat [data]="item.description"></marked-compat>
       <expand-compat #details
         class="expand-compat"
         (changed)="$event && expanded(details)">

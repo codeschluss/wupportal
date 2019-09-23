@@ -44,7 +44,7 @@ page {
             width: 50%;
           }
 
-          & > stack-layout {
+          stack-layout {
             height: rem(3.25);
             orientation: horizontal;
             padding-left: rem(1);

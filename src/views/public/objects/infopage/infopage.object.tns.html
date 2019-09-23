@@ -1,4 +1,4 @@
-<scroll-view>
+<scroll-view class="topoff">
   <stack-layout>
     <grid-layout>
       <label textWrap="true">
@@ -16,7 +16,7 @@
       <time-piece [item]="item"></time-piece>
     </flexbox-layout>
     <stack-layout>
-      <marked-compat class="mat-body" [data]="item.content"></marked-compat>
+      <marked-compat [data]="item.content"></marked-compat>
     </stack-layout>
   </stack-layout>
 </scroll-view>

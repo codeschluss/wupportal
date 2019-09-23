@@ -2,4 +2,8 @@
 
 scroll-view {
   height: 100%;
+
+  & > stack-layout {
+    padding: rem(1);
+  }
 }

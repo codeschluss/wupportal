@@ -1,1 +1,10 @@
 @import '../../../app.vars.scss';
+
+main {
+  & > section {
+    & > marked-compat {
+      display: block;
+      padding: 0 1rem;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@wooportal/client",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "client for wooportal - conventional event mapping",
   "homepage": "https://github.com/wooportal/client",
   "author": {

@@ -6,7 +6,7 @@ import { PlatformProvider } from './platform.provider';
 export class PlatformGuarding
   implements CanActivate, CanDeactivate<boolean | UrlTree> {
 
-  private offline: UrlTree = this.router.createUrlTree(['/', 'offline']);
+  private netsplit: UrlTree = this.router.createUrlTree(['/', 'netsplit']);
 
   public constructor(
     private platformProvider: PlatformProvider,
@@ -14,7 +14,7 @@ export class PlatformGuarding
   ) { }
 
   public canActivate(): boolean | UrlTree {
-    return this.platformProvider.connected || this.offline;
+    return this.platformProvider.connected || this.netsplit;
   }
 
   public canDeactivate(): boolean {

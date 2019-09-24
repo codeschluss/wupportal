@@ -74,6 +74,15 @@
         </stack-layout>
         <!-- TODO: https://github.com/NativeScript/NativeScript/issues/6114 -->
         <stack-layout flexGrow="1"></stack-layout>
+        <select-compat
+          key="locale"
+          [formControl]="language"
+          [items]="languages">
+          <stack-layout ripple>
+            <icon-compat icon="language"></icon-compat>
+            <i18n i18n="@@language" unit="language"></i18n>
+          </stack-layout>
+        </select-compat>
         <stack-layout ripple
           [class.active]="url.startsWith('/imprint')"
           (tap)="navigate('/', 'imprint')">

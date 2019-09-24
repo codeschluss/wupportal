@@ -9,6 +9,10 @@ import { PlatformProvider as Compat } from './platform.provider.i';
 @Injectable({ providedIn: 'root' })
 export class PlatformProvider implements Compat {
 
+  public readonly chromeClient: any;
+
+  public readonly viewClient: any;
+
   public get connected(): boolean {
     switch (this.name) {
       case 'Server': return true;
@@ -68,7 +72,11 @@ export class PlatformProvider implements Compat {
     router: Router
   ) {
     this.connection.pipe(filter((state) => !state))
-      .subscribe(() => router.navigate(['/', 'offline']));
+      .subscribe(() => router.navigate(['/', 'netsplit']));
+  }
+
+  public reload(): void {
+    this.document.defaultView.location.reload();
   }
 
 }

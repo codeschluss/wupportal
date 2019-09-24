@@ -57,7 +57,9 @@ export class CalendarCompatComponent implements CalendarCompat, AfterViewInit {
   }
 
   public get startdate(): Date {
-    return new Date(this.items[0].startDate);
+    return this.items.length
+      ? new Date(this.items[0].startDate)
+      : new Date();
   }
 
   public ngAfterViewInit(): void {

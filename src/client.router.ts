@@ -36,7 +36,7 @@ const routes: Route[] = [
   exports: [RouterModule],
   imports: [RouterModule.forRoot([
     {
-      path: 'offline',
+      path: 'netsplit',
       canDeactivate: [PlatformGuarding],
       component: ErrorNetsplitComponent
     },

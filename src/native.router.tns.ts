@@ -32,7 +32,7 @@ const routes: Route[] = [
   exports: [NativeScriptRouterModule],
   imports: [NativeScriptRouterModule.forRoot([
     {
-      path: 'offline',
+      path: 'netsplit',
       canDeactivate: [PlatformGuarding],
       component: ErrorNetsplitComponent
     },

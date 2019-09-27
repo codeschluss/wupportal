@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { OrganisationEntity } from '../models/organisation-entity';
@@ -19,9 +19,28 @@ import { OrganisationImageEntity } from '../models/organisation-image-entity';
 @Injectable({
   providedIn: 'root',
 })
-class OrganisationControllerService extends BaseService {
+class OrganisationControllerService extends __BaseService {
+  static readonly organisationControllerReadAllPath = '/organisations';
+  static readonly organisationControllerCreatePath = '/organisations';
+  static readonly organisationControllerReadOnePath = '/organisations/{organisationId}';
+  static readonly organisationControllerUpdatePath = '/organisations/{organisationId}';
+  static readonly organisationControllerDeletePath = '/organisations/{organisationId}';
+  static readonly organisationControllerReadActivitiesPath = '/organisations/{organisationId}/activities';
+  static readonly organisationControllerDeleteActivityPath = '/organisations/{organisationId}/activities/{activityId}';
+  static readonly organisationControllerReadAddressPath = '/organisations/{organisationId}/address';
+  static readonly organisationControllerUpdateAddressPath = '/organisations/{organisationId}/address';
+  static readonly organisationControllerGrantApprovalPath = '/organisations/{organisationId}/approve';
+  static readonly organisationControllerReadImagesPath = '/organisations/{organisationId}/images';
+  static readonly organisationControllerAddImagePath = '/organisations/{organisationId}/images';
+  static readonly organisationControllerDeleteImagesPath = '/organisations/{organisationId}/images';
+  static readonly organisationControllerReadTranslationsPath = '/organisations/{organisationId}/translations';
+  static readonly organisationControllerReadUsersPath = '/organisations/{organisationId}/users';
+  static readonly organisationControllerDeleteUserPath = '/organisations/{organisationId}/users/{userId}';
+  static readonly organisationControllerGrantAdminRightPath = '/organisations/{organisationId}/users/{userId}/admin';
+  static readonly organisationControllerApproveOrRejectUserPath = '/organisations/{organisationId}/users/{userId}/approve';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -46,7 +65,7 @@ class OrganisationControllerService extends BaseService {
    *
    * @return OK
    */
-  organisationControllerReadAllResponse(params: OrganisationControllerService.OrganisationControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadAllResponse(params: OrganisationControllerService.OrganisationControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -70,7 +89,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -93,7 +112,7 @@ class OrganisationControllerService extends BaseService {
    *
    * @return OK
    */
-  organisationControllerReadAll(params: OrganisationControllerService.OrganisationControllerReadAllParams): Observable<{}> {
+  organisationControllerReadAll(params: OrganisationControllerService.OrganisationControllerReadAllParams): __Observable<{}> {
     return this.organisationControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -103,7 +122,7 @@ class OrganisationControllerService extends BaseService {
    * @param newOrga newOrga
    * @return OK
    */
-  organisationControllerCreateResponse(newOrga: OrganisationEntity): Observable<StrictHttpResponse<{}>> {
+  organisationControllerCreateResponse(newOrga: OrganisationEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -121,7 +140,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -129,7 +148,7 @@ class OrganisationControllerService extends BaseService {
    * @param newOrga newOrga
    * @return OK
    */
-  organisationControllerCreate(newOrga: OrganisationEntity): Observable<{}> {
+  organisationControllerCreate(newOrga: OrganisationEntity): __Observable<{}> {
     return this.organisationControllerCreateResponse(newOrga).pipe(
       __map(_r => _r.body as {})
     );
@@ -139,7 +158,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadOneResponse(organisationId: string): Observable<StrictHttpResponse<ResourceOrganisationEntity>> {
+  organisationControllerReadOneResponse(organisationId: string): __Observable<__StrictHttpResponse<ResourceOrganisationEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -157,7 +176,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceOrganisationEntity>;
+        return _r as __StrictHttpResponse<ResourceOrganisationEntity>;
       })
     );
   }
@@ -165,7 +184,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadOne(organisationId: string): Observable<ResourceOrganisationEntity> {
+  organisationControllerReadOne(organisationId: string): __Observable<ResourceOrganisationEntity> {
     return this.organisationControllerReadOneResponse(organisationId).pipe(
       __map(_r => _r.body as ResourceOrganisationEntity)
     );
@@ -177,7 +196,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerUpdateResponse(newOrga: OrganisationEntity,
-    organisationId: string): Observable<StrictHttpResponse<{}>> {
+    organisationId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -196,7 +215,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -206,7 +225,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerUpdate(newOrga: OrganisationEntity,
-    organisationId: string): Observable<{}> {
+    organisationId: string): __Observable<{}> {
     return this.organisationControllerUpdateResponse(newOrga, organisationId).pipe(
       __map(_r => _r.body as {})
     );
@@ -216,7 +235,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerDeleteResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerDeleteResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -234,7 +253,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -242,7 +261,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerDelete(organisationId: string): Observable<{}> {
+  organisationControllerDelete(organisationId: string): __Observable<{}> {
     return this.organisationControllerDeleteResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
@@ -258,7 +277,7 @@ class OrganisationControllerService extends BaseService {
   organisationControllerReadActivitiesResponse(organisationId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -279,7 +298,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -293,7 +312,7 @@ class OrganisationControllerService extends BaseService {
   organisationControllerReadActivities(organisationId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<{}> {
+    embeddings?: string): __Observable<{}> {
     return this.organisationControllerReadActivitiesResponse(organisationId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
@@ -305,7 +324,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerDeleteActivityResponse(organisationId: string,
-    activityId: string): Observable<StrictHttpResponse<{}>> {
+    activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -324,7 +343,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -334,7 +353,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerDeleteActivity(organisationId: string,
-    activityId: string): Observable<{}> {
+    activityId: string): __Observable<{}> {
     return this.organisationControllerDeleteActivityResponse(organisationId, activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -344,7 +363,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadAddressResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadAddressResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -362,7 +381,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -370,7 +389,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadAddress(organisationId: string): Observable<{}> {
+  organisationControllerReadAddress(organisationId: string): __Observable<{}> {
     return this.organisationControllerReadAddressResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
@@ -382,7 +401,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerUpdateAddressResponse(organisationId: string,
-    addressId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
+    addressId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -401,7 +420,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -411,7 +430,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerUpdateAddress(organisationId: string,
-    addressId: StringPrimitive): Observable<{}> {
+    addressId: StringPrimitive): __Observable<{}> {
     return this.organisationControllerUpdateAddressResponse(organisationId, addressId).pipe(
       __map(_r => _r.body as {})
     );
@@ -423,7 +442,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerGrantApprovalResponse(organisationId: string,
-    isApproved: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
+    isApproved: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -442,7 +461,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -452,7 +471,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerGrantApproval(organisationId: string,
-    isApproved: BooleanPrimitive): Observable<{}> {
+    isApproved: BooleanPrimitive): __Observable<{}> {
     return this.organisationControllerGrantApprovalResponse(organisationId, isApproved).pipe(
       __map(_r => _r.body as {})
     );
@@ -462,7 +481,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadImagesResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadImagesResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -480,7 +499,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -488,7 +507,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadImages(organisationId: string): Observable<{}> {
+  organisationControllerReadImages(organisationId: string): __Observable<{}> {
     return this.organisationControllerReadImagesResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
@@ -500,7 +519,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerAddImageResponse(organisationId: string,
-    image: Array<OrganisationImageEntity>): Observable<StrictHttpResponse<{}>> {
+    image: Array<OrganisationImageEntity>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -519,7 +538,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -529,7 +548,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerAddImage(organisationId: string,
-    image: Array<OrganisationImageEntity>): Observable<{}> {
+    image: Array<OrganisationImageEntity>): __Observable<{}> {
     return this.organisationControllerAddImageResponse(organisationId, image).pipe(
       __map(_r => _r.body as {})
     );
@@ -541,7 +560,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerDeleteImagesResponse(organisationId: string,
-    imageIds: Array<string>): Observable<StrictHttpResponse<{}>> {
+    imageIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -560,7 +579,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -570,7 +589,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerDeleteImages(organisationId: string,
-    imageIds: Array<string>): Observable<{}> {
+    imageIds: Array<string>): __Observable<{}> {
     return this.organisationControllerDeleteImagesResponse(organisationId, imageIds).pipe(
       __map(_r => _r.body as {})
     );
@@ -580,7 +599,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadTranslationsResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadTranslationsResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -598,7 +617,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -606,7 +625,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadTranslations(organisationId: string): Observable<{}> {
+  organisationControllerReadTranslations(organisationId: string): __Observable<{}> {
     return this.organisationControllerReadTranslationsResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
@@ -616,7 +635,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadUsersResponse(organisationId: string): Observable<StrictHttpResponse<{}>> {
+  organisationControllerReadUsersResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -634,7 +653,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -642,7 +661,7 @@ class OrganisationControllerService extends BaseService {
    * @param organisationId organisationId
    * @return OK
    */
-  organisationControllerReadUsers(organisationId: string): Observable<{}> {
+  organisationControllerReadUsers(organisationId: string): __Observable<{}> {
     return this.organisationControllerReadUsersResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
@@ -654,7 +673,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerDeleteUserResponse(organisationId: string,
-    userId: string): Observable<StrictHttpResponse<{}>> {
+    userId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -673,7 +692,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -683,7 +702,7 @@ class OrganisationControllerService extends BaseService {
    * @return OK
    */
   organisationControllerDeleteUser(organisationId: string,
-    userId: string): Observable<{}> {
+    userId: string): __Observable<{}> {
     return this.organisationControllerDeleteUserResponse(organisationId, userId).pipe(
       __map(_r => _r.body as {})
     );
@@ -697,7 +716,7 @@ class OrganisationControllerService extends BaseService {
    */
   organisationControllerGrantAdminRightResponse(organisationId: string,
     userId: string,
-    isAdmin: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
+    isAdmin: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -717,7 +736,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -729,7 +748,7 @@ class OrganisationControllerService extends BaseService {
    */
   organisationControllerGrantAdminRight(organisationId: string,
     userId: string,
-    isAdmin: BooleanPrimitive): Observable<{}> {
+    isAdmin: BooleanPrimitive): __Observable<{}> {
     return this.organisationControllerGrantAdminRightResponse(organisationId, userId, isAdmin).pipe(
       __map(_r => _r.body as {})
     );
@@ -743,7 +762,7 @@ class OrganisationControllerService extends BaseService {
    */
   organisationControllerApproveOrRejectUserResponse(organisationId: string,
     userId: string,
-    isApproved: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
+    isApproved: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -763,7 +782,7 @@ class OrganisationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -775,7 +794,7 @@ class OrganisationControllerService extends BaseService {
    */
   organisationControllerApproveOrRejectUser(organisationId: string,
     userId: string,
-    isApproved: BooleanPrimitive): Observable<{}> {
+    isApproved: BooleanPrimitive): __Observable<{}> {
     return this.organisationControllerApproveOrRejectUserResponse(organisationId, userId, isApproved).pipe(
       __map(_r => _r.body as {})
     );

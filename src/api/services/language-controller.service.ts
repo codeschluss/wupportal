@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { LanguageEntity } from '../models/language-entity';
@@ -16,9 +16,15 @@ import { ResourceLanguageEntity } from '../models/resource-language-entity';
 @Injectable({
   providedIn: 'root',
 })
-class LanguageControllerService extends BaseService {
+class LanguageControllerService extends __BaseService {
+  static readonly languageControllerReadAllPath = '/languages';
+  static readonly languageControllerCreatePath = '/languages';
+  static readonly languageControllerReadOnePath = '/languages/{languageId}';
+  static readonly languageControllerUpdatePath = '/languages/{languageId}';
+  static readonly languageControllerDeletePath = '/languages/{languageId}';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -41,7 +47,7 @@ class LanguageControllerService extends BaseService {
    *
    * @return OK
    */
-  languageControllerReadAllResponse(params: LanguageControllerService.LanguageControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  languageControllerReadAllResponse(params: LanguageControllerService.LanguageControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -64,7 +70,7 @@ class LanguageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -85,7 +91,7 @@ class LanguageControllerService extends BaseService {
    *
    * @return OK
    */
-  languageControllerReadAll(params: LanguageControllerService.LanguageControllerReadAllParams): Observable<{}> {
+  languageControllerReadAll(params: LanguageControllerService.LanguageControllerReadAllParams): __Observable<{}> {
     return this.languageControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -95,7 +101,7 @@ class LanguageControllerService extends BaseService {
    * @param newLanguage newLanguage
    * @return OK
    */
-  languageControllerCreateResponse(newLanguage: LanguageEntity): Observable<StrictHttpResponse<{}>> {
+  languageControllerCreateResponse(newLanguage: LanguageEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -113,7 +119,7 @@ class LanguageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -121,7 +127,7 @@ class LanguageControllerService extends BaseService {
    * @param newLanguage newLanguage
    * @return OK
    */
-  languageControllerCreate(newLanguage: LanguageEntity): Observable<{}> {
+  languageControllerCreate(newLanguage: LanguageEntity): __Observable<{}> {
     return this.languageControllerCreateResponse(newLanguage).pipe(
       __map(_r => _r.body as {})
     );
@@ -131,7 +137,7 @@ class LanguageControllerService extends BaseService {
    * @param languageId languageId
    * @return OK
    */
-  languageControllerReadOneResponse(languageId: string): Observable<StrictHttpResponse<ResourceLanguageEntity>> {
+  languageControllerReadOneResponse(languageId: string): __Observable<__StrictHttpResponse<ResourceLanguageEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -149,7 +155,7 @@ class LanguageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceLanguageEntity>;
+        return _r as __StrictHttpResponse<ResourceLanguageEntity>;
       })
     );
   }
@@ -157,7 +163,7 @@ class LanguageControllerService extends BaseService {
    * @param languageId languageId
    * @return OK
    */
-  languageControllerReadOne(languageId: string): Observable<ResourceLanguageEntity> {
+  languageControllerReadOne(languageId: string): __Observable<ResourceLanguageEntity> {
     return this.languageControllerReadOneResponse(languageId).pipe(
       __map(_r => _r.body as ResourceLanguageEntity)
     );
@@ -169,7 +175,7 @@ class LanguageControllerService extends BaseService {
    * @return OK
    */
   languageControllerUpdateResponse(newLanguage: LanguageEntity,
-    languageId: string): Observable<StrictHttpResponse<{}>> {
+    languageId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -188,7 +194,7 @@ class LanguageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -198,7 +204,7 @@ class LanguageControllerService extends BaseService {
    * @return OK
    */
   languageControllerUpdate(newLanguage: LanguageEntity,
-    languageId: string): Observable<{}> {
+    languageId: string): __Observable<{}> {
     return this.languageControllerUpdateResponse(newLanguage, languageId).pipe(
       __map(_r => _r.body as {})
     );
@@ -208,7 +214,7 @@ class LanguageControllerService extends BaseService {
    * @param languageId languageId
    * @return OK
    */
-  languageControllerDeleteResponse(languageId: string): Observable<StrictHttpResponse<{}>> {
+  languageControllerDeleteResponse(languageId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -226,7 +232,7 @@ class LanguageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -234,7 +240,7 @@ class LanguageControllerService extends BaseService {
    * @param languageId languageId
    * @return OK
    */
-  languageControllerDelete(languageId: string): Observable<{}> {
+  languageControllerDelete(languageId: string): __Observable<{}> {
     return this.languageControllerDeleteResponse(languageId).pipe(
       __map(_r => _r.body as {})
     );

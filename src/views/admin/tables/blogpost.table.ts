@@ -4,7 +4,7 @@ import { BaseTable, TableColumn } from '@wooportal/forms';
 import { BlogpostModel } from '../../../realm/models/blogpost.model';
 
 @Component({
-  selector: 'blog-table',
+  selector: 'blogpost-table',
   template: BaseTable.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -22,7 +22,7 @@ import { BlogpostModel } from '../../../realm/models/blogpost.model';
   `)
 })
 
-export class BlogTableComponent extends BaseTable<BlogpostModel> {
+export class BlogpostTableComponent extends BaseTable<BlogpostModel> {
 
   public columns: TableColumn[] = [
     {

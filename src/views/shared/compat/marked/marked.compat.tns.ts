@@ -30,7 +30,7 @@ export class MarkedCompatComponent
   ) { }
 
   public ngOnInit() {
-    this.html = marked(this.data);
+    this.html = marked(this.data || '');
   }
 
   public ngAfterViewInit(): void {

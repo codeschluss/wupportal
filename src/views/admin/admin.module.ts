@@ -57,14 +57,14 @@ import { TopicStepperComponent } from './steppers/topic.stepper';
 import { UserStepperComponent } from './steppers/user.stepper';
 import { ActivityTableComponent } from './tables/activity.table';
 import { AddressTableComponent } from './tables/address.table';
-import { BlogTableComponent } from './tables/blog.table';
+import { BlogpostTableComponent } from './tables/blogpost.table';
 import { CategoryTableComponent } from './tables/category.table';
+import { InfopageTableComponent } from './tables/infopage.table';
+import { KeywordTableComponent } from './tables/keyword.table';
 import { LanguageTableComponent } from './tables/language.table';
+import { MembershipTableComponent } from './tables/membership.table';
 import { OrganisationTableComponent } from './tables/organisation.table';
-import { PageTableComponent } from './tables/page.table';
-import { ProviderTableComponent } from './tables/provider.table';
 import { SuburbTableComponent } from './tables/suburb.table';
-import { TagTableComponent } from './tables/tag.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
 import { TopicTableComponent } from './tables/topic.table';
 import { UserTableComponent } from './tables/user.table';
@@ -140,14 +140,14 @@ const steppers: Type<BaseStepper<CrudModel>>[] = [
 const tables: Type<BaseTable<CrudModel>>[] = [
   ActivityTableComponent,
   AddressTableComponent,
-  BlogTableComponent,
+  BlogpostTableComponent,
   CategoryTableComponent,
+  InfopageTableComponent,
+  KeywordTableComponent,
   LanguageTableComponent,
+  MembershipTableComponent,
   OrganisationTableComponent,
-  PageTableComponent,
-  ProviderTableComponent,
   SuburbTableComponent,
-  TagTableComponent,
   TargetGroupTableComponent,
   TopicTableComponent,
   UserTableComponent

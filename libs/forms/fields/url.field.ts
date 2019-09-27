@@ -9,7 +9,7 @@ import { BaseFieldComponent } from '../base/base.field';
   `],
   template: BaseFieldComponent.template(`
     <input [id]="field.name">
-    <input matInput [formControl]="input" [name]="field.name">
+    <input matInput type="url" [formControl]="input" [name]="field.name">
     <span matPrefix>{{ transport }}</span>
     <mat-slide-toggle matSuffix [formControl]="proto">
       <i18n i18n="@@encryptedConnection">encryptedConnection</i18n>

@@ -39,48 +39,50 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
 
     return request.pipe(
       mergeMap((response) => this.refine(response as any, joiner.graph)),
-      catchError((e) => this.unbound(e) ? of(undefined) : throwError(e))
+      catchError((e) => this.ignore(e) ? of(undefined) : throwError(e))
     );
   }
 
   private run(input: CrudModel, nodes: CrudGraph[]): Observable<CrudModel> {
-    const resolve = forkJoin(nodes.map((node) => {
-      const provider = input.constructor['provider'].system;
-      const link = provider.linked.find((l) => l.field === node.name);
+    if ((input.constructor as any).provider && nodes.length) {
+      return forkJoin(nodes.map((node) => {
+        const provider = (input.constructor as any).provider.system;
+        const link = provider.linked.find((l) => l.field === node.name);
 
-      return of(input).pipe(mergeMap((item) => {
-        if ((item._embedded || { })[link.field]) {
-          const embedded = item._embedded[link.field];
-          return of(Object.assign(item, {
-            [link.field]: Array.isArray(embedded)
-              ? embedded.map((e) => Object.assign(new link.model(), e))
-              : Object.assign(new link.model(), embedded)
-          }));
-        } else {
-          return provider.call(
-            link.method,
-            item.id,
-            node.params.sort,
-            node.params.dir,
-            CrudJoiner.to(node)
-          ).pipe(
-            map((response) => provider.cast(response, link.model)),
-            catchError((e) => this.unbound(e) ? of(undefined) : throwError(e)),
-            map((response) => Object.assign(item, { [link.field]: response })),
-            defaultIfEmpty(undefined)
-          );
-        }
-      })).pipe(mergeMap((item) => {
-        return item && item[link.field] && node.nodes.length
-          ? this.refine(item[link.field], node)
-          : of(item);
-      }));
-    })).pipe(map(() => input));
+        return of(input).pipe(mergeMap((item) => {
+          if ((item._embedded || { })[link.field]) {
+            const embedded = item._embedded[link.field];
+            return of(Object.assign(item, {
+              [link.field]: Array.isArray(embedded)
+                ? embedded.map((e) => Object.assign(new link.model(), e))
+                : Object.assign(new link.model(), embedded)
+            }));
+          } else {
+            return provider.call(
+              link.method,
+              item.id,
+              node.params.sort,
+              node.params.dir,
+              CrudJoiner.to(node)
+            ).pipe(
+              map((response) => provider.cast(response, link.model)),
+              catchError((e) => this.ignore(e) ? of(undefined) : throwError(e)),
+              map((model) => Object.assign(item, { [link.field]: model })),
+              defaultIfEmpty()
+            );
+          }
+        })).pipe(mergeMap((item) => {
+          return item && item[link.field] && node.nodes.length
+            ? this.refine(item[link.field], node)
+            : of(item);
+        }));
+      })).pipe(map(() => input));
+    }
 
-    return input.constructor['provider'] && nodes.length ? resolve : of(input);
+    return of(input);
   }
 
-  private unbound(error: any): boolean {
+  private ignore(error: any): boolean {
     switch (error.status) {
       default:
         return false;

@@ -111,14 +111,18 @@ export abstract class BaseForm<Model extends CrudModel>
 
   public persist(): Observable<any> {
     const item = Object.assign(new this.model(), this.item);
+    const provider = (this.model as any).provider;
 
     this.fields.forEach((field) => Object.assign(item, {
       [field.name]: this.group.get(field.name).value
     }));
 
-    return (!this.model['provider'] || !this.group.dirty ? of(item) : item.id
-      ? this.model['provider'].update(item)
-      : this.model['provider'].create(item)
+    return (
+      !provider || !this.group.dirty
+        ? of(item)
+        : item.id
+          ? provider.update(item)
+          : provider.create(item)
     ).pipe(mergeMap((persisted) => this.cascade(persisted as Model)));
   }
 

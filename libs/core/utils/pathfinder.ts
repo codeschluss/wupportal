@@ -16,8 +16,8 @@ export class Pathfinder {
         return path;
       } else if (route.children) {
         return mapper(route.children);
-      } else if ((route['_loadedConfig'] || { }).routes) {
-        return mapper(route['_loadedConfig'].routes);
+      } else if ((route._loadedConfig || { }).routes) {
+        return mapper(route._loadedConfig.routes);
       }
     };
 

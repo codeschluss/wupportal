@@ -4,7 +4,7 @@ import { BaseTable, TableColumn } from '@wooportal/forms';
 import { KeywordModel } from '../../../realm/models/keyword.model';
 
 @Component({
-  selector: 'tag-table',
+  selector: 'keyword-table',
   template: BaseTable.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -19,7 +19,7 @@ import { KeywordModel } from '../../../realm/models/keyword.model';
   `)
 })
 
-export class TagTableComponent extends BaseTable<KeywordModel> {
+export class KeywordTableComponent extends BaseTable<KeywordModel> {
 
   public columns: TableColumn[] = [
     {

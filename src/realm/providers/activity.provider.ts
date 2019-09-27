@@ -9,8 +9,8 @@ import { BlogpostModel } from '../models/blogpost.model';
 import { CategoryModel } from '../models/category.model';
 import { KeywordModel } from '../models/keyword.model';
 import { LanguageModel } from '../models/language.model';
+import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel } from '../models/organisation.model';
-import { ProviderModel } from '../models/provider.model';
 import { ScheduleModel } from '../models/schedule.model';
 import { TargetGroupModel } from '../models/target-group.model';
 
@@ -47,7 +47,7 @@ export class ActivityProvider
     {
       field: 'provider',
       method: () => EMPTY,
-      model: ProviderModel
+      model: MembershipModel
     },
     {
       field: 'schedules',
@@ -106,13 +106,13 @@ export class ActivityProvider
     (id: string, targetGroupIds: string[]) => Observable<any> =
       this.apply(this.service.activityControllerAddTargetGroupsResponse);
 
+  public pasteKeywords:
+    (id: string, tags: KeywordModel[]) => Observable<any> =
+      this.apply(this.service.activityControllerAddTagsResponse);
+
   public pasteSchedules:
     (id: string, schedules: ScheduleModel[]) => Observable<any> =
       this.apply(this.service.activityControllerAddSchedulesResponse);
-
-  public pasteTags:
-    (id: string, tags: KeywordModel[]) => Observable<any> =
-      this.apply(this.service.activityControllerAddTagsResponse);
 
   public relinkAddress:
     (id: string, addressId: String) => Observable<any> =
@@ -126,13 +126,13 @@ export class ActivityProvider
     (id: string, organisationId: String) => Observable<any> =
       this.apply(this.service.activityControllerUpdateOrganisationResponse);
 
+  public unlinkKeywords:
+    (id: string, tagIds: string[]) => Observable<any> =
+      this.apply(this.service.activityControllerDeleteTagsResponse);
+
   public unlinkSchedules:
     (id: string, scheduleId: string[]) => Observable<any> =
       this.apply(this.service.activityControllerDeleteSchedulesResponse);
-
-  public unlinkTags:
-    (id: string, tagIds: string[]) => Observable<any> =
-      this.apply(this.service.activityControllerDeleteTagsResponse);
 
   public unlinkTargetGroups:
     (id: string, targetGroupIds: string[]) => Observable<any> =

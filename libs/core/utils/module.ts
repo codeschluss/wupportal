@@ -69,7 +69,7 @@ const providers: Provider[] = [
 
 export class CoreModule {
 
-  static forRoot(settings: CoreSettings): ModuleWithProviders {
+  public static forRoot(settings: CoreSettings): ModuleWithProviders {
     return {
       ngModule: CoreModule,
       providers: [{ provide: CoreSettings, useValue: settings }]

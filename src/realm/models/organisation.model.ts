@@ -5,7 +5,7 @@ import { Translatable } from '../translations/translatable';
 import { ActivityModel } from './activity.model';
 import { AddressModel } from './address.model';
 import { ImageModel } from './image.model';
-import { ProviderModel } from './provider.model';
+import { MembershipModel } from './membership.model';
 import { UserModel } from './user.model';
 
 export class OrganisationModel
@@ -25,8 +25,13 @@ export class OrganisationModel
   public activities: ActivityModel[] & Observable<ActivityModel[]>;
   public address: AddressModel & Observable<AddressModel>;
   public images: ImageModel[] & Observable<ImageModel[]>;
-  public provider: ProviderModel & Observable<ProviderModel>;
-  public providers: ProviderModel[] & Observable<ProviderModel[]>;
+  public membership: MembershipModel & Observable<MembershipModel>;
+  public memberships: MembershipModel[] & Observable<MembershipModel[]>;
   public users: UserModel[] & Observable<UserModel[]>;
+
+  public get provider() { return this.membership; }
+  public set provider(value) { this.membership = value; }
+  public get providers() { return this.memberships; }
+  public set providers(value) { this.memberships = value; }
 
 }

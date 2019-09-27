@@ -8,7 +8,7 @@
 </header>
 
 <mat-menu #actions="matMenu">
-  <button mat-menu-item [disabled]="!provides" (click)="create('activities')">
+  <button mat-menu-item [disabled]="!approved" (click)="create('activities')">
     <i18n i18n="@@createActivity">createActivity</i18n>
   </button>
   <ng-container ngProjectAs="mat-menu-item" *ngIf="user.blogger">
@@ -62,9 +62,9 @@
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="admin">
+        <ng-container matColumnDef="ownership">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@admin">admin</i18n>
+            <i18n i18n="@@ownership">ownership</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <mat-slide-toggle disabled
@@ -132,7 +132,7 @@
       <i18n i18n="@@blogposts">blogposts</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <blog-table [items]="blogposts">
+      <blogpost-table [items]="blogposts">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
@@ -150,7 +150,7 @@
             </button>
           </mat-cell>
         </ng-container>
-      </blog-table>
+      </blogpost-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

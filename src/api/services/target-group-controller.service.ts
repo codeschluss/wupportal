@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { TargetGroupEntity } from '../models/target-group-entity';
@@ -16,9 +16,16 @@ import { ResourceTargetGroupEntity } from '../models/resource-target-group-entit
 @Injectable({
   providedIn: 'root',
 })
-class TargetGroupControllerService extends BaseService {
+class TargetGroupControllerService extends __BaseService {
+  static readonly targetGroupControllerReadAllPath = '/targetgroups';
+  static readonly targetGroupControllerCreatePath = '/targetgroups';
+  static readonly targetGroupControllerReadOnePath = '/targetgroups/{targetGroupId}';
+  static readonly targetGroupControllerUpdatePath = '/targetgroups/{targetGroupId}';
+  static readonly targetGroupControllerDeletePath = '/targetgroups/{targetGroupId}';
+  static readonly targetGroupControllerReadTranslationsPath = '/targetgroups/{targetGroupId}/translations';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -41,7 +48,7 @@ class TargetGroupControllerService extends BaseService {
    *
    * @return OK
    */
-  targetGroupControllerReadAllResponse(params: TargetGroupControllerService.TargetGroupControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  targetGroupControllerReadAllResponse(params: TargetGroupControllerService.TargetGroupControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -64,7 +71,7 @@ class TargetGroupControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -85,7 +92,7 @@ class TargetGroupControllerService extends BaseService {
    *
    * @return OK
    */
-  targetGroupControllerReadAll(params: TargetGroupControllerService.TargetGroupControllerReadAllParams): Observable<{}> {
+  targetGroupControllerReadAll(params: TargetGroupControllerService.TargetGroupControllerReadAllParams): __Observable<{}> {
     return this.targetGroupControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -95,7 +102,7 @@ class TargetGroupControllerService extends BaseService {
    * @param newTargetGroup newTargetGroup
    * @return OK
    */
-  targetGroupControllerCreateResponse(newTargetGroup: TargetGroupEntity): Observable<StrictHttpResponse<{}>> {
+  targetGroupControllerCreateResponse(newTargetGroup: TargetGroupEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -113,7 +120,7 @@ class TargetGroupControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -121,7 +128,7 @@ class TargetGroupControllerService extends BaseService {
    * @param newTargetGroup newTargetGroup
    * @return OK
    */
-  targetGroupControllerCreate(newTargetGroup: TargetGroupEntity): Observable<{}> {
+  targetGroupControllerCreate(newTargetGroup: TargetGroupEntity): __Observable<{}> {
     return this.targetGroupControllerCreateResponse(newTargetGroup).pipe(
       __map(_r => _r.body as {})
     );
@@ -131,7 +138,7 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerReadOneResponse(targetGroupId: string): Observable<StrictHttpResponse<ResourceTargetGroupEntity>> {
+  targetGroupControllerReadOneResponse(targetGroupId: string): __Observable<__StrictHttpResponse<ResourceTargetGroupEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -149,7 +156,7 @@ class TargetGroupControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceTargetGroupEntity>;
+        return _r as __StrictHttpResponse<ResourceTargetGroupEntity>;
       })
     );
   }
@@ -157,7 +164,7 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerReadOne(targetGroupId: string): Observable<ResourceTargetGroupEntity> {
+  targetGroupControllerReadOne(targetGroupId: string): __Observable<ResourceTargetGroupEntity> {
     return this.targetGroupControllerReadOneResponse(targetGroupId).pipe(
       __map(_r => _r.body as ResourceTargetGroupEntity)
     );
@@ -169,7 +176,7 @@ class TargetGroupControllerService extends BaseService {
    * @return OK
    */
   targetGroupControllerUpdateResponse(newTargetGroup: TargetGroupEntity,
-    targetGroupId: string): Observable<StrictHttpResponse<{}>> {
+    targetGroupId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -188,7 +195,7 @@ class TargetGroupControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -198,7 +205,7 @@ class TargetGroupControllerService extends BaseService {
    * @return OK
    */
   targetGroupControllerUpdate(newTargetGroup: TargetGroupEntity,
-    targetGroupId: string): Observable<{}> {
+    targetGroupId: string): __Observable<{}> {
     return this.targetGroupControllerUpdateResponse(newTargetGroup, targetGroupId).pipe(
       __map(_r => _r.body as {})
     );
@@ -208,7 +215,7 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerDeleteResponse(targetGroupId: string): Observable<StrictHttpResponse<{}>> {
+  targetGroupControllerDeleteResponse(targetGroupId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -226,7 +233,7 @@ class TargetGroupControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -234,7 +241,7 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerDelete(targetGroupId: string): Observable<{}> {
+  targetGroupControllerDelete(targetGroupId: string): __Observable<{}> {
     return this.targetGroupControllerDeleteResponse(targetGroupId).pipe(
       __map(_r => _r.body as {})
     );
@@ -244,7 +251,7 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerReadTranslationsResponse(targetGroupId: string): Observable<StrictHttpResponse<{}>> {
+  targetGroupControllerReadTranslationsResponse(targetGroupId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -262,7 +269,7 @@ class TargetGroupControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -270,7 +277,7 @@ class TargetGroupControllerService extends BaseService {
    * @param targetGroupId targetGroupId
    * @return OK
    */
-  targetGroupControllerReadTranslations(targetGroupId: string): Observable<{}> {
+  targetGroupControllerReadTranslations(targetGroupId: string): __Observable<{}> {
     return this.targetGroupControllerReadTranslationsResponse(targetGroupId).pipe(
       __map(_r => _r.body as {})
     );

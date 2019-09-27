@@ -19,8 +19,8 @@ export abstract class Selfrouter {
       } else if (route.children) {
         route.children = route.children
           .map((child) => walker(child, children));
-      } else if ((route['_loadedConfig'] || { }).routes) {
-        route['_loadedConfig'].routes = route['_loadedConfig'].routes
+      } else if ((route._loadedConfig || { }).routes) {
+        route._loadedConfig.routes = route._loadedConfig.routes
           .map((child) => walker(child, children));
       }
 

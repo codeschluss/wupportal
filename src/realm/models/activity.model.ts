@@ -6,8 +6,8 @@ import { Translatable } from '../translations/translatable';
 import { BlogpostModel } from './blogpost.model';
 import { CategoryModel } from './category.model';
 import { KeywordModel } from './keyword.model';
+import { MembershipModel } from './membership.model';
 import { OrganisationModel } from './organisation.model';
-import { ProviderModel } from './provider.model';
 import { ScheduleModel } from './schedule.model';
 import { TargetGroupModel } from './target-group.model';
 
@@ -27,12 +27,12 @@ export class ActivityModel
   public organisationId: string;
 
   public address: AddressModel & Observable<AddressModel>;
+  public blogposts: BlogpostModel[] & Observable<BlogpostModel[]>;
   public category: CategoryModel & Observable<CategoryModel>;
+  public keywords: KeywordModel[] & Observable<KeywordModel[]>;
+  public membership: MembershipModel & Observable<MembershipModel>;
   public organisation: OrganisationModel & Observable<OrganisationModel>;
-  public provider: ProviderModel & Observable<ProviderModel>;
   public schedules: ScheduleModel[] & Observable<ScheduleModel[]>;
-  public tags: KeywordModel[] & Observable<KeywordModel[]>;
-  public blogs: BlogpostModel[] & Observable<BlogpostModel[]>;
   public targetGroups: TargetGroupModel[] & Observable<TargetGroupModel[]>;
 
   public get dates(): ScheduleModel[] {
@@ -40,5 +40,12 @@ export class ActivityModel
       .filter((s) => +new Date(s.startDate) > +new Date())
       .sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
   }
+
+  public get provider() { return this.membership; }
+  public set provider(value) { this.membership = value; }
+  public get tags() { return this.keywords; }
+  public set tags(value) { this.keywords = value; }
+  public get blogs() { return this.blogposts; }
+  public set blogs(value) { this.blogposts = value; }
 
 }

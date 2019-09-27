@@ -83,7 +83,8 @@ export class SearchPageComponent extends BasePage implements OnInit {
 
   private search(filter: string, model: Type<CrudModel>): Observable<any> {
     const joiner = CrudJoiner.of(model);
-    const provider = model['provider'] as CrudProvider<BaseService, CrudModel>;
+    const provider = (model as any)
+      .provider as CrudProvider<BaseService, CrudModel>;
 
     switch (model) {
       case ActivityModel:

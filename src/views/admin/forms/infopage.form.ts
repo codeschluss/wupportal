@@ -1,11 +1,14 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Box } from '@wooportal/core';
+import { ActivatedRoute } from '@angular/router';
+import { Box, TokenProvider } from '@wooportal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { InfopageModel } from '../../../realm/models/infopage.model';
 import { TopicModel } from '../../../realm/models/topic.model';
+import { InfopageProvider } from '../../../realm/providers/infopage.provider';
+import { TranslationProvider } from '../../../realm/providers/translation.provider';
 import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
@@ -53,6 +56,15 @@ export class InfopageFormComponent
 
   public model: Type<InfopageModel> = InfopageModel;
 
+  public constructor(
+    private infopageProvider: InfopageProvider,
+    route: ActivatedRoute,
+    tokenProvider: TokenProvider,
+    translationProvider: TranslationProvider
+  ) {
+    super(translationProvider, route, tokenProvider);
+  }
+
   public persist(): Observable<any> {
     this.item.topicId = this.group.get('topic').value.id;
 
@@ -61,11 +73,10 @@ export class InfopageFormComponent
 
   protected cascade(item: InfopageModel): Observable<any> {
     const links = [];
-    const provider = this.model['provider'];
 
     if (this.item.id) {
-      const tpicID = this.item.topic && this.item.topic.id;
-      if (tpicID !== this.item.topicId) { links.push(provider
+      const tId = this.item.topic && this.item.topic.id;
+      if (tId !== this.item.topicId) { links.push(this.infopageProvider
         .relinkTopic(item.id, Box(this.item.topicId))); }
     }
 

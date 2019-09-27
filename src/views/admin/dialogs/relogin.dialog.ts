@@ -16,8 +16,8 @@ import { catchError } from 'rxjs/operators';
     </h2>
     <section mat-dialog-content>
       <mat-form-field>
-        <mat-label><i18n i18n="@@username">username</i18n></mat-label>
-        <input matInput [formControl]="username">
+        <mat-label><i18n i18n="@@email">email</i18n></mat-label>
+        <input matInput type="email" [formControl]="email">
       </mat-form-field>
       <mat-form-field>
         <mat-label><i18n i18n="@@password">password</i18n></mat-label>
@@ -25,17 +25,22 @@ import { catchError } from 'rxjs/operators';
       </mat-form-field>
     </section>
     <section mat-dialog-actions>
+      <button mat-button [disabled]="!valid" (click)="login()">
+        <i18n i18n="@@login">login</i18n>
+      </button>
       <button mat-button (click)="logout()">
         <i18n i18n="@@logout">logout</i18n>
-      </button>
-      <button mat-button color="primary" [disabled]="!valid" (click)="login()">
-        <i18n i18n="@@login">login</i18n>
       </button>
     </section>
   `
 })
 
 export class ReloginDialogComponent implements OnInit {
+
+  public email: FormControl = new FormControl(null, [
+    Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+    Validators.required
+  ]);
 
   public password: FormControl = new FormControl(null, [
     // Validators.minLength(8),
@@ -45,13 +50,10 @@ export class ReloginDialogComponent implements OnInit {
     Validators.required
   ]);
 
-  public username: FormControl = new FormControl(null, [
-    Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
-    Validators.required
-  ]);
-
   public get valid(): boolean {
-    return this.password.valid && this.username.valid;
+    return true
+      && this.email.valid
+      && this.password.valid;
   }
 
   public constructor(
@@ -65,10 +67,10 @@ export class ReloginDialogComponent implements OnInit {
   }
 
   public login(): void {
-    this.tokenProvider.login(this.username.value, this.password.value).pipe(
+    this.tokenProvider.login(this.email.value, this.password.value).pipe(
       catchError(() => {
+        this.email.patchValue(null);
         this.password.patchValue(null);
-        this.username.patchValue(null);
         return EMPTY;
       })
     ).subscribe(() => this.dialogRef.close(true));

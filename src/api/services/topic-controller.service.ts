@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { TopicEntity } from '../models/topic-entity';
@@ -16,9 +16,17 @@ import { ResourceTopicEntity } from '../models/resource-topic-entity';
 @Injectable({
   providedIn: 'root',
 })
-class TopicControllerService extends BaseService {
+class TopicControllerService extends __BaseService {
+  static readonly topicControllerReadAllPath = '/topics';
+  static readonly topicControllerCreatePath = '/topics';
+  static readonly topicControllerReadOnePath = '/topics/{topicId}';
+  static readonly topicControllerUpdatePath = '/topics/{topicId}';
+  static readonly topicControllerDeletePath = '/topics/{topicId}';
+  static readonly topicControllerReadPagesPath = '/topics/{topicId}/pages';
+  static readonly topicControllerReadTranslationsPath = '/topics/{topicId}/translations';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -41,7 +49,7 @@ class TopicControllerService extends BaseService {
    *
    * @return OK
    */
-  topicControllerReadAllResponse(params: TopicControllerService.TopicControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  topicControllerReadAllResponse(params: TopicControllerService.TopicControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -64,7 +72,7 @@ class TopicControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -85,7 +93,7 @@ class TopicControllerService extends BaseService {
    *
    * @return OK
    */
-  topicControllerReadAll(params: TopicControllerService.TopicControllerReadAllParams): Observable<{}> {
+  topicControllerReadAll(params: TopicControllerService.TopicControllerReadAllParams): __Observable<{}> {
     return this.topicControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -95,7 +103,7 @@ class TopicControllerService extends BaseService {
    * @param newTopic newTopic
    * @return OK
    */
-  topicControllerCreateResponse(newTopic: TopicEntity): Observable<StrictHttpResponse<{}>> {
+  topicControllerCreateResponse(newTopic: TopicEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -113,7 +121,7 @@ class TopicControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -121,7 +129,7 @@ class TopicControllerService extends BaseService {
    * @param newTopic newTopic
    * @return OK
    */
-  topicControllerCreate(newTopic: TopicEntity): Observable<{}> {
+  topicControllerCreate(newTopic: TopicEntity): __Observable<{}> {
     return this.topicControllerCreateResponse(newTopic).pipe(
       __map(_r => _r.body as {})
     );
@@ -131,7 +139,7 @@ class TopicControllerService extends BaseService {
    * @param topicId topicId
    * @return OK
    */
-  topicControllerReadOneResponse(topicId: string): Observable<StrictHttpResponse<ResourceTopicEntity>> {
+  topicControllerReadOneResponse(topicId: string): __Observable<__StrictHttpResponse<ResourceTopicEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -149,7 +157,7 @@ class TopicControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceTopicEntity>;
+        return _r as __StrictHttpResponse<ResourceTopicEntity>;
       })
     );
   }
@@ -157,7 +165,7 @@ class TopicControllerService extends BaseService {
    * @param topicId topicId
    * @return OK
    */
-  topicControllerReadOne(topicId: string): Observable<ResourceTopicEntity> {
+  topicControllerReadOne(topicId: string): __Observable<ResourceTopicEntity> {
     return this.topicControllerReadOneResponse(topicId).pipe(
       __map(_r => _r.body as ResourceTopicEntity)
     );
@@ -169,7 +177,7 @@ class TopicControllerService extends BaseService {
    * @return OK
    */
   topicControllerUpdateResponse(newTopic: TopicEntity,
-    topicId: string): Observable<StrictHttpResponse<{}>> {
+    topicId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -188,7 +196,7 @@ class TopicControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -198,7 +206,7 @@ class TopicControllerService extends BaseService {
    * @return OK
    */
   topicControllerUpdate(newTopic: TopicEntity,
-    topicId: string): Observable<{}> {
+    topicId: string): __Observable<{}> {
     return this.topicControllerUpdateResponse(newTopic, topicId).pipe(
       __map(_r => _r.body as {})
     );
@@ -208,7 +216,7 @@ class TopicControllerService extends BaseService {
    * @param topicId topicId
    * @return OK
    */
-  topicControllerDeleteResponse(topicId: string): Observable<StrictHttpResponse<{}>> {
+  topicControllerDeleteResponse(topicId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -226,7 +234,7 @@ class TopicControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -234,7 +242,7 @@ class TopicControllerService extends BaseService {
    * @param topicId topicId
    * @return OK
    */
-  topicControllerDelete(topicId: string): Observable<{}> {
+  topicControllerDelete(topicId: string): __Observable<{}> {
     return this.topicControllerDeleteResponse(topicId).pipe(
       __map(_r => _r.body as {})
     );
@@ -250,7 +258,7 @@ class TopicControllerService extends BaseService {
   topicControllerReadPagesResponse(topicId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -271,7 +279,7 @@ class TopicControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -285,7 +293,7 @@ class TopicControllerService extends BaseService {
   topicControllerReadPages(topicId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<{}> {
+    embeddings?: string): __Observable<{}> {
     return this.topicControllerReadPagesResponse(topicId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
@@ -295,7 +303,7 @@ class TopicControllerService extends BaseService {
    * @param topicId topicId
    * @return OK
    */
-  topicControllerReadTranslationsResponse(topicId: string): Observable<StrictHttpResponse<{}>> {
+  topicControllerReadTranslationsResponse(topicId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -313,7 +321,7 @@ class TopicControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -321,7 +329,7 @@ class TopicControllerService extends BaseService {
    * @param topicId topicId
    * @return OK
    */
-  topicControllerReadTranslations(topicId: string): Observable<{}> {
+  topicControllerReadTranslations(topicId: string): __Observable<{}> {
     return this.topicControllerReadTranslationsResponse(topicId).pipe(
       __map(_r => _r.body as {})
     );

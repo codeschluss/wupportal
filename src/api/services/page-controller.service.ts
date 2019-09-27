@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { PageEntity } from '../models/page-entity';
@@ -17,9 +17,18 @@ import { StringPrimitive } from '../models/string-primitive';
 @Injectable({
   providedIn: 'root',
 })
-class PageControllerService extends BaseService {
+class PageControllerService extends __BaseService {
+  static readonly pageControllerReadAllPath = '/pages';
+  static readonly pageControllerCreatePath = '/pages';
+  static readonly pageControllerReadOnePath = '/pages/{pageId}';
+  static readonly pageControllerUpdatePath = '/pages/{pageId}';
+  static readonly pageControllerDeletePath = '/pages/{pageId}';
+  static readonly pageControllerReadTopicPath = '/pages/{pageId}/topic';
+  static readonly pageControllerUpdateTopicPath = '/pages/{pageId}/topic';
+  static readonly pageControllerReadTranslationsPath = '/pages/{pageId}/translations';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -42,7 +51,7 @@ class PageControllerService extends BaseService {
    *
    * @return OK
    */
-  pageControllerReadAllResponse(params: PageControllerService.PageControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  pageControllerReadAllResponse(params: PageControllerService.PageControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -65,7 +74,7 @@ class PageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -86,7 +95,7 @@ class PageControllerService extends BaseService {
    *
    * @return OK
    */
-  pageControllerReadAll(params: PageControllerService.PageControllerReadAllParams): Observable<{}> {
+  pageControllerReadAll(params: PageControllerService.PageControllerReadAllParams): __Observable<{}> {
     return this.pageControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -96,7 +105,7 @@ class PageControllerService extends BaseService {
    * @param newPage newPage
    * @return OK
    */
-  pageControllerCreateResponse(newPage: PageEntity): Observable<StrictHttpResponse<{}>> {
+  pageControllerCreateResponse(newPage: PageEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -114,7 +123,7 @@ class PageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -122,7 +131,7 @@ class PageControllerService extends BaseService {
    * @param newPage newPage
    * @return OK
    */
-  pageControllerCreate(newPage: PageEntity): Observable<{}> {
+  pageControllerCreate(newPage: PageEntity): __Observable<{}> {
     return this.pageControllerCreateResponse(newPage).pipe(
       __map(_r => _r.body as {})
     );
@@ -132,7 +141,7 @@ class PageControllerService extends BaseService {
    * @param pageId pageId
    * @return OK
    */
-  pageControllerReadOneResponse(pageId: string): Observable<StrictHttpResponse<ResourcePageEntity>> {
+  pageControllerReadOneResponse(pageId: string): __Observable<__StrictHttpResponse<ResourcePageEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -150,7 +159,7 @@ class PageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourcePageEntity>;
+        return _r as __StrictHttpResponse<ResourcePageEntity>;
       })
     );
   }
@@ -158,7 +167,7 @@ class PageControllerService extends BaseService {
    * @param pageId pageId
    * @return OK
    */
-  pageControllerReadOne(pageId: string): Observable<ResourcePageEntity> {
+  pageControllerReadOne(pageId: string): __Observable<ResourcePageEntity> {
     return this.pageControllerReadOneResponse(pageId).pipe(
       __map(_r => _r.body as ResourcePageEntity)
     );
@@ -170,7 +179,7 @@ class PageControllerService extends BaseService {
    * @return OK
    */
   pageControllerUpdateResponse(newPage: PageEntity,
-    pageId: string): Observable<StrictHttpResponse<{}>> {
+    pageId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -189,7 +198,7 @@ class PageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -199,7 +208,7 @@ class PageControllerService extends BaseService {
    * @return OK
    */
   pageControllerUpdate(newPage: PageEntity,
-    pageId: string): Observable<{}> {
+    pageId: string): __Observable<{}> {
     return this.pageControllerUpdateResponse(newPage, pageId).pipe(
       __map(_r => _r.body as {})
     );
@@ -209,7 +218,7 @@ class PageControllerService extends BaseService {
    * @param pageId pageId
    * @return OK
    */
-  pageControllerDeleteResponse(pageId: string): Observable<StrictHttpResponse<{}>> {
+  pageControllerDeleteResponse(pageId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -227,7 +236,7 @@ class PageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -235,7 +244,7 @@ class PageControllerService extends BaseService {
    * @param pageId pageId
    * @return OK
    */
-  pageControllerDelete(pageId: string): Observable<{}> {
+  pageControllerDelete(pageId: string): __Observable<{}> {
     return this.pageControllerDeleteResponse(pageId).pipe(
       __map(_r => _r.body as {})
     );
@@ -245,7 +254,7 @@ class PageControllerService extends BaseService {
    * @param pageId pageId
    * @return OK
    */
-  pageControllerReadTopicResponse(pageId: string): Observable<StrictHttpResponse<{}>> {
+  pageControllerReadTopicResponse(pageId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -263,7 +272,7 @@ class PageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -271,7 +280,7 @@ class PageControllerService extends BaseService {
    * @param pageId pageId
    * @return OK
    */
-  pageControllerReadTopic(pageId: string): Observable<{}> {
+  pageControllerReadTopic(pageId: string): __Observable<{}> {
     return this.pageControllerReadTopicResponse(pageId).pipe(
       __map(_r => _r.body as {})
     );
@@ -283,7 +292,7 @@ class PageControllerService extends BaseService {
    * @return OK
    */
   pageControllerUpdateTopicResponse(pageId: string,
-    topicId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
+    topicId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -302,7 +311,7 @@ class PageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -312,7 +321,7 @@ class PageControllerService extends BaseService {
    * @return OK
    */
   pageControllerUpdateTopic(pageId: string,
-    topicId: StringPrimitive): Observable<{}> {
+    topicId: StringPrimitive): __Observable<{}> {
     return this.pageControllerUpdateTopicResponse(pageId, topicId).pipe(
       __map(_r => _r.body as {})
     );
@@ -322,7 +331,7 @@ class PageControllerService extends BaseService {
    * @param pageId pageId
    * @return OK
    */
-  pageControllerReadTranslationsResponse(pageId: string): Observable<StrictHttpResponse<{}>> {
+  pageControllerReadTranslationsResponse(pageId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -340,7 +349,7 @@ class PageControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -348,7 +357,7 @@ class PageControllerService extends BaseService {
    * @param pageId pageId
    * @return OK
    */
-  pageControllerReadTranslations(pageId: string): Observable<{}> {
+  pageControllerReadTranslations(pageId: string): __Observable<{}> {
     return this.pageControllerReadTranslationsResponse(pageId).pipe(
       __map(_r => _r.body as {})
     );

@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { UserEntity } from '../models/user-entity';
@@ -18,9 +18,30 @@ import { BooleanPrimitive } from '../models/boolean-primitive';
 @Injectable({
   providedIn: 'root',
 })
-class UserControllerService extends BaseService {
+class UserControllerService extends __BaseService {
+  static readonly userControllerReadAllPath = '/users';
+  static readonly userControllerCreatePath = '/users';
+  static readonly userControllerApplyAsBloggerPath = '/users/blogapply';
+  static readonly userControllerReadAllBloggersPath = '/users/bloggers';
+  static readonly userControllerResetAllPasswordsPath = '/users/resetallpasswords';
+  static readonly userControllerResetPasswordPath = '/users/resetpassword';
+  static readonly userControllerReadOnePath = '/users/{userId}';
+  static readonly userControllerUpdatePath = '/users/{userId}';
+  static readonly userControllerDeletePath = '/users/{userId}';
+  static readonly userControllerReadActivitiesPath = '/users/{userId}/activities';
+  static readonly userControllerDeleteActivityPath = '/users/{userId}/activities/{activityId}';
+  static readonly userControllerReadBloggerPath = '/users/{userId}/blogger';
+  static readonly userControllerDeleteBloggerPath = '/users/{userId}/blogger';
+  static readonly userControllerReadBlogsPath = '/users/{userId}/blogs';
+  static readonly userControllerDeleteBlogPath = '/users/{userId}/blogs/{blogId}';
+  static readonly userControllerGrantBloggerRightPath = '/users/{userId}/grantblogger';
+  static readonly userControllerReadOrganisationsPath = '/users/{userId}/organisations';
+  static readonly userControllerAddOrganisationPath = '/users/{userId}/organisations';
+  static readonly userControllerDeleteOrganisationPath = '/users/{userId}/organisations/{orgaId}';
+  static readonly userControllerGrantSuperuserRightPath = '/users/{userId}/superuser';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -43,7 +64,7 @@ class UserControllerService extends BaseService {
    *
    * @return OK
    */
-  userControllerReadAllResponse(params: UserControllerService.UserControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  userControllerReadAllResponse(params: UserControllerService.UserControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -66,7 +87,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -87,7 +108,7 @@ class UserControllerService extends BaseService {
    *
    * @return OK
    */
-  userControllerReadAll(params: UserControllerService.UserControllerReadAllParams): Observable<{}> {
+  userControllerReadAll(params: UserControllerService.UserControllerReadAllParams): __Observable<{}> {
     return this.userControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -97,7 +118,7 @@ class UserControllerService extends BaseService {
    * @param newUser newUser
    * @return OK
    */
-  userControllerCreateResponse(newUser: UserEntity): Observable<StrictHttpResponse<{}>> {
+  userControllerCreateResponse(newUser: UserEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -115,7 +136,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -123,7 +144,7 @@ class UserControllerService extends BaseService {
    * @param newUser newUser
    * @return OK
    */
-  userControllerCreate(newUser: UserEntity): Observable<{}> {
+  userControllerCreate(newUser: UserEntity): __Observable<{}> {
     return this.userControllerCreateResponse(newUser).pipe(
       __map(_r => _r.body as {})
     );
@@ -132,7 +153,7 @@ class UserControllerService extends BaseService {
   /**
    * @return OK
    */
-  userControllerApplyAsBloggerResponse(): Observable<StrictHttpResponse<{}>> {
+  userControllerApplyAsBloggerResponse(): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -149,14 +170,14 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
   /**
    * @return OK
    */
-  userControllerApplyAsBlogger(): Observable<{}> {
+  userControllerApplyAsBlogger(): __Observable<{}> {
     return this.userControllerApplyAsBloggerResponse().pipe(
       __map(_r => _r.body as {})
     );
@@ -179,7 +200,7 @@ class UserControllerService extends BaseService {
    *
    * @return OK
    */
-  userControllerReadAllBloggersResponse(params: UserControllerService.UserControllerReadAllBloggersParams): Observable<StrictHttpResponse<{}>> {
+  userControllerReadAllBloggersResponse(params: UserControllerService.UserControllerReadAllBloggersParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -202,7 +223,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -223,8 +244,41 @@ class UserControllerService extends BaseService {
    *
    * @return OK
    */
-  userControllerReadAllBloggers(params: UserControllerService.UserControllerReadAllBloggersParams): Observable<{}> {
+  userControllerReadAllBloggers(params: UserControllerService.UserControllerReadAllBloggersParams): __Observable<{}> {
     return this.userControllerReadAllBloggersResponse(params).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @return OK
+   */
+  userControllerResetAllPasswordsResponse(): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/users/resetallpasswords`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  userControllerResetAllPasswords(): __Observable<{}> {
+    return this.userControllerResetAllPasswordsResponse().pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -233,7 +287,7 @@ class UserControllerService extends BaseService {
    * @param username username
    * @return OK
    */
-  userControllerResetPasswordResponse(username: StringPrimitive): Observable<StrictHttpResponse<{}>> {
+  userControllerResetPasswordResponse(username: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -251,7 +305,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -259,7 +313,7 @@ class UserControllerService extends BaseService {
    * @param username username
    * @return OK
    */
-  userControllerResetPassword(username: StringPrimitive): Observable<{}> {
+  userControllerResetPassword(username: StringPrimitive): __Observable<{}> {
     return this.userControllerResetPasswordResponse(username).pipe(
       __map(_r => _r.body as {})
     );
@@ -269,7 +323,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerReadOneResponse(userId: string): Observable<StrictHttpResponse<ResourceUserEntity>> {
+  userControllerReadOneResponse(userId: string): __Observable<__StrictHttpResponse<ResourceUserEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -287,7 +341,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceUserEntity>;
+        return _r as __StrictHttpResponse<ResourceUserEntity>;
       })
     );
   }
@@ -295,7 +349,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerReadOne(userId: string): Observable<ResourceUserEntity> {
+  userControllerReadOne(userId: string): __Observable<ResourceUserEntity> {
     return this.userControllerReadOneResponse(userId).pipe(
       __map(_r => _r.body as ResourceUserEntity)
     );
@@ -307,7 +361,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerUpdateResponse(newUser: UserEntity,
-    userId: string): Observable<StrictHttpResponse<{}>> {
+    userId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -326,7 +380,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -336,7 +390,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerUpdate(newUser: UserEntity,
-    userId: string): Observable<{}> {
+    userId: string): __Observable<{}> {
     return this.userControllerUpdateResponse(newUser, userId).pipe(
       __map(_r => _r.body as {})
     );
@@ -346,7 +400,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerDeleteResponse(userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerDeleteResponse(userId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -364,7 +418,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -372,7 +426,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerDelete(userId: string): Observable<{}> {
+  userControllerDelete(userId: string): __Observable<{}> {
     return this.userControllerDeleteResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
@@ -388,7 +442,7 @@ class UserControllerService extends BaseService {
   userControllerReadActivitiesResponse(userId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -409,7 +463,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -423,7 +477,7 @@ class UserControllerService extends BaseService {
   userControllerReadActivities(userId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<{}> {
+    embeddings?: string): __Observable<{}> {
     return this.userControllerReadActivitiesResponse(userId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
@@ -435,7 +489,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerDeleteActivityResponse(userId: string,
-    activityId: string): Observable<StrictHttpResponse<{}>> {
+    activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -454,7 +508,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -464,7 +518,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerDeleteActivity(userId: string,
-    activityId: string): Observable<{}> {
+    activityId: string): __Observable<{}> {
     return this.userControllerDeleteActivityResponse(userId, activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -474,7 +528,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerReadBloggerResponse(userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerReadBloggerResponse(userId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -492,7 +546,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -500,7 +554,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerReadBlogger(userId: string): Observable<{}> {
+  userControllerReadBlogger(userId: string): __Observable<{}> {
     return this.userControllerReadBloggerResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
@@ -510,7 +564,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerDeleteBloggerResponse(userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerDeleteBloggerResponse(userId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -528,7 +582,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -536,7 +590,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerDeleteBlogger(userId: string): Observable<{}> {
+  userControllerDeleteBlogger(userId: string): __Observable<{}> {
     return this.userControllerDeleteBloggerResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
@@ -552,7 +606,7 @@ class UserControllerService extends BaseService {
   userControllerReadBlogsResponse(userId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -573,7 +627,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -587,7 +641,7 @@ class UserControllerService extends BaseService {
   userControllerReadBlogs(userId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<{}> {
+    embeddings?: string): __Observable<{}> {
     return this.userControllerReadBlogsResponse(userId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
@@ -599,7 +653,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerDeleteBlogResponse(userId: string,
-    blogId: string): Observable<StrictHttpResponse<{}>> {
+    blogId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -618,7 +672,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -628,7 +682,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerDeleteBlog(userId: string,
-    blogId: string): Observable<{}> {
+    blogId: string): __Observable<{}> {
     return this.userControllerDeleteBlogResponse(userId, blogId).pipe(
       __map(_r => _r.body as {})
     );
@@ -640,7 +694,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerGrantBloggerRightResponse(userId: string,
-    isBlogger: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
+    isBlogger: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -659,7 +713,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -669,7 +723,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerGrantBloggerRight(userId: string,
-    isBlogger: BooleanPrimitive): Observable<{}> {
+    isBlogger: BooleanPrimitive): __Observable<{}> {
     return this.userControllerGrantBloggerRightResponse(userId, isBlogger).pipe(
       __map(_r => _r.body as {})
     );
@@ -679,7 +733,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerReadOrganisationsResponse(userId: string): Observable<StrictHttpResponse<{}>> {
+  userControllerReadOrganisationsResponse(userId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -697,7 +751,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -705,7 +759,7 @@ class UserControllerService extends BaseService {
    * @param userId userId
    * @return OK
    */
-  userControllerReadOrganisations(userId: string): Observable<{}> {
+  userControllerReadOrganisations(userId: string): __Observable<{}> {
     return this.userControllerReadOrganisationsResponse(userId).pipe(
       __map(_r => _r.body as {})
     );
@@ -717,7 +771,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerAddOrganisationResponse(userId: string,
-    organisationParam: Array<string>): Observable<StrictHttpResponse<{}>> {
+    organisationParam: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -736,7 +790,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -746,7 +800,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerAddOrganisation(userId: string,
-    organisationParam: Array<string>): Observable<{}> {
+    organisationParam: Array<string>): __Observable<{}> {
     return this.userControllerAddOrganisationResponse(userId, organisationParam).pipe(
       __map(_r => _r.body as {})
     );
@@ -758,7 +812,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerDeleteOrganisationResponse(userId: string,
-    orgaId: string): Observable<StrictHttpResponse<{}>> {
+    orgaId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -777,7 +831,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -787,7 +841,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerDeleteOrganisation(userId: string,
-    orgaId: string): Observable<{}> {
+    orgaId: string): __Observable<{}> {
     return this.userControllerDeleteOrganisationResponse(userId, orgaId).pipe(
       __map(_r => _r.body as {})
     );
@@ -799,7 +853,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerGrantSuperuserRightResponse(userId: string,
-    isSuperuser: BooleanPrimitive): Observable<StrictHttpResponse<{}>> {
+    isSuperuser: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -818,7 +872,7 @@ class UserControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -828,7 +882,7 @@ class UserControllerService extends BaseService {
    * @return OK
    */
   userControllerGrantSuperuserRight(userId: string,
-    isSuperuser: BooleanPrimitive): Observable<{}> {
+    isSuperuser: BooleanPrimitive): __Observable<{}> {
     return this.userControllerGrantSuperuserRightResponse(userId, isSuperuser).pipe(
       __map(_r => _r.body as {})
     );

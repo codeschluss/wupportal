@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { ActivityModel } from '../../../../realm/models/activity.model';
+import { MembershipModel } from '../../../../realm/models/membership.model';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
-import { ProviderModel } from '../../../../realm/models/provider.model';
 import { BasePanel } from '../base.panel';
 
 @Component({
@@ -27,19 +27,21 @@ export class OrganisationPanelComponent extends BasePanel {
       arr.concat(organisation.activities || []), []);
   }
 
+  public get memberships(): MembershipModel[] {
+    return this.organisations
+      .flatMap((organisation) => this.membership(organisation))
+      .filter((membership) => membership.approved);
+  }
+
   public get organisations(): OrganisationModel[] {
     return this.route.snapshot.data.organisations.filter((organisation) =>
       this.superUser || this.organisationAdmin.includes(organisation.id));
   }
 
-  public get providers(): ProviderModel[] {
-    return this.organisations.flatMap((i) => this.provided(i))
-      .filter((provider) => provider.approved);
-  }
-
-  public get requests(): ProviderModel[] {
-    return this.organisations.flatMap((i) => this.provided(i))
-      .filter((provider) => !provider.approved);
+  public get requests(): MembershipModel[] {
+    return this.organisations
+      .flatMap((organisation) => this.membership(organisation))
+      .filter((membership) => !membership.approved);
   }
 
 }

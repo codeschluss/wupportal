@@ -83,19 +83,21 @@
               <label [text]="item.address.suburb.name"></label>
             </stack-layout>
           </stack-layout>
-          <stack-layout class="detail">
-            <i18n i18n="@@targetGroups" unit="targetGroups"></i18n>
-            <stack-layout>
-              <ng-container *ngFor="let targetGroup of item.targetGroups">
-                <stack-layout ripple
-                  (tap)="router.navigate(['/', 'activities'],
-                    { queryParams: { targetgroups: targetGroup.id } })">
-                  <icon-compat icon="users"></icon-compat>
-                  <label [text]="targetGroup.name"></label>
-                </stack-layout>
-              </ng-container>
+          <ng-container *ngIf="item.targetGroups?.length">
+            <stack-layout class="detail">
+              <i18n i18n="@@targetGroups" unit="targetGroups"></i18n>
+              <stack-layout>
+                <ng-container *ngFor="let targetGroup of item.targetGroups">
+                  <stack-layout ripple
+                    (tap)="router.navigate(['/', 'activities'],
+                      { queryParams: { targetgroups: targetGroup.id } })">
+                    <icon-compat icon="users"></icon-compat>
+                    <label [text]="targetGroup.name"></label>
+                  </stack-layout>
+                </ng-container>
+              </stack-layout>
             </stack-layout>
-          </stack-layout>
+          </ng-container>
         </ng-template>
       </expand-compat>
       <expand-compat #schedules
@@ -146,19 +148,19 @@
           <organisation-card [item]="item.organisation"></organisation-card>
         </ng-template>
       </expand-compat>
-      <ng-container *ngIf="item.blogs">
+      <ng-container *ngIf="item.blogposts">
         <expand-compat #blogposts
           class="expand-compat"
           (changed)="$event && expanded(blogposts)">
           <ng-template #expandHeader>
             <icon-compat icon="at"></icon-compat>
             <i18n i18n="@@blogposts" unit="blogposts"></i18n>
-            <label [text]="'(' + item.blogs.length + ')'"></label>
+            <label [text]="'(' + item.blogposts.length + ')'"></label>
           </ng-template>
           <ng-template #expandContent>
             <scroll-view #scrollBlogposts>
               <flexbox-layout>
-                <ng-container *ngFor="let blogpost of item.blogs">
+                <ng-container *ngFor="let blogpost of item.blogposts">
                   <grid-layout [width]="scrollBlogposts.getActualSize().width">
                     <blogpost-card [item]="blogpost"></blogpost-card>
                   </grid-layout>

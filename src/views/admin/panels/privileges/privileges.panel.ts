@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
+import { MembershipModel } from '../../../../realm/models/membership.model';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
-import { ProviderModel } from '../../../../realm/models/provider.model';
 import { UserModel } from '../../../../realm/models/user.model';
 import { BasePanel } from '../base.panel';
 
@@ -14,10 +14,10 @@ export class PrivilegesPanelComponent extends BasePanel {
   protected path: string = 'privileges';
 
   protected resolve: object = {
+    memberships: CrudJoiner.of(OrganisationModel, { approved: true })
+      .with('users').yield('provider'),
     organisations: CrudJoiner.of(OrganisationModel, { approved: false })
       .with('address').yield('suburb'),
-    providers: CrudJoiner.of(OrganisationModel, { approved: true })
-      .with('users').yield('provider'),
     users: CrudJoiner.of(UserModel)
       .with('blogger')
   };
@@ -27,13 +27,18 @@ export class PrivilegesPanelComponent extends BasePanel {
       .filter((user) => user.blogger && !user.blogger.approved);
   }
 
+  public get memberships(): MembershipModel[] {
+    return this.route.snapshot.data.memberships
+      .flatMap((organisation) => this.membership(organisation))
+      .filter((membership) => !membership.approved);
+  }
+
   public get organisations(): OrganisationModel[] {
     return this.route.snapshot.data.organisations || [];
   }
 
-  public get providers(): ProviderModel[] {
-    return this.route.snapshot.data.providers.flatMap((i) => this.provided(i))
-      .filter((provider) => !provider.approved);
+  public resetAllPasswords(): void {
+    this.userProvider.resetAllPasswords().subscribe();
   }
 
 }

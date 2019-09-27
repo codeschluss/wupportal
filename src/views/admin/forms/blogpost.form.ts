@@ -1,11 +1,14 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Box } from '@wooportal/core';
+import { ActivatedRoute } from '@angular/router';
+import { Box, TokenProvider } from '@wooportal/core';
 import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityModel } from '../../../realm/models/activity.model';
 import { BlogpostModel } from '../../../realm/models/blogpost.model';
+import { BlogpostProvider } from '../../../realm/providers/blogpost.provider';
+import { TranslationProvider } from '../../../realm/providers/translation.provider';
 import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
@@ -52,6 +55,15 @@ export class BlogpostFormComponent
 
   public model: Type<BlogpostModel> = BlogpostModel;
 
+  public constructor(
+    private blogpostProvider: BlogpostProvider,
+    route: ActivatedRoute,
+    tokenProvider: TokenProvider,
+    translationProvider: TranslationProvider
+  ) {
+    super(translationProvider, route, tokenProvider);
+  }
+
   public persist(): Observable<any> {
     this.item.activityId = (this.group.get('activity').value || { }).id;
 
@@ -65,11 +77,10 @@ export class BlogpostFormComponent
 
   protected cascade(item: BlogpostModel): Observable<any> {
     const links = [];
-    const provider = this.model['provider'];
 
     if (this.item.id) {
-      const actyID = this.item.activity && this.item.activity.id;
-      if (actyID !== this.item.activityId) { links.push(provider
+      const aId = this.item.activity && this.item.activity.id;
+      if (aId !== this.item.activityId) { links.push(this.blogpostProvider
         .relinkActivity(item.id, Box(this.item.activityId))); }
     }
 

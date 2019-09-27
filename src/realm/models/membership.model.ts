@@ -4,11 +4,11 @@ import { ActivityModel } from './activity.model';
 import { OrganisationModel } from './organisation.model';
 import { UserModel } from './user.model';
 
-export class ProviderModel
+export class MembershipModel
   extends CrudModel {
 
-  public admin: boolean;
   public approved: boolean;
+  public ownership: boolean;
 
   public activities: ActivityModel[] & Observable<ActivityModel[]>;
   public organisation: OrganisationModel & Observable<OrganisationModel>;
@@ -17,5 +17,8 @@ export class ProviderModel
   public get name(): string {
     return `${this.user.name} @ ${this.organisation.name}`;
   }
+
+  public get admin() { return this.ownership; }
+  public set admin(value) { this.ownership = value; }
 
 }

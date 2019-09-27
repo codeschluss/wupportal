@@ -1,10 +1,13 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Box } from '@wooportal/core';
+import { ActivatedRoute } from '@angular/router';
+import { Box, TokenProvider } from '@wooportal/core';
 import { BaseForm, FormField, StringFieldComponent, Tests, UrlFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../../../realm/models/organisation.model';
+import { OrganisationProvider } from '../../../realm/providers/organisation.provider';
+import { TranslationProvider } from '../../../realm/providers/translation.provider';
 import { TranslationBase } from '../../../realm/translations/translation.base';
 
 @Component({
@@ -81,6 +84,15 @@ export class OrganisationFormComponent
 
   public model: Type<OrganisationModel> = OrganisationModel;
 
+  public constructor(
+    private organisationProvider: OrganisationProvider,
+    route: ActivatedRoute,
+    tokenProvider: TokenProvider,
+    translationProvider: TranslationProvider
+  ) {
+    super(translationProvider, route, tokenProvider);
+  }
+
   public persist(): Observable<any> {
     this.item.addressId = this.group.get('address').value.id;
 
@@ -91,17 +103,16 @@ export class OrganisationFormComponent
 
   protected cascade(item: OrganisationModel): Observable<any> {
     const links = [];
-    const provider = this.model['provider'];
 
     const images = this.updated('images');
-    if (images.add.length) { links.push(provider
+    if (images.add.length) { links.push(this.organisationProvider
       .pasteImages(item.id, images.add)); }
-    if (images.del.length) { links.push(provider
+    if (images.del.length) { links.push(this.organisationProvider
       .unlinkImages(item.id, images.del.map((i) => i.id))); }
 
     if (this.item.id) {
-      const addrId = this.item.address && this.item.address.id;
-      if (addrId !== this.item.addressId) { links.push(provider
+      const aId = this.item.address && this.item.address.id;
+      if (aId !== this.item.addressId) { links.push(this.organisationProvider
         .relinkAddress(item.id, Box(this.item.addressId))); }
     }
 

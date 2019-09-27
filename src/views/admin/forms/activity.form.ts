@@ -10,6 +10,7 @@ import { CategoryModel } from '../../../realm/models/category.model';
 import { KeywordModel } from '../../../realm/models/keyword.model';
 import { OrganisationModel } from '../../../realm/models/organisation.model';
 import { TargetGroupModel } from '../../../realm/models/target-group.model';
+import { ActivityProvider } from '../../../realm/providers/activity.provider';
 import { TranslationProvider } from '../../../realm/providers/translation.provider';
 import { UserProvider } from '../../../realm/providers/user.provider';
 import { TranslationBase } from '../../../realm/translations/translation.base';
@@ -141,6 +142,7 @@ export class ActivityFormComponent
   }
 
   public constructor(
+    private activityProvider: ActivityProvider,
     private userProvider: UserProvider,
     route: ActivatedRoute,
     tokenProvider: TokenProvider,
@@ -189,37 +191,36 @@ export class ActivityFormComponent
 
   protected cascade(item: ActivityModel): Observable<any> {
     const links = [];
-    const provider = this.model['provider'];
 
     const schedules = this.updated('schedules');
-    if (schedules.add.length) { links.push(provider
+    if (schedules.add.length) { links.push(this.activityProvider
       .pasteSchedules(item.id, schedules.add)); }
-    if (schedules.del.length) { links.push(provider
+    if (schedules.del.length) { links.push(this.activityProvider
       .unlinkSchedules(item.id, schedules.del.map((i) => i.id))); }
 
     const tags = this.updated('tags');
-    if (tags.add.length) { links.push(provider
-      .pasteTags(item.id, tags.add)); }
-    if (tags.del.length) { links.push(provider
-      .unlinkTags(item.id, tags.del.map((i) => i.id))); }
+    if (tags.add.length) { links.push(this.activityProvider
+      .pasteKeywords(item.id, tags.add)); }
+    if (tags.del.length) { links.push(this.activityProvider
+      .unlinkKeywords(item.id, tags.del.map((i) => i.id))); }
 
     const targetGroups = this.updated('targetGroups');
-    if (targetGroups.add.length) { links.push(provider
+    if (targetGroups.add.length) { links.push(this.activityProvider
       .linkTargetGroups(item.id, targetGroups.add.map((i) => i.id))); }
-    if (targetGroups.del.length) { links.push(provider
+    if (targetGroups.del.length) { links.push(this.activityProvider
       .unlinkTargetGroups(item.id, targetGroups.del.map((i) => i.id))); }
 
     if (this.item.id) {
-      const addrId = this.item.address && this.item.address.id;
-      if (addrId !== this.item.addressId) { links.push(provider
+      const aId = this.item.address && this.item.address.id;
+      if (aId !== this.item.addressId) { links.push(this.activityProvider
         .relinkAddress(item.id, Box(this.item.addressId))); }
 
-      const goryId = this.item.category && this.item.category.id;
-      if (goryId !== this.item.categoryId) { links.push(provider
+      const cId = this.item.category && this.item.category.id;
+      if (cId !== this.item.categoryId) { links.push(this.activityProvider
         .relinkCategory(item.id, Box(this.item.categoryId))); }
 
-      const orgaId = this.item.organisation && this.item.organisation.id;
-      if (orgaId !== this.item.organisationId) { links.push(provider
+      const oId = this.item.organisation && this.item.organisation.id;
+      if (oId !== this.item.organisationId) { links.push(this.activityProvider
         .relinkOrganisation(item.id, Box(this.item.organisationId))); }
     }
 

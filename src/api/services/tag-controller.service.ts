@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { TagEntity } from '../models/tag-entity';
@@ -16,9 +16,16 @@ import { ResourceTagEntity } from '../models/resource-tag-entity';
 @Injectable({
   providedIn: 'root',
 })
-class TagControllerService extends BaseService {
+class TagControllerService extends __BaseService {
+  static readonly tagControllerReadAllPath = '/tags';
+  static readonly tagControllerCreatePath = '/tags';
+  static readonly tagControllerReadOnePath = '/tags/{tagId}';
+  static readonly tagControllerUpdatePath = '/tags/{tagId}';
+  static readonly tagControllerDeletePath = '/tags/{tagId}';
+  static readonly tagControllerReadTranslationsPath = '/tags/{tagId}/translations';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -41,7 +48,7 @@ class TagControllerService extends BaseService {
    *
    * @return OK
    */
-  tagControllerReadAllResponse(params: TagControllerService.TagControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  tagControllerReadAllResponse(params: TagControllerService.TagControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -64,7 +71,7 @@ class TagControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -85,7 +92,7 @@ class TagControllerService extends BaseService {
    *
    * @return OK
    */
-  tagControllerReadAll(params: TagControllerService.TagControllerReadAllParams): Observable<{}> {
+  tagControllerReadAll(params: TagControllerService.TagControllerReadAllParams): __Observable<{}> {
     return this.tagControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -95,7 +102,7 @@ class TagControllerService extends BaseService {
    * @param newTag newTag
    * @return OK
    */
-  tagControllerCreateResponse(newTag: TagEntity): Observable<StrictHttpResponse<{}>> {
+  tagControllerCreateResponse(newTag: TagEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -113,7 +120,7 @@ class TagControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -121,7 +128,7 @@ class TagControllerService extends BaseService {
    * @param newTag newTag
    * @return OK
    */
-  tagControllerCreate(newTag: TagEntity): Observable<{}> {
+  tagControllerCreate(newTag: TagEntity): __Observable<{}> {
     return this.tagControllerCreateResponse(newTag).pipe(
       __map(_r => _r.body as {})
     );
@@ -131,7 +138,7 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerReadOneResponse(tagId: string): Observable<StrictHttpResponse<ResourceTagEntity>> {
+  tagControllerReadOneResponse(tagId: string): __Observable<__StrictHttpResponse<ResourceTagEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -149,7 +156,7 @@ class TagControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceTagEntity>;
+        return _r as __StrictHttpResponse<ResourceTagEntity>;
       })
     );
   }
@@ -157,7 +164,7 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerReadOne(tagId: string): Observable<ResourceTagEntity> {
+  tagControllerReadOne(tagId: string): __Observable<ResourceTagEntity> {
     return this.tagControllerReadOneResponse(tagId).pipe(
       __map(_r => _r.body as ResourceTagEntity)
     );
@@ -169,7 +176,7 @@ class TagControllerService extends BaseService {
    * @return OK
    */
   tagControllerUpdateResponse(newTag: TagEntity,
-    tagId: string): Observable<StrictHttpResponse<{}>> {
+    tagId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -188,7 +195,7 @@ class TagControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -198,7 +205,7 @@ class TagControllerService extends BaseService {
    * @return OK
    */
   tagControllerUpdate(newTag: TagEntity,
-    tagId: string): Observable<{}> {
+    tagId: string): __Observable<{}> {
     return this.tagControllerUpdateResponse(newTag, tagId).pipe(
       __map(_r => _r.body as {})
     );
@@ -208,7 +215,7 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerDeleteResponse(tagId: string): Observable<StrictHttpResponse<{}>> {
+  tagControllerDeleteResponse(tagId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -226,7 +233,7 @@ class TagControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -234,7 +241,7 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerDelete(tagId: string): Observable<{}> {
+  tagControllerDelete(tagId: string): __Observable<{}> {
     return this.tagControllerDeleteResponse(tagId).pipe(
       __map(_r => _r.body as {})
     );
@@ -244,7 +251,7 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerReadTranslationsResponse(tagId: string): Observable<StrictHttpResponse<{}>> {
+  tagControllerReadTranslationsResponse(tagId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -262,7 +269,7 @@ class TagControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -270,7 +277,7 @@ class TagControllerService extends BaseService {
    * @param tagId tagId
    * @return OK
    */
-  tagControllerReadTranslations(tagId: string): Observable<{}> {
+  tagControllerReadTranslations(tagId: string): __Observable<{}> {
     return this.tagControllerReadTranslationsResponse(tagId).pipe(
       __map(_r => _r.body as {})
     );

@@ -88,14 +88,14 @@ export abstract class CrudProvider
 
   protected cast<T>(response: StrictHttpResponse<any>, t?: Type<Model>): T {
     const caster = (item) => Object.assign(new (t || this.model)(), item);
-    const data = (response.body['_embedded'] || { })['data'] || response.body;
+    const data = (response.body._embedded || { }).data || response.body;
 
     const casted = Array.isArray(data)
       ? data.map((item) => caster(item))
       : caster(data);
 
     return Object.defineProperties(casted, {
-      page: { value: response.body['page'] }
+      page: { value: response.body.page }
     });
   }
 
@@ -113,7 +113,7 @@ export abstract class CrudProvider
   }
 
   private walk(link: CrudLink, item: Model): Observable<any> {
-    const provider = link.model['provider'];
+    const provider = (link.model as any).provider;
     return provider ? this.call.apply(provider, [link.method, item.id]).pipe(
       map((response) => this.cast.apply(provider, [response, link.model])),
       tap((response) => this.link.apply(provider, [response]))) : of(null);

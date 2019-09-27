@@ -92,19 +92,21 @@
                 </a>
               </td>
             </tr>
-            <tr>
-              <td><i18n i18n="@@targetGroups">targetGroups</i18n></td>
-              <td>
-                <ng-container *ngFor="let targetGroup of item.targetGroups">
-                  <a mat-button
-                    [queryParams]="{ targetgroups: targetGroup.id }"
-                    [routerLink]="['/', 'activities']">
-                    <icon-compat icon="users"></icon-compat>
-                    {{ targetGroup.name }}
-                  </a>
-                </ng-container>
-              </td>
-            </tr>
+            <ng-container *ngIf="item.targetGroups?.length">
+              <tr>
+                <td><i18n i18n="@@targetGroups">targetGroups</i18n></td>
+                <td>
+                  <ng-container *ngFor="let targetGroup of item.targetGroups">
+                    <a mat-button
+                      [queryParams]="{ targetgroups: targetGroup.id }"
+                      [routerLink]="['/', 'activities']">
+                      <icon-compat icon="users"></icon-compat>
+                      {{ targetGroup.name }}
+                    </a>
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
           </table>
         </ng-template>
       </expand-compat>
@@ -153,15 +155,15 @@
           <organisation-card [item]="item.organisation"></organisation-card>
         </ng-template>
       </expand-compat>
-      <ng-container *ngIf="item.blogs">
+      <ng-container *ngIf="item.blogposts">
         <expand-compat #blogposts (changed)="$event && expanded(blogposts)">
           <ng-template #expandHeader>
             <icon-compat icon="at"></icon-compat>
             <i18n i18n="@@blogposts">blogposts</i18n>
-            <small>({{ item.blogs.length }})</small>
+            <small>({{ item.blogposts.length }})</small>
           </ng-template>
           <ng-template #expandContent>
-            <ng-container *ngFor="let blogpost of item.blogs">
+            <ng-container *ngFor="let blogpost of item.blogposts">
               <blogpost-card [item]="blogpost"></blogpost-card>
             </ng-container>
           </ng-template>

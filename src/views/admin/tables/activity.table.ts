@@ -41,7 +41,7 @@ export class ActivityTableComponent extends BaseTable<ActivityModel> {
     },
     {
       name: 'organisation',
-      value: (item) => item.provider.organisation.name
+      value: (item) => item.membership.organisation.name
     },
     {
       name: 'category',

@@ -4,10 +4,10 @@
       <ng-template #expandHeader>
         <icon-compat icon="info-circle"></icon-compat>
         {{ item.name }}
-        <small>({{ item.pages.length }})</small>
+        <small>({{ item.infopages.length }})</small>
       </ng-template>
       <ng-template #expandContent>
-        <ng-container *ngFor="let page of item.pages">
+        <ng-container *ngFor="let page of item.infopages">
           <infopage-card [item]="page"></infopage-card>
         </ng-container>
       </ng-template>

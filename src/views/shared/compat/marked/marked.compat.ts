@@ -21,7 +21,7 @@ export class MarkedCompatComponent
   public html: string;
 
   public ngOnInit() {
-    this.html = marked(this.data);
+    this.html = marked(this.data || '');
   }
 
 }

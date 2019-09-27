@@ -1,6 +1,15 @@
 <header class="mat-title">
   <i18n i18n="@@privilegesPanel">privilegesPanel</i18n>
+  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
+    <i18n i18n="@@actions">actions</i18n>
+  </button>
 </header>
+
+<mat-menu #actions="matMenu">
+  <button mat-menu-item (click)="resetAllPasswords()">
+    <i18n i18n="@@resetAllPasswords">resetAllPasswords</i18n>
+  </button>
+</mat-menu>
 
 <mat-tab-group [selectedIndex]="index">
   <mat-tab id="users">
@@ -26,7 +35,10 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <ng-container *ngIf="item.blogger">
-              <mat-slide-toggle disabled [checked]="item.blogger.approved">
+              <mat-slide-toggle
+                [disabled]="!item.blogger.approved"
+                [checked]="item.blogger.approved"
+                (change)="unlinkBlogger(item)">
               </mat-slide-toggle>
             </ng-container>
           </mat-cell>
@@ -36,13 +48,6 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            <ng-container *ngIf="item.blogger?.approved">
-              <button mat-icon-button
-                color="warn"
-                (click)="unlinkBlogger(item)">
-                <fa-icon icon="comment-slash"></fa-icon>
-              </button>
-            </ng-container>
             <button mat-icon-button
               color="warn"
               (click)="delete(item)">
@@ -83,14 +88,14 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="providers" [disabled]="!providers.length">
+  <mat-tab id="memberships" [disabled]="!memberships.length">
     <ng-template matTabLabel>
-      <span matBadgeOverlap="false" [matBadge]="providers.length || null">
-        <i18n i18n="@@providerRequests">providerRequests</i18n>
+      <span matBadgeOverlap="false" [matBadge]="memberships.length || null">
+        <i18n i18n="@@membershipRequests">membershipRequests</i18n>
       </span>
     </ng-template>
     <ng-template matTabContent>
-      <provider-table [items]="providers">
+      <membership-table [items]="memberships">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n i18n="@@actions">actions</i18n>
@@ -98,17 +103,17 @@
           <mat-cell *matCellDef="let item">
             <button mat-icon-button
               color="primary"
-              (click)="grantOrganisationUser(item, true)">
+              (click)="grantMembership(item, true)">
               <fa-icon icon="check"></fa-icon>
             </button>
             <button mat-icon-button
               color="warn"
-              (click)="grantOrganisationUser(item, false)">
+              (click)="grantMembership(item, false)">
               <fa-icon icon="times"></fa-icon>
             </button>
           </mat-cell>
         </ng-container>
-      </provider-table>
+      </membership-table>
     </ng-template>
   </mat-tab>
 

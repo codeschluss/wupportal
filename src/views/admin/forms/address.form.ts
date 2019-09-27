@@ -7,6 +7,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { AddressModel } from '../../../realm/models/address.model';
 import { SuburbModel } from '../../../realm/models/suburb.model';
+import { AddressProvider } from '../../../realm/providers/address.provider';
 import { ClientPackage } from '../../../utils/package';
 
 @Component({
@@ -118,6 +119,7 @@ export class AddressFormComponent
   }
 
   public constructor(
+    private addressProvider: AddressProvider,
     private crudResolver: CrudResolver,
     route: ActivatedRoute,
     tokenProvider: TokenProvider
@@ -173,11 +175,10 @@ export class AddressFormComponent
 
   protected cascade(item: AddressModel): Observable<any> {
     const links = [];
-    const provider = this.model['provider'];
 
     if (this.item.id) {
-      const surbId = this.item.suburb && this.item.suburb.id;
-      if (surbId !== this.item.suburbId) { links.push(provider
+      const sId = this.item.suburb && this.item.suburb.id;
+      if (sId !== this.item.suburbId) { links.push(this.addressProvider
         .relinkSuburb(item.id, Box(this.item.suburbId))); }
     }
 

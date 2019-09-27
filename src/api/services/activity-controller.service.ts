@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { ActivityEntity } from '../models/activity-entity';
@@ -20,9 +20,33 @@ import { TagEntity } from '../models/tag-entity';
 @Injectable({
   providedIn: 'root',
 })
-class ActivityControllerService extends BaseService {
+class ActivityControllerService extends __BaseService {
+  static readonly activityControllerReadAllPath = '/activities';
+  static readonly activityControllerCreatePath = '/activities';
+  static readonly activityControllerReadOnePath = '/activities/{activityId}';
+  static readonly activityControllerUpdatePath = '/activities/{activityId}';
+  static readonly activityControllerDeletePath = '/activities/{activityId}';
+  static readonly activityControllerReadAddressPath = '/activities/{activityId}/address';
+  static readonly activityControllerUpdateAddressPath = '/activities/{activityId}/address';
+  static readonly activityControllerReadBlogsPath = '/activities/{activityId}/blogs';
+  static readonly activityControllerReadCategoryPath = '/activities/{activityId}/category';
+  static readonly activityControllerUpdateCategoryPath = '/activities/{activityId}/category';
+  static readonly activityControllerIncreaseLikePath = '/activities/{activityId}/like';
+  static readonly activityControllerReadOrganisationPath = '/activities/{activityId}/organisation';
+  static readonly activityControllerUpdateOrganisationPath = '/activities/{activityId}/organisation';
+  static readonly activityControllerReadSchedulesPath = '/activities/{activityId}/schedules';
+  static readonly activityControllerAddSchedulesPath = '/activities/{activityId}/schedules';
+  static readonly activityControllerDeleteSchedulesPath = '/activities/{activityId}/schedules';
+  static readonly activityControllerReadTagsPath = '/activities/{activityId}/tags';
+  static readonly activityControllerAddTagsPath = '/activities/{activityId}/tags';
+  static readonly activityControllerDeleteTagsPath = '/activities/{activityId}/tags';
+  static readonly activityControllerReadTargetGroupsPath = '/activities/{activityId}/targetgroups';
+  static readonly activityControllerAddTargetGroupsPath = '/activities/{activityId}/targetgroups';
+  static readonly activityControllerDeleteTargetGroupsPath = '/activities/{activityId}/targetgroups';
+  static readonly activityControllerReadTranslationsPath = '/activities/{activityId}/translations';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -53,7 +77,7 @@ class ActivityControllerService extends BaseService {
    *
    * @return OK
    */
-  activityControllerReadAllResponse(params: ActivityControllerService.ActivityControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  activityControllerReadAllResponse(params: ActivityControllerService.ActivityControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -80,7 +104,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -109,7 +133,7 @@ class ActivityControllerService extends BaseService {
    *
    * @return OK
    */
-  activityControllerReadAll(params: ActivityControllerService.ActivityControllerReadAllParams): Observable<{}> {
+  activityControllerReadAll(params: ActivityControllerService.ActivityControllerReadAllParams): __Observable<{}> {
     return this.activityControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -119,7 +143,7 @@ class ActivityControllerService extends BaseService {
    * @param newActivity newActivity
    * @return OK
    */
-  activityControllerCreateResponse(newActivity: ActivityEntity): Observable<StrictHttpResponse<{}>> {
+  activityControllerCreateResponse(newActivity: ActivityEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -137,7 +161,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -145,7 +169,7 @@ class ActivityControllerService extends BaseService {
    * @param newActivity newActivity
    * @return OK
    */
-  activityControllerCreate(newActivity: ActivityEntity): Observable<{}> {
+  activityControllerCreate(newActivity: ActivityEntity): __Observable<{}> {
     return this.activityControllerCreateResponse(newActivity).pipe(
       __map(_r => _r.body as {})
     );
@@ -155,7 +179,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadOneResponse(activityId: string): Observable<StrictHttpResponse<ResourceActivityEntity>> {
+  activityControllerReadOneResponse(activityId: string): __Observable<__StrictHttpResponse<ResourceActivityEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -173,7 +197,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceActivityEntity>;
+        return _r as __StrictHttpResponse<ResourceActivityEntity>;
       })
     );
   }
@@ -181,7 +205,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadOne(activityId: string): Observable<ResourceActivityEntity> {
+  activityControllerReadOne(activityId: string): __Observable<ResourceActivityEntity> {
     return this.activityControllerReadOneResponse(activityId).pipe(
       __map(_r => _r.body as ResourceActivityEntity)
     );
@@ -193,7 +217,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateResponse(newActivity: ActivityEntity,
-    activityId: string): Observable<StrictHttpResponse<{}>> {
+    activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -212,7 +236,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -222,7 +246,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdate(newActivity: ActivityEntity,
-    activityId: string): Observable<{}> {
+    activityId: string): __Observable<{}> {
     return this.activityControllerUpdateResponse(newActivity, activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -232,7 +256,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerDeleteResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerDeleteResponse(activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -250,7 +274,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -258,7 +282,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerDelete(activityId: string): Observable<{}> {
+  activityControllerDelete(activityId: string): __Observable<{}> {
     return this.activityControllerDeleteResponse(activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -268,7 +292,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadAddressResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerReadAddressResponse(activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -286,7 +310,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -294,7 +318,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadAddress(activityId: string): Observable<{}> {
+  activityControllerReadAddress(activityId: string): __Observable<{}> {
     return this.activityControllerReadAddressResponse(activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -306,7 +330,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateAddressResponse(activityId: string,
-    addressId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
+    addressId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -325,7 +349,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -335,7 +359,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateAddress(activityId: string,
-    addressId: StringPrimitive): Observable<{}> {
+    addressId: StringPrimitive): __Observable<{}> {
     return this.activityControllerUpdateAddressResponse(activityId, addressId).pipe(
       __map(_r => _r.body as {})
     );
@@ -351,7 +375,7 @@ class ActivityControllerService extends BaseService {
   activityControllerReadBlogsResponse(activityId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -372,7 +396,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -386,7 +410,7 @@ class ActivityControllerService extends BaseService {
   activityControllerReadBlogs(activityId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<{}> {
+    embeddings?: string): __Observable<{}> {
     return this.activityControllerReadBlogsResponse(activityId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
@@ -396,7 +420,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadCategoryResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerReadCategoryResponse(activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -414,7 +438,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -422,7 +446,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadCategory(activityId: string): Observable<{}> {
+  activityControllerReadCategory(activityId: string): __Observable<{}> {
     return this.activityControllerReadCategoryResponse(activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -434,7 +458,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateCategoryResponse(activityId: string,
-    categoryId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
+    categoryId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -453,7 +477,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -463,7 +487,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateCategory(activityId: string,
-    categoryId: StringPrimitive): Observable<{}> {
+    categoryId: StringPrimitive): __Observable<{}> {
     return this.activityControllerUpdateCategoryResponse(activityId, categoryId).pipe(
       __map(_r => _r.body as {})
     );
@@ -473,7 +497,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerIncreaseLikeResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerIncreaseLikeResponse(activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -491,7 +515,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -499,7 +523,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerIncreaseLike(activityId: string): Observable<{}> {
+  activityControllerIncreaseLike(activityId: string): __Observable<{}> {
     return this.activityControllerIncreaseLikeResponse(activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -509,7 +533,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadOrganisationResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerReadOrganisationResponse(activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -527,7 +551,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -535,7 +559,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadOrganisation(activityId: string): Observable<{}> {
+  activityControllerReadOrganisation(activityId: string): __Observable<{}> {
     return this.activityControllerReadOrganisationResponse(activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -547,7 +571,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateOrganisationResponse(activityId: string,
-    organisationId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
+    organisationId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -566,7 +590,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -576,7 +600,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerUpdateOrganisation(activityId: string,
-    organisationId: StringPrimitive): Observable<{}> {
+    organisationId: StringPrimitive): __Observable<{}> {
     return this.activityControllerUpdateOrganisationResponse(activityId, organisationId).pipe(
       __map(_r => _r.body as {})
     );
@@ -592,7 +616,7 @@ class ActivityControllerService extends BaseService {
   activityControllerReadSchedulesResponse(activityId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -613,7 +637,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -627,7 +651,7 @@ class ActivityControllerService extends BaseService {
   activityControllerReadSchedules(activityId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<{}> {
+    embeddings?: string): __Observable<{}> {
     return this.activityControllerReadSchedulesResponse(activityId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
@@ -639,7 +663,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddSchedulesResponse(activityId: string,
-    schedules: Array<ScheduleEntity>): Observable<StrictHttpResponse<ResourcesObject>> {
+    schedules: Array<ScheduleEntity>): __Observable<__StrictHttpResponse<ResourcesObject>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -658,7 +682,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourcesObject>;
+        return _r as __StrictHttpResponse<ResourcesObject>;
       })
     );
   }
@@ -668,7 +692,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddSchedules(activityId: string,
-    schedules: Array<ScheduleEntity>): Observable<ResourcesObject> {
+    schedules: Array<ScheduleEntity>): __Observable<ResourcesObject> {
     return this.activityControllerAddSchedulesResponse(activityId, schedules).pipe(
       __map(_r => _r.body as ResourcesObject)
     );
@@ -680,7 +704,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerDeleteSchedulesResponse(activityId: string,
-    scheduleIds: Array<string>): Observable<StrictHttpResponse<{}>> {
+    scheduleIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -699,7 +723,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -709,7 +733,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerDeleteSchedules(activityId: string,
-    scheduleIds: Array<string>): Observable<{}> {
+    scheduleIds: Array<string>): __Observable<{}> {
     return this.activityControllerDeleteSchedulesResponse(activityId, scheduleIds).pipe(
       __map(_r => _r.body as {})
     );
@@ -725,7 +749,7 @@ class ActivityControllerService extends BaseService {
   activityControllerReadTagsResponse(activityId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -746,7 +770,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -760,7 +784,7 @@ class ActivityControllerService extends BaseService {
   activityControllerReadTags(activityId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<{}> {
+    embeddings?: string): __Observable<{}> {
     return this.activityControllerReadTagsResponse(activityId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
@@ -772,7 +796,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddTagsResponse(activityId: string,
-    tags: Array<TagEntity>): Observable<StrictHttpResponse<{}>> {
+    tags: Array<TagEntity>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -791,7 +815,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -801,7 +825,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddTags(activityId: string,
-    tags: Array<TagEntity>): Observable<{}> {
+    tags: Array<TagEntity>): __Observable<{}> {
     return this.activityControllerAddTagsResponse(activityId, tags).pipe(
       __map(_r => _r.body as {})
     );
@@ -813,7 +837,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerDeleteTagsResponse(activityId: string,
-    tagIds: Array<string>): Observable<StrictHttpResponse<{}>> {
+    tagIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -832,7 +856,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -842,7 +866,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerDeleteTags(activityId: string,
-    tagIds: Array<string>): Observable<{}> {
+    tagIds: Array<string>): __Observable<{}> {
     return this.activityControllerDeleteTagsResponse(activityId, tagIds).pipe(
       __map(_r => _r.body as {})
     );
@@ -858,7 +882,7 @@ class ActivityControllerService extends BaseService {
   activityControllerReadTargetGroupsResponse(activityId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<StrictHttpResponse<{}>> {
+    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -879,7 +903,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -893,7 +917,7 @@ class ActivityControllerService extends BaseService {
   activityControllerReadTargetGroups(activityId: string,
     sort?: string,
     dir?: string,
-    embeddings?: string): Observable<{}> {
+    embeddings?: string): __Observable<{}> {
     return this.activityControllerReadTargetGroupsResponse(activityId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
@@ -905,7 +929,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddTargetGroupsResponse(activityId: string,
-    targetGroupIds: Array<string>): Observable<StrictHttpResponse<{}>> {
+    targetGroupIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -924,7 +948,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -934,7 +958,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerAddTargetGroups(activityId: string,
-    targetGroupIds: Array<string>): Observable<{}> {
+    targetGroupIds: Array<string>): __Observable<{}> {
     return this.activityControllerAddTargetGroupsResponse(activityId, targetGroupIds).pipe(
       __map(_r => _r.body as {})
     );
@@ -946,7 +970,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerDeleteTargetGroupsResponse(activityId: string,
-    targetGroupIds: Array<string>): Observable<StrictHttpResponse<{}>> {
+    targetGroupIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -965,7 +989,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -975,7 +999,7 @@ class ActivityControllerService extends BaseService {
    * @return OK
    */
   activityControllerDeleteTargetGroups(activityId: string,
-    targetGroupIds: Array<string>): Observable<{}> {
+    targetGroupIds: Array<string>): __Observable<{}> {
     return this.activityControllerDeleteTargetGroupsResponse(activityId, targetGroupIds).pipe(
       __map(_r => _r.body as {})
     );
@@ -985,7 +1009,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadTranslationsResponse(activityId: string): Observable<StrictHttpResponse<{}>> {
+  activityControllerReadTranslationsResponse(activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -1003,7 +1027,7 @@ class ActivityControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -1011,7 +1035,7 @@ class ActivityControllerService extends BaseService {
    * @param activityId activityId
    * @return OK
    */
-  activityControllerReadTranslations(activityId: string): Observable<{}> {
+  activityControllerReadTranslations(activityId: string): __Observable<{}> {
     return this.activityControllerReadTranslationsResponse(activityId).pipe(
       __map(_r => _r.body as {})
     );

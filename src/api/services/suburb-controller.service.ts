@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { SuburbEntity } from '../models/suburb-entity';
@@ -16,9 +16,15 @@ import { ResourceSuburbEntity } from '../models/resource-suburb-entity';
 @Injectable({
   providedIn: 'root',
 })
-class SuburbControllerService extends BaseService {
+class SuburbControllerService extends __BaseService {
+  static readonly suburbControllerReadAllPath = '/suburbs';
+  static readonly suburbControllerCreatePath = '/suburbs';
+  static readonly suburbControllerReadOnePath = '/suburbs/{surburbId}';
+  static readonly suburbControllerUpdatePath = '/suburbs/{surburbId}';
+  static readonly suburbControllerDeletePath = '/suburbs/{surburbId}';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -41,7 +47,7 @@ class SuburbControllerService extends BaseService {
    *
    * @return OK
    */
-  suburbControllerReadAllResponse(params: SuburbControllerService.SuburbControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  suburbControllerReadAllResponse(params: SuburbControllerService.SuburbControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -64,7 +70,7 @@ class SuburbControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -85,7 +91,7 @@ class SuburbControllerService extends BaseService {
    *
    * @return OK
    */
-  suburbControllerReadAll(params: SuburbControllerService.SuburbControllerReadAllParams): Observable<{}> {
+  suburbControllerReadAll(params: SuburbControllerService.SuburbControllerReadAllParams): __Observable<{}> {
     return this.suburbControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -95,7 +101,7 @@ class SuburbControllerService extends BaseService {
    * @param newSuburb newSuburb
    * @return OK
    */
-  suburbControllerCreateResponse(newSuburb: SuburbEntity): Observable<StrictHttpResponse<{}>> {
+  suburbControllerCreateResponse(newSuburb: SuburbEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -113,7 +119,7 @@ class SuburbControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -121,7 +127,7 @@ class SuburbControllerService extends BaseService {
    * @param newSuburb newSuburb
    * @return OK
    */
-  suburbControllerCreate(newSuburb: SuburbEntity): Observable<{}> {
+  suburbControllerCreate(newSuburb: SuburbEntity): __Observable<{}> {
     return this.suburbControllerCreateResponse(newSuburb).pipe(
       __map(_r => _r.body as {})
     );
@@ -131,7 +137,7 @@ class SuburbControllerService extends BaseService {
    * @param surburbId surburbId
    * @return OK
    */
-  suburbControllerReadOneResponse(surburbId: string): Observable<StrictHttpResponse<ResourceSuburbEntity>> {
+  suburbControllerReadOneResponse(surburbId: string): __Observable<__StrictHttpResponse<ResourceSuburbEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -149,7 +155,7 @@ class SuburbControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceSuburbEntity>;
+        return _r as __StrictHttpResponse<ResourceSuburbEntity>;
       })
     );
   }
@@ -157,7 +163,7 @@ class SuburbControllerService extends BaseService {
    * @param surburbId surburbId
    * @return OK
    */
-  suburbControllerReadOne(surburbId: string): Observable<ResourceSuburbEntity> {
+  suburbControllerReadOne(surburbId: string): __Observable<ResourceSuburbEntity> {
     return this.suburbControllerReadOneResponse(surburbId).pipe(
       __map(_r => _r.body as ResourceSuburbEntity)
     );
@@ -169,7 +175,7 @@ class SuburbControllerService extends BaseService {
    * @return OK
    */
   suburbControllerUpdateResponse(newSuburb: SuburbEntity,
-    surburbId: string): Observable<StrictHttpResponse<{}>> {
+    surburbId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -188,7 +194,7 @@ class SuburbControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -198,7 +204,7 @@ class SuburbControllerService extends BaseService {
    * @return OK
    */
   suburbControllerUpdate(newSuburb: SuburbEntity,
-    surburbId: string): Observable<{}> {
+    surburbId: string): __Observable<{}> {
     return this.suburbControllerUpdateResponse(newSuburb, surburbId).pipe(
       __map(_r => _r.body as {})
     );
@@ -208,7 +214,7 @@ class SuburbControllerService extends BaseService {
    * @param surburbId surburbId
    * @return OK
    */
-  suburbControllerDeleteResponse(surburbId: string): Observable<StrictHttpResponse<{}>> {
+  suburbControllerDeleteResponse(surburbId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -226,7 +232,7 @@ class SuburbControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -234,7 +240,7 @@ class SuburbControllerService extends BaseService {
    * @param surburbId surburbId
    * @return OK
    */
-  suburbControllerDelete(surburbId: string): Observable<{}> {
+  suburbControllerDelete(surburbId: string): __Observable<{}> {
     return this.suburbControllerDeleteResponse(surburbId).pipe(
       __map(_r => _r.body as {})
     );

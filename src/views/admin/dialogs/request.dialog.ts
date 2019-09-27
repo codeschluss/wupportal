@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatInput } from '@angular/material/input';
 import { MatSelectionListChange } from '@angular/material/list';
 import { TokenProvider } from '@wooportal/core';
-import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, mergeMap, startWith, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, mergeMap, startWith, take } from 'rxjs/operators';
 import { OrganisationModel } from '../../../realm/models/organisation.model';
 import { OrganisationProvider } from '../../../realm/providers/organisation.provider';
 import { UserProvider } from '../../../realm/providers/user.provider';
@@ -55,6 +55,7 @@ export class RequestDialogComponent implements OnInit {
   private search: MatInput;
 
   public constructor(
+    @Inject(MAT_DIALOG_DATA) private data: any,
     private dialog: MatDialogRef<RequestDialogComponent>,
     private organisationProvider: OrganisationProvider,
     private tokenProvider: TokenProvider,
@@ -69,7 +70,7 @@ export class RequestDialogComponent implements OnInit {
       // tslint:disable-next-line:deprecation
       startWith(null),
       distinctUntilChanged(),
-      mergeMap((label) => this.suggest(label)),
+      mergeMap((filter) => this.suggest(filter)),
     ).subscribe((items) => this.items = items);
   }
 
@@ -85,17 +86,17 @@ export class RequestDialogComponent implements OnInit {
       : this.ids.push(event.option.value);
   }
 
-  private suggest(label: string = ''): Observable<OrganisationModel[]> {
-    return forkJoin([
-      this.organisationProvider.readAll({ approved: true, filter: label }),
-      this.tokenProvider.value.pipe(take(1))
-    ]).pipe(
-      map(([items, tokens]) => items.filter((item) =>
-        !tokens.access.adminOrgas.includes(item.id) &&
-        !tokens.access.approvedOrgas.includes(item.id)
-      )),
-      catchError(() => of([]))
-    );
+  private suggest(filter: string = ''): Observable<OrganisationModel[]> {
+    return this.organisationProvider.readAll({
+      approved: true,
+      filter
+    }).pipe(map((items) => items.filter((item) => {
+      try {
+        return !this.data.organisations.find((o) => o.id === item.id);
+      } catch {
+        return true;
+      }
+    })));
   }
 
 }

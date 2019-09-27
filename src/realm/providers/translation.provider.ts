@@ -26,9 +26,9 @@ export class TranslationProvider {
 
   public update(item: CrudModel): Observable<any> {
     if (item.language) {
-      const header = { 'Content-Language': item.language['locale'] };
-      const provider = item.constructor['provider'].system;
-      const root = item.constructor['stepper'].root;
+      const header = { 'Content-Language': (item.language as any).locale };
+      const provider = (item.constructor as any).provider.system;
+      const root = (item.constructor as any).stepper.root;
 
       return this.httpClient.request<any>(new HttpRequest<any>(
         'PUT',

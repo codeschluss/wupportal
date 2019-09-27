@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { AddressEntity } from '../models/address-entity';
@@ -18,9 +18,17 @@ import { StringPrimitive } from '../models/string-primitive';
 @Injectable({
   providedIn: 'root',
 })
-class AddressControllerService extends BaseService {
+class AddressControllerService extends __BaseService {
+  static readonly addressControllerReadAllPath = '/addresses';
+  static readonly addressControllerCreatePath = '/addresses';
+  static readonly addressControllerReadOnePath = '/addresses/{addressId}';
+  static readonly addressControllerUpdatePath = '/addresses/{addressId}';
+  static readonly addressControllerDeletePath = '/addresses/{addressId}';
+  static readonly addressControllerReadSuburbPath = '/addresses/{addressId}/suburb';
+  static readonly addressControllerUpdateSuburbPath = '/addresses/{addressId}/suburb';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -43,7 +51,7 @@ class AddressControllerService extends BaseService {
    *
    * @return OK
    */
-  addressControllerReadAllResponse(params: AddressControllerService.AddressControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  addressControllerReadAllResponse(params: AddressControllerService.AddressControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -66,7 +74,7 @@ class AddressControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -87,7 +95,7 @@ class AddressControllerService extends BaseService {
    *
    * @return OK
    */
-  addressControllerReadAll(params: AddressControllerService.AddressControllerReadAllParams): Observable<{}> {
+  addressControllerReadAll(params: AddressControllerService.AddressControllerReadAllParams): __Observable<{}> {
     return this.addressControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -97,7 +105,7 @@ class AddressControllerService extends BaseService {
    * @param newAddress newAddress
    * @return OK
    */
-  addressControllerCreateResponse(newAddress: AddressEntity): Observable<StrictHttpResponse<{}>> {
+  addressControllerCreateResponse(newAddress: AddressEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -115,7 +123,7 @@ class AddressControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -123,7 +131,7 @@ class AddressControllerService extends BaseService {
    * @param newAddress newAddress
    * @return OK
    */
-  addressControllerCreate(newAddress: AddressEntity): Observable<{}> {
+  addressControllerCreate(newAddress: AddressEntity): __Observable<{}> {
     return this.addressControllerCreateResponse(newAddress).pipe(
       __map(_r => _r.body as {})
     );
@@ -133,7 +141,7 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerReadOneResponse(addressId: string): Observable<StrictHttpResponse<ResourceAddressEntity>> {
+  addressControllerReadOneResponse(addressId: string): __Observable<__StrictHttpResponse<ResourceAddressEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -151,7 +159,7 @@ class AddressControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceAddressEntity>;
+        return _r as __StrictHttpResponse<ResourceAddressEntity>;
       })
     );
   }
@@ -159,7 +167,7 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerReadOne(addressId: string): Observable<ResourceAddressEntity> {
+  addressControllerReadOne(addressId: string): __Observable<ResourceAddressEntity> {
     return this.addressControllerReadOneResponse(addressId).pipe(
       __map(_r => _r.body as ResourceAddressEntity)
     );
@@ -171,7 +179,7 @@ class AddressControllerService extends BaseService {
    * @return OK
    */
   addressControllerUpdateResponse(newAddress: AddressEntity,
-    addressId: string): Observable<StrictHttpResponse<{}>> {
+    addressId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -190,7 +198,7 @@ class AddressControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -200,7 +208,7 @@ class AddressControllerService extends BaseService {
    * @return OK
    */
   addressControllerUpdate(newAddress: AddressEntity,
-    addressId: string): Observable<{}> {
+    addressId: string): __Observable<{}> {
     return this.addressControllerUpdateResponse(newAddress, addressId).pipe(
       __map(_r => _r.body as {})
     );
@@ -210,7 +218,7 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerDeleteResponse(addressId: string): Observable<StrictHttpResponse<{}>> {
+  addressControllerDeleteResponse(addressId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -228,7 +236,7 @@ class AddressControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -236,7 +244,7 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerDelete(addressId: string): Observable<{}> {
+  addressControllerDelete(addressId: string): __Observable<{}> {
     return this.addressControllerDeleteResponse(addressId).pipe(
       __map(_r => _r.body as {})
     );
@@ -246,7 +254,7 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerReadSuburbResponse(addressId: string): Observable<StrictHttpResponse<ResourceObject>> {
+  addressControllerReadSuburbResponse(addressId: string): __Observable<__StrictHttpResponse<ResourceObject>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -264,7 +272,7 @@ class AddressControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceObject>;
+        return _r as __StrictHttpResponse<ResourceObject>;
       })
     );
   }
@@ -272,7 +280,7 @@ class AddressControllerService extends BaseService {
    * @param addressId addressId
    * @return OK
    */
-  addressControllerReadSuburb(addressId: string): Observable<ResourceObject> {
+  addressControllerReadSuburb(addressId: string): __Observable<ResourceObject> {
     return this.addressControllerReadSuburbResponse(addressId).pipe(
       __map(_r => _r.body as ResourceObject)
     );
@@ -284,7 +292,7 @@ class AddressControllerService extends BaseService {
    * @return OK
    */
   addressControllerUpdateSuburbResponse(addressId: string,
-    suburbId: StringPrimitive): Observable<StrictHttpResponse<ResourceObject>> {
+    suburbId: StringPrimitive): __Observable<__StrictHttpResponse<ResourceObject>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -303,7 +311,7 @@ class AddressControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceObject>;
+        return _r as __StrictHttpResponse<ResourceObject>;
       })
     );
   }
@@ -313,7 +321,7 @@ class AddressControllerService extends BaseService {
    * @return OK
    */
   addressControllerUpdateSuburb(addressId: string,
-    suburbId: StringPrimitive): Observable<ResourceObject> {
+    suburbId: StringPrimitive): __Observable<ResourceObject> {
     return this.addressControllerUpdateSuburbResponse(addressId, suburbId).pipe(
       __map(_r => _r.body as ResourceObject)
     );

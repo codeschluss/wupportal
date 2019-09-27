@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { News } from '../models/news';
@@ -16,9 +16,13 @@ import { SubscriptionEntity } from '../models/subscription-entity';
 @Injectable({
   providedIn: 'root',
 })
-class NewsControllerService extends BaseService {
+class NewsControllerService extends __BaseService {
+  static readonly newsControllerPushNewsPath = '/news/push';
+  static readonly newsControllerSubscribePath = '/news/subscribe';
+  static readonly newsControllerUnsubscribePath = '/news/unsubscribe/{subscriptionId}';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -28,7 +32,7 @@ class NewsControllerService extends BaseService {
    * @param news news
    * @return OK
    */
-  newsControllerPushNewsResponse(news: News): Observable<StrictHttpResponse<{}>> {
+  newsControllerPushNewsResponse(news: News): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -46,7 +50,7 @@ class NewsControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -54,7 +58,7 @@ class NewsControllerService extends BaseService {
    * @param news news
    * @return OK
    */
-  newsControllerPushNews(news: News): Observable<{}> {
+  newsControllerPushNews(news: News): __Observable<{}> {
     return this.newsControllerPushNewsResponse(news).pipe(
       __map(_r => _r.body as {})
     );
@@ -64,7 +68,7 @@ class NewsControllerService extends BaseService {
    * @param newSubscription newSubscription
    * @return OK
    */
-  newsControllerSubscribeResponse(newSubscription: SubscriptionEntity): Observable<StrictHttpResponse<{}>> {
+  newsControllerSubscribeResponse(newSubscription: SubscriptionEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -82,7 +86,7 @@ class NewsControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -90,7 +94,7 @@ class NewsControllerService extends BaseService {
    * @param newSubscription newSubscription
    * @return OK
    */
-  newsControllerSubscribe(newSubscription: SubscriptionEntity): Observable<{}> {
+  newsControllerSubscribe(newSubscription: SubscriptionEntity): __Observable<{}> {
     return this.newsControllerSubscribeResponse(newSubscription).pipe(
       __map(_r => _r.body as {})
     );
@@ -100,7 +104,7 @@ class NewsControllerService extends BaseService {
    * @param subscriptionId subscriptionId
    * @return OK
    */
-  newsControllerUnsubscribeResponse(subscriptionId: string): Observable<StrictHttpResponse<{}>> {
+  newsControllerUnsubscribeResponse(subscriptionId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -118,7 +122,7 @@ class NewsControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -126,7 +130,7 @@ class NewsControllerService extends BaseService {
    * @param subscriptionId subscriptionId
    * @return OK
    */
-  newsControllerUnsubscribe(subscriptionId: string): Observable<{}> {
+  newsControllerUnsubscribe(subscriptionId: string): __Observable<{}> {
     return this.newsControllerUnsubscribeResponse(subscriptionId).pipe(
       __map(_r => _r.body as {})
     );

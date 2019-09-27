@@ -92,19 +92,21 @@
                 </a>
               </td>
             </tr>
-            <tr>
-              <td><i18n i18n="@@targetGroups">targetGroups</i18n></td>
-              <td>
-                <ng-container *ngFor="let targetGroup of item.targetGroups">
-                  <a mat-button
-                    [queryParams]="{ targetgroups: targetGroup.id }"
-                    [routerLink]="['/', 'activities']">
-                    <icon-compat icon="users"></icon-compat>
-                    {{ targetGroup.name }}
-                  </a>
-                </ng-container>
-              </td>
-            </tr>
+            <ng-container *ngIf="item.targetGroups?.length">
+              <tr>
+                <td><i18n i18n="@@targetGroups">targetGroups</i18n></td>
+                <td>
+                  <ng-container *ngFor="let targetGroup of item.targetGroups">
+                    <a mat-button
+                      [queryParams]="{ targetgroups: targetGroup.id }"
+                      [routerLink]="['/', 'activities']">
+                      <icon-compat icon="users"></icon-compat>
+                      {{ targetGroup.name }}
+                    </a>
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
           </table>
         </ng-template>
       </expand-compat>

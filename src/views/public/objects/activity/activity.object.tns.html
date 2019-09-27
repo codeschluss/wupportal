@@ -83,19 +83,21 @@
               <label [text]="item.address.suburb.name"></label>
             </stack-layout>
           </stack-layout>
-          <stack-layout class="detail">
-            <i18n i18n="@@targetGroups" unit="targetGroups"></i18n>
-            <stack-layout>
-              <ng-container *ngFor="let targetGroup of item.targetGroups">
-                <stack-layout ripple
-                  (tap)="router.navigate(['/', 'activities'],
-                    { queryParams: { targetgroups: targetGroup.id } })">
-                  <icon-compat icon="users"></icon-compat>
-                  <label [text]="targetGroup.name"></label>
-                </stack-layout>
-              </ng-container>
+          <ng-container *ngIf="item.targetGroups?.length">
+            <stack-layout class="detail">
+              <i18n i18n="@@targetGroups" unit="targetGroups"></i18n>
+              <stack-layout>
+                <ng-container *ngFor="let targetGroup of item.targetGroups">
+                  <stack-layout ripple
+                    (tap)="router.navigate(['/', 'activities'],
+                      { queryParams: { targetgroups: targetGroup.id } })">
+                    <icon-compat icon="users"></icon-compat>
+                    <label [text]="targetGroup.name"></label>
+                  </stack-layout>
+                </ng-container>
+              </stack-layout>
             </stack-layout>
-          </stack-layout>
+          </ng-container>
         </ng-template>
       </expand-compat>
       <expand-compat #schedules

@@ -35,7 +35,7 @@ export class ErrorModel {
     }
   }
 
-  public get ignored(): boolean {
+  public get ignore(): boolean {
     switch (true) {
       case this.raw === 'ResizeObserver loop limit exceeded':
       case this.raw.message === 'ResizeObserver loop limit exceeded':

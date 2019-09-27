@@ -7,8 +7,8 @@ import { UserControllerService } from '../../api/services/user-controller.servic
 import { ActivityModel } from '../models/activity.model';
 import { BloggerModel } from '../models/blogger.model';
 import { BlogpostModel } from '../models/blogpost.model';
+import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel } from '../models/organisation.model';
-import { ProviderModel } from '../models/provider.model';
 import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -39,12 +39,12 @@ export class UserProvider
     {
       field: 'provider',
       method: () => EMPTY,
-      model: ProviderModel
+      model: MembershipModel
     },
     {
       field: 'providers',
       method: () => EMPTY,
-      model: ProviderModel
+      model: MembershipModel
     }
   ];
 
@@ -83,6 +83,10 @@ export class UserProvider
     (id: string, grant: Boolean) => Observable<any> =
       this.apply(this.service.userControllerGrantSuperuserRightResponse);
 
+  public resetAllPasswords:
+    () => Observable<any> =
+      this.apply(this.service.userControllerResetAllPasswordsResponse);
+
   public resetPassword:
     (username: String) => Observable<any> =
       this.apply(this.service.userControllerResetPasswordResponse);
@@ -99,7 +103,7 @@ export class UserProvider
     (id: string, activityId: string) => Observable<any> =
       this.apply(this.service.userControllerDeleteActivityResponse);
 
-  public unlinkBlog:
+  public unlinkBlogpost:
       (id: string, blogId: string) => Observable<any> =
         this.apply(this.service.userControllerDeleteBlogResponse);
 

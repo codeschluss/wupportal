@@ -34,20 +34,20 @@ export class AccountPanelComponent extends BasePanel {
     return this.user.activities || [];
   }
 
+  public get approved(): boolean {
+    return this.organisations.some((item) => item.approved);
+  }
+
   public get blogger(): boolean {
     return this.user.blogger && this.user.blogger.approved;
   }
 
   public get blogposts(): BlogpostModel[] {
-    return this.user.blogs || [];
+    return this.user.blogposts || [];
   }
 
   public get organisations(): OrganisationModel[] {
     return this.user.organisations || [];
-  }
-
-  public get provides(): boolean {
-    return this.organisations.some((item) => item.approved);
   }
 
   public get name(): string {
@@ -63,8 +63,9 @@ export class AccountPanelComponent extends BasePanel {
   }
 
   public joinOrganisations(): void {
-    this.dialog.open(RequestDialogComponent).afterClosed()
-      .pipe(filter(Boolean)).subscribe(() => this.reload());
+    this.dialog.open(RequestDialogComponent, {
+      data: this.user
+    }).afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
   }
 
 }

@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { TranslationResult } from '../models/translation-result';
@@ -15,9 +15,11 @@ import { TranslationResult } from '../models/translation-result';
 @Injectable({
   providedIn: 'root',
 })
-class TranslationControllerService extends BaseService {
+class TranslationControllerService extends __BaseService {
+  static readonly translationControllerTranslatePath = '/translations/translate';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -31,7 +33,7 @@ class TranslationControllerService extends BaseService {
    */
   translationControllerTranslateResponse(labels: {[key: string]: string},
     targets?: Array<string>,
-    source?: string): Observable<StrictHttpResponse<Array<TranslationResult>>> {
+    source?: string): __Observable<__StrictHttpResponse<Array<TranslationResult>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -51,7 +53,7 @@ class TranslationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<Array<TranslationResult>>;
+        return _r as __StrictHttpResponse<Array<TranslationResult>>;
       })
     );
   }
@@ -63,7 +65,7 @@ class TranslationControllerService extends BaseService {
    */
   translationControllerTranslate(labels: {[key: string]: string},
     targets?: Array<string>,
-    source?: string): Observable<Array<TranslationResult>> {
+    source?: string): __Observable<Array<TranslationResult>> {
     return this.translationControllerTranslateResponse(labels, targets, source).pipe(
       __map(_r => _r.body as Array<TranslationResult>)
     );

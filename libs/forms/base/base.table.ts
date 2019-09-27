@@ -125,7 +125,7 @@ export abstract class BaseTable<Model extends CrudModel>
 
   private fetch(): void {
     const graph = this.joiner.graph;
-    const provider = this.model['provider'].system;
+    const provider = (this.model as any).provider.system;
 
     provider.call(provider.methods.readAll, {
       dir: this.sorter.direction,

@@ -7,15 +7,16 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
+import { Feedback } from '../models/feedback';
 
 /**
- * Security Controller
+ * Feedback Controller
  */
 @Injectable({
   providedIn: 'root',
 })
-class SecurityControllerService extends __BaseService {
-  static readonly securityControllerRefreshTokenPath = '/refresh';
+class FeedbackControllerService extends __BaseService {
+  static readonly feedbackControllerFeedbackPath = '/feedback';
 
   constructor(
     config: __Configuration,
@@ -25,40 +26,43 @@ class SecurityControllerService extends __BaseService {
   }
 
   /**
+   * @param feedback feedback
    * @return OK
    */
-  securityControllerRefreshTokenResponse(): __Observable<__StrictHttpResponse<string>> {
+  feedbackControllerFeedbackResponse(feedback: Feedback): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    __body = feedback;
     let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/refresh`,
+      'POST',
+      this.rootUrl + `/feedback`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'text'
+        responseType: 'json'
       });
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<string>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
   /**
+   * @param feedback feedback
    * @return OK
    */
-  securityControllerRefreshToken(): __Observable<string> {
-    return this.securityControllerRefreshTokenResponse().pipe(
-      __map(_r => _r.body as string)
+  feedbackControllerFeedback(feedback: Feedback): __Observable<{}> {
+    return this.feedbackControllerFeedbackResponse(feedback).pipe(
+      __map(_r => _r.body as {})
     );
   }
 }
 
-module SecurityControllerService {
+module FeedbackControllerService {
 }
 
-export { SecurityControllerService }
+export { FeedbackControllerService }

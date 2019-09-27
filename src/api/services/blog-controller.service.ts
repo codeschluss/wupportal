@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { BlogEntity } from '../models/blog-entity';
@@ -17,9 +17,19 @@ import { ResourceBlogEntity } from '../models/resource-blog-entity';
 @Injectable({
   providedIn: 'root',
 })
-class BlogControllerService extends BaseService {
+class BlogControllerService extends __BaseService {
+  static readonly blogControllerReadAllPath = '/blogs';
+  static readonly blogControllerCreatePath = '/blogs';
+  static readonly blogControllerUpdateActivityPath = '/blogs/{activityId}/activity';
+  static readonly blogControllerReadOnePath = '/blogs/{blogId}';
+  static readonly blogControllerUpdatePath = '/blogs/{blogId}';
+  static readonly blogControllerDeletePath = '/blogs/{blogId}';
+  static readonly blogControllerReadActivityPath = '/blogs/{blogId}/activity';
+  static readonly blogControllerIncreaseLikePath = '/blogs/{blogId}/like';
+  static readonly blogControllerReadTranslationsPath = '/blogs/{blogId}/translations';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -42,7 +52,7 @@ class BlogControllerService extends BaseService {
    *
    * @return OK
    */
-  blogControllerReadAllResponse(params: BlogControllerService.BlogControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  blogControllerReadAllResponse(params: BlogControllerService.BlogControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -65,7 +75,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -86,7 +96,7 @@ class BlogControllerService extends BaseService {
    *
    * @return OK
    */
-  blogControllerReadAll(params: BlogControllerService.BlogControllerReadAllParams): Observable<{}> {
+  blogControllerReadAll(params: BlogControllerService.BlogControllerReadAllParams): __Observable<{}> {
     return this.blogControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -96,7 +106,7 @@ class BlogControllerService extends BaseService {
    * @param newBlog newBlog
    * @return OK
    */
-  blogControllerCreateResponse(newBlog: BlogEntity): Observable<StrictHttpResponse<{}>> {
+  blogControllerCreateResponse(newBlog: BlogEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -114,7 +124,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -122,7 +132,7 @@ class BlogControllerService extends BaseService {
    * @param newBlog newBlog
    * @return OK
    */
-  blogControllerCreate(newBlog: BlogEntity): Observable<{}> {
+  blogControllerCreate(newBlog: BlogEntity): __Observable<{}> {
     return this.blogControllerCreateResponse(newBlog).pipe(
       __map(_r => _r.body as {})
     );
@@ -134,7 +144,7 @@ class BlogControllerService extends BaseService {
    * @return OK
    */
   blogControllerUpdateActivityResponse(blogId: string,
-    activityId: StringPrimitive): Observable<StrictHttpResponse<{}>> {
+    activityId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -153,7 +163,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -163,7 +173,7 @@ class BlogControllerService extends BaseService {
    * @return OK
    */
   blogControllerUpdateActivity(blogId: string,
-    activityId: StringPrimitive): Observable<{}> {
+    activityId: StringPrimitive): __Observable<{}> {
     return this.blogControllerUpdateActivityResponse(blogId, activityId).pipe(
       __map(_r => _r.body as {})
     );
@@ -173,7 +183,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerReadOneResponse(blogId: string): Observable<StrictHttpResponse<ResourceBlogEntity>> {
+  blogControllerReadOneResponse(blogId: string): __Observable<__StrictHttpResponse<ResourceBlogEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -191,7 +201,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceBlogEntity>;
+        return _r as __StrictHttpResponse<ResourceBlogEntity>;
       })
     );
   }
@@ -199,7 +209,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerReadOne(blogId: string): Observable<ResourceBlogEntity> {
+  blogControllerReadOne(blogId: string): __Observable<ResourceBlogEntity> {
     return this.blogControllerReadOneResponse(blogId).pipe(
       __map(_r => _r.body as ResourceBlogEntity)
     );
@@ -211,7 +221,7 @@ class BlogControllerService extends BaseService {
    * @return OK
    */
   blogControllerUpdateResponse(newBlog: BlogEntity,
-    blogId: string): Observable<StrictHttpResponse<{}>> {
+    blogId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -230,7 +240,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -240,7 +250,7 @@ class BlogControllerService extends BaseService {
    * @return OK
    */
   blogControllerUpdate(newBlog: BlogEntity,
-    blogId: string): Observable<{}> {
+    blogId: string): __Observable<{}> {
     return this.blogControllerUpdateResponse(newBlog, blogId).pipe(
       __map(_r => _r.body as {})
     );
@@ -250,7 +260,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerDeleteResponse(blogId: string): Observable<StrictHttpResponse<{}>> {
+  blogControllerDeleteResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -268,7 +278,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -276,7 +286,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerDelete(blogId: string): Observable<{}> {
+  blogControllerDelete(blogId: string): __Observable<{}> {
     return this.blogControllerDeleteResponse(blogId).pipe(
       __map(_r => _r.body as {})
     );
@@ -286,7 +296,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerReadActivityResponse(blogId: string): Observable<StrictHttpResponse<{}>> {
+  blogControllerReadActivityResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -304,7 +314,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -312,7 +322,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerReadActivity(blogId: string): Observable<{}> {
+  blogControllerReadActivity(blogId: string): __Observable<{}> {
     return this.blogControllerReadActivityResponse(blogId).pipe(
       __map(_r => _r.body as {})
     );
@@ -322,7 +332,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerIncreaseLikeResponse(blogId: string): Observable<StrictHttpResponse<{}>> {
+  blogControllerIncreaseLikeResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -340,7 +350,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -348,7 +358,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerIncreaseLike(blogId: string): Observable<{}> {
+  blogControllerIncreaseLike(blogId: string): __Observable<{}> {
     return this.blogControllerIncreaseLikeResponse(blogId).pipe(
       __map(_r => _r.body as {})
     );
@@ -358,7 +368,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerReadTranslationsResponse(blogId: string): Observable<StrictHttpResponse<{}>> {
+  blogControllerReadTranslationsResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -376,7 +386,7 @@ class BlogControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -384,7 +394,7 @@ class BlogControllerService extends BaseService {
    * @param blogId blogId
    * @return OK
    */
-  blogControllerReadTranslations(blogId: string): Observable<{}> {
+  blogControllerReadTranslations(blogId: string): __Observable<{}> {
     return this.blogControllerReadTranslationsResponse(blogId).pipe(
       __map(_r => _r.body as {})
     );

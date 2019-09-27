@@ -21,7 +21,7 @@ export class CrudJoiner {
         name: null,
         nodes: [],
         params: params || { },
-        provider: model['provider']
+        provider: (model as any).provider
       }
     });
   }

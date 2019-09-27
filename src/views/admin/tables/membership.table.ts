@@ -1,15 +1,15 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
 import { BaseTable, TableColumn } from '@wooportal/forms';
-import { ProviderModel } from '../../../realm/models/provider.model';
+import { MembershipModel } from '../../../realm/models/membership.model';
 
 @Component({
-  selector: 'provider-table',
+  selector: 'membership-table',
   template: BaseTable.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'admin'">
-          <i18n i18n="@@admin">admin</i18n>
+          <i18n i18n="@@ownership">ownership</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'approved'">
           <i18n i18n="@@approved">approved</i18n>
@@ -21,14 +21,14 @@ import { ProviderModel } from '../../../realm/models/provider.model';
           <i18n i18n="@@organisation">organisation</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'username'">
-          <i18n i18n="@@username">username</i18n>
+          <i18n i18n="@@email">email</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
   `)
 })
 
-export class ProviderTableComponent extends BaseTable<ProviderModel> {
+export class MembershipTableComponent extends BaseTable<MembershipModel> {
 
   public columns: TableColumn[] = [
     {
@@ -47,6 +47,6 @@ export class ProviderTableComponent extends BaseTable<ProviderModel> {
 
   protected joiner: CrudJoiner;
 
-  protected model: Type<ProviderModel> = ProviderModel;
+  protected model: Type<MembershipModel> = MembershipModel;
 
 }

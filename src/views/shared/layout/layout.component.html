@@ -39,6 +39,7 @@
   <mat-form-field [class.active]="url.startsWith('/search')">
     <icon-compat matPrefix icon="search"></icon-compat>
     <input #navbarInput matInput
+      type="search"
       value="{{ filter() }}"
       (keydown.enter)="navbarInput.value
         && navigate('/', 'search', navbarInput.value)">
@@ -182,6 +183,7 @@
         <mat-form-field [class.active]="url.startsWith('/search')">
           <input #drawerInput matInput
             tabindex="-1"
+            type="search"
             value="{{ filter() }}"
             (keydown.enter)="drawerInput.value
               && navigate('/', 'search', drawerInput.value)">

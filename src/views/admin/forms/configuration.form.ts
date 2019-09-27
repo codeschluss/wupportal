@@ -1,9 +1,12 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { TokenProvider } from '@wooportal/core';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ConfigurationModel } from '../../../realm/models/configuration.model';
+import { ConfigurationProvider } from '../../../realm/providers/configuration.provider';
 
 @Component({
   selector: 'configuration-form',
@@ -96,6 +99,14 @@ export class ConfigurationFormComponent
 
   public model: Type<ConfigurationModel> = ConfigurationModel;
 
+  public constructor(
+    private configurationProvider: ConfigurationProvider,
+    route: ActivatedRoute,
+    tokenProvider: TokenProvider
+  ) {
+    super(route, tokenProvider);
+  }
+
   public persist(): Observable<any> {
     return forkJoin(Object.keys(this.group.controls)
       .filter((key) => this.group.get(key).dirty)
@@ -105,8 +116,8 @@ export class ConfigurationFormComponent
         });
 
         return item.id
-          ? this.model['provider'].update(item)
-          : this.model['provider'].create(item);
+          ? this.configurationProvider.update(item)
+          : this.configurationProvider.create(item);
       })
     ).pipe(tap(() => this.group.markAsPristine()));
   }

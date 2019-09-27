@@ -121,8 +121,8 @@
       <trans-unit id="authenticationExpired" datatype="html">
         <source>authenticationExpired</source><target>Session expirée</target>
       </trans-unit>
-      <trans-unit id="username" datatype="html">
-        <source>username</source><target>Nom d'utilisateur</target>
+      <trans-unit id="email" datatype="html">
+        <source>email</source><target>E-mail</target>
       </trans-unit>
       <trans-unit id="password" datatype="html">
         <source>password</source><target>Mot d'accès</target>
@@ -162,9 +162,6 @@
       </trans-unit>
       <trans-unit id="contactName" datatype="html">
         <source>contactName</source><target>Contacte</target>
-      </trans-unit>
-      <trans-unit id="email" datatype="html">
-        <source>email</source><target>E-mail</target>
       </trans-unit>
       <trans-unit id="phone" datatype="html">
         <source>phone</source><target>Téléphone</target>
@@ -346,8 +343,8 @@
       <trans-unit id="approved" datatype="html">
         <source>approved</source><target>Approuvé</target>
       </trans-unit>
-      <trans-unit id="admin" datatype="html">
-        <source>admin</source><target>Manager</target>
+      <trans-unit id="ownership" datatype="html">
+        <source>ownership</source><target>Manager</target>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source><target>Administrer l'application</target>
@@ -370,11 +367,11 @@
       <trans-unit id="organisationPanel" datatype="html">
         <source>organisationPanel</source><target>Administrer l'organisation</target>
       </trans-unit>
-      <trans-unit id="providers" datatype="html">
-        <source>providers</source><target>Associés</target>
+      <trans-unit id="memberships" datatype="html">
+        <source>memberships</source><target>Associés</target>
       </trans-unit>
-      <trans-unit id="providerRequests" datatype="html">
-        <source>providerRequests</source><target>Admission des associés</target>
+      <trans-unit id="membershipRequests" datatype="html">
+        <source>membershipRequests</source><target>Admission des associés</target>
       </trans-unit>
       <trans-unit id="positioningPanel" datatype="html">
         <source>positioningPanel</source><target>Administrer les localités</target>
@@ -390,6 +387,9 @@
       </trans-unit>
       <trans-unit id="privilegesPanel" datatype="html">
         <source>privilegesPanel</source><target>Administrer des privilèges d'accès</target>
+      </trans-unit>
+      <trans-unit id="resetAllPasswords" datatype="html">
+        <source>resetPassword</source><target>Réinitialiser tous mots d'accès</target>
       </trans-unit>
       <trans-unit id="users" datatype="html">
         <source>users</source><target>Utilisateurs</target>
@@ -514,8 +514,8 @@
       <trans-unit id="newActivities" datatype="html">
         <source>newActivities</source><target>Activités nouvelles</target>
       </trans-unit>
-      <trans-unit id="videoError" datatype="html">
-        <source>videoError</source><target>Erreur de vidéo</target>
+      <trans-unit id="resetPassword" datatype="html">
+        <source>resetPassword</source><target>Réinitialiser mot d'accès</target>
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source><target>Enregistrer</target>

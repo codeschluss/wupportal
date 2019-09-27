@@ -72,7 +72,8 @@ export abstract class BaseListing<Model extends CrudModel>
   }
 
   private fetch(params?: ReadParams): void {
-    const provider = this.model['provider'] as CrudProvider<BaseService, Model>;
+    const provider = (this.model as any)
+      .provider as CrudProvider<BaseService, Model>;
 
     provider.readAll(Object.assign(params, {
       embeddings: CrudJoiner.to(this.joiner.graph),

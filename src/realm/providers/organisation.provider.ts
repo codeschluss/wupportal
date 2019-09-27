@@ -8,8 +8,8 @@ import { ActivityModel } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
+import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel } from '../models/organisation.model';
-import { ProviderModel } from '../models/provider.model';
 import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -40,12 +40,12 @@ export class OrganisationProvider
     {
       field: 'provider',
       method: () => EMPTY,
-      model: ProviderModel
+      model: MembershipModel
     },
     {
       field: 'providers',
       method: () => EMPTY,
-      model: ProviderModel
+      model: MembershipModel
     },
     {
       field: 'translations',
@@ -86,17 +86,17 @@ export class OrganisationProvider
   public readAll: (params?: OrganisationControllerService
     .OrganisationControllerReadAllParams) => Observable<OrganisationModel[]>;
 
+  public grantMembership:
+    (id: string, userId: string, grant: Boolean) => Observable<any> =
+    this.apply(this.service.organisationControllerApproveOrRejectUserResponse);
+
   public grantOrganisation:
     (id: string, grant: Boolean) => Observable<any> =
       this.apply(this.service.organisationControllerGrantApprovalResponse);
 
-  public grantOrganisationAdmin:
-    (id: string, userId: String, grant: Boolean) => Observable<any> =
+  public grantOwnership:
+    (id: string, userId: string, grant: Boolean) => Observable<any> =
       this.apply(this.service.organisationControllerGrantAdminRightResponse);
-
-  public grantOrganisationUser:
-    (id: string, userId: String, grant: Boolean) => Observable<any> =
-    this.apply(this.service.organisationControllerApproveOrRejectUserResponse);
 
   public pasteImages:
     (id: string, images: ImageModel[]) => Observable<any> =

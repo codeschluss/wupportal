@@ -119,18 +119,19 @@ export class TranslationFormComponent<Model extends CrudModel>
   public persist(): Observable<any> {
     return this.translationProvider.translate(
       Object.keys(this.form.group.value)
-        .filter((key) => this.model['translatable'].includes(key))
+        .filter((key) => (this.model as any).translatable.includes(key))
         .map((key) => ({ [key]: this.form.group.get(key).value }))
         .reduce((obj, v) => Object.assign(obj, v), { }),
       this.route.snapshot.data.language.filter((lang) => {
         if (lang.id === this.language.id) { return false; }
         const value = this.translations.find((t) => t.language.id === lang.id);
-        return this.model['translatable'].some((t) => !value[t]);
+        return (this.model as any).translatable.some((t) => !value[t]);
       }).map((lang) => lang.locale),
       this.language.locale
-    ).pipe(map((items) => this.translations.map((t) => Object.assign(t,
-      (items.find((i) => i.lang === t.language['locale']) || { }).translations
-    )).filter((t) => t.language.id !== this.language.id)));
+    ).pipe(map((items) => this.translations.map((t) => {
+      const item = items.find((i) => i.lang === (t.language as any).locale);
+      return Object.assign(t, (item || { }).translations);
+    }).filter((t) => t.language.id !== this.language.id)));
   }
 
   public reset(): void {
@@ -143,7 +144,7 @@ export class TranslationFormComponent<Model extends CrudModel>
     this.model = this.form.item.constructor as any;
 
     this.form.fields
-      .filter((field) => this.model['translatable'].includes(field.name))
+      .filter((field) => (this.model as any).translatable.includes(field.name))
       .forEach((field) => this.fields.push(field));
 
     this.sessionProvider.value.pipe(take(1)).subscribe((session) => {
@@ -157,7 +158,7 @@ export class TranslationFormComponent<Model extends CrudModel>
   }
 
   private empty(language: LanguageModel): Model {
-    return this.model['translatable']
+    return (this.model as any).translatable
       .reduce((item, t) => Object.assign(item, { [t]: null }),
         Object.assign(new this.model(), { language }));
   }

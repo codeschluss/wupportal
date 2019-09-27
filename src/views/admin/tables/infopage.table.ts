@@ -4,7 +4,7 @@ import { BaseTable, TableColumn } from '@wooportal/forms';
 import { InfopageModel } from '../../../realm/models/infopage.model';
 
 @Component({
-  selector: 'page-table',
+  selector: 'infopage-table',
   template: BaseTable.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -19,7 +19,7 @@ import { InfopageModel } from '../../../realm/models/infopage.model';
   `)
 })
 
-export class PageTableComponent extends BaseTable<InfopageModel> {
+export class InfopageTableComponent extends BaseTable<InfopageModel> {
 
   public columns: TableColumn[] = [
     {

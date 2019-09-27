@@ -22,8 +22,8 @@ export class LikePieceComponent extends BasePiece {
   }
 
   public like(): void {
-    const provider = this.item.constructor
-      ['provider'] as CrudProvider<BaseService, CrudModel>
+    const provider = (this.item.constructor as any)
+      .provider as CrudProvider<BaseService, CrudModel>
         & { like: (id: string) => Observable<any> };
 
     if (provider.like) {

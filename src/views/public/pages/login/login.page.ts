@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Title, TokenProvider } from '@wooportal/core';
+import { Box, Title, TokenProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, filter, map, take } from 'rxjs/operators';
+import { UserProvider } from '../../../../realm/providers/user.provider';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -13,6 +14,11 @@ import { BasePage } from '../base.page';
 
 export class LoginPageComponent extends BasePage implements OnInit {
 
+  public email: FormControl = new FormControl(null, [
+    Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+    Validators.required
+  ]);
+
   public password: FormControl = new FormControl(null, [
     // Validators.minLength(8),
     // Validators.pattern(/(?=(?:[^0-9]*[0-9]){1})/),
@@ -21,12 +27,10 @@ export class LoginPageComponent extends BasePage implements OnInit {
     Validators.required
   ]);
 
-  public username: FormControl = new FormControl(null, [
-    Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
-    Validators.required
-  ]);
-
   protected path: string = 'login';
+
+  @ViewChild('input', { read: ElementRef, static: true })
+  private input: ElementRef<HTMLElement>;
 
   public get name(): Observable<string> {
     return this.titleService.name;
@@ -34,14 +38,15 @@ export class LoginPageComponent extends BasePage implements OnInit {
 
   public get valid(): boolean {
     return true
-      && this.password.valid
-      && this.username.valid;
+      && this.email.valid
+      && this.password.valid;
   }
 
   public constructor(
     private router: Router,
     private titleService: Title,
-    private tokenProvider: TokenProvider
+    private tokenProvider: TokenProvider,
+    private userProvider: UserProvider
   ) {
     super();
   }
@@ -55,14 +60,27 @@ export class LoginPageComponent extends BasePage implements OnInit {
   }
 
   public login(): void {
-    this.tokenProvider.login(this.username.value, this.password.value).pipe(
+    this.tokenProvider.login(this.email.value, this.password.value).pipe(
       map((tokens) => tokens.access.id),
       catchError(() => {
+        this.input.nativeElement.focus();
         this.password.patchValue(null);
-        this.username.patchValue(null);
         return EMPTY;
       })
     ).subscribe((id) => this.router.navigate(['/', 'admin', 'account', id]));
+  }
+
+  public reset(event: Event): void {
+    this.userProvider.resetPassword(Box(this.email.value)).pipe(
+      catchError(() => {
+        this.email.patchValue(null);
+        return EMPTY;
+      })
+    ).subscribe(() => {
+      (event.target as HTMLButtonElement).disabled = true;
+      this.input.nativeElement.focus();
+      this.password.reset();
+    });
   }
 
 }

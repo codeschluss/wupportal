@@ -9,6 +9,9 @@ export class TopicModel
 
   @Translatable() public name: string;
 
-  public pages: InfopageModel[] & Observable<InfopageModel[]>;
+  public infopages: InfopageModel[] & Observable<InfopageModel[]>;
+
+  public get pages() { return this.infopages; }
+  public set pages(value) { this.infopages = value; }
 
 }

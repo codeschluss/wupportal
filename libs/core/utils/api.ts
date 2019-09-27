@@ -54,6 +54,6 @@ export type StrictHttpResponse<T> = HttpResponse<T> & {
 };
 
 export const Arr = (arg: any) => arg ? (Array.isArray(arg) ? arg : [arg]) : [];
-export const Box = (value: boolean | number | string) => ({ value });
+export const Box = (value: any) => ({ value });
 export const True = { value: true };
 export const False = { value: false };

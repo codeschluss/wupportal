@@ -121,8 +121,8 @@
       <trans-unit id="authenticationExpired" datatype="html">
         <source>authenticationExpired</source><target>Sitzung abgelaufen</target>
       </trans-unit>
-      <trans-unit id="username" datatype="html">
-        <source>username</source><target>Benutzername</target>
+      <trans-unit id="email" datatype="html">
+        <source>email</source><target>E-Mail</target>
       </trans-unit>
       <trans-unit id="password" datatype="html">
         <source>password</source><target>Passwort</target>
@@ -162,9 +162,6 @@
       </trans-unit>
       <trans-unit id="contactName" datatype="html">
         <source>contactName</source><target>Kontakt</target>
-      </trans-unit>
-      <trans-unit id="email" datatype="html">
-        <source>email</source><target>E-Mail</target>
       </trans-unit>
       <trans-unit id="phone" datatype="html">
         <source>phone</source><target>Telefon</target>
@@ -346,8 +343,8 @@
       <trans-unit id="approved" datatype="html">
         <source>approved</source><target>Zugelassen</target>
       </trans-unit>
-      <trans-unit id="admin" datatype="html">
-        <source>admin</source><target>Besitzer</target>
+      <trans-unit id="ownership" datatype="html">
+        <source>ownership</source><target>Besitzer</target>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source><target>Applikation verwalten</target>
@@ -370,11 +367,11 @@
       <trans-unit id="organisationPanel" datatype="html">
         <source>organisationPanel</source><target>Organisationen verwalten</target>
       </trans-unit>
-      <trans-unit id="providers" datatype="html">
-        <source>providers</source><target>Anbieter</target>
+      <trans-unit id="memberships" datatype="html">
+        <source>memberships</source><target>Anbieter</target>
       </trans-unit>
-      <trans-unit id="providerRequests" datatype="html">
-        <source>providerRequests</source><target>Anbieterzulassung</target>
+      <trans-unit id="membershipRequests" datatype="html">
+        <source>membershipRequests</source><target>Anbieterzulassung</target>
       </trans-unit>
       <trans-unit id="positioningPanel" datatype="html">
         <source>positioningPanel</source><target>Lokalitäten verwalten</target>
@@ -390,6 +387,9 @@
       </trans-unit>
       <trans-unit id="privilegesPanel" datatype="html">
         <source>privilegesPanel</source><target>Benutzerrechte verwalten</target>
+      </trans-unit>
+      <trans-unit id="resetAllPasswords" datatype="html">
+        <source>resetAllPasswords</source><target>Alle Passwörter zurücksetzen</target>
       </trans-unit>
       <trans-unit id="users" datatype="html">
         <source>users</source><target>Benutzer</target>
@@ -514,8 +514,8 @@
       <trans-unit id="newActivities" datatype="html">
         <source>newActivities</source><target>Neue Aktivitäten</target>
       </trans-unit>
-      <trans-unit id="videoError" datatype="html">
-        <source>videoError</source><target>Videofehler</target>
+      <trans-unit id="resetPassword" datatype="html">
+        <source>resetPassword</source><target>Password zurücksetzen</target>
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source><target>Registrieren</target>

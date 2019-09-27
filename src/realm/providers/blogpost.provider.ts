@@ -8,7 +8,7 @@ import { BlogpostModel } from '../models/blogpost.model';
 import { LanguageModel } from '../models/language.model';
 
 @Injectable({ providedIn: 'root' })
-export class BlogProvider
+export class BlogpostProvider
   extends CrudProvider<BlogControllerService, BlogpostModel> {
 
   protected linked: CrudLink[] = [

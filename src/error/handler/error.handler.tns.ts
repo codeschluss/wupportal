@@ -28,7 +28,7 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
   public throwError(reason: ErrorModel): void {
     reason.path = this.location.path(true) || '/';
 
-    if (!reason.ignored) {
+    if (!reason.ignore) {
       // TODO: global ViewContainerRef
       this.zone.run(() => !reason.breaking || true ? alert({
         title: reason.error,

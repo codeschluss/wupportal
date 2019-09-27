@@ -146,19 +146,19 @@
           <organisation-card [item]="item.organisation"></organisation-card>
         </ng-template>
       </expand-compat>
-      <ng-container *ngIf="item.blogs">
+      <ng-container *ngIf="item.blogposts">
         <expand-compat #blogposts
           class="expand-compat"
           (changed)="$event && expanded(blogposts)">
           <ng-template #expandHeader>
             <icon-compat icon="at"></icon-compat>
             <i18n i18n="@@blogposts" unit="blogposts"></i18n>
-            <label [text]="'(' + item.blogs.length + ')'"></label>
+            <label [text]="'(' + item.blogposts.length + ')'"></label>
           </ng-template>
           <ng-template #expandContent>
             <scroll-view #scrollBlogposts>
               <flexbox-layout>
-                <ng-container *ngFor="let blogpost of item.blogs">
+                <ng-container *ngFor="let blogpost of item.blogposts">
                   <grid-layout [width]="scrollBlogposts.getActualSize().width">
                     <blogpost-card [item]="blogpost"></blogpost-card>
                   </grid-layout>

@@ -2,13 +2,13 @@ import { Injectable, Type } from '@angular/core';
 import { BaseService, CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY } from 'rxjs';
 import { ActivityModel } from '../models/activity.model';
+import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel } from '../models/organisation.model';
-import { ProviderModel } from '../models/provider.model';
 import { UserModel } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
-export class ProviderProvider
-  extends CrudProvider<BaseService, ProviderModel> {
+export class MembershipProvider
+  extends CrudProvider<BaseService, MembershipModel> {
 
   protected linked: CrudLink[] = [
     {
@@ -30,7 +30,7 @@ export class ProviderProvider
 
   protected methods: CrudMethods;
 
-  protected model: Type<ProviderModel> = this.based(ProviderModel);
+  protected model: Type<MembershipModel> = this.based(MembershipModel);
 
   protected service: BaseService;
 

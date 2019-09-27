@@ -6,7 +6,7 @@ import { KeywordModel } from '../models/keyword.model';
 import { LanguageModel } from '../models/language.model';
 
 @Injectable({ providedIn: 'root' })
-export class TagProvider
+export class KeywordProvider
   extends CrudProvider<TagControllerService, KeywordModel> {
 
   public create: (model: KeywordModel) => Observable<any>;

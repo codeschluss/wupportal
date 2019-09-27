@@ -35,7 +35,7 @@
         "ignore-pattern": "^import { .* }"
       }
     ],
-    "member-access": false,
+    "member-access": true,
     "member-ordering": [
       true,
       {
@@ -47,7 +47,7 @@
         ]
       }
     ],
-    "no-consecutive-blank-lines": false,
+    "no-consecutive-blank-lines": true,
     "no-console": [
       true,
       "debug",
@@ -64,7 +64,7 @@
     ],
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
-    "no-string-literal": false,
+    "no-string-literal": true,
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [

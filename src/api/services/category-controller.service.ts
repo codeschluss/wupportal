@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { CategoryEntity } from '../models/category-entity';
@@ -16,9 +16,16 @@ import { ResourceCategoryEntity } from '../models/resource-category-entity';
 @Injectable({
   providedIn: 'root',
 })
-class CategoryControllerService extends BaseService {
+class CategoryControllerService extends __BaseService {
+  static readonly categoryControllerReadAllPath = '/categories';
+  static readonly categoryControllerCreatePath = '/categories';
+  static readonly categoryControllerReadOnePath = '/categories/{categoryId}';
+  static readonly categoryControllerUpdatePath = '/categories/{categoryId}';
+  static readonly categoryControllerDeletePath = '/categories/{categoryId}';
+  static readonly categoryControllerReadTranslationsPath = '/categories/{categoryId}/translations';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -41,7 +48,7 @@ class CategoryControllerService extends BaseService {
    *
    * @return OK
    */
-  categoryControllerReadAllResponse(params: CategoryControllerService.CategoryControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  categoryControllerReadAllResponse(params: CategoryControllerService.CategoryControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -64,7 +71,7 @@ class CategoryControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -85,7 +92,7 @@ class CategoryControllerService extends BaseService {
    *
    * @return OK
    */
-  categoryControllerReadAll(params: CategoryControllerService.CategoryControllerReadAllParams): Observable<{}> {
+  categoryControllerReadAll(params: CategoryControllerService.CategoryControllerReadAllParams): __Observable<{}> {
     return this.categoryControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -95,7 +102,7 @@ class CategoryControllerService extends BaseService {
    * @param newCategory newCategory
    * @return OK
    */
-  categoryControllerCreateResponse(newCategory: CategoryEntity): Observable<StrictHttpResponse<{}>> {
+  categoryControllerCreateResponse(newCategory: CategoryEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -113,7 +120,7 @@ class CategoryControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -121,7 +128,7 @@ class CategoryControllerService extends BaseService {
    * @param newCategory newCategory
    * @return OK
    */
-  categoryControllerCreate(newCategory: CategoryEntity): Observable<{}> {
+  categoryControllerCreate(newCategory: CategoryEntity): __Observable<{}> {
     return this.categoryControllerCreateResponse(newCategory).pipe(
       __map(_r => _r.body as {})
     );
@@ -131,7 +138,7 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerReadOneResponse(categoryId: string): Observable<StrictHttpResponse<ResourceCategoryEntity>> {
+  categoryControllerReadOneResponse(categoryId: string): __Observable<__StrictHttpResponse<ResourceCategoryEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -149,7 +156,7 @@ class CategoryControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceCategoryEntity>;
+        return _r as __StrictHttpResponse<ResourceCategoryEntity>;
       })
     );
   }
@@ -157,7 +164,7 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerReadOne(categoryId: string): Observable<ResourceCategoryEntity> {
+  categoryControllerReadOne(categoryId: string): __Observable<ResourceCategoryEntity> {
     return this.categoryControllerReadOneResponse(categoryId).pipe(
       __map(_r => _r.body as ResourceCategoryEntity)
     );
@@ -169,7 +176,7 @@ class CategoryControllerService extends BaseService {
    * @return OK
    */
   categoryControllerUpdateResponse(newCategory: CategoryEntity,
-    categoryId: string): Observable<StrictHttpResponse<{}>> {
+    categoryId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -188,7 +195,7 @@ class CategoryControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -198,7 +205,7 @@ class CategoryControllerService extends BaseService {
    * @return OK
    */
   categoryControllerUpdate(newCategory: CategoryEntity,
-    categoryId: string): Observable<{}> {
+    categoryId: string): __Observable<{}> {
     return this.categoryControllerUpdateResponse(newCategory, categoryId).pipe(
       __map(_r => _r.body as {})
     );
@@ -208,7 +215,7 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerDeleteResponse(categoryId: string): Observable<StrictHttpResponse<{}>> {
+  categoryControllerDeleteResponse(categoryId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -226,7 +233,7 @@ class CategoryControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -234,7 +241,7 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerDelete(categoryId: string): Observable<{}> {
+  categoryControllerDelete(categoryId: string): __Observable<{}> {
     return this.categoryControllerDeleteResponse(categoryId).pipe(
       __map(_r => _r.body as {})
     );
@@ -244,7 +251,7 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerReadTranslationsResponse(categoryId: string): Observable<StrictHttpResponse<{}>> {
+  categoryControllerReadTranslationsResponse(categoryId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -262,7 +269,7 @@ class CategoryControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -270,7 +277,7 @@ class CategoryControllerService extends BaseService {
    * @param categoryId categoryId
    * @return OK
    */
-  categoryControllerReadTranslations(categoryId: string): Observable<{}> {
+  categoryControllerReadTranslations(categoryId: string): __Observable<{}> {
     return this.categoryControllerReadTranslationsResponse(categoryId).pipe(
       __map(_r => _r.body as {})
     );

@@ -5,9 +5,10 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Box, CrudModel, CrudResolver, I18nComponent, Pathfinder, Selfrouter, Title, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
+import { MembershipModel } from '../../../realm/models/membership.model';
 import { OrganisationModel } from '../../../realm/models/organisation.model';
-import { ProviderModel } from '../../../realm/models/provider.model';
 import { UserModel } from '../../../realm/models/user.model';
+import { OrganisationProvider } from '../../../realm/providers/organisation.provider';
 import { UserProvider } from '../../../realm/providers/user.provider';
 import { ClientPackage } from '../../../utils/package';
 import { DeleteDialogComponent } from '../dialogs/delete.dialog';
@@ -74,6 +75,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   public constructor(
     protected dialog: MatDialog,
+    protected organisationProvider: OrganisationProvider,
     protected pathfinder: Pathfinder,
     protected route: ActivatedRoute,
     protected router: Router,
@@ -114,31 +116,39 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   public delete(item: CrudModel): void {
     this.confirm(item).pipe(
       filter(Boolean),
-      mergeMap(() => item.constructor['provider'].delete(item.id)),
+      mergeMap(() => (item.constructor as any).provider.delete(item.id)),
     ).subscribe(() => this.reload());
   }
 
   public edit(item: CrudModel): void {
-    const stepper = item.constructor['stepper'].constructor;
+    const stepper = (item.constructor as any).stepper.constructor;
     this.router.navigate(this.pathfinder.to(stepper).concat(item.id));
   }
 
   public grantBlogger(item: UserModel, grant: boolean): void {
-    UserModel['provider'].grantBlogger(
+    this.userProvider.grantBlogger(
       item.id,
       Box(grant)
     ).subscribe(() => this.reload());
   }
 
   public grantOrganisation(item: OrganisationModel, grant: boolean): void {
-    OrganisationModel['provider'].grantOrganisationAdmin(
+    this.organisationProvider.grantOrganisation(
       item.id,
       Box(grant)
     ).subscribe(() => this.reload());
   }
 
-  public grantOrganisationAdmin(item: ProviderModel, grant: boolean): void {
-    OrganisationModel['provider'].grantOrganisationAdmin(
+  public grantMembership(item: MembershipModel, grant: boolean): void {
+    this.organisationProvider.grantMembership(
+      item.organisation.id,
+      item.user.id,
+      Box(grant)
+    ).subscribe(() => this.reload());
+  }
+
+  public grantOwnership(item: MembershipModel, grant: boolean): void {
+    this.organisationProvider.grantOwnership(
       item.organisation.id,
       item.user.id,
       Box(grant)
@@ -147,16 +157,8 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     ).subscribe(() => this.reload());
   }
 
-  public grantOrganisationUser(item: ProviderModel, grant: boolean): void {
-    OrganisationModel['provider'].grantOrganisationUser(
-      item.organisation.id,
-      item.user.id,
-      Box(grant)
-    ).subscribe(() => this.reload());
-  }
-
   public grantSuperUser(item: UserModel, grant: boolean): void {
-    UserModel['provider'].grantSuperUser(
+    this.userProvider.grantSuperUser(
       item.id,
       Box(grant)
     ).pipe(
@@ -165,28 +167,26 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   }
 
   public unlinkBlogger(item: UserModel): void {
-    this.confirm(item).pipe(
-      mergeMap(() => UserModel['provider'].unlinkBlogger(
-        item.id
-      ))
+    this.userProvider.unlinkBlogger(
+      item.id
     ).subscribe(() => this.reload());
   }
 
   public unlinkOrganisation(item: OrganisationModel, user: UserModel): void {
-    this.confirm(Object.assign(item.provider, {
+    this.confirm(Object.assign(item.membership, {
       organisation: item,
       user
     })).pipe(
-      mergeMap(() => UserModel['provider'].unlinkOrganisation(
+      mergeMap(() => this.userProvider.unlinkOrganisation(
         this.userId,
         item.id
       ))
     ).subscribe(() => this.reload());
   }
 
-  public unlinkUser(item: ProviderModel): void {
+  public unlinkUser(item: MembershipModel): void {
     this.confirm(item).pipe(
-      mergeMap(() => OrganisationModel['provider'].unlinkUser(
+      mergeMap(() => this.organisationProvider.unlinkUser(
         item.organisation.id,
         item.user.id
       ))
@@ -199,11 +199,11 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     }).afterClosed().pipe(filter(Boolean)) as Observable<boolean>;
   }
 
-  protected provided(organisation: OrganisationModel): ProviderModel[] {
-    const users = organisation.users as any || [];
+  protected membership(item: OrganisationModel): MembershipModel[] {
+    const users = item.users as UserModel[] || [];
 
-    return users.map((user) => Object.assign(user.provider, {
-      organisation,
+    return users.map((user) => Object.assign(user.membership, {
+      organisation: item,
       user
     }));
   }

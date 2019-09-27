@@ -8,7 +8,7 @@ import { LanguageModel } from '../models/language.model';
 import { TopicModel } from '../models/topic.model';
 
 @Injectable({ providedIn: 'root' })
-export class PageProvider
+export class InfopageProvider
   extends CrudProvider<PageControllerService, InfopageModel> {
 
   protected linked: CrudLink[] = [

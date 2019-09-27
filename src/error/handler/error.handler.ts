@@ -25,7 +25,7 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
   public throwError(reason: ErrorModel): any {
     reason.path = this.location.path(true) || '/';
 
-    if (!reason.ignored) {
+    if (!reason.ignore) {
       this.zone.run(() => !reason.breaking
         ? this.bar.openFromComponent(ErrorBarComponent, { data: reason })
         : this.dialog.open(ErrorDialogComponent, { data: reason })

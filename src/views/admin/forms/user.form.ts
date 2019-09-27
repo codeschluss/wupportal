@@ -23,7 +23,7 @@ import { UserModel } from '../../../realm/models/user.model';
           <i18n i18n="@@phone">phone</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'username'">
-          <i18n i18n="@@username">username</i18n>
+          <i18n i18n="@@email">email</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

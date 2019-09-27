@@ -122,8 +122,8 @@
       <trans-unit id="authenticationExpired" datatype="html">
         <source>authenticationExpired</source>
       </trans-unit>
-      <trans-unit id="username" datatype="html">
-        <source>username</source>
+      <trans-unit id="email" datatype="html">
+        <source>email</source>
       </trans-unit>
       <trans-unit id="password" datatype="html">
         <source>password</source>
@@ -163,9 +163,6 @@
       </trans-unit>
       <trans-unit id="contactName" datatype="html">
         <source>contactName</source>
-      </trans-unit>
-      <trans-unit id="email" datatype="html">
-        <source>email</source>
       </trans-unit>
       <trans-unit id="phone" datatype="html">
         <source>phone</source>
@@ -347,8 +344,8 @@
       <trans-unit id="approved" datatype="html">
         <source>approved</source>
       </trans-unit>
-      <trans-unit id="admin" datatype="html">
-        <source>admin</source>
+      <trans-unit id="ownership" datatype="html">
+        <source>ownership</source>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source>
@@ -371,11 +368,11 @@
       <trans-unit id="organisationPanel" datatype="html">
         <source>organisationPanel</source>
       </trans-unit>
-      <trans-unit id="providers" datatype="html">
-        <source>providers</source>
+      <trans-unit id="memberships" datatype="html">
+        <source>memberships</source>
       </trans-unit>
-      <trans-unit id="providerRequests" datatype="html">
-        <source>providerRequests</source>
+      <trans-unit id="membershipRequests" datatype="html">
+        <source>membershipRequests</source>
       </trans-unit>
       <trans-unit id="positioningPanel" datatype="html">
         <source>positioningPanel</source>
@@ -391,6 +388,9 @@
       </trans-unit>
       <trans-unit id="privilegesPanel" datatype="html">
         <source>privilegesPanel</source>
+      </trans-unit>
+      <trans-unit id="resetAllPasswords" datatype="html">
+        <source>resetAllPasswords</source>
       </trans-unit>
       <trans-unit id="users" datatype="html">
         <source>users</source>
@@ -515,8 +515,8 @@
       <trans-unit id="newActivities" datatype="html">
         <source>newActivities</source>
       </trans-unit>
-      <trans-unit id="videoError" datatype="html">
-        <source>videoError</source>
+      <trans-unit id="resetPassword" datatype="html">
+        <source>resetPassword</source>
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source>

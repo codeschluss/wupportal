@@ -1,10 +1,10 @@
 /* tslint:disable */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
-import { Observable } from 'rxjs';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { ConfigurationEntity } from '../models/configuration-entity';
@@ -16,9 +16,15 @@ import { ResourceConfigurationEntity } from '../models/resource-configuration-en
 @Injectable({
   providedIn: 'root',
 })
-class ConfigurationControllerService extends BaseService {
+class ConfigurationControllerService extends __BaseService {
+  static readonly configurationControllerReadAllPath = '/configurations';
+  static readonly configurationControllerCreatePath = '/configurations';
+  static readonly configurationControllerReadOnePath = '/configurations/{configurationId}';
+  static readonly configurationControllerUpdatePath = '/configurations/{configurationId}';
+  static readonly configurationControllerDeletePath = '/configurations/{configurationId}';
+
   constructor(
-    config: ApiConfiguration,
+    config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
@@ -41,7 +47,7 @@ class ConfigurationControllerService extends BaseService {
    *
    * @return OK
    */
-  configurationControllerReadAllResponse(params: ConfigurationControllerService.ConfigurationControllerReadAllParams): Observable<StrictHttpResponse<{}>> {
+  configurationControllerReadAllResponse(params: ConfigurationControllerService.ConfigurationControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -64,7 +70,7 @@ class ConfigurationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -85,7 +91,7 @@ class ConfigurationControllerService extends BaseService {
    *
    * @return OK
    */
-  configurationControllerReadAll(params: ConfigurationControllerService.ConfigurationControllerReadAllParams): Observable<{}> {
+  configurationControllerReadAll(params: ConfigurationControllerService.ConfigurationControllerReadAllParams): __Observable<{}> {
     return this.configurationControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
@@ -95,7 +101,7 @@ class ConfigurationControllerService extends BaseService {
    * @param newConfiguration newConfiguration
    * @return OK
    */
-  configurationControllerCreateResponse(newConfiguration: ConfigurationEntity): Observable<StrictHttpResponse<{}>> {
+  configurationControllerCreateResponse(newConfiguration: ConfigurationEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -113,7 +119,7 @@ class ConfigurationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -121,7 +127,7 @@ class ConfigurationControllerService extends BaseService {
    * @param newConfiguration newConfiguration
    * @return OK
    */
-  configurationControllerCreate(newConfiguration: ConfigurationEntity): Observable<{}> {
+  configurationControllerCreate(newConfiguration: ConfigurationEntity): __Observable<{}> {
     return this.configurationControllerCreateResponse(newConfiguration).pipe(
       __map(_r => _r.body as {})
     );
@@ -131,7 +137,7 @@ class ConfigurationControllerService extends BaseService {
    * @param configurationId configurationId
    * @return OK
    */
-  configurationControllerReadOneResponse(configurationId: string): Observable<StrictHttpResponse<ResourceConfigurationEntity>> {
+  configurationControllerReadOneResponse(configurationId: string): __Observable<__StrictHttpResponse<ResourceConfigurationEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -149,7 +155,7 @@ class ConfigurationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<ResourceConfigurationEntity>;
+        return _r as __StrictHttpResponse<ResourceConfigurationEntity>;
       })
     );
   }
@@ -157,7 +163,7 @@ class ConfigurationControllerService extends BaseService {
    * @param configurationId configurationId
    * @return OK
    */
-  configurationControllerReadOne(configurationId: string): Observable<ResourceConfigurationEntity> {
+  configurationControllerReadOne(configurationId: string): __Observable<ResourceConfigurationEntity> {
     return this.configurationControllerReadOneResponse(configurationId).pipe(
       __map(_r => _r.body as ResourceConfigurationEntity)
     );
@@ -169,7 +175,7 @@ class ConfigurationControllerService extends BaseService {
    * @return OK
    */
   configurationControllerUpdateResponse(newConfiguration: ConfigurationEntity,
-    configurationId: string): Observable<StrictHttpResponse<{}>> {
+    configurationId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -188,7 +194,7 @@ class ConfigurationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -198,7 +204,7 @@ class ConfigurationControllerService extends BaseService {
    * @return OK
    */
   configurationControllerUpdate(newConfiguration: ConfigurationEntity,
-    configurationId: string): Observable<{}> {
+    configurationId: string): __Observable<{}> {
     return this.configurationControllerUpdateResponse(newConfiguration, configurationId).pipe(
       __map(_r => _r.body as {})
     );
@@ -208,7 +214,7 @@ class ConfigurationControllerService extends BaseService {
    * @param configurationId configurationId
    * @return OK
    */
-  configurationControllerDeleteResponse(configurationId: string): Observable<StrictHttpResponse<{}>> {
+  configurationControllerDeleteResponse(configurationId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -226,7 +232,7 @@ class ConfigurationControllerService extends BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as StrictHttpResponse<{}>;
+        return _r as __StrictHttpResponse<{}>;
       })
     );
   }
@@ -234,7 +240,7 @@ class ConfigurationControllerService extends BaseService {
    * @param configurationId configurationId
    * @return OK
    */
-  configurationControllerDelete(configurationId: string): Observable<{}> {
+  configurationControllerDelete(configurationId: string): __Observable<{}> {
     return this.configurationControllerDeleteResponse(configurationId).pipe(
       __map(_r => _r.body as {})
     );

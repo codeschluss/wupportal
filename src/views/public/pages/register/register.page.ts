@@ -21,6 +21,11 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
     joinBloggers: false
   };
 
+  public email: FormControl = new FormControl(null, [
+    Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+    Validators.required
+  ]);
+
   public fullname: FormControl = new FormControl(null, [
     Validators.required
   ]);
@@ -49,11 +54,6 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
     Validators.required
   ]);
 
-  public username: FormControl = new FormControl(null, [
-    Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
-    Validators.required
-  ]);
-
   protected path: string = 'register';
 
   public get name(): Observable<string> {
@@ -66,11 +66,11 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
 
   public get valid(): boolean {
     return true
+      && this.email.valid
       && this.fullname.valid
       && this.password.valid
       && this.passwordConfirm.valid
-      && this.phone.valid
-      && this.username.valid;
+      && this.phone.valid;
   }
 
   protected get routing(): Route {
@@ -113,7 +113,7 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
     user.organisationRegistrations = this.joinOrganisations.value;
     user.password = this.password.value;
     user.phone = this.phone.value;
-    user.username = this.username.value;
+    user.username = this.email.value;
 
     this.userProvider.create(user).pipe(
       mergeMap(() => this.tokenProvider.login(user.username, user.password)),

@@ -161,6 +161,7 @@ export class MapsComponent
 
     this.focus.subscribe(() => this.vector.instance.changed());
     this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
+    this.maps.onPointerMove.subscribe((event) => this.handleCursor(event));
     this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
     this.maps.instance.once('postrender', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () => {
@@ -200,6 +201,13 @@ export class MapsComponent
       if (this.connection) {
         this.connection.nextFocus(items);
       }
+    }
+  }
+
+  public handleCursor(event: MapBrowserPointerEvent): void {
+    if (!event.dragging) {
+      const feats = this.maps.instance.hasFeatureAtPixel(event.pixel);
+      this.element.nativeElement.style.cursor = feats ? 'pointer' : null;
     }
   }
 

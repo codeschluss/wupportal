@@ -34,8 +34,8 @@ export class OrganisationPanelComponent extends BasePanel {
   }
 
   public get organisations(): OrganisationModel[] {
-    return this.route.snapshot.data.organisations.filter((organisation) =>
-      this.superUser || this.organisationAdmin.includes(organisation.id));
+    return (this.route.snapshot.data.organisations || []).filter((item) =>
+      this.superUser || this.organisationAdmin.includes(item.id));
   }
 
   public get requests(): MembershipModel[] {

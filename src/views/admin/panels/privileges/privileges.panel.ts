@@ -23,12 +23,12 @@ export class PrivilegesPanelComponent extends BasePanel {
   };
 
   public get bloggers(): UserModel[] {
-    return this.route.snapshot.data.users
+    return (this.route.snapshot.data.users || [])
       .filter((user) => user.blogger && !user.blogger.approved);
   }
 
   public get memberships(): MembershipModel[] {
-    return this.route.snapshot.data.memberships
+    return (this.route.snapshot.data.memberships || [])
       .flatMap((organisation) => this.membership(organisation))
       .filter((membership) => !membership.approved);
   }

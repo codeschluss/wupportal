@@ -21,7 +21,7 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <marked-compat class="mat-body" [data]="item.content"></marked-compat>
+    <marked-compat [data]="item.content"></marked-compat>
     <ng-container *ngIf="item.activity">
       <aside>
         <expand-compat #activity (changed)="$event && expanded(activity)">

@@ -18,6 +18,7 @@ import { AdminRouter } from './admin.router';
 import { DeleteDialogComponent } from './dialogs/delete.dialog';
 import { ReloginDialogComponent } from './dialogs/relogin.dialog';
 import { RequestDialogComponent } from './dialogs/request.dialog';
+import { IconFieldComponent } from './fields/icon.field';
 import { ImageFieldComponent } from './fields/image.field';
 import { ScheduleFieldComponent } from './fields/schedule.field';
 import { ActivityFormComponent } from './forms/activity.form';
@@ -76,6 +77,7 @@ const dialogs: Type<any>[] = [
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
+  IconFieldComponent,
   ImageFieldComponent,
   ScheduleFieldComponent
 ];

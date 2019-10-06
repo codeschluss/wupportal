@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="root" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="minLengthError" datatype="html">
@@ -133,6 +134,9 @@
       <trans-unit id="joinOrganisations" datatype="html">
         <source>joinOrganisations</source><target>Affilier à des organisations</target>
       </trans-unit>
+      <trans-unit id="iconList" datatype="html">
+        <source>iconList</source><target>Liste de tous les symboles</target>
+      </trans-unit>
       <trans-unit id="edit" datatype="html">
         <source>edit</source><target>Éditer</target>
       </trans-unit>
@@ -207,6 +211,9 @@
       </trans-unit>
       <trans-unit id="color" datatype="html">
         <source>color</source><target>Couleur</target>
+      </trans-unit>
+      <trans-unit id="icon" datatype="html">
+        <source>icon</source><target>Symbole</target>
       </trans-unit>
       <trans-unit id="mapCluster" datatype="html">
         <source>mapCluster</source><target>Limites du cluster</target>
@@ -389,7 +396,7 @@
         <source>privilegesPanel</source><target>Administrer des privilèges d'accès</target>
       </trans-unit>
       <trans-unit id="resetAllPasswords" datatype="html">
-        <source>resetPassword</source><target>Réinitialiser tous mots d'accès</target>
+        <source>resetAllPasswords</source><target>Réinitialiser tous mots d'accès</target>
       </trans-unit>
       <trans-unit id="users" datatype="html">
         <source>users</source><target>Utilisateurs</target>

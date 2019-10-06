@@ -8,8 +8,14 @@ import { CategoryModel } from '../../../realm/models/category.model';
   template: BaseTable.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
+        <ng-container *ngSwitchCase="'color'">
+          <i18n i18n="@@color">color</i18n>
+        </ng-container>
         <ng-container *ngSwitchCase="'description'">
           <i18n i18n="@@description">description</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'icon'">
+          <i18n i18n="@@icon">icon</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
           <i18n i18n="@@name">name</i18n>
@@ -29,6 +35,14 @@ export class CategoryTableComponent extends BaseTable<CategoryModel> {
     {
       name: 'description',
       value: (item) => item.description
+    },
+    {
+      name: 'icon',
+      value: (item) => `
+        <a target="_blank" href="https://fontawesome.com/icons/${item.icon}">
+          ${item.icon}
+        </a>
+      `
     },
     {
       name: 'color',

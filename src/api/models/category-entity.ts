@@ -4,6 +4,7 @@ export interface CategoryEntity {
   color?: string;
   created?: string;
   description?: string;
+  icon?: string;
   id?: string;
   modified?: string;
   name?: string;

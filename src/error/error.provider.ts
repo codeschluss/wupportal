@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { StrictHttpResponse } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { ErrorControllerService } from '../api/services/error-controller.service';
 import { ErrorModel } from './error.model';
@@ -10,7 +11,7 @@ export class ErrorProvider {
     private service: ErrorControllerService
   ) { }
 
-  public throwError(reason: ErrorModel): Observable<any> {
+  public throwError(reason: ErrorModel): Observable<StrictHttpResponse<any>> {
     return this.service.errorControllerErrorResponse(reason.toString());
   }
 

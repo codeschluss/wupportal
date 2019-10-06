@@ -57,13 +57,38 @@ layout-component {
   @include position(fixed, 0, 0, 0, 0);
 
   & > header {
+    @include flex(row, space-around, flex-end);
     height: 10rem;
+    margin: 0 auto;
+    max-width: $viewport-width;
     overflow: hidden;
-    text-align: center;
     transition: height $animation-duration;
+    width: 100%;
 
     @include media(lt-md) {
       display: none;
+    }
+
+    & > figure {
+      text-align: center;
+
+      & > img {
+        height: auto;
+        max-height: 5rem;
+        max-width: 15rem;
+        width: auto;
+      }
+
+      & > figcaption {
+        white-space: nowrap;
+
+        & > a {
+          border-bottom: 1px dotted $color-darkest;
+          color:  $color-darkest;;
+          font-weight: bold;
+          text-decoration: none;
+        }
+      }
     }
 
     & > img {
@@ -77,7 +102,7 @@ layout-component {
     }
 
     & > mat-toolbar {
-      @include flex(nowrap, space-between, center);
+      @include flex(row, space-between, center);
       padding: 0 calc((100% - #{$viewport-width}) / 2);
 
       & > mat-form-field {
@@ -292,6 +317,10 @@ layout-component {
           main {
             margin: 0 auto;
             max-width: $viewport-width;
+
+            [compat=marked]:not([class]) {
+              @extend .mat-body;
+            }
           }
         }
 

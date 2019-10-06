@@ -61,12 +61,6 @@
           <i18n i18n="@@organisations" unit="organisations"></i18n>
         </stack-layout>
         <stack-layout ripple
-          [class.active]="url.startsWith('/blogposts')"
-          (tap)="navigate('/', 'blogposts')">
-          <icon-compat icon="comment-dots"></icon-compat>
-          <i18n i18n="@@blogposts" unit="blogposts"></i18n>
-        </stack-layout>
-        <stack-layout ripple
           [class.active]="url.startsWith('/infopages')"
           (tap)="navigate('/', 'infopages')">
           <icon-compat icon="info-circle"></icon-compat>

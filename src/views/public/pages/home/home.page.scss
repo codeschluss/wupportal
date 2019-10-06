@@ -154,6 +154,10 @@ main {
     margin: 2.5rem auto;
     max-width: $viewport-width;
 
+    @include media(gt-sm) {
+      display: none;
+    }
+
     & > figure {
       text-align: center;
 

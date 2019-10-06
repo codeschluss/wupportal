@@ -1,5 +1,33 @@
 <header #header>
+<figure>
+    <img
+      alt="Stadt Wuppertal Ressort Zuwanderung und Integration"
+      src="/images/municipality.png"
+      title="Stadt Wuppertal Ressort Zuwanderung und Integration">
+    <figcaption class="mat-body-strong">
+      <a
+        href="https://www.wuppertal.de/integration"
+        target="_blank"
+        title="Stadt Wuppertal Ressort Zuwanderung und Integration">
+        Ressort Zuwanderung und Integration
+      </a>
+    </figcaption>
+  </figure>
   <img src="/images/icon.png" [alt]="name | async" [title]="name | async">
+  <figure>
+    <img
+      alt="Kommunales Integrationszentrum Wuppertal"
+      src="/images/office.png"
+      title="Kommunales Integrationszentrum Wuppertal">
+    <figcaption class="mat-body-strong">
+      <a
+        href="https://www.wuppertal.de/integration"
+        target="_blank"
+        title="Kommunales Integrationszentrum Wuppertal">
+        Kommunales Integrationszentrum Wuppertal
+      </a>
+    </figcaption>
+  </figure>
 </header>
 <navbar-compat>
   <a mat-button [class.active]="url === '/'" [routerLink]="['/']">
@@ -23,12 +51,6 @@
     [routerLink]="['/', 'organisations']">
     <icon-compat icon="at"></icon-compat>
     <i18n i18n="@@organisations">organisations</i18n>
-  </a>
-  <a mat-button
-    [class.active]="url.startsWith('/blogposts')"
-    [routerLink]="['/', 'blogposts']">
-    <icon-compat icon="comment-dots"></icon-compat>
-    <i18n i18n="@@blogposts">blogposts</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/infopages')"
@@ -218,12 +240,6 @@
         (click)="navigate('/', 'organisations')">
         <icon-compat icon="at"></icon-compat>
         <i18n i18n="@@organisations">organisations</i18n>
-      </button>
-      <button mat-list-item
-        [class.active]="url.startsWith('/blogposts')"
-        (click)="navigate('/', 'blogposts')">
-        <icon-compat icon="comment-dots"></icon-compat>
-        <i18n i18n="@@blogposts">blogposts</i18n>
       </button>
       <button mat-list-item
         [class.active]="url.startsWith('/infopages')"

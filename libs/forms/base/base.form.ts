@@ -123,7 +123,9 @@ export abstract class BaseForm<Model extends CrudModel>
         : item.id
           ? provider.update(item)
           : provider.create(item)
-    ).pipe(mergeMap((persisted) => this.cascade(persisted as Model)));
+    ).pipe(
+      mergeMap((persisted) => this.cascade(persisted as Model))
+    );
   }
 
   public required(field: FormField): boolean {

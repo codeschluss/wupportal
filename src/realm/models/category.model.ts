@@ -9,7 +9,6 @@ export class CategoryModel
 
   public description: string;
   public color: string;
-  // TODO: https://board.codeschluss.de/project/wooportal/us/13
-  public icon: string = 'icons';
+  public icon: string;
 
 }

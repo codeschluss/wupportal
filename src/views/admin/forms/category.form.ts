@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
 import { CategoryModel } from '../../../realm/models/category.model';
 import { TranslationBase } from '../../../realm/translations/translation.base';
+import { IconFieldComponent } from '../fields/icon.field';
 
 @Component({
   selector: 'category-form',
@@ -14,6 +15,9 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
         </ng-container>
         <ng-container *ngSwitchCase="'description'">
           <i18n i18n="@@description">description</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'icon'">
+          <i18n i18n="@@icon">icon</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
           <i18n i18n="@@name">name</i18n>
@@ -35,6 +39,11 @@ export class CategoryFormComponent
     {
       name: 'description',
       input: StringFieldComponent
+    },
+    {
+      name: 'icon',
+      input: IconFieldComponent,
+      tests: [Validators.required]
     },
     {
       name: 'color',

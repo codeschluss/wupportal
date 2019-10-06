@@ -134,6 +134,9 @@
       <trans-unit id="joinOrganisations" datatype="html">
         <source>joinOrganisations</source>
       </trans-unit>
+      <trans-unit id="iconList" datatype="html">
+        <source>iconList</source>
+      </trans-unit>
       <trans-unit id="edit" datatype="html">
         <source>edit</source>
       </trans-unit>
@@ -208,6 +211,9 @@
       </trans-unit>
       <trans-unit id="color" datatype="html">
         <source>color</source>
+      </trans-unit>
+      <trans-unit id="icon" datatype="html">
+        <source>icon</source>
       </trans-unit>
       <trans-unit id="mapCluster" datatype="html">
         <source>mapCluster</source>

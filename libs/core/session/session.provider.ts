@@ -27,8 +27,10 @@ export class SessionProvider {
         language: platformProvider.language
       }));
 
-      this.value.subscribe((value) =>
-        localStorage.setItem('clientSession', value).subscribe());
+      this.value.subscribe((value) => {
+        Object.setPrototypeOf(value, Object.prototype);
+        localStorage.setItem('clientSession', value).subscribe();
+      });
     });
   }
 

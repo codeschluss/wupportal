@@ -154,10 +154,6 @@ main#admin {
 
     & > mat-paginator {
       background-color: inherit;
-
-      .mat-paginator-page-size {
-        display: none;
-      }
     }
   }
 }

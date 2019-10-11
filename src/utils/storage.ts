@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalDatabase, StorageMap } from '@ngx-pwa/local-storage';
+import { LocalDatabase, SerializationError, StorageMap } from '@ngx-pwa/local-storage';
 import { asyncScheduler, Observable, of, throwError } from 'rxjs';
 import { observeOn } from 'rxjs/operators';
 import * as nativeStorage from 'tns-core-modules/application-settings';
@@ -51,6 +51,18 @@ export class NativeStorageDatabase implements LocalDatabase {
 
   public set(key: string, data: any): Observable<undefined> {
     let json: string | null = null;
+
+    if (
+      data !== null &&
+      !Array.isArray(data) &&
+      typeof data === 'object' &&
+      !(
+        Object.getPrototypeOf(data) === null ||
+        Object.getPrototypeOf(data) === Object.prototype
+      )
+    ) {
+      return throwError(new SerializationError());
+    }
 
     try {
       json = JSON.stringify(data);

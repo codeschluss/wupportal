@@ -5,8 +5,8 @@ import { MatSort, SortDirection } from '@angular/material/sort';
 import { MatColumnDef, MatTable } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@wooportal/core';
-import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, ignoreElements, map, mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, mergeMap, tap } from 'rxjs/operators';
 
 export interface TableColumn {
   name: string;
@@ -31,14 +31,8 @@ export abstract class BaseTable<Model extends CrudModel>
 
   public source: BehaviorSubject<Model[]>;
 
-  public readonly viewpipe: Observable<any> = merge(
-    this.route.queryParams.pipe(tap((params) => this.navigate(params)))
-  ).pipe(ignoreElements());
-
   @Input()
   private items: Model[];
-
-  private navigation: any;
 
   @ViewChild(MatPaginator, { static: true })
   private pager: MatPaginator;
@@ -75,8 +69,10 @@ export abstract class BaseTable<Model extends CrudModel>
         </ng-container>
         <ng-content></ng-content>
       </mat-table>
-      <mat-paginator [pageSize]="size"></mat-paginator>
-      <ng-container *ngIf="viewpipe | async"></ng-container>
+      <mat-paginator
+        [pageSize]="size"
+        [pageSizeOptions]="[10, 25, 50]">
+      </mat-paginator>
     `;
   }
 
@@ -89,6 +85,7 @@ export abstract class BaseTable<Model extends CrudModel>
   public ngOnInit(): void {
     this.source = new BehaviorSubject<Model[]>([]);
     this.items = this.items || this.route.snapshot.data.items;
+    this.route.queryParams.subscribe((params) => this.navigate(params));
   }
 
   public ngAfterViewInit(): void {
@@ -162,17 +159,13 @@ export abstract class BaseTable<Model extends CrudModel>
   }
 
   private navigate(params: Params) {
-    const { dir, find, page, size, sort, ...rest } = params;
-    this.navigation = this.navigation || rest;
-
-    if (JSON.stringify(this.navigation) === JSON.stringify(rest)) {
-      this.sorter.direction = dir || null as SortDirection;
-      this.searcher.value = find || null;
-      this.pager.pageIndex = parseInt(page, 10) || null;
-      this.pager.pageSize = parseInt(size, 10) || this.size;
-      this.sorter.active = sort || null;
-      this.items ? this.filter() : this.fetch();
-    }
+    const { dir, find, page, size, sort } = params;
+    this.sorter.direction = dir || null as SortDirection;
+    this.searcher.value = find || null;
+    this.pager.pageIndex = parseInt(page, 10) || null;
+    this.pager.pageSize = parseInt(size, 10) || this.size;
+    this.sorter.active = sort || null;
+    this.items ? this.filter() : this.fetch();
   }
 
   private paginate(response: StrictHttpResponse<any>) {

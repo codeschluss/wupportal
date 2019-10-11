@@ -40,8 +40,10 @@ export class TokenProvider {
       mergeMap((token: RefreshTokenModel) => this.validate(token)),
       map((tokens: AuthTokens) => this.update(tokens)),
       tap((tokens: AuthTokens) => this.work(tokens))
-    ).subscribe(() => this.refreshToken.subscribe((token) =>
-      localStorage.setItem('refreshToken', token).subscribe()));
+    ).subscribe(() => this.refreshToken.subscribe((token) => {
+      Object.setPrototypeOf(token, Object.prototype);
+      localStorage.setItem('refreshToken', token).subscribe();
+    }));
   }
 
   public login(username: string, password: string): Observable<AuthTokens> {

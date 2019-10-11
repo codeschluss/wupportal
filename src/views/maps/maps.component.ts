@@ -192,14 +192,17 @@ export class MapsComponent
 
   public handleClick(event: MapBrowserPointerEvent): void {
     if (!this.route.snapshot.queryParamMap.has('items')) {
-      const feature = this.maps.instance.getFeaturesAtPixel(event.pixel);
-      const items = !feature ? [] : feature[0].get('features').map((feat) =>
-        this.items.value.find((item) => item.id === feat.getId()));
+      const features = this.maps.instance.getFeaturesAtPixel(event.pixel);
 
-      this.focus.next(items);
+      if (features.length) {
+        this.focus.next(features[0].get('features').map((feature) =>
+          this.items.value.find((item) => item.id === feature.getId())));
+      } else {
+        this.focus.next([]);
+      }
 
       if (this.connection) {
-        this.connection.nextFocus(items);
+        this.connection.nextFocus(this.focus.value);
       }
     }
   }

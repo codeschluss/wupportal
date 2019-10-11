@@ -27,7 +27,7 @@ export abstract class BaseTable<Model extends CrudModel>
 
   public collate: string[] = [];
 
-  public size: number = 2;
+  public size: number = 10;
 
   public source: BehaviorSubject<Model[]>;
 
@@ -69,7 +69,10 @@ export abstract class BaseTable<Model extends CrudModel>
         </ng-container>
         <ng-content></ng-content>
       </mat-table>
-      <mat-paginator [pageSize]="size"></mat-paginator>
+      <mat-paginator
+        [pageSize]="size"
+        [pageSizeOptions]="[10, 25, 50]">
+      </mat-paginator>
     `;
   }
 

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CrudModel, SessionProvider, TokenProvider } from '@wooportal/core';
 import { BaseForm, FormField, SelectFieldComponent } from '@wooportal/forms';
 import { EMPTY, merge, Observable, Subscription } from 'rxjs';
-import { map, startWith, take } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { LanguageModel } from '../../../realm/models/language.model';
 import { TranslationProvider } from '../../../realm/providers/translation.provider';
 import { ClientPackage } from '../../../utils/package';
@@ -147,14 +147,12 @@ export class TranslationFormComponent<Model extends CrudModel>
       .filter((field) => (this.model as any).translatable.includes(field.name))
       .forEach((field) => this.fields.push(field));
 
-    this.sessionProvider.value.pipe(take(1)).subscribe((session) => {
-      const fallback = this.route.snapshot.data.language.find((lang) =>
-        lang.locale === ClientPackage.config.defaults.language);
-      const selected = this.route.snapshot.data.language.find((lang) =>
-        lang.locale === session.language);
+    const fallback = this.route.snapshot.data.language.find((lang) =>
+      lang.locale === ClientPackage.config.defaults.language);
+    const selected = this.route.snapshot.data.language.find((lang) =>
+      lang.locale === this.sessionProvider.getLanguage());
 
-      this.language = this.fields[0].value = selected || fallback;
-    });
+    this.language = this.fields[0].value = selected || fallback;
   }
 
   private empty(language: LanguageModel): Model {

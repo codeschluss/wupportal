@@ -34,16 +34,20 @@ export class SessionProvider {
     });
   }
 
-  public isLiked(id: string): boolean {
+  public getLiked(id: string): boolean {
     return this.session.value.likes.includes(id);
   }
 
-  public like(id: string): void {
-    if (!this.isLiked(id)) {
+  public setLiked(id: string): void {
+    if (!this.getLiked(id)) {
       this.session.next(Object.assign(this.session.value, {
         likes: this.session.value.likes.concat(id)
       }));
     }
+  }
+
+  public getLanguage(): string {
+    return this.session.value.language;
   }
 
   public setLanguage(language: string): void {

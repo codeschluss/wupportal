@@ -7,7 +7,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, Title, TokenProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
-import { filter, map, startWith, take, tap } from 'rxjs/operators';
+import { filter, map, startWith, tap } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData as BackPressedEvent } from 'tns-core-modules/application';
 import { ScrollView } from 'tns-core-modules/ui/scroll-view';
 import { LanguageModel } from '../../../realm/models/language.model';
@@ -66,12 +66,10 @@ export class LayoutComponent implements OnInit {
   public ngOnInit(): void {
     this.busy = new BehaviorSubject<number>(1);
     this.languageProvider.readAll().subscribe((l) => this.languages = l);
-    this.sessionProvider.value.pipe(take(1)).subscribe((session) => {
-      this.language.setValue(session.language);
-      this.language.valueChanges.subscribe((language) => {
-        setTimeout(() => this.platformProvider.reload(), 250);
-        this.sessionProvider.setLanguage(language);
-      });
+    this.language.setValue(this.sessionProvider.getLanguage());
+    this.language.valueChanges.subscribe((language) => {
+      setTimeout(() => this.platformProvider.reload(), 250);
+      this.sessionProvider.setLanguage(language);
     });
 
     this.router.events.pipe(

@@ -12,7 +12,7 @@ import { BasePiece } from '../base.piece';
 export class LikePieceComponent extends BasePiece {
 
   public get liked(): boolean {
-    return this.sessionProvider.isLiked(this.item.id);
+    return this.sessionProvider.getLiked(this.item.id);
   }
 
   public constructor(
@@ -28,7 +28,7 @@ export class LikePieceComponent extends BasePiece {
 
     if (provider.like) {
       provider.like(this.item.id).subscribe(() => {
-        this.sessionProvider.like(this.item.id);
+        this.sessionProvider.setLiked(this.item.id);
         (this.item as any).likes++;
       });
     }

@@ -86,8 +86,13 @@ export class PlatformProvider implements Compat {
 
   public reload(): void {
     switch (this.name) {
-      case 'Android': return this.engine.foregroundActivity.finish();
-      case 'iOS': return;
+      case 'Android':
+        android.webkit.WebStorage.getInstance().deleteAllData();
+        this.engine.foregroundActivity.finish();
+        break;
+
+      case 'iOS':
+        break;
     }
   }
 

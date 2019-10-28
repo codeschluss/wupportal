@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlatformProvider } from '@wooportal/core';
 import { fromEvent } from 'rxjs';
@@ -15,11 +15,16 @@ import { ClientPackage } from './utils/package';
 
 export class NativeComponent {
 
+  public static viewContainer: ViewContainerRef;
+
   public constructor(
+    container: ViewContainerRef,
     platformProvider: PlatformProvider,
     router: Router,
     zone: NgZone
   ) {
+    NativeComponent.viewContainer = container;
+
     switch (platformProvider.name) {
       case 'Android':
         fromEvent(platformProvider.engine, 'activityStarted').pipe(

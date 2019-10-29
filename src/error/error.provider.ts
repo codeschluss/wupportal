@@ -12,7 +12,7 @@ export class ErrorProvider {
   ) { }
 
   public throwError(reason: ErrorModel): Observable<StrictHttpResponse<any>> {
-    return this.service.errorControllerErrorResponse(reason.toString());
+    return this.service.errorControllerErrorResponse(JSON.stringify(reason));
   }
 
 }

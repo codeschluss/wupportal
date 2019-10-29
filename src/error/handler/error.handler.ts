@@ -30,11 +30,14 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     reason.path = this.location.path(true) || '/';
 
     if (!reason.ignore) {
-      this.errorProvider.throwError(reason);
       this.zone.run(() => !reason.breaking
         ? this.bar.openFromComponent(ErrorBarComponent, { data: reason })
         : this.dialog.open(ErrorDialogComponent, { data: reason })
           .afterClosed().subscribe(() => this.platformProvider.reload()));
+
+      if (reason.breaking) {
+        this.errorProvider.throwError(reason).subscribe();
+      }
     }
   }
 

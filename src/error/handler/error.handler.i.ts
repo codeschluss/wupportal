@@ -4,6 +4,6 @@ export interface ClientErrorHandler {
 
   handleError(error: any): void;
 
-  throwError(error: ErrorModel): void;
+  throwError(reason: ErrorModel): void;
 
 }

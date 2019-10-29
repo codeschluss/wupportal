@@ -34,7 +34,6 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     reason.path = this.location.path(true) || '/';
 
     if (!reason.ignore) {
-      this.errorProvider.throwError(reason);
       this.zone.run(() => !reason.breaking ? alert({
         title: reason.error,
         message: reason.message,
@@ -43,6 +42,10 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
         context: reason,
         viewContainerRef: NativeComponent.viewContainer
       })).then(() => this.platformProvider.reload());
+
+      if (reason.breaking) {
+        this.errorProvider.throwError(reason).subscribe();
+      }
     }
   }
 

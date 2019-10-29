@@ -1,10 +1,12 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { PlatformProvider } from '@wooportal/core';
+import { PlatformProvider, SessionProvider } from '@wooportal/core';
 import { fromEvent } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { AndroidActivityEventData as ActivityEvent } from 'tns-core-modules/application';
 import { ClientPackage } from './utils/package';
+
+declare const java: any;
 
 @Component({
   selector: 'native-component',
@@ -15,13 +17,23 @@ import { ClientPackage } from './utils/package';
 
 export class NativeComponent {
 
+  public static viewContainer: ViewContainerRef;
+
   public constructor(
+    container: ViewContainerRef,
     platformProvider: PlatformProvider,
     router: Router,
+    sessionProvider: SessionProvider,
     zone: NgZone
   ) {
+    NativeComponent.viewContainer = container;
+
     switch (platformProvider.name) {
       case 'Android':
+        sessionProvider.value.pipe(
+          take(1), map((session) => new java.util.Locale(session.language))
+        ).subscribe((locale) => java.util.Locale.setDefault(locale));
+
         fromEvent(platformProvider.engine, 'activityStarted').pipe(
           map((event: ActivityEvent) => event.activity.getIntent())
         ).subscribe((intent) => {

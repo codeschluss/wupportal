@@ -11,10 +11,10 @@ import { PlatformProvider as Compat } from './platform.provider.i';
 
 declare const android: any;
 
-let navigate: (url: string) => Promise<boolean>;
-
 @Injectable({ providedIn: 'root' })
 export class PlatformProvider implements Compat {
+
+  private static navigate: (url: string) => Promise<boolean>;
 
   public readonly chromeClient: any = android.webkit.WebChromeClient.extend({
     onGeolocationPermissionsShowPrompt: (url: string, callback: any) => {
@@ -29,7 +29,7 @@ export class PlatformProvider implements Compat {
       url = typeof url === 'string' ? url : url.getUrl().toString();
 
       if (url.startsWith(this.coreSettings.appUrl)) {
-        navigate(url.replace(this.coreSettings.appUrl, ''));
+        PlatformProvider.navigate(url.replace(this.coreSettings.appUrl, ''));
       } else {
         openUrl(url);
       }
@@ -77,7 +77,8 @@ export class PlatformProvider implements Compat {
     router: Router,
     zone: NgZone
   ) {
-    navigate = (url) => zone.run(() => router.navigateByUrl(url));
+    PlatformProvider.navigate = (url) =>
+      zone.run(() => router.navigateByUrl(url));
 
     this.connection.pipe(filter((state) => !state))
       .subscribe(() => router.navigate(['/', 'netsplit']));
@@ -85,8 +86,13 @@ export class PlatformProvider implements Compat {
 
   public reload(): void {
     switch (this.name) {
-      case 'Android': return this.engine.foregroundActivity.finish();
-      case 'iOS': return;
+      case 'Android':
+        android.webkit.WebStorage.getInstance().deleteAllData();
+        this.engine.foregroundActivity.finish();
+        break;
+
+      case 'iOS':
+        break;
     }
   }
 

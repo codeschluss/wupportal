@@ -24,7 +24,7 @@ export class I18nResolver implements Resolve<string> {
   }
 
   private run(): Observable<string> {
-    return this.sessionProvider.value.pipe(take(1)).pipe(mergeMap((session) => {
+    return this.sessionProvider.value.pipe(take(1), mergeMap((session) => {
       const path = `/i18n/strings.${session.language}.xliff`;
       return this.httpClient.get(path, { responseType: 'text' });
     }), tap((xliff) => this.xliff = xliff));

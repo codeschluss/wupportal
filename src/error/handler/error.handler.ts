@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PlatformProvider } from '@wooportal/core';
 import { ErrorBarComponent } from '../bar/error.bar';
 import { ErrorDialogComponent } from '../dialog/error.dialog';
 import { ErrorModel } from '../error.model';
@@ -16,6 +17,7 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     private dialog: MatDialog,
     private errorProvider: ErrorProvider,
     private location: Location,
+    private platformProvider: PlatformProvider,
     private zone: NgZone
   ) { }
 
@@ -24,15 +26,18 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     this.throwError(ErrorModel.from(error));
   }
 
-  public throwError(reason: ErrorModel): any {
+  public throwError(reason: ErrorModel): void {
     reason.path = this.location.path(true) || '/';
 
     if (!reason.ignore) {
-      this.errorProvider.throwError(reason);
       this.zone.run(() => !reason.breaking
         ? this.bar.openFromComponent(ErrorBarComponent, { data: reason })
         : this.dialog.open(ErrorDialogComponent, { data: reason })
-          .afterClosed().subscribe(() => location.reload()));
+          .afterClosed().subscribe(() => this.platformProvider.reload()));
+
+      if (reason.breaking) {
+        this.errorProvider.throwError(reason).subscribe();
+      }
     }
   }
 

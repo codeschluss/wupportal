@@ -2,6 +2,8 @@ import { ErrorModel } from '../error.model';
 
 export interface ClientErrorHandler {
 
-  throwError(error: ErrorModel): any;
+  handleError(error: any): void;
+
+  throwError(reason: ErrorModel): void;
 
 }

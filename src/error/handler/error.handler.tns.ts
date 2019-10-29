@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
 import { Injectable, NgZone } from '@angular/core';
+import { PlatformProvider } from '@wooportal/core';
 import { ModalDialogService } from 'nativescript-angular/modal-dialog';
 import { ErrorHandler, setErrorHandler } from 'tns-core-modules/trace';
 import { alert } from 'tns-core-modules/ui/dialogs';
+import { NativeComponent } from '../../native.component.tns';
 import { ErrorDialogComponent } from '../dialog/error.dialog';
 import { ErrorModel } from '../error.model';
 import { ErrorProvider } from '../error.provider';
@@ -17,6 +19,7 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     private dialog: ModalDialogService,
     private errorProvider: ErrorProvider,
     private location: Location,
+    private platformProvider: PlatformProvider,
     private zone: NgZone
   ) {
     setErrorHandler(this);
@@ -31,16 +34,18 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     reason.path = this.location.path(true) || '/';
 
     if (!reason.ignore) {
-      this.errorProvider.throwError(reason);
-      this.zone.run(() => !reason.breaking || true ? alert({
+      this.zone.run(() => !reason.breaking ? alert({
         title: reason.error,
         message: reason.message,
-        okButtonText: 'Close'
+        okButtonText: 'OK'
       }) : this.dialog.showModal(ErrorDialogComponent, {
         context: reason,
-        // TODO: global ViewContainerRef
-        viewContainerRef: null
-      }));
+        viewContainerRef: NativeComponent.viewContainer
+      })).then(() => this.platformProvider.reload());
+
+      if (reason.breaking) {
+        this.errorProvider.throwError(reason).subscribe();
+      }
     }
   }
 

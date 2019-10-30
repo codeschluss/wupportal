@@ -14,7 +14,11 @@ export interface PlatformProvider {
 
   readonly name: 'Android' | 'iOS' | 'Server' | 'Web';
 
+  readonly platform: string;
+
   readonly type: 'Native' | 'Online';
+
+  readonly userAgent: string;
 
   readonly viewClient: any;
 

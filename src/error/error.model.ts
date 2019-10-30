@@ -2,19 +2,20 @@ import { inspect } from 'util';
 
 export class ErrorModel {
 
+  public client: string;
+  public device: string;
   public error: string;
   public message: string;
-  public path?: string;
-  public raw?: any;
+  public path: string;
+  public raw: any;
   public status: number = NaN;
   public timestamp: string = new Date().toISOString();
-  public trace?: string;
+  public trace: string;
 
   public static from(error: any): ErrorModel {
     return Object.assign(new ErrorModel(), {
       error: error.constructor.name,
       message: error.status ? error.error.message : error.message,
-      path: error.url,
       raw: error,
       status: error.status || NaN,
       trace: error.stack || inspect(error)
@@ -44,6 +45,18 @@ export class ErrorModel {
       default:
         return false;
     }
+  }
+
+  public toString(): string {
+    return `\n`
+      + `Time:\n${this.timestamp}\n\n`
+      + `Error:\n${this.error}\n\n`
+      + `Status:\n${this.status}\n\n`
+      + `Resource:\n${this.path}\n\n`
+      + `Platform:\n${this.device}\n\n`
+      + `Useragent:\n${this.client}\n\n`
+      + `Exception:\n${this.message}\n\n`
+      + `Stacktrace:\n${this.trace}\n\n`;
   }
 
 }

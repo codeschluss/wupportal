@@ -68,8 +68,16 @@ export class PlatformProvider implements Compat {
     return device.os as any;
   }
 
+  public get platform(): string {
+    return `${device.manufacturer} ${device.model}`;
+  }
+
   public get type(): 'Online' | 'Native' {
     return 'Native';
+  }
+
+  public get userAgent(): string {
+    return `${device.os} ${device.osVersion}`;
   }
 
   public constructor(

@@ -12,6 +12,8 @@ import { ClientErrorHandler as Compat } from './error.handler.i';
 @Injectable({ providedIn: 'root' })
 export class ClientErrorHandler implements Compat, ErrorHandler {
 
+  public static instance: ClientErrorHandler;
+
   public constructor(
     private bar: MatSnackBar,
     private dialog: MatDialog,
@@ -19,25 +21,32 @@ export class ClientErrorHandler implements Compat, ErrorHandler {
     private location: Location,
     private platformProvider: PlatformProvider,
     private zone: NgZone
-  ) { }
+  ) {
+    if (Object.keys(this).every(Boolean)) {
+      ClientErrorHandler.instance = this;
+    }
+  }
 
   public handleError(error: any): void {
     console.error('ClientErrorHandler.handleError', error);
-    this.throwError(ErrorModel.from(error));
+    ClientErrorHandler.instance.throwError(ErrorModel.from(error));
   }
 
   public throwError(reason: ErrorModel): void {
+    reason.client = this.platformProvider.userAgent;
+    reason.device = this.platformProvider.platform;
     reason.path = this.location.path(true) || '/';
 
     if (!reason.ignore) {
-      this.zone.run(() => !reason.breaking
-        ? this.bar.openFromComponent(ErrorBarComponent, { data: reason })
-        : this.dialog.open(ErrorDialogComponent, { data: reason })
-          .afterClosed().subscribe(() => this.platformProvider.reload()));
-
-      if (reason.breaking) {
-        this.errorProvider.throwError(reason).subscribe();
-      }
+      this.zone.run(() => {
+        if (reason.breaking) {
+          this.errorProvider.throwError(reason).subscribe();
+          this.dialog.open(ErrorDialogComponent, { data: reason })
+            .afterClosed().subscribe(() => this.platformProvider.reload());
+        } else {
+          this.bar.openFromComponent(ErrorBarComponent, { data: reason });
+        }
+      });
     }
   }
 

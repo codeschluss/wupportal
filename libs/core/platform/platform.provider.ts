@@ -60,8 +60,22 @@ export class PlatformProvider implements Compat {
     }
   }
 
+  public get platform(): string {
+    switch (this.name) {
+      case 'Web': return navigator.platform;
+      case 'Server': return `${process.platform} ${process.arch}`;
+    }
+  }
+
   public get type(): 'Online' | 'Native' {
     return 'Online';
+  }
+
+  public get userAgent(): string {
+    switch (this.name) {
+      case 'Web': return navigator.userAgent;
+      case 'Server': return `${process.argv0} ${process.version}`;
+    }
   }
 
   public constructor(

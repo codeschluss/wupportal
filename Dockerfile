@@ -39,7 +39,7 @@ tools/bin/sdkmanager \
   "extras;android;m2repository" \
   "platforms;android-29" \
   "platform-tools" \
-  "tools" && \
+  "tools" > /dev/null && \
 #
 # wooportal/client
 cd /tmp/wooportal.client && \

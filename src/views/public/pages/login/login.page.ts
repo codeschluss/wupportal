@@ -36,6 +36,18 @@ export class LoginPageComponent extends BasePage implements OnInit {
     return this.titleService.name;
   }
 
+  public get registerable(): boolean {
+    return true
+      && !this.email.value
+      && !this.password.value;
+  }
+
+  public get resetable(): boolean {
+    return true
+      && this.email.valid
+      && !this.password.value;
+  }
+
   public get valid(): boolean {
     return true
       && this.email.valid

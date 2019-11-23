@@ -96,8 +96,13 @@ export class LayoutComponent implements OnInit {
             Object.assign(claim, { [key]: access[claims[key]] }), { }))
         ).subscribe((claimed) => this.claimed = claimed as JwtClaims);
 
-        fromEvent(this.document, 'scroll', { capture: true, passive: true })
-          .subscribe((event) => this.topoff(event));
+        fromEvent(this.document, 'scroll', {
+          capture: true,
+          passive: true
+        }).pipe(
+          filter((event) => event.target instanceof HTMLElement),
+          map((event) => event.target as HTMLElement)
+        ).subscribe((element) => this.topoff(element));
       } else if (this.platformProvider.name === 'Android') {
         fromEvent(this.platformProvider.engine, 'activityBackPressed').pipe(
           tap((event: BackPressedEvent) => event.cancel = true)
@@ -130,16 +135,13 @@ export class LayoutComponent implements OnInit {
     }));
   }
 
-  private topoff(event: Event): void {
-    if ((event.target as HTMLElement).classList.contains('topoff')) {
-      const height = this.header.nativeElement.clientHeight;
-      const scroll = (event.target as HTMLElement).scrollTop;
-
-      if (height) {
-        if (scroll > height) {
+  private topoff(element: HTMLElement): void {
+    if (element.classList.contains('topoff')) {
+      if (this.header.nativeElement.clientHeight) {
+        if (element.scrollTop > this.header.nativeElement.clientHeight) {
           this.header.nativeElement.style.height = '0';
         }
-      } else if (!scroll) {
+      } else if (!element.scrollTop) {
         this.header.nativeElement.style.height = null;
       }
     }

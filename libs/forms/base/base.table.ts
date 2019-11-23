@@ -141,13 +141,8 @@ export abstract class BaseTable<Model extends CrudModel>
   private filter(): void {
     const column = this.columns.find((c) => c.name === this.sorter.active);
     const field = column ? column.value : (item) => item[this.sorter.active];
-    const regex = this.searcher.value && new RegExp(this.searcher.value, 'i');
-    const matcher = (item) => !regex || Object.values(item).some((value) =>
-      value instanceof CrudModel
-        ? matcher(value) : typeof value === 'string'
-        ? value.search(regex) >= 0 : false);
+    const items = this.searcher.value ? this.search() as Model[] : this.items;
 
-    const items = this.items.filter((item) => matcher(item));
     this.pager.length = items.length;
     this.source.next(items.sort((a, b) => this.sorter.direction === 'asc'
       ? (field(a) || '').localeCompare(field(b) || '')
@@ -172,6 +167,22 @@ export abstract class BaseTable<Model extends CrudModel>
     this.pager.length = response.body.page.totalElements;
     this.pager.pageIndex = response.body.page.number;
     this.pager.pageSize = response.body.page.size;
+  }
+
+  private search(item?: CrudModel, path: CrudModel[] = []): Model[] | boolean {
+    if (!item) {
+      return this.items.filter((i) => this.search(i));
+    }
+
+    return Object.values(item).some((value) => {
+      switch (true) {
+        case typeof value === 'string':
+          return value.search(new RegExp(this.searcher.value, 'i')) >= 0;
+
+        case value instanceof CrudModel && !path.includes(value):
+          return this.search(value, path.concat(value));
+      }
+    });
   }
 
 }

@@ -10,7 +10,13 @@ export class SessionModel {
     }
   };
 
-  public language: string = 'en';
+  public language: string = null;
   public likes: string[] = [];
+
+  public constructor(
+    language: string = 'en'
+  ) {
+    this.language = language;
+  }
 
 }

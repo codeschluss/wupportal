@@ -41,6 +41,7 @@ export class ActivityModel
       .sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
   }
 
+  // compatability
   public get provider() { return this.membership; }
   public set provider(value) { this.membership = value; }
   public get tags() { return this.keywords; }

@@ -33,6 +33,7 @@ class OrganisationControllerService extends __BaseService {
   static readonly organisationControllerReadImagesPath = '/organisations/{organisationId}/images';
   static readonly organisationControllerAddImagePath = '/organisations/{organisationId}/images';
   static readonly organisationControllerDeleteImagesPath = '/organisations/{organisationId}/images';
+  static readonly organisationControllerIncreaseLikePath = '/organisations/{organisationId}/like';
   static readonly organisationControllerReadTranslationsPath = '/organisations/{organisationId}/translations';
   static readonly organisationControllerReadUsersPath = '/organisations/{organisationId}/users';
   static readonly organisationControllerDeleteUserPath = '/organisations/{organisationId}/users/{userId}';
@@ -591,6 +592,42 @@ class OrganisationControllerService extends __BaseService {
   organisationControllerDeleteImages(organisationId: string,
     imageIds: Array<string>): __Observable<{}> {
     return this.organisationControllerDeleteImagesResponse(organisationId, imageIds).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @return OK
+   */
+  organisationControllerIncreaseLikeResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/organisations/${organisationId}/like`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @return OK
+   */
+  organisationControllerIncreaseLike(organisationId: string): __Observable<{}> {
+    return this.organisationControllerIncreaseLikeResponse(organisationId).pipe(
       __map(_r => _r.body as {})
     );
   }

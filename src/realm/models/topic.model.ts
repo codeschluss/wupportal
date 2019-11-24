@@ -11,6 +11,7 @@ export class TopicModel
 
   public infopages: InfopageModel[] & Observable<InfopageModel[]>;
 
+  // compatability
   public get pages() { return this.infopages; }
   public set pages(value) { this.infopages = value; }
 

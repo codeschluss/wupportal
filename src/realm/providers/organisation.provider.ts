@@ -98,6 +98,10 @@ export class OrganisationProvider
     (id: string, userId: string, grant: Boolean) => Observable<any> =
       this.apply(this.service.organisationControllerGrantAdminRightResponse);
 
+  public like:
+    (id: string) => Observable<any> =
+      this.apply(this.service.organisationControllerIncreaseLikeResponse);
+
   public pasteImages:
     (id: string, images: ImageModel[]) => Observable<any> =
       this.apply(this.service.organisationControllerAddImageResponse);

@@ -14,6 +14,7 @@ export class OrganisationModel
   @Translatable() public description: string;
 
   public approved: boolean;
+  public likes: number;
   public mail: string;
   public name: string;
   public phone: string;
@@ -29,6 +30,7 @@ export class OrganisationModel
   public memberships: MembershipModel[] & Observable<MembershipModel[]>;
   public users: UserModel[] & Observable<UserModel[]>;
 
+  // compatability
   public get provider() { return this.membership; }
   public set provider(value) { this.membership = value; }
   public get providers() { return this.memberships; }

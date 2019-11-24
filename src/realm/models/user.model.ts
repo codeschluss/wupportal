@@ -25,6 +25,7 @@ export class UserModel
   public memberships: MembershipModel[] & Observable<MembershipModel[]>;
   public organisations: OrganisationModel[] & Observable<OrganisationModel[]>;
 
+  // compatability
   public get blogs() { return this.blogposts; }
   public set blogs(value) { this.blogposts = value; }
   public get provider() { return this.membership; }

@@ -56,6 +56,10 @@ export class InfopageProvider
   public readAll: (params?: PageControllerService
     .PageControllerReadAllParams) => Observable<InfopageModel[]>;
 
+  public like:
+    (id: string) => Observable<any> =
+      this.apply(this.service.pageControllerIncreaseLikeResponse);
+
   public relinkTopic:
     (id: string, topicId: String) => Observable<any> =
       this.apply(this.service.pageControllerUpdateTopicResponse);

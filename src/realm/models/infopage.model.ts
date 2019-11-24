@@ -10,6 +10,8 @@ export class InfopageModel
   @Translatable() public content: string;
   @Translatable() public title: string;
 
+  public likes: number;
+
   public topicId: string;
 
   public topic: TopicModel & Observable<TopicModel>;

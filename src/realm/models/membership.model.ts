@@ -18,6 +18,7 @@ export class MembershipModel
     return `${this.user.name} @ ${this.organisation.name}`;
   }
 
+  // compatability
   public get admin() { return this.ownership; }
   public set admin(value) { this.ownership = value; }
 

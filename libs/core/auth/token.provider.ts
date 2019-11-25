@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, combineLatest, EMPTY, Observable, of, Subscription, timer } from 'rxjs';
+import { LocalStorage, VALIDATION_ERROR } from '@ngx-pwa/local-storage';
+import { BehaviorSubject, combineLatest, EMPTY, Observable, of, Subscription, throwError, timer } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { AuthTokens, StrictHttpResponse } from '../utils/api';
 import { Base64 } from '../utils/base64';
@@ -35,8 +35,9 @@ export class TokenProvider {
     this.refreshToken = new BehaviorSubject<RefreshTokenModel>(null);
 
     localStorage.getItem<RefreshTokenModel>('refreshToken', {
-        schema: RefreshTokenModel.schema
+      schema: RefreshTokenModel.schema
     }).pipe(
+      catchError((e) => e.message === VALIDATION_ERROR ? EMPTY : throwError(e)),
       mergeMap((token: RefreshTokenModel) => this.validate(token)),
       map((tokens: AuthTokens) => this.update(tokens)),
       tap((tokens: AuthTokens) => this.work(tokens))

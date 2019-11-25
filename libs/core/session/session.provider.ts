@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { LocalStorage, VALIDATION_ERROR } from '@ngx-pwa/local-storage';
+import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs';
+import { catchError, filter, map, tap } from 'rxjs/operators';
 import { PlatformProvider } from '../platform/platform.provider';
 import { SessionModel } from './session.model';
 
@@ -22,16 +22,14 @@ export class SessionProvider {
 
     localStorage.getItem<SessionModel>('clientSession', {
       schema: SessionModel.schema
-    }).subscribe((session) => {
-      this.session.next(session || Object.assign(new SessionModel(), {
-        language: platformProvider.language
-      }));
-
-      this.value.subscribe((value) => {
-        Object.setPrototypeOf(value, Object.prototype);
-        localStorage.setItem('clientSession', value).subscribe();
-      });
-    });
+    }).pipe(
+      catchError((e) => e.message === VALIDATION_ERROR ? EMPTY : throwError(e)),
+      map((session) => session || new SessionModel(platformProvider.language)),
+      tap((session) => this.session.next(session))
+    ).subscribe(() => this.value.subscribe((value) => {
+      Object.setPrototypeOf(value, Object.prototype);
+      localStorage.setItem('clientSession', value).subscribe();
+    }));
   }
 
   public getLiked(id: string): boolean {

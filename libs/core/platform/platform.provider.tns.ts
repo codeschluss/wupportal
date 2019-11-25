@@ -16,27 +16,13 @@ export class PlatformProvider implements Compat {
 
   private static navigate: (url: string) => Promise<boolean>;
 
-  public readonly chromeClient: any = android.webkit.WebChromeClient.extend({
-    onGeolocationPermissionsShowPrompt: (url: string, callback: any) => {
-      if (url.startsWith(this.coreSettings.appUrl)) {
-        callback.invoke(url, true, false);
-      }
-    }
-  });
+  private static chromeClient: any;
 
-  public readonly viewClient: any = android.webkit.WebViewClient.extend({
-    shouldOverrideUrlLoading: (_: any, url: any) => {
-      url = typeof url === 'string' ? url : url.getUrl().toString();
+  private static viewClient: any;
 
-      if (url.startsWith(this.coreSettings.appUrl)) {
-        PlatformProvider.navigate(url.replace(this.coreSettings.appUrl, ''));
-      } else {
-        openUrl(url);
-      }
-
-      return true;
-    }
-  });
+  public get chromeClient(): any {
+    return PlatformProvider.chromeClient;
+  }
 
   public get connected(): boolean {
     return this.online(getConnectionType());
@@ -80,16 +66,50 @@ export class PlatformProvider implements Compat {
     return `${device.os} ${device.osVersion}`;
   }
 
+  public get viewClient(): any {
+    return PlatformProvider.viewClient;
+  }
+
   public constructor(
     private coreSettings: CoreSettings,
     router: Router,
     zone: NgZone
   ) {
-    PlatformProvider.navigate = (url) =>
-      zone.run(() => router.navigateByUrl(url));
-
     this.connection.pipe(filter((state) => !state))
       .subscribe(() => router.navigate(['/', 'netsplit']));
+
+    switch (this.name) {
+      case 'Android':
+        PlatformProvider.navigate = (url) =>
+          zone.run(() => router.navigateByUrl(url));
+
+        PlatformProvider.chromeClient = android.webkit.WebChromeClient.extend({
+          onGeolocationPermissionsShowPrompt: (url: string, callback: any) => {
+            if (url.startsWith(this.coreSettings.appUrl)) {
+              callback.invoke(url, true, false);
+            }
+          }
+        });
+
+        PlatformProvider.viewClient = android.webkit.WebViewClient.extend({
+          shouldOverrideUrlLoading: (_: any, url: any) => {
+            url = typeof url === 'string' ? url : url.getUrl().toString();
+
+            if (url.startsWith(this.coreSettings.appUrl)) {
+              url = url.replace(this.coreSettings.appUrl, '');
+              PlatformProvider.navigate(url);
+            } else {
+              openUrl(url);
+            }
+
+            return true;
+          }
+        });
+        break;
+
+      case 'iOS':
+        break;
+    }
   }
 
   public reload(): void {

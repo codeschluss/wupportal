@@ -30,12 +30,12 @@
         <i18n i18n="@@login">login</i18n>
       </button>
       <button mat-button
-        [disabled]="!email.valid || !!password.value"
+        [disabled]="!resetable"
         (click)="reset($event)">
         <i18n i18n="@@resetPassword">resetPassword</i18n>
       </button>
       <button mat-button
-        [disabled]="email.value || password.value"
+        [disabled]="!registerable"
         [routerLink]="['/', 'register']">
         <i18n i18n="@@register">register</i18n>
       </button>

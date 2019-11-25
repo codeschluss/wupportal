@@ -1,5 +1,5 @@
 {
-  "$schema": "node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "defaultProject": "@wooportal/client",
   "projects": {
@@ -29,7 +29,7 @@
             "outputHashing": "none",
             "outputPath": "target/@wooportal/client",
             "serviceWorker": true,
-            "sourceMap": false,
+            "sourceMap": true,
             "tsConfig": "tsconfig.json",
             "vendorChunk": true,
             "assets": [
@@ -101,7 +101,7 @@
             "main": "src/server.ts",
             "outputPath": "target/@wooportal/server",
             "tsConfig": "server.json",
-            "sourceMap": false,
+            "sourceMap": true,
             "optimization": {
               "scripts": true,
               "styles": true
@@ -133,7 +133,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "libs/core/tsconfig.json",
+            "tsConfig": "tsconfig.json",
             "project": "libs/core/ng-package.json"
           }
         },
@@ -141,8 +141,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.json",
-              "libs/core/tsconfig.json"
+              "tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -160,7 +159,7 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "libs/forms/tsconfig.json",
+            "tsConfig": "tsconfig.json",
             "project": "libs/forms/ng-package.json"
           }
         },
@@ -168,8 +167,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.json",
-              "libs/forms/tsconfig.json"
+              "tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"

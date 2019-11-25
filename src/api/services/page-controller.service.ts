@@ -23,6 +23,7 @@ class PageControllerService extends __BaseService {
   static readonly pageControllerReadOnePath = '/pages/{pageId}';
   static readonly pageControllerUpdatePath = '/pages/{pageId}';
   static readonly pageControllerDeletePath = '/pages/{pageId}';
+  static readonly pageControllerIncreaseLikePath = '/pages/{pageId}/like';
   static readonly pageControllerReadTopicPath = '/pages/{pageId}/topic';
   static readonly pageControllerUpdateTopicPath = '/pages/{pageId}/topic';
   static readonly pageControllerReadTranslationsPath = '/pages/{pageId}/translations';
@@ -246,6 +247,42 @@ class PageControllerService extends __BaseService {
    */
   pageControllerDelete(pageId: string): __Observable<{}> {
     return this.pageControllerDeleteResponse(pageId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param pageId pageId
+   * @return OK
+   */
+  pageControllerIncreaseLikeResponse(pageId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/pages/${pageId}/like`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param pageId pageId
+   * @return OK
+   */
+  pageControllerIncreaseLike(pageId: string): __Observable<{}> {
+    return this.pageControllerIncreaseLikeResponse(pageId).pipe(
       __map(_r => _r.body as {})
     );
   }

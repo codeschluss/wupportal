@@ -1,6 +1,5 @@
 /* tslint:disable */
-export interface OrganisationImageEntity {
-  _embedded?: {};
+export interface ImageEntity {
   caption?: string;
   created?: string;
   id?: string;

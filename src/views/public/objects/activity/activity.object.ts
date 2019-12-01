@@ -25,6 +25,7 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     .with('address').yield('suburb')
     .with('blogs')
     .with('category')
+    .with('images')
     .with('organisation').yield('address').yield('suburb')
     .with('organisation').yield('images')
     .with('provider')

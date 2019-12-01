@@ -33,11 +33,21 @@ scroll-view {
 
           & > flexbox-layout {
             align-items: center;
+            // align-items: stretch;
             orientation: horizontal;
 
             & > grid-layout {
               & + grid-layout {
                 margin-left: rem(1);
+              }
+
+              & > image {
+                border-radius: rem(.25);
+                stretch: aspectFill;
+
+                & + image {
+                  margin-left: rem(1);
+                }
               }
             }
           }

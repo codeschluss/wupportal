@@ -5,6 +5,7 @@ import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { BlogControllerService } from '../../api/services/blog-controller.service';
 import { ActivityModel } from '../models/activity.model';
 import { BlogpostModel } from '../models/blogpost.model';
+import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
 
 @Injectable({ providedIn: 'root' })
@@ -16,6 +17,11 @@ export class BlogpostProvider
       field: 'activity',
       method: this.service.blogControllerReadActivityResponse,
       model: ActivityModel
+    },
+    {
+      field: 'images',
+      method: this.service.blogControllerReadImagesResponse,
+      model: ImageModel
     },
     {
       field: 'language',
@@ -60,8 +66,16 @@ export class BlogpostProvider
     (id: string) => Observable<any> =
       this.apply(this.service.blogControllerIncreaseLikeResponse);
 
+  public pasteImages:
+    (id: string, images: ImageModel[]) => Observable<any> =
+      this.apply(this.service.blogControllerAddImageResponse);
+
   public relinkActivity:
     (id: string, activityId: String) => Observable<any> =
       this.apply(this.service.blogControllerUpdateActivityResponse);
+
+  public unlinkImages:
+    (id: string, imageIds: string[]) => Observable<any> =
+      this.apply(this.service.blogControllerDeleteImagesResponse);
 
 }

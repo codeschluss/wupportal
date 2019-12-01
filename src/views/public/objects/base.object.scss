@@ -90,6 +90,46 @@ main {
                 scroll-snap-type: x mandatory;
               }
 
+              & > figure {
+                @include flex(row, center, center);
+                @include position(relative);
+                flex: 0 0 auto;
+                margin: 0;
+                scroll-snap-align: start;
+
+                @include media(xs) {
+                  width: 100%;
+
+                  & + figure::before {
+                    @include position(absolute, auto, auto, auto, -.75rem);
+                    background-color: $color-primary;
+                    border-radius: 50%;
+                    box-sizing: border-box;
+                    content: '';
+                    height: 1.5rem;
+                    width: 1.5rem;
+                  }
+                }
+
+                @include media(gt-xs) {
+                  & + figure {
+                    & > content {
+                      margin-left: 0;
+                    }
+                  }
+                }
+
+                & > content {
+                  background-position: center;
+                  background-size: cover;
+                  border-radius: .25rem;
+                  display: block;
+                  height: 20rem;
+                  margin: 1rem;
+                  width: 20rem;
+                }
+              }
+
               & > table {
                 margin: 0 auto;
                 padding: .5rem;

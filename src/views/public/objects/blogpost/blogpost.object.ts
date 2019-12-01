@@ -13,7 +13,8 @@ export class BlogpostObjectComponent extends BaseObject<BlogpostModel> {
   protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
     .with('activity').yield('address').yield('suburb')
     .with('activity').yield('category')
-    .with('activity').yield('schedules');
+    .with('activity').yield('schedules')
+    .with('images');
 
   protected model: Type<BlogpostModel> = BlogpostModel;
 

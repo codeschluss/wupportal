@@ -192,6 +192,12 @@ export class ActivityFormComponent
   protected cascade(item: ActivityModel): Observable<any> {
     const links = [];
 
+    const images = this.updated('images');
+    if (images.add.length) { links.push(this.activityProvider
+      .pasteImages(item.id, images.add)); }
+    if (images.del.length) { links.push(this.activityProvider
+      .unlinkImages(item.id, images.del.map((i) => i.id))); }
+
     const schedules = this.updated('schedules');
     if (schedules.add.length) { links.push(this.activityProvider
       .pasteSchedules(item.id, schedules.add)); }

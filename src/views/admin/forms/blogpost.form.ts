@@ -78,6 +78,12 @@ export class BlogpostFormComponent
   protected cascade(item: BlogpostModel): Observable<any> {
     const links = [];
 
+    const images = this.updated('images');
+    if (images.add.length) { links.push(this.blogpostProvider
+      .pasteImages(item.id, images.add)); }
+    if (images.del.length) { links.push(this.blogpostProvider
+      .unlinkImages(item.id, images.del.map((i) => i.id))); }
+
     if (this.item.id) {
       const aId = this.item.activity && this.item.activity.id;
       if (aId !== this.item.activityId) { links.push(this.blogpostProvider

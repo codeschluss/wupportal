@@ -160,8 +160,8 @@ export class MapsComponent
     const source = this.document.defaultView;
 
     this.focus.subscribe(() => this.vector.instance.changed());
-    this.maps.onSingleClick.subscribe((event) => this.handleClick(event));
-    this.maps.onPointerMove.subscribe((event) => this.handleCursor(event));
+    this.maps.singleClick.subscribe((event) => this.handleClick(event));
+    this.maps.pointerMove.subscribe((event) => this.handleCursor(event));
     this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
     this.maps.instance.once('postrender', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () => {

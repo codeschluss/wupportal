@@ -1,8 +1,9 @@
 import { CrudModel } from '@wooportal/core';
+import { ImageEntity } from '../../api/models/image-entity';
 import { fromBase64 } from '../../views/shared/shared.imports';
 
 export class ImageModel
-  extends CrudModel {
+  extends CrudModel implements ImageEntity {
 
   public caption: string;
   public imageData: string;

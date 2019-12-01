@@ -10,6 +10,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 import { BlogEntity } from '../models/blog-entity';
 import { StringPrimitive } from '../models/string-primitive';
 import { ResourceBlogEntity } from '../models/resource-blog-entity';
+import { ImageEntity } from '../models/image-entity';
 
 /**
  * Blog Controller
@@ -25,6 +26,9 @@ class BlogControllerService extends __BaseService {
   static readonly blogControllerUpdatePath = '/blogs/{blogId}';
   static readonly blogControllerDeletePath = '/blogs/{blogId}';
   static readonly blogControllerReadActivityPath = '/blogs/{blogId}/activity';
+  static readonly blogControllerReadImagesPath = '/blogs/{blogId}/images';
+  static readonly blogControllerAddImagePath = '/blogs/{blogId}/images';
+  static readonly blogControllerDeleteImagesPath = '/blogs/{blogId}/images';
   static readonly blogControllerIncreaseLikePath = '/blogs/{blogId}/like';
   static readonly blogControllerReadTranslationsPath = '/blogs/{blogId}/translations';
 
@@ -324,6 +328,124 @@ class BlogControllerService extends __BaseService {
    */
   blogControllerReadActivity(blogId: string): __Observable<{}> {
     return this.blogControllerReadActivityResponse(blogId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadImagesResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/${blogId}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadImages(blogId: string): __Observable<{}> {
+    return this.blogControllerReadImagesResponse(blogId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param blogId blogId
+   * @param images images
+   * @return OK
+   */
+  blogControllerAddImageResponse(blogId: string,
+    images: Array<ImageEntity>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = images;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/blogs/${blogId}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param blogId blogId
+   * @param images images
+   * @return OK
+   */
+  blogControllerAddImage(blogId: string,
+    images: Array<ImageEntity>): __Observable<{}> {
+    return this.blogControllerAddImageResponse(blogId, images).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param blogId blogId
+   * @param imageIds imageIds
+   * @return OK
+   */
+  blogControllerDeleteImagesResponse(blogId: string,
+    imageIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    (imageIds || []).forEach(val => {if (val != null) __params = __params.append('imageIds', val.toString())});
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/blogs/${blogId}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param blogId blogId
+   * @param imageIds imageIds
+   * @return OK
+   */
+  blogControllerDeleteImages(blogId: string,
+    imageIds: Array<string>): __Observable<{}> {
+    return this.blogControllerDeleteImagesResponse(blogId, imageIds).pipe(
       __map(_r => _r.body as {})
     );
   }

@@ -10,6 +10,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 import { ActivityEntity } from '../models/activity-entity';
 import { ResourceActivityEntity } from '../models/resource-activity-entity';
 import { StringPrimitive } from '../models/string-primitive';
+import { ImageEntity } from '../models/image-entity';
 import { ResourcesObject } from '../models/resources-object';
 import { ScheduleEntity } from '../models/schedule-entity';
 import { TagEntity } from '../models/tag-entity';
@@ -31,6 +32,9 @@ class ActivityControllerService extends __BaseService {
   static readonly activityControllerReadBlogsPath = '/activities/{activityId}/blogs';
   static readonly activityControllerReadCategoryPath = '/activities/{activityId}/category';
   static readonly activityControllerUpdateCategoryPath = '/activities/{activityId}/category';
+  static readonly activityControllerReadImagesPath = '/activities/{activityId}/images';
+  static readonly activityControllerAddImagePath = '/activities/{activityId}/images';
+  static readonly activityControllerDeleteImagesPath = '/activities/{activityId}/images';
   static readonly activityControllerIncreaseLikePath = '/activities/{activityId}/like';
   static readonly activityControllerReadOrganisationPath = '/activities/{activityId}/organisation';
   static readonly activityControllerUpdateOrganisationPath = '/activities/{activityId}/organisation';
@@ -489,6 +493,124 @@ class ActivityControllerService extends __BaseService {
   activityControllerUpdateCategory(activityId: string,
     categoryId: StringPrimitive): __Observable<{}> {
     return this.activityControllerUpdateCategoryResponse(activityId, categoryId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerReadImagesResponse(activityId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/${activityId}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerReadImages(activityId: string): __Observable<{}> {
+    return this.activityControllerReadImagesResponse(activityId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param activityId activityId
+   * @param images images
+   * @return OK
+   */
+  activityControllerAddImageResponse(activityId: string,
+    images: Array<ImageEntity>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = images;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/activities/${activityId}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param activityId activityId
+   * @param images images
+   * @return OK
+   */
+  activityControllerAddImage(activityId: string,
+    images: Array<ImageEntity>): __Observable<{}> {
+    return this.activityControllerAddImageResponse(activityId, images).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param activityId activityId
+   * @param imageIds imageIds
+   * @return OK
+   */
+  activityControllerDeleteImagesResponse(activityId: string,
+    imageIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    (imageIds || []).forEach(val => {if (val != null) __params = __params.append('imageIds', val.toString())});
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/activities/${activityId}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param activityId activityId
+   * @param imageIds imageIds
+   * @return OK
+   */
+  activityControllerDeleteImages(activityId: string,
+    imageIds: Array<string>): __Observable<{}> {
+    return this.activityControllerDeleteImagesResponse(activityId, imageIds).pipe(
       __map(_r => _r.body as {})
     );
   }

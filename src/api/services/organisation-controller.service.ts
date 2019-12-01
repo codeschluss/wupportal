@@ -11,7 +11,7 @@ import { OrganisationEntity } from '../models/organisation-entity';
 import { ResourceOrganisationEntity } from '../models/resource-organisation-entity';
 import { StringPrimitive } from '../models/string-primitive';
 import { BooleanPrimitive } from '../models/boolean-primitive';
-import { OrganisationImageEntity } from '../models/organisation-image-entity';
+import { ImageEntity } from '../models/image-entity';
 
 /**
  * Organisation Controller
@@ -516,16 +516,16 @@ class OrganisationControllerService extends __BaseService {
 
   /**
    * @param organisationId organisationId
-   * @param image image
+   * @param images images
    * @return OK
    */
   organisationControllerAddImageResponse(organisationId: string,
-    image: Array<OrganisationImageEntity>): __Observable<__StrictHttpResponse<{}>> {
+    images: Array<ImageEntity>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    __body = image;
+    __body = images;
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/organisations/${organisationId}/images`,
@@ -545,12 +545,12 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * @param organisationId organisationId
-   * @param image image
+   * @param images images
    * @return OK
    */
   organisationControllerAddImage(organisationId: string,
-    image: Array<OrganisationImageEntity>): __Observable<{}> {
-    return this.organisationControllerAddImageResponse(organisationId, image).pipe(
+    images: Array<ImageEntity>): __Observable<{}> {
+    return this.organisationControllerAddImageResponse(organisationId, images).pipe(
       __map(_r => _r.body as {})
     );
   }

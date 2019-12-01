@@ -4,6 +4,7 @@ import { BaseStepper, FormStep } from '@wooportal/forms';
 import { ActivityModel } from '../../../realm/models/activity.model';
 import { ActivityFormComponent } from '../forms/activity.form';
 import { AddressFormComponent } from '../forms/address.form';
+import { ImageFormComponent } from '../forms/image.form';
 import { ScheduleFormComponent } from '../forms/schedule.form';
 import { TranslationFormComponent } from '../forms/translation.form';
 
@@ -24,6 +25,9 @@ import { TranslationFormComponent } from '../forms/translation.form';
 
         <ng-container *ngSwitchCase="'address'">
           <i18n i18n="@@address">address</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'images'">
+          <i18n i18n="@@images">images</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'schedules'">
           <i18n i18n="@@schedules">schedules</i18n>
@@ -51,6 +55,10 @@ export class ActivityStepperComponent
       form: AddressFormComponent
     },
     {
+      name: 'images',
+      form: ImageFormComponent
+    },
+    {
       name: 'schedules',
       form: ScheduleFormComponent
     },
@@ -63,6 +71,7 @@ export class ActivityStepperComponent
   protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
     .with('address').yield('suburb')
     .with('category')
+    .with('images')
     .with('organisation')
     .with('schedules')
     .with('tags')

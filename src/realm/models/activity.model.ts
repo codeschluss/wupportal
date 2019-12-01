@@ -5,6 +5,7 @@ import { AddressModel } from '../models/address.model';
 import { Translatable } from '../translations/translatable';
 import { BlogpostModel } from './blogpost.model';
 import { CategoryModel } from './category.model';
+import { ImageModel } from './image.model';
 import { KeywordModel } from './keyword.model';
 import { MembershipModel } from './membership.model';
 import { OrganisationModel } from './organisation.model';
@@ -29,6 +30,7 @@ export class ActivityModel
   public address: AddressModel & Observable<AddressModel>;
   public blogposts: BlogpostModel[] & Observable<BlogpostModel[]>;
   public category: CategoryModel & Observable<CategoryModel>;
+  public images: ImageModel[] & Observable<ImageModel[]>;
   public keywords: KeywordModel[] & Observable<KeywordModel[]>;
   public membership: MembershipModel & Observable<MembershipModel>;
   public organisation: OrganisationModel & Observable<OrganisationModel>;

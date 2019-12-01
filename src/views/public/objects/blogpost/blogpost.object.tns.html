@@ -21,6 +21,28 @@
     </flexbox-layout>
     <stack-layout>
       <marked-compat [data]="item.content"></marked-compat>
+      <ng-container *ngIf="item.images">
+        <expand-compat #images
+          class="expand-compat"
+          (changed)="$event && expanded(images)">
+          <ng-template #expandHeader>
+            <icon-compat icon="image"></icon-compat>
+            <i18n i18n="@@images" unit="images"></i18n>
+            <label [text]="'(' + item.images.length + ')'"></label>
+          </ng-template>
+          <ng-template #expandContent>
+            <scroll-view #scrollImages>
+              <flexbox-layout>
+                <ng-container *ngFor="let image of item.images">
+                  <grid-layout [width]="scrollImages.getActualSize().width">
+                    <image [src]="image.nativeSource"></image>
+                  </grid-layout>
+                </ng-container>
+              </flexbox-layout>
+            </scroll-view>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
       <ng-container *ngIf="item.activity">
         <expand-compat #activity
           class="expand-compat"

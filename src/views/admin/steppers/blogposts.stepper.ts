@@ -3,6 +3,7 @@ import { CrudJoiner } from '@wooportal/core';
 import { BaseStepper, FormStep } from '@wooportal/forms';
 import { BlogpostModel } from '../../../realm/models/blogpost.model';
 import { BlogpostFormComponent } from '../forms/blogpost.form';
+import { ImageFormComponent } from '../forms/image.form';
 import { TranslationFormComponent } from '../forms/translation.form';
 
 @Component({
@@ -20,6 +21,9 @@ import { TranslationFormComponent } from '../forms/translation.form';
           <i18n i18n="@@main">main</i18n>
         </ng-container>
 
+        <ng-container *ngSwitchCase="'images'">
+          <i18n i18n="@@images">images</i18n>
+        </ng-container>
         <ng-container *ngSwitchCase="'translations'">
           <i18n i18n="@@translations">translations</i18n>
         </ng-container>
@@ -39,6 +43,10 @@ export class BlogpostStepperComponent
       form: BlogpostFormComponent
     },
     {
+      name: 'images',
+      form: ImageFormComponent
+    },
+    {
       name: 'translations',
       form: TranslationFormComponent
     }
@@ -46,6 +54,7 @@ export class BlogpostStepperComponent
 
   protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
     .with('activity')
+    .with('images')
     .with('translations').yield('language');
 
   protected model: Type<BlogpostModel> = BlogpostModel;

@@ -7,6 +7,7 @@ import { ActivityModel } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
 import { BlogpostModel } from '../models/blogpost.model';
 import { CategoryModel } from '../models/category.model';
+import { ImageModel } from '../models/image.model';
 import { KeywordModel } from '../models/keyword.model';
 import { LanguageModel } from '../models/language.model';
 import { MembershipModel } from '../models/membership.model';
@@ -33,6 +34,11 @@ export class ActivityProvider
       field: 'category',
       method: this.service.activityControllerReadCategoryResponse,
       model: CategoryModel
+    },
+    {
+      field: 'images',
+      method: this.service.activityControllerReadImagesResponse,
+      model: ImageModel
     },
     {
       field: 'language',
@@ -106,6 +112,10 @@ export class ActivityProvider
     (id: string, targetGroupIds: string[]) => Observable<any> =
       this.apply(this.service.activityControllerAddTargetGroupsResponse);
 
+  public pasteImages:
+    (id: string, images: ImageModel[]) => Observable<any> =
+      this.apply(this.service.activityControllerAddImageResponse);
+
   public pasteKeywords:
     (id: string, tags: KeywordModel[]) => Observable<any> =
       this.apply(this.service.activityControllerAddTagsResponse);
@@ -125,6 +135,10 @@ export class ActivityProvider
   public relinkOrganisation:
     (id: string, organisationId: String) => Observable<any> =
       this.apply(this.service.activityControllerUpdateOrganisationResponse);
+
+  public unlinkImages:
+    (id: string, imageIds: string[]) => Observable<any> =
+      this.apply(this.service.activityControllerDeleteImagesResponse);
 
   public unlinkKeywords:
     (id: string, tagIds: string[]) => Observable<any> =

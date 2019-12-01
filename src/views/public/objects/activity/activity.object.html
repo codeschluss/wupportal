@@ -110,6 +110,26 @@
           </table>
         </ng-template>
       </expand-compat>
+      <ng-container *ngIf="item.images">
+        <expand-compat #images (changed)="$event && expanded(images)">
+          <ng-template #expandHeader>
+            <icon-compat icon="image"></icon-compat>
+            <i18n i18n="@@images">images</i18n>
+            <small>({{ item.images.length }})</small>
+          </ng-template>
+          <ng-template #expandContent>
+            <ng-container *ngFor="let image of item.images">
+              <figure>
+                <content
+                  [alt]="image.caption"
+                  [style.backgroundImage]="image.source"
+                  [title]="image.caption">
+                </content>
+              </figure>
+            </ng-container>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
       <expand-compat #schedules (changed)="$event && expanded(schedules)">
         <ng-template #expandHeader>
           <icon-compat icon="history"></icon-compat>

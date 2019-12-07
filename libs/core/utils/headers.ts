@@ -52,6 +52,8 @@ export class Headers {
 
   private readonly twitterTags = [
     'card',
+    'description',
+    'image',
     'title'
   ];
 

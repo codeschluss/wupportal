@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Title } from '@wooportal/core';
+import { Headers } from '@wooportal/core';
 
 @Component({
   styleUrls: ['error.netsplit.scss'],
@@ -10,8 +10,8 @@ import { Title } from '@wooportal/core';
 export class ErrorNetsplitComponent {
 
   public constructor(
-    public router: Router,
-    public titleService: Title
+    public headers: Headers,
+    public router: Router
   ) { }
 
 }

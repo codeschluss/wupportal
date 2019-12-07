@@ -1,7 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudResolver, Title, TokenProvider } from '@wooportal/core';
+import { CrudJoiner, CrudResolver, Headers, TokenProvider } from '@wooportal/core';
 import { merge, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../../../../realm/models/organisation.model';
@@ -57,7 +57,7 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
   protected path: string = 'register';
 
   public get name(): Observable<string> {
-    return this.titleService.name;
+    return this.headers.name;
   }
 
   public get organisations(): OrganisationModel[] {
@@ -88,9 +88,9 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
   }
 
   public constructor(
+    private headers: Headers,
     private route: ActivatedRoute,
     private router: Router,
-    private titleService: Title,
     private tokenProvider: TokenProvider,
     private userProvider: UserProvider
   ) {

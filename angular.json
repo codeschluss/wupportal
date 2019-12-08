@@ -39,6 +39,11 @@
                 "output": "/"
               },
               {
+                "glob": "robots.txt",
+                "input": "res/Web",
+                "output": "/"
+              },
+              {
                 "glob": "*.xliff",
                 "input": "res/All/i18n",
                 "output": "/i18n"

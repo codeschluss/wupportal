@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 type EnrichedModel = CrudModel
   & { address?: any }
+  & { content?: any }
   & { description?: string }
   & { images?: any[] }
   & { keywords?: any[] };
@@ -129,7 +130,7 @@ export class Headers {
 
   private metaModel(model: EnrichedModel): object {
     const tags = Object.assign(this.defaultTags, {
-      description: model.description,
+      description: model.content || model.description,
       title: model.name
     });
 
@@ -142,7 +143,8 @@ export class Headers {
 
     if (model.images && model.images.length) {
       Object.assign(tags, {
-        image: model.images[0].source
+        image:
+          `data:${model.images[0].mimeType};base64,${model.images[0].imageData}`
       });
     }
 

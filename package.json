@@ -117,7 +117,7 @@
     "@types/node": "12.12.14",
     "classlist.js": "1.1.20150312",
     "codelyzer": "5.2.0",
-    "core-js": "3.4.5",
+    "core-js": "3.4.7",
     "hammerjs": "2.0.8",
     "nativescript": "6.2.2",
     "nativescript-angular": "8.20.3",

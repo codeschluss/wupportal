@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Title } from '@wooportal/core';
+import { CrudJoiner, CrudResolver, Headers } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { ClientPackage } from '../../../../utils/package';
@@ -20,7 +20,7 @@ export class HomePageComponent extends BasePage {
   }
 
   public get name(): Observable<string> {
-    return this.titleService.name;
+    return this.headers.name;
   }
 
   public get tagline(): string {
@@ -50,8 +50,8 @@ export class HomePageComponent extends BasePage {
   }
 
   public constructor(
-    private route: ActivatedRoute,
-    private titleService: Title
+    private headers: Headers,
+    private route: ActivatedRoute
   ) {
     super();
   }

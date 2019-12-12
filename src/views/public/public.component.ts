@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Title } from '@wooportal/core';
+import { Headers } from '@wooportal/core';
+import { ClientPackage } from '../../utils/package';
 
 @Component({
   template: `
@@ -11,13 +12,22 @@ import { Title } from '@wooportal/core';
 export class PublicComponent {
 
   public constructor(
-    route: ActivatedRoute,
-    titleService: Title
+    headers: Headers,
+    route: ActivatedRoute
   ) {
-    titleService.setBase(route.snapshot.data.
-      configuration.find((c) => c.item === 'portalName').value);
+    const conf = route.snapshot.data.configuration;
 
-    titleService.set(null);
+    headers.init({
+      base: conf.find((c) => c.item === 'portalName').value,
+      city: ClientPackage.config.defaults.city,
+      slug: conf.find((c) => c.item === 'portalSubtitle').value,
+      spot: [
+        conf.find((c) => c.item === 'mapLatitude').value,
+        conf.find((c) => c.item === 'mapLongitude').value
+      ]
+    });
+
+    headers.setTitle(null);
   }
 
 }

@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { AfterViewInit, HostBinding, Input, OnDestroy, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, I18nComponent, Selfrouter, Title, TokenResolver } from '@wooportal/core';
+import { CrudJoiner, CrudModel, CrudResolver, Headers, I18nComponent, Selfrouter, TokenResolver } from '@wooportal/core';
 import { forkJoin, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { BaseForm } from './base.form';
@@ -133,8 +133,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   public constructor(
     protected route: ActivatedRoute,
     protected router: Router,
-    private location: Location,
-    private titleService: Title
+    private headers: Headers,
+    private location: Location
   ) {
     super();
   }
@@ -152,7 +152,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   public ngAfterViewInit(): void {
-    this.titleService.set(this.translations.first.text);
+    this.headers.setTitle(this.translations.first.text);
   }
 
   public ngOnDestroy(): void {

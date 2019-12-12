@@ -2,7 +2,7 @@ import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@
 import { MatDialog } from '@angular/material/dialog';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Box, CrudModel, CrudResolver, I18nComponent, Pathfinder, Selfrouter, Title, TokenProvider, TokenResolver } from '@wooportal/core';
+import { Box, CrudModel, CrudResolver, Headers, I18nComponent, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
 import { MembershipModel } from '../../../realm/models/membership.model';
@@ -81,7 +81,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     protected router: Router,
     protected tokenProvider: TokenProvider,
     protected userProvider: UserProvider,
-    private titleService: Title
+    private headers: Headers
   ) {
     super();
   }
@@ -90,7 +90,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     const tabs = this.tabs.toArray();
     const id = (index) => tabs[index].nativeElement.id;
 
-    this.titleService.set(this.title);
+    this.headers.setTitle(this.title);
 
     this.route.queryParams.subscribe((params) => this.index =
       tabs.findIndex((t) => t.nativeElement.id === params.tab));

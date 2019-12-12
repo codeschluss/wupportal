@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Box, Title, TokenProvider } from '@wooportal/core';
+import { Box, Headers, TokenProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, filter, map, take } from 'rxjs/operators';
 import { UserProvider } from '../../../../realm/providers/user.provider';
@@ -33,7 +33,7 @@ export class LoginPageComponent extends BasePage implements OnInit {
   private input: ElementRef<HTMLElement>;
 
   public get name(): Observable<string> {
-    return this.titleService.name;
+    return this.headers.name;
   }
 
   public get registerable(): boolean {
@@ -55,8 +55,8 @@ export class LoginPageComponent extends BasePage implements OnInit {
   }
 
   public constructor(
+    private headers: Headers,
     private router: Router,
-    private titleService: Title,
     private tokenProvider: TokenProvider,
     private userProvider: UserProvider
   ) {

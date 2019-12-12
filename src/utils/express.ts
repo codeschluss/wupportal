@@ -2,11 +2,14 @@ import { enableProdMode } from '@angular/core';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import * as express from 'express';
+import * as robots from 'express-robots-txt';
 import { readFile } from 'fs';
 import { bindNodeCallback } from 'rxjs';
 import 'zone.js/dist/zone-node';
 
 enableProdMode();
+
+const config = require('../package.json').config;
 
 const client = {
   engine: express(),
@@ -32,6 +35,12 @@ const {
 client.engine.engine('html', ngExpressEngine({
   bootstrap: ServerModuleNgFactory,
   providers: [engine, provideModuleMap(LAZY_MODULE_MAP)]
+}));
+
+client.engine.use(robots({
+  UserAgent: '*',
+  Disallow: ['/admin', '/login', '/*.js$'],
+  Sitemap: config.defaults.appUrl + config.api.rootUrl + '/sitemap'
 }));
 
 client.engine.set('view engine', 'html');

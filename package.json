@@ -99,6 +99,7 @@
     "@wooportal/forms": "file:libs/forms",
     "color-convert": "1.9.3",
     "express": "4.17.1",
+    "express-robots-txt": "0.4.1",
     "marked": "0.7.0",
     "moment": "2.24.0",
     "ng-swagger-gen": "1.8.1",

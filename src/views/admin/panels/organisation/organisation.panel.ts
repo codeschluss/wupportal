@@ -14,8 +14,9 @@ export class OrganisationPanelComponent extends BasePanel {
   protected path: string = 'organisation';
 
   protected resolve: object = {
-    organisations: CrudJoiner.of(OrganisationModel, { approved: true })
-      .with('activities').yield('address').yield('suburb')
+    organisations: CrudJoiner.of(OrganisationModel, {
+      approved: true
+    }).with('activities').yield('address').yield('suburb')
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
       .with('address').yield('suburb')

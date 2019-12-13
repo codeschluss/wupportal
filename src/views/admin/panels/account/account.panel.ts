@@ -20,8 +20,9 @@ export class AccountPanelComponent extends BasePanel {
   protected path: string = 'account/:uuid';
 
   protected resolve: object = {
-    user: CrudJoiner.of(UserModel)
-      .with('activities').yield('address').yield('suburb')
+    user: CrudJoiner.of(UserModel, {
+      required: true
+    }).with('activities').yield('address').yield('suburb')
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
       .with('blogger')

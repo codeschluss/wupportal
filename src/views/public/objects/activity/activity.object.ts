@@ -21,8 +21,9 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   public source: SafeResourceUrl | string;
 
-  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
-    .with('address').yield('suburb')
+  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel, {
+    required: true
+  }).with('address').yield('suburb')
     .with('blogs')
     .with('category')
     .with('images')

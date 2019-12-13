@@ -37,6 +37,7 @@ export interface ReadParams {
   embeddings?: string;
   filter?: string;
   page?: number;
+  required?: boolean;
   size?: number;
   sort?: string;
 }

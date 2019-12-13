@@ -15,7 +15,9 @@ export class ApplicationPanelComponent extends BasePanel {
   protected path: string = 'application';
 
   protected resolve: object = {
-    configuration: CrudJoiner.of(ConfigurationModel)
+    configuration: CrudJoiner.of(ConfigurationModel, {
+      required: true
+    })
   };
 
   public get configuration(): ConfigurationModel[] {

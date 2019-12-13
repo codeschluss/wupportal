@@ -81,7 +81,9 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
       },
       data: {
         resolve: {
-          organisations: CrudJoiner.of(OrganisationModel, { approved: true })
+          organisations: CrudJoiner.of(OrganisationModel, {
+            approved: true
+          })
         }
       }
     };

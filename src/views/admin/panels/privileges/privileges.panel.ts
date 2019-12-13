@@ -14,10 +14,12 @@ export class PrivilegesPanelComponent extends BasePanel {
   protected path: string = 'privileges';
 
   protected resolve: object = {
-    memberships: CrudJoiner.of(OrganisationModel, { approved: true })
-      .with('users').yield('provider'),
-    organisations: CrudJoiner.of(OrganisationModel, { approved: false })
-      .with('address').yield('suburb'),
+    memberships: CrudJoiner.of(OrganisationModel, {
+      approved: true
+    }).with('users').yield('provider'),
+    organisations: CrudJoiner.of(OrganisationModel, {
+      approved: false
+    }).with('address').yield('suburb'),
     users: CrudJoiner.of(UserModel)
       .with('blogger')
   };

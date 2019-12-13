@@ -50,7 +50,9 @@ export class MapsComponent
     },
     data: {
       resolve: {
-        configuration: CrudJoiner.of(ConfigurationModel)
+        configuration: CrudJoiner.of(ConfigurationModel, {
+          required: true
+        })
       }
     }
   };

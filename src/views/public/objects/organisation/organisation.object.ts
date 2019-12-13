@@ -10,8 +10,9 @@ import { BaseObject } from '../base.object';
 
 export class OrganisationObjectComponent extends BaseObject<OrganisationModel> {
 
-  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
-    .with('activities').yield('address').yield('suburb')
+  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel, {
+    required: true
+  }).with('activities').yield('address').yield('suburb')
     .with('activities').yield('category')
     .with('activities').yield('schedules')
     .with('address').yield('suburb')

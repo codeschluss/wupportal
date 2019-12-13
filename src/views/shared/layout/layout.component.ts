@@ -4,7 +4,7 @@ import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } f
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, Title, TokenProvider } from '@wooportal/core';
+import { Headers, JwtClaims, LoadingProvider, PlatformProvider, SessionProvider, TokenProvider } from '@wooportal/core';
 import { CoreUrlSerializer } from '@wooportal/core/utils/serializer';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
@@ -42,7 +42,7 @@ export class LayoutComponent implements OnInit {
   private serializer: UrlSerializer = new CoreUrlSerializer();
 
   public get name(): Observable<string> {
-    return this.titleService.name;
+    return this.headers.name;
   }
 
   public get url(): string {
@@ -52,6 +52,7 @@ export class LayoutComponent implements OnInit {
   public constructor(
     private changeDetection: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: Document,
+    private headers: Headers,
     private i18n: I18n,
     private languageProvider: LanguageProvider,
     private loadingProvider: LoadingProvider,
@@ -59,7 +60,6 @@ export class LayoutComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sessionProvider: SessionProvider,
-    private titleService: Title,
     private tokenProvider: TokenProvider
   ) { }
 
@@ -164,18 +164,18 @@ export class LayoutComponent implements OnInit {
 
     switch (path) {
       case '':
-        return this.titleService.set(null);
+        return this.headers.setTitle(null);
 
       case 'admin':
         return;
 
       case 'search':
-        return this.titleService.set(
+        return this.headers.setTitle(
           this.i18n({ id: path, value: path }) + `: ${this.filter(url)}`
         );
 
       default:
-        return this.titleService.set(this.i18n({ id: path, value: path }));
+        return this.headers.setTitle(this.i18n({ id: path, value: path }));
     }
   }
 

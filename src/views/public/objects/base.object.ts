@@ -1,7 +1,7 @@
 import { AfterViewInit, HostBinding, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { CrudJoiner, CrudModel, CrudResolver, PlatformProvider, Selfrouter, Title } from '@wooportal/core';
+import { CrudJoiner, CrudModel, CrudResolver, Headers, PlatformProvider, Selfrouter } from '@wooportal/core';
 import { ExpandCompatComponent } from '../../shared/compat/expand/expand.compat';
 import { ExpandCompat } from '../../shared/compat/expand/expand.compat.i';
 import { openUrl } from '../../shared/shared.imports';
@@ -44,15 +44,15 @@ export abstract class BaseObject<Model extends CrudModel>
   public constructor(
     public router: Router,
     protected platformProvider: PlatformProvider,
+    private headers: Headers,
     private i18n: I18n,
-    private route: ActivatedRoute,
-    private titleService: Title
+    private route: ActivatedRoute
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    this.titleService.set(this.item.name);
+    this.headers.setModel(this.item);
     this.ngPostInit();
   }
 

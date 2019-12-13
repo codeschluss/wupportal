@@ -10,8 +10,9 @@ import { BaseObject } from '../base.object';
 
 export class InfopageObjectComponent extends BaseObject<InfopageModel> {
 
-  protected joiner: CrudJoiner = CrudJoiner.of(InfopageModel)
-    .with('topic');
+  protected joiner: CrudJoiner = CrudJoiner.of(InfopageModel, {
+    required: true
+  }).with('topic');
 
   protected model: Type<InfopageModel> = InfopageModel;
 

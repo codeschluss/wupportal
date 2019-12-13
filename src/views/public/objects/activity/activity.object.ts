@@ -2,7 +2,7 @@ import { Component, ElementRef, Optional, Type, ViewChild } from '@angular/core'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { CrudJoiner, PlatformProvider, Title } from '@wooportal/core';
+import { CrudJoiner, Headers, PlatformProvider } from '@wooportal/core';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { ScheduleModel } from '../../../../realm/models/schedule.model';
@@ -21,8 +21,9 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   public source: SafeResourceUrl | string;
 
-  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
-    .with('address').yield('suburb')
+  protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel, {
+    required: true
+  }).with('address').yield('suburb')
     .with('blogs')
     .with('category')
     .with('images')
@@ -46,9 +47,9 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     platformProvider: PlatformProvider,
     route: ActivatedRoute,
     router: Router,
-    titleService: Title
+    headers: Headers
   ) {
-    super(router, platformProvider, i18n, route, titleService);
+    super(router, platformProvider, headers, i18n, route);
   }
 
   protected ngPostInit(): void {

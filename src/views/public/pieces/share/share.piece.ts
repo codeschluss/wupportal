@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { PlatformProvider, Title } from '@wooportal/core';
+import { Headers, PlatformProvider } from '@wooportal/core';
 import { take } from 'rxjs/operators';
 import { ClientPackage } from '../../../../utils/package';
 import { SocialShare } from '../../../shared/shared.imports';
@@ -61,8 +61,8 @@ export class SharePieceComponent extends BasePiece {
 
   public constructor(
     @Inject(DOCUMENT) private document: Document,
-    private platformProvider: PlatformProvider,
-    private titleService: Title
+    private headers: Headers,
+    private platformProvider: PlatformProvider
   ) {
     super();
   }
@@ -83,7 +83,7 @@ export class SharePieceComponent extends BasePiece {
   public share(target?: ShareTarget): void {
     switch (this.platformProvider.type) {
       case 'Native':
-        this.titleService.name.pipe(take(1)).subscribe((name) =>
+        this.headers.name.pipe(take(1)).subscribe((name) =>
           SocialShare.shareUrl(this.href, `${this.item.name} | ${name}`));
         break;
 

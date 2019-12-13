@@ -1,0 +1,15 @@
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchScreen;
+FRAMEWORK_SEARCH_PATHS = (
+  "$(inherited)",
+  "../../node_modules/nativescript-geolocation/platforms/ios",
+  "../../node_modules/nativescript-intl/platforms/ios",
+  "../../node_modules/nativescript-ng-ripple/platforms/ios",
+  "../../node_modules/nativescript-permissions/platforms/ios",
+  "../../node_modules/nativescript-social-share/platforms/ios",
+  "../../node_modules/nativescript-ui-calendar/platforms/ios",
+  "../../node_modules/nativescript-ui-sidedrawer/platforms/ios",
+  "../../node_modules/nativescript-ui-core/platforms/ios",
+  "../../node_modules/tns-core-modules/platforms/ios",
+  "../../node_modules/tns-core-modules-widgets/platforms/ios"
+);

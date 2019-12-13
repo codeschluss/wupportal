@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, defaultIfEmpty, map, mergeMap } from 'rxjs/operators';
 import { CrudGraph, CrudJoiner } from './crud.joiner';
@@ -7,6 +7,10 @@ import { CrudModel } from './crud.model';
 
 @Injectable({ providedIn: 'root' })
 export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
+
+  public constructor(
+    private router: Router
+  ) { }
 
   public refine(input: CrudModel | CrudModel[], graph: CrudGraph):
     Observable<CrudModel | CrudModel[]> {
@@ -38,6 +42,7 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       : joiner.graph.provider.readAll(joiner.graph.params);
 
     return request.pipe(
+      catchError((e) => this.router.navigate(['/', 'error', e.status || 400])),
       mergeMap((response) => this.refine(response as any, joiner.graph)),
       catchError((e) => this.ignore(e) ? of(undefined) : throwError(e))
     );

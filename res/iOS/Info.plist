@@ -6,16 +6,19 @@
     <string>en</string>
 
     <key>CFBundleDisplayName</key>
-    <string>${PRODUCT_NAME}</string>
+    <string>$(APPLICATION_NAME)</string>
 
     <key>CFBundleExecutable</key>
     <string>${EXECUTABLE_NAME}</string>
+
+    <key>CFBundleIconName</key>
+    <string>$(ASSETCATALOG_COMPILER_APPICON_NAME)</string>
 
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
 
     <key>CFBundleName</key>
-    <string>${PRODUCT_NAME}</string>
+    <string>$(APPLICATION_NAME)</string>
 
     <key>CFBundlePackageType</key>
     <string>APPL</string>

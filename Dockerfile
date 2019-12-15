@@ -1,7 +1,7 @@
 #
 # PHASE 0
 FROM ubuntu:latest
-ADD / /tmp/wooportal.client
+COPY / /tmp/wooportal.client
 ENV DEBIAN_FRONTEND noninteractive
 RUN \
 #
@@ -41,7 +41,7 @@ tools/bin/sdkmanager \
   "platform-tools" \
   "tools" > /dev/null && \
 #
-# wooportal/client
+# wooportal.client
 cd /tmp/wooportal.client && \
 npm install && \
 npm run setup && \
@@ -60,7 +60,7 @@ mv $(find platforms/android -name "*.apk") /client.apk
 # PHASE 1
 FROM alpine:latest
 LABEL maintainer info@codeschluss.de
-ADD / /opt/wooportal.client/
+COPY / /opt/wooportal.client
 COPY --from=0 /client.apk /
 RUN \
 #
@@ -70,7 +70,7 @@ apk --no-cache add \
 apk --no-cache --virtual build add \
   nodejs-npm && \
 #
-# wooportal/client
+# wooportal.client
 cd /opt/wooportal.client && \
 npm install && \
 npm run build:lib && \

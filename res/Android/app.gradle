@@ -1,5 +1,3 @@
-import groovy.json.JsonSlurper
-
 android {
   defaultConfig {
     generatedDensities = []
@@ -9,52 +7,3 @@ android {
     additionalParameters "--no-version-vectors"
   }
 }
-
-project.ext.nativescriptDependencies = new JsonSlurper().parseText('''
-  [
-    {
-      "name": "nativescript-angular",
-      "directory": "../../node_modules/nativescript-angular"
-    },
-    {
-      "name": "nativescript-geolocation",
-      "directory": "../../node_modules/nativescript-geolocation"
-    },
-    {
-      "name": "nativescript-intl",
-      "directory": "../../node_modules/nativescript-intl"
-    },
-    {
-      "name": "nativescript-ng-ripple",
-      "directory": "../../node_modules/nativescript-ng-ripple"
-    },
-    {
-      "name": "nativescript-permissions",
-      "directory": "../../node_modules/nativescript-permissions"
-    },
-    {
-      "name": "nativescript-social-share",
-      "directory": "../../node_modules/nativescript-social-share"
-    },
-    {
-      "name": "nativescript-ui-calendar",
-      "directory": "../../node_modules/nativescript-ui-calendar"
-    },
-    {
-      "name": "nativescript-ui-sidedrawer",
-      "directory": "../../node_modules/nativescript-ui-sidedrawer"
-    },
-    {
-      "name": "nativescript-ui-core",
-      "directory": "../../node_modules/nativescript-ui-core"
-    },
-    {
-      "name": "tns-core-modules",
-      "directory": "../../node_modules/tns-core-modules"
-    },
-    {
-      "name": "tns-core-modules-widgets",
-      "directory": "../../node_modules/tns-core-modules-widgets"
-    }
-  ]
-''')

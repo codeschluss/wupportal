@@ -45,7 +45,7 @@ tools/bin/sdkmanager \
 cd /tmp/wooportal.client && \
 npm install && \
 npm run setup && \
-npm run -- tns build android \
+npm run -- ns build android \
   --bundle \
   --env.aot \
   --env.snapshot \

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, HostBinding, Input, Output, ViewChild } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
 import { MatCalendar } from '@angular/material/datepicker';
+import { SessionProvider } from '@wooportal/core';
 import { ScheduleModel as Schedule } from '../../../../realm/models/schedule.model';
 import { CalendarCompat } from './calendar.compat.i';
 
@@ -39,6 +41,14 @@ export class CalendarCompatComponent implements CalendarCompat {
     return this.items.length
       ? new Date(this.items[0].startDate)
       : new Date();
+  }
+
+  public constructor(
+    dateAdapter: DateAdapter<Date>,
+    sessionProvider: SessionProvider
+  ) {
+    dateAdapter.getFirstDayOfWeek = () => 1;
+    dateAdapter.setLocale(sessionProvider.getLanguage());
   }
 
   public click(event: Event): void {

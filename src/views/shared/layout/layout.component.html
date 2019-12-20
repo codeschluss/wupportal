@@ -4,7 +4,7 @@
 <navbar-compat>
   <a mat-button [class.active]="url === '/'" [routerLink]="['/']">
     <icon-compat icon="play-circle"></icon-compat>
-    <h1>{{ name | async }}</h1>
+    <i18n i18n="@@homepage">homepage</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/mapview')"

@@ -40,7 +40,7 @@
         </stack-layout>
         <stack-layout ripple [class.active]="url === '/'" (tap)="navigate('/')">
           <icon-compat icon="play-circle"></icon-compat>
-          <label [text]="name | async"></label>
+          <i18n i18n="@@homepage" unit="homepage"></i18n>
         </stack-layout>
         <stack-layout ripple
           [class.active]="url.startsWith('/mapview')"

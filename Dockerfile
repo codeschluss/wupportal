@@ -52,12 +52,9 @@ export \
 # wooportal.client
 cd /tmp/wooportal.client && \
 npm install && \
-npm run setup && \
-npm run -- ns build android \
-  --env.aot \
+npm run -- build:oid \
   --env.compileSnapshot \
   --env.snapshot \
-  --env.uglify \
   --key-store-alias=dev \
   --key-store-alias-password=password \
   --key-store-password=password \

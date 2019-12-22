@@ -5,8 +5,6 @@
 /target/
 
 /package-lock.json
-/tsconfig.tns.json
 /webpack.config.js
 
 /res/Android/production.keystore
-/src/package.json

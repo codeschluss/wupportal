@@ -17,7 +17,7 @@
     "url": "https://github.com/wooportal/client/issues"
   },
   "bin": {
-    "ns": "bin/nativescript-cli.js"
+    "ns": "bin/nativescript.js"
   },
   "peerDependencies": {
     "nativescript": "6.3.0"

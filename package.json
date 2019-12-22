@@ -36,10 +36,6 @@
       "title": "wooportal"
     }
   },
-  "android": {
-    "markingMode": "none",
-    "v8Flags": "--expose_gc"
-  },
   "nativescript": {
     "id": "de.codeschluss.wooportal.client",
     "tns-android": {
@@ -47,30 +43,36 @@
     },
     "tns-ios": {
       "version": "6.3.0"
-    }
+    },
+    "packages": [
+      "nativescript-angular",
+      "nativescript-geolocation",
+      "nativescript-ng-ripple",
+      "nativescript-social-share",
+      "nativescript-ui-calendar",
+      "nativescript-ui-sidedrawer",
+      "tns-core-modules"
+    ]
   },
-  "main": "native.js",
+  "android": {
+    "markingMode": "none"
+  },
   "scripts": {
     "ng": "ng",
     "ns": "ns",
     "lint": "ng lint",
     "clean": "git clean -dfX",
-    "start": "npm run start:dev",
-    "setup": "update-ns-webpack --configs && run-s setup:*",
-    "build": "run-s setup build:app build:ssr build:ios build:oid",
-    "build:api": "ng-swagger-gen --config swagger.json --input",
-    "build:app": "ng build --base-href / --prod @wooportal/client",
-    "build:ios": "ns build ios --bundle --env.aot --env.uglify",
-    "build:oid": "ns build android --bundle --env.aot --env.uglify",
+    "start": "npm run start:app",
+    "build:api": "ng-swagger-gen -c swagger.json",
+    "build:app": "ng build --prod @wooportal/client",
+    "build:ios": "ns platform add ios ||:&& ns build ios",
+    "build:oid": "ns platform add android ||:&& ns build android",
     "build:lib": "ng build @wooportal/core && ng build @wooportal/forms",
     "build:ssr": "ng run @wooportal/client:server && tsc -p express.json",
     "build:xlf": "ng xi18n && sed -i '/context/d' res/All/i18n/strings.xliff",
-    "setup:env": "cp package.json src && cp tsconfig.json tsconfig.tns.json",
-    "setup:ios": "ns platform add ios ||:&& ns prepare ios",
-    "setup:oid": "ns platform add android ||:&& ns prepare android",
-    "start:dev": "ng serve --host 0.0.0.0 --port",
-    "start:ios": "ns debug ios --env.aot",
-    "start:oid": "ns debug android --env.aot",
+    "start:oid": "ns platform add android ||:&& ns debug android",
+    "start:ios": "ns platform add ios ||:&& ns debug ios",
+    "start:app": "ng serve --host 0.0.0.0 --port",
     "start:ssr": "node target/express"
   },
   "dependencies": {
@@ -87,6 +89,7 @@
     "@angular/router": "8.2.14",
     "@angular/service-worker": "8.2.14",
     "@fortawesome/angular-fontawesome": "0.5.0",
+    "@fortawesome/fontawesome-free": "5.12.0",
     "@fortawesome/fontawesome-svg-core": "1.2.26",
     "@fortawesome/free-brands-svg-icons": "5.12.0",
     "@fortawesome/free-solid-svg-icons": "5.12.0",

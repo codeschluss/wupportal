@@ -1,6 +1,7 @@
 @import '../../../../app.vars.scss';
 
 AbsoluteLayout {
+  background-color: $color-lightest;
   border-radius: rem(.25);
   transform: rotate(180deg);
 
@@ -37,6 +38,7 @@ AbsoluteLayout {
 
     & > [icon] {
       color: $color-lightest;
+      font-size: rem(1.5);
       height: rem(3);
       transform: rotate(180deg);
       vertical-align: center;

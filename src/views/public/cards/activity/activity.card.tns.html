@@ -14,7 +14,9 @@
         <label [text]="item.address.suburb.name"></label>
       </stack-layout>
       <icon-compat
+        android:style="margin-top: -56"
         class="card-image"
+        ios:style="margin-top: -32"
         [icon]="item.category.icon"
         [style.color]="colors(item.category.color).color">
       </icon-compat>

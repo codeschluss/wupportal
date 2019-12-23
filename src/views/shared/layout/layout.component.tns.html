@@ -3,9 +3,12 @@
     <action-item ios.position="right">
       <stack-layout>
         <activity-indicator [busy]="busy | async"></activity-indicator>
-        <grid-layout (tap)="drawer.toggle()">
-          <icon-compat
-            [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
+        <grid-layout
+          android:style="margin-right: 8"
+          ios:style="margin-right: -16">
+          <icon-compat ripple
+            [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'"
+            (tap)="drawer.toggle()">
           </icon-compat>
         </grid-layout>
       </stack-layout>
@@ -34,10 +37,11 @@
                 (textChange)="submit.className = input.text ? null : 'off'">
               </text-field>
               <i18n i18n="@@search" unit="search"></i18n>
-              <grid-layout #submit ripple
-                class="off"
-                (tap)="input.text && navigate('/', 'search', input.text)">
-                <icon-compat icon="chevron-circle-right"></icon-compat>
+              <grid-layout #submit class="off">
+                <icon-compat ripple
+                  icon="chevron-circle-right"
+                  (tap)="input.text && navigate('/', 'search', input.text)">
+                </icon-compat>
               </grid-layout>
             </absolute-layout>
           </stack-layout>

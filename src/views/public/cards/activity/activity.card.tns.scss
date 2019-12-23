@@ -14,9 +14,10 @@ grid-layout {
       font-weight: 300;
 
       & > .card-image {
+        font-size: rem(4);
         height: rem(5);
         horizontal-align: right;
-        margin: rem(-3.5) rem(-.5) rem(-.5) rem(-.5);
+        margin-bottom: rem(-.5);
         width: rem(5);
       }
     }

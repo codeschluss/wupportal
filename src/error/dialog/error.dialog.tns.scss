@@ -1,6 +1,8 @@
 @import '../../app.vars.scss';
 
 scroll-view {
+  background-color: $color-lightest;
+
   & > stack-layout {
     min-width: rem(5);
     padding: rem(1.5);

@@ -32,9 +32,9 @@ StackLayout {
       background-color: $color-primary;
       border-radius: rem(2.5);
       color: $color-lightest;
+      font-size: rem(1);
       height: rem(2.5);
       left: 0;
-      padding: 2;
       width: rem(2.5);
 
       &.disabled {

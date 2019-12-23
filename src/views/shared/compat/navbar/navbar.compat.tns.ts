@@ -9,8 +9,20 @@ if (!isKnownView('navbar-compat')) {
 
 @Component({
   selector: 'navbar-compat',
+  styles: [`
+    Label {
+      font-size: 20;
+      font-weight: 500;
+      horizontal-align: left;
+      text-align: left;
+      width: 100%;
+    }
+  `],
   template: `
-    <ActionBar [title]="title"><ng-content></ng-content></ActionBar>
+    <ActionBar>
+      <Label [text]="title"></Label>
+      <ng-content></ng-content>
+    </ActionBar>
   `
 })
 

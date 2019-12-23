@@ -3,7 +3,6 @@ import { ActivatedRoute, Route } from '@angular/router';
 import { CrudJoiner, CrudResolver, Headers } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { ActivityModel } from '../../../../realm/models/activity.model';
-import { ClientPackage } from '../../../../utils/package';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -54,10 +53,6 @@ export class HomePageComponent extends BasePage {
     private route: ActivatedRoute
   ) {
     super();
-  }
-
-  public src(path: string): string {
-    return ClientPackage.config.defaults.appUrl + path;
   }
 
 }

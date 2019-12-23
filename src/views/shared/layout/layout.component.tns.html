@@ -14,7 +14,7 @@
       </stack-layout>
     </action-item>
   </navbar-compat>
-  <drawer-compat #drawer>
+  <drawer-compat #drawer (changed)="toggle($event)">
     <ng-template #drawerMain>
       <stack-layout>
         <router-outlet></router-outlet>
@@ -36,7 +36,7 @@
                   && navigate('/', 'search', input.text)"
                 (textChange)="submit.className = input.text ? null : 'off'">
               </text-field>
-              <i18n i18n="@@search" unit="search"></i18n>
+              <i18n i18n="@@search" unit="search" (tap)="input.focus()"></i18n>
               <grid-layout #submit class="off">
                 <icon-compat ripple
                   icon="chevron-circle-right"

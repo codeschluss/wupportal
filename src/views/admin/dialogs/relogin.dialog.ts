@@ -17,11 +17,17 @@ import { catchError } from 'rxjs/operators';
     <section mat-dialog-content>
       <mat-form-field>
         <mat-label><i18n i18n="@@email">email</i18n></mat-label>
-        <input matInput type="email" [formControl]="email">
+        <input matInput
+          type="email"
+          [formControl]="email"
+          (keydown.enter)="valid && login()">
       </mat-form-field>
       <mat-form-field>
         <mat-label><i18n i18n="@@password">password</i18n></mat-label>
-        <input matInput type="password" [formControl]="password">
+        <input matInput
+          type="password"
+          [formControl]="password"
+          (keydown.enter)="valid && login()">
       </mat-form-field>
     </section>
     <section mat-dialog-actions>

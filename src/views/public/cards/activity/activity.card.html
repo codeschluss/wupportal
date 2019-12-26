@@ -6,7 +6,7 @@
     <mat-card-content>
       <icon-compat [icon]="item.category.icon"></icon-compat>
       <small>
-        {{ item.dates[0]?.startDate | date: 'dd.MM.yyyy, HH:mm' }}
+        {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' }}
         <br>{{ item.address.street }} {{ item.address.houseNumber }}
         <br>{{ item.address.place }} {{ item.address.suburb.name }}
       </small>

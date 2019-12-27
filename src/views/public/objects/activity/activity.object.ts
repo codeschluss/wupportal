@@ -81,13 +81,7 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
           wv.getSettings().setGeolocationEnabled(true);
           wv.getSettings().setJavaScriptEnabled(true);
           wv.setWebChromeClient(new this.platformProvider.chromeClient());
-          wv.setWebViewClient(new this.platformProvider.viewClient());
-          return;
-
-        case 'iOS':
-          wv = wv.ios;
-          // TODO: https://board.codeschluss.de/project/wooportal/us/37
-          return;
+          break;
       }
     }
   }

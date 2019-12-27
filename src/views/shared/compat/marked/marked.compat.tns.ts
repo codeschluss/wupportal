@@ -46,14 +46,13 @@ export class MarkedCompatComponent
         wv.setBackgroundColor(0x00000000);
         wv.getSettings().setSupportZoom(false);
         wv.setWebViewClient(new this.platformProvider.viewClient());
-        return;
+        break;
 
       case 'iOS':
-        // TODO: https://board.codeschluss.de/project/wooportal/us/37
-        wv = wv.ios;
-        wv.opaque = false;
-        wv.setDrawsBackground = false;
-        return;
+        wv.ios.opaque = false;
+        wv.ios.setDrawsBackground = false;
+        wv.on('loadStarted', (e) => this.platformProvider.viewClient(e));
+        break;
     }
   }
 

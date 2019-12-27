@@ -75,14 +75,14 @@ export class PlatformProvider implements Compat {
     router: Router,
     zone: NgZone
   ) {
+    PlatformProvider.navigate = (url) =>
+      zone.run(() => router.navigateByUrl(url));
+
     this.connection.pipe(filter((state) => !state))
       .subscribe(() => router.navigate(['/', 'netsplit']));
 
     switch (this.name) {
       case 'Android':
-        PlatformProvider.navigate = (url) =>
-          zone.run(() => router.navigateByUrl(url));
-
         PlatformProvider.chromeClient = android.webkit.WebChromeClient.extend({
           onGeolocationPermissionsShowPrompt: (url: string, callback: any) => {
             if (url.startsWith(this.coreSettings.appUrl)) {
@@ -108,6 +108,14 @@ export class PlatformProvider implements Compat {
         break;
 
       case 'iOS':
+        PlatformProvider.viewClient = (event) => {
+          if (event.url.startsWith(this.coreSettings.appUrl)) {
+            const url = event.url.replace(this.coreSettings.appUrl, '');
+            PlatformProvider.navigate(url);
+          } else {
+            openUrl(event.url);
+          }
+        }
         break;
     }
   }

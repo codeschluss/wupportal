@@ -32,7 +32,7 @@
       android:name="com.tns.NativeScriptActivity"
       android:label="@string/defaultTitle"
       android:launchMode="singleTask"
-      android:configChanges="keyboardHidden|orientation|screenSize"
+      android:screenOrientation="sensorPortrait"
       android:theme="@style/LaunchScreenTheme">
 
       <meta-data
@@ -52,6 +52,5 @@
         <data android:scheme="https"/>
       </intent-filter>
     </activity>
-    <activity android:name="com.tns.ErrorReportActivity"/>
   </application>
 </manifest>

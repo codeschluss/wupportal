@@ -5,5 +5,9 @@ main {
 
   & > blogpost-card {
     width: calc(#{$viewport-width} / 2 - 2rem);
+
+    @include media(lt-md) {
+      padding-top: 0;
+    }
   }
 }

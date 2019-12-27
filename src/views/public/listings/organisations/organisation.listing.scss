@@ -2,4 +2,10 @@
 
 main {
   @include flex(wrap, center, flex-start);
+
+  & > organisation-card {
+    @include media(lt-md) {
+      padding-top: 0;
+    }
+  }
 }

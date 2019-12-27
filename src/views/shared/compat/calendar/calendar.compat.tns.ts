@@ -61,13 +61,7 @@ export class CalendarCompatComponent implements CalendarCompat, AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    const cal = this.instance.calendar;
-
-    // tslint:disable-next-line
-    if(!cal.isLoaded){return cal.once('loaded',()=>this.ngAfterViewInit());}
-    // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
-
-    cal.goToDate(this.startdate);
+    this.instance.calendar.goToDate(this.startdate);
   }
 
   public select(event: CalendarSelectionEventData): void {

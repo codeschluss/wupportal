@@ -78,6 +78,15 @@ page {
                 }
               }
 
+              &.base {
+                [compat=i18n] {
+                  animation-direction: reverse;
+                  animation-duration: $animation-duration;
+                  animation-fill-mode: reverse;
+                  animation-name: float;
+                }
+              }
+
               &.float {
                 [compat=i18n] {
                   animation-direction: forwards;
@@ -88,10 +97,6 @@ page {
               }
 
               [compat=i18n] {
-                animation-direction: reverse;
-                animation-duration: $animation-duration;
-                animation-fill-mode: reverse;
-                animation-name: float;
                 margin-left: 0;
                 margin-top: rem(1);
                 origin-x: 0;

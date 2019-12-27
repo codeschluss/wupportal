@@ -30,7 +30,7 @@
               <text-field #input
                 returnKeyType="search"
                 text="{{ filter() }}"
-                (blur)="search.className = input.text ? 'float' : null"
+                (blur)="search.className = input.text ? 'float' : 'base'"
                 (focus)="search.className = 'float'"
                 (returnPress)="input.text
                   && navigate('/', 'search', input.text)"

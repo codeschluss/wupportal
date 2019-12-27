@@ -20,7 +20,7 @@ StackLayout.expand {
     }
 
     & > StackLayout {
-      height: auto;
+      visibility: visible;
     }
   }
 
@@ -50,6 +50,6 @@ StackLayout.expand {
 
   & > StackLayout {
     padding: rem(1);
-    height: 0;
+    visibility: collapse;
   }
 }

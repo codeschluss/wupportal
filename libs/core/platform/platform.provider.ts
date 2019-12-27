@@ -93,4 +93,8 @@ export class PlatformProvider implements Compat {
     this.document.defaultView.location.reload();
   }
 
+  public resizeClient(_: any): void { }
+
+  public resourceClient(_: any): void { }
+
 }

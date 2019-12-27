@@ -51,7 +51,7 @@ export class MapsComponent
         break;
 
       case 'iOS':
-        wv.on('loadStarted', (e) => this.platformProvider.viewClient(e));
+        wv.on('loadStarted', (e) => this.platformProvider.resourceClient(e));
         break;
     }
   }

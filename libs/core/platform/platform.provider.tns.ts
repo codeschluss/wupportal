@@ -10,11 +10,16 @@ import { CoreSettings } from '../utils/settings';
 import { PlatformProvider as Compat } from './platform.provider.i';
 
 declare const android: any;
+declare const exit: (code: number) => void;
 
 @Injectable({ providedIn: 'root' })
 export class PlatformProvider implements Compat {
 
   private static navigate: (url: string) => Promise<boolean>;
+
+  private static resizeClient: (event: any) => void;
+
+  private static resourceClient: (event: any) => void;
 
   private static chromeClient: any;
 
@@ -108,14 +113,21 @@ export class PlatformProvider implements Compat {
         break;
 
       case 'iOS':
-        PlatformProvider.viewClient = (event) => {
+        PlatformProvider.resizeClient = (event) => {
+          event.object.ios.evaluateJavaScriptCompletionHandler(
+            'document.body.scrollHeight',
+            (height) => event.object.height = height
+          );
+        };
+
+        PlatformProvider.resourceClient = (event) => {
           if (event.url.startsWith(this.coreSettings.appUrl)) {
             const url = event.url.replace(this.coreSettings.appUrl, '');
             PlatformProvider.navigate(url);
           } else {
             openUrl(event.url);
           }
-        }
+        };
         break;
     }
   }
@@ -128,8 +140,17 @@ export class PlatformProvider implements Compat {
         break;
 
       case 'iOS':
+        exit(0);
         break;
     }
+  }
+
+  public resizeClient(event: any): void {
+    PlatformProvider.resizeClient(event);
+  }
+
+  public resourceClient(event: any): void {
+    PlatformProvider.resourceClient(event);
   }
 
   private online(type: connectionType): boolean {

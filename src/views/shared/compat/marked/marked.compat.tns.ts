@@ -30,7 +30,8 @@ export class MarkedCompatComponent
   ) { }
 
   public ngOnInit() {
-    this.html = marked(this.data || '');
+    this.html = '<style>body{font-family:sans-serif;}</style>'
+      + marked(this.data || '');
   }
 
   public ngAfterViewInit(): void {
@@ -51,7 +52,8 @@ export class MarkedCompatComponent
       case 'iOS':
         wv.ios.opaque = false;
         wv.ios.setDrawsBackground = false;
-        wv.on('loadStarted', (e) => this.platformProvider.viewClient(e));
+        wv.on('loadStarted', (e) => this.platformProvider.resourceClient(e));
+        wv.on('loadFinished', (e) => this.platformProvider.resizeClient(e));
         break;
     }
   }

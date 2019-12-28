@@ -12,32 +12,36 @@ if (!isKnownView('pager-compat')) {
   selector: 'pager-compat',
   styleUrls: ['pager.compat.scss'],
   template: `
-  <StackLayout>
-    <AbsoluteLayout class="prev">
-      <i18n i18n="@@previous" unit="previous"></i18n>
-      <icon-compat ripple
-        icon="angle-double-left"
-        rippleColor="#fff"
-        [isEnabled]="prev"
-        [isUserInteractionEnabled]="prev"
-        [ngClass]="{ disabled: !prev }"
-        (tap)="router.navigate([], { queryParams: prevLink })">
-      </icon-compat>
-      <GridLayout></GridLayout>
-    </AbsoluteLayout>
-    <AbsoluteLayout class="next">
-      <i18n i18n="@@following" unit="following"></i18n>
-      <icon-compat ripple
-        icon="angle-double-left"
-        rippleColor="#fff"
-        [isEnabled]="next"
-        [isUserInteractionEnabled]="next"
-        [ngClass]="{ disabled: !next }"
-        (tap)="router.navigate([], { queryParams: nextLink })">
-      </icon-compat>
-      <GridLayout></GridLayout>
-    </AbsoluteLayout>
-  </StackLayout>
+    <StackLayout>
+      <AbsoluteLayout class="prev">
+        <GridLayout>
+          <i18n i18n="@@previous" unit="previous"></i18n>
+        </GridLayout>
+        <icon-compat ripple
+          icon="angle-double-left"
+          rippleColor="#fff"
+          [isEnabled]="prev"
+          [isUserInteractionEnabled]="prev"
+          [ngClass]="{ disabled: !prev }"
+          (tap)="router.navigate([], { queryParams: prevLink })">
+        </icon-compat>
+        <AbsoluteLayout></AbsoluteLayout>
+      </AbsoluteLayout>
+      <AbsoluteLayout class="next">
+        <GridLayout>
+          <i18n i18n="@@following" unit="following"></i18n>
+        </GridLayout>
+        <icon-compat ripple
+          icon="angle-double-left"
+          rippleColor="#fff"
+          [isEnabled]="next"
+          [isUserInteractionEnabled]="next"
+          [ngClass]="{ disabled: !next }"
+          (tap)="router.navigate([], { queryParams: nextLink })">
+        </icon-compat>
+        <AbsoluteLayout></AbsoluteLayout>
+      </AbsoluteLayout>
+    </StackLayout>
   `
 })
 

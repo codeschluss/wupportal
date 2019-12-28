@@ -7,19 +7,8 @@ StackLayout {
 
   & > AbsoluteLayout {
     height: rem(2.5);
-    horizontal-align: left;
 
-    & + AbsoluteLayout {
-      horizontal-align: right;
-      transform: rotate(180deg);
-
-      & > [unit] {
-        text-align: right;
-        transform: rotate(180deg);
-      }
-    }
-
-    & > GridLayout {
+    & > AbsoluteLayout {
       background-color: $color-lighter;
       height: rem(2.5);
       left: rem(8.5);
@@ -42,13 +31,41 @@ StackLayout {
       }
     }
 
-    & > [unit] {
+    & > GridLayout {
       background-color: $color-light;
-      font-size: rem(1);
       height: 100%;
       margin-left: rem(1.25);
-      padding: rem(.5) 0 0 rem(1.75);
       width: rem(8.5);
+
+      & > [unit] {
+        font-size: rem(1);
+        // height: 100%;
+        vertical-align: center;
+      }
+    }
+
+    &.next {
+      horizontal-align: right;
+      transform: rotate(180deg);
+
+      & > GridLayout {
+        transform: rotate(180deg);
+
+        & > [unit] {
+          margin-right: rem(1.75);
+          text-align: right;
+        }
+      }
+    }
+
+    &.prev {
+      horizontal-align: left;
+
+      & > GridLayout {
+        & > [unit] {
+          margin-left: rem(1.75);
+        }
+      }
     }
   }
 }

@@ -114,6 +114,7 @@ export class PlatformProvider implements Compat {
 
       case 'iOS':
         PlatformProvider.resizeClient = (event) => {
+          event.object.ios.scrollView.scrollEnabled = false;
           event.object.ios.evaluateJavaScriptCompletionHandler(
             'document.body.scrollHeight',
             (height) => event.object.height = height

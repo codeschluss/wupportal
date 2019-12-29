@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CrudJoiner, Headers, PlatformProvider } from '@wooportal/core';
+import { ExpandCompat } from 'src/views/shared/compat/expand/expand.compat.i';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { ScheduleModel } from '../../../../realm/models/schedule.model';
@@ -41,6 +42,8 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   @ViewChild('webview', { read: ElementRef, static: false })
   private webview: ElementRef<WebView>;
 
+  private mapview: boolean = false;
+
   public constructor(
     @Optional() private sanitizer: DomSanitizer,
     i18n: I18n,
@@ -50,6 +53,15 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     headers: Headers
   ) {
     super(router, platformProvider, headers, i18n, route);
+  }
+
+  public expander(expand: ExpandCompat): void {
+    if (this.platformProvider.name === 'iOS' && !this.mapview) {
+      this.webview.nativeElement.reload();
+      this.mapview = true;
+    }
+
+    this.expanded(expand);
   }
 
   protected ngPostInit(): void {

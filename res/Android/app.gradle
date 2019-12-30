@@ -1,9 +1,12 @@
 android {
   defaultConfig {
+    applicationId = 'de.codeschluss.wooportal.client'
     generatedDensities = []
-    applicationId = "de.codeschluss.wooportal.client"
+  }
+  configurations.all {
+    exclude group: 'com.google.android.gms', module: 'play-services-location'
   }
   aaptOptions {
-    additionalParameters "--no-version-vectors"
+    additionalParameters '--no-version-vectors'
   }
 }

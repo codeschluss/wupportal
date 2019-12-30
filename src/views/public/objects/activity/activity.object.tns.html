@@ -150,7 +150,7 @@
       </expand-compat>
       <expand-compat #mapview
         class="expand-compat"
-        (changed)="$event && expander(mapview)">
+        (changed)="$event && reloader(mapview)">
         <ng-template #expandHeader>
           <icon-compat icon="globe"></icon-compat>
           <i18n i18n="@@mapview" unit="mapview"></i18n>

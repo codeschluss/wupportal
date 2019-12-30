@@ -42,8 +42,6 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   @ViewChild('webview', { read: ElementRef, static: false })
   private webview: ElementRef<WebView>;
 
-  private mapview: boolean = false;
-
   public constructor(
     @Optional() private sanitizer: DomSanitizer,
     i18n: I18n,
@@ -55,13 +53,12 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     super(router, platformProvider, headers, i18n, route);
   }
 
-  public expander(expand: ExpandCompat): void {
-    if (this.platformProvider.name === 'iOS' && !this.mapview) {
-      this.webview.nativeElement.reload();
-      this.mapview = true;
-    }
-
+  public reloader(expand: ExpandCompat): void {
     this.expanded(expand);
+
+    if (this.platformProvider.name === 'iOS') {
+      this.webview.nativeElement.reload();
+    }
   }
 
   protected ngPostInit(): void {

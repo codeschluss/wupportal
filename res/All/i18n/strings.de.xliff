@@ -20,6 +20,9 @@
       <trans-unit id="encryptedConnection" datatype="html">
         <source>encryptedConnection</source><target>HTTPS verschlüsselt</target>
       </trans-unit>
+      <trans-unit id="homepage" datatype="html">
+        <source>homepage</source><target>Startseite</target>
+      </trans-unit>
       <trans-unit id="mapview" datatype="html">
         <source>mapview</source><target>Kartenansicht</target>
       </trans-unit>
@@ -351,7 +354,7 @@
         <source>approved</source><target>Zugelassen</target>
       </trans-unit>
       <trans-unit id="ownership" datatype="html">
-        <source>ownership</source><target>Besitzer</target>
+        <source>ownership</source><target>Verwaltend</target>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source><target>Applikation verwalten</target>

@@ -1,10 +1,9 @@
-/hooks
-/node_modules
-/platforms
-/target
+/hooks/
+/node_modules/
+/platforms/
+/target/
 
-package-lock.json
-tsconfig.tns.json
-webpack.config.js
+/package-lock.json
+/webpack.config.js
 
-src/package.json
+/res/Android/production.keystore

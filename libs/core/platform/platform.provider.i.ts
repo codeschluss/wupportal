@@ -24,4 +24,8 @@ export interface PlatformProvider {
 
   reload(): void;
 
+  resizeClient(event: any): void;
+
+  resourceClient(event: any): void;
+
 }

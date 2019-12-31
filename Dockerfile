@@ -1,19 +1,23 @@
 #
 # PHASE 0
 FROM ubuntu:latest
-ADD / /tmp/wooportal.client
+COPY / /tmp/wooportal.client
 ENV DEBIAN_FRONTEND noninteractive
 RUN \
 #
 # packages
-apt-get -qy update && \
-apt-get -qy install --no-install-recommends \
+apt-get -qqy update && \
+apt-get -qqy install --no-install-recommends ${TMPKG:= \
+  file \
   gcc-multilib \
   git \
   gnupg \
+  make \
   openjdk-8-jdk \
   unzip \
-  wget && \
+  wget \
+  xxd \
+} && \
 #
 # buildenv
 . /etc/lsb-release && \
@@ -24,12 +28,11 @@ wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key \
   | apt-key add - && \
 echo "deb https://deb.nodesource.com/node_10.x $DISTRIB_CODENAME main" \
   > /etc/apt/sources.list.d/nodejs.list && \
-apt-get -qy update && \
-apt-get -qy install --no-install-recommends nodejs && \
+apt-get -qqy update && \
+apt-get -qqy install --no-install-recommends nodejs && \
 #
 # android-sdk
 cd $(mktemp -d) && \
-export ANDROID_HOME="$PWD" PATH="$PATH:$PWD/tools:$PWD/platform-tools" && \
 wget -qO- https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
   > android-sdk.zip && \
 unzip -qq android-sdk.zip && \
@@ -37,47 +40,56 @@ yes | tools/bin/sdkmanager --licenses > /dev/null && \
 tools/bin/sdkmanager \
   "build-tools;29.0.2" \
   "extras;android;m2repository" \
+  "ndk;20.1.5948944" \
   "platforms;android-29" \
   "platform-tools" \
   "tools" > /dev/null && \
+export \
+  ANDROID_HOME="$PWD" \
+  ANDROID_NDK_HOME="$PWD/ndk/$(ls ndk)" \
+  PATH="$PATH:$PWD/tools:$PWD/platform-tools" && \
 #
-# wooportal/client
+# wooportal.client
 cd /tmp/wooportal.client && \
 npm install && \
-npm run setup && \
-npm run -- tns build android \
-  --bundle \
-  --env.aot \
+npm run -- build:oid \
+  --env.compileSnapshot \
   --env.snapshot \
-  --env.uglify \
   --key-store-alias=dev \
   --key-store-alias-password=password \
   --key-store-password=password \
   --key-store-path=res/Android/dev.keystore \
   --release && \
-mv $(find platforms/android -name "*.apk") /client.apk
+mkdir /phase_0 && \
+mv $(find platforms/android -name "*.apk") /phase_0/client.apk && \
+#
+# cleanup
+apt-get -qqy clean all && \
+apt-get -qqy purge --autoremove $TMPKG nodejs && \
+find /root /tmp /var/lib/apt/lists -mindepth 1 -delete
 #
 # PHASE 1
 FROM alpine:latest
 LABEL maintainer info@codeschluss.de
-ADD / /opt/wooportal.client/
-COPY --from=0 /client.apk /
+ADD / /opt/wooportal.client
+COPY --from=0 /phase_0/client.apk /tmp/phase_0/client.apk
 RUN \
 #
 # packages
 apk --no-cache add \
   nodejs && \
 apk --no-cache --virtual build add \
+  bash \
   nodejs-npm && \
 #
-# wooportal/client
+# wooportal.client
 cd /opt/wooportal.client && \
 npm install && \
 npm run build:lib && \
 npm run build:app && \
 npm run build:ssr && \
 npm prune --production && \
-mv /client.apk target/@wooportal/client && \
+mv /tmp/phase_0/client.apk target/@wooportal/client && \
 #
 # cleanup
 apk del --purge build && \

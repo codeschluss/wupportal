@@ -1,12 +1,6 @@
 @import '../../../app.vars.scss';
 
 main {
-  [base=card] {
-    @include media(lt-md) {
-      padding-top: 0;
-    }
-  }
-
   [compat=pager] {
     @include flex(row, center, center);
     margin: 1rem;

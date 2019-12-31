@@ -85,13 +85,19 @@ main {
       flex: 1 0 auto;
       width: 66%;
 
-      @include deep {
-        mat-card {
-          & > .mat-ripple-element {
-            @include media(lt-lg) {
-              display: none;
+      & > activity-card {
+        @include deep {
+          mat-card {
+            & > .mat-ripple-element {
+              @include media(lt-lg) {
+                display: none;
+              }
             }
           }
+        }
+
+        @include media(lt-md) {
+          padding-top: 0;
         }
       }
     }

@@ -37,10 +37,13 @@ export class ActivityModel
   public schedules: ScheduleModel[] & Observable<ScheduleModel[]>;
   public targetGroups: TargetGroupModel[] & Observable<TargetGroupModel[]>;
 
-  public get dates(): ScheduleModel[] {
-    return !this.schedules ? [] : this.schedules
-      .filter((s) => +new Date(s.startDate) > +new Date())
-      .sort((a, b) => +new Date(a.startDate) - +new Date(b.startDate));
+  public get scheduled(): ScheduleModel | null {
+    return Array.isArray(this.schedules) && this.schedules.length
+      ? this.schedules
+        .filter((s) => s.start.valueOf() > new Date().valueOf())
+        .sort((a, b) => a.start.valueOf() - b.start.valueOf())
+        .shift()
+      : null;
   }
 
   // compatability

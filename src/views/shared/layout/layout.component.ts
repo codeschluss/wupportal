@@ -10,6 +10,7 @@ import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData as BackPressedEvent } from 'tns-core-modules/application';
 import { ScrollView } from 'tns-core-modules/ui/scroll-view';
+import { TextField } from 'tns-core-modules/ui/text-field';
 import { LanguageModel } from '../../../realm/models/language.model';
 import { LanguageProvider } from '../../../realm/providers/language.provider';
 import { ClientPackage } from '../../../utils/package';
@@ -38,6 +39,9 @@ export class LayoutComponent implements OnInit {
 
   @ViewChild('header', { read: ElementRef, static: true })
   private header: ElementRef<HTMLElement>;
+
+  @ViewChild('input', { read: ElementRef, static: false })
+  private input: ElementRef<TextField>;
 
   private serializer: UrlSerializer = new CoreUrlSerializer();
 
@@ -133,6 +137,12 @@ export class LayoutComponent implements OnInit {
       this.loadingProvider.finished(block);
       this.changeDetection.detectChanges();
     }));
+  }
+
+  public toggle(state: boolean): void {
+    if (!state && this.input) {
+      this.input.nativeElement.dismissSoftInput();
+    }
   }
 
   private topoff(element: HTMLElement): void {

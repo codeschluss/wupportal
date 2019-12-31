@@ -33,7 +33,6 @@ scroll-view {
 
           & > flexbox-layout {
             align-items: center;
-            // align-items: stretch;
             orientation: horizontal;
 
             & > grid-layout {
@@ -67,8 +66,8 @@ scroll-view {
         }
 
         .detail {
+          margin: rem(.25) 0;
           orientation: horizontal;
-          padding: rem(.25) 0;
 
           & > [unit] {
             font-weight: bold;

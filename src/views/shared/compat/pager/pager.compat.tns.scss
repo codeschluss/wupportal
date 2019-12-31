@@ -7,19 +7,32 @@ StackLayout {
 
   & > AbsoluteLayout {
     height: rem(2.5);
-    horizontal-align: left;
 
-    & + AbsoluteLayout {
+    &.next {
       horizontal-align: right;
       transform: rotate(180deg);
 
-      & > [unit] {
-        text-align: right;
+      & > GridLayout {
         transform: rotate(180deg);
+
+        & > [unit] {
+          margin-right: rem(1.75);
+          text-align: right;
+        }
       }
     }
 
-    & > GridLayout {
+    &.prev {
+      horizontal-align: left;
+
+      & > GridLayout {
+        & > [unit] {
+          margin-left: rem(1.75);
+        }
+      }
+    }
+
+    & > AbsoluteLayout {
       background-color: $color-lighter;
       height: rem(2.5);
       left: rem(8.5);
@@ -32,9 +45,9 @@ StackLayout {
       background-color: $color-primary;
       border-radius: rem(2.5);
       color: $color-lightest;
+      font-size: rem(1);
       height: rem(2.5);
       left: 0;
-      padding: 2;
       width: rem(2.5);
 
       &.disabled {
@@ -42,13 +55,16 @@ StackLayout {
       }
     }
 
-    & > [unit] {
+    & > GridLayout {
       background-color: $color-light;
-      font-size: rem(1);
       height: 100%;
       margin-left: rem(1.25);
-      padding: rem(.5) 0 0 rem(1.75);
       width: rem(8.5);
+
+      & > [unit] {
+        font-size: rem(1);
+        vertical-align: center;
+      }
     }
   }
 }

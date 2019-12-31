@@ -48,12 +48,11 @@ export class MapsComponent
         wv.getSettings().setJavaScriptEnabled(true);
         wv.setWebChromeClient(new this.platformProvider.chromeClient());
         wv.setWebViewClient(new this.platformProvider.viewClient());
-        return;
+        break;
 
       case 'iOS':
-        wv = wv.ios;
-        // TODO: https://board.codeschluss.de/project/wooportal/us/37
-        return;
+        wv.on('loadStarted', (e) => this.platformProvider.resourceClient(e));
+        break;
     }
   }
 

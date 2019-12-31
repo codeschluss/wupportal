@@ -3,7 +3,28 @@
 StackLayout.expand {
   @include elevation;
 
-  &.open {
+  &.closed {
+    border-color: $color-light;
+
+    & > FlexboxLayout {
+      background-color: $color-lightest;
+      color: $color-darkest;
+      height: rem(3);
+
+      & > .indicator {
+        GridLayout {
+          border-color: $color-darker;
+          transform: rotate(45deg);
+        }
+      }
+    }
+
+    & > StackLayout {
+      height: 0;
+    }
+  }
+
+  &.opened {
     border-color: $color-primary;
 
     & > FlexboxLayout {
@@ -26,12 +47,9 @@ StackLayout.expand {
 
   & > FlexboxLayout {
     align-items: center;
-    background-color: $color-lightest;
     border-top-left-radius: rem(.25);
     border-top-right-radius: rem(.25);
-    color: $color-darkest;
     font-weight: bold;
-    height: rem(3);
     padding: 0 rem(1);
 
     & > .indicator {
@@ -39,10 +57,8 @@ StackLayout.expand {
       width: rem(3);
 
       & > GridLayout {
-        border-color: $color-darker;
         border-width: 0 2 2 0;
         height: rem(.5);
-        transform: rotate(45deg);
         width: rem(.5);
       }
     }
@@ -50,6 +66,5 @@ StackLayout.expand {
 
   & > StackLayout {
     padding: rem(1);
-    height: 0;
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "wupportal",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An informative portal for new citizens in Wuppertal",
   "homepage": "https://www.wupportal.org",
   "author": {
@@ -36,41 +36,43 @@
       "title": "Wupportal"
     }
   },
-  "android": {
-    "markingMode": "none",
-    "v8Flags": "--expose_gc"
-  },
   "nativescript": {
     "id": "de.codeschluss.wupportal",
     "tns-android": {
-      "version": "6.2.0"
+      "version": "6.3.0"
     },
     "tns-ios": {
-      "version": "6.2.0"
-    }
+      "version": "6.3.0"
+    },
+    "packages": [
+      "nativescript-angular",
+      "nativescript-geolocation",
+      "nativescript-ng-ripple",
+      "nativescript-social-share",
+      "nativescript-ui-calendar",
+      "nativescript-ui-sidedrawer",
+      "tns-core-modules"
+    ]
   },
-  "main": "native.js",
+  "android": {
+    "markingMode": "none"
+  },
   "scripts": {
     "ng": "ng",
-    "tns": "tns",
+    "ns": "ns",
     "lint": "ng lint",
     "clean": "git clean -dfX",
-    "start": "npm run start:dev",
-    "setup": "update-ns-webpack --configs && run-s setup:*",
-    "build": "run-s setup build:app build:ssr build:ios build:oid",
-    "build:api": "ng-swagger-gen --config swagger.json --input",
-    "build:app": "ng build --base-href / --prod @wooportal/client",
-    "build:ios": "tns build ios --bundle --env.aot --env.uglify",
-    "build:oid": "tns build android --bundle --env.aot --env.uglify",
+    "start": "npm run start:app",
+    "build:api": "ng-swagger-gen -c swagger.json",
+    "build:app": "ng build --prod @wooportal/client",
+    "build:ios": "ns platform add ios ||:&& ns build ios",
+    "build:oid": "ns platform add android ||:&& ns build android",
     "build:lib": "ng build @wooportal/core && ng build @wooportal/forms",
     "build:ssr": "ng run @wooportal/client:server && tsc -p express.json",
     "build:xlf": "ng xi18n && sed -i '/context/d' res/All/i18n/strings.xliff",
-    "setup:env": "cp package.json src && cp tsconfig.json tsconfig.tns.json",
-    "setup:ios": "tns platform add ios ||:&& tns prepare ios",
-    "setup:oid": "tns platform add android ||:&& tns prepare android",
-    "start:dev": "ng serve --host 0.0.0.0 --port",
-    "start:ios": "tns debug ios --env.aot",
-    "start:oid": "tns debug android --env.aot",
+    "start:oid": "ns platform add android ||:&& ns debug android",
+    "start:ios": "ns platform add ios ||:&& ns debug ios",
+    "start:app": "ng serve --host 0.0.0.0 --port",
     "start:ssr": "node target/express"
   },
   "dependencies": {
@@ -87,6 +89,7 @@
     "@angular/router": "8.2.14",
     "@angular/service-worker": "8.2.14",
     "@fortawesome/angular-fontawesome": "0.5.0",
+    "@fortawesome/fontawesome-free": "5.12.0",
     "@fortawesome/fontawesome-svg-core": "1.2.26",
     "@fortawesome/free-brands-svg-icons": "5.12.0",
     "@fortawesome/free-solid-svg-icons": "5.12.0",
@@ -97,6 +100,7 @@
     "@ngx-translate/i18n-polyfill": "1.0.0",
     "@wooportal/core": "file:libs/core",
     "@wooportal/forms": "file:libs/forms",
+    "@wooportal/native": "file:libs/native",
     "color-convert": "1.9.3",
     "express": "4.17.1",
     "express-robots-txt": "0.4.1",
@@ -109,20 +113,20 @@
     "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.803.20",
-    "@angular-devkit/build-ng-packagr": "0.803.20",
-    "@angular/cli": "8.3.20",
+    "@angular-devkit/build-angular": "0.803.21",
+    "@angular-devkit/build-ng-packagr": "0.803.21",
+    "@angular/cli": "8.3.21",
     "@angular/compiler-cli": "8.2.14",
     "@angular/language-service": "8.2.14",
-    "@nativescript/schematics": "0.7.3",
-    "@types/node": "12.12.17",
+    "@nativescript/schematics": "1.0.0",
+    "@types/node": "12.12.22",
     "classlist.js": "1.1.20150312",
-    "codelyzer": "5.2.0",
-    "core-js": "3.5.0",
+    "codelyzer": "5.2.1",
+    "core-js": "3.6.1",
     "hammerjs": "2.0.8",
-    "nativescript": "6.2.2",
+    "nativescript": "6.3.0",
     "nativescript-angular": "8.20.3",
-    "nativescript-dev-webpack": "1.3.0",
+    "nativescript-dev-webpack": "1.4.0",
     "nativescript-geolocation": "5.1.0",
     "nativescript-ng-ripple": "2.0.1",
     "nativescript-social-share": "1.5.2",
@@ -130,16 +134,16 @@
     "nativescript-ui-sidedrawer": "8.0.0",
     "ng-packagr": "5.7.1",
     "normalize.css": "8.0.1",
+    "node-sass": "4.13.0",
     "npm-run-all": "4.1.5",
     "reflect-metadata": "0.1.13",
-    "tns-core-modules": "6.2.3",
+    "tns-core-modules": "6.3.2",
     "ts-loader": "6.2.1",
     "ts-node": "8.5.4",
     "tsickle": "0.37.1",
     "tslib": "1.10.0",
     "tslint": "5.20.1",
     "typescript": "3.5.3",
-    "web-animations-js": "2.3.2",
-    "node-sass": "4.13.0"
+    "web-animations-js": "2.3.2"
   }
 }

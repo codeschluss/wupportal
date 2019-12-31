@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, QueryList, Type, ViewChild, ViewC
 import { FormControl } from '@angular/forms';
 import { MatChipList } from '@angular/material/chips';
 import { Params, Route } from '@angular/router';
-import { Arr, CrudJoiner, CrudResolver, ReadParams } from '@wooportal/core';
+import { Arr, CrudJoiner, CrudModel, CrudResolver, ReadParams } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { merge } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
@@ -63,17 +63,6 @@ export class ActivityListingComponent
 
   public get targetGroups(): TargetGroupModel[] {
     return this.route.snapshot.data.targetGroups || [];
-  }
-
-  public get values(): { suburbs: string, targetGroups: string } {
-    return {
-      suburbs: (this.suburbCtrl.value || [])
-        .map((id) => this.suburbs.find((item) => item.id === id))
-        .map((i) => i.name).join(', '),
-      targetGroups: (this.targetGroupCtrl.value || [])
-        .map((id) => this.targetGroups.find((item) => item.id === id))
-        .map((item) => item.name).join(', ')
-    };
   }
 
   protected get routing(): Route {
@@ -163,6 +152,12 @@ export class ActivityListingComponent
         ? ids.filter((i) => i !== id)
         : ids.concat(id)
     );
+  }
+
+  public values(items: CrudModel[], ctrl: FormControl): string {
+    return (ctrl.value || [])
+      .map((id) => items.find((i) => i.id === id))
+      .map((i) => i.name).join(', ') || ' ';
   }
 
   protected params(params: Params): ReadParams {

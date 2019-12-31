@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, EventEmitter, HostBinding, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ContentChild, EventEmitter, HostBinding, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
@@ -13,7 +13,10 @@ if (!isKnownView('expand-compat')) {
   selector: 'expand-compat',
   styleUrls: ['expand.compat.scss'],
   template: `
-    <StackLayout #expand class="expand" [ngClass]="{ open: expanded | async}">
+    <StackLayout #expand class="expand" [ngClass]="{
+      closed: (expanded | async) === false,
+      opened: (expanded | async) === true
+    }">
       <FlexboxLayout (tap)="toggle()">
         <ng-container *ngTemplateOutlet="header"></ng-container>
         <StackLayout flexGrow="1"></StackLayout>
@@ -43,7 +46,7 @@ export class ExpandCompatComponent implements ExpandCompat, OnInit {
   public header: TemplateRef<any>;
 
   @ViewChild('expand', { static: true })
-  public instance: ElementRef<StackLayout>;
+  public instance: StackLayout;
 
   private state: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 

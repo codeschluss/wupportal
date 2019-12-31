@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { CrudJoiner, Headers, PlatformProvider } from '@wooportal/core';
+import { ExpandCompat } from 'src/views/shared/compat/expand/expand.compat.i';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { ActivityModel } from '../../../../realm/models/activity.model';
 import { ScheduleModel } from '../../../../realm/models/schedule.model';
@@ -52,6 +53,14 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     super(router, platformProvider, headers, i18n, route);
   }
 
+  public reloader(expand: ExpandCompat): void {
+    this.expanded(expand);
+
+    if (this.platformProvider.name === 'iOS') {
+      this.webview.nativeElement.reload();
+    }
+  }
+
   protected ngPostInit(): void {
     const url = `/mapview?embed&items=${this.item.id}`;
 
@@ -81,13 +90,7 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
           wv.getSettings().setGeolocationEnabled(true);
           wv.getSettings().setJavaScriptEnabled(true);
           wv.setWebChromeClient(new this.platformProvider.chromeClient());
-          wv.setWebViewClient(new this.platformProvider.viewClient());
-          return;
-
-        case 'iOS':
-          wv = wv.ios;
-          // TODO: https://board.codeschluss.de/project/wooportal/us/37
-          return;
+          break;
       }
     }
   }

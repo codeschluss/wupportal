@@ -1,0 +1,25 @@
+{
+  "name": "@wooportal/native",
+  "version": "0.1.1",
+  "description": "@wooportal/client native library",
+  "homepage": "https://github.com/wooportal/client",
+  "author": {
+    "name": "codeschluss",
+    "email": "info@codeschluss.de",
+    "url": "https://www.codeschluss.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooportal/client"
+  },
+  "bugs": {
+    "email": "info@codeschluss.de",
+    "url": "https://github.com/wooportal/client/issues"
+  },
+  "bin": {
+    "ns": "bin/nativescript.js"
+  },
+  "peerDependencies": {
+    "nativescript": "6.3.0"
+  }
+}

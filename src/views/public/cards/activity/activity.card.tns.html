@@ -2,8 +2,8 @@
   <stack-layout [ngStyle]="colors(item.category.color)">
     <stack-layout class="card-content">
       <stack-layout>
-        <label [text]="item.dates[0]?.startDate | date: 'dd.MM.yyyy'"></label>
-        <label [text]="item.dates[0]?.startDate | date: 'HH:mm'"></label>
+        <label [text]="item.scheduled?.startDate | date: 'dd.MM.yyyy'"></label>
+        <label [text]="item.scheduled?.startDate | date: 'HH:mm'"></label>
       </stack-layout>
       <stack-layout>
         <label [text]="item.address.street"></label>
@@ -14,7 +14,9 @@
         <label [text]="item.address.suburb.name"></label>
       </stack-layout>
       <icon-compat
+        android:style="margin-top: -56"
         class="card-image"
+        ios:style="margin-top: -48"
         [icon]="item.category.icon"
         [style.color]="colors(item.category.color).color">
       </icon-compat>

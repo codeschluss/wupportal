@@ -24,7 +24,9 @@
         (tap)="router.navigate(['/organisations', item.id])">
       </label>
     </stack-layout>
-    <stack-layout class="card-actions">
+    <stack-layout
+      class="card-actions"
+      ios:style="margin-bottom: 8; padding: -1 8 0 8">
       <details-piece [item]="item"></details-piece>
       <share-piece [item]="item"></share-piece>
       <like-piece [item]="item"></like-piece>

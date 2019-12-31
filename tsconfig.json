@@ -26,9 +26,6 @@
       "node_modules/@types"
     ],
     "paths": {
-      "~/*": [
-        "src/*"
-      ],
       "@wooportal/*": [
         "target/@wooportal/*"
       ]

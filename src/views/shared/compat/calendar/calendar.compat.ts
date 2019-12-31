@@ -1,5 +1,7 @@
 import { Component, EventEmitter, HostBinding, Input, Output, ViewChild } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
 import { MatCalendar } from '@angular/material/datepicker';
+import { SessionProvider } from '@wooportal/core';
 import { ScheduleModel as Schedule } from '../../../../realm/models/schedule.model';
 import { CalendarCompat } from './calendar.compat.i';
 
@@ -36,9 +38,15 @@ export class CalendarCompatComponent implements CalendarCompat {
   public selectable: (date: Date) => boolean = this.scheduled.bind(this);
 
   public get startdate(): Date {
-    return this.items.length
-      ? new Date(this.items[0].startDate)
-      : new Date();
+    return this.items.length ? this.items[0].start : new Date();
+  }
+
+  public constructor(
+    dateAdapter: DateAdapter<Date>,
+    sessionProvider: SessionProvider
+  ) {
+    dateAdapter.getFirstDayOfWeek = () => 1;
+    dateAdapter.setLocale(sessionProvider.getLanguage());
   }
 
   public click(event: Event): void {
@@ -55,7 +63,7 @@ export class CalendarCompatComponent implements CalendarCompat {
 
   private schedule(date: Date): Schedule {
     return this.items.find((schedule) =>
-      !(+new Date(schedule.startDate).setHours(0, 0, 0, 0) - +date));
+      !(schedule.start.setHours(0, 0, 0, 0).valueOf() - date.valueOf()));
   }
 
   private scheduled(date: Date): boolean {

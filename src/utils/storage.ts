@@ -4,10 +4,7 @@ import { asyncScheduler, Observable, of, throwError } from 'rxjs';
 import { observeOn } from 'rxjs/operators';
 import * as nativeStorage from 'tns-core-modules/application-settings';
 
-@Injectable({
-  providedIn: StorageMap
-})
-
+@Injectable({ providedIn: StorageMap })
 export class NativeStorageDatabase implements LocalDatabase {
 
   public get size(): Observable<number> {
@@ -39,7 +36,7 @@ export class NativeStorageDatabase implements LocalDatabase {
   }
 
   public has(key: string): Observable<boolean> {
-    return nativeStorage.hasKey(key) ? of(true) : of(false);
+    return of(nativeStorage.hasKey(key));
   }
 
   public keys(): Observable<string> {

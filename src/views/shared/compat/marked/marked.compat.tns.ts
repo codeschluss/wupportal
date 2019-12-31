@@ -30,7 +30,8 @@ export class MarkedCompatComponent
   ) { }
 
   public ngOnInit() {
-    this.html = marked(this.data || '');
+    this.html = '<style>body{font-family:sans-serif;}</style>'
+      + marked(this.data || '');
   }
 
   public ngAfterViewInit(): void {
@@ -46,14 +47,14 @@ export class MarkedCompatComponent
         wv.setBackgroundColor(0x00000000);
         wv.getSettings().setSupportZoom(false);
         wv.setWebViewClient(new this.platformProvider.viewClient());
-        return;
+        break;
 
       case 'iOS':
-        // TODO: https://board.codeschluss.de/project/wooportal/us/37
-        wv = wv.ios;
-        wv.opaque = false;
-        wv.setDrawsBackground = false;
-        return;
+        wv.ios.opaque = false;
+        wv.ios.setDrawsBackground = false;
+        wv.on('loadStarted', (e) => this.platformProvider.resourceClient(e));
+        wv.on('loadFinished', (e) => this.platformProvider.resizeClient(e));
+        break;
     }
   }
 

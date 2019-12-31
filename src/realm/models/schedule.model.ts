@@ -29,4 +29,12 @@ export class ScheduleModel
     }
   }
 
+  public get end(): Date {
+    return moment.utc(this.endDate).toDate();
+  }
+
+  public get start(): Date {
+    return moment.utc(this.startDate).toDate();
+  }
+
 }

@@ -1,5 +1,13 @@
 @import 'app.vars.scss';
 
+.fab {
+  font-family: 'Font Awesome 5 Brands', 'fa-brands-400';
+}
+
+.fas {
+  font-family: 'Font Awesome 5 Free', 'fa-solid-900';
+}
+
 page {
   color: $color-darkest;
 
@@ -13,18 +21,18 @@ page {
 
       activity-indicator {
         height: rem(1.25);
-        margin-right: rem(1);
         width: rem(1.25);
       }
 
       grid-layout {
         height: rem(3);
-        padding-right: rem(1);
         width: rem(3);
 
         [compat=icon] {
-          height: rem(2);
-          width: rem(1.75);
+          border-radius: rem(2.5);
+          font-size: rem(1);
+          height: rem(2.5);
+          width: rem(2.5);
         }
       }
     }
@@ -70,8 +78,17 @@ page {
                 }
               }
 
+              &.base {
+                [compat=i18n] {
+                  animation-direction: reverse;
+                  animation-duration: $animation-duration;
+                  animation-fill-mode: reverse;
+                  animation-name: float;
+                }
+              }
+
               &.float {
-                label {
+                [compat=i18n] {
                   animation-direction: forwards;
                   animation-duration: $animation-duration;
                   animation-fill-mode: forwards;
@@ -79,15 +96,12 @@ page {
                 }
               }
 
-              label {
-                animation-direction: reverse;
-                animation-duration: $animation-duration;
-                animation-fill-mode: reverse;
-                animation-name: float;
+              [compat=i18n] {
                 margin-left: 0;
                 margin-top: rem(1);
                 origin-x: 0;
                 origin-y: 0;
+                width: 100%;
               }
 
               text-field {
@@ -98,8 +112,8 @@ page {
               }
 
               grid-layout {
+                height: 100%;
                 margin-left: 175;
-                margin-top: 10;
 
                 &.off {
                   [compat=icon] {
@@ -108,6 +122,8 @@ page {
                 }
 
                 [compat=icon] {
+                  border-radius: rem(2);
+                  font-size: rem(1);
                   height: rem(2);
                   width: rem(2);
                 }
@@ -121,6 +137,7 @@ page {
             }
 
             [compat=icon] {
+              font-size: rem(1);
               height: rem(2);
               margin-right: rem(.5);
               width: rem(2);

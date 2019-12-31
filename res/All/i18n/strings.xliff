@@ -20,6 +20,9 @@
       <trans-unit id="encryptedConnection" datatype="html">
         <source>encryptedConnection</source>
       </trans-unit>
+      <trans-unit id="homepage" datatype="html">
+        <source>homepage</source>
+      </trans-unit>
       <trans-unit id="mapview" datatype="html">
         <source>mapview</source>
       </trans-unit>

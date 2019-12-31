@@ -49,27 +49,19 @@ export class CalendarCompatComponent implements CalendarCompat, AfterViewInit {
   public get events(): CalendarEvent[] {
     return this.items.map((item) => new CalendarEvent(
       `${this.name}\n${item.datetime}`,
-      new Date(item.startDate),
-      new Date(item.startDate),
+      item.start,
+      item.start,
       true,
       new Color(222, 0, 0, 0)
     ));
   }
 
   public get startdate(): Date {
-    return this.items.length
-      ? new Date(this.items[0].startDate)
-      : new Date();
+    return this.items.length ? this.items[0].start : new Date();
   }
 
   public ngAfterViewInit(): void {
-    const cal = this.instance.calendar;
-
-    // tslint:disable-next-line
-    if(!cal.isLoaded){return cal.once('loaded',()=>this.ngAfterViewInit());}
-    // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
-
-    cal.goToDate(this.startdate);
+    this.instance.calendar.goToDate(this.startdate);
   }
 
   public select(event: CalendarSelectionEventData): void {
@@ -78,7 +70,7 @@ export class CalendarCompatComponent implements CalendarCompat, AfterViewInit {
 
   private schedule(date: Date): Schedule {
     return this.items.find((schedule) =>
-      !(+new Date(schedule.startDate).setHours(0, 0, 0, 0) - +date));
+      !(schedule.start.setHours(0, 0, 0, 0).valueOf() - date.valueOf()));
   }
 
 }

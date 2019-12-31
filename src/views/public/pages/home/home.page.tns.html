@@ -1,6 +1,6 @@
 <scroll-view class="topoff">
   <stack-layout>
-    <absolute-layout>
+    <absolute-layout ios:style="margin-top: 1">
       <stack-layout>
         <label [text]="(name | async) + ' &mdash;'"></label>
         <i18n i18n="@@newActivities" unit="newActivities"></i18n>
@@ -51,11 +51,11 @@ verschiedenen Sprachen anzeigen.
     </stack-layout>
     <flexbox-layout>
       <stack-layout>
-        <img [src]="src('/images/municipality.png')">
+        <img src="~/images/municipality.png">
         <label text="Ressort Zuwanderung und Integration"></label>
       </stack-layout>
       <stack-layout>
-        <img [src]="src('/images/office.png')">
+        <img src="~/images/office.png">
         <label text="Kommunales Integrationszentrum Wuppertal"></label>
       </stack-layout>
     </flexbox-layout>

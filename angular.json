@@ -50,6 +50,11 @@
               },
               {
                 "glob": "**/*",
+                "input": "res/All/images",
+                "output": "/images"
+              },
+              {
+                "glob": "**/*",
                 "input": "res/Web/images",
                 "output": "/images"
               },

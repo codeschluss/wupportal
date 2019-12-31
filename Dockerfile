@@ -98,4 +98,4 @@ find /root /tmp -mindepth 1 -delete
 # runtime
 EXPOSE 4000
 WORKDIR /opt/wooportal.client
-CMD npm run start:ssr
+CMD node target/express

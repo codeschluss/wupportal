@@ -1,6 +1,6 @@
 {
   "name": "@wooportal/forms",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "@wooportal/client forms library",
   "homepage": "https://github.com/wooportal/client",
   "author": {
@@ -28,7 +28,7 @@
     "@angular/forms": "8.2.14",
     "@angular/material": "8.2.3",
     "@angular/platform-browser": "8.2.14",
-    "@wooportal/core": "0.1.0",
+    "@wooportal/core": "0.1.1",
     "ng-packagr": "5.7.1",
     "rxjs": "6.5.3",
     "tsickle": "0.37.1",

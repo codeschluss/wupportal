@@ -40,8 +40,8 @@ export class ActivityModel
   public get scheduled(): ScheduleModel | null {
     return Array.isArray(this.schedules) && this.schedules.length
       ? this.schedules
-        .filter((s) => s.start.valueOf() > new Date().valueOf())
-        .sort((a, b) => a.start.valueOf() - b.start.valueOf())
+        .filter((s) => s.startDate > new Date().toISOString())
+        .sort((a, b) => a.startDate.localeCompare(b.startDate))
         .shift()
       : null;
   }

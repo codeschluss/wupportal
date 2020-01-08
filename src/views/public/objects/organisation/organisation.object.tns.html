@@ -118,8 +118,7 @@
             <scroll-view #scrollActivities>
               <flexbox-layout>
                 <ng-container *ngFor="let activity of item.activities">
-                  <grid-layout
-                    [android:width]="scrollActivities.getActualSize().width">
+                  <grid-layout [width]="scrollActivities.getActualSize().width">
                     <activity-card [item]="activity"></activity-card>
                   </grid-layout>
                 </ng-container>

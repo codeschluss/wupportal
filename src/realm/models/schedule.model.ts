@@ -21,13 +21,13 @@ export class ScheduleModel
       this.endDate.substr(11, 5);
 
     switch (true) {
-      case until === start:
+      case start.substr(0, 10) === until.substr(0, 10):
         return `${start} - ${until.substr(12)}`;
 
-      case until.endsWith(start.substr(2)):
+      case start.substr(2, 8) === until.substr(2, 8):
         return `${start.substr(0, 3)}, ${start.substr(12)} - ${until}`;
 
-      case until.endsWith(start.substr(5)):
+      case start.substr(5, 5) === until.substr(5, 5):
         return `${start.substr(0, 6)}, ${start.substr(12)} - ${until}`;
 
       default:

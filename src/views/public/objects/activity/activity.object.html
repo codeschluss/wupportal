@@ -130,33 +130,35 @@
           </ng-template>
         </expand-compat>
       </ng-container>
-      <expand-compat #schedules (changed)="$event && expanded(schedules)">
-        <ng-template #expandHeader>
-          <icon-compat icon="history"></icon-compat>
-          <i18n i18n="@@schedules">schedules</i18n>
-          <small>({{ item.schedules.length }})</small>
-        </ng-template>
-        <ng-template #expandContent>
-          <section>
-            <calendar-compat
-              [items]="item.schedules"
-              [name]="item.name"
-              (changed)="schedule = $event">
-            </calendar-compat>
-            <mat-divider></mat-divider>
-            <aside>
-              <ng-container *ngIf="schedule">
-                <i18n i18n="@@selectedSchedule">selectedSchedule</i18n>
-                <time>{{ schedule.datetime }}</time>
-              </ng-container>
-              <ng-container *ngIf="!schedule">
-                <i18n i18n="@@nextSchedule">nextSchedule</i18n>
-                <time>{{ item.scheduled?.datetime }}</time>
-              </ng-container>
-            </aside>
-          </section>
-        </ng-template>
-      </expand-compat>
+      <ng-container *ngIf="item.schedules">
+        <expand-compat #schedules (changed)="$event && expanded(schedules)">
+          <ng-template #expandHeader>
+            <icon-compat icon="history"></icon-compat>
+            <i18n i18n="@@schedules">schedules</i18n>
+            <small>({{ item.schedules.length }})</small>
+          </ng-template>
+          <ng-template #expandContent>
+            <section>
+              <calendar-compat
+                [items]="item.schedules"
+                [name]="item.name"
+                (changed)="schedule = $event">
+              </calendar-compat>
+              <mat-divider></mat-divider>
+              <aside>
+                <ng-container *ngIf="schedule">
+                  <i18n i18n="@@selectedSchedule">selectedSchedule</i18n>
+                  <time>{{ schedule.datetime }}</time>
+                </ng-container>
+                <ng-container *ngIf="!schedule">
+                  <i18n i18n="@@nextSchedule">nextSchedule</i18n>
+                  <time>{{ item.scheduled?.datetime }}</time>
+                </ng-container>
+              </aside>
+            </section>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
       <expand-compat #mapview (changed)="$event && expanded(mapview)">
         <ng-template #expandHeader>
           <icon-compat icon="globe"></icon-compat>

@@ -1,5 +1,4 @@
 import { CrudModel } from '@wooportal/core';
-import * as moment from 'moment';
 import { ScheduleEntity } from '../../api/models/schedule-entity';
 
 export class ScheduleModel
@@ -9,32 +8,39 @@ export class ScheduleModel
   public startDate: string;
 
   public get datetime(): string {
-    const from = moment.utc(this.startDate);
-    const goto = moment.utc(this.endDate);
-    const time = goto.format('HH:mm');
-    const until = goto.format('DD.MM.YYYY');
+    const start =
+      this.startDate.substr(8, 2) + '.' +
+      this.startDate.substr(5, 2) + '.' +
+      this.startDate.substr(0, 4) + ', ' +
+      this.startDate.substr(11, 5);
+
+    const until =
+      this.endDate.substr(8, 2) + '.' +
+      this.endDate.substr(5, 2) + '.' +
+      this.endDate.substr(0, 4) + ', ' +
+      this.endDate.substr(11, 5);
 
     switch (true) {
-      case until === from.format('DD.MM.YYYY'):
-        return `${until}, ${from.format('HH:mm')} - ${time}`;
+      case start.substr(0, 10) === until.substr(0, 10):
+        return `${start} - ${until.substr(12)}`;
 
-      case until.endsWith(from.format('.MM.YYYY')):
-        return `${from.format('DD., HH:mm')} - ${until}, ${time}`;
+      case start.substr(2, 8) === until.substr(2, 8):
+        return `${start.substr(0, 3)}, ${start.substr(12)} - ${until}`;
 
-      case until.endsWith(from.format('.YYYY')):
-        return `${from.format('DD.MM., HH:mm')} - ${until}, ${time}`;
+      case start.substr(5, 5) === until.substr(5, 5):
+        return `${start.substr(0, 6)}, ${start.substr(12)} - ${until}`;
 
       default:
-        return `${from.format('DD.MM.YYYY, HH:mm')} - ${until}, ${time}`;
+        return `${start} - ${until}`;
     }
   }
 
-  public get end(): Date {
-    return moment.utc(this.endDate).toDate();
+  public get start(): Date {
+    return new Date(this.startDate.substr(0, 23));
   }
 
-  public get start(): Date {
-    return moment.utc(this.startDate).toDate();
+  public get until(): Date {
+    return new Date(this.endDate.substr(0, 23));
   }
 
 }

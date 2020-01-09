@@ -31,19 +31,16 @@ grid-layout {
 
         & > stack-layout {
           orientation: horizontal;
-
-          & > label {
-            & + label {
-              padding-left: rem(.25);
-            }
-          }
         }
       }
+    }
 
-      &.card-actions {
-        border-top-color: $color-light;
-        border-top-width: 1;
-        color: $color-darkest;
+    & > .card-actions {
+      border-top-color: $color-light;
+      border-top-width: 1;
+      color: $color-darkest;
+
+      & > stack-layout {
         orientation: horizontal;
         padding: rem(.5);
       }

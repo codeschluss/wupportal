@@ -11,6 +11,8 @@ import { PlatformProvider as Compat } from './platform.provider.i';
 
 declare const android: any;
 declare const exit: (code: number) => void;
+declare const NSDate: any;
+declare const WKWebsiteDataStore: any;
 
 @Injectable({ providedIn: 'root' })
 export class PlatformProvider implements Compat {
@@ -52,7 +54,7 @@ export class PlatformProvider implements Compat {
   }
 
   public get language(): string {
-    return device.language || this.coreSettings.defaultLanguage;
+    return device.language.substr(0, 2) || this.coreSettings.defaultLanguage;
   }
 
   public get name(): 'Android' | 'iOS' | 'Server' | 'Web' {
@@ -141,6 +143,12 @@ export class PlatformProvider implements Compat {
         break;
 
       case 'iOS':
+        const store = WKWebsiteDataStore.defaultDataStore();
+        store.removeDataOfTypesModifiedSinceCompletionHandler(
+          WKWebsiteDataStore.allWebsiteDataTypes(),
+          NSDate.dateWithTimeIntervalSince1970(0),
+          () => null
+        );
         exit(0);
         break;
     }

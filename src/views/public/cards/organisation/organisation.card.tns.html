@@ -1,14 +1,18 @@
 <grid-layout>
   <stack-layout>
     <stack-layout class="card-content">
-      <stack-layout>
-        <label [text]="item.address.street"></label>
-        <label [text]="item.address.houseNumber"></label>
-      </stack-layout>
-      <stack-layout>
-        <label [text]="item.address.place"></label>
-        <label [text]="item.address.suburb.name"></label>
-      </stack-layout>
+      <label>
+        <FormattedString>
+          <span [text]="item.address.street + ' '"></span>
+          <span [text]="item.address.houseNumber"></span>
+        </FormattedString>
+      </label>
+      <label>
+        <FormattedString>
+          <span [text]="item.address.place + ' '"></span>
+          <span [text]="item.address.suburb.name"></span>
+        </FormattedString>
+      </label>
     </stack-layout>
     <grid-layout class="card-image">
       <ng-container *ngIf="item.images?.length">
@@ -24,12 +28,12 @@
         (tap)="router.navigate(['/organisations', item.id])">
       </label>
     </stack-layout>
-    <stack-layout
-      class="card-actions"
-      ios:style="margin-bottom: 8; padding: -1 8 0 8">
-      <details-piece [item]="item"></details-piece>
-      <share-piece [item]="item"></share-piece>
-      <like-piece [item]="item"></like-piece>
-    </stack-layout>
+    <absolute-layout class="card-actions">
+      <stack-layout>
+        <details-piece [item]="item"></details-piece>
+        <share-piece [item]="item"></share-piece>
+        <like-piece [item]="item"></like-piece>
+      </stack-layout>
+    </absolute-layout>
   </stack-layout>
 </grid-layout>

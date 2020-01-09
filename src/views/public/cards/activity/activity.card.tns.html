@@ -1,18 +1,24 @@
 <grid-layout (tap)="router.navigate(['/', 'activities', item.id])">
   <stack-layout [ngStyle]="colors(item.category.color)">
     <stack-layout class="card-content">
-      <stack-layout>
-        <label [text]="item.scheduled?.startDate | date: 'dd.MM.yyyy'"></label>
-        <label [text]="item.scheduled?.startDate | date: 'HH:mm'"></label>
-      </stack-layout>
-      <stack-layout>
-        <label [text]="item.address.street"></label>
-        <label [text]="item.address.houseNumber"></label>
-      </stack-layout>
-      <stack-layout>
-        <label [text]="item.address.place"></label>
-        <label [text]="item.address.suburb.name"></label>
-      </stack-layout>
+      <label>
+        <FormattedString>
+          <span [text]="item.scheduled?.startDate | date: 'dd.MM.yyyy'"></span>
+          <span [text]="item.scheduled?.startDate | date: ' HH:mm'"></span>
+        </FormattedString>
+      </label>
+      <label>
+        <FormattedString>
+          <span [text]="item.address.street + ' '"></span>
+          <span [text]="item.address.houseNumber"></span>
+        </FormattedString>
+      </label>
+      <label>
+        <FormattedString>
+          <span [text]="item.address.place + ' '"></span>
+          <span [text]="item.address.suburb.name"></span>
+        </FormattedString>
+      </label>
       <icon-compat
         android:style="margin-top: -56"
         class="card-image"

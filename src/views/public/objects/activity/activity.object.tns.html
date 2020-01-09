@@ -122,32 +122,34 @@
           </ng-template>
         </expand-compat>
       </ng-container>
-      <expand-compat #schedules
-        class="expand-compat"
-        (changed)="$event && expanded(schedules)">
-        <ng-template #expandHeader>
-          <icon-compat icon="history"></icon-compat>
-          <i18n i18n="@@schedules" unit="schedules"></i18n>
-          <label [text]="'(' + item.schedules.length + ')'"></label>
-        </ng-template>
-        <ng-template #expandContent>
-          <calendar-compat
-            [items]="item.schedules"
-            [name]="item.name"
-            (changed)="schedule = $event">
-          </calendar-compat>
-          <stack-layout class="datetime">
-            <ng-container *ngIf="schedule">
-              <i18n i18n="@@selectedSchedule" unit="selectedSchedule"></i18n>
-              <label [text]="schedule.datetime"></label>
-            </ng-container>
-            <ng-container *ngIf="!schedule">
-              <i18n i18n="@@nextSchedule" unit="nextSchedule"></i18n>
-              <label [text]="item.scheduled?.datetime"></label>
-            </ng-container>
-          </stack-layout>
-        </ng-template>
-      </expand-compat>
+      <ng-container *ngIf="item.schedules">
+        <expand-compat #schedules
+          class="expand-compat"
+          (changed)="$event && expanded(schedules)">
+          <ng-template #expandHeader>
+            <icon-compat icon="history"></icon-compat>
+            <i18n i18n="@@schedules" unit="schedules"></i18n>
+            <label [text]="'(' + item.schedules.length + ')'"></label>
+          </ng-template>
+          <ng-template #expandContent>
+            <calendar-compat
+              [items]="item.schedules"
+              [name]="item.name"
+              (changed)="schedule = $event">
+            </calendar-compat>
+            <stack-layout class="datetime">
+              <ng-container *ngIf="schedule">
+                <i18n i18n="@@selectedSchedule" unit="selectedSchedule"></i18n>
+                <label [text]="schedule.datetime"></label>
+              </ng-container>
+              <ng-container *ngIf="!schedule">
+                <i18n i18n="@@nextSchedule" unit="nextSchedule"></i18n>
+                <label [text]="item.scheduled?.datetime"></label>
+              </ng-container>
+            </stack-layout>
+          </ng-template>
+        </expand-compat>
+      </ng-container>
       <expand-compat #mapview
         class="expand-compat"
         (changed)="$event && reloader(mapview)">

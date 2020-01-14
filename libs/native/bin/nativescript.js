@@ -4,14 +4,15 @@
 const fs = require('fs');
 
 require('nativescript/lib/bootstrap');
+
 const builder = $injector.resolve('nodeModulesDependenciesBuilder');
 const compiler = $injector.resolve('webpackCompilerService');
 
 builder.getProductionDependencies = (root) => {
   const deps = [];
-  const json = JSON.parse(fs.readFileSync(`${root}/package.json`));
+  const json = JSON.parse(fs.readFileSync(`${root}/nsconfig.json`));
 
-  const queue = json.nativescript.packages.map((key) => ({
+  const queue = json.sources.map((key) => ({
     depth: 0,
     name: key,
     parent: null,

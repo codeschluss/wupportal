@@ -43,16 +43,7 @@
     },
     "tns-ios": {
       "version": "6.3.0"
-    },
-    "packages": [
-      "nativescript-angular",
-      "nativescript-geolocation",
-      "nativescript-ng-ripple",
-      "nativescript-social-share",
-      "nativescript-ui-calendar",
-      "nativescript-ui-sidedrawer",
-      "tns-core-modules"
-    ]
+    }
   },
   "android": {
     "markingMode": "none"

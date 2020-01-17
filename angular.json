@@ -21,13 +21,13 @@
             "deleteOutputPath": false,
             "extractCss": true,
             "extractLicenses": false,
+            "index": "res/Web/index.html",
             "main": "src/client.ts",
             "namedChunks": false,
             "ngswConfigPath": "service.json",
-            "index": "res/Web/index.html",
-            "polyfills": "src/utils/polyfills.ts",
             "outputHashing": "none",
             "outputPath": "target/@wooportal/client",
+            "polyfills": "src/utils/polyfills.ts",
             "serviceWorker": true,
             "sourceMap": true,
             "tsConfig": "tsconfig.json",
@@ -145,6 +145,31 @@
           "options": {
             "tsConfig": "tsconfig.json",
             "project": "libs/core/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@wooportal/editor": {
+      "root": "libs/editor",
+      "sourceRoot": "libs/editor",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-webpack:webpack",
+          "options": {
+            "webpackConfig": "libs/editor/conf/webpack.js"
           }
         },
         "lint": {

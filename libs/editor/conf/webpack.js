@@ -43,6 +43,7 @@ module.exports = {
           options: {
             onlyCompileBundledFiles: true,
             compilerOptions: {
+              declaration: false,
               outDir: `${process.env.PWD}/target/@wooportal/editor`,
               target: 'es6'
             }

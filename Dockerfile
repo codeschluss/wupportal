@@ -88,7 +88,7 @@ npm install && \
 npm run build:lib && \
 npm run build:app && \
 npm run build:ssr && \
-npm prune --production && \
+npm run undev && \
 mv /tmp/phase_0/client.apk target/@wooportal/client && \
 #
 # cleanup

@@ -118,16 +118,8 @@
             },
             "fileReplacements": [
               {
-                "replace": "src/views/maps/maps.component.ts",
-                "with": "src/views/maps/maps.mockup.ts"
-              },
-              {
-                "replace": "src/views/maps/maps.module.ts",
-                "with": "src/views/maps/maps.mockup.ts"
-              },
-              {
-                "replace": "src/views/maps/maps.router.ts",
-                "with": "src/views/maps/maps.mockup.ts"
+                "replace": "src/client.router.ts",
+                "with": "src/server.router.ts"
               }
             ]
           }
@@ -196,6 +188,32 @@
           "options": {
             "tsConfig": "tsconfig.json",
             "project": "libs/forms/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@wooportal/native": {
+      "root": "libs/native",
+      "sourceRoot": "libs/native",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "tsconfig.json",
+            "project": "libs/native/ng-package.json"
           }
         },
         "lint": {

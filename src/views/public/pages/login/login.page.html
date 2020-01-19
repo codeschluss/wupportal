@@ -22,7 +22,7 @@
         <mat-label>
           <i18n i18n="@@password">password</i18n>
         </mat-label>
-        <input #input matInput
+        <input matInput
           type="password"
           [formControl]="password"
           (keydown.enter)="valid && login()">

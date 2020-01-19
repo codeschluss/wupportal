@@ -16,7 +16,7 @@
     "email": "info@codeschluss.de",
     "url": "https://github.com/wooportal/client/issues"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "@angular-devkit/build-ng-packagr": "0.803.23",
     "@angular/animations": "8.2.14",
     "@angular/cdk": "8.2.3",
@@ -31,8 +31,7 @@
     "@wooportal/core": "0.1.1",
     "ng-packagr": "5.7.1",
     "rxjs": "6.5.4",
-    "tsickle": "0.38.0",
-    "tslib": "1.10.0",
+    "tsickle": "0.37.0",
     "typescript": "3.5.3"
   }
 }

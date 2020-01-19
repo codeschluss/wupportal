@@ -18,14 +18,6 @@
   },
   "config": {
     "language": "en",
-    "image": {
-      "toolbar": [
-        "imageStyle:full",
-        "imageStyle:side",
-        "|",
-        "imageTextAlternative"
-      ]
-    },
     "table": {
       "contentToolbar": [
         "tableColumn",
@@ -42,6 +34,7 @@
         "bold",
         "italic",
         "underline",
+        "code",
         "|",
         "strikethrough",
         "subscript",
@@ -63,7 +56,7 @@
       ]
     }
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "@angular-devkit/build-webpack": "0.803.23",
     "@ckeditor/ckeditor5-alignment": "16.0.0",
     "@ckeditor/ckeditor5-angular": "1.1.2",
@@ -86,11 +79,7 @@
     "@ckeditor/ckeditor5-table": "16.0.0",
     "@ckeditor/ckeditor5-theme-lark": "16.0.0",
     "postcss-loader": "3.0.0",
-    "raw-loader": "4.0.0",
-    "style-loader": "1.1.2",
-    "terser-webpack-plugin": "2.3.2",
     "ts-loader": "6.2.1",
-    "typescript": "3.5.3",
-    "webpack": "4.41.5"
+    "typescript": "3.5.3"
   }
 }

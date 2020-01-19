@@ -31,7 +31,7 @@ export class MapsComponent
   }
 
   public ngOnInit(): void {
-    geolocation.enableLocationRequest().catch(() => null);
+    geolocation.enableLocationRequest().catch(() => { });
   }
 
   public ngAfterViewInit(): void {

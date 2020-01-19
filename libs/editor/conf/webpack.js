@@ -4,10 +4,6 @@ const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const SourceMapDevToolPlugin = require('webpack/lib/SourceMapDevToolPlugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const { BuildOptimizerWebpackPlugin } = require('@angular-devkit/build-optimizer/src/build-optimizer/webpack-plugin');
-const { CleanCssWebpackPlugin } = require('@angular-devkit/build-angular/src/angular-cli-files/plugins/cleancss-webpack-plugin');
-const { SuppressExtractedTextChunksWebpackPlugin } = require('@angular-devkit/build-angular/src/angular-cli-files/plugins/suppress-entry-chunks-webpack-plugin');
-
 module.exports = {
   entry: `${__dirname}/../index.ts`,
   mode: 'production',
@@ -59,9 +55,6 @@ module.exports = {
   optimization: {
     noEmitOnErrors: true,
     minimizer: [
-      new CleanCssWebpackPlugin({
-        sourceMap: true
-      }),
       new TerserPlugin({
         cache: true,
         extractComments: false,
@@ -98,9 +91,8 @@ module.exports = {
   },
 
   plugins: [
-    new BuildOptimizerWebpackPlugin(),
     new CKEditorPlugin({
-      language: require('./editor.js').language
+      language: require('../package.json').config.language
     }),
     new ProgressPlugin({
       profile: false
@@ -109,8 +101,7 @@ module.exports = {
       filename: '[file].map',
       moduleFilenameTemplate: '[resource-path]',
       sourceRoot: 'webpack:///'
-    }),
-    new SuppressExtractedTextChunksWebpackPlugin()
+    })
   ],
 
   resolve: {

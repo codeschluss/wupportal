@@ -16,10 +16,50 @@
     "email": "info@codeschluss.de",
     "url": "https://github.com/wooportal/client/issues"
   },
+  "config": {
+    "language": "en",
+    "image": {
+      "toolbar": [
+        "imageStyle:full",
+        "imageStyle:side",
+        "|",
+        "imageTextAlternative"
+      ]
+    },
+    "table": {
+      "contentToolbar": [
+        "tableColumn",
+        "tableRow",
+        "mergeTableCells"
+      ]
+    },
+    "toolbar": {
+      "items": [
+        "heading",
+        "blockQuote",
+        "alignment",
+        "|",
+        "bold",
+        "italic",
+        "underline",
+        "strikethrough",
+        "|",
+        "bulletedList",
+        "numberedList",
+        "indent",
+        "outdent",
+        "|",
+        "link",
+        "|",
+        "undo",
+        "redo"
+      ]
+    }
+  },
   "peerDependencies": {
-    "@angular-devkit/build-angular": "0.803.23",
     "@angular-devkit/build-webpack": "0.803.23",
     "@ckeditor/ckeditor5-alignment": "16.0.0",
+    "@ckeditor/ckeditor5-angular": "1.1.2",
     "@ckeditor/ckeditor5-basic-styles": "16.0.0",
     "@ckeditor/ckeditor5-block-quote": "16.0.0",
     "@ckeditor/ckeditor5-core": "16.0.0",

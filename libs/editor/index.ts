@@ -1,1 +1,1 @@
-export * from './source/editor';
+export * from './main/editor';

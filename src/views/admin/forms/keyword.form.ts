@@ -31,9 +31,7 @@ export class KeywordFormComponent
     },
     {
       name: 'description',
-      input: StringFieldComponent,
-      multi: true,
-      tests: [Validators.required]
+      input: StringFieldComponent
     }
   ];
 

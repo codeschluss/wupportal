@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Box, TokenProvider } from '@wooportal/core';
-import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
+import { BaseForm, EditorFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityModel } from '../../../realm/models/activity.model';
@@ -47,8 +47,7 @@ export class BlogpostFormComponent
     },
     {
       name: 'content',
-      input: StringFieldComponent,
-      multi: true,
+      input: EditorFieldComponent,
       tests: [Validators.required]
     }
   ];

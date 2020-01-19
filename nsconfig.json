@@ -2,5 +2,14 @@
   "appPath": "src",
   "appResourcesPath": "res",
   "nsext": ".tns",
-  "shared": true
+  "shared": true,
+  "sources": [
+    "nativescript-angular",
+    "nativescript-geolocation",
+    "nativescript-ng-ripple",
+    "nativescript-social-share",
+    "nativescript-ui-calendar",
+    "nativescript-ui-sidedrawer",
+    "tns-core-modules"
+  ]
 }

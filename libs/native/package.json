@@ -20,6 +20,6 @@
     "ns": "bin/nativescript.js"
   },
   "peerDependencies": {
-    "nativescript": "6.3.0"
+    "nativescript": "6.3.3"
   }
 }

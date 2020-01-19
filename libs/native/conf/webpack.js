@@ -1,5 +1,6 @@
 const fs = require('fs');
-const webpackCopyPlugin = require('copy-webpack-plugin');
+
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env) => {
   __dirname = process.env.PWD;
@@ -15,7 +16,7 @@ module.exports = (env) => {
       .replace('tsconfig.tns.json', 'tsconfig.json')
   )(env);
 
-  webpack.plugins.push(new webpackCopyPlugin([
+  webpack.plugins.push(new CopyPlugin([
     {
       from: `${modules}/${webfonts}/fa-brands-400.ttf`,
       to: 'fonts'

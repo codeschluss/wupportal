@@ -1,18 +1,16 @@
-import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { PlatformProvider } from '@wooportal/core';
-import * as marked from 'marked';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { MarkedCompat } from './marked.compat.i';
 
 @Component({
   selector: 'marked-compat',
   template: `
-    <WebView #webview margin="-8" [src]="html"></WebView>
+    <WebView #webview margin="-8" [src]="data"></WebView>
   `
 })
 
-export class MarkedCompatComponent
-  implements MarkedCompat, OnInit, AfterViewInit {
+export class MarkedCompatComponent implements MarkedCompat, AfterViewInit {
 
   @HostBinding('attr.compat')
   public readonly compat: string = 'marked';
@@ -20,19 +18,12 @@ export class MarkedCompatComponent
   @Input()
   public data: string;
 
-  public html: string;
-
   @ViewChild('webview', { read: ElementRef, static: true })
   private webview: ElementRef<WebView>;
 
   public constructor(
     private platformProvider: PlatformProvider
   ) { }
-
-  public ngOnInit() {
-    this.html = '<style>body{font-family:sans-serif;}</style>'
-      + marked(this.data || '');
-  }
 
   public ngAfterViewInit(): void {
     let wv = this.webview.nativeElement as any;

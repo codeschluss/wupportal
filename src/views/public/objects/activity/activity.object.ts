@@ -81,7 +81,7 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
       let wv = this.webview.nativeElement as any;
 
       // tslint:disable-next-line
-      if(!wv.nativeView){return wv.once('loaded',()=>this.ngAfterViewInit());}
+      if(!wv.nativeView){return wv.once('loaded',()=>this.ngPostViewInit());}
       // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
 
       switch (this.platformProvider.name) {

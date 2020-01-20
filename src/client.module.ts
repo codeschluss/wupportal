@@ -1,6 +1,7 @@
+import { NoopScrollStrategy as ScrollStrategy } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { MatMenuModule } from '@angular/material/menu';
+import { MAT_MENU_SCROLL_STRATEGY } from '@angular/material/menu';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -34,12 +35,10 @@ import { ClientPackage } from './utils/package';
     HttpClientModule,
     RealmModule,
     TransferHttpCacheModule
-
-    // TODO: remove
-    , MatMenuModule
   ],
   providers: [
-    { provide: ErrorHandler, useClass: ClientErrorHandler }
+    { provide: ErrorHandler, useClass: ClientErrorHandler },
+    { provide: MAT_MENU_SCROLL_STRATEGY, useValue: () => new ScrollStrategy() }
   ]
 })
 

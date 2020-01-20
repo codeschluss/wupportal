@@ -147,7 +147,7 @@ export class PlatformProvider implements Compat {
         store.removeDataOfTypesModifiedSinceCompletionHandler(
           WKWebsiteDataStore.allWebsiteDataTypes(),
           NSDate.dateWithTimeIntervalSince1970(0),
-          () => null
+          () => { }
         );
         exit(0);
         break;

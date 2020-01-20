@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import * as marked from 'marked';
 import { BlogpostModel } from '../../../../realm/models/blogpost.model';
 import { BaseCard } from '../base.card';
 
@@ -12,8 +11,8 @@ import { BaseCard } from '../base.card';
 export class BlogpostCardComponent extends BaseCard<BlogpostModel> {
 
   public get preview(): string {
-    const preview = marked(this.item.content)
-      .replace(/&#\d+;/g, (i) => String.fromCharCode(i.match(/\d+/g)[0]))
+    const preview = this.item.content
+      .replace(/&#\d+;/g, (i) => String.fromCharCode(i.match(/\d+/g)[0] as any))
       .replace(/<[^>]*>/g, '').replace(/\s+/g, ' ');
 
     return preview.length > 500

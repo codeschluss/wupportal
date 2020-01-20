@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { Box, Headers, TokenProvider } from '@wooportal/core';
+import { Box, Headers, PlatformProvider, TokenProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, filter, map, take } from 'rxjs/operators';
 import { UserProvider } from '../../../../realm/providers/user.provider';
@@ -12,7 +13,8 @@ import { BasePage } from '../base.page';
   templateUrl: 'login.page.html'
 })
 
-export class LoginPageComponent extends BasePage implements OnInit {
+export class LoginPageComponent extends BasePage
+  implements OnInit, AfterViewInit {
 
   public email: FormControl = new FormControl(null, [
     Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
@@ -29,27 +31,32 @@ export class LoginPageComponent extends BasePage implements OnInit {
 
   protected path: string = 'login';
 
-  @ViewChild('input', { read: ElementRef, static: true })
-  private input: ElementRef<HTMLElement>;
+  @ViewChildren(MatInput)
+  private inputs: QueryList<MatInput>;
+
+  public get disabled(): boolean {
+    return this.platformProvider.name === 'Server'
+      || /MSIE|Trident/.test(navigator.userAgent);
+  }
 
   public get name(): Observable<string> {
     return this.headers.name;
   }
 
   public get registerable(): boolean {
-    return true
+    return !this.disabled
       && !this.email.value
       && !this.password.value;
   }
 
   public get resetable(): boolean {
-    return true
+    return !this.disabled
       && this.email.valid
       && !this.password.value;
   }
 
   public get valid(): boolean {
-    return true
+    return !this.disabled
       && this.email.valid
       && this.password.valid;
   }
@@ -57,6 +64,7 @@ export class LoginPageComponent extends BasePage implements OnInit {
   public constructor(
     private headers: Headers,
     private router: Router,
+    private platformProvider: PlatformProvider,
     private tokenProvider: TokenProvider,
     private userProvider: UserProvider
   ) {
@@ -64,18 +72,29 @@ export class LoginPageComponent extends BasePage implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.tokenProvider.value.pipe(
-      take(1),
-      map((tokens) => tokens.access.id),
-      filter(Boolean)
-    ).subscribe((id) => this.router.navigate(['/', 'admin', 'account', id]));
+    if (this.disabled) {
+      this.email.disable();
+      this.password.disable();
+    } else {
+      this.tokenProvider.value.pipe(
+        take(1),
+        map((tokens) => tokens.access.id),
+        filter(Boolean)
+      ).subscribe((id) => this.router.navigate(['/', 'admin', 'account', id]));
+    }
+  }
+
+  public ngAfterViewInit(): void {
+    if (!this.disabled) {
+      this.inputs.first.focus();
+    }
   }
 
   public login(): void {
     this.tokenProvider.login(this.email.value, this.password.value).pipe(
       map((tokens) => tokens.access.id),
       catchError(() => {
-        this.input.nativeElement.focus();
+        this.inputs.last.focus();
         this.password.patchValue(null);
         return EMPTY;
       })
@@ -90,7 +109,7 @@ export class LoginPageComponent extends BasePage implements OnInit {
       })
     ).subscribe(() => {
       (event.target as HTMLButtonElement).disabled = true;
-      this.input.nativeElement.focus();
+      this.inputs.last.focus();
       this.password.reset();
     });
   }

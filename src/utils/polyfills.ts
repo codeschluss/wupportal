@@ -37,27 +37,6 @@ import 'core-js/es/symbol';
 import 'core-js/es/weak-map';
 
 /*
- * Classlist.js
- * IE10 and IE11 requires the following for NgClass support on SVG elements
- */
-import 'classlist.js';
-
-/*
- * Web Animations
- * Only required if AnimationBuilder is used within the application and using
- * IE/Edge or Safari. Standard animation support in Angular DOES NOT require
- * any polyfills (as of Angular 6.0).
- */
-import 'web-animations-js';
-
-/*
- * Hammer.js
- * Some components rely on HammerJS for gestures. In order to get the full
- * feature-set of these components, HammerJS must be loaded.
- */
-import 'hammerjs';
-
-/*
  * ZoneJS
  * By default, ZoneJS is required for Angular and included with Angular CLI.
  */

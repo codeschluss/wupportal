@@ -16,23 +16,23 @@
     "email": "info@codeschluss.de",
     "url": "https://github.com/wooportal/client/issues"
   },
-  "peerDependencies": {
-    "@angular-devkit/build-ng-packagr": "0.803.21",
+  "optionalDependencies": {
+    "@angular-devkit/build-ng-packagr": "0.803.23",
     "@angular/animations": "8.2.14",
     "@angular/cdk": "8.2.3",
     "@angular/common": "8.2.14",
-    "@angular/cli": "8.3.21",
+    "@angular/cli": "8.3.23",
     "@angular/compiler": "8.2.14",
     "@angular/compiler-cli": "8.2.14",
     "@angular/core": "8.2.14",
     "@angular/forms": "8.2.14",
     "@angular/material": "8.2.3",
-    "@angular/platform-browser": "8.2.14",
+    "@angular/router": "8.2.14",
+    "@ckeditor/ckeditor5-angular": "1.1.2",
     "@wooportal/core": "0.1.1",
     "ng-packagr": "5.7.1",
-    "rxjs": "6.5.3",
-    "tsickle": "0.37.1",
-    "tslib": "1.10.0",
+    "rxjs": "6.5.4",
+    "tsickle": "0.37.0",
     "typescript": "3.5.3"
   }
 }

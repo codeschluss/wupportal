@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Box, TokenProvider } from '@wooportal/core';
-import { BaseForm, ChipListFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@wooportal/forms';
+import { BaseForm, ChipListFieldComponent, EditorFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ActivityModel } from '../../../realm/models/activity.model';
@@ -90,8 +90,7 @@ export class ActivityFormComponent
     },
     {
       name: 'description',
-      input: StringFieldComponent,
-      multi: true,
+      input: EditorFieldComponent,
       tests: [Validators.required]
     },
     {

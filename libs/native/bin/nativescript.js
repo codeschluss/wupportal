@@ -4,14 +4,16 @@
 const fs = require('fs');
 
 require('nativescript/lib/bootstrap');
+
 const builder = $injector.resolve('nodeModulesDependenciesBuilder');
 const compiler = $injector.resolve('webpackCompilerService');
+const migrator = $injector.resolve('migrateController');
 
 builder.getProductionDependencies = (root) => {
   const deps = [];
-  const json = JSON.parse(fs.readFileSync(`${root}/package.json`));
+  const json = JSON.parse(fs.readFileSync(`${root}/nsconfig.json`));
 
-  const queue = json.nativescript.packages.map((key) => ({
+  const queue = json.sources.map((key) => ({
     depth: 0,
     name: key,
     parent: null,
@@ -71,6 +73,10 @@ compiler.startWebpackProcess = async (platform, proj, prep) => {
   compiler.webpackProcesses[platform.platformNameLowerCase] = proc;
   await compiler.$cleanupService.addKillProcess(proc.pid.toString());
   return proc;
+};
+
+migrator.shouldMigrate = async () => {
+  return false;
 };
 
 require('nativescript/lib/nativescript-cli');

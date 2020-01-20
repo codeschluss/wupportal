@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Box, TokenProvider } from '@wooportal/core';
-import { BaseForm, FormField, StringFieldComponent, Tests, UrlFieldComponent } from '@wooportal/forms';
+import { BaseForm, EditorFieldComponent, FormField, StringFieldComponent, Tests, UrlFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OrganisationModel } from '../../../realm/models/organisation.model';
@@ -49,8 +49,7 @@ export class OrganisationFormComponent
     },
     {
       name: 'description',
-      input: StringFieldComponent,
-      multi: true,
+      input: EditorFieldComponent,
       tests: [Validators.required]
     },
     {

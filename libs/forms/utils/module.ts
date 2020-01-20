@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule as StaticFormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -14,10 +14,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CoreModule } from '@wooportal/core';
 import { BaseFieldComponent } from '../base/base.field';
 import { BooleanFieldComponent } from '../fields/boolean.field';
 import { ChipListFieldComponent } from '../fields/chip-list.field';
+import { EditorFieldComponent } from '../fields/editor.field';
 import { SelectFieldComponent } from '../fields/select.field';
 import { StringFieldComponent } from '../fields/string.field';
 import { UrlFieldComponent } from '../fields/url.field';
@@ -31,12 +33,14 @@ const declarations: Type<any>[] = [
 const fields: Type<BaseFieldComponent>[] = [
   BooleanFieldComponent,
   ChipListFieldComponent,
+  EditorFieldComponent,
   SelectFieldComponent,
   StringFieldComponent,
   UrlFieldComponent
 ];
 
 const materials: Type<any>[] = [
+  CKEditorModule,
   MatAutocompleteModule,
   MatButtonModule,
   MatChipsModule,
@@ -49,7 +53,8 @@ const materials: Type<any>[] = [
   MatSortModule,
   MatTableModule,
   MatTabsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  StaticFormsModule
 ];
 
 @NgModule({

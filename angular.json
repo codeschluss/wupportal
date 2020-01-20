@@ -21,13 +21,13 @@
             "deleteOutputPath": false,
             "extractCss": true,
             "extractLicenses": false,
+            "index": "res/Web/index.html",
             "main": "src/client.ts",
             "namedChunks": false,
             "ngswConfigPath": "service.json",
-            "index": "res/Web/index.html",
-            "polyfills": "src/utils/polyfills.ts",
             "outputHashing": "none",
             "outputPath": "target/@wooportal/client",
+            "polyfills": "src/utils/polyfills.ts",
             "serviceWorker": true,
             "sourceMap": true,
             "tsConfig": "tsconfig.json",
@@ -118,16 +118,8 @@
             },
             "fileReplacements": [
               {
-                "replace": "src/views/maps/maps.component.ts",
-                "with": "src/views/maps/maps.mockup.ts"
-              },
-              {
-                "replace": "src/views/maps/maps.module.ts",
-                "with": "src/views/maps/maps.mockup.ts"
-              },
-              {
-                "replace": "src/views/maps/maps.router.ts",
-                "with": "src/views/maps/maps.mockup.ts"
+                "replace": "src/client.router.ts",
+                "with": "src/server.router.ts"
               }
             ]
           }
@@ -160,6 +152,31 @@
         }
       }
     },
+    "@wooportal/editor": {
+      "root": "libs/editor",
+      "sourceRoot": "libs/editor",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-webpack:webpack",
+          "options": {
+            "webpackConfig": "libs/editor/conf/webpack.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "@wooportal/forms": {
       "root": "libs/forms",
       "sourceRoot": "libs/forms",
@@ -171,6 +188,32 @@
           "options": {
             "tsConfig": "tsconfig.json",
             "project": "libs/forms/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@wooportal/native": {
+      "root": "libs/native",
+      "sourceRoot": "libs/native",
+      "projectType": "library",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "tsconfig.json",
+            "project": "libs/native/ng-package.json"
           }
         },
         "lint": {

@@ -4,6 +4,7 @@ export * from './base/base.stepper';
 export * from './base/base.table';
 export * from './fields/boolean.field';
 export * from './fields/chip-list.field';
+export * from './fields/editor.field';
 export * from './fields/select.field';
 export * from './fields/string.field';
 export * from './fields/url.field';

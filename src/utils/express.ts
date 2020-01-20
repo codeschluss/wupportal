@@ -37,23 +37,22 @@ client.engine.engine('html', ngExpressEngine({
   providers: [engine, provideModuleMap(LAZY_MODULE_MAP)]
 }));
 
-client.engine.use(robots({
-  UserAgent: '*',
-  Disallow: ['/admin', '/login', '/*.js$'],
-  Sitemap: config.defaults.appUrl + config.api.rootUrl + '/sitemap'
-}));
-
 client.engine.set('view engine', 'html');
 client.engine.set('views', `${client.root}/client`);
 
-client.engine.get('*.*', express.static(`${client.root}/client`, {
-  maxAge: '1y'
+client.engine.use(robots({
+  UserAgent: '*',
+  Disallow: ['/*.js$'],
+  Sitemap: config.defaults.appUrl + config.api.rootUrl + '/sitemap'
 }));
 
-client.engine.get('*', (req, res) => {
-  client.request = req;
-  client.response = res;
-  res.render('index', { req });
+client.engine.get('*.*', express.static(`${client.root}/client`, {
+  maxAge: '30d'
+}));
+
+client.engine.get('*', (request, response) => {
+  Object.assign(client, { request, response });
+  response.render('index', { req: request });
 });
 
 client.engine.listen(client.port, () => {

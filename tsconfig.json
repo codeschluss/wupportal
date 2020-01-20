@@ -2,8 +2,8 @@
   "compileOnSave": false,
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
-    "skipTemplateCodegen": true,
     "fullTemplateTypeCheck": true,
+    "skipTemplateCodegen": true,
     "strictInjectionParameters": true
   },
   "compilerOptions": {

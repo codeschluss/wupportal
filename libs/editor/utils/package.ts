@@ -1,6 +1,6 @@
-import * as packageJson from '@wooportal/core/package.json';
+import * as packageJson from '@wooportal/editor/package.json';
 
-export class CorePackage {
+export class EditorPackage {
 
   public static readonly author: {
     name: string,
@@ -12,6 +12,12 @@ export class CorePackage {
     email: string,
     url: string
   } = packageJson.bugs;
+
+  public static readonly config: {
+    language: string,
+    toolbar: object,
+    [key: string]: any
+  } = packageJson.config;
 
   public static readonly repository: {
     type: string,

@@ -74,4 +74,5 @@ compiler.startWebpackProcess = async (platform, proj, prep) => {
   return proc;
 };
 
+process.argv.splice(process.argv.length, 0, '--force');
 require('nativescript/lib/nativescript-cli');

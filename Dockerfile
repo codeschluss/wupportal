@@ -21,7 +21,6 @@ apt-get -qqy install --no-install-recommends ${TMPKG:= \
 #
 # buildenv
 . /etc/lsb-release && \
-export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::") && \
 #
 # nodejs
 wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key \
@@ -47,6 +46,7 @@ tools/bin/sdkmanager \
 export \
   ANDROID_HOME="$PWD" \
   ANDROID_NDK_HOME="$PWD/ndk/$(ls ndk)" \
+  JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::") \
   PATH="$PATH:$PWD/tools:$PWD/platform-tools" && \
 #
 # wooportal.client

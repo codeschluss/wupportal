@@ -54,7 +54,6 @@
     "lint": "ng lint",
     "clean": "git clean -dfX",
     "start": "npm run start:app",
-    "undev": "npm ci --no-optional --only=prod",
     "build:api": "ng-swagger-gen -c swagger.json",
     "build:app": "ng build --prod @wooportal/client",
     "build:ios": "ns platform add ios ||:&& ns build ios",

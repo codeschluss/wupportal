@@ -95,14 +95,12 @@ module.exports = {
     new CKEditorPlugin({
       language: require('../package.json').config.language
     }),
-    new ProgressPlugin({
-      profile: false
-    }),
     new SourceMapDevToolPlugin({
       filename: '[file].map',
       moduleFilenameTemplate: '[resource-path]',
       sourceRoot: 'webpack:///'
-    })
+    }),
+    ...(process.stderr.isTTY ? [new ProgressPlugin()] : [])
   ],
 
   resolve: {

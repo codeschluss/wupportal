@@ -60,8 +60,7 @@ npm run -- build:oid \
   --key-store-password=password \
   --key-store-path=res/Android/dev.keystore \
   --release && \
-mkdir /phase_0 && \
-mv $(find platforms/android -name "*.apk") /phase_0/client.apk && \
+mv $(find platforms/android -name "*.apk") /client.apk && \
 #
 # cleanup
 apt-get -qqy clean all && \
@@ -69,17 +68,16 @@ apt-get -qqy purge --autoremove $TMPKG nodejs && \
 find /root /tmp /var/lib/apt/lists -mindepth 1 -delete
 #
 # PHASE 1
-FROM alpine:latest
+FROM alpine:edge
 LABEL maintainer info@codeschluss.de
 ADD / /opt/wooportal.client
-COPY --from=0 /phase_0/client.apk /tmp/phase_0/client.apk
+COPY --from=0 /client.apk /tmp/client.apk
 RUN \
 #
 # packages
 apk --no-cache add \
   nodejs && \
 apk --no-cache --virtual build add \
-  bash \
   nodejs-npm && \
 #
 # wooportal.client
@@ -88,8 +86,8 @@ npm install && \
 npm run build:lib && \
 npm run build:app && \
 npm run build:ssr && \
-npm run undev && \
-mv /tmp/phase_0/client.apk target/@wooportal/client && \
+npm clean-install --no-optional --only=production && \
+mv /tmp/client.apk target/@wooportal/client && \
 #
 # cleanup
 apk del --purge build && \

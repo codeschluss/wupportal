@@ -7,6 +7,7 @@ require('nativescript/lib/bootstrap');
 
 const builder = $injector.resolve('nodeModulesDependenciesBuilder');
 const compiler = $injector.resolve('webpackCompilerService');
+const migrator = $injector.resolve('migrateController');
 
 builder.getProductionDependencies = (root) => {
   const deps = [];
@@ -74,5 +75,8 @@ compiler.startWebpackProcess = async (platform, proj, prep) => {
   return proc;
 };
 
-process.argv.splice(process.argv.length, 0, '--force');
+migrator.shouldMigrate = async () => {
+  return false;
+};
+
 require('nativescript/lib/nativescript-cli');

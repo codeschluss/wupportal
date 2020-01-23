@@ -3,8 +3,13 @@ import { MarkedCompat } from './marked.compat.i';
 
 @Component({
   selector: 'marked-compat',
+  styles: [`
+    div {
+      font-family: sans-serif;
+    }
+  `],
   template: `
-    <div [innerHTML]="data"></div>
+    <div [innerHTML]="html"></div>
   `
 })
 
@@ -15,5 +20,9 @@ export class MarkedCompatComponent implements MarkedCompat {
 
   @Input()
   public data: string;
+
+  public get html(): string {
+    return this.data;
+  }
 
 }

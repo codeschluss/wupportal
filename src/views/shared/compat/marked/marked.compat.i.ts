@@ -4,4 +4,6 @@ export interface MarkedCompat {
 
   data: string;
 
+  html: string;
+
 }

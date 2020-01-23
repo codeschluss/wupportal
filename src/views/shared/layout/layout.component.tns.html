@@ -4,8 +4,8 @@
       <stack-layout>
         <activity-indicator [busy]="busy | async"></activity-indicator>
         <grid-layout
-          android:style="margin-right: 8"
-          ios:style="margin-right: -16">
+          android:style="margin-right: 8;"
+          ios:style="margin-right: -16;">
           <icon-compat ripple
             [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'"
             (tap)="drawer.toggle()">

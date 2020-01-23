@@ -6,7 +6,7 @@ import { MarkedCompat } from './marked.compat.i';
 @Component({
   selector: 'marked-compat',
   template: `
-    <WebView #webview margin="-8" [src]="data"></WebView>
+    <WebView #webview margin="-8" [src]="html"></WebView>
   `
 })
 
@@ -17,6 +17,10 @@ export class MarkedCompatComponent implements MarkedCompat, AfterViewInit {
 
   @Input()
   public data: string;
+
+  public get html(): string {
+    return '<style>body{font-family:sans-serif;}</style>' + this.data;
+  }
 
   @ViewChild('webview', { read: ElementRef, static: true })
   private webview: ElementRef<WebView>;

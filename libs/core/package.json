@@ -17,9 +17,9 @@
     "url": "https://github.com/wooportal/client/issues"
   },
   "optionalDependencies": {
-    "@angular-devkit/build-ng-packagr": "0.803.23",
+    "@angular-devkit/build-ng-packagr": "0.803.24",
     "@angular/common": "8.2.14",
-    "@angular/cli": "8.3.23",
+    "@angular/cli": "8.3.24",
     "@angular/compiler": "8.2.14",
     "@angular/compiler-cli": "8.2.14",
     "@angular/core": "8.2.14",

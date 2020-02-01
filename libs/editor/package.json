@@ -57,8 +57,8 @@
     }
   },
   "optionalDependencies": {
-    "@angular-devkit/build-webpack": "0.803.23",
-    "@angular/cli": "8.3.23",
+    "@angular-devkit/build-webpack": "0.803.24",
+    "@angular/cli": "8.3.24",
     "@angular/core": "8.2.14",
     "@ckeditor/ckeditor5-alignment": "16.0.0",
     "@ckeditor/ckeditor5-angular": "1.1.2",
@@ -66,8 +66,8 @@
     "@ckeditor/ckeditor5-block-quote": "16.0.0",
     "@ckeditor/ckeditor5-code-block": "16.0.0",
     "@ckeditor/ckeditor5-core": "16.0.0",
-    "@ckeditor/ckeditor5-dev-utils": "12.0.6",
-    "@ckeditor/ckeditor5-dev-webpack-plugin": "8.0.6",
+    "@ckeditor/ckeditor5-dev-utils": "12.0.7",
+    "@ckeditor/ckeditor5-dev-webpack-plugin": "8.0.7",
     "@ckeditor/ckeditor5-editor-inline": "16.0.0",
     "@ckeditor/ckeditor5-essentials": "16.0.0",
     "@ckeditor/ckeditor5-font": "16.0.0",

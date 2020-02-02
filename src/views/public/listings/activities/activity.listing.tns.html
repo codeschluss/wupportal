@@ -1,12 +1,12 @@
 <scroll-view class="topoff">
   <stack-layout>
-    <select-compat
+    <select-component
       [formControl]="suburbCtrl"
       [items]="suburbs"
       [multiple]="true">
       <absolute-layout ripple>
         <stack-layout [ngClass]="{ float: suburbCtrl.value?.length }">
-          <icon-compat icon="city"></icon-compat>
+          <icon-component icon="city"></icon-component>
           <i18n i18n="@@suburbs" unit="suburbs"></i18n>
         </stack-layout>
         <flexbox-layout>
@@ -14,14 +14,14 @@
           <grid-layout></grid-layout>
         </flexbox-layout>
       </absolute-layout>
-    </select-compat>
-    <select-compat
+    </select-component>
+    <select-component
       [formControl]="targetGroupCtrl"
       [items]="targetGroups"
       [multiple]="true">
       <absolute-layout ripple>
         <stack-layout [ngClass]="{ float: targetGroupCtrl.value?.length }">
-          <icon-compat icon="users"></icon-compat>
+          <icon-component icon="users"></icon-component>
           <i18n i18n="@@targetGroups" unit="targetGroups"></i18n>
         </stack-layout>
         <flexbox-layout>
@@ -29,7 +29,7 @@
           <grid-layout></grid-layout>
         </flexbox-layout>
       </absolute-layout>
-    </select-compat>
+    </select-component>
     <flexbox-layout>
       <ng-container *ngFor="let item of categories; let i = index">
         <stack-layout ripple
@@ -44,7 +44,7 @@
       <stack-layout ripple
         [visibility]="blank || categories.length < 5 ? 'visible' : 'collapse'"
         (tap)="blank = false">
-        <icon-compat icon="ellipsis-h"></icon-compat>
+        <icon-component icon="ellipsis-h"></icon-component>
       </stack-layout>
     </flexbox-layout>
     <ng-container *ngFor="let item of items | async">
@@ -53,7 +53,7 @@
       </grid-layout>
     </ng-container>
     <ng-container *ngIf="next || prev">
-      <pager-compat [next]="next" [prev]="prev"></pager-compat>
+      <pager-component [next]="next" [prev]="prev"></pager-component>
     </ng-container>
   </stack-layout>
 </scroll-view>

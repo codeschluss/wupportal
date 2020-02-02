@@ -1,9 +1,9 @@
 import { HostBinding, Input } from '@angular/core';
 import { CrudModel } from '@wooportal/core';
-import { ActivityModel } from '../../../realm/models/activity.model';
-import { BlogpostModel } from '../../../realm/models/blogpost.model';
-import { InfopageModel } from '../../../realm/models/infopage.model';
-import { OrganisationModel } from '../../../realm/models/organisation.model';
+import { ActivityModel } from '../../../base/models/activity.model';
+import { BlogpostModel } from '../../../base/models/blogpost.model';
+import { InfopageModel } from '../../../base/models/infopage.model';
+import { OrganisationModel } from '../../../base/models/organisation.model';
 
 export abstract class BasePiece {
 

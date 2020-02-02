@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BaseTable, TableColumn } from '@wooportal/forms';
-import { TopicModel } from '../../../realm/models/topic.model';
+import { TopicModel } from '../../../base/models/topic.model';
+import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
   selector: 'topic-table',

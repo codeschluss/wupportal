@@ -11,7 +11,7 @@ export class PositionProvider {
   ) { }
 
   public locate(): Observable<Coordinates> {
-    return this.positionService.navigatorPositionResponse().pipe(
+    return this.positionService.frontendPositionResponse().pipe(
       map((response) => response ? response.coords : null));
   }
 

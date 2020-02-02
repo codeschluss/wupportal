@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { ActivityModel } from '../../../../realm/models/activity.model';
-import { MembershipModel } from '../../../../realm/models/membership.model';
-import { OrganisationModel } from '../../../../realm/models/organisation.model';
-import { BasePanel } from '../base.panel';
+import { ActivityModel } from '../../../../base/models/activity.model';
+import { MembershipModel } from '../../../../base/models/membership.model';
+import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { BasePanel } from '../../base/base.panel';
 
 @Component({
   templateUrl: './organisation.panel.html'

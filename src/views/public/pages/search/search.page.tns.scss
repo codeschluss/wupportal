@@ -17,8 +17,8 @@ scroll-view {
       }
     }
 
-    & > .expand-compat {
-      & + .expand-compat {
+    & > .expand-component {
+      & + .expand-component {
         margin-top: rem(1);
       }
 

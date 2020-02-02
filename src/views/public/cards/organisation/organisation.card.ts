@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OrganisationModel } from '../../../../realm/models/organisation.model';
+import { OrganisationModel } from '../../../../base/models/organisation.model';
 import { BaseCard } from '../base.card';
 
 @Component({

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AuthTokens } from '../utils/api';
+import { AuthTokens } from '../tools/api';
 import { TokenProvider } from './token.provider';
 
 @Injectable({ providedIn: 'root' })

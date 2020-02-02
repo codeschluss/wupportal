@@ -4,9 +4,9 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { CrudJoiner, CrudResolver, Headers, TokenProvider } from '@wooportal/core';
 import { merge, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { OrganisationModel } from '../../../../realm/models/organisation.model';
-import { UserModel } from '../../../../realm/models/user.model';
-import { UserProvider } from '../../../../realm/providers/user.provider';
+import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { UserModel } from '../../../../base/models/user.model';
+import { UserProvider } from '../../../../base/providers/user.provider';
 import { BasePage } from '../base.page';
 
 @Component({

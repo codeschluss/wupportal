@@ -1,36 +1,31 @@
 import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
-import { CoreModule, PlatformRouterModule } from '@wooportal/core';
-import { NativeScriptCommonModule as PlatformCommonModule } from 'nativescript-angular/common';
+import { AppRouterModule } from '@wooportal/app';
+import { NativeScriptCommonModule as AppCommonModule } from 'nativescript-angular/common';
 import { NgRippleModule } from 'nativescript-ng-ripple';
 import { NativeScriptUICalendarModule } from 'nativescript-ui-calendar/angular/calendar-directives';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
-import { CalendarCompatComponent } from './compat/calendar/calendar.compat';
-import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
-import { ExpandCompatComponent } from './compat/expand/expand.compat';
-import { IconCompatComponent } from './compat/icon/icon.compat';
-import { MarkedCompatComponent } from './compat/marked/marked.compat';
-import { NavbarCompatComponent } from './compat/navbar/navbar.compat';
-import { PagerCompatComponent } from './compat/pager/pager.compat';
-import { SelectCompatComponent, SelectCompatDialogComponent } from './compat/select/select.compat.tns';
-import { LayoutComponent } from './layout/layout.component';
-
-const compat: Type<any>[] = [
-  CalendarCompatComponent,
-  DrawerCompatComponent,
-  ExpandCompatComponent,
-  IconCompatComponent,
-  MarkedCompatComponent,
-  NavbarCompatComponent,
-  PagerCompatComponent,
-  SelectCompatComponent
-];
+import { CalendarComponent } from './calendar/calendar.component';
+import { DrawerComponent } from './drawer/drawer.component';
+import { ExpandComponent } from './expand/expand.component';
+import { I18nComponent } from './i18n/i18n.component';
+import { IconComponent } from './icon/icon.component';
+import { MarkedComponent } from './marked/marked.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { PagerComponent } from './pager/pager.component';
+import { SelectComponent, SelectPopupComponent } from './select/select.component.tns';
+import { SharedComponent } from './shared.component';
 
 const components: Type<any>[] = [
-  LayoutComponent
-];
-
-const dialogs: Type<any>[] = [
-  SelectCompatDialogComponent
+  CalendarComponent,
+  DrawerComponent,
+  ExpandComponent,
+  I18nComponent,
+  IconComponent,
+  MarkedComponent,
+  NavbarComponent,
+  PagerComponent,
+  SelectComponent,
+  SharedComponent
 ];
 
 const materials: Type<any>[] = [
@@ -39,23 +34,25 @@ const materials: Type<any>[] = [
   NgRippleModule
 ];
 
+const popups: Type<any>[] = [
+  SelectPopupComponent
+];
+
 @NgModule({
   declarations: [
-    ...compat,
     ...components,
-    ...dialogs
+    ...popups
   ],
   entryComponents: [
-    ...dialogs
+    ...popups
   ],
   exports: [
-    ...compat
+    ...components
   ],
   imports: [
     ...materials,
-    CoreModule,
-    PlatformCommonModule,
-    PlatformRouterModule
+    AppCommonModule,
+    AppRouterModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { InfopageModel } from '../../../../realm/models/infopage.model';
+import { InfopageModel } from '../../../../base/models/infopage.model';
 import { BaseObject } from '../base.object';
 
 @Component({

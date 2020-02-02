@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BaseFieldComponent } from '@wooportal/forms';
 import * as moment from 'moment';
-import { ScheduleModel } from '../../../realm/models/schedule.model';
+import { ScheduleModel } from '../../../base/models/schedule.model';
+import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
   styles: [`

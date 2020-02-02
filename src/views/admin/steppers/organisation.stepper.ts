@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BaseStepper, FormStep } from '@wooportal/forms';
-import { OrganisationModel } from '../../../realm/models/organisation.model';
+import { OrganisationModel } from '../../../base/models/organisation.model';
+import { BaseStepper, FormStep } from '../base/base.stepper';
 import { AddressFormComponent } from '../forms/address.form';
 import { ImageFormComponent } from '../forms/image.form';
 import { OrganisationFormComponent } from '../forms/organisation.form';

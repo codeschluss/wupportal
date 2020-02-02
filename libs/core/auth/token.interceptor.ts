@@ -1,8 +1,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApplicationSettings } from '@wooportal/app';
 import { Observable } from 'rxjs';
-import { AuthTokens } from '../utils/api';
-import { CoreSettings } from '../utils/settings';
+import { AuthTokens } from '../tools/api';
 import { TokenProvider } from './token.provider';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +11,7 @@ export class TokenInterceptor implements HttpInterceptor {
   private tokens: AuthTokens;
 
   public constructor(
-    private coreSettings: CoreSettings,
+    private app: ApplicationSettings,
     tokenProvider: TokenProvider
   ) {
     tokenProvider.value.subscribe((tokens) => this.tokens = tokens);
@@ -20,12 +20,12 @@ export class TokenInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    if (request.url.startsWith(this.coreSettings.apiRootUrl) && this.tokens) {
+    if (request.url.startsWith(this.app.config.api.rootUrl) && this.tokens) {
       switch (request.url) {
-        case this.coreSettings.apiAuthUrl:
+        case this.app.config.api.authUrl:
           break;
 
-        case this.coreSettings.apiRefreshUrl:
+        case this.app.config.api.refreshUrl:
           request = request.clone({
             setHeaders: { authorization: `Bearer ${this.tokens.refresh.raw}` }
           });

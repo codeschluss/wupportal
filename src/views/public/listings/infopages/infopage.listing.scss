@@ -3,7 +3,7 @@
 main {
   @include flex(column, flex-start, center);
 
-  & > [compat=expand] {
+  & > [component=expand] {
     margin: 1rem auto 1rem auto;
     width: calc(100% - 2rem);
 
@@ -46,7 +46,7 @@ main {
               padding-left: .5rem;
             }
 
-            [compat=icon] {
+            [component=icon] {
               padding-right: .5rem;
             }
           }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { fas, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { BaseFieldComponent } from '@wooportal/forms';
+import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
   styles: [`

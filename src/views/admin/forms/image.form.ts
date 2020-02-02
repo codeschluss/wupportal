@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
-import { BaseForm, FormField } from '@wooportal/forms';
 import { Observable, of } from 'rxjs';
-import { ImageModel } from '../../../realm/models/image.model';
+import { ImageModel } from '../../../base/models/image.model';
+import { BaseForm, FormField } from '../base/base.form';
 import { ImageFieldComponent } from '../fields/image.field';
 
 @Component({

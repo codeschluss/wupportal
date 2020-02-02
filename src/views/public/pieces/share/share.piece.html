@@ -1,15 +1,15 @@
 <button mat-button [matMenuTriggerFor]="actions">
-  <icon-compat icon="share-alt"></icon-compat>
+  <icon-component icon="share-alt"></icon-component>
   <i18n i18n="@@share">share</i18n>
 </button>
 <mat-menu #actions="matMenu">
   <button mat-menu-item (click)="copy()">
-    <icon-compat icon="link"></icon-compat>
+    <icon-component icon="link"></icon-component>
     <i18n i18n="@@copyLink">copyLink</i18n>
   </button>
   <ng-container *ngFor="let item of items">
     <button mat-menu-item (click)="share(item)">
-      <icon-compat [icon]="item.icon" [pack]="item.pack"></icon-compat>
+      <icon-component [icon]="item.icon" [pack]="item.pack"></icon-component>
       {{ item.name }}
     </button>
   </ng-container>

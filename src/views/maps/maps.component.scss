@@ -138,7 +138,7 @@
         }
 
         &[disabled=true] {
-          [compat=i18n] {
+          [component=i18n] {
             opacity: .24;
           }
         }
@@ -149,7 +149,7 @@
           pointer-events: none;
         }
 
-        [compat=i18n] {
+        [component=i18n] {
           @include position(absolute, auto, 5rem);
           background-color: $color-darkest;
           border-radius: .25rem;

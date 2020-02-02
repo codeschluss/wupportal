@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BaseTable, TableColumn } from '@wooportal/forms';
-import { LanguageModel } from '../../../realm/models/language.model';
+import { LanguageModel } from '../../../base/models/language.model';
+import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
   selector: 'language-table',

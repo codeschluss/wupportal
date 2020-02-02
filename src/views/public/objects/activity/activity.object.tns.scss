@@ -3,7 +3,7 @@
 scroll-view {
   & > stack-layout {
     & > stack-layout {
-      & > .expand-compat {
+      & > .expand-component {
         .datetime {
           border-color: $color-light;
           border-top-width: 1;

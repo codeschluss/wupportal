@@ -23,11 +23,12 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <marked-compat [data]="item.description"></marked-compat>
+    <marked-component [data]="item.description"></marked-component>
     <aside>
-      <expand-compat #details (changed)="$event && expanded(details)">
+      <expand-component #details
+        (changed)="$event && expanded(details)">
         <ng-template #expandHeader>
-          <icon-compat icon="map-marker-alt"></icon-compat>
+          <icon-component icon="map-marker-alt"></icon-component>
           <i18n i18n="@@details">details</i18n>
         </ng-template>
         <ng-template #expandContent>
@@ -50,7 +51,7 @@
                 <td><i18n i18n="@@phone">phone</i18n></td>
                 <td>
                   <a mat-button target="_blank" [href]="'tel:' + item.phone">
-                    <icon-compat icon="phone"></icon-compat>
+                    <icon-component icon="phone"></icon-component>
                     {{ item.phone }}
                   </a>
                 </td>
@@ -61,7 +62,7 @@
                 <td><i18n i18n="@@email">email</i18n></td>
                 <td>
                   <a mat-button target="_blank" [href]="'mailto:' + item.mail">
-                    <icon-compat icon="envelope"></icon-compat>
+                    <icon-component icon="envelope"></icon-component>
                     {{ item.mail }}
                   </a>
                 </td>
@@ -87,7 +88,7 @@
                 <a mat-button
                   [queryParams]="{ suburbs: item.address.suburb.id }"
                   [routerLink]="['/', 'activities']">
-                  <icon-compat icon="city"></icon-compat>
+                  <icon-component icon="city"></icon-component>
                   {{ item.address.suburb.name }}
                 </a>
               </td>
@@ -100,7 +101,7 @@
                     <a mat-button
                       [queryParams]="{ targetgroups: targetGroup.id }"
                       [routerLink]="['/', 'activities']">
-                      <icon-compat icon="users"></icon-compat>
+                      <icon-component icon="users"></icon-component>
                       {{ targetGroup.name }}
                     </a>
                   </ng-container>
@@ -109,11 +110,12 @@
             </ng-container>
           </table>
         </ng-template>
-      </expand-compat>
+      </expand-component>
       <ng-container *ngIf="item.images">
-        <expand-compat #images (changed)="$event && expanded(images)">
+        <expand-component #images
+          (changed)="$event && expanded(images)">
           <ng-template #expandHeader>
-            <icon-compat icon="image"></icon-compat>
+            <icon-component icon="image"></icon-component>
             <i18n i18n="@@images">images</i18n>
             <small>({{ item.images.length }})</small>
           </ng-template>
@@ -128,22 +130,23 @@
               </figure>
             </ng-container>
           </ng-template>
-        </expand-compat>
+        </expand-component>
       </ng-container>
       <ng-container *ngIf="item.schedules">
-        <expand-compat #schedules (changed)="$event && expanded(schedules)">
+        <expand-component #schedules
+          (changed)="$event && expanded(schedules)">
           <ng-template #expandHeader>
-            <icon-compat icon="history"></icon-compat>
+            <icon-component icon="history"></icon-component>
             <i18n i18n="@@schedules">schedules</i18n>
             <small>({{ item.schedules.length }})</small>
           </ng-template>
           <ng-template #expandContent>
             <section>
-              <calendar-compat
+              <calendar-component
                 [items]="item.schedules"
                 [name]="item.name"
                 (changed)="schedule = $event">
-              </calendar-compat>
+              </calendar-component>
               <mat-divider></mat-divider>
               <aside>
                 <ng-container *ngIf="schedule">
@@ -157,30 +160,33 @@
               </aside>
             </section>
           </ng-template>
-        </expand-compat>
+        </expand-component>
       </ng-container>
-      <expand-compat #mapview (changed)="$event && expanded(mapview)">
+      <expand-component #mapview
+        (changed)="$event && expanded(mapview)">
         <ng-template #expandHeader>
-          <icon-compat icon="globe"></icon-compat>
+          <icon-component icon="globe"></icon-component>
           <i18n i18n="@@mapview">mapview</i18n>
         </ng-template>
         <ng-template #expandContent>
           <iframe [src]="source"></iframe>
         </ng-template>
-      </expand-compat>
-      <expand-compat #organisation (changed)="$event && expanded(organisation)">
+      </expand-component>
+      <expand-component #organisation
+        (changed)="$event && expanded(organisation)">
         <ng-template #expandHeader>
-          <icon-compat icon="at"></icon-compat>
+          <icon-component icon="at"></icon-component>
           <i18n i18n="@@organisation">organisation</i18n>
         </ng-template>
         <ng-template #expandContent>
           <organisation-card [item]="item.organisation"></organisation-card>
         </ng-template>
-      </expand-compat>
+      </expand-component>
       <ng-container *ngIf="item.blogposts">
-        <expand-compat #blogposts (changed)="$event && expanded(blogposts)">
+        <expand-component #blogposts
+          (changed)="$event && expanded(blogposts)">
           <ng-template #expandHeader>
-            <icon-compat icon="at"></icon-compat>
+            <icon-component icon="at"></icon-component>
             <i18n i18n="@@blogposts">blogposts</i18n>
             <small>({{ item.blogposts.length }})</small>
           </ng-template>
@@ -189,7 +195,7 @@
               <blogpost-card [item]="blogpost"></blogpost-card>
             </ng-container>
           </ng-template>
-        </expand-compat>
+        </expand-component>
       </ng-container>
     </aside>
   </section>

@@ -1,13 +1,14 @@
 import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ApplicationSettings } from '@wooportal/app';
 import { CrudModel, SessionProvider, TokenProvider } from '@wooportal/core';
-import { BaseForm, FormField, SelectFieldComponent } from '@wooportal/forms';
 import { EMPTY, merge, Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { LanguageModel } from '../../../realm/models/language.model';
-import { TranslationProvider } from '../../../realm/providers/translation.provider';
-import { ClientPackage } from '../../../utils/package';
+import { LanguageModel } from '../../../base/models/language.model';
+import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { BaseForm, FormField } from '../base/base.form';
+import { SelectFieldComponent } from '../fields/select.field';
 
 @Component({
   selector: 'translation-form',
@@ -73,12 +74,13 @@ export class TranslationFormComponent<Model extends CrudModel>
   }
 
   public constructor(
+    private app: ApplicationSettings,
     private sessionProvider: SessionProvider,
-    private translationProvider: TranslationProvider,
     route: ActivatedRoute,
-    tokenProvider: TokenProvider
+    tokenProvider: TokenProvider,
+    translationProvider: TranslationProvider
   ) {
-    super(route, tokenProvider);
+    super(route, tokenProvider, translationProvider);
   }
 
   public ngAfterViewInit(): void {
@@ -148,7 +150,7 @@ export class TranslationFormComponent<Model extends CrudModel>
       .forEach((field) => this.fields.push(field));
 
     const fallback = this.route.snapshot.data.language.find((lang) =>
-      lang.locale === ClientPackage.config.defaults.language);
+      lang.locale === this.app.config.defaults.language);
     const selected = this.route.snapshot.data.language.find((lang) =>
       lang.locale === this.sessionProvider.getLanguage());
 

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { I18nResolver, SessionResolver } from '@wooportal/core';
-import { LayoutComponent } from './views/shared/layout/layout.component';
+import { Route } from '@angular/router';
+import { AppRouterModule } from '@wooportal/app';
+import { LabelsResolver, SessionResolver } from '@wooportal/core';
+import { SharedComponent } from './views/shared/shared.component';
 
 const routes: Route[] = [
   {
@@ -9,7 +10,7 @@ const routes: Route[] = [
     children: [
       {
         path: 'error',
-        loadChildren: () => import('./error/error.module')
+        loadChildren: () => import('./views/error/error.module')
           .then((imported) => imported.ErrorModule)
       },
       {
@@ -32,15 +33,15 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [RouterModule],
-  imports: [RouterModule.forRoot([
+  exports: [AppRouterModule],
+  imports: [AppRouterModule.forRoot([
     {
       path: '',
       children: routes,
-      component: LayoutComponent,
+      component: SharedComponent,
       resolve: {
         session: SessionResolver,
-        xliff: I18nResolver
+        xliff: LabelsResolver
       }
     }
   ], {

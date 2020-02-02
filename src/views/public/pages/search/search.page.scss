@@ -8,11 +8,11 @@ main {
     padding-top: .5rem;
   }
 
-  & > [compat=icon] {
+  & > [component=icon] {
     font-size: 3rem;
   }
 
-  & > [compat=expand] {
+  & > [component=expand] {
     margin: 1rem auto;
     width: calc(100% - 2rem);
 
@@ -55,7 +55,7 @@ main {
               padding-left: .5rem;
             }
 
-            [compat=icon] {
+            [component=icon] {
               padding-right: .5rem;
             }
           }
@@ -134,7 +134,7 @@ main {
                 margin-left: 0;
               }
 
-              [compat=icon] {
+              [component=icon] {
                 padding-right: .5rem;
               }
             }

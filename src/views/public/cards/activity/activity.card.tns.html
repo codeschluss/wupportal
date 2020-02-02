@@ -19,13 +19,13 @@
           <span [text]="item.address.suburb.name"></span>
         </FormattedString>
       </label>
-      <icon-compat
+      <icon-component
         android:style="margin-top: -56;"
         class="card-image"
         ios:style="margin-top: -48;"
         [icon]="item.category.icon"
         [style.color]="colors(item.category.color).color">
-      </icon-compat>
+      </icon-component>
     </stack-layout>
     <stack-layout class="card-title">
       <label textWrap="true" [text]="item.name"></label>

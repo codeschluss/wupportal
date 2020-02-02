@@ -2,10 +2,11 @@ import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angu
 import { FormControl, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { Box, Headers, PlatformProvider, TokenProvider } from '@wooportal/core';
+import { DeviceProvider } from '@wooportal/app';
+import { Box, Headers, TokenProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, filter, map, take } from 'rxjs/operators';
-import { UserProvider } from '../../../../realm/providers/user.provider';
+import { UserProvider } from '../../../../base/providers/user.provider';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -35,8 +36,8 @@ export class LoginPageComponent extends BasePage
   private inputs: QueryList<MatInput>;
 
   public get disabled(): boolean {
-    return this.platformProvider.name === 'Server'
-      || /MSIE|Trident/.test(navigator.userAgent);
+    return this.deviceProvider.notation === 'Server'
+      || /MSIE|Trident/.test(this.deviceProvider.agent);
   }
 
   public get name(): Observable<string> {
@@ -62,9 +63,9 @@ export class LoginPageComponent extends BasePage
   }
 
   public constructor(
+    private deviceProvider: DeviceProvider,
     private headers: Headers,
     private router: Router,
-    private platformProvider: PlatformProvider,
     private tokenProvider: TokenProvider,
     private userProvider: UserProvider
   ) {

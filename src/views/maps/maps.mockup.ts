@@ -1,7 +1,7 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject, NgModule, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Component, NgModule, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AppRouterModule, DeviceProvider } from '@wooportal/app';
 
 @Component({
   styles: [`
@@ -37,21 +37,21 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class MapsComponent implements OnInit {
 
   public constructor(
-    @Inject(DOCUMENT) private document: Document,
+    private deviceProvider: DeviceProvider,
     private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
     if (this.route.snapshot.queryParamMap.has('embed')) {
-      this.document.body.classList.add('embedded');
+      this.deviceProvider.document.body.classList.add('embedded');
     }
   }
 
 }
 
 @NgModule({
-  exports: [RouterModule],
-  imports: [RouterModule.forChild([
+  exports: [AppRouterModule],
+  imports: [AppRouterModule.forChild([
     {
       path: '',
       component: MapsComponent

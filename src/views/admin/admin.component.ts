@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ApplicationSettings } from '@wooportal/app';
 import { LoadingProvider, Pathfinder, TokenProvider } from '@wooportal/core';
 import { EMPTY, Subscription } from 'rxjs';
 import { filter, map, mergeMap, startWith, take } from 'rxjs/operators';
-import { ClientPackage } from '../../utils/package';
-import { ReloginDialogComponent } from './dialogs/relogin.dialog';
 import { AccountPanelComponent } from './panels/account/account.panel';
+import { ReloginPopupComponent } from './popups/relogin.popup';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -22,6 +22,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   public constructor(
     public loadingProvider: LoadingProvider,
+    private app: ApplicationSettings,
     private dialog: MatDialog,
     private pathfinder: Pathfinder,
     private route: ActivatedRoute,
@@ -36,7 +37,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   private working: Subscription = EMPTY.subscribe();
 
   public ngOnInit(): void {
-    const claim = ClientPackage.config.jwtClaims.userId;
+    const claim = this.app.config.jwtClaims.userId;
     const userId = this.route.snapshot.data.tokens.access[claim];
     this.base = this.pathfinder.to(AccountPanelComponent).concat(userId);
 
@@ -65,7 +66,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   private work(): void {
     this.working = this.tokenProvider.value.pipe(
       filter((tokens) => !tokens.refresh.raw), take(1),
-      mergeMap(() => this.dialog.open(ReloginDialogComponent).afterClosed()),
+      mergeMap(() => this.dialog.open(ReloginPopupComponent).afterClosed()),
       filter(Boolean)
     ).subscribe(() => this.work());
   }

@@ -2,14 +2,16 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Box, TokenProvider } from '@wooportal/core';
-import { BaseForm, EditorFieldComponent, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivityModel } from '../../../realm/models/activity.model';
-import { BlogpostModel } from '../../../realm/models/blogpost.model';
-import { BlogpostProvider } from '../../../realm/providers/blogpost.provider';
-import { TranslationProvider } from '../../../realm/providers/translation.provider';
-import { TranslationBase } from '../../../realm/translations/translation.base';
+import { ActivityModel } from '../../../base/models/activity.model';
+import { BlogpostModel } from '../../../base/models/blogpost.model';
+import { BlogpostProvider } from '../../../base/providers/blogpost.provider';
+import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { BaseForm, FormField } from '../base/base.form';
+import { EditorFieldComponent } from '../fields/editor.field';
+import { SelectFieldComponent } from '../fields/select.field';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'blogpost-form',
@@ -31,7 +33,7 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
 })
 
 export class BlogpostFormComponent
-  extends TranslationBase<BlogpostModel> {
+  extends BaseForm<BlogpostModel> {
 
   public fields: FormField[] = [
     {
@@ -60,7 +62,7 @@ export class BlogpostFormComponent
     tokenProvider: TokenProvider,
     translationProvider: TranslationProvider
   ) {
-    super(translationProvider, route, tokenProvider);
+    super(route, tokenProvider, translationProvider);
   }
 
   public persist(): Observable<any> {

@@ -17,12 +17,12 @@
       <time-piece [item]="item"></time-piece>
     </flexbox-layout>
     <stack-layout>
-      <marked-compat [data]="item.description"></marked-compat>
-      <expand-compat #details
-        class="expand-compat"
+      <marked-component [data]="item.description"></marked-component>
+      <expand-component #details
+        class="expand-component"
         (changed)="$event && expanded(details)">
         <ng-template #expandHeader>
-          <icon-compat icon="at"></icon-compat>
+          <icon-component icon="at"></icon-component>
           <i18n i18n="@@details" unit="details"></i18n>
         </ng-template>
         <ng-template #expandContent>
@@ -49,7 +49,7 @@
             <stack-layout class="detail">
               <i18n i18n="@@website" unit="website"></i18n>
               <stack-layout ripple (tap)="openUrl(item.website)">
-                <icon-compat icon="link"></icon-compat>
+                <icon-component icon="link"></icon-component>
                 <label [text]="item.website"></label>
               </stack-layout>
             </stack-layout>
@@ -58,7 +58,7 @@
             <stack-layout class="detail">
               <i18n i18n="@@phone" unit="phone"></i18n>
               <stack-layout ripple (tap)="openUrl('tel:' + item.phone)">
-                <icon-compat icon="phone"></icon-compat>
+                <icon-component icon="phone"></icon-component>
                 <label [text]="item.phone"></label>
               </stack-layout>
             </stack-layout>
@@ -67,7 +67,7 @@
             <stack-layout class="detail">
               <i18n i18n="@@email" unit="email"></i18n>
               <stack-layout ripple (tap)="openUrl('mailto:' + item.mail)">
-                <icon-compat icon="envelope"></icon-compat>
+                <icon-component icon="envelope"></icon-component>
                 <label [text]="item.mail"></label>
               </stack-layout>
             </stack-layout>
@@ -77,18 +77,18 @@
             <stack-layout ripple
               (tap)="router.navigate(['/', 'activities'],
                 { queryParams: { suburbs: item.address.suburb.id } })">
-              <icon-compat icon="city"></icon-compat>
+              <icon-component icon="city"></icon-component>
               <label [text]="item.address.suburb.name"></label>
             </stack-layout>
           </stack-layout>
         </ng-template>
-      </expand-compat>
+      </expand-component>
       <ng-container *ngIf="item.images">
-        <expand-compat #images
-          class="expand-compat"
+        <expand-component #images
+          class="expand-component"
           (changed)="$event && expanded(images)">
           <ng-template #expandHeader>
-            <icon-compat icon="image"></icon-compat>
+            <icon-component icon="image"></icon-component>
             <i18n i18n="@@images" unit="images"></i18n>
             <label [text]="'(' + item.images.length + ')'"></label>
           </ng-template>
@@ -103,14 +103,14 @@
               </flexbox-layout>
             </scroll-view>
           </ng-template>
-        </expand-compat>
+        </expand-component>
       </ng-container>
       <ng-container *ngIf="item.activities">
-        <expand-compat #activities
-          class="expand-compat"
+        <expand-component #activities
+          class="expand-component"
           (changed)="$event && expanded(activities)">
           <ng-template #expandHeader>
-            <icon-compat icon="map-marker-alt"></icon-compat>
+            <icon-component icon="map-marker-alt"></icon-component>
             <i18n i18n="@@activities" unit="activities"></i18n>
             <label [text]="'(' + item.activities.length + ')'"></label>
           </ng-template>
@@ -125,7 +125,7 @@
               </flexbox-layout>
             </scroll-view>
           </ng-template>
-        </expand-compat>
+        </expand-component>
       </ng-container>
     </stack-layout>
   </stack-layout>

@@ -25,7 +25,7 @@ scroll-view {
     & > stack-layout {
       width: rem(25);
 
-      & > .expand-compat {
+      & > .expand-component {
         margin-top: rem(1);
 
         scroll-view {

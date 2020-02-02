@@ -3,15 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver } from '@wooportal/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { ActivityModel } from '../../../../realm/models/activity.model';
-import { BlogpostModel } from '../../../../realm/models/blogpost.model';
-import { CategoryModel } from '../../../../realm/models/category.model';
-import { InfopageModel } from '../../../../realm/models/infopage.model';
-import { OrganisationModel } from '../../../../realm/models/organisation.model';
-import { SuburbModel } from '../../../../realm/models/suburb.model';
-import { TargetGroupModel } from '../../../../realm/models/target-group.model';
-import { ExpandCompatComponent } from '../../../shared/compat/expand/expand.compat';
-import { ExpandCompat } from '../../../shared/compat/expand/expand.compat.i';
+import { ActivityModel } from '../../../../base/models/activity.model';
+import { BlogpostModel } from '../../../../base/models/blogpost.model';
+import { CategoryModel } from '../../../../base/models/category.model';
+import { InfopageModel } from '../../../../base/models/infopage.model';
+import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { SuburbModel } from '../../../../base/models/suburb.model';
+import { TargetGroupModel } from '../../../../base/models/target-group.model';
+import { ExpandComponent } from '../../../shared/expand/expand.component';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -43,8 +42,8 @@ export class SearchPageComponent extends BasePage implements OnInit {
 
   protected path: string = 'search/:filter';
 
-  @ViewChildren(ExpandCompatComponent)
-  private expands: QueryList<ExpandCompat>;
+  @ViewChildren(ExpandComponent)
+  private expands: QueryList<ExpandComponent>;
 
   public constructor(
     public router: Router,
@@ -75,7 +74,7 @@ export class SearchPageComponent extends BasePage implements OnInit {
     ).subscribe((length) => this.results = length.reduce((num, i) => num + i));
   }
 
-  public expanded(expand: ExpandCompat): void {
+  public expanded(expand: ExpandComponent): void {
     if (this.expands.length) {
       this.expands.filter((e) => e !== expand).forEach((e) => e.close());
     }

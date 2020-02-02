@@ -1,14 +1,17 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ApplicationSettings } from '@wooportal/app';
 import { Box, CrudJoiner, CrudResolver, TokenProvider } from '@wooportal/core';
-import { BaseForm, FormField, SelectFieldComponent, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { AddressModel } from '../../../realm/models/address.model';
-import { SuburbModel } from '../../../realm/models/suburb.model';
-import { AddressProvider } from '../../../realm/providers/address.provider';
-import { ClientPackage } from '../../../utils/package';
+import { AddressModel } from '../../../base/models/address.model';
+import { SuburbModel } from '../../../base/models/suburb.model';
+import { AddressProvider } from '../../../base/providers/address.provider';
+import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { BaseForm, FormField } from '../base/base.form';
+import { SelectFieldComponent } from '../fields/select.field';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'address-form',
@@ -92,9 +95,7 @@ export class AddressFormComponent
     {
       name: 'place',
       input: StringFieldComponent,
-      tests: [Validators.required],
-      locked: !!ClientPackage.config.defaults.city,
-      value: ClientPackage.config.defaults.city
+      tests: [Validators.required]
     },
     {
       name: 'longitude',
@@ -120,11 +121,13 @@ export class AddressFormComponent
 
   public constructor(
     private addressProvider: AddressProvider,
+    private app: ApplicationSettings,
     private crudResolver: CrudResolver,
     route: ActivatedRoute,
-    tokenProvider: TokenProvider
+    tokenProvider: TokenProvider,
+    translationProvider: TranslationProvider
   ) {
-    super(route, tokenProvider);
+    super(route, tokenProvider, translationProvider);
   }
 
   public address(): void {
@@ -169,7 +172,14 @@ export class AddressFormComponent
 
   protected ngPostInit(): void {
     if (this.item.id) {
-      this.fields.forEach((field, i) => this.fields[i].locked = true);
+      this.fields.forEach((field) => field.locked = true);
+    }
+
+    if (this.app.config.defaults.city) {
+      Object.assign(this.fields.find((field) => field.name === 'place'), {
+        locked: true,
+        value: this.app.config.defaults.city
+      });
     }
   }
 

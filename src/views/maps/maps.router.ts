@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route } from '@angular/router';
-import { PlatformRouterModule } from '@wooportal/core';
+import { AppRouterModule } from '@wooportal/app';
 import { MapsComponent } from './maps.component';
 
 const routes: Route[] = [
@@ -13,8 +13,8 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [PlatformRouterModule],
-  imports: [PlatformRouterModule.forChild([
+  exports: [AppRouterModule],
+  imports: [AppRouterModule.forChild([
     {
       path: '',
       children: routes

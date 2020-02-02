@@ -1,20 +1,24 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ApplicationSettings } from '@wooportal/app';
 import { Box, TokenProvider } from '@wooportal/core';
-import { BaseForm, ChipListFieldComponent, EditorFieldComponent, FormField, SelectFieldComponent, StringFieldComponent, Tests } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { ActivityModel } from '../../../realm/models/activity.model';
-import { CategoryModel } from '../../../realm/models/category.model';
-import { KeywordModel } from '../../../realm/models/keyword.model';
-import { OrganisationModel } from '../../../realm/models/organisation.model';
-import { TargetGroupModel } from '../../../realm/models/target-group.model';
-import { ActivityProvider } from '../../../realm/providers/activity.provider';
-import { TranslationProvider } from '../../../realm/providers/translation.provider';
-import { UserProvider } from '../../../realm/providers/user.provider';
-import { TranslationBase } from '../../../realm/translations/translation.base';
-import { ClientPackage } from '../../../utils/package';
+import { ActivityModel } from '../../../base/models/activity.model';
+import { CategoryModel } from '../../../base/models/category.model';
+import { KeywordModel } from '../../../base/models/keyword.model';
+import { OrganisationModel } from '../../../base/models/organisation.model';
+import { TargetGroupModel } from '../../../base/models/target-group.model';
+import { ActivityProvider } from '../../../base/providers/activity.provider';
+import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { UserProvider } from '../../../base/providers/user.provider';
+import { BaseForm, FormField } from '../base/base.form';
+import { BaseTests } from '../base/base.tests';
+import { ChipListFieldComponent } from '../fields/chip-list.field';
+import { EditorFieldComponent } from '../fields/editor.field';
+import { SelectFieldComponent } from '../fields/select.field';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'activity-form',
@@ -73,7 +77,7 @@ import { ClientPackage } from '../../../utils/package';
 })
 
 export class ActivityFormComponent
-  extends TranslationBase<ActivityModel> {
+  extends BaseForm<ActivityModel> {
 
   public fields: FormField[] = [
     {
@@ -100,14 +104,14 @@ export class ActivityFormComponent
     {
       name: 'phone',
       input: StringFieldComponent,
-      tests: [Tests.neither('phone', 'mail')],
+      tests: [BaseTests.neither('phone', 'mail')],
       type: 'tel'
     },
     {
       name: 'mail',
       input: StringFieldComponent,
       tests: [
-        Tests.neither('phone', 'mail'),
+        BaseTests.neither('phone', 'mail'),
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ],
       type: 'email'
@@ -142,12 +146,13 @@ export class ActivityFormComponent
 
   public constructor(
     private activityProvider: ActivityProvider,
+    private app: ApplicationSettings,
     private userProvider: UserProvider,
     route: ActivatedRoute,
     tokenProvider: TokenProvider,
     translationProvider: TranslationProvider
   ) {
-    super(translationProvider, route, tokenProvider);
+    super(route, tokenProvider, translationProvider);
   }
 
   public fillOrganisationData(): void {
@@ -180,10 +185,10 @@ export class ActivityFormComponent
       this.fields[0].locked = true;
     }
 
-    if (!this.token[ClientPackage.config.jwtClaims.superUser]) {
+    if (!this.token[this.app.config.jwtClaims.superUser]) {
       this.fields[0].options = Array.from(new Set([
-        ...this.token[ClientPackage.config.jwtClaims.organisationAdmin],
-        ...this.token[ClientPackage.config.jwtClaims.organisationUser]
+        ...this.token[this.app.config.jwtClaims.organisationAdmin],
+        ...this.token[this.app.config.jwtClaims.organisationUser]
       ])).map((id) => this.fields[0].options.find((o) => o.id === id));
     }
   }

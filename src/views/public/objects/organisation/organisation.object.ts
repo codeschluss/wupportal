@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { OrganisationModel } from '../../../../realm/models/organisation.model';
+import { OrganisationModel } from '../../../../base/models/organisation.model';
 import { BaseObject } from '../base.object';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { KeywordModel } from '../../../realm/models/keyword.model';
-import { TranslationBase } from '../../../realm/translations/translation.base';
+import { KeywordModel } from '../../../base/models/keyword.model';
+import { BaseForm, FormField } from '../base/base.form';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'keyword-form',
@@ -21,7 +21,7 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
 })
 
 export class KeywordFormComponent
-  extends TranslationBase<KeywordModel> {
+  extends BaseForm<KeywordModel> {
 
   public fields: FormField[] = [
     {

@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { TargetGroupModel } from '../../../realm/models/target-group.model';
-import { TranslationBase } from '../../../realm/translations/translation.base';
+import { TargetGroupModel } from '../../../base/models/target-group.model';
+import { BaseForm, FormField } from '../base/base.form';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'target-group-form',
@@ -21,7 +21,7 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
 })
 
 export class TargetGroupFormComponent
-  extends TranslationBase<TargetGroupModel> {
+  extends BaseForm<TargetGroupModel> {
 
   public fields: FormField[] = [
     {

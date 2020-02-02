@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BlogpostModel } from '../../../../realm/models/blogpost.model';
+import { BlogpostModel } from '../../../../base/models/blogpost.model';
 import { BaseCard } from '../base.card';
 
 @Component({

@@ -1,9 +1,9 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { CategoryModel } from '../../../realm/models/category.model';
-import { TranslationBase } from '../../../realm/translations/translation.base';
+import { CategoryModel } from '../../../base/models/category.model';
+import { BaseForm, FormField } from '../base/base.form';
 import { IconFieldComponent } from '../fields/icon.field';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'category-form',
@@ -28,7 +28,7 @@ import { IconFieldComponent } from '../fields/icon.field';
 })
 
 export class CategoryFormComponent
-  extends TranslationBase<CategoryModel> {
+  extends BaseForm<CategoryModel> {
 
   public fields: FormField[] = [
     {

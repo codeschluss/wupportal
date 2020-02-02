@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BaseStepper, FormStep } from '@wooportal/forms';
-import { SuburbModel } from '../../../realm/models/suburb.model';
+import { SuburbModel } from '../../../base/models/suburb.model';
+import { BaseStepper, FormStep } from '../base/base.stepper';
 import { SuburbFormComponent } from '../forms/suburb.form';
 
 @Component({

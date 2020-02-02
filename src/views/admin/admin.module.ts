@@ -1,26 +1,45 @@
-import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule, MAT_TABS_CONFIG } from '@angular/material/tabs';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CoreModule, CrudModel } from '@wooportal/core';
-import { BaseFieldComponent, BaseForm, BaseStepper, BaseTable, FormsModule, MatPagerIntl } from '@wooportal/forms';
+import { AppCommonModule, AppRouterModule } from '@wooportal/app';
+import { CrudModel } from '@wooportal/core';
+import { FileValueAccessorDirective } from '../../tools/accesor';
+import { Paginate } from '../../tools/paginate';
+import { SharedModule } from '../shared/shared.module';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
-import { DeleteDialogComponent } from './dialogs/delete.dialog';
-import { ReloginDialogComponent } from './dialogs/relogin.dialog';
-import { RequestDialogComponent } from './dialogs/request.dialog';
+import { BaseFieldComponent } from './base/base.field';
+import { BaseForm } from './base/base.form';
+import { BasePanel } from './base/base.panel';
+import { BaseStepper } from './base/base.stepper';
+import { BaseTable } from './base/base.table';
+import { BooleanFieldComponent } from './fields/boolean.field';
+import { ChipListFieldComponent } from './fields/chip-list.field';
+import { EditorFieldComponent } from './fields/editor.field';
 import { IconFieldComponent } from './fields/icon.field';
 import { ImageFieldComponent } from './fields/image.field';
 import { ScheduleFieldComponent } from './fields/schedule.field';
+import { SelectFieldComponent } from './fields/select.field';
+import { StringFieldComponent } from './fields/string.field';
+import { UrlFieldComponent } from './fields/url.field';
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
@@ -44,6 +63,9 @@ import { OrganisationPanelComponent } from './panels/organisation/organisation.p
 import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
 import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
 import { TaxonomyPanelComponent } from './panels/taxonomy/taxonomy.panel';
+import { DeletePopupComponent } from './popups/delete.popup';
+import { ReloginPopupComponent } from './popups/relogin.popup';
+import { RequestPopupComponent } from './popups/request.popup';
 import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
 import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
@@ -70,16 +92,25 @@ import { TargetGroupTableComponent } from './tables/target-group.table';
 import { TopicTableComponent } from './tables/topic.table';
 import { UserTableComponent } from './tables/user.table';
 
-const dialogs: Type<any>[] = [
-  DeleteDialogComponent,
-  ReloginDialogComponent,
-  RequestDialogComponent
+const components: Type<any>[] = [
+  AdminComponent,
+  BaseFieldComponent
+];
+
+const directives: Type<any>[] = [
+  FileValueAccessorDirective
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
+  BooleanFieldComponent,
+  ChipListFieldComponent,
+  EditorFieldComponent,
   IconFieldComponent,
   ImageFieldComponent,
-  ScheduleFieldComponent
+  ScheduleFieldComponent,
+  SelectFieldComponent,
+  StringFieldComponent,
+  UrlFieldComponent
 ];
 
 const forms: Type<BaseForm<CrudModel>>[] = [
@@ -102,19 +133,30 @@ const forms: Type<BaseForm<CrudModel>>[] = [
 ];
 
 const materials: Type<any>[] = [
+  CKEditorModule,
   FontAwesomeModule,
+  MatAutocompleteModule,
   MatBadgeModule,
   MatButtonModule,
   MatCardModule,
+  MatChipsModule,
   MatDialogModule,
   MatDividerModule,
+  MatFormFieldModule,
+  MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatPaginatorModule,
+  MatSelectModule,
   MatSlideToggleModule,
-  MatTabsModule
+  MatSortModule,
+  MatTableModule,
+  MatTabsModule,
+  ReactiveFormsModule,
+  FormsModule
 ];
 
-const panels: Type<any>[] = [
+const panels: Type<BasePanel>[] = [
   AccountPanelComponent,
   ApplicationPanelComponent,
   InformationPanelComponent,
@@ -122,6 +164,12 @@ const panels: Type<any>[] = [
   PositioningPanelComponent,
   PrivilegesPanelComponent,
   TaxonomyPanelComponent
+];
+
+const popups: Type<any>[] = [
+  DeletePopupComponent,
+  ReloginPopupComponent,
+  RequestPopupComponent
 ];
 
 const steppers: Type<BaseStepper<CrudModel>>[] = [
@@ -156,32 +204,33 @@ const tables: Type<BaseTable<CrudModel>>[] = [
 ];
 
 @NgModule({
-  entryComponents: [
-    ...dialogs,
-    ...fields,
-    ...forms,
-    ...panels,
-    ...steppers
-  ],
   declarations: [
-    ...dialogs,
+    ...components,
+    ...directives,
     ...fields,
     ...forms,
     ...panels,
+    ...popups,
     ...steppers,
-    ...tables,
-    AdminComponent
+    ...tables
+  ],
+  entryComponents: [
+    ...fields,
+    ...forms,
+    ...panels,
+    ...popups,
+    ...steppers
   ],
   imports: [
     ...materials,
     AdminRouter,
-    CommonModule,
-    CoreModule,
-    FormsModule
+    AppCommonModule,
+    AppRouterModule,
+    SharedModule
   ],
   providers: [
     { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '0ms' } },
-    { provide: MatPaginatorIntl, useClass: MatPagerIntl }
+    { provide: MatPaginatorIntl, useClass: Paginate }
   ]
 })
 

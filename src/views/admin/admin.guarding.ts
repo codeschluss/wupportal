@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { ApplicationSettings } from '@wooportal/app';
 import { JwtClaims, TokenProvider } from '@wooportal/core';
 import { map, mergeMap, take } from 'rxjs/operators';
-import { ActivityProvider } from '../../realm/providers/activity.provider';
-import { ClientPackage } from '../../utils/package';
+import { ActivityProvider } from '../../base/providers/activity.provider';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuarding implements CanActivate, CanActivateChild {
 
   public constructor(
     private activityProvider: ActivityProvider,
+    private app: ApplicationSettings,
     private router: Router,
     private tokenProvider: TokenProvider
   ) { }
@@ -36,7 +37,7 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
       take(1), map((tokens) => tokens.access)
     ).toPromise();
 
-    const claims = ClientPackage.config.jwtClaims;
+    const claims = this.app.config.jwtClaims;
     const claimed = Object.keys(claims).reduce((claim, key) =>
       Object.assign(claim, { [key]: access[claims[key]] }), { }) as JwtClaims;
 

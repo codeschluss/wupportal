@@ -8,33 +8,36 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { TransferHttpCacheModule } from '@nguniversal/common';
+import { AppModule } from '@wooportal/app';
 import { CoreModule } from '@wooportal/core';
+import { BaseModule } from './base/module';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
-import { ErrorModule } from './error/error.module';
-import { ClientErrorHandler } from './error/handler/error.handler';
-import { RealmModule } from './realm/realm.module';
-import { ClientPackage } from './utils/package';
+import { PackageJson } from './tools/package';
+import { ErrorModule } from './views/error/error.module';
+import { ClientErrorHandler } from './views/error/handler/error.handler';
+
+const platform: any[] = [
+  BrowserAnimationsModule,
+  BrowserModule.withServerTransition({ appId: 'wooportal' }),
+  HttpClientModule,
+  TransferHttpCacheModule
+];
 
 @NgModule({
-  bootstrap: [ClientComponent],
-  declarations: [ClientComponent],
+  bootstrap: [
+    ClientComponent
+  ],
+  declarations: [
+    ClientComponent
+  ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'wooportal' }),
-    BrowserAnimationsModule,
+    ...platform,
+    AppModule.forRoot(PackageJson),
+    BaseModule,
     ClientRouter,
-    CoreModule.forRoot({
-      apiAuthUrl: ClientPackage.config.api.authUrl,
-      apiRefreshUrl: ClientPackage.config.api.refreshUrl,
-      apiRootUrl: ClientPackage.config.api.rootUrl,
-      appUrl: ClientPackage.config.defaults.appUrl,
-      defaultLanguage: ClientPackage.config.defaults.language,
-      defaultTitle: ClientPackage.config.defaults.title
-    }),
-    ErrorModule,
-    HttpClientModule,
-    RealmModule,
-    TransferHttpCacheModule
+    CoreModule,
+    ErrorModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: ClientErrorHandler },

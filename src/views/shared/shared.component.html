@@ -1,0 +1,265 @@
+<header #header>
+  <img src="/images/icon.png" [alt]="name | async" [title]="name | async">
+</header>
+<navbar-component>
+  <a mat-button [class.active]="url === '/'" [routerLink]="['/']">
+    <icon-component icon="play-circle"></icon-component>
+    <i18n i18n="@@homepage">homepage</i18n>
+  </a>
+  <a mat-button
+    [class.active]="url.startsWith('/mapview')"
+    [routerLink]="['/', 'mapview']">
+    <icon-component icon="globe"></icon-component>
+    <i18n i18n="@@mapview">mapview</i18n>
+  </a>
+  <a mat-button
+    [class.active]="url.startsWith('/activities')"
+    [routerLink]="['/', 'activities']">
+    <icon-component icon="map-marker-alt"></icon-component>
+    <i18n i18n="@@activities">activities</i18n>
+  </a>
+  <a mat-button
+    [class.active]="url.startsWith('/organisations')"
+    [routerLink]="['/', 'organisations']">
+    <icon-component icon="at"></icon-component>
+    <i18n i18n="@@organisations">organisations</i18n>
+  </a>
+  <a mat-button
+    [class.active]="url.startsWith('/blogposts')"
+    [routerLink]="['/', 'blogposts']">
+    <icon-component icon="comment-dots"></icon-component>
+    <i18n i18n="@@blogposts">blogposts</i18n>
+  </a>
+  <a mat-button
+    [class.active]="url.startsWith('/infopages')"
+    [routerLink]="['/', 'infopages']">
+    <icon-component icon="info-circle"></icon-component>
+    <i18n i18n="@@infopages">infopages</i18n>
+  </a>
+  <mat-form-field [class.active]="url.startsWith('/search')">
+    <icon-component matPrefix icon="search"></icon-component>
+    <input #navbarInput matInput
+      type="search"
+      value="{{ filter() }}"
+      (keydown.enter)="navbarInput.value
+        && navigate('/', 'search', navbarInput.value)">
+    <mat-label><i18n i18n="@@search">search</i18n></mat-label>
+    <button mat-button mat-icon-button matSuffix
+      [disabled]="!navbarInput.value"
+      [routerLink]="['/', 'search', navbarInput.value]">
+      <icon-component icon="chevron-circle-right"></icon-component>
+    </button>
+  </mat-form-field>
+</navbar-component>
+<navbar-component [title]="name | async">
+  <span [style.flexGrow]="1"></span>
+  <mat-progress-spinner
+    mode="indeterminate"
+    [style.opacity]="busy | async">
+  </mat-progress-spinner>
+  <button mat-icon-button (click)="drawer.toggle()">
+    <icon-component [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
+    </icon-component>
+  </button>
+</navbar-component>
+<drawer-component #drawer>
+  <ng-template #drawerMain>
+    <mat-progress-bar
+      mode="indeterminate"
+      [style.opacity]="busy | async">
+    </mat-progress-bar>
+    <router-outlet></router-outlet>
+    <navbar-component>
+      <button mat-button [matMenuTriggerFor]="languageMenu">
+        <icon-component icon="language"></icon-component>
+        <i18n i18n="@@language">language</i18n>
+      </button>
+      <mat-menu #languageMenu="matMenu" xPosition="after">
+        <ng-container *ngFor="let item of languages">
+          <button mat-menu-item
+            [class.active]="item.locale === this.language.value"
+            (click)="this.language.setValue(item.locale)">
+            <pre>{{ item.locale }}</pre>
+            {{ item.name }}
+          </button>
+        </ng-container>
+      </mat-menu>
+      <a mat-button
+        [class.active]="url.startsWith('/imprint')"
+        [routerLink]="['/', 'imprint']">
+        <icon-component icon="bullhorn"></icon-component>
+        <i18n i18n="@@imprint">imprint</i18n>
+      </a>
+      <a mat-button
+        [class.active]="url.startsWith('/policies')"
+        [routerLink]="['/', 'policies']">
+        <icon-component icon="balance-scale"></icon-component>
+        <i18n i18n="@@policies">policies</i18n>
+      </a>
+      <span [style.flexGrow]="1"></span>
+      <small>
+        <icon-component icon="copyright"></icon-component>
+        {{ name | async }} 2017-{{ date | date: 'yyyy' }}
+      </small>
+      <ng-container *ngIf="claimed?.userId">
+        <button mat-button
+          [class.active]="url.startsWith('/admin')"
+          [matMenuTriggerFor]="adminMenu">
+          <icon-component icon="cog"></icon-component>
+          <i18n i18n="@@administration">administration</i18n>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="!claimed?.userId">
+        <a mat-button
+          [class.active]="url.startsWith('/login')"
+          [routerLink]="['/', 'login']">
+          <icon-component icon="unlock"></icon-component>
+          <i18n i18n="@@login">login</i18n>
+        </a>
+      </ng-container>
+      <mat-menu #adminMenu="matMenu" xPosition="before">
+        <button mat-menu-item
+          [class.active]="url.startsWith('/admin/account')"
+          [routerLink]="['/', 'admin', 'account', claimed?.userId]">
+          <icon-component icon="chalkboard-teacher"></icon-component>
+          <i18n i18n="@@account">account</i18n>
+        </button>
+        <button mat-menu-item
+          [class.active]="url.startsWith('/admin/organisation')"
+          [disabled]="!claimed?.organisationAdmin.length && !claimed?.superUser"
+          [routerLink]="['/', 'admin', 'organisation']">
+          <icon-component icon="sitemap"></icon-component>
+          <i18n i18n="@@organisation">organisation</i18n>
+        </button>
+        <ng-container *ngIf="claimed?.superUser">
+          <mat-divider></mat-divider>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/application')"
+            [routerLink]="['/', 'admin', 'application']">
+            <icon-component icon="sliders-h"></icon-component>
+            <i18n i18n="@@application">application</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/information')"
+            [routerLink]="['/', 'admin', 'information']">
+            <icon-component icon="book"></icon-component>
+            <i18n i18n="@@information">information</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/positioning')"
+            [routerLink]="['/', 'admin', 'positioning']">
+            <icon-component icon="sign"></icon-component>
+            <i18n i18n="@@positioning">positioning</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/privileges')"
+            [routerLink]="['/', 'admin', 'privileges']">
+            <icon-component icon="shield-alt"></icon-component>
+            <i18n i18n="@@privileges">privileges</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/taxonomy')"
+            [routerLink]="['/', 'admin', 'taxonomy']">
+            <icon-component icon="tags"></icon-component>
+            <i18n i18n="@@taxonomy">taxonomy</i18n>
+          </button>
+        </ng-container>
+        <mat-divider></mat-divider>
+        <button mat-menu-item [routerLink]="['/', 'logout']">
+          <icon-component icon="lock"></icon-component>
+          <i18n i18n="@@logout">logout</i18n>
+        </button>
+      </mat-menu>
+    </navbar-component>
+  </ng-template>
+  <ng-template #drawerMenu>
+    <header>
+      <img src="/images/icon.png" [alt]="name | async" [title]="name | async">
+    </header>
+    <mat-action-list>
+      <mat-list-item disableRipple
+        [class.active]="url.startsWith('/search')">
+        <icon-component icon="search"></icon-component>
+        <mat-form-field [class.active]="url.startsWith('/search')">
+          <input #drawerInput matInput
+            tabindex="-1"
+            type="search"
+            value="{{ filter() }}"
+            (keydown.enter)="drawerInput.value
+              && navigate('/', 'search', drawerInput.value)">
+          <mat-label><i18n i18n="@@search">search</i18n></mat-label>
+          <button mat-button mat-icon-button matSuffix
+            [disabled]="!drawerInput.value"
+            (click)="navigate('/', 'search', drawerInput.value)">
+            <icon-component icon="chevron-circle-right"></icon-component>
+          </button>
+        </mat-form-field>
+      </mat-list-item>
+      <button mat-list-item
+        [class.active]="url === '/'"
+        (click)="navigate('/')">
+        <icon-component icon="play-circle"></icon-component>
+        <span>{{ name | async }}</span>
+      </button>
+      <button mat-list-item
+        [class.active]="url.startsWith('/mapview')"
+        (click)="navigate('/', 'mapview')">
+        <icon-component icon="globe"></icon-component>
+        <i18n i18n="@@mapview">mapview</i18n>
+      </button>
+      <button mat-list-item
+        [class.active]="url.startsWith('/activities')"
+        (click)="navigate('/', 'activities')">
+        <icon-component icon="map-marker-alt"></icon-component>
+        <i18n i18n="@@activities">activities</i18n>
+      </button>
+      <button mat-list-item
+        [class.active]="url.startsWith('/organisations')"
+        (click)="navigate('/', 'organisations')">
+        <icon-component icon="at"></icon-component>
+        <i18n i18n="@@organisations">organisations</i18n>
+      </button>
+      <button mat-list-item
+        [class.active]="url.startsWith('/blogposts')"
+        (click)="navigate('/', 'blogposts')">
+        <icon-component icon="comment-dots"></icon-component>
+        <i18n i18n="@@blogposts">blogposts</i18n>
+      </button>
+      <button mat-list-item
+        [class.active]="url.startsWith('/infopages')"
+        (click)="navigate('/', 'infopages')">
+        <icon-component icon="info-circle"></icon-component>
+        <i18n i18n="@@infopages">infopages</i18n>
+      </button>
+    </mat-action-list>
+    <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
+    <mat-action-list>
+      <button mat-list-item [matMenuTriggerFor]="languageMenu">
+        <icon-component icon="language"></icon-component>
+        <i18n i18n="@@language">language</i18n>
+      </button>
+      <mat-menu #languageMenu="matMenu" xPosition="before">
+        <ng-container *ngFor="let item of languages">
+          <button mat-menu-item
+            [class.active]="item.locale === this.language.value"
+            (click)="this.language.setValue(item.locale)">
+            <pre>{{ item.locale }}</pre>
+            {{ item.name }}
+          </button>
+        </ng-container>
+      </mat-menu>
+      <button mat-list-item
+        [class.active]="url.startsWith('/imprint')"
+        (click)="navigate('/', 'imprint')">
+        <icon-component icon="bullhorn"></icon-component>
+        <i18n i18n="@@imprint">imprint</i18n>
+      </button>
+      <button mat-list-item
+        [class.active]="url.startsWith('/policies')"
+        (click)="navigate('/', 'policies')">
+        <icon-component icon="balance-scale"></icon-component>
+        <i18n i18n="@@policies">policies</i18n>
+      </button>
+    </mat-action-list>
+  </ng-template>
+</drawer-component>

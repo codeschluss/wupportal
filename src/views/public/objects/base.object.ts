@@ -1,10 +1,9 @@
 import { AfterViewInit, HostBinding, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { CrudJoiner, CrudModel, CrudResolver, Headers, PlatformProvider, Selfrouter } from '@wooportal/core';
-import { ExpandCompatComponent } from '../../shared/compat/expand/expand.compat';
-import { ExpandCompat } from '../../shared/compat/expand/expand.compat.i';
-import { openUrl } from '../../shared/shared.imports';
+import { DeviceProvider, openUrl } from '@wooportal/app';
+import { CrudJoiner, CrudModel, CrudResolver, Headers, Selfrouter } from '@wooportal/core';
+import { ExpandComponent } from '../../shared/expand/expand.component';
 
 export abstract class BaseObject<Model extends CrudModel>
   extends Selfrouter implements OnInit, AfterViewInit {
@@ -38,12 +37,12 @@ export abstract class BaseObject<Model extends CrudModel>
     };
   }
 
-  @ViewChildren(ExpandCompatComponent)
-  private expands: QueryList<ExpandCompat>;
+  @ViewChildren(ExpandComponent)
+  private expands: QueryList<ExpandComponent>;
 
   public constructor(
     public router: Router,
-    protected platformProvider: PlatformProvider,
+    protected deviceProvider: DeviceProvider,
     private headers: Headers,
     private i18n: I18n,
     private route: ActivatedRoute
@@ -57,15 +56,15 @@ export abstract class BaseObject<Model extends CrudModel>
   }
 
   public ngAfterViewInit(): void {
-    if (this.expands.length && this.platformProvider.name !== 'Server') {
+    if (this.expands.length && this.deviceProvider.notation !== 'Server') {
       this.expands.first.open();
     }
 
     this.ngPostViewInit();
   }
 
-  public expanded(expand: ExpandCompat): void {
-    if (this.expands.length && this.platformProvider.name !== 'Server') {
+  public expanded(expand: ExpandComponent): void {
+    if (this.expands.length && this.deviceProvider.notation !== 'Server') {
       this.expands.filter((e) => e !== expand).forEach((e) => e.close());
     }
   }

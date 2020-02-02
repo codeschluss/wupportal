@@ -87,7 +87,7 @@ npm run build:lib && \
 npm run build:app && \
 npm run build:ssr && \
 npm clean-install --no-optional --only=production && \
-mv /tmp/client.apk target/@wooportal/client && \
+mv /tmp/client.apk platforms/web/@wooportal/client && \
 #
 # cleanup
 apk del --purge build && \
@@ -96,4 +96,4 @@ find /root /tmp -mindepth 1 -delete
 # runtime
 EXPOSE 4000
 WORKDIR /opt/wooportal.client
-CMD node target/express
+CMD node platforms/web/express

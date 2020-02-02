@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CrudJoiner } from '@wooportal/core';
-import { ConfigurationModel } from '../../../../realm/models/configuration.model';
-import { BasePanel } from '../base.panel';
+import { ConfigurationModel } from '../../../../base/models/configuration.model';
+import { BasePanel } from '../../base/base.panel';
 
 @Component({
   templateUrl: './application.panel.html'

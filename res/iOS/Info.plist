@@ -37,6 +37,7 @@
 
     <key>LSApplicationQueriesSchemes</key>
     <array>
+      <string>about</string>
       <string>mailto</string>
       <string>tel</string>
     </array>

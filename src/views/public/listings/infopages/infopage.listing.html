@@ -1,8 +1,8 @@
 <main>
   <ng-container *ngFor="let item of items | async">
-    <expand-compat #expand (changed)="$event && expanded(expand)">
+    <expand-component #expand (changed)="$event && expanded(expand)">
       <ng-template #expandHeader>
-        <icon-compat icon="info-circle"></icon-compat>
+        <icon-component icon="info-circle"></icon-component>
         {{ item.name }}
         <small>({{ item.infopages.length }})</small>
       </ng-template>
@@ -11,9 +11,9 @@
           <infopage-card [item]="page"></infopage-card>
         </ng-container>
       </ng-template>
-    </expand-compat>
+    </expand-component>
   </ng-container>
   <ng-container *ngIf="next || prev">
-    <pager-compat [next]="next" [prev]="prev"></pager-compat>
+    <pager-component [next]="next" [prev]="prev"></pager-component>
   </ng-container>
 </main>

@@ -2,13 +2,16 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Box, TokenProvider } from '@wooportal/core';
-import { BaseForm, EditorFieldComponent, FormField, StringFieldComponent, Tests, UrlFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { OrganisationModel } from '../../../realm/models/organisation.model';
-import { OrganisationProvider } from '../../../realm/providers/organisation.provider';
-import { TranslationProvider } from '../../../realm/providers/translation.provider';
-import { TranslationBase } from '../../../realm/translations/translation.base';
+import { OrganisationModel } from '../../../base/models/organisation.model';
+import { OrganisationProvider } from '../../../base/providers/organisation.provider';
+import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { BaseForm, FormField } from '../base/base.form';
+import { BaseTests } from '../base/base.tests';
+import { EditorFieldComponent } from '../fields/editor.field';
+import { StringFieldComponent } from '../fields/string.field';
+import { UrlFieldComponent } from '../fields/url.field';
 
 @Component({
   selector: 'organisation-form',
@@ -39,7 +42,7 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
 })
 
 export class OrganisationFormComponent
-  extends TranslationBase<OrganisationModel> {
+  extends BaseForm<OrganisationModel> {
 
   public fields: FormField[] = [
     {
@@ -61,14 +64,14 @@ export class OrganisationFormComponent
     {
       name: 'phone',
       input: StringFieldComponent,
-      tests: [Tests.neither('phone', 'mail')],
+      tests: [BaseTests.neither('phone', 'mail')],
       type: 'tel'
     },
     {
       name: 'mail',
       input: StringFieldComponent,
       tests: [
-        Tests.neither('phone', 'mail'),
+        BaseTests.neither('phone', 'mail'),
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ],
       type: 'email'
@@ -89,7 +92,7 @@ export class OrganisationFormComponent
     tokenProvider: TokenProvider,
     translationProvider: TranslationProvider
   ) {
-    super(translationProvider, route, tokenProvider);
+    super(route, tokenProvider, translationProvider);
   }
 
   public persist(): Observable<any> {

@@ -35,7 +35,7 @@ main {
         margin: -1rem 0 0 1rem;
       }
 
-      & > [compat=expand] {
+      & > [component=expand] {
         display: block;
         margin: 1rem auto;
 
@@ -74,7 +74,7 @@ main {
                   padding-left: .5rem;
                 }
 
-                [compat=icon] {
+                [component=icon] {
                   padding-right: .5rem;
                 }
               }
@@ -163,7 +163,7 @@ main {
                       overflow: hidden;
                       text-overflow: ellipsis;
 
-                      [compat=icon] {
+                      [component=icon] {
                         padding-right: .5rem;
                       }
                     }
@@ -208,7 +208,7 @@ main {
       }
     }
 
-    & > marked-compat {
+    & > marked-component {
       flex: 1 1 auto;
       font-size: 1rem;
       line-height: 1.5rem;

@@ -44,7 +44,7 @@ module.exports = {
             onlyCompileBundledFiles: true,
             compilerOptions: {
               declaration: false,
-              outDir: `${process.env.PWD}/target/@wooportal/editor`,
+              outDir: `${process.env.PWD}/platforms/web/@wooportal/editor`,
               target: 'es6'
             }
           }
@@ -84,7 +84,7 @@ module.exports = {
     filename: 'index.js',
     library: 'InlineEditor',
     libraryTarget: 'umd',
-    path: `${process.env.PWD}/target/@wooportal/editor`
+    path: `${process.env.PWD}/platforms/web/@wooportal/editor`
   },
 
   performance: {

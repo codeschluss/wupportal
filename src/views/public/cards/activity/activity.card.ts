@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import * as ColorConvert from 'color-convert';
-import { ActivityModel } from '../../../../realm/models/activity.model';
+import { ActivityModel } from '../../../../base/models/activity.model';
 import { BaseCard } from '../base.card';
 
 @Component({

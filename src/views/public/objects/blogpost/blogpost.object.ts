@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BlogpostModel } from '../../../../realm/models/blogpost.model';
+import { BlogpostModel } from '../../../../base/models/blogpost.model';
 import { BaseObject } from '../base.object';
 
 @Component({

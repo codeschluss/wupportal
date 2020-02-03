@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BaseStepper, FormStep } from '@wooportal/forms';
-import { KeywordModel } from '../../../realm/models/keyword.model';
+import { KeywordModel } from '../../../base/models/keyword.model';
+import { BaseStepper, FormStep } from '../base/base.stepper';
 import { KeywordFormComponent } from '../forms/keyword.form';
 import { TranslationFormComponent } from '../forms/translation.form';
 

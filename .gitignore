@@ -1,7 +1,6 @@
 /hooks/
 /node_modules/
 /platforms/
-/target/
 
 /package-lock.json
 /webpack.config.js

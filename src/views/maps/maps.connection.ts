@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ActivityModel } from '../../realm/models/activity.model';
+import { ActivityModel } from '../../base/models/activity.model';
 
 export class MapsConnection {
 

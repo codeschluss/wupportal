@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Route } from '@angular/router';
-import { PlatformProvider, Selfrouter } from '@wooportal/core';
+import { ApplicationSettings, DeviceProvider, GeoLocation } from '@wooportal/app';
+import { Selfrouter } from '@wooportal/core';
 import { WebView } from 'tns-core-modules/ui/web-view';
-import { ClientPackage } from '../../utils/package';
-import { geolocation } from '../shared/shared.imports';
 
 @Component({
   styleUrls: ['maps.component.scss'],
@@ -21,38 +20,39 @@ export class MapsComponent
   private webview: ElementRef<WebView>;
 
   public get source(): string {
-    return `${ClientPackage.config.defaults.appUrl}/mapview?native`;
+    return `${this.app.config.defaults.appUrl}/mapview?native`;
   }
 
   public constructor(
-    private platformProvider: PlatformProvider
+    private app: ApplicationSettings,
+    private deviceProvider: DeviceProvider
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    geolocation.enableLocationRequest().catch(() => { });
+    GeoLocation.enableLocationRequest().catch(() => { });
   }
 
   public ngAfterViewInit(): void {
-    let wv = this.webview.nativeElement as any;
+    if (this.webview.nativeElement.isLoaded) {
+      let wv = this.webview.nativeElement as any;
 
-    // tslint:disable-next-line
-    if(!wv.nativeView){return wv.once('loaded',()=>this.ngAfterViewInit());}
-    // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
+      switch (this.deviceProvider.notation) {
+        case 'Android':
+          wv = wv.android;
+          wv.getSettings().setGeolocationEnabled(true);
+          wv.getSettings().setJavaScriptEnabled(true);
+          wv.setWebChromeClient(new this.deviceProvider.webChromeClient());
+          wv.setWebViewClient(new this.deviceProvider.webViewClient());
+          break;
 
-    switch (this.platformProvider.name) {
-      case 'Android':
-        wv = wv.android;
-        wv.getSettings().setGeolocationEnabled(true);
-        wv.getSettings().setJavaScriptEnabled(true);
-        wv.setWebChromeClient(new this.platformProvider.chromeClient());
-        wv.setWebViewClient(new this.platformProvider.viewClient());
-        break;
-
-      case 'iOS':
-        wv.on('loadStarted', (e) => this.platformProvider.resourceClient(e));
-        break;
+        case 'iOS':
+          wv.on('loadStarted', this.deviceProvider.resourceClient);
+          break;
+      }
+    } else {
+      this.webview.nativeElement.once('loaded', () => this.ngAfterViewInit());
     }
   }
 

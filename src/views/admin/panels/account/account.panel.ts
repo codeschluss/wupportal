@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CrudJoiner } from '@wooportal/core';
 import { filter } from 'rxjs/operators';
-import { ActivityModel } from '../../../../realm/models/activity.model';
-import { BlogpostModel } from '../../../../realm/models/blogpost.model';
-import { OrganisationModel } from '../../../../realm/models/organisation.model';
-import { UserModel } from '../../../../realm/models/user.model';
-import { RequestDialogComponent } from '../../dialogs/request.dialog';
-import { BasePanel } from '../base.panel';
+import { ActivityModel } from '../../../../base/models/activity.model';
+import { BlogpostModel } from '../../../../base/models/blogpost.model';
+import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { UserModel } from '../../../../base/models/user.model';
+import { BasePanel } from '../../base/base.panel';
+import { RequestPopupComponent } from '../../popups/request.popup';
 
 @Component({
   templateUrl: './account.panel.html'
@@ -64,7 +64,7 @@ export class AccountPanelComponent extends BasePanel {
   }
 
   public joinOrganisations(): void {
-    this.dialog.open(RequestDialogComponent, {
+    this.dialog.open(RequestPopupComponent, {
       data: this.user
     }).afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
   }

@@ -1,16 +1,16 @@
 <main>
   <ng-container *ngIf="results === 0">
-    <icon-compat icon="frown"></icon-compat>
+    <icon-component icon="frown"></icon-component>
     <strong class="mat-title">
       <i18n i18n="@@notFoundError">notFoundError</i18n>
     </strong>
   </ng-container>
   <ng-container *ngIf="results > 0">
     <ng-container *ngIf="items.activities.length">
-      <expand-compat #activities
+      <expand-component #activities
         (changed)="$event && expanded(activities)">
         <ng-template #expandHeader>
-          <icon-compat icon="map-marker-alt"></icon-compat>
+          <icon-component icon="map-marker-alt"></icon-component>
           <i18n i18n="@@activities">activities</i18n>
           <small>({{ items.activities.length }})</small>
         </ng-template>
@@ -19,13 +19,13 @@
             <activity-card [item]="item"></activity-card>
           </ng-container>
         </ng-template>
-      </expand-compat>
+      </expand-component>
     </ng-container>
     <ng-container *ngIf="items.organisations.length">
-      <expand-compat #organisations
+      <expand-component #organisations
         (changed)="$event && expanded(organisations)">
         <ng-template #expandHeader>
-          <icon-compat icon="at"></icon-compat>
+          <icon-component icon="at"></icon-component>
           <i18n i18n="@@organisations">organisations</i18n>
           <small>({{ items.organisations.length }})</small>
         </ng-template>
@@ -34,13 +34,13 @@
             <organisation-card [item]="item"></organisation-card>
           </ng-container>
         </ng-template>
-      </expand-compat>
+      </expand-component>
     </ng-container>
     <ng-container *ngIf="items.blogposts.length">
-      <expand-compat #blogposts
+      <expand-component #blogposts
         (changed)="$event && expanded(blogposts)">
         <ng-template #expandHeader>
-          <icon-compat icon="comment-dots"></icon-compat>
+          <icon-component icon="comment-dots"></icon-component>
           <i18n i18n="@@blogposts">blogposts</i18n>
           <small>({{ items.blogposts.length }})</small>
         </ng-template>
@@ -49,13 +49,13 @@
             <blogpost-card [item]="item"></blogpost-card>
           </ng-container>
         </ng-template>
-      </expand-compat>
+      </expand-component>
     </ng-container>
     <ng-container *ngIf="items.infopages.length">
-      <expand-compat #infopages
+      <expand-component #infopages
         (changed)="$event && expanded(infopages)">
         <ng-template #expandHeader>
-          <icon-compat icon="info-circle"></icon-compat>
+          <icon-component icon="info-circle"></icon-component>
           <i18n i18n="@@infopages">infopages</i18n>
           <small>({{ items.infopages.length }})</small>
         </ng-template>
@@ -64,13 +64,13 @@
             <infopage-card [item]="item"></infopage-card>
           </ng-container>
         </ng-template>
-      </expand-compat>
+      </expand-component>
     </ng-container>
     <ng-container *ngIf="items.categories.length">
-      <expand-compat #categories
+      <expand-component #categories
         (changed)="$event && expanded(categories)">
         <ng-template #expandHeader>
-          <icon-compat icon="dot-circle"></icon-compat>
+          <icon-component icon="dot-circle"></icon-component>
           <i18n i18n="@@categories">categories</i18n>
           <small>({{ items.categories.length }})</small>
         </ng-template>
@@ -87,13 +87,13 @@
             </ng-container>
           </mat-chip-list>
         </ng-template>
-      </expand-compat>
+      </expand-component>
     </ng-container>
     <ng-container *ngIf="items.suburbs.length">
-      <expand-compat #suburbs
+      <expand-component #suburbs
         (changed)="$event && expanded(suburbs)">
         <ng-template #expandHeader>
-          <icon-compat icon="city"></icon-compat>
+          <icon-component icon="city"></icon-component>
           <i18n i18n="@@suburbs">suburbs</i18n>
           <small>({{ items.suburbs.length }})</small>
         </ng-template>
@@ -103,19 +103,19 @@
               <button mat-button
                 [queryParams]="{ suburbs: item.id }"
                 [routerLink]="['/', 'activities']">
-                <icon-compat icon="city"></icon-compat>
+                <icon-component icon="city"></icon-component>
                 <span>{{ item.name }}</span>
               </button>
             </ng-container>
           </section>
         </ng-template>
-      </expand-compat>
+      </expand-component>
     </ng-container>
     <ng-container *ngIf="items.targetGroups.length">
-      <expand-compat #targetGroups
+      <expand-component #targetGroups
         (changed)="$event && expanded(targetGroups)">
         <ng-template #expandHeader>
-          <icon-compat icon="users"></icon-compat>
+          <icon-component icon="users"></icon-component>
           <i18n i18n="@@targetGroups">targetGroups</i18n>
           <small>({{ items.targetGroups.length }})</small>
         </ng-template>
@@ -125,13 +125,13 @@
               <button mat-button
                 [queryParams]="{ targetgroups: item.id }"
                 [routerLink]="['/', 'activities']">
-                <icon-compat icon="users"></icon-compat>
+                <icon-component icon="users"></icon-component>
                 <span>{{ item.name }}</span>
               </button>
             </ng-container>
           </section>
         </ng-template>
-      </expand-compat>
+      </expand-component>
     </ng-container>
   </ng-container>
 </main>

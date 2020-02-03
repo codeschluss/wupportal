@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BaseTable, TableColumn } from '@wooportal/forms';
-import { ActivityModel } from '../../../realm/models/activity.model';
+import { ActivityModel } from '../../../base/models/activity.model';
+import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
   selector: 'activity-table',

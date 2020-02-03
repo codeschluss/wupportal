@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
-import { I18nResolver, PlatformGuarding, SessionResolver } from '@wooportal/core';
-import { ErrorNetsplitComponent } from './error/netsplit/error.netsplit';
-import { LayoutComponent } from './views/shared/layout/layout.component';
+import { Route } from '@angular/router';
+import { AppRouterModule } from '@wooportal/app';
+import { LabelsResolver, LoadingGuarding, SessionResolver } from '@wooportal/core';
+import { ErrorNetsplitComponent } from './views/error/netsplit/error.netsplit';
+import { SharedComponent } from './views/shared/shared.component';
 
 const routes: Route[] = [
   {
@@ -10,7 +11,7 @@ const routes: Route[] = [
     children: [
       {
         path: 'error',
-        loadChildren: () => import('./error/error.module')
+        loadChildren: () => import('./views/error/error.module')
           .then((imported) => imported.ErrorModule)
       },
       {
@@ -33,21 +34,21 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [RouterModule],
-  imports: [RouterModule.forRoot([
+  exports: [AppRouterModule],
+  imports: [AppRouterModule.forRoot([
     {
       path: 'netsplit',
-      canDeactivate: [PlatformGuarding],
+      canDeactivate: [LoadingGuarding],
       component: ErrorNetsplitComponent
     },
     {
       path: '',
       children: routes,
-      component: LayoutComponent,
-      canActivate: [PlatformGuarding],
+      component: SharedComponent,
+      canActivate: [LoadingGuarding],
       resolve: {
         session: SessionResolver,
-        xliff: I18nResolver
+        xliff: LabelsResolver
       }
     }
   ], {

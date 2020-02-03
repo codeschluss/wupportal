@@ -30,10 +30,14 @@
     <string>????</string>
 
     <key>CFBundleVersion</key>
-    <string>0.1.1.1</string>
+    <string>0.1.1.11</string>
+
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
 
     <key>LSApplicationQueriesSchemes</key>
     <array>
+      <string>about</string>
       <string>mailto</string>
       <string>tel</string>
     </array>

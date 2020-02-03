@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ApplicationSettings } from '@wooportal/app';
 import { Headers } from '@wooportal/core';
-import { ClientPackage } from '../../utils/package';
 
 @Component({
   template: `
@@ -12,6 +12,7 @@ import { ClientPackage } from '../../utils/package';
 export class PublicComponent {
 
   public constructor(
+    app: ApplicationSettings,
     headers: Headers,
     route: ActivatedRoute
   ) {
@@ -19,7 +20,7 @@ export class PublicComponent {
 
     headers.init({
       base: conf.find((c) => c.item === 'portalName').value,
-      city: ClientPackage.config.defaults.city,
+      city: app.config.defaults.city,
       slug: conf.find((c) => c.item === 'portalSubtitle').value,
       spot: [
         conf.find((c) => c.item === 'mapLatitude').value,

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { CrudJoiner, CrudResolver, Headers } from '@wooportal/core';
 import { Observable } from 'rxjs';
-import { ActivityModel } from '../../../../realm/models/activity.model';
+import { ActivityModel } from '../../../../base/models/activity.model';
 import { BasePage } from '../base.page';
 
 @Component({

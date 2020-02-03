@@ -2,13 +2,12 @@ import { Component, ElementRef, Optional, Type, ViewChild } from '@angular/core'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { CrudJoiner, Headers, PlatformProvider } from '@wooportal/core';
-import { ExpandCompat } from 'src/views/shared/compat/expand/expand.compat.i';
+import { ApplicationSettings, DeviceProvider, GeoLocation } from '@wooportal/app';
+import { CrudJoiner, Headers } from '@wooportal/core';
 import { WebView } from 'tns-core-modules/ui/web-view';
-import { ActivityModel } from '../../../../realm/models/activity.model';
-import { ScheduleModel } from '../../../../realm/models/schedule.model';
-import { ClientPackage } from '../../../../utils/package';
-import { geolocation } from '../../../shared/shared.imports';
+import { ActivityModel } from '../../../../base/models/activity.model';
+import { ScheduleModel } from '../../../../base/models/schedule.model';
+import { ExpandComponent } from '../../../shared/expand/expand.component';
 import { BaseObject } from '../base.object';
 
 @Component({
@@ -43,20 +42,21 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   private webview: ElementRef<WebView>;
 
   public constructor(
+    private app: ApplicationSettings,
     @Optional() private sanitizer: DomSanitizer,
     i18n: I18n,
-    platformProvider: PlatformProvider,
+    deviceProvider: DeviceProvider,
     route: ActivatedRoute,
     router: Router,
     headers: Headers
   ) {
-    super(router, platformProvider, headers, i18n, route);
+    super(router, deviceProvider, headers, i18n, route);
   }
 
-  public reloader(expand: ExpandCompat): void {
+  public reloader(expand: ExpandComponent): void {
     this.expanded(expand);
 
-    if (this.platformProvider.name === 'iOS') {
+    if (this.deviceProvider.notation === 'iOS') {
       this.webview.nativeElement.reload();
     }
   }
@@ -64,10 +64,10 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   protected ngPostInit(): void {
     const url = `/mapview?embed&items=${this.item.id}`;
 
-    switch (this.platformProvider.type) {
+    switch (this.deviceProvider.platform) {
       case 'Native':
-        geolocation.enableLocationRequest().catch(() => { });
-        this.source = ClientPackage.config.defaults.appUrl + url + '&native';
+        GeoLocation.enableLocationRequest().catch(() => { });
+        this.source = this.app.config.defaults.appUrl + url + '&native';
         break;
 
       case 'Online':
@@ -77,20 +77,20 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   }
 
   protected ngPostViewInit(): void {
-    if (this.platformProvider.type === 'Native') {
-      let wv = this.webview.nativeElement as any;
+    if (this.deviceProvider.platform === 'Native') {
+      if (this.webview.nativeElement.isLoaded) {
+        let wv = this.webview.nativeElement as any;
 
-      // tslint:disable-next-line
-      if(!wv.nativeView){return wv.once('loaded',()=>this.ngPostViewInit());}
-      // TODO: https://github.com/NativeScript/nativescript-angular/issues/848
-
-      switch (this.platformProvider.name) {
-        case 'Android':
-          wv = wv.android;
-          wv.getSettings().setGeolocationEnabled(true);
-          wv.getSettings().setJavaScriptEnabled(true);
-          wv.setWebChromeClient(new this.platformProvider.chromeClient());
-          break;
+        switch (this.deviceProvider.notation) {
+          case 'Android':
+            wv = wv.android;
+            wv.getSettings().setGeolocationEnabled(true);
+            wv.getSettings().setJavaScriptEnabled(true);
+            wv.setWebChromeClient(new this.deviceProvider.webChromeClient());
+            break;
+        }
+      } else {
+        this.webview.nativeElement.once('loaded', () => this.ngPostViewInit());
       }
     }
   }

@@ -1,6 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
-import { CoreModule, PlatformCommonModule } from '@wooportal/core';
+import { AppCommonModule } from '@wooportal/app';
 import { PublicModule } from '../public/public.module';
+import { SharedModule } from '../shared/shared.module';
 import { MapsComponent } from './maps.component';
 import { materials } from './maps.imports';
 import { MapsRouter } from './maps.router';
@@ -18,10 +19,10 @@ const components: Type<any>[] = [
   ],
   imports: [
     ...materials,
-    CoreModule,
+    AppCommonModule,
     MapsRouter,
-    PlatformCommonModule,
-    PublicModule
+    PublicModule,
+    SharedModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

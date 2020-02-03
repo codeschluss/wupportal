@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BasePanel } from '../base.panel';
+import { BasePanel } from '../../base/base.panel';
 
 @Component({
   templateUrl: './positioning.panel.html'

@@ -14,7 +14,6 @@ page {
   & > action-bar {
     background-color: $color-primary;
     color: $color-lightest;
-    font-weight: normal;
 
     stack-layout {
       orientation: horizontal;
@@ -28,7 +27,7 @@ page {
         height: rem(3);
         width: rem(3);
 
-        [compat=icon] {
+        [component=icon] {
           border-radius: rem(2.5);
           font-size: rem(1);
           height: rem(2.5);
@@ -38,7 +37,7 @@ page {
     }
   }
 
-  [compat=drawer] {
+  [component=drawer] {
     #TKDrawerContent {
       background-color: $color-lightest;
 
@@ -79,7 +78,7 @@ page {
               }
 
               &.base {
-                [compat=i18n] {
+                [component=i18n] {
                   animation-direction: reverse;
                   animation-duration: $animation-duration;
                   animation-fill-mode: reverse;
@@ -88,7 +87,7 @@ page {
               }
 
               &.float {
-                [compat=i18n] {
+                [component=i18n] {
                   animation-direction: forwards;
                   animation-duration: $animation-duration;
                   animation-fill-mode: forwards;
@@ -96,7 +95,7 @@ page {
                 }
               }
 
-              [compat=i18n] {
+              [component=i18n] {
                 margin-left: 0;
                 margin-top: rem(1);
                 origin-x: 0;
@@ -116,12 +115,12 @@ page {
                 margin-left: 175;
 
                 &.off {
-                  [compat=icon] {
+                  [component=icon] {
                     color: $color-dark;
                   }
                 }
 
-                [compat=icon] {
+                [component=icon] {
                   border-radius: rem(2);
                   font-size: rem(1);
                   height: rem(2);
@@ -136,7 +135,7 @@ page {
               vertical-align: center;
             }
 
-            [compat=icon] {
+            [component=icon] {
               font-size: rem(1);
               height: rem(2);
               margin-right: rem(.5);

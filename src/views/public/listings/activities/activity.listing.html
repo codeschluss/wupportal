@@ -2,7 +2,7 @@
   <header>
     <mat-form-field>
       <mat-label>
-        <icon-compat icon="city"></icon-compat>
+        <icon-component icon="city"></icon-component>
         <i18n i18n="@@suburbs">suburbs</i18n>
       </mat-label>
       <mat-select multiple [formControl]="suburbCtrl">
@@ -15,7 +15,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>
-        <icon-compat icon="users"></icon-compat>
+        <icon-component icon="users"></icon-component>
         <i18n i18n="@@targetGroups">targetGroups</i18n>
       </mat-label>
       <mat-select multiple [formControl]="targetGroupCtrl">
@@ -45,7 +45,7 @@
         class="mat-body"
         [style.display]="blank || categories.length < 5 ? null : 'none'"
         (click)="blank = false">
-        <icon-compat icon="ellipsis-h"></icon-compat>
+        <icon-component icon="ellipsis-h"></icon-component>
       </mat-chip>
     </mat-chip-list>
   </header>
@@ -62,7 +62,7 @@
         </activity-card>
       </ng-container>
       <ng-container *ngIf="next || prev">
-        <pager-compat [next]="next" [prev]="prev"></pager-compat>
+        <pager-component [next]="next" [prev]="prev"></pager-component>
       </ng-container>
     </nav>
   </section>

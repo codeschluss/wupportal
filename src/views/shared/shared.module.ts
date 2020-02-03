@@ -14,28 +14,27 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CoreModule, PlatformCommonModule, PlatformRouterModule } from '@wooportal/core';
-import { CalendarCompatComponent } from './compat/calendar/calendar.compat';
-import { DrawerCompatComponent } from './compat/drawer/drawer.compat';
-import { ExpandCompatComponent } from './compat/expand/expand.compat';
-import { IconCompatComponent } from './compat/icon/icon.compat';
-import { MarkedCompatComponent } from './compat/marked/marked.compat';
-import { NavbarCompatComponent } from './compat/navbar/navbar.compat';
-import { PagerCompatComponent } from './compat/pager/pager.compat';
-import { LayoutComponent } from './layout/layout.component';
-
-const compat: Type<any>[] = [
-  CalendarCompatComponent,
-  DrawerCompatComponent,
-  ExpandCompatComponent,
-  IconCompatComponent,
-  MarkedCompatComponent,
-  NavbarCompatComponent,
-  PagerCompatComponent
-];
+import { AppCommonModule, AppRouterModule } from '@wooportal/app';
+import { CalendarComponent } from './calendar/calendar.component';
+import { DrawerComponent } from './drawer/drawer.component';
+import { ExpandComponent } from './expand/expand.component';
+import { I18nComponent } from './i18n/i18n.component';
+import { IconComponent } from './icon/icon.component';
+import { MarkedComponent } from './marked/marked.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { PagerComponent } from './pager/pager.component';
+import { SharedComponent } from './shared.component';
 
 const components: Type<any>[] = [
-  LayoutComponent
+  CalendarComponent,
+  DrawerComponent,
+  ExpandComponent,
+  I18nComponent,
+  IconComponent,
+  MarkedComponent,
+  NavbarComponent,
+  PagerComponent,
+  SharedComponent
 ];
 
 const materials: Type<any>[] = [
@@ -58,17 +57,15 @@ const materials: Type<any>[] = [
 
 @NgModule({
   declarations: [
-    ...compat,
     ...components
   ],
   exports: [
-    ...compat
+    ...components
   ],
   imports: [
     ...materials,
-    CoreModule,
-    PlatformCommonModule,
-    PlatformRouterModule
+    AppCommonModule,
+    AppRouterModule
   ]
 })
 

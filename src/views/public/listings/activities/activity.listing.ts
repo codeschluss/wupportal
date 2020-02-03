@@ -6,10 +6,10 @@ import { Arr, CrudJoiner, CrudModel, CrudResolver, ReadParams } from '@wooportal
 import * as ColorConvert from 'color-convert';
 import { merge } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import { ActivityModel } from '../../../../realm/models/activity.model';
-import { CategoryModel } from '../../../../realm/models/category.model';
-import { SuburbModel } from '../../../../realm/models/suburb.model';
-import { TargetGroupModel } from '../../../../realm/models/target-group.model';
+import { ActivityModel } from '../../../../base/models/activity.model';
+import { CategoryModel } from '../../../../base/models/category.model';
+import { SuburbModel } from '../../../../base/models/suburb.model';
+import { TargetGroupModel } from '../../../../base/models/target-group.model';
 import { MapsConnection } from '../../../maps/maps.connection';
 import { ActivityCardComponent } from '../../cards/activity/activity.card';
 import { BaseListing } from '../base.listing';
@@ -84,7 +84,7 @@ export class ActivityListingComponent
   }
 
   public ngAfterViewInit(): void {
-    if (this.platformProvider.type === 'Online') {
+    if (this.deviceProvider.platform === 'Online') {
       this.chipList.chipSelectionChanges.subscribe(() => this.categoryCtrl
         .setValue(Arr(this.chipList.selected).map((chip) => chip.value)));
 
@@ -92,8 +92,8 @@ export class ActivityListingComponent
         .subscribe((categories) => this.chipList.chips.forEach((chip) =>
           chip.selected = categories.includes(chip.value)));
 
-      if (this.platformProvider.name === 'Web') {
-        const source = this.document.defaultView;
+      if (this.deviceProvider.notation === 'Web') {
+        const source = this.deviceProvider.document.defaultView;
         const target = this.frame.nativeElement.contentWindow;
 
         this.connection = new MapsConnection(source, target);

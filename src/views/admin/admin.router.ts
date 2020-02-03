@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
+import { Route } from '@angular/router';
+import { AppRouterModule } from '@wooportal/app';
 import { TokenResolver } from '@wooportal/core';
 import { AdminComponent } from './admin.component';
 import { AdminGuarding } from './admin.guarding';
@@ -61,8 +62,8 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [RouterModule],
-  imports: [RouterModule.forChild([
+  exports: [AppRouterModule],
+  imports: [AppRouterModule.forChild([
     {
       path: '',
       children: routes,

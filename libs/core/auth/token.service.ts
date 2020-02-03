@@ -1,22 +1,22 @@
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApplicationSettings } from '@wooportal/app';
 import { filter, map } from 'rxjs/operators';
-import { Response, StrictHttpResponse } from '../utils/api';
-import { CoreSettings } from '../utils/settings';
+import { Response, StrictHttpResponse } from '../tools/api';
 import { RefreshTokenModel } from './refresh-token.model';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
 
   public constructor(
-    private coreSettings: CoreSettings,
+    private app: ApplicationSettings,
     private httpClient: HttpClient,
   ) { }
 
   public apiLoginResponse(username: string, password: string): Response {
     return this.call(new HttpRequest<any>(
       'POST',
-      this.coreSettings.apiAuthUrl,
+      this.app.config.api.authUrl,
       {
         username,
         password
@@ -32,7 +32,7 @@ export class TokenService {
     const header = token ? { authorization: `Bearer ${token.raw}` } : { };
     return this.call(new HttpRequest<any>(
       'GET',
-      this.coreSettings.apiRefreshUrl,
+      this.app.config.api.refreshUrl,
       null,
       {
         headers: new HttpHeaders(header),

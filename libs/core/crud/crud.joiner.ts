@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
-import { BaseService, ReadParams } from '../utils/api';
-import { Base64 } from '../utils/base64';
+import { BaseService, ReadParams } from '../tools/api';
+import { Base64 } from '../tools/base64';
 import { CrudModel } from './crud.model';
 import { CrudProvider } from './crud.provider';
 

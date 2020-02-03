@@ -2,11 +2,13 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TokenProvider } from '@wooportal/core';
-import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ConfigurationModel } from '../../../realm/models/configuration.model';
-import { ConfigurationProvider } from '../../../realm/providers/configuration.provider';
+import { ConfigurationModel } from '../../../base/models/configuration.model';
+import { ConfigurationProvider } from '../../../base/providers/configuration.provider';
+import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { BaseForm, FormField } from '../base/base.form';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'configuration-form',
@@ -102,9 +104,10 @@ export class ConfigurationFormComponent
   public constructor(
     private configurationProvider: ConfigurationProvider,
     route: ActivatedRoute,
-    tokenProvider: TokenProvider
+    tokenProvider: TokenProvider,
+    translationProvider: TranslationProvider
   ) {
-    super(route, tokenProvider);
+    super(route, tokenProvider, translationProvider);
   }
 
   public persist(): Observable<any> {

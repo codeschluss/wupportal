@@ -4,7 +4,7 @@
     [matRippleDisabled]="true"
     [ngStyle]="colors(item.category.color)">
     <mat-card-content>
-      <icon-compat [icon]="item.category.icon"></icon-compat>
+      <icon-component [icon]="item.category.icon"></icon-component>
       <small>
         {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' }}
         <br>{{ item.address.street }} {{ item.address.houseNumber }}

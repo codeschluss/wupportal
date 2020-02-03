@@ -21,7 +21,7 @@ a {
     }
 
     & > mat-card-content {
-      & > [compat=icon] {
+      & > [component=icon] {
         float: right;
         font-size: 4rem;
       }

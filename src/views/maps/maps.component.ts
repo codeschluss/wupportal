@@ -1,9 +1,9 @@
-import { DOCUMENT } from '@angular/common';
 import { HttpRequest } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent } from '@angular/router';
+import { DeviceProvider } from '@wooportal/app';
 import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
@@ -13,9 +13,9 @@ import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
 import { BehaviorSubject, EMPTY, forkJoin, Observable, of, Subscription } from 'rxjs';
 import { catchError, filter, mergeMap, tap } from 'rxjs/operators';
-import { ActivityModel } from '../../realm/models/activity.model';
-import { ConfigurationModel } from '../../realm/models/configuration.model';
-import { ActivityProvider } from '../../realm/providers/activity.provider';
+import { ActivityModel } from '../../base/models/activity.model';
+import { ConfigurationModel } from '../../base/models/configuration.model';
+import { ActivityProvider } from '../../base/providers/activity.provider';
 import { MapsConnection } from './maps.connection';
 
 @Component({
@@ -97,17 +97,17 @@ export class MapsComponent
 
   public get filled(): boolean {
     switch (true) {
-      case 'fullscreenElement' in this.document:
-        return (this.document as any).fullscreenElement !== null;
+      case 'fullscreenElement' in this.deviceProvider.document:
+        return this.deviceProvider.document.fullscreenElement !== null;
 
-      case 'webkitFullscreenElement' in this.document:
-        return (this.document as any).webkitFullscreenElement !== null;
+      case 'webkitFullscreenElement' in this.deviceProvider.document:
+        return this.deviceProvider.document.webkitFullscreenElement !== null;
 
-      case 'mozFullScreenElement' in this.document:
-        return (this.document as any).mozFullScreenElement !== null;
+      case 'mozFullScreenElement' in this.deviceProvider.document:
+        return this.deviceProvider.document.mozFullScreenElement !== null;
 
-      case 'msFullscreenElement' in this.document:
-        return (this.document as any).msFullscreenElement !== null;
+      case 'msFullscreenElement' in this.deviceProvider.document:
+        return this.deviceProvider.document.msFullscreenElement !== null;
     }
   }
 
@@ -118,7 +118,7 @@ export class MapsComponent
   public constructor(
     private activityProvider: ActivityProvider,
     private crudResolver: CrudResolver,
-    @Inject(DOCUMENT) private document: Document,
+    private deviceProvider: DeviceProvider,
     private element: ElementRef<HTMLElement>,
     private loadingProvider: LoadingProvider,
     private positionProvider: PositionProvider,
@@ -150,7 +150,7 @@ export class MapsComponent
       if (this.connection) {
         this.connection.nextRoute(event.url);
       } else if (this.native) {
-        this.document.defaultView.location.href = event.url;
+        this.deviceProvider.document.defaultView.location.href = event.url;
       } else if (this.route.snapshot.queryParamMap.has('embed')) {
         this.router.navigate(this.route.snapshot.url);
       }
@@ -159,7 +159,7 @@ export class MapsComponent
 
   public ngAfterViewInit(): void {
     const params = this.route.snapshot.queryParamMap;
-    const source = this.document.defaultView;
+    const source = this.deviceProvider.document.defaultView;
 
     this.focus.subscribe(() => this.vector.instance.changed());
     this.maps.singleClick.subscribe((event) => this.handleClick(event));
@@ -275,7 +275,7 @@ export class MapsComponent
             return elem.webkitRequestFullscreen();
         }
       } else {
-        const elem = this.document as any;
+        const elem = this.deviceProvider.document as any;
 
         switch (true) {
           case typeof elem.exitFullscreen === 'function':

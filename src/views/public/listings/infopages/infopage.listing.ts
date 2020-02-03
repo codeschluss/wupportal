@@ -1,8 +1,7 @@
 import { Component, QueryList, Type, ViewChildren } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { TopicModel } from '../../../../realm/models/topic.model';
-import { ExpandCompatComponent } from '../../../shared/compat/expand/expand.compat';
-import { ExpandCompat } from '../../../shared/compat/expand/expand.compat.i';
+import { TopicModel } from '../../../../base/models/topic.model';
+import { ExpandComponent } from '../../../shared/expand/expand.component';
 import { BaseListing } from '../base.listing';
 
 @Component({
@@ -22,10 +21,10 @@ export class InfopageListingComponent
 
   protected size: number = 10;
 
-  @ViewChildren(ExpandCompatComponent)
-  private expands: QueryList<ExpandCompat>;
+  @ViewChildren(ExpandComponent)
+  private expands: QueryList<ExpandComponent>;
 
-  public expanded(expand: ExpandCompat): void {
+  public expanded(expand: ExpandComponent): void {
     this.expands.filter((e) => e !== expand).forEach((e) => e.close());
   }
 

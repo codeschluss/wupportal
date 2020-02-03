@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BaseTable, TableColumn } from '@wooportal/forms';
-import { KeywordModel } from '../../../realm/models/keyword.model';
+import { KeywordModel } from '../../../base/models/keyword.model';
+import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
   selector: 'keyword-table',

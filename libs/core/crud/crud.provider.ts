@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { BaseService, ReadParams, Response, ResponseMethod, StrictHttpResponse } from '../utils/api';
+import { BaseService, ReadParams, Response, ResponseMethod, StrictHttpResponse } from '../tools/api';
 import { CrudModel } from './crud.model';
 
 export interface CrudLink {

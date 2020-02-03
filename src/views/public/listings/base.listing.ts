@@ -1,7 +1,7 @@
-import { DOCUMENT } from '@angular/common';
-import { HostBinding, Inject, OnInit, Type } from '@angular/core';
+import { HostBinding, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
-import { Arr, BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, PlatformProvider, ReadParams, Selfrouter } from '@wooportal/core';
+import { DeviceProvider } from '@wooportal/app';
+import { Arr, BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, ReadParams, Selfrouter } from '@wooportal/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
@@ -38,8 +38,7 @@ export abstract class BaseListing<Model extends CrudModel>
   }
 
   public constructor(
-    @Inject(DOCUMENT) protected document: Document,
-    protected platformProvider: PlatformProvider,
+    protected deviceProvider: DeviceProvider,
     protected route: ActivatedRoute,
     protected router: Router,
     private crudResolver: CrudResolver

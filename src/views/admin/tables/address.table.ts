@@ -1,7 +1,7 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner } from '@wooportal/core';
-import { BaseTable, TableColumn } from '@wooportal/forms';
-import { AddressModel } from '../../../realm/models/address.model';
+import { AddressModel } from '../../../base/models/address.model';
+import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
   selector: 'address-table',

@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
 import { EMPTY, Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
-import { UserModel } from '../../../realm/models/user.model';
+import { UserModel } from '../../../base/models/user.model';
+import { BaseForm, FormField } from '../base/base.form';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'user-form',

@@ -1,8 +1,8 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { BaseForm, FormField, StringFieldComponent } from '@wooportal/forms';
-import { TopicModel } from '../../../realm/models/topic.model';
-import { TranslationBase } from '../../../realm/translations/translation.base';
+import { TopicModel } from '../../../base/models/topic.model';
+import { BaseForm, FormField } from '../base/base.form';
+import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'topic-form',
@@ -18,7 +18,7 @@ import { TranslationBase } from '../../../realm/translations/translation.base';
 })
 
 export class TopicFormComponent
-  extends TranslationBase<TopicModel> {
+  extends BaseForm<TopicModel> {
 
   public fields: FormField[] = [
     {

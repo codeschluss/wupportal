@@ -1,4 +1,4 @@
-import { Link, ResourceObject } from '../utils/api';
+import { Link, ResourceObject } from '../tools/api';
 
 export abstract class CrudModel implements ResourceObject {
 

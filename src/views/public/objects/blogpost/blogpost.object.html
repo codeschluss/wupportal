@@ -21,13 +21,14 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <marked-compat [data]="item.content"></marked-compat>
+    <marked-component [data]="item.content"></marked-component>
     <ng-container *ngIf="item.activity || item.images">
       <aside>
         <ng-container *ngIf="item.images">
-          <expand-compat #images (changed)="$event && expanded(images)">
+          <expand-component #images
+            (changed)="$event && expanded(images)">
             <ng-template #expandHeader>
-              <icon-compat icon="image"></icon-compat>
+              <icon-component icon="image"></icon-component>
               <i18n i18n="@@images">images</i18n>
               <small>({{ item.images.length }})</small>
             </ng-template>
@@ -42,18 +43,19 @@
                 </figure>
               </ng-container>
             </ng-template>
-          </expand-compat>
+          </expand-component>
         </ng-container>
         <ng-container *ngIf="item.activity">
-          <expand-compat #activity (changed)="$event && expanded(activity)">
+          <expand-component #activity
+            (changed)="$event && expanded(activity)">
             <ng-template #expandHeader>
-              <icon-compat icon="map-marker-alt"></icon-compat>
+              <icon-component icon="map-marker-alt"></icon-component>
               <i18n i18n="@@activity">activity</i18n>
             </ng-template>
             <ng-template #expandContent>
               <activity-card [item]="item.activity"></activity-card>
             </ng-template>
-          </expand-compat>
+          </expand-component>
         </ng-container>
       </aside>
     </ng-container>

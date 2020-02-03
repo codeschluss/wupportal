@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, PlatformRouterModule } from '@wooportal/core';
-import { ConfigurationModel } from '../../realm/models/configuration.model';
+import { AppRouterModule } from '@wooportal/app';
+import { CrudJoiner, CrudResolver } from '@wooportal/core';
+import { ConfigurationModel } from '../../base/models/configuration.model';
 import { ActivityListingComponent } from './listings/activities/activity.listing';
 import { BlogpostListingComponent } from './listings/blogposts/blogpost.listing';
 import { InfopageListingComponent } from './listings/infopages/infopage.listing';
@@ -19,27 +20,37 @@ import { RegisterPageComponent } from './pages/register/register.page';
 import { SearchPageComponent } from './pages/search/search.page';
 import { PublicComponent } from './public.component';
 
+const listingRoutes: Route[] = [
+  ActivityListingComponent.routing,
+  BlogpostListingComponent.routing,
+  InfopageListingComponent.routing,
+  OrganisationListingComponent.routing
+];
+
+const objectRoutes: Route[] = [
+  ActivityObjectComponent.routing,
+  BlogpostObjectComponent.routing,
+  InfopageObjectComponent.routing,
+  OrganisationObjectComponent.routing
+];
+
+const pageRoutes: Route[] = [
+  HomePageComponent.routing,
+  ImprintPageComponent.routing,
+  LoginPageComponent.routing,
+  LogoutPageComponent.routing,
+  PoliciesPageComponent.routing,
+  RegisterPageComponent.routing,
+  SearchPageComponent.routing
+];
+
 const routes: Route[] = [
   {
     path: '',
     children: [
-      HomePageComponent.routing,
-      ImprintPageComponent.routing,
-      LoginPageComponent.routing,
-      LogoutPageComponent.routing,
-      PoliciesPageComponent.routing,
-      RegisterPageComponent.routing,
-      SearchPageComponent.routing,
-
-      ActivityListingComponent.routing,
-      BlogpostListingComponent.routing,
-      InfopageListingComponent.routing,
-      OrganisationListingComponent.routing,
-
-      ActivityObjectComponent.routing,
-      BlogpostObjectComponent.routing,
-      InfopageObjectComponent.routing,
-      OrganisationObjectComponent.routing
+      ...listingRoutes,
+      ...objectRoutes,
+      ...pageRoutes
     ]
   },
   {
@@ -50,8 +61,8 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [PlatformRouterModule],
-  imports: [PlatformRouterModule.forChild([
+  exports: [AppRouterModule],
+  imports: [AppRouterModule.forChild([
     {
       path: '',
       children: routes,

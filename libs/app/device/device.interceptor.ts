@@ -1,7 +1,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { FileSystem } from '../locals/locals';
 import { ApplicationSettings } from '../tools/settings';
 import { DeviceProvider } from './device.provider';
 
@@ -62,9 +63,21 @@ export class DeviceInterceptor implements HttpInterceptor {
     Observable<HttpEvent<any>> {
 
     if (request.url.startsWith('/')) {
-      return next.handle(request.clone({
-        url: this.app.config.defaults.appUrl + request.url
-      }));
+      switch (true) {
+        case request.url.endsWith('.xliff'):
+          const i18n = FileSystem.knownFolders.currentApp().getFolder('i18n');
+          const file = i18n.getFile(request.url.split('/').pop()).readText();
+          return from(file).pipe(map((xliff) => new HttpResponse<any>({
+            body: xliff,
+            status: 200,
+            url: request.url
+          })));
+
+        default:
+          return next.handle(request.clone({
+            url: this.app.config.defaults.appUrl + request.url
+          }));
+      }
     }
 
     return next.handle(request);

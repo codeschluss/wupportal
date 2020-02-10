@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
-import { ContentView } from 'tns-core-modules/ui/page';
+import { ContentView } from 'tns-core-modules/ui/content-view';
 import { PagerComponent as Compat } from './pager.component.i';
 
 if (!isKnownView('pager-component')) {

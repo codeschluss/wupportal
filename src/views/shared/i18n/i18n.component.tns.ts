@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
+import { ContentView } from 'tns-core-modules/ui/content-view';
 import { Label } from 'tns-core-modules/ui/label';
-import { ContentView } from 'tns-core-modules/ui/page';
 import { I18nComponent as Compat } from './i18n.component.i';
 
 if (!isKnownView('i18n')) {

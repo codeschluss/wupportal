@@ -2,7 +2,7 @@ import { Component, ContentChild, EventEmitter, HostBinding, OnInit, Output, Tem
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { RadSideDrawerComponent } from 'nativescript-ui-sidedrawer/angular/side-drawer-directives';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ContentView } from 'tns-core-modules/ui/page';
+import { ContentView } from 'tns-core-modules/ui/content-view';
 import { DrawerComponent as Compat } from './drawer.component.i';
 
 if (!isKnownView('drawer-component')) {

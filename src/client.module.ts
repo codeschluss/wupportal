@@ -32,12 +32,12 @@ const platform: any[] = [
     ClientComponent
   ],
   imports: [
-    ...platform,
     AppModule.forRoot(PackageJson),
     BaseModule,
     ClientRouter,
     CoreModule,
-    ErrorModule
+    ErrorModule,
+    ...platform
   ],
   providers: [
     { provide: ErrorHandler, useClass: ClientErrorHandler },

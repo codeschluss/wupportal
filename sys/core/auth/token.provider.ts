@@ -116,11 +116,13 @@ export class TokenProvider {
   private work(tokens: AuthTokens): void {
     const accessExp = tokens.access.exp * 1000 - Date.now();
     const refreshExp = tokens.refresh.exp * 1000 - Date.now();
-    this.timeout.unsubscribe();
 
-    this.timeout = refreshExp > accessExp
-      ? timer(accessExp).subscribe(() => this.refresh().subscribe())
-      : timer(refreshExp).subscribe(() => this.remove());
+    if (tokens.access.exp || tokens.refresh.exp) {
+      this.timeout.unsubscribe();
+      this.timeout = refreshExp > accessExp
+        ? timer(accessExp).subscribe(() => this.refresh().subscribe())
+        : timer(refreshExp).subscribe(() => this.remove());
+    }
   }
 
 }

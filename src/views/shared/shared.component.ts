@@ -88,7 +88,7 @@ export class SharedComponent implements OnInit {
     if (this.deviceProvider.notation !== 'Server') {
       this.loadingProvider.value.subscribe((l) => this.busy.next(l && 1));
 
-      if (this.deviceProvider.notation === 'Web') {
+      if (this.deviceProvider.notation === 'Browser') {
         const claims = this.app.config.jwtClaims;
 
         this.tokenProvider.value.pipe(
@@ -126,7 +126,7 @@ export class SharedComponent implements OnInit {
       setTimeout(resolve, (() => {
         switch (this.deviceProvider.notation) {
           case 'Android': return 500;
-          case 'Web': return 400;
+          case 'Browser': return 400;
           default: return 0;
         }
       })());
@@ -157,7 +157,7 @@ export class SharedComponent implements OnInit {
   private transition(url: string): void {
     const path = url.replace(/\?.*$/, '').slice(1).split('/')[0];
 
-    if (this.deviceProvider.notation === 'Web') {
+    if (this.deviceProvider.notation === 'Browser') {
       Array.from(this.deviceProvider.document.getElementsByClassName('topoff'))
         .forEach((element: HTMLElement) => element.scrollTo
           ? element.scrollTo({ behavior: 'smooth', top: 0 })

@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../platforms/web/@wooportal/app",
+  "dest": "../../platforms/web/system/app",
   "lib": {
     "entryFile": "index.ts"
   }

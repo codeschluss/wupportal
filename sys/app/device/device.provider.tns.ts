@@ -65,7 +65,7 @@ export class DeviceProvider implements Compat {
     return device.language.substr(0, 2) || this.app.config.defaults.language;
   }
 
-  public get notation(): 'Android' | 'iOS' | 'Server' | 'Web' {
+  public get notation(): 'Android' | 'Browser' | 'iOS' | 'Server' {
     return device.os as any;
   }
 
@@ -156,9 +156,8 @@ export class DeviceProvider implements Compat {
         store.removeDataOfTypesModifiedSinceCompletionHandler(
           WKWebsiteDataStore.allWebsiteDataTypes(),
           NSDate.dateWithTimeIntervalSince1970(0),
-          () => { }
+          () => exit(0)
         );
-        exit(0);
         break;
     }
   }

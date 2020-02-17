@@ -92,7 +92,7 @@ export class ActivityListingComponent
         .subscribe((categories) => this.chipList.chips.forEach((chip) =>
           chip.selected = categories.includes(chip.value)));
 
-      if (this.deviceProvider.notation === 'Web') {
+      if (this.deviceProvider.notation === 'Browser') {
         const source = this.deviceProvider.document.defaultView;
         const target = this.frame.nativeElement.contentWindow;
 

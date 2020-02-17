@@ -10,22 +10,22 @@ export class DeviceProvider implements Compat {
 
   public get agent(): string {
     switch (this.notation) {
+      case 'Browser': return this.frontend.userAgent;
       case 'Server': return `${process.argv0} ${process.version}`;
-      case 'Web': return this.frontend.userAgent;
     }
   }
 
   public get apparat(): string {
     switch (this.notation) {
+      case 'Browser': return this.frontend.platform;
       case 'Server': return `${process.platform} ${process.arch}`;
-      case 'Web': return this.frontend.platform;
     }
   }
 
   public get connected(): boolean {
     switch (this.notation) {
+      case 'Browser': return this.frontend.onLine;
       case 'Server': return true;
-      case 'Web': return this.frontend.onLine;
     }
   }
 
@@ -43,9 +43,8 @@ export class DeviceProvider implements Compat {
 
   public get frontend(): any {
     switch (this.notation) {
-      // tslint:disable-next-line: deprecation
-      case 'Server': return this.injector.get('express');
-      case 'Web': return this.document.defaultView.navigator;
+      case 'Browser': return this.document.defaultView.navigator;
+      case 'Server': return this.injector.get<any>('engine' as any);
     }
   }
 
@@ -53,7 +52,7 @@ export class DeviceProvider implements Compat {
     let language;
 
     switch (this.notation) {
-      case 'Web':
+      case 'Browser':
         language = this.frontend.language;
         break;
 
@@ -67,9 +66,9 @@ export class DeviceProvider implements Compat {
       : this.app.config.defaults.language;
   }
 
-  public get notation(): 'Android' | 'iOS' | 'Server' | 'Web' {
+  public get notation(): 'Android' | 'Browser' | 'iOS' | 'Server' {
     switch (true) {
-      case isPlatformBrowser(this.platformId): return 'Web';
+      case isPlatformBrowser(this.platformId): return 'Browser';
       case isPlatformServer(this.platformId): return 'Server';
     }
   }

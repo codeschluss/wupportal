@@ -16,7 +16,7 @@ export interface DeviceProvider {
 
   readonly language: string;
 
-  readonly notation: 'Android' | 'iOS' | 'Server' | 'Web';
+  readonly notation: 'Android' | 'Browser' | 'iOS' | 'Server';
 
   readonly platform: 'Native' | 'Online';
 

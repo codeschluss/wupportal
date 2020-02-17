@@ -32,7 +32,7 @@
       true,
       {
         "limit": 80,
-        "ignore-pattern": "^(export|import) { .* }"
+        "ignore-pattern": "^(export|import)"
       }
     ],
     "member-access": true,

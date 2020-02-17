@@ -37,9 +37,9 @@ wget -qO- https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
 unzip -qq android-sdk.zip && \
 yes | tools/bin/sdkmanager --licenses > /dev/null && \
 tools/bin/sdkmanager \
-  "build-tools;29.0.2" \
+  "build-tools;29.0.3" \
   "extras;android;m2repository" \
-  "ndk;20.1.5948944" \
+  "ndk;21.0.6113669" \
   "platforms;android-29" \
   "platform-tools" \
   "tools" > /dev/null && \
@@ -83,11 +83,11 @@ apk --no-cache --virtual build add \
 # wooportal.client
 cd /opt/wooportal.client && \
 npm install && \
-npm run build:lib && \
+npm run build:sys && \
 npm run build:app && \
-npm run build:ssr && \
+npm run build:srv && \
 npm clean-install --no-optional --only=production && \
-mv /tmp/client.apk platforms/web/@wooportal/client && \
+mv /tmp/client.apk platforms/web/browser && \
 #
 # cleanup
 apk del --purge build && \
@@ -96,4 +96,4 @@ find /root /tmp -mindepth 1 -delete
 # runtime
 EXPOSE 4000
 WORKDIR /opt/wooportal.client
-CMD node platforms/web/express
+CMD node platforms/web/server

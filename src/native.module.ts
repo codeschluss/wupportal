@@ -30,12 +30,12 @@ const platform: any[] = [
     NativeComponent
   ],
   imports: [
-    ...platform,
     AppModule.forRoot(PackageJson),
     BaseModule,
     CoreModule,
     ErrorModule,
-    NativeRouter
+    NativeRouter,
+    ...platform
   ],
   providers: [
     { provide: ErrorHandler, useClass: ClientErrorHandler },

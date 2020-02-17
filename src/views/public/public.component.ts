@@ -27,8 +27,6 @@ export class PublicComponent {
         conf.find((c) => c.item === 'mapLongitude').value
       ]
     });
-
-    headers.setTitle(null);
   }
 
 }

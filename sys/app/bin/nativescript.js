@@ -53,7 +53,7 @@ compiler.startWebpackProcess = async (platform, proj, prep) => {
     ...(process.arch === 'x64' ? ['--max_old_space_size=4096'] : []),
     '--preserve-symlinks',
     `${proj.projectDir}/node_modules/webpack/bin/webpack.js`,
-    `--config=${proj.projectDir}/libs/app/conf/webpack.js`,
+    `--config=${proj.projectDir}/sys/app/conf/native.js`,
     ...(await compiler.buildEnvCommandLineParams(
       compiler.buildEnvData(
         platform.platformNameLowerCase,

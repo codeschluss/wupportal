@@ -19,44 +19,17 @@ export class DeviceInterceptor implements HttpInterceptor {
 
     switch (this.deviceProvider.notation) {
       case 'Android':
+        return this.handleNative(request, next);
+
+      case 'Browser':
+        return next.handle(request);
+
       case 'iOS':
         return this.handleNative(request, next);
 
       case 'Server':
         return this.handleServer(request, next);
-
-      case 'Web':
-        return next.handle(request);
     }
-  }
-
-  private handleServer(request: HttpRequest<any>, next: HttpHandler):
-    Observable<HttpEvent<any>> {
-
-    if (request.url.startsWith('/')) {
-      const engine = this.deviceProvider.frontend;
-
-      switch (true) {
-        case request.url.startsWith(this.app.config.api.authUrl):
-        case request.url.startsWith(this.app.config.api.refreshUrl):
-        case request.url.startsWith(this.app.config.api.rootUrl):
-          const host = engine.request.hostname;
-          const prot = engine.request.protocol;
-          return next.handle(request.clone({
-            url: `${prot}://${host}${request.url}`
-          }));
-
-        default:
-          const file = `${engine.root}/client${request.url}`;
-          return engine.read(file).pipe(map((buffer) => new HttpResponse<any>({
-            body: buffer.toString(),
-            status: 200,
-            url: request.url
-          })));
-      }
-    }
-
-    return next.handle(request);
   }
 
   private handleNative(request: HttpRequest<any>, next: HttpHandler):
@@ -77,6 +50,35 @@ export class DeviceInterceptor implements HttpInterceptor {
           return next.handle(request.clone({
             url: this.app.config.defaults.appUrl + request.url
           }));
+      }
+    }
+
+    return next.handle(request);
+  }
+
+  private handleServer(request: HttpRequest<any>, next: HttpHandler):
+    Observable<HttpEvent<any>> {
+
+    if (request.url.startsWith('/')) {
+      const engine = this.deviceProvider.frontend;
+
+      switch (true) {
+        case request.url.startsWith(this.app.config.api.authUrl):
+        case request.url.startsWith(this.app.config.api.refreshUrl):
+        case request.url.startsWith(this.app.config.api.rootUrl):
+          const host = engine.request.hostname;
+          const prot = engine.request.protocol;
+          return next.handle(request.clone({
+            url: `${prot}://${host}${request.url}`
+          }));
+
+        default:
+          const file = `${engine.path}/browser${request.url}`;
+          return engine.read(file).pipe(map((buffer) => new HttpResponse<any>({
+            body: buffer.toString(),
+            status: 200,
+            url: request.url
+          })));
       }
     }
 

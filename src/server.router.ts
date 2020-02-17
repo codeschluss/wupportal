@@ -49,4 +49,5 @@ const routes: Route[] = [
   })]
 })
 
-export class ClientRouter { }
+export class ServerRouter { }
+export { ServerRouter as ClientRouter };

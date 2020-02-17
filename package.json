@@ -22,18 +22,18 @@
       "authUrl": "/api/login",
       "refreshUrl": "/api/refresh"
     },
+    "defaults": {
+      "appUrl": "https://wooportal.test.codeschluss.de",
+      "city": "",
+      "language": "en",
+      "title": "wooportal"
+    },
     "jwtClaims": {
       "activityProvider": "createdActivities",
       "organisationAdmin": "adminOrgas",
       "organisationUser": "approvedOrgas",
       "superUser": "superuser",
       "userId": "id"
-    },
-    "defaults": {
-      "appUrl": "https://wooportal.test.codeschluss.de",
-      "city": "",
-      "language": "en",
-      "title": "wooportal"
     }
   },
   "nativescript": {
@@ -58,13 +58,13 @@
     "build:app": "ng build --prod @wooportal/client",
     "build:ios": "ns platform add ios ||:&& ns build ios",
     "build:oid": "ns platform add android ||:&& ns build android",
-    "build:lib": "for i in libs/*; do ng build @wooportal/${i#libs/}; done",
-    "build:ssr": "ng run @wooportal/client:server && tsc -p express.json",
+    "build:srv": "ng run @wooportal/client:server --configuration=production",
+    "build:sys": "for sys in sys/*; do ng build @wooportal/${sys#sys/}; done",
     "build:xlf": "ng xi18n && sed -i '/context/d' res/All/i18n/strings.xliff",
     "start:oid": "ns platform add android ||:&& ns debug android",
     "start:ios": "ns platform add ios ||:&& ns debug ios",
     "start:app": "ng serve --host 0.0.0.0 --port",
-    "start:ssr": "node platforms/web/express"
+    "start:ssr": "node platforms/web/server"
   },
   "dependencies": {
     "@angular/animations": "8.2.14",
@@ -97,12 +97,11 @@
     "@angular-devkit/build-angular": "0.803.24",
     "@angular/cli": "8.3.24",
     "@angular/compiler-cli": "8.2.14",
-    "@angular/service-worker": "8.2.14",
     "@ckeditor/ckeditor5-angular": "1.1.2",
     "@types/node": "13.7.0",
-    "@wooportal/app": "file:libs/app",
-    "@wooportal/core": "file:libs/core",
-    "@wooportal/editor": "file:libs/editor",
+    "@wooportal/app": "file:sys/app",
+    "@wooportal/core": "file:sys/core",
+    "@wooportal/editor": "file:sys/editor",
     "codelyzer": "5.2.1",
     "core-js": "3.6.4",
     "moment": "2.24.0",

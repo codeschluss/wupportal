@@ -104,7 +104,7 @@ export class Headers {
   public setModel(model: EnrichedModel): void {
     this.title.next(`${model.name} | ${this.base.value}`);
 
-    if (['Server', 'Web'].includes(this.deviceProvider.notation)) {
+    if (['Browser', 'Server'].includes(this.deviceProvider.notation)) {
       this.titleService.setTitle(this.title.value);
       this.updateMeta(this.metaModel(model));
     }
@@ -113,7 +113,7 @@ export class Headers {
   public setTitle(title: string | null): void {
     this.title.next(title ? `${title} | ${this.base.value}` : this.base.value);
 
-    if (['Server', 'Web'].includes(this.deviceProvider.notation)) {
+    if (['Browser', 'Server'].includes(this.deviceProvider.notation)) {
       this.titleService.setTitle(this.title.value);
       this.updateMeta(this.metaData(title));
     }

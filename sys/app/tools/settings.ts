@@ -20,18 +20,18 @@ export class ApplicationSettings {
       refreshUrl: string,
       rootUrl: string
     },
+    defaults: {
+      appUrl: string,
+      city: string,
+      language: string,
+      title: string
+    },
     jwtClaims: {
       activityProvider: string,
       organisationAdmin: string,
       organisationUser: string,
       superUser: string,
       userId: string
-    },
-    defaults: {
-      appUrl: string,
-      city: string,
-      language: string,
-      title: string
     }
   };
 

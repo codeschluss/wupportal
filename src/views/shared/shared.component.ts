@@ -51,6 +51,15 @@ export class SharedComponent implements OnInit {
     return this.pushProvider.registerable;
   }
 
+  public get stores(): Record<string, string> {
+    return {
+      apple: 'https://apps.apple.com/app/id'
+        + this.app.nativescript.appId,
+      google: 'https://play.google.com/store/apps/details?id='
+        + this.app.nativescript.id
+    };
+  }
+
   public get url(): string {
     return this.router.url;
   }

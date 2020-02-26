@@ -28,6 +28,12 @@
       "language": "en",
       "title": "wooportal"
     },
+    "firebase": {
+      "apiKey": "AIzaSyDoTopWz0hKOfyb0TLE0IdJkhA8glXu9I8",
+      "appId": "1:83837424328:web:f5d3d2af732be47ff64bfd",
+      "messagingSenderId": "83837424328",
+      "projectId": "wooportal-e80d8"
+    },
     "jwtClaims": {
       "activityProvider": "createdActivities",
       "organisationAdmin": "adminOrgas",
@@ -78,6 +84,9 @@
     "@angular/platform-browser-dynamic": "8.2.14",
     "@angular/platform-server": "8.2.14",
     "@angular/router": "8.2.14",
+    "@angular/service-worker": "8.2.14",
+    "@firebase/app": "0.5.4",
+    "@firebase/messaging": "0.6.6",
     "@fortawesome/angular-fontawesome": "0.5.0",
     "@fortawesome/fontawesome-svg-core": "1.2.26",
     "@fortawesome/free-brands-svg-icons": "5.12.0",

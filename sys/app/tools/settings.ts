@@ -26,6 +26,12 @@ export class ApplicationSettings {
       language: string,
       title: string
     },
+    firebase: {
+      apiKey: string,
+      appId: string,
+      messagingSenderId: string,
+      projectId: string
+    },
     jwtClaims: {
       activityProvider: string,
       organisationAdmin: string,

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApplicationSettings } from '@wooportal/app';
+import { ApplicationSettings, PushProvider } from '@wooportal/app';
 import { Headers } from '@wooportal/core';
 
 @Component({
@@ -14,6 +14,7 @@ export class PublicComponent {
   public constructor(
     app: ApplicationSettings,
     headers: Headers,
+    pushProvider: PushProvider,
     route: ActivatedRoute
   ) {
     const conf = route.snapshot.data.configuration;
@@ -26,6 +27,10 @@ export class PublicComponent {
         conf.find((c) => c.item === 'mapLatitude').value,
         conf.find((c) => c.item === 'mapLongitude').value
       ]
+    });
+
+    pushProvider.registration.subscribe((token) => {
+      console.log(token);
     });
   }
 

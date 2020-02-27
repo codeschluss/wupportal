@@ -1,9 +1,9 @@
 import { Component, NgZone, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApplicationSettings, DeviceProvider } from '@wooportal/app';
+import { ApplicationSettings, DeviceProvider, PushProvider } from '@wooportal/app';
 import { SessionProvider } from '@wooportal/core';
 import { fromEvent } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { AndroidActivityEventData as ActivityEvent } from 'tns-core-modules/application';
 
 declare const java: any;
@@ -23,6 +23,7 @@ export class NativeComponent {
     app: ApplicationSettings,
     container: ViewContainerRef,
     deviceProvider: DeviceProvider,
+    pushProvider: PushProvider,
     router: Router,
     sessionProvider: SessionProvider,
     zone: NgZone
@@ -48,6 +49,13 @@ export class NativeComponent {
             }
           }
         });
+        break;
+
+      case 'iOS':
+        pushProvider.clicks.pipe(
+          filter((event) => event.data.aps.route),
+          map((event) => event.data.aps.route)
+        ).subscribe((route) => zone.run(() => router.navigateByUrl(route)));
         break;
     }
   }

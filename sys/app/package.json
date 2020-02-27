@@ -36,6 +36,7 @@
     "nativescript-dev-webpack": "1.4.1",
     "nativescript-geolocation": "5.1.0",
     "nativescript-ng-ripple": "2.0.1",
+    "nativescript-plugin-firebase": "10.5.0",
     "nativescript-social-share": "1.6.0",
     "nativescript-ui-calendar": "6.0.0",
     "nativescript-ui-sidedrawer": "8.0.0",

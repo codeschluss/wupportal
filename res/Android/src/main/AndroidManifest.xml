@@ -27,6 +27,10 @@
     android:label="@string/defaultTitle"
     android:theme="@style/AppTheme">
 
+    <meta-data
+      android:name="firebase_analytics_collection_deactivated"
+      android:value="true"/>
+
     <activity
       android:name="com.tns.NativeScriptActivity"
       android:label="@string/defaultTitle"

@@ -1,10 +1,11 @@
+import { Message } from 'nativescript-plugin-firebase';
 import { Observable } from 'rxjs';
 
 export interface PushProvider {
 
-  clicks: Observable<NotificationOptions>;
+  clicks: Observable<Message | NotificationOptions>;
 
-  messages: Observable<Notification>;
+  messages: Observable<Message | Notification>;
 
   registration: Observable<string>;
 

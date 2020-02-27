@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>API_KEY</key>
+    <string>AIzaSyDhugSPmI27zUIr8inLx1XYzHv40sSaz_Q</string>
+
+    <key>BUNDLE_ID</key>
+    <string>de.codeschluss.wooportal.client</string>
+
+    <key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
+    <true/>
+
+    <key>GCM_SENDER_ID</key>
+    <string>83837424328</string>
+
+    <key>GOOGLE_APP_ID</key>
+    <string>1:83837424328:ios:e36d7e3a33d595dff64bfd</string>
+
+    <key>PROJECT_ID</key>
+    <string>wooportal-e80d8</string>
+  </dict>
+</plist>

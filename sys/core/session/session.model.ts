@@ -5,13 +5,17 @@ export class SessionModel {
   public static readonly schema: JSONSchema = {
     type: 'object',
     properties: {
+      followed: { type: 'array', items: { type: 'string' } },
       language: { type: 'string' },
-      likes: { type: 'array', items: { type: 'string' } }
+      likes: { type: 'array', items: { type: 'string' } },
+      subscriptionId: { type: 'string' }
     }
   };
 
+  public followed: string[] = [];
   public language: string = null;
   public likes: string[] = [];
+  public subscriptionId: string = '';
 
   public constructor(
     language: string = 'en'

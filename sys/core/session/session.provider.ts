@@ -32,6 +32,26 @@ export class SessionProvider {
     }));
   }
 
+  public getFollowed(id: string): boolean {
+    return this.session.value.followed.includes(id);
+  }
+
+  public setFollowed(id: string): void {
+    if (!this.getFollowed(id)) {
+      this.session.next(Object.assign(this.session.value, {
+        followed: this.session.value.followed.concat(id)
+      }));
+    }
+  }
+
+  public delFollowed(id: string): void {
+    if (this.getFollowed(id)) {
+      this.session.next(Object.assign(this.session.value, {
+        followed: this.session.value.followed.filter((i) => i !== id)
+      }));
+    }
+  }
+
   public getLiked(id: string): boolean {
     return this.session.value.likes.includes(id);
   }
@@ -44,12 +64,28 @@ export class SessionProvider {
     }
   }
 
+  public delLiked(id: string): void {
+    if (this.getLiked(id)) {
+      this.session.next(Object.assign(this.session.value, {
+        likes: this.session.value.likes.filter((i) => i !== id)
+      }));
+    }
+  }
+
   public getLanguage(): string {
     return this.session.value.language;
   }
 
   public setLanguage(language: string): void {
     this.session.next(Object.assign(this.session.value, { language }));
+  }
+
+  public getSubscriptionId(): string {
+    return this.session.value.subscriptionId;
+  }
+
+  public setSubscriptionId(subscriptionId: string): void {
+    this.session.next(Object.assign(this.session.value, { subscriptionId }));
   }
 
 }

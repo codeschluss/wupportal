@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Message } from 'nativescript-plugin-firebase';
 import { initFirebaseMessaging } from 'nativescript-plugin-firebase/messaging/messaging';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { DeviceProvider } from '../device/device.provider';
 import { PushProvider as Compat } from './push.provider.i';
 
 declare const FIRApp: any;
@@ -11,42 +9,34 @@ declare const FIRApp: any;
 @Injectable({ providedIn: 'root' })
 export class PushProvider implements Compat {
 
-  private receiver: Subject<Message>;
+  private static configured: boolean = false;
 
-  private token: BehaviorSubject<string>;
+  private events: Subject<Message> = new Subject<Message>();
 
-  public get clicks(): Observable<Message> {
-    return this.receiver.pipe(filter((message) => message.notificationTapped));
+  private token: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+  public get messages(): Observable<Message & Notification> {
+    return this.events.asObservable() as any;
   }
 
-  public get messages(): Observable<Message> {
-    return this.receiver.asObservable();
+  public get registerable(): boolean {
+    return true;
   }
 
-  public get registration(): Observable<string> {
-    return this.token.pipe(filter(Boolean)) as Observable<string>;
-  }
-
-  public constructor(
-    deviceProvider: DeviceProvider
-  ) {
-    this.receiver = new Subject<Message>();
-    this.token = new BehaviorSubject<string>(null);
-
-    switch (deviceProvider.notation) {
-      case 'Android':
-        break;
-
-      case 'iOS':
-        FIRApp.configure();
-        break;
+  public constructor() {
+    if (typeof FIRApp !== 'undefined' && !PushProvider.configured) {
+      PushProvider.configured = true;
+      FIRApp.configure();
     }
+  }
 
+  public registration(): Observable<string> {
     initFirebaseMessaging({
-      onMessageReceivedCallback: (message) => this.receiver.next(message),
-      onPushTokenReceivedCallback: (token) => this.token.next(token),
-      showNotificationsWhenInForeground: true
+      onMessageReceivedCallback: (event) => this.events.next(event),
+      onPushTokenReceivedCallback: (token) => this.token.next(token)
     });
+
+    return this.token.asObservable();
   }
 
 }

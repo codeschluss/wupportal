@@ -3,10 +3,10 @@ import { Observable } from 'rxjs';
 
 export interface PushProvider {
 
-  clicks: Observable<Message | NotificationOptions>;
+  messages: Observable<Message & Notification>;
 
-  messages: Observable<Message | Notification>;
+  registerable: boolean;
 
-  registration: Observable<string>;
+  registration(): Observable<string>;
 
 }

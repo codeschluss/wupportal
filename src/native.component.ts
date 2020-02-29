@@ -52,7 +52,7 @@ export class NativeComponent {
         break;
 
       case 'iOS':
-        pushProvider.clicks.pipe(
+        pushProvider.actions.pipe(
           filter((event) => event.data.aps.route),
           map((event) => event.data.aps.route)
         ).subscribe((route) => zone.run(() => router.navigateByUrl(route)));

@@ -1,9 +1,9 @@
 /* tslint:disable */
-export interface SubscriptionEntity {
+export interface VideoEntity {
   _embedded?: {};
-  authSecret?: string;
   created?: string;
   id?: string;
-  locale?: string;
   modified?: string;
+  platform?: string;
+  url?: string;
 }

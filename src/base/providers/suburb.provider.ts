@@ -1,23 +1,11 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
-import { SuburbControllerService } from '../../api/services/suburb-controller.service';
-import { SuburbModel } from '../models/suburb.model';
+import { SuburbControllerService as Service } from '../../api/services/suburb-controller.service';
+import { SuburbModel as Model } from '../models/suburb.model';
 
 @Injectable({ providedIn: 'root' })
-export class SuburbProvider
-  extends CrudProvider<SuburbControllerService, SuburbModel> {
-
-  public create: (model: SuburbModel) => Observable<any>;
-
-  public update: (model: SuburbModel) => Observable<any>;
-
-  public delete: (id: string) => Observable<any>;
-
-  public readOne: (id: string) => Observable<SuburbModel>;
-
-  public readAll: (params?: SuburbControllerService
-    .SuburbControllerReadAllParams) => Observable<SuburbModel[]>;
+export class SuburbProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [];
 
@@ -29,12 +17,23 @@ export class SuburbProvider
     update: this.service.suburbControllerUpdateResponse
   };
 
-  protected model: Type<SuburbModel> = this.based(SuburbModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: SuburbControllerService
+    protected service: Service
   ) {
     super();
   }
+
+  public create: (model: Partial<Model>) => Observable<any>;
+
+  public update: (model: Partial<Model>) => Observable<any>;
+
+  public delete: (id: string) => Observable<any>;
+
+  public readOne: (id: string) => Observable<Model>;
+
+  public readAll: (params?: Service.SuburbControllerReadAllParams) =>
+    Observable<Model[]>;
 
 }

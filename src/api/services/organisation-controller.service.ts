@@ -12,6 +12,7 @@ import { ResourceOrganisationEntity } from '../models/resource-organisation-enti
 import { StringPrimitive } from '../models/string-primitive';
 import { BooleanPrimitive } from '../models/boolean-primitive';
 import { ImageEntity } from '../models/image-entity';
+import { VideoEntity } from '../models/video-entity';
 
 /**
  * Organisation Controller
@@ -39,6 +40,9 @@ class OrganisationControllerService extends __BaseService {
   static readonly organisationControllerDeleteUserPath = '/organisations/{organisationId}/users/{userId}';
   static readonly organisationControllerGrantAdminRightPath = '/organisations/{organisationId}/users/{userId}/admin';
   static readonly organisationControllerApproveOrRejectUserPath = '/organisations/{organisationId}/users/{userId}/approve';
+  static readonly organisationControllerReadVideosPath = '/organisations/{organisationId}/videos';
+  static readonly organisationControllerAddVideosPath = '/organisations/{organisationId}/videos';
+  static readonly organisationControllerDeleteVideosPath = '/organisations/{organisationId}/videos';
 
   constructor(
     config: __Configuration,
@@ -598,13 +602,16 @@ class OrganisationControllerService extends __BaseService {
 
   /**
    * @param organisationId organisationId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  organisationControllerIncreaseLikeResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+  organisationControllerIncreaseLikeResponse(organisationId: string,
+    subscriptionId?: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/organisations/${organisationId}/like`,
@@ -624,10 +631,12 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * @param organisationId organisationId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  organisationControllerIncreaseLike(organisationId: string): __Observable<{}> {
-    return this.organisationControllerIncreaseLikeResponse(organisationId).pipe(
+  organisationControllerIncreaseLike(organisationId: string,
+    subscriptionId?: StringPrimitive): __Observable<{}> {
+    return this.organisationControllerIncreaseLikeResponse(organisationId, subscriptionId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -833,6 +842,124 @@ class OrganisationControllerService extends __BaseService {
     userId: string,
     isApproved: BooleanPrimitive): __Observable<{}> {
     return this.organisationControllerApproveOrRejectUserResponse(organisationId, userId, isApproved).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @return OK
+   */
+  organisationControllerReadVideosResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/organisations/${organisationId}/videos`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @return OK
+   */
+  organisationControllerReadVideos(organisationId: string): __Observable<{}> {
+    return this.organisationControllerReadVideosResponse(organisationId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @param videos videos
+   * @return OK
+   */
+  organisationControllerAddVideosResponse(organisationId: string,
+    videos: Array<VideoEntity>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = videos;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/organisations/${organisationId}/videos`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @param videos videos
+   * @return OK
+   */
+  organisationControllerAddVideos(organisationId: string,
+    videos: Array<VideoEntity>): __Observable<{}> {
+    return this.organisationControllerAddVideosResponse(organisationId, videos).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param organisationId organisationId
+   * @param videoIds videoIds
+   * @return OK
+   */
+  organisationControllerDeleteVideosResponse(organisationId: string,
+    videoIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    (videoIds || []).forEach(val => {if (val != null) __params = __params.append('videoIds', val.toString())});
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/organisations/${organisationId}/videos`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param organisationId organisationId
+   * @param videoIds videoIds
+   * @return OK
+   */
+  organisationControllerDeleteVideos(organisationId: string,
+    videoIds: Array<string>): __Observable<{}> {
+    return this.organisationControllerDeleteVideosResponse(organisationId, videoIds).pipe(
       __map(_r => _r.body as {})
     );
   }

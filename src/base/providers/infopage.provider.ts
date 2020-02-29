@@ -2,14 +2,13 @@ import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
-import { PageControllerService } from '../../api/services/page-controller.service';
-import { InfopageModel } from '../models/infopage.model';
+import { PageControllerService as Service } from '../../api/services/page-controller.service';
+import { InfopageModel as Model } from '../models/infopage.model';
 import { LanguageModel } from '../models/language.model';
 import { TopicModel } from '../models/topic.model';
 
 @Injectable({ providedIn: 'root' })
-export class InfopageProvider
-  extends CrudProvider<PageControllerService, InfopageModel> {
+export class InfopageProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -25,7 +24,7 @@ export class InfopageProvider
     {
       field: 'translations',
       method: this.service.pageControllerReadTranslationsResponse,
-      model: InfopageModel
+      model: Model
     }
   ];
 
@@ -37,31 +36,31 @@ export class InfopageProvider
     update: this.service.pageControllerUpdateResponse
   };
 
-  protected model: Type<InfopageModel> = this.based(InfopageModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: PageControllerService
+    protected service: Service
   ) {
     super();
   }
 
-  public create: (model: InfopageModel) => Observable<any>;
+  public create: (model: Partial<Model>) => Observable<any>;
 
-  public update: (model: InfopageModel) => Observable<any>;
+  public update: (model: Partial<Model>) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<InfopageModel>;
+  public readOne: (id: string) => Observable<Model>;
 
-  public readAll: (params?: PageControllerService
-    .PageControllerReadAllParams) => Observable<InfopageModel[]>;
+  public readAll: (params?: Service.PageControllerReadAllParams) =>
+    Observable<Model[]>;
 
-  public like:
-    (id: string) => Observable<any> =
-      this.apply(this.service.pageControllerIncreaseLikeResponse);
+  public like: (id: string, subscriptionId?: String) =>
+    Observable<any> = this.apply(this.service
+      .pageControllerIncreaseLikeResponse);
 
-  public relinkTopic:
-    (id: string, topicId: String) => Observable<any> =
-      this.apply(this.service.pageControllerUpdateTopicResponse);
+  public relinkTopic: (id: string, topicId: String) =>
+    Observable<any> = this.apply(this.service
+      .pageControllerUpdateTopicResponse);
 
 }

@@ -1,5 +1,5 @@
 /* tslint:disable */
-export interface News {
+export interface MessageDto {
   content?: string;
   title?: string;
 }

@@ -617,13 +617,16 @@ class ActivityControllerService extends __BaseService {
 
   /**
    * @param activityId activityId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  activityControllerIncreaseLikeResponse(activityId: string): __Observable<__StrictHttpResponse<{}>> {
+  activityControllerIncreaseLikeResponse(activityId: string,
+    subscriptionId?: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/activities/${activityId}/like`,
@@ -643,10 +646,12 @@ class ActivityControllerService extends __BaseService {
   }
   /**
    * @param activityId activityId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  activityControllerIncreaseLike(activityId: string): __Observable<{}> {
-    return this.activityControllerIncreaseLikeResponse(activityId).pipe(
+  activityControllerIncreaseLike(activityId: string,
+    subscriptionId?: StringPrimitive): __Observable<{}> {
+    return this.activityControllerIncreaseLikeResponse(activityId, subscriptionId).pipe(
       __map(_r => _r.body as {})
     );
   }

@@ -1,7 +1,8 @@
 /* tslint:disable */
-export interface SubscriptionEntity {
+import { Link } from './link';
+export interface ResourceSubscriptionEntity {
   _embedded?: {};
-  authSecret?: string;
+  _links?: Array<Link>;
   created?: string;
   id?: string;
   locale?: string;

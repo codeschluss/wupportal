@@ -42,13 +42,15 @@ export class CrudResolver implements Resolve<CrudModel | CrudModel[]> {
       : joiner.graph.provider.readAll(joiner.graph.params);
 
     return request.pipe(
-      catchError((e) => {
-        return joiner.graph.params.required
-          ? from(this.router.navigate(['/', 'error', e.status || 400]))
-          : throwError(e);
-      }),
-      mergeMap((response) => this.refine(response as any, joiner.graph)),
-      catchError((e) => this.ignore(e) ? of(undefined) : throwError(e))
+      catchError((error) => joiner.graph.params.required
+        ? from(this.router.navigate(['/', 'error', error.status || 400]))
+        : throwError(error)
+      ),
+      mergeMap((response) => this.refine(response as CrudModel, joiner.graph)),
+      catchError((error) => this.ignore(error)
+        ? of(undefined)
+        : throwError(error)
+      )
     );
   }
 

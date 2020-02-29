@@ -1,5 +1,6 @@
 /* tslint:disable */
 import { Link } from './link';
+import { VideoEntity } from './video-entity';
 export interface ResourceOrganisationEntity {
   likes?: number;
   _embedded?: {};
@@ -13,6 +14,6 @@ export interface ResourceOrganisationEntity {
   modified?: string;
   name?: string;
   phone?: string;
-  videoUrl?: string;
+  videos?: Array<VideoEntity>;
   website?: string;
 }

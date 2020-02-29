@@ -1,24 +1,12 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
-import { CategoryControllerService } from '../../api/services/category-controller.service';
-import { CategoryModel } from '../models/category.model';
+import { CategoryControllerService as Service } from '../../api/services/category-controller.service';
+import { CategoryModel as Model } from '../models/category.model';
 import { LanguageModel } from '../models/language.model';
 
 @Injectable({ providedIn: 'root' })
-export class CategoryProvider
-  extends CrudProvider<CategoryControllerService, CategoryModel> {
-
-  public create: (model: CategoryModel) => Observable<any>;
-
-  public update: (model: CategoryModel) => Observable<any>;
-
-  public delete: (id: string) => Observable<any>;
-
-  public readOne: (id: string) => Observable<CategoryModel>;
-
-  public readAll: (params?: CategoryControllerService
-    .CategoryControllerReadAllParams) => Observable<CategoryModel[]>;
+export class CategoryProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -29,7 +17,7 @@ export class CategoryProvider
     {
       field: 'translations',
       method: this.service.categoryControllerReadTranslationsResponse,
-      model: CategoryModel
+      model: Model
     }
   ];
 
@@ -41,12 +29,23 @@ export class CategoryProvider
     update: this.service.categoryControllerUpdateResponse
   };
 
-  protected model: Type<CategoryModel> = this.based(CategoryModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: CategoryControllerService
+    protected service: Service
   ) {
     super();
   }
+
+  public create: (model: Partial<Model>) => Observable<any>;
+
+  public update: (model: Partial<Model>) => Observable<any>;
+
+  public delete: (id: string) => Observable<any>;
+
+  public readOne: (id: string) => Observable<Model>;
+
+  public readAll: (params?: Service.CategoryControllerReadAllParams) =>
+    Observable<Model[]>;
 
 }

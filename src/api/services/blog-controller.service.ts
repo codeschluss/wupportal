@@ -452,13 +452,16 @@ class BlogControllerService extends __BaseService {
 
   /**
    * @param blogId blogId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  blogControllerIncreaseLikeResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
+  blogControllerIncreaseLikeResponse(blogId: string,
+    subscriptionId?: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/blogs/${blogId}/like`,
@@ -478,10 +481,12 @@ class BlogControllerService extends __BaseService {
   }
   /**
    * @param blogId blogId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  blogControllerIncreaseLike(blogId: string): __Observable<{}> {
-    return this.blogControllerIncreaseLikeResponse(blogId).pipe(
+  blogControllerIncreaseLike(blogId: string,
+    subscriptionId?: StringPrimitive): __Observable<{}> {
+    return this.blogControllerIncreaseLikeResponse(blogId, subscriptionId).pipe(
       __map(_r => _r.body as {})
     );
   }

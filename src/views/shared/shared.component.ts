@@ -3,15 +3,16 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ApplicationSettings, DeviceProvider, eachDescendant, getRootView } from '@wooportal/app';
+import { ApplicationSettings, DeviceProvider, eachDescendant, getRootView, PushProvider } from '@wooportal/app';
 import { CoreUrlSerializer, Headers, JwtClaims, LoadingProvider, SessionProvider, TokenProvider } from '@wooportal/core';
-import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
-import { filter, map, startWith, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, fromEvent, Observable } from 'rxjs';
+import { catchError, filter, map, mergeMap, startWith, tap } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData as BackPressedEvent } from 'tns-core-modules/application';
 import { ScrollView } from 'tns-core-modules/ui/scroll-view';
 import { TextField } from 'tns-core-modules/ui/text-field';
 import { LanguageModel } from '../../base/models/language.model';
 import { LanguageProvider } from '../../base/providers/language.provider';
+import { SubscriptionProvider } from '../../base/providers/subscription.provider';
 import { DrawerComponent } from './drawer/drawer.component.i';
 
 @Component({
@@ -46,6 +47,10 @@ export class SharedComponent implements OnInit {
     return this.headers.name;
   }
 
+  public get registerable(): boolean {
+    return this.pushProvider.registerable;
+  }
+
   public get url(): string {
     return this.router.url;
   }
@@ -60,7 +65,9 @@ export class SharedComponent implements OnInit {
     private loadingProvider: LoadingProvider,
     private route: ActivatedRoute,
     private router: Router,
+    private pushProvider: PushProvider,
     private sessionProvider: SessionProvider,
+    private subscriptionProvider: SubscriptionProvider,
     private tokenProvider: TokenProvider
   ) { }
 
@@ -134,6 +141,32 @@ export class SharedComponent implements OnInit {
       this.loadingProvider.finished(block);
       this.changeDetection.detectChanges();
     }));
+  }
+
+  public notifications(): void {
+    const subscriptionId = this.sessionProvider.getSubscriptionId();
+
+    if (subscriptionId) {
+      this.navigate('/', 'notifications', subscriptionId);
+    } else {
+      const block = Object.create(HttpRequest);
+      this.loadingProvider.enqueue(block);
+
+      this.pushProvider.registration().pipe(
+        mergeMap((token) => this.subscriptionProvider.create({
+          authSecret: token,
+          locale: this.sessionProvider.getLanguage()
+        })),
+        catchError(() => {
+          this.loadingProvider.finished(block);
+          return EMPTY;
+        })
+      ).subscribe((subscription) => {
+        this.sessionProvider.setSubscriptionId(subscription.id);
+        this.navigate('/', 'notifications', subscription.id);
+        this.loadingProvider.finished(block);
+      });
+    }
   }
 
   public toggle(state: boolean): void {

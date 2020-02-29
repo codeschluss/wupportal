@@ -15,6 +15,7 @@ import { HomePageComponent } from './pages/home/home.page';
 import { ImprintPageComponent } from './pages/imprint/imprint.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { LogoutPageComponent } from './pages/logout/logout.page';
+import { NotificationsPageComponent } from './pages/notifications/notifications.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
 import { RegisterPageComponent } from './pages/register/register.page';
 import { SearchPageComponent } from './pages/search/search.page';
@@ -39,6 +40,7 @@ const pageRoutes: Route[] = [
   ImprintPageComponent.routing,
   LoginPageComponent.routing,
   LogoutPageComponent.routing,
+  NotificationsPageComponent.routing,
   PoliciesPageComponent.routing,
   RegisterPageComponent.routing,
   SearchPageComponent.routing

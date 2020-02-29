@@ -22,6 +22,7 @@ import { HomePageComponent } from './pages/home/home.page';
 import { ImprintPageComponent } from './pages/imprint/imprint.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { LogoutPageComponent } from './pages/logout/logout.page';
+import { NotifyPageComponent } from './pages/notify/notify.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
 import { RegisterPageComponent } from './pages/register/register.page';
 import { SearchPageComponent } from './pages/search/search.page';
@@ -64,6 +65,7 @@ const pages: Type<BasePage>[] = [
   ImprintPageComponent,
   LoginPageComponent,
   LogoutPageComponent,
+  NotificationsPageComponent,
   PoliciesPageComponent,
   RegisterPageComponent,
   SearchPageComponent

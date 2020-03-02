@@ -7,7 +7,7 @@ import { bindNodeCallback } from 'rxjs';
 import 'zone.js/dist/zone-node';
 import { PackageJson } from './package';
 
-declare const __non_webpack_require__;
+declare const __non_webpack_require__: typeof require;
 const appRoot = PackageJson.config.defaults.appUrl;
 const apiRoot = PackageJson.config.api.rootUrl;
 

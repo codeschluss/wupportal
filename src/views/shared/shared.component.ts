@@ -122,14 +122,14 @@ export class SharedComponent implements OnInit {
     this.loadingProvider.enqueue(block);
 
     return new Promise((resolve) => {
+      let timeout; switch (this.deviceProvider.notation) {
+        case 'Android': timeout = 500; break;
+        case 'Browser': timeout = 400; break;
+        default: timeout = 0; break;
+      }
+
       this.drawer.hide();
-      setTimeout(resolve, (() => {
-        switch (this.deviceProvider.notation) {
-          case 'Android': return 500;
-          case 'Browser': return 400;
-          default: return 0;
-        }
-      })());
+      setTimeout(resolve, timeout);
     }).then(() => this.router.navigate(path)).finally(() => setTimeout(() => {
       this.loadingProvider.finished(block);
       this.changeDetection.detectChanges();

@@ -6,6 +6,7 @@ import { AdminComponent } from './admin.component';
 import { AdminGuarding } from './admin.guarding';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
+import { AnalyticsPanelComponent } from './panels/analytics/analytics.panel';
 import { InformationPanelComponent } from './panels/information/information.panel';
 import { MessagingPanelComponent } from './panels/messaging/messaging.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
@@ -30,6 +31,7 @@ const routes: Route[] = [
     path: '',
     children: [
       AccountPanelComponent.routing,
+      AnalyticsPanelComponent.routing,
       ApplicationPanelComponent.routing,
       InformationPanelComponent.routing,
       MessagingPanelComponent.routing,

@@ -97,6 +97,7 @@
     "@nguniversal/module-map-ngfactory-loader": "8.2.6",
     "@ngx-pwa/local-storage": "8.2.4",
     "@ngx-translate/i18n-polyfill": "1.0.0",
+    "@swimlane/ngx-charts": "13.0.2",
     "color-convert": "1.9.3",
     "express": "4.17.1",
     "express-robots-txt": "0.4.1",

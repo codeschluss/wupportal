@@ -176,6 +176,12 @@
             <icon-component icon="tags"></icon-component>
             <i18n i18n="@@taxonomy">taxonomy</i18n>
           </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/analytics')"
+            [routerLink]="['/', 'admin', 'analytics']">
+            <icon-component icon="chart-bar"></icon-component>
+            <i18n i18n="@@analytics">analytics</i18n>
+          </button>
         </ng-container>
         <mat-divider></mat-divider>
         <button mat-menu-item [routerLink]="['/', 'logout']">

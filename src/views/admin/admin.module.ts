@@ -19,11 +19,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule, MAT_TABS_CONFIG } from '@angular/material/tabs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AppCommonModule, AppRouterModule } from '@wooportal/app';
 import { CrudModel } from '@wooportal/core';
 import { FileValueAccessorDirective } from '../../tools/accesor';
 import { Paginate } from '../../tools/paginate';
 import { SharedModule } from '../shared/shared.module';
+import { SubscriptionChartComponent } from './charts/subscription.chart.component';
+import { ActivityCategoryChartComponent } from './charts/activity-category.chart.component';
+import { ActivityTargetGroupChartComponent } from './charts/activity-targetgroup.chart.component';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
 import { BaseFieldComponent } from './base/base.field';
@@ -60,6 +64,7 @@ import { TopicFormComponent } from './forms/topic.form';
 import { TranslationFormComponent } from './forms/translation.form';
 import { UserFormComponent } from './forms/user.form';
 import { AccountPanelComponent } from './panels/account/account.panel';
+import { AnalyticsPanelComponent } from './panels/analytics/analytics.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { InformationPanelComponent } from './panels/information/information.panel';
 import { MessagingPanelComponent } from './panels/messaging/messaging.panel';
@@ -96,6 +101,12 @@ import { SuburbTableComponent } from './tables/suburb.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
 import { TopicTableComponent } from './tables/topic.table';
 import { UserTableComponent } from './tables/user.table';
+
+const charts: Type<any>[] = [
+  SubscriptionChartComponent,
+  ActivityCategoryChartComponent,
+  ActivityTargetGroupChartComponent
+]
 
 const components: Type<any>[] = [
   AdminComponent,
@@ -160,12 +171,14 @@ const materials: Type<any>[] = [
   MatSortModule,
   MatTableModule,
   MatTabsModule,
+  NgxChartsModule,
   ReactiveFormsModule,
   FormsModule
 ];
 
 const panels: Type<BasePanel>[] = [
   AccountPanelComponent,
+  AnalyticsPanelComponent,
   ApplicationPanelComponent,
   InformationPanelComponent,
   MessagingPanelComponent,
@@ -215,6 +228,7 @@ const tables: Type<BaseTable<CrudModel>>[] = [
 
 @NgModule({
   declarations: [
+    ...charts,
     ...components,
     ...directives,
     ...fields,

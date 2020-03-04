@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { KeywordModel } from '../../../base/models/keyword.model';
 import { BaseForm, FormField } from '../base/base.form';
-import { StringFieldComponent } from '../fields/string.field';
+import { InputFieldComponent } from '../fields/input.field';
 
 @Component({
   selector: 'keyword-form',
@@ -26,12 +26,12 @@ export class KeywordFormComponent
   public fields: FormField[] = [
     {
       name: 'name',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'description',
-      input: StringFieldComponent
+      input: InputFieldComponent
     }
   ];
 

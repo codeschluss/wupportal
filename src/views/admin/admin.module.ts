@@ -36,9 +36,9 @@ import { ChipListFieldComponent } from './fields/chip-list.field';
 import { EditorFieldComponent } from './fields/editor.field';
 import { IconFieldComponent } from './fields/icon.field';
 import { ImageFieldComponent } from './fields/image.field';
+import { InputFieldComponent } from './fields/input.field';
 import { ScheduleFieldComponent } from './fields/schedule.field';
 import { SelectFieldComponent } from './fields/select.field';
-import { StringFieldComponent } from './fields/string.field';
 import { UrlFieldComponent } from './fields/url.field';
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
@@ -106,10 +106,10 @@ const fields: Type<BaseFieldComponent>[] = [
   ChipListFieldComponent,
   EditorFieldComponent,
   IconFieldComponent,
+  InputFieldComponent,
   ImageFieldComponent,
   ScheduleFieldComponent,
   SelectFieldComponent,
-  StringFieldComponent,
   UrlFieldComponent
 ];
 

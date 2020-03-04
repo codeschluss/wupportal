@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { CategoryModel } from '../../../base/models/category.model';
 import { BaseForm, FormField } from '../base/base.form';
 import { IconFieldComponent } from '../fields/icon.field';
-import { StringFieldComponent } from '../fields/string.field';
+import { InputFieldComponent } from '../fields/input.field';
 
 @Component({
   selector: 'category-form',
@@ -33,12 +33,12 @@ export class CategoryFormComponent
   public fields: FormField[] = [
     {
       name: 'name',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'description',
-      input: StringFieldComponent
+      input: InputFieldComponent
     },
     {
       name: 'icon',
@@ -47,7 +47,7 @@ export class CategoryFormComponent
     },
     {
       name: 'color',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [
         Validators.pattern(/^#[0-9A-Fa-f]{6}$/),
         Validators.required

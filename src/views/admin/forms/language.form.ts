@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { LanguageModel } from '../../../base/models/language.model';
 import { BaseForm, FormField } from '../base/base.form';
-import { StringFieldComponent } from '../fields/string.field';
+import { InputFieldComponent } from '../fields/input.field';
 
 @Component({
   selector: 'language-form',
@@ -29,17 +29,17 @@ export class LanguageFormComponent
   public fields: FormField[] = [
     {
       name: 'name',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'locale',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'machineTranslated',
-      input: StringFieldComponent
+      input: InputFieldComponent
     }
   ];
 

@@ -10,7 +10,7 @@ import { TranslationProvider } from '../../../base/providers/translation.provide
 import { BaseForm, FormField } from '../base/base.form';
 import { BaseTests } from '../base/base.tests';
 import { EditorFieldComponent } from '../fields/editor.field';
-import { StringFieldComponent } from '../fields/string.field';
+import { InputFieldComponent } from '../fields/input.field';
 import { UrlFieldComponent } from '../fields/url.field';
 
 @Component({
@@ -47,7 +47,7 @@ export class OrganisationFormComponent
   public fields: FormField[] = [
     {
       name: 'name',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
@@ -63,13 +63,13 @@ export class OrganisationFormComponent
     },
     {
       name: 'phone',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [BaseTests.neither('phone', 'mail')],
       type: 'tel'
     },
     {
       name: 'mail',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [
         BaseTests.neither('phone', 'mail'),
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)

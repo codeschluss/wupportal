@@ -10,4 +10,4 @@ import { BaseFieldComponent } from '../base/base.field';
   `)
 })
 
-export class StringFieldComponent extends BaseFieldComponent { }
+export class InputFieldComponent extends BaseFieldComponent { }

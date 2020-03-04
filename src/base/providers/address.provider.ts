@@ -44,6 +44,10 @@ export class AddressProvider extends CrudProvider<Service, Model> {
   public readAll: (params?: Service.AddressControllerReadAllParams) =>
     Observable<Model[]>;
 
+  public lookup: (model: Model) =>
+    Observable<any> = this.apply(this.service
+      .addressControllerLookupResponse);
+
   public relinkSuburb: (id: string, suburbId: String) =>
     Observable<any> = this.apply(this.service
       .addressControllerUpdateSuburbResponse);

@@ -16,8 +16,8 @@ import { MessageDto } from '../models/message-dto';
   providedIn: 'root',
 })
 class PushControllerService extends __BaseService {
-  static readonly pushControllerPushContentPath = '/push/content';
-  static readonly pushControllerPushNewsPath = '/push/news';
+  static readonly pushControllerPushMailsPath = '/push/mails';
+  static readonly pushControllerPushNotificationsPath = '/push/notifications';
 
   constructor(
     config: __Configuration,
@@ -28,19 +28,16 @@ class PushControllerService extends __BaseService {
 
   /**
    * @param message message
-   * @param link link
    * @return OK
    */
-  pushControllerPushContentResponse(message: MessageDto,
-    link: string): __Observable<__StrictHttpResponse<{}>> {
+  pushControllerPushMailsResponse(message: MessageDto): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = message;
-    __body = link;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/push/content`,
+      this.rootUrl + `/push/mails`,
       __body,
       {
         headers: __headers,
@@ -57,12 +54,10 @@ class PushControllerService extends __BaseService {
   }
   /**
    * @param message message
-   * @param link link
    * @return OK
    */
-  pushControllerPushContent(message: MessageDto,
-    link: string): __Observable<{}> {
-    return this.pushControllerPushContentResponse(message, link).pipe(
+  pushControllerPushMails(message: MessageDto): __Observable<{}> {
+    return this.pushControllerPushMailsResponse(message).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -71,14 +66,14 @@ class PushControllerService extends __BaseService {
    * @param message message
    * @return OK
    */
-  pushControllerPushNewsResponse(message: MessageDto): __Observable<__StrictHttpResponse<{}>> {
+  pushControllerPushNotificationsResponse(message: MessageDto): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = message;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/push/news`,
+      this.rootUrl + `/push/notifications`,
       __body,
       {
         headers: __headers,
@@ -97,8 +92,8 @@ class PushControllerService extends __BaseService {
    * @param message message
    * @return OK
    */
-  pushControllerPushNews(message: MessageDto): __Observable<{}> {
-    return this.pushControllerPushNewsResponse(message).pipe(
+  pushControllerPushNotifications(message: MessageDto): __Observable<{}> {
+    return this.pushControllerPushNotificationsResponse(message).pipe(
       __map(_r => _r.body as {})
     );
   }

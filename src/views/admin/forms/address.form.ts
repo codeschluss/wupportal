@@ -2,9 +2,9 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationSettings } from '@wooportal/app';
-import { Box, CrudJoiner, CrudResolver, TokenProvider } from '@wooportal/core';
+import { Box, TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable } from 'rxjs';
-import { filter, map, mergeMap, take } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { AddressModel } from '../../../base/models/address.model';
 import { SuburbModel } from '../../../base/models/suburb.model';
 import { AddressProvider } from '../../../base/providers/address.provider';
@@ -118,7 +118,6 @@ export class AddressFormComponent
   public constructor(
     private addressProvider: AddressProvider,
     private app: ApplicationSettings,
-    private crudResolver: CrudResolver,
     route: ActivatedRoute,
     tokenProvider: TokenProvider,
     translationProvider: TranslationProvider
@@ -127,14 +126,9 @@ export class AddressFormComponent
   }
 
   public locate(): void {
-    const joiner = CrudJoiner.of(AddressModel).with('suburb');
-
-    this.item.id = null;
-    this.item.suburbId = this.group.get('suburb').value.id;
-
-    super.persist().pipe(
-      mergeMap((item) => this.crudResolver.refine(item, joiner.graph))
-    ).subscribe((item) => this.group.patchValue(this.item = item as any));
+    this.addressProvider.lookup(this.group.value).pipe(
+      map((response) => this.addressProvider.system.cast(response))
+    ).subscribe((item) => this.group.patchValue(item));
   }
 
   public persist(): Observable<any> {

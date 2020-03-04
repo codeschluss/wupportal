@@ -21,6 +21,7 @@ import { StringPrimitive } from '../models/string-primitive';
 class AddressControllerService extends __BaseService {
   static readonly addressControllerReadAllPath = '/addresses';
   static readonly addressControllerCreatePath = '/addresses';
+  static readonly addressControllerLookupPath = '/addresses/lookup';
   static readonly addressControllerReadOnePath = '/addresses/{addressId}';
   static readonly addressControllerUpdatePath = '/addresses/{addressId}';
   static readonly addressControllerDeletePath = '/addresses/{addressId}';
@@ -134,6 +135,42 @@ class AddressControllerService extends __BaseService {
   addressControllerCreate(newAddress: AddressEntity): __Observable<{}> {
     return this.addressControllerCreateResponse(newAddress).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param address address
+   * @return OK
+   */
+  addressControllerLookupResponse(address: AddressEntity): __Observable<__StrictHttpResponse<AddressEntity>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = address;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/addresses/lookup`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<AddressEntity>;
+      })
+    );
+  }
+  /**
+   * @param address address
+   * @return OK
+   */
+  addressControllerLookup(address: AddressEntity): __Observable<AddressEntity> {
+    return this.addressControllerLookupResponse(address).pipe(
+      __map(_r => _r.body as AddressEntity)
     );
   }
 

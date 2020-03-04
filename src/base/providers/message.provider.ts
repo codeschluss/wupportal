@@ -10,12 +10,12 @@ export class MessageProvider {
     private service: PushControllerService
   ) { }
 
-  public pushNews(message: Message): Response {
-    return this.service.pushControllerPushNewsResponse(message);
+  public mail(message: Message): Response {
+    return this.service.pushControllerPushMailsResponse(message);
   }
 
-  public pushContent(message: Message, route: string): Response {
-    return this.service.pushControllerPushContentResponse(message, route);
+  public push(message: Message): Response {
+    return this.service.pushControllerPushNotificationsResponse(message);
   }
 
 }

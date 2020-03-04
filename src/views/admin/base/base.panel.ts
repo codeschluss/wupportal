@@ -176,10 +176,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
       data: { item }
     }).afterClosed().pipe(
       filter(Boolean),
-      mergeMap((message: any) => this.messageProvider.pushContent({
-        content: message.content,
-        title: message.title
-      }, message.route))
+      mergeMap((message: any) => this.messageProvider.push(message))
     ).subscribe();
   }
 

@@ -2,11 +2,12 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CrudModel, TokenProvider } from '@wooportal/core';
-import { EMPTY, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MessageProvider } from '../../../base/providers/message.provider';
 import { TranslationProvider } from '../../../base/providers/translation.provider';
 import { BaseForm, FormField } from '../base/base.form';
-import { StringFieldComponent } from '../fields/string.field';
+import { InputFieldComponent } from '../fields/input.field';
 import { TextareaFieldComponent } from '../fields/textarea.field';
 
 @Component({
@@ -33,7 +34,7 @@ export class PusherFormComponent
   public fields: FormField[] = [
     {
       name: 'title',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
@@ -55,9 +56,10 @@ export class PusherFormComponent
   }
 
   public persist(): Observable<any> {
-    console.log(this.group.value);
-
-    return EMPTY;
+    return this.messageProvider.push({
+      content: this.group.get('content').value,
+      title: this.group.get('title').value
+    }).pipe(map(() => this.reset()));
   }
 
 }

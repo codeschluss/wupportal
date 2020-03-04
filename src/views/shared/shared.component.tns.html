@@ -87,15 +87,6 @@
             TODO: https://github.com/NativeScript/NativeScript/issues/6114
           -->
           <stack-layout flexGrow="1"></stack-layout>
-          <stack-layout ripple
-            [class.active]="url.startsWith('/notifications')"
-            [class.disabled]="!registerable"
-            [isEnabled]="registerable"
-            [isUserInteractionEnabled]="registerable"
-            (tap)="notifications()">
-            <icon-component icon="paper-plane"></icon-component>
-            <i18n i18n="@@notifications" unit="notifications"></i18n>
-          </stack-layout>
           <select-component
             key="locale"
             [formControl]="language"
@@ -105,6 +96,15 @@
               <i18n i18n="@@language" unit="language"></i18n>
             </stack-layout>
           </select-component>
+          <stack-layout ripple
+            [class.active]="url.startsWith('/notifications')"
+            [class.disabled]="!registerable"
+            [isEnabled]="registerable"
+            [isUserInteractionEnabled]="registerable"
+            (tap)="notifications()">
+            <icon-component icon="paper-plane"></icon-component>
+            <i18n i18n="@@notifications" unit="notifications"></i18n>
+          </stack-layout>
           <stack-layout ripple
             [class.active]="url.startsWith('/imprint')"
             (tap)="navigate('/', 'imprint')">

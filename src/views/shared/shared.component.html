@@ -70,13 +70,6 @@
     </mat-progress-bar>
     <router-outlet></router-outlet>
     <navbar-component>
-      <a mat-button
-        [class.active]="url.startsWith('/notifications')"
-        [disabled]="!registerable"
-        (click)="notifications()">
-        <icon-component icon="paper-plane"></icon-component>
-        <i18n i18n="@@notifications">notifications</i18n>
-      </a>
       <button mat-button [matMenuTriggerFor]="languageMenu">
         <icon-component icon="language"></icon-component>
         <i18n i18n="@@language">language</i18n>
@@ -91,6 +84,13 @@
           </button>
         </ng-container>
       </mat-menu>
+      <a mat-button
+        [class.active]="url.startsWith('/notifications')"
+        [disabled]="!registerable"
+        (click)="notifications()">
+        <icon-component icon="paper-plane"></icon-component>
+        <i18n i18n="@@notifications">notifications</i18n>
+      </a>
       <a mat-button
         [class.active]="url.startsWith('/imprint')"
         [routerLink]="['/', 'imprint']">
@@ -247,13 +247,6 @@
     </mat-action-list>
     <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
     <mat-action-list>
-      <button mat-list-item
-        [class.active]="url.startsWith('/notifications')"
-        [disabled]="!registerable"
-        (click)="notifications()">
-        <icon-component icon="paper-plane"></icon-component>
-        <i18n i18n="@@notifications">notifications</i18n>
-      </button>
       <a mat-button target="_blank" [href]="stores.apple">
         <img
           src="/images/badge-app-store.svg"
@@ -280,6 +273,13 @@
           </button>
         </ng-container>
       </mat-menu>
+      <button mat-list-item
+        [class.active]="url.startsWith('/notifications')"
+        [disabled]="!registerable"
+        (click)="notifications()">
+        <icon-component icon="paper-plane"></icon-component>
+        <i18n i18n="@@notifications">notifications</i18n>
+      </button>
       <button mat-list-item
         [class.active]="url.startsWith('/imprint')"
         (click)="navigate('/', 'imprint')">

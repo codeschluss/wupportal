@@ -20,6 +20,12 @@ main {
     @include flex(row, flex-start, center);
     overflow-x: auto;
     overflow-y: hidden;
+
+    & > time-piece {
+      @include media(lt-sm) {
+        display: none;
+      }
+    }
   }
 
   & > section {

@@ -19,7 +19,7 @@ export class MarkedComponent implements Compat, AfterViewInit {
   public data: string;
 
   public get html(): string {
-    return '<style>body{font-family:sans-serif;}</style>' + this.data;
+    return '<style>*{font-family:sans-serif;}</style>' + this.data;
   }
 
   @ViewChild('webview', { read: ElementRef, static: true })

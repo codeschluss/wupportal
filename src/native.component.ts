@@ -34,7 +34,7 @@ export class NativeComponent {
     NativeComponent.viewContainer = container;
 
     if (sessionProvider.getSubscriptionId()) {
-      pushProvider.registration();
+      pushProvider.registration().subscribe();
     }
 
     pushProvider.messages.subscribe((event) => {

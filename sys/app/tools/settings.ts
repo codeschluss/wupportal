@@ -41,6 +41,11 @@ export class ApplicationSettings {
     }
   };
 
+  public nativescript: {
+    appId: string,
+    id: string
+  };
+
   public repository: {
     type: string,
     url: string

@@ -43,6 +43,7 @@
     }
   },
   "nativescript": {
+    "appId": "1234567890",
     "id": "de.codeschluss.wooportal.client",
     "tns-android": {
       "version": "6.3.1"

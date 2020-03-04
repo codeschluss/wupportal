@@ -254,6 +254,18 @@
         <icon-component icon="paper-plane"></icon-component>
         <i18n i18n="@@notifications">notifications</i18n>
       </button>
+      <a mat-button target="_blank" [href]="stores.apple">
+        <img
+          src="/images/badge-app-store.svg"
+          [alt]="'Apple App Store: ' + (name | async)"
+          [title]="'Apple App Store: ' + (name | async)">
+      </a>
+      <a mat-button target="_blank" [href]="stores.google">
+        <img
+          src="/images/badge-google-play.svg"
+          [alt]="'Google Play Store: ' + (name | async)"
+          [title]="'Google Play Store: ' + (name | async)">
+      </a>
       <button mat-list-item [matMenuTriggerFor]="languageMenu">
         <icon-component icon="language"></icon-component>
         <i18n i18n="@@language">language</i18n>

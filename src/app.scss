@@ -224,6 +224,20 @@ shared-component {
               width: 2.5rem;
             }
 
+            & > .mat-button {
+              display: block;
+              text-align: inherit;
+
+              & > .mat-button-wrapper {
+                text-align: inherit;
+
+                img {
+                  padding: 0.5rem;
+                  width: 66%;
+                }
+              }
+            }
+
             & > .mat-list-item {
               text-decoration: none;
 

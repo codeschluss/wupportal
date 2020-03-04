@@ -147,6 +147,12 @@
             <i18n i18n="@@application">application</i18n>
           </button>
           <button mat-menu-item
+            [class.active]="url.startsWith('/admin/messaging')"
+            [routerLink]="['/', 'admin', 'messaging']">
+            <icon-component icon="paper-plane"></icon-component>
+            <i18n i18n="@@messaging">messaging</i18n>
+          </button>
+          <button mat-menu-item
             [class.active]="url.startsWith('/admin/information')"
             [routerLink]="['/', 'admin', 'information']">
             <icon-component icon="book"></icon-component>

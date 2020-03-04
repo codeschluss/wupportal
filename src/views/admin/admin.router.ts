@@ -7,6 +7,7 @@ import { AdminGuarding } from './admin.guarding';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { InformationPanelComponent } from './panels/information/information.panel';
+import { MessagingPanelComponent } from './panels/messaging/messaging.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
 import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
@@ -31,6 +32,7 @@ const routes: Route[] = [
       AccountPanelComponent.routing,
       ApplicationPanelComponent.routing,
       InformationPanelComponent.routing,
+      MessagingPanelComponent.routing,
       OrganisationPanelComponent.routing,
       PositioningPanelComponent.routing,
       PrivilegesPanelComponent.routing,

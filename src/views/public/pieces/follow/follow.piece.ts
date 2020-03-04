@@ -31,9 +31,7 @@ export class FollowPieceComponent extends BasePiece {
   }
 
   public follow(): void {
-    let method;
-
-    switch (true) {
+    let method; switch (true) {
       case this.item instanceof ActivityModel:
         method = this.subscriptionProvider.linkActivity;
         break;

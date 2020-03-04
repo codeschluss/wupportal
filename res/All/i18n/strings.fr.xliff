@@ -575,6 +575,22 @@
       <trans-unit id="copyLink" datatype="html">
         <source>copyLink</source><target>Copier lien</target>
       </trans-unit>
+      <trans-unit id="analytics" datatype="html">
+        <source>analytics</source><target>analytique</target>
+      </trans-unit>
+      <trans-unit id="allSubscriptions" datatype="html">
+        <source>allSubscriptions</source><target>tous les Subscriptions</target>
+      </trans-unit>
+      <trans-unit id="subscription" datatype="html">
+        <source>subscription</source><target>Subscription</target>
+      </trans-unit>
+      <trans-unit id="subscriptions" datatype="html">
+        <source>subscriptions</source><target>Subscriptions</target>
+      </trans-unit>
+      <trans-unit id="currentOnly" datatype="html">
+        <source>currentOnly</source><target>Afficher uniquement le courant</target>
+      </trans-unit>
+    </body>
     </body>
   </file>
 </xliff>

@@ -1,42 +1,21 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 
+import { AnalyticsEntry } from 'src/api/models/analytics-entry';
 import { AnalyticsProvider } from '../../../base/providers/analytics.provider';
-import { AnalyticsEntry } from '../../../api/models/analytics-entry';
+import { BaseChart } from '../base/base.chart';
 
 @Component({
   selector: 'subscription-chart',
-  template: `
-    <ngx-charts-bar-vertical
-      [scheme]="colorScheme"
-      [results]="results"
-      [xAxis]=true
-      [yAxis]=true
-      [showXAxisLabel]=true
-      [showYAxisLabel]=true
-      [xAxisLabel]="'Typen'"
-      [yAxisLabel]="'Anzahl'">
-    </ngx-charts-bar-vertical>
-  `
+  template: `<ngx-charts-bar-vertical`
+      + BaseChart.template() + `>
+    </ngx-charts-bar-vertical>`
 })
-export class SubscriptionChartComponent implements OnDestroy {
-  results = [];
-  colorScheme = {
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
-  };
-
-  dataSubscription: Subscription;
+export class SubscriptionChartComponent extends BaseChart {
 
   constructor(
     private dataService: AnalyticsProvider) {
-      this.dataSubscription = this.dataService
-        .subscriptionCalc()
-        .subscribe((result: Array<AnalyticsEntry>) => {
-          this.results = result;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.dataSubscription.unsubscribe();
+      super();
+      this.dataSubscription = this.dataService.subscriptionCalc()
+        .subscribe((result: Array<AnalyticsEntry>) => super.setData(result))
   }
 }

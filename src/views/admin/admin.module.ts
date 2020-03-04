@@ -30,6 +30,7 @@ import { ActivityCategoryChartComponent } from './charts/activity-category.chart
 import { ActivityTargetGroupChartComponent } from './charts/activity-targetgroup.chart.component';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
+import { BaseChart } from './base/base.chart';
 import { BaseFieldComponent } from './base/base.field';
 import { BaseForm } from './base/base.form';
 import { BasePanel } from './base/base.panel';
@@ -45,6 +46,7 @@ import { ScheduleFieldComponent } from './fields/schedule.field';
 import { SelectFieldComponent } from './fields/select.field';
 import { TextareaFieldComponent } from './fields/textarea.field';
 import { UrlFieldComponent } from './fields/url.field';
+import { CurrentFilterComponent } from './filter/current-filter.component'
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
@@ -102,7 +104,7 @@ import { TargetGroupTableComponent } from './tables/target-group.table';
 import { TopicTableComponent } from './tables/topic.table';
 import { UserTableComponent } from './tables/user.table';
 
-const charts: Type<any>[] = [
+const charts: Type<BaseChart>[] = [
   SubscriptionChartComponent,
   ActivityCategoryChartComponent,
   ActivityTargetGroupChartComponent
@@ -128,6 +130,10 @@ const fields: Type<BaseFieldComponent>[] = [
   SelectFieldComponent,
   TextareaFieldComponent,
   UrlFieldComponent
+];
+
+const filters: Type<any>[] = [
+  CurrentFilterComponent
 ];
 
 const forms: Type<BaseForm<CrudModel>>[] = [
@@ -232,6 +238,7 @@ const tables: Type<BaseTable<CrudModel>>[] = [
     ...components,
     ...directives,
     ...fields,
+    ...filters,
     ...forms,
     ...panels,
     ...popups,

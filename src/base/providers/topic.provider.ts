@@ -1,15 +1,13 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
-import { BaseService } from '../../api/base-service';
-import { TopicControllerService } from '../../api/services/topic-controller.service';
+import { TopicControllerService as Service } from '../../api/services/topic-controller.service';
 import { InfopageModel } from '../models/infopage.model';
 import { LanguageModel } from '../models/language.model';
-import { TopicModel } from '../models/topic.model';
+import { TopicModel as Model } from '../models/topic.model';
 
 @Injectable({ providedIn: 'root' })
-export class TopicProvider
-  extends CrudProvider<BaseService, TopicModel> {
+export class TopicProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -25,7 +23,7 @@ export class TopicProvider
     {
       field: 'translations',
       method: this.service.topicControllerReadTranslationsResponse,
-      model: TopicModel
+      model: Model
     }
   ];
 
@@ -37,23 +35,23 @@ export class TopicProvider
     update: this.service.topicControllerUpdateResponse
   };
 
-  protected model: Type<TopicModel> = this.based(TopicModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: TopicControllerService
+    protected service: Service
   ) {
     super();
   }
 
-  public create: (model: TopicModel) => Observable<any>;
+  public create: (model: Partial<Model>) => Observable<any>;
 
-  public update: (model: TopicModel) => Observable<any>;
+  public update: (model: Partial<Model>) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<TopicModel>;
+  public readOne: (id: string) => Observable<Model>;
 
-  public readAll: (params?: TopicControllerService
-    .TopicControllerReadAllParams) => Observable<TopicModel[]>;
+  public readAll: (params?: Service.TopicControllerReadAllParams) =>
+    Observable<Model[]>;
 
 }

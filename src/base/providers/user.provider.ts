@@ -3,17 +3,16 @@ import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
-import { UserControllerService } from '../../api/services/user-controller.service';
+import { UserControllerService as Service } from '../../api/services/user-controller.service';
 import { ActivityModel } from '../models/activity.model';
 import { BloggerModel } from '../models/blogger.model';
 import { BlogpostModel } from '../models/blogpost.model';
 import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel } from '../models/organisation.model';
-import { UserModel } from '../models/user.model';
+import { UserModel as Model } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
-export class UserProvider
-  extends CrudProvider<UserControllerService, UserModel> {
+export class UserProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -56,63 +55,63 @@ export class UserProvider
     update: this.service.userControllerUpdateResponse
   };
 
-  protected model: Type<UserModel> = this.based(UserModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: UserControllerService
+    protected service: Service
   ) {
     super();
   }
 
-  public create: (model: UserModel) => Observable<any>;
+  public create: (model: Partial<Model>) => Observable<any>;
 
-  public update: (model: UserModel) => Observable<any>;
+  public update: (model: Partial<Model>) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<UserModel>;
+  public readOne: (id: string) => Observable<Model>;
 
-  public readAll: (params?: UserControllerService
-    .UserControllerReadAllParams) => Observable<UserModel[]>;
+  public readAll: (params?: Service.UserControllerReadAllParams) =>
+    Observable<Model[]>;
 
-  public grantBlogger:
-    (id: string, grant: Boolean) => Observable<any> =
-      this.apply(this.service.userControllerGrantBloggerRightResponse);
+  public grantBlogger: (id: string, grant: Boolean) =>
+    Observable<any> = this.apply(this.service
+      .userControllerGrantBloggerRightResponse);
 
-  public grantSuperUser:
-    (id: string, grant: Boolean) => Observable<any> =
-      this.apply(this.service.userControllerGrantSuperuserRightResponse);
+  public grantSuperUser: (id: string, grant: Boolean) =>
+    Observable<any> = this.apply(this.service
+      .userControllerGrantSuperuserRightResponse);
 
-  public resetAllPasswords:
-    () => Observable<any> =
-      this.apply(this.service.userControllerResetAllPasswordsResponse);
+  public resetAllPasswords: () =>
+    Observable<any> = this.apply(this.service
+      .userControllerResetAllPasswordsResponse);
 
-  public resetPassword:
-    (username: String) => Observable<any> =
-      this.apply(this.service.userControllerResetPasswordResponse);
+  public resetPassword: (username: String) =>
+    Observable<any> = this.apply(this.service
+      .userControllerResetPasswordResponse);
 
-  public linkBlogger:
-    () => Observable<any> =
-      this.apply(this.service.userControllerApplyAsBloggerResponse);
+  public linkBlogger: () =>
+    Observable<any> = this.apply(this.service
+      .userControllerApplyAsBloggerResponse);
 
-  public linkOrganisations:
-    (id: string, organisationIds: string[]) => Observable<any> =
-      this.apply(this.service.userControllerAddOrganisationResponse);
+  public linkOrganisations: (id: string, organisationIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .userControllerAddOrganisationResponse);
 
-  public unlinkActivity:
-    (id: string, activityId: string) => Observable<any> =
-      this.apply(this.service.userControllerDeleteActivityResponse);
+  public unlinkActivity: (id: string, activityId: string) =>
+    Observable<any> = this.apply(this.service
+      .userControllerDeleteActivityResponse);
 
-  public unlinkBlogpost:
-      (id: string, blogId: string) => Observable<any> =
-        this.apply(this.service.userControllerDeleteBlogResponse);
+  public unlinkBlogpost: (id: string, blogId: string) =>
+    Observable<any> = this.apply(this.service
+      .userControllerDeleteBlogResponse);
 
-  public unlinkBlogger:
-      (id: string) => Observable<any> =
-        this.apply(this.service.userControllerDeleteBloggerResponse);
+  public unlinkBlogger: (id: string) =>
+    Observable<any> = this.apply(this.service
+      .userControllerDeleteBloggerResponse);
 
-  public unlinkOrganisation:
-    (id: string, organisationId: string) => Observable<any> =
-      this.apply(this.service.userControllerDeleteOrganisationResponse);
+  public unlinkOrganisation: (id: string, organisationId: string) =>
+    Observable<any> = this.apply(this.service
+      .userControllerDeleteOrganisationResponse);
 
 }

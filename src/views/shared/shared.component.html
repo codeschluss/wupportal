@@ -70,6 +70,13 @@
     </mat-progress-bar>
     <router-outlet></router-outlet>
     <navbar-component>
+      <a mat-button
+        [class.active]="url.startsWith('/notifications')"
+        [disabled]="!registerable"
+        (click)="notifications()">
+        <icon-component icon="paper-plane"></icon-component>
+        <i18n i18n="@@notifications">notifications</i18n>
+      </a>
       <button mat-button [matMenuTriggerFor]="languageMenu">
         <icon-component icon="language"></icon-component>
         <i18n i18n="@@language">language</i18n>
@@ -138,6 +145,12 @@
             [routerLink]="['/', 'admin', 'application']">
             <icon-component icon="sliders-h"></icon-component>
             <i18n i18n="@@application">application</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/messaging')"
+            [routerLink]="['/', 'admin', 'messaging']">
+            <icon-component icon="paper-plane"></icon-component>
+            <i18n i18n="@@messaging">messaging</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/information')"
@@ -234,6 +247,13 @@
     </mat-action-list>
     <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
     <mat-action-list>
+      <button mat-list-item
+        [class.active]="url.startsWith('/notifications')"
+        [disabled]="!registerable"
+        (click)="notifications()">
+        <icon-component icon="paper-plane"></icon-component>
+        <i18n i18n="@@notifications">notifications</i18n>
+      </button>
       <button mat-list-item [matMenuTriggerFor]="languageMenu">
         <icon-component icon="language"></icon-component>
         <i18n i18n="@@language">language</i18n>

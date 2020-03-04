@@ -39,6 +39,7 @@ import { ImageFieldComponent } from './fields/image.field';
 import { InputFieldComponent } from './fields/input.field';
 import { ScheduleFieldComponent } from './fields/schedule.field';
 import { SelectFieldComponent } from './fields/select.field';
+import { TextareaFieldComponent } from './fields/textarea.field';
 import { UrlFieldComponent } from './fields/url.field';
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
@@ -49,7 +50,9 @@ import { ImageFormComponent } from './forms/image.form';
 import { InfopageFormComponent } from './forms/infopage.form';
 import { KeywordFormComponent } from './forms/keyword.form';
 import { LanguageFormComponent } from './forms/language.form';
+import { MailingFormComponent } from './forms/mailing.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
+import { PusherFormComponent } from './forms/pusher.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
 import { SuburbFormComponent } from './forms/suburb.form';
 import { TargetGroupFormComponent } from './forms/target-group.form';
@@ -59,11 +62,13 @@ import { UserFormComponent } from './forms/user.form';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { InformationPanelComponent } from './panels/information/information.panel';
+import { MessagingPanelComponent } from './panels/messaging/messaging.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
 import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
 import { TaxonomyPanelComponent } from './panels/taxonomy/taxonomy.panel';
 import { DeletePopupComponent } from './popups/delete.popup';
+import { PusherPopupComponent } from './popups/pusher.popup';
 import { ReloginPopupComponent } from './popups/relogin.popup';
 import { RequestPopupComponent } from './popups/request.popup';
 import { ActivityStepperComponent } from './steppers/activity.stepper';
@@ -110,6 +115,7 @@ const fields: Type<BaseFieldComponent>[] = [
   ImageFieldComponent,
   ScheduleFieldComponent,
   SelectFieldComponent,
+  TextareaFieldComponent,
   UrlFieldComponent
 ];
 
@@ -123,7 +129,9 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   InfopageFormComponent,
   KeywordFormComponent,
   LanguageFormComponent,
+  MailingFormComponent,
   OrganisationFormComponent,
+  PusherFormComponent,
   ScheduleFormComponent,
   SuburbFormComponent,
   TargetGroupFormComponent,
@@ -160,6 +168,7 @@ const panels: Type<BasePanel>[] = [
   AccountPanelComponent,
   ApplicationPanelComponent,
   InformationPanelComponent,
+  MessagingPanelComponent,
   OrganisationPanelComponent,
   PositioningPanelComponent,
   PrivilegesPanelComponent,
@@ -168,6 +177,7 @@ const panels: Type<BasePanel>[] = [
 
 const popups: Type<any>[] = [
   DeletePopupComponent,
+  PusherPopupComponent,
   ReloginPopupComponent,
   RequestPopupComponent
 ];

@@ -57,9 +57,7 @@ export class ReloginPopupComponent implements OnInit {
   ]);
 
   public get valid(): boolean {
-    return true
-      && this.email.valid
-      && this.password.valid;
+    return this.email.valid && this.password.valid;
   }
 
   public constructor(

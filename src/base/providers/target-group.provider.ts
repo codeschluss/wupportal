@@ -1,24 +1,12 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
-import { TargetGroupControllerService } from '../../api/services/target-group-controller.service';
+import { TargetGroupControllerService as Service } from '../../api/services/target-group-controller.service';
 import { LanguageModel } from '../models/language.model';
-import { TargetGroupModel } from '../models/target-group.model';
+import { TargetGroupModel as Model } from '../models/target-group.model';
 
 @Injectable({ providedIn: 'root' })
-export class TargetGroupProvider
-  extends CrudProvider<TargetGroupControllerService, TargetGroupModel> {
-
-  public create: (model: TargetGroupModel) => Observable<any>;
-
-  public update: (model: TargetGroupModel) => Observable<any>;
-
-  public delete: (id: string) => Observable<any>;
-
-  public readOne: (id: string) => Observable<TargetGroupModel>;
-
-  public readAll: (params?: TargetGroupControllerService
-    .TargetGroupControllerReadAllParams) => Observable<TargetGroupModel[]>;
+export class TargetGroupProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -29,7 +17,7 @@ export class TargetGroupProvider
     {
       field: 'translations',
       method: this.service.targetGroupControllerReadTranslationsResponse,
-      model: TargetGroupModel
+      model: Model
     }
   ];
 
@@ -41,12 +29,23 @@ export class TargetGroupProvider
     update: this.service.targetGroupControllerUpdateResponse
   };
 
-  protected model: Type<TargetGroupModel> = this.based(TargetGroupModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: TargetGroupControllerService
+    protected service: Service
   ) {
     super();
   }
+
+  public create: (model: Partial<Model>) => Observable<any>;
+
+  public update: (model: Partial<Model>) => Observable<any>;
+
+  public delete: (id: string) => Observable<any>;
+
+  public readOne: (id: string) => Observable<Model>;
+
+  public readAll: (params?: Service.TargetGroupControllerReadAllParams) =>
+    Observable<Model[]>;
 
 }

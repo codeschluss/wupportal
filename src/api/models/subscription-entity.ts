@@ -1,9 +1,9 @@
 /* tslint:disable */
 export interface SubscriptionEntity {
+  _embedded?: {};
   authSecret?: string;
   created?: string;
-  endpoint?: string;
   id?: string;
+  locale?: string;
   modified?: string;
-  publicKey?: string;
 }

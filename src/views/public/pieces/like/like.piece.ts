@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { BaseService, CrudModel, CrudProvider, SessionProvider } from '@wooportal/core';
+import { BaseService, Box, CrudModel, CrudProvider, SessionProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
+import { StringPrimitive as String } from '../../../../api/models/string-primitive';
 import { BasePiece } from '../base.piece';
 
 @Component({
@@ -24,10 +25,14 @@ export class LikePieceComponent extends BasePiece {
   public like(): void {
     const provider = (this.item.constructor as any)
       .provider as CrudProvider<BaseService, CrudModel>
-        & { like: (id: string) => Observable<any> };
+        & { like: (id: string, subId?: String) => Observable<any> };
 
     if (provider.like) {
-      provider.like(this.item.id).subscribe(() => {
+      const subId = this.sessionProvider.getSubscriptionId()
+        ? Box(this.sessionProvider.getSubscriptionId())
+        : undefined;
+
+      provider.like(this.item.id, subId).subscribe(() => {
         this.sessionProvider.setLiked(this.item.id);
         (this.item as any).likes++;
       });

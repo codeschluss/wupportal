@@ -22,11 +22,13 @@ import { HomePageComponent } from './pages/home/home.page';
 import { ImprintPageComponent } from './pages/imprint/imprint.page';
 import { LoginPageComponent } from './pages/login/login.page';
 import { LogoutPageComponent } from './pages/logout/logout.page';
+import { NotificationsPageComponent } from './pages/notifications/notifications.page';
 import { PoliciesPageComponent } from './pages/policies/policies.page';
 import { RegisterPageComponent } from './pages/register/register.page';
 import { SearchPageComponent } from './pages/search/search.page';
 import { BasePiece } from './pieces/base.piece';
 import { DetailsPieceComponent } from './pieces/details/details.piece';
+import { FollowPieceComponent } from './pieces/follow/follow.piece';
 import { LikePieceComponent } from './pieces/like/like.piece';
 import { SharePieceComponent } from './pieces/share/share.piece';
 import { TimePieceComponent } from './pieces/time/time.piece';
@@ -64,6 +66,7 @@ const pages: Type<BasePage>[] = [
   ImprintPageComponent,
   LoginPageComponent,
   LogoutPageComponent,
+  NotificationsPageComponent,
   PoliciesPageComponent,
   RegisterPageComponent,
   SearchPageComponent
@@ -71,6 +74,7 @@ const pages: Type<BasePage>[] = [
 
 const pieces: Type<BasePiece>[] = [
   DetailsPieceComponent,
+  FollowPieceComponent,
   LikePieceComponent,
   SharePieceComponent,
   TimePieceComponent

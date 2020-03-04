@@ -1,0 +1,13 @@
+@import '../../../../app.vars.scss';
+
+stack-layout {
+  &.disabled {
+    & > [icon] {
+      opacity: .26;
+    }
+
+    & > [unit] {
+      opacity: .26;
+    }
+  }
+}

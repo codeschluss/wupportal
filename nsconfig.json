@@ -7,6 +7,7 @@
     "nativescript-angular",
     "nativescript-geolocation",
     "nativescript-ng-ripple",
+    "nativescript-plugin-firebase",
     "nativescript-social-share",
     "nativescript-ui-calendar",
     "nativescript-ui-sidedrawer",

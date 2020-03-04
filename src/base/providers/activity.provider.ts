@@ -2,8 +2,8 @@ import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
-import { ActivityControllerService } from '../../api/services/activity-controller.service';
-import { ActivityModel } from '../models/activity.model';
+import { ActivityControllerService as Service } from '../../api/services/activity-controller.service';
+import { ActivityModel as Model } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
 import { BlogpostModel } from '../models/blogpost.model';
 import { CategoryModel } from '../models/category.model';
@@ -16,8 +16,7 @@ import { ScheduleModel } from '../models/schedule.model';
 import { TargetGroupModel } from '../models/target-group.model';
 
 @Injectable({ providedIn: 'root' })
-export class ActivityProvider
-  extends CrudProvider<ActivityControllerService, ActivityModel> {
+export class ActivityProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -73,7 +72,7 @@ export class ActivityProvider
     {
       field: 'translations',
       method: this.service.activityControllerReadTranslationsResponse,
-      model: ActivityModel
+      model: Model
     }
   ];
 
@@ -85,71 +84,71 @@ export class ActivityProvider
     update: this.service.activityControllerUpdateResponse
   };
 
-  protected model: Type<ActivityModel> = this.based(ActivityModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: ActivityControllerService
+    protected service: Service
   ) {
     super();
   }
 
-  public create: (model: ActivityModel) => Observable<any>;
+  public create: (model: Partial<Model>) => Observable<any>;
 
-  public update: (model: ActivityModel) => Observable<any>;
+  public update: (model: Partial<Model>) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<ActivityModel>;
+  public readOne: (id: string) => Observable<Model>;
 
-  public readAll: (params?: ActivityControllerService
-    .ActivityControllerReadAllParams) => Observable<ActivityModel[]>;
+  public readAll: (params?: Service.ActivityControllerReadAllParams) =>
+    Observable<Model[]>;
 
-  public like:
-    (id: string) => Observable<any> =
-      this.apply(this.service.activityControllerIncreaseLikeResponse);
+  public like: (id: string, subscriptionId?: String) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerIncreaseLikeResponse);
 
-  public linkTargetGroups:
-    (id: string, targetGroupIds: string[]) => Observable<any> =
-      this.apply(this.service.activityControllerAddTargetGroupsResponse);
+  public linkTargetGroups: (id: string, targetGroupIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerAddTargetGroupsResponse);
 
-  public pasteImages:
-    (id: string, images: ImageModel[]) => Observable<any> =
-      this.apply(this.service.activityControllerAddImageResponse);
+  public pasteImages: (id: string, images: ImageModel[]) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerAddImageResponse);
 
-  public pasteKeywords:
-    (id: string, tags: KeywordModel[]) => Observable<any> =
-      this.apply(this.service.activityControllerAddTagsResponse);
+  public pasteKeywords: (id: string, tags: KeywordModel[]) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerAddTagsResponse);
 
-  public pasteSchedules:
-    (id: string, schedules: ScheduleModel[]) => Observable<any> =
-      this.apply(this.service.activityControllerAddSchedulesResponse);
+  public pasteSchedules: (id: string, schedules: ScheduleModel[]) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerAddSchedulesResponse);
 
-  public relinkAddress:
-    (id: string, addressId: String) => Observable<any> =
-      this.apply(this.service.activityControllerUpdateAddressResponse);
+  public relinkAddress: (id: string, addressId: String) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerUpdateAddressResponse);
 
-  public relinkCategory:
-    (id: string, categoryId: String) => Observable<any> =
-      this.apply(this.service.activityControllerUpdateCategoryResponse);
+  public relinkCategory: (id: string, categoryId: String) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerUpdateCategoryResponse);
 
-  public relinkOrganisation:
-    (id: string, organisationId: String) => Observable<any> =
-      this.apply(this.service.activityControllerUpdateOrganisationResponse);
+  public relinkOrganisation: (id: string, organisationId: String) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerUpdateOrganisationResponse);
 
-  public unlinkImages:
-    (id: string, imageIds: string[]) => Observable<any> =
-      this.apply(this.service.activityControllerDeleteImagesResponse);
+  public unlinkImages: (id: string, imageIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerDeleteImagesResponse);
 
-  public unlinkKeywords:
-    (id: string, tagIds: string[]) => Observable<any> =
-      this.apply(this.service.activityControllerDeleteTagsResponse);
+  public unlinkKeywords: (id: string, tagIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerDeleteTagsResponse);
 
-  public unlinkSchedules:
-    (id: string, scheduleId: string[]) => Observable<any> =
-      this.apply(this.service.activityControllerDeleteSchedulesResponse);
+  public unlinkSchedules: (id: string, scheduleId: string[]) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerDeleteSchedulesResponse);
 
-  public unlinkTargetGroups:
-    (id: string, targetGroupIds: string[]) => Observable<any> =
-      this.apply(this.service.activityControllerDeleteTargetGroupsResponse);
+  public unlinkTargetGroups: (id: string, targetGroupIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerDeleteTargetGroupsResponse);
 
 }

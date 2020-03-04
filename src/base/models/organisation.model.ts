@@ -6,6 +6,7 @@ import { AddressModel } from './address.model';
 import { ImageModel } from './image.model';
 import { MembershipModel } from './membership.model';
 import { UserModel } from './user.model';
+import { VideoModel } from './video.model';
 
 export class OrganisationModel
   extends CrudModel implements OrganisationEntity {
@@ -28,6 +29,7 @@ export class OrganisationModel
   public membership: MembershipModel & Observable<MembershipModel>;
   public memberships: MembershipModel[] & Observable<MembershipModel[]>;
   public users: UserModel[] & Observable<UserModel[]>;
+  public videos: VideoModel[] & Observable<VideoModel[]>;
 
   // compatability
   public get provider() { return this.membership; }

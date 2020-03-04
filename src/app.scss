@@ -227,6 +227,11 @@ shared-component {
             & > .mat-list-item {
               text-decoration: none;
 
+              &[disabled] {
+                opacity: .26;
+                pointer-events: none;
+              }
+
               &:focus {
                 background: inherit !important;
               }
@@ -335,6 +340,10 @@ shared-component {
             & > .mat-button-base {
               @include flex(row, normal, center);
               height: 100%;
+
+              &[disabled] {
+                pointer-events: none;
+              }
 
               &.active {
                 color: $color-primary;

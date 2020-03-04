@@ -9,10 +9,12 @@ import { filter, mergeMap } from 'rxjs/operators';
 import { MembershipModel } from '../../../base/models/membership.model';
 import { OrganisationModel } from '../../../base/models/organisation.model';
 import { UserModel } from '../../../base/models/user.model';
+import { MessageProvider } from '../../../base/providers/message.provider';
 import { OrganisationProvider } from '../../../base/providers/organisation.provider';
 import { UserProvider } from '../../../base/providers/user.provider';
 import { I18nComponent } from '../../shared/i18n/i18n.component';
 import { DeletePopupComponent } from '../popups/delete.popup';
+import { PusherPopupComponent } from '../popups/pusher.popup';
 
 export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
@@ -76,6 +78,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   public constructor(
     protected dialog: MatDialog,
+    protected messageProvider: MessageProvider,
     protected organisationProvider: OrganisationProvider,
     protected pathfinder: Pathfinder,
     protected route: ActivatedRoute,
@@ -166,6 +169,18 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     ).pipe(
       filter(() => item.id === this.userId)
     ).subscribe(() => this.reload());
+  }
+
+  public push(item: CrudModel): void {
+    this.dialog.open(PusherPopupComponent, {
+      data: { item }
+    }).afterClosed().pipe(
+      filter(Boolean),
+      mergeMap((message: any) => this.messageProvider.pushContent({
+        content: message.content,
+        title: message.title
+      }, message.route))
+    ).subscribe();
   }
 
   public unlinkBlogger(item: UserModel): void {

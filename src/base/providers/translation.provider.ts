@@ -15,7 +15,7 @@ export class TranslationProvider {
   ) { }
 
   public translate(
-    labels: { [key: string]: string },
+    labels: Record<string, string>,
     targets: string[],
     source: string
   ): Observable<TranslationModel[]> {

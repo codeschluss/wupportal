@@ -1,0 +1,22 @@
+{
+  "configuration_version": "1",
+  "project_info": {
+    "project_id": "wooportal-e80d8",
+    "project_number": "83837424328"
+  },
+  "client": [
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe04PVju7h8U8lxUHXAkd1izSreW5ggOE"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "de.codeschluss.wooportal.client"
+        },
+        "mobilesdk_app_id": "1:83837424328:android:29b2134bc5a0a1c9f64bfd"
+      }
+    }
+  ]
+}

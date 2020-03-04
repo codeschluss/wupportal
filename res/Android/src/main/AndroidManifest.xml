@@ -27,6 +27,18 @@
     android:label="@string/defaultTitle"
     android:theme="@style/AppTheme">
 
+    <meta-data
+      android:name="firebase_analytics_collection_deactivated"
+      android:value="true"/>
+
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_color"
+      android:resource="@color/primary"/>
+
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_icon"
+      android:resource="@drawable/notification"/>
+
     <activity
       android:name="com.tns.NativeScriptActivity"
       android:label="@string/defaultTitle"

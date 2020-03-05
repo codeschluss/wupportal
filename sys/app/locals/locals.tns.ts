@@ -6,6 +6,7 @@ export { NativeScriptCommonModule as AppCommonModule } from 'nativescript-angula
 export { NativeScriptRouterModule as AppRouterModule } from 'nativescript-angular/router';
 export { getRootView } from 'tns-core-modules/application';
 export { fromBase64 } from 'tns-core-modules/image-source';
+export { alert, confirm } from 'tns-core-modules/ui/dialogs';
 export { eachDescendant } from 'tns-core-modules/ui/page';
 export { openUrl } from 'tns-core-modules/utils/utils';
 export { FileSystem };

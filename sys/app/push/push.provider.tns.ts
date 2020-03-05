@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Message, registerForPushNotifications } from 'nativescript-plugin-firebase';
 import { firebase } from 'nativescript-plugin-firebase/firebase-common';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { PushProvider as Compat } from './push.provider.i';
 
 declare const FIRApp: any;
@@ -9,10 +10,10 @@ declare const FIRApp: any;
 @Injectable({ providedIn: 'root' })
 export class PushProvider implements Compat {
 
-  private events: Subject<Message> = new Subject<Message>();
+  private events: BehaviorSubject<Message>;
 
   public get messages(): Observable<Message & Notification> {
-    return this.events.asObservable() as any;
+    return this.events.pipe(filter(Boolean)) as Observable<any>;
   }
 
   public get registerable(): boolean {
@@ -20,6 +21,8 @@ export class PushProvider implements Compat {
   }
 
   public constructor() {
+    this.events = new BehaviorSubject<Message>(null);
+
     if (typeof FIRApp !== 'undefined' && !firebase._configured) {
       firebase._configured = true;
       FIRApp.configure();

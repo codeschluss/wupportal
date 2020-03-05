@@ -1,9 +1,9 @@
 import { HttpRequest } from '@angular/common/http';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ApplicationSettings, DeviceProvider, eachDescendant, getRootView, PushProvider } from '@wooportal/app';
+import { alert, ApplicationSettings, confirm, DeviceProvider, eachDescendant, getRootView, PushProvider } from '@wooportal/app';
 import { CoreUrlSerializer, Headers, JwtClaims, LoadingProvider, SessionProvider, TokenProvider } from '@wooportal/core';
 import { BehaviorSubject, EMPTY, fromEvent, Observable } from 'rxjs';
 import { catchError, filter, map, mergeMap, startWith, tap } from 'rxjs/operators';
@@ -77,7 +77,8 @@ export class SharedComponent implements OnInit {
     private pushProvider: PushProvider,
     private sessionProvider: SessionProvider,
     private subscriptionProvider: SubscriptionProvider,
-    private tokenProvider: TokenProvider
+    private tokenProvider: TokenProvider,
+    private zone: NgZone
   ) { }
 
   public ngOnInit(): void {
@@ -99,6 +100,36 @@ export class SharedComponent implements OnInit {
     const params = this.route.snapshot.queryParamMap;
     if (params.has('embed') || params.has('native')) {
       this.deviceProvider.document.body.classList.add('embedded');
+    }
+
+    if (this.deviceProvider.platform === 'Native') {
+      this.pushProvider.messages.subscribe((event) => {
+        let route; switch (this.deviceProvider.notation) {
+          case 'Android': route = event.data.route; break;
+          case 'iOS': route = event.data.aps.route; break;
+        }
+
+        if (event.foreground && route) {
+          confirm({
+            cancelButtonText: this.i18n({ id: 'close', value: 'close' }),
+            message: event.body,
+            okButtonText: this.i18n({ id: 'details', value: 'details' }),
+            title: event.title
+          }).then((navigate) => {
+            if (navigate) {
+              this.zone.run(() => this.router.navigateByUrl(route));
+            }
+          });
+        } else if (event.foreground) {
+          alert({
+            message: event.body,
+            okButtonText: this.i18n({ id: 'close', value: 'close' }),
+            title: event.title
+          });
+        } else if (route) {
+          this.zone.run(() => this.router.navigateByUrl(route));
+        }
+      });
     }
 
     if (this.deviceProvider.notation !== 'Server') {

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Message, registerForPushNotifications } from 'nativescript-plugin-firebase';
+import { firebase } from 'nativescript-plugin-firebase/firebase-common';
 import { Observable, Subject } from 'rxjs';
 import { PushProvider as Compat } from './push.provider.i';
+
+declare const FIRApp: any;
 
 @Injectable({ providedIn: 'root' })
 export class PushProvider implements Compat {
@@ -14,6 +17,13 @@ export class PushProvider implements Compat {
 
   public get registerable(): boolean {
     return true;
+  }
+
+  public constructor() {
+    if (typeof FIRApp !== 'undefined' && !firebase._configured) {
+      firebase._configured = true;
+      FIRApp.configure();
+    }
   }
 
   public registration(): Observable<string> {

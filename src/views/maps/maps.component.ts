@@ -200,6 +200,10 @@ export class MapsComponent
     this.following(this.followed.closed);
   }
 
+  public handleNavigation(item: ActivityModel): void {
+    console.log(item);
+  }
+
   public handleReset(): void {
     const items = this.items.value;
     this.focus.next(items.length > 1 ? [] : items);

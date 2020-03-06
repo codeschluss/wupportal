@@ -1,18 +1,30 @@
-<a [routerLink]="['/', 'activities', item.id]">
-  <mat-card matRipple
-    matRippleColor="currentColor"
-    [matRippleDisabled]="true"
-    [ngStyle]="colors(item.category.color)">
-    <mat-card-content>
-      <icon-component [icon]="item.category.icon"></icon-component>
-      <small>
-        {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' }}
-        <br>{{ item.address.street }} {{ item.address.houseNumber }}
-        <br>{{ item.address.place }} {{ item.address.suburb.name }}
-      </small>
-    </mat-card-content>
-    <mat-card-header>
-      <mat-card-title>{{ item.name }}</mat-card-title>
-    </mat-card-header>
-  </mat-card>
-</a>
+<mat-card matRipple
+  matRippleColor="currentColor"
+  [matRippleDisabled]="true"
+  [ngStyle]="colors(item.category.color)"
+  (click)="actions = !actions">
+  <ng-container *ngIf="!navigation">
+    <a [routerLink]="['/', 'activities', item.id]"></a>
+  </ng-container>
+  <mat-card-content>
+    <icon-component [icon]="item.category.icon"></icon-component>
+    <small>
+      {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' }}
+      <br>{{ item.address.street }} {{ item.address.houseNumber }}
+      <br>{{ item.address.place }} {{ item.address.suburb.name }}
+    </small>
+  </mat-card-content>
+  <mat-card-header>
+    <mat-card-title>{{ item.name }}</mat-card-title>
+  </mat-card-header>
+  <ng-container *ngIf="navigation">
+    <mat-card-actions [class.show]="actions">
+      <mat-divider></mat-divider>
+      <details-piece [item]="item"></details-piece>
+      <button mat-button (click)="navigation(item)">
+        <icon-component icon="route"></icon-component>
+        <i18n i18n="@@showRoute">showRoute</i18n>
+      </button>
+    </mat-card-actions>
+  </ng-container>
+</mat-card>

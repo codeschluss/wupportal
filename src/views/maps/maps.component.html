@@ -11,7 +11,10 @@
     <ng-container *ngIf="!embed && (focus | async).length">
       <nav>
         <ng-container *ngFor="let item of focus | async">
-          <activity-card [item]="item"></activity-card>
+          <activity-card
+            [item]="item"
+            [navigation]="handleNavigation">
+          </activity-card>
         </ng-container>
       </nav>
     </ng-container>

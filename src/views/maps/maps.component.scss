@@ -7,7 +7,6 @@
     @include position(absolute, 0, 0, 0, 0);
     background-color: $color-lighter;
     max-width: 100% !important;
-
     user-select: none;
 
     & > aol-map {

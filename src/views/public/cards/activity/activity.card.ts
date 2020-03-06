@@ -15,7 +15,7 @@ export class ActivityCardComponent extends BaseCard<ActivityModel> {
   public actions: boolean = false;
 
   @Input()
-  public navigation: (item: ActivityModel) => void;
+  public navigate: (item: ActivityModel) => void;
 
   @ViewChild(MatRipple, { static: true })
   public ripple: MatRipple;

@@ -12,10 +12,11 @@ import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
 import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
-import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { ActivityModel } from '../../base/models/activity.model';
 import { ConfigurationModel } from '../../base/models/configuration.model';
 import { ActivityProvider } from '../../base/providers/activity.provider';
+import { LocationProvider } from '../../base/providers/location.provider';
 import { MapsConnection } from './maps.connection';
 
 @Component({
@@ -25,6 +26,12 @@ import { MapsConnection } from './maps.connection';
 
 export class MapsComponent
   extends Selfrouter implements OnInit, AfterViewInit, OnDestroy {
+
+  public directions: {
+    item: ActivityModel,
+    line: [number, number][],
+    text: string[]
+  };
 
   public followed: Subscription = EMPTY.subscribe();
 
@@ -93,6 +100,10 @@ export class MapsComponent
     return this.route.snapshot.queryParamMap.has('embed');
   }
 
+  public get navigate(): boolean | Function {
+    return !this.follow.disabled && this.handleNavigation.bind(this);
+  }
+
   public get uuid(): string | undefined {
     return (this.route.snapshot.url[0] || { } as any).path;
   }
@@ -103,6 +114,7 @@ export class MapsComponent
     private deviceProvider: DeviceProvider,
     private element: ElementRef<HTMLElement>,
     private loadingProvider: LoadingProvider,
+    private locationProvider: LocationProvider,
     private positionProvider: PositionProvider,
     private route: ActivatedRoute,
     private router: Router
@@ -170,18 +182,16 @@ export class MapsComponent
 
   public ngOnDestroy(): void {
     this.loadingProvider.finished(this.block);
+    this.following(false);
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {
     if (!this.uuid) {
-      const features = this.maps.instance.getFeaturesAtPixel(event.pixel);
+      const pixel = this.maps.instance.getFeaturesAtPixel(event.pixel);
+      const features = pixel.length ? pixel[0].get('features') || [] : [];
 
-      if (features.length) {
-        this.focus.next(features[0].get('features').map((feature) =>
-          this.items.value.find((item) => item.id === feature.getId())));
-      } else {
-        this.focus.next([]);
-      }
+      this.focus.next(features.map((feat) =>
+        this.items.value.find((item) => item.id === feat.getId())));
 
       if (this.connection) {
         this.connection.nextFocus(this.focus.value);
@@ -201,13 +211,33 @@ export class MapsComponent
   }
 
   public handleNavigation(item: ActivityModel): void {
-    console.log(item);
+    this.positionProvider.locate().pipe(
+      take(1),
+      mergeMap((coords) => this.locationProvider.calculateRoute({
+        startPointLatitude: coords.latitude,
+        startPointLongitude: coords.longitude,
+        targetPointLatitude: item.address.latitude,
+        targetPointLongitude: item.address.longitude,
+        travelMode: 'DRIVING'
+      })),
+      filter((response) => response.body.routeLegs.length),
+      map((response) => response.body.routeLegs[0].itineraryItems)
+    ).subscribe((turns) => this.directions = {
+      item,
+      line: turns.map((i) => fromLonLat([
+        i.maneuverPoint.coordinates[1],
+        i.maneuverPoint.coordinates[0]
+      ])),
+      text: turns.map((i) => i.instruction.text)
+    });
   }
 
   public handleReset(): void {
     const items = this.items.value;
-    this.focus.next(items.length > 1 ? [] : items);
+
+    this.directions = null;
     this.following(false);
+    this.focus.next(items.length > 1 ? [] : items);
 
     this.view.instance.animate({
       center: fromLonLat([

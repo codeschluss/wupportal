@@ -8,16 +8,6 @@
       <aol-source-osm>
       </aol-source-osm>
     </aol-layer-tile>
-    <ng-container *ngIf="!embed && (focus | async).length">
-      <nav>
-        <ng-container *ngFor="let item of focus | async">
-          <activity-card
-            [item]="item"
-            [navigation]="handleNavigation">
-          </activity-card>
-        </ng-container>
-      </nav>
-    </ng-container>
     <aol-view
       [enableRotation]="true"
       [zoom]="mapconf.zoomfactor">
@@ -34,7 +24,7 @@
       <aol-source-cluster
         [distance]="mapconf.cluster"
         [geometryFunction]="mapconf.geomFn">
-        <aol-source-vector [overlaps]="true">
+        <aol-source-vector>
           <ng-container *ngFor="let item of items | async">
             <aol-feature [id]="item.id">
               <aol-geometry-point>
@@ -49,6 +39,32 @@
         </aol-source-vector>
       </aol-source-cluster>
     </aol-layer-vector>
+    <ng-container *ngIf="directions">
+      <aol-layer-vector
+        [updateWhileAnimating]="true"
+        [updateWhileInteracting]="true">
+        <aol-source-vector>
+          <aol-feature>
+            <aol-geometry-linestring>
+              <aol-collection-coordinates
+                srid="EPSG:3857"
+                [coordinates]="directions.line">
+              </aol-collection-coordinates>
+            </aol-geometry-linestring>
+            <aol-style>
+              <aol-style-stroke color="red" width="5"></aol-style-stroke>
+            </aol-style>
+          </aol-feature>
+        </aol-source-vector>
+      </aol-layer-vector>
+    </ng-container>
+    <ng-container *ngIf="!embed && (focus | async).length">
+      <nav>
+        <ng-container *ngFor="let item of focus | async">
+          <activity-card [item]="item" [navigate]="navigate"></activity-card>
+        </ng-container>
+      </nav>
+    </ng-container>
   </aol-map>
   <fa-icon #center matRipple
     icon="circle"

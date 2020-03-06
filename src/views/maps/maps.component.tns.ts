@@ -13,7 +13,8 @@ export class MapsComponent
   extends Selfrouter implements OnInit, AfterViewInit {
 
   protected routing: Route = {
-    path: ''
+    path: '**',
+    pathMatch: 'full'
   };
 
   @ViewChild('webview', { read: ElementRef, static: true })

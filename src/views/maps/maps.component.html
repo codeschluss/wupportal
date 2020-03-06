@@ -8,10 +8,10 @@
       <aol-source-osm>
       </aol-source-osm>
     </aol-layer-tile>
-    <ng-container *ngIf="cards && (focus | async).length">
+    <ng-container *ngIf="!embed && (focus | async).length">
       <nav>
         <ng-container *ngFor="let item of focus | async">
-          <activity-card #card [item]="item"></activity-card>
+          <activity-card [item]="item"></activity-card>
         </ng-container>
       </nav>
     </ng-container>
@@ -61,14 +61,10 @@
       <i18n i18n="@@followPosition">followPosition</i18n>
       <fa-icon icon="location-arrow"></fa-icon>
     </button>
-    <ng-container *ngIf="!native">
-      <button #fill mat-fab
-        [color]="filled ? 'primary' : null"
-        (click)="handleFill()">
+    <ng-container *ngIf="embed">
+      <button color mat-fab [routerLink]="['/', 'mapview', uuid]">
         <i18n i18n="@@fullscreen">fullscreen</i18n>
-        <fa-icon
-          [icon]="filled ? 'compress-arrows-alt' : 'expand-arrows-alt'">
-        </fa-icon>
+        <fa-icon icon="expand-arrows-alt"></fa-icon>
       </button>
     </ng-container>
     <button color mat-fab (click)="handleReset()">

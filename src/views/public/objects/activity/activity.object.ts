@@ -7,6 +7,7 @@ import { CrudJoiner, Headers } from '@wooportal/core';
 import { WebView } from 'tns-core-modules/ui/web-view';
 import { ActivityModel } from '../../../../base/models/activity.model';
 import { ScheduleModel } from '../../../../base/models/schedule.model';
+import { MapsConnection } from '../../../maps/maps.connection';
 import { ExpandComponent } from '../../../shared/expand/expand.component';
 import { BaseObject } from '../base.object';
 
@@ -38,6 +39,9 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   protected path: string = 'activities';
 
+  @ViewChild('frame', { read: ElementRef, static: false })
+  private frame: ElementRef<HTMLIFrameElement>;
+
   @ViewChild('webview', { read: ElementRef, static: false })
   private webview: ElementRef<WebView>;
 
@@ -54,15 +58,21 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   }
 
   public reloader(expand: ExpandComponent): void {
-    this.expanded(expand);
+    switch (this.deviceProvider.platform) {
+      case 'Native':
+        this.webview.nativeElement.reload();
+        break;
 
-    if (this.deviceProvider.notation === 'iOS') {
-      this.webview.nativeElement.reload();
+      case 'Online':
+        this.frame.nativeElement.contentWindow.location.reload();
+        break;
     }
+
+    this.expanded(expand);
   }
 
   protected ngPostInit(): void {
-    const url = `/mapview?embed&items=${this.item.id}`;
+    const url = `/mapview/${this.item.id}?embed`;
 
     switch (this.deviceProvider.platform) {
       case 'Native':
@@ -77,7 +87,13 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   }
 
   protected ngPostViewInit(): void {
-    if (this.deviceProvider.platform === 'Native') {
+    if (this.deviceProvider.notation === 'Browser') {
+      const source = this.deviceProvider.document.defaultView;
+      const target = this.frame.nativeElement.contentWindow;
+      const connection = new MapsConnection(source, target);
+      connection.route.subscribe((r) => this.router.navigateByUrl(r));
+      connection.nextReady(true);
+    } else if (this.deviceProvider.platform === 'Native') {
       if (this.webview.nativeElement.isLoaded) {
         let wv = this.webview.nativeElement as any;
 

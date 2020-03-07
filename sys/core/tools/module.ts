@@ -9,9 +9,11 @@ import { LabelsInterceptor } from '../labels/labels.interceptor';
 import { LabelsFactory, LabelsResolver } from '../labels/labels.resolver';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
 import { SessionProvider } from '../session/session.provider';
+import { ContentInterceptor } from './content';
 import { CoreUrlSerializer } from './serializer';
 
 const interceptors: ClassProvider[] = [
+  { provide: HTTP_INTERCEPTORS, useClass: ContentInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LabelsInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

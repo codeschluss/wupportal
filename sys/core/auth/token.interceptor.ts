@@ -27,13 +27,17 @@ export class TokenInterceptor implements HttpInterceptor {
 
         case this.app.config.api.refreshUrl:
           request = request.clone({
-            setHeaders: { authorization: `Bearer ${this.tokens.refresh.raw}` }
+            setHeaders: {
+              Authorization: `Bearer ${this.tokens.refresh.raw}`
+            }
           });
           break;
 
         default:
           request = request.clone({
-            setHeaders: { authorization: `Bearer ${this.tokens.access.raw}` }
+            setHeaders: {
+              Authorization: `Bearer ${this.tokens.access.raw}`
+            }
           });
           break;
       }

@@ -17,15 +17,17 @@ export class LabelsInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    const headers = {
-      'Accept-Language': this.language,
-      'Content-Language': request.headers
-        .get('Content-Language') || this.language
-    };
+    if (this.language) {
+      return next.handle(request.clone({
+        setHeaders: {
+          'Accept-Language': this.language,
+          'Content-Language': request.headers.get('Content-Language')
+            || this.language
+        }
+      }));
+    }
 
-    return next.handle(!this.language ? request : request.clone({
-      setHeaders: headers
-    }));
+    return next.handle(request);
   }
 
 }

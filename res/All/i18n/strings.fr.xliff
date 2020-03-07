@@ -2,24 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="root" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="minLengthError" datatype="html">
-        <source>minLengthError</source><target>Donnée trop courte</target>
-      </trans-unit>
-      <trans-unit id="mismatchError" datatype="html">
-        <source>mismatchError</source><target>Donnée non correspondante</target>
-      </trans-unit>
-      <trans-unit id="neitherError" datatype="html">
-        <source>neitherError</source><target>Nécessairement une donnée</target>
-      </trans-unit>
-      <trans-unit id="patternError" datatype="html">
-        <source>patternError</source><target>Erreur de format</target>
-      </trans-unit>
-      <trans-unit id="requiredError" datatype="html">
-        <source>requiredError</source><target>Donnée necessaire</target>
-      </trans-unit>
-      <trans-unit id="encryptedConnection" datatype="html">
-        <source>encryptedConnection</source><target>Crypté en HTTPS</target>
-      </trans-unit>
       <trans-unit id="homepage" datatype="html">
         <source>homepage</source><target>Page d'accueil</target>
       </trans-unit>
@@ -44,6 +26,9 @@
       <trans-unit id="language" datatype="html">
         <source>language</source><target>Langue</target>
       </trans-unit>
+      <trans-unit id="notifications" datatype="html">
+        <source>notifications</source><target>Notifications</target>
+      </trans-unit>
       <trans-unit id="imprint" datatype="html">
         <source>imprint</source><target>Empreinte</target>
       </trans-unit>
@@ -65,6 +50,9 @@
       <trans-unit id="application" datatype="html">
         <source>application</source><target>Application</target>
       </trans-unit>
+      <trans-unit id="messaging" datatype="html">
+        <source>messaging</source><target>Communications</target>
+      </trans-unit>
       <trans-unit id="information" datatype="html">
         <source>information</source><target>Contenu</target>
       </trans-unit>
@@ -80,8 +68,23 @@
       <trans-unit id="logout" datatype="html">
         <source>logout</source><target>Déconnecter</target>
       </trans-unit>
+      <trans-unit id="previous" datatype="html">
+        <source>previous</source><target>Dernier</target>
+      </trans-unit>
+      <trans-unit id="following" datatype="html">
+        <source>following</source><target>Prochain</target>
+      </trans-unit>
       <trans-unit id="locationError" datatype="html">
         <source>locationError</source><target>Erreur de navigation</target>
+      </trans-unit>
+      <trans-unit id="unhandledError" datatype="html">
+        <source>unhandledError</source><target>Erreur pas traité</target>
+      </trans-unit>
+      <trans-unit id="reportIssue" datatype="html">
+        <source>reportIssue</source><target>Alerter l'erreur</target>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <source>close</source><target>Fermer</target>
       </trans-unit>
       <trans-unit id="forbiddenError" datatype="html">
         <source>forbiddenError</source><target>Accès refusé</target>
@@ -98,15 +101,6 @@
       <trans-unit id="serverError" datatype="html">
         <source>serverError</source><target>Erreur du serveur</target>
       </trans-unit>
-      <trans-unit id="unhandledError" datatype="html">
-        <source>unhandledError</source><target>Erreur pas traité</target>
-      </trans-unit>
-      <trans-unit id="reportIssue" datatype="html">
-        <source>reportIssue</source><target>Alerter l'erreur</target>
-      </trans-unit>
-      <trans-unit id="close" datatype="html">
-        <source>close</source><target>Fermer</target>
-      </trans-unit>
       <trans-unit id="confirmDelete" datatype="html">
         <source>confirmDelete</source><target>Confirmer l'éffacement</target>
       </trans-unit>
@@ -122,6 +116,54 @@
       <trans-unit id="delete" datatype="html">
         <source>delete</source><target>Éffacer</target>
       </trans-unit>
+      <trans-unit id="pushNotification" datatype="html">
+        <source>pushNotification</source><target>Notification push</target>
+      </trans-unit>
+      <trans-unit id="title" datatype="html">
+        <source>title</source><target>Title</target>
+      </trans-unit>
+      <trans-unit id="content" datatype="html">
+        <source>content</source><target>Texte</target>
+      </trans-unit>
+      <trans-unit id="send" datatype="html">
+        <source>send</source><target>Envoyer</target>
+      </trans-unit>
+      <trans-unit id="selectOrganisations" datatype="html">
+        <source>selectOrganisations</source><target>Choisir des organisations</target>
+      </trans-unit>
+      <trans-unit id="joinOrganisations" datatype="html">
+        <source>joinOrganisations</source><target>Affilier à des organisations</target>
+      </trans-unit>
+      <trans-unit id="accountPanel" datatype="html">
+        <source>accountPanel</source><target>Administrer le compte</target>
+      </trans-unit>
+      <trans-unit id="actions" datatype="html">
+        <source>actions</source><target>Actions</target>
+      </trans-unit>
+      <trans-unit id="createActivity" datatype="html">
+        <source>createActivity</source><target>Créer une activité</target>
+      </trans-unit>
+      <trans-unit id="createBlogpost" datatype="html">
+        <source>createBlogpost</source><target>Créer un article de blog</target>
+      </trans-unit>
+      <trans-unit id="joinBloggers" datatype="html">
+        <source>joinBloggers</source><target>Devenir blogueur</target>
+      </trans-unit>
+      <trans-unit id="createOrganisation" datatype="html">
+        <source>createOrganisation</source><target>Créer une organisation</target>
+      </trans-unit>
+      <trans-unit id="main" datatype="html">
+        <source>main</source><target>Données de base</target>
+      </trans-unit>
+      <trans-unit id="persist" datatype="html">
+        <source>persist</source><target>Sauver</target>
+      </trans-unit>
+      <trans-unit id="approved" datatype="html">
+        <source>approved</source><target>Approuvé</target>
+      </trans-unit>
+      <trans-unit id="ownership" datatype="html">
+        <source>ownership</source><target>Manager</target>
+      </trans-unit>
       <trans-unit id="authenticationExpired" datatype="html">
         <source>authenticationExpired</source><target>Session expirée</target>
       </trans-unit>
@@ -131,11 +173,20 @@
       <trans-unit id="password" datatype="html">
         <source>password</source><target>Mot d'accès</target>
       </trans-unit>
-      <trans-unit id="selectOrganisations" datatype="html">
-        <source>selectOrganisations</source><target>Choisir des organisations</target>
+      <trans-unit id="minLengthError" datatype="html">
+        <source>minLengthError</source><target>Donnée trop courte</target>
       </trans-unit>
-      <trans-unit id="joinOrganisations" datatype="html">
-        <source>joinOrganisations</source><target>Affilier à des organisations</target>
+      <trans-unit id="mismatchError" datatype="html">
+        <source>mismatchError</source><target>Donnée non correspondante</target>
+      </trans-unit>
+      <trans-unit id="neitherError" datatype="html">
+        <source>neitherError</source><target>Nécessairement une donnée</target>
+      </trans-unit>
+      <trans-unit id="patternError" datatype="html">
+        <source>patternError</source><target>Erreur de format</target>
+      </trans-unit>
+      <trans-unit id="requiredError" datatype="html">
+        <source>requiredError</source><target>Donnée necessaire</target>
       </trans-unit>
       <trans-unit id="iconList" datatype="html">
         <source>iconList</source><target>Liste de tous les symboles</target>
@@ -155,14 +206,17 @@
       <trans-unit id="create" datatype="html">
         <source>create</source><target>Créer</target>
       </trans-unit>
+      <trans-unit id="encryptedConnection" datatype="html">
+        <source>encryptedConnection</source><target>Crypté en HTTPS</target>
+      </trans-unit>
       <trans-unit id="compilation" datatype="html">
         <source>compilation</source><target>Création</target>
       </trans-unit>
       <trans-unit id="fillUserData" datatype="html">
-        <source>fillUserData</source><target>Importer les coordonnées d'utilisateur</target>
+        <source>fillUserData</source><target>Importer les données d'utilisateur</target>
       </trans-unit>
       <trans-unit id="fillOrganisationData" datatype="html">
-        <source>fillOrganisationData</source><target>Importer les coordonnées d'organisation</target>
+        <source>fillOrganisationData</source><target>Importer les données d'organisation</target>
       </trans-unit>
       <trans-unit id="category" datatype="html">
         <source>category</source><target>Catégorie</target>
@@ -205,12 +259,6 @@
       </trans-unit>
       <trans-unit id="activity" datatype="html">
         <source>activity</source><target>Activité</target>
-      </trans-unit>
-      <trans-unit id="content" datatype="html">
-        <source>content</source><target>Texte</target>
-      </trans-unit>
-      <trans-unit id="title" datatype="html">
-        <source>title</source><target>Title</target>
       </trans-unit>
       <trans-unit id="color" datatype="html">
         <source>color</source><target>Couleur</target>
@@ -326,36 +374,6 @@
       <trans-unit id="passwordConfirm" datatype="html">
         <source>passwordConfirm</source><target>Confirmer le mot d'accès</target>
       </trans-unit>
-      <trans-unit id="accountPanel" datatype="html">
-        <source>accountPanel</source><target>Administrer le compte</target>
-      </trans-unit>
-      <trans-unit id="actions" datatype="html">
-        <source>actions</source><target>Actions</target>
-      </trans-unit>
-      <trans-unit id="createActivity" datatype="html">
-        <source>createActivity</source><target>Créer un activité</target>
-      </trans-unit>
-      <trans-unit id="createBlogpost" datatype="html">
-        <source>createBlogpost</source><target>Créer un article de blog</target>
-      </trans-unit>
-      <trans-unit id="joinBloggers" datatype="html">
-        <source>joinBloggers</source><target>Devenir blogueur</target>
-      </trans-unit>
-      <trans-unit id="createOrganisation" datatype="html">
-        <source>createOrganisation</source><target>Créer une organisation</target>
-      </trans-unit>
-      <trans-unit id="main" datatype="html">
-        <source>main</source><target>Données de base</target>
-      </trans-unit>
-      <trans-unit id="persist" datatype="html">
-        <source>persist</source><target>Sauver</target>
-      </trans-unit>
-      <trans-unit id="approved" datatype="html">
-        <source>approved</source><target>Approuvé</target>
-      </trans-unit>
-      <trans-unit id="ownership" datatype="html">
-        <source>ownership</source><target>Manager</target>
-      </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source><target>Administrer l'application</target>
       </trans-unit>
@@ -374,6 +392,9 @@
       <trans-unit id="createInfopage" datatype="html">
         <source>createInfopage</source><target>Créer un page d'information</target>
       </trans-unit>
+      <trans-unit id="messagingPanel" datatype="html">
+        <source>messagingPanel</source><target>Administrer les communications</target>
+      </trans-unit>
       <trans-unit id="organisationPanel" datatype="html">
         <source>organisationPanel</source><target>Administrer l'organisation</target>
       </trans-unit>
@@ -388,6 +409,9 @@
       </trans-unit>
       <trans-unit id="createSuburb" datatype="html">
         <source>createSuburb</source><target>Créer un quartier</target>
+      </trans-unit>
+      <trans-unit id="createAddress" datatype="html">
+        <source>createAddress</source><target>Créer une adresse</target>
       </trans-unit>
       <trans-unit id="suburbs" datatype="html">
         <source>suburbs</source><target>Quartiers</target>
@@ -446,15 +470,6 @@
       <trans-unit id="translations" datatype="html">
         <source>translations</source><target>Traductions</target>
       </trans-unit>
-      <trans-unit id="previous" datatype="html">
-        <source>previous</source><target>Dernier</target>
-      </trans-unit>
-      <trans-unit id="following" datatype="html">
-        <source>following</source><target>Prochain</target>
-      </trans-unit>
-      <trans-unit id="createAddress" datatype="html">
-        <source>createAddress</source><target>Créer un adresse</target>
-      </trans-unit>
       <trans-unit id="editAddress" datatype="html">
         <source>editAddress</source><target>Éditer l'adresse</target>
       </trans-unit>
@@ -465,7 +480,7 @@
         <source>editCategory</source><target>Éditer la catégorie</target>
       </trans-unit>
       <trans-unit id="editInfopage" datatype="html">
-        <source>editInfopage</source><target>Éditer le page d'information</target>
+        <source>editInfopage</source><target>Éditer la page d'information</target>
       </trans-unit>
       <trans-unit id="editKeyword" datatype="html">
         <source>editKeyword</source><target>Éditer le mot-clé</target>
@@ -494,6 +509,9 @@
       <trans-unit id="author" datatype="html">
         <source>author</source><target>Auteur</target>
       </trans-unit>
+      <trans-unit id="showRoute" datatype="html">
+        <source>showRoute</source><target>Montrer itinéraire</target>
+      </trans-unit>
       <trans-unit id="by" datatype="html">
         <source>by</source><target>de</target>
       </trans-unit>
@@ -501,7 +519,7 @@
         <source>about</source><target>sur</target>
       </trans-unit>
       <trans-unit id="followPosition" datatype="html">
-        <source>followPosition</source><target>Suiver l'emplacement</target>
+        <source>followPosition</source><target>Suivre l'emplacement</target>
       </trans-unit>
       <trans-unit id="fullscreen" datatype="html">
         <source>fullscreen</source><target>Plein écran</target>
@@ -529,6 +547,24 @@
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source><target>Enregistrer</target>
+      </trans-unit>
+      <trans-unit id="subscriptions" datatype="html">
+        <source>subscriptions</source><target>Abonnements</target>
+      </trans-unit>
+      <trans-unit id="followedActivities" datatype="html">
+        <source>followedActivities</source><target>Activités suivies</target>
+      </trans-unit>
+      <trans-unit id="followedOrganisations" datatype="html">
+        <source>followedOrganisations</source><target>Organisations suivies</target>
+      </trans-unit>
+      <trans-unit id="followedBloggers" datatype="html">
+        <source>followedBloggers</source><target>Blogueurs suivis</target>
+      </trans-unit>
+      <trans-unit id="followedTopics" datatype="html">
+        <source>followedTopics</source><target>Sujets suivis</target>
+      </trans-unit>
+      <trans-unit id="follow" datatype="html">
+        <source>follow</source><target>Suivre</target>
       </trans-unit>
       <trans-unit id="like" datatype="html">
         <source>like</source><target>Liker</target>

@@ -37,7 +37,7 @@ export class TokenProvider {
     localStorage.getItem<RefreshTokenModel>('refreshToken', {
       schema: RefreshTokenModel.schema
     }).pipe(
-      catchError((e) => e.message === VALIDATION_ERROR ? EMPTY : throwError(e)),
+      catchError((e) => e.message === VALIDATION_ERROR ? of() : throwError(e)),
       mergeMap((token: RefreshTokenModel) => this.validate(token)),
       map((tokens: AuthTokens) => this.update(tokens)),
       tap((tokens: AuthTokens) => this.work(tokens))

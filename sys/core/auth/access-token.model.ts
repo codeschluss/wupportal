@@ -15,7 +15,19 @@ export class AccessTokenModel {
       approvedOrgas: { type: 'array', items: { type: 'string' } },
       createdActivities: { type: 'array', items: { type: 'string' } },
       superuser: { type: 'boolean' }
-    }
+    },
+    required: [
+      'exp',
+      'id',
+      'raw',
+      'scopes',
+      'sub',
+
+      'adminOrgas',
+      'approvedOrgas',
+      'createdActivities',
+      'superuser'
+    ]
   };
 
   public exp: number = 0;

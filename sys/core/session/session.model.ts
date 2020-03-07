@@ -9,7 +9,13 @@ export class SessionModel {
       language: { type: 'string' },
       likes: { type: 'array', items: { type: 'string' } },
       subscriptionId: { type: 'string' }
-    }
+    },
+    required: [
+      'followed',
+      'language',
+      'likes',
+      'subscriptionId'
+    ]
   };
 
   public followed: string[] = [];

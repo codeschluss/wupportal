@@ -9,7 +9,13 @@ export class RefreshTokenModel {
       raw: { type: 'string' },
       scopes: { type: 'array', items: { type: 'string', const: 'refresh' } },
       sub: { type: 'string' }
-    }
+    },
+    required: [
+      'exp',
+      'raw',
+      'scopes',
+      'sub'
+    ]
   };
 
   public exp: number = 0;

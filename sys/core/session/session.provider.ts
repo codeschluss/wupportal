@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage, VALIDATION_ERROR } from '@ngx-pwa/local-storage';
 import { DeviceProvider } from '@wooportal/app';
-import { BehaviorSubject, EMPTY, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, map, tap } from 'rxjs/operators';
 import { SessionModel } from './session.model';
 
@@ -23,7 +23,11 @@ export class SessionProvider {
     localStorage.getItem<SessionModel>('clientSession', {
       schema: SessionModel.schema
     }).pipe(
-      catchError((e) => e.message === VALIDATION_ERROR ? EMPTY : throwError(e)),
+      catchError((error) => error.message === VALIDATION_ERROR
+        ? localStorage.getItem('clientSession').pipe(map((session) =>
+            Object.assign(new SessionModel(deviceProvider.language), session)))
+        : throwError(error)
+      ),
       map((session) => session || new SessionModel(deviceProvider.language)),
       tap((session) => this.session.next(session))
     ).subscribe(() => this.value.subscribe((value) => {

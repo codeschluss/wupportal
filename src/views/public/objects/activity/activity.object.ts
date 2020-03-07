@@ -103,6 +103,7 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
             wv.getSettings().setGeolocationEnabled(true);
             wv.getSettings().setJavaScriptEnabled(true);
             wv.setWebChromeClient(new this.deviceProvider.webChromeClient());
+            wv.setWebViewClient(new this.deviceProvider.webViewClient());
             break;
         }
       } else {

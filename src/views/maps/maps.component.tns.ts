@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Route } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { ApplicationSettings, DeviceProvider, GeoLocation } from '@wooportal/app';
 import { Selfrouter } from '@wooportal/core';
 import { WebView } from 'tns-core-modules/ui/web-view';
@@ -21,12 +21,13 @@ export class MapsComponent
   private webview: ElementRef<WebView>;
 
   public get source(): string {
-    return `${this.app.config.defaults.appUrl}/mapview?native`;
+    return `${this.app.config.defaults.appUrl}${this.router.url}?native`;
   }
 
   public constructor(
     private app: ApplicationSettings,
-    private deviceProvider: DeviceProvider
+    private deviceProvider: DeviceProvider,
+    private router: Router
   ) {
     super();
   }

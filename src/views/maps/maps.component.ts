@@ -13,6 +13,7 @@ import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
 import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import * as smoothPolyline from 'smooth-polyline';
 import { ActivityModel } from '../../base/models/activity.model';
 import { ConfigurationModel } from '../../base/models/configuration.model';
 import { ActivityProvider } from '../../base/providers/activity.provider';
@@ -224,10 +225,10 @@ export class MapsComponent
       map((response) => response.body.routeLegs[0].itineraryItems)
     ).subscribe((turns) => this.directions = {
       item,
-      line: turns.map((i) => fromLonLat([
+      line: this.smooth(turns.map((i) => fromLonLat([
         i.maneuverPoint.coordinates[1],
         i.maneuverPoint.coordinates[0]
-      ])),
+      ])), 5),
       text: turns.map((i) => i.instruction.text)
     });
   }
@@ -319,6 +320,10 @@ export class MapsComponent
   private geometry(feature: Feature): Point {
     const point = feature.getGeometry();
     return point && point instanceof Point ? point : null;
+  }
+
+  private smooth(path: [number, number][], iter: number): [number, number][] {
+    return iter > 0 ? this.smooth(smoothPolyline(path), --iter) : path;
   }
 
   private styling(feature: Feature): Style {

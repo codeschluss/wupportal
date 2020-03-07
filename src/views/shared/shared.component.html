@@ -86,7 +86,7 @@
       </mat-menu>
       <a mat-button
         [class.active]="url.startsWith('/notifications')"
-        [disabled]="!registerable"
+        [disabled]="!pushable"
         (click)="notifications()">
         <icon-component icon="paper-plane"></icon-component>
         <i18n i18n="@@notifications">notifications</i18n>
@@ -275,7 +275,7 @@
       </mat-menu>
       <button mat-list-item
         [class.active]="url.startsWith('/notifications')"
-        [disabled]="!registerable"
+        [disabled]="!pushable"
         (click)="notifications()">
         <icon-component icon="paper-plane"></icon-component>
         <i18n i18n="@@notifications">notifications</i18n>

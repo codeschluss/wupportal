@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 
 export interface PushProvider {
 
-  messages: Observable<Message & Notification>;
+  enabled: boolean;
 
-  registerable: boolean;
+  messages: Observable<Message & Notification>;
 
   registration(): Observable<string>;
 

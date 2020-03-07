@@ -98,9 +98,9 @@
           </select-component>
           <stack-layout ripple
             [class.active]="url.startsWith('/notifications')"
-            [class.disabled]="!registerable"
-            [isEnabled]="registerable"
-            [isUserInteractionEnabled]="registerable"
+            [class.disabled]="!pushable"
+            [isEnabled]="pushable"
+            [isUserInteractionEnabled]="pushable"
             (tap)="notifications()">
             <icon-component icon="paper-plane"></icon-component>
             <i18n i18n="@@notifications" unit="notifications"></i18n>

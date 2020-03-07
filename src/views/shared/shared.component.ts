@@ -47,8 +47,8 @@ export class SharedComponent implements OnInit {
     return this.headers.name;
   }
 
-  public get registerable(): boolean {
-    return this.pushProvider.registerable;
+  public get pushable(): boolean {
+    return this.pushProvider.enabled;
   }
 
   public get stores(): Record<string, string> {

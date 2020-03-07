@@ -259,6 +259,9 @@
           [alt]="'Google Play Store: ' + (name | async)"
           [title]="'Google Play Store: ' + (name | async)">
       </a>
+    </mat-action-list>
+    <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
+    <mat-action-list>
       <button mat-list-item [matMenuTriggerFor]="languageMenu">
         <icon-component icon="language"></icon-component>
         <i18n i18n="@@language">language</i18n>

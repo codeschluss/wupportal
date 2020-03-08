@@ -33,12 +33,14 @@ export class PushProvider implements Compat {
 
   public registration(): Observable<string> {
     if (this.enabled && !this.fcm) {
-      this.fcm = firebase.initializeApp(this.app.config.firebase).messaging();
+      try {
+        this.fcm = firebase.initializeApp(this.app.config.firebase).messaging();
 
-      return from(this.deviceProvider.frontend.serviceWorker.ready).pipe(
-        tap((worker) => this.fcm.useServiceWorker(worker as any)),
-        mergeMap(() => from(this.fcm.getToken()))
-      );
+        return from(this.deviceProvider.frontend.serviceWorker.ready).pipe(
+          tap((worker) => this.fcm.useServiceWorker(worker as any)),
+          mergeMap(() => from(this.fcm.getToken()))
+        );
+      } catch { }
     }
 
     return EMPTY;

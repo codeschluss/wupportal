@@ -28,11 +28,7 @@ import { MapsConnection } from './maps.connection';
 export class MapsComponent
   extends Selfrouter implements OnInit, AfterViewInit, OnDestroy {
 
-  public directions: {
-    item: ActivityModel,
-    line: [number, number][],
-    text: string[]
-  };
+  public directions: [number, number][];
 
   public followed: Subscription = EMPTY.subscribe();
 
@@ -221,16 +217,11 @@ export class MapsComponent
         targetPointLongitude: item.address.longitude,
         travelMode: 'DRIVING'
       })),
-      filter((response) => response.routeLegs.length),
-      map((response) => response.routeLegs[0].itineraryItems)
-    ).subscribe((turns) => this.directions = {
-      item,
-      line: this.smooth(turns.map((i) => fromLonLat([
-        i.maneuverPoint.coordinates[1],
-        i.maneuverPoint.coordinates[0]
-      ])), 5),
-      text: turns.map((i) => i.instruction.text)
-    }, () => this.follow.disabled = true);
+      map((response) => smoothPolyline(response.routePath.line.coordinates))
+    ).subscribe((coords) => this.directions = coords.map((coord) => fromLonLat([
+      coord[1],
+      coord[0]
+    ])), () => this.follow.disabled = true);
   }
 
   public handleReset(): void {
@@ -320,10 +311,6 @@ export class MapsComponent
   private geometry(feature: Feature): Point {
     const point = feature.getGeometry();
     return point && point instanceof Point ? point : null;
-  }
-
-  private smooth(path: [number, number][], iter: number): [number, number][] {
-    return iter > 0 ? this.smooth(smoothPolyline(path), --iter) : path;
   }
 
   private styling(feature: Feature): Style {

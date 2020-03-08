@@ -26,6 +26,7 @@ class BlogControllerService extends __BaseService {
   static readonly blogControllerUpdatePath = '/blogs/{blogId}';
   static readonly blogControllerDeletePath = '/blogs/{blogId}';
   static readonly blogControllerReadActivityPath = '/blogs/{blogId}/activity';
+  static readonly blogControllerReadBloggerPath = '/blogs/{blogId}/blogger';
   static readonly blogControllerReadImagesPath = '/blogs/{blogId}/images';
   static readonly blogControllerAddImagePath = '/blogs/{blogId}/images';
   static readonly blogControllerDeleteImagesPath = '/blogs/{blogId}/images';
@@ -328,6 +329,42 @@ class BlogControllerService extends __BaseService {
    */
   blogControllerReadActivity(blogId: string): __Observable<{}> {
     return this.blogControllerReadActivityResponse(blogId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadBloggerResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/${blogId}/blogger`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadBlogger(blogId: string): __Observable<{}> {
+    return this.blogControllerReadBloggerResponse(blogId).pipe(
       __map(_r => _r.body as {})
     );
   }

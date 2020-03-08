@@ -4,6 +4,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { BlogControllerService as Service } from '../../api/services/blog-controller.service';
 import { ActivityModel } from '../models/activity.model';
+import { BloggerModel } from '../models/blogger.model';
 import { BlogpostModel as Model } from '../models/blogpost.model';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
@@ -16,6 +17,11 @@ export class BlogpostProvider extends CrudProvider<Service, Model> {
       field: 'activity',
       method: this.service.blogControllerReadActivityResponse,
       model: ActivityModel
+    },
+    {
+      field: 'blogger',
+      method: this.service.blogControllerReadBloggerResponse,
+      model: BloggerModel
     },
     {
       field: 'images',

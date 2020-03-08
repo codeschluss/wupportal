@@ -57,6 +57,22 @@
       </ng-container>
     </ng-container>
     <grid-layout>
+      <i18n i18n="@@followedBloggers" unit="followedBloggers"></i18n>
+    </grid-layout>
+    <ng-container *ngIf="!items.bloggers.length">
+      <i18n i18n="@@notFoundError" unit="notFoundError"></i18n>
+    </ng-container>
+    <ng-container *ngIf="items.bloggers.length">
+      <ng-container *ngFor="let item of items.bloggers">
+        <stack-layout>
+          <label [text]="item.name"></label>
+          <grid-layout ripple (tap)="unsubscribe(item)">
+            <icon-component icon="times"></icon-component>
+          </grid-layout>
+        </stack-layout>
+      </ng-container>
+    </ng-container>
+    <grid-layout>
       <i18n i18n="@@followedTopics" unit="followedTopics"></i18n>
     </grid-layout>
     <ng-container *ngIf="!items.topics.length">

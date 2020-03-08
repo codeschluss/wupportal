@@ -2,6 +2,7 @@ import { CrudModel, Translate } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { BlogEntity } from '../../api/models/blog-entity';
 import { ActivityModel } from './activity.model';
+import { BloggerModel } from './blogger.model';
 import { ImageModel } from './image.model';
 
 export class BlogpostModel
@@ -16,6 +17,7 @@ export class BlogpostModel
   public activityId: string;
 
   public activity: ActivityModel & Observable<ActivityModel>;
+  public blogger: BloggerModel & Observable<BloggerModel>;
   public images: ImageModel[] & Observable<ImageModel[]>;
 
   public get name(): string {

@@ -276,9 +276,6 @@ export class MapsComponent
     if (enable) {
       this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
       this.followed = this.positionProvider.locate().subscribe((coords) => {
-        this.center.nativeElement.classList.add('show');
-        this.follow.ripple.launch({ centered: true });
-        this.location.launch({ centered: true });
         this.view.instance.animate({
           center: fromLonLat([
             coords.longitude,
@@ -286,17 +283,21 @@ export class MapsComponent
           ]),
           duration: 1000,
           zoom: 17.5
-        });
+        }, () => {
+          if (this.uuid) {
+            this.center.nativeElement.classList.add('arrow');
+            this.center.nativeElement.style.transform = `rotate(${Math.atan2(
+              coords.latitude - 1 / this.focus.value.length * this.focus.value
+                .reduce((num, i) => num += i.address.latitude, 0),
+              coords.longitude - 1 / this.focus.value.length * this.focus.value
+                .reduce((num, i) => num += i.address.longitude, 0)
+            ) * -180 / Math.PI}deg)`;
+          }
 
-        if (this.uuid) {
-          this.center.nativeElement.classList.add('arrow');
-          this.center.nativeElement.style.transform = `rotate(${Math.atan2(
-            coords.latitude - 1 / this.focus.value.length * this.focus.value
-              .reduce((num, i) => num += i.address.latitude, 0),
-            coords.longitude - 1 / this.focus.value.length * this.focus.value
-              .reduce((num, i) => num += i.address.longitude, 0)
-          ) * -180 / Math.PI}deg)`;
-        }
+          this.center.nativeElement.classList.add('show');
+          this.follow.ripple.launch({ centered: true });
+          this.location.launch({ centered: true });
+        });
       }, () => {
         this.following(false);
         this.follow.disabled = true;

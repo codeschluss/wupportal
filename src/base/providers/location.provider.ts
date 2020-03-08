@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@wooportal/core';
+import { Observable } from 'rxjs';
 import { LocationControllerService } from '../../api/services/location-controller.service';
 
 @Injectable({ providedIn: 'root' })
@@ -11,8 +11,8 @@ export class LocationProvider {
 
   public calculateRoute(
     params: LocationControllerService.LocationControllerCalculateRouteParams
-  ): Response {
-    return this.service.locationControllerCalculateRouteResponse(params);
+  ): Observable<any> {
+    return this.service.locationControllerCalculateRoute(params);
   }
 
 }

@@ -5,7 +5,7 @@ import { ConfigurationModel } from '../../../../base/models/configuration.model'
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
-  templateUrl: './application.panel.html'
+  templateUrl: 'application.panel.html'
 })
 
 export class ApplicationPanelComponent extends BasePanel {
@@ -14,7 +14,7 @@ export class ApplicationPanelComponent extends BasePanel {
 
   protected path: string = 'application';
 
-  protected resolve: object = {
+  protected resolve: Record<string, CrudJoiner> = {
     configuration: CrudJoiner.of(ConfigurationModel, {
       required: true
     })

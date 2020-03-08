@@ -6,14 +6,14 @@ import { OrganisationModel } from '../../../../base/models/organisation.model';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
-  templateUrl: './organisation.panel.html'
+  templateUrl: 'organisation.panel.html'
 })
 
 export class OrganisationPanelComponent extends BasePanel {
 
   protected path: string = 'organisation';
 
-  protected resolve: object = {
+  protected resolve: Record<string, CrudJoiner> = {
     organisations: CrudJoiner.of(OrganisationModel, {
       approved: true
     }).with('activities').yield('address').yield('suburb')

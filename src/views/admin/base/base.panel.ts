@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ApplicationSettings } from '@wooportal/app';
-import { Box, CrudModel, CrudResolver, Headers, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
+import { Box, CrudJoiner, CrudModel, CrudResolver, Headers, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
 import { MembershipModel } from '../../../base/models/membership.model';
@@ -20,7 +20,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   protected abstract path: string;
 
-  protected abstract resolve: object;
+  protected abstract resolve: Record<string, CrudJoiner>;
 
   public index: number;
 

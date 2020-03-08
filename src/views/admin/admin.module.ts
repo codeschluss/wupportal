@@ -99,7 +99,6 @@ import { UserTableComponent } from './tables/user.table';
 
 const components: Type<any>[] = [
   AdminComponent,
-  BaseFieldComponent
 ];
 
 const directives: Type<any>[] = [
@@ -107,6 +106,7 @@ const directives: Type<any>[] = [
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
+  BaseFieldComponent,
   BooleanFieldComponent,
   ChipListFieldComponent,
   EditorFieldComponent,

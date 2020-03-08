@@ -221,8 +221,8 @@ export class MapsComponent
         targetPointLongitude: item.address.longitude,
         travelMode: 'DRIVING'
       })),
-      filter((response) => response.body.routeLegs.length),
-      map((response) => response.body.routeLegs[0].itineraryItems)
+      filter((response) => response.routeLegs.length),
+      map((response) => response.routeLegs[0].itineraryItems)
     ).subscribe((turns) => this.directions = {
       item,
       line: this.smooth(turns.map((i) => fromLonLat([

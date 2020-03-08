@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@wooportal/core';
+import { Observable } from 'rxjs';
 import { Feedback } from '../../api/models/feedback';
 import { FeedbackControllerService } from '../../api/services/feedback-controller.service';
 
@@ -10,8 +10,8 @@ export class FeedbackProvider {
     private service: FeedbackControllerService
   ) { }
 
-  public create(feedback: Feedback): Response {
-    return this.service.feedbackControllerFeedbackResponse(feedback);
+  public create(feedback: Feedback): Observable<any> {
+    return this.service.feedbackControllerFeedback(feedback);
   }
 
 }

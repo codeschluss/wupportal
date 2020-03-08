@@ -6,14 +6,14 @@ import { UserModel } from '../../../../base/models/user.model';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
-  templateUrl: './privileges.panel.html'
+  templateUrl: 'privileges.panel.html'
 })
 
 export class PrivilegesPanelComponent extends BasePanel {
 
   protected path: string = 'privileges';
 
-  protected resolve: object = {
+  protected resolve: Record<string, CrudJoiner> = {
     memberships: CrudJoiner.of(OrganisationModel, {
       approved: true
     }).with('users').yield('provider'),

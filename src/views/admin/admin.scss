@@ -29,7 +29,7 @@ main#admin {
     margin: .25rem;
   }
 
-   [base=form] {
+  [base=form] {
     & > form {
       & > section {
         @include flex(row, normal, center);
@@ -89,6 +89,35 @@ main#admin {
 
         & > .mat-form-field-flex {
           padding: 0 1rem;
+        }
+      }
+    }
+  }
+
+  [base=panel] {
+    & > mat-tab-group#analytics {
+      mat-tab-body {
+        & > .mat-tab-body-content {
+          @include flex(wrap);
+
+          & > mat-card {
+            margin: 1rem;
+            max-width: calc(100% - 4rem);
+            width: calc(100rem / 2 - 4rem);
+
+            & > mat-card-content {
+              @include position(relative);
+              height: 350px;
+
+              & > [base=chart] {
+                @include position(absolute, 0, 0, 0, 0);
+
+                svg {
+                  float: none;
+                }
+              }
+            }
+          }
         }
       }
     }

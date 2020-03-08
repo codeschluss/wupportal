@@ -1,9 +1,7 @@
-import { Injectable, Type } from '@angular/core';
-
-import { AnalyticsControllerService } from '../../api/services/analytics-controller.service';
-import { AnalyticsEntry } from 'src/api/models/analytics-entry';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { AnalyticsEntry } from 'src/api/models/analytics-entry';
+import { AnalyticsControllerService } from '../../api/services/analytics-controller.service';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsProvider {
@@ -12,15 +10,22 @@ export class AnalyticsProvider {
     private service: AnalyticsControllerService
   ) { }
 
-  public subscriptionCalc(): Observable<Array<AnalyticsEntry>> {
+  public activitiesPerCategory(
+    current: boolean
+  ): Observable<AnalyticsEntry[]> {
+    return this.service
+      .analyticsControllerCalculateActivitiesPerCategory(current);
+  }
+
+  public activitiesPerTargetGroup(
+    current: boolean
+  ): Observable<AnalyticsEntry[]> {
+    return this.service
+      .analyticsControllerCalculateActivitiesPerTargetGroup(current);
+  }
+
+  public subscriptions(): Observable<AnalyticsEntry[]> {
     return this.service.analyticsControllerCalculateSubscriptions();
   }
 
-  public activitiesPerCategoryCalc(currentOnly: boolean): Observable<Array<AnalyticsEntry>> {
-    return this.service.analyticsControllerCalculateActivitiesPerCategory(currentOnly);
-  }
-
-  public activitiesPerTargetGroupCalc(currentOnly: boolean): Observable<Array<AnalyticsEntry>> {
-    return this.service.analyticsControllerCalculateActivitiesPerTargetGroup(currentOnly);
-  }
 }

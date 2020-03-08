@@ -25,9 +25,6 @@ import { CrudModel } from '@wooportal/core';
 import { FileValueAccessorDirective } from '../../tools/accesor';
 import { Paginate } from '../../tools/paginate';
 import { SharedModule } from '../shared/shared.module';
-import { SubscriptionChartComponent } from './charts/subscription.chart.component';
-import { ActivityCategoryChartComponent } from './charts/activity-category.chart.component';
-import { ActivityTargetGroupChartComponent } from './charts/activity-targetgroup.chart.component';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
 import { BaseChart } from './base/base.chart';
@@ -36,6 +33,9 @@ import { BaseForm } from './base/base.form';
 import { BasePanel } from './base/base.panel';
 import { BaseStepper } from './base/base.stepper';
 import { BaseTable } from './base/base.table';
+import { CategoryActivitiesChartComponent } from './charts/category-activities.chart';
+import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
+import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
 import { BooleanFieldComponent } from './fields/boolean.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
 import { EditorFieldComponent } from './fields/editor.field';
@@ -46,7 +46,6 @@ import { ScheduleFieldComponent } from './fields/schedule.field';
 import { SelectFieldComponent } from './fields/select.field';
 import { TextareaFieldComponent } from './fields/textarea.field';
 import { UrlFieldComponent } from './fields/url.field';
-import { CurrentFilterComponent } from './filter/current-filter.component'
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
@@ -105,10 +104,10 @@ import { TopicTableComponent } from './tables/topic.table';
 import { UserTableComponent } from './tables/user.table';
 
 const charts: Type<BaseChart>[] = [
-  SubscriptionChartComponent,
-  ActivityCategoryChartComponent,
-  ActivityTargetGroupChartComponent
-]
+  CategoryActivitiesChartComponent,
+  SubscriptionsChartComponent,
+  TargetGroupActivitiesChartComponent
+];
 
 const components: Type<any>[] = [
   AdminComponent,
@@ -130,10 +129,6 @@ const fields: Type<BaseFieldComponent>[] = [
   SelectFieldComponent,
   TextareaFieldComponent,
   UrlFieldComponent
-];
-
-const filters: Type<any>[] = [
-  CurrentFilterComponent
 ];
 
 const forms: Type<BaseForm<CrudModel>>[] = [
@@ -238,7 +233,6 @@ const tables: Type<BaseTable<CrudModel>>[] = [
     ...components,
     ...directives,
     ...fields,
-    ...filters,
     ...forms,
     ...panels,
     ...popups,

@@ -1,62 +1,51 @@
 <header class="mat-title">
-  <i18n i18n="@@analytics">analytics</i18n>
+  <i18n i18n="@@analyticsPanel">analyticsPanel</i18n>
 </header>
 
-<mat-menu #actions="matMenu">
-  <button mat-menu-item (click)="create('languages')">
-    <i18n i18n="@@createLanguage">createLanguage</i18n>
-  </button>
-</mat-menu>
-
-<mat-tab-group [selectedIndex]="index">
+<mat-tab-group id="analytics" [selectedIndex]="index">
   <mat-tab id="activities">
     <ng-template matTabLabel>
       <i18n i18n="@@activities">activities</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <current-filter></current-filter>
-      <div class="container">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>
-              <i18n i18n="@@categories">categories</i18n>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <activity-category-chart></activity-category-chart>
-          </mat-card-content>
-        </mat-card>
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>
-              <i18n i18n="@@targetGroups" unit="targetGroups">targetgroups</i18n>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <activity-targetgroup-chart></activity-targetgroup-chart>
-          </mat-card-content>
-        </mat-card>
-      </div>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <i18n i18n="@@categories">categories</i18n>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <category-activities-chart></category-activities-chart>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <i18n i18n="@@targetGroups">targetGroups</i18n>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <targetgroup-activities-chart></targetgroup-activities-chart>
+        </mat-card-content>
+      </mat-card>
     </ng-template>
   </mat-tab>
 
   <mat-tab id="subscription">
     <ng-template matTabLabel>
-      <i18n i18n="@@subscription">subscription</i18n>
+      <i18n i18n="@@subscriptions">subscriptions</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <div class="container">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>
-              <i18n i18n="@@allSubscriptions">allSubscriptions</i18n>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <subscription-chart></subscription-chart>
-          </mat-card-content>
-        </mat-card>
-      </div>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <i18n i18n="@@subscriptions">subscriptions</i18n>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <subscriptions-chart></subscriptions-chart>
+        </mat-card-content>
+      </mat-card>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

@@ -1,52 +1,68 @@
-import { OnDestroy } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
-
+import { HostBinding, ViewChild } from '@angular/core';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { AnalyticsEntry } from '../../../api/models/analytics-entry';
+import { AnalyticsProvider } from '../../../base/providers/analytics.provider';
 
-export abstract class BaseChart implements OnDestroy {
+export abstract class BaseChart {
 
-  protected results: Array<AnalyticsEntry> = [];
+  @HostBinding('attr.base')
+  public readonly base: string = 'chart';
 
-  protected colorScheme = {
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#D32F2F', '#00838F', '#1976D2']
+  public colors = {
+    domain: [
+      '#9370DB',
+      '#87CEFA',
+      '#FA8072',
+      '#FF7F50',
+      '#90EE90',
+      '#D32F2F',
+      '#00838F',
+      '#1976D2'
+    ]
   };
 
-  protected dataSubscription: Subscription;
-  protected filterSubscription: Subscription;
+  public data: AnalyticsEntry[] = [];
 
-  protected xAxisLabel: string;
-  protected yAxisLabel: string;
+  public yScaleMax: number;
 
-  protected yScaleMax: number = 30;
+  @ViewChild(MatSlideToggle, { static: true })
+  protected toggle: MatSlideToggle;
 
-  protected static template(additionals: string = '') {
+  protected static template(filters: {
+    current: boolean
+  }) {
     return `
-      ${additionals}
-      [scheme]="colorScheme"
-      [results]="results"
-      [yScaleMax]="yScaleMax"
-      [xAxis]=true
-      [yAxis]=true
-      [showXAxisLabel]=true
-      [showYAxisLabel]=true
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel">
-    `
+      ${!filters.current ? `` : `
+        <mat-slide-toggle color="primary">
+          <i18n i18n="@@current">current</i18n>
+        </mat-slide-toggle>
+      `}
+      <ngx-charts-bar-vertical
+        [animations]="false"
+        [results]="data"
+        [scheme]="colors"
+        [showDataLabel]="true"
+        [showXAxisLabel]="true"
+        [tooltipDisabled]="true"
+        [xAxis]="true"
+        [yScaleMax]="yScaleMax">
+      </ngx-charts-bar-vertical>
+    `;
   }
 
-  protected setData(result: Array<AnalyticsEntry>) {
-    this.setCustomColor(result);
-    this.results = result;
-  }
+  public constructor(
+    protected analyticsProvider: AnalyticsProvider
+  ) { }
 
-  protected setCustomColor(result: Array<AnalyticsEntry>) {
-    if (result.every(entry => entry.customColor)) {
-      this.colorScheme.domain = result.map(entry => entry.customColor);
+  protected setData(entries: AnalyticsEntry[]) {
+    if (entries.every((result) => result.customColor)) {
+      this.colors.domain = entries.map((result) => result.customColor);
     }
+
+    this.yScaleMax = this.yScaleMax
+      || Math.max.apply(Math, entries.map((i) => i.value));
+
+    this.data = entries;
   }
 
-  public ngOnDestroy(): void {
-    if (this.filterSubscription) this.filterSubscription.unsubscribe();
-    if (this.dataSubscription) this.dataSubscription.unsubscribe();
-  }
 }

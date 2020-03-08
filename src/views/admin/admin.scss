@@ -98,7 +98,7 @@ main#admin {
     & > mat-tab-group#analytics {
       mat-tab-body {
         & > .mat-tab-body-content {
-          @include flex(wrap);
+          @include flex(wrap, center);
 
           & > mat-card {
             margin: 1rem;

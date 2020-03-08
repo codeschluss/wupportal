@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ElementRef, HostBinding, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
@@ -21,6 +21,9 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   protected abstract path: string;
 
   protected abstract resolve: Record<string, CrudJoiner>;
+
+  @HostBinding('attr.base')
+  public readonly base: string = 'panel';
 
   public index: number;
 

@@ -72,12 +72,12 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
   }
 
   protected ngPostInit(): void {
-    const url = `/mapview/${this.item.id}?embed`;
+    const url = `/mapview/${this.item.id}?embed=true`;
 
     switch (this.deviceProvider.platform) {
       case 'Native':
         GeoLocation.enableLocationRequest().catch(() => { });
-        this.source = this.app.config.defaults.appUrl + url + '&native';
+        this.source = this.app.config.defaults.appUrl + url + '&native=true';
         break;
 
       case 'Online':
@@ -104,6 +104,11 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
             wv.getSettings().setJavaScriptEnabled(true);
             wv.setWebChromeClient(new this.deviceProvider.webChromeClient());
             wv.setWebViewClient(new this.deviceProvider.webViewClient());
+            break;
+
+          case 'iOS':
+            wv.on('loadStarted', (event) => event.url !== this.source
+              && this.deviceProvider.resourceClient(event));
             break;
         }
       } else {

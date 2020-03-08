@@ -230,7 +230,7 @@ export class MapsComponent
         i.maneuverPoint.coordinates[0]
       ])), 5),
       text: turns.map((i) => i.instruction.text)
-    });
+    }, () => this.follow.disabled = true);
   }
 
   public handleReset(): void {

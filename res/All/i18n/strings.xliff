@@ -65,6 +65,9 @@
       <trans-unit id="taxonomy" datatype="html">
         <source>taxonomy</source>
       </trans-unit>
+      <trans-unit id="analytics" datatype="html">
+        <source>analytics</source>
+      </trans-unit>
       <trans-unit id="logout" datatype="html">
         <source>logout</source>
       </trans-unit>
@@ -172,6 +175,9 @@
       </trans-unit>
       <trans-unit id="password" datatype="html">
         <source>password</source>
+      </trans-unit>
+      <trans-unit id="current" datatype="html">
+        <source>current</source>
       </trans-unit>
       <trans-unit id="minLengthError" datatype="html">
         <source>minLengthError</source>
@@ -374,6 +380,15 @@
       <trans-unit id="passwordConfirm" datatype="html">
         <source>passwordConfirm</source>
       </trans-unit>
+      <trans-unit id="analyticsPanel" datatype="html">
+        <source>analyticsPanel</source>
+      </trans-unit>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source>
+      </trans-unit>
+      <trans-unit id="subscriptions" datatype="html">
+        <source>subscriptions</source>
+      </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source>
       </trans-unit>
@@ -454,9 +469,6 @@
       </trans-unit>
       <trans-unit id="createTopic" datatype="html">
         <source>createTopic</source>
-      </trans-unit>
-      <trans-unit id="categories" datatype="html">
-        <source>categories</source>
       </trans-unit>
       <trans-unit id="topics" datatype="html">
         <source>topics</source>
@@ -547,9 +559,6 @@
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source>
-      </trans-unit>
-      <trans-unit id="subscriptions" datatype="html">
-        <source>subscriptions</source>
       </trans-unit>
       <trans-unit id="followedActivities" datatype="html">
         <source>followedActivities</source>

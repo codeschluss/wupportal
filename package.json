@@ -108,6 +108,7 @@
     "@angular/cli": "8.3.24",
     "@angular/compiler-cli": "8.2.14",
     "@ckeditor/ckeditor5-angular": "1.1.2",
+    "@swimlane/ngx-charts": "13.0.2",
     "@types/node": "13.7.0",
     "@wooportal/app": "file:sys/app",
     "@wooportal/core": "file:sys/core",

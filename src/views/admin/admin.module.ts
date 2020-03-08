@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule, MAT_TABS_CONFIG } from '@angular/material/tabs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AppCommonModule, AppRouterModule } from '@wooportal/app';
 import { CrudModel } from '@wooportal/core';
 import { FileValueAccessorDirective } from '../../tools/accesor';
@@ -26,11 +27,15 @@ import { Paginate } from '../../tools/paginate';
 import { SharedModule } from '../shared/shared.module';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
+import { BaseChart } from './base/base.chart';
 import { BaseFieldComponent } from './base/base.field';
 import { BaseForm } from './base/base.form';
 import { BasePanel } from './base/base.panel';
 import { BaseStepper } from './base/base.stepper';
 import { BaseTable } from './base/base.table';
+import { CategoryActivitiesChartComponent } from './charts/category-activities.chart';
+import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
+import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
 import { BooleanFieldComponent } from './fields/boolean.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
 import { EditorFieldComponent } from './fields/editor.field';
@@ -60,6 +65,7 @@ import { TopicFormComponent } from './forms/topic.form';
 import { TranslationFormComponent } from './forms/translation.form';
 import { UserFormComponent } from './forms/user.form';
 import { AccountPanelComponent } from './panels/account/account.panel';
+import { AnalyticsPanelComponent } from './panels/analytics/analytics.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { InformationPanelComponent } from './panels/information/information.panel';
 import { MessagingPanelComponent } from './panels/messaging/messaging.panel';
@@ -96,6 +102,12 @@ import { SuburbTableComponent } from './tables/suburb.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
 import { TopicTableComponent } from './tables/topic.table';
 import { UserTableComponent } from './tables/user.table';
+
+const charts: Type<BaseChart>[] = [
+  CategoryActivitiesChartComponent,
+  SubscriptionsChartComponent,
+  TargetGroupActivitiesChartComponent
+];
 
 const components: Type<any>[] = [
   AdminComponent,
@@ -160,12 +172,14 @@ const materials: Type<any>[] = [
   MatSortModule,
   MatTableModule,
   MatTabsModule,
+  NgxChartsModule,
   ReactiveFormsModule,
   FormsModule
 ];
 
 const panels: Type<BasePanel>[] = [
   AccountPanelComponent,
+  AnalyticsPanelComponent,
   ApplicationPanelComponent,
   InformationPanelComponent,
   MessagingPanelComponent,
@@ -215,6 +229,7 @@ const tables: Type<BaseTable<CrudModel>>[] = [
 
 @NgModule({
   declarations: [
+    ...charts,
     ...components,
     ...directives,
     ...fields,

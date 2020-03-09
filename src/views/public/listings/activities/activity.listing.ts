@@ -5,7 +5,7 @@ import { Params, Route } from '@angular/router';
 import { Arr, CrudJoiner, CrudModel, CrudResolver, ReadParams } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { merge } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ActivityModel } from '../../../../base/models/activity.model';
 import { CategoryModel } from '../../../../base/models/category.model';
 import { SuburbModel } from '../../../../base/models/suburb.model';
@@ -99,7 +99,7 @@ export class ActivityListingComponent
         this.connection = new MapsConnection(source, target);
         this.connection.focus.subscribe((focus) => this.focusing(focus));
         this.connection.route.subscribe((r) => this.router.navigateByUrl(r));
-        this.connection.ready.pipe(filter(Boolean), take(1)).subscribe(() =>
+        this.connection.ready.subscribe(() =>
           this.items.subscribe((items) => this.connection.nextItems(items)));
 
         this.connection.nextReady(true);

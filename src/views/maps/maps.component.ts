@@ -161,20 +161,24 @@ export class MapsComponent
       this.loadingProvider.finished(this.block);
     });
 
-    if (source !== source.parent) {
-      this.connection = new MapsConnection(source, source.parent);
-      this.connection.focus.subscribe((focus) => this.focus.next(focus));
-      this.connection.items.subscribe((items) => this.items.next(items));
-      this.connection.nextReady(true);
-    }
-
     if (this.embed) {
       this.maps.instance.getInteractions().clear();
     }
 
-    this.route.url.pipe(
-      mergeMap(() => this.fetch())
-    ).subscribe(() => this.handleReset());
+    if (source !== source.parent) {
+      this.connection = new MapsConnection(source, source.parent);
+      this.connection.focus.subscribe((focus) => this.focus.next(focus));
+      this.connection.items.subscribe((items) => {
+        this.items.next(items);
+        this.handleReset();
+      });
+
+      this.connection.nextReady(true);
+    } else {
+      this.route.url.pipe(
+        mergeMap(() => this.fetch())
+      ).subscribe(() => this.handleReset());
+    }
   }
 
   public ngOnDestroy(): void {

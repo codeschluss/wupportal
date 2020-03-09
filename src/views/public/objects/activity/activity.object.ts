@@ -39,6 +39,8 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   protected path: string = 'activities';
 
+  private connection: MapsConnection;
+
   @ViewChild('frame', { read: ElementRef, static: false })
   private frame: ElementRef<HTMLIFrameElement>;
 
@@ -90,9 +92,13 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
     if (this.deviceProvider.notation === 'Browser') {
       const source = this.deviceProvider.document.defaultView;
       const target = this.frame.nativeElement.contentWindow;
-      const connection = new MapsConnection(source, target);
-      connection.route.subscribe((r) => this.router.navigateByUrl(r));
-      connection.nextReady(true);
+
+      this.connection = new MapsConnection(source, target);
+      this.connection.route.subscribe((r) => this.router.navigateByUrl(r));
+      this.connection.ready.subscribe(() =>
+        this.connection.nextItems([this.item]));
+
+      this.connection.nextReady(true);
     } else if (this.deviceProvider.platform === 'Native') {
       if (this.webview.nativeElement.isLoaded) {
         let wv = this.webview.nativeElement as any;

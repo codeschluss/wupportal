@@ -183,27 +183,26 @@ export class SharedComponent implements OnInit {
     }));
   }
 
-  public notifications(): void {
-    const subscriptionId = this.sessionProvider.getSubscriptionId();
+  public notifications(delay: boolean = false): void {
+    const id = this.sessionProvider.getSubscriptionId();
+    const navigate = (path: string[]) =>
+      delay ? this.navigate(...path) : this.router.navigate(path);
 
-    if (subscriptionId) {
-      this.navigate('/', 'notifications', subscriptionId);
+    if (id) {
+      navigate(['/', 'notifications', id]);
     } else {
       const block = Object.create(HttpRequest);
       this.loadingProvider.enqueue(block);
-
       this.pushProvider.registration().pipe(
         mergeMap((token) => this.subscriptionProvider.create({
           authSecret: token,
           locale: this.sessionProvider.getLanguage()
         })),
-        catchError(() => {
-          this.loadingProvider.finished(block);
-          return EMPTY;
-        })
+        catchError(() => EMPTY)
       ).subscribe((subscription) => {
+        navigate(['/', 'notifications', subscription.id]);
         this.sessionProvider.setSubscriptionId(subscription.id);
-        this.navigate('/', 'notifications', subscription.id);
+    }).add(() => {
         this.loadingProvider.finished(block);
       });
     }

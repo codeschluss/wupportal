@@ -285,7 +285,7 @@
       <button mat-list-item
         [class.active]="url.startsWith('/notifications')"
         [disabled]="!pushable"
-        (click)="notifications()">
+        (click)="notifications(true)">
         <icon-component icon="paper-plane"></icon-component>
         <i18n i18n="@@notifications">notifications</i18n>
       </button>

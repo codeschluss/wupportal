@@ -101,7 +101,7 @@
             [class.disabled]="!pushable"
             [isEnabled]="pushable"
             [isUserInteractionEnabled]="pushable"
-            (tap)="notifications()">
+            (tap)="notifications(true)">
             <icon-component icon="paper-plane"></icon-component>
             <i18n i18n="@@notifications" unit="notifications"></i18n>
           </stack-layout>

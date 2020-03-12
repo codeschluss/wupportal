@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Message, registerForPushNotifications } from 'nativescript-plugin-firebase';
+import { addOnPushTokenReceivedCallback, Message, registerForPushNotifications } from 'nativescript-plugin-firebase';
 import { firebase } from 'nativescript-plugin-firebase/firebase-common';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
 import { DeviceProvider } from '../device/device.provider';
 import { PushProvider as Compat } from './push.provider.i';
 
@@ -45,14 +45,14 @@ export class PushProvider implements Compat {
   }
 
   public registration(): Observable<string> {
-    return new Observable<string>((observer) => {
-      registerForPushNotifications({
-        onMessageReceivedCallback: (event) => this.events.next(event),
-        onPushTokenReceivedCallback: (token) => observer.next(token)
+    return from(registerForPushNotifications({
+      onMessageReceivedCallback: (event) => this.events.next(event),
+    })).pipe(mergeMap(() => new Observable<string>((observer) => {
+      addOnPushTokenReceivedCallback((token) => {
+        observer.next(token);
+        observer.complete();
       });
-
-      return () => observer.complete();
-    });
+    })));
   }
 
 }

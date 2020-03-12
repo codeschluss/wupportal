@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApplicationSettings } from '@wooportal/app';
+import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Response, StrictHttpResponse } from '../tools/api';
+import { StrictHttpResponse } from '../tools/api';
 import { RefreshTokenModel } from './refresh-token.model';
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +14,7 @@ export class TokenService {
     private httpClient: HttpClient,
   ) { }
 
-  public apiLoginResponse(username: string, password: string): Response {
+  public apiLogin(username: string, password: string): Observable<any> {
     return this.call(new HttpRequest<any>(
       'POST',
       this.app.config.api.authUrl,
@@ -28,7 +29,7 @@ export class TokenService {
     ));
   }
 
-  public apiRefreshResponse(token?: RefreshTokenModel): Response {
+  public apiRefresh(token?: RefreshTokenModel): Observable<any> {
     const header = token ? { authorization: `Bearer ${token.raw}` } : { };
     return this.call(new HttpRequest<any>(
       'GET',
@@ -41,10 +42,11 @@ export class TokenService {
     ));
   }
 
-  private call(request: HttpRequest<any>): Response {
+  private call(request: HttpRequest<any>): Observable<any> {
     return this.httpClient.request<any>(request).pipe(
       filter((response) => response instanceof HttpResponse),
-      map((response) => response as StrictHttpResponse<any>));
+      map((response: StrictHttpResponse<any>) => response.body)
+    );
   }
 
 }

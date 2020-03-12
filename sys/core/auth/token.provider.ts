@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorage, VALIDATION_ERROR } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, combineLatest, EMPTY, Observable, of, Subscription, throwError, timer } from 'rxjs';
 import { catchError, filter, map, mergeMap, tap } from 'rxjs/operators';
-import { AuthTokens, StrictHttpResponse } from '../tools/api';
+import { AuthTokens } from '../tools/api';
 import { Base64 } from '../tools/base64';
 import { AccessTokenModel } from './access-token.model';
 import { RefreshTokenModel } from './refresh-token.model';
@@ -48,16 +48,16 @@ export class TokenProvider {
   }
 
   public login(username: string, password: string): Observable<AuthTokens> {
-    return this.tokenService.apiLoginResponse(username, password).pipe(
-      map((response) => this.tokenize(response)),
+    return this.tokenService.apiLogin(username, password).pipe(
+      map((body) => this.tokenize(body)),
       map((tokens) => this.update(tokens)),
       tap((tokens) => this.work(tokens))
     );
   }
 
   public refresh(): Observable<AuthTokens> {
-    return this.tokenService.apiRefreshResponse().pipe(
-      map((response) => this.tokenize(response)),
+    return this.tokenService.apiRefresh().pipe(
+      map((body) => this.tokenize(body)),
       map((tokens) => this.update(tokens)),
       tap((tokens) => this.work(tokens))
     );
@@ -69,11 +69,11 @@ export class TokenProvider {
     this.refreshToken.next(new RefreshTokenModel());
   }
 
-  private tokenize(response: StrictHttpResponse<any>): AuthTokens {
+  private tokenize(body: object): AuthTokens {
     const tokens = { };
 
-    Object.keys(response.body).forEach((type) => {
-      const base64 = response.body[type].split('.')[1];
+    Object.keys(body).forEach((type) => {
+      const base64 = body[type].split('.')[1];
       const token = JSON.parse(Base64.decode(base64));
 
       let item; switch (type) {
@@ -82,7 +82,7 @@ export class TokenProvider {
       }
 
       token.exp = token.exp - 5;
-      token.raw = response.body[type];
+      token.raw = body[type];
       tokens[type] = Object.assign(item, token);
     });
 
@@ -106,8 +106,8 @@ export class TokenProvider {
     };
 
     return token && token.exp * 1000 > Date.now()
-      ? this.tokenService.apiRefreshResponse(token).pipe(
-        map((response) => this.tokenize(response)),
+      ? this.tokenService.apiRefresh(token).pipe(
+        map((body) => this.tokenize(body)),
         map((tokens) => ({ access: tokens.access, refresh: token })),
         catchError(() => of(defaults)))
       : of(defaults);

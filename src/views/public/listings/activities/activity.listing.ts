@@ -93,10 +93,10 @@ export class ActivityListingComponent
           chip.selected = categories.includes(chip.value)));
 
       if (this.deviceProvider.notation === 'Browser') {
-        const source = this.deviceProvider.document.defaultView;
-        const target = this.frame.nativeElement.contentWindow;
+        const main = this.deviceProvider.document.defaultView;
+        const frame = this.frame.nativeElement.contentWindow;
 
-        this.connection = new MapsConnection(source, target);
+        this.connection = new MapsConnection(main, frame);
         this.connection.focus.subscribe((focus) => this.focusing(focus));
         this.connection.route.subscribe((r) => this.router.navigateByUrl(r));
         this.connection.ready.subscribe(() =>

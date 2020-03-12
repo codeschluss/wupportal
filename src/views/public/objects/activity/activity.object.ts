@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ApplicationSettings, DeviceProvider, GeoLocation } from '@wooportal/app';
 import { CrudJoiner, Headers } from '@wooportal/core';
-import { WebView } from 'tns-core-modules/ui/web-view';
+import { fromEvent } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { LoadEventData, WebView } from 'tns-core-modules/ui/web-view';
 import { ActivityModel } from '../../../../base/models/activity.model';
 import { ScheduleModel } from '../../../../base/models/schedule.model';
 import { MapsConnection } from '../../../maps/maps.connection';
@@ -90,17 +92,19 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
   protected ngPostViewInit(): void {
     if (this.deviceProvider.notation === 'Browser') {
-      const source = this.deviceProvider.document.defaultView;
-      const target = this.frame.nativeElement.contentWindow;
+      const main = this.deviceProvider.document.defaultView;
+      const frame = this.frame.nativeElement.contentWindow;
 
-      this.connection = new MapsConnection(source, target);
+      this.connection = new MapsConnection(main, frame);
       this.connection.route.subscribe((r) => this.router.navigateByUrl(r));
       this.connection.ready.subscribe(() =>
         this.connection.nextItems([this.item]));
 
       this.connection.nextReady(true);
     } else if (this.deviceProvider.platform === 'Native') {
-      if (this.webview.nativeElement.isLoaded) {
+      if (!this.webview.nativeElement.isLoaded) {
+        this.webview.nativeElement.once('loaded', () => this.ngPostViewInit());
+      } else {
         let wv = this.webview.nativeElement as any;
 
         switch (this.deviceProvider.notation) {
@@ -113,12 +117,14 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
             break;
 
           case 'iOS':
-            wv.on('loadStarted', (event) => event.url !== this.source
-              && this.deviceProvider.resourceClient(event));
+            wv.ios.opaque = false;
+            wv.ios.setDrawsBackground = false;
+
+            fromEvent<LoadEventData>(wv, 'loadStarted').pipe(
+              filter((event) => event.url !== this.source)
+            ).subscribe((event) => this.deviceProvider.resourceClient(event));
             break;
         }
-      } else {
-        this.webview.nativeElement.once('loaded', () => this.ngPostViewInit());
       }
     }
   }

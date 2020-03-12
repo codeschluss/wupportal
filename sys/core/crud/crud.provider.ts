@@ -46,7 +46,8 @@ export abstract class CrudProvider
   public create(item: Model): Observable<any> {
     return this.call(this.methods.create, item).pipe(
       map((response) => this.cast<Model[]>(response)),
-      tap((response) => this.link(response)));
+      tap((response) => this.link(response))
+    );
   }
 
   public delete(id: string): Observable<any> {
@@ -56,19 +57,22 @@ export abstract class CrudProvider
   public readOne(id: string): Observable<Model> {
     return this.call(this.methods.readOne, id).pipe(
       map((response) => this.cast<Model>(response)),
-      tap((response) => this.link(response)));
+      tap((response) => this.link(response))
+    );
   }
 
   public readAll(params?: ReadParams): Observable<Model[]> {
     return this.call(this.methods.readAll, params || { }).pipe(
       map((response) => this.cast<Model[]>(response)),
-      tap((response) => this.link(response)));
+      tap((response) => this.link(response))
+    );
   }
 
   public update(item: Model): Observable<any> {
     return this.call(this.methods.update, item, item.id).pipe(
       map((response) => this.cast<Model[]>(response)),
-      tap((response) => this.link(response)));
+      tap((response) => this.link(response))
+    );
   }
 
   protected apply(method: ResponseMethod): ResponseMethod {

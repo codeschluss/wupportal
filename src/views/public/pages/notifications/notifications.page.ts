@@ -91,10 +91,7 @@ export class NotificationsPageComponent extends BasePage {
   }
 
   public unsubscribe(item: CrudModel): void {
-    let items: CrudModel[];
-    let method;
-
-    switch (true) {
+    let items; let method; switch (true) {
       case item instanceof ActivityModel:
         items = this.items.activities;
         method = this.subscriptionProvider.unlinkActivities;

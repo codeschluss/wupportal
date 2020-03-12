@@ -91,9 +91,9 @@ export class RequestPopupComponent implements OnInit {
     }).pipe(map((items) => items.filter((item) => {
       try {
         return !this.data.organisations.find((o) => o.id === item.id);
-      } catch {
-        return true;
-      }
+      } catch { }
+
+      return true;
     })));
   }
 

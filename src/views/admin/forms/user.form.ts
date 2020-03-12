@@ -96,7 +96,8 @@ export class UserFormComponent
     return super.persist().pipe(
       tap((item) => this.group.reset(item)),
       filter((item) => item.username !== this.item.username),
-      tap(() => this.tokenProvider.remove()));
+      tap(() => this.tokenProvider.remove())
+    );
   }
 
   private validate(change: any): void {

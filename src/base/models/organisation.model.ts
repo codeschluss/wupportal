@@ -18,7 +18,6 @@ export class OrganisationModel
   public mail: string;
   public name: string;
   public phone: string;
-  public videoUrl: string;
   public website: string;
 
   public addressId: string;

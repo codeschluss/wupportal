@@ -30,9 +30,6 @@ import { UrlFieldComponent } from '../fields/url.field';
         <ng-container *ngSwitchCase="'phone'">
           <i18n i18n="@@phone">phone</i18n><sup>#</sup>
         </ng-container>
-        <ng-container *ngSwitchCase="'videoUrl'">
-          <i18n i18n="@@videoUrl">videoUrl</i18n>
-        </ng-container>
         <ng-container *ngSwitchCase="'website'">
           <i18n i18n="@@website">website</i18n>
         </ng-container>
@@ -75,12 +72,6 @@ export class OrganisationFormComponent
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ],
       type: 'email'
-    },
-    {
-      name: 'videoUrl',
-      input: UrlFieldComponent,
-      tests: [Validators.pattern(/^https?:\/\/\S+\.\S+(\/\S*)?$/)],
-      type: 'url'
     }
   ];
 

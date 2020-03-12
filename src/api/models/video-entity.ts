@@ -4,6 +4,5 @@ export interface VideoEntity {
   created?: string;
   id?: string;
   modified?: string;
-  platform?: string;
   url?: string;
 }

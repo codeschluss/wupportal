@@ -42,12 +42,11 @@ export class DeviceProvider implements Compat {
   public get connection(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
       startMonitoring((change) => observer.next(this.online(change)));
-
-      return () => {
-        stopMonitoring();
-        observer.complete();
-      };
-    }).pipe(multicast(() => new ReplaySubject<boolean>(1)), refCount());
+      return () => stopMonitoring();
+    }).pipe(
+      multicast(() => new ReplaySubject<boolean>(1)),
+      refCount()
+    );
   }
 
   public get document(): any {

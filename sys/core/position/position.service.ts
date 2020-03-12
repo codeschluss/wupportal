@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DeviceProvider } from '@wooportal/app';
-import { Observable, of, ReplaySubject } from 'rxjs';
-import { multicast, refCount } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class PositionService {
@@ -10,8 +9,8 @@ export class PositionService {
     private deviceProvider: DeviceProvider
   ) { }
 
-  public frontendPositionResponse(): Observable<Position> {
-    if (this.deviceProvider.frontend.geolocation.watchPosition) {
+  public frontendPosition(): Observable<Position> {
+    try {
       return new Observable<Position>((observer) => {
         const id = this.deviceProvider.frontend.geolocation.watchPosition(
           (position) => observer.next(position),
@@ -19,14 +18,11 @@ export class PositionService {
           { enableHighAccuracy: true }
         );
 
-        return () => {
-          this.deviceProvider.frontend.geolocation.clearWatch(id);
-          observer.complete();
-        };
-      }).pipe(multicast(() => new ReplaySubject<Position>(1)), refCount());
+        return () => this.deviceProvider.frontend.geolocation.clearWatch(id);
+      });
+    } catch (error) {
+      return throwError(error);
     }
-
-    return of(null);
   }
 
 }

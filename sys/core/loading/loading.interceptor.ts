@@ -17,11 +17,7 @@ export class LoadingInterceptor implements HttpInterceptor {
 
     return new Observable<HttpEvent<any>>((observer) => {
       next.handle(request).subscribe(observer);
-
-      return () => {
-        this.loadingProvider.finished(request);
-        observer.complete();
-      };
+      return () => this.loadingProvider.finished(request);
     });
   }
 

@@ -1,11 +1,8 @@
 <mat-card matRipple
   matRippleColor="currentColor"
   [matRippleDisabled]="true"
-  [ngStyle]="colors(item.category.color)"
-  (click)="actions = !actions">
-  <ng-container *ngIf="!navigate">
-    <a [routerLink]="['/', 'activities', item.id]"></a>
-  </ng-container>
+  [ngStyle]="colors(item.category.color)">
+  <a [routerLink]="['/', 'activities', item.id]"></a>
   <mat-card-content>
     <icon-component [icon]="item.category.icon"></icon-component>
     <small>
@@ -17,14 +14,4 @@
   <mat-card-header>
     <mat-card-title>{{ item.name }}</mat-card-title>
   </mat-card-header>
-  <ng-container *ngIf="navigate">
-    <mat-card-actions [class.show]="actions">
-      <mat-divider></mat-divider>
-      <details-piece [item]="item"></details-piece>
-      <button mat-button (click)="navigate(item)">
-        <icon-component icon="route"></icon-component>
-        <i18n i18n="@@showRoute">showRoute</i18n>
-      </button>
-    </mat-card-actions>
-  </ng-container>
 </mat-card>

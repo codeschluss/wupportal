@@ -1,8 +1,7 @@
 import { HttpRequest } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
-import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent, UrlSegment } from '@angular/router';
 import { DeviceProvider } from '@wooportal/app';
 import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, Selfrouter } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
@@ -30,11 +29,13 @@ export class MapsComponent
 
   public directions: [number, number][];
 
-  public followed: Subscription = EMPTY.subscribe();
+  public enabled: boolean = true;
 
   public focus: BehaviorSubject<ActivityModel[]>;
 
   public items: BehaviorSubject<ActivityModel[]>;
+
+  public location: Subscription = EMPTY.subscribe();
 
   public mapconf: {
     geomFn: GeometryFunction;
@@ -59,8 +60,7 @@ export class MapsComponent
           required: true
         })
       }
-    },
-    runGuardsAndResolvers: 'always'
+    }
   };
 
   private block: HttpRequest<any> = Object.create(HttpRequest);
@@ -78,14 +78,11 @@ export class MapsComponent
   @ViewChild('dialer', { read: ElementRef, static: true })
   private dialer: ElementRef<HTMLElement>;
 
-  @ViewChild('follow', { static: true })
-  private follow: MatButton;
-
-  @ViewChild(MatRipple, { static: true })
-  private location: MatRipple;
-
   @ViewChild(MapComponent, { static: true })
   private maps: MapComponent;
+
+  @ViewChild(MatRipple, { static: true })
+  private ripple: MatRipple;
 
   @ViewChild(LayerVectorComponent, { static: true })
   private vector: LayerVectorComponent;
@@ -93,12 +90,15 @@ export class MapsComponent
   @ViewChild(ViewComponent, { static: true })
   private view: ViewComponent;
 
-  public get embed(): boolean {
+  public get embedded(): boolean {
     return this.route.snapshot.queryParamMap.has('embed');
   }
 
-  public get navigate(): boolean | Function {
-    return !this.follow.disabled && this.handleNavigation.bind(this);
+  public get navigate(): boolean {
+    return this.focus.value.length && this.focus.value.every((item) =>
+      item.address.latitude === this.focus.value[0].address.latitude &&
+      item.address.longitude === this.focus.value[0].address.longitude
+    );
   }
 
   public get uuid(): string | undefined {
@@ -148,11 +148,9 @@ export class MapsComponent
   }
 
   public ngAfterViewInit(): void {
-    const source = this.deviceProvider.document.defaultView;
-
     this.focus.subscribe(() => this.vector.instance.changed());
-    this.maps.singleClick.subscribe((event) => this.handleClick(event));
-    this.maps.pointerMove.subscribe((event) => this.handleCursor(event));
+    this.items.subscribe(() => this.handleReset());
+
     this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
     this.maps.instance.once('postrender', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () => {
@@ -161,38 +159,49 @@ export class MapsComponent
       this.loadingProvider.finished(this.block);
     });
 
-    if (this.embed) {
+    this.maps.pointerMove.subscribe((event) => this.handleCursor(event));
+    this.maps.singleClick.subscribe((event) => this.handleClick(event));
+    const window = this.deviceProvider.document.defaultView;
+
+    if (this.embedded && this.uuid) {
       this.maps.instance.getInteractions().clear();
     }
 
-    if (source !== source.parent) {
-      this.connection = new MapsConnection(source, source.parent);
-      this.connection.focus.subscribe((focus) => this.focus.next(focus));
-      this.connection.items.subscribe((items) => {
-        this.items.next(items);
-        this.handleReset();
-      });
-
-      this.connection.nextReady(true);
-    } else {
+    if (window === window.parent) {
       this.route.url.pipe(
-        mergeMap(() => this.fetch())
-      ).subscribe(() => this.handleReset());
+        mergeMap((url) => this.fetch(url[0]))
+      ).subscribe((items) => this.items.next(items));
+    } else {
+      this.connection = new MapsConnection(window, window.parent);
+      this.connection.focus.subscribe((focus) => this.focus.next(focus));
+      this.connection.items.subscribe((items) => this.items.next(items));
+      this.connection.nextReady(true);
     }
   }
 
   public ngOnDestroy(): void {
     this.loadingProvider.finished(this.block);
-    this.following(false);
+    this.location.unsubscribe();
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {
-    if (!this.uuid) {
+    if (this.items.value.length > 1) {
       const pixel = this.maps.instance.getFeaturesAtPixel(event.pixel);
-      const features = pixel.length ? pixel[0].get('features') || [] : [];
+      const feats = pixel.length ? pixel[0].get('features') || [] : [];
+      const items = feats.map((f) =>
+        this.items.value.find((i) => i.id === f.getId()));
 
-      this.focus.next(features.map((feat) =>
-        this.items.value.find((item) => item.id === feat.getId())));
+      if (
+        items.length &&
+        this.focus.value.length &&
+        items.every((i) => this.focus.value.find((f) => f.id === i.id)) &&
+        this.focus.value.every((f) => items.find((i) => i.id === f.id))
+      ) {
+        this.frame(this.focus.value.map((i) => i.address)).subscribe();
+        this.focus.next([]);
+      } else {
+        this.focus.next(items);
+      }
 
       if (this.connection) {
         this.connection.nextFocus(this.focus.value);
@@ -207,46 +216,54 @@ export class MapsComponent
     }
   }
 
-  public handleFollow(): void {
-    this.following(this.followed.closed);
+  public handleLocation(): void {
+    if (!this.location.closed) {
+      this.location.unsubscribe();
+    } else {
+      this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
+      this.location = this.positionProvider.locate().pipe(
+        mergeMap((coords) => this.frame([coords]))
+      ).subscribe(() => {
+        this.center.nativeElement.classList.add('show');
+        this.ripple.launch({ centered: true });
+      }, () => this.enabled = false).add(() => {
+        this.center.nativeElement.classList.remove('show');
+        this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
+      });
+    }
   }
 
-  public handleNavigation(item: ActivityModel): void {
+  public handleNavigation(mode: 'DRIVING' | 'WALKING'): void {
+    this.location.unsubscribe();
     this.positionProvider.locate().pipe(
       take(1),
       mergeMap((coords) => this.locationProvider.calculateRoute({
         startPointLatitude: coords.latitude,
         startPointLongitude: coords.longitude,
-        targetPointLatitude: item.address.latitude,
-        targetPointLongitude: item.address.longitude,
-        travelMode: 'DRIVING'
+        targetPointLatitude: this.focus.value[0].address.latitude,
+        targetPointLongitude: this.focus.value[0].address.longitude,
+        travelMode: mode
       })),
-      map((response) => smoothPolyline(response.routePath.line.coordinates))
-    ).subscribe((coords) => this.directions = coords.map((coord) => fromLonLat([
-      coord[1],
-      coord[0]
-    ])), () => this.follow.disabled = true);
+      map((route) => route.routePath.line.coordinates),
+      tap((coords) => this.frame(coords.map((c) => ({
+        latitude: c[0],
+        longitude: c[1]
+      }))).subscribe()),
+      map((coords) => smoothPolyline(smoothPolyline(coords))),
+      map((coords) => coords.map((c) => fromLonLat([c[1], c[0]]))),
+    ).subscribe(
+      (coords) => this.directions = coords,
+      () => this.enabled = false
+    );
   }
 
   public handleReset(): void {
-    const items = this.items.value;
-
     this.directions = null;
-    this.following(false);
-    this.focus.next(items.length > 1 ? [] : items);
+    this.location.unsubscribe();
 
-    this.view.instance.animate({
-      center: fromLonLat([
-        items.length
-          ? items.reduce((l, i) => l += i.address.longitude, 0) / items.length
-          : this.mapconf.longitude,
-        items.length
-          ? items.reduce((l, i) => l += i.address.latitude, 0) / items.length
-          : this.mapconf.latitude
-      ]),
-      rotation: 0,
-      zoom: items.length > 1 ? this.mapconf.zoomfactor : 17.5
-    });
+    this.dialer.nativeElement.classList.remove('open');
+    this.focus.next(this.items.value.length === 1 ? this.items.value : []);
+    this.frame(this.items.value.map((i) => i.address)).subscribe();
   }
 
   private configuration(item: string): string {
@@ -254,15 +271,11 @@ export class MapsComponent
       .find((config) => config.item === item).value;
   }
 
-  private fetch(): Observable<ActivityModel[]> {
-    if (this.uuid) {
-      return this.activityProvider.readOne(this.uuid).pipe(
+  private fetch(url?: UrlSegment): Observable<ActivityModel[]> {
+    if (url && url.path) {
+      return this.activityProvider.readOne(url.path).pipe(
         mergeMap((item) => this.crudResolver.refine(item, this.joiner.graph)),
-        map((item) => [item]),
-        tap(((item: ActivityModel[]) => {
-          this.focus.next(item);
-          this.items.next(item);
-        }))
+        map((item: ActivityModel) => [item])
       );
     } else {
       return this.activityProvider.readAll({
@@ -270,47 +283,48 @@ export class MapsComponent
         embeddings: CrudJoiner.to(this.joiner.graph)
       }).pipe(
         mergeMap((items) => this.crudResolver.refine(items, this.joiner.graph)),
-        catchError(() => of([])),
-        tap((items: ActivityModel[]) => this.items.next(items))
-      );
+        catchError(() => of([]))
+      ) as Observable<ActivityModel[]>;
     }
   }
 
-  private following(enable: boolean): void {
-    if (enable) {
-      this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
-      this.followed = this.positionProvider.locate().subscribe((coords) => {
+  private frame(coords: Partial<Coordinates>[]): Observable<any> {
+    return new Observable<any>((observer) => {
+      if (!coords.length) {
         this.view.instance.animate({
           center: fromLonLat([
-            coords.longitude,
-            coords.latitude
+            this.mapconf.longitude,
+            this.mapconf.latitude
           ]),
           duration: 1000,
-          zoom: 17.5
+          rotation: 0,
+          zoom: this.mapconf.zoomfactor
         }, () => {
-          if (this.uuid) {
-            this.center.nativeElement.classList.add('arrow');
-            this.center.nativeElement.style.transform = `rotate(${Math.atan2(
-              coords.latitude - 1 / this.focus.value.length * this.focus.value
-                .reduce((num, i) => num += i.address.latitude, 0),
-              coords.longitude - 1 / this.focus.value.length * this.focus.value
-                .reduce((num, i) => num += i.address.longitude, 0)
-            ) * -180 / Math.PI}deg)`;
-          }
-
-          this.center.nativeElement.classList.add('show');
-          this.follow.ripple.launch({ centered: true });
-          this.location.launch({ centered: true });
+          observer.next();
+          observer.complete();
         });
-      }, () => {
-        this.following(false);
-        this.follow.disabled = true;
-      });
-    } else {
-      this.followed.unsubscribe();
-      this.center.nativeElement.classList.remove('arrow', 'show');
-      this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
-    }
+      } else {
+        this.view.instance.fit([
+          ...fromLonLat([
+            Math.min(...coords.map((coord) => coord.longitude)),
+            Math.min(...coords.map((coord) => coord.latitude))
+          ]),
+          ...fromLonLat([
+            Math.max(...coords.map((coord) => coord.longitude)),
+            Math.max(...coords.map((coord) => coord.latitude))
+          ])
+        ], {
+          callback: () => {
+            observer.next();
+            observer.complete();
+          },
+          duration: 1000,
+          maxZoom: 17.5,
+          padding: [100, 100, 100, 100],
+          rotation: 0
+        });
+      }
+    });
   }
 
   private geometry(feature: Feature): Point {

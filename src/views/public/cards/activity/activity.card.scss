@@ -2,7 +2,6 @@
 
 mat-card {
   @include position(relative);
-  cursor: pointer;
   width: 20rem;
 
   @include deep {
@@ -19,27 +18,6 @@ mat-card {
 
   & > a {
     @include position(absolute, 0, 0, 0, 0);
-  }
-
-  & > mat-card-actions {
-    max-height: 0;
-    opacity: 0;
-    transition: all $animation-duration;
-
-    &.show {
-      max-height: 3.5rem;
-      opacity: 1;
-    }
-
-    & > button {
-      [component=icon] {
-        padding-right: .5rem;
-      }
-    }
-
-    & > mat-divider {
-      margin-top: -.5rem;
-    }
   }
 
   & > mat-card-content {

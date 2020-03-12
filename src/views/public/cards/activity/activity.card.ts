@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import * as ColorConvert from 'color-convert';
 import { ActivityModel } from '../../../../base/models/activity.model';
@@ -11,11 +11,6 @@ import { BaseCard } from '../base.card';
 })
 
 export class ActivityCardComponent extends BaseCard<ActivityModel> {
-
-  public actions: boolean = false;
-
-  @Input()
-  public navigate: (item: ActivityModel) => void;
 
   @ViewChild(MatRipple, { static: true })
   public ripple: MatRipple;

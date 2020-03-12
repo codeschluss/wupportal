@@ -23,7 +23,7 @@ export class MapsComponent
   private webview: ElementRef<WebView>;
 
   public get source(): string {
-    return `${this.app.config.defaults.appUrl}${this.router.url}?native`;
+    return `${this.app.config.defaults.appUrl}${this.router.url}?native=true`;
   }
 
   public constructor(

@@ -65,6 +65,9 @@
       <trans-unit id="taxonomy" datatype="html">
         <source>taxonomy</source><target>Taxonomy</target>
       </trans-unit>
+      <trans-unit id="analytics" datatype="html">
+        <source>analytics</source><target>Analytics</target>
+      </trans-unit>
       <trans-unit id="logout" datatype="html">
         <source>logout</source><target>Logout</target>
       </trans-unit>
@@ -100,6 +103,9 @@
       </trans-unit>
       <trans-unit id="serverError" datatype="html">
         <source>serverError</source><target>Server error</target>
+      </trans-unit>
+      <trans-unit id="current" datatype="html">
+        <source>current</source><target>Current</target>
       </trans-unit>
       <trans-unit id="confirmDelete" datatype="html">
         <source>confirmDelete</source><target>Confirm delete</target>
@@ -209,6 +215,9 @@
       <trans-unit id="encryptedConnection" datatype="html">
         <source>encryptedConnection</source><target>HTTPS encryption</target>
       </trans-unit>
+      <trans-unit id="videoUrl" datatype="html">
+        <source>videoUrl</source><target>Video link</target>
+      </trans-unit>
       <trans-unit id="compilation" datatype="html">
         <source>compilation</source><target>Compilation</target>
       </trans-unit>
@@ -296,9 +305,6 @@
       <trans-unit id="machineTranslated" datatype="html">
         <source>machineTranslated</source><target>Translation notice</target>
       </trans-unit>
-      <trans-unit id="videoUrl" datatype="html">
-        <source>videoUrl</source><target>Video link</target>
-      </trans-unit>
       <trans-unit id="website" datatype="html">
         <source>website</source><target>Website</target>
       </trans-unit>
@@ -373,6 +379,18 @@
       </trans-unit>
       <trans-unit id="passwordConfirm" datatype="html">
         <source>passwordConfirm</source><target>Password confirm</target>
+      </trans-unit>
+      <trans-unit id="videos" datatype="html">
+        <source>videos</source><target>Videos</target>
+      </trans-unit>
+      <trans-unit id="analyticsPanel" datatype="html">
+        <source>analyticsPanel</source><target>Analytics panel</target>
+      </trans-unit>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source><target>Categories</target>
+      </trans-unit>
+      <trans-unit id="subscriptions" datatype="html">
+        <source>subscriptions</source><target>Subscriptions</target>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source><target>Application panel</target>
@@ -455,9 +473,6 @@
       <trans-unit id="createTopic" datatype="html">
         <source>createTopic</source><target>Create topic</target>
       </trans-unit>
-      <trans-unit id="categories" datatype="html">
-        <source>categories</source><target>Categories</target>
-      </trans-unit>
       <trans-unit id="topics" datatype="html">
         <source>topics</source><target>Topics</target>
       </trans-unit>
@@ -509,20 +524,23 @@
       <trans-unit id="author" datatype="html">
         <source>author</source><target>Author</target>
       </trans-unit>
-      <trans-unit id="showRoute" datatype="html">
-        <source>showRoute</source><target>Show route</target>
-      </trans-unit>
       <trans-unit id="by" datatype="html">
         <source>by</source><target>by</target>
       </trans-unit>
       <trans-unit id="about" datatype="html">
         <source>about</source><target>about</target>
       </trans-unit>
-      <trans-unit id="followPosition" datatype="html">
-        <source>followPosition</source><target>Follow position</target>
-      </trans-unit>
       <trans-unit id="fullscreen" datatype="html">
         <source>fullscreen</source><target>Fullscreen</target>
+      </trans-unit>
+      <trans-unit id="drivingRoute" datatype="html">
+        <source>drivingRoute</source><target>Driving route</target>
+      </trans-unit>
+      <trans-unit id="walkingRoute" datatype="html">
+        <source>walkingRoute</source><target>Walking route</target>
+      </trans-unit>
+      <trans-unit id="followPosition" datatype="html">
+        <source>followPosition</source><target>Follow position</target>
       </trans-unit>
       <trans-unit id="at" datatype="html">
         <source>at</source><target>at</target>
@@ -547,9 +565,6 @@
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source><target>Register</target>
-      </trans-unit>
-      <trans-unit id="subscriptions" datatype="html">
-        <source>subscriptions</source><target>Subscriptions</target>
       </trans-unit>
       <trans-unit id="followedActivities" datatype="html">
         <source>followedActivities</source><target>Followed activities</target>

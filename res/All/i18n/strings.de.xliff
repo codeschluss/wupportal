@@ -65,6 +65,9 @@
       <trans-unit id="taxonomy" datatype="html">
         <source>taxonomy</source><target>Taxonomie</target>
       </trans-unit>
+      <trans-unit id="analytics" datatype="html">
+        <source>analytics</source><target>Statistiken</target>
+      </trans-unit>
       <trans-unit id="logout" datatype="html">
         <source>logout</source><target>Abmelden</target>
       </trans-unit>
@@ -100,6 +103,9 @@
       </trans-unit>
       <trans-unit id="serverError" datatype="html">
         <source>serverError</source><target>Serverfehler</target>
+      </trans-unit>
+      <trans-unit id="current" datatype="html">
+        <source>current</source><target>Aktuelle</target>
       </trans-unit>
       <trans-unit id="confirmDelete" datatype="html">
         <source>confirmDelete</source><target>Löschen bestätigen</target>
@@ -209,6 +215,9 @@
       <trans-unit id="encryptedConnection" datatype="html">
         <source>encryptedConnection</source><target>HTTPS verschlüsselt</target>
       </trans-unit>
+      <trans-unit id="videoUrl" datatype="html">
+        <source>videoUrl</source><target>Videolink</target>
+      </trans-unit>
       <trans-unit id="compilation" datatype="html">
         <source>compilation</source><target>Erstellung</target>
       </trans-unit>
@@ -296,9 +305,6 @@
       <trans-unit id="machineTranslated" datatype="html">
         <source>machineTranslated</source><target>Übersetzungshinweis</target>
       </trans-unit>
-      <trans-unit id="videoUrl" datatype="html">
-        <source>videoUrl</source><target>Videolink</target>
-      </trans-unit>
       <trans-unit id="website" datatype="html">
         <source>website</source><target>Webseite</target>
       </trans-unit>
@@ -373,6 +379,18 @@
       </trans-unit>
       <trans-unit id="passwordConfirm" datatype="html">
         <source>passwordConfirm</source><target>Passwort bestätigen</target>
+      </trans-unit>
+      <trans-unit id="videos" datatype="html">
+        <source>videos</source><target>Videos</target>
+      </trans-unit>
+      <trans-unit id="analyticsPanel" datatype="html">
+        <source>analyticsPanel</source><target>Statistiken einsehen</target>
+      </trans-unit>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source><target>Kategorien</target>
+      </trans-unit>
+      <trans-unit id="subscriptions" datatype="html">
+        <source>subscriptions</source><target>Abonnements</target>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source><target>Applikation verwalten</target>
@@ -455,9 +473,6 @@
       <trans-unit id="createTopic" datatype="html">
         <source>createTopic</source><target>Themengebiet erstellen</target>
       </trans-unit>
-      <trans-unit id="categories" datatype="html">
-        <source>categories</source><target>Kategorien</target>
-      </trans-unit>
       <trans-unit id="topics" datatype="html">
         <source>topics</source><target>Themengebiete</target>
       </trans-unit>
@@ -509,20 +524,23 @@
       <trans-unit id="author" datatype="html">
         <source>author</source><target>Autor</target>
       </trans-unit>
-      <trans-unit id="showRoute" datatype="html">
-        <source>showRoute</source><target>Route anzeigen</target>
-      </trans-unit>
       <trans-unit id="by" datatype="html">
         <source>by</source><target>von</target>
       </trans-unit>
       <trans-unit id="about" datatype="html">
         <source>about</source><target>über</target>
       </trans-unit>
-      <trans-unit id="followPosition" datatype="html">
-        <source>followPosition</source><target>Standort anzeigen</target>
-      </trans-unit>
       <trans-unit id="fullscreen" datatype="html">
         <source>fullscreen</source><target>Vollbild</target>
+      </trans-unit>
+      <trans-unit id="drivingRoute" datatype="html">
+        <source>drivingRoute</source><target>Fahrweg berechnen</target>
+      </trans-unit>
+      <trans-unit id="walkingRoute" datatype="html">
+        <source>walkingRoute</source><target>Laufweg berechnen</target>
+      </trans-unit>
+      <trans-unit id="followPosition" datatype="html">
+        <source>followPosition</source><target>Standort anzeigen</target>
       </trans-unit>
       <trans-unit id="at" datatype="html">
         <source>at</source><target>in</target>
@@ -547,9 +565,6 @@
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source><target>Registrieren</target>
-      </trans-unit>
-      <trans-unit id="subscriptions" datatype="html">
-        <source>subscriptions</source><target>Abonnements</target>
       </trans-unit>
       <trans-unit id="followedActivities" datatype="html">
         <source>followedActivities</source><target>Gefolgte Aktivitäten</target>

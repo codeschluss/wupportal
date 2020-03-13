@@ -104,6 +104,9 @@
       <trans-unit id="serverError" datatype="html">
         <source>serverError</source>
       </trans-unit>
+      <trans-unit id="current" datatype="html">
+        <source>current</source>
+      </trans-unit>
       <trans-unit id="confirmDelete" datatype="html">
         <source>confirmDelete</source>
       </trans-unit>
@@ -176,9 +179,6 @@
       <trans-unit id="password" datatype="html">
         <source>password</source>
       </trans-unit>
-      <trans-unit id="current" datatype="html">
-        <source>current</source>
-      </trans-unit>
       <trans-unit id="minLengthError" datatype="html">
         <source>minLengthError</source>
       </trans-unit>
@@ -214,6 +214,9 @@
       </trans-unit>
       <trans-unit id="encryptedConnection" datatype="html">
         <source>encryptedConnection</source>
+      </trans-unit>
+      <trans-unit id="videoUrl" datatype="html">
+        <source>videoUrl</source>
       </trans-unit>
       <trans-unit id="compilation" datatype="html">
         <source>compilation</source>
@@ -302,9 +305,6 @@
       <trans-unit id="machineTranslated" datatype="html">
         <source>machineTranslated</source>
       </trans-unit>
-      <trans-unit id="videoUrl" datatype="html">
-        <source>videoUrl</source>
-      </trans-unit>
       <trans-unit id="website" datatype="html">
         <source>website</source>
       </trans-unit>
@@ -379,6 +379,9 @@
       </trans-unit>
       <trans-unit id="passwordConfirm" datatype="html">
         <source>passwordConfirm</source>
+      </trans-unit>
+      <trans-unit id="videos" datatype="html">
+        <source>videos</source>
       </trans-unit>
       <trans-unit id="analyticsPanel" datatype="html">
         <source>analyticsPanel</source>
@@ -521,20 +524,23 @@
       <trans-unit id="author" datatype="html">
         <source>author</source>
       </trans-unit>
-      <trans-unit id="showRoute" datatype="html">
-        <source>showRoute</source>
-      </trans-unit>
       <trans-unit id="by" datatype="html">
         <source>by</source>
       </trans-unit>
       <trans-unit id="about" datatype="html">
         <source>about</source>
       </trans-unit>
-      <trans-unit id="followPosition" datatype="html">
-        <source>followPosition</source>
-      </trans-unit>
       <trans-unit id="fullscreen" datatype="html">
         <source>fullscreen</source>
+      </trans-unit>
+      <trans-unit id="drivingRoute" datatype="html">
+        <source>drivingRoute</source>
+      </trans-unit>
+      <trans-unit id="walkingRoute" datatype="html">
+        <source>walkingRoute</source>
+      </trans-unit>
+      <trans-unit id="followPosition" datatype="html">
+        <source>followPosition</source>
       </trans-unit>
       <trans-unit id="at" datatype="html">
         <source>at</source>

@@ -226,7 +226,9 @@ export class MapsComponent
       ).subscribe(() => {
         this.center.nativeElement.classList.add('show');
         this.ripple.launch({ centered: true });
-      }, () => this.enabled = false).add(() => {
+      }, () => this.enabled = false);
+
+      this.location.add(() => {
         this.center.nativeElement.classList.remove('show');
         this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
       });

@@ -2,8 +2,8 @@ import { Component, NgZone, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApplicationSettings, DeviceProvider, PushProvider } from '@wooportal/app';
 import { SessionProvider } from '@wooportal/core';
-import { fromEvent } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { EMPTY, fromEvent } from 'rxjs';
+import { catchError, map, take } from 'rxjs/operators';
 import { AndroidActivityEventData as ActivityEvent } from 'tns-core-modules/application';
 
 declare const java: any;
@@ -31,7 +31,7 @@ export class NativeComponent {
     NativeComponent.viewContainer = container;
 
     if (sessionProvider.getSubscriptionId()) {
-      pushProvider.registration().subscribe();
+        pushProvider.registration().pipe(catchError(() => EMPTY)).subscribe();
     }
 
     switch (deviceProvider.notation) {

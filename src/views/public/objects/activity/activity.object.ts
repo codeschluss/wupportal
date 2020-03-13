@@ -2,7 +2,7 @@ import { Component, ElementRef, Optional, Type, ViewChild } from '@angular/core'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ApplicationSettings, DeviceProvider, GeoLocation } from '@wooportal/app';
+import { ApplicationSettings, DeviceProvider } from '@wooportal/app';
 import { CrudJoiner, Headers } from '@wooportal/core';
 import { fromEvent } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -80,7 +80,6 @@ export class ActivityObjectComponent extends BaseObject<ActivityModel> {
 
     switch (this.deviceProvider.platform) {
       case 'Native':
-        GeoLocation.enableLocationRequest().catch(() => { });
         this.source = this.app.config.defaults.appUrl + url + '&native=true';
         break;
 

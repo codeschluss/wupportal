@@ -119,13 +119,13 @@ main {
 
                 @include media(gt-xs) {
                   & + figure {
-                    content {
+                    & > content {
                       margin-left: 0;
                     }
                   }
                 }
 
-                content {
+                & > content {
                   align-items: center;
                   background-color: $color-light;
                   background-position: center;
@@ -138,12 +138,15 @@ main {
                   margin: 1rem;
                   width: 20rem;
 
-                  & > [component=icon] {
-                    position: absolute;
+                  & > a {
+                    z-index: 1;
+                  }
 
+                  [component=icon] {
                     &[icon=film] {
                       color: $color-dark;
                       font-size: 12.5rem;
+                      position: absolute;
                     }
 
                     &[icon=play] {

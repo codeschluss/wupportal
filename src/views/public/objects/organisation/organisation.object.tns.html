@@ -118,16 +118,17 @@
               <flexbox-layout>
                 <ng-container *ngFor="let video of item.videos">
                   <grid-layout
-                    [width]="scrollVideos.getActualSize().width"
-                    (tap)="openUrl(video.url)">
+                    [width]="scrollVideos.getActualSize().width">
                     <ng-container *ngIf="video.thumbnail">
                       <image [src]="video.thumbnail.nativeSource"></image>
-                      <icon-component icon="play"></icon-component>
                     </ng-container>
                     <ng-container *ngIf="!video.thumbnail">
                       <icon-component icon="film"></icon-component>
-                      <icon-component icon="play"></icon-component>
                     </ng-container>
+                    <icon-component
+                      (tap)="openUrl(video.url)"
+                      icon="play">
+                    </icon-component>
                   </grid-layout>
                 </ng-container>
               </flexbox-layout>

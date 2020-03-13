@@ -122,22 +122,24 @@
           <ng-template #expandContent>
             <ng-container *ngFor="let video of item.videos">
               <figure>
-                <a target="_blank" [href]="video.url">
-                  <ng-container *ngIf="video.thumbnail">
-                    <content
-                      [alt]="video.thumbnail.name"
-                      [style.backgroundImage]="video.thumbnail.source"
-                      [title]="video.thumbnail.name">
+                <ng-container *ngIf="video.thumbnail">
+                  <content
+                    [alt]="video.thumbnail.name"
+                    [style.backgroundImage]="video.thumbnail.source"
+                    [title]="video.thumbnail.name">
+                    <a target="_blank" [href]="video.url">
                       <icon-component icon="play"></icon-component>
-                    </content>
-                  </ng-container>
-                  <ng-container *ngIf="!video.thumbnail">
-                    <content [alt]="video.url" [title]="video.url">
-                      <icon-component icon="film"></icon-component>
+                    </a>
+                  </content>
+                </ng-container>
+                <ng-container *ngIf="!video.thumbnail">
+                  <content [alt]="video.url" [title]="video.url">
+                    <icon-component icon="film"></icon-component>
+                    <a target="_blank" [href]="video.url">
                       <icon-component icon="play"></icon-component>
-                    </content>
-                  </ng-container>
-                </a>
+                    </a>
+                  </content>
+                </ng-container>
               </figure>
             </ng-container>
           </ng-template>

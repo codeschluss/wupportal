@@ -46,6 +46,7 @@ import { ScheduleFieldComponent } from './fields/schedule.field';
 import { SelectFieldComponent } from './fields/select.field';
 import { TextareaFieldComponent } from './fields/textarea.field';
 import { UrlFieldComponent } from './fields/url.field';
+import { VideoFieldComponent } from './fields/video.field';
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
@@ -64,6 +65,7 @@ import { TargetGroupFormComponent } from './forms/target-group.form';
 import { TopicFormComponent } from './forms/topic.form';
 import { TranslationFormComponent } from './forms/translation.form';
 import { UserFormComponent } from './forms/user.form';
+import { VideoFormComponent } from './forms/video.form';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { AnalyticsPanelComponent } from './panels/analytics/analytics.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
@@ -128,7 +130,8 @@ const fields: Type<BaseFieldComponent>[] = [
   ScheduleFieldComponent,
   SelectFieldComponent,
   TextareaFieldComponent,
-  UrlFieldComponent
+  UrlFieldComponent,
+  VideoFieldComponent
 ];
 
 const forms: Type<BaseForm<CrudModel>>[] = [
@@ -149,7 +152,8 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   TargetGroupFormComponent,
   TopicFormComponent,
   TranslationFormComponent,
-  UserFormComponent
+  UserFormComponent,
+  VideoFormComponent
 ];
 
 const materials: Type<any>[] = [

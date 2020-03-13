@@ -104,6 +104,37 @@
           </ng-template>
         </expand-component>
       </ng-container>
+      <ng-container *ngIf="item.videos">
+        <expand-component #videos
+          class="expand-component"
+          (changed)="$event && expanded(videos)">
+          <ng-template #expandHeader>
+            <icon-component icon="film"></icon-component>
+            <i18n i18n="@@videos" unit="videos"></i18n>
+            <label [text]="'(' + item.videos.length + ')'"></label>
+          </ng-template>
+          <ng-template #expandContent>
+            <scroll-view #scrollVideos>
+              <flexbox-layout>
+                <ng-container *ngFor="let video of item.videos">
+                  <grid-layout
+                    [width]="scrollVideos.getActualSize().width"
+                    (tap)="openUrl(video.url)">
+                    <ng-container *ngIf="video.thumbnail">
+                      <image [src]="video.thumbnail.nativeSource"></image>
+                      <icon-component icon="play"></icon-component>
+                    </ng-container>
+                    <ng-container *ngIf="!video.thumbnail">
+                      <icon-component icon="film"></icon-component>
+                      <icon-component icon="play"></icon-component>
+                    </ng-container>
+                  </grid-layout>
+                </ng-container>
+              </flexbox-layout>
+            </scroll-view>
+          </ng-template>
+        </expand-component>
+      </ng-container>
       <ng-container *ngIf="item.activities">
         <expand-component #activities
           class="expand-component"

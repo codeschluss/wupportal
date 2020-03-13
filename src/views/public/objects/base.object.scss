@@ -119,20 +119,38 @@ main {
 
                 @include media(gt-xs) {
                   & + figure {
-                    & > content {
+                    content {
                       margin-left: 0;
                     }
                   }
                 }
 
-                & > content {
+                content {
+                  align-items: center;
+                  background-color: $color-light;
                   background-position: center;
                   background-size: cover;
                   border-radius: .25rem;
-                  display: block;
+                  color: $color-dark;
+                  display: flex;
                   height: 20rem;
+                  justify-content: center;
                   margin: 1rem;
                   width: 20rem;
+
+                  & > [component=icon] {
+                    position: absolute;
+
+                    &[icon=film] {
+                      color: $color-dark;
+                      font-size: 12.5rem;
+                    }
+
+                    &[icon=play] {
+                      color: $color-primary;
+                      font-size: 4rem;
+                    }
+                  }
                 }
               }
 

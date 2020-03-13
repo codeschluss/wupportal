@@ -2,7 +2,9 @@
 
 main#admin {
   filter: grayscale(0);
+  max-width: calc(100% - 2rem);
   transition: filter $animation-duration;
+  width: 100rem;
 
   &.disabled {
     filter: grayscale(1);
@@ -58,7 +60,7 @@ main#admin {
         }
 
         & > output {
-          flex: 1 0 auto;
+          flex: 1 1 auto;
 
           mat-chip-list {
             & > .mat-chip-list-wrapper {

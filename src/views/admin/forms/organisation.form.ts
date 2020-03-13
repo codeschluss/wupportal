@@ -103,6 +103,12 @@ export class OrganisationFormComponent
     if (images.del.length) { links.push(this.organisationProvider
       .unlinkImages(item.id, images.del.map((i) => i.id))); }
 
+    const videos = this.updated('videos');
+    if (videos.add.length) { links.push(this.organisationProvider
+      .pasteVideos(item.id, videos.add)); }
+    if (videos.del.length) { links.push(this.organisationProvider
+      .unlinkVideos(item.id, videos.del.map((i) => i.id))); }
+
     if (this.item.id) {
       const aId = this.item.address && this.item.address.id;
       if (aId !== this.item.addressId) { links.push(this.organisationProvider

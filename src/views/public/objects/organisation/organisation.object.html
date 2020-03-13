@@ -102,10 +102,42 @@
             <ng-container *ngFor="let image of item.images">
               <figure>
                 <content
-                  [alt]="image.caption"
+                  [alt]="image.name"
                   [style.backgroundImage]="image.source"
-                  [title]="image.caption">
+                  [title]="image.name">
                 </content>
+              </figure>
+            </ng-container>
+          </ng-template>
+        </expand-component>
+      </ng-container>
+      <ng-container *ngIf="item.videos">
+        <expand-component #videos
+          (changed)="$event && expanded(videos)">
+          <ng-template #expandHeader>
+            <icon-component icon="film"></icon-component>
+            <i18n i18n="@@videos">videos</i18n>
+            <small>({{ item.videos.length }})</small>
+          </ng-template>
+          <ng-template #expandContent>
+            <ng-container *ngFor="let video of item.videos">
+              <figure>
+                <a target="_blank" [href]="video.url">
+                  <ng-container *ngIf="video.thumbnail">
+                    <content
+                      [alt]="video.thumbnail.name"
+                      [style.backgroundImage]="video.thumbnail.source"
+                      [title]="video.thumbnail.name">
+                      <icon-component icon="play"></icon-component>
+                    </content>
+                  </ng-container>
+                  <ng-container *ngIf="!video.thumbnail">
+                    <content [alt]="video.url" [title]="video.url">
+                      <icon-component icon="film"></icon-component>
+                      <icon-component icon="play"></icon-component>
+                    </content>
+                  </ng-container>
+                </a>
               </figure>
             </ng-container>
           </ng-template>

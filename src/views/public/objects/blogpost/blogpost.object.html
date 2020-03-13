@@ -37,9 +37,9 @@
               <ng-container *ngFor="let image of item.images">
                 <figure>
                   <content
-                    [alt]="image.caption"
+                    [alt]="image.name"
                     [style.backgroundImage]="image.source"
-                    [title]="image.caption">
+                    [title]="image.name">
                   </content>
                 </figure>
               </ng-container>

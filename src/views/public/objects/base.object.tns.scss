@@ -37,6 +37,7 @@ scroll-view {
 
             & > grid-layout {
               background-color: $color-light;
+              border-radius: rem(.25);
 
               & + grid-layout {
                 margin-left: rem(1);

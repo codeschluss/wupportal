@@ -9,9 +9,12 @@
   <button mat-menu-item (click)="create('suburbs')">
     <i18n i18n="@@createSuburb">createSuburb</i18n>
   </button>
+  <button mat-menu-item (click)="create('addresses')">
+    <i18n i18n="@@createAddress">createAddress</i18n>
+  </button>
 </mat-menu>
 
-<mat-tab-group [selectedIndex]="index">
+<mat-tab-group id="positioning" [selectedIndex]="index">
   <mat-tab id="suburbs">
     <ng-template matTabLabel>
       <i18n i18n="@@suburbs">suburbs</i18n>
@@ -50,6 +53,11 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
             <button mat-icon-button
               color="warn"
               (click)="delete(item)">

@@ -10,8 +10,8 @@ import { InfopageProvider } from '../../../base/providers/infopage.provider';
 import { TranslationProvider } from '../../../base/providers/translation.provider';
 import { BaseForm, FormField } from '../base/base.form';
 import { EditorFieldComponent } from '../fields/editor.field';
+import { InputFieldComponent } from '../fields/input.field';
 import { SelectFieldComponent } from '../fields/select.field';
-import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'infopage-form',
@@ -38,7 +38,7 @@ export class InfopageFormComponent
   public fields: FormField[] = [
     {
       name: 'title',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {

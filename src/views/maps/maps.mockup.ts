@@ -53,7 +53,8 @@ export class MapsComponent implements OnInit {
   exports: [AppRouterModule],
   imports: [AppRouterModule.forChild([
     {
-      path: '',
+      path: '**',
+      pathMatch: 'full',
       component: MapsComponent
     }
   ])]

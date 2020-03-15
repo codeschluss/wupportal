@@ -253,13 +253,16 @@ class PageControllerService extends __BaseService {
 
   /**
    * @param pageId pageId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  pageControllerIncreaseLikeResponse(pageId: string): __Observable<__StrictHttpResponse<{}>> {
+  pageControllerIncreaseLikeResponse(pageId: string,
+    subscriptionId?: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/pages/${pageId}/like`,
@@ -279,10 +282,12 @@ class PageControllerService extends __BaseService {
   }
   /**
    * @param pageId pageId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  pageControllerIncreaseLike(pageId: string): __Observable<{}> {
-    return this.pageControllerIncreaseLikeResponse(pageId).pipe(
+  pageControllerIncreaseLike(pageId: string,
+    subscriptionId?: StringPrimitive): __Observable<{}> {
+    return this.pageControllerIncreaseLikeResponse(pageId, subscriptionId).pipe(
       __map(_r => _r.body as {})
     );
   }

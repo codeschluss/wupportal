@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
-import { ContentView } from 'tns-core-modules/ui/page';
+import { ContentView } from 'tns-core-modules/ui/content-view';
 import { IconComponent as Compat } from './icon.component.i';
 
 if (!isKnownView('icon-component')) {

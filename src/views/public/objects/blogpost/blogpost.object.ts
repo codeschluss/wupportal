@@ -15,6 +15,7 @@ export class BlogpostObjectComponent extends BaseObject<BlogpostModel> {
   }).with('activity').yield('address').yield('suburb')
     .with('activity').yield('category')
     .with('activity').yield('schedules')
+    .with('blogger')
     .with('images');
 
   protected model: Type<BlogpostModel> = BlogpostModel;

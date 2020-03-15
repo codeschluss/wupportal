@@ -2,7 +2,7 @@
   <i18n i18n="@@organisationPanel">organisationPanel</i18n>
 </header>
 
-<mat-tab-group [selectedIndex]="index">
+<mat-tab-group id="organisation" [selectedIndex]="index">
   <mat-tab id="organisations">
     <ng-template matTabLabel>
       <i18n i18n="@@organisations">organisations</i18n>
@@ -14,6 +14,12 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
+            <ng-container *ngIf="superUser">
+              <button mat-icon-button
+                (click)="push(item)">
+                <fa-icon icon="paper-plane"></fa-icon>
+              </button>
+            </ng-container>
             <button mat-icon-button
               color="primary"
               (click)="edit(item)">
@@ -41,6 +47,12 @@
             <i18n i18n="@@actions">actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
+            <ng-container *ngIf="superUser">
+              <button mat-icon-button
+                (click)="push(item)">
+                <fa-icon icon="paper-plane"></fa-icon>
+              </button>
+            </ng-container>
             <button mat-icon-button
               color="primary"
               (click)="edit(item)">

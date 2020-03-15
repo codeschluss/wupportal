@@ -1,21 +1,22 @@
 import { HttpRequest } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import { MatRipple } from '@angular/material/core';
-import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent, UrlSegment } from '@angular/router';
 import { DeviceProvider } from '@wooportal/app';
-import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, ReadParams, Selfrouter } from '@wooportal/core';
+import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, Selfrouter } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
 import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
-import { BehaviorSubject, EMPTY, forkJoin, Observable, of, Subscription } from 'rxjs';
-import { catchError, filter, mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
+import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import * as smoothPolyline from 'smooth-polyline';
 import { ActivityModel } from '../../base/models/activity.model';
 import { ConfigurationModel } from '../../base/models/configuration.model';
 import { ActivityProvider } from '../../base/providers/activity.provider';
+import { LocationProvider } from '../../base/providers/location.provider';
 import { MapsConnection } from './maps.connection';
 
 @Component({
@@ -26,11 +27,15 @@ import { MapsConnection } from './maps.connection';
 export class MapsComponent
   extends Selfrouter implements OnInit, AfterViewInit, OnDestroy {
 
-  public followed: Subscription = EMPTY.subscribe();
+  public directions: [number, number][];
+
+  public enabled: boolean = true;
 
   public focus: BehaviorSubject<ActivityModel[]>;
 
   public items: BehaviorSubject<ActivityModel[]>;
+
+  public location: Subscription = EMPTY.subscribe();
 
   public mapconf: {
     geomFn: GeometryFunction;
@@ -44,7 +49,8 @@ export class MapsComponent
   };
 
   protected routing: Route = {
-    path: '',
+    path: '**',
+    pathMatch: 'full',
     resolve: {
       configuration: CrudResolver
     },
@@ -72,17 +78,11 @@ export class MapsComponent
   @ViewChild('dialer', { read: ElementRef, static: true })
   private dialer: ElementRef<HTMLElement>;
 
-  @ViewChild('fill', { static: true })
-  private fill: MatButton;
-
-  @ViewChild('follow', { static: true })
-  private follow: MatButton;
-
-  @ViewChild(MatRipple, { static: true })
-  private location: MatRipple;
-
   @ViewChild(MapComponent, { static: true })
   private maps: MapComponent;
+
+  @ViewChild(MatRipple, { static: true })
+  private ripple: MatRipple;
 
   @ViewChild(LayerVectorComponent, { static: true })
   private vector: LayerVectorComponent;
@@ -90,29 +90,19 @@ export class MapsComponent
   @ViewChild(ViewComponent, { static: true })
   private view: ViewComponent;
 
-  public get cards(): boolean {
-    const params = this.route.snapshot.queryParamMap;
-    return this.filled || !(params.has('embed') || params.has('items'));
+  public get embedded(): boolean {
+    return this.route.snapshot.queryParamMap.has('embed');
   }
 
-  public get filled(): boolean {
-    switch (true) {
-      case 'fullscreenElement' in this.deviceProvider.document:
-        return this.deviceProvider.document.fullscreenElement !== null;
-
-      case 'webkitFullscreenElement' in this.deviceProvider.document:
-        return this.deviceProvider.document.webkitFullscreenElement !== null;
-
-      case 'mozFullScreenElement' in this.deviceProvider.document:
-        return this.deviceProvider.document.mozFullScreenElement !== null;
-
-      case 'msFullscreenElement' in this.deviceProvider.document:
-        return this.deviceProvider.document.msFullscreenElement !== null;
-    }
+  public get navigate(): boolean {
+    return this.focus.value.length && this.focus.value.every((item) =>
+      item.address.latitude === this.focus.value[0].address.latitude &&
+      item.address.longitude === this.focus.value[0].address.longitude
+    );
   }
 
-  public get native(): boolean {
-    return this.route.snapshot.queryParamMap.has('native');
+  public get uuid(): string | undefined {
+    return (this.route.snapshot.url[0] || { } as any).path;
   }
 
   public constructor(
@@ -121,6 +111,7 @@ export class MapsComponent
     private deviceProvider: DeviceProvider,
     private element: ElementRef<HTMLElement>,
     private loadingProvider: LoadingProvider,
+    private locationProvider: LocationProvider,
     private positionProvider: PositionProvider,
     private route: ActivatedRoute,
     private router: Router
@@ -149,21 +140,17 @@ export class MapsComponent
     ).subscribe((event: RouterEvent) => {
       if (this.connection) {
         this.connection.nextRoute(event.url);
-      } else if (this.native) {
+        this.router.navigateByUrl(this.router.url);
+      } else if (this.route.snapshot.queryParamMap.has('native')) {
         this.deviceProvider.document.defaultView.location.href = event.url;
-      } else if (this.route.snapshot.queryParamMap.has('embed')) {
-        this.router.navigate(this.route.snapshot.url);
       }
     });
   }
 
   public ngAfterViewInit(): void {
-    const params = this.route.snapshot.queryParamMap;
-    const source = this.deviceProvider.document.defaultView;
-
     this.focus.subscribe(() => this.vector.instance.changed());
-    this.maps.singleClick.subscribe((event) => this.handleClick(event));
-    this.maps.pointerMove.subscribe((event) => this.handleCursor(event));
+    this.items.subscribe(() => this.handleReset());
+
     this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
     this.maps.instance.once('postrender', (e) => e.target.updateSize());
     this.maps.instance.once('rendercomplete', () => {
@@ -172,35 +159,48 @@ export class MapsComponent
       this.loadingProvider.finished(this.block);
     });
 
-    if (params.has('items')) {
+    this.maps.pointerMove.subscribe((event) => this.handleCursor(event));
+    this.maps.singleClick.subscribe((event) => this.handleClick(event));
+    const window = this.deviceProvider.document.defaultView;
+
+    if (this.embedded && this.uuid) {
       this.maps.instance.getInteractions().clear();
-      this.filter(params.getAll('items')).subscribe((items) => {
-        this.focus.next(items);
-        this.items.next(items);
-      });
-    } else if (source !== source.parent) {
-      this.connection = new MapsConnection(source, source.parent);
+    }
+
+    if (window === window.parent) {
+      this.route.url.pipe(
+        mergeMap((url) => this.fetch(url[0]))
+      ).subscribe((items) => this.items.next(items));
+    } else {
+      this.connection = new MapsConnection(window, window.parent);
       this.connection.focus.subscribe((focus) => this.focus.next(focus));
       this.connection.items.subscribe((items) => this.items.next(items));
       this.connection.nextReady(true);
-    } else {
-      this.fetch().subscribe((items) => this.items.next(items));
     }
   }
 
   public ngOnDestroy(): void {
     this.loadingProvider.finished(this.block);
+    this.location.unsubscribe();
   }
 
   public handleClick(event: MapBrowserPointerEvent): void {
-    if (!this.route.snapshot.queryParamMap.has('items')) {
-      const features = this.maps.instance.getFeaturesAtPixel(event.pixel);
+    if (this.items.value.length > 1) {
+      const pixel = this.maps.instance.getFeaturesAtPixel(event.pixel);
+      const feats = pixel.length ? pixel[0].get('features') || [] : [];
+      const items = feats.map((f) =>
+        this.items.value.find((i) => i.id === f.getId()));
 
-      if (features.length) {
-        this.focus.next(features[0].get('features').map((feature) =>
-          this.items.value.find((item) => item.id === feature.getId())));
-      } else {
+      if (
+        items.length &&
+        this.focus.value.length &&
+        items.every((i) => this.focus.value.find((f) => f.id === i.id)) &&
+        this.focus.value.every((f) => items.find((i) => i.id === f.id))
+      ) {
+        this.frame(this.focus.value.map((i) => i.address)).subscribe();
         this.focus.next([]);
+      } else {
+        this.focus.next(items);
       }
 
       if (this.connection) {
@@ -216,30 +216,56 @@ export class MapsComponent
     }
   }
 
-  public handleFill(): void {
-    this.filling(!this.filled);
+  public handleLocation(): void {
+    if (!this.location.closed) {
+      this.location.unsubscribe();
+    } else {
+      this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
+      this.location = this.positionProvider.locate().pipe(
+        mergeMap((coords) => this.frame([coords]))
+      ).subscribe(() => {
+        this.center.nativeElement.classList.add('show');
+        this.ripple.launch({ centered: true });
+      }, () => this.enabled = false);
+
+      this.location.add(() => {
+        this.center.nativeElement.classList.remove('show');
+        this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
+      });
+    }
   }
 
-  public handleFollow(): void {
-    this.following(this.followed.closed);
+  public handleNavigation(mode: 'DRIVING' | 'WALKING'): void {
+    this.location.unsubscribe();
+    this.positionProvider.locate().pipe(
+      take(1),
+      mergeMap((coords) => this.locationProvider.calculateRoute({
+        startPointLatitude: coords.latitude,
+        startPointLongitude: coords.longitude,
+        targetPointLatitude: this.focus.value[0].address.latitude,
+        targetPointLongitude: this.focus.value[0].address.longitude,
+        travelMode: mode
+      })),
+      map((route) => route.routePath.line.coordinates),
+      tap((coords) => this.frame(coords.map((c) => ({
+        latitude: c[0],
+        longitude: c[1]
+      }))).subscribe()),
+      map((coords) => smoothPolyline(smoothPolyline(coords))),
+      map((coords) => coords.map((c) => fromLonLat([c[1], c[0]]))),
+    ).subscribe(
+      (coords) => this.directions = coords,
+      () => this.enabled = false
+    );
   }
 
   public handleReset(): void {
-    this.following(false);
+    this.directions = null;
+    this.location.unsubscribe();
 
-    if (this.route.snapshot.queryParamMap.has('items')) {
-      this.filter(this.route.snapshot.queryParamMap.getAll('items'))
-        .subscribe((items) => this.focus.next(items));
-    } else {
-      this.view.instance.animate({
-        center: fromLonLat([
-          this.mapconf.longitude,
-          this.mapconf.latitude
-        ]),
-        rotation: 0,
-        zoom: this.mapconf.zoomfactor
-      });
-    }
+    this.dialer.nativeElement.classList.remove('open');
+    this.focus.next(this.items.value.length === 1 ? this.items.value : []);
+    this.frame(this.items.value.map((i) => i.address)).subscribe();
   }
 
   private configuration(item: string): string {
@@ -247,104 +273,60 @@ export class MapsComponent
       .find((config) => config.item === item).value;
   }
 
-  private fetch(params?: ReadParams): Observable<ActivityModel[]> {
-    params = Object.assign({
-      current: true,
-      embeddings: CrudJoiner.to(this.joiner.graph)
-    }, params);
-
-    return this.activityProvider.readAll(params).pipe(
-      mergeMap((items) => this.crudResolver.refine(items, this.joiner.graph)),
-      catchError(() => of([]))
-    ) as Observable<ActivityModel[]>;
-  }
-
-  private filling(enable: boolean): void {
-    try {
-      if (enable) {
-        const elem = this.element.nativeElement as any;
-
-        switch (true) {
-          case typeof elem.mozRequestFullScreen === 'function':
-            return elem.mozRequestFullScreen();
-          case typeof elem.msRequestFullscreen === 'function':
-            return elem.msRequestFullscreen();
-          case typeof elem.requestFullscreen === 'function':
-            return elem.requestFullscreen();
-          case typeof elem.webkitRequestFullscreen === 'function':
-            return elem.webkitRequestFullscreen();
-        }
-      } else {
-        const elem = this.deviceProvider.document as any;
-
-        switch (true) {
-          case typeof elem.exitFullscreen === 'function':
-            return elem.exitFullscreen();
-          case typeof elem.msExitFullscreen === 'function':
-            return elem.msExitFullscreen();
-          case typeof elem.mozCancelFullScreen === 'function':
-            return elem.mozCancelFullScreen();
-          case typeof elem.webkitExitFullscreen === 'function':
-            return elem.webkitExitFullscreen();
-        }
-      }
-    } catch {
-      this.fill.disabled = true;
+  private fetch(url?: UrlSegment): Observable<ActivityModel[]> {
+    if (url && url.path) {
+      return this.activityProvider.readOne(url.path).pipe(
+        mergeMap((item) => this.crudResolver.refine(item, this.joiner.graph)),
+        map((item: ActivityModel) => [item])
+      );
+    } else {
+      return this.activityProvider.readAll({
+        current: true,
+        embeddings: CrudJoiner.to(this.joiner.graph)
+      }).pipe(
+        mergeMap((items) => this.crudResolver.refine(items, this.joiner.graph)),
+        catchError(() => of([]))
+      ) as Observable<ActivityModel[]>;
     }
   }
 
-  private filter(ids: string[]): Observable<ActivityModel[]> {
-    return forkJoin(ids.map((id) => this.activityProvider.readOne(id).pipe(
-      mergeMap((item) => this.crudResolver.refine(item, this.joiner.graph))
-    ))).pipe(tap((items: ActivityModel[]) => {
-      const latitude = items.reduce((num, i) => num += i.address.latitude, 0);
-      const longitude = items.reduce((num, i) => num += i.address.longitude, 0);
-
-      this.view.instance.animate({
-        center: fromLonLat([
-          longitude / items.length,
-          latitude / items.length
-        ]),
-        rotation: 0,
-        zoom: 17.5
-      });
-    })) as Observable<ActivityModel[]>;
-  }
-
-  private following(enable: boolean): void {
-    if (enable) {
-      this.maps.instance.getInteractions().forEach((i) => i.setActive(false));
-      this.followed = this.positionProvider.locate().subscribe((coords) => {
-        this.center.nativeElement.classList.add('show');
-        this.follow.ripple.launch({ centered: true });
-        this.location.launch({ centered: true });
+  private frame(coords: Partial<Coordinates>[]): Observable<any> {
+    return new Observable<any>((observer) => {
+      if (!coords.length) {
         this.view.instance.animate({
           center: fromLonLat([
-            coords.longitude,
-            coords.latitude
+            this.mapconf.longitude,
+            this.mapconf.latitude
           ]),
           duration: 1000,
-          zoom: 17.5
+          rotation: 0,
+          zoom: this.mapconf.zoomfactor
+        }, () => {
+          observer.next();
+          observer.complete();
         });
-
-        if (this.route.snapshot.queryParamMap.has('items')) {
-          this.center.nativeElement.classList.add('arrow');
-          this.center.nativeElement.style.transform = `rotate(${Math.atan2(
-            coords.latitude - 1 / this.focus.value.length * this.focus.value
-              .reduce((num, i) => num += i.address.latitude, 0),
-            coords.longitude - 1 / this.focus.value.length * this.focus.value
-              .reduce((num, i) => num += i.address.longitude, 0)
-          ) * -180 / Math.PI}deg)`;
-        }
-      }, () => {
-        this.following(false);
-        this.follow.disabled = true;
-      });
-    } else {
-      this.followed.unsubscribe();
-      this.center.nativeElement.classList.remove('arrow', 'show');
-      this.maps.instance.getInteractions().forEach((i) => i.setActive(true));
-    }
+      } else {
+        this.view.instance.fit([
+          ...fromLonLat([
+            Math.min(...coords.map((coord) => coord.longitude)),
+            Math.min(...coords.map((coord) => coord.latitude))
+          ]),
+          ...fromLonLat([
+            Math.max(...coords.map((coord) => coord.longitude)),
+            Math.max(...coords.map((coord) => coord.latitude))
+          ])
+        ], {
+          callback: () => {
+            observer.next();
+            observer.complete();
+          },
+          duration: 1000,
+          maxZoom: 17.5,
+          padding: [100, 100, 100, 100],
+          rotation: 0
+        });
+      }
+    });
   }
 
   private geometry(feature: Feature): Point {

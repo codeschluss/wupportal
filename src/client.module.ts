@@ -4,6 +4,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { MAT_MENU_SCROLL_STRATEGY } from '@angular/material/menu';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +22,7 @@ const platform: any[] = [
   BrowserAnimationsModule,
   BrowserModule.withServerTransition({ appId: 'wooportal' }),
   HttpClientModule,
+  ServiceWorkerModule.register('/worker.js'),
   TransferHttpCacheModule
 ];
 
@@ -32,12 +34,12 @@ const platform: any[] = [
     ClientComponent
   ],
   imports: [
-    ...platform,
     AppModule.forRoot(PackageJson),
     BaseModule,
     ClientRouter,
     CoreModule,
-    ErrorModule
+    ErrorModule,
+    ...platform
   ],
   providers: [
     { provide: ErrorHandler, useClass: ClientErrorHandler },

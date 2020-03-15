@@ -20,6 +20,12 @@ main {
     @include flex(row, flex-start, center);
     overflow-x: auto;
     overflow-y: hidden;
+
+    & > time-piece {
+      @include media(lt-sm) {
+        display: none;
+      }
+    }
   }
 
   & > section {
@@ -120,13 +126,34 @@ main {
                 }
 
                 & > content {
+                  align-items: center;
+                  background-color: $color-light;
                   background-position: center;
                   background-size: cover;
                   border-radius: .25rem;
-                  display: block;
+                  color: $color-dark;
+                  display: flex;
                   height: 20rem;
+                  justify-content: center;
                   margin: 1rem;
                   width: 20rem;
+
+                  & > a {
+                    z-index: 1;
+                  }
+
+                  [component=icon] {
+                    &[icon=film] {
+                      color: $color-dark;
+                      font-size: 12.5rem;
+                      position: absolute;
+                    }
+
+                    &[icon=play] {
+                      color: $color-primary;
+                      font-size: 4rem;
+                    }
+                  }
                 }
               }
 

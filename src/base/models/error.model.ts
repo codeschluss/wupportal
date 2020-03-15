@@ -14,8 +14,8 @@ export class ErrorModel {
 
   public static from(error: any): ErrorModel {
     return Object.assign(new ErrorModel(), {
-      error: error.constructor.name,
-      message: error.status ? error.error.message : error.message,
+      error: error.name || error.constructor.name,
+      message: (error.error || { }).message || error.message,
       raw: error,
       status: error.status || NaN,
       trace: error.stack || inspect(error)

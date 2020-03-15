@@ -1,17 +1,18 @@
 import { HttpRequest } from '@angular/common/http';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router, RouterEvent, UrlSerializer } from '@angular/router';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ApplicationSettings, DeviceProvider, eachDescendant, getRootView } from '@wooportal/app';
+import { alert, ApplicationSettings, confirm, DeviceProvider, eachDescendant, getRootView, PushProvider } from '@wooportal/app';
 import { CoreUrlSerializer, Headers, JwtClaims, LoadingProvider, SessionProvider, TokenProvider } from '@wooportal/core';
-import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
-import { filter, map, startWith, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, fromEvent, Observable } from 'rxjs';
+import { catchError, filter, map, mergeMap, startWith, tap } from 'rxjs/operators';
 import { AndroidActivityBackPressedEventData as BackPressedEvent } from 'tns-core-modules/application';
 import { ScrollView } from 'tns-core-modules/ui/scroll-view';
 import { TextField } from 'tns-core-modules/ui/text-field';
 import { LanguageModel } from '../../base/models/language.model';
 import { LanguageProvider } from '../../base/providers/language.provider';
+import { SubscriptionProvider } from '../../base/providers/subscription.provider';
 import { DrawerComponent } from './drawer/drawer.component.i';
 
 @Component({
@@ -46,6 +47,19 @@ export class SharedComponent implements OnInit {
     return this.headers.name;
   }
 
+  public get pushable(): boolean {
+    return this.pushProvider.enabled;
+  }
+
+  public get stores(): Record<string, string> {
+    return {
+      apple: 'https://apps.apple.com/app/id'
+        + this.app.nativescript.appId,
+      google: 'https://play.google.com/store/apps/details?id='
+        + this.app.nativescript.id
+    };
+  }
+
   public get url(): string {
     return this.router.url;
   }
@@ -60,8 +74,11 @@ export class SharedComponent implements OnInit {
     private loadingProvider: LoadingProvider,
     private route: ActivatedRoute,
     private router: Router,
+    private pushProvider: PushProvider,
     private sessionProvider: SessionProvider,
-    private tokenProvider: TokenProvider
+    private subscriptionProvider: SubscriptionProvider,
+    private tokenProvider: TokenProvider,
+    private zone: NgZone
   ) { }
 
   public ngOnInit(): void {
@@ -85,10 +102,40 @@ export class SharedComponent implements OnInit {
       this.deviceProvider.document.body.classList.add('embedded');
     }
 
+    if (this.deviceProvider.platform === 'Native') {
+      this.pushProvider.messages.subscribe((event) => {
+        let route; switch (this.deviceProvider.notation) {
+          case 'Android': route = event.data.route; break;
+          case 'iOS': route = event.data.aps.route; break;
+        }
+
+        if (event.foreground && route) {
+          confirm({
+            cancelButtonText: this.i18n({ id: 'close', value: 'close' }),
+            message: event.body,
+            okButtonText: this.i18n({ id: 'details', value: 'details' }),
+            title: event.title
+          }).then((navigate) => {
+            if (navigate) {
+              this.zone.run(() => this.router.navigateByUrl(route));
+            }
+          });
+        } else if (event.foreground) {
+          alert({
+            message: event.body,
+            okButtonText: this.i18n({ id: 'close', value: 'close' }),
+            title: event.title
+          });
+        } else if (route) {
+          this.zone.run(() => this.router.navigateByUrl(route));
+        }
+      });
+    }
+
     if (this.deviceProvider.notation !== 'Server') {
       this.loadingProvider.value.subscribe((l) => this.busy.next(l && 1));
 
-      if (this.deviceProvider.notation === 'Web') {
+      if (this.deviceProvider.notation === 'Browser') {
         const claims = this.app.config.jwtClaims;
 
         this.tokenProvider.value.pipe(
@@ -122,18 +169,43 @@ export class SharedComponent implements OnInit {
     this.loadingProvider.enqueue(block);
 
     return new Promise((resolve) => {
+      let timeout; switch (this.deviceProvider.notation) {
+        case 'Android': timeout = 500; break;
+        case 'Browser': timeout = 400; break;
+        default: timeout = 0; break;
+      }
+
       this.drawer.hide();
-      setTimeout(resolve, (() => {
-        switch (this.deviceProvider.notation) {
-          case 'Android': return 500;
-          case 'Web': return 400;
-          default: return 0;
-        }
-      })());
+      setTimeout(resolve, timeout);
     }).then(() => this.router.navigate(path)).finally(() => setTimeout(() => {
       this.loadingProvider.finished(block);
       this.changeDetection.detectChanges();
     }));
+  }
+
+  public notifications(delay: boolean = false): void {
+    const id = this.sessionProvider.getSubscriptionId();
+    const navigate = (path: string[]) =>
+      delay ? this.navigate(...path) : this.router.navigate(path);
+
+    if (id) {
+      navigate(['/', 'notifications', id]);
+    } else {
+      const block = Object.create(HttpRequest);
+      this.loadingProvider.enqueue(block);
+      this.pushProvider.registration().pipe(
+        mergeMap((token) => this.subscriptionProvider.create({
+          authSecret: token,
+          locale: this.sessionProvider.getLanguage()
+        })),
+        catchError(() => EMPTY)
+      ).subscribe((subscription) => {
+        navigate(['/', 'notifications', subscription.id]);
+        this.sessionProvider.setSubscriptionId(subscription.id);
+    }).add(() => {
+        this.loadingProvider.finished(block);
+      });
+    }
   }
 
   public toggle(state: boolean): void {
@@ -157,7 +229,7 @@ export class SharedComponent implements OnInit {
   private transition(url: string): void {
     const path = url.replace(/\?.*$/, '').slice(1).split('/')[0];
 
-    if (this.deviceProvider.notation === 'Web') {
+    if (this.deviceProvider.notation === 'Browser') {
       Array.from(this.deviceProvider.document.getElementsByClassName('topoff'))
         .forEach((element: HTMLElement) => element.scrollTo
           ? element.scrollTo({ behavior: 'smooth', top: 0 })

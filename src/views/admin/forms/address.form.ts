@@ -2,16 +2,16 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationSettings } from '@wooportal/app';
-import { Box, CrudJoiner, CrudResolver, TokenProvider } from '@wooportal/core';
-import { forkJoin, Observable, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Box, TokenProvider } from '@wooportal/core';
+import { forkJoin, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 import { AddressModel } from '../../../base/models/address.model';
 import { SuburbModel } from '../../../base/models/suburb.model';
 import { AddressProvider } from '../../../base/providers/address.provider';
 import { TranslationProvider } from '../../../base/providers/translation.provider';
 import { BaseForm, FormField } from '../base/base.form';
+import { InputFieldComponent } from '../fields/input.field';
 import { SelectFieldComponent } from '../fields/select.field';
-import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'address-form',
@@ -42,26 +42,21 @@ import { StringFieldComponent } from '../fields/string.field';
       </ng-container>
     </ng-template>
   `, `
-    <section>
-      <label class="mat-body-strong" for="sr">
-        <i18n i18n="@@compilation">compilation</i18n>
-      </label>
-      <nav>
-        <ng-container *ngIf="this.group.disabled">
-          <button mat-button color="primary" (click)="this.edit()">
-            <i18n i18n="@@edit">edit</i18n>
-          </button>
-        </ng-container>
-        <ng-container *ngIf="!this.group.disabled">
+    <ng-container *ngIf="superuser | async">
+      <section>
+        <label class="mat-body-strong">
+          <i18n i18n="@@compilation">compilation</i18n>
+        </label>
+        <nav>
           <button mat-button
             color="primary"
-            [disabled]="!this.group.valid"
-            (click)="this.address()">
+            [disabled]="locked"
+            (click)="this.locate()">
             <i18n i18n="@@autoLocate">autoLocate</i18n>
           </button>
-        </ng-container>
-      </nav>
-    </section>
+        </nav>
+      </section>
+    </ng-container>
   `)
 })
 
@@ -78,51 +73,51 @@ export class AddressFormComponent
     },
     {
       name: 'street',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'houseNumber',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'postalCode',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required],
       type: 'number'
     },
     {
       name: 'place',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'longitude',
-      input: StringFieldComponent,
-      locked: true,
-      tests: [Validators.required],
+      input: InputFieldComponent,
       type: 'number'
     },
     {
       name: 'latitude',
-      input: StringFieldComponent,
-      locked: true,
-      tests: [Validators.required],
+      input: InputFieldComponent,
       type: 'number'
     }
   ];
 
   public model: Type<AddressModel> = AddressModel;
 
-  public get valid(): boolean {
-    return Object.values(this.group.getRawValue()).every(Boolean);
+  public get locked(): boolean {
+    return !this.valid ||
+      !!(this.group.get('latitude').value && this.group.get('longitude').value);
+  }
+
+  public get superuser(): Observable<boolean> {
+    return this.tokenProvider.value.pipe(map((t) => t.access.superuser));
   }
 
   public constructor(
     private addressProvider: AddressProvider,
     private app: ApplicationSettings,
-    private crudResolver: CrudResolver,
     route: ActivatedRoute,
     tokenProvider: TokenProvider,
     translationProvider: TranslationProvider
@@ -130,57 +125,29 @@ export class AddressFormComponent
     super(route, tokenProvider, translationProvider);
   }
 
-  public address(): void {
-    const joiner = CrudJoiner.of(AddressModel).with('suburb');
-
-    this.item.id = null;
-    this.item.suburbId = this.group.get('suburb').value.id;
-
-    super.persist().pipe(
-      mergeMap((item) => this.crudResolver.refine(item as any, joiner.graph)),
-    ).subscribe((item) => {
-      this.group.disable();
-      this.group.patchValue(this.item = item as any);
-    });
-  }
-
-  public edit(): void {
-    this.group.get('latitude').patchValue(null);
-    this.group.get('longitude').patchValue(null);
-
-    new (this.constructor as any)().fields.filter((field) => !field.locked)
-      .forEach((field) => this.group.get(field.name).enable());
+  public locate(): void {
+    this.addressProvider.lookup(this.group.value).pipe(
+      map((response) => this.addressProvider.system.cast(response))
+    ).subscribe((item) => this.group.patchValue(item));
   }
 
   public persist(): Observable<any> {
-    return of(this.item);
-  }
+    this.item.suburbId = this.group.get('suburb').value.id;
 
-  public reset(): void {
-    const item = this.route.parent.snapshot.data.item;
-
-    if (item && item.address) {
-      this.group.disable();
-      this.group.reset(item.address);
-    } else {
-      this.edit();
-      this.group.get('suburb').patchValue(null);
-      this.group.reset(this.fields.reduce((obj, field) =>
-        Object.assign(obj, { [field.name]: field.value })));
-    }
+    return super.persist();
   }
 
   protected ngPostInit(): void {
-    if (this.item.id) {
-      this.fields.forEach((field) => field.locked = true);
-    }
-
     if (this.app.config.defaults.city) {
       Object.assign(this.fields.find((field) => field.name === 'place'), {
         locked: true,
         value: this.app.config.defaults.city
       });
     }
+
+    this.superuser.pipe(take(1), filter((su) => !su)).subscribe(() =>
+      this.fields = this.fields.filter((field) =>
+        !['latitude', 'longitude'].includes(field.name)));
   }
 
   protected cascade(item: AddressModel): Observable<any> {

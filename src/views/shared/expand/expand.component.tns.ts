@@ -1,8 +1,8 @@
 import { Component, ContentChild, EventEmitter, HostBinding, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ContentView } from 'tns-core-modules/ui/content-view';
 import { StackLayout } from 'tns-core-modules/ui/layouts/stack-layout';
-import { ContentView } from 'tns-core-modules/ui/page';
 import { ExpandComponent as Compat } from './expand.component.i';
 
 if (!isKnownView('expand-component')) {

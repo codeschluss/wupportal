@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule, MAT_TABS_CONFIG } from '@angular/material/tabs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AppCommonModule, AppRouterModule } from '@wooportal/app';
 import { CrudModel } from '@wooportal/core';
 import { FileValueAccessorDirective } from '../../tools/accesor';
@@ -26,20 +27,26 @@ import { Paginate } from '../../tools/paginate';
 import { SharedModule } from '../shared/shared.module';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
+import { BaseChart } from './base/base.chart';
 import { BaseFieldComponent } from './base/base.field';
 import { BaseForm } from './base/base.form';
 import { BasePanel } from './base/base.panel';
 import { BaseStepper } from './base/base.stepper';
 import { BaseTable } from './base/base.table';
+import { CategoryActivitiesChartComponent } from './charts/category-activities.chart';
+import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
+import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
 import { BooleanFieldComponent } from './fields/boolean.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
 import { EditorFieldComponent } from './fields/editor.field';
 import { IconFieldComponent } from './fields/icon.field';
 import { ImageFieldComponent } from './fields/image.field';
+import { InputFieldComponent } from './fields/input.field';
 import { ScheduleFieldComponent } from './fields/schedule.field';
 import { SelectFieldComponent } from './fields/select.field';
-import { StringFieldComponent } from './fields/string.field';
+import { TextareaFieldComponent } from './fields/textarea.field';
 import { UrlFieldComponent } from './fields/url.field';
+import { VideoFieldComponent } from './fields/video.field';
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
@@ -49,21 +56,27 @@ import { ImageFormComponent } from './forms/image.form';
 import { InfopageFormComponent } from './forms/infopage.form';
 import { KeywordFormComponent } from './forms/keyword.form';
 import { LanguageFormComponent } from './forms/language.form';
+import { MailingFormComponent } from './forms/mailing.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
+import { PusherFormComponent } from './forms/pusher.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
 import { SuburbFormComponent } from './forms/suburb.form';
 import { TargetGroupFormComponent } from './forms/target-group.form';
 import { TopicFormComponent } from './forms/topic.form';
 import { TranslationFormComponent } from './forms/translation.form';
 import { UserFormComponent } from './forms/user.form';
+import { VideoFormComponent } from './forms/video.form';
 import { AccountPanelComponent } from './panels/account/account.panel';
+import { AnalyticsPanelComponent } from './panels/analytics/analytics.panel';
 import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { InformationPanelComponent } from './panels/information/information.panel';
+import { MessagingPanelComponent } from './panels/messaging/messaging.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
 import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
 import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
 import { TaxonomyPanelComponent } from './panels/taxonomy/taxonomy.panel';
 import { DeletePopupComponent } from './popups/delete.popup';
+import { PusherPopupComponent } from './popups/pusher.popup';
 import { ReloginPopupComponent } from './popups/relogin.popup';
 import { RequestPopupComponent } from './popups/request.popup';
 import { ActivityStepperComponent } from './steppers/activity.stepper';
@@ -92,9 +105,14 @@ import { TargetGroupTableComponent } from './tables/target-group.table';
 import { TopicTableComponent } from './tables/topic.table';
 import { UserTableComponent } from './tables/user.table';
 
+const charts: Type<BaseChart>[] = [
+  CategoryActivitiesChartComponent,
+  SubscriptionsChartComponent,
+  TargetGroupActivitiesChartComponent
+];
+
 const components: Type<any>[] = [
   AdminComponent,
-  BaseFieldComponent
 ];
 
 const directives: Type<any>[] = [
@@ -102,15 +120,18 @@ const directives: Type<any>[] = [
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
+  BaseFieldComponent,
   BooleanFieldComponent,
   ChipListFieldComponent,
   EditorFieldComponent,
   IconFieldComponent,
+  InputFieldComponent,
   ImageFieldComponent,
   ScheduleFieldComponent,
   SelectFieldComponent,
-  StringFieldComponent,
-  UrlFieldComponent
+  TextareaFieldComponent,
+  UrlFieldComponent,
+  VideoFieldComponent
 ];
 
 const forms: Type<BaseForm<CrudModel>>[] = [
@@ -123,13 +144,16 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   InfopageFormComponent,
   KeywordFormComponent,
   LanguageFormComponent,
+  MailingFormComponent,
   OrganisationFormComponent,
+  PusherFormComponent,
   ScheduleFormComponent,
   SuburbFormComponent,
   TargetGroupFormComponent,
   TopicFormComponent,
   TranslationFormComponent,
-  UserFormComponent
+  UserFormComponent,
+  VideoFormComponent
 ];
 
 const materials: Type<any>[] = [
@@ -152,14 +176,17 @@ const materials: Type<any>[] = [
   MatSortModule,
   MatTableModule,
   MatTabsModule,
+  NgxChartsModule,
   ReactiveFormsModule,
   FormsModule
 ];
 
 const panels: Type<BasePanel>[] = [
   AccountPanelComponent,
+  AnalyticsPanelComponent,
   ApplicationPanelComponent,
   InformationPanelComponent,
+  MessagingPanelComponent,
   OrganisationPanelComponent,
   PositioningPanelComponent,
   PrivilegesPanelComponent,
@@ -168,6 +195,7 @@ const panels: Type<BasePanel>[] = [
 
 const popups: Type<any>[] = [
   DeletePopupComponent,
+  PusherPopupComponent,
   ReloginPopupComponent,
   RequestPopupComponent
 ];
@@ -205,6 +233,7 @@ const tables: Type<BaseTable<CrudModel>>[] = [
 
 @NgModule({
   declarations: [
+    ...charts,
     ...components,
     ...directives,
     ...fields,

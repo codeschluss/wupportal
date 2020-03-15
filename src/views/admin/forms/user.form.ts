@@ -4,7 +4,7 @@ import { EMPTY, Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { UserModel } from '../../../base/models/user.model';
 import { BaseForm, FormField } from '../base/base.form';
-import { StringFieldComponent } from '../fields/string.field';
+import { InputFieldComponent } from '../fields/input.field';
 
 @Component({
   selector: 'user-form',
@@ -38,12 +38,12 @@ export class UserFormComponent
   public fields: FormField[] = [
     {
       name: 'name',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'username',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
         Validators.required
@@ -52,12 +52,12 @@ export class UserFormComponent
     },
     {
       name: 'phone',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       type: 'tel'
     },
     {
       name: 'password',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [
         Validators.minLength(8),
         Validators.pattern(/(?=(?:[^0-9]*[0-9]){1})/),
@@ -68,7 +68,7 @@ export class UserFormComponent
     },
     {
       name: 'passwordConfirm',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       locked: true,
       tests: [
         Validators.minLength(8),
@@ -96,7 +96,8 @@ export class UserFormComponent
     return super.persist().pipe(
       tap((item) => this.group.reset(item)),
       filter((item) => item.username !== this.item.username),
-      tap(() => this.tokenProvider.remove()));
+      tap(() => this.tokenProvider.remove())
+    );
   }
 
   private validate(change: any): void {

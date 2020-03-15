@@ -8,13 +8,6 @@
       <aol-source-osm>
       </aol-source-osm>
     </aol-layer-tile>
-    <ng-container *ngIf="cards && (focus | async).length">
-      <nav>
-        <ng-container *ngFor="let item of focus | async">
-          <activity-card #card [item]="item"></activity-card>
-        </ng-container>
-      </nav>
-    </ng-container>
     <aol-view
       [enableRotation]="true"
       [zoom]="mapconf.zoomfactor">
@@ -31,7 +24,7 @@
       <aol-source-cluster
         [distance]="mapconf.cluster"
         [geometryFunction]="mapconf.geomFn">
-        <aol-source-vector [overlaps]="true">
+        <aol-source-vector>
           <ng-container *ngFor="let item of items | async">
             <aol-feature [id]="item.id">
               <aol-geometry-point>
@@ -46,6 +39,32 @@
         </aol-source-vector>
       </aol-source-cluster>
     </aol-layer-vector>
+    <ng-container *ngIf="directions">
+      <aol-layer-vector
+        [updateWhileAnimating]="true"
+        [updateWhileInteracting]="true">
+        <aol-source-vector>
+          <aol-feature>
+            <aol-geometry-linestring>
+              <aol-collection-coordinates
+                srid="EPSG:3857"
+                [coordinates]="directions">
+              </aol-collection-coordinates>
+            </aol-geometry-linestring>
+            <aol-style>
+              <aol-style-stroke color="royalblue" width="5"></aol-style-stroke>
+            </aol-style>
+          </aol-feature>
+        </aol-source-vector>
+      </aol-layer-vector>
+    </ng-container>
+    <ng-container *ngIf="!embedded && (focus | async).length">
+      <nav>
+        <ng-container *ngFor="let item of focus | async">
+          <activity-card [item]="item"></activity-card>
+        </ng-container>
+      </nav>
+    </ng-container>
   </aol-map>
   <fa-icon #center matRipple
     icon="circle"
@@ -55,25 +74,38 @@
     <button color mat-fab (click)="dialer.classList.toggle('open')">
       <fa-icon icon="plus"></fa-icon>
     </button>
-    <button #follow mat-fab
-      [color]="!followed.closed ? 'primary' : null"
-      (click)="handleFollow()">
-      <i18n i18n="@@followPosition">followPosition</i18n>
-      <fa-icon icon="location-arrow"></fa-icon>
-    </button>
-    <ng-container *ngIf="!native">
-      <button #fill mat-fab
-        [color]="filled ? 'primary' : null"
-        (click)="handleFill()">
+    <ng-container *ngIf="embedded && uuid">
+      <button color mat-fab [routerLink]="['/', 'mapview', uuid]">
         <i18n i18n="@@fullscreen">fullscreen</i18n>
-        <fa-icon
-          [icon]="filled ? 'compress-arrows-alt' : 'expand-arrows-alt'">
-        </fa-icon>
+        <fa-icon icon="expand-arrows-alt"></fa-icon>
       </button>
     </ng-container>
-    <button color mat-fab (click)="handleReset()">
-      <i18n i18n="@@reset">reset</i18n>
-      <fa-icon icon="undo-alt"></fa-icon>
-    </button>
+    <ng-container *ngIf="!embedded">
+      <button color mat-fab
+        [disabled]="!enabled || !navigate"
+        (click)="handleNavigation('DRIVING')">
+        <i18n i18n="@@drivingRoute">drivingRoute</i18n>
+        <fa-icon icon="car-side"></fa-icon>
+      </button>
+      <button color mat-fab
+        [disabled]="!enabled || !navigate"
+        (click)="handleNavigation('WALKING')">
+        <i18n i18n="@@walkingRoute">walkingRoute</i18n>
+        <fa-icon icon="walking"></fa-icon>
+      </button>
+      <button mat-fab
+        [color]="location.closed ? null : 'primary'"
+        [disabled]="!enabled"
+        (click)="handleLocation()">
+        <i18n i18n="@@followPosition">followPosition</i18n>
+        <fa-icon icon="location-arrow"></fa-icon>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!embedded || !uuid">
+      <button color mat-fab (click)="handleReset()">
+        <i18n i18n="@@reset">reset</i18n>
+        <fa-icon icon="undo-alt"></fa-icon>
+      </button>
+    </ng-container>
   </nav>
 </main>

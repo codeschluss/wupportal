@@ -1,4 +1,3 @@
-import { enableProdMode } from '@angular/core';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import * as express from 'express';
@@ -6,55 +5,55 @@ import * as robots from 'express-robots-txt';
 import { readFile } from 'fs';
 import { bindNodeCallback } from 'rxjs';
 import 'zone.js/dist/zone-node';
+import { PackageJson } from './package';
 
-enableProdMode();
+declare const __non_webpack_require__: typeof require;
+const appRoot = PackageJson.config.defaults.appUrl;
+const apiRoot = PackageJson.config.api.rootUrl;
 
-const config = require('../../package.json').config;
+const engine = {
+  provide: 'engine',
+  useFactory: () => server,
+  deps: []
+};
 
-const client = {
-  engine: express(),
-  port: process.env.PORT || 4000,
+const server = {
+  base: express(),
+  path: `${process.cwd()}/platforms/web`,
+  port: process.env.PORT || '4000',
   read: bindNodeCallback(readFile),
-  root: `${process.cwd()}/platforms/web/@wooportal`,
-
   request: null,
   response: null
 };
 
-const engine = {
-  provide: 'express',
-  useFactory: () => client,
-  deps: [],
-};
-
 const {
-  ServerModuleNgFactory,
-  LAZY_MODULE_MAP
-} = require(`${client.root}/server/main`);
+  LAZY_MODULE_MAP,
+  ServerModuleNgFactory
+} = __non_webpack_require__(`${server.path}/server/main`);
 
-client.engine.engine('html', ngExpressEngine({
+server.base.engine('html', ngExpressEngine({
   bootstrap: ServerModuleNgFactory,
   providers: [engine, provideModuleMap(LAZY_MODULE_MAP)]
 }));
 
-client.engine.set('view engine', 'html');
-client.engine.set('views', `${client.root}/client`);
+server.base.set('view engine', 'html');
+server.base.set('views', `${server.path}/browser`);
 
-client.engine.use(robots({
+server.base.use(robots({
   UserAgent: '*',
   Disallow: ['/*.js$'],
-  Sitemap: config.defaults.appUrl + config.api.rootUrl + '/sitemap'
+  Sitemap: `${appRoot}${apiRoot}/sitemap`
 }));
 
-client.engine.get('*.*', express.static(`${client.root}/client`, {
+server.base.get('*.*', express.static(`${server.path}/browser`, {
   maxAge: '30d'
 }));
 
-client.engine.get('*', (request, response) => {
-  Object.assign(client, { request, response });
+server.base.get('*', (request, response) => {
+  Object.assign(server, { request, response });
   response.render('index', { req: request });
 });
 
-client.engine.listen(client.port, () => {
-  console.log(`Listening on http://0.0.0.0:${client.port}`);
+server.base.listen(server.port, () => {
+  console.log(`Listening on http://0.0.0.0:${server.port}`);
 });

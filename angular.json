@@ -16,6 +16,12 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "configurations": {
+            "production": {
+              "buildOptimizer": true,
+              "optimization": true
+            }
+          },
           "options": {
             "aot": true,
             "deleteOutputPath": false,
@@ -26,23 +32,12 @@
             "namedChunks": false,
             "ngswConfigPath": "service.json",
             "outputHashing": "none",
-            "outputPath": "platforms/web/@wooportal/client",
+            "outputPath": "platforms/web/browser",
             "polyfills": "src/tools/polyfills.ts",
             "serviceWorker": true,
-            "sourceMap": true,
             "tsConfig": "tsconfig.json",
             "vendorChunk": true,
             "assets": [
-              {
-                "glob": "manifest.json",
-                "input": "",
-                "output": "/"
-              },
-              {
-                "glob": "robots.txt",
-                "input": "res/Web",
-                "output": "/"
-              },
               {
                 "glob": "*.xliff",
                 "input": "res/All/i18n",
@@ -52,6 +47,11 @@
                 "glob": "**/*",
                 "input": "res/All/images",
                 "output": "/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "res/Web/assets",
+                "output": "/"
               },
               {
                 "glob": "**/*",
@@ -70,12 +70,6 @@
                 "bundleName": "css/theme"
               }
             ]
-          },
-          "configurations": {
-            "production": {
-              "buildOptimizer": true,
-              "optimization": true
-            }
           }
         },
         "serve": {
@@ -106,15 +100,21 @@
           }
         },
         "server": {
-          "builder": "@angular-devkit/build-angular:server",
+          "builder": "@angular-builders/custom-webpack:server",
+          "configurations": {
+            "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": true
+              }
+            }
+          },
           "options": {
             "main": "src/server.ts",
-            "outputPath": "platforms/web/@wooportal/server",
+            "outputPath": "platforms/web/server",
             "tsConfig": "server.json",
-            "sourceMap": true,
-            "optimization": {
-              "scripts": true,
-              "styles": true
+            "customWebpackConfig": {
+              "path": "sys/app/conf/server.js"
             },
             "fileReplacements": [
               {
@@ -127,8 +127,8 @@
       }
     },
     "@wooportal/app": {
-      "root": "libs/app",
-      "sourceRoot": "libs/app",
+      "root": "sys/app",
+      "sourceRoot": "sys/app",
       "projectType": "library",
       "prefix": "",
       "architect": {
@@ -136,7 +136,7 @@
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "tsconfig.json",
-            "project": "libs/app/ng-package.json"
+            "project": "sys/app/ng-package.json"
           }
         },
         "lint": {
@@ -153,8 +153,8 @@
       }
     },
     "@wooportal/core": {
-      "root": "libs/core",
-      "sourceRoot": "libs/core",
+      "root": "sys/core",
+      "sourceRoot": "sys/core",
       "projectType": "library",
       "prefix": "",
       "architect": {
@@ -162,7 +162,7 @@
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "tsconfig.json",
-            "project": "libs/core/ng-package.json"
+            "project": "sys/core/ng-package.json"
           }
         },
         "lint": {
@@ -179,15 +179,15 @@
       }
     },
     "@wooportal/editor": {
-      "root": "libs/editor",
-      "sourceRoot": "libs/editor",
+      "root": "sys/editor",
+      "sourceRoot": "sys/editor",
       "projectType": "library",
       "prefix": "",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-webpack:webpack",
           "options": {
-            "webpackConfig": "libs/editor/conf/webpack.js"
+            "webpackConfig": "sys/editor/conf/webpack.js"
           }
         },
         "lint": {

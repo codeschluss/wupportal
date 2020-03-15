@@ -9,32 +9,36 @@ import { BaseFieldComponent } from '../base/base.field';
 @Component({
   styles: [`
     :host {
-      align-items: center;
-      display: flex; flex-wrap: wrap;
+      align-items: flex-start;
+      display: flex;
+      flex-wrap: wrap;
     }
     img {
       background-position: center;
       background-size: cover;
       display: block;
-      height: 15rem;
+      object-fit: cover;
     }
     input[type=file] { display: none; }
-    label {
-      align-items: center;
-      border: .05rem dotted rgba(0, 0, 0, 0.87);
-      cursor: pointer;
-      display: flex;
-      height: 12.5rem;
-      justify-content: center;
-      margin: 0 0 1rem !important;
-      width: auto !important;
-    }
-    label > i18n {
-      pointer-events: none;
-    }
     mat-card {
       display: inline-block;
-      margin: .5rem; width: 25rem;
+      margin: .5rem;
+      width: 20rem;
+    }
+    mat-card .mat-card-image {
+      align-items: center;
+      background-color: #e0e0e0; /* $color-light */
+      display: flex;
+      flex-direction: column;
+      height: 15rem;
+      justify-content: center;
+    }
+    mat-card label.mat-card-image {
+      cursor: pointer;
+    }
+    mat-card label.mat-card-image fa-icon {
+      color: #a3a3a3; /* $color-dark */
+      font-size: 4rem;
     }
     mat-form-field::ng-deep > .mat-form-field-wrapper {
       margin-bottom: -1.25rem;
@@ -71,6 +75,7 @@ import { BaseFieldComponent } from '../base/base.field';
               (dragleave)="drag($event, -1)"
               (dragover)="drag($event)"
               (drop)="drop($event)">
+              <fa-icon icon="image"></fa-icon>
               <i18n i18n="@@selectOrDropImage">selectOrDropImage</i18n>
             </label>
             <input accept="image/*" id="image" type="file" [formControl]="file">

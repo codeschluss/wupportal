@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SuburbModel } from '../../../base/models/suburb.model';
 import { BaseForm, FormField } from '../base/base.form';
-import { StringFieldComponent } from '../fields/string.field';
+import { InputFieldComponent } from '../fields/input.field';
 
 @Component({
   selector: 'suburb-form',
@@ -23,7 +23,7 @@ export class SuburbFormComponent
   public fields: FormField[] = [
     {
       name: 'name',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     }
   ];

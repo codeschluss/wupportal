@@ -1,0 +1,139 @@
+<main>
+  <section>
+    <mat-list>
+      <mat-list-item>
+        <strong>
+          <i18n i18n="@@subscriptions">subscriptions</i18n>
+        </strong>
+      </mat-list-item>
+      <ng-container *ngIf="!types.length">
+        <mat-list-item>
+          <i18n i18n="@@notFoundError">notFoundError</i18n>
+        </mat-list-item>
+      </ng-container>
+      <ng-container *ngIf="types.length">
+        <ng-container *ngFor="let item of types">
+          <mat-list-item>
+            <mat-slide-toggle
+              [checked]="selected(item)"
+              [disabled]="!subscriptionId"
+              (change)="toggle($event.checked, item)">
+              <strong>{{ item.name }}</strong>
+              <marked-component [data]="item.description"></marked-component>
+            </mat-slide-toggle>
+          </mat-list-item>
+        </ng-container>
+      </ng-container>
+    </mat-list>
+  </section>
+  <section>
+    <aside>
+      <mat-list>
+        <mat-list-item>
+          <strong>
+            <i18n i18n="@@followedActivities">followedActivities</i18n>
+          </strong>
+        </mat-list-item>
+        <ng-container *ngIf="!items.activities.length">
+          <mat-list-item>
+            <i18n i18n="@@notFoundError">notFoundError</i18n>
+          </mat-list-item>
+        </ng-container>
+        <ng-container *ngIf="items.activities.length">
+          <ng-container *ngFor="let item of items.activities">
+            <mat-list-item>
+              {{ item.name }}
+              <button mat-icon-button
+                color="warn"
+                [disabled]="!subscriptionId"
+                (click)="unsubscribe(item)">
+                <icon-component icon="times"></icon-component>
+              </button>
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
+      </mat-list>
+    </aside>
+    <aside>
+      <mat-list>
+        <mat-list-item>
+          <strong>
+            <i18n i18n="@@followedOrganisations">followedOrganisations</i18n>
+          </strong>
+        </mat-list-item>
+        <ng-container *ngIf="!items.organisations.length">
+          <mat-list-item>
+            <i18n i18n="@@notFoundError">notFoundError</i18n>
+          </mat-list-item>
+        </ng-container>
+        <ng-container *ngIf="items.organisations.length">
+          <ng-container *ngFor="let item of items.organisations">
+            <mat-list-item>
+              {{ item.name }}
+              <button mat-icon-button
+                color="warn"
+                [disabled]="!subscriptionId"
+                (click)="unsubscribe(item)">
+                <icon-component icon="times"></icon-component>
+              </button>
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
+      </mat-list>
+    </aside>
+    <aside>
+      <mat-list>
+        <mat-list-item>
+          <strong>
+            <i18n i18n="@@followedBloggers">followedBloggers</i18n>
+          </strong>
+        </mat-list-item>
+        <ng-container *ngIf="!items.bloggers.length">
+          <mat-list-item>
+            <i18n i18n="@@notFoundError">notFoundError</i18n>
+          </mat-list-item>
+        </ng-container>
+        <ng-container *ngIf="items.bloggers.length">
+          <ng-container *ngFor="let item of items.bloggers">
+            <mat-list-item>
+              {{ item.name }}
+              <button mat-icon-button
+                color="warn"
+                [disabled]="!subscriptionId"
+                (click)="unsubscribe(item)">
+                <icon-component icon="times"></icon-component>
+              </button>
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
+      </mat-list>
+    </aside>
+    <aside>
+      <mat-list>
+        <mat-list-item>
+          <strong>
+            <i18n i18n="@@followedTopics">followedTopics</i18n>
+          </strong>
+        </mat-list-item>
+        <ng-container *ngIf="!items.topics.length">
+          <mat-list-item>
+            <i18n i18n="@@notFoundError">notFoundError</i18n>
+          </mat-list-item>
+        </ng-container>
+        <ng-container *ngIf="items.topics.length">
+          <ng-container *ngFor="let item of items.topics">
+            <mat-list-item>
+              {{ item.name }}
+              <button mat-icon-button
+                color="warn"
+                [disabled]="!subscriptionId"
+                (click)="unsubscribe(item)">
+                <icon-component icon="times"></icon-component>
+              </button>
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
+      </mat-list>
+    </aside>
+  </section>
+</main>

@@ -11,6 +11,5 @@ export interface OrganisationEntity {
   modified?: string;
   name?: string;
   phone?: string;
-  videoUrl?: string;
   website?: string;
 }

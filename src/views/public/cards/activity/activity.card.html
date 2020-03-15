@@ -1,18 +1,17 @@
-<a [routerLink]="['/', 'activities', item.id]">
-  <mat-card matRipple
-    matRippleColor="currentColor"
-    [matRippleDisabled]="true"
-    [ngStyle]="colors(item.category.color)">
-    <mat-card-content>
-      <icon-component [icon]="item.category.icon"></icon-component>
-      <small>
-        {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' }}
-        <br>{{ item.address.street }} {{ item.address.houseNumber }}
-        <br>{{ item.address.place }} {{ item.address.suburb.name }}
-      </small>
-    </mat-card-content>
-    <mat-card-header>
-      <mat-card-title>{{ item.name }}</mat-card-title>
-    </mat-card-header>
-  </mat-card>
-</a>
+<mat-card matRipple
+  matRippleColor="currentColor"
+  [matRippleDisabled]="true"
+  [ngStyle]="colors(item.category.color)">
+  <a [routerLink]="['/', 'activities', item.id]"></a>
+  <mat-card-content>
+    <icon-component [icon]="item.category.icon"></icon-component>
+    <small>
+      {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' }}
+      <br>{{ item.address.street }} {{ item.address.houseNumber }}
+      <br>{{ item.address.place }} {{ item.address.suburb.name }}
+    </small>
+  </mat-card-content>
+  <mat-card-header>
+    <mat-card-title>{{ item.name }}</mat-card-title>
+  </mat-card-header>
+</mat-card>

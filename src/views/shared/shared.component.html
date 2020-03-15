@@ -107,6 +107,13 @@
         </ng-container>
       </mat-menu>
       <a mat-button
+        [class.active]="url.startsWith('/notifications')"
+        [disabled]="!pushable"
+        (click)="notifications()">
+        <icon-component icon="paper-plane"></icon-component>
+        <i18n i18n="@@notifications">notifications</i18n>
+      </a>
+      <a mat-button
         [class.active]="url.startsWith('/imprint')"
         [routerLink]="['/', 'imprint']">
         <icon-component icon="bullhorn"></icon-component>
@@ -162,6 +169,12 @@
             <i18n i18n="@@application">application</i18n>
           </button>
           <button mat-menu-item
+            [class.active]="url.startsWith('/admin/messaging')"
+            [routerLink]="['/', 'admin', 'messaging']">
+            <icon-component icon="paper-plane"></icon-component>
+            <i18n i18n="@@messaging">messaging</i18n>
+          </button>
+          <button mat-menu-item
             [class.active]="url.startsWith('/admin/information')"
             [routerLink]="['/', 'admin', 'information']">
             <icon-component icon="book"></icon-component>
@@ -184,6 +197,12 @@
             [routerLink]="['/', 'admin', 'taxonomy']">
             <icon-component icon="tags"></icon-component>
             <i18n i18n="@@taxonomy">taxonomy</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/analytics')"
+            [routerLink]="['/', 'admin', 'analytics']">
+            <icon-component icon="chart-bar"></icon-component>
+            <i18n i18n="@@analytics">analytics</i18n>
           </button>
         </ng-container>
         <mat-divider></mat-divider>
@@ -250,6 +269,21 @@
     </mat-action-list>
     <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
     <mat-action-list>
+      <a mat-button target="_blank" [href]="stores.apple">
+        <img
+          src="/images/badge-app-store.svg"
+          [alt]="'Apple App Store: ' + (name | async)"
+          [title]="'Apple App Store: ' + (name | async)">
+      </a>
+      <a mat-button target="_blank" [href]="stores.google">
+        <img
+          src="/images/badge-google-play.svg"
+          [alt]="'Google Play Store: ' + (name | async)"
+          [title]="'Google Play Store: ' + (name | async)">
+      </a>
+    </mat-action-list>
+    <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
+    <mat-action-list>
       <button mat-list-item [matMenuTriggerFor]="languageMenu">
         <icon-component icon="language"></icon-component>
         <i18n i18n="@@language">language</i18n>
@@ -264,6 +298,13 @@
           </button>
         </ng-container>
       </mat-menu>
+      <button mat-list-item
+        [class.active]="url.startsWith('/notifications')"
+        [disabled]="!pushable"
+        (click)="notifications(true)">
+        <icon-component icon="paper-plane"></icon-component>
+        <i18n i18n="@@notifications">notifications</i18n>
+      </button>
       <button mat-list-item
         [class.active]="url.startsWith('/imprint')"
         (click)="navigate('/', 'imprint')">

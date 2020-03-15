@@ -2,24 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="root" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="minLengthError" datatype="html">
-        <source>minLengthError</source><target>Input too short</target>
-      </trans-unit>
-      <trans-unit id="mismatchError" datatype="html">
-        <source>mismatchError</source><target>Inputs must match</target>
-      </trans-unit>
-      <trans-unit id="neitherError" datatype="html">
-        <source>neitherError</source><target>One input required</target>
-      </trans-unit>
-      <trans-unit id="patternError" datatype="html">
-        <source>patternError</source><target>Faulty input format</target>
-      </trans-unit>
-      <trans-unit id="requiredError" datatype="html">
-        <source>requiredError</source><target>Input required</target>
-      </trans-unit>
-      <trans-unit id="encryptedConnection" datatype="html">
-        <source>encryptedConnection</source><target>HTTPS encryption</target>
-      </trans-unit>
       <trans-unit id="homepage" datatype="html">
         <source>homepage</source><target>Homepage</target>
       </trans-unit>
@@ -44,6 +26,9 @@
       <trans-unit id="language" datatype="html">
         <source>language</source><target>Language</target>
       </trans-unit>
+      <trans-unit id="notifications" datatype="html">
+        <source>notifications</source><target>Notifications</target>
+      </trans-unit>
       <trans-unit id="imprint" datatype="html">
         <source>imprint</source><target>Imprint</target>
       </trans-unit>
@@ -65,6 +50,9 @@
       <trans-unit id="application" datatype="html">
         <source>application</source><target>Application</target>
       </trans-unit>
+      <trans-unit id="messaging" datatype="html">
+        <source>messaging</source><target>Messaging</target>
+      </trans-unit>
       <trans-unit id="information" datatype="html">
         <source>information</source><target>Information</target>
       </trans-unit>
@@ -77,11 +65,29 @@
       <trans-unit id="taxonomy" datatype="html">
         <source>taxonomy</source><target>Taxonomy</target>
       </trans-unit>
+      <trans-unit id="analytics" datatype="html">
+        <source>analytics</source><target>Analytics</target>
+      </trans-unit>
       <trans-unit id="logout" datatype="html">
         <source>logout</source><target>Logout</target>
       </trans-unit>
+      <trans-unit id="previous" datatype="html">
+        <source>previous</source><target>Back</target>
+      </trans-unit>
+      <trans-unit id="following" datatype="html">
+        <source>following</source><target>Next</target>
+      </trans-unit>
       <trans-unit id="locationError" datatype="html">
         <source>locationError</source><target>Navigation error</target>
+      </trans-unit>
+      <trans-unit id="unhandledError" datatype="html">
+        <source>unhandledError</source><target>Unhandled error</target>
+      </trans-unit>
+      <trans-unit id="reportIssue" datatype="html">
+        <source>reportIssue</source><target>Report issue</target>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <source>close</source><target>Close</target>
       </trans-unit>
       <trans-unit id="forbiddenError" datatype="html">
         <source>forbiddenError</source><target>Access denied</target>
@@ -98,14 +104,8 @@
       <trans-unit id="serverError" datatype="html">
         <source>serverError</source><target>Server error</target>
       </trans-unit>
-      <trans-unit id="unhandledError" datatype="html">
-        <source>unhandledError</source><target>Unhandled error</target>
-      </trans-unit>
-      <trans-unit id="reportIssue" datatype="html">
-        <source>reportIssue</source><target>Report issue</target>
-      </trans-unit>
-      <trans-unit id="close" datatype="html">
-        <source>close</source><target>Close</target>
+      <trans-unit id="current" datatype="html">
+        <source>current</source><target>Current</target>
       </trans-unit>
       <trans-unit id="confirmDelete" datatype="html">
         <source>confirmDelete</source><target>Confirm delete</target>
@@ -122,6 +122,54 @@
       <trans-unit id="delete" datatype="html">
         <source>delete</source><target>Delete</target>
       </trans-unit>
+      <trans-unit id="pushNotification" datatype="html">
+        <source>pushNotification</source><target>Push notifications</target>
+      </trans-unit>
+      <trans-unit id="title" datatype="html">
+        <source>title</source><target>Title</target>
+      </trans-unit>
+      <trans-unit id="content" datatype="html">
+        <source>content</source><target>Content</target>
+      </trans-unit>
+      <trans-unit id="send" datatype="html">
+        <source>send</source><target>Send</target>
+      </trans-unit>
+      <trans-unit id="selectOrganisations" datatype="html">
+        <source>selectOrganisations</source><target>Select organisations</target>
+      </trans-unit>
+      <trans-unit id="joinOrganisations" datatype="html">
+        <source>joinOrganisations</source><target>Join organisations</target>
+      </trans-unit>
+      <trans-unit id="accountPanel" datatype="html">
+        <source>accountPanel</source><target>Account panel</target>
+      </trans-unit>
+      <trans-unit id="actions" datatype="html">
+        <source>actions</source><target>Actions</target>
+      </trans-unit>
+      <trans-unit id="createActivity" datatype="html">
+        <source>createActivity</source><target>Create activity</target>
+      </trans-unit>
+      <trans-unit id="createBlogpost" datatype="html">
+        <source>createBlogpost</source><target>Create blogpost</target>
+      </trans-unit>
+      <trans-unit id="joinBloggers" datatype="html">
+        <source>joinBloggers</source><target>Join bloggers</target>
+      </trans-unit>
+      <trans-unit id="createOrganisation" datatype="html">
+        <source>createOrganisation</source><target>Create organisation</target>
+      </trans-unit>
+      <trans-unit id="main" datatype="html">
+        <source>main</source><target>Master data</target>
+      </trans-unit>
+      <trans-unit id="persist" datatype="html">
+        <source>persist</source><target>Persist</target>
+      </trans-unit>
+      <trans-unit id="approved" datatype="html">
+        <source>approved</source><target>Approved</target>
+      </trans-unit>
+      <trans-unit id="ownership" datatype="html">
+        <source>ownership</source><target>Ownership</target>
+      </trans-unit>
       <trans-unit id="authenticationExpired" datatype="html">
         <source>authenticationExpired</source><target>Authentication expired</target>
       </trans-unit>
@@ -131,11 +179,20 @@
       <trans-unit id="password" datatype="html">
         <source>password</source><target>Password</target>
       </trans-unit>
-      <trans-unit id="selectOrganisations" datatype="html">
-        <source>selectOrganisations</source><target>Select organisations</target>
+      <trans-unit id="minLengthError" datatype="html">
+        <source>minLengthError</source><target>Input too short</target>
       </trans-unit>
-      <trans-unit id="joinOrganisations" datatype="html">
-        <source>joinOrganisations</source><target>Join organisations</target>
+      <trans-unit id="mismatchError" datatype="html">
+        <source>mismatchError</source><target>Inputs must match</target>
+      </trans-unit>
+      <trans-unit id="neitherError" datatype="html">
+        <source>neitherError</source><target>One input required</target>
+      </trans-unit>
+      <trans-unit id="patternError" datatype="html">
+        <source>patternError</source><target>Faulty input format</target>
+      </trans-unit>
+      <trans-unit id="requiredError" datatype="html">
+        <source>requiredError</source><target>Input required</target>
       </trans-unit>
       <trans-unit id="iconList" datatype="html">
         <source>iconList</source><target>List of all icons</target>
@@ -154,6 +211,12 @@
       </trans-unit>
       <trans-unit id="create" datatype="html">
         <source>create</source><target>Create</target>
+      </trans-unit>
+      <trans-unit id="encryptedConnection" datatype="html">
+        <source>encryptedConnection</source><target>HTTPS encryption</target>
+      </trans-unit>
+      <trans-unit id="videoUrl" datatype="html">
+        <source>videoUrl</source><target>Video link</target>
       </trans-unit>
       <trans-unit id="compilation" datatype="html">
         <source>compilation</source><target>Compilation</target>
@@ -206,12 +269,6 @@
       <trans-unit id="activity" datatype="html">
         <source>activity</source><target>Activity</target>
       </trans-unit>
-      <trans-unit id="content" datatype="html">
-        <source>content</source><target>Content</target>
-      </trans-unit>
-      <trans-unit id="title" datatype="html">
-        <source>title</source><target>Title</target>
-      </trans-unit>
       <trans-unit id="color" datatype="html">
         <source>color</source><target>Color</target>
       </trans-unit>
@@ -247,9 +304,6 @@
       </trans-unit>
       <trans-unit id="machineTranslated" datatype="html">
         <source>machineTranslated</source><target>Translation notice</target>
-      </trans-unit>
-      <trans-unit id="videoUrl" datatype="html">
-        <source>videoUrl</source><target>Video link</target>
       </trans-unit>
       <trans-unit id="website" datatype="html">
         <source>website</source><target>Website</target>
@@ -326,35 +380,17 @@
       <trans-unit id="passwordConfirm" datatype="html">
         <source>passwordConfirm</source><target>Password confirm</target>
       </trans-unit>
-      <trans-unit id="accountPanel" datatype="html">
-        <source>accountPanel</source><target>Account panel</target>
+      <trans-unit id="videos" datatype="html">
+        <source>videos</source><target>Videos</target>
       </trans-unit>
-      <trans-unit id="actions" datatype="html">
-        <source>actions</source><target>Actions</target>
+      <trans-unit id="analyticsPanel" datatype="html">
+        <source>analyticsPanel</source><target>Analytics panel</target>
       </trans-unit>
-      <trans-unit id="createActivity" datatype="html">
-        <source>createActivity</source><target>Create activity</target>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source><target>Categories</target>
       </trans-unit>
-      <trans-unit id="createBlogpost" datatype="html">
-        <source>createBlogpost</source><target>Create blogpost</target>
-      </trans-unit>
-      <trans-unit id="joinBloggers" datatype="html">
-        <source>joinBloggers</source><target>Join bloggers</target>
-      </trans-unit>
-      <trans-unit id="createOrganisation" datatype="html">
-        <source>createOrganisation</source><target>Create organisation</target>
-      </trans-unit>
-      <trans-unit id="main" datatype="html">
-        <source>main</source><target>Master data</target>
-      </trans-unit>
-      <trans-unit id="persist" datatype="html">
-        <source>persist</source><target>Persist</target>
-      </trans-unit>
-      <trans-unit id="approved" datatype="html">
-        <source>approved</source><target>Approved</target>
-      </trans-unit>
-      <trans-unit id="ownership" datatype="html">
-        <source>ownership</source><target>Ownership</target>
+      <trans-unit id="subscriptions" datatype="html">
+        <source>subscriptions</source><target>Subscriptions</target>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source><target>Application panel</target>
@@ -374,6 +410,9 @@
       <trans-unit id="createInfopage" datatype="html">
         <source>createInfopage</source><target>Create infopage</target>
       </trans-unit>
+      <trans-unit id="messagingPanel" datatype="html">
+        <source>messagingPanel</source><target>Messaging panel</target>
+      </trans-unit>
       <trans-unit id="organisationPanel" datatype="html">
         <source>organisationPanel</source><target>Organisation panel</target>
       </trans-unit>
@@ -388,6 +427,9 @@
       </trans-unit>
       <trans-unit id="createSuburb" datatype="html">
         <source>createSuburb</source><target>Create suburb</target>
+      </trans-unit>
+      <trans-unit id="createAddress" datatype="html">
+        <source>createAddress</source><target>Create address</target>
       </trans-unit>
       <trans-unit id="suburbs" datatype="html">
         <source>suburbs</source><target>Suburbs</target>
@@ -431,9 +473,6 @@
       <trans-unit id="createTopic" datatype="html">
         <source>createTopic</source><target>Create topic</target>
       </trans-unit>
-      <trans-unit id="categories" datatype="html">
-        <source>categories</source><target>Categories</target>
-      </trans-unit>
       <trans-unit id="topics" datatype="html">
         <source>topics</source><target>Topics</target>
       </trans-unit>
@@ -445,15 +484,6 @@
       </trans-unit>
       <trans-unit id="translations" datatype="html">
         <source>translations</source><target>Translations</target>
-      </trans-unit>
-      <trans-unit id="previous" datatype="html">
-        <source>previous</source><target>Back</target>
-      </trans-unit>
-      <trans-unit id="following" datatype="html">
-        <source>following</source><target>Next</target>
-      </trans-unit>
-      <trans-unit id="createAddress" datatype="html">
-        <source>createAddress</source><target>Create address</target>
       </trans-unit>
       <trans-unit id="editAddress" datatype="html">
         <source>editAddress</source><target>Edit address</target>
@@ -500,11 +530,17 @@
       <trans-unit id="about" datatype="html">
         <source>about</source><target>about</target>
       </trans-unit>
-      <trans-unit id="followPosition" datatype="html">
-        <source>followPosition</source><target>Follow position</target>
-      </trans-unit>
       <trans-unit id="fullscreen" datatype="html">
         <source>fullscreen</source><target>Fullscreen</target>
+      </trans-unit>
+      <trans-unit id="drivingRoute" datatype="html">
+        <source>drivingRoute</source><target>Driving route</target>
+      </trans-unit>
+      <trans-unit id="walkingRoute" datatype="html">
+        <source>walkingRoute</source><target>Walking route</target>
+      </trans-unit>
+      <trans-unit id="followPosition" datatype="html">
+        <source>followPosition</source><target>Follow position</target>
       </trans-unit>
       <trans-unit id="at" datatype="html">
         <source>at</source><target>at</target>
@@ -529,6 +565,21 @@
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source><target>Register</target>
+      </trans-unit>
+      <trans-unit id="followedActivities" datatype="html">
+        <source>followedActivities</source><target>Followed activities</target>
+      </trans-unit>
+      <trans-unit id="followedOrganisations" datatype="html">
+        <source>followedOrganisations</source><target>Followed organisations</target>
+      </trans-unit>
+      <trans-unit id="followedBloggers" datatype="html">
+        <source>followedBloggers</source><target>Followed bloggers</target>
+      </trans-unit>
+      <trans-unit id="followedTopics" datatype="html">
+        <source>followedTopics</source><target>Followed topics</target>
+      </trans-unit>
+      <trans-unit id="follow" datatype="html">
+        <source>follow</source><target>Follow</target>
       </trans-unit>
       <trans-unit id="like" datatype="html">
         <source>like</source><target>Like</target>

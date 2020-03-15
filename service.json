@@ -2,13 +2,25 @@
   "index": "/",
   "assetGroups": [
     {
-      "name": "client",
+      "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
         "files": [
           "/",
           "/manifest.json",
-          "/*.js"
+          "/*.js",
+          "!/*-es5.js"
+        ]
+      }
+    },
+    {
+      "name": "app-es5",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/*-es5.js"
         ]
       }
     },
@@ -30,12 +42,14 @@
     {
       "name": "api",
       "urls": [
-        "/api/**"
+        "/api/**",
+        "!/api/login",
+        "!/api/refresh"
       ],
       "cacheConfig": {
         "strategy": "freshness",
-        "timeout":"5m",
-        "maxAge": "1d"
+        "timeout":"500u",
+        "maxAge": "6h"
       }
     }
   ]

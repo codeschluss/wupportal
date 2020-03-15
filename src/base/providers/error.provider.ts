@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { StrictHttpResponse } from '@wooportal/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, throttleTime } from 'rxjs/operators';
 import { ErrorControllerService } from '../../api/services/error-controller.service';
@@ -17,8 +16,8 @@ export class ErrorProvider {
       .subscribe((reason) => this.throwError(reason));
   }
 
-  public throwError(reason: ErrorModel): Observable<StrictHttpResponse<any>> {
-    return this.service.errorControllerErrorResponse(reason.toString())
+  public throwError(reason: ErrorModel): Observable<any> {
+    return this.service.errorControllerError(reason.toString())
       .pipe(catchError(() => of(undefined)));
   }
 

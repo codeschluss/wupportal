@@ -16,6 +16,7 @@
   </h2>
   <mat-divider></mat-divider>
   <nav>
+    <follow-piece [item]="item"></follow-piece>
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
     <span [style.flexGrow]="1"></span>
@@ -123,9 +124,9 @@
             <ng-container *ngFor="let image of item.images">
               <figure>
                 <content
-                  [alt]="image.caption"
+                  [alt]="image.name"
                   [style.backgroundImage]="image.source"
-                  [title]="image.caption">
+                  [title]="image.name">
                 </content>
               </figure>
             </ng-container>
@@ -163,13 +164,13 @@
         </expand-component>
       </ng-container>
       <expand-component #mapview
-        (changed)="$event && expanded(mapview)">
+        (changed)="$event && reloader(mapview)">
         <ng-template #expandHeader>
           <icon-component icon="globe"></icon-component>
           <i18n i18n="@@mapview">mapview</i18n>
         </ng-template>
         <ng-template #expandContent>
-          <iframe [src]="source"></iframe>
+          <iframe #frame [src]="source"></iframe>
         </ng-template>
       </expand-component>
       <expand-component #organisation

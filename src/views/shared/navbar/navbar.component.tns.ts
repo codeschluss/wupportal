@@ -1,6 +1,6 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { isKnownView, registerElement } from 'nativescript-angular/element-registry';
-import { ContentView } from 'tns-core-modules/ui/page';
+import { ContentView } from 'tns-core-modules/ui/content-view';
 import { NavbarComponent as Compat } from './navbar.component.i';
 
 if (!isKnownView('navbar-component')) {

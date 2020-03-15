@@ -12,10 +12,13 @@ import { KeywordProvider } from './providers/keyword.provider';
 import { LanguageProvider } from './providers/language.provider';
 import { MembershipProvider } from './providers/membership.provider';
 import { OrganisationProvider } from './providers/organisation.provider';
+import { SubscriptionTypeProvider } from './providers/subscription-type.provider';
+import { SubscriptionProvider } from './providers/subscription.provider';
 import { SuburbProvider } from './providers/suburb.provider';
 import { TargetGroupProvider } from './providers/target-group.provider';
 import { TopicProvider } from './providers/topic.provider';
 import { UserProvider } from './providers/user.provider';
+import { VideoProvider } from './providers/video.provider';
 
 const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
   ActivityProvider,
@@ -28,10 +31,13 @@ const providers: Type<CrudProvider<BaseService, CrudModel>>[] = [
   LanguageProvider,
   MembershipProvider,
   OrganisationProvider,
+  SubscriptionProvider,
+  SubscriptionTypeProvider,
   SuburbProvider,
   TargetGroupProvider,
   TopicProvider,
-  UserProvider
+  UserProvider,
+  VideoProvider
 ];
 
 @NgModule()

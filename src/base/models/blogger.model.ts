@@ -4,5 +4,6 @@ export class BloggerModel
   extends CrudModel {
 
   public approved: boolean;
+  public name: string;
 
 }

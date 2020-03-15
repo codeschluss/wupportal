@@ -26,6 +26,7 @@ class BlogControllerService extends __BaseService {
   static readonly blogControllerUpdatePath = '/blogs/{blogId}';
   static readonly blogControllerDeletePath = '/blogs/{blogId}';
   static readonly blogControllerReadActivityPath = '/blogs/{blogId}/activity';
+  static readonly blogControllerReadBloggerPath = '/blogs/{blogId}/blogger';
   static readonly blogControllerReadImagesPath = '/blogs/{blogId}/images';
   static readonly blogControllerAddImagePath = '/blogs/{blogId}/images';
   static readonly blogControllerDeleteImagesPath = '/blogs/{blogId}/images';
@@ -336,6 +337,42 @@ class BlogControllerService extends __BaseService {
    * @param blogId blogId
    * @return OK
    */
+  blogControllerReadBloggerResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/${blogId}/blogger`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadBlogger(blogId: string): __Observable<{}> {
+    return this.blogControllerReadBloggerResponse(blogId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * @param blogId blogId
+   * @return OK
+   */
   blogControllerReadImagesResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -452,13 +489,16 @@ class BlogControllerService extends __BaseService {
 
   /**
    * @param blogId blogId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  blogControllerIncreaseLikeResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
+  blogControllerIncreaseLikeResponse(blogId: string,
+    subscriptionId?: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/blogs/${blogId}/like`,
@@ -478,10 +518,12 @@ class BlogControllerService extends __BaseService {
   }
   /**
    * @param blogId blogId
+   * @param subscriptionId subscriptionId
    * @return OK
    */
-  blogControllerIncreaseLike(blogId: string): __Observable<{}> {
-    return this.blogControllerIncreaseLikeResponse(blogId).pipe(
+  blogControllerIncreaseLike(blogId: string,
+    subscriptionId?: StringPrimitive): __Observable<{}> {
+    return this.blogControllerIncreaseLikeResponse(blogId, subscriptionId).pipe(
       __map(_r => _r.body as {})
     );
   }

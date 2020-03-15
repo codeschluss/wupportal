@@ -27,7 +27,7 @@
     ],
     "paths": {
       "@wooportal/*": [
-        "platforms/web/@wooportal/*"
+        "platforms/web/system/*"
       ]
     }
   },

@@ -2,13 +2,12 @@ import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
-import { AddressControllerService } from '../../api/services/address-controller.service';
-import { AddressModel } from '../models/address.model';
+import { AddressControllerService as Service } from '../../api/services/address-controller.service';
+import { AddressModel as Model } from '../models/address.model';
 import { SuburbModel } from '../models/suburb.model';
 
 @Injectable({ providedIn: 'root' })
-export class AddressProvider
-  extends CrudProvider<AddressControllerService, AddressModel> {
+export class AddressProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -26,27 +25,31 @@ export class AddressProvider
     update: this.service.addressControllerUpdateResponse
   };
 
-  protected model: Type<AddressModel> = this.based(AddressModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: AddressControllerService
+    protected service: Service
   ) {
     super();
   }
 
-  public create: (model: AddressModel) => Observable<any>;
+  public create: (model: Partial<Model>) => Observable<any>;
 
-  public update: (model: AddressModel) => Observable<any>;
+  public update: (model: Partial<Model>) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<AddressModel>;
+  public readOne: (id: string) => Observable<Model>;
 
-  public readAll: (params?: AddressControllerService
-    .AddressControllerReadAllParams) => Observable<AddressModel[]>;
+  public readAll: (params?: Service.AddressControllerReadAllParams) =>
+    Observable<Model[]>;
 
-  public relinkSuburb:
-    (id: string, suburbId: String) => Observable<any> =
-      this.apply(this.service.addressControllerUpdateSuburbResponse);
+  public lookup: (model: Model) =>
+    Observable<any> = this.apply(this.service
+      .addressControllerLookupResponse);
+
+  public relinkSuburb: (id: string, suburbId: String) =>
+    Observable<any> = this.apply(this.service
+      .addressControllerUpdateSuburbResponse);
 
 }

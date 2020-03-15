@@ -1,23 +1,11 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
-import { ConfigurationControllerService } from '../../api/services/configuration-controller.service';
-import { ConfigurationModel } from '../models/configuration.model';
+import { ConfigurationControllerService as Service } from '../../api/services/configuration-controller.service';
+import { ConfigurationModel as Model } from '../models/configuration.model';
 
 @Injectable({ providedIn: 'root' })
-export class ConfigurationProvider
-  extends CrudProvider<ConfigurationControllerService, ConfigurationModel> {
-
-  public create: (model: ConfigurationModel) => Observable<any>;
-
-  public update: (model: ConfigurationModel) => Observable<any>;
-
-  public delete: (id: string) => Observable<any>;
-
-  public readOne: (id: string) => Observable<ConfigurationModel>;
-
-  public readAll: (params?: ConfigurationControllerService
-    .ConfigurationControllerReadAllParams) => Observable<ConfigurationModel[]>;
+export class ConfigurationProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [];
 
@@ -29,12 +17,23 @@ export class ConfigurationProvider
     update: this.service.configurationControllerUpdateResponse
   };
 
-  protected model: Type<ConfigurationModel> = this.based(ConfigurationModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: ConfigurationControllerService
+    protected service: Service
   ) {
     super();
   }
+
+  public create: (model: Partial<Model>) => Observable<any>;
+
+  public update: (model: Partial<Model>) => Observable<any>;
+
+  public delete: (id: string) => Observable<any>;
+
+  public readOne: (id: string) => Observable<Model>;
+
+  public readAll: (params?: Service.ConfigurationControllerReadAllParams) =>
+    Observable<Model[]>;
 
 }

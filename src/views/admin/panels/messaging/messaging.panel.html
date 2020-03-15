@@ -1,0 +1,39 @@
+<header class="mat-title">
+  <i18n i18n="@@messagingPanel">messagingPanel</i18n>
+</header>
+
+<mat-tab-group id="messaging" [selectedIndex]="index">
+  <mat-tab id="mailing">
+    <ng-template matTabLabel>
+      <i18n i18n="@@email">email</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <mailing-form #mailing>
+      </mailing-form>
+      <mat-divider></mat-divider>
+      <button mat-raised-button
+        color="primary"
+        [disabled]="!mailing.valid"
+        (click)="mailing.persist().subscribe()">
+        <i18n i18n="@@send">send</i18n>
+      </button>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="pusher">
+    <ng-template matTabLabel>
+      <i18n i18n="@@pushNotification">pushNotification</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <pusher-form #pusher>
+      </pusher-form>
+      <mat-divider></mat-divider>
+      <button mat-raised-button
+        color="primary"
+        [disabled]="!pusher.valid"
+        (click)="pusher.persist().subscribe()">
+        <i18n i18n="@@send">send</i18n>
+      </button>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

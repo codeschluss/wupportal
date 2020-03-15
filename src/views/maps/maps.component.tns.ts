@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Route } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { ApplicationSettings, DeviceProvider, GeoLocation } from '@wooportal/app';
 import { Selfrouter } from '@wooportal/core';
-import { WebView } from 'tns-core-modules/ui/web-view';
+import { fromEvent } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { LoadEventData, WebView } from 'tns-core-modules/ui/web-view';
 
 @Component({
   styleUrls: ['maps.component.scss'],
@@ -13,19 +15,21 @@ export class MapsComponent
   extends Selfrouter implements OnInit, AfterViewInit {
 
   protected routing: Route = {
-    path: ''
+    path: '**',
+    pathMatch: 'full'
   };
 
   @ViewChild('webview', { read: ElementRef, static: true })
   private webview: ElementRef<WebView>;
 
   public get source(): string {
-    return `${this.app.config.defaults.appUrl}/mapview?native`;
+    return `${this.app.config.defaults.appUrl}${this.router.url}?native=true`;
   }
 
   public constructor(
     private app: ApplicationSettings,
-    private deviceProvider: DeviceProvider
+    private deviceProvider: DeviceProvider,
+    private router: Router
   ) {
     super();
   }
@@ -35,7 +39,9 @@ export class MapsComponent
   }
 
   public ngAfterViewInit(): void {
-    if (this.webview.nativeElement.isLoaded) {
+    if (!this.webview.nativeElement.isLoaded) {
+      this.webview.nativeElement.once('loaded', () => this.ngAfterViewInit());
+    } else {
       let wv = this.webview.nativeElement as any;
 
       switch (this.deviceProvider.notation) {
@@ -48,11 +54,14 @@ export class MapsComponent
           break;
 
         case 'iOS':
-          wv.on('loadStarted', this.deviceProvider.resourceClient);
+          wv.ios.opaque = false;
+          wv.ios.setDrawsBackground = false;
+
+          fromEvent<LoadEventData>(wv, 'loadStarted').pipe(
+            filter((event) => event.url !== this.source)
+          ).subscribe((event) => this.deviceProvider.resourceClient(event));
           break;
       }
-    } else {
-      this.webview.nativeElement.once('loaded', () => this.ngAfterViewInit());
     }
   }
 

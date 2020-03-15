@@ -1,24 +1,29 @@
-import { AfterViewInit, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ElementRef, HostBinding, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ApplicationSettings } from '@wooportal/app';
-import { Box, CrudModel, CrudResolver, Headers, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
+import { Box, CrudJoiner, CrudModel, CrudResolver, Headers, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
 import { MembershipModel } from '../../../base/models/membership.model';
 import { OrganisationModel } from '../../../base/models/organisation.model';
 import { UserModel } from '../../../base/models/user.model';
+import { MessageProvider } from '../../../base/providers/message.provider';
 import { OrganisationProvider } from '../../../base/providers/organisation.provider';
 import { UserProvider } from '../../../base/providers/user.provider';
 import { I18nComponent } from '../../shared/i18n/i18n.component';
 import { DeletePopupComponent } from '../popups/delete.popup';
+import { PusherPopupComponent } from '../popups/pusher.popup';
 
 export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   protected abstract path: string;
 
-  protected abstract resolve: object;
+  protected abstract resolve: Record<string, CrudJoiner>;
+
+  @HostBinding('attr.base')
+  public readonly base: string = 'panel';
 
   public index: number;
 
@@ -76,6 +81,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   public constructor(
     protected dialog: MatDialog,
+    protected messageProvider: MessageProvider,
     protected organisationProvider: OrganisationProvider,
     protected pathfinder: Pathfinder,
     protected route: ActivatedRoute,
@@ -166,6 +172,15 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     ).pipe(
       filter(() => item.id === this.userId)
     ).subscribe(() => this.reload());
+  }
+
+  public push(item: CrudModel): void {
+    this.dialog.open(PusherPopupComponent, {
+      data: { item }
+    }).afterClosed().pipe(
+      filter(Boolean),
+      mergeMap((message: any) => this.messageProvider.push(message))
+    ).subscribe();
   }
 
   public unlinkBlogger(item: UserModel): void {

@@ -2,24 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="root" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="minLengthError" datatype="html">
-        <source>minLengthError</source>
-      </trans-unit>
-      <trans-unit id="mismatchError" datatype="html">
-        <source>mismatchError</source>
-      </trans-unit>
-      <trans-unit id="neitherError" datatype="html">
-        <source>neitherError</source>
-      </trans-unit>
-      <trans-unit id="patternError" datatype="html">
-        <source>patternError</source>
-      </trans-unit>
-      <trans-unit id="requiredError" datatype="html">
-        <source>requiredError</source>
-      </trans-unit>
-      <trans-unit id="encryptedConnection" datatype="html">
-        <source>encryptedConnection</source>
-      </trans-unit>
       <trans-unit id="homepage" datatype="html">
         <source>homepage</source>
       </trans-unit>
@@ -44,6 +26,9 @@
       <trans-unit id="language" datatype="html">
         <source>language</source>
       </trans-unit>
+      <trans-unit id="notifications" datatype="html">
+        <source>notifications</source>
+      </trans-unit>
       <trans-unit id="imprint" datatype="html">
         <source>imprint</source>
       </trans-unit>
@@ -65,6 +50,9 @@
       <trans-unit id="application" datatype="html">
         <source>application</source>
       </trans-unit>
+      <trans-unit id="messaging" datatype="html">
+        <source>messaging</source>
+      </trans-unit>
       <trans-unit id="information" datatype="html">
         <source>information</source>
       </trans-unit>
@@ -77,11 +65,29 @@
       <trans-unit id="taxonomy" datatype="html">
         <source>taxonomy</source>
       </trans-unit>
+      <trans-unit id="analytics" datatype="html">
+        <source>analytics</source>
+      </trans-unit>
       <trans-unit id="logout" datatype="html">
         <source>logout</source>
       </trans-unit>
+      <trans-unit id="previous" datatype="html">
+        <source>previous</source>
+      </trans-unit>
+      <trans-unit id="following" datatype="html">
+        <source>following</source>
+      </trans-unit>
       <trans-unit id="locationError" datatype="html">
         <source>locationError</source>
+      </trans-unit>
+      <trans-unit id="unhandledError" datatype="html">
+        <source>unhandledError</source>
+      </trans-unit>
+      <trans-unit id="reportIssue" datatype="html">
+        <source>reportIssue</source>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <source>close</source>
       </trans-unit>
       <trans-unit id="forbiddenError" datatype="html">
         <source>forbiddenError</source>
@@ -98,14 +104,8 @@
       <trans-unit id="serverError" datatype="html">
         <source>serverError</source>
       </trans-unit>
-      <trans-unit id="unhandledError" datatype="html">
-        <source>unhandledError</source>
-      </trans-unit>
-      <trans-unit id="reportIssue" datatype="html">
-        <source>reportIssue</source>
-      </trans-unit>
-      <trans-unit id="close" datatype="html">
-        <source>close</source>
+      <trans-unit id="current" datatype="html">
+        <source>current</source>
       </trans-unit>
       <trans-unit id="confirmDelete" datatype="html">
         <source>confirmDelete</source>
@@ -122,6 +122,54 @@
       <trans-unit id="delete" datatype="html">
         <source>delete</source>
       </trans-unit>
+      <trans-unit id="pushNotification" datatype="html">
+        <source>pushNotification</source>
+      </trans-unit>
+      <trans-unit id="title" datatype="html">
+        <source>title</source>
+      </trans-unit>
+      <trans-unit id="content" datatype="html">
+        <source>content</source>
+      </trans-unit>
+      <trans-unit id="send" datatype="html">
+        <source>send</source>
+      </trans-unit>
+      <trans-unit id="selectOrganisations" datatype="html">
+        <source>selectOrganisations</source>
+      </trans-unit>
+      <trans-unit id="joinOrganisations" datatype="html">
+        <source>joinOrganisations</source>
+      </trans-unit>
+      <trans-unit id="accountPanel" datatype="html">
+        <source>accountPanel</source>
+      </trans-unit>
+      <trans-unit id="actions" datatype="html">
+        <source>actions</source>
+      </trans-unit>
+      <trans-unit id="createActivity" datatype="html">
+        <source>createActivity</source>
+      </trans-unit>
+      <trans-unit id="createBlogpost" datatype="html">
+        <source>createBlogpost</source>
+      </trans-unit>
+      <trans-unit id="joinBloggers" datatype="html">
+        <source>joinBloggers</source>
+      </trans-unit>
+      <trans-unit id="createOrganisation" datatype="html">
+        <source>createOrganisation</source>
+      </trans-unit>
+      <trans-unit id="main" datatype="html">
+        <source>main</source>
+      </trans-unit>
+      <trans-unit id="persist" datatype="html">
+        <source>persist</source>
+      </trans-unit>
+      <trans-unit id="approved" datatype="html">
+        <source>approved</source>
+      </trans-unit>
+      <trans-unit id="ownership" datatype="html">
+        <source>ownership</source>
+      </trans-unit>
       <trans-unit id="authenticationExpired" datatype="html">
         <source>authenticationExpired</source>
       </trans-unit>
@@ -131,11 +179,20 @@
       <trans-unit id="password" datatype="html">
         <source>password</source>
       </trans-unit>
-      <trans-unit id="selectOrganisations" datatype="html">
-        <source>selectOrganisations</source>
+      <trans-unit id="minLengthError" datatype="html">
+        <source>minLengthError</source>
       </trans-unit>
-      <trans-unit id="joinOrganisations" datatype="html">
-        <source>joinOrganisations</source>
+      <trans-unit id="mismatchError" datatype="html">
+        <source>mismatchError</source>
+      </trans-unit>
+      <trans-unit id="neitherError" datatype="html">
+        <source>neitherError</source>
+      </trans-unit>
+      <trans-unit id="patternError" datatype="html">
+        <source>patternError</source>
+      </trans-unit>
+      <trans-unit id="requiredError" datatype="html">
+        <source>requiredError</source>
       </trans-unit>
       <trans-unit id="iconList" datatype="html">
         <source>iconList</source>
@@ -154,6 +211,12 @@
       </trans-unit>
       <trans-unit id="create" datatype="html">
         <source>create</source>
+      </trans-unit>
+      <trans-unit id="encryptedConnection" datatype="html">
+        <source>encryptedConnection</source>
+      </trans-unit>
+      <trans-unit id="videoUrl" datatype="html">
+        <source>videoUrl</source>
       </trans-unit>
       <trans-unit id="compilation" datatype="html">
         <source>compilation</source>
@@ -206,12 +269,6 @@
       <trans-unit id="activity" datatype="html">
         <source>activity</source>
       </trans-unit>
-      <trans-unit id="content" datatype="html">
-        <source>content</source>
-      </trans-unit>
-      <trans-unit id="title" datatype="html">
-        <source>title</source>
-      </trans-unit>
       <trans-unit id="color" datatype="html">
         <source>color</source>
       </trans-unit>
@@ -247,9 +304,6 @@
       </trans-unit>
       <trans-unit id="machineTranslated" datatype="html">
         <source>machineTranslated</source>
-      </trans-unit>
-      <trans-unit id="videoUrl" datatype="html">
-        <source>videoUrl</source>
       </trans-unit>
       <trans-unit id="website" datatype="html">
         <source>website</source>
@@ -326,35 +380,17 @@
       <trans-unit id="passwordConfirm" datatype="html">
         <source>passwordConfirm</source>
       </trans-unit>
-      <trans-unit id="accountPanel" datatype="html">
-        <source>accountPanel</source>
+      <trans-unit id="videos" datatype="html">
+        <source>videos</source>
       </trans-unit>
-      <trans-unit id="actions" datatype="html">
-        <source>actions</source>
+      <trans-unit id="analyticsPanel" datatype="html">
+        <source>analyticsPanel</source>
       </trans-unit>
-      <trans-unit id="createActivity" datatype="html">
-        <source>createActivity</source>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source>
       </trans-unit>
-      <trans-unit id="createBlogpost" datatype="html">
-        <source>createBlogpost</source>
-      </trans-unit>
-      <trans-unit id="joinBloggers" datatype="html">
-        <source>joinBloggers</source>
-      </trans-unit>
-      <trans-unit id="createOrganisation" datatype="html">
-        <source>createOrganisation</source>
-      </trans-unit>
-      <trans-unit id="main" datatype="html">
-        <source>main</source>
-      </trans-unit>
-      <trans-unit id="persist" datatype="html">
-        <source>persist</source>
-      </trans-unit>
-      <trans-unit id="approved" datatype="html">
-        <source>approved</source>
-      </trans-unit>
-      <trans-unit id="ownership" datatype="html">
-        <source>ownership</source>
+      <trans-unit id="subscriptions" datatype="html">
+        <source>subscriptions</source>
       </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source>
@@ -374,6 +410,9 @@
       <trans-unit id="createInfopage" datatype="html">
         <source>createInfopage</source>
       </trans-unit>
+      <trans-unit id="messagingPanel" datatype="html">
+        <source>messagingPanel</source>
+      </trans-unit>
       <trans-unit id="organisationPanel" datatype="html">
         <source>organisationPanel</source>
       </trans-unit>
@@ -388,6 +427,9 @@
       </trans-unit>
       <trans-unit id="createSuburb" datatype="html">
         <source>createSuburb</source>
+      </trans-unit>
+      <trans-unit id="createAddress" datatype="html">
+        <source>createAddress</source>
       </trans-unit>
       <trans-unit id="suburbs" datatype="html">
         <source>suburbs</source>
@@ -431,9 +473,6 @@
       <trans-unit id="createTopic" datatype="html">
         <source>createTopic</source>
       </trans-unit>
-      <trans-unit id="categories" datatype="html">
-        <source>categories</source>
-      </trans-unit>
       <trans-unit id="topics" datatype="html">
         <source>topics</source>
       </trans-unit>
@@ -445,15 +484,6 @@
       </trans-unit>
       <trans-unit id="translations" datatype="html">
         <source>translations</source>
-      </trans-unit>
-      <trans-unit id="previous" datatype="html">
-        <source>previous</source>
-      </trans-unit>
-      <trans-unit id="following" datatype="html">
-        <source>following</source>
-      </trans-unit>
-      <trans-unit id="createAddress" datatype="html">
-        <source>createAddress</source>
       </trans-unit>
       <trans-unit id="editAddress" datatype="html">
         <source>editAddress</source>
@@ -500,11 +530,17 @@
       <trans-unit id="about" datatype="html">
         <source>about</source>
       </trans-unit>
-      <trans-unit id="followPosition" datatype="html">
-        <source>followPosition</source>
-      </trans-unit>
       <trans-unit id="fullscreen" datatype="html">
         <source>fullscreen</source>
+      </trans-unit>
+      <trans-unit id="drivingRoute" datatype="html">
+        <source>drivingRoute</source>
+      </trans-unit>
+      <trans-unit id="walkingRoute" datatype="html">
+        <source>walkingRoute</source>
+      </trans-unit>
+      <trans-unit id="followPosition" datatype="html">
+        <source>followPosition</source>
       </trans-unit>
       <trans-unit id="at" datatype="html">
         <source>at</source>
@@ -529,6 +565,21 @@
       </trans-unit>
       <trans-unit id="register" datatype="html">
         <source>register</source>
+      </trans-unit>
+      <trans-unit id="followedActivities" datatype="html">
+        <source>followedActivities</source>
+      </trans-unit>
+      <trans-unit id="followedOrganisations" datatype="html">
+        <source>followedOrganisations</source>
+      </trans-unit>
+      <trans-unit id="followedBloggers" datatype="html">
+        <source>followedBloggers</source>
+      </trans-unit>
+      <trans-unit id="followedTopics" datatype="html">
+        <source>followedTopics</source>
+      </trans-unit>
+      <trans-unit id="follow" datatype="html">
+        <source>follow</source>
       </trans-unit>
       <trans-unit id="like" datatype="html">
         <source>like</source>

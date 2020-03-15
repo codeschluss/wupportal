@@ -43,9 +43,9 @@ export class AddressStepperComponent
   public get title(): string {
     const data = this.route.snapshot.routeConfig.children[0].data;
     return data.form && `
-      ${data.form.group.get('street').value || '?'}
-      ${data.form.group.get('houseNumber').value || '?'},
-      ${data.form.group.get('place').value || '?'}
+      ${data.form.group.get('street').value || '...'}
+      ${data.form.group.get('houseNumber').value || '...'},
+      ${data.form.group.get('place').value || '...'}
     `;
   }
 

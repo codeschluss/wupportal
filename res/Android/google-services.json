@@ -1,0 +1,22 @@
+{
+  "configuration_version": "1",
+  "project_info": {
+    "project_id": "wupportal-id",
+    "project_number": "408108080891"
+  },
+  "client": [
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9yqvpiIDjv5LG_N_p0sTjvluzElPQJPg"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "de.codeschluss.wupportal"
+        },
+        "mobilesdk_app_id": "1:408108080891:android:6d9ea64b6e4a7e32c15a5e"
+      }
+    }
+  ]
+}

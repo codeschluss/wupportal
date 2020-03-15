@@ -10,7 +10,7 @@ import { BasePanel } from '../../base/base.panel';
 import { RequestPopupComponent } from '../../popups/request.popup';
 
 @Component({
-  templateUrl: './account.panel.html'
+  templateUrl: 'account.panel.html'
 })
 
 export class AccountPanelComponent extends BasePanel {
@@ -19,7 +19,7 @@ export class AccountPanelComponent extends BasePanel {
 
   protected path: string = 'account/:uuid';
 
-  protected resolve: object = {
+  protected resolve: Record<string, CrudJoiner> = {
     user: CrudJoiner.of(UserModel, {
       required: true
     }).with('activities').yield('address').yield('suburb')

@@ -66,9 +66,7 @@ export class RequestPopupComponent implements OnInit {
     this.search.stateChanges.pipe(
       map(() => this.search.value || null),
       debounceTime(1000),
-      // https://github.com/ReactiveX/rxjs/issues/4772
-      // tslint:disable-next-line:deprecation
-      startWith(null),
+      startWith(null as string),
       distinctUntilChanged(),
       mergeMap((filter) => this.suggest(filter)),
     ).subscribe((items) => this.items = items);
@@ -93,9 +91,9 @@ export class RequestPopupComponent implements OnInit {
     }).pipe(map((items) => items.filter((item) => {
       try {
         return !this.data.organisations.find((o) => o.id === item.id);
-      } catch {
-        return true;
-      }
+      } catch { }
+
+      return true;
     })));
   }
 

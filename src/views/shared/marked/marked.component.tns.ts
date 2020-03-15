@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { DeviceProvider } from '@wooportal/app';
-import { WebView } from 'tns-core-modules/ui/web-view';
+import { fromEvent } from 'rxjs';
+import { LoadEventData, WebView } from 'tns-core-modules/ui/web-view';
 import { MarkedComponent as Compat } from './marked.component.i';
 
 @Component({
@@ -19,7 +20,7 @@ export class MarkedComponent implements Compat, AfterViewInit {
   public data: string;
 
   public get html(): string {
-    return '<style>body{font-family:sans-serif;}</style>' + this.data;
+    return '<style>*{font-family:sans-serif;}</style>' + this.data;
   }
 
   @ViewChild('webview', { read: ElementRef, static: true })
@@ -30,7 +31,9 @@ export class MarkedComponent implements Compat, AfterViewInit {
   ) { }
 
   public ngAfterViewInit(): void {
-    if (this.webview.nativeElement.isLoaded) {
+    if (!this.webview.nativeElement.isLoaded) {
+      this.webview.nativeElement.once('loaded', () => this.ngAfterViewInit());
+    } else {
       let wv = this.webview.nativeElement as any;
 
       switch (this.deviceProvider.notation) {
@@ -44,12 +47,13 @@ export class MarkedComponent implements Compat, AfterViewInit {
         case 'iOS':
           wv.ios.opaque = false;
           wv.ios.setDrawsBackground = false;
-          wv.on('loadStarted', this.deviceProvider.resourceClient);
-          wv.on('loadFinished', this.deviceProvider.resizeClient);
+
+          fromEvent<LoadEventData>(wv, 'loadStarted').subscribe((event) =>
+            this.deviceProvider.resourceClient(event));
+          fromEvent<LoadEventData>(wv, 'loadFinished').subscribe((event) =>
+            this.deviceProvider.resizeClient(event));
           break;
       }
-    } else {
-      this.webview.nativeElement.once('loaded', () => this.ngAfterViewInit());
     }
   }
 

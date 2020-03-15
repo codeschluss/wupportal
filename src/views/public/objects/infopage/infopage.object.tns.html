@@ -10,10 +10,9 @@
       </label>
     </grid-layout>
     <flexbox-layout>
+      <follow-piece [item]="item.topic"></follow-piece>
       <share-piece [item]="item"></share-piece>
       <like-piece [item]="item"></like-piece>
-      <label flexGrow="1"></label>
-      <time-piece [item]="item"></time-piece>
     </flexbox-layout>
     <stack-layout>
       <marked-component [data]="item.content"></marked-component>

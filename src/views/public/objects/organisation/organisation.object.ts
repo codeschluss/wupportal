@@ -16,7 +16,8 @@ export class OrganisationObjectComponent extends BaseObject<OrganisationModel> {
     .with('activities').yield('category')
     .with('activities').yield('schedules')
     .with('address').yield('suburb')
-    .with('images');
+    .with('images')
+    .with('videos').yield('thumbnail');
 
   protected model: Type<OrganisationModel> = OrganisationModel;
 

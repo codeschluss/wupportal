@@ -4,12 +4,7 @@ import { AppRouterModule } from '@wooportal/app';
 import { MapsComponent } from './maps.component';
 
 const routes: Route[] = [
-  MapsComponent.routing,
-  {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: ''
-  }
+  MapsComponent.routing
 ];
 
 @NgModule({

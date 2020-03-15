@@ -8,7 +8,7 @@ import { ConfigurationModel } from '../../../base/models/configuration.model';
 import { ConfigurationProvider } from '../../../base/providers/configuration.provider';
 import { TranslationProvider } from '../../../base/providers/translation.provider';
 import { BaseForm, FormField } from '../base/base.form';
-import { StringFieldComponent } from '../fields/string.field';
+import { InputFieldComponent } from '../fields/input.field';
 
 @Component({
   selector: 'configuration-form',
@@ -52,17 +52,17 @@ export class ConfigurationFormComponent
   public fields: FormField[] = [
     {
       name: 'portalName',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'portalSubtitle',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'portalMail',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
         Validators.required
@@ -70,30 +70,30 @@ export class ConfigurationFormComponent
     },
     {
       name: 'mapLongitude',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required],
       type: 'number'
     },
     {
       name: 'mapLatitude',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required],
       type: 'number'
     },
     {
       name: 'mapZoomfactor',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required],
       type: 'number'
     },
     {
       name: 'mapProjection',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'mapCluster',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required],
       type: 'number'
     }

@@ -17,8 +17,8 @@ import { BaseForm, FormField } from '../base/base.form';
 import { BaseTests } from '../base/base.tests';
 import { ChipListFieldComponent } from '../fields/chip-list.field';
 import { EditorFieldComponent } from '../fields/editor.field';
+import { InputFieldComponent } from '../fields/input.field';
 import { SelectFieldComponent } from '../fields/select.field';
-import { StringFieldComponent } from '../fields/string.field';
 
 @Component({
   selector: 'activity-form',
@@ -89,7 +89,7 @@ export class ActivityFormComponent
     },
     {
       name: 'name',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [Validators.required]
     },
     {
@@ -99,17 +99,17 @@ export class ActivityFormComponent
     },
     {
       name: 'contactName',
-      input: StringFieldComponent
+      input: InputFieldComponent
     },
     {
       name: 'phone',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [BaseTests.neither('phone', 'mail')],
       type: 'tel'
     },
     {
       name: 'mail',
-      input: StringFieldComponent,
+      input: InputFieldComponent,
       tests: [
         BaseTests.neither('phone', 'mail'),
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)

@@ -3,18 +3,18 @@ import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
-import { OrganisationControllerService } from '../../api/services/organisation-controller.service';
+import { OrganisationControllerService as Service } from '../../api/services/organisation-controller.service';
 import { ActivityModel } from '../models/activity.model';
 import { AddressModel } from '../models/address.model';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
 import { MembershipModel } from '../models/membership.model';
-import { OrganisationModel } from '../models/organisation.model';
+import { OrganisationModel as Model } from '../models/organisation.model';
 import { UserModel } from '../models/user.model';
+import { VideoModel } from '../models/video.model';
 
 @Injectable({ providedIn: 'root' })
-export class OrganisationProvider
-  extends CrudProvider<OrganisationControllerService, OrganisationModel> {
+export class OrganisationProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -50,12 +50,17 @@ export class OrganisationProvider
     {
       field: 'translations',
       method: this.service.organisationControllerReadTranslationsResponse,
-      model: OrganisationModel
+      model: Model
     },
     {
       field: 'users',
       method: this.service.organisationControllerReadUsersResponse,
       model: UserModel
+    },
+    {
+      field: 'videos',
+      method: this.service.organisationControllerReadVideosResponse,
+      model: VideoModel
     }
   ];
 
@@ -67,59 +72,67 @@ export class OrganisationProvider
     update: this.service.organisationControllerUpdateResponse
   };
 
-  protected model: Type<OrganisationModel> = this.based(OrganisationModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: OrganisationControllerService
+    protected service: Service
   ) {
     super();
   }
 
-  public create: (model: OrganisationModel) => Observable<any>;
+  public create: (model: Partial<Model>) => Observable<any>;
 
-  public update: (model: OrganisationModel) => Observable<any>;
+  public update: (model: Partial<Model>) => Observable<any>;
 
   public delete: (id: string) => Observable<any>;
 
-  public readOne: (id: string) => Observable<OrganisationModel>;
+  public readOne: (id: string) => Observable<Model>;
 
-  public readAll: (params?: OrganisationControllerService
-    .OrganisationControllerReadAllParams) => Observable<OrganisationModel[]>;
+  public readAll: (params?: Service.OrganisationControllerReadAllParams) =>
+    Observable<Model[]>;
 
-  public grantMembership:
-    (id: string, userId: string, grant: Boolean) => Observable<any> =
-    this.apply(this.service.organisationControllerApproveOrRejectUserResponse);
+  public grantMembership: (id: string, userId: string, grant: Boolean) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerApproveOrRejectUserResponse);
 
-  public grantOrganisation:
-    (id: string, grant: Boolean) => Observable<any> =
-      this.apply(this.service.organisationControllerGrantApprovalResponse);
+  public grantOrganisation: (id: string, grant: Boolean) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerGrantApprovalResponse);
 
-  public grantOwnership:
-    (id: string, userId: string, grant: Boolean) => Observable<any> =
-      this.apply(this.service.organisationControllerGrantAdminRightResponse);
+  public grantOwnership: (id: string, userId: string, grant: Boolean) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerGrantAdminRightResponse);
 
-  public like:
-    (id: string) => Observable<any> =
-      this.apply(this.service.organisationControllerIncreaseLikeResponse);
+  public like: (id: string, subscriptionId?: String) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerIncreaseLikeResponse);
 
-  public pasteImages:
-    (id: string, images: ImageModel[]) => Observable<any> =
-      this.apply(this.service.organisationControllerAddImageResponse);
+  public pasteImages: (id: string, images: ImageModel[]) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerAddImageResponse);
 
-  public relinkAddress:
-    (id: string, addressId: String) => Observable<any> =
-      this.apply(this.service.organisationControllerUpdateAddressResponse);
+  public pasteVideos: (id: string, videos: VideoModel[]) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerAddVideosResponse);
 
-  public unlinkActivity:
-    (id: string, activityId: string) => Observable<any> =
-      this.apply(this.service.organisationControllerDeleteActivityResponse);
+  public relinkAddress: (id: string, addressId: String) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerUpdateAddressResponse);
 
-  public unlinkImages:
-    (id: string, imageIds: string[]) => Observable<any> =
-      this.apply(this.service.organisationControllerDeleteImagesResponse);
+  public unlinkActivity: (id: string, activityId: string) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerDeleteActivityResponse);
 
-  public unlinkUser:
-    (id: string, userId: string) => Observable<any> =
-      this.apply(this.service.organisationControllerDeleteUserResponse);
+  public unlinkImages: (id: string, imageIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerDeleteImagesResponse);
+
+  public unlinkUser: (id: string, userId: string) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerDeleteUserResponse);
+
+  public unlinkVideos: (id: string, videoIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerDeleteVideosResponse);
 
 }

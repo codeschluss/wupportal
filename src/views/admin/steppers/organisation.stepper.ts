@@ -6,6 +6,7 @@ import { AddressFormComponent } from '../forms/address.form';
 import { ImageFormComponent } from '../forms/image.form';
 import { OrganisationFormComponent } from '../forms/organisation.form';
 import { TranslationFormComponent } from '../forms/translation.form';
+import { VideoFormComponent } from '../forms/video.form';
 
 @Component({
   selector: 'organisation-stepper',
@@ -27,6 +28,9 @@ import { TranslationFormComponent } from '../forms/translation.form';
         </ng-container>
         <ng-container *ngSwitchCase="'images'">
           <i18n i18n="@@images">images</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'videos'">
+          <i18n i18n="@@videos">videos</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'translations'">
           <i18n i18n="@@translations">translations</i18n>
@@ -55,6 +59,10 @@ export class OrganisationStepperComponent
       form: ImageFormComponent
     },
     {
+      name: 'videos',
+      form: VideoFormComponent
+    },
+    {
       name: 'translations',
       form: TranslationFormComponent
     }
@@ -63,7 +71,8 @@ export class OrganisationStepperComponent
   protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
     .with('address').yield('suburb')
     .with('images')
-    .with('translations').yield('language');
+    .with('translations').yield('language')
+    .with('videos').yield('thumbnail');
 
   protected model: Type<OrganisationModel> = OrganisationModel;
 

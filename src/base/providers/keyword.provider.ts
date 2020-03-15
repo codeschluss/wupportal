@@ -1,24 +1,12 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
-import { TagControllerService } from '../../api/services/tag-controller.service';
-import { KeywordModel } from '../models/keyword.model';
+import { TagControllerService as Service } from '../../api/services/tag-controller.service';
+import { KeywordModel as Model } from '../models/keyword.model';
 import { LanguageModel } from '../models/language.model';
 
 @Injectable({ providedIn: 'root' })
-export class KeywordProvider
-  extends CrudProvider<TagControllerService, KeywordModel> {
-
-  public create: (model: KeywordModel) => Observable<any>;
-
-  public update: (model: KeywordModel) => Observable<any>;
-
-  public delete: (id: string) => Observable<any>;
-
-  public readOne: (id: string) => Observable<KeywordModel>;
-
-  public readAll: (params?: TagControllerService
-    .TagControllerReadAllParams) => Observable<KeywordModel[]>;
+export class KeywordProvider extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
@@ -29,7 +17,7 @@ export class KeywordProvider
     {
       field: 'translations',
       method: this.service.tagControllerReadTranslationsResponse,
-      model: KeywordModel
+      model: Model
     }
   ];
 
@@ -41,12 +29,23 @@ export class KeywordProvider
     update: this.service.tagControllerUpdateResponse
   };
 
-  protected model: Type<KeywordModel> = this.based(KeywordModel);
+  protected model: Type<Model> = this.based(Model);
 
   public constructor(
-    protected service: TagControllerService
+    protected service: Service
   ) {
     super();
   }
+
+  public create: (model: Partial<Model>) => Observable<any>;
+
+  public update: (model: Partial<Model>) => Observable<any>;
+
+  public delete: (id: string) => Observable<any>;
+
+  public readOne: (id: string) => Observable<Model>;
+
+  public readAll: (params?: Service.TagControllerReadAllParams) =>
+    Observable<Model[]>;
 
 }

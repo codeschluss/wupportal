@@ -16,7 +16,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class SuburbTableComponent extends BaseTable<SuburbModel> {
+export class SuburbTableComponent
+  extends BaseTable<SuburbModel> {
 
   public columns: TableColumn[] = [
     {

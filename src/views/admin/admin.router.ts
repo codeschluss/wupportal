@@ -5,8 +5,8 @@ import { TokenResolver } from '@wooportal/core';
 import { AdminComponent } from './admin.component';
 import { AdminGuarding } from './admin.guarding';
 import { AccountPanelComponent } from './panels/account/account.panel';
-import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { AnalyticsPanelComponent } from './panels/analytics/analytics.panel';
+import { ApplicationPanelComponent } from './panels/application/application.panel';
 import { InformationPanelComponent } from './panels/information/information.panel';
 import { MessagingPanelComponent } from './panels/messaging/messaging.panel';
 import { OrganisationPanelComponent } from './panels/organisation/organisation.panel';
@@ -21,6 +21,7 @@ import { InfopageStepperComponent } from './steppers/infopage.stepper';
 import { KeywordsStepperComponent } from './steppers/keyword.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
+import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
 import { TopicStepperComponent } from './steppers/topic.stepper';
@@ -50,6 +51,7 @@ const routes: Route[] = [
           KeywordsStepperComponent.routing,
           LanguageStepperComponent.routing,
           OrganisationStepperComponent.routing,
+          SubscriptionTypeStepperComponent.routing,
           SuburbStepperComponent.routing,
           TargetGroupStepperComponent.routing,
           TopicStepperComponent.routing,

@@ -19,7 +19,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class KeywordTableComponent extends BaseTable<KeywordModel> {
+export class KeywordTableComponent
+  extends BaseTable<KeywordModel> {
 
   public columns: TableColumn[] = [
     {

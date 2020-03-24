@@ -19,7 +19,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class InfopageTableComponent extends BaseTable<InfopageModel> {
+export class InfopageTableComponent
+  extends BaseTable<InfopageModel> {
 
   public columns: TableColumn[] = [
     {

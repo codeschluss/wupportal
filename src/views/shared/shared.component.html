@@ -108,15 +108,223 @@
         <icon-component icon="copyright"></icon-component>
         {{ name | async }} 2017-{{ date | date: 'yyyy' }}
       </small>
-      <ng-container *ngIf="claimed?.userId">
+      <ng-container *ngIf="claims?.userId">
         <button mat-button
+          #adminMenuTrigger="matMenuTrigger"
           [class.active]="url.startsWith('/admin')"
           [matMenuTriggerFor]="adminMenu">
           <icon-component icon="cog"></icon-component>
           <i18n i18n="@@administration">administration</i18n>
         </button>
+        <mat-menu #adminMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/account')"
+            [routerLink]="['/', 'admin', 'account', claims?.userId]">
+            <icon-component icon="chalkboard-teacher"></icon-component>
+            <i18n i18n="@@account">account</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url.startsWith('/admin/organisation')"
+            [disabled]="!claims?.organisationAdmin.length && !claims?.superUser"
+            [routerLink]="['/', 'admin', 'organisation']">
+            <icon-component icon="sitemap"></icon-component>
+            <i18n i18n="@@organisation">organisation</i18n>
+          </button>
+          <ng-container *ngIf="claims?.superUser">
+            <mat-divider></mat-divider>
+            <button mat-menu-item
+              [class.active]="url.startsWith('/admin/application')"
+              [matMenuTriggerFor]="applicationMenu"
+              [routerLink]="['/', 'admin', 'application']"
+              (click)="adminMenuTrigger.closeMenu()">
+              <icon-component icon="sliders-h"></icon-component>
+              <i18n i18n="@@application">application</i18n>
+            </button>
+            <button mat-menu-item
+              [class.active]="url.startsWith('/admin/messaging')"
+              [matMenuTriggerFor]="messagingMenu"
+              [routerLink]="['/', 'admin', 'messaging']"
+              (click)="adminMenuTrigger.closeMenu()">
+              <icon-component icon="paper-plane"></icon-component>
+              <i18n i18n="@@messaging">messaging</i18n>
+            </button>
+            <button mat-menu-item
+              [class.active]="url.startsWith('/admin/information')"
+              [matMenuTriggerFor]="informationMenu"
+              [routerLink]="['/', 'admin', 'information']"
+              (click)="adminMenuTrigger.closeMenu()">
+              <icon-component icon="book"></icon-component>
+              <i18n i18n="@@information">information</i18n>
+            </button>
+            <button mat-menu-item
+              [class.active]="url.startsWith('/admin/positioning')"
+              [matMenuTriggerFor]="positioningMenu"
+              [routerLink]="['/', 'admin', 'positioning']"
+              (click)="adminMenuTrigger.closeMenu()">
+              <icon-component icon="sign"></icon-component>
+              <i18n i18n="@@positioning">positioning</i18n>
+            </button>
+            <button mat-menu-item
+              [class.active]="url.startsWith('/admin/privileges')"
+              [matMenuTriggerFor]="privilegesMenu"
+              [routerLink]="['/', 'admin', 'privileges']"
+              (click)="adminMenuTrigger.closeMenu()">
+              <icon-component icon="shield-alt"></icon-component>
+              <i18n i18n="@@privileges">privileges</i18n>
+            </button>
+            <button mat-menu-item
+              [class.active]="url.startsWith('/admin/taxonomy')"
+              [matMenuTriggerFor]="taxonomyMenu"
+              [routerLink]="['/', 'admin', 'taxonomy']"
+              (click)="adminMenuTrigger.closeMenu()">
+              <icon-component icon="tags"></icon-component>
+              <i18n i18n="@@taxonomy">taxonomy</i18n>
+            </button>
+            <button mat-menu-item
+              [class.active]="url.startsWith('/admin/analytics')"
+              [matMenuTriggerFor]="analyticsMenu"
+              [routerLink]="['/', 'admin', 'analytics']"
+              (click)="adminMenuTrigger.closeMenu()">
+              <icon-component icon="chart-bar"></icon-component>
+              <i18n i18n="@@analytics">analytics</i18n>
+            </button>
+          </ng-container>
+          <mat-divider></mat-divider>
+          <button mat-menu-item [routerLink]="['/', 'logout']">
+            <icon-component icon="lock"></icon-component>
+            <i18n i18n="@@logout">logout</i18n>
+          </button>
+        </mat-menu>
+        <mat-menu #applicationMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url === '/admin/application?tab=configuration'"
+            [queryParams]="{ tab: 'configuration' }"
+            [routerLink]="['/', 'admin', 'application']">
+            <i18n i18n="@@configuration">configuration</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/application?tab=languages'"
+            [queryParams]="{ tab: 'languages' }"
+            [routerLink]="['/', 'admin', 'application']">
+            <i18n i18n="@@languages">languages</i18n>
+          </button>
+        </mat-menu>
+        <mat-menu #messagingMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url === '/admin/messaging?tab=mailing'"
+            [queryParams]="{ tab: 'mailing' }"
+            [routerLink]="['/', 'admin', 'messaging']">
+            <i18n i18n="@@email">email</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/messaging?tab=pushing'"
+            [queryParams]="{ tab: 'pushing' }"
+            [routerLink]="['/', 'admin', 'messaging']">
+            <i18n i18n="@@pushNotification">pushNotification</i18n>
+          </button>
+        </mat-menu>
+        <mat-menu #informationMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url === '/admin/information?tab=infopages'"
+            [queryParams]="{ tab: 'infopages' }"
+            [routerLink]="['/', 'admin', 'information']">
+            <i18n i18n="@@infopages">infopages</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/information?tab=blogposts'"
+            [queryParams]="{ tab: 'blogposts' }"
+            [routerLink]="['/', 'admin', 'information']">
+            <i18n i18n="@@blogposts">blogposts</i18n>
+          </button>
+        </mat-menu>
+        <mat-menu #positioningMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url === '/admin/positioning?tab=suburbs'"
+            [queryParams]="{ tab: 'suburbs' }"
+            [routerLink]="['/', 'admin', 'positioning']">
+            <i18n i18n="@@suburbs">suburbs</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/positioning?tab=addresses'"
+            [queryParams]="{ tab: 'addresses' }"
+            [routerLink]="['/', 'admin', 'positioning']">
+            <i18n i18n="@@addresses">addresses</i18n>
+          </button>
+        </mat-menu>
+        <mat-menu #privilegesMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url === '/admin/privileges?tab=users'"
+            [queryParams]="{ tab: 'users' }"
+            [routerLink]="['/', 'admin', 'privileges']">
+            <i18n i18n="@@users">users</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/privileges?tab=organisations'"
+            [queryParams]="{ tab: 'organisations' }"
+            [routerLink]="['/', 'admin', 'privileges']">
+            <i18n i18n="@@organisationRequests">organisationRequests</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/privileges?tab=memberships'"
+            [queryParams]="{ tab: 'memberships' }"
+            [routerLink]="['/', 'admin', 'privileges']">
+            <i18n i18n="@@membershipRequests">membershipRequests</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/privileges?tab=bloggers'"
+            [queryParams]="{ tab: 'bloggers' }"
+            [routerLink]="['/', 'admin', 'privileges']">
+            <i18n i18n="@@bloggerRequests">bloggerRequests</i18n>
+          </button>
+        </mat-menu>
+        <mat-menu #taxonomyMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url === '/admin/taxonomy?tab=categories'"
+            [queryParams]="{ tab: 'categories' }"
+            [routerLink]="['/', 'admin', 'taxonomy']">
+            <i18n i18n="@@categories">categories</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/taxonomy?tab=keywords'"
+            [queryParams]="{ tab: 'keywords' }"
+            [routerLink]="['/', 'admin', 'taxonomy']">
+            <i18n i18n="@@keywords">keywords</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/taxonomy?tab=targetGroups'"
+            [queryParams]="{ tab: 'targetGroups' }"
+            [routerLink]="['/', 'admin', 'taxonomy']">
+            <i18n i18n="@@targetGroups">targetGroups</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/taxonomy?tab=topics'"
+            [queryParams]="{ tab: 'topics' }"
+            [routerLink]="['/', 'admin', 'taxonomy']">
+            <i18n i18n="@@topics">topics</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/taxonomy?tab=subscriptions'"
+            [queryParams]="{ tab: 'subscriptions' }"
+            [routerLink]="['/', 'admin', 'taxonomy']">
+            <i18n i18n="@@subscriptionTypes">subscriptionTypes</i18n>
+          </button>
+        </mat-menu>
+        <mat-menu #analyticsMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url === '/admin/analytics?tab=activities'"
+            [queryParams]="{ tab: 'activities' }"
+            [routerLink]="['/', 'admin', 'analytics']">
+            <i18n i18n="@@activities">activities</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/analytics?tab=subscriptions'"
+            [queryParams]="{ tab: 'subscriptions' }"
+            [routerLink]="['/', 'admin', 'analytics']">
+            <i18n i18n="@@subscriptions">subscriptions</i18n>
+          </button>
+        </mat-menu>
       </ng-container>
-      <ng-container *ngIf="!claimed?.userId">
+      <ng-container *ngIf="!claims?.userId">
         <a mat-button
           [class.active]="url.startsWith('/login')"
           [routerLink]="['/', 'login']">
@@ -124,71 +332,6 @@
           <i18n i18n="@@login">login</i18n>
         </a>
       </ng-container>
-      <mat-menu #adminMenu="matMenu" xPosition="before">
-        <button mat-menu-item
-          [class.active]="url.startsWith('/admin/account')"
-          [routerLink]="['/', 'admin', 'account', claimed?.userId]">
-          <icon-component icon="chalkboard-teacher"></icon-component>
-          <i18n i18n="@@account">account</i18n>
-        </button>
-        <button mat-menu-item
-          [class.active]="url.startsWith('/admin/organisation')"
-          [disabled]="!claimed?.organisationAdmin.length && !claimed?.superUser"
-          [routerLink]="['/', 'admin', 'organisation']">
-          <icon-component icon="sitemap"></icon-component>
-          <i18n i18n="@@organisation">organisation</i18n>
-        </button>
-        <ng-container *ngIf="claimed?.superUser">
-          <mat-divider></mat-divider>
-          <button mat-menu-item
-            [class.active]="url.startsWith('/admin/application')"
-            [routerLink]="['/', 'admin', 'application']">
-            <icon-component icon="sliders-h"></icon-component>
-            <i18n i18n="@@application">application</i18n>
-          </button>
-          <button mat-menu-item
-            [class.active]="url.startsWith('/admin/messaging')"
-            [routerLink]="['/', 'admin', 'messaging']">
-            <icon-component icon="paper-plane"></icon-component>
-            <i18n i18n="@@messaging">messaging</i18n>
-          </button>
-          <button mat-menu-item
-            [class.active]="url.startsWith('/admin/information')"
-            [routerLink]="['/', 'admin', 'information']">
-            <icon-component icon="book"></icon-component>
-            <i18n i18n="@@information">information</i18n>
-          </button>
-          <button mat-menu-item
-            [class.active]="url.startsWith('/admin/positioning')"
-            [routerLink]="['/', 'admin', 'positioning']">
-            <icon-component icon="sign"></icon-component>
-            <i18n i18n="@@positioning">positioning</i18n>
-          </button>
-          <button mat-menu-item
-            [class.active]="url.startsWith('/admin/privileges')"
-            [routerLink]="['/', 'admin', 'privileges']">
-            <icon-component icon="shield-alt"></icon-component>
-            <i18n i18n="@@privileges">privileges</i18n>
-          </button>
-          <button mat-menu-item
-            [class.active]="url.startsWith('/admin/taxonomy')"
-            [routerLink]="['/', 'admin', 'taxonomy']">
-            <icon-component icon="tags"></icon-component>
-            <i18n i18n="@@taxonomy">taxonomy</i18n>
-          </button>
-          <button mat-menu-item
-            [class.active]="url.startsWith('/admin/analytics')"
-            [routerLink]="['/', 'admin', 'analytics']">
-            <icon-component icon="chart-bar"></icon-component>
-            <i18n i18n="@@analytics">analytics</i18n>
-          </button>
-        </ng-container>
-        <mat-divider></mat-divider>
-        <button mat-menu-item [routerLink]="['/', 'logout']">
-          <icon-component icon="lock"></icon-component>
-          <i18n i18n="@@logout">logout</i18n>
-        </button>
-      </mat-menu>
     </navbar-component>
   </ng-template>
   <ng-template #drawerMenu>

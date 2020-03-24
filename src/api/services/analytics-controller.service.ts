@@ -17,6 +17,7 @@ import { AnalyticsEntry } from '../models/analytics-entry';
 })
 class AnalyticsControllerService extends __BaseService {
   static readonly analyticsControllerCalculateActivitiesPerCategoryPath = '/analytic/activities/categories';
+  static readonly analyticsControllerCalculateActivitiesPerSuburbsPath = '/analytic/activities/suburbs';
   static readonly analyticsControllerCalculateActivitiesPerTargetGroupPath = '/analytic/activities/targetgroups';
   static readonly analyticsControllerCalculateSubscriptionsPath = '/analytic/subscriptions';
 
@@ -59,6 +60,42 @@ class AnalyticsControllerService extends __BaseService {
    */
   analyticsControllerCalculateActivitiesPerCategory(value?: boolean): __Observable<Array<AnalyticsEntry>> {
     return this.analyticsControllerCalculateActivitiesPerCategoryResponse(value).pipe(
+      __map(_r => _r.body as Array<AnalyticsEntry>)
+    );
+  }
+
+  /**
+   * @param value undefined
+   * @return OK
+   */
+  analyticsControllerCalculateActivitiesPerSuburbsResponse(value?: boolean): __Observable<__StrictHttpResponse<Array<AnalyticsEntry>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (value != null) __params = __params.set('value', value.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/analytic/activities/suburbs`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<AnalyticsEntry>>;
+      })
+    );
+  }
+  /**
+   * @param value undefined
+   * @return OK
+   */
+  analyticsControllerCalculateActivitiesPerSuburbs(value?: boolean): __Observable<Array<AnalyticsEntry>> {
+    return this.analyticsControllerCalculateActivitiesPerSuburbsResponse(value).pipe(
       __map(_r => _r.body as Array<AnalyticsEntry>)
     );
   }

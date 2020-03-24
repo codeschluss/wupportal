@@ -19,7 +19,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class TargetGroupTableComponent extends BaseTable<TargetGroupModel> {
+export class TargetGroupTableComponent
+  extends BaseTable<TargetGroupModel> {
 
   public columns: TableColumn[] = [
     {

@@ -38,9 +38,6 @@
       <trans-unit id="administration" datatype="html">
         <source>administration</source><target>Administration</target>
       </trans-unit>
-      <trans-unit id="login" datatype="html">
-        <source>login</source><target>Anmelden</target>
-      </trans-unit>
       <trans-unit id="account" datatype="html">
         <source>account</source><target>Benutzerkonto</target>
       </trans-unit>
@@ -70,6 +67,57 @@
       </trans-unit>
       <trans-unit id="logout" datatype="html">
         <source>logout</source><target>Abmelden</target>
+      </trans-unit>
+      <trans-unit id="configuration" datatype="html">
+        <source>configuration</source><target>Konfiguration</target>
+      </trans-unit>
+      <trans-unit id="languages" datatype="html">
+        <source>languages</source><target>Sprachen</target>
+      </trans-unit>
+      <trans-unit id="email" datatype="html">
+        <source>email</source><target>E-Mail</target>
+      </trans-unit>
+      <trans-unit id="pushNotification" datatype="html">
+        <source>pushNotification</source><target>Push-Benachrichtigungen</target>
+      </trans-unit>
+      <trans-unit id="suburbs" datatype="html">
+        <source>suburbs</source><target>Stadtteile</target>
+      </trans-unit>
+      <trans-unit id="addresses" datatype="html">
+        <source>addresses</source><target>Adressen</target>
+      </trans-unit>
+      <trans-unit id="users" datatype="html">
+        <source>users</source><target>Benutzer</target>
+      </trans-unit>
+      <trans-unit id="organisationRequests" datatype="html">
+        <source>organisationRequests</source><target>Organisationszulassung</target>
+      </trans-unit>
+      <trans-unit id="membershipRequests" datatype="html">
+        <source>membershipRequests</source><target>Anbieterzulassung</target>
+      </trans-unit>
+      <trans-unit id="bloggerRequests" datatype="html">
+        <source>bloggerRequests</source><target>Bloggerzulassung</target>
+      </trans-unit>
+      <trans-unit id="categories" datatype="html">
+        <source>categories</source><target>Kategorien</target>
+      </trans-unit>
+      <trans-unit id="keywords" datatype="html">
+        <source>keywords</source><target>Schlagworte</target>
+      </trans-unit>
+      <trans-unit id="targetGroups" datatype="html">
+        <source>targetGroups</source><target>Zielgruppen</target>
+      </trans-unit>
+      <trans-unit id="topics" datatype="html">
+        <source>topics</source><target>Themengebiete</target>
+      </trans-unit>
+      <trans-unit id="subscriptionTypes" datatype="html">
+        <source>subscriptionTypes</source><target>Abonnementtypen</target>
+      </trans-unit>
+      <trans-unit id="subscriptions" datatype="html">
+        <source>subscriptions</source><target>Abonnements</target>
+      </trans-unit>
+      <trans-unit id="login" datatype="html">
+        <source>login</source><target>Anmelden</target>
       </trans-unit>
       <trans-unit id="previous" datatype="html">
         <source>previous</source><target>Zurück</target>
@@ -113,17 +161,11 @@
       <trans-unit id="name" datatype="html">
         <source>name</source><target>Name</target>
       </trans-unit>
-      <trans-unit id="description" datatype="html">
-        <source>description</source><target>Beschreibung</target>
-      </trans-unit>
       <trans-unit id="uuid" datatype="html">
         <source>uuid</source><target>Objektschlüssel</target>
       </trans-unit>
       <trans-unit id="delete" datatype="html">
         <source>delete</source><target>Löschen</target>
-      </trans-unit>
-      <trans-unit id="pushNotification" datatype="html">
-        <source>pushNotification</source><target>Push-Benachrichtigungen</target>
       </trans-unit>
       <trans-unit id="title" datatype="html">
         <source>title</source><target>Titel</target>
@@ -133,7 +175,7 @@
       </trans-unit>
       <trans-unit id="send" datatype="html">
         <source>send</source><target>Senden</target>
-      </trans-unit><target>Senden</target>
+      </trans-unit>
       <trans-unit id="selectOrganisations" datatype="html">
         <source>selectOrganisations</source><target>Organisationen auswählen</target>
       </trans-unit>
@@ -172,9 +214,6 @@
       </trans-unit>
       <trans-unit id="authenticationExpired" datatype="html">
         <source>authenticationExpired</source><target>Sitzung abgelaufen</target>
-      </trans-unit>
-      <trans-unit id="email" datatype="html">
-        <source>email</source><target>E-Mail</target>
       </trans-unit>
       <trans-unit id="password" datatype="html">
         <source>password</source><target>Passwort</target>
@@ -233,14 +272,11 @@
       <trans-unit id="contactName" datatype="html">
         <source>contactName</source><target>Kontakt</target>
       </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <source>description</source><target>Beschreibung</target>
+      </trans-unit>
       <trans-unit id="phone" datatype="html">
         <source>phone</source><target>Telefon</target>
-      </trans-unit>
-      <trans-unit id="keywords" datatype="html">
-        <source>keywords</source><target>Schlagworte</target>
-      </trans-unit>
-      <trans-unit id="targetGroups" datatype="html">
-        <source>targetGroups</source><target>Zielgruppen</target>
       </trans-unit>
       <trans-unit id="houseNumber" datatype="html">
         <source>houseNumber</source><target>Hausnummer</target>
@@ -386,23 +422,11 @@
       <trans-unit id="analyticsPanel" datatype="html">
         <source>analyticsPanel</source><target>Statistiken einsehen</target>
       </trans-unit>
-      <trans-unit id="categories" datatype="html">
-        <source>categories</source><target>Kategorien</target>
-      </trans-unit>
-      <trans-unit id="subscriptions" datatype="html">
-        <source>subscriptions</source><target>Abonnements</target>
-      </trans-unit>
       <trans-unit id="applicationPanel" datatype="html">
         <source>applicationPanel</source><target>Applikation verwalten</target>
       </trans-unit>
       <trans-unit id="createLanguage" datatype="html">
         <source>createLanguage</source><target>Sprache erstellen</target>
-      </trans-unit>
-      <trans-unit id="configuration" datatype="html">
-        <source>configuration</source><target>Konfiguration</target>
-      </trans-unit>
-      <trans-unit id="languages" datatype="html">
-        <source>languages</source><target>Sprachen</target>
       </trans-unit>
       <trans-unit id="informationPanel" datatype="html">
         <source>informationPanel</source><target>Inhalte verwalten</target>
@@ -419,9 +443,6 @@
       <trans-unit id="memberships" datatype="html">
         <source>memberships</source><target>Anbieter</target>
       </trans-unit>
-      <trans-unit id="membershipRequests" datatype="html">
-        <source>membershipRequests</source><target>Anbieterzulassung</target>
-      </trans-unit>
       <trans-unit id="positioningPanel" datatype="html">
         <source>positioningPanel</source><target>Lokalitäten verwalten</target>
       </trans-unit>
@@ -431,32 +452,17 @@
       <trans-unit id="createAddress" datatype="html">
         <source>createAddress</source><target>Adresse erstellen</target>
       </trans-unit>
-      <trans-unit id="suburbs" datatype="html">
-        <source>suburbs</source><target>Stadtteile</target>
-      </trans-unit>
-      <trans-unit id="addresses" datatype="html">
-        <source>addresses</source><target>Adressen</target>
-      </trans-unit>
       <trans-unit id="privilegesPanel" datatype="html">
         <source>privilegesPanel</source><target>Benutzerrechte verwalten</target>
       </trans-unit>
       <trans-unit id="resetAllPasswords" datatype="html">
         <source>resetAllPasswords</source><target>Alle Passwörter zurücksetzen</target>
       </trans-unit>
-      <trans-unit id="users" datatype="html">
-        <source>users</source><target>Benutzer</target>
-      </trans-unit>
       <trans-unit id="superUser" datatype="html">
         <source>superUser</source><target>Administrator</target>
       </trans-unit>
       <trans-unit id="blogger" datatype="html">
         <source>blogger</source><target>Blogger</target>
-      </trans-unit>
-      <trans-unit id="organisationRequests" datatype="html">
-        <source>organisationRequests</source><target>Organisationszulassung</target>
-      </trans-unit>
-      <trans-unit id="bloggerRequests" datatype="html">
-        <source>bloggerRequests</source><target>Bloggerzulassung</target>
       </trans-unit>
       <trans-unit id="taxonomyPanel" datatype="html">
         <source>taxonomyPanel</source><target>Taxonomien verwalten</target>
@@ -472,9 +478,6 @@
       </trans-unit>
       <trans-unit id="createTopic" datatype="html">
         <source>createTopic</source><target>Themengebiet erstellen</target>
-      </trans-unit>
-      <trans-unit id="topics" datatype="html">
-        <source>topics</source><target>Themengebiete</target>
       </trans-unit>
       <trans-unit id="editActivity" datatype="html">
         <source>editActivity</source><target>Aktivität bearbeiten</target>
@@ -505,6 +508,9 @@
       </trans-unit>
       <trans-unit id="editOrganisation" datatype="html">
         <source>editOrganisation</source><target>Organisation bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="editSubscriptionType" datatype="html">
+        <source>editSubscriptionType</source><target>Abonnementtyp bearbeiten</target>
       </trans-unit>
       <trans-unit id="editSuburb" datatype="html">
         <source>editSuburb</source><target>Stadtteil bearbeiten</target>

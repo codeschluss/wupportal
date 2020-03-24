@@ -59,7 +59,7 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="organisations" [disabled]="!organisations.length">
+  <mat-tab id="organisations">
     <ng-template matTabLabel>
       <span matBadgeOverlap="false" [matBadge]="organisations.length || null">
         <i18n i18n="@@organisationRequests">organisationRequests</i18n>
@@ -88,7 +88,7 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="memberships" [disabled]="!memberships.length">
+  <mat-tab id="memberships">
     <ng-template matTabLabel>
       <span matBadgeOverlap="false" [matBadge]="memberships.length || null">
         <i18n i18n="@@membershipRequests">membershipRequests</i18n>
@@ -117,7 +117,7 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="bloggers" [disabled]="!bloggers.length">
+  <mat-tab id="bloggers">
     <ng-template matTabLabel>
       <span matBadgeOverlap="false" [matBadge]="bloggers.length || null">
         <i18n i18n="@@bloggerRequests">bloggerRequests</i18n>

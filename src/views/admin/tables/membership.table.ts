@@ -28,7 +28,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class MembershipTableComponent extends BaseTable<MembershipModel> {
+export class MembershipTableComponent
+  extends BaseTable<MembershipModel> {
 
   public columns: TableColumn[] = [
     {

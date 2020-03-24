@@ -11,6 +11,16 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title>
+            <i18n i18n="@@suburbs">suburbs</i18n>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <suburb-activities-chart></suburb-activities-chart>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
             <i18n i18n="@@categories">categories</i18n>
           </mat-card-title>
         </mat-card-header>
@@ -25,13 +35,13 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <targetgroup-activities-chart></targetgroup-activities-chart>
+          <target-group-activities-chart></target-group-activities-chart>
         </mat-card-content>
       </mat-card>
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="subscription">
+  <mat-tab id="subscriptions">
     <ng-template matTabLabel>
       <i18n i18n="@@subscriptions">subscriptions</i18n>
     </ng-template>

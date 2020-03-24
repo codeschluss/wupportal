@@ -112,4 +112,26 @@
       </topic-table>
     </ng-template>
   </mat-tab>
+
+  <mat-tab id="subscriptions">
+    <ng-template matTabLabel>
+      <i18n i18n="@@subscriptionTypes">subscriptionTypes</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <subscription-type-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n i18n="@@actions">actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </subscription-type-table>
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>

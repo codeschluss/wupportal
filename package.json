@@ -23,7 +23,7 @@
       "refreshUrl": "/api/refresh"
     },
     "defaults": {
-      "appUrl": "https://wooportal.test.codeschluss.de",
+      "appUrl": "https://wooportal.app",
       "city": "",
       "language": "en",
       "title": "wooportal"

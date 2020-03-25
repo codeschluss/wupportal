@@ -25,7 +25,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class CategoryTableComponent extends BaseTable<CategoryModel> {
+export class CategoryTableComponent
+  extends BaseTable<CategoryModel> {
 
   public columns: TableColumn[] = [
     {

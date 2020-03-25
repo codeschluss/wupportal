@@ -22,7 +22,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class BlogpostTableComponent extends BaseTable<BlogpostModel> {
+export class BlogpostTableComponent
+  extends BaseTable<BlogpostModel> {
 
   public columns: TableColumn[] = [
     {

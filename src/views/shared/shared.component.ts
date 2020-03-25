@@ -26,7 +26,7 @@ export class SharedComponent implements OnInit {
 
   public date: Date = new Date();
 
-  public claimed: JwtClaims;
+  public claims: JwtClaims;
 
   public language: FormControl = new FormControl();
 
@@ -142,7 +142,7 @@ export class SharedComponent implements OnInit {
           map((tokens) => tokens.access),
           map((access) => Object.keys(claims).reduce((claim, key) =>
             Object.assign(claim, { [key]: access[claims[key]] }), { }))
-        ).subscribe((claimed) => this.claimed = claimed as JwtClaims);
+        ).subscribe((claimed) => this.claims = claimed as JwtClaims);
 
         fromEvent(this.deviceProvider.document, 'scroll', {
           capture: true,

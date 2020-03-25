@@ -35,6 +35,7 @@ import { BaseStepper } from './base/base.stepper';
 import { BaseTable } from './base/base.table';
 import { CategoryActivitiesChartComponent } from './charts/category-activities.chart';
 import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
+import { SuburbActivitiesChartComponent } from './charts/suburb-activities.chart';
 import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
 import { BooleanFieldComponent } from './fields/boolean.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
@@ -58,8 +59,9 @@ import { KeywordFormComponent } from './forms/keyword.form';
 import { LanguageFormComponent } from './forms/language.form';
 import { MailingFormComponent } from './forms/mailing.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
-import { PusherFormComponent } from './forms/pusher.form';
+import { PushingFormComponent } from './forms/pushing.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
+import { SubscriptionTypeFormComponent } from './forms/subscription-type.form';
 import { SuburbFormComponent } from './forms/suburb.form';
 import { TargetGroupFormComponent } from './forms/target-group.form';
 import { TopicFormComponent } from './forms/topic.form';
@@ -87,6 +89,7 @@ import { InfopageStepperComponent } from './steppers/infopage.stepper';
 import { KeywordsStepperComponent } from './steppers/keyword.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
+import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
 import { TopicStepperComponent } from './steppers/topic.stepper';
@@ -100,6 +103,7 @@ import { KeywordTableComponent } from './tables/keyword.table';
 import { LanguageTableComponent } from './tables/language.table';
 import { MembershipTableComponent } from './tables/membership.table';
 import { OrganisationTableComponent } from './tables/organisation.table';
+import { SubscriptionTypeTableComponent } from './tables/subscription-type.table';
 import { SuburbTableComponent } from './tables/suburb.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
 import { TopicTableComponent } from './tables/topic.table';
@@ -108,6 +112,7 @@ import { UserTableComponent } from './tables/user.table';
 const charts: Type<BaseChart>[] = [
   CategoryActivitiesChartComponent,
   SubscriptionsChartComponent,
+  SuburbActivitiesChartComponent,
   TargetGroupActivitiesChartComponent
 ];
 
@@ -146,8 +151,9 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   LanguageFormComponent,
   MailingFormComponent,
   OrganisationFormComponent,
-  PusherFormComponent,
+  PushingFormComponent,
   ScheduleFormComponent,
+  SubscriptionTypeFormComponent,
   SuburbFormComponent,
   TargetGroupFormComponent,
   TopicFormComponent,
@@ -209,6 +215,7 @@ const steppers: Type<BaseStepper<CrudModel>>[] = [
   KeywordsStepperComponent,
   LanguageStepperComponent,
   OrganisationStepperComponent,
+  SubscriptionTypeStepperComponent,
   SuburbStepperComponent,
   TargetGroupStepperComponent,
   TopicStepperComponent,
@@ -225,6 +232,7 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   LanguageTableComponent,
   MembershipTableComponent,
   OrganisationTableComponent,
+  SubscriptionTypeTableComponent,
   SuburbTableComponent,
   TargetGroupTableComponent,
   TopicTableComponent,

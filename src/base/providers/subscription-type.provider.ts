@@ -1,13 +1,25 @@
 import { Injectable, Type } from '@angular/core';
 import { CrudLink, CrudMethods, CrudProvider } from '@wooportal/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { SubscriptionTypeControllerService as Service } from '../../api/services/subscription-type-controller.service';
+import { LanguageModel } from '../models/language.model';
 import { SubscriptionTypeModel as Model } from '../models/subscription-type.model';
 
 @Injectable({ providedIn: 'root' })
 export class SubscriptionTypeProvider extends CrudProvider<Service, Model> {
 
-  protected linked: CrudLink[] = [];
+  protected linked: CrudLink[] = [
+    {
+      field: 'language',
+      method: () => EMPTY,
+      model: LanguageModel
+    },
+    {
+      field: 'translations',
+      method: this.service.subscriptionTypeControllerReadTranslationsResponse,
+      model: Model
+    }
+  ];
 
   protected methods: CrudMethods = {
     create: this.service.subscriptionTypeControllerCreateResponse,

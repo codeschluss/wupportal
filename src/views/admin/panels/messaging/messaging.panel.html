@@ -20,18 +20,18 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="pusher">
+  <mat-tab id="pushing">
     <ng-template matTabLabel>
       <i18n i18n="@@pushNotification">pushNotification</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <pusher-form #pusher>
-      </pusher-form>
+      <pushing-form #pushing>
+      </pushing-form>
       <mat-divider></mat-divider>
       <button mat-raised-button
         color="primary"
-        [disabled]="!pusher.valid"
-        (click)="pusher.persist().subscribe()">
+        [disabled]="!pushing.valid"
+        (click)="pushing.persist().subscribe()">
         <i18n i18n="@@send">send</i18n>
       </button>
     </ng-template>

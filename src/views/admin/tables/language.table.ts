@@ -22,7 +22,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class LanguageTableComponent extends BaseTable<LanguageModel> {
+export class LanguageTableComponent
+  extends BaseTable<LanguageModel> {
 
   public columns: TableColumn[] = [
     {

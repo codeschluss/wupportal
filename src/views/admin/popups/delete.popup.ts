@@ -12,10 +12,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
           <strong mat-line>{{ data.item.name }}</strong>
           <em mat-line><i18n i18n="@@name">name</i18n></em>
         </mat-list-item>
-        <mat-list-item *ngIf="data.item.description">
-          <strong mat-line>{{ data.item.description }}</strong>
-          <em mat-line><i18n i18n="@@description">description</i18n></em>
-        </mat-list-item>
         <mat-list-item>
           <strong mat-line>{{ data.item.id }}</strong>
           <em mat-line><i18n i18n="@@uuid">uuid</i18n></em>

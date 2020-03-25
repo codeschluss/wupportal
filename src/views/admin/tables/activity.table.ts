@@ -28,7 +28,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class ActivityTableComponent extends BaseTable<ActivityModel> {
+export class ActivityTableComponent
+  extends BaseTable<ActivityModel> {
 
   public columns: TableColumn[] = [
     {

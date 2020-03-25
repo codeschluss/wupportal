@@ -28,7 +28,8 @@ import { BaseTable, TableColumn } from '../base/base.table';
   `)
 })
 
-export class OrganisationTableComponent extends BaseTable<OrganisationModel> {
+export class OrganisationTableComponent
+  extends BaseTable<OrganisationModel> {
 
   public columns: TableColumn[] = [
     {

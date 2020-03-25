@@ -17,6 +17,13 @@ export class AnalyticsProvider {
       .analyticsControllerCalculateActivitiesPerCategory(current);
   }
 
+  public activitiesPerSuburb(
+    current: boolean
+  ): Observable<AnalyticsEntry[]> {
+    return this.service
+      .analyticsControllerCalculateActivitiesPerSuburbs(current);
+  }
+
   public activitiesPerTargetGroup(
     current: boolean
   ): Observable<AnalyticsEntry[]> {

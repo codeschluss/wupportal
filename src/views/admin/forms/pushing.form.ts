@@ -11,7 +11,7 @@ import { InputFieldComponent } from '../fields/input.field';
 import { TextareaFieldComponent } from '../fields/textarea.field';
 
 @Component({
-  selector: 'pusher-form',
+  selector: 'pushing-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -26,7 +26,7 @@ import { TextareaFieldComponent } from '../fields/textarea.field';
   `)
 })
 
-export class PusherFormComponent
+export class PushingFormComponent
   extends BaseForm<CrudModel> {
 
   public item: any;

@@ -37,20 +37,5 @@
         ]
       }
     }
-  ],
-  "dataGroups": [
-    {
-      "name": "api",
-      "urls": [
-        "/api/**",
-        "!/api/login",
-        "!/api/refresh"
-      ],
-      "cacheConfig": {
-        "strategy": "freshness",
-        "timeout":"500u",
-        "maxAge": "6h"
-      }
-    }
   ]
 }

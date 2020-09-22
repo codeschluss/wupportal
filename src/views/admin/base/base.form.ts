@@ -111,7 +111,7 @@ export abstract class BaseForm<Model extends CrudModel>
     }
   }
 
-  public persist(): Observable<any> {
+  public persist(override: boolean = false): Observable<any> {
     const item = Object.assign(new this.model(), this.item);
     const provider = (this.model as any).provider;
 
@@ -122,7 +122,7 @@ export abstract class BaseForm<Model extends CrudModel>
     return (
       !provider || !this.group.dirty
         ? of(item)
-        : item.id
+        : item.id && !override
           ? provider.update(item)
           : provider.create(item)
     ).pipe(

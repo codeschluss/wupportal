@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApplicationSettings } from '@wooportal/app';
 import { Box, TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 import { AddressModel } from '../../../base/models/address.model';
 import { SuburbModel } from '../../../base/models/suburb.model';
 import { AddressProvider } from '../../../base/providers/address.provider';
@@ -134,7 +134,7 @@ export class AddressFormComponent
   public persist(): Observable<any> {
     this.item.suburbId = this.group.get('suburb').value.id;
 
-    return super.persist();
+    return this.superuser.pipe(take(1), switchMap((su) => super.persist(!su)));
   }
 
   protected ngPostInit(): void {

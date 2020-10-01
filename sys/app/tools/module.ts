@@ -2,6 +2,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { ClassProvider, NgModule } from '@angular/core';
 import { DeviceInterceptor } from '../device/device.interceptor';
+import { ServiceProvider } from '../service/service.provider';
 import { ApplicationSettings } from './settings';
 
 const interceptors: ClassProvider[] = [
@@ -10,6 +11,7 @@ const interceptors: ClassProvider[] = [
 
 @NgModule({
   providers: [
+    ServiceProvider,
     ...interceptors
   ]
 })

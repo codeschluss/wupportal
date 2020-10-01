@@ -49,7 +49,7 @@ const platform: any[] = [
 
 export class ClientModule {
 
-  constructor(
+  public constructor(
     iconLibrary: FaIconLibrary
   ) {
     iconLibrary.addIconPacks(fab, fas);

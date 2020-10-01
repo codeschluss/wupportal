@@ -46,7 +46,7 @@ const platform: any[] = [
 
 export class NativeModule {
 
-  constructor(
+  public constructor(
     iconLibrary: FaIconLibrary
   ) {
     iconLibrary.addIconPacks(fab, fas);

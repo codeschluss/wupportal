@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApplicationSettings } from '@wooportal/app';
 import { Box, TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable } from 'rxjs';
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { filter, map, mergeMap, take } from 'rxjs/operators';
 import { AddressModel } from '../../../base/models/address.model';
 import { SuburbModel } from '../../../base/models/suburb.model';
 import { AddressProvider } from '../../../base/providers/address.provider';
@@ -134,7 +134,7 @@ export class AddressFormComponent
   public persist(): Observable<any> {
     this.item.suburbId = this.group.get('suburb').value.id;
 
-    return this.superuser.pipe(take(1), switchMap((su) => super.persist(!su)));
+    return this.superuser.pipe(take(1), mergeMap((su) => super.persist(!su)));
   }
 
   protected ngPostInit(): void {
@@ -145,9 +145,25 @@ export class AddressFormComponent
       });
     }
 
-    this.superuser.pipe(take(1), filter((su) => !su)).subscribe(() =>
-      this.fields = this.fields.filter((field) =>
-        !['latitude', 'longitude'].includes(field.name)));
+    this.superuser.pipe(take(1), filter((su) => !su)).subscribe(() => {
+      this.fields = this.fields.filter((field) => ![
+        'latitude',
+        'longitude'
+      ].includes(field.name));
+
+      if (this.item.id) {
+        Object.assign(this.fields.find((field) => field.name === 'suburb'), {
+          locked: true
+        });
+      }
+
+      this.group.valueChanges.pipe(take(1)).subscribe(() => {
+        this.item.id = undefined;
+        Object.assign(this.fields.find((field) => field.name === 'suburb'), {
+          locked: false
+        });
+      });
+    });
   }
 
   protected cascade(item: AddressModel): Observable<any> {

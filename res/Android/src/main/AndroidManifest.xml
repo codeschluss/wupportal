@@ -2,7 +2,7 @@
 <manifest
   xmlns:android="http://schemas.android.com/apk/res/android"
   package="__PACKAGE__"
-  android:versionCode="14"
+  android:versionCode="15"
   android:versionName="0.1.2">
 
   <supports-screens
@@ -24,6 +24,7 @@
     android:name="com.tns.NativeScriptApplication"
     android:allowBackup="true"
     android:icon="@drawable/icon"
+    android:roundIcon="@drawable/icon_round"
     android:label="@string/defaultTitle"
     android:theme="@style/AppTheme">
 

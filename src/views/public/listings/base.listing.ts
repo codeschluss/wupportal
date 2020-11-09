@@ -2,8 +2,8 @@ import { HostBinding, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { DeviceProvider } from '@wooportal/app';
 import { Arr, BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, ReadParams, Selfrouter } from '@wooportal/core';
-import { BehaviorSubject, of } from 'rxjs';
-import { catchError, mergeMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, skip } from 'rxjs/operators';
 
 export abstract class BaseListing<Model extends CrudModel>
   extends Selfrouter implements OnInit {
@@ -20,6 +20,8 @@ export abstract class BaseListing<Model extends CrudModel>
   public readonly base: string = 'listing';
 
   public items: BehaviorSubject<Model[]>;
+
+  public results: Observable<boolean>;
 
   public get next(): boolean {
     const page = (this.items.value as any).page;
@@ -48,6 +50,7 @@ export abstract class BaseListing<Model extends CrudModel>
 
   public ngOnInit(): void {
     this.items = new BehaviorSubject<Model[]>([]);
+    this.results = this.items.pipe(skip(1), map((i) => i.length > 0));
     this.route.queryParams.subscribe((p) => this.fetch(this.params(p)));
   }
 

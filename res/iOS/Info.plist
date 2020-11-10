@@ -18,7 +18,7 @@
     <string>6.0</string>
 
     <key>CFBundleName</key>
-    <string>$(APPLICATION_NAME)</string>
+    <string>$(PRODUCT_NAME)</string>
 
     <key>CFBundlePackageType</key>
     <string>APPL</string>

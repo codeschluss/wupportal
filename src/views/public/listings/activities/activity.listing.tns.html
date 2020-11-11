@@ -47,6 +47,12 @@
         <icon-component icon="ellipsis-h"></icon-component>
       </stack-layout>
     </flexbox-layout>
+    <ng-container *ngIf="(results | async) === false">
+      <stack-layout>
+        <icon-component icon="frown"></icon-component>
+        <i18n i18n="@@notFoundError" unit="notFoundError"></i18n>
+      </stack-layout>
+    </ng-container>
     <ng-container *ngFor="let item of items | async">
       <grid-layout>
         <activity-card [item]="item"></activity-card>

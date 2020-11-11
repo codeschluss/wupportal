@@ -54,6 +54,12 @@
       <div><iframe #frame src="/mapview?embed=true"></iframe></div>
     </aside>
     <nav>
+      <ng-container *ngIf="(results | async) === false">
+        <icon-component icon="frown"></icon-component>
+        <strong class="mat-title">
+          <i18n i18n="@@notFoundError">notFoundError</i18n>
+        </strong>
+      </ng-container>
       <ng-container *ngFor="let item of items | async">
         <activity-card
           [item]="item"

@@ -9,5 +9,20 @@ scroll-view {
         margin-top: 0;
       }
     }
+
+    & > stack-layout {
+      horizontal-align: center;
+      margin-top: rem(1);
+
+      & > [icon] {
+        font-size: rem(3);
+        height: rem(4);
+        width: rem(4);
+      }
+
+      & > [unit] {
+        font-size: rem(1.5);
+      }
+    }
   }
 }

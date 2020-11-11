@@ -1,5 +1,11 @@
 <scroll-view class="topoff">
   <stack-layout>
+    <ng-container *ngIf="(results | async) === false">
+      <stack-layout>
+        <icon-component icon="frown"></icon-component>
+        <i18n i18n="@@notFoundError" unit="notFoundError"></i18n>
+      </stack-layout>
+    </ng-container>
     <ng-container *ngFor="let item of items | async">
       <grid-layout>
         <expand-component #expand (changed)="$event && expanded(expand)">

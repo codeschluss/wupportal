@@ -1,20 +1,20 @@
 <main>
   <h2 class="mat-headline">
-    {{ item.name }}
+    {{ item.label }}
     <small>
-      <i18n i18n="@@by">by</i18n>
+      <i18n>by</i18n>
       {{ item.author }}
       <ng-container *ngIf="item.activity">
-        <i18n i18n="@@about">about</i18n>
+        <i18n>about</i18n>
         <a [routerLink]="['/', 'activities', item.activity.id]">
-          {{ item.activity.name }}
+          {{ item.activity.label }}
         </a>
       </ng-container>
     </small>
   </h2>
   <mat-divider></mat-divider>
   <nav>
-    <follow-piece [item]="item.blogger"></follow-piece>
+    <follow-piece [item]="blogger"></follow-piece>
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
     <span [style.flexGrow]="1"></span>
@@ -22,41 +22,40 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <marked-component [data]="item.content"></marked-component>
+    <article [innerHTML]="item.content"></article>
     <ng-container *ngIf="item.activity || item.images">
       <aside>
         <ng-container *ngIf="item.images">
-          <expand-component #images
-            (changed)="$event && expanded(images)">
-            <ng-template #expandHeader>
-              <icon-component icon="image"></icon-component>
-              <i18n i18n="@@images">images</i18n>
-              <small>({{ item.images.length }})</small>
-            </ng-template>
-            <ng-template #expandContent>
-              <ng-container *ngFor="let image of item.images">
-                <figure>
-                  <content
-                    [alt]="image.name"
-                    [style.backgroundImage]="image.source"
-                    [title]="image.name">
-                  </content>
-                </figure>
-              </ng-container>
-            </ng-template>
-          </expand-component>
+          <mat-expansion-panel #images (opened)="expanded(images)">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <fa-icon icon="image"></fa-icon>
+                <i18n>images</i18n>
+                <small>({{ item.images.length }})</small>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngFor="let image of item.images">
+              <figure>
+                <img
+                  src="data:image/svg+xml,
+                    %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                  [alt]="image.label"
+                  [style.backgroundImage]="image.source"
+                  [title]="image.label">
+              </figure>
+            </ng-container>
+          </mat-expansion-panel>
         </ng-container>
         <ng-container *ngIf="item.activity">
-          <expand-component #activity
-            (changed)="$event && expanded(activity)">
-            <ng-template #expandHeader>
-              <icon-component icon="map-marker-alt"></icon-component>
-              <i18n i18n="@@activity">activity</i18n>
-            </ng-template>
-            <ng-template #expandContent>
-              <activity-card [item]="item.activity"></activity-card>
-            </ng-template>
-          </expand-component>
+          <mat-expansion-panel #activity (opened)="expanded(activity)">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <fa-icon icon="map-marker-alt"></fa-icon>
+                <i18n>activity</i18n>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <activity-card [item]="item.activity"></activity-card>
+          </mat-expansion-panel>
         </ng-container>
       </aside>
     </ng-container>

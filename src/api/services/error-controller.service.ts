@@ -25,6 +25,7 @@ class ErrorControllerService extends __BaseService {
   }
 
   /**
+   * error
    * @param error error
    * @return OK
    */
@@ -51,6 +52,7 @@ class ErrorControllerService extends __BaseService {
     );
   }
   /**
+   * error
    * @param error error
    * @return OK
    */

@@ -1,12 +1,9 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ConfigurationModel } from '../../../base/models/configuration.model';
-import { ConfigurationProvider } from '../../../base/providers/configuration.provider';
-import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { ConfigurationModel, ConfigurationProvider, TokenProvider, TranslationProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { InputFieldComponent } from '../fields/input.field';
 
@@ -16,28 +13,28 @@ import { InputFieldComponent } from '../fields/input.field';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'mapCluster'">
-          <i18n i18n="@@mapCluster">mapCluster</i18n>
+          <i18n>mapCluster</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mapLatitude'">
-          <i18n i18n="@@mapLatitude">mapLatitude</i18n>
+          <i18n>mapLatitude</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mapLongitude'">
-          <i18n i18n="@@mapLongitude">mapLongitude</i18n>
+          <i18n>mapLongitude</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mapProjection'">
-          <i18n i18n="@@mapProjection">mapProjection</i18n>
+          <i18n>mapProjection</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mapZoomfactor'">
-          <i18n i18n="@@mapZoomfactor">mapZoomfactor</i18n>
+          <i18n>mapZoomfactor</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalMail'">
-          <i18n i18n="@@email">email</i18n>
+          <i18n>email</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalName'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n>title</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'portalSubtitle'">
-          <i18n i18n="@@tagline">tagline</i18n>
+          <i18n>tagline</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

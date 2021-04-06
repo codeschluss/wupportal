@@ -1,0 +1,52 @@
+@import ../../../brand.scss
+
+nav
+  display: flex
+  justify-content: space-between
+  max-width: 25rem
+  width: calc(100% - 3rem)
+
+  & > div
+    &:first-of-type
+      background-color: $color-light
+      text-align: left
+      width: 7.5rem
+
+      & > a
+        margin: 0 .5rem 0 -1.5rem
+
+      & > span
+        border-right-color: $color-lighter
+        border-left: none
+        float: right
+
+    &:last-of-type
+      background-color: $color-light
+      text-align: right
+      width: 7.5rem
+
+      & > a
+        margin: 0 -1.5rem 0 .5rem
+
+      & > span
+        border-left-color: $color-lighter
+        border-right: none
+        float: left
+
+    &:nth-of-type(2) > a
+      width: 4rem
+
+    & > a
+      background: $color-primary !important
+      color: $color-lightest !important
+
+      &[disabled]
+        filter: grayscale(1)
+        pointer-events: none
+
+    & > i18n
+      font-size: 1rem
+      vertical-align: middle
+
+    & > span
+      border: 1.25rem solid transparent

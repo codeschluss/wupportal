@@ -1,30 +1,24 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, SessionProvider } from '@wooportal/core';
-import { ActivityModel } from '../../../../base/models/activity.model';
-import { BloggerModel } from '../../../../base/models/blogger.model';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
-import { SubscriptionTypeModel } from '../../../../base/models/subscription-type.model';
-import { SubscriptionModel } from '../../../../base/models/subscription.model';
-import { TopicModel } from '../../../../base/models/topic.model';
-import { SubscriptionProvider } from '../../../../base/providers/subscription.provider';
+import { ActivityModel, BloggerModel, CrudJoiner, CrudModel, CrudResolver, OrganisationModel, SessionGuarding, SessionProvider, SubscriptionModel, SubscriptionProvider, SubscriptionTypeModel, TopicModel } from '../../../../core';
 import { BasePage } from '../base.page';
 
 @Component({
-  styleUrls: ['../base.page.scss', 'notifications.page.scss'],
+  styleUrls: ['../base.page.sass', 'notifications.page.sass'],
   templateUrl: 'notifications.page.html'
 })
 
-export class NotificationsPageComponent extends BasePage {
+export class NotificationsPageComponent
+  extends BasePage {
 
   protected path: string = 'notifications/:uuid';
 
   public get items(): {
-    activities: ActivityModel[],
-    bloggers: BloggerModel[],
-    organisations: OrganisationModel[],
-    topics: TopicModel[],
-    types: SubscriptionTypeModel[]
+    activities: ActivityModel[];
+    bloggers: BloggerModel[];
+    organisations: OrganisationModel[];
+    topics: TopicModel[];
+    types: SubscriptionTypeModel[];
   } {
     return {
       activities: this.subscription.activities || [],
@@ -50,6 +44,7 @@ export class NotificationsPageComponent extends BasePage {
   protected get routing(): Route {
     return {
       path: this.path,
+      canActivate: [SessionGuarding],
       resolve: {
         subscription: CrudResolver,
         subscriptionTypes: CrudResolver

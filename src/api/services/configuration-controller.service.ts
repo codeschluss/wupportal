@@ -31,6 +31,7 @@ class ConfigurationControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `ConfigurationControllerService.ConfigurationControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -75,6 +76,7 @@ class ConfigurationControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `ConfigurationControllerService.ConfigurationControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -98,6 +100,7 @@ class ConfigurationControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newConfiguration newConfiguration
    * @return OK
    */
@@ -124,6 +127,7 @@ class ConfigurationControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newConfiguration newConfiguration
    * @return OK
    */
@@ -134,6 +138,7 @@ class ConfigurationControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param configurationId configurationId
    * @return OK
    */
@@ -144,7 +149,7 @@ class ConfigurationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/configurations/${configurationId}`,
+      this.rootUrl + `/configurations/${encodeURIComponent(String(configurationId))}`,
       __body,
       {
         headers: __headers,
@@ -160,6 +165,7 @@ class ConfigurationControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param configurationId configurationId
    * @return OK
    */
@@ -170,6 +176,7 @@ class ConfigurationControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newConfiguration newConfiguration
    * @param configurationId configurationId
    * @return OK
@@ -183,7 +190,7 @@ class ConfigurationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/configurations/${configurationId}`,
+      this.rootUrl + `/configurations/${encodeURIComponent(String(configurationId))}`,
       __body,
       {
         headers: __headers,
@@ -199,6 +206,7 @@ class ConfigurationControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newConfiguration newConfiguration
    * @param configurationId configurationId
    * @return OK
@@ -211,6 +219,7 @@ class ConfigurationControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param configurationId configurationId
    * @return OK
    */
@@ -221,7 +230,7 @@ class ConfigurationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/configurations/${configurationId}`,
+      this.rootUrl + `/configurations/${encodeURIComponent(String(configurationId))}`,
       __body,
       {
         headers: __headers,
@@ -237,6 +246,7 @@ class ConfigurationControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param configurationId configurationId
    * @return OK
    */

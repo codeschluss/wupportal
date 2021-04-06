@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Route } from '@angular/router';
-import { AppRouterModule } from '@wooportal/app';
-import { LabelsResolver, SessionResolver } from '@wooportal/core';
+import { Route, RouterModule } from '@angular/router';
+import { LabelResolver, SessionResolver } from './core';
 import { SharedComponent } from './views/shared/shared.component';
 
 const routes: Route[] = [
@@ -33,15 +32,15 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [AppRouterModule],
-  imports: [AppRouterModule.forRoot([
+  exports: [RouterModule],
+  imports: [RouterModule.forRoot([
     {
       path: '',
       children: routes,
       component: SharedComponent,
       resolve: {
-        session: SessionResolver,
-        xliff: LabelsResolver
+        labels: LabelResolver,
+        session: SessionResolver
       }
     }
   ], {

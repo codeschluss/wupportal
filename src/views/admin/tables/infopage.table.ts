@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { InfopageModel } from '../../../base/models/infopage.model';
+import { CrudJoiner, InfopageModel } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,10 +8,10 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'title'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n>title</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'topic'">
-          <i18n i18n="@@topic">topic</i18n>
+          <i18n>topic</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

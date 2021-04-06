@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { AppRouterModule } from '@wooportal/app';
+import { RouterModule } from '@angular/router';
 import { AdminGuarding } from './admin.guarding';
 
 @Component({
@@ -9,8 +9,8 @@ import { AdminGuarding } from './admin.guarding';
 export class AdminComponent { }
 
 @NgModule({
-  exports: [AppRouterModule],
-  imports: [AppRouterModule.forChild([
+  exports: [RouterModule],
+  imports: [RouterModule.forChild([
     {
       path: '**',
       pathMatch: 'full',

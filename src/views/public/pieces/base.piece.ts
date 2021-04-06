@@ -1,10 +1,9 @@
-import { HostBinding, Input } from '@angular/core';
-import { CrudModel } from '@wooportal/core';
-import { ActivityModel } from '../../../base/models/activity.model';
-import { BlogpostModel } from '../../../base/models/blogpost.model';
-import { InfopageModel } from '../../../base/models/infopage.model';
-import { OrganisationModel } from '../../../base/models/organisation.model';
+import { Directive, HostBinding, Input } from '@angular/core';
+import { ActivityModel, BlogpostModel, CrudModel, InfopageModel, OrganisationModel } from '../../../core';
 
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
 export abstract class BasePiece {
 
   @HostBinding('attr.base')

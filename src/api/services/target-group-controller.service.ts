@@ -32,6 +32,7 @@ class TargetGroupControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `TargetGroupControllerService.TargetGroupControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -76,6 +77,7 @@ class TargetGroupControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `TargetGroupControllerService.TargetGroupControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -99,6 +101,7 @@ class TargetGroupControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newTargetGroup newTargetGroup
    * @return OK
    */
@@ -125,6 +128,7 @@ class TargetGroupControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newTargetGroup newTargetGroup
    * @return OK
    */
@@ -135,6 +139,7 @@ class TargetGroupControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param targetGroupId targetGroupId
    * @return OK
    */
@@ -145,7 +150,7 @@ class TargetGroupControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/targetgroups/${targetGroupId}`,
+      this.rootUrl + `/targetgroups/${encodeURIComponent(String(targetGroupId))}`,
       __body,
       {
         headers: __headers,
@@ -161,6 +166,7 @@ class TargetGroupControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param targetGroupId targetGroupId
    * @return OK
    */
@@ -171,6 +177,7 @@ class TargetGroupControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newTargetGroup newTargetGroup
    * @param targetGroupId targetGroupId
    * @return OK
@@ -184,7 +191,7 @@ class TargetGroupControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/targetgroups/${targetGroupId}`,
+      this.rootUrl + `/targetgroups/${encodeURIComponent(String(targetGroupId))}`,
       __body,
       {
         headers: __headers,
@@ -200,6 +207,7 @@ class TargetGroupControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newTargetGroup newTargetGroup
    * @param targetGroupId targetGroupId
    * @return OK
@@ -212,6 +220,7 @@ class TargetGroupControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param targetGroupId targetGroupId
    * @return OK
    */
@@ -222,7 +231,7 @@ class TargetGroupControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/targetgroups/${targetGroupId}`,
+      this.rootUrl + `/targetgroups/${encodeURIComponent(String(targetGroupId))}`,
       __body,
       {
         headers: __headers,
@@ -238,6 +247,7 @@ class TargetGroupControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param targetGroupId targetGroupId
    * @return OK
    */
@@ -248,6 +258,7 @@ class TargetGroupControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param targetGroupId targetGroupId
    * @return OK
    */
@@ -258,7 +269,7 @@ class TargetGroupControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/targetgroups/${targetGroupId}/translations`,
+      this.rootUrl + `/targetgroups/${encodeURIComponent(String(targetGroupId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -274,6 +285,7 @@ class TargetGroupControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param targetGroupId targetGroupId
    * @return OK
    */

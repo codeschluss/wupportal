@@ -1,111 +1,111 @@
 <header #header>
-  <img src="/images/icon.png" [alt]="name | async" [title]="name | async">
+  <img src="images/icon.png" [alt]="name | async" [title]="name | async">
 </header>
-<navbar-component>
+<mat-toolbar desktop>
   <a mat-button [class.active]="url === '/'" [routerLink]="['/']">
-    <icon-component icon="play-circle"></icon-component>
-    <i18n i18n="@@homepage">homepage</i18n>
+    <fa-icon icon="play-circle"></fa-icon>
+    <i18n>homepage</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/mapview')"
     [routerLink]="['/', 'mapview']">
-    <icon-component icon="globe"></icon-component>
-    <i18n i18n="@@mapview">mapview</i18n>
+    <fa-icon icon="globe"></fa-icon>
+    <i18n>mapview</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/activities')"
     [routerLink]="['/', 'activities']">
-    <icon-component icon="map-marker-alt"></icon-component>
-    <i18n i18n="@@activities">activities</i18n>
+    <fa-icon icon="map-marker-alt"></fa-icon>
+    <i18n>activities</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/organisations')"
     [routerLink]="['/', 'organisations']">
-    <icon-component icon="at"></icon-component>
-    <i18n i18n="@@organisations">organisations</i18n>
+    <fa-icon icon="at"></fa-icon>
+    <i18n>organisations</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/blogposts')"
     [routerLink]="['/', 'blogposts']">
-    <icon-component icon="comment-dots"></icon-component>
-    <i18n i18n="@@blogposts">blogposts</i18n>
+    <fa-icon icon="comment-dots"></fa-icon>
+    <i18n>blogposts</i18n>
   </a>
   <a mat-button
     [class.active]="url.startsWith('/infopages')"
     [routerLink]="['/', 'infopages']">
-    <icon-component icon="info-circle"></icon-component>
-    <i18n i18n="@@infopages">infopages</i18n>
+    <fa-icon icon="info-circle"></fa-icon>
+    <i18n>infopages</i18n>
   </a>
   <mat-form-field [class.active]="url.startsWith('/search')">
-    <icon-component matPrefix icon="search"></icon-component>
-    <input #navbarInput matInput
+    <fa-icon matPrefix icon="search"></fa-icon>
+    <input #toolbarInput matInput
       type="search"
       value="{{ filter() }}"
-      (keydown.enter)="navbarInput.value
-        && navigate('/', 'search', navbarInput.value)">
-    <mat-label><i18n i18n="@@search">search</i18n></mat-label>
+      (keydown.enter)="toolbarInput.value
+        && navigate('/', 'search', toolbarInput.value)">
+    <mat-label><i18n>search</i18n></mat-label>
     <button mat-button mat-icon-button matSuffix
-      [disabled]="!navbarInput.value"
-      [routerLink]="['/', 'search', navbarInput.value]">
-      <icon-component icon="chevron-circle-right"></icon-component>
+      [disabled]="!toolbarInput.value"
+      [routerLink]="['/', 'search', toolbarInput.value]">
+      <fa-icon icon="chevron-circle-right"></fa-icon>
     </button>
   </mat-form-field>
-</navbar-component>
-<navbar-component [title]="name | async">
+</mat-toolbar>
+<mat-toolbar mobile color="primary">
+  <h1>{{ name | async }}</h1>
   <span [style.flexGrow]="1"></span>
   <mat-progress-spinner
     mode="indeterminate"
     [style.opacity]="busy | async">
   </mat-progress-spinner>
   <button mat-icon-button (click)="drawer.toggle()">
-    <icon-component [icon]="(drawer.visible | async) ? 'arrow-left' : 'bars'">
-    </icon-component>
+    <fa-icon [icon]="drawer.opened ? 'arrow-left' : 'bars'"></fa-icon>
   </button>
-</navbar-component>
-<drawer-component #drawer>
-  <ng-template #drawerMain>
+</mat-toolbar>
+<mat-drawer-container>
+  <mat-drawer-content class="topoff">
     <mat-progress-bar
       mode="indeterminate"
       [style.opacity]="busy | async">
     </mat-progress-bar>
     <router-outlet></router-outlet>
-    <navbar-component>
+    <mat-toolbar desktop>
       <button mat-button [matMenuTriggerFor]="languageMenu">
-        <icon-component icon="language"></icon-component>
-        <i18n i18n="@@language">language</i18n>
+        <fa-icon icon="language"></fa-icon>
+        <i18n>language</i18n>
       </button>
-      <mat-menu #languageMenu="matMenu" xPosition="after">
+      <mat-menu #languageMenu="matMenu" xPosition="before">
         <ng-container *ngFor="let item of languages">
           <button mat-menu-item
             [class.active]="item.locale === this.language.value"
             (click)="this.language.setValue(item.locale)">
             <pre>{{ item.locale }}</pre>
-            {{ item.name }}
+            {{ item.label }}
           </button>
         </ng-container>
       </mat-menu>
       <a mat-button
         [class.active]="url.startsWith('/notifications')"
-        [disabled]="!pushable"
-        (click)="notifications()">
-        <icon-component icon="paper-plane"></icon-component>
-        <i18n i18n="@@notifications">notifications</i18n>
+        [disabled]="subscriptionId === 'blocked'"
+        [routerLink]="['/', 'notifications', subscriptionId]">
+        <fa-icon icon="paper-plane"></fa-icon>
+        <i18n>notifications</i18n>
       </a>
       <a mat-button
         [class.active]="url.startsWith('/imprint')"
         [routerLink]="['/', 'imprint']">
-        <icon-component icon="bullhorn"></icon-component>
-        <i18n i18n="@@imprint">imprint</i18n>
+        <fa-icon icon="bullhorn"></fa-icon>
+        <i18n>imprint</i18n>
       </a>
       <a mat-button
         [class.active]="url.startsWith('/policies')"
         [routerLink]="['/', 'policies']">
-        <icon-component icon="balance-scale"></icon-component>
-        <i18n i18n="@@policies">policies</i18n>
+        <fa-icon icon="balance-scale"></fa-icon>
+        <i18n>policies</i18n>
       </a>
       <span [style.flexGrow]="1"></span>
       <small>
-        <icon-component icon="copyright"></icon-component>
+        <fa-icon icon="copyright"></fa-icon>
         {{ name | async }} 2017-{{ date | date: 'yyyy' }}
       </small>
       <ng-container *ngIf="claims?.userId">
@@ -113,22 +113,22 @@
           #adminMenuTrigger="matMenuTrigger"
           [class.active]="url.startsWith('/admin')"
           [matMenuTriggerFor]="adminMenu">
-          <icon-component icon="cog"></icon-component>
-          <i18n i18n="@@administration">administration</i18n>
+          <fa-icon icon="cog"></fa-icon>
+          <i18n>administration</i18n>
         </button>
         <mat-menu #adminMenu="matMenu" xPosition="before">
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/account')"
             [routerLink]="['/', 'admin', 'account', claims?.userId]">
-            <icon-component icon="chalkboard-teacher"></icon-component>
-            <i18n i18n="@@account">account</i18n>
+            <fa-icon icon="chalkboard-teacher"></fa-icon>
+            <i18n>account</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url.startsWith('/admin/organisation')"
             [disabled]="!claims?.organisationAdmin.length && !claims?.superUser"
             [routerLink]="['/', 'admin', 'organisation']">
-            <icon-component icon="sitemap"></icon-component>
-            <i18n i18n="@@organisation">organisation</i18n>
+            <fa-icon icon="sitemap"></fa-icon>
+            <i18n>organisation</i18n>
           </button>
           <ng-container *ngIf="claims?.superUser">
             <mat-divider></mat-divider>
@@ -137,62 +137,99 @@
               [matMenuTriggerFor]="applicationMenu"
               [routerLink]="['/', 'admin', 'application']"
               (click)="adminMenuTrigger.closeMenu()">
-              <icon-component icon="sliders-h"></icon-component>
-              <i18n i18n="@@application">application</i18n>
+              <fa-icon icon="sliders-h"></fa-icon>
+              <i18n>application</i18n>
             </button>
             <button mat-menu-item
               [class.active]="url.startsWith('/admin/messaging')"
               [matMenuTriggerFor]="messagingMenu"
               [routerLink]="['/', 'admin', 'messaging']"
               (click)="adminMenuTrigger.closeMenu()">
-              <icon-component icon="paper-plane"></icon-component>
-              <i18n i18n="@@messaging">messaging</i18n>
+              <fa-icon icon="paper-plane"></fa-icon>
+              <i18n>messaging</i18n>
             </button>
             <button mat-menu-item
               [class.active]="url.startsWith('/admin/information')"
               [matMenuTriggerFor]="informationMenu"
               [routerLink]="['/', 'admin', 'information']"
               (click)="adminMenuTrigger.closeMenu()">
-              <icon-component icon="book"></icon-component>
-              <i18n i18n="@@information">information</i18n>
+              <fa-icon icon="book"></fa-icon>
+              <i18n>information</i18n>
             </button>
             <button mat-menu-item
               [class.active]="url.startsWith('/admin/positioning')"
               [matMenuTriggerFor]="positioningMenu"
               [routerLink]="['/', 'admin', 'positioning']"
               (click)="adminMenuTrigger.closeMenu()">
-              <icon-component icon="sign"></icon-component>
-              <i18n i18n="@@positioning">positioning</i18n>
+              <fa-icon icon="sign"></fa-icon>
+              <i18n>positioning</i18n>
             </button>
             <button mat-menu-item
               [class.active]="url.startsWith('/admin/privileges')"
               [matMenuTriggerFor]="privilegesMenu"
               [routerLink]="['/', 'admin', 'privileges']"
               (click)="adminMenuTrigger.closeMenu()">
-              <icon-component icon="shield-alt"></icon-component>
-              <i18n i18n="@@privileges">privileges</i18n>
+              <fa-icon icon="shield-alt"></fa-icon>
+              <i18n>privileges</i18n>
             </button>
             <button mat-menu-item
               [class.active]="url.startsWith('/admin/taxonomy')"
               [matMenuTriggerFor]="taxonomyMenu"
               [routerLink]="['/', 'admin', 'taxonomy']"
               (click)="adminMenuTrigger.closeMenu()">
-              <icon-component icon="tags"></icon-component>
-              <i18n i18n="@@taxonomy">taxonomy</i18n>
+              <fa-icon icon="tags"></fa-icon>
+              <i18n>taxonomy</i18n>
             </button>
             <button mat-menu-item
               [class.active]="url.startsWith('/admin/analytics')"
               [matMenuTriggerFor]="analyticsMenu"
               [routerLink]="['/', 'admin', 'analytics']"
               (click)="adminMenuTrigger.closeMenu()">
-              <icon-component icon="chart-bar"></icon-component>
-              <i18n i18n="@@analytics">analytics</i18n>
+              <fa-icon icon="chart-bar"></fa-icon>
+              <i18n>analytics</i18n>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="claims?.superUser || claims?.translator">
+            <mat-divider></mat-divider>
+            <button mat-menu-item
+              [class.active]="url.startsWith('/admin/translate')"
+              [matMenuTriggerFor]="translateMenu"
+              [routerLink]="['/', 'admin', 'translate']"
+              (click)="adminMenuTrigger.closeMenu()">
+              <fa-icon icon="language"></fa-icon>
+              <i18n>translate</i18n>
             </button>
           </ng-container>
           <mat-divider></mat-divider>
           <button mat-menu-item [routerLink]="['/', 'logout']">
-            <icon-component icon="lock"></icon-component>
-            <i18n i18n="@@logout">logout</i18n>
+            <fa-icon icon="lock"></fa-icon>
+            <i18n>logout</i18n>
+          </button>
+        </mat-menu>
+        <mat-menu #translateMenu="matMenu" xPosition="before">
+          <button mat-menu-item
+            [class.active]="url === '/admin/translate?tab=homepage'"
+            [queryParams]="{ tab: 'homepage' }"
+            [routerLink]="['/', 'admin', 'translate']">
+            <i18n>homepage</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/translate?tab=imprint'"
+            [queryParams]="{ tab: 'imprint' }"
+            [routerLink]="['/', 'admin', 'translate']">
+            <i18n>imprint</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/translate?tab=policies'"
+            [queryParams]="{ tab: 'policies' }"
+            [routerLink]="['/', 'admin', 'translate']">
+            <i18n>policies</i18n>
+          </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/translate?tab=labels'"
+            [queryParams]="{ tab: 'labels' }"
+            [routerLink]="['/', 'admin', 'translate']">
+            <i18n>labels</i18n>
           </button>
         </mat-menu>
         <mat-menu #applicationMenu="matMenu" xPosition="before">
@@ -200,13 +237,13 @@
             [class.active]="url === '/admin/application?tab=configuration'"
             [queryParams]="{ tab: 'configuration' }"
             [routerLink]="['/', 'admin', 'application']">
-            <i18n i18n="@@configuration">configuration</i18n>
+            <i18n>configuration</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/application?tab=languages'"
             [queryParams]="{ tab: 'languages' }"
             [routerLink]="['/', 'admin', 'application']">
-            <i18n i18n="@@languages">languages</i18n>
+            <i18n>languages</i18n>
           </button>
         </mat-menu>
         <mat-menu #messagingMenu="matMenu" xPosition="before">
@@ -214,13 +251,13 @@
             [class.active]="url === '/admin/messaging?tab=mailing'"
             [queryParams]="{ tab: 'mailing' }"
             [routerLink]="['/', 'admin', 'messaging']">
-            <i18n i18n="@@email">email</i18n>
+            <i18n>email</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/messaging?tab=pushing'"
             [queryParams]="{ tab: 'pushing' }"
             [routerLink]="['/', 'admin', 'messaging']">
-            <i18n i18n="@@pushNotification">pushNotification</i18n>
+            <i18n>pushNotification</i18n>
           </button>
         </mat-menu>
         <mat-menu #informationMenu="matMenu" xPosition="before">
@@ -228,13 +265,13 @@
             [class.active]="url === '/admin/information?tab=infopages'"
             [queryParams]="{ tab: 'infopages' }"
             [routerLink]="['/', 'admin', 'information']">
-            <i18n i18n="@@infopages">infopages</i18n>
+            <i18n>infopages</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/information?tab=blogposts'"
             [queryParams]="{ tab: 'blogposts' }"
             [routerLink]="['/', 'admin', 'information']">
-            <i18n i18n="@@blogposts">blogposts</i18n>
+            <i18n>blogposts</i18n>
           </button>
         </mat-menu>
         <mat-menu #positioningMenu="matMenu" xPosition="before">
@@ -242,13 +279,13 @@
             [class.active]="url === '/admin/positioning?tab=suburbs'"
             [queryParams]="{ tab: 'suburbs' }"
             [routerLink]="['/', 'admin', 'positioning']">
-            <i18n i18n="@@suburbs">suburbs</i18n>
+            <i18n>suburbs</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/positioning?tab=addresses'"
             [queryParams]="{ tab: 'addresses' }"
             [routerLink]="['/', 'admin', 'positioning']">
-            <i18n i18n="@@addresses">addresses</i18n>
+            <i18n>addresses</i18n>
           </button>
         </mat-menu>
         <mat-menu #privilegesMenu="matMenu" xPosition="before">
@@ -256,25 +293,25 @@
             [class.active]="url === '/admin/privileges?tab=users'"
             [queryParams]="{ tab: 'users' }"
             [routerLink]="['/', 'admin', 'privileges']">
-            <i18n i18n="@@users">users</i18n>
+            <i18n>users</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/privileges?tab=organisations'"
             [queryParams]="{ tab: 'organisations' }"
             [routerLink]="['/', 'admin', 'privileges']">
-            <i18n i18n="@@organisationRequests">organisationRequests</i18n>
+            <i18n>organisationRequests</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/privileges?tab=memberships'"
             [queryParams]="{ tab: 'memberships' }"
             [routerLink]="['/', 'admin', 'privileges']">
-            <i18n i18n="@@membershipRequests">membershipRequests</i18n>
+            <i18n>membershipRequests</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/privileges?tab=bloggers'"
             [queryParams]="{ tab: 'bloggers' }"
             [routerLink]="['/', 'admin', 'privileges']">
-            <i18n i18n="@@bloggerRequests">bloggerRequests</i18n>
+            <i18n>bloggerRequests</i18n>
           </button>
         </mat-menu>
         <mat-menu #taxonomyMenu="matMenu" xPosition="before">
@@ -282,31 +319,31 @@
             [class.active]="url === '/admin/taxonomy?tab=categories'"
             [queryParams]="{ tab: 'categories' }"
             [routerLink]="['/', 'admin', 'taxonomy']">
-            <i18n i18n="@@categories">categories</i18n>
+            <i18n>categories</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/taxonomy?tab=keywords'"
             [queryParams]="{ tab: 'keywords' }"
             [routerLink]="['/', 'admin', 'taxonomy']">
-            <i18n i18n="@@keywords">keywords</i18n>
+            <i18n>keywords</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/taxonomy?tab=targetGroups'"
             [queryParams]="{ tab: 'targetGroups' }"
             [routerLink]="['/', 'admin', 'taxonomy']">
-            <i18n i18n="@@targetGroups">targetGroups</i18n>
+            <i18n>targetGroups</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/taxonomy?tab=topics'"
             [queryParams]="{ tab: 'topics' }"
             [routerLink]="['/', 'admin', 'taxonomy']">
-            <i18n i18n="@@topics">topics</i18n>
+            <i18n>topics</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/taxonomy?tab=subscriptions'"
             [queryParams]="{ tab: 'subscriptions' }"
             [routerLink]="['/', 'admin', 'taxonomy']">
-            <i18n i18n="@@subscriptionTypes">subscriptionTypes</i18n>
+            <i18n>subscriptionTypes</i18n>
           </button>
         </mat-menu>
         <mat-menu #analyticsMenu="matMenu" xPosition="before">
@@ -314,13 +351,13 @@
             [class.active]="url === '/admin/analytics?tab=activities'"
             [queryParams]="{ tab: 'activities' }"
             [routerLink]="['/', 'admin', 'analytics']">
-            <i18n i18n="@@activities">activities</i18n>
+            <i18n>activities</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/analytics?tab=subscriptions'"
             [queryParams]="{ tab: 'subscriptions' }"
             [routerLink]="['/', 'admin', 'analytics']">
-            <i18n i18n="@@subscriptions">subscriptions</i18n>
+            <i18n>subscriptions</i18n>
           </button>
         </mat-menu>
       </ng-container>
@@ -328,20 +365,20 @@
         <a mat-button
           [class.active]="url.startsWith('/login')"
           [routerLink]="['/', 'login']">
-          <icon-component icon="unlock"></icon-component>
-          <i18n i18n="@@login">login</i18n>
+          <fa-icon icon="unlock"></fa-icon>
+          <i18n>login</i18n>
         </a>
       </ng-container>
-    </navbar-component>
-  </ng-template>
-  <ng-template #drawerMenu>
+    </mat-toolbar>
+  </mat-drawer-content>
+  <mat-drawer #drawer mode="over">
     <header>
-      <img src="/images/icon.png" [alt]="name | async" [title]="name | async">
+      <img src="images/icon.png" [alt]="name | async" [title]="name | async">
     </header>
     <mat-action-list>
       <mat-list-item disableRipple
         [class.active]="url.startsWith('/search')">
-        <icon-component icon="search"></icon-component>
+        <fa-icon icon="search"></fa-icon>
         <mat-form-field [class.active]="url.startsWith('/search')">
           <input #drawerInput matInput
             tabindex="-1"
@@ -349,101 +386,186 @@
             value="{{ filter() }}"
             (keydown.enter)="drawerInput.value
               && navigate('/', 'search', drawerInput.value)">
-          <mat-label><i18n i18n="@@search">search</i18n></mat-label>
+          <mat-label><i18n>search</i18n></mat-label>
           <button mat-button mat-icon-button matSuffix
             [disabled]="!drawerInput.value"
             (click)="navigate('/', 'search', drawerInput.value)">
-            <icon-component icon="chevron-circle-right"></icon-component>
+            <fa-icon icon="chevron-circle-right"></fa-icon>
           </button>
         </mat-form-field>
       </mat-list-item>
       <button mat-list-item
         [class.active]="url === '/'"
         (click)="navigate('/')">
-        <icon-component icon="play-circle"></icon-component>
-        <span>{{ name | async }}</span>
+        <fa-icon icon="play-circle"></fa-icon>
+        <i18n>homepage</i18n>
       </button>
       <button mat-list-item
         [class.active]="url.startsWith('/mapview')"
         (click)="navigate('/', 'mapview')">
-        <icon-component icon="globe"></icon-component>
-        <i18n i18n="@@mapview">mapview</i18n>
+        <fa-icon icon="globe"></fa-icon>
+        <i18n>mapview</i18n>
       </button>
       <button mat-list-item
         [class.active]="url.startsWith('/activities')"
         (click)="navigate('/', 'activities')">
-        <icon-component icon="map-marker-alt"></icon-component>
-        <i18n i18n="@@activities">activities</i18n>
+        <fa-icon icon="map-marker-alt"></fa-icon>
+        <i18n>activities</i18n>
       </button>
       <button mat-list-item
         [class.active]="url.startsWith('/organisations')"
         (click)="navigate('/', 'organisations')">
-        <icon-component icon="at"></icon-component>
-        <i18n i18n="@@organisations">organisations</i18n>
+        <fa-icon icon="at"></fa-icon>
+        <i18n>organisations</i18n>
       </button>
       <button mat-list-item
         [class.active]="url.startsWith('/blogposts')"
         (click)="navigate('/', 'blogposts')">
-        <icon-component icon="comment-dots"></icon-component>
-        <i18n i18n="@@blogposts">blogposts</i18n>
+        <fa-icon icon="comment-dots"></fa-icon>
+        <i18n>blogposts</i18n>
       </button>
       <button mat-list-item
         [class.active]="url.startsWith('/infopages')"
         (click)="navigate('/', 'infopages')">
-        <icon-component icon="info-circle"></icon-component>
-        <i18n i18n="@@infopages">infopages</i18n>
+        <fa-icon icon="info-circle"></fa-icon>
+        <i18n>infopages</i18n>
       </button>
     </mat-action-list>
-    <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
-    <mat-action-list>
-      <a mat-button target="_blank" [href]="stores.apple">
-        <img
-          src="/images/badge-app-store.svg"
-          [alt]="'Apple App Store: ' + (name | async)"
-          [title]="'Apple App Store: ' + (name | async)">
-      </a>
-      <a mat-button target="_blank" [href]="stores.google">
-        <img
-          src="/images/badge-google-play.svg"
-          [alt]="'Google Play Store: ' + (name | async)"
-          [title]="'Google Play Store: ' + (name | async)">
-      </a>
-    </mat-action-list>
+    <ng-container *ngIf="platform === 'browser'">
+      <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
+      <mat-action-list>
+        <a mat-button target="_blank" [href]="stores.apple">
+          <img
+            src="images/badge-app-store.svg"
+            [alt]="'Apple App Store: ' + (name | async)"
+            [title]="'Apple App Store: ' + (name | async)">
+        </a>
+        <a mat-button target="_blank" [href]="stores.google">
+          <img
+            src="images/badge-google-play.svg"
+            [alt]="'Google Play Store: ' + (name | async)"
+            [title]="'Google Play Store: ' + (name | async)">
+        </a>
+      </mat-action-list>
+    </ng-container>
     <span [style.flexGrow]="1" [style.minHeight]="'2.5rem'"></span>
     <mat-action-list>
       <button mat-list-item [matMenuTriggerFor]="languageMenu">
-        <icon-component icon="language"></icon-component>
-        <i18n i18n="@@language">language</i18n>
+        <fa-icon icon="language"></fa-icon>
+        <i18n>language</i18n>
       </button>
-      <mat-menu #languageMenu="matMenu" xPosition="before">
+      <mat-menu #languageMenu="matMenu" xPosition="after">
         <ng-container *ngFor="let item of languages">
           <button mat-menu-item
             [class.active]="item.locale === this.language.value"
             (click)="this.language.setValue(item.locale)">
             <pre>{{ item.locale }}</pre>
-            {{ item.name }}
+            {{ item.label }}
           </button>
         </ng-container>
       </mat-menu>
       <button mat-list-item
         [class.active]="url.startsWith('/notifications')"
-        [disabled]="!pushable"
-        (click)="notifications(true)">
-        <icon-component icon="paper-plane"></icon-component>
-        <i18n i18n="@@notifications">notifications</i18n>
+        [disabled]="subscriptionId === 'blocked'"
+        (click)="navigate('/', 'notifications', subscriptionId)">
+        <fa-icon icon="paper-plane"></fa-icon>
+        <i18n>notifications</i18n>
       </button>
       <button mat-list-item
         [class.active]="url.startsWith('/imprint')"
         (click)="navigate('/', 'imprint')">
-        <icon-component icon="bullhorn"></icon-component>
-        <i18n i18n="@@imprint">imprint</i18n>
+        <fa-icon icon="bullhorn"></fa-icon>
+        <i18n>imprint</i18n>
       </button>
       <button mat-list-item
         [class.active]="url.startsWith('/policies')"
         (click)="navigate('/', 'policies')">
-        <icon-component icon="balance-scale"></icon-component>
-        <i18n i18n="@@policies">policies</i18n>
+        <fa-icon icon="balance-scale"></fa-icon>
+        <i18n>policies</i18n>
       </button>
+      <mat-divider></mat-divider>
+      <ng-container *ngIf="!claims?.userId">
+        <button mat-list-item
+          [class.active]="url.startsWith('/login')"
+          (click)="navigate('/', 'login')">
+          <fa-icon icon="unlock"></fa-icon>
+          <i18n>login</i18n>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="claims?.userId">
+        <button mat-list-item
+          [class.active]="url.startsWith('/admin/account')"
+          (click)="navigate('/', 'admin', 'account', claims?.userId)">
+          <fa-icon icon="chalkboard-teacher"></fa-icon>
+          <i18n>account</i18n>
+        </button>
+        <button mat-list-item
+          [class.active]="url.startsWith('/admin/organisation')"
+          [disabled]="!claims?.organisationAdmin.length && !claims?.superUser"
+          (click)="navigate('/', 'admin', 'organisation')">
+          <fa-icon icon="sitemap"></fa-icon>
+          <i18n>organisation</i18n>
+        </button>
+        <ng-container *ngIf="claims?.superUser">
+          <mat-divider></mat-divider>
+          <button mat-list-item
+            [class.active]="url.startsWith('/admin/application')"
+            (click)="navigate('/', 'admin', 'application')">
+            <fa-icon icon="sliders-h"></fa-icon>
+            <i18n>application</i18n>
+          </button>
+          <button mat-list-item
+            [class.active]="url.startsWith('/admin/messaging')"
+            (click)="navigate('/', 'admin', 'messaging')">
+            <fa-icon icon="paper-plane"></fa-icon>
+            <i18n>messaging</i18n>
+          </button>
+          <button mat-list-item
+            [class.active]="url.startsWith('/admin/information')"
+            (click)="navigate('/', 'admin', 'information')">
+            <fa-icon icon="book"></fa-icon>
+            <i18n>information</i18n>
+          </button>
+          <button mat-list-item
+            [class.active]="url.startsWith('/admin/positioning')"
+            (click)="navigate('/', 'admin', 'positioning')">
+            <fa-icon icon="sign"></fa-icon>
+            <i18n>positioning</i18n>
+          </button>
+          <button mat-list-item
+            [class.active]="url.startsWith('/admin/privileges')"
+            (click)="navigate('/', 'admin', 'privileges')">
+            <fa-icon icon="shield-alt"></fa-icon>
+            <i18n>privileges</i18n>
+          </button>
+          <button mat-list-item
+            [class.active]="url.startsWith('/admin/taxonomy')"
+            (click)="navigate('/', 'admin', 'taxonomy')">
+            <fa-icon icon="tags"></fa-icon>
+            <i18n>taxonomy</i18n>
+          </button>
+          <button mat-list-item
+            [class.active]="url.startsWith('/admin/analytics')"
+            (click)="navigate('/', 'admin', 'analytics')">
+            <fa-icon icon="chart-bar"></fa-icon>
+            <i18n>analytics</i18n>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="claims?.superUser || claims?.translator">
+          <mat-divider></mat-divider>
+          <button mat-list-item
+            [class.active]="url.startsWith('/admin/translate')"
+            (click)="navigate('/', 'admin', 'translate')">
+            <fa-icon icon="language"></fa-icon>
+            <i18n>translate</i18n>
+          </button>
+        </ng-container>
+        <mat-divider></mat-divider>
+        <button mat-list-item (click)="navigate('/', 'logout')">
+          <fa-icon icon="lock"></fa-icon>
+          <i18n>logout</i18n>
+        </button>
+      </ng-container>
     </mat-action-list>
-  </ng-template>
-</drawer-component>
+  </mat-drawer>
+</mat-drawer-container>

@@ -1,26 +1,30 @@
 <header class="mat-title">
-  <i18n i18n="@@privilegesPanel">privilegesPanel</i18n>
-  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
-    <i18n i18n="@@actions">actions</i18n>
+  <span [style.flexGrow]="1"></span>
+  <i18n>privilegesPanel</i18n>
+  <button mat-raised-button
+    color="primary"
+    xPosition="before"
+    [matMenuTriggerFor]="actions">
+    <i18n>actions</i18n>
   </button>
 </header>
 
 <mat-menu #actions="matMenu">
   <button mat-menu-item (click)="resetAllPasswords()">
-    <i18n i18n="@@resetAllPasswords">resetAllPasswords</i18n>
+    <i18n>resetAllPasswords</i18n>
   </button>
 </mat-menu>
 
 <mat-tab-group id="privileges" [selectedIndex]="index">
   <mat-tab id="users">
     <ng-template matTabLabel>
-      <i18n i18n="@@users">users</i18n>
+      <i18n>users</i18n>
     </ng-template>
     <ng-template matTabContent>
       <user-table>
         <ng-container matColumnDef="superUser">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@superUser">superUser</i18n>
+            <i18n>superUser</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <mat-slide-toggle
@@ -29,9 +33,20 @@
             </mat-slide-toggle>
           </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="translator">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>translator</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle
+              [checked]="item.translator"
+              (change)="grantTranslator(item, $event.checked)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="blogger">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@blogger">blogger</i18n>
+            <i18n>blogger</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <ng-container *ngIf="item.blogger">
@@ -45,7 +60,7 @@
         </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button
@@ -61,15 +76,17 @@
 
   <mat-tab id="organisations">
     <ng-template matTabLabel>
-      <span matBadgeOverlap="false" [matBadge]="organisations.length || null">
-        <i18n i18n="@@organisationRequests">organisationRequests</i18n>
+      <span
+        [matBadge]="organisations.length || null"
+        [matBadgeOverlap]="false">
+        <i18n>organisationRequests</i18n>
       </span>
     </ng-template>
     <ng-template matTabContent>
       <organisation-table [items]="organisations">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button
@@ -90,15 +107,17 @@
 
   <mat-tab id="memberships">
     <ng-template matTabLabel>
-      <span matBadgeOverlap="false" [matBadge]="memberships.length || null">
-        <i18n i18n="@@membershipRequests">membershipRequests</i18n>
+      <span
+        [matBadge]="memberships.length || null"
+        [matBadgeOverlap]="false">
+        <i18n>membershipRequests</i18n>
       </span>
     </ng-template>
     <ng-template matTabContent>
       <membership-table [items]="memberships">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button
@@ -119,15 +138,17 @@
 
   <mat-tab id="bloggers">
     <ng-template matTabLabel>
-      <span matBadgeOverlap="false" [matBadge]="bloggers.length || null">
-        <i18n i18n="@@bloggerRequests">bloggerRequests</i18n>
+      <span
+        [matBadge]="bloggers.length || null"
+        [matBadgeOverlap]="false">
+        <i18n>bloggerRequests</i18n>
       </span>
     </ng-template>
     <ng-template matTabContent>
       <user-table [items]="bloggers">
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button

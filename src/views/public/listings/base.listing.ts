@@ -1,12 +1,15 @@
-import { HostBinding, OnInit, Type } from '@angular/core';
+import { Directive, HostBinding, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
-import { DeviceProvider } from '@wooportal/app';
-import { Arr, BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, ReadParams, Selfrouter } from '@wooportal/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, skip } from 'rxjs/operators';
+import { Arr, BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver, PlatformProvider, ReadParams, RoutingComponent } from '../../../core';
 
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
 export abstract class BaseListing<Model extends CrudModel>
-  extends Selfrouter implements OnInit {
+  extends RoutingComponent
+  implements OnInit {
 
   protected abstract joiner: CrudJoiner;
 
@@ -23,14 +26,16 @@ export abstract class BaseListing<Model extends CrudModel>
 
   public results: Observable<boolean>;
 
+  public get page(): any {
+    return (this.items.value as any).page;
+  }
+
   public get next(): boolean {
-    const page = (this.items.value as any).page;
-    return page && page.number < page.totalPages - 1;
+    return this.page && this.page.number < this.page.totalPages - 1;
   }
 
   public get prev(): boolean {
-    const page = (this.items.value as any).page;
-    return page && page.number > 0;
+    return this.page && this.page.number > 0;
   }
 
   protected get routing(): Route {
@@ -40,7 +45,7 @@ export abstract class BaseListing<Model extends CrudModel>
   }
 
   public constructor(
-    protected deviceProvider: DeviceProvider,
+    protected platformProvider: PlatformProvider,
     protected route: ActivatedRoute,
     protected router: Router,
     private crudResolver: CrudResolver

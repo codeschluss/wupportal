@@ -27,6 +27,7 @@ class PushControllerService extends __BaseService {
   }
 
   /**
+   * pushMails
    * @param message message
    * @return OK
    */
@@ -53,6 +54,7 @@ class PushControllerService extends __BaseService {
     );
   }
   /**
+   * pushMails
    * @param message message
    * @return OK
    */
@@ -63,6 +65,7 @@ class PushControllerService extends __BaseService {
   }
 
   /**
+   * pushNotifications
    * @param message message
    * @return OK
    */
@@ -89,6 +92,7 @@ class PushControllerService extends __BaseService {
     );
   }
   /**
+   * pushNotifications
    * @param message message
    * @return OK
    */

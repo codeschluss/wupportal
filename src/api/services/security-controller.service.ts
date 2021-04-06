@@ -25,6 +25,7 @@ class SecurityControllerService extends __BaseService {
   }
 
   /**
+   * refreshToken
    * @return OK
    */
   securityControllerRefreshTokenResponse(): __Observable<__StrictHttpResponse<string>> {
@@ -49,6 +50,7 @@ class SecurityControllerService extends __BaseService {
     );
   }
   /**
+   * refreshToken
    * @return OK
    */
   securityControllerRefreshToken(): __Observable<string> {

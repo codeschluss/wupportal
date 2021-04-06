@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, Type, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChip, MatChipList } from '@angular/material/chips';
 import * as moment from 'moment';
 import { merge, Observable, of } from 'rxjs';
-import { ScheduleModel } from '../../../base/models/schedule.model';
+import { ScheduleModel } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { ScheduleFieldComponent } from '../fields/schedule.field';
 
@@ -15,30 +15,30 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
   template: BaseForm.template(`
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@schedule">schedule</i18n>
+        <i18n>schedule</i18n>
       </label>
       <nav>
         <mat-form-field>
           <strong matPrefix>
-            <i18n i18n="@@startDate">startDate</i18n>&nbsp;
+            <i18n>startDate</i18n>&nbsp;
           </strong>
           <input matInput type="date" [formControl]="fromDate">
         </mat-form-field>
         <mat-form-field>
           <strong matPrefix>
-            <i18n i18n="@@startTime">startTime</i18n>&nbsp;
+            <i18n>startTime</i18n>&nbsp;
           </strong>
           <input matInput type="time" [formControl]="fromTime">
         </mat-form-field>
         <mat-form-field>
           <strong matPrefix>
-            <i18n i18n="@@endDate">endDate</i18n>&nbsp;
+            <i18n>endDate</i18n>&nbsp;
           </strong>
           <input matInput type="date" [formControl]="gotoDate">
         </mat-form-field>
         <mat-form-field>
           <strong matPrefix>
-            <i18n i18n="@@endTime">endTime</i18n>&nbsp;
+            <i18n>endTime</i18n>&nbsp;
           </strong>
           <input matInput type="time" [formControl]="gotoTime">
         </mat-form-field>
@@ -46,35 +46,35 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
     </section>
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@recurrence">recurrence</i18n>
+        <i18n>recurrence</i18n>
       </label>
       <nav>
         <mat-form-field>
           <strong matPrefix>
-            <i18n i18n="@@recurrence">recurrence</i18n>&nbsp;
+            <i18n>recurrence</i18n>&nbsp;
           </strong>
           <mat-select [formControl]="recurrence">
             <mat-option value="once">
-              <i18n i18n="@@once">once</i18n>
+              <i18n>once</i18n>
             </mat-option>
             <mat-option value="day">
-              <i18n i18n="@@daily">daily</i18n>
+              <i18n>daily</i18n>
             </mat-option>
             <mat-option value="week">
-              <i18n i18n="@@weekly">weekly</i18n>
+              <i18n>weekly</i18n>
             </mat-option>
             <mat-option value="month">
-              <i18n i18n="@@monthly">monthly</i18n>
+              <i18n>monthly</i18n>
             </mat-option>
             <mat-option value="year">
-              <i18n i18n="@@yearly">yearly</i18n>
+              <i18n>yearly</i18n>
             </mat-option>
           </mat-select>
         </mat-form-field>
         <ng-container *ngIf="recurrence.value !== 'once'">
           <mat-form-field>
             <strong matPrefix>
-              <i18n i18n="@@until">until</i18n>&nbsp;
+              <i18n>until</i18n>&nbsp;
             </strong>
             <input matInput type="date" [formControl]="until">
           </mat-form-field>
@@ -85,43 +85,43 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
               #monday="matChip"
               value="monday"
               (click)="monday.toggleSelected()">
-              <i18n i18n="@@monday">monday</i18n>
+              <i18n>monday</i18n>
             </mat-chip>
             <mat-chip
               #tuesday="matChip"
               value="tuesday"
               (click)="tuesday.toggleSelected()">
-              <i18n i18n="@@tuesday">tuesday</i18n>
+              <i18n>tuesday</i18n>
             </mat-chip>
             <mat-chip
               #wednesday="matChip"
               value="wednesday"
               (click)="wednesday.toggleSelected()">
-              <i18n i18n="@@wednesday">wednesday</i18n>
+              <i18n>wednesday</i18n>
             </mat-chip>
             <mat-chip
               #thursday="matChip"
               value="thursday"
               (click)="thursday.toggleSelected()">
-              <i18n i18n="@@thursday">thursday</i18n>
+              <i18n>thursday</i18n>
             </mat-chip>
             <mat-chip
               #friday="matChip"
               value="friday"
               (click)="friday.toggleSelected()">
-              <i18n i18n="@@friday">friday</i18n>
+              <i18n>friday</i18n>
             </mat-chip>
             <mat-chip
               #saturday="matChip"
               value="saturday"
               (click)="saturday.toggleSelected()">
-              <i18n i18n="@@saturday">saturday</i18n>
+              <i18n>saturday</i18n>
             </mat-chip>
             <mat-chip
               #sunday="matChip"
               value="sunday"
               (click)="sunday.toggleSelected()">
-              <i18n i18n="@@sunday">sunday</i18n>
+              <i18n>sunday</i18n>
             </mat-chip>
           </mat-chip-list>
         </ng-container>
@@ -129,17 +129,17 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
     </section>
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@compilation">compilation</i18n>
+        <i18n>compilation</i18n>
       </label>
       <nav>
         <button mat-button color="warn" (click)="clear()">
-          <i18n i18n="@@deleteAll">deleteAll</i18n>
+          <i18n>deleteAll</i18n>
         </button>
         <button mat-button
           color="primary"
           [disabled]="!scheduled"
           (click)="create()">
-          <i18n i18n="@@createSchedules">createSchedules</i18n>
+          <i18n>createSchedules</i18n>
         </button>
       </nav>
     </section>
@@ -147,7 +147,7 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'schedules'">
-          <i18n i18n="@@schedules">schedules</i18n>
+          <i18n>schedules</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -184,10 +184,10 @@ export class ScheduleFormComponent
     gotoTime: new FormControl(moment().add(3, 'h').format(this.formats.time))
   });
 
-  public get fromDate(): AbstractControl { return this.values.get('fromDate'); }
-  public get fromTime(): AbstractControl { return this.values.get('fromTime'); }
-  public get gotoDate(): AbstractControl { return this.values.get('gotoDate'); }
-  public get gotoTime(): AbstractControl { return this.values.get('gotoTime'); }
+  public get fromDate(): any { return this.values.get('fromDate'); }
+  public get fromTime(): any { return this.values.get('fromTime'); }
+  public get gotoDate(): any { return this.values.get('gotoDate'); }
+  public get gotoTime(): any { return this.values.get('gotoTime'); }
 
   public get scheduled(): boolean {
     const recurrence = this.recurrence.value !== 'week'

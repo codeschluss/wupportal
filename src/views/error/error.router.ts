@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Route } from '@angular/router';
-import { AppRouterModule } from '@wooportal/app';
+import { Route, RouterModule } from '@angular/router';
 import { ErrorResponseComponent } from './response/error.response';
 
 const routes: Route[] = [
@@ -16,8 +15,8 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [AppRouterModule],
-  imports: [AppRouterModule.forChild([
+  exports: [RouterModule],
+  imports: [RouterModule.forChild([
     {
       path: '',
       children: routes

@@ -1,0 +1,42 @@
+{
+  "index": "/",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/",
+          "/config.xml",
+          "/firebase.json",
+          "/manifest.json",
+          "/**/*.js",
+          "!/**/*-es5.js"
+        ]
+      }
+    },
+    {
+      "name": "app-es5",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/**/*-es5.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/images/**",
+          "/videos/**",
+          "/**/*.css"
+        ]
+      }
+    }
+  ]
+}

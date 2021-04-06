@@ -1,0 +1,36 @@
+@import ../../brand.scss
+
+:host
+  @include position(fixed, 0, 0, 0, 0)
+
+  & > mat-toolbar
+    background-color: $color-primary
+    color: $color-lightest
+
+    @include responsive(gt-sm)
+      display: none
+
+  & > main
+    @include flex(column, center, center)
+    background-color: $color-light
+    height: 100%
+
+    & > button
+      font-size: 2rem
+      margin-top: 5rem
+      padding: 1rem
+
+    & > .icon
+      @include flex(row, center, center)
+      border: .25rem solid $color-darkest
+      border-radius: 1rem
+      color: $color-warn
+      font-size: 10rem
+      height: 10rem
+      overflow: hidden
+      width: 10rem
+
+    & > .text
+      color: $color-darkest
+      font-size: 2rem
+      padding-top: .5rem

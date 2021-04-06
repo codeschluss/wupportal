@@ -2,23 +2,24 @@
   <mat-card-content>
     <small>
       {{ item.address.street }} {{ item.address.houseNumber }}
-      <br>{{ item.address.place }} {{ item.address.suburb.name }}
+      <br>{{ item.address.place }} {{ item.address.suburb.label }}
     </small>
   </mat-card-content>
   <ng-container *ngIf="item.images?.length">
-    <figure mat-card-image
+    <img mat-card-image
+      src="data:image/svg+xml,
+        %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
       [alt]="item.images[0].caption"
       [style.backgroundImage]="item.images[0].source"
       [title]="item.images[0].caption">
-    </figure>
   </ng-container>
   <ng-container *ngIf="!item.images?.length">
-    <icon-component mat-card-image icon="image"></icon-component>
+    <fa-icon mat-card-image icon="image"></fa-icon>
   </ng-container>
   <mat-card-header>
     <mat-card-title>
       <a [routerLink]="['/', 'organisations', item.id]">
-        {{ item.name }}
+        {{ item.label }}
       </a>
     </mat-card-title>
   </mat-card-header>

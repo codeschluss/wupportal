@@ -1,14 +1,14 @@
 <main>
   <h2 class="mat-headline">
-    {{ item.name }}
+    {{ item.label }}
     <small>
-      <i18n i18n="@@ofTopic">ofTopic</i18n>
-      {{ item.topic.name }}
+      <i18n>ofTopic</i18n>
+      {{ item.topic.label }}
     </small>
   </h2>
   <mat-divider></mat-divider>
   <nav>
-    <follow-piece [item]="item.topic"></follow-piece>
+    <follow-piece [item]="topic"></follow-piece>
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
     <span [style.flexGrow]="1"></span>
@@ -16,6 +16,6 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <marked-component [data]="item.content"></marked-component>
+    <article [innerHTML]="item.content"></article>
   </section>
 </main>

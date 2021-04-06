@@ -1,10 +1,10 @@
 import { COMMA, ENTER, SEMICOLON, SPACE } from '@angular/cdk/keycodes';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { CrudModel } from '@wooportal/core';
 import { map } from 'rxjs/operators';
+import { CrudModel } from '../../../core';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -31,8 +31,9 @@ import { BaseFieldComponent } from '../base/base.field';
   `)
 })
 
-export class ChipListFieldComponent extends BaseFieldComponent
-  implements AfterViewInit {
+export class ChipListFieldComponent
+  extends BaseFieldComponent
+  implements OnInit, AfterViewInit {
 
   public keys: number[] = [COMMA, ENTER, SEMICOLON, SPACE];
 
@@ -45,6 +46,10 @@ export class ChipListFieldComponent extends BaseFieldComponent
 
   @ViewChild('input', { read: ElementRef, static: true })
   private input: ElementRef<HTMLInputElement>;
+
+  public ngOnInit(): void {
+    if (!this.value) { this.control.patchValue([], { emitEvent: false }); }
+  }
 
   public ngAfterViewInit(): void {
     this.control.valueChanges.subscribe(() => this.clear());
@@ -71,10 +76,6 @@ export class ChipListFieldComponent extends BaseFieldComponent
 
   public delete(item: CrudModel): void {
     this.value = this.value.filter((value) => value !== item);
-  }
-
-  protected ngPostInit(): void {
-    if (!this.value) { this.control.patchValue([], { emitEvent: false }); }
   }
 
   private clear(): void {

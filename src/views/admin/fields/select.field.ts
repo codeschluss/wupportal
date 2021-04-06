@@ -17,7 +17,8 @@ import { BaseFieldComponent } from '../base/base.field';
   `)
 })
 
-export class SelectFieldComponent extends BaseFieldComponent
+export class SelectFieldComponent
+  extends BaseFieldComponent
   implements AfterViewInit {
 
   public select: FormControl = new FormControl();

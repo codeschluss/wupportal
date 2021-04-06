@@ -33,6 +33,7 @@ class TopicControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `TopicControllerService.TopicControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -77,6 +78,7 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `TopicControllerService.TopicControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -100,6 +102,7 @@ class TopicControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newTopic newTopic
    * @return OK
    */
@@ -126,6 +129,7 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newTopic newTopic
    * @return OK
    */
@@ -136,6 +140,7 @@ class TopicControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param topicId topicId
    * @return OK
    */
@@ -146,7 +151,7 @@ class TopicControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/topics/${topicId}`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}`,
       __body,
       {
         headers: __headers,
@@ -162,6 +167,7 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param topicId topicId
    * @return OK
    */
@@ -172,6 +178,7 @@ class TopicControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newTopic newTopic
    * @param topicId topicId
    * @return OK
@@ -185,7 +192,7 @@ class TopicControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/topics/${topicId}`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}`,
       __body,
       {
         headers: __headers,
@@ -201,6 +208,7 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newTopic newTopic
    * @param topicId topicId
    * @return OK
@@ -213,6 +221,7 @@ class TopicControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param topicId topicId
    * @return OK
    */
@@ -223,7 +232,7 @@ class TopicControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/topics/${topicId}`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}`,
       __body,
       {
         headers: __headers,
@@ -239,6 +248,7 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param topicId topicId
    * @return OK
    */
@@ -249,6 +259,7 @@ class TopicControllerService extends __BaseService {
   }
 
   /**
+   * readPages
    * @param topicId topicId
    * @param sort undefined
    * @param dir undefined
@@ -268,7 +279,7 @@ class TopicControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/topics/${topicId}/pages`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}/pages`,
       __body,
       {
         headers: __headers,
@@ -284,6 +295,7 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
+   * readPages
    * @param topicId topicId
    * @param sort undefined
    * @param dir undefined
@@ -300,6 +312,7 @@ class TopicControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param topicId topicId
    * @return OK
    */
@@ -310,7 +323,7 @@ class TopicControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/topics/${topicId}/translations`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -326,6 +339,7 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param topicId topicId
    * @return OK
    */

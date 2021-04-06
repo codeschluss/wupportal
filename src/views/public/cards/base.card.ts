@@ -1,8 +1,10 @@
-import { HostBinding, Input } from '@angular/core';
+import { Directive, HostBinding, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { CrudModel } from '@wooportal/core';
+import { CrudModel } from '../../../core';
 
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
 export abstract class BaseCard<Model extends CrudModel> {
 
   @HostBinding('attr.base')
@@ -12,12 +14,11 @@ export abstract class BaseCard<Model extends CrudModel> {
   public item: Model;
 
   public constructor(
-    public router: Router,
-    private i18n: I18n
+    public router: Router
   ) { }
 
   public string(id: string): string {
-    return this.i18n({ id, value: id }) || id;
+    return id;
   }
 
 }

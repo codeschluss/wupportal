@@ -1,14 +1,14 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { BlogpostModel } from '../../../../base/models/blogpost.model';
+import { BlogpostModel, CrudJoiner } from '../../../../core';
 import { BaseObject } from '../base.object';
 
 @Component({
-  styleUrls: ['../base.object.scss', 'blogpost.object.scss'],
+  styleUrls: ['../base.object.sass', 'blogpost.object.sass'],
   templateUrl: 'blogpost.object.html'
 })
 
-export class BlogpostObjectComponent extends BaseObject<BlogpostModel> {
+export class BlogpostObjectComponent
+  extends BaseObject<BlogpostModel> {
 
   protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel, {
     required: true
@@ -21,5 +21,9 @@ export class BlogpostObjectComponent extends BaseObject<BlogpostModel> {
   protected model: Type<BlogpostModel> = BlogpostModel;
 
   protected path: string = 'blogposts';
+
+  public get blogger(): any {
+    return this.item.blogger;
+  }
 
 }

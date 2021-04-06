@@ -1,14 +1,14 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { CrudJoiner, OrganisationModel } from '../../../../core';
 import { BaseObject } from '../base.object';
 
 @Component({
-  styleUrls: ['../base.object.scss', 'organisation.object.scss'],
+  styleUrls: ['../base.object.sass', 'organisation.object.sass'],
   templateUrl: 'organisation.object.html'
 })
 
-export class OrganisationObjectComponent extends BaseObject<OrganisationModel> {
+export class OrganisationObjectComponent
+  extends BaseObject<OrganisationModel> {
 
   protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel, {
     required: true

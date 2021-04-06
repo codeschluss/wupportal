@@ -32,6 +32,7 @@ class SubscriptionTypeControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `SubscriptionTypeControllerService.SubscriptionTypeControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -76,6 +77,7 @@ class SubscriptionTypeControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `SubscriptionTypeControllerService.SubscriptionTypeControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -99,6 +101,7 @@ class SubscriptionTypeControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newSubscriptionType newSubscriptionType
    * @return OK
    */
@@ -125,6 +128,7 @@ class SubscriptionTypeControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newSubscriptionType newSubscriptionType
    * @return OK
    */
@@ -135,6 +139,7 @@ class SubscriptionTypeControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -145,7 +150,7 @@ class SubscriptionTypeControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/subscriptiontypes/${subscriptionId}`,
+      this.rootUrl + `/subscriptiontypes/${encodeURIComponent(String(subscriptionId))}`,
       __body,
       {
         headers: __headers,
@@ -161,6 +166,7 @@ class SubscriptionTypeControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -171,6 +177,7 @@ class SubscriptionTypeControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newSubscriptionType newSubscriptionType
    * @param subscriptionTypeId subscriptionTypeId
    * @return OK
@@ -184,7 +191,7 @@ class SubscriptionTypeControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/subscriptiontypes/${subscriptionTypeId}`,
+      this.rootUrl + `/subscriptiontypes/${encodeURIComponent(String(subscriptionTypeId))}`,
       __body,
       {
         headers: __headers,
@@ -200,6 +207,7 @@ class SubscriptionTypeControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newSubscriptionType newSubscriptionType
    * @param subscriptionTypeId subscriptionTypeId
    * @return OK
@@ -212,6 +220,7 @@ class SubscriptionTypeControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param subscriptionTypeId subscriptionTypeId
    * @return OK
    */
@@ -222,7 +231,7 @@ class SubscriptionTypeControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/subscriptiontypes/${subscriptionTypeId}`,
+      this.rootUrl + `/subscriptiontypes/${encodeURIComponent(String(subscriptionTypeId))}`,
       __body,
       {
         headers: __headers,
@@ -238,6 +247,7 @@ class SubscriptionTypeControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param subscriptionTypeId subscriptionTypeId
    * @return OK
    */
@@ -248,6 +258,7 @@ class SubscriptionTypeControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param subscriptionTypeId subscriptionTypeId
    * @return OK
    */
@@ -258,7 +269,7 @@ class SubscriptionTypeControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/subscriptiontypes/${subscriptionTypeId}/translations`,
+      this.rootUrl + `/subscriptiontypes/${encodeURIComponent(String(subscriptionTypeId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -274,6 +285,7 @@ class SubscriptionTypeControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param subscriptionTypeId subscriptionTypeId
    * @return OK
    */

@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { SuburbModel } from '../../../base/models/suburb.model';
+import { CrudJoiner, SuburbModel } from '../../../core';
 import { BaseStepper, FormStep } from '../base/base.stepper';
 import { SuburbFormComponent } from '../forms/suburb.form';
 
@@ -10,13 +9,13 @@ import { SuburbFormComponent } from '../forms/suburb.form';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'create'">
-          <i18n i18n="@@createSuburb">createSuburb</i18n>
+          <i18n>createSuburb</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'edit'">
-          <i18n i18n="@@editSuburb">editSuburb</i18n>
+          <i18n>editSuburb</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'main'">
-          <i18n i18n="@@main">main</i18n>
+          <i18n>main</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

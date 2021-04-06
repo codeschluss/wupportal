@@ -1,12 +1,12 @@
 /* tslint:disable */
 export interface ActivityEntity {
-  id?: string;
   _embedded?: {};
+  addressId?: string;
   categoryId?: string;
   contactName?: string;
   created?: string;
   description?: string;
-  addressId?: string;
+  id?: string;
   likes?: number;
   mail?: string;
   modified?: string;

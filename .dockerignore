@@ -1,10 +1,12 @@
 /.git/
-/hooks/
 /node_modules/
 /platforms/
+/plugins/
+/www/
 
+/api-docs.json
 /package-lock.json
-/webpack.config.js
+/settings-dev.json
 
-/res/Android/*.keystore
-!/res/Android/dev.keystore
+/res/android/*.keystore
+!/res/android/dev.keystore

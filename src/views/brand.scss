@@ -1,0 +1,238 @@
+@import '~@angular/material/theming';
+
+$animation-duration: .25s;
+$viewport-width: 100rem;
+
+$color-lightest: scale-color(white, $lightness: -0%);
+$color-lighter: scale-color(white, $lightness: -2%);
+$color-light: scale-color(white, $lightness: -12%);
+$color-dark: scale-color(white, $lightness: -36%);
+$color-darker: scale-color(white, $lightness: -54%);
+$color-darkest: scale-color(white, $lightness: -87%);
+
+$theme-palette-primary: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #2196f3,
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+  A100: #82b1ff,
+  A200: #448aff,
+  A400: #2979ff,
+  A700: #2962ff,
+  contrast: (
+    50: $color-darkest,
+    100: $color-darkest,
+    200: $color-darkest,
+    300: $color-darkest,
+    400: $color-darkest,
+    500: $color-lightest,
+    600: $color-lightest,
+    700: $color-lightest,
+    800: $color-lightest,
+    900: $color-lightest,
+    A100: $color-darkest,
+    A200: $color-lightest,
+    A400: $color-lightest,
+    A700: $color-lightest
+  )
+);
+
+$theme-palette-accent: (
+  50: #e0f7fa,
+  100: #b2ebf2,
+  200: #80deea,
+  300: #4dd0e1,
+  400: #26c6da,
+  500: #00bcd4,
+  600: #00acc1,
+  700: #0097a7,
+  800: #00838f,
+  900: #006064,
+  A100: #84ffff,
+  A200: #18ffff,
+  A400: #00e5ff,
+  A700: #00b8d4,
+  contrast: (
+    50: $color-darkest,
+    100: $color-darkest,
+    200: $color-darkest,
+    300: $color-darkest,
+    400: $color-darkest,
+    500: $color-lightest,
+    600: $color-lightest,
+    700: $color-lightest,
+    800: $color-lightest,
+    900: $color-lightest,
+    A100: $color-darkest,
+    A200: $color-darkest,
+    A400: $color-darkest,
+    A700: $color-darkest
+  )
+);
+
+$theme-palette-warn: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #f44336,
+  600: #e53935,
+  700: #d32f2f,
+  800: #c62828,
+  900: #b71c1c,
+  A100: #ff8a80,
+  A200: #ff5252,
+  A400: #ff1744,
+  A700: #d50000,
+  contrast: (
+    50: $color-darkest,
+    100: $color-darkest,
+    200: $color-darkest,
+    300: $color-darkest,
+    400: $color-darkest,
+    500: $color-lightest,
+    600: $color-lightest,
+    700: $color-lightest,
+    800: $color-lightest,
+    900: $color-lightest,
+    A100: $color-darkest,
+    A200: $color-lightest,
+    A400: $color-lightest,
+    A700: $color-lightest
+  )
+);
+
+$theme-palette: mat-light-theme(
+  mat-palette($theme-palette-primary),
+  mat-palette($theme-palette-accent),
+  mat-palette($theme-palette-warn)
+);
+
+$color-primary: mat-color(map-get($theme-palette, primary));
+$color-accent: mat-color(map-get($theme-palette, accent));
+$color-warn: mat-color(map-get($theme-palette, warn));
+
+@mixin deep {
+  &::ng-deep { @content; }
+}
+
+@mixin flex(
+  $direction,
+  $main-axis: normal,
+  $cross-axis: normal
+) {
+  display: flex;
+  align-items: $cross-axis;
+  justify-content: $main-axis;
+
+  @if $direction == wrap {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  @else {
+    flex-direction: $direction;
+    flex-wrap: nowrap;
+  }
+}
+
+@mixin position(
+  $value,
+  $top: auto,
+  $right: auto,
+  $bottom: auto,
+  $left: auto
+) {
+  position: $value;
+  bottom: $bottom;
+  left: $left;
+  right: $right;
+  top: $top;
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: 599px) { @content; }
+  }
+  @if $breakpoint == sm {
+    @media (min-width: 600px) and (max-width: 959px) { @content; }
+  }
+  @if $breakpoint == md {
+    @media (min-width: 960px) and (max-width: 1279px) { @content; }
+  }
+  @if $breakpoint == lg {
+    @media (min-width: 1280px) and (max-width: 1919px) { @content; }
+  }
+  @if $breakpoint == xl {
+    @media (min-width: 1920px) and (max-width: 5000px) { @content; }
+  }
+  @if $breakpoint == lt-sm {
+    @media (max-width: 599px) { @content; }
+  }
+  @if $breakpoint == lt-md {
+    @media (max-width: 959px) { @content; }
+  }
+  @if $breakpoint == lt-lg {
+    @media (max-width: 1279px) { @content; }
+  }
+  @if $breakpoint == lt-xl {
+    @media (max-width: 1919px) { @content; }
+  }
+  @if $breakpoint == gt-xs {
+    @media (min-width: 600px) { @content; }
+  }
+  @if $breakpoint == gt-sm {
+    @media (min-width: 960px) { @content; }
+  }
+  @if $breakpoint == gt-md {
+    @media (min-width: 1280px) { @content; }
+  }
+  @if $breakpoint == gt-lg {
+    @media (min-width: 1920px) { @content; }
+  }
+}
+
+mat-progress-bar._mat-animation-noopable[mode=indeterminate] {
+  .mat-progress-bar-primary {
+    animation:
+      mat-progress-bar-primary-indeterminate-translate
+      ($animation-duration * 8) infinite linear !important;
+
+    &::after {
+      animation:
+        mat-progress-bar-primary-indeterminate-scale
+        ($animation-duration * 8) infinite linear !important;
+    }
+  }
+
+  .mat-progress-bar-secondary {
+    animation:
+      mat-progress-bar-secondary-indeterminate-translate
+      ($animation-duration * 8) infinite linear !important;
+
+    &::after {
+      animation:
+        mat-progress-bar-secondary-indeterminate-scale
+        ($animation-duration * 8) infinite linear !important;
+    }
+  }
+}
+
+mat-progress-spinner._mat-animation-noopable[mode=indeterminate] {
+  animation:
+    mat-progress-spinner-linear-rotate
+    ($animation-duration * 8) linear infinite !important;
+
+  & > svg {
+    & > circle {
+      animation-duration: ($animation-duration * 16) !important;
+      animation-iteration-count: infinite !important;
+    }
+  }
+}

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+  xmlns:cdv="http://cordova.apache.org/ns/1.0"
+  id="de.codeschluss.wooportal.client"
+  android-versionCode="20"
+  ios-CFBundleVersion="0.2.0.0"
+  version="0.2.0">
+
+  <author
+    email="info@codeschluss.de"
+    href="https://www.codeschluss.de">
+    Codeschluss GbR
+  </author>
+  <name>
+    wooportal.client
+  </name>
+  <description>
+    client for wooportal - conventional event mapping
+  </description>
+
+  <access origin="*"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
+  <allow-intent href="mailto:*"/>
+  <allow-intent href="tel:*"/>
+
+  <preference name="Orientation" value="portrait"/>
+  <preference name="AutoHideSplashScreen" value="false"/>
+  <preference name="ShowSplashScreenSpinner" value="false"/>
+  <preference name="SplashMaintainAspectRatio" value="true"/>
+
+  <platform name="browser">
+    <preference name="AutoHideSplashScreen" value="true"/>
+    <preference name="ShowSplashScreen" value="false"/>
+  </platform>
+
+  <platform name="android">
+    <config-file
+      parent="/manifest/application"
+      target="app/src/main/AndroidManifest.xml">
+      <meta-data
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="firebase_analytics_collection_deactivated"
+        android:value="true"/>
+      <meta-data
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.firebase.messaging.default_notification_color"
+        android:resource="@color/primary"/>
+      <meta-data
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@drawable/notification"/>
+    </config-file>
+
+    <resource-file
+      src="res/android/google-services.json"
+      target="app/google-services.json"/>
+
+    <resource-file
+      src="res/android/colors.xml"
+      target="app/src/main/res/values/colors.xml"/>
+
+    <resource-file
+      src="res/android/notification/mdpi.png"
+      target="app/src/main/res/drawable-mdpi/notification.png"/>
+    <resource-file
+      src="res/android/notification/hdpi.png"
+      target="app/src/main/res/drawable-hdpi/notification.png"/>
+    <resource-file
+      src="res/android/notification/xhdpi.png"
+      target="app/src/main/res/drawable-xhdpi/notification.png"/>
+    <resource-file
+      src="res/android/notification/xxhdpi.png"
+      target="app/src/main/res/drawable-xxhdpi/notification.png"/>
+    <resource-file
+      src="res/android/notification/xxxhdpi.png"
+      target="app/src/main/res/drawable-xxxhdpi/notification.png"/>
+
+    <edit-config mode="merge"
+      file="app/src/main/AndroidManifest.xml"
+      target="/manifest/application">
+      <application
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@drawable/round_icon"/>
+    </edit-config>
+
+    <resource-file
+      src="res/android/network_security_config.xml"
+      target="app/src/main/res/xml/network_security_config.xml"/>
+
+    <resource-file
+      src="res/android/round-icon/mdpi.png"
+      target="app/src/main/res/drawable-mdpi/round_icon.png"/>
+    <resource-file
+      src="res/android/round-icon/hdpi.png"
+      target="app/src/main/res/drawable-hdpi/round_icon.png"/>
+    <resource-file
+      src="res/android/round-icon/xhdpi.png"
+      target="app/src/main/res/drawable-xhdpi/round_icon.png"/>
+    <resource-file
+      src="res/android/round-icon/xxhdpi.png"
+      target="app/src/main/res/drawable-xxhdpi/round_icon.png"/>
+    <resource-file
+      src="res/android/round-icon/xxxhdpi.png"
+      target="app/src/main/res/drawable-xxxhdpi/round_icon.png"/>
+
+    <icon density="mdpi" src="res/android/icon/mdpi.png"/>
+    <icon density="hdpi" src="res/android/icon/hdpi.png"/>
+    <icon density="xhdpi" src="res/android/icon/xhdpi.png"/>
+    <icon density="xxhdpi" src="res/android/icon/xxhdpi.png"/>
+    <icon density="xxxhdpi" src="res/android/icon/xxxhdpi.png"/>
+
+    <splash density="hdpi" src="res/android/splashscreen/hdpi.png"/>
+    <splash density="mdpi" src="res/android/splashscreen/mdpi.png"/>
+    <splash density="xhdpi" src="res/android/splashscreen/xhdpi.png"/>
+    <splash density="xxhdpi" src="res/android/splashscreen/xxhdpi.png"/>
+    <splash density="xxxhdpi" src="res/android/splashscreen/xxxhdpi.png"/>
+  </platform>
+
+  <platform name="ios">
+    <preference name="scheme" value="app"/>
+    <preference name="hostname" value="localhost"/>
+    <resource-file src="res/ios/GoogleService-Info.plist"/>
+
+    <edit-config mode="merge" file="*-Info.plist"
+      target="NSLocationAlwaysUsageDescription">
+      <string>Position, Route etc.</string>
+    </edit-config>
+
+    <edit-config mode="merge" file="*-Info.plist"
+      target="NSLocationWhenInUseUsageDescription">
+      <string>Position, Route etc.</string>
+    </edit-config>
+
+    <edit-config mode="merge" file="*-Info.plist"
+      target="NSLocationAlwaysAndWhenInUseUsageDescription">
+      <string>Position, Route etc.</string>
+    </edit-config>
+
+    <icon width="20" height="20" src="res/ios/icon/20.png"/>
+    <icon width="29" height="29" src="res/ios/icon/29.png"/>
+    <icon width="40" height="40" src="res/ios/icon/40.png"/>
+    <icon width="58" height="58" src="res/ios/icon/58.png"/>
+    <icon width="60" height="60" src="res/ios/icon/60.png"/>
+    <icon width="76" height="76" src="res/ios/icon/76.png"/>
+    <icon width="80" height="80" src="res/ios/icon/80.png"/>
+    <icon width="87" height="87" src="res/ios/icon/87.png"/>
+    <icon width="120" height="120" src="res/ios/icon/120.png"/>
+    <icon width="152" height="152" src="res/ios/icon/152.png"/>
+    <icon width="167" height="167" src="res/ios/icon/167.png"/>
+    <icon width="180" height="180" src="res/ios/icon/180.png"/>
+    <icon width="1024" height="1024" src="res/ios/icon/1024.png"/>
+
+    <splash src="res/ios/splashscreen/Default@2x~universal~anyany.png"/>
+    <splash src="res/ios/splashscreen/Default@3x~universal~anyany.png"/>
+  </platform>
+</widget>

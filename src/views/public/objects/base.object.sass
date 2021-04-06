@@ -1,0 +1,190 @@
+@import ../../brand.scss
+
+main
+  padding: 1rem 1rem 0 1rem
+
+  & > h2
+    & > small
+      & > a
+        color: inherit
+        text-decoration: inherit
+
+  & > mat-divider
+    margin: 1rem 0
+
+  & > nav
+    @include flex(row, flex-start, center)
+    overflow: visible
+
+    & > time-piece
+      @include responsive(lt-sm)
+        display: none
+
+  & > section
+    @include flex(row)
+
+    @include responsive(lt-md)
+      @include flex(column)
+
+    & > aside
+      @include responsive(gt-sm)
+        width: 25rem
+        margin: -1rem 0 0 1rem
+
+      & > mat-expansion-panel
+        border: 1px solid transparent
+        border-radius: .25rem
+        margin: 1rem auto
+        transition: all $animation-duration
+
+        @include deep
+          .mat-expansion-indicator::after
+            color: $color-lightest
+
+          .mat-expansion-panel-body
+            @include flex(row)
+            overflow-x: auto
+            overflow-y: hidden
+            padding: 0
+
+            @include responsive(xs)
+              scroll-snap-type: x mandatory
+
+        &.mat-expanded
+          border-color: $color-primary
+
+          & > mat-expansion-panel-header
+            background-color: $color-primary
+
+            mat-panel-title
+              color: $color-lightest
+
+        & > mat-expansion-panel-header
+          border-radius: 0
+          font-weight: bold
+          text-transform: uppercase
+          transition: all $animation-duration
+
+          mat-panel-title
+            & > small
+              font-weight: lighter
+              line-height: 1rem
+              padding-left: .5rem
+
+            fa-icon
+              padding-right: .5rem
+
+        figure
+          @include flex(row, center, center)
+          @include position(relative)
+          flex: 0 0 auto
+          margin: 0
+          scroll-snap-align: start
+
+          @include responsive(xs)
+            width: 100%
+
+            & + figure::before
+              @include position(absolute, auto, auto, auto, -.75rem)
+              background-color: $color-primary
+              border-radius: 50%
+              box-sizing: border-box
+              content: ''
+              height: 1.5rem
+              width: 1.5rem
+
+          @include responsive(gt-xs)
+            & + figure
+              & > img
+                margin-left: 0
+
+          & > img
+            background-color: $color-light
+            background-position: center
+            background-size: cover
+            border-radius: .25rem
+            color: $color-dark
+            height: 20rem
+            margin: 1rem
+            width: 20rem
+
+          & > a
+            @include position(absolute, 0, 0, 0, 0)
+            align-items: center
+            display: flex
+            justify-content: center
+            z-index: 1
+
+          fa-icon
+            &[icon=film]
+              position: absolute
+              color: $color-dark
+              font-size: 12.5rem
+
+            &[icon=play]
+              color: $color-primary
+              font-size: 4rem
+
+        table
+          margin: 0 auto
+          padding: .5rem
+          table-layout: fixed
+          width: 100%
+
+          & > tr
+            & > td
+              padding: .5rem
+
+              &:first-child
+                font-weight: bold
+                text-align: right
+                width: 30%
+
+              & > mat-chip-list
+                mat-chip
+                  background-color: transparent
+                  border: .25rem solid
+                  cursor: pointer
+
+                  &::after
+                    opacity: 0
+
+              @include deep
+                & > .mat-button-base
+                  max-width: 100%
+                  overflow: hidden
+                  text-overflow: ellipsis
+
+                  fa-icon
+                    padding-right: .5rem
+
+        [base=card]
+          @include flex(row, center, center)
+          @include position(relative)
+          scroll-snap-align: start
+
+          @include deep
+            mat-card
+              max-width: 25rem
+
+          @include responsive(gt-xs)
+            & + [base=card]
+              padding-left: 0
+
+          @include responsive(xs)
+            width: 100%
+
+            & + [base=card]::before
+              @include position(absolute, auto, auto, auto, -.75rem)
+              background-color: $color-primary
+              border-radius: 50%
+              box-sizing: border-box
+              content: ''
+              height: 1.5rem
+              width: 1.5rem
+
+    & > article
+      flex: 1 1 auto
+      font-size: 1rem
+      line-height: 1.5rem
+      text-align: justify

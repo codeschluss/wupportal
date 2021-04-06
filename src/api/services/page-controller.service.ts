@@ -36,6 +36,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `PageControllerService.PageControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -80,6 +81,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `PageControllerService.PageControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -103,6 +105,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newPage newPage
    * @return OK
    */
@@ -129,6 +132,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newPage newPage
    * @return OK
    */
@@ -139,6 +143,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param pageId pageId
    * @return OK
    */
@@ -149,7 +154,7 @@ class PageControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/pages/${pageId}`,
+      this.rootUrl + `/pages/${encodeURIComponent(String(pageId))}`,
       __body,
       {
         headers: __headers,
@@ -165,6 +170,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param pageId pageId
    * @return OK
    */
@@ -175,6 +181,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newPage newPage
    * @param pageId pageId
    * @return OK
@@ -188,7 +195,7 @@ class PageControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/pages/${pageId}`,
+      this.rootUrl + `/pages/${encodeURIComponent(String(pageId))}`,
       __body,
       {
         headers: __headers,
@@ -204,6 +211,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newPage newPage
    * @param pageId pageId
    * @return OK
@@ -216,6 +224,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param pageId pageId
    * @return OK
    */
@@ -226,7 +235,7 @@ class PageControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/pages/${pageId}`,
+      this.rootUrl + `/pages/${encodeURIComponent(String(pageId))}`,
       __body,
       {
         headers: __headers,
@@ -242,6 +251,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param pageId pageId
    * @return OK
    */
@@ -252,6 +262,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * increaseLike
    * @param pageId pageId
    * @param subscriptionId subscriptionId
    * @return OK
@@ -265,7 +276,7 @@ class PageControllerService extends __BaseService {
     __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/pages/${pageId}/like`,
+      this.rootUrl + `/pages/${encodeURIComponent(String(pageId))}/like`,
       __body,
       {
         headers: __headers,
@@ -281,6 +292,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * increaseLike
    * @param pageId pageId
    * @param subscriptionId subscriptionId
    * @return OK
@@ -293,6 +305,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * readTopic
    * @param pageId pageId
    * @return OK
    */
@@ -303,7 +316,7 @@ class PageControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/pages/${pageId}/topic`,
+      this.rootUrl + `/pages/${encodeURIComponent(String(pageId))}/topic`,
       __body,
       {
         headers: __headers,
@@ -319,6 +332,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * readTopic
    * @param pageId pageId
    * @return OK
    */
@@ -329,6 +343,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * updateTopic
    * @param pageId pageId
    * @param topicId topicId
    * @return OK
@@ -342,7 +357,7 @@ class PageControllerService extends __BaseService {
     __body = topicId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/pages/${pageId}/topic`,
+      this.rootUrl + `/pages/${encodeURIComponent(String(pageId))}/topic`,
       __body,
       {
         headers: __headers,
@@ -358,6 +373,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * updateTopic
    * @param pageId pageId
    * @param topicId topicId
    * @return OK
@@ -370,6 +386,7 @@ class PageControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param pageId pageId
    * @return OK
    */
@@ -380,7 +397,7 @@ class PageControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/pages/${pageId}/translations`,
+      this.rootUrl + `/pages/${encodeURIComponent(String(pageId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -396,6 +413,7 @@ class PageControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param pageId pageId
    * @return OK
    */

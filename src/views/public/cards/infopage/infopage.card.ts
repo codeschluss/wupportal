@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { InfopageModel } from '../../../../base/models/infopage.model';
+import { InfopageModel } from '../../../../core';
 import { BaseCard } from '../base.card';
 
 @Component({
   selector: 'infopage-card',
-  styleUrls: ['../base.card.scss', 'infopage.card.scss'],
+  styleUrls: ['../base.card.sass', 'infopage.card.sass'],
   templateUrl: 'infopage.card.html'
 })
 
-export class InfopageCardComponent extends BaseCard<InfopageModel> { }
+export class InfopageCardComponent
+  extends BaseCard<InfopageModel> { }

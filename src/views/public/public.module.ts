@@ -1,7 +1,24 @@
-import { NgModule, NO_ERRORS_SCHEMA, Type } from '@angular/core';
-import { AppCommonModule } from '@wooportal/app';
-import { CrudModel } from '@wooportal/core';
-import { SharedModule } from '../shared/shared.module';
+import { CommonModule } from '@angular/common';
+import { NgModule, Type } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CrudModel, LabelModule } from '../../core';
 import { ActivityCardComponent } from './cards/activity/activity.card';
 import { BaseCard } from './cards/base.card';
 import { BlogpostCardComponent } from './cards/blogpost/blogpost.card';
@@ -12,6 +29,7 @@ import { BaseListing } from './listings/base.listing';
 import { BlogpostListingComponent } from './listings/blogposts/blogpost.listing';
 import { InfopageListingComponent } from './listings/infopages/infopage.listing';
 import { OrganisationListingComponent } from './listings/organisations/organisation.listing';
+import { PagerComponent } from './listings/pager/pager.component';
 import { ActivityObjectComponent } from './objects/activity/activity.object';
 import { BaseObject } from './objects/base.object';
 import { BlogpostObjectComponent } from './objects/blogpost/blogpost.object';
@@ -32,8 +50,8 @@ import { FollowPieceComponent } from './pieces/follow/follow.piece';
 import { LikePieceComponent } from './pieces/like/like.piece';
 import { SharePieceComponent } from './pieces/share/share.piece';
 import { TimePieceComponent } from './pieces/time/time.piece';
+import { NotificationPopupComponent } from './popups/notification/notification.popup';
 import { PublicComponent } from './public.component';
-import { materials } from './public.imports';
 import { PublicRouter } from './public.router';
 
 const cards: Type<BaseCard<CrudModel>>[] = [
@@ -44,6 +62,7 @@ const cards: Type<BaseCard<CrudModel>>[] = [
 ];
 
 const components: Type<any>[] = [
+  PagerComponent,
   PublicComponent
 ];
 
@@ -51,14 +70,38 @@ const listings: Type<BaseListing<CrudModel>>[] = [
   ActivityListingComponent,
   BlogpostListingComponent,
   InfopageListingComponent,
-  OrganisationListingComponent,
+  OrganisationListingComponent
+];
+
+const materials: Type<any>[] = [
+  FontAwesomeModule,
+  FormsModule,
+  LabelModule,
+  MatBadgeModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatSelectModule,
+  MatSlideToggleModule,
+  MatRippleModule,
+  ReactiveFormsModule
 ];
 
 const objects: Type<BaseObject<CrudModel>>[] = [
   ActivityObjectComponent,
   BlogpostObjectComponent,
   InfopageObjectComponent,
-  OrganisationObjectComponent,
+  OrganisationObjectComponent
 ];
 
 const pages: Type<BasePage>[] = [
@@ -80,16 +123,22 @@ const pieces: Type<BasePiece>[] = [
   TimePieceComponent
 ];
 
+const popups: Type<any>[] = [
+  NotificationPopupComponent
+];
+
 @NgModule({
   declarations: [
     ...cards,
     ...components,
+    ...popups,
     ...listings,
     ...objects,
     ...pages,
     ...pieces
   ],
   entryComponents: [
+    ...popups,
     ...listings,
     ...objects,
     ...pages
@@ -99,11 +148,9 @@ const pieces: Type<BasePiece>[] = [
   ],
   imports: [
     ...materials,
-    AppCommonModule,
-    PublicRouter,
-    SharedModule
-  ],
-  schemas: [NO_ERRORS_SCHEMA]
+    CommonModule,
+    PublicRouter
+  ]
 })
 
 export class PublicModule { }

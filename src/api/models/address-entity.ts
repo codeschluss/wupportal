@@ -1,11 +1,11 @@
 /* tslint:disable */
 export interface AddressEntity {
-  longitude?: number;
   _embedded?: {};
+  created?: string;
   houseNumber?: string;
   id?: string;
   latitude?: number;
-  created?: string;
+  longitude?: number;
   modified?: string;
   place?: string;
   postalCode?: string;

@@ -1,11 +1,10 @@
 import { Location } from '@angular/common';
-import { AfterViewInit, HostBinding, Input, OnDestroy, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
+import { AfterViewInit, Directive, HostBinding, Input, OnDestroy, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, Headers, Selfrouter, TokenResolver } from '@wooportal/core';
 import { forkJoin, of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
-import { I18nComponent } from '../../shared/i18n/i18n.component';
+import { CrudJoiner, CrudModel, CrudResolver, LabelComponent, MetatagService, RoutingComponent, TokenResolver } from '../../../core';
 import { BaseForm } from './base.form';
 
 export interface FormStep {
@@ -13,7 +12,11 @@ export interface FormStep {
   form: Type<BaseForm<CrudModel>>;
 }
 
-export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
+export abstract class BaseStepper<Model extends CrudModel>
+  extends RoutingComponent
   implements OnInit, AfterViewInit, OnDestroy {
 
   public abstract root: string;
@@ -30,8 +33,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   @Input()
   public item: Model;
 
-  @ViewChildren(I18nComponent)
-  private translations: QueryList<I18nComponent>;
+  @ViewChildren(LabelComponent)
+  private translations: QueryList<LabelComponent>;
 
   protected static template(template: string): string {
     return `
@@ -43,9 +46,10 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       </header>
       <nav mat-tab-nav-bar>
         <ng-container *ngFor="let step of steps; let i = index">
-          <a mat-tab-link replaceUrl routerLinkActive
+          <a mat-tab-link routerLinkActive
             #tab="routerLinkActive"
             [disabled]="!can(i)"
+            [replaceUrl]="true"
             [routerLink]="[link(i)]"
             [active]="tab.isActive">
             <ng-container *ngTemplateOutlet="label; context: { case: step }">
@@ -57,23 +61,25 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
       <router-outlet></router-outlet>
       <mat-divider></mat-divider>
       <button mat-raised-button color="warn" (click)="quit()">
-        <i18n i18n="@@close">close</i18n>
+        <i18n>close</i18n>
       </button>
       <button mat-raised-button color="warn" (click)="reset()">
-        <i18n i18n="@@reset">reset</i18n>
+        <i18n>reset</i18n>
       </button>
       <ng-container *ngIf="has('-1')">
-        <button mat-raised-button replaceUrl
+        <button mat-raised-button
           [disabled]="!can(index - 1)"
+          [replaceUrl]="true"
           [routerLink]="[link('-1')]">
-          <i18n i18n="@@previous">previous</i18n>
+          <i18n>previous</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="has('+1')">
-        <button mat-raised-button replaceUrl
+        <button mat-raised-button
+          [replaceUrl]="true"
           [disabled]="!can(index + 1)"
           [routerLink]="[link('+1')]">
-          <i18n i18n="@@following">following</i18n>
+          <i18n>following</i18n>
         </button>
       </ng-container>
       <ng-container *ngIf="!has('+1')">
@@ -81,7 +87,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
           color="primary"
           [disabled]="!valid || !dirty"
           (click)="persist()">
-          <i18n i18n="@@persist">persist</i18n>
+          <i18n>persist</i18n>
         </button>
       </ng-container>
     `;
@@ -111,7 +117,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
     return this.root;
   }
 
-  protected get routing(this: any): Route {
+  protected get routing(): Route {
     Object.defineProperty(this.model, 'stepper', {
       configurable: true,
       value: this
@@ -134,8 +140,8 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   public constructor(
     protected route: ActivatedRoute,
     protected router: Router,
-    private headers: Headers,
-    private location: Location
+    private location: Location,
+    private metatagService: MetatagService
   ) {
     super();
   }
@@ -153,7 +159,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
   }
 
   public ngAfterViewInit(): void {
-    this.headers.setTitle(this.translations.first.text);
+    this.metatagService.setTitle(this.translations.first.text);
   }
 
   public ngOnDestroy(): void {
@@ -208,7 +214,7 @@ export abstract class BaseStepper<Model extends CrudModel> extends Selfrouter
         path: step.name,
         component: step.form,
         resolve: fields.reduce((obj, field) => Object.assign(obj, {
-          [field.name]: CrudResolver,
+          [field.name]: CrudResolver
         }), { }),
         data: {
           group: new FormGroup({ }),

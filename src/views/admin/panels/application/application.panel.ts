@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CrudJoiner } from '@wooportal/core';
-import { ConfigurationModel } from '../../../../base/models/configuration.model';
+import { ConfigurationModel, CrudJoiner } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
   templateUrl: 'application.panel.html'
 })
 
-export class ApplicationPanelComponent extends BasePanel {
+export class ApplicationPanelComponent
+  extends BasePanel {
 
-  public group: FormGroup = new FormGroup({ });
+  public configurationGroup: FormGroup = new FormGroup({ });
 
   protected path: string = 'application';
 

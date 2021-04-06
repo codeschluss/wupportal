@@ -2,9 +2,9 @@
   <mat-card-header>
     <mat-card-title>
       <a [routerLink]="['/', 'blogposts', item.id]">
-        {{ item.name }}
+        {{ item.label }}
         <small>
-          <i18n i18n="@@by">by</i18n>
+          <i18n>by</i18n>
           {{ item.author }}
         </small>
       </a>
@@ -12,8 +12,8 @@
     <ng-container ngProjectAs="mat-card-subtitle" *ngIf="item.activity">
       <mat-card-subtitle>
         <a [routerLink]="['/', 'activities', item.activity.id]">
-          <i18n i18n="@@about">about</i18n>
-          {{ item.activity.name }}
+          <i18n>about</i18n>
+          {{ item.activity.label }}
         </a>
       </mat-card-subtitle>
     </ng-container>

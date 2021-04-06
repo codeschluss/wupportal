@@ -3,7 +3,7 @@
     <aside>
       <h2 class="mat-headline">
         {{ name | async }} &mdash;<br>
-        <i18n i18n="@@newActivities">newActivities</i18n>
+        <i18n>newActivities</i18n>
       </h2>
       <strong class="mat-title">
         {{ tagline }}
@@ -16,29 +16,23 @@
     </aside>
   </section>
   <section>
-    <article>
-      <marked-component class="mat-title" [data]="'
-
-<h2>Home Page</h2>
-
-      '"></marked-component>
-    </article>
+  <article class="mat-title" [innerHTML]="content"></article>
   </section>
   <section>
     <figure>
-      <img alt="Sponsor One" src="/images/icon.png" title="Sponsor One">
+      <img alt="Sponsor One" src="images/icon.png" title="Sponsor One">
       <figcaption class="mat-body-strong">Sponsor One</figcaption>
     </figure>
     <figure>
-      <img alt="Sponsor Two" src="/images/icon.png" title="Sponsor Two">
+      <img alt="Sponsor Two" src="images/icon.png" title="Sponsor Two">
       <figcaption class="mat-body-strong">Sponsor Two</figcaption>
     </figure>
     <figure>
-      <img alt="Sponsor Three" src="/images/icon.png" title="Sponsor Three">
+      <img alt="Sponsor Three" src="images/icon.png" title="Sponsor Three">
       <figcaption class="mat-body-strong">Sponsor Three</figcaption>
     </figure>
     <figure>
-      <img alt="Sponsor Four" src="/images/icon.png" title="Sponsor Four">
+      <img alt="Sponsor Four" src="images/icon.png" title="Sponsor Four">
       <figcaption class="mat-body-strong">Sponsor Four</figcaption>
     </figure>
   </section>

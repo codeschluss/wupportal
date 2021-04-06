@@ -1,18 +1,21 @@
-import { AfterViewInit, ContentChildren, HostBinding, Input, OnInit, QueryList, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, ContentChildren, Directive, HostBinding, Input, OnInit, QueryList, Type, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material/input';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { MatColumnDef, MatTable } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '@wooportal/core';
 import { BehaviorSubject, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, mergeMap, tap } from 'rxjs/operators';
+import { CrudJoiner, CrudModel, CrudResolver, StrictHttpResponse } from '../../../core';
 
 export interface TableColumn {
   name: string;
   value: (item) => string;
 }
 
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
 export abstract class BaseTable<Model extends CrudModel>
   implements OnInit, AfterViewInit {
 
@@ -32,7 +35,7 @@ export abstract class BaseTable<Model extends CrudModel>
   public source: BehaviorSubject<Model[]>;
 
   @Input()
-  private items: Model[];
+  public items: Model[];
 
   @ViewChild(MatPaginator, { static: true })
   private pager: MatPaginator;
@@ -84,7 +87,7 @@ export abstract class BaseTable<Model extends CrudModel>
 
   public ngOnInit(): void {
     this.source = new BehaviorSubject<Model[]>([]);
-    this.items = this.items || this.route.snapshot.data.items;
+    this.items ||= this.route.snapshot.data.items;
     this.route.queryParams.subscribe((params) => this.navigate(params));
   }
 

@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { UserModel } from '../../../base/models/user.model';
+import { CrudJoiner, UserModel } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,13 +8,13 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@fullname">fullname</i18n>
+          <i18n>fullname</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'phone'">
-          <i18n i18n="@@phone">phone</i18n>
+          <i18n>phone</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'username'">
-          <i18n i18n="@@email">email</i18n>
+          <i18n>email</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -28,7 +27,7 @@ export class UserTableComponent
   public columns: TableColumn[] = [
     {
       name: 'name',
-      value: (item) => item.name
+      value: (item) => item.label
     },
     {
       name: 'username',

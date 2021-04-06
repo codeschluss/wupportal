@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'wooportal-client',
+  selector: 'wooportal-app',
   template: `
     <router-outlet></router-outlet>
   `

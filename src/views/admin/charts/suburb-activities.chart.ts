@@ -10,7 +10,8 @@ import { BaseChart } from '../base/base.chart';
 })
 
 export class SuburbActivitiesChartComponent
-  extends BaseChart implements AfterViewInit {
+  extends BaseChart
+  implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.toggle.change.pipe(

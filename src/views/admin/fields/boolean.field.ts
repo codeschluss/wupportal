@@ -10,4 +10,5 @@ import { BaseFieldComponent } from '../base/base.field';
   `
 })
 
-export class BooleanFieldComponent extends BaseFieldComponent { }
+export class BooleanFieldComponent
+  extends BaseFieldComponent { }

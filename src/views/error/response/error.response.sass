@@ -1,0 +1,16 @@
+@import ../../brand.scss
+
+main
+  @include flex(column, center, center)
+  @include position(absolute, 0, 0, 0, 0)
+  background-color: $color-light
+  color: $color-darkest
+  height: 100%
+  max-width: 100% !important
+
+  & > fa-icon
+    font-size: 4rem
+
+  & > strong
+    font-size: 2rem
+    margin-top: 1rem

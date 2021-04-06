@@ -1,0 +1,32 @@
+{
+  "api": {
+    "rootUrl": "/api",
+    "authUrl": "/api/login",
+    "refreshUrl": "/api/refresh"
+  },
+  "app": {
+    "baseUrl": "https://wooportal.app",
+    "profile": "production"
+  },
+  "defaults": {
+    "city": "",
+    "language": "en",
+    "title": "wooportal"
+  },
+  "jwtClaims": {
+    "activityProvider": "createdActivities",
+    "organisationAdmin": "adminOrgas",
+    "organisationUser": "approvedOrgas",
+    "superUser": "superuser",
+    "translator": "translator",
+    "userId": "id"
+  },
+  "labelHeader": {
+    "read": "accept-language",
+    "write": "content-language"
+  },
+  "storeIds": {
+    "android": "de.codeschluss.wooportal.client",
+    "ios": "1234567890"
+  }
+}

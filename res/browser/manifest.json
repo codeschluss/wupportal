@@ -1,0 +1,18 @@
+{
+  "short_name": "wooportal",
+  "name": "@wooportal/client",
+  "description": "client for wooportal - conventional event mapping",
+
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#2196f3",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

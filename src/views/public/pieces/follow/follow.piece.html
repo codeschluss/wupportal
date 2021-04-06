@@ -1,6 +1,7 @@
 <button mat-button
-  [disabled]="disabled || followed"
-  (click)="follow()">
-  <icon-component icon="paper-plane"></icon-component>
-  <i18n i18n="@@follow">follow</i18n>
+  [color]="followed ? 'primary' : null"
+  [disabled]="disabled"
+  (click)="toggle()">
+  <fa-icon icon="paper-plane"></fa-icon>
+  <i18n>follow</i18n>
 </button>

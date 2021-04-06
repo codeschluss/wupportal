@@ -1,10 +1,9 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { CrudJoiner, OrganisationModel } from '../../../../core';
 import { BaseListing } from '../base.listing';
 
 @Component({
-  styleUrls: ['../base.listing.scss', 'organisation.listing.scss'],
+  styleUrls: ['../base.listing.sass', 'organisation.listing.sass'],
   templateUrl: 'organisation.listing.html'
 })
 

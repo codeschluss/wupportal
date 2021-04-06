@@ -1,18 +1,9 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ApplicationSettings } from '@wooportal/app';
-import { Box, TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { ActivityModel } from '../../../base/models/activity.model';
-import { CategoryModel } from '../../../base/models/category.model';
-import { KeywordModel } from '../../../base/models/keyword.model';
-import { OrganisationModel } from '../../../base/models/organisation.model';
-import { TargetGroupModel } from '../../../base/models/target-group.model';
-import { ActivityProvider } from '../../../base/providers/activity.provider';
-import { TranslationProvider } from '../../../base/providers/translation.provider';
-import { UserProvider } from '../../../base/providers/user.provider';
+import { ActivityModel, ActivityProvider, Box, CategoryModel, CoreSettings, KeywordModel, OrganisationModel, TargetGroupModel, TokenProvider, TranslationProvider, UserProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { BaseTests } from '../base/base.tests';
 import { ChipListFieldComponent } from '../fields/chip-list.field';
@@ -25,19 +16,19 @@ import { SelectFieldComponent } from '../fields/select.field';
   template: BaseForm.template(`
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@compilation">compilation</i18n>
+        <i18n>compilation</i18n>
       </label>
       <nav>
         <button mat-button
           color="primary"
           (click)="fillUserData()">
-          <i18n i18n="@@fillUserData">fillUserData</i18n>
+          <i18n>fillUserData</i18n>
         </button>
         <button mat-button
           color="primary"
           [disabled]="!this.organisation"
           (click)="fillOrganisationData()">
-          <i18n i18n="@@fillOrganisationData">fillOrganisationData</i18n>
+          <i18n>fillOrganisationData</i18n>
         </button>
       </nav>
     </section>
@@ -45,31 +36,31 @@ import { SelectFieldComponent } from '../fields/select.field';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'category'">
-          <i18n i18n="@@category">category</i18n>
+          <i18n>category</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'contactName'">
-          <i18n i18n="@@contactName">contactName</i18n>
+          <i18n>contactName</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'description'">
-          <i18n i18n="@@description">description</i18n>
+          <i18n>description</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'mail'">
-          <i18n i18n="@@email">email</i18n><sup>#</sup>
+          <i18n>email</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@name">name</i18n>
+          <i18n>name</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'organisation'">
-          <i18n i18n="@@organisation">organisation</i18n>
+          <i18n>organisation</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'phone'">
-          <i18n i18n="@@phone">phone</i18n><sup>#</sup>
+          <i18n>phone</i18n><sup>#</sup>
         </ng-container>
         <ng-container *ngSwitchCase="'tags'">
-          <i18n i18n="@@keywords">keywords</i18n>
+          <i18n>keywords</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'targetGroups'">
-          <i18n i18n="@@targetGroups">targetGroups</i18n>
+          <i18n>targetGroups</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -146,7 +137,7 @@ export class ActivityFormComponent
 
   public constructor(
     private activityProvider: ActivityProvider,
-    private app: ApplicationSettings,
+    private settings: CoreSettings,
     private userProvider: UserProvider,
     route: ActivatedRoute,
     tokenProvider: TokenProvider,
@@ -157,7 +148,7 @@ export class ActivityFormComponent
 
   public fillOrganisationData(): void {
     const organisation = this.group.get('organisation').value;
-    this.group.get('contactName').patchValue(organisation.name);
+    this.group.get('contactName').patchValue(organisation.label);
     this.group.get('mail').patchValue(organisation.mail);
     this.group.get('phone').patchValue(organisation.phone);
   }
@@ -185,10 +176,10 @@ export class ActivityFormComponent
       this.fields[0].locked = true;
     }
 
-    if (!this.token[this.app.config.jwtClaims.superUser]) {
+    if (!this.token[this.settings.jwtClaims.superUser]) {
       this.fields[0].options = Array.from(new Set([
-        ...this.token[this.app.config.jwtClaims.organisationAdmin],
-        ...this.token[this.app.config.jwtClaims.organisationUser]
+        ...this.token[this.settings.jwtClaims.organisationAdmin],
+        ...this.token[this.settings.jwtClaims.organisationUser]
       ])).map((id) => this.fields[0].options.find((o) => o.id === id));
     }
   }

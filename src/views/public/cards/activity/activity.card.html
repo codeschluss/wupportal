@@ -4,14 +4,14 @@
   [ngStyle]="colors(item.category.color)">
   <a [routerLink]="['/', 'activities', item.id]"></a>
   <mat-card-content>
-    <icon-component [icon]="item.category.icon"></icon-component>
+    <fa-icon [icon]="icon"></fa-icon>
     <small>
       {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' }}
       <br>{{ item.address.street }} {{ item.address.houseNumber }}
-      <br>{{ item.address.place }} {{ item.address.suburb.name }}
+      <br>{{ item.address.place }} {{ item.address.suburb.label }}
     </small>
   </mat-card-content>
   <mat-card-header>
-    <mat-card-title>{{ item.name }}</mat-card-title>
+    <mat-card-title>{{ item.label }}</mat-card-title>
   </mat-card-header>
 </mat-card>

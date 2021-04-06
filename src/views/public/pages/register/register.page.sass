@@ -1,0 +1,28 @@
+@import ../../../brand.scss
+
+main
+  @include flex(row, center, center)
+  height: 100%
+
+  & > mat-card
+    margin: 1rem
+    max-width: 30rem
+
+    & > aside
+      padding: .5rem 0
+
+      mat-checkbox
+        display: block
+        padding: .25rem 0
+
+    & > mat-card-actions
+      margin-bottom: -.5rem
+      padding-bottom: 0
+
+    & > mat-card-header
+      @include deep
+        & > .mat-card-header-text
+          margin: 0
+
+    mat-form-field
+      width: 100%

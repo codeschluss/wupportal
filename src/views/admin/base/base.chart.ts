@@ -1,8 +1,11 @@
-import { HostBinding, ViewChild } from '@angular/core';
+import { Directive, HostBinding, ViewChild } from '@angular/core';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { AnalyticsEntry } from '../../../api/models/analytics-entry';
-import { AnalyticsProvider } from '../../../base/providers/analytics.provider';
+import { AnalyticsProvider } from '../../../core';
 
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
 export abstract class BaseChart {
 
   @HostBinding('attr.base')
@@ -34,7 +37,7 @@ export abstract class BaseChart {
     return `
       ${!filters.current ? `` : `
         <mat-slide-toggle color="primary">
-          <i18n i18n="@@current">current</i18n>
+          <i18n>current</i18n>
         </mat-slide-toggle>
       `}
       <ngx-charts-bar-vertical

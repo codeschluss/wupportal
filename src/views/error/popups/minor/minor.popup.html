@@ -10,19 +10,19 @@
 <ng-template #label let-case="case">
   <ng-container [ngSwitch]="case.status">
     <ng-container *ngSwitchCase="'403'">
-      <i18n i18n="@@forbiddenError">forbiddenError</i18n>
+      <i18n>forbiddenError</i18n>
     </ng-container>
     <ng-container *ngSwitchCase="'404'">
-      <i18n i18n="@@notFoundError">notFoundError</i18n>
+      <i18n>notFoundError</i18n>
     </ng-container>
     <ng-container *ngSwitchCase="'409'">
-      <i18n i18n="@@conflictError">conflictError</i18n>
+      <i18n>conflictError</i18n>
     </ng-container>
     <ng-container *ngSwitchCase="'413'">
-      <i18n i18n="@@tooLargeError">tooLargeError</i18n>
+      <i18n>tooLargeError</i18n>
     </ng-container>
     <ng-container *ngSwitchCase="'503'">
-      <i18n i18n="@@serverError">serverError</i18n>
+      <i18n>serverError</i18n>
     </ng-container>
   </ng-container>
 </ng-template>

@@ -1,15 +1,8 @@
 import { NgModule } from '@angular/core';
 import { ServerModule as ServerSideRenderingModule, ServerTransferStateModule } from '@angular/platform-server';
-import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
-import { AppRouterModule } from '@wooportal/app';
+import { RouterModule } from '@angular/router';
 import { ClientModule } from './client.module';
 import { ServerComponent } from './server.component';
-
-const platform: any[] = [
-  ModuleMapLoaderModule,
-  ServerSideRenderingModule,
-  ServerTransferStateModule
-];
 
 @NgModule({
   bootstrap: [
@@ -19,9 +12,10 @@ const platform: any[] = [
     ServerComponent
   ],
   imports: [
-    AppRouterModule,
     ClientModule,
-    ...platform
+    RouterModule,
+    ServerSideRenderingModule,
+    ServerTransferStateModule
   ]
 })
 

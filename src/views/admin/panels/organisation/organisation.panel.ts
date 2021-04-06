@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { ActivityModel } from '../../../../base/models/activity.model';
-import { MembershipModel } from '../../../../base/models/membership.model';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { ActivityModel, CrudJoiner, MembershipModel, OrganisationModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
   templateUrl: 'organisation.panel.html'
 })
 
-export class OrganisationPanelComponent extends BasePanel {
+export class OrganisationPanelComponent
+  extends BasePanel {
 
   protected path: string = 'organisation';
 
@@ -20,6 +18,8 @@ export class OrganisationPanelComponent extends BasePanel {
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
       .with('address').yield('suburb')
+      // .with('providers').yield('activities').yield('address').yield('suburb')
+      // .with('providers').yield('activities').yield('category')
       .with('users').yield('provider')
   };
 

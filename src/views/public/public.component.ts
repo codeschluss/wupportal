@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApplicationSettings } from '@wooportal/app';
-import { Headers } from '@wooportal/core';
+import { CoreSettings, MetatagService } from '../../core';
 
 @Component({
   template: `
@@ -12,15 +11,15 @@ import { Headers } from '@wooportal/core';
 export class PublicComponent {
 
   public constructor(
-    app: ApplicationSettings,
-    headers: Headers,
-    route: ActivatedRoute
+    metatagService: MetatagService,
+    route: ActivatedRoute,
+    settings: CoreSettings
   ) {
     const conf = route.snapshot.data.configuration;
 
-    headers.init({
+    metatagService.init({
       base: conf.find((c) => c.item === 'portalName').value,
-      city: app.config.defaults.city,
+      city: settings.defaults.city,
       slug: conf.find((c) => c.item === 'portalSubtitle').value,
       spot: [
         conf.find((c) => c.item === 'mapLatitude').value,

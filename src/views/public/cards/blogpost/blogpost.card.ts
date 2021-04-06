@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { BlogpostModel } from '../../../../base/models/blogpost.model';
+import { BlogpostModel } from '../../../../core';
 import { BaseCard } from '../base.card';
 
 @Component({
   selector: 'blogpost-card',
-  styleUrls: ['../base.card.scss', 'blogpost.card.scss'],
+  styleUrls: ['../base.card.sass', 'blogpost.card.sass'],
   templateUrl: 'blogpost.card.html'
 })
 
-export class BlogpostCardComponent extends BaseCard<BlogpostModel> {
+export class BlogpostCardComponent
+  extends BaseCard<BlogpostModel> {
 
   public get preview(): string {
     const preview = this.item.content

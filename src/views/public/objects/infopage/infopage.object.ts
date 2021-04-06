@@ -1,14 +1,14 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { InfopageModel } from '../../../../base/models/infopage.model';
+import { CrudJoiner, InfopageModel } from '../../../../core';
 import { BaseObject } from '../base.object';
 
 @Component({
-  styleUrls: ['../base.object.scss', 'infopage.object.scss'],
+  styleUrls: ['../base.object.sass', 'infopage.object.sass'],
   templateUrl: 'infopage.object.html'
 })
 
-export class InfopageObjectComponent extends BaseObject<InfopageModel> {
+export class InfopageObjectComponent
+  extends BaseObject<InfopageModel> {
 
   protected joiner: CrudJoiner = CrudJoiner.of(InfopageModel, {
     required: true
@@ -17,5 +17,9 @@ export class InfopageObjectComponent extends BaseObject<InfopageModel> {
   protected model: Type<InfopageModel> = InfopageModel;
 
   protected path: string = 'infopages';
+
+  public get topic(): any {
+    return this.item.topic;
+  }
 
 }

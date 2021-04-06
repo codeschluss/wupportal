@@ -1,137 +1,130 @@
 <main>
   <ng-container *ngIf="results === 0">
-    <icon-component icon="frown"></icon-component>
+    <fa-icon icon="frown"></fa-icon>
     <strong class="mat-title">
-      <i18n i18n="@@notFoundError">notFoundError</i18n>
+      <i18n>notFoundError</i18n>
     </strong>
   </ng-container>
   <ng-container *ngIf="results > 0">
     <ng-container *ngIf="items.activities.length">
-      <expand-component #activities
-        (changed)="$event && expanded(activities)">
-        <ng-template #expandHeader>
-          <icon-component icon="map-marker-alt"></icon-component>
-          <i18n i18n="@@activities">activities</i18n>
-          <small>({{ items.activities.length }})</small>
-        </ng-template>
-        <ng-template #expandContent>
-          <ng-container *ngFor="let item of items.activities">
-            <activity-card [item]="item"></activity-card>
-          </ng-container>
-        </ng-template>
-      </expand-component>
+      <mat-expansion-panel #activities (opened)="expanded(activities)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon icon="map-marker-alt"></fa-icon>
+            <i18n>activities</i18n>
+            <small>({{ items.activities.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.activities">
+          <activity-card [item]="item"></activity-card>
+        </ng-container>
+      </mat-expansion-panel>
     </ng-container>
     <ng-container *ngIf="items.organisations.length">
-      <expand-component #organisations
-        (changed)="$event && expanded(organisations)">
-        <ng-template #expandHeader>
-          <icon-component icon="at"></icon-component>
-          <i18n i18n="@@organisations">organisations</i18n>
-          <small>({{ items.organisations.length }})</small>
-        </ng-template>
-        <ng-template #expandContent>
-          <ng-container *ngFor="let item of items.organisations">
-            <organisation-card [item]="item"></organisation-card>
-          </ng-container>
-        </ng-template>
-      </expand-component>
+      <mat-expansion-panel #organisations (opened)="expanded(organisations)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon icon="at"></fa-icon>
+            <i18n>organisations</i18n>
+            <small>({{ items.organisations.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.organisations">
+          <organisation-card [item]="item"></organisation-card>
+        </ng-container>
+      </mat-expansion-panel>
     </ng-container>
     <ng-container *ngIf="items.blogposts.length">
-      <expand-component #blogposts
-        (changed)="$event && expanded(blogposts)">
-        <ng-template #expandHeader>
-          <icon-component icon="comment-dots"></icon-component>
-          <i18n i18n="@@blogposts">blogposts</i18n>
-          <small>({{ items.blogposts.length }})</small>
-        </ng-template>
-        <ng-template #expandContent>
-          <ng-container *ngFor="let item of items.blogposts">
-            <blogpost-card [item]="item"></blogpost-card>
-          </ng-container>
-        </ng-template>
-      </expand-component>
+      <mat-expansion-panel #blogposts (opened)="expanded(blogposts)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon icon="comment-dots"></fa-icon>
+            <i18n>blogposts</i18n>
+            <small>({{ items.blogposts.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.blogposts">
+          <blogpost-card [item]="item"></blogpost-card>
+        </ng-container>
+      </mat-expansion-panel>
     </ng-container>
     <ng-container *ngIf="items.infopages.length">
-      <expand-component #infopages
-        (changed)="$event && expanded(infopages)">
-        <ng-template #expandHeader>
-          <icon-component icon="info-circle"></icon-component>
-          <i18n i18n="@@infopages">infopages</i18n>
-          <small>({{ items.infopages.length }})</small>
-        </ng-template>
-        <ng-template #expandContent>
-          <ng-container *ngFor="let item of items.infopages">
-            <infopage-card [item]="item"></infopage-card>
-          </ng-container>
-        </ng-template>
-      </expand-component>
+      <mat-expansion-panel #infopages (opened)="expanded(infopages)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon icon="info-circle"></fa-icon>
+            <i18n>infopages</i18n>
+            <small>({{ items.infopages.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let item of items.infopages">
+          <infopage-card [item]="item"></infopage-card>
+        </ng-container>
+      </mat-expansion-panel>
     </ng-container>
     <ng-container *ngIf="items.categories.length">
-      <expand-component #categories
-        (changed)="$event && expanded(categories)">
-        <ng-template #expandHeader>
-          <icon-component icon="dot-circle"></icon-component>
-          <i18n i18n="@@categories">categories</i18n>
-          <small>({{ items.categories.length }})</small>
-        </ng-template>
-        <ng-template #expandContent>
-          <mat-chip-list multiple selectable>
-            <ng-container *ngFor="let item of items.categories">
-              <mat-chip
-                class="mat-body"
-                [queryParams]="{ categories: item.id }"
-                [routerLink]="['/', 'activities']"
-                [style.borderColor]="item.color">
-                {{ item.name }}
-              </mat-chip>
-            </ng-container>
-          </mat-chip-list>
-        </ng-template>
-      </expand-component>
+      <mat-expansion-panel #categories (opened)="expanded(categories)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon icon="dot-circle"></fa-icon>
+            <i18n>categories</i18n>
+            <small>({{ items.categories.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-chip-list multiple selectable>
+          <ng-container *ngFor="let item of items.categories">
+            <mat-chip
+              class="mat-body"
+              [queryParams]="{ categories: item.id }"
+              [routerLink]="['/', 'activities']"
+              [style.borderColor]="item.color">
+              {{ item.label }}
+            </mat-chip>
+          </ng-container>
+        </mat-chip-list>
+      </mat-expansion-panel>
     </ng-container>
     <ng-container *ngIf="items.suburbs.length">
-      <expand-component #suburbs
-        (changed)="$event && expanded(suburbs)">
-        <ng-template #expandHeader>
-          <icon-component icon="city"></icon-component>
-          <i18n i18n="@@suburbs">suburbs</i18n>
-          <small>({{ items.suburbs.length }})</small>
-        </ng-template>
-        <ng-template #expandContent>
-          <section>
-            <ng-container *ngFor="let item of items.suburbs">
-              <button mat-button
-                [queryParams]="{ suburbs: item.id }"
-                [routerLink]="['/', 'activities']">
-                <icon-component icon="city"></icon-component>
-                <span>{{ item.name }}</span>
-              </button>
-            </ng-container>
-          </section>
-        </ng-template>
-      </expand-component>
+      <mat-expansion-panel #suburbs (opened)="expanded(suburbs)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon icon="city"></fa-icon>
+            <i18n>suburbs</i18n>
+            <small>({{ items.suburbs.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <section>
+          <ng-container *ngFor="let item of items.suburbs">
+            <button mat-button
+              [queryParams]="{ suburbs: item.id }"
+              [routerLink]="['/', 'activities']">
+              <fa-icon icon="city"></fa-icon>
+              <span>{{ item.label }}</span>
+            </button>
+          </ng-container>
+        </section>
+      </mat-expansion-panel>
     </ng-container>
     <ng-container *ngIf="items.targetGroups.length">
-      <expand-component #targetGroups
-        (changed)="$event && expanded(targetGroups)">
-        <ng-template #expandHeader>
-          <icon-component icon="users"></icon-component>
-          <i18n i18n="@@targetGroups">targetGroups</i18n>
-          <small>({{ items.targetGroups.length }})</small>
-        </ng-template>
-        <ng-template #expandContent>
-          <section>
-            <ng-container *ngFor="let item of items.targetGroups">
-              <button mat-button
-                [queryParams]="{ targetgroups: item.id }"
-                [routerLink]="['/', 'activities']">
-                <icon-component icon="users"></icon-component>
-                <span>{{ item.name }}</span>
-              </button>
-            </ng-container>
-          </section>
-        </ng-template>
-      </expand-component>
+      <mat-expansion-panel #targetGroups (opened)="expanded(targetGroups)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon icon="users"></fa-icon>
+            <i18n>targetGroups</i18n>
+            <small>({{ items.targetGroups.length }})</small>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <section>
+          <ng-container *ngFor="let item of items.targetGroups">
+            <button mat-button
+              [queryParams]="{ targetgroups: item.id }"
+              [routerLink]="['/', 'activities']">
+              <fa-icon icon="users"></fa-icon>
+              <span>{{ item.label }}</span>
+            </button>
+          </ng-container>
+        </section>
+      </mat-expansion-panel>
     </ng-container>
   </ng-container>
 </main>

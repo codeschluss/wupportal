@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { ScheduleModel } from '../../../base/models/schedule.model';
+import { ScheduleModel } from '../../../core';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -20,18 +20,20 @@ import { BaseFieldComponent } from '../base/base.field';
   `)
 })
 
-export class ScheduleFieldComponent extends BaseFieldComponent {
+export class ScheduleFieldComponent
+  extends BaseFieldComponent
+  implements OnInit {
 
   public get sorted(): ScheduleModel[] {
     return this.value.sort((a, b) => moment(a.startDate).diff(b.startDate));
   }
 
-  public delete(item: ScheduleModel): void {
-    this.value = this.value.filter((value) => value !== item);
+  public ngOnInit(): void {
+    if (!this.value) { this.control.patchValue([], { emitEvent: false }); }
   }
 
-  protected ngPostInit(): void {
-    if (!this.value) { this.control.patchValue([], { emitEvent: false }); }
+  public delete(item: ScheduleModel): void {
+    this.value = this.value.filter((value) => value !== item);
   }
 
 }

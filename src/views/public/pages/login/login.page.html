@@ -5,13 +5,13 @@
         {{ name | async }}
       </mat-card-title>
       <mat-card-subtitle>
-        <i18n i18n="@@login">login</i18n>
+        <i18n>login</i18n>
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <mat-form-field>
         <mat-label>
-          <i18n i18n="@@email">email</i18n>
+          <i18n>email</i18n>
         </mat-label>
         <input matInput
           type="email"
@@ -20,7 +20,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>
-          <i18n i18n="@@password">password</i18n>
+          <i18n>password</i18n>
         </mat-label>
         <input matInput
           type="password"
@@ -33,17 +33,17 @@
       <button mat-button
         [disabled]="!valid"
         (click)="login()">
-        <i18n i18n="@@login">login</i18n>
+        <i18n>login</i18n>
       </button>
       <button mat-button
         [disabled]="!resetable"
         (click)="reset($event)">
-        <i18n i18n="@@resetPassword">resetPassword</i18n>
+        <i18n>resetPassword</i18n>
       </button>
       <button mat-button
         [disabled]="!registerable"
         [routerLink]="['/', 'register']">
-        <i18n i18n="@@register">register</i18n>
+        <i18n>register</i18n>
       </button>
     </mat-card-actions>
   </mat-card>

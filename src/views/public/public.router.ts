@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Route } from '@angular/router';
-import { AppRouterModule } from '@wooportal/app';
-import { CrudJoiner, CrudResolver } from '@wooportal/core';
-import { ConfigurationModel } from '../../base/models/configuration.model';
+import { Route, RouterModule } from '@angular/router';
+import { ConfigurationModel, CrudJoiner, CrudResolver } from '../../core';
 import { ActivityListingComponent } from './listings/activities/activity.listing';
 import { BlogpostListingComponent } from './listings/blogposts/blogpost.listing';
 import { InfopageListingComponent } from './listings/infopages/infopage.listing';
@@ -63,8 +61,8 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [AppRouterModule],
-  imports: [AppRouterModule.forChild([
+  exports: [RouterModule],
+  imports: [RouterModule.forChild([
     {
       path: '',
       children: routes,

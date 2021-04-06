@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TokenProvider } from '@wooportal/core';
+import { TokenProvider } from '../../../../core';
 import { BasePage } from '../base.page';
 
 @Component({
-  styleUrls: ['../base.page.scss', 'logout.page.scss'],
+  styleUrls: ['../base.page.sass', 'logout.page.sass'],
   templateUrl: 'logout.page.html'
 })
 
-export class LogoutPageComponent extends BasePage implements OnInit {
+export class LogoutPageComponent
+  extends BasePage
+  implements OnInit {
 
   protected path: string = 'logout';
 

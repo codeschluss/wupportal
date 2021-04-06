@@ -1,0 +1,36 @@
+{
+  "android": {
+    "debug": {
+      "keystore": "res/android/dev.keystore",
+      "storePassword": "password",
+      "alias": "dev",
+      "password" : "password",
+      "keystoreType": "",
+      "packageType": "apk"
+    },
+    "release": {
+      "keystore": "res/android/dev.keystore",
+      "storePassword": "password",
+      "alias": "dev",
+      "password" : "password",
+      "keystoreType": "",
+      "packageType": "apk"
+    }
+  },
+  "ios": {
+    "debug": {
+      "codeSignIdentity": "iPhone Developer",
+      "developmentTeam": "HSSYVY6G5Y",
+      "packageType": "development",
+      "automaticProvisioning": true,
+      "buildFlag": []
+    },
+    "release": {
+      "codeSignIdentity": "iPhone Developer",
+      "developmentTeam": "HSSYVY6G5Y",
+      "packageType": "app-store",
+      "automaticProvisioning": true,
+      "buildFlag": []
+    }
+  }
+}

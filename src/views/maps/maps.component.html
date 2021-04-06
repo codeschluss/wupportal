@@ -9,7 +9,7 @@
       </aol-source-osm>
     </aol-layer-tile>
     <aol-view
-      [enableRotation]="true"
+      [enableRotation]="false"
       [zoom]="mapconf.zoomfactor">
       <aol-coordinate
         [srid]="mapconf.projection"
@@ -52,7 +52,10 @@
               </aol-collection-coordinates>
             </aol-geometry-linestring>
             <aol-style>
-              <aol-style-stroke color="royalblue" width="5"></aol-style-stroke>
+              <aol-style-stroke
+                color="royalblue"
+                [width]="5">
+              </aol-style-stroke>
             </aol-style>
           </aol-feature>
         </aol-source-vector>
@@ -76,7 +79,7 @@
     </button>
     <ng-container *ngIf="embedded && uuid">
       <button color mat-fab [routerLink]="['/', 'mapview', uuid]">
-        <i18n i18n="@@fullscreen">fullscreen</i18n>
+        <i18n>fullscreen</i18n>
         <fa-icon icon="expand-arrows-alt"></fa-icon>
       </button>
     </ng-container>
@@ -84,26 +87,26 @@
       <button color mat-fab
         [disabled]="!enabled || !navigate"
         (click)="handleNavigation('DRIVING')">
-        <i18n i18n="@@drivingRoute">drivingRoute</i18n>
+        <i18n>drivingRoute</i18n>
         <fa-icon icon="car-side"></fa-icon>
       </button>
       <button color mat-fab
         [disabled]="!enabled || !navigate"
         (click)="handleNavigation('WALKING')">
-        <i18n i18n="@@walkingRoute">walkingRoute</i18n>
+        <i18n>walkingRoute</i18n>
         <fa-icon icon="walking"></fa-icon>
       </button>
       <button mat-fab
         [color]="location.closed ? null : 'primary'"
         [disabled]="!enabled"
         (click)="handleLocation()">
-        <i18n i18n="@@followPosition">followPosition</i18n>
+        <i18n>followPosition</i18n>
         <fa-icon icon="location-arrow"></fa-icon>
       </button>
     </ng-container>
     <ng-container *ngIf="!embedded || !uuid">
       <button color mat-fab (click)="handleReset()">
-        <i18n i18n="@@reset">reset</i18n>
+        <i18n>reset</i18n>
         <fa-icon icon="undo-alt"></fa-icon>
       </button>
     </ng-container>

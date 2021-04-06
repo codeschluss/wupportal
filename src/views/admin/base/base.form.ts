@@ -1,10 +1,9 @@
-import { HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
+import { Directive, HostBinding, Input, OnDestroy, OnInit, Type } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { AccessTokenModel, CrudModel, TokenProvider } from '@wooportal/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { AccessTokenModel, CrudModel, TokenProvider, TranslationProvider } from '../../../core';
 import { BaseFieldComponent } from './base.field';
 import { BaseStepper } from './base.stepper';
 
@@ -21,6 +20,9 @@ export interface FormField {
   value?: any;
 }
 
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
 export abstract class BaseForm<Model extends CrudModel>
   implements OnInit, OnDestroy {
 
@@ -153,8 +155,10 @@ export abstract class BaseForm<Model extends CrudModel>
       : of(item);
   }
 
-  protected updated(field: string):
-    { add: (CrudModel & any)[], del: (CrudModel & any)[] } {
+  protected updated(field: string): {
+    add: (CrudModel & any)[];
+    del: (CrudModel & any)[];
+  } {
 
     const del = (this.item[field] || []);
     const mod = (this.group.get(field).value || []).filter((item) => item.id);

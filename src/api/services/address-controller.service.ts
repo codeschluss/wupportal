@@ -36,6 +36,7 @@ class AddressControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `AddressControllerService.AddressControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -80,6 +81,7 @@ class AddressControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `AddressControllerService.AddressControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -103,6 +105,7 @@ class AddressControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newAddress newAddress
    * @return OK
    */
@@ -129,6 +132,7 @@ class AddressControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newAddress newAddress
    * @return OK
    */
@@ -139,6 +143,7 @@ class AddressControllerService extends __BaseService {
   }
 
   /**
+   * lookup
    * @param address address
    * @return OK
    */
@@ -165,6 +170,7 @@ class AddressControllerService extends __BaseService {
     );
   }
   /**
+   * lookup
    * @param address address
    * @return OK
    */
@@ -175,6 +181,7 @@ class AddressControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param addressId addressId
    * @return OK
    */
@@ -185,7 +192,7 @@ class AddressControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/addresses/${addressId}`,
+      this.rootUrl + `/addresses/${encodeURIComponent(String(addressId))}`,
       __body,
       {
         headers: __headers,
@@ -201,6 +208,7 @@ class AddressControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param addressId addressId
    * @return OK
    */
@@ -211,6 +219,7 @@ class AddressControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newAddress newAddress
    * @param addressId addressId
    * @return OK
@@ -224,7 +233,7 @@ class AddressControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/addresses/${addressId}`,
+      this.rootUrl + `/addresses/${encodeURIComponent(String(addressId))}`,
       __body,
       {
         headers: __headers,
@@ -240,6 +249,7 @@ class AddressControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newAddress newAddress
    * @param addressId addressId
    * @return OK
@@ -252,6 +262,7 @@ class AddressControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param addressId addressId
    * @return OK
    */
@@ -262,7 +273,7 @@ class AddressControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/addresses/${addressId}`,
+      this.rootUrl + `/addresses/${encodeURIComponent(String(addressId))}`,
       __body,
       {
         headers: __headers,
@@ -278,6 +289,7 @@ class AddressControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param addressId addressId
    * @return OK
    */
@@ -288,6 +300,7 @@ class AddressControllerService extends __BaseService {
   }
 
   /**
+   * readSuburb
    * @param addressId addressId
    * @return OK
    */
@@ -298,7 +311,7 @@ class AddressControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/addresses/${addressId}/suburb`,
+      this.rootUrl + `/addresses/${encodeURIComponent(String(addressId))}/suburb`,
       __body,
       {
         headers: __headers,
@@ -314,6 +327,7 @@ class AddressControllerService extends __BaseService {
     );
   }
   /**
+   * readSuburb
    * @param addressId addressId
    * @return OK
    */
@@ -324,6 +338,7 @@ class AddressControllerService extends __BaseService {
   }
 
   /**
+   * updateSuburb
    * @param addressId addressId
    * @param suburbId suburbId
    * @return OK
@@ -337,7 +352,7 @@ class AddressControllerService extends __BaseService {
     __body = suburbId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/addresses/${addressId}/suburb`,
+      this.rootUrl + `/addresses/${encodeURIComponent(String(addressId))}/suburb`,
       __body,
       {
         headers: __headers,
@@ -353,6 +368,7 @@ class AddressControllerService extends __BaseService {
     );
   }
   /**
+   * updateSuburb
    * @param addressId addressId
    * @param suburbId suburbId
    * @return OK

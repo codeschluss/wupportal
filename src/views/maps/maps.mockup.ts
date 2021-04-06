@@ -1,7 +1,7 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AppRouterModule, DeviceProvider } from '@wooportal/app';
+import { PlatformProvider } from '../../core';
 
 @Component({
   styles: [`
@@ -14,14 +14,16 @@ import { AppRouterModule, DeviceProvider } from '@wooportal/app';
     }
     main {
       align-items: center;
-      background-color: rgba(0, 0, 0, .12);
+      background-color: #e0e0e0;
       bottom: 0;
       color: rgba(0, 0, 0, .87);
       display: flex;
       font-size: 4rem;
+      height: 100%;
       justify-content: center;
       left: 0;
       max-width: 100% !important;
+      padding: 0;
       position: absolute;
       right: 0;
       top: 0;
@@ -34,24 +36,25 @@ import { AppRouterModule, DeviceProvider } from '@wooportal/app';
   `
 })
 
-export class MapsComponent implements OnInit {
+export class MapsComponent
+  implements OnInit {
 
   public constructor(
-    private deviceProvider: DeviceProvider,
+    private platformProvider: PlatformProvider,
     private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
     if (this.route.snapshot.queryParamMap.has('embed')) {
-      this.deviceProvider.document.body.classList.add('embedded');
+      this.platformProvider.document.body.classList.add('embedded');
     }
   }
 
 }
 
 @NgModule({
-  exports: [AppRouterModule],
-  imports: [AppRouterModule.forChild([
+  exports: [RouterModule],
+  imports: [RouterModule.forChild([
     {
       path: '**',
       pathMatch: 'full',

@@ -31,6 +31,7 @@ class SuburbControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `SuburbControllerService.SuburbControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -75,6 +76,7 @@ class SuburbControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `SuburbControllerService.SuburbControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -98,6 +100,7 @@ class SuburbControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newSuburb newSuburb
    * @return OK
    */
@@ -124,6 +127,7 @@ class SuburbControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newSuburb newSuburb
    * @return OK
    */
@@ -134,6 +138,7 @@ class SuburbControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param surburbId surburbId
    * @return OK
    */
@@ -144,7 +149,7 @@ class SuburbControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/suburbs/${surburbId}`,
+      this.rootUrl + `/suburbs/${encodeURIComponent(String(surburbId))}`,
       __body,
       {
         headers: __headers,
@@ -160,6 +165,7 @@ class SuburbControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param surburbId surburbId
    * @return OK
    */
@@ -170,6 +176,7 @@ class SuburbControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newSuburb newSuburb
    * @param surburbId surburbId
    * @return OK
@@ -183,7 +190,7 @@ class SuburbControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/suburbs/${surburbId}`,
+      this.rootUrl + `/suburbs/${encodeURIComponent(String(surburbId))}`,
       __body,
       {
         headers: __headers,
@@ -199,6 +206,7 @@ class SuburbControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newSuburb newSuburb
    * @param surburbId surburbId
    * @return OK
@@ -211,6 +219,7 @@ class SuburbControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param surburbId surburbId
    * @return OK
    */
@@ -221,7 +230,7 @@ class SuburbControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/suburbs/${surburbId}`,
+      this.rootUrl + `/suburbs/${encodeURIComponent(String(surburbId))}`,
       __body,
       {
         headers: __headers,
@@ -237,6 +246,7 @@ class SuburbControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param surburbId surburbId
    * @return OK
    */

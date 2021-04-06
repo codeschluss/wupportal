@@ -1,45 +1,50 @@
 <header class="mat-title">
-  <i18n i18n="@@applicationPanel">applicationPanel</i18n>
-  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
-    <i18n i18n="@@actions">actions</i18n>
-  </button>
-  <span [style.flexGrow]="1"></span>
   <h2 class="mat-headline">{{ name }}</h2>
+  <span [style.flexGrow]="1"></span>
+  <i18n>applicationPanel</i18n>
+  <button  mat-raised-button
+    color="primary"
+    xPosition="before"
+    [matMenuTriggerFor]="actions">
+    <i18n>actions</i18n>
+  </button>
 </header>
 
 <mat-menu #actions="matMenu">
   <button mat-menu-item (click)="create('languages')">
-    <i18n i18n="@@createLanguage">createLanguage</i18n>
+    <i18n>createLanguage</i18n>
   </button>
 </mat-menu>
 
 <mat-tab-group id="application" [selectedIndex]="index">
   <mat-tab id="configuration">
     <ng-template matTabLabel>
-      <i18n i18n="@@configuration">configuration</i18n>
+      <i18n>configuration</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <configuration-form #form [group]="group" [item]="configuration">
+      <configuration-form #configurationForm
+        [group]="configurationGroup"
+        [item]="configuration">
       </configuration-form>
       <mat-divider></mat-divider>
       <button mat-raised-button
         color="primary"
-        [disabled]="!form.valid || !form.dirty"
-        (click)="form.persist().subscribe()">
-        <i18n i18n="@@persist">persist</i18n>
+        [disabled]="!configurationForm.valid || !configurationForm.dirty"
+        (click)="configurationForm.persist().subscribe()">
+        <i18n>persist</i18n>
       </button>
     </ng-template>
   </mat-tab>
 
   <mat-tab id="languages">
     <ng-template matTabLabel>
-      <i18n i18n="@@languages">languages</i18n>
+      <i18n>languages</i18n>
     </ng-template>
     <ng-template matTabContent>
       <language-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button

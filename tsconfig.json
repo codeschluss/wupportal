@@ -1,39 +1,29 @@
 {
   "compileOnSave": false,
   "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "fullTemplateTypeCheck": true,
-    "skipTemplateCodegen": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   },
   "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": true,
-    "importHelpers": true,
-    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noImplicitReturns": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "outDir": "platforms/web",
-    "target": "es5",
+    // "strict": true,
+
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
+    "target": "esnext",
     "lib": [
       "dom",
       "esnext"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "paths": {
-      "@wooportal/*": [
-        "platforms/web/system/*"
-      ]
-    }
-  },
-  "exclude": [
-    "**/*.android.ts",
-    "**/*.ios.ts",
-    "**/*.tns.ts"
-  ]
+    ]
+  }
 }

@@ -1,11 +1,9 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CrudModel, TokenProvider } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MessageProvider } from '../../../base/providers/message.provider';
-import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { CrudModel, MessageProvider, TokenProvider, TranslationProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { InputFieldComponent } from '../fields/input.field';
 import { TextareaFieldComponent } from '../fields/textarea.field';
@@ -16,10 +14,10 @@ import { TextareaFieldComponent } from '../fields/textarea.field';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'content'">
-          <i18n i18n="@@content">content</i18n>
+          <i18n>content</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'title'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n>title</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

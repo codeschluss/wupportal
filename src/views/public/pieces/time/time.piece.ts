@@ -3,8 +3,9 @@ import { BasePiece } from '../base.piece';
 
 @Component({
   selector: 'time-piece',
-  styleUrls: ['../base.piece.scss', 'time.piece.scss'],
+  styleUrls: ['../base.piece.sass', 'time.piece.sass'],
   templateUrl: 'time.piece.html'
 })
 
-export class TimePieceComponent extends BasePiece { }
+export class TimePieceComponent
+  extends BasePiece { }

@@ -1,0 +1,12 @@
+{
+  "name": "cordova-support-base-href",
+  "version": "0.0.0",
+  "cordova": {
+    "id": "cordova-support-base-href",
+    "platforms": [
+      "android",
+      "browser",
+      "ios"
+    ]
+  }
+}

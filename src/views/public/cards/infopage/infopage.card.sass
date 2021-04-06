@@ -1,0 +1,13 @@
+@import ../../../brand.scss
+
+a
+  display: block
+  text-align: left
+
+  @include deep
+    & > span
+      & > span
+        font-size: 1rem
+
+      & > fa-icon
+        padding-right: .5rem

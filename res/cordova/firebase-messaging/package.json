@@ -1,0 +1,14 @@
+{
+  "name": "cordova-support-firebase-messaging",
+  "version": "0.0.0",
+  "types": "./types/index.d.ts",
+  "cordova": {
+    "id": "cordova-support-firebase-messaging",
+    "platforms": [
+      "browser"
+    ]
+  },
+  "dependencies": {
+    "firebase": "~8.0.0"
+  }
+}

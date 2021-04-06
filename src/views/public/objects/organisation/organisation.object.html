@@ -1,12 +1,12 @@
 <main>
   <h2 class="mat-headline">
-    {{ item.name }}
+    {{ item.label }}
     <small>
-      <i18n i18n="@@at">at</i18n>
+      <i18n>at</i18n>
       <a
         [queryParams]="{ suburbs: item.address.suburb.id }"
         [routerLink]="['/', 'activities']">
-        {{ item.address.place }} {{ item.address.suburb.name }}
+        {{ item.address.place }} {{ item.address.suburb.label }}
       </a>
     </small>
   </h2>
@@ -20,145 +20,146 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <marked-component [data]="item.description"></marked-component>
+    <article [innerHTML]="item.description"></article>
     <aside>
-      <expand-component #details
-        (changed)="$event && expanded(details)">
-        <ng-template #expandHeader>
-          <icon-component icon="at"></icon-component>
-          <i18n i18n="@@details">details</i18n>
-        </ng-template>
-        <ng-template #expandContent>
-          <table>
+      <mat-expansion-panel #details (opened)="expanded(details)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon icon="at"></fa-icon>
+            <i18n>details</i18n>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <table>
+          <tr>
+            <td [style.verticalAlign]="'top'">
+              <i18n>address</i18n>
+            </td>
+            <td>
+                {{ item.address.street }}
+                {{ item.address.houseNumber }}
+                <br>
+                {{ item.address.postalCode }}
+                {{ item.address.place }}
+                {{ item.address.suburb.label }}
+            </td>
+          </tr>
+          <ng-container *ngIf="item.website">
             <tr>
-              <td [style.verticalAlign]="'top'">
-                <i18n i18n="@@address">address</i18n>
-              </td>
+              <td><i18n>website</i18n></td>
               <td>
-                  {{ item.address.street }}
-                  {{ item.address.houseNumber }}
-                  <br>
-                  {{ item.address.postalCode }}
-                  {{ item.address.place }}
-                  {{ item.address.suburb.name }}
-              </td>
-            </tr>
-            <ng-container *ngIf="item.website">
-              <tr>
-                <td><i18n i18n="@@website">website</i18n></td>
-                <td>
-                  <a mat-button target="_blank" [href]="item.website">
-                    <icon-component icon="link"></icon-component>
-                    {{ item.website }}
-                  </a>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="item.phone">
-              <tr>
-                <td><i18n i18n="@@phone">phone</i18n></td>
-                <td>
-                  <a mat-button target="_blank" [href]="'tel:' + item.phone">
-                    <icon-component icon="phone"></icon-component>
-                    {{ item.phone }}
-                  </a>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="item.mail">
-              <tr>
-                <td><i18n i18n="@@email">email</i18n></td>
-                <td>
-                  <a mat-button target="_blank" [href]="'mailto:' + item.mail">
-                    <icon-component icon="envelope"></icon-component>
-                    {{ item.mail }}
-                  </a>
-                </td>
-              </tr>
-            </ng-container>
-            <tr>
-              <td><i18n i18n="@@suburb">suburb</i18n></td>
-              <td>
-                <a mat-button
-                  [queryParams]="{ suburbs: item.address.suburb.id }"
-                  [routerLink]="['/', 'activities']">
-                  <icon-component icon="city"></icon-component>
-                  {{ item.address.suburb.name }}
+                <a mat-button target="_blank" [href]="item.website">
+                  <fa-icon icon="link"></fa-icon>
+                  {{ item.website }}
                 </a>
               </td>
             </tr>
-          </table>
-        </ng-template>
-      </expand-component>
+          </ng-container>
+          <ng-container *ngIf="item.phone">
+            <tr>
+              <td><i18n>phone</i18n></td>
+              <td>
+                <a mat-button target="_blank" [href]="'tel:' + item.phone">
+                  <fa-icon icon="phone"></fa-icon>
+                  {{ item.phone }}
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="item.mail">
+            <tr>
+              <td><i18n>email</i18n></td>
+              <td>
+                <a mat-button target="_blank" [href]="'mailto:' + item.mail">
+                  <fa-icon icon="envelope"></fa-icon>
+                  {{ item.mail }}
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+          <tr>
+            <td><i18n>suburb</i18n></td>
+            <td>
+              <a mat-button
+                [queryParams]="{ suburbs: item.address.suburb.id }"
+                [routerLink]="['/', 'activities']">
+                <fa-icon icon="city"></fa-icon>
+                {{ item.address.suburb.label }}
+              </a>
+            </td>
+          </tr>
+        </table>
+      </mat-expansion-panel>
       <ng-container *ngIf="item.images">
-        <expand-component #images
-          (changed)="$event && expanded(images)">
-          <ng-template #expandHeader>
-            <icon-component icon="image"></icon-component>
-            <i18n i18n="@@images">images</i18n>
-            <small>({{ item.images.length }})</small>
-          </ng-template>
-          <ng-template #expandContent>
-            <ng-container *ngFor="let image of item.images">
-              <figure>
-                <content
-                  [alt]="image.name"
-                  [style.backgroundImage]="image.source"
-                  [title]="image.name">
-                </content>
-              </figure>
-            </ng-container>
-          </ng-template>
-        </expand-component>
+        <mat-expansion-panel #images (opened)="expanded(images)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <fa-icon icon="image"></fa-icon>
+              <i18n>images</i18n>
+              <small>({{ item.images.length }})</small>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let image of item.images">
+            <figure>
+              <img
+                src="data:image/svg+xml,
+                  %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                [alt]="image.label"
+                [style.backgroundImage]="image.source"
+                [title]="image.label">
+            </figure>
+          </ng-container>
+        </mat-expansion-panel>
       </ng-container>
       <ng-container *ngIf="item.videos">
-        <expand-component #videos
-          (changed)="$event && expanded(videos)">
-          <ng-template #expandHeader>
-            <icon-component icon="film"></icon-component>
-            <i18n i18n="@@videos">videos</i18n>
-            <small>({{ item.videos.length }})</small>
-          </ng-template>
-          <ng-template #expandContent>
-            <ng-container *ngFor="let video of item.videos">
-              <figure>
-                <ng-container *ngIf="video.thumbnail">
-                  <content
-                    [alt]="video.thumbnail.name"
-                    [style.backgroundImage]="video.thumbnail.source"
-                    [title]="video.thumbnail.name">
-                    <a target="_blank" [href]="video.url">
-                      <icon-component icon="play"></icon-component>
-                    </a>
-                  </content>
-                </ng-container>
-                <ng-container *ngIf="!video.thumbnail">
-                  <content [alt]="video.url" [title]="video.url">
-                    <icon-component icon="film"></icon-component>
-                    <a target="_blank" [href]="video.url">
-                      <icon-component icon="play"></icon-component>
-                    </a>
-                  </content>
-                </ng-container>
-              </figure>
-            </ng-container>
-          </ng-template>
-        </expand-component>
+        <mat-expansion-panel #videos (opened)="expanded(videos)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <fa-icon icon="film"></fa-icon>
+              <i18n>videos</i18n>
+              <small>({{ item.videos.length }})</small>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let video of item.videos">
+            <figure>
+              <ng-container *ngIf="video.thumbnail">
+                <img
+                  src="data:image/svg+xml,
+                    %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                  [alt]="video.thumbnail.label"
+                  [style.backgroundImage]="video.thumbnail.source"
+                  [title]="video.thumbnail.label">
+                <a target="_blank" [href]="video.url">
+                  <fa-icon icon="play"></fa-icon>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="!video.thumbnail">
+                <img
+                  src="data:image/svg+xml,
+                    %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                  [alt]="video.url"
+                  [title]="video.url">
+                <fa-icon icon="film"></fa-icon>
+                <a target="_blank" [href]="video.url">
+                  <fa-icon icon="play"></fa-icon>
+                </a>
+              </ng-container>
+            </figure>
+          </ng-container>
+        </mat-expansion-panel>
       </ng-container>
       <ng-container *ngIf="item.activities">
-        <expand-component #activities
-          (changed)="$event && expanded(activities)">
-          <ng-template #expandHeader>
-            <icon-component icon="map-marker-alt"></icon-component>
-            <i18n i18n="@@activities">activities</i18n>
-            <small>({{ item.activities.length }})</small>
-          </ng-template>
-          <ng-template #expandContent>
-            <ng-container *ngFor="let activity of item.activities">
-              <activity-card [item]="activity"></activity-card>
-            </ng-container>
-          </ng-template>
-        </expand-component>
+        <mat-expansion-panel #activities (opened)="expanded(activities)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <fa-icon icon="map-marker-alt"></fa-icon>
+              <i18n>activities</i18n>
+              <small>({{ item.activities.length }})</small>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let activity of item.activities">
+            <activity-card [item]="activity"></activity-card>
+          </ng-container>
+        </mat-expansion-panel>
       </ng-container>
     </aside>
   </section>

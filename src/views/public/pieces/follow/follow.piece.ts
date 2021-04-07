@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { ActivityModel, BloggerModel, Box, OrganisationModel, SessionProvider, SubscriptionProvider, TopicModel } from '../../../../core';
+import { NotificationsPageComponent } from '../../pages/notifications/notifications.page';
 import { BasePiece } from '../base.piece';
 
 @Component({
@@ -33,8 +34,45 @@ export class FollowPieceComponent
   public toggle(): void {
     if (!this.sessionProvider.getSubscriptionId()) {
       from(this.router.navigate(['/', 'notifications', 'register'])).pipe(
-        filter((ok) => ok && this.router.url.startsWith('/notifications'))
-      ).subscribe(() => this.follow());
+        filter((ok) => ok && this.router.url.startsWith('/notifications')),
+        map(() => this.router.routerState.snapshot.root)
+      ).subscribe((route) => {
+        this.follow();
+
+        while (route) {
+          if (route.routeConfig.component === NotificationsPageComponent) {
+            switch (this.item.constructor) {
+              case ActivityModel:
+                route.data.subscription.activities
+                  ? route.data.subscription.activities.push(this.item)
+                  : route.data.subscription.activities = [this.item];
+                break;
+
+              case BloggerModel:
+                route.data.subscription.activities
+                  ? route.data.subscription.bloggers.push(this.item)
+                  : route.data.subscription.bloggers = [this.item];
+                break;
+
+              case OrganisationModel:
+                route.data.subscription.activities
+                  ? route.data.subscription.organisations.push(this.item)
+                  : route.data.subscription.organisations = [this.item];
+                break;
+
+              case TopicModel:
+                route.data.subscription.activities
+                  ? route.data.subscription.topics.push(this.item)
+                  : route.data.subscription.topics = [this.item];
+                break;
+            }
+
+            break;
+          }
+
+          route = route.firstChild;
+        }
+      });
     } else {
       this.followed ? this.unfollow() : this.follow();
     }

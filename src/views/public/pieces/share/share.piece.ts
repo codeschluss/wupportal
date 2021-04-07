@@ -69,15 +69,24 @@ export class SharePieceComponent
     clipboard.style.opacity = '0';
     clipboard.style.position = 'absolute';
     clipboard.value = this.href;
-    this.platformProvider.document.body.appendChild(clipboard);
 
+    this.platformProvider.document.body.appendChild(clipboard);
     clipboard.focus();
     clipboard.select();
+
+    const range = document.createRange();
+    range.selectNodeContents(clipboard);
+
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    clipboard.setSelectionRange(0, clipboard.value.length);
     this.platformProvider.document.execCommand('copy');
     this.platformProvider.document.body.removeChild(clipboard);
   }
 
-  public share(target?: ShareTarget): void {
+  public share(target: ShareTarget): void {
     this.platformProvider.document.defaultView
       .open(target.url + this.href, '_blank');
   }

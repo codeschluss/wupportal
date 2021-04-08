@@ -49,7 +49,7 @@ export class AddressTableComponent
     },
     {
       name: 'suburb',
-      value: (item) => item.suburb.name
+      value: (item) => item.suburb.label
     }
   ];
 

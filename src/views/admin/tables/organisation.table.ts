@@ -57,7 +57,7 @@ export class OrganisationTableComponent
     },
     {
       name: 'address',
-      value: (item) => item.address.name
+      value: (item) => item.address.label
     }
   ];
 

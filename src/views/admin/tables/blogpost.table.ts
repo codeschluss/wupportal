@@ -35,7 +35,7 @@ export class BlogpostTableComponent
     },
     {
       name: 'activity',
-      value: (item) => item.activity ? item.activity.name : ''
+      value: (item) => item.activity ? item.activity.label : ''
     }
   ];
 

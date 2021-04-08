@@ -15,7 +15,7 @@ export class FatalPopupComponent {
   ]);
 
   public email: FormControl = new FormControl(null, [
-    Validators.email,
+    Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
     Validators.required
   ]);
 

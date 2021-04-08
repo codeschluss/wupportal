@@ -54,10 +54,13 @@ main#admin
             transform: translateY(.25rem)
 
         & > nav
-          @include flex(row, normal, center)
+          @include flex(column, normal, stretch)
 
-          & > * + *
-            margin-left: 1rem
+          @include responsive(gt-sm)
+            @include flex(row, normal, center)
+
+            & > * + *
+              margin-left: 1rem
 
         & > output
           flex: 1 1 auto
@@ -136,14 +139,14 @@ main#admin
           border-width: .5rem
 
       & > mat-header-row
-        min-width: calc(#{$viewport-width} / 2)
+        min-width: calc(#{$viewport-width} / 1.5)
 
         & > mat-header-cell
           &:last-of-type
             @include flex(row, flex-end, center)
 
       & > mat-row
-        min-width: calc(#{$viewport-width} / 2)
+        min-width: calc(#{$viewport-width} / 1.5)
 
         &:nth-of-type(even)
           background-color: rgba(0, 0, 0, .005)

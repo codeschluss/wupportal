@@ -13,11 +13,15 @@ export class TranslatePanelComponent
   protected path: string = 'translate';
 
   protected resolve: Record<string, CrudJoiner> = {
-    label: CrudJoiner.of(LabelModel)
-      .with('translatables').yield('language'),
-    language: CrudJoiner.of(LanguageModel),
-    markup: CrudJoiner.of(MarkupModel)
-      .with('translatables').yield('language')
+    label: CrudJoiner.of(LabelModel, {
+      required: true
+    }).with('translatables').yield('language'),
+    language: CrudJoiner.of(LanguageModel, {
+      required: true
+    }),
+    markup: CrudJoiner.of(MarkupModel, {
+      required: true
+    }).with('translatables').yield('language')
   };
 
   public get label(): LabelModel[] {

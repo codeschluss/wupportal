@@ -18,12 +18,12 @@ case $NODE_ENV in
       -e "s|(\"profile\":) \"[^\"]+\"|\1 \"$NODE_ENV\"|" \
       settings.json >settings-dev.json
 
+    trap 'test -n "$PID" && kill -0 $PID && pkill -P $PID' 0
+
     while node -e 'done = require("fsevents").watch("www", () => done())'; do
-      if system_profiler SPUSBDataType 2>&- | grep -Eq 'iP([ao]d|hone)'; then
-        if test -f www/index.html && cordova run ios && test -n "$APP"; then
-          test -n "$PID" && kill -0 $PID && pkill -P $PID
-          sh -c "cfgutil syslog | grep $APP" & PID=$!
-        fi
+      if test -f www/index.html && cordova run ios && test -n "$APP"; then
+        test -n "$PID" && kill -0 $PID && pkill -P $PID
+        sh -c "cfgutil syslog | grep $APP" & PID=$!
       fi
     done &
 

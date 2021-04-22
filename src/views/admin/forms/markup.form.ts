@@ -12,17 +12,6 @@ import { SelectFieldComponent } from '../fields/select.field';
 @Component({
   selector: 'markup-form',
   template: BaseForm.template(`
-    <section>
-      <label class="mat-body-strong">
-        <i18n>compilation</i18n>
-      </label>
-      <nav>
-        <button mat-button color="warn" (click)="reset()">
-          <i18n>reset</i18n>
-        </button>
-      </nav>
-    </section>
-
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'content'">

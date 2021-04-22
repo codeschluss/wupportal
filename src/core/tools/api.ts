@@ -14,6 +14,8 @@ export interface BaseService {
 
 export interface JwtClaims {
   activityProvider: string[];
+  blogger: boolean;
+  blogpostAuthor: string[];
   organisationAdmin: string[];
   organisationUser: string[];
   superUser: boolean;

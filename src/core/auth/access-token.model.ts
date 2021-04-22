@@ -13,6 +13,8 @@ export class AccessTokenModel {
 
       adminOrgas: { type: 'array', items: { type: 'string' } },
       approvedOrgas: { type: 'array', items: { type: 'string' } },
+      blogger: { type: 'boolean' },
+      blogAuthor: { type: 'array', items: { type: 'string' } },
       createdActivities: { type: 'array', items: { type: 'string' } },
       superuser: { type: 'boolean' },
       translator: { type: 'boolean' }
@@ -39,6 +41,8 @@ export class AccessTokenModel {
   public sub: string = '';
 
   public adminOrgas: string[] = [];
+  public blogger: boolean = false;
+  public blogpostAuthor: string[] = [];
   public approvedOrgas: string[] = [];
   public createdActivities: string[] = [];
   public superuser: boolean = false;

@@ -65,6 +65,11 @@ export class AdminGuarding
           || claimed.activityProvider.includes(this.uuid(state.url))
           || claimed.organisationAdmin.includes(await this.orga(state.url));
 
+        case state.url.startsWith('/admin/edit/blogposts/'):
+        return claimed.superUser
+          || (claimed.blogger && !this.uuid(state.url))
+          || claimed.blogpostAuthor.includes(this.uuid(state.url));
+
         case state.url.startsWith('/admin/edit/organisations/'):
         return claimed.superUser
           || (claimed.userId && !this.uuid(state.url))

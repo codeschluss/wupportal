@@ -20,16 +20,18 @@ export class CoreSettings {
   public defaults: {
     city: string;
     language: string;
-    title: string
+    title: string;
   };
 
   public jwtClaims: {
     activityProvider: string;
+    blogger: string;
+    blogpostAuthor: string;
     organisationAdmin: string;
     organisationUser: string;
     superUser: string;
     translator: string;
-    userId: string
+    userId: string;
   };
 
   public labelHeader: {

@@ -6,7 +6,6 @@ export class LanguageModel
   implements LanguageEntity {
 
   public locale: string;
-  public machineTranslated: string;
   public name: string;
 
 }

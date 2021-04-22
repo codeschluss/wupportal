@@ -12,9 +12,6 @@ import { InputFieldComponent } from '../fields/input.field';
         <ng-container *ngSwitchCase="'locale'">
           <i18n>locale</i18n>
         </ng-container>
-        <ng-container *ngSwitchCase="'machineTranslated'">
-          <i18n>machineTranslated</i18n>
-        </ng-container>
         <ng-container *ngSwitchCase="'name'">
           <i18n>name</i18n>
         </ng-container>
@@ -36,10 +33,6 @@ export class LanguageFormComponent
       name: 'locale',
       input: InputFieldComponent,
       tests: [Validators.required]
-    },
-    {
-      name: 'machineTranslated',
-      input: InputFieldComponent
     }
   ];
 

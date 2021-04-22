@@ -10,9 +10,6 @@ import { BaseTable, TableColumn } from '../base/base.table';
         <ng-container *ngSwitchCase="'locale'">
           <i18n>locale</i18n>
         </ng-container>
-        <ng-container *ngSwitchCase="'machineTranslated'">
-          <i18n>machineTranslated</i18n>
-        </ng-container>
         <ng-container *ngSwitchCase="'name'">
           <i18n>name</i18n>
         </ng-container>
@@ -32,10 +29,6 @@ export class LanguageTableComponent
     {
       name: 'locale',
       value: (item) => item.locale
-    },
-    {
-      name: 'machineTranslated',
-      value: (item) => item.machineTranslated
     }
   ];
 

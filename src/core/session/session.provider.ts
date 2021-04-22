@@ -109,7 +109,7 @@ export class SessionProvider {
 
   private setLanguageCookie(language: string): void {
     if (this.platformProvider.name === 'browser') {
-      this.platformProvider.document.cookie = `lang=${language}`;
+      this.platformProvider.document.cookie = `lang=${language};path=/`;
     }
   }
 

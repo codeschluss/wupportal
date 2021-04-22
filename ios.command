@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 case $1 in development|production) export NODE_ENV=$1;; *) exit 64;; esac
 case $(uname -s) in Darwin*) :;; *) exit 71;; esac

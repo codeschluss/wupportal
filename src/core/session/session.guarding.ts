@@ -45,12 +45,12 @@ export class SessionGuarding
             catchError(() => {
               this.loadingProvider.finished(block);
               this.sessionProvider.setSubscriptionId('blocked');
-              return of(this.router.createUrlTree(['/', 'error', 403]));
+              return of(this.router.createUrlTree(['/', 'error', 400]));
             })
           );
 
         case 'blocked':
-          return of(this.router.createUrlTree(['/', 'error', 403]));
+          return of(this.router.createUrlTree(['/', 'error', 400]));
 
         default:
           return of(session.subscriptionId).pipe(map((id) => {

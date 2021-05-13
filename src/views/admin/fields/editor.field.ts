@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, OnDestroy, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgControl, Validators } from '@angular/forms';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { CKEditor5, CKEditorComponent } from '@ckeditor/ckeditor5-angular';
-import { InlineEditor } from '@wooportal/editor';
+import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { merge, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
@@ -26,7 +26,8 @@ import { BaseFieldComponent } from '../base/base.field';
     }
   `],
   template: BaseFieldComponent.template(`
-    <ckeditor #instance
+    <ckeditor
+      [config]="config"
       [disabled]="disabled"
       [editor]="editor"
       [id]="field.name"
@@ -37,14 +38,55 @@ import { BaseFieldComponent } from '../base/base.field';
   `)
 })
 
-export class EditorFieldComponent extends BaseFieldComponent
-  implements AfterViewInit, OnDestroy, MatFormFieldControl<string> {
-
-  public controlType: string = 'ckeditor';
+export class EditorFieldComponent
+  extends BaseFieldComponent
+  implements OnInit, AfterViewInit, OnDestroy, MatFormFieldControl<string> {
 
   public changes: Subject<any> = new Subject<any>();
 
-  public editor: Type<CKEditor5.Editor> = InlineEditor;
+  public config: CKEditor5.Config = {
+    table: {
+      contentToolbar: [
+        'tableColumn',
+        'tableRow',
+        'mergeTableCells'
+      ]
+    },
+    toolbar: {
+      items: [
+        'heading',
+        'alignment',
+        'fontSize',
+        '|',
+        'bold',
+        'italic',
+        'underline',
+        'code',
+        '|',
+        'strikethrough',
+        'subscript',
+        'superscript',
+        '|',
+        'bulletedList',
+        'numberedList',
+        'indent',
+        'outdent',
+        '|',
+        'link',
+        'blockQuote',
+        'codeBlock',
+        'insertTable',
+        'horizontalLine',
+        '|',
+        'undo',
+        'redo'
+      ]
+    }
+  };
+
+  public controlType: string = 'ckeditor';
+
+  public editor: CKEditor5.EditorConstructor = InlineEditor;
 
   public focused: boolean;
 
@@ -54,7 +96,7 @@ export class EditorFieldComponent extends BaseFieldComponent
 
   public placeholder: string;
 
-  @ViewChild('instance', { static: true })
+  @ViewChild(CKEditorComponent, { static: true })
   private instance: CKEditorComponent;
 
   @ViewChild(MatFormField, { static: true })
@@ -92,12 +134,16 @@ export class EditorFieldComponent extends BaseFieldComponent
     return this.changes.asObservable();
   }
 
+  public ngOnInit(): void {
+    this.parent._control = this;
+  }
+
   public ngAfterViewInit(): void {
     this.id = this.field.name;
 
     merge(
       this.instance.blur.pipe(map(() => false)),
-      this.instance.focus.pipe(map(() => true)),
+      this.instance.focus.pipe(map(() => true))
     ).pipe(
       tap((focused) => focused || this.control.markAsTouched())
     ).subscribe((focused) => this.changes.next(this.focused = focused));
@@ -110,9 +156,5 @@ export class EditorFieldComponent extends BaseFieldComponent
   public onContainerClick(_: Event): void { }
 
   public setDescribedByIds(_: string[]): void { }
-
-  protected ngPostInit(): void {
-    this.parent._control = this;
-  }
 
 }

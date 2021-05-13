@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -20,11 +21,7 @@ import { MatTabsModule, MAT_TABS_CONFIG } from '@angular/material/tabs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { AppCommonModule, AppRouterModule } from '@wooportal/app';
-import { CrudModel } from '@wooportal/core';
-import { FileValueAccessorDirective } from '../../tools/accesor';
-import { Paginate } from '../../tools/paginate';
-import { SharedModule } from '../shared/shared.module';
+import { CrudModel, LabelModule } from '../../core';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
 import { BaseChart } from './base/base.chart';
@@ -56,8 +53,10 @@ import { ConfigurationFormComponent } from './forms/configuration.form';
 import { ImageFormComponent } from './forms/image.form';
 import { InfopageFormComponent } from './forms/infopage.form';
 import { KeywordFormComponent } from './forms/keyword.form';
+import { LabelFormComponent } from './forms/label.form';
 import { LanguageFormComponent } from './forms/language.form';
 import { MailingFormComponent } from './forms/mailing.form';
+import { MarkupFormComponent } from './forms/markup.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
 import { PushingFormComponent } from './forms/pushing.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
@@ -77,6 +76,7 @@ import { OrganisationPanelComponent } from './panels/organisation/organisation.p
 import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
 import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
 import { TaxonomyPanelComponent } from './panels/taxonomy/taxonomy.panel';
+import { TranslatePanelComponent } from './panels/translate/translate.panel';
 import { DeletePopupComponent } from './popups/delete.popup';
 import { PusherPopupComponent } from './popups/pusher.popup';
 import { ReloginPopupComponent } from './popups/relogin.popup';
@@ -108,6 +108,8 @@ import { SuburbTableComponent } from './tables/suburb.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
 import { TopicTableComponent } from './tables/topic.table';
 import { UserTableComponent } from './tables/user.table';
+import { FileValueAccessorDirective } from './tools/accesor';
+import { Paginate } from './tools/paginate';
 
 const charts: Type<BaseChart>[] = [
   CategoryActivitiesChartComponent,
@@ -117,7 +119,7 @@ const charts: Type<BaseChart>[] = [
 ];
 
 const components: Type<any>[] = [
-  AdminComponent,
+  AdminComponent
 ];
 
 const directives: Type<any>[] = [
@@ -148,8 +150,10 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   ImageFormComponent,
   InfopageFormComponent,
   KeywordFormComponent,
+  LabelFormComponent,
   LanguageFormComponent,
   MailingFormComponent,
+  MarkupFormComponent,
   OrganisationFormComponent,
   PushingFormComponent,
   ScheduleFormComponent,
@@ -165,6 +169,8 @@ const forms: Type<BaseForm<CrudModel>>[] = [
 const materials: Type<any>[] = [
   CKEditorModule,
   FontAwesomeModule,
+  FormsModule,
+  LabelModule,
   MatAutocompleteModule,
   MatBadgeModule,
   MatButtonModule,
@@ -183,8 +189,7 @@ const materials: Type<any>[] = [
   MatTableModule,
   MatTabsModule,
   NgxChartsModule,
-  ReactiveFormsModule,
-  FormsModule
+  ReactiveFormsModule
 ];
 
 const panels: Type<BasePanel>[] = [
@@ -196,7 +201,8 @@ const panels: Type<BasePanel>[] = [
   OrganisationPanelComponent,
   PositioningPanelComponent,
   PrivilegesPanelComponent,
-  TaxonomyPanelComponent
+  TaxonomyPanelComponent,
+  TranslatePanelComponent
 ];
 
 const popups: Type<any>[] = [
@@ -261,9 +267,7 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   imports: [
     ...materials,
     AdminRouter,
-    AppCommonModule,
-    AppRouterModule,
-    SharedModule
+    CommonModule
   ],
   providers: [
     { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '0ms' } },

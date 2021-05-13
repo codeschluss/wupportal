@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, HostBinding, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { CrudModel } from '@wooportal/core';
+import { CrudModel } from '../../../core';
 import { FormField } from './base.form';
 
 @Component({
@@ -8,7 +8,8 @@ import { FormField } from './base.form';
   template: ``
 })
 
-export class BaseFieldComponent implements OnInit {
+export class BaseFieldComponent
+  implements OnInit {
 
   @HostBinding('attr.base')
   public readonly base: string = 'field';
@@ -27,19 +28,19 @@ export class BaseFieldComponent implements OnInit {
           <mat-error>
             <ng-container [ngSwitch]="error">
               <ng-container *ngSwitchCase="'minLength'">
-                <i18n i18n="@@minLengthError">minLengthError</i18n>
+                <i18n>minLengthError</i18n>
               </ng-container>
               <ng-container *ngSwitchCase="'mismatch'">
-                <i18n i18n="@@mismatchError">mismatchError</i18n>
+                <i18n>mismatchError</i18n>
               </ng-container>
               <ng-container *ngSwitchCase="'neither'">
-                <i18n i18n="@@neitherError">neitherError</i18n>
+                <i18n>neitherError</i18n>
               </ng-container>
               <ng-container *ngSwitchCase="'pattern'">
-                <i18n i18n="@@patternError">patternError</i18n>
+                <i18n>patternError</i18n>
               </ng-container>
               <ng-container *ngSwitchCase="'required'">
-                <i18n i18n="@@requiredError">requiredError</i18n>
+                <i18n>requiredError</i18n>
               </ng-container>
             </ng-container>
           </mat-error>
@@ -78,8 +79,6 @@ export class BaseFieldComponent implements OnInit {
 
       component.instance.field = this.field;
       component.instance.group = this.group;
-    } else {
-      this.ngPostInit();
     }
   }
 
@@ -109,7 +108,5 @@ export class BaseFieldComponent implements OnInit {
       ? input.map((id) => modeler(id))
       : modeler(input);
   }
-
-  protected ngPostInit(): void { }
 
 }

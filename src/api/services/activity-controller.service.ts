@@ -57,6 +57,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `ActivityControllerService.ActivityControllerReadAllParams` containing the following parameters:
    *
    * - `categories`:
@@ -113,6 +114,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `ActivityControllerService.ActivityControllerReadAllParams` containing the following parameters:
    *
    * - `categories`:
@@ -144,6 +146,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newActivity newActivity
    * @return OK
    */
@@ -170,6 +173,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newActivity newActivity
    * @return OK
    */
@@ -180,6 +184,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param activityId activityId
    * @return OK
    */
@@ -190,7 +195,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}`,
       __body,
       {
         headers: __headers,
@@ -206,6 +211,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param activityId activityId
    * @return OK
    */
@@ -216,6 +222,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newActivity newActivity
    * @param activityId activityId
    * @return OK
@@ -229,7 +236,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/activities/${activityId}`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}`,
       __body,
       {
         headers: __headers,
@@ -245,6 +252,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newActivity newActivity
    * @param activityId activityId
    * @return OK
@@ -257,6 +265,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param activityId activityId
    * @return OK
    */
@@ -267,7 +276,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/activities/${activityId}`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}`,
       __body,
       {
         headers: __headers,
@@ -283,6 +292,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param activityId activityId
    * @return OK
    */
@@ -293,6 +303,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readAddress
    * @param activityId activityId
    * @return OK
    */
@@ -303,7 +314,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/address`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/address`,
       __body,
       {
         headers: __headers,
@@ -319,6 +330,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readAddress
    * @param activityId activityId
    * @return OK
    */
@@ -329,6 +341,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * updateAddress
    * @param activityId activityId
    * @param addressId addressId
    * @return OK
@@ -342,7 +355,7 @@ class ActivityControllerService extends __BaseService {
     __body = addressId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/activities/${activityId}/address`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/address`,
       __body,
       {
         headers: __headers,
@@ -358,6 +371,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * updateAddress
    * @param activityId activityId
    * @param addressId addressId
    * @return OK
@@ -370,6 +384,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readBlogs
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
@@ -389,7 +404,7 @@ class ActivityControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/blogs`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/blogs`,
       __body,
       {
         headers: __headers,
@@ -405,6 +420,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readBlogs
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
@@ -421,6 +437,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readCategory
    * @param activityId activityId
    * @return OK
    */
@@ -431,7 +448,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/category`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/category`,
       __body,
       {
         headers: __headers,
@@ -447,6 +464,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readCategory
    * @param activityId activityId
    * @return OK
    */
@@ -457,6 +475,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * updateCategory
    * @param activityId activityId
    * @param categoryId categoryId
    * @return OK
@@ -470,7 +489,7 @@ class ActivityControllerService extends __BaseService {
     __body = categoryId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/activities/${activityId}/category`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/category`,
       __body,
       {
         headers: __headers,
@@ -486,6 +505,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * updateCategory
    * @param activityId activityId
    * @param categoryId categoryId
    * @return OK
@@ -498,6 +518,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readImages
    * @param activityId activityId
    * @return OK
    */
@@ -508,7 +529,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/images`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/images`,
       __body,
       {
         headers: __headers,
@@ -524,6 +545,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readImages
    * @param activityId activityId
    * @return OK
    */
@@ -534,6 +556,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * addImage
    * @param activityId activityId
    * @param images images
    * @return OK
@@ -547,7 +570,7 @@ class ActivityControllerService extends __BaseService {
     __body = images;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/activities/${activityId}/images`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/images`,
       __body,
       {
         headers: __headers,
@@ -563,6 +586,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * addImage
    * @param activityId activityId
    * @param images images
    * @return OK
@@ -575,6 +599,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * deleteImages
    * @param activityId activityId
    * @param imageIds imageIds
    * @return OK
@@ -588,7 +613,7 @@ class ActivityControllerService extends __BaseService {
     (imageIds || []).forEach(val => {if (val != null) __params = __params.append('imageIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/activities/${activityId}/images`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/images`,
       __body,
       {
         headers: __headers,
@@ -604,6 +629,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * deleteImages
    * @param activityId activityId
    * @param imageIds imageIds
    * @return OK
@@ -616,6 +642,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * increaseLike
    * @param activityId activityId
    * @param subscriptionId subscriptionId
    * @return OK
@@ -629,7 +656,7 @@ class ActivityControllerService extends __BaseService {
     __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/activities/${activityId}/like`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/like`,
       __body,
       {
         headers: __headers,
@@ -645,6 +672,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * increaseLike
    * @param activityId activityId
    * @param subscriptionId subscriptionId
    * @return OK
@@ -657,6 +685,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readOrganisation
    * @param activityId activityId
    * @return OK
    */
@@ -667,7 +696,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/organisation`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/organisation`,
       __body,
       {
         headers: __headers,
@@ -683,6 +712,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readOrganisation
    * @param activityId activityId
    * @return OK
    */
@@ -693,6 +723,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * updateOrganisation
    * @param activityId activityId
    * @param organisationId organisationId
    * @return OK
@@ -706,7 +737,7 @@ class ActivityControllerService extends __BaseService {
     __body = organisationId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/activities/${activityId}/organisation`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/organisation`,
       __body,
       {
         headers: __headers,
@@ -722,6 +753,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * updateOrganisation
    * @param activityId activityId
    * @param organisationId organisationId
    * @return OK
@@ -734,6 +766,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readSchedules
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
@@ -753,7 +786,7 @@ class ActivityControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/schedules`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/schedules`,
       __body,
       {
         headers: __headers,
@@ -769,6 +802,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readSchedules
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
@@ -785,6 +819,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * addSchedules
    * @param activityId activityId
    * @param schedules schedules
    * @return OK
@@ -798,7 +833,7 @@ class ActivityControllerService extends __BaseService {
     __body = schedules;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/activities/${activityId}/schedules`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/schedules`,
       __body,
       {
         headers: __headers,
@@ -814,6 +849,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * addSchedules
    * @param activityId activityId
    * @param schedules schedules
    * @return OK
@@ -826,6 +862,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * deleteSchedules
    * @param activityId activityId
    * @param scheduleIds scheduleIds
    * @return OK
@@ -839,7 +876,7 @@ class ActivityControllerService extends __BaseService {
     (scheduleIds || []).forEach(val => {if (val != null) __params = __params.append('scheduleIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/activities/${activityId}/schedules`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/schedules`,
       __body,
       {
         headers: __headers,
@@ -855,6 +892,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * deleteSchedules
    * @param activityId activityId
    * @param scheduleIds scheduleIds
    * @return OK
@@ -867,6 +905,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readTags
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
@@ -886,7 +925,7 @@ class ActivityControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/tags`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/tags`,
       __body,
       {
         headers: __headers,
@@ -902,6 +941,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readTags
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
@@ -918,6 +958,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * addTags
    * @param activityId activityId
    * @param tags tags
    * @return OK
@@ -931,7 +972,7 @@ class ActivityControllerService extends __BaseService {
     __body = tags;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/activities/${activityId}/tags`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/tags`,
       __body,
       {
         headers: __headers,
@@ -947,6 +988,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * addTags
    * @param activityId activityId
    * @param tags tags
    * @return OK
@@ -959,6 +1001,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * deleteTags
    * @param activityId activityId
    * @param tagIds tagIds
    * @return OK
@@ -972,7 +1015,7 @@ class ActivityControllerService extends __BaseService {
     (tagIds || []).forEach(val => {if (val != null) __params = __params.append('tagIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/activities/${activityId}/tags`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/tags`,
       __body,
       {
         headers: __headers,
@@ -988,6 +1031,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * deleteTags
    * @param activityId activityId
    * @param tagIds tagIds
    * @return OK
@@ -1000,6 +1044,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readTargetGroups
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
@@ -1019,7 +1064,7 @@ class ActivityControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/targetgroups`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/targetgroups`,
       __body,
       {
         headers: __headers,
@@ -1035,6 +1080,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readTargetGroups
    * @param activityId activityId
    * @param sort undefined
    * @param dir undefined
@@ -1051,6 +1097,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * addTargetGroups
    * @param activityId activityId
    * @param targetGroupIds targetGroupIds
    * @return OK
@@ -1064,7 +1111,7 @@ class ActivityControllerService extends __BaseService {
     __body = targetGroupIds;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/activities/${activityId}/targetgroups`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/targetgroups`,
       __body,
       {
         headers: __headers,
@@ -1080,6 +1127,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * addTargetGroups
    * @param activityId activityId
    * @param targetGroupIds targetGroupIds
    * @return OK
@@ -1092,6 +1140,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * deleteTargetGroups
    * @param activityId activityId
    * @param targetGroupIds targetGroupIds
    * @return OK
@@ -1105,7 +1154,7 @@ class ActivityControllerService extends __BaseService {
     (targetGroupIds || []).forEach(val => {if (val != null) __params = __params.append('targetGroupIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/activities/${activityId}/targetgroups`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/targetgroups`,
       __body,
       {
         headers: __headers,
@@ -1121,6 +1170,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * deleteTargetGroups
    * @param activityId activityId
    * @param targetGroupIds targetGroupIds
    * @return OK
@@ -1133,6 +1183,7 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param activityId activityId
    * @return OK
    */
@@ -1143,7 +1194,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${activityId}/translations`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -1159,6 +1210,7 @@ class ActivityControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param activityId activityId
    * @return OK
    */

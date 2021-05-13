@@ -1,8 +1,12 @@
-import { HostBinding } from '@angular/core';
+import { Directive, HostBinding } from '@angular/core';
 import { Route } from '@angular/router';
-import { Selfrouter } from '@wooportal/core';
+import { RoutingComponent } from '../../../core';
 
-export abstract class BasePage extends Selfrouter {
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
+export abstract class BasePage
+  extends RoutingComponent {
 
   protected abstract path: string;
 

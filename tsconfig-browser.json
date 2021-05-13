@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "angularCompilerOptions": {
+    "entryModule": "./src/client.module#ClientModule"
+  },
+  "compilerOptions": {
+    "target": "es5"
+  },
+  "files": [
+    "src/client.ts",
+    "src/tools/polyfills.ts",
+    "src/tools/types.d.ts"
+  ]
+}

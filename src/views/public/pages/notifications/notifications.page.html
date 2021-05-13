@@ -3,12 +3,12 @@
     <mat-list>
       <mat-list-item>
         <strong>
-          <i18n i18n="@@subscriptions">subscriptions</i18n>
+          <i18n>subscriptions</i18n>
         </strong>
       </mat-list-item>
       <ng-container *ngIf="!types.length">
         <mat-list-item>
-          <i18n i18n="@@notFoundError">notFoundError</i18n>
+          <i18n>notFoundError</i18n>
         </mat-list-item>
       </ng-container>
       <ng-container *ngIf="types.length">
@@ -16,10 +16,9 @@
           <mat-list-item>
             <mat-slide-toggle
               [checked]="selected(item)"
-              [disabled]="!subscriptionId"
               (change)="toggle($event.checked, item)">
-              <strong>{{ item.name }}</strong>
-              <marked-component [data]="item.description"></marked-component>
+              <strong>{{ item.label }}</strong>
+              <article [innerHTML]="item.description"></article>
             </mat-slide-toggle>
           </mat-list-item>
         </ng-container>
@@ -31,23 +30,22 @@
       <mat-list>
         <mat-list-item>
           <strong>
-            <i18n i18n="@@followedActivities">followedActivities</i18n>
+            <i18n>followedActivities</i18n>
           </strong>
         </mat-list-item>
         <ng-container *ngIf="!items.activities.length">
           <mat-list-item>
-            <i18n i18n="@@notFoundError">notFoundError</i18n>
+            <i18n>notFoundError</i18n>
           </mat-list-item>
         </ng-container>
         <ng-container *ngIf="items.activities.length">
           <ng-container *ngFor="let item of items.activities">
             <mat-list-item>
-              {{ item.name }}
+              {{ item.label }}
               <button mat-icon-button
                 color="warn"
-                [disabled]="!subscriptionId"
                 (click)="unsubscribe(item)">
-                <icon-component icon="times"></icon-component>
+                <fa-icon icon="times"></fa-icon>
               </button>
             </mat-list-item>
           </ng-container>
@@ -58,23 +56,22 @@
       <mat-list>
         <mat-list-item>
           <strong>
-            <i18n i18n="@@followedOrganisations">followedOrganisations</i18n>
+            <i18n>followedOrganisations</i18n>
           </strong>
         </mat-list-item>
         <ng-container *ngIf="!items.organisations.length">
           <mat-list-item>
-            <i18n i18n="@@notFoundError">notFoundError</i18n>
+            <i18n>notFoundError</i18n>
           </mat-list-item>
         </ng-container>
         <ng-container *ngIf="items.organisations.length">
           <ng-container *ngFor="let item of items.organisations">
             <mat-list-item>
-              {{ item.name }}
+              {{ item.label }}
               <button mat-icon-button
                 color="warn"
-                [disabled]="!subscriptionId"
                 (click)="unsubscribe(item)">
-                <icon-component icon="times"></icon-component>
+                <fa-icon icon="times"></fa-icon>
               </button>
             </mat-list-item>
           </ng-container>
@@ -85,23 +82,22 @@
       <mat-list>
         <mat-list-item>
           <strong>
-            <i18n i18n="@@followedBloggers">followedBloggers</i18n>
+            <i18n>followedBloggers</i18n>
           </strong>
         </mat-list-item>
         <ng-container *ngIf="!items.bloggers.length">
           <mat-list-item>
-            <i18n i18n="@@notFoundError">notFoundError</i18n>
+            <i18n>notFoundError</i18n>
           </mat-list-item>
         </ng-container>
         <ng-container *ngIf="items.bloggers.length">
           <ng-container *ngFor="let item of items.bloggers">
             <mat-list-item>
-              {{ item.name }}
+              {{ item.label }}
               <button mat-icon-button
                 color="warn"
-                [disabled]="!subscriptionId"
                 (click)="unsubscribe(item)">
-                <icon-component icon="times"></icon-component>
+                <fa-icon icon="times"></fa-icon>
               </button>
             </mat-list-item>
           </ng-container>
@@ -112,23 +108,22 @@
       <mat-list>
         <mat-list-item>
           <strong>
-            <i18n i18n="@@followedTopics">followedTopics</i18n>
+            <i18n>followedTopics</i18n>
           </strong>
         </mat-list-item>
         <ng-container *ngIf="!items.topics.length">
           <mat-list-item>
-            <i18n i18n="@@notFoundError">notFoundError</i18n>
+            <i18n>notFoundError</i18n>
           </mat-list-item>
         </ng-container>
         <ng-container *ngIf="items.topics.length">
           <ng-container *ngFor="let item of items.topics">
             <mat-list-item>
-              {{ item.name }}
+              {{ item.label }}
               <button mat-icon-button
                 color="warn"
-                [disabled]="!subscriptionId"
                 (click)="unsubscribe(item)">
-                <icon-component icon="times"></icon-component>
+                <fa-icon icon="times"></fa-icon>
               </button>
             </mat-list-item>
           </ng-container>

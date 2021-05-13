@@ -1,11 +1,10 @@
 import { Component, QueryList, Type, ViewChildren } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { TopicModel } from '../../../../base/models/topic.model';
-import { ExpandComponent } from '../../../shared/expand/expand.component';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { CrudJoiner, TopicModel } from '../../../../core';
 import { BaseListing } from '../base.listing';
 
 @Component({
-  styleUrls: ['../base.listing.scss', 'infopage.listing.scss'],
+  styleUrls: ['../base.listing.sass', 'infopage.listing.sass'],
   templateUrl: 'infopage.listing.html'
 })
 
@@ -21,10 +20,10 @@ export class InfopageListingComponent
 
   protected size: number = 10;
 
-  @ViewChildren(ExpandComponent)
-  private expands: QueryList<ExpandComponent>;
+  @ViewChildren(MatExpansionPanel)
+  private expands: QueryList<MatExpansionPanel>;
 
-  public expanded(expand: ExpandComponent): void {
+  public expanded(expand: MatExpansionPanel): void {
     this.expands.filter((e) => e !== expand).forEach((e) => e.close());
   }
 

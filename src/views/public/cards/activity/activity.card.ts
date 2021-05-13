@@ -1,19 +1,25 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import * as ColorConvert from 'color-convert';
-import { ActivityModel } from '../../../../base/models/activity.model';
+import { ActivityModel } from '../../../../core';
 import { BaseCard } from '../base.card';
 
 @Component({
   selector: 'activity-card',
-  styleUrls: ['../base.card.scss', 'activity.card.scss'],
+  styleUrls: ['../base.card.sass', 'activity.card.sass'],
   templateUrl: 'activity.card.html'
 })
 
-export class ActivityCardComponent extends BaseCard<ActivityModel> {
+export class ActivityCardComponent
+  extends BaseCard<ActivityModel> {
 
   @ViewChild(MatRipple, { static: true })
   public ripple: MatRipple;
+
+  public get icon(): IconProp {
+    return this.item.category.icon as any;
+  }
 
   public colors(base: string): Partial<CSSStyleDeclaration> {
     const rgb = ColorConvert.keyword.rgb(base) || ColorConvert.hex.rgb(base);

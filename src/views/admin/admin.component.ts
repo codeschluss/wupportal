@@ -1,16 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { ApplicationSettings } from '@wooportal/app';
-import { LoadingProvider, Pathfinder, TokenProvider } from '@wooportal/core';
 import { EMPTY, Subscription } from 'rxjs';
 import { filter, map, mergeMap, startWith, take } from 'rxjs/operators';
+import { CoreSettings, LoadingProvider, RoutingProvider, TokenProvider } from '../../core';
 import { AccountPanelComponent } from './panels/account/account.panel';
 import { ReloginPopupComponent } from './popups/relogin.popup';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['admin.scss'],
+  styleUrls: ['admin.sass'],
   template: `
     <main id="admin" [class.disabled]="loadingProvider.value | async">
       <router-outlet></router-outlet>
@@ -18,15 +17,16 @@ import { ReloginPopupComponent } from './popups/relogin.popup';
   `
 })
 
-export class AdminComponent implements OnInit, OnDestroy {
+export class AdminComponent
+  implements OnInit, OnDestroy {
 
   public constructor(
     public loadingProvider: LoadingProvider,
-    private app: ApplicationSettings,
     private dialog: MatDialog,
-    private pathfinder: Pathfinder,
     private route: ActivatedRoute,
     private router: Router,
+    private routingProvider: RoutingProvider,
+    private settings: CoreSettings,
     private tokenProvider: TokenProvider
   ) { }
 
@@ -37,9 +37,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   private working: Subscription = EMPTY.subscribe();
 
   public ngOnInit(): void {
-    const claim = this.app.config.jwtClaims.userId;
+    const claim = this.settings.jwtClaims.userId;
     const userId = this.route.snapshot.data.tokens.access[claim];
-    this.base = this.pathfinder.to(AccountPanelComponent).concat(userId);
+    this.base = this.routingProvider.to(AccountPanelComponent).concat(userId);
 
     if (userId) {
       this.home();

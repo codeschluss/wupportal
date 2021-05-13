@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { EMPTY, Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
-import { UserModel } from '../../../base/models/user.model';
+import { UserModel } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { InputFieldComponent } from '../fields/input.field';
 
@@ -12,19 +12,19 @@ import { InputFieldComponent } from '../fields/input.field';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@fullname">fullname</i18n>
+          <i18n>fullname</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'password'">
-          <i18n i18n="@@password">password</i18n>
+          <i18n>password</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'passwordConfirm'">
-          <i18n i18n="@@passwordConfirm">passwordConfirm</i18n>
+          <i18n>passwordConfirm</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'phone'">
-          <i18n i18n="@@phone">phone</i18n>
+          <i18n>phone</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'username'">
-          <i18n i18n="@@email">email</i18n>
+          <i18n>email</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

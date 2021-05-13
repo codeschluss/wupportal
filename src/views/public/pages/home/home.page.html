@@ -3,7 +3,7 @@
     <aside>
       <h2 class="mat-headline">
         {{ name | async }} &mdash;<br>
-        <i18n i18n="@@newActivities">newActivities</i18n>
+        <i18n>newActivities</i18n>
       </h2>
       <strong class="mat-title">
         {{ tagline }}
@@ -19,45 +19,16 @@
     <article>
       <img
         alt="Wuppertal"
-        src="/images/pinboard.png"
+        src="images/pinboard.png"
         title="Wuppertal">
     </article>
-    <article>
-      <marked-component class="mat-title" [data]="'
-
-<h2>Ein Angebotsportal für Integration und Begegnung in Wuppertal</h2>
-
-<p>Das Wupportal richtet sich an Menschen, die zum Einen neu in Wuppertal sind
-und an alle interessierten Menschen, die sich zum Thema Angebote zur Integration
-informieren wollen.</p>
-
-<h2>Einfach und schnell</h2>
-<p>Durchstöbere Organisationen und Veranstaltungen in Wuppertal. Alle Infos zu
-den Veranstaltungen und Organisationen findest Du auch auf einer interaktiven
-Karte.</p>
-
-<h2>Finde Angebote, die zu Dir passen</h2>
-<p>Einfach nach Kategorien, Stadtteilen oder Zielgruppen filtern und nur die
-Veranstaltungen sehen, die Du gerade brauchst. Oder suche nach Schlagworten und
-Du bekommst Ergebnisse.</p>
-
-<h2>Von überall erreichbar</h2>
-<p>Ob Zuhause, im Internetcafé oder auf dem Smartphone, das Wupportal versorgt
-Dich von überall mit den Infos zu den neusten Veranstaltungen in Wuppertal.</p>
-
-<h2>In Deiner Sprache</h2>
-<p>Das Wupportal kann nicht nur deinen Standort verwenden oder die besten
-Veranstaltungen mit Deinen Freunden teilen, sondern auch Inhalte in
-verschiedenen Sprachen anzeigen.</p>
-
-      '"></marked-component>
-    </article>
+    <article class="mat-title" [innerHTML]="content"></article>
   </section>
   <section>
     <figure>
       <img
         alt="Stadt Wuppertal Ressort Zuwanderung und Integration"
-        src="/images/municipality.png"
+        src="images/municipality.png"
         title="Stadt Wuppertal Ressort Zuwanderung und Integration">
       <figcaption class="mat-body-strong">
         <a
@@ -71,7 +42,7 @@ verschiedenen Sprachen anzeigen.</p>
     <figure>
       <img
         alt="Kommunales Integrationszentrum Wuppertal"
-        src="/images/office.png"
+        src="images/office.png"
         title="Kommunales Integrationszentrum Wuppertal">
       <figcaption class="mat-body-strong">
         <a

@@ -1,9 +1,8 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Base64 } from '@wooportal/core';
 import { fromEvent } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { ImageModel } from '../../../base/models/image.model';
+import { Base64, ImageModel } from '../../../core';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -47,17 +46,20 @@ import { BaseFieldComponent } from '../base/base.field';
   template: `
     <ng-container *ngFor="let item of value">
       <mat-card>
-        <img mat-card-image [style.backgroundImage]="item.source">
+        <img mat-card-image
+          src="data:image/svg+xml,
+            %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+          [style.backgroundImage]="item.source">
         <mat-card-content>{{ item.caption }}</mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
           <button mat-button color="warn" (click)="delete(item)">
-            <i18n i18n="@@delete">delete</i18n>
+            <i18n>delete</i18n>
           </button>
           <button mat-button
             [disabled]="caption.value || image"
             (click)="edit(item)">
-            <i18n i18n="@@edit">edit</i18n>
+            <i18n>edit</i18n>
           </button>
         </mat-card-actions>
       </mat-card>
@@ -66,7 +68,10 @@ import { BaseFieldComponent } from '../base/base.field';
       <mat-card>
         <mat-card-content>
           <ng-container *ngIf="image">
-            <img mat-card-image [style.backgroundImage]="image.source">
+            <img mat-card-image
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [style.backgroundImage]="image.source">
           </ng-container>
           <ng-container *ngIf="!image">
             <label mat-card-image
@@ -76,26 +81,28 @@ import { BaseFieldComponent } from '../base/base.field';
               (dragover)="drag($event)"
               (drop)="drop($event)">
               <fa-icon icon="image"></fa-icon>
-              <i18n i18n="@@selectOrDropImage">selectOrDropImage</i18n>
+              <i18n>selectOrDropImage</i18n>
             </label>
             <input accept="image/*" id="image" type="file" [formControl]="file">
           </ng-container>
           <mat-form-field>
-            <mat-label><i18n i18n="@@caption">caption</i18n></mat-label>
-            <textarea matInput matTextareaAutosize [formControl]="caption">
+            <mat-label><i18n>caption</i18n></mat-label>
+            <textarea matInput
+              [formControl]="caption"
+              [matTextareaAutosize]="true">
             </textarea>
           </mat-form-field>
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
           <button mat-button [disabled]="!image" (click)="clear()">
-            <i18n i18n="@@reset">reset</i18n>
+            <i18n>reset</i18n>
           </button>
           <button mat-button
             color="primary"
             [disabled]="!image"
             (click)="create()">
-            <i18n i18n="@@create">create</i18n>
+            <i18n>create</i18n>
           </button>
         </mat-card-actions>
       </mat-card>
@@ -103,7 +110,8 @@ import { BaseFieldComponent } from '../base/base.field';
   `
 })
 
-export class ImageFieldComponent extends BaseFieldComponent
+export class ImageFieldComponent
+  extends BaseFieldComponent
   implements AfterViewInit {
 
   public caption: FormControl = new FormControl();

@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { SubscriptionTypeModel } from '../../../base/models/subscription-type.model';
+import { SubscriptionTypeModel } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { EditorFieldComponent } from '../fields/editor.field';
 import { InputFieldComponent } from '../fields/input.field';
@@ -11,10 +11,10 @@ import { InputFieldComponent } from '../fields/input.field';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'description'">
-          <i18n i18n="@@description">description</i18n>
+          <i18n>description</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@name">name</i18n>
+          <i18n>name</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

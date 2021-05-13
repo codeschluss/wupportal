@@ -2,19 +2,18 @@ import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angu
 import { FormControl, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { DeviceProvider } from '@wooportal/app';
-import { Box, Headers, TokenProvider } from '@wooportal/core';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, filter, map, take } from 'rxjs/operators';
-import { UserProvider } from '../../../../base/providers/user.provider';
+import { Box, MetatagService, PlatformProvider, TokenProvider, UserProvider } from '../../../../core';
 import { BasePage } from '../base.page';
 
 @Component({
-  styleUrls: ['../base.page.scss', 'login.page.scss'],
+  styleUrls: ['../base.page.sass', 'login.page.sass'],
   templateUrl: 'login.page.html'
 })
 
-export class LoginPageComponent extends BasePage
+export class LoginPageComponent
+  extends BasePage
   implements OnInit, AfterViewInit {
 
   public email: FormControl = new FormControl(null, [
@@ -36,12 +35,12 @@ export class LoginPageComponent extends BasePage
   private inputs: QueryList<MatInput>;
 
   public get disabled(): boolean {
-    return this.deviceProvider.notation === 'Server'
-      || /MSIE|Trident/.test(this.deviceProvider.agent);
+    return this.platformProvider.name === 'server'
+      || /MSIE|Trident/.test(this.platformProvider.userAgent);
   }
 
   public get name(): Observable<string> {
-    return this.headers.name;
+    return this.metatagService.name;
   }
 
   public get registerable(): boolean {
@@ -63,8 +62,8 @@ export class LoginPageComponent extends BasePage
   }
 
   public constructor(
-    private deviceProvider: DeviceProvider,
-    private headers: Headers,
+    private metatagService: MetatagService,
+    private platformProvider: PlatformProvider,
     private router: Router,
     private tokenProvider: TokenProvider,
     private userProvider: UserProvider

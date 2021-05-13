@@ -1,26 +1,30 @@
 <header class="mat-title">
-  <i18n i18n="@@informationPanel">informationPanel</i18n>
-  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
-    <i18n i18n="@@actions">actions</i18n>
+  <span [style.flexGrow]="1"></span>
+  <i18n>informationPanel</i18n>
+  <button mat-raised-button
+    color="primary"
+    xPosition="before"
+    [matMenuTriggerFor]="actions">
+    <i18n>actions</i18n>
   </button>
 </header>
 
 <mat-menu #actions="matMenu">
   <button mat-menu-item (click)="create('infopages')">
-    <i18n i18n="@@createInfopage">createInfopage</i18n>
+    <i18n>createInfopage</i18n>
   </button>
 </mat-menu>
 
 <mat-tab-group id="information" [selectedIndex]="index">
   <mat-tab id="infopages">
     <ng-template matTabLabel>
-      <i18n i18n="@@infopages">infopages</i18n>
+      <i18n>infopages</i18n>
     </ng-template>
     <ng-template matTabContent>
       <infopage-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <ng-container *ngIf="superUser">
@@ -42,39 +46,6 @@
           </mat-cell>
         </ng-container>
       </infopage-table>
-    </ng-template>
-  </mat-tab>
-
-  <mat-tab id="blogposts">
-    <ng-template matTabLabel>
-      <i18n i18n="@@blogposts">blogposts</i18n>
-    </ng-template>
-    <ng-template matTabContent>
-      <blogpost-table>
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
-          </mat-header-cell>
-          <mat-cell *matCellDef="let item">
-            <ng-container *ngIf="superUser">
-              <button mat-icon-button
-                (click)="push(item)">
-                <fa-icon icon="paper-plane"></fa-icon>
-              </button>
-            </ng-container>
-            <button mat-icon-button
-              color="primary"
-              (click)="edit(item)">
-              <fa-icon icon="pen"></fa-icon>
-            </button>
-            <button mat-icon-button
-              color="warn"
-              (click)="delete(item)">
-              <fa-icon icon="times"></fa-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-      </blogpost-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

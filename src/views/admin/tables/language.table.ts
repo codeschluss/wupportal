@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { LanguageModel } from '../../../base/models/language.model';
+import { CrudJoiner, LanguageModel } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,13 +8,10 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'locale'">
-          <i18n i18n="@@locale">locale</i18n>
-        </ng-container>
-        <ng-container *ngSwitchCase="'machineTranslated'">
-          <i18n i18n="@@machineTranslated">machineTranslated</i18n>
+          <i18n>locale</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@name">name</i18n>
+          <i18n>name</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -28,15 +24,11 @@ export class LanguageTableComponent
   public columns: TableColumn[] = [
     {
       name: 'name',
-      value: (item) => item.name
+      value: (item) => item.label
     },
     {
       name: 'locale',
       value: (item) => item.locale
-    },
-    {
-      name: 'machineTranslated',
-      value: (item) => item.machineTranslated
     }
   ];
 

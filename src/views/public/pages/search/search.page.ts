@@ -1,33 +1,28 @@
 import { Component, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseService, CrudJoiner, CrudModel, CrudProvider, CrudResolver } from '@wooportal/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { ActivityModel } from '../../../../base/models/activity.model';
-import { BlogpostModel } from '../../../../base/models/blogpost.model';
-import { CategoryModel } from '../../../../base/models/category.model';
-import { InfopageModel } from '../../../../base/models/infopage.model';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
-import { SuburbModel } from '../../../../base/models/suburb.model';
-import { TargetGroupModel } from '../../../../base/models/target-group.model';
-import { ExpandComponent } from '../../../shared/expand/expand.component';
+import { ActivityModel, BaseService, BlogpostModel, CategoryModel, CrudJoiner, CrudModel, CrudProvider, CrudResolver, InfopageModel, OrganisationModel, SuburbModel, TargetGroupModel } from '../../../../core';
 import { BasePage } from '../base.page';
 
 @Component({
-  styleUrls: ['../base.page.scss', 'search.page.scss'],
+  styleUrls: ['../base.page.sass', 'search.page.sass'],
   templateUrl: 'search.page.html'
 })
 
-export class SearchPageComponent extends BasePage implements OnInit {
+export class SearchPageComponent
+  extends BasePage
+  implements OnInit {
 
   public items: {
-    activities: ActivityModel[],
-    blogposts: BlogpostModel[],
-    categories: CategoryModel[],
-    organisations: OrganisationModel[],
-    infopages: InfopageModel[],
-    suburbs: SuburbModel[],
-    targetGroups: TargetGroupModel[]
+    activities: ActivityModel[];
+    blogposts: BlogpostModel[];
+    categories: CategoryModel[];
+    organisations: OrganisationModel[];
+    infopages: InfopageModel[];
+    suburbs: SuburbModel[];
+    targetGroups: TargetGroupModel[];
   } = {
     activities: [],
     blogposts: [],
@@ -42,8 +37,8 @@ export class SearchPageComponent extends BasePage implements OnInit {
 
   protected path: string = 'search/:filter';
 
-  @ViewChildren(ExpandComponent)
-  private expands: QueryList<ExpandComponent>;
+  @ViewChildren(MatExpansionPanel)
+  private expands: QueryList<MatExpansionPanel>;
 
   public constructor(
     public router: Router,
@@ -74,7 +69,7 @@ export class SearchPageComponent extends BasePage implements OnInit {
     ).subscribe((length) => this.results = length.reduce((num, i) => num + i));
   }
 
-  public expanded(expand: ExpandComponent): void {
+  public expanded(expand: MatExpansionPanel): void {
     if (this.expands.length) {
       this.expands.filter((e) => e !== expand).forEach((e) => e.close());
     }

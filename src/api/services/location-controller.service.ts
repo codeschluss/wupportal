@@ -25,6 +25,7 @@ class LocationControllerService extends __BaseService {
   }
 
   /**
+   * calculateRoute
    * @param params The `LocationControllerService.LocationControllerCalculateRouteParams` containing the following parameters:
    *
    * - `startPoint.latitude`:
@@ -72,6 +73,7 @@ class LocationControllerService extends __BaseService {
     );
   }
   /**
+   * calculateRoute
    * @param params The `LocationControllerService.LocationControllerCalculateRouteParams` containing the following parameters:
    *
    * - `startPoint.latitude`:

@@ -1,133 +1,127 @@
 {
   "name": "wupportal",
-  "version": "0.1.3",
   "description": "An informative portal for new citizens in Wuppertal",
   "homepage": "https://www.wupportal.org",
+  "version": "0.2.0",
   "author": {
     "name": "codeschluss",
     "email": "info@codeschluss.de",
     "url": "https://www.codeschluss.de"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/codeschluss/wupportal"
-  },
   "bugs": {
     "email": "info@codeschluss.de",
     "url": "https://github.com/codeschluss/wupportal/issues"
   },
-  "config": {
-    "api": {
-      "rootUrl": "/api",
-      "authUrl": "/api/login",
-      "refreshUrl": "/api/refresh"
-    },
-    "defaults": {
-      "appUrl": "https://www.wupportal.org",
-      "city": "Wuppertal",
-      "language": "de",
-      "title": "Wupportal"
-    },
-    "firebase": {
-      "apiKey": "AIzaSyB4rO_etgYhADBGzL0MoZ8MY7_3SncftoU",
-      "appId": "1:408108080891:web:3755284630a75a31c15a5e",
-      "messagingSenderId": "408108080891",
-      "projectId": "wupportal-id"
-    },
-    "jwtClaims": {
-      "activityProvider": "createdActivities",
-      "organisationAdmin": "adminOrgas",
-      "organisationUser": "approvedOrgas",
-      "superUser": "superuser",
-      "userId": "id"
-    }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codeschluss/wupportal"
   },
-  "nativescript": {
-    "appId": "1497493082",
-    "id": "de.codeschluss.wupportal",
-    "tns-android": {
-      "version": "6.3.1"
+  "browserdlist": [
+    "last 5 Chrome version",
+    "last 5 Firefox version",
+    "last 5 Edge major versions",
+    "last 5 Safari major versions",
+    "last 5 iOS major versions",
+    "Firefox ESR",
+    "IE 11"
+  ],
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-device": {},
+      "cordova-plugin-firebase-messaging": {
+        "ANDROID_FIREBASE_MESSAGING_VERSION": "21.+",
+        "ANDROIDX_CORE_VERSION": "1.3.+",
+        "IOS_FIREBASE_MESSAGING_VERSION": "~> 7.0.0"
+      },
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "false"
+      },
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-support-base-href": {},
+      "cordova-support-firebase-messaging": {}
     },
-    "tns-ios": {
-      "version": "6.3.0"
-    }
-  },
-  "android": {
-    "markingMode": "none"
+    "platforms": [
+      "android",
+      "browser",
+      "ios"
+    ]
   },
   "scripts": {
-    "ng": "ng",
-    "ns": "ns",
-    "lint": "ng lint",
-    "clean": "git clean -dfX",
-    "start": "npm run start:app",
-    "build:api": "ng-swagger-gen -c swagger.json",
-    "build:app": "ng build --prod @wooportal/client",
-    "build:ios": "ns platform add ios ||:&& ns build ios",
-    "build:oid": "ns platform add android ||:&& ns build android",
-    "build:srv": "ng run @wooportal/client:server --configuration=production",
-    "build:sys": "for sys in sys/*; do ng build @wooportal/${sys#sys/}; done",
-    "build:xlf": "ng xi18n && sed -i '/context/d' res/All/i18n/strings.xliff",
-    "start:oid": "ns platform add android ||:&& ns debug android",
-    "start:ios": "ns platform add ios ||:&& ns debug ios",
-    "start:app": "ng serve --host 0.0.0.0 --port",
-    "start:ssr": "node platforms/web/server"
+    "build": "ng run",
+    "cordova": "cordova",
+    "ngsw": "ngsw-config",
+    "start": "ng run @wooportal/client:start",
+    "swagger": "ng-swagger-gen -c swagger.json",
+    "test": "ng lint && ng test"
   },
   "dependencies": {
-    "@angular/animations": "8.2.14",
-    "@angular/cdk": "8.2.3",
-    "@angular/common": "8.2.14",
-    "@angular/compiler": "8.2.14",
-    "@angular/core": "8.2.14",
-    "@angular/forms": "8.2.14",
-    "@angular/material": "8.2.3",
-    "@angular/platform-browser": "8.2.14",
-    "@angular/platform-browser-dynamic": "8.2.14",
-    "@angular/platform-server": "8.2.14",
-    "@angular/router": "8.2.14",
-    "@angular/service-worker": "8.2.14",
-    "@firebase/app": "0.5.4",
-    "@firebase/messaging": "0.6.6",
-    "@fortawesome/angular-fontawesome": "0.5.0",
-    "@fortawesome/fontawesome-svg-core": "1.2.26",
-    "@fortawesome/free-brands-svg-icons": "5.12.0",
-    "@fortawesome/free-solid-svg-icons": "5.12.0",
-    "@nguniversal/common": "8.2.6",
-    "@nguniversal/express-engine": "8.2.6",
-    "@nguniversal/module-map-ngfactory-loader": "8.2.6",
-    "@ngx-pwa/local-storage": "8.2.4",
-    "@ngx-translate/i18n-polyfill": "1.0.0",
-    "color-convert": "1.9.3",
+    "@angular/animations": "11.2.0",
+    "@angular/cdk": "11.2.0",
+    "@angular/common": "11.2.0",
+    "@angular/compiler": "11.2.0",
+    "@angular/core": "11.2.0",
+    "@angular/forms": "11.2.0",
+    "@angular/material": "11.2.0",
+    "@angular/platform-browser": "11.2.0",
+    "@angular/platform-browser-dynamic": "11.2.0",
+    "@angular/platform-server": "11.2.0",
+    "@angular/router": "11.2.0",
+    "@angular/service-worker": "11.2.0",
+    "@fortawesome/angular-fontawesome": "0.8.2",
+    "@fortawesome/fontawesome-svg-core": "1.2.35",
+    "@fortawesome/free-brands-svg-icons": "5.15.3",
+    "@fortawesome/free-solid-svg-icons": "5.15.3",
+    "@nguniversal/common": "11.2.0",
+    "@nguniversal/express-engine": "11.2.0",
+    "@ngx-pwa/local-storage": "11.1.0",
+    "color-convert": "2.0.1",
     "express": "4.17.1",
-    "express-robots-txt": "0.4.1",
-    "rxjs": "6.5.4",
-    "zone.js": "0.9.1"
+    "express-robots-txt": "0.5.0",
+    "rxjs": "6.6.7",
+    "tslib": "2.2.0",
+    "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.803.24",
-    "@angular/cli": "8.3.24",
-    "@angular/compiler-cli": "8.2.14",
-    "@ckeditor/ckeditor5-angular": "1.1.2",
-    "@swimlane/ngx-charts": "13.0.2",
-    "@types/node": "13.7.0",
-    "@wooportal/app": "file:sys/app",
-    "@wooportal/core": "file:sys/core",
-    "@wooportal/editor": "file:sys/editor",
-    "codelyzer": "5.2.1",
-    "core-js": "3.6.4",
-    "moment": "2.24.0",
-    "ng-swagger-gen": "1.8.1",
-    "ngx-openlayers": "1.0.0-next.13",
+    "@angular-devkit/build-angular": "0.1102.0",
+    "@angular/cli": "11.2.0",
+    "@angular/compiler-cli": "11.2.0",
+    "@ckeditor/ckeditor5-angular": "2.0.1",
+    "@ckeditor/ckeditor5-build-inline": "27.0.0",
+    "@nguniversal/builders": "11.2.0",
+    "@swimlane/ngx-charts": "17.0.1",
+    "cordova": "10.0.0",
+    "cordova-android": "9.0.0",
+    "cordova-browser": "6.0.0",
+    "cordova-ios": "6.2.0",
+    "cordova-plugin-androidx": "3.0.0",
+    "cordova-plugin-device": "2.0.3",
+    "cordova-plugin-firebase-analytics": "5.0.0",
+    "cordova-plugin-firebase-messaging": "5.0.1",
+    "cordova-plugin-geolocation": "4.1.0",
+    "cordova-plugin-network-information": "2.0.2",
+    "cordova-plugin-splashscreen": "6.0.0",
+    "cordova-plugin-whitelist": "1.3.4",
+    "cordova-support-android-plugin": "1.0.2",
+    "cordova-support-base-href": "res/cordova/base-href",
+    "cordova-support-firebase-messaging": "res/cordova/firebase-messaging",
+    "cordova-support-google-services": "1.4.1",
+    "elm-pep": "1.0.6",
+    "moment": "2.29.1",
+    "ng-swagger-gen": "2.3.1",
+    "ngx-openlayers": "1.0.0-next.17",
     "normalize.css": "8.0.1",
-    "ol": "6.1.1",
+    "ol": "6.5.0",
     "smooth-polyline": "1.0.8",
-    "tslint": "5.20.1",
-    "typescript": "3.5.3"
+    "typescript": "4.1.5"
   },
   "optionalDependencies": {
-    "raw-loader": "4.0.0",
-    "style-loader": "1.1.3",
-    "ts-loader": "6.2.1",
-    "webpack": "4.41.5"
+    "@types/cordova": "0.0.34",
+    "@types/express": "4.17.11",
+    "@types/node": "14.14.37",
+    "codelyzer": "6.0.1",
+    "ios-deploy": "1.11.4",
+    "tslint": "6.1.0"
   }
 }

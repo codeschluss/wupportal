@@ -1,11 +1,12 @@
 <header class="mat-title">
-  <i18n i18n="@@messagingPanel">messagingPanel</i18n>
+  <span [style.flexGrow]="1"></span>
+  <i18n>messagingPanel</i18n>
 </header>
 
 <mat-tab-group id="messaging" [selectedIndex]="index">
   <mat-tab id="mailing">
     <ng-template matTabLabel>
-      <i18n i18n="@@email">email</i18n>
+      <i18n>email</i18n>
     </ng-template>
     <ng-template matTabContent>
       <mailing-form #mailing>
@@ -15,14 +16,14 @@
         color="primary"
         [disabled]="!mailing.valid"
         (click)="mailing.persist().subscribe()">
-        <i18n i18n="@@send">send</i18n>
+        <i18n>send</i18n>
       </button>
     </ng-template>
   </mat-tab>
 
   <mat-tab id="pushing">
     <ng-template matTabLabel>
-      <i18n i18n="@@pushNotification">pushNotification</i18n>
+      <i18n>pushNotification</i18n>
     </ng-template>
     <ng-template matTabContent>
       <pushing-form #pushing>
@@ -32,7 +33,7 @@
         color="primary"
         [disabled]="!pushing.valid"
         (click)="pushing.persist().subscribe()">
-        <i18n i18n="@@send">send</i18n>
+        <i18n>send</i18n>
       </button>
     </ng-template>
   </mat-tab>

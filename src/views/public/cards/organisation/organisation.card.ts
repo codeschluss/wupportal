@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
+import { OrganisationModel } from '../../../../core';
 import { BaseCard } from '../base.card';
 
 @Component({
   selector: 'organisation-card',
-  styleUrls: ['../base.card.scss', 'organisation.card.scss'],
+  styleUrls: ['../base.card.sass', 'organisation.card.sass'],
   templateUrl: 'organisation.card.html'
 })
 
-export class OrganisationCardComponent extends BaseCard<OrganisationModel> { }
+export class OrganisationCardComponent
+  extends BaseCard<OrganisationModel> { }

@@ -2,21 +2,24 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "defaultProject": "@wooportal/client",
+  "newProjectRoot": "sys",
   "projects": {
     "@wooportal/client": {
-      "prefix": "",
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
-      "schematics": {
-        "@nativescript/schematics:component": {
-          "styleext": "scss"
-        }
-      },
       "architect": {
-        "build": {
+        "browser": {
           "builder": "@angular-devkit/build-angular:browser",
           "configurations": {
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "settings.json",
+                  "with": "settings-dev.json"
+                }
+              ]
+            },
             "production": {
               "buildOptimizer": true,
               "optimization": true
@@ -25,97 +28,66 @@
           "options": {
             "aot": true,
             "deleteOutputPath": false,
-            "extractCss": true,
             "extractLicenses": false,
-            "index": "res/Web/index.html",
+            "index": "src/views/index.html",
             "main": "src/client.ts",
             "namedChunks": false,
-            "ngswConfigPath": "service.json",
             "outputHashing": "none",
-            "outputPath": "platforms/web/browser",
+            "outputPath": "www",
             "polyfills": "src/tools/polyfills.ts",
             "serviceWorker": true,
-            "tsConfig": "tsconfig.json",
+            "tsConfig": "tsconfig-browser.json",
             "vendorChunk": true,
             "assets": [
               {
-                "glob": "*.xliff",
-                "input": "res/All/i18n",
-                "output": "/i18n"
+                "glob": "zone.min.js",
+                "input": "node_modules/zone.js/dist",
+                "output": "/"
               },
               {
-                "glob": "**/*",
-                "input": "res/All/images",
-                "output": "/images"
-              },
-              {
-                "glob": "**/*",
-                "input": "res/Web/assets",
+                "glob": "zone-patch-cordova.min.js",
+                "input": "node_modules/zone.js/dist",
                 "output": "/"
               },
               {
                 "glob": "**/*",
-                "input": "res/Web/images",
-                "output": "/images"
-              },
-              {
-                "glob": "**/*",
-                "input": "res/Web/videos",
-                "output": "/videos"
+                "input": "res/browser",
+                "output": "/"
               }
             ],
             "styles": [
-              {
-                "input": "src/app.scss",
-                "bundleName": "css/theme"
-              }
-            ]
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "@wooportal/client:build"
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "@wooportal/client:build",
-            "i18nFormat": "xliff",
-            "i18nLocale": "root",
-            "outFile": "strings.xliff",
-            "outputPath": "res/All/i18n"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+              "src/views/app.sass"
             ]
           }
         },
         "server": {
-          "builder": "@angular-builders/custom-webpack:server",
+          "builder": "@angular-devkit/build-angular:server",
           "configurations": {
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "settings.json",
+                  "with": "settings-dev.json"
+                },
+                {
+                  "replace": "src/client.router.ts",
+                  "with": "src/server.router.ts"
+                }
+              ]
+            },
             "production": {
-              "optimization": {
-                "scripts": true,
-                "styles": true
-              }
+              "sourceMap": false,
+              "optimization": true
             }
           },
           "options": {
-            "main": "src/server.ts",
-            "outputPath": "platforms/web/server",
-            "tsConfig": "server.json",
-            "customWebpackConfig": {
-              "path": "sys/app/conf/server.js"
-            },
+            "deleteOutputPath": false,
+            "extractLicenses": false,
+            "namedChunks": false,
+            "main": "src/tools/express.ts",
+            "outputHashing": "none",
+            "outputPath": "platforms/server",
+            "tsConfig": "tsconfig-server.json",
             "fileReplacements": [
               {
                 "replace": "src/client.router.ts",
@@ -123,78 +95,28 @@
               }
             ]
           }
-        }
-      }
-    },
-    "@wooportal/app": {
-      "root": "sys/app",
-      "sourceRoot": "sys/app",
-      "projectType": "library",
-      "prefix": "",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+        },
+        "start": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "@wooportal/client:browser:production",
+              "serverTarget": "@wooportal/client:server:production"
+            }
+          },
           "options": {
-            "tsConfig": "tsconfig.json",
-            "project": "sys/app/ng-package.json"
+            "browserTarget": "@wooportal/client:browser:development",
+            "serverTarget": "@wooportal/client:server:development",
+            "host": "0.0.0.0",
+            "port": 8081
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "@wooportal/core": {
-      "root": "sys/core",
-      "sourceRoot": "sys/core",
-      "projectType": "library",
-      "prefix": "",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "tsconfig.json",
-            "project": "sys/core/ng-package.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "@wooportal/editor": {
-      "root": "sys/editor",
-      "sourceRoot": "sys/editor",
-      "projectType": "library",
-      "prefix": "",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-webpack:webpack",
-          "options": {
-            "webpackConfig": "sys/editor/conf/webpack.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.json"
+              "tsconfig-browser.json",
+              "tsconfig-server.json"
             ],
             "exclude": [
               "**/node_modules/**"

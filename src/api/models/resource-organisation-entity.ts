@@ -1,13 +1,13 @@
 /* tslint:disable */
 import { Link } from './link';
 export interface ResourceOrganisationEntity {
-  id?: string;
   _embedded?: {};
+  _links?: Array<Link>;
   addressId?: string;
   approved?: boolean;
   created?: string;
   description?: string;
-  _links?: Array<Link>;
+  id?: string;
   likes?: number;
   mail?: string;
   modified?: string;

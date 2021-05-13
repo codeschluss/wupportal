@@ -32,6 +32,7 @@ class TagControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `TagControllerService.TagControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -76,6 +77,7 @@ class TagControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `TagControllerService.TagControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -99,6 +101,7 @@ class TagControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newTag newTag
    * @return OK
    */
@@ -125,6 +128,7 @@ class TagControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newTag newTag
    * @return OK
    */
@@ -135,6 +139,7 @@ class TagControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param tagId tagId
    * @return OK
    */
@@ -145,7 +150,7 @@ class TagControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/tags/${tagId}`,
+      this.rootUrl + `/tags/${encodeURIComponent(String(tagId))}`,
       __body,
       {
         headers: __headers,
@@ -161,6 +166,7 @@ class TagControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param tagId tagId
    * @return OK
    */
@@ -171,6 +177,7 @@ class TagControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newTag newTag
    * @param tagId tagId
    * @return OK
@@ -184,7 +191,7 @@ class TagControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/tags/${tagId}`,
+      this.rootUrl + `/tags/${encodeURIComponent(String(tagId))}`,
       __body,
       {
         headers: __headers,
@@ -200,6 +207,7 @@ class TagControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newTag newTag
    * @param tagId tagId
    * @return OK
@@ -212,6 +220,7 @@ class TagControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param tagId tagId
    * @return OK
    */
@@ -222,7 +231,7 @@ class TagControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/tags/${tagId}`,
+      this.rootUrl + `/tags/${encodeURIComponent(String(tagId))}`,
       __body,
       {
         headers: __headers,
@@ -238,6 +247,7 @@ class TagControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param tagId tagId
    * @return OK
    */
@@ -248,6 +258,7 @@ class TagControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param tagId tagId
    * @return OK
    */
@@ -258,7 +269,7 @@ class TagControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/tags/${tagId}/translations`,
+      this.rootUrl + `/tags/${encodeURIComponent(String(tagId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -274,6 +285,7 @@ class TagControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param tagId tagId
    * @return OK
    */

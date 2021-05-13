@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { MembershipModel } from '../../../base/models/membership.model';
+import { CrudJoiner, MembershipModel } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,19 +8,19 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'admin'">
-          <i18n i18n="@@ownership">ownership</i18n>
+          <i18n>ownership</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'approved'">
-          <i18n i18n="@@approved">approved</i18n>
+          <i18n>approved</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@fullname">fullname</i18n>
+          <i18n>fullname</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'organisation'">
-          <i18n i18n="@@organisation">organisation</i18n>
+          <i18n>organisation</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'username'">
-          <i18n i18n="@@email">email</i18n>
+          <i18n>email</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -34,7 +33,7 @@ export class MembershipTableComponent
   public columns: TableColumn[] = [
     {
       name: 'name',
-      value: (item) => item.user.name
+      value: (item) => item.user.label
     },
     {
       name: 'username',
@@ -42,7 +41,7 @@ export class MembershipTableComponent
     },
     {
       name: 'organisation',
-      value: (item) => item.organisation.name
+      value: (item) => item.organisation.label
     }
   ];
 

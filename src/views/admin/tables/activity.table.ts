@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { ActivityModel } from '../../../base/models/activity.model';
+import { ActivityModel, CrudJoiner } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,19 +8,19 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'address'">
-          <i18n i18n="@@address">address</i18n>
+          <i18n>address</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'category'">
-          <i18n i18n="@@category">category</i18n>
+          <i18n>category</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'contactName'">
-          <i18n i18n="@@contactName">contactName</i18n>
+          <i18n>contactName</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@name">name</i18n>
+          <i18n>name</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'organisation'">
-          <i18n i18n="@@organisation">organisation</i18n>
+          <i18n>organisation</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -34,7 +33,7 @@ export class ActivityTableComponent
   public columns: TableColumn[] = [
     {
       name: 'name',
-      value: (item) => item.name
+      value: (item) => item.label
     },
     {
       name: 'contactName',
@@ -42,15 +41,15 @@ export class ActivityTableComponent
     },
     {
       name: 'organisation',
-      value: (item) => item.membership.organisation.name
+      value: (item) => item.membership.organisation.label
     },
     {
       name: 'category',
-      value: (item) => item.category.name
+      value: (item) => item.category.label
     },
     {
       name: 'address',
-      value: (item) => item.address.name
+      value: (item) => item.address.label
     }
   ];
 

@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { CategoryModel } from '../../../base/models/category.model';
+import { CategoryModel, CrudJoiner } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,16 +8,16 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'color'">
-          <i18n i18n="@@color">color</i18n>
+          <i18n>color</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'description'">
-          <i18n i18n="@@description">description</i18n>
+          <i18n>description</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'icon'">
-          <i18n i18n="@@icon">icon</i18n>
+          <i18n>icon</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@name">name</i18n>
+          <i18n>name</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -31,7 +30,7 @@ export class CategoryTableComponent
   public columns: TableColumn[] = [
     {
       name: 'name',
-      value: (item) => item.name
+      value: (item) => item.label
     },
     {
       name: 'description',

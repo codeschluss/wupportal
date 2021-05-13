@@ -1,0 +1,169 @@
+@import ../brand.scss
+
+main#admin
+  filter: grayscale(0)
+  max-width: calc(100% - 2rem)
+  transition: filter $animation-duration
+  width: 100rem
+
+  &.disabled
+    filter: grayscale(1)
+    pointer-events: none
+
+  header
+    @include flex(column, normal, center)
+    color: $color-darker
+    margin: 1rem 0
+
+    @include responsive(gt-sm)
+      @include flex(row, normal, center)
+
+      & > * + *
+        margin-left: 1rem !important
+
+    & > .mat-headline
+      color: $color-darkest
+      margin: 0
+
+  .mat-raised-button
+    margin: .25rem
+
+  [base=form]
+    & > form
+      & > section
+        @include flex(row, normal, center)
+        min-height: 4rem
+        padding: 0 1rem
+
+        @include responsive(lt-md)
+          @include flex(column, normal, normal)
+
+        &:nth-of-type(even)
+          background-color: rgba(0, 0, 0, .005)
+
+        &:nth-of-type(odd)
+          background-color: rgba(0, 0, 0, .02)
+
+        & > label
+          flex: 0 0 auto
+          padding-right: 1rem
+          width: 15rem
+
+          @include responsive(lt-md)
+            color: $color-darker
+            transform: translateY(.25rem)
+
+        & > nav
+          @include flex(column, normal, stretch)
+
+          @include responsive(gt-sm)
+            @include flex(row, normal, center)
+
+            & > * + *
+              margin-left: 1rem
+
+        & > output
+          flex: 1 1 auto
+
+          mat-chip-list
+            & > .mat-chip-list-wrapper
+              margin: 0
+
+              & > mat-chip
+                width: auto
+
+                & > .mat-chip-remove
+                  height: auto
+
+          mat-form-field
+            width: 100%
+
+    & > mat-form-field
+      width: 100%
+
+      & > .mat-form-field-wrapper
+        margin-bottom: -1.25rem
+
+        & > .mat-form-field-flex
+          padding: 0 1rem
+
+  [base=panel]
+    & > mat-tab-group
+      mat-tab-body
+        & > .mat-tab-body-content
+          & > .mat-button-base
+            margin: .5rem .5rem .5rem 0
+
+      &#analytics
+        mat-tab-body
+          & > .mat-tab-body-content
+            @include flex(wrap, center)
+
+            & > mat-card
+              margin: 1rem
+              max-width: calc(100% - 4rem)
+              width: calc(100rem / 2 - 4rem)
+
+              & > mat-card-content
+                @include position(relative)
+                height: 350px
+
+                & > [base=chart]
+                  @include position(absolute, 0, 0, 0, 0)
+
+                  svg
+                    float: none
+
+  [base=stepper]
+    & > .mat-button-base
+      margin: .5rem .5rem .5rem 0
+
+  [base=table]
+    & > mat-form-field
+      width: 100%
+
+      & > .mat-form-field-wrapper
+        margin-bottom: -1.25rem
+
+        & > .mat-form-field-flex
+          padding: 0 1rem
+
+    & > mat-table
+      background-color: inherit
+      overflow: auto
+
+      & > mat-form-field
+        .mat-form-field-infix
+          border-bottom-color: transparent
+          border-bottom-style: solid
+          border-width: .5rem
+
+      & > mat-header-row
+        min-width: calc(#{$viewport-width} / 1.5)
+
+        & > mat-header-cell
+          &:last-of-type
+            @include flex(row, flex-end, center)
+
+      & > mat-row
+        min-width: calc(#{$viewport-width} / 1.5)
+
+        &:nth-of-type(even)
+          background-color: rgba(0, 0, 0, .005)
+
+        &:nth-of-type(odd)
+          background-color: rgba(0, 0, 0, .02)
+
+        & > mat-cell
+          &:last-of-type
+            @include flex(row, flex-end, center)
+
+          & > slot
+            & > *
+              display: block
+              overflow: hidden
+              text-overflow: ellipsis
+              white-space: nowrap
+
+    & > mat-paginator
+      background-color: inherit

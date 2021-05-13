@@ -2,8 +2,7 @@ import { AfterViewInit, Component, ComponentFactoryResolver, ViewContainerRef } 
 import { FormControl, Validators } from '@angular/forms';
 import { from, Observable, of } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { ImageModel } from '../../../base/models/image.model';
-import { VideoModel } from '../../../base/models/video.model';
+import { ImageModel, VideoModel } from '../../../core';
 import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
@@ -40,23 +39,27 @@ import { BaseFieldComponent } from '../base/base.field';
       <mat-card>
         <a target="_blank" [href]="item.url">
           <ng-container *ngIf="item.thumbnailUrl">
-            <img mat-card-image [src]="item.thumbnailUrl">
+            <img mat-card-image
+              [src]="item.thumbnailUrl">
           </ng-container>
           <ng-container *ngIf="!item.thumbnailUrl && item.thumbnail?.source">
-            <img mat-card-image [style.backgroundImage]="item.thumbnail.source">
+            <img mat-card-image
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [style.backgroundImage]="item.thumbnail.source">
           </ng-container>
           <ng-container *ngIf="!item.thumbnailUrl && !item.thumbnail?.source">
             <fa-icon mat-card-image icon="film"></fa-icon>
           </ng-container>
         </a>
-        <mat-card-content>{{ item.name }}</mat-card-content>
+        <mat-card-content>{{ item.label }}</mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
           <button mat-button color="warn" (click)="delete(item)">
-            <i18n i18n="@@delete">delete</i18n>
+            <i18n>delete</i18n>
           </button>
           <button mat-button [disabled]="imageUrl.value" (click)="edit(item)">
-            <i18n i18n="@@edit">edit</i18n>
+            <i18n>edit</i18n>
           </button>
         </mat-card-actions>
       </mat-card>
@@ -64,7 +67,8 @@ import { BaseFieldComponent } from '../base/base.field';
     <ng-container *ngIf="!(value?.length >= 5)">
       <mat-card>
         <ng-container *ngIf="imageUrl.value">
-          <img mat-card-image [src]="imageUrl.value">
+          <img mat-card-image
+            [src]="imageUrl.value">
         </ng-container>
         <ng-container *ngIf="!imageUrl.value">
           <fa-icon mat-card-image icon="film"></fa-icon>
@@ -72,15 +76,17 @@ import { BaseFieldComponent } from '../base/base.field';
         <mat-card-content>
           <mat-form-field>
             <mat-label>
-              <i18n i18n="@@videoUrl">videoUrl</i18n>
+              <i18n>videoUrl</i18n>
             </mat-label>
             <input matInput [formControl]="videoUrl">
           </mat-form-field>
           <mat-form-field>
             <mat-label>
-              <i18n i18n="@@caption">caption</i18n>
+              <i18n>caption</i18n>
             </mat-label>
-            <textarea matInput matTextareaAutosize [formControl]="caption">
+            <textarea matInput
+              [formControl]="caption"
+              [matTextareaAutosize]="true">
             </textarea>
           </mat-form-field>
         </mat-card-content>
@@ -89,13 +95,13 @@ import { BaseFieldComponent } from '../base/base.field';
           <button mat-button
             [disabled]="!imageUrl.value"
             (click)="clear()">
-            <i18n i18n="@@reset">reset</i18n>
+            <i18n>reset</i18n>
           </button>
           <button mat-button
             color="primary"
             [disabled]="!videoUrl.valid"
             (click)="create()">
-            <i18n i18n="@@create">create</i18n>
+            <i18n>create</i18n>
           </button>
         </mat-card-actions>
       </mat-card>
@@ -103,12 +109,13 @@ import { BaseFieldComponent } from '../base/base.field';
   `
 })
 
-export class VideoFieldComponent extends BaseFieldComponent
+export class VideoFieldComponent
+  extends BaseFieldComponent
   implements AfterViewInit {
 
   private static regex: Record<string, RegExp> = {
     vimeo: /^https?:\/\/vimeo.com\/(\d+)$/,
-    youtube: /^https?:\/\/www\.youtube\.com\/watch\?v=([^/#&?]+)$/
+    youtube: /^https?:\/\/(?:m.|www\.)youtube\.com\/watch\?v=([^/#&?]+)$/
   };
 
   public caption: FormControl = new FormControl(null);
@@ -161,7 +168,7 @@ export class VideoFieldComponent extends BaseFieldComponent
 
   public edit(item: VideoModel): void {
     this.source(item.url).subscribe((imageUrl) => {
-      this.caption.patchValue(item.name);
+      this.caption.patchValue(item.label);
       this.imageUrl.patchValue(imageUrl);
       this.videoUrl.patchValue(item.url);
       this.delete(item);

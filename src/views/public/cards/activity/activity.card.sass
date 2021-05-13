@@ -1,0 +1,32 @@
+@import ../../../brand.scss
+
+mat-card
+  @include position(relative)
+  width: 20rem
+
+  @include deep
+    & > .mat-ripple-element
+      border-radius: 0 0 100% 0
+      height: 150% !important
+      left: 0 !important
+      opacity: .12
+      top: 0 !important
+      transform-origin: 0 0
+      width: 150% !important
+
+  & > a
+    @include position(absolute, 0, 0, 0, 0)
+    z-index: 1
+
+  & > mat-card-content
+    & > fa-icon
+      float: right
+      font-size: 4rem
+
+  & > mat-card-header
+    @include flex(column)
+    height: 5rem
+
+    @include deep
+      & > .mat-card-header-text
+        margin: auto 0 0 0 !important

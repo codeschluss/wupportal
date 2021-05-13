@@ -5,37 +5,37 @@
         {{ name | async }}
       </mat-card-title>
       <mat-card-subtitle>
-        <i18n i18n="@@register">register</i18n>
+        <i18n>register</i18n>
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <mat-form-field>
         <mat-label>
-          <i18n i18n="@@email">email</i18n>
+          <i18n>email</i18n>
         </mat-label>
         <input matInput type="email" [formControl]="email">
       </mat-form-field>
       <mat-form-field>
         <mat-label>
-          <i18n i18n="@@fullname">fullname</i18n>
+          <i18n>fullname</i18n>
         </mat-label>
         <input matInput type="text" [formControl]="fullname">
       </mat-form-field>
       <mat-form-field>
         <mat-label>
-          <i18n i18n="@@phone">phone</i18n>
+          <i18n>phone</i18n>
         </mat-label>
         <input matInput type="tel" [formControl]="phone">
       </mat-form-field>
       <mat-form-field>
         <mat-label>
-          <i18n i18n="@@password">password</i18n>
+          <i18n>password</i18n>
         </mat-label>
         <input matInput type="password" [formControl]="password">
       </mat-form-field>
       <mat-form-field>
         <mat-label>
-          <i18n i18n="@@passwordConfirm">passwordConfirm</i18n>
+          <i18n>passwordConfirm</i18n>
         </mat-label>
         <input matInput type="password" [formControl]="passwordConfirm">
       </mat-form-field>
@@ -44,27 +44,27 @@
     <aside>
       <mat-form-field>
         <mat-label>
-          <i18n i18n="@@joinOrganisations">joinOrganisations</i18n>
+          <i18n>joinOrganisations</i18n>
         </mat-label>
         <mat-select multiple [formControl]="joinOrganisations">
           <ng-container *ngFor="let organisation of organisations">
             <mat-option [value]="organisation.id">
-              {{ organisation.name }}
+              {{ organisation.label }}
             </mat-option>
           </ng-container>
         </mat-select>
       </mat-form-field>
       <mat-checkbox [(ngModel)]="boxes.createOrganisation">
-        <i18n i18n="@@createOrganisation">createOrganisation</i18n>
+        <i18n>createOrganisation</i18n>
       </mat-checkbox>
       <mat-checkbox [(ngModel)]="boxes.joinBloggers">
-        <i18n i18n="@@joinBloggers">joinBloggers</i18n>
+        <i18n>joinBloggers</i18n>
       </mat-checkbox>
     </aside>
     <mat-divider></mat-divider>
     <mat-card-actions>
       <button mat-button [disabled]="!valid" (click)="register()">
-        <i18n i18n="@@register">register</i18n>
+        <i18n>register</i18n>
       </button>
     </mat-card-actions>
   </mat-card>

@@ -26,6 +26,7 @@ class TranslationControllerService extends __BaseService {
   }
 
   /**
+   * translate
    * @param labels labels
    * @param targets undefined
    * @param source undefined
@@ -58,6 +59,7 @@ class TranslationControllerService extends __BaseService {
     );
   }
   /**
+   * translate
    * @param labels labels
    * @param targets undefined
    * @param source undefined

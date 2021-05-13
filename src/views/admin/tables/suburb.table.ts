@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { SuburbModel } from '../../../base/models/suburb.model';
+import { CrudJoiner, SuburbModel } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,7 +8,7 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'name'">
-          <i18n i18n="@@name">name</i18n>
+          <i18n>name</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -22,7 +21,7 @@ export class SuburbTableComponent
   public columns: TableColumn[] = [
     {
       name: 'name',
-      value: (item) => item.name
+      value: (item) => item.label
     }
   ];
 

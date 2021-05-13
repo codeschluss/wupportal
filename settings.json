@@ -1,0 +1,34 @@
+{
+  "api": {
+    "rootUrl": "/api",
+    "authUrl": "/api/login",
+    "refreshUrl": "/api/refresh"
+  },
+  "app": {
+    "baseUrl": "https://www.wupportal.org",
+    "profile": "production"
+  },
+  "defaults": {
+    "city": "Wuppertal",
+    "language": "de",
+    "title": "Wupportal"
+  },
+  "jwtClaims": {
+    "activityProvider": "createdActivities",
+    "blogger": "blogger",
+    "blogpostAuthor": "blogAuthor",
+    "organisationAdmin": "adminOrgas",
+    "organisationUser": "approvedOrgas",
+    "superUser": "superuser",
+    "translator": "translator",
+    "userId": "id"
+  },
+  "labelHeader": {
+    "read": "accept-language",
+    "write": "content-language"
+  },
+  "storeIds": {
+    "android": "de.codeschluss.wupportal",
+    "ios": "1497493082"
+  }
+}

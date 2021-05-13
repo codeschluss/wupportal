@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { BaseFieldComponent } from '../base/base.field';
@@ -12,19 +12,32 @@ import { BaseFieldComponent } from '../base/base.field';
     <input matInput type="url" [formControl]="input" [name]="field.name">
     <span matPrefix>{{ transport }}</span>
     <mat-slide-toggle matSuffix [formControl]="proto">
-      <i18n i18n="@@encryptedConnection">encryptedConnection</i18n>
+      <i18n>encryptedConnection</i18n>
     </mat-slide-toggle>
   `)
 })
 
-export class UrlFieldComponent extends BaseFieldComponent
-  implements AfterViewInit {
+export class UrlFieldComponent
+  extends BaseFieldComponent
+  implements OnInit, AfterViewInit {
 
   public input: FormControl = new FormControl();
 
   public proto: FormControl = new FormControl();
 
   public transport: string;
+
+  public ngOnInit(): void {
+    this.control.valueChanges.pipe(
+      startWith(this.control.value),
+      map((value) => value || '')
+    ).subscribe((value) => {
+      this.input.patchValue(value.split('://').pop(), { emitEvent: false });
+      this.proto.patchValue(value.startsWith('https://'), { emitEvent: false });
+      this.proto[value ? 'enable' : 'disable']({ emitEvent: false });
+      this.transport = this.proto.value ? 'https://' : 'http://';
+    });
+  }
 
   public ngAfterViewInit(): void {
     this.control.statusChanges.subscribe(() =>
@@ -36,18 +49,6 @@ export class UrlFieldComponent extends BaseFieldComponent
     this.proto.valueChanges.subscribe((value) => {
       this.transport = value ? 'https://' : 'http://';
       this.input.patchValue(this.input.value);
-    });
-  }
-
-  protected ngPostInit(): void {
-    this.control.valueChanges.pipe(
-      startWith(this.control.value),
-      map((value) => value || '')
-    ).subscribe((value) => {
-      this.input.patchValue(value.split('://').pop(), { emitEvent: false });
-      this.proto.patchValue(value.startsWith('https://'), { emitEvent: false });
-      this.proto[value ? 'enable' : 'disable']({ emitEvent: false });
-      this.transport = this.proto.value ? 'https://' : 'http://';
     });
   }
 

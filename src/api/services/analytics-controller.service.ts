@@ -29,6 +29,7 @@ class AnalyticsControllerService extends __BaseService {
   }
 
   /**
+   * calculateActivitiesPerCategory
    * @param value undefined
    * @return OK
    */
@@ -55,6 +56,7 @@ class AnalyticsControllerService extends __BaseService {
     );
   }
   /**
+   * calculateActivitiesPerCategory
    * @param value undefined
    * @return OK
    */
@@ -65,6 +67,7 @@ class AnalyticsControllerService extends __BaseService {
   }
 
   /**
+   * calculateActivitiesPerSuburbs
    * @param value undefined
    * @return OK
    */
@@ -91,6 +94,7 @@ class AnalyticsControllerService extends __BaseService {
     );
   }
   /**
+   * calculateActivitiesPerSuburbs
    * @param value undefined
    * @return OK
    */
@@ -101,6 +105,7 @@ class AnalyticsControllerService extends __BaseService {
   }
 
   /**
+   * calculateActivitiesPerTargetGroup
    * @param value undefined
    * @return OK
    */
@@ -127,6 +132,7 @@ class AnalyticsControllerService extends __BaseService {
     );
   }
   /**
+   * calculateActivitiesPerTargetGroup
    * @param value undefined
    * @return OK
    */
@@ -137,6 +143,7 @@ class AnalyticsControllerService extends __BaseService {
   }
 
   /**
+   * calculateSubscriptions
    * @return OK
    */
   analyticsControllerCalculateSubscriptionsResponse(): __Observable<__StrictHttpResponse<Array<AnalyticsEntry>>> {
@@ -161,6 +168,7 @@ class AnalyticsControllerService extends __BaseService {
     );
   }
   /**
+   * calculateSubscriptions
    * @return OK
    */
   analyticsControllerCalculateSubscriptions(): __Observable<Array<AnalyticsEntry>> {

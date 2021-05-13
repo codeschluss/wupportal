@@ -1,12 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ApplicationSettings } from '@wooportal/app';
-import { CrudModel, SessionProvider, TokenProvider } from '@wooportal/core';
 import { EMPTY, merge, Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { LanguageModel } from '../../../base/models/language.model';
-import { TranslationProvider } from '../../../base/providers/translation.provider';
+import { CoreSettings, CrudModel, LanguageModel, SessionProvider, TokenProvider, TranslationProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { SelectFieldComponent } from '../fields/select.field';
 
@@ -15,11 +12,11 @@ import { SelectFieldComponent } from '../fields/select.field';
   template: BaseForm.template(`
     <section>
       <label class="mat-body-strong">
-        <i18n i18n="@@compilation">compilation</i18n>
+        <i18n>compilation</i18n>
       </label>
       <nav>
         <button mat-button color="warn" (click)="clear()">
-          <i18n i18n="@@deleteAll">deleteAll</i18n>
+          <i18n>deleteAll</i18n>
         </button>
       </nav>
     </section>
@@ -27,7 +24,7 @@ import { SelectFieldComponent } from '../fields/select.field';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'language'">
-          <i18n i18n="@@language">language</i18n>
+          <i18n>language</i18n>
         </ng-container>
         <ng-container *ngSwitchDefault>
           <i18n>{{ case.name }}</i18n>
@@ -38,7 +35,8 @@ import { SelectFieldComponent } from '../fields/select.field';
 })
 
 export class TranslationFormComponent<Model extends CrudModel>
-  extends BaseForm<Model> implements AfterViewInit, OnDestroy {
+  extends BaseForm<Model>
+  implements AfterViewInit, OnDestroy {
 
   public fields: FormField[] = [
     {
@@ -74,8 +72,8 @@ export class TranslationFormComponent<Model extends CrudModel>
   }
 
   public constructor(
-    private app: ApplicationSettings,
     private sessionProvider: SessionProvider,
+    private settings: CoreSettings,
     route: ActivatedRoute,
     tokenProvider: TokenProvider,
     translationProvider: TranslationProvider
@@ -150,7 +148,7 @@ export class TranslationFormComponent<Model extends CrudModel>
       .forEach((field) => this.fields.push(field));
 
     const fallback = this.route.snapshot.data.language.find((lang) =>
-      lang.locale === this.app.config.defaults.language);
+      lang.locale === this.settings.defaults.language);
     const selected = this.route.snapshot.data.language.find((lang) =>
       lang.locale === this.sessionProvider.getLanguage());
 

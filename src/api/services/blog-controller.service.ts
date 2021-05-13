@@ -8,8 +8,8 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { BlogEntity } from '../models/blog-entity';
-import { StringPrimitive } from '../models/string-primitive';
 import { ResourceBlogEntity } from '../models/resource-blog-entity';
+import { StringPrimitive } from '../models/string-primitive';
 import { ImageEntity } from '../models/image-entity';
 
 /**
@@ -21,11 +21,11 @@ import { ImageEntity } from '../models/image-entity';
 class BlogControllerService extends __BaseService {
   static readonly blogControllerReadAllPath = '/blogs';
   static readonly blogControllerCreatePath = '/blogs';
-  static readonly blogControllerUpdateActivityPath = '/blogs/{activityId}/activity';
   static readonly blogControllerReadOnePath = '/blogs/{blogId}';
   static readonly blogControllerUpdatePath = '/blogs/{blogId}';
   static readonly blogControllerDeletePath = '/blogs/{blogId}';
   static readonly blogControllerReadActivityPath = '/blogs/{blogId}/activity';
+  static readonly blogControllerUpdateActivityPath = '/blogs/{blogId}/activity';
   static readonly blogControllerReadBloggerPath = '/blogs/{blogId}/blogger';
   static readonly blogControllerReadImagesPath = '/blogs/{blogId}/images';
   static readonly blogControllerAddImagePath = '/blogs/{blogId}/images';
@@ -41,6 +41,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `BlogControllerService.BlogControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -85,6 +86,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `BlogControllerService.BlogControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -108,6 +110,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newBlog newBlog
    * @return OK
    */
@@ -134,6 +137,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newBlog newBlog
    * @return OK
    */
@@ -144,47 +148,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
-   * @param blogId blogId
-   * @param activityId activityId
-   * @return OK
-   */
-  blogControllerUpdateActivityResponse(blogId: string,
-    activityId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    __body = activityId;
-    let req = new HttpRequest<any>(
-      'PUT',
-      this.rootUrl + `/blogs/${activityId}/activity`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * @param blogId blogId
-   * @param activityId activityId
-   * @return OK
-   */
-  blogControllerUpdateActivity(blogId: string,
-    activityId: StringPrimitive): __Observable<{}> {
-    return this.blogControllerUpdateActivityResponse(blogId, activityId).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
+   * readOne
    * @param blogId blogId
    * @return OK
    */
@@ -195,7 +159,7 @@ class BlogControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/blogs/${blogId}`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}`,
       __body,
       {
         headers: __headers,
@@ -211,6 +175,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param blogId blogId
    * @return OK
    */
@@ -221,6 +186,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newBlog newBlog
    * @param blogId blogId
    * @return OK
@@ -234,7 +200,7 @@ class BlogControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/blogs/${blogId}`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}`,
       __body,
       {
         headers: __headers,
@@ -250,6 +216,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newBlog newBlog
    * @param blogId blogId
    * @return OK
@@ -262,6 +229,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param blogId blogId
    * @return OK
    */
@@ -272,7 +240,7 @@ class BlogControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/blogs/${blogId}`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}`,
       __body,
       {
         headers: __headers,
@@ -288,6 +256,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param blogId blogId
    * @return OK
    */
@@ -298,6 +267,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * readActivity
    * @param blogId blogId
    * @return OK
    */
@@ -308,7 +278,7 @@ class BlogControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/blogs/${blogId}/activity`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/activity`,
       __body,
       {
         headers: __headers,
@@ -324,6 +294,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * readActivity
    * @param blogId blogId
    * @return OK
    */
@@ -334,6 +305,50 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * updateActivity
+   * @param blogId blogId
+   * @param activityId activityId
+   * @return OK
+   */
+  blogControllerUpdateActivityResponse(blogId: string,
+    activityId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = activityId;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/activity`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * updateActivity
+   * @param blogId blogId
+   * @param activityId activityId
+   * @return OK
+   */
+  blogControllerUpdateActivity(blogId: string,
+    activityId: StringPrimitive): __Observable<{}> {
+    return this.blogControllerUpdateActivityResponse(blogId, activityId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * readBlogger
    * @param blogId blogId
    * @return OK
    */
@@ -344,7 +359,7 @@ class BlogControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/blogs/${blogId}/blogger`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/blogger`,
       __body,
       {
         headers: __headers,
@@ -360,6 +375,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * readBlogger
    * @param blogId blogId
    * @return OK
    */
@@ -370,6 +386,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * readImages
    * @param blogId blogId
    * @return OK
    */
@@ -380,7 +397,7 @@ class BlogControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/blogs/${blogId}/images`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/images`,
       __body,
       {
         headers: __headers,
@@ -396,6 +413,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * readImages
    * @param blogId blogId
    * @return OK
    */
@@ -406,6 +424,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * addImage
    * @param blogId blogId
    * @param images images
    * @return OK
@@ -419,7 +438,7 @@ class BlogControllerService extends __BaseService {
     __body = images;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/blogs/${blogId}/images`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/images`,
       __body,
       {
         headers: __headers,
@@ -435,6 +454,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * addImage
    * @param blogId blogId
    * @param images images
    * @return OK
@@ -447,6 +467,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * deleteImages
    * @param blogId blogId
    * @param imageIds imageIds
    * @return OK
@@ -460,7 +481,7 @@ class BlogControllerService extends __BaseService {
     (imageIds || []).forEach(val => {if (val != null) __params = __params.append('imageIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/blogs/${blogId}/images`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/images`,
       __body,
       {
         headers: __headers,
@@ -476,6 +497,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * deleteImages
    * @param blogId blogId
    * @param imageIds imageIds
    * @return OK
@@ -488,6 +510,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * increaseLike
    * @param blogId blogId
    * @param subscriptionId subscriptionId
    * @return OK
@@ -501,7 +524,7 @@ class BlogControllerService extends __BaseService {
     __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/blogs/${blogId}/like`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/like`,
       __body,
       {
         headers: __headers,
@@ -517,6 +540,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * increaseLike
    * @param blogId blogId
    * @param subscriptionId subscriptionId
    * @return OK
@@ -529,6 +553,7 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param blogId blogId
    * @return OK
    */
@@ -539,7 +564,7 @@ class BlogControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/blogs/${blogId}/translations`,
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -555,6 +580,7 @@ class BlogControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param blogId blogId
    * @return OK
    */

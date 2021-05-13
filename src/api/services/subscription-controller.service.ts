@@ -47,6 +47,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `SubscriptionControllerService.SubscriptionControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -91,6 +92,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `SubscriptionControllerService.SubscriptionControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -114,6 +116,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newSubscription newSubscription
    * @return OK
    */
@@ -140,6 +143,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newSubscription newSubscription
    * @return OK
    */
@@ -150,6 +154,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -160,7 +165,7 @@ class SubscriptionControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/subscriptions/${subscriptionId}`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}`,
       __body,
       {
         headers: __headers,
@@ -176,6 +181,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -186,6 +192,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newSubscription newSubscription
    * @param subscriptionId subscriptionId
    * @return OK
@@ -199,7 +206,7 @@ class SubscriptionControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/subscriptions/${subscriptionId}`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}`,
       __body,
       {
         headers: __headers,
@@ -215,6 +222,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newSubscription newSubscription
    * @param subscriptionId subscriptionId
    * @return OK
@@ -227,6 +235,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -237,7 +246,7 @@ class SubscriptionControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/subscriptions/${subscriptionId}`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}`,
       __body,
       {
         headers: __headers,
@@ -253,6 +262,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -263,6 +273,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * readActivitySubscriptions
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -273,7 +284,7 @@ class SubscriptionControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/subscriptions/${subscriptionId}/activities`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/activities`,
       __body,
       {
         headers: __headers,
@@ -289,6 +300,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * readActivitySubscriptions
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -299,6 +311,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * addActivitySubscription
    * @param subscriptionId subscriptionId
    * @param activityId activityId
    * @return OK
@@ -312,7 +325,7 @@ class SubscriptionControllerService extends __BaseService {
     __body = activityId;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/subscriptions/${subscriptionId}/activities`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/activities`,
       __body,
       {
         headers: __headers,
@@ -328,6 +341,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * addActivitySubscription
    * @param subscriptionId subscriptionId
    * @param activityId activityId
    * @return OK
@@ -340,6 +354,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * deleteActivitySubscriptions
    * @param subscriptionId subscriptionId
    * @param activityIds activityIds
    * @return OK
@@ -353,7 +368,7 @@ class SubscriptionControllerService extends __BaseService {
     (activityIds || []).forEach(val => {if (val != null) __params = __params.append('activityIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/subscriptions/${subscriptionId}/activities`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/activities`,
       __body,
       {
         headers: __headers,
@@ -369,6 +384,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * deleteActivitySubscriptions
    * @param subscriptionId subscriptionId
    * @param activityIds activityIds
    * @return OK
@@ -381,6 +397,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * readBloggerSubscriptions
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -391,7 +408,7 @@ class SubscriptionControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/subscriptions/${subscriptionId}/bloggers`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/bloggers`,
       __body,
       {
         headers: __headers,
@@ -407,6 +424,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * readBloggerSubscriptions
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -417,6 +435,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * addBloggerSubscription
    * @param subscriptionId subscriptionId
    * @param bloggerId bloggerId
    * @return OK
@@ -430,7 +449,7 @@ class SubscriptionControllerService extends __BaseService {
     __body = bloggerId;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/subscriptions/${subscriptionId}/bloggers`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/bloggers`,
       __body,
       {
         headers: __headers,
@@ -446,6 +465,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * addBloggerSubscription
    * @param subscriptionId subscriptionId
    * @param bloggerId bloggerId
    * @return OK
@@ -458,6 +478,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * deleteBloggerSubscriptions
    * @param subscriptionId subscriptionId
    * @param bloggerIds bloggerIds
    * @return OK
@@ -471,7 +492,7 @@ class SubscriptionControllerService extends __BaseService {
     (bloggerIds || []).forEach(val => {if (val != null) __params = __params.append('bloggerIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/subscriptions/${subscriptionId}/bloggers`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/bloggers`,
       __body,
       {
         headers: __headers,
@@ -487,6 +508,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * deleteBloggerSubscriptions
    * @param subscriptionId subscriptionId
    * @param bloggerIds bloggerIds
    * @return OK
@@ -499,6 +521,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * readOrganisationSubscriptions
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -509,7 +532,7 @@ class SubscriptionControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/subscriptions/${subscriptionId}/organisations`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/organisations`,
       __body,
       {
         headers: __headers,
@@ -525,6 +548,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * readOrganisationSubscriptions
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -535,6 +559,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * addOrganisationSubscription
    * @param subscriptionId subscriptionId
    * @param organisationId organisationId
    * @return OK
@@ -548,7 +573,7 @@ class SubscriptionControllerService extends __BaseService {
     __body = organisationId;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/subscriptions/${subscriptionId}/organisations`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/organisations`,
       __body,
       {
         headers: __headers,
@@ -564,6 +589,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * addOrganisationSubscription
    * @param subscriptionId subscriptionId
    * @param organisationId organisationId
    * @return OK
@@ -576,6 +602,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * deleteOrganisationSubscriptions
    * @param subscriptionId subscriptionId
    * @param organisationIds organisationIds
    * @return OK
@@ -589,7 +616,7 @@ class SubscriptionControllerService extends __BaseService {
     (organisationIds || []).forEach(val => {if (val != null) __params = __params.append('organisationIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/subscriptions/${subscriptionId}/organisations`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/organisations`,
       __body,
       {
         headers: __headers,
@@ -605,6 +632,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * deleteOrganisationSubscriptions
    * @param subscriptionId subscriptionId
    * @param organisationIds organisationIds
    * @return OK
@@ -617,6 +645,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * readTopicSubscriptions
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -627,7 +656,7 @@ class SubscriptionControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/subscriptions/${subscriptionId}/topics`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/topics`,
       __body,
       {
         headers: __headers,
@@ -643,6 +672,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * readTopicSubscriptions
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -653,6 +683,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * addTopicSubscription
    * @param subscriptionId subscriptionId
    * @param topicId topicId
    * @return OK
@@ -666,7 +697,7 @@ class SubscriptionControllerService extends __BaseService {
     __body = topicId;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/subscriptions/${subscriptionId}/topics`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/topics`,
       __body,
       {
         headers: __headers,
@@ -682,6 +713,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * addTopicSubscription
    * @param subscriptionId subscriptionId
    * @param topicId topicId
    * @return OK
@@ -694,6 +726,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * deleteTopicSubscriptions
    * @param subscriptionId subscriptionId
    * @param topicIds topicIds
    * @return OK
@@ -707,7 +740,7 @@ class SubscriptionControllerService extends __BaseService {
     (topicIds || []).forEach(val => {if (val != null) __params = __params.append('topicIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/subscriptions/${subscriptionId}/topics`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/topics`,
       __body,
       {
         headers: __headers,
@@ -723,6 +756,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * deleteTopicSubscriptions
    * @param subscriptionId subscriptionId
    * @param topicIds topicIds
    * @return OK
@@ -735,6 +769,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * readSubscribedTypes
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -745,7 +780,7 @@ class SubscriptionControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/subscriptions/${subscriptionId}/types`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/types`,
       __body,
       {
         headers: __headers,
@@ -761,6 +796,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * readSubscribedTypes
    * @param subscriptionId subscriptionId
    * @return OK
    */
@@ -771,6 +807,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * addSubscriptionType
    * @param subscriptionId subscriptionId
    * @param subscriptionTypeIds subscriptionTypeIds
    * @return OK
@@ -784,7 +821,7 @@ class SubscriptionControllerService extends __BaseService {
     __body = subscriptionTypeIds;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/subscriptions/${subscriptionId}/types`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/types`,
       __body,
       {
         headers: __headers,
@@ -800,6 +837,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * addSubscriptionType
    * @param subscriptionId subscriptionId
    * @param subscriptionTypeIds subscriptionTypeIds
    * @return OK
@@ -812,6 +850,7 @@ class SubscriptionControllerService extends __BaseService {
   }
 
   /**
+   * deleteSubscriptionTypes
    * @param subscriptionId subscriptionId
    * @param subscriptionTypeIds subscriptionTypeIds
    * @return OK
@@ -825,7 +864,7 @@ class SubscriptionControllerService extends __BaseService {
     (subscriptionTypeIds || []).forEach(val => {if (val != null) __params = __params.append('subscriptionTypeIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/subscriptions/${subscriptionId}/types`,
+      this.rootUrl + `/subscriptions/${encodeURIComponent(String(subscriptionId))}/types`,
       __body,
       {
         headers: __headers,
@@ -841,6 +880,7 @@ class SubscriptionControllerService extends __BaseService {
     );
   }
   /**
+   * deleteSubscriptionTypes
    * @param subscriptionId subscriptionId
    * @param subscriptionTypeIds subscriptionTypeIds
    * @return OK

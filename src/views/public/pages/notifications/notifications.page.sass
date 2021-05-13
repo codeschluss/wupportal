@@ -1,0 +1,35 @@
+@import ../../../brand.scss
+
+main
+  & > section:nth-of-type(1)
+    & > mat-list
+      & > mat-list-item
+        & > mat-slide-toggle
+          pointer-events: none
+
+          @include deep
+            .mat-slide-toggle-bar
+              margin-right: 1rem
+
+          small
+            display: block
+
+          strong
+            display: block
+
+  & > section:nth-of-type(2)
+    display: flex
+    justify-content: space-between
+
+    @include responsive(lt-md)
+      flex-wrap: wrap
+
+    & > aside
+      width: 100%
+
+      & > mat-list
+        & > mat-list-item:nth-of-type(1)
+          strong
+            & > *
+              & + *::before
+                content: ' '

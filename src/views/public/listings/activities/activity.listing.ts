@@ -1,37 +1,39 @@
-import { AfterViewInit, Component, ElementRef, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatChipList } from '@angular/material/chips';
-import { Params, Route } from '@angular/router';
-import { Arr, CrudJoiner, CrudModel, CrudResolver, ReadParams } from '@wooportal/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import * as ColorConvert from 'color-convert';
 import { merge } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ActivityModel } from '../../../../base/models/activity.model';
-import { CategoryModel } from '../../../../base/models/category.model';
-import { SuburbModel } from '../../../../base/models/suburb.model';
-import { TargetGroupModel } from '../../../../base/models/target-group.model';
+import { filter, map } from 'rxjs/operators';
+import { ActivityModel, Arr, CategoryModel, CrudJoiner, CrudModel, CrudResolver, PlatformProvider, ReadParams, SuburbModel, TargetGroupModel } from '../../../../core';
 import { MapsConnection } from '../../../maps/maps.connection';
 import { ActivityCardComponent } from '../../cards/activity/activity.card';
 import { BaseListing } from '../base.listing';
 
 @Component({
-  styleUrls: ['../base.listing.scss', 'activity.listing.scss'],
+  styleUrls: ['../base.listing.sass', 'activity.listing.sass'],
   templateUrl: 'activity.listing.html'
 })
 
 export class ActivityListingComponent
-  extends BaseListing<ActivityModel> implements AfterViewInit {
+  extends BaseListing<ActivityModel>
+  implements OnInit, AfterViewInit {
 
   public blank: boolean = true;
 
+  public source: SafeResourceUrl | string;
+
   public categoryCtrl: FormControl = new FormControl();
+
+  public currentCtrl: FormControl = new FormControl();
 
   public suburbCtrl: FormControl = new FormControl();
 
   public targetGroupCtrl: FormControl = new FormControl();
 
   protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel, {
-    current: true
+    current: !!this.currentCtrl.value
   }).with('address').yield('suburb')
     .with('category')
     .with('schedules');
@@ -53,7 +55,7 @@ export class ActivityListingComponent
   @ViewChild('frame', { read: ElementRef, static: true })
   private frame: ElementRef<HTMLIFrameElement>;
 
-  public get categories(): SuburbModel[] {
+  public get categories(): CategoryModel[] {
     return this.route.snapshot.data.categories || [];
   }
 
@@ -83,27 +85,45 @@ export class ActivityListingComponent
     };
   }
 
+  public constructor(
+    private sanitizer: DomSanitizer,
+    crudResolver: CrudResolver,
+    platformProvider: PlatformProvider,
+    route: ActivatedRoute,
+    router: Router
+  ) {
+    super(platformProvider, route, router, crudResolver);
+  }
+
+  public ngOnInit(): void {
+    super.ngOnInit();
+
+    this.source = this.sanitizer.bypassSecurityTrustResourceUrl(
+      ['android', 'ios'].includes(this.platformProvider.name)
+        ? '#/mapview/?embed=true'
+        : '/mapview/?embed=true'
+    );
+  }
+
   public ngAfterViewInit(): void {
-    if (this.deviceProvider.platform === 'Online') {
-      this.chipList.chipSelectionChanges.subscribe(() => this.categoryCtrl
-        .setValue(Arr(this.chipList.selected).map((chip) => chip.value)));
+    this.chipList.chipSelectionChanges.subscribe(() => this.categoryCtrl
+      .setValue(Arr(this.chipList.selected).map((chip) => chip.value)));
 
-      this.route.queryParams.pipe(map((p) => this.params(p).categories || []))
-        .subscribe((categories) => this.chipList.chips.forEach((chip) =>
-          chip.selected = categories.includes(chip.value)));
+    this.route.queryParams.pipe(map((p) => this.params(p).categories || []))
+      .subscribe((categories) => this.chipList.chips.forEach((chip) =>
+        chip.selected = categories.includes(chip.value)));
 
-      if (this.deviceProvider.notation === 'Browser') {
-        const main = this.deviceProvider.document.defaultView;
-        const frame = this.frame.nativeElement.contentWindow;
+    if (this.platformProvider.name !== 'server') {
+      const main = this.platformProvider.document.defaultView;
+      const frame = this.frame.nativeElement.contentWindow;
 
-        this.connection = new MapsConnection(main, frame);
-        this.connection.focus.subscribe((focus) => this.focusing(focus));
-        this.connection.route.subscribe((r) => this.router.navigateByUrl(r));
-        this.connection.ready.subscribe(() =>
-          this.items.subscribe((items) => this.connection.nextItems(items)));
+      this.connection = new MapsConnection(main, frame);
+      this.connection.focus.subscribe((focus) => this.focusing(focus));
+      this.connection.route.subscribe((r) => this.router.navigateByUrl(r));
+      this.connection.ready.pipe(filter(Boolean)).subscribe(() =>
+        this.items.subscribe((items) => this.connection.nextItems(items)));
 
-        this.connection.nextReady(true);
-      }
+      this.connection.nextReady(true);
     }
 
     this.route.queryParams.pipe(
@@ -157,7 +177,7 @@ export class ActivityListingComponent
   public values(items: CrudModel[], ctrl: FormControl): string {
     return (ctrl.value || [])
       .map((id) => items.find((i) => i.id === id))
-      .map((i) => i.name).join(', ') || ' ';
+      .map((i) => i.label).join(', ') || ' ';
   }
 
   protected params(params: Params): ReadParams {

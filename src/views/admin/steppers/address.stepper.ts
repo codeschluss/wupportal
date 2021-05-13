@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { AddressModel } from '../../../base/models/address.model';
+import { AddressModel, CrudJoiner } from '../../../core';
 import { BaseStepper, FormStep } from '../base/base.stepper';
 import { AddressFormComponent } from '../forms/address.form';
 
@@ -10,13 +9,13 @@ import { AddressFormComponent } from '../forms/address.form';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'create'">
-          <i18n i18n="@@createAddress">createAddress</i18n>
+          <i18n>createAddress</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'edit'">
-          <i18n i18n="@@editAddress">editAddress</i18n>
+          <i18n>editAddress</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'main'">
-          <i18n i18n="@@main">main</i18n>
+          <i18n>main</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

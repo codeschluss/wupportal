@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
-import { ApplicationSettings, DeviceProvider, SocialShare } from '@wooportal/app';
-import { Headers } from '@wooportal/core';
-import { take } from 'rxjs/operators';
+import { IconName, IconPrefix } from '@fortawesome/fontawesome-svg-core';
+import { CoreSettings, PlatformProvider } from '../../../../core';
 import { BasePiece } from '../base.piece';
 
 interface ShareTarget {
   name: string;
-  icon: string;
-  pack: string;
+  icon: IconName;
+  pack: IconPrefix;
   url: string;
 }
 
 @Component({
   selector: 'share-piece',
-  styleUrls: ['../base.piece.scss', 'share.piece.scss'],
+  styleUrls: ['../base.piece.sass', 'share.piece.sass'],
   templateUrl: 'share.piece.html'
 })
 
-export class SharePieceComponent extends BasePiece {
+export class SharePieceComponent
+  extends BasePiece {
 
   public items: ShareTarget[] = [
     {
@@ -53,43 +53,42 @@ export class SharePieceComponent extends BasePiece {
   ];
 
   private get href(): string {
-    return this.app.config.defaults.appUrl
+    return this.settings.app.baseUrl
       + `/${this.namespace}/${this.item.id}`;
   }
 
   public constructor(
-    private app: ApplicationSettings,
-    private deviceProvider: DeviceProvider,
-    private headers: Headers
+    private platformProvider: PlatformProvider,
+    private settings: CoreSettings
   ) {
     super();
   }
 
   public copy(): void {
-    const clipboard = this.deviceProvider.document.createElement('textarea');
+    const clipboard = this.platformProvider.document.createElement('textarea');
     clipboard.style.opacity = '0';
     clipboard.style.position = 'absolute';
     clipboard.value = this.href;
-    this.deviceProvider.document.body.appendChild(clipboard);
 
+    this.platformProvider.document.body.appendChild(clipboard);
     clipboard.focus();
     clipboard.select();
-    this.deviceProvider.document.execCommand('copy');
-    this.deviceProvider.document.body.removeChild(clipboard);
+
+    const range = document.createRange();
+    range.selectNodeContents(clipboard);
+
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    clipboard.setSelectionRange(0, clipboard.value.length);
+    this.platformProvider.document.execCommand('copy');
+    this.platformProvider.document.body.removeChild(clipboard);
   }
 
-  public share(target?: ShareTarget): void {
-    switch (this.deviceProvider.platform) {
-      case 'Native':
-        this.headers.name.pipe(take(1)).subscribe((name) =>
-          SocialShare.shareUrl(this.href, `${this.item.name} | ${name}`));
-        break;
-
-      case 'Online':
-        this.deviceProvider.document.defaultView
-          .open(target.url + this.href, '_blank');
-        break;
-    }
+  public share(target: ShareTarget): void {
+    this.platformProvider.document.defaultView
+      .open(target.url + this.href, '_blank');
   }
 
 }

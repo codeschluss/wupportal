@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { Route } from '@angular/router';
-import { AppRouterModule } from '@wooportal/app';
-import { LabelsResolver, LoadingGuarding, SessionResolver } from '@wooportal/core';
+import { Route, RouterModule } from '@angular/router';
+import { LabelResolver, LoadingGuarding, SessionResolver } from './core';
 import { ErrorNetsplitComponent } from './views/error/netsplit/error.netsplit';
 import { SharedComponent } from './views/shared/shared.component';
 
 const routes: Route[] = [
   {
     path: '',
+    resolve: {
+      labels: LabelResolver
+    },
     children: [
       {
         path: 'error',
@@ -34,8 +36,8 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [AppRouterModule],
-  imports: [AppRouterModule.forRoot([
+  exports: [RouterModule],
+  imports: [RouterModule.forRoot([
     {
       path: 'netsplit',
       canDeactivate: [LoadingGuarding],
@@ -47,8 +49,7 @@ const routes: Route[] = [
       component: SharedComponent,
       canActivate: [LoadingGuarding],
       resolve: {
-        session: SessionResolver,
-        xliff: LabelsResolver
+        session: SessionResolver
       }
     }
   ], {

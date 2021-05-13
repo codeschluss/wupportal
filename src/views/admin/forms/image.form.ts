@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ImageModel } from '../../../base/models/image.model';
+import { ImageModel } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { ImageFieldComponent } from '../fields/image.field';
 
@@ -10,7 +10,7 @@ import { ImageFieldComponent } from '../fields/image.field';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'images'">
-          <i18n i18n="@@images">images</i18n>
+          <i18n>images</i18n>
         </ng-container>
       </ng-container>
     </ng-template>

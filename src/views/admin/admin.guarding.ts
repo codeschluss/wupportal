@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
-import { ApplicationSettings } from '@wooportal/app';
-import { JwtClaims, TokenProvider } from '@wooportal/core';
 import { map, mergeMap, take } from 'rxjs/operators';
-import { ActivityProvider } from '../../base/providers/activity.provider';
+import { ActivityProvider, CoreSettings, JwtClaims, TokenProvider } from '../../core';
 
-@Injectable({ providedIn: 'root' })
-export class AdminGuarding implements CanActivate, CanActivateChild {
+@Injectable({
+  providedIn: 'root'
+})
+
+export class AdminGuarding
+  implements CanActivate, CanActivateChild {
 
   public constructor(
     private activityProvider: ActivityProvider,
-    private app: ApplicationSettings,
     private router: Router,
+    private settings: CoreSettings,
     private tokenProvider: TokenProvider
   ) { }
 
@@ -37,7 +39,7 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
       take(1), map((tokens) => tokens.access)
     ).toPromise();
 
-    const claims = this.app.config.jwtClaims;
+    const claims = this.settings.jwtClaims;
     const claimed = Object.keys(claims).reduce((claim, key) =>
       Object.assign(claim, { [key]: access[claims[key]] }), { }) as JwtClaims;
 
@@ -54,11 +56,19 @@ export class AdminGuarding implements CanActivate, CanActivateChild {
         case state.url.startsWith('/admin/organisation'):
         return claimed.superUser || claimed.organisationAdmin.length;
 
+        case state.url.startsWith('/admin/translate'):
+        return claimed.superUser || claimed.translator;
+
         case state.url.startsWith('/admin/edit/activities/'):
         return claimed.superUser
           || (claimed.userId && !this.uuid(state.url))
           || claimed.activityProvider.includes(this.uuid(state.url))
           || claimed.organisationAdmin.includes(await this.orga(state.url));
+
+        case state.url.startsWith('/admin/edit/blogposts/'):
+        return claimed.superUser
+          || (claimed.blogger && !this.uuid(state.url))
+          || claimed.blogpostAuthor.includes(this.uuid(state.url));
 
         case state.url.startsWith('/admin/edit/organisations/'):
         return claimed.superUser

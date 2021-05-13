@@ -1,8 +1,0 @@
-<stack-layout ripple
-  [isEnabled]="!disabled && !followed"
-  [isUserInteractionEnabled]="!disabled && !followed"
-  [ngClass]="{ disabled: disabled || followed }"
-  (tap)="follow()">
-  <icon-component icon="paper-plane"></icon-component>
-  <i18n i18n="@@follow" unit="follow"></i18n>
-</stack-layout>

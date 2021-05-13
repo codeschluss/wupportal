@@ -26,6 +26,7 @@ class FeedbackControllerService extends __BaseService {
   }
 
   /**
+   * feedback
    * @param feedback feedback
    * @return OK
    */
@@ -52,6 +53,7 @@ class FeedbackControllerService extends __BaseService {
     );
   }
   /**
+   * feedback
    * @param feedback feedback
    * @return OK
    */

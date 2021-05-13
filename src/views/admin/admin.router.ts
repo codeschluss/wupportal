@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Route } from '@angular/router';
-import { AppRouterModule } from '@wooportal/app';
-import { TokenResolver } from '@wooportal/core';
+import { Route, RouterModule } from '@angular/router';
+import { TokenResolver } from '../../core';
 import { AdminComponent } from './admin.component';
 import { AdminGuarding } from './admin.guarding';
 import { AccountPanelComponent } from './panels/account/account.panel';
@@ -13,6 +12,7 @@ import { OrganisationPanelComponent } from './panels/organisation/organisation.p
 import { PositioningPanelComponent } from './panels/positioning/positioning.panel';
 import { PrivilegesPanelComponent } from './panels/privileges/privileges.panel';
 import { TaxonomyPanelComponent } from './panels/taxonomy/taxonomy.panel';
+import { TranslatePanelComponent } from './panels/translate/translate.panel';
 import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
 import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
@@ -40,6 +40,7 @@ const routes: Route[] = [
       PositioningPanelComponent.routing,
       PrivilegesPanelComponent.routing,
       TaxonomyPanelComponent.routing,
+      TranslatePanelComponent.routing,
       {
         path: 'edit',
         children: [
@@ -68,8 +69,8 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  exports: [AppRouterModule],
-  imports: [AppRouterModule.forChild([
+  exports: [RouterModule],
+  imports: [RouterModule.forChild([
     {
       path: '',
       children: routes,

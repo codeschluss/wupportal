@@ -1,59 +1,38 @@
 import { ngExpressEngine } from '@nguniversal/express-engine';
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import * as express from 'express';
 import * as robots from 'express-robots-txt';
-import { readFile } from 'fs';
-import { bindNodeCallback } from 'rxjs';
 import 'zone.js/dist/zone-node';
-import { PackageJson } from './package';
+import { ServerModule } from '../server';
+import { SettingsJson } from './settings';
 
-declare const __non_webpack_require__: typeof require;
-const appRoot = PackageJson.config.defaults.appUrl;
-const apiRoot = PackageJson.config.api.rootUrl;
+const apiRoot = SettingsJson.api.rootUrl;
+const baseUrl = SettingsJson.app.baseUrl;
 
-const engine = {
-  provide: 'engine',
-  useFactory: () => server,
-  deps: []
-};
+const path = `${process.cwd()}/platforms/browser/www`
+const port = process.env.PORT || '4000'
+const server = express();
 
-const server = {
-  base: express(),
-  path: `${process.cwd()}/platforms/web`,
-  port: process.env.PORT || '4000',
-  read: bindNodeCallback(readFile),
-  request: null,
-  response: null
-};
-
-const {
-  LAZY_MODULE_MAP,
-  ServerModuleNgFactory
-} = __non_webpack_require__(`${server.path}/server/main`);
-
-server.base.engine('html', ngExpressEngine({
-  bootstrap: ServerModuleNgFactory,
-  providers: [engine, provideModuleMap(LAZY_MODULE_MAP)]
+server.engine('html', ngExpressEngine({
+  bootstrap: ServerModule
 }));
 
-server.base.set('view engine', 'html');
-server.base.set('views', `${server.path}/browser`);
+server.set('view engine', 'html');
+server.set('views', path);
 
-server.base.use(robots({
+server.use(robots({
   UserAgent: '*',
   Disallow: ['/*.js$'],
-  Sitemap: `${appRoot}${apiRoot}/sitemap`
+  Sitemap: `${baseUrl}${apiRoot}/sitemap`
 }));
 
-server.base.get('*.*', express.static(`${server.path}/browser`, {
+server.get('*.*', express.static(path, {
   maxAge: '30d'
 }));
 
-server.base.get('*', (request, response) => {
-  Object.assign(server, { request, response });
+server.get('*', (request, response) => {
   response.render('index', { req: request });
 });
 
-server.base.listen(server.port, () => {
-  console.log(`Listening on http://0.0.0.0:${server.port}`);
+server.listen(port, () => {
+  console.log(`Listening on http://0.0.0.0:${port}`);
 });

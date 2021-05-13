@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { TokenProvider } from '@wooportal/core';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TokenProvider } from '../../../core';
 
 @Component({
   styles: [`
@@ -12,18 +12,18 @@ import { catchError } from 'rxjs/operators';
   `],
   template: `
     <h2 mat-dialog-title>
-      <i18n i18n="@@authenticationExpired">authenticationExpired</i18n>
+      <i18n>authenticationExpired</i18n>
     </h2>
     <section mat-dialog-content>
       <mat-form-field>
-        <mat-label><i18n i18n="@@email">email</i18n></mat-label>
+        <mat-label><i18n>email</i18n></mat-label>
         <input matInput
           type="email"
           [formControl]="email"
           (keydown.enter)="valid && login()">
       </mat-form-field>
       <mat-form-field>
-        <mat-label><i18n i18n="@@password">password</i18n></mat-label>
+        <mat-label><i18n>password</i18n></mat-label>
         <input matInput
           type="password"
           [formControl]="password"
@@ -32,16 +32,17 @@ import { catchError } from 'rxjs/operators';
     </section>
     <section mat-dialog-actions>
       <button mat-button [disabled]="!valid" (click)="login()">
-        <i18n i18n="@@login">login</i18n>
+        <i18n>login</i18n>
       </button>
       <button mat-button (click)="logout()">
-        <i18n i18n="@@logout">logout</i18n>
+        <i18n>logout</i18n>
       </button>
     </section>
   `
 })
 
-export class ReloginPopupComponent implements OnInit {
+export class ReloginPopupComponent
+  implements OnInit {
 
   public email: FormControl = new FormControl(null, [
     Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),

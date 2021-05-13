@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { Headers } from '@wooportal/core';
+import { MetatagService } from '../../../core';
 
 @Component({
-  styleUrls: ['error.netsplit.scss'],
+  styleUrls: ['error.netsplit.sass'],
   templateUrl: 'error.netsplit.html'
 })
 
 export class ErrorNetsplitComponent {
 
   public constructor(
-    public headers: Headers
+    public metatagService: MetatagService
   ) { }
 
 }

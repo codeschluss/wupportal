@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { BlogpostModel } from '../../../base/models/blogpost.model';
+import { BlogpostModel, CrudJoiner } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,13 +8,13 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'activity'">
-          <i18n i18n="@@activity">activity</i18n>
+          <i18n>activity</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'author'">
-          <i18n i18n="@@author">author</i18n>
+          <i18n>author</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'title'">
-          <i18n i18n="@@title">title</i18n>
+          <i18n>title</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -36,7 +35,7 @@ export class BlogpostTableComponent
     },
     {
       name: 'activity',
-      value: (item) => item.activity ? item.activity.name : ''
+      value: (item) => item.activity ? item.activity.label : ''
     }
   ];
 

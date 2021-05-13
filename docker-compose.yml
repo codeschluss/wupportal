@@ -1,0 +1,58 @@
+version: '3.4'
+
+services:
+  client:
+    build:
+      args: [PROFILE=development]
+      context: ./
+      target: android
+    command: |
+      '
+      export APP=$$(sed -En "s|.*id=\"([a-z.]+)\".*|\1|p" config.xml)
+      export PATH=$$PATH:$$ANDROID_SDK_ROOT/platform-tools
+      export PATH=$$PATH:$$ANDROID_SDK_ROOT/tools/bin
+      export PATH=$$PATH:$$PWD/node_modules/.bin
+      export SRV=$$(hostname -I | cut -d" " -f1)
+
+      test -f settings-dev.json || sed -E settings.json >settings-dev.json \
+        -e "s|(\"profile\":) \"[^\"]+\"|\1 \"$$NODE_ENV\"|" \
+        -e "s|(\"baseUrl\":) \"[^\"]+\"|\1 \"http://$$SRV:8081\"|" \
+        -e "s|(\"rootUrl\":) \"([^\"]+)\"|\1 \"http://$$SRV:8080\2\"|" \
+        -e "s|(\"authUrl\":) \"([^\"]+)\"|\1 \"http://$$SRV:8080\2\"|" \
+        -e "s|(\"refreshUrl\":) \"([^\"]+)\"|\1 \"http://$$SRV:8080\2\"|"
+
+      mkdir -p www
+      npm install --also=development
+      cordova prepare android browser
+
+      while inotifywait -e modify -qq www; do if test -f www/index.html; then
+        cordova build browser
+      fi; done &
+
+      while inotifywait -e modify -qq www; do if test -f www/index.html; then
+        if adb wait-for-device && cordova run android && test -n "$$APP"; then
+          test -n "$$PID" && kill -0 $$PID && kill $$PID
+          adb logcat --pid=$$(adb shell pidof -s $$APP) & PID=$$!
+        fi
+      fi; done &
+
+      npm start
+      '
+    container_name: wooportal.client.dev
+    entrypoint: [sh, -c]
+    image: wooportal/client:dev
+    network_mode: host
+    privileged: true
+    restart: on-failure
+    stop_signal: SIGKILL
+    volumes: [./:/src]
+    working_dir: /src
+
+  server:
+    build: https://github.com/wooportal/server.git
+    command: java -jar server.jar
+    container_name: wooportal.server.dev
+    extra_hosts: [$HOSTNAME:127.0.0.1]
+    image: wooportal/server:dev
+    network_mode: host
+    environment: ['SPRING_PROFILES_ACTIVE=development,staging']

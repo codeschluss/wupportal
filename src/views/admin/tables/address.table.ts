@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { AddressModel } from '../../../base/models/address.model';
+import { AddressModel, CrudJoiner } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
@@ -9,19 +8,19 @@ import { BaseTable, TableColumn } from '../base/base.table';
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'houseNumber'">
-          <i18n i18n="@@houseNumber">houseNumber</i18n>
+          <i18n>houseNumber</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'place'">
-          <i18n i18n="@@place">place</i18n>
+          <i18n>place</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'postalCode'">
-          <i18n i18n="@@postalCode">postalCode</i18n>
+          <i18n>postalCode</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'street'">
-          <i18n i18n="@@street">street</i18n>
+          <i18n>street</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'suburb'">
-          <i18n i18n="@@suburb">suburb</i18n>
+          <i18n>suburb</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -50,8 +49,8 @@ export class AddressTableComponent
     },
     {
       name: 'suburb',
-      value: (item) => item.suburb.name
-    },
+      value: (item) => item.suburb.label
+    }
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(AddressModel)

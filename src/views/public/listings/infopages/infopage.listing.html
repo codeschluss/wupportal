@@ -1,25 +1,25 @@
 <main>
   <ng-container *ngIf="(results | async) === false">
-    <icon-component icon="frown"></icon-component>
+    <fa-icon icon="frown"></fa-icon>
     <strong class="mat-title">
-      <i18n i18n="@@notFoundError">notFoundError</i18n>
+      <i18n>notFoundError</i18n>
     </strong>
   </ng-container>
   <ng-container *ngFor="let item of items | async">
-    <expand-component #expand (changed)="$event && expanded(expand)">
-      <ng-template #expandHeader>
-        <icon-component icon="info-circle"></icon-component>
-        {{ item.name }}
-        <small>({{ item.infopages.length }})</small>
-      </ng-template>
-      <ng-template #expandContent>
-        <ng-container *ngFor="let page of item.infopages">
-          <infopage-card [item]="page"></infopage-card>
-        </ng-container>
-      </ng-template>
-    </expand-component>
+    <mat-expansion-panel #expand (opened)="expanded(expand)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <fa-icon icon="info-circle"></fa-icon>
+          {{ item.label }}
+          <small>({{ item.infopages.length }})</small>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-container *ngFor="let page of item.infopages">
+        <infopage-card [item]="page"></infopage-card>
+      </ng-container>
+    </mat-expansion-panel>
   </ng-container>
   <ng-container *ngIf="next || prev">
-    <pager-component [next]="next" [prev]="prev"></pager-component>
+    <pager-component [page]="page"></pager-component>
   </ng-container>
 </main>

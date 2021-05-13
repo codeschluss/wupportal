@@ -1,12 +1,12 @@
 /* tslint:disable */
 export interface OrganisationEntity {
-  likes?: number;
   _embedded?: {};
+  addressId?: string;
   approved?: boolean;
   created?: string;
   description?: string;
   id?: string;
-  addressId?: string;
+  likes?: number;
   mail?: string;
   modified?: string;
   name?: string;

@@ -9,7 +9,8 @@ import { BaseChart } from '../base/base.chart';
 })
 
 export class SubscriptionsChartComponent
-  extends BaseChart implements OnInit {
+  extends BaseChart
+  implements OnInit {
 
   public ngOnInit(): void {
     this.analyticsProvider.subscriptions()

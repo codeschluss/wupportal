@@ -1,0 +1,19 @@
+@import ../../brand.scss
+
+main
+  fa-icon[icon=frown]
+    font-size: 3rem
+
+    & + strong
+      font-size: 1.5rem
+      padding-top: .5rem
+      text-align: center
+      width: 100%
+
+  pager-component
+    @include flex(row, center, center)
+    margin: 1rem
+    width: 100%
+
+    @include responsive(lt-md)
+      margin-top: 0

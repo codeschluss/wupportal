@@ -1,0 +1,8 @@
+@import ../../../brand.scss
+
+main
+  @include flex(wrap, center, flex-start)
+
+  & > organisation-card
+    @include responsive(lt-md)
+      padding-top: 0

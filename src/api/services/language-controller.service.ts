@@ -31,6 +31,7 @@ class LanguageControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `LanguageControllerService.LanguageControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -75,6 +76,7 @@ class LanguageControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `LanguageControllerService.LanguageControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -98,6 +100,7 @@ class LanguageControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newLanguage newLanguage
    * @return OK
    */
@@ -124,6 +127,7 @@ class LanguageControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newLanguage newLanguage
    * @return OK
    */
@@ -134,6 +138,7 @@ class LanguageControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param languageId languageId
    * @return OK
    */
@@ -144,7 +149,7 @@ class LanguageControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/languages/${languageId}`,
+      this.rootUrl + `/languages/${encodeURIComponent(String(languageId))}`,
       __body,
       {
         headers: __headers,
@@ -160,6 +165,7 @@ class LanguageControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param languageId languageId
    * @return OK
    */
@@ -170,6 +176,7 @@ class LanguageControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newLanguage newLanguage
    * @param languageId languageId
    * @return OK
@@ -183,7 +190,7 @@ class LanguageControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/languages/${languageId}`,
+      this.rootUrl + `/languages/${encodeURIComponent(String(languageId))}`,
       __body,
       {
         headers: __headers,
@@ -199,6 +206,7 @@ class LanguageControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newLanguage newLanguage
    * @param languageId languageId
    * @return OK
@@ -211,6 +219,7 @@ class LanguageControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param languageId languageId
    * @return OK
    */
@@ -221,7 +230,7 @@ class LanguageControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/languages/${languageId}`,
+      this.rootUrl + `/languages/${encodeURIComponent(String(languageId))}`,
       __body,
       {
         headers: __headers,
@@ -237,6 +246,7 @@ class LanguageControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param languageId languageId
    * @return OK
    */

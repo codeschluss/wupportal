@@ -2,8 +2,6 @@ import { HttpRequest } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent, UrlSegment } from '@angular/router';
-import { DeviceProvider } from '@wooportal/app';
-import { CrudJoiner, CrudResolver, LoadingProvider, PositionProvider, Selfrouter } from '@wooportal/core';
 import * as ColorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
@@ -13,19 +11,17 @@ import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
 import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
 import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import * as smoothPolyline from 'smooth-polyline';
-import { ActivityModel } from '../../base/models/activity.model';
-import { ConfigurationModel } from '../../base/models/configuration.model';
-import { ActivityProvider } from '../../base/providers/activity.provider';
-import { LocationProvider } from '../../base/providers/location.provider';
+import { ActivityModel, ActivityProvider, ConfigurationModel, CrudJoiner, CrudResolver, LoadingProvider, LocationProvider, PlatformProvider, PositionProvider, RoutingComponent } from '../../core';
 import { MapsConnection } from './maps.connection';
 
 @Component({
-  styleUrls: ['maps.component.scss'],
+  styleUrls: ['maps.component.sass'],
   templateUrl: 'maps.component.html'
 })
 
 export class MapsComponent
-  extends Selfrouter implements OnInit, AfterViewInit, OnDestroy {
+  extends RoutingComponent
+  implements OnInit, AfterViewInit, OnDestroy {
 
   public directions: [number, number][];
 
@@ -108,10 +104,10 @@ export class MapsComponent
   public constructor(
     private activityProvider: ActivityProvider,
     private crudResolver: CrudResolver,
-    private deviceProvider: DeviceProvider,
     private element: ElementRef<HTMLElement>,
     private loadingProvider: LoadingProvider,
     private locationProvider: LocationProvider,
+    private platformProvider: PlatformProvider,
     private positionProvider: PositionProvider,
     private route: ActivatedRoute,
     private router: Router
@@ -141,8 +137,6 @@ export class MapsComponent
       if (this.connection) {
         this.connection.nextRoute(event.url);
         this.router.navigateByUrl(this.router.url);
-      } else if (this.route.snapshot.queryParamMap.has('native')) {
-        this.deviceProvider.document.defaultView.location.href = event.url;
       }
     });
   }
@@ -161,7 +155,7 @@ export class MapsComponent
 
     this.maps.pointerMove.subscribe((event) => this.handleCursor(event));
     this.maps.singleClick.subscribe((event) => this.handleClick(event));
-    const window = this.deviceProvider.document.defaultView;
+    const window = this.platformProvider.document.defaultView;
 
     if (this.embedded && this.uuid) {
       this.maps.instance.getInteractions().clear();
@@ -252,7 +246,7 @@ export class MapsComponent
         longitude: c[1]
       }))).subscribe()),
       map((coords) => smoothPolyline(smoothPolyline(coords))),
-      map((coords) => coords.map((c) => fromLonLat([c[1], c[0]]))),
+      map((coords) => coords.map((c) => fromLonLat([c[1], c[0]])))
     ).subscribe(
       (coords) => this.directions = coords,
       () => this.enabled = false
@@ -290,7 +284,7 @@ export class MapsComponent
     }
   }
 
-  private frame(coords: Partial<Coordinates>[]): Observable<any> {
+  private frame(coords: Partial<GeolocationCoordinates>[]): Observable<any> {
     return new Observable<any>((observer) => {
       if (!coords.length) {
         this.view.instance.animate({
@@ -354,7 +348,7 @@ export class MapsComponent
     return new Style({
       image: new Icon({
         color: '#' + ColorConvert.rgb.hex(r, g, b),
-        src: `/images/pin-${multi ? 'full' : 'hole'}.png`,
+        src: `images/pin-${multi ? 'full' : 'hole'}.png`,
 
         anchor: [.5, 1],
         imgSize: [60, 96],

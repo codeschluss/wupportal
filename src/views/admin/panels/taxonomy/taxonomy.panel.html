@@ -1,35 +1,39 @@
 <header class="mat-title">
-  <i18n i18n="@@taxonomyPanel">taxonomyPanel</i18n>
-  <button  mat-raised-button color="primary" [matMenuTriggerFor]="actions">
-    <i18n i18n="@@actions">actions</i18n>
+  <span [style.flexGrow]="1"></span>
+  <i18n>taxonomyPanel</i18n>
+  <button mat-raised-button
+    color="primary"
+    xPosition="before"
+    [matMenuTriggerFor]="actions">
+    <i18n>actions</i18n>
   </button>
 </header>
 
 <mat-menu #actions="matMenu">
   <button mat-menu-item (click)="create('categories')">
-    <i18n i18n="@@createCategory">createCategory</i18n>
+    <i18n>createCategory</i18n>
   </button>
   <button mat-menu-item (click)="create('keywords')">
-    <i18n i18n="@@createKeyword">createKeyword</i18n>
+    <i18n>createKeyword</i18n>
   </button>
   <button mat-menu-item (click)="create('targetgroups')">
-    <i18n i18n="@@createTargetGroup">createTargetGroup</i18n>
+    <i18n>createTargetGroup</i18n>
   </button>
   <button mat-menu-item (click)="create('topics')">
-    <i18n i18n="@@createTopic">createTopic</i18n>
+    <i18n>createTopic</i18n>
   </button>
 </mat-menu>
 
 <mat-tab-group id="taxonomy" [selectedIndex]="index">
   <mat-tab id="categories">
     <ng-template matTabLabel>
-      <i18n i18n="@@categories">categories</i18n>
+      <i18n>categories</i18n>
     </ng-template>
     <ng-template matTabContent>
       <category-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button color="primary" (click)="edit(item)">
@@ -46,13 +50,13 @@
 
   <mat-tab id="keywords">
     <ng-template matTabLabel>
-      <i18n i18n="@@keywords">keywords</i18n>
+      <i18n>keywords</i18n>
     </ng-template>
     <ng-template matTabContent>
       <keyword-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button color="primary" (click)="edit(item)">
@@ -69,13 +73,13 @@
 
   <mat-tab id="targetGroups">
     <ng-template matTabLabel>
-      <i18n i18n="@@targetGroups">targetGroups</i18n>
+      <i18n>targetGroups</i18n>
     </ng-template>
     <ng-template matTabContent>
       <target-group-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button color="primary" (click)="edit(item)">
@@ -92,13 +96,13 @@
 
   <mat-tab id="topics">
     <ng-template matTabLabel>
-      <i18n i18n="@@topics">topics</i18n>
+      <i18n>topics</i18n>
     </ng-template>
     <ng-template matTabContent>
       <topic-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button color="primary" (click)="edit(item)">
@@ -115,13 +119,13 @@
 
   <mat-tab id="subscriptions">
     <ng-template matTabLabel>
-      <i18n i18n="@@subscriptionTypes">subscriptionTypes</i18n>
+      <i18n>subscriptionTypes</i18n>
     </ng-template>
     <ng-template matTabContent>
       <subscription-type-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-            <i18n i18n="@@actions">actions</i18n>
+            <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
             <button mat-icon-button

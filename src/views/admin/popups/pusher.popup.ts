@@ -1,39 +1,37 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivityModel } from '../../../base/models/activity.model';
-import { BlogpostModel } from '../../../base/models/blogpost.model';
-import { InfopageModel } from '../../../base/models/infopage.model';
-import { OrganisationModel } from '../../../base/models/organisation.model';
+import { ActivityModel, BlogpostModel, InfopageModel, OrganisationModel } from '../../../core';
 
 @Component({
   styles: [`
     mat-form-field { display: block; }
-    section { width: 25rem; }
+    section { max-width: 100%; width: 25rem; }
   `],
   template: `
     <h2 mat-dialog-title>
-      <i18n i18n="@@pushNotification">pushNotification</i18n>
+      <i18n>pushNotification</i18n>
     </h2>
     <section mat-dialog-content>
       <mat-form-field>
-      <mat-label><i18n i18n="@@title">title</i18n></mat-label>
+        <mat-label><i18n>title</i18n></mat-label>
         <input matInput [formControl]="title">
       </mat-form-field>
       <mat-form-field>
-      <mat-label><i18n i18n="@@content">content</i18n></mat-label>
-        <textarea matInput matTextareaAutosize
+        <mat-label><i18n>content</i18n></mat-label>
+        <textarea matInput
           [formControl]="content"
-          [matAutosizeMinRows]="3">
+          [matAutosizeMinRows]="3"
+          [matTextareaAutosize]="true">
         </textarea>
       </mat-form-field>
     </section>
     <section mat-dialog-actions>
       <button mat-button mat-dialog-close>
-        <i18n i18n="@@close">close</i18n>
+        <i18n>close</i18n>
       </button>
       <button mat-button color="primary" [disabled]="!valid" (click)="send()">
-        <i18n i18n="@@send">send</i18n>
+        <i18n>send</i18n>
       </button>
     </section>
   `
@@ -51,7 +49,7 @@ export class PusherPopupComponent {
   );
 
   public title: FormControl = new FormControl(
-    this.data.item.name,
+    this.data.item.label,
     [
       Validators.required
     ]

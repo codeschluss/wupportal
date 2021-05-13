@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>
+  <i18n>newNotification</i18n>:
+  {{ title }}
+</h2>
+<section mat-dialog-content>
+  {{ content }}
+</section>
+<section mat-dialog-actions>
+  <button mat-button mat-dialog-close>
+    <i18n>close</i18n>
+  </button>
+  <ng-container *ngIf="route">
+    <button mat-button color="primary" [mat-dialog-close]="route">
+      <i18n>show</i18n>
+    </button>
+  </ng-container>
+</section>

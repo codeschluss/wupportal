@@ -52,6 +52,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `OrganisationControllerService.OrganisationControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -99,6 +100,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `OrganisationControllerService.OrganisationControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -124,6 +126,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newOrga newOrga
    * @return OK
    */
@@ -150,6 +153,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newOrga newOrga
    * @return OK
    */
@@ -160,6 +164,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param organisationId organisationId
    * @return OK
    */
@@ -170,7 +175,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${organisationId}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}`,
       __body,
       {
         headers: __headers,
@@ -186,6 +191,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param organisationId organisationId
    * @return OK
    */
@@ -196,6 +202,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newOrga newOrga
    * @param organisationId organisationId
    * @return OK
@@ -209,7 +216,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${organisationId}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}`,
       __body,
       {
         headers: __headers,
@@ -225,6 +232,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newOrga newOrga
    * @param organisationId organisationId
    * @return OK
@@ -237,6 +245,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param organisationId organisationId
    * @return OK
    */
@@ -247,7 +256,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${organisationId}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}`,
       __body,
       {
         headers: __headers,
@@ -263,6 +272,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param organisationId organisationId
    * @return OK
    */
@@ -273,6 +283,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * readActivities
    * @param organisationId organisationId
    * @param sort undefined
    * @param dir undefined
@@ -292,7 +303,7 @@ class OrganisationControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${organisationId}/activities`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/activities`,
       __body,
       {
         headers: __headers,
@@ -308,6 +319,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * readActivities
    * @param organisationId organisationId
    * @param sort undefined
    * @param dir undefined
@@ -324,6 +336,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * deleteActivity
    * @param organisationId organisationId
    * @param activityId activityId
    * @return OK
@@ -337,7 +350,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${organisationId}/activities/${activityId}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/activities/${encodeURIComponent(String(activityId))}`,
       __body,
       {
         headers: __headers,
@@ -353,6 +366,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * deleteActivity
    * @param organisationId organisationId
    * @param activityId activityId
    * @return OK
@@ -365,6 +379,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * readAddress
    * @param organisationId organisationId
    * @return OK
    */
@@ -375,7 +390,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${organisationId}/address`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/address`,
       __body,
       {
         headers: __headers,
@@ -391,6 +406,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * readAddress
    * @param organisationId organisationId
    * @return OK
    */
@@ -401,6 +417,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * updateAddress
    * @param organisationId organisationId
    * @param addressId addressId
    * @return OK
@@ -414,7 +431,7 @@ class OrganisationControllerService extends __BaseService {
     __body = addressId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${organisationId}/address`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/address`,
       __body,
       {
         headers: __headers,
@@ -430,6 +447,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * updateAddress
    * @param organisationId organisationId
    * @param addressId addressId
    * @return OK
@@ -442,6 +460,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * grantApproval
    * @param organisationId organisationId
    * @param isApproved isApproved
    * @return OK
@@ -455,7 +474,7 @@ class OrganisationControllerService extends __BaseService {
     __body = isApproved;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${organisationId}/approve`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/approve`,
       __body,
       {
         headers: __headers,
@@ -471,6 +490,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * grantApproval
    * @param organisationId organisationId
    * @param isApproved isApproved
    * @return OK
@@ -483,6 +503,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * readImages
    * @param organisationId organisationId
    * @return OK
    */
@@ -493,7 +514,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${organisationId}/images`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/images`,
       __body,
       {
         headers: __headers,
@@ -509,6 +530,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * readImages
    * @param organisationId organisationId
    * @return OK
    */
@@ -519,6 +541,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * addImage
    * @param organisationId organisationId
    * @param images images
    * @return OK
@@ -532,7 +555,7 @@ class OrganisationControllerService extends __BaseService {
     __body = images;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/organisations/${organisationId}/images`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/images`,
       __body,
       {
         headers: __headers,
@@ -548,6 +571,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * addImage
    * @param organisationId organisationId
    * @param images images
    * @return OK
@@ -560,6 +584,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * deleteImages
    * @param organisationId organisationId
    * @param imageIds imageIds
    * @return OK
@@ -573,7 +598,7 @@ class OrganisationControllerService extends __BaseService {
     (imageIds || []).forEach(val => {if (val != null) __params = __params.append('imageIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${organisationId}/images`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/images`,
       __body,
       {
         headers: __headers,
@@ -589,6 +614,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * deleteImages
    * @param organisationId organisationId
    * @param imageIds imageIds
    * @return OK
@@ -601,6 +627,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * increaseLike
    * @param organisationId organisationId
    * @param subscriptionId subscriptionId
    * @return OK
@@ -614,7 +641,7 @@ class OrganisationControllerService extends __BaseService {
     __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${organisationId}/like`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/like`,
       __body,
       {
         headers: __headers,
@@ -630,6 +657,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * increaseLike
    * @param organisationId organisationId
    * @param subscriptionId subscriptionId
    * @return OK
@@ -642,6 +670,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param organisationId organisationId
    * @return OK
    */
@@ -652,7 +681,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${organisationId}/translations`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -668,6 +697,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param organisationId organisationId
    * @return OK
    */
@@ -678,6 +708,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * readUsers
    * @param organisationId organisationId
    * @return OK
    */
@@ -688,7 +719,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${organisationId}/users`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/users`,
       __body,
       {
         headers: __headers,
@@ -704,6 +735,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * readUsers
    * @param organisationId organisationId
    * @return OK
    */
@@ -714,6 +746,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * deleteUser
    * @param organisationId organisationId
    * @param userId userId
    * @return OK
@@ -727,7 +760,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${organisationId}/users/${userId}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/users/${encodeURIComponent(String(userId))}`,
       __body,
       {
         headers: __headers,
@@ -743,6 +776,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * deleteUser
    * @param organisationId organisationId
    * @param userId userId
    * @return OK
@@ -755,6 +789,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * grantAdminRight
    * @param organisationId organisationId
    * @param userId userId
    * @param isAdmin isAdmin
@@ -771,7 +806,7 @@ class OrganisationControllerService extends __BaseService {
     __body = isAdmin;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${organisationId}/users/${userId}/admin`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/users/${encodeURIComponent(String(userId))}/admin`,
       __body,
       {
         headers: __headers,
@@ -787,6 +822,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * grantAdminRight
    * @param organisationId organisationId
    * @param userId userId
    * @param isAdmin isAdmin
@@ -801,6 +837,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * approveOrRejectUser
    * @param organisationId organisationId
    * @param userId userId
    * @param isApproved isApproved
@@ -817,7 +854,7 @@ class OrganisationControllerService extends __BaseService {
     __body = isApproved;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${organisationId}/users/${userId}/approve`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/users/${encodeURIComponent(String(userId))}/approve`,
       __body,
       {
         headers: __headers,
@@ -833,6 +870,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * approveOrRejectUser
    * @param organisationId organisationId
    * @param userId userId
    * @param isApproved isApproved
@@ -847,6 +885,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * readVideos
    * @param organisationId organisationId
    * @return OK
    */
@@ -857,7 +896,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${organisationId}/videos`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/videos`,
       __body,
       {
         headers: __headers,
@@ -873,6 +912,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * readVideos
    * @param organisationId organisationId
    * @return OK
    */
@@ -883,6 +923,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * addVideos
    * @param organisationId organisationId
    * @param videos videos
    * @return OK
@@ -896,7 +937,7 @@ class OrganisationControllerService extends __BaseService {
     __body = videos;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/organisations/${organisationId}/videos`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/videos`,
       __body,
       {
         headers: __headers,
@@ -912,6 +953,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * addVideos
    * @param organisationId organisationId
    * @param videos videos
    * @return OK
@@ -924,6 +966,7 @@ class OrganisationControllerService extends __BaseService {
   }
 
   /**
+   * deleteVideos
    * @param organisationId organisationId
    * @param videoIds videoIds
    * @return OK
@@ -937,7 +980,7 @@ class OrganisationControllerService extends __BaseService {
     (videoIds || []).forEach(val => {if (val != null) __params = __params.append('videoIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${organisationId}/videos`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/videos`,
       __body,
       {
         headers: __headers,
@@ -953,6 +996,7 @@ class OrganisationControllerService extends __BaseService {
     );
   }
   /**
+   * deleteVideos
    * @param organisationId organisationId
    * @param videoIds videoIds
    * @return OK

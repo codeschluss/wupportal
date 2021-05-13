@@ -1,0 +1,81 @@
+@import ../../../brand.scss
+
+main
+  & > header
+    @include flex(wrap, space-around, center)
+    box-sizing: border-box
+    margin: 0 auto 1rem auto
+    max-width: $viewport-width
+    padding: 0 1rem
+    width: 100%
+
+    & > mat-chip-list
+      @include deep
+        & > .mat-chip-list-wrapper
+          @include flex(wrap, center, center)
+
+      mat-chip
+        @include flex(row, center, center)
+        border: .25rem solid
+        cursor: pointer
+        flex: 1 0 auto
+
+        &:focus:not(:hover)::after
+          opacity: 0
+
+        &:not(.mat-chip-selected)
+          background-color: transparent !important
+
+    & > mat-form-field
+      width: 15rem
+
+      @include responsive(xs)
+        flex: 1 0 auto
+        width: 100%
+
+      mat-label
+        & > fa-icon
+          padding-right: .5rem
+
+  & > section
+    @include flex(row, center, flex-start)
+    margin: 0 auto
+    max-width: $viewport-width
+
+    & > aside
+      flex: 1 0 auto
+      margin: 1rem
+      width: 33%
+
+      @include responsive(lt-lg)
+        display: none
+
+      & > div
+        @include position(relative)
+        height: 0
+        padding-top: 100%
+
+        & > iframe
+          @include mat-elevation(1)
+          @include position(absolute, 0, 0, 0, 0)
+          background-color: $color-light
+          border: 0
+          border-radius: .25rem
+          color: $color-darkest
+          height: 100%
+          width: 100%
+
+    & > nav
+      @include flex(wrap, center, flex-start)
+      flex: 1 0 auto
+      width: 66%
+
+      & > activity-card
+        @include deep
+          mat-card
+            & > .mat-ripple-element
+              @include responsive(lt-lg)
+                display: none
+
+        @include responsive(lt-md)
+          padding-top: 0

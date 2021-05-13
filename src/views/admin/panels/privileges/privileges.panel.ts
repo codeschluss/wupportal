@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { CrudJoiner } from '@wooportal/core';
-import { MembershipModel } from '../../../../base/models/membership.model';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
-import { UserModel } from '../../../../base/models/user.model';
+import { CrudJoiner, MembershipModel, OrganisationModel, UserModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
   templateUrl: 'privileges.panel.html'
 })
 
-export class PrivilegesPanelComponent extends BasePanel {
+export class PrivilegesPanelComponent
+  extends BasePanel {
 
   protected path: string = 'privileges';
 

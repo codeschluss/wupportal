@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
 @Component({
-  styleUrls: ['minor.popup.scss'],
+  styleUrls: ['minor.popup.sass'],
   templateUrl: 'minor.popup.html'
 })
 

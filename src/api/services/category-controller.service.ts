@@ -32,6 +32,7 @@ class CategoryControllerService extends __BaseService {
   }
 
   /**
+   * readAll
    * @param params The `CategoryControllerService.CategoryControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -76,6 +77,7 @@ class CategoryControllerService extends __BaseService {
     );
   }
   /**
+   * readAll
    * @param params The `CategoryControllerService.CategoryControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
@@ -99,6 +101,7 @@ class CategoryControllerService extends __BaseService {
   }
 
   /**
+   * create
    * @param newCategory newCategory
    * @return OK
    */
@@ -125,6 +128,7 @@ class CategoryControllerService extends __BaseService {
     );
   }
   /**
+   * create
    * @param newCategory newCategory
    * @return OK
    */
@@ -135,6 +139,7 @@ class CategoryControllerService extends __BaseService {
   }
 
   /**
+   * readOne
    * @param categoryId categoryId
    * @return OK
    */
@@ -145,7 +150,7 @@ class CategoryControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/categories/${categoryId}`,
+      this.rootUrl + `/categories/${encodeURIComponent(String(categoryId))}`,
       __body,
       {
         headers: __headers,
@@ -161,6 +166,7 @@ class CategoryControllerService extends __BaseService {
     );
   }
   /**
+   * readOne
    * @param categoryId categoryId
    * @return OK
    */
@@ -171,6 +177,7 @@ class CategoryControllerService extends __BaseService {
   }
 
   /**
+   * update
    * @param newCategory newCategory
    * @param categoryId categoryId
    * @return OK
@@ -184,7 +191,7 @@ class CategoryControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/categories/${categoryId}`,
+      this.rootUrl + `/categories/${encodeURIComponent(String(categoryId))}`,
       __body,
       {
         headers: __headers,
@@ -200,6 +207,7 @@ class CategoryControllerService extends __BaseService {
     );
   }
   /**
+   * update
    * @param newCategory newCategory
    * @param categoryId categoryId
    * @return OK
@@ -212,6 +220,7 @@ class CategoryControllerService extends __BaseService {
   }
 
   /**
+   * delete
    * @param categoryId categoryId
    * @return OK
    */
@@ -222,7 +231,7 @@ class CategoryControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/categories/${categoryId}`,
+      this.rootUrl + `/categories/${encodeURIComponent(String(categoryId))}`,
       __body,
       {
         headers: __headers,
@@ -238,6 +247,7 @@ class CategoryControllerService extends __BaseService {
     );
   }
   /**
+   * delete
    * @param categoryId categoryId
    * @return OK
    */
@@ -248,6 +258,7 @@ class CategoryControllerService extends __BaseService {
   }
 
   /**
+   * readTranslations
    * @param categoryId categoryId
    * @return OK
    */
@@ -258,7 +269,7 @@ class CategoryControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/categories/${categoryId}/translations`,
+      this.rootUrl + `/categories/${encodeURIComponent(String(categoryId))}/translations`,
       __body,
       {
         headers: __headers,
@@ -274,6 +285,7 @@ class CategoryControllerService extends __BaseService {
     );
   }
   /**
+   * readTranslations
    * @param categoryId categoryId
    * @return OK
    */

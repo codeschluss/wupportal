@@ -1,19 +1,32 @@
 <h2 mat-dialog-title>
-  <i18n i18n="@@unhandledError">unhandledError</i18n>:
-  {{ data.error }}
+  <i18n>unhandledError</i18n>: {{ data.error }}
 </h2>
 <section mat-dialog-content>
-  <pre><strong>Time:</strong><br>{{ data.timestamp }}</pre>
-  <pre><strong>Status:</strong><br>{{ data.status }}</pre>
-  <pre><strong>Resource:</strong><br>{{ data.path }}</pre>
-  <pre><strong>Exception:</strong><br>{{ data.message }}</pre>
-  <pre><strong>Stacktrace:</strong><br>{{ data.trace }}</pre>
+  <pre><strong><i18n>time</i18n>:</strong><br>{{ data.timestamp }}</pre>
+  <pre><strong><i18n>status</i18n>:</strong><br>{{ data.status }}</pre>
+  <pre><strong><i18n>resource</i18n>:</strong><br>{{ data.path }}</pre>
+  <pre><strong><i18n>feedback</i18n>:</strong></pre>
+  <mat-form-field>
+    <mat-label><i18n>content</i18n></mat-label>
+    <textarea matInput
+      [formControl]="content"
+      [matAutosizeMinRows]="3"
+      [matTextareaAutosize]="true">
+    </textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label><i18n>email</i18n></mat-label>
+    <input matInput type="email" [formControl]="email">
+  </mat-form-field>
 </section>
 <section mat-dialog-actions>
-  <a mat-button target="_blank" [href]="app.bugs.url">
-    <i18n i18n="@@reportIssue">reportIssue</i18n>
-  </a>
   <button mat-button mat-dialog-close>
-    <i18n i18n="@@close">close</i18n>
+    <i18n>reset</i18n>
+  </button>
+  <button mat-button
+    color="primary"
+    [disabled]="!email.valid || !content.valid"
+    (click)="send()">
+    <i18n>send</i18n>
   </button>
 </section>

@@ -1,0 +1,18 @@
+{
+  "short_name": "Wupportal",
+  "name": "Wupportal",
+  "description": "An informative portal for new citizens in Wuppertal",
+
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#003d42",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

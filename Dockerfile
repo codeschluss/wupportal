@@ -1,77 +1,77 @@
+ARG PROFILE=production
 #
-# PHASE 0
-FROM ubuntu:latest
-COPY / /tmp/wooportal.client
-ENV DEBIAN_FRONTEND noninteractive
+# target:android
+FROM ubuntu:latest AS android
+ARG PROFILE
+ARG SDK_FILE=commandlinetools-linux-6858069_latest.zip
+COPY / /src
+ENV ANDROID_SDK_ROOT=/opt/android-sdk
+ENV NODE_ENV=$PROFILE
 RUN \
 #
 # packages
-apt-get -qqy update && \
-apt-get -qqy install --no-install-recommends ${TMPKG:= \
-  file \
-  gcc-multilib \
-  git \
+apt-get --yes update && \
+apt-get --yes install --no-install-recommends ${PKG_DEV:= \
+  gradle \
+  inotify-tools \
+  openjdk-8-jdk-headless \
+} && \
+apt-get --yes install --no-install-recommends ${PKG_TMP:= \
   gnupg \
-  make \
-  openjdk-8-jdk \
-  unzip \
   wget \
-  xxd \
 } && \
 #
 # buildenv
 . /etc/lsb-release && \
 #
 # nodejs
-wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key \
+wget --output-document=- https://deb.nodesource.com/gpgkey/nodesource.gpg.key \
   | apt-key add - && \
-echo "deb https://deb.nodesource.com/node_10.x $DISTRIB_CODENAME main" \
-  > /etc/apt/sources.list.d/nodejs.list && \
-apt-get -qqy update && \
-apt-get -qqy install --no-install-recommends nodejs && \
+echo "deb https://deb.nodesource.com/node_12.x $DISTRIB_CODENAME main" \
+  >/etc/apt/sources.list.d/nodejs.list && \
+apt-get --yes update && \
+apt-get --yes install --no-install-recommends \
+  nodejs && \
 #
 # android-sdk
-cd $(mktemp -d) && \
-wget -qO- https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
-  > android-sdk.zip && \
-unzip -qq android-sdk.zip && \
-yes | tools/bin/sdkmanager --licenses > /dev/null && \
-tools/bin/sdkmanager \
-  "build-tools;29.0.3" \
-  "extras;android;m2repository" \
-  "ndk;21.0.6113669" \
-  "platforms;android-29" \
-  "platform-tools" \
-  "tools" > /dev/null && \
-export \
-  ANDROID_HOME="$PWD" \
-  ANDROID_NDK_HOME="$PWD/ndk/$(ls ndk)" \
-  JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::") \
-  PATH="$PATH:$PWD/tools:$PWD/platform-tools" && \
+cd $(mktemp --directory) && \
+wget https://dl.google.com/android/repository/$SDK_FILE && \
+mkdir --parent $ANDROID_SDK_ROOT && \
+unzip -d $ANDROID_SDK_ROOT $SDK_FILE && \
+yes | $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager \
+  --sdk_root=$ANDROID_SDK_ROOT \
+  --licenses >/dev/null && \
+$ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager \
+  --sdk_root=$ANDROID_SDK_ROOT \
+  'build-tools;29.0.3' && \
 #
-# wooportal.client
-cd /tmp/wooportal.client && \
-npm install && \
-npm run -- build:oid \
-  --env.compileSnapshot \
-  --env.snapshot \
-  --key-store-alias=dev \
-  --key-store-alias-password=password \
-  --key-store-password=password \
-  --key-store-path=res/Android/dev.keystore \
-  --release && \
-mv $(find platforms/android -name "*.apk") /client.apk && \
+# wooportal
+test "$PROFILE" = 'production' && ( \
+  npm --prefix=/src install --also=development && \
+  npm --prefix=/src run build @wooportal/client:browser:production && \
+  npm --prefix=/src run cordova platform add android && \
+  npm --prefix=/src run cordova build android -- --release && \
+  mv $(find /src -name app-release.apk) /client.apk && \
+  find $ANDROID_SDK_ROOT /root /src -mindepth 1 -delete && \
+  apt-get --yes purge --autoremove $PKG_DEV \
+) || ( \
+  mkdir /src/www && \
+  npm --prefix=/src install cordova && \
+  npm --prefix=/src run cordova platform add android && \
+  npm --prefix /src run cordova compile android \
+) && \
 #
 # cleanup
-apt-get -qqy clean all && \
-apt-get -qqy purge --autoremove $TMPKG nodejs && \
-find /root /tmp /var/lib/apt/lists -mindepth 1 -delete
+apt-get --yes clean all && \
+apt-get --yes purge --autoremove $PKG_TMP && \
+find /tmp /var/lib/apt/lists -mindepth 1 -delete
 #
-# PHASE 1
-FROM alpine:edge
-LABEL maintainer info@codeschluss.de
-ADD / /opt/wooportal.client
-COPY --from=0 /client.apk /tmp/client.apk
+# target
+FROM alpine:latest
+ARG PROFILE
+COPY / /src
+COPY --from=android /client.apk /client.apk
+ENV NODE_ENV=$PROFILE
 RUN \
 #
 # packages
@@ -80,14 +80,15 @@ apk --no-cache add \
 apk --no-cache --virtual build add \
   nodejs-npm && \
 #
-# wooportal.client
-cd /opt/wooportal.client && \
-npm install && \
-npm run build:sys && \
-npm run build:app && \
-npm run build:srv && \
-npm clean-install --no-optional --only=production && \
-mv /tmp/client.apk platforms/web/browser && \
+# wooportal
+npm --prefix=/src install --also=development && \
+npm --prefix=/src run build @wooportal/client:browser:production && \
+npm --prefix=/src run cordova platform add browser && \
+npm --prefix=/src run cordova build browser -- --release && \
+npm --prefix=/src run build @wooportal/client:server:production && \
+npm --prefix=/src run ngsw platforms/browser/www ngsw-config.json && \
+npm --prefix=/src clean-install --no-optional --only=production && \
+mv /client.apk /src/platforms/browser/www && \
 #
 # cleanup
 apk del --purge build && \
@@ -95,5 +96,6 @@ find /root /tmp -mindepth 1 -delete
 #
 # runtime
 EXPOSE 4000
-WORKDIR /opt/wooportal.client
-CMD node platforms/web/server
+WORKDIR /src
+HEALTHCHECK CMD wget -q --spider 127.0.0.1:4000/imprint
+CMD node platforms/server/main

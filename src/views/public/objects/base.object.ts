@@ -1,12 +1,14 @@
-import { AfterViewInit, HostBinding, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
+import { AfterViewInit, Directive, HostBinding, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { DeviceProvider, openUrl } from '@wooportal/app';
-import { CrudJoiner, CrudModel, CrudResolver, Headers, Selfrouter } from '@wooportal/core';
-import { ExpandComponent } from '../../shared/expand/expand.component';
+import { CrudJoiner, CrudModel, CrudResolver, MetatagService, PlatformProvider, RoutingComponent } from '../../../core';
 
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
 export abstract class BaseObject<Model extends CrudModel>
-  extends Selfrouter implements OnInit, AfterViewInit {
+  extends RoutingComponent
+  implements OnInit, AfterViewInit {
 
   protected abstract model: Type<Model>;
 
@@ -16,8 +18,6 @@ export abstract class BaseObject<Model extends CrudModel>
 
   @HostBinding('attr.base')
   public readonly base: string = 'object';
-
-  public openUrl: (url: string) => boolean = openUrl;
 
   public get item(): Model {
     return this.route.snapshot.data.item;
@@ -37,44 +37,36 @@ export abstract class BaseObject<Model extends CrudModel>
     };
   }
 
-  @ViewChildren(ExpandComponent)
-  private expands: QueryList<ExpandComponent>;
+  @ViewChildren(MatExpansionPanel)
+  private expands: QueryList<MatExpansionPanel>;
 
   public constructor(
     public router: Router,
-    protected deviceProvider: DeviceProvider,
-    private headers: Headers,
-    private i18n: I18n,
+    protected platformProvider: PlatformProvider,
+    private metatagService: MetatagService,
     private route: ActivatedRoute
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    this.headers.setModel(this.item);
-    this.ngPostInit();
+    this.metatagService.setModel(this.item);
   }
 
   public ngAfterViewInit(): void {
-    if (this.expands.length && this.deviceProvider.notation !== 'Server') {
+    if (this.expands.length && this.platformProvider.name !== 'server') {
       this.expands.first.open();
     }
-
-    this.ngPostViewInit();
   }
 
-  public expanded(expand: ExpandComponent): void {
-    if (this.expands.length && this.deviceProvider.notation !== 'Server') {
+  public expanded(expand: MatExpansionPanel): void {
+    if (this.expands.length && this.platformProvider.name !== 'server') {
       this.expands.filter((e) => e !== expand).forEach((e) => e.close());
     }
   }
 
   public string(id: string): string {
-    return this.i18n({ id, value: id }) || id;
+    return id;
   }
-
-  protected ngPostInit(): void { }
-
-  protected ngPostViewInit(): void { }
 
 }

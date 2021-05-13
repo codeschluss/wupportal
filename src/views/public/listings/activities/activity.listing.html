@@ -2,26 +2,26 @@
   <header>
     <mat-form-field>
       <mat-label>
-        <icon-component icon="city"></icon-component>
-        <i18n i18n="@@suburbs">suburbs</i18n>
+        <fa-icon icon="city"></fa-icon>
+        <i18n>suburbs</i18n>
       </mat-label>
       <mat-select multiple [formControl]="suburbCtrl">
         <ng-container *ngFor="let item of suburbs">
           <mat-option [value]="item.id">
-            {{ item.name }}
+            {{ item.label }}
           </mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
       <mat-label>
-        <icon-component icon="users"></icon-component>
-        <i18n i18n="@@targetGroups">targetGroups</i18n>
+        <fa-icon icon="users"></fa-icon>
+        <i18n>targetGroups</i18n>
       </mat-label>
       <mat-select multiple [formControl]="targetGroupCtrl">
         <ng-container *ngFor="let item of targetGroups">
           <mat-option [value]="item.id">
-            {{ item.name }}
+            {{ item.label }}
           </mat-option>
         </ng-container>
       </mat-select>
@@ -37,7 +37,7 @@
           [style.display]="blank && i > 5 ? 'none' : null"
           [value]="item.id"
           (click)="chip.toggleSelected()">
-          {{ item.name }}
+          {{ item.label }}
         </mat-chip>
       </ng-container>
       <mat-chip
@@ -45,19 +45,19 @@
         class="mat-body"
         [style.display]="blank || categories.length < 5 ? null : 'none'"
         (click)="blank = false">
-        <icon-component icon="ellipsis-h"></icon-component>
+        <fa-icon icon="ellipsis-h"></fa-icon>
       </mat-chip>
     </mat-chip-list>
   </header>
   <section>
     <aside>
-      <div><iframe #frame src="/mapview?embed=true"></iframe></div>
+      <div><iframe #frame [src]="source"></iframe></div>
     </aside>
     <nav>
       <ng-container *ngIf="(results | async) === false">
-        <icon-component icon="frown"></icon-component>
+        <fa-icon icon="frown"></fa-icon>
         <strong class="mat-title">
-          <i18n i18n="@@notFoundError">notFoundError</i18n>
+          <i18n>notFoundError</i18n>
         </strong>
       </ng-container>
       <ng-container *ngFor="let item of items | async">
@@ -68,7 +68,7 @@
         </activity-card>
       </ng-container>
       <ng-container *ngIf="next || prev">
-        <pager-component [next]="next" [prev]="prev"></pager-component>
+        <pager-component [page]="page"></pager-component>
       </ng-container>
     </nav>
   </section>

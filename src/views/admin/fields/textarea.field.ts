@@ -3,11 +3,13 @@ import { BaseFieldComponent } from '../base/base.field';
 
 @Component({
   template: BaseFieldComponent.template(`
-    <textarea matInput matTextareaAutosize
+    <textarea matInput
       [formControlName]="field.name"
-      [id]="field.name">
+      [id]="field.name"
+      [matTextareaAutosize]="true">
     </textarea>
   `)
 })
 
-export class TextareaFieldComponent extends BaseFieldComponent { }
+export class TextareaFieldComponent
+  extends BaseFieldComponent { }

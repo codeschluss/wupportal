@@ -1,20 +1,19 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { CrudJoiner, CrudResolver, Headers, TokenProvider } from '@wooportal/core';
 import { merge, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { OrganisationModel } from '../../../../base/models/organisation.model';
-import { UserModel } from '../../../../base/models/user.model';
-import { UserProvider } from '../../../../base/providers/user.provider';
+import { CrudJoiner, CrudResolver, MetatagService, OrganisationModel, TokenProvider, UserModel, UserProvider } from '../../../../core';
 import { BasePage } from '../base.page';
 
 @Component({
-  styleUrls: ['../base.page.scss', 'register.page.scss'],
+  styleUrls: ['../base.page.sass', 'register.page.sass'],
   templateUrl: 'register.page.html'
 })
 
-export class RegisterPageComponent extends BasePage implements AfterViewInit {
+export class RegisterPageComponent
+  extends BasePage
+  implements AfterViewInit {
 
   public boxes: any = {
     createOrganisation: false,
@@ -57,7 +56,7 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
   protected path: string = 'register';
 
   public get name(): Observable<string> {
-    return this.headers.name;
+    return this.metatagService.name;
   }
 
   public get organisations(): OrganisationModel[] {
@@ -90,7 +89,7 @@ export class RegisterPageComponent extends BasePage implements AfterViewInit {
   }
 
   public constructor(
-    private headers: Headers,
+    private metatagService: MetatagService,
     private route: ActivatedRoute,
     private router: Router,
     private tokenProvider: TokenProvider,

@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ActivityModel } from '../../base/models/activity.model';
+import { ActivityModel } from '../../core';
 
 export class MapsConnection {
 
@@ -55,7 +55,11 @@ export class MapsConnection {
     const data = JSON.parse(JSON.stringify(message, (key, value) =>
       key.startsWith('_') || value instanceof Observable ? undefined : value));
 
-    this.target.postMessage(data, this.target.origin || '*');
+    try {
+      this.target.postMessage(data, this.target.origin || '*');
+    } catch (exception) {
+      this.ready.next(false);
+    }
   }
 
 }

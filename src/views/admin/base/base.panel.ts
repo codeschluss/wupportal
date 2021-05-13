@@ -1,22 +1,19 @@
-import { AfterViewInit, ElementRef, HostBinding, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostBinding, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { ApplicationSettings } from '@wooportal/app';
-import { Box, CrudJoiner, CrudModel, CrudResolver, Headers, Pathfinder, Selfrouter, TokenProvider, TokenResolver } from '@wooportal/core';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
-import { MembershipModel } from '../../../base/models/membership.model';
-import { OrganisationModel } from '../../../base/models/organisation.model';
-import { UserModel } from '../../../base/models/user.model';
-import { MessageProvider } from '../../../base/providers/message.provider';
-import { OrganisationProvider } from '../../../base/providers/organisation.provider';
-import { UserProvider } from '../../../base/providers/user.provider';
-import { I18nComponent } from '../../shared/i18n/i18n.component';
+import { Box, CoreSettings, CrudJoiner, CrudModel, CrudResolver, LabelComponent, MembershipModel, MessageProvider, MetatagService, OrganisationModel, OrganisationProvider, RoutingComponent, RoutingProvider, TokenProvider, TokenResolver, UserModel, UserProvider } from '../../../core';
 import { DeletePopupComponent } from '../popups/delete.popup';
 import { PusherPopupComponent } from '../popups/pusher.popup';
 
-export abstract class BasePanel extends Selfrouter implements AfterViewInit {
+@Directive()
+
+// tslint:disable-next-line:directive-class-suffix
+export abstract class BasePanel
+  extends RoutingComponent
+  implements AfterViewInit {
 
   protected abstract path: string;
 
@@ -33,26 +30,26 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   @ViewChildren(MatTab, { read: ElementRef })
   private tabs: QueryList<ElementRef<HTMLElement>>;
 
-  @ViewChildren(I18nComponent)
-  private translations: QueryList<I18nComponent>;
+  @ViewChildren(LabelComponent)
+  private translations: QueryList<LabelComponent>;
 
   public get activityProvider(): string[] {
-    const claim = this.app.config.jwtClaims.activityProvider;
+    const claim = this.settings.jwtClaims.activityProvider;
     return this.route.snapshot.data.tokens.access[claim];
   }
 
   public get organisationAdmin(): string[] {
-    const claim = this.app.config.jwtClaims.organisationAdmin;
+    const claim = this.settings.jwtClaims.organisationAdmin;
     return this.route.snapshot.data.tokens.access[claim];
   }
 
   public get organisationUser(): string[] {
-    const claim = this.app.config.jwtClaims.organisationUser;
+    const claim = this.settings.jwtClaims.organisationUser;
     return this.route.snapshot.data.tokens.access[claim];
   }
 
   public get superUser(): boolean {
-    const claim = this.app.config.jwtClaims.superUser;
+    const claim = this.settings.jwtClaims.superUser;
     return this.route.snapshot.data.tokens.access[claim];
   }
 
@@ -61,11 +58,11 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   }
 
   public get userId(): string {
-    const claim = this.app.config.jwtClaims.userId;
+    const claim = this.settings.jwtClaims.userId;
     return this.route.snapshot.data.tokens.access[claim];
   }
 
-  protected get routing(this: any): Route {
+  protected get routing(): Route {
     return {
       path: this.path,
       resolve: Object.assign({
@@ -83,13 +80,13 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     protected dialog: MatDialog,
     protected messageProvider: MessageProvider,
     protected organisationProvider: OrganisationProvider,
-    protected pathfinder: Pathfinder,
     protected route: ActivatedRoute,
     protected router: Router,
+    protected routingProvider: RoutingProvider,
     protected tokenProvider: TokenProvider,
     protected userProvider: UserProvider,
-    private app: ApplicationSettings,
-    private headers: Headers
+    private metatagService: MetatagService,
+    private settings: CoreSettings
   ) {
     super();
   }
@@ -98,7 +95,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     const tabs = this.tabs.toArray();
     const id = (index) => tabs[index].nativeElement.id;
 
-    this.headers.setTitle(this.title);
+    this.metatagService.setTitle(this.title);
 
     this.route.queryParams.subscribe((params) => this.index =
       tabs.findIndex((t) => t.nativeElement.id === params.tab));
@@ -124,13 +121,13 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
   public delete(item: CrudModel): void {
     this.confirm(item).pipe(
       filter(Boolean),
-      mergeMap(() => (item.constructor as any).provider.delete(item.id)),
+      mergeMap(() => (item.constructor as any).provider.delete(item.id))
     ).subscribe(() => this.reload());
   }
 
   public edit(item: CrudModel): void {
     const stepper = (item.constructor as any).stepper.constructor;
-    this.router.navigate(this.pathfinder.to(stepper).concat(item.id));
+    this.router.navigate(this.routingProvider.to(stepper).concat(item.id));
   }
 
   public grantBlogger(item: UserModel, grant: boolean): void {
@@ -167,6 +164,15 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
 
   public grantSuperUser(item: UserModel, grant: boolean): void {
     this.userProvider.grantSuperUser(
+      item.id,
+      Box(grant)
+    ).pipe(
+      filter(() => item.id === this.userId)
+    ).subscribe(() => this.reload());
+  }
+
+  public grantTranslator(item: UserModel, grant: boolean): void {
+    this.userProvider.grantTranslator(
       item.id,
       Box(grant)
     ).pipe(
@@ -229,7 +235,7 @@ export abstract class BasePanel extends Selfrouter implements AfterViewInit {
     this.tokenProvider.refresh().subscribe(() => {
       this.router.resetConfig(this.router.config);
       this.router.navigate([], {
-        preserveQueryParams: true,
+        queryParamsHandling: 'preserve',
         skipLocationChange: true
       });
     });

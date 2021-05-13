@@ -22,12 +22,13 @@ import { BaseFieldComponent } from '../base/base.field';
     <a mat-button matSuffix
       href="https://fontawesome.com/icons?m=free&s=solid"
       target="_blank">
-      <i18n i18n="@@iconList">iconList</i18n>
+      <i18n>iconList</i18n>
     </a>
   `)
 })
 
-export class IconFieldComponent extends BaseFieldComponent {
+export class IconFieldComponent
+  extends BaseFieldComponent {
 
   public get icons(): IconDefinition[] {
     return Object.values(fas);

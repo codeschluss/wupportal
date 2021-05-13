@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, Headers } from '@wooportal/core';
 import { Observable } from 'rxjs';
-import { ActivityModel } from '../../../../base/models/activity.model';
+import { ActivityModel, CrudJoiner, CrudResolver, MetatagService } from '../../../../core';
+import { MarkupModel } from '../../../../core/models/markup.model';
 import { BasePage } from '../base.page';
 
 @Component({
-  styleUrls: ['../base.page.scss', 'home.page.scss'],
+  styleUrls: ['../base.page.sass', 'home.page.sass'],
   templateUrl: 'home.page.html'
 })
 
-export class HomePageComponent extends BasePage {
+export class HomePageComponent
+  extends BasePage {
 
   protected path: string = '';
 
@@ -18,8 +19,14 @@ export class HomePageComponent extends BasePage {
     return this.route.snapshot.data.activities;
   }
 
+  public get content(): string {
+    return this.route.snapshot.data.markups?.find((markup) => {
+      return markup.tagId === 'homepage'
+    })?.content || 'homepage';
+  }
+
   public get name(): Observable<string> {
-    return this.headers.name;
+    return this.metatagService.name;
   }
 
   public get tagline(): string {
@@ -31,10 +38,14 @@ export class HomePageComponent extends BasePage {
     return {
       path: this.path,
       resolve: {
-        activities: CrudResolver
+        activities: CrudResolver,
+        markups: CrudResolver
       },
       data: {
         resolve: {
+          markups: CrudJoiner.of(MarkupModel, {
+            required: true
+          }),
           activities: CrudJoiner.of(ActivityModel, {
             current: true,
             page: 0,
@@ -49,7 +60,7 @@ export class HomePageComponent extends BasePage {
   }
 
   public constructor(
-    private headers: Headers,
+    private metatagService: MetatagService,
     private route: ActivatedRoute
   ) {
     super();

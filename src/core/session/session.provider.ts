@@ -36,8 +36,14 @@ export class SessionProvider {
       }
 
       return throwError(error);
-    })).subscribe((session) => {
+    }), map((session) => {
       session ||= new SessionModel(this.platformProvider.language);
+      session.subscriptionId = this.platformProvider.name !== 'server'
+        ? session.subscriptionId
+        : 'blocked';
+
+      return session;
+    })).subscribe((session) => {
       this.setLanguageCookie(session.language);
       this.session.next(session);
 
@@ -98,9 +104,7 @@ export class SessionProvider {
   }
 
   public getSubscriptionId(): string {
-    return this.platformProvider.name !== 'server'
-      ? this.session.value.subscriptionId
-      : 'blocked';
+    return this.session.value.subscriptionId;
   }
 
   public setSubscriptionId(subscriptionId: string): void {

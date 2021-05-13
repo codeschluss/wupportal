@@ -14,8 +14,6 @@ import { MinorPopupComponent } from './popups/minor/minor.popup';
 export class ClientErrorHandler
   implements ErrorHandler {
 
-  private static mutex: boolean = false;
-
   private static self: ClientErrorHandler;
 
   public constructor(
@@ -37,24 +35,27 @@ export class ClientErrorHandler
     item.path = self.location.path(true) || '/';
     item.userAgent = self.platformProvider.userAgent;
 
-    if (!ClientErrorHandler.mutex && !item.ignore) {
-      ClientErrorHandler.mutex = item.fatal;
-
-      self.ngZone.run(() => {
-        if (item.fatal) {
-          forkJoin([
-            self.errorProvider.throwError(item),
-            self.dialog.open(FatalPopupComponent, {
-              data: item,
-              disableClose: true
-            }).afterClosed()
-          ]).subscribe(() => self.platformProvider.reload());
-          console.error('ClientErrorHandler.handleError', item.raw);
-        } else {
+    switch (true) {
+      default:
+        console.warn('ClientErrorHandler.handleError', item.raw);
+        self.ngZone.run(() => {
           self.snackBar.openFromComponent(MinorPopupComponent, { data: item });
-          console.warn('ClientErrorHandler.handleError', item.raw);
-        }
-      });
+        });
+        break;
+
+      case item.fatal:
+        console.error('ClientErrorHandler.handleError', item.raw);
+        self.ngZone.run(() => forkJoin([
+          self.errorProvider.throwError(item),
+          self.dialog.open(FatalPopupComponent, {
+            data: item,
+            disableClose: true
+          }).afterClosed()
+        ]).subscribe(() => self.platformProvider.reload()));
+        break;
+
+      case item.ignore:
+        break;
     }
   }
 

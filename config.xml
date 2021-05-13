@@ -19,6 +19,7 @@
   </description>
 
   <access origin="*"/>
+  <access origin="https://*.tile.openstreetmap.org"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="mailto:*"/>
@@ -81,13 +82,8 @@
       target="/manifest/application">
       <application
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/round_icon"/>
     </edit-config>
-
-    <resource-file
-      src="res/android/network_security_config.xml"
-      target="app/src/main/res/xml/network_security_config.xml"/>
 
     <resource-file
       src="res/android/round-icon/mdpi.png"

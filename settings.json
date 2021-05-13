@@ -16,7 +16,7 @@
   "jwtClaims": {
     "activityProvider": "createdActivities",
     "blogger": "blogger",
-    "blogpostAuthor": "blogAuthor",
+    "blogpostAuthor": "createdBlogs",
     "organisationAdmin": "adminOrgas",
     "organisationUser": "approvedOrgas",
     "superUser": "superuser",

@@ -97,4 +97,5 @@ find /root /tmp -mindepth 1 -delete
 # runtime
 EXPOSE 4000
 WORKDIR /src
+HEALTHCHECK CMD wget -q --spider 127.0.0.1:4000/imprint
 CMD node platforms/server/main

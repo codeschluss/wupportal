@@ -2,8 +2,8 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
   xmlns:cdv="http://cordova.apache.org/ns/1.0"
   id="de.codeschluss.wooportal.client"
-  android-versionCode="20"
-  ios-CFBundleVersion="0.2.0.0"
+  android-versionCode="0201"
+  ios-CFBundleVersion="0.2.0.1"
   version="0.2.0">
 
   <author

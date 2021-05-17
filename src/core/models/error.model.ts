@@ -32,7 +32,7 @@ export class ErrorModel {
         return false;
 
       default:
-        return true;
+        return !this.ignore;
     }
   }
 

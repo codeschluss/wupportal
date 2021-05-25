@@ -3,7 +3,7 @@ ARG PROFILE=production
 # target:android
 FROM ubuntu:latest AS android
 ARG PROFILE
-ARG SDK_FILE=commandlinetools-linux-6858069_latest.zip
+ARG SDK_FILE=commandlinetools-linux-7302050_latest.zip
 COPY / /src
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV NODE_ENV=$PROFILE

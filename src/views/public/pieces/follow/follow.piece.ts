@@ -40,7 +40,7 @@ export class FollowPieceComponent
         this.follow();
 
         while (route) {
-          if (route.routeConfig.component === NotificationsPageComponent) {
+          if (route.routeConfig?.component === NotificationsPageComponent) {
             switch (this.item.constructor) {
               case ActivityModel:
                 route.data.subscription.activities

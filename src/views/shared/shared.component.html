@@ -106,7 +106,7 @@
       <span [style.flexGrow]="1"></span>
       <small>
         <fa-icon icon="copyright"></fa-icon>
-        {{ name | async }} 2017-{{ date | date: 'yyyy' }}
+        {{ name | async }} 2017-{{ date | date: 'yyyy' : 'utc' }}
       </small>
       <ng-container *ngIf="claims?.userId">
         <button mat-button

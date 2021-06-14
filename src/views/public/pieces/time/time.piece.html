@@ -1,6 +1,6 @@
 <button mat-button disabled>
   <fa-icon icon="clock"></fa-icon>
   <time [dateTime]="item.created">
-    {{ item.created | date: 'dd.MM.yyyy' }}
+    {{ item.created | date: 'dd.MM.yyyy' : 'utc' }}
   </time>
 </button>

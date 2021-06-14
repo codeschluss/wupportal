@@ -54,7 +54,7 @@ export class AdminGuarding
         return claimed.userId === this.uuid(state.url);
 
         case state.url.startsWith('/admin/organisation'):
-        return claimed.superUser || claimed.organisationAdmin.length;
+        return claimed.superUser || claimed.organisationAdmin?.length;
 
         case state.url.startsWith('/admin/translate'):
         return claimed.superUser || claimed.translator;
@@ -62,18 +62,18 @@ export class AdminGuarding
         case state.url.startsWith('/admin/edit/activities/'):
         return claimed.superUser
           || (claimed.userId && !this.uuid(state.url))
-          || claimed.activityProvider.includes(this.uuid(state.url))
-          || claimed.organisationAdmin.includes(await this.orga(state.url));
+          || claimed.activityProvider?.includes(this.uuid(state.url))
+          || claimed.organisationAdmin?.includes(await this.orga(state.url));
 
         case state.url.startsWith('/admin/edit/blogposts/'):
         return claimed.superUser
           || (claimed.blogger && !this.uuid(state.url))
-          || claimed.blogpostAuthor.includes(this.uuid(state.url));
+          || claimed.blogpostAuthor?.includes(this.uuid(state.url));
 
         case state.url.startsWith('/admin/edit/organisations/'):
         return claimed.superUser
           || (claimed.userId && !this.uuid(state.url))
-          || claimed.organisationAdmin.includes(this.uuid(state.url));
+          || claimed.organisationAdmin?.includes(this.uuid(state.url));
       }
     })()) { return true; }
 

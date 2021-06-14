@@ -40,6 +40,7 @@ services:
       '
     container_name: wooportal.client.dev
     entrypoint: [sh, -c]
+    healthcheck: {disable: true}
     image: wooportal/client:dev
     network_mode: host
     privileged: true
@@ -53,6 +54,7 @@ services:
     command: java -jar server.jar
     container_name: wooportal.server.dev
     extra_hosts: [$HOSTNAME:127.0.0.1]
+    healthcheck: {disable: true}
     image: wooportal/server:dev
     network_mode: host
     environment: ['SPRING_PROFILES_ACTIVE=development,staging']

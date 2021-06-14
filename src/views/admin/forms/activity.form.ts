@@ -176,12 +176,10 @@ export class ActivityFormComponent
       this.fields[0].locked = true;
     }
 
-    if (!this.token[this.settings.jwtClaims.superUser]) {
-      this.fields[0].options = Array.from(new Set([
-        ...this.token[this.settings.jwtClaims.organisationAdmin],
-        ...this.token[this.settings.jwtClaims.organisationUser]
-      ])).map((id) => this.fields[0].options.find((o) => o.id === id));
-    }
+    this.fields[0].options = Array.from(new Set([
+      ...this.token[this.settings.jwtClaims.organisationAdmin],
+      ...this.token[this.settings.jwtClaims.organisationUser]
+    ])).map((id) => this.fields[0].options.find((o) => o.id === id));
   }
 
   protected cascade(item: ActivityModel): Observable<any> {

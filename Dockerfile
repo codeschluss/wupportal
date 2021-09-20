@@ -78,7 +78,7 @@ RUN \
 apk --no-cache add \
   nodejs && \
 apk --no-cache --virtual build add \
-  nodejs-npm && \
+  npm && \
 #
 # wooportal
 npm --prefix=/src install --also=development && \

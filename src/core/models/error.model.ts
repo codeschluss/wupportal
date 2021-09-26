@@ -1,5 +1,3 @@
-import { inspect } from 'util';
-
 export class ErrorModel {
 
   public device: string;
@@ -18,7 +16,7 @@ export class ErrorModel {
       message: (error.error || { }).message || error.message,
       raw: error,
       status: error.status || NaN,
-      trace: error.stack || inspect(error)
+      trace: error.stack || JSON.stringify(error, null, 2)
     });
   }
 
@@ -28,7 +26,6 @@ export class ErrorModel {
       case 404: // HttpStatus.NOT_FOUND
       case 409: // HttpStatus.CONFLICT
       case 413: // HttpStatus.PAYLOAD_TOO_LARGE
-      case 503: // HttpStatus.SERVICE_UNAVAILABLE
         return false;
 
       default:

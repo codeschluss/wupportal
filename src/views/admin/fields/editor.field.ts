@@ -32,7 +32,7 @@ import { BaseFieldComponent } from '../base/base.field';
       [editor]="editor"
       [id]="field.name"
       [ngModelOptions]="{ standalone: true }"
-      (change)="changes.next()"
+      (change)="changes.next(undefined)"
       [(ngModel)]="content">
     </ckeditor>
   `)

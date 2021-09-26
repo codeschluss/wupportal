@@ -83,7 +83,7 @@ export class CrudResolver
               map((response) => provider.cast(response, link.model)),
               catchError((e) => this.ignore(e) ? of(undefined) : throwError(e)),
               map((model) => Object.assign(item, { [link.field]: model })),
-              defaultIfEmpty()
+              defaultIfEmpty(undefined)
             );
           }
         })).pipe(mergeMap((item) => {

@@ -47,7 +47,7 @@ export abstract class BaseTable<Model extends CrudModel>
   private sorter: MatSort;
 
   @ViewChild(MatTable, { static: true })
-  private table: MatTable<Model>;
+  private table: MatTable<CrudModel>;
 
   @ContentChildren(MatColumnDef)
   private views: QueryList<MatColumnDef>;

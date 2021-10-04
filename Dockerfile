@@ -56,7 +56,7 @@ test "$PROFILE" = 'production' && ( \
   npm --prefix /src run cordova platform add android@10.1.1 && \
   npm --prefix /src run cordova build android -- --release && \
   mv $(find /src -name app-release.apk) /client.apk && \
-  find $ANDROID_SDK_ROOT /root /src -mindepth 1 -delete && \
+  find $ANDROID_SDK_ROOT /root /src -delete -mindepth 1 && \
   apt-get --yes purge --autoremove $PKG_DEV \
 ) || ( \
   mkdir /src/www && \
@@ -68,7 +68,7 @@ test "$PROFILE" = 'production' && ( \
 # cleanup
 apt-get --yes clean all && \
 apt-get --yes purge --autoremove $PKG_TMP && \
-find /tmp /var/lib/apt/lists -mindepth 1 -delete
+find /tmp /var/lib/apt/lists -delete -mindepth 1
 #
 # target
 FROM alpine:latest
@@ -100,7 +100,7 @@ mv /client.apk /src/platforms/browser/www && \
 #
 # cleanup
 apk del --purge build && \
-find /root /tmp -mindepth 1 -delete
+find /root /tmp -delete -mindepth 1
 #
 # runtime
 EXPOSE 4000

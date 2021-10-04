@@ -16,8 +16,25 @@ export class ErrorModel {
       message: (error.error || { }).message || error.message,
       raw: error,
       status: error.status || NaN,
-      trace: error.stack || JSON.stringify(error, null, 2)
+      trace: error.stack || this.inspect(error)
     });
+  }
+
+  private static inspect(data: any): string {
+    const circular = new WeakSet();
+    const replacer = (_: string, value: any) => {
+      if (typeof value === 'object' && value !== null) {
+        if (circular.has(value)) {
+          return '[Circular]';
+        }
+
+        circular.add(value);
+      }
+
+      return value;
+    };
+
+    return JSON.stringify(data, replacer, 2);
   }
 
   public get fatal(): boolean {

@@ -14,7 +14,7 @@ module.exports = function(ctx) {
   const targets = [];
 
   for (let i = 0; i < assets.length; i++) {
-    sources.push(join(require.resolve(assets[i][0]), assets[i][1]));
+    sources.push(require.resolve(join(assets[i][0], assets[i][1])));
     targets.push(join(path, assets[i][1]));
   }
 

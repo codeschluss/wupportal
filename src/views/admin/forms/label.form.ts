@@ -29,7 +29,7 @@ export class LabelFormComponent
   extends BaseForm<LabelModel>
   implements AfterViewInit {
 
-  public item: any;
+  declare public item: any;
 
   public fields: FormField[] = [
     {

@@ -44,7 +44,7 @@ import { InputFieldComponent } from '../fields/input.field';
 export class ConfigurationFormComponent
   extends BaseForm<ConfigurationModel> {
 
-  public item: any;
+  declare public item: any;
 
   public fields: FormField[] = [
     {

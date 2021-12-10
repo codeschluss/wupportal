@@ -33,7 +33,7 @@ export class ActivityListingComponent
   public targetGroupCtrl: FormControl = new FormControl();
 
   protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel, {
-    current: !!this.currentCtrl.value
+    sort: 'schedules.startDate'
   }).with('address').yield('suburb')
     .with('category')
     .with('schedules');
@@ -129,13 +129,17 @@ export class ActivityListingComponent
     this.route.queryParams.pipe(
       map((params) => this.params(params))
     ).subscribe((params) => {
-      const { categories, suburbs, targetgroups } = params;
+      const { current, categories, suburbs, targetgroups } = params;
+      this.currentCtrl.setValue(current || false, { emitEvent: false });
       this.categoryCtrl.setValue(categories || [], { emitEvent: false });
       this.suburbCtrl.setValue(suburbs || [], { emitEvent: false });
       this.targetGroupCtrl.setValue(targetgroups || [], { emitEvent: false });
     });
 
     merge(
+      this.currentCtrl.valueChanges.pipe((map((value) => ({
+        current: value,
+      })))),
       this.categoryCtrl.valueChanges.pipe(map((value) => ({
         categories: Arr(value)
       }))),
@@ -182,6 +186,7 @@ export class ActivityListingComponent
 
   protected params(params: Params): ReadParams {
     return Object.assign(super.params(params), {
+      current: params.current ? params.current : null,
       categories: params.categories ? Arr(params.categories) : null,
       suburbs: params.suburbs ? Arr(params.suburbs) : null,
       targetgroups: params.targetgroups ? Arr(params.targetgroups) : null

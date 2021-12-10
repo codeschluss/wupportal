@@ -1,5 +1,10 @@
 <main>
   <header>
+    <mat-slide-toggle
+      [checked]="currentCtrl.value"
+      (change)="currentCtrl.patchValue($event.checked)">
+      <i18n>current</i18n>
+    </mat-slide-toggle>
     <mat-form-field>
       <mat-label>
         <fa-icon icon="city"></fa-icon>

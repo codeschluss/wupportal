@@ -133,7 +133,7 @@ export class MarkupFormComponent
 
   public translate(): void {
     const content = this.item.translatables.find((translatable) => {
-      return translatable.language.locale === this.language.locale;
+      return translatable.language.locale === this.translation.value.locale
     }).content;
 
     this.translationProvider.translate(

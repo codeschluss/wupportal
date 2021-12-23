@@ -24,11 +24,13 @@
   <allow-intent href="https://*/*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="tel:*"/>
+  <content src="index.html"/>
 
   <preference name="Orientation" value="portrait"/>
   <preference name="AutoHideSplashScreen" value="false"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="SplashMaintainAspectRatio" value="true"/>
+  <preference name="AndroidInsecureFileModeEnabled" value="true"/>
 
   <platform name="browser">
     <preference name="AutoHideSplashScreen" value="true"/>

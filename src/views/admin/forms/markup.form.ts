@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Type } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -22,6 +22,27 @@ import { SelectFieldComponent } from '../fields/select.field';
         </ng-container>
       </ng-container>
     </ng-template>
+  `, `
+    <section>
+      <label class="mat-body-strong">
+        <i18n>compilation</i18n>
+      </label>
+      <nav>
+        <button mat-button
+          color="primary"
+          [disabled]="!translation.value"
+          (click)="translate()">
+          <i18n>translateFrom</i18n>
+        </button>
+        <mat-form-field>
+          <mat-select [formControl]="translation">
+            <mat-option [value]="language" *ngFor="let language of languages">
+              {{ language.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </nav>
+    </section>
   `)
 })
 
@@ -49,7 +70,15 @@ export class MarkupFormComponent
 
   public model: Type<MarkupModel> = MarkupModel;
 
+  public translation: FormControl = new FormControl();
+
   private language: LanguageModel;
+
+  public get languages(): LanguageModel[] {
+    return this.item.translatables.filter((t) => {
+      return t.content && t.language.locale !== this.language.locale;
+    }).map((translatable) => translatable.language);
+  }
 
   public constructor(
     private sessionProvider: SessionProvider,
@@ -99,6 +128,23 @@ export class MarkupFormComponent
     }, { emitEvent: false });
 
     this.group.markAsPristine();
+    this.translation.reset();
+  }
+
+  public translate(): void {
+    const content = this.item.translatables.find((translatable) => {
+      return translatable.language.locale === this.language.locale;
+    }).content;
+
+    this.translationProvider.translate(
+      { content },
+      [this.translation.value.locale],
+      this.language.locale
+    ).subscribe((translations) => {
+      this.group.patchValue({
+        content: translations[0].translations.content
+      }, { emitEvent: false })
+    });
   }
 
   protected ngPostInit(): void {

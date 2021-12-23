@@ -143,7 +143,7 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
         </button>
       </nav>
     </section>
-
+  `, `
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'schedules'">

@@ -121,7 +121,7 @@ export class AddressFormComponent
   }
 
   public locate(): void {
-    this.addressProvider.lookup(this.group.value).pipe(
+    this.addressProvider.lookup(this.group.getRawValue()).pipe(
       map((response) => this.addressProvider.system.cast(response))
     ).subscribe((item) => this.group.patchValue(item));
   }

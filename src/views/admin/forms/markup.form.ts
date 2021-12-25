@@ -138,8 +138,8 @@ export class MarkupFormComponent
 
     this.translationProvider.translate(
       { content },
-      [this.translation.value.locale],
-      this.language.locale
+      [this.language.locale],
+      this.translation.value.locale
     ).subscribe((translations) => {
       this.group.patchValue({
         content: translations[0].translations.content

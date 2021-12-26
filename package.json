@@ -28,11 +28,7 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-device": {},
-      "cordova-plugin-firebase-messaging": {
-        "ANDROID_FIREBASE_MESSAGING_VERSION": "21.+",
-        "ANDROIDX_CORE_VERSION": "1.3.+",
-        "IOS_FIREBASE_MESSAGING_VERSION": "~> 7.0.0"
-      },
+      "cordova-plugin-firebase-messaging": {},
       "cordova-plugin-geolocation": {
         "GPS_REQUIRED": "false"
       },

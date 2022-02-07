@@ -1,11 +1,14 @@
-<mat-card>
+<mat-card itemscope itemtype="https://schema.org/Organization">
   <mat-card-content>
-    <small>
-      {{ item.address.street }} {{ item.address.houseNumber }}
-      <br>{{ item.address.place }} {{ item.address.suburb.label }}
+    <small itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+      <span itemprop="streetAddress">{{ item.address.street }} </span>
+      <span itemprop="postOfficeBoxNumber">{{ item.address.houseNumber }}</span>
+      <br>
+      <span itemprop="addressLocality">{{ item.address.place }} </span>
+      <span itemprop="streetAddress">{{ item.address.suburb.label }}</span>
     </small>
   </mat-card-content>
-  <ng-container *ngIf="item.images?.length">
+  <ng-container *ngIf="item.images?.length" itemprop="logo">
     <img mat-card-image
       src="data:image/svg+xml,
         %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
@@ -13,13 +16,13 @@
       [style.backgroundImage]="item.images[0].source"
       [title]="item.images[0].caption">
   </ng-container>
-  <ng-container *ngIf="!item.images?.length">
+  <ng-container *ngIf="!item.images?.length" itemprop="logo">
     <fa-icon mat-card-image icon="image"></fa-icon>
   </ng-container>
   <mat-card-header>
     <mat-card-title>
       <a [routerLink]="['/', 'organisations', item.id]">
-        {{ item.label }}
+        <span itemprop="name">{{ item.label }}</span>
       </a>
     </mat-card-title>
   </mat-card-header>

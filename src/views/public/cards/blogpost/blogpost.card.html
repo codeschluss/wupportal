@@ -1,11 +1,11 @@
-<mat-card>
+<mat-card itemscope itemtype="https://schema.org/BlogPosting">
   <mat-card-header>
     <mat-card-title>
-      <a [routerLink]="['/', 'blogposts', item.id]">
+      <a [routerLink]="['/', 'blogposts', item.id]" itemprop="headline">
         {{ item.label }}
         <small>
           <i18n>by</i18n>
-          {{ item.author }}
+          <span itemprop="author">{{ item.author }}</span>
         </small>
       </a>
     </mat-card-title>
@@ -13,12 +13,12 @@
       <mat-card-subtitle>
         <a [routerLink]="['/', 'activities', item.activity.id]">
           <i18n>about</i18n>
-          {{ item.activity.label }}
+          <span itemprop="about">{{ item.activity.label }}</span>
         </a>
       </mat-card-subtitle>
     </ng-container>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content itemprop="articleBody">
     {{ preview }}
   </mat-card-content>
   <mat-divider></mat-divider>

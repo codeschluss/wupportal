@@ -1,9 +1,9 @@
-<main>
-  <h2 class="mat-headline">
+<main itemscope itemtype="https://schema.org/Article">
+  <h2 class="mat-headline" itemprop="headline">
     {{ item.label }}
     <small>
       <i18n>ofTopic</i18n>
-      {{ item.topic.label }}
+      <span itemprop="articleSection">{{ item.topic.label }}</span>
     </small>
   </h2>
   <mat-divider></mat-divider>
@@ -16,6 +16,6 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <article [innerHTML]="item.content"></article>
+    <article [innerHTML]="item.content" itemprop="articleBody"></article>
   </section>
 </main>

@@ -56,7 +56,9 @@
   </header>
   <section>
     <aside>
-      <div><iframe #frame [src]="source"></iframe></div>
+      <div itemscope itemtype="https://schema.org/Map" itemprop="mapType">
+        <iframe #frame [src]="source"></iframe>
+      </div>
     </aside>
     <nav>
       <ng-container *ngIf="(results | async) === false">
@@ -65,7 +67,7 @@
           <i18n>notFoundError</i18n>
         </strong>
       </ng-container>
-      <ng-container *ngFor="let item of items | async">
+      <ng-container *ngFor="let item of items | async" itemscope itemtype="https://schema.org/Event">
         <activity-card
           [item]="item"
           (mouseenter)="focus(item, $event)"

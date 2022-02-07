@@ -1,12 +1,12 @@
-<main>
+<main itemscope itemtype="https://schema.org/Organization">
   <h2 class="mat-headline">
-    {{ item.label }}
+    <span itemprop="name">{{ item.label }}</span>
     <small>
       <i18n>at</i18n>
       <a
         [queryParams]="{ suburbs: item.address.suburb.id }"
-        [routerLink]="['/', 'activities']">
-        {{ item.address.place }} {{ item.address.suburb.label }}
+        [routerLink]="['/', 'activities']" itemprop="location" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+        <span itemprop="addressLocality">{{ item.address.place }}</span> <span itemprop="streetAddress">{{ item.address.suburb.label }}</span>
       </a>
     </small>
   </h2>
@@ -20,7 +20,7 @@
   </nav>
   <mat-divider></mat-divider>
   <section>
-    <article [innerHTML]="item.description"></article>
+    <article [innerHTML]="item.description" itemprop="description"></article>
     <aside>
       <mat-expansion-panel #details (opened)="expanded(details)">
         <mat-expansion-panel-header>
@@ -34,22 +34,22 @@
             <td [style.verticalAlign]="'top'">
               <i18n>address</i18n>
             </td>
-            <td>
-                {{ item.address.street }}
-                {{ item.address.houseNumber }}
+            <td itemprop="location" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+              <span itemprop="streetAddress">{{ item.address.street }}</span>
+              <span itemprop="postOfficeBoxNumber">{{ item.address.houseNumber }}</span>
                 <br>
-                {{ item.address.postalCode }}
-                {{ item.address.place }}
-                {{ item.address.suburb.label }}
+                <span itemprop="postalCode">{{ item.address.postalCode }}</span>
+                <span itemprop="addressLocality">{{ item.address.place }}</span>
+                <span itemprop="addressLocality">{{ item.address.suburb.label }}</span>
             </td>
           </tr>
           <ng-container *ngIf="item.website">
             <tr>
               <td><i18n>website</i18n></td>
-              <td>
+              <td itemscope itemtype="https://schema.org/PostalAddress">
                 <a mat-button target="_blank" [href]="item.website">
                   <fa-icon icon="link"></fa-icon>
-                  {{ item.website }}
+                  <span itemprop="sameAs">{{ item.website }}</span>
                 </a>
               </td>
             </tr>
@@ -57,10 +57,10 @@
           <ng-container *ngIf="item.phone">
             <tr>
               <td><i18n>phone</i18n></td>
-              <td>
+              <td itemscope itemtype="https://schema.org/PostalAddress">
                 <a mat-button target="_blank" [href]="'tel:' + item.phone">
                   <fa-icon icon="phone"></fa-icon>
-                  {{ item.phone }}
+                  <span itemprop="telephone">{{ item.phone }}</span>
                 </a>
               </td>
             </tr>
@@ -68,22 +68,22 @@
           <ng-container *ngIf="item.mail">
             <tr>
               <td><i18n>email</i18n></td>
-              <td>
+              <td itemscope itemtype="https://schema.org/PostalAddress">
                 <a mat-button target="_blank" [href]="'mailto:' + item.mail">
                   <fa-icon icon="envelope"></fa-icon>
-                  {{ item.mail }}
+                  <span itemprop="email">{{ item.mail }}</span>
                 </a>
               </td>
             </tr>
           </ng-container>
           <tr>
             <td><i18n>suburb</i18n></td>
-            <td>
+            <td itemscope itemtype="https://schema.org/PostalAddress">
               <a mat-button
                 [queryParams]="{ suburbs: item.address.suburb.id }"
                 [routerLink]="['/', 'activities']">
                 <fa-icon icon="city"></fa-icon>
-                {{ item.address.suburb.label }}
+                <span itemprop="addressLocality">{{ item.address.suburb.label }}</span>
               </a>
             </td>
           </tr>
@@ -99,7 +99,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <ng-container *ngFor="let image of item.images">
-            <figure>
+            <figure itemprop="image">
               <img
                 src="data:image/svg+xml,
                   %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
@@ -127,7 +127,9 @@
                     %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
                   [alt]="video.thumbnail.label"
                   [style.backgroundImage]="video.thumbnail.source"
-                  [title]="video.thumbnail.label">
+                  [title]="video.thumbnail.label"
+                  itemprop="video"
+                  >
                 <a target="_blank" [href]="video.url">
                   <fa-icon icon="play"></fa-icon>
                 </a>
@@ -156,7 +158,7 @@
               <small>({{ item.activities.length }})</small>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <ng-container *ngFor="let activity of item.activities">
+          <ng-container *ngFor="let activity of item.activities" itemprop="event">
             <activity-card [item]="activity"></activity-card>
           </ng-container>
         </mat-expansion-panel>

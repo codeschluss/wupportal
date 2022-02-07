@@ -1,13 +1,13 @@
-<main>
+<main itemscope itemtype="https://schema.org/BlogPosting">
   <h2 class="mat-headline">
-    {{ item.label }}
+    <span itemprop="headline">{{ item.label }}</span>
     <small>
       <i18n>by</i18n>
-      {{ item.author }}
+      <span itemscope itemtype="https://schema.org/BlogPosting" itemprop="author">{{ item.author }}</span>
       <ng-container *ngIf="item.activity">
         <i18n>about</i18n>
         <a [routerLink]="['/', 'activities', item.activity.id]">
-          {{ item.activity.label }}
+          <span itemscope itemtype="https://schema.org/BlogPosting" itemprop="about">{{ item.activity.label }}</span>
         </a>
       </ng-container>
     </small>
@@ -21,8 +21,8 @@
     <time-piece [item]="item"></time-piece>
   </nav>
   <mat-divider></mat-divider>
-  <section>
-    <article [innerHTML]="item.content"></article>
+  <section itemprop="articleBody">
+    <article [innerHTML]="item.content" ></article>
     <ng-container *ngIf="item.activity || item.images">
       <aside>
         <ng-container *ngIf="item.images">
@@ -31,11 +31,11 @@
               <mat-panel-title>
                 <fa-icon icon="image"></fa-icon>
                 <i18n>images</i18n>
-                <small>({{ item.images.length }})</small>
+                <small itemprop="image">({{ item.images.length }})</small>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <ng-container *ngFor="let image of item.images">
-              <figure>
+              <figure itemprop="image">
                 <img
                   src="data:image/svg+xml,
                     %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
@@ -54,7 +54,9 @@
                 <i18n>activity</i18n>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <activity-card [item]="item.activity"></activity-card>
+            <span itemscope itemtype="https://schema.org/Event">
+              <activity-card [item]="item.activity"></activity-card>
+            </span>
           </mat-expansion-panel>
         </ng-container>
       </aside>

@@ -1,11 +1,11 @@
-<main>
+<main itemscope itemtype="https://schema.org/BlogPosting">
   <ng-container *ngIf="(results | async) === false">
     <fa-icon icon="frown"></fa-icon>
     <strong class="mat-title">
       <i18n>notFoundError</i18n>
     </strong>
   </ng-container>
-  <ng-container *ngFor="let item of items | async">
+  <ng-container *ngFor="let item of items | async" >
     <blogpost-card [item]="item"></blogpost-card>
   </ng-container>
   <ng-container *ngIf="next || prev">

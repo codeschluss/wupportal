@@ -16,14 +16,16 @@
     "type": "git",
     "url": "https://github.com/wooportal/client"
   },
-  "browserdlist": [
+  "browserslist": [
     "last 5 Chrome version",
     "last 5 Firefox version",
     "last 5 Edge major versions",
     "last 5 Safari major versions",
     "last 5 iOS major versions",
     "Firefox ESR",
-    "IE 11"
+    "IE 11",
+    "not ios_saf 15.2-15.3",
+    "not safari 15.2-15.3"
   ],
   "cordova": {
     "plugins": {

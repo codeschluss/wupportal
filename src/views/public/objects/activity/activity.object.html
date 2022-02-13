@@ -2,14 +2,14 @@
   <h2 class="mat-headline" >
     <span itemprop="name">{{ item.label }}</span>
     <small>
-      <i18n>by</i18n>
+      <i18n>by </i18n>
       <a [routerLink]="['/', 'organisations', item.organisation.id]">
-        <span itemprop="organizer">{{ item.organisation.label }}</span>
+        <span itemprop="organizer">{{ item.organisation.label }} </span>
       </a>
-      <i18n>at</i18n>
+      <i18n>at </i18n>
       <a
         [queryParams]="{ suburbs: item.address.suburb.id }"
-        [routerLink]="['/', 'activities']" itemscope itemtype="https://schema.org/PostalAddress">
+        [routerLink]="['/', 'activities']" itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
         <span itemprop="addressLocality">{{ item.address.place }} </span>
         <span itemprop="streetAddress">{{ item.address.suburb.label }}</span>
       </a>
@@ -180,8 +180,8 @@
             <fa-icon icon="at"></fa-icon>
             <i18n>organisation</i18n>
           </mat-panel-title>
-        </mat-expansion-panel-header itemscope itemtype="https://schema.org/Organization">
-        <organisation-card [item]="item.organisation"></organisation-card>
+        </mat-expansion-panel-header>
+        <organisation-card itemscope itemtype="https://schema.org/Organization" [item]="item.organisation"></organisation-card>
       </mat-expansion-panel>
       <ng-container *ngIf="item.blogposts">
         <mat-expansion-panel #blogposts (opened)="expanded(blogposts)">

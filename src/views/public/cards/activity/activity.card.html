@@ -9,12 +9,12 @@
     <small>
       <span itemprop="startDate">{{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}</span>
       <br>
-      <span itemscope itemtype="https://schema.org/PostalAddress">
+      <span itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
         <span itemprop="streetAddress">{{ item.address.street }} </span>
         <span itemprop="postOfficeBoxNumber">{{ item.address.houseNumber }}</span>
       </span>
       <br>
-      <span itemscope itemtype="https://schema.org/PostalAddress">
+      <span itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
         <span itemprop="addressLocality">{{ item.address.place }} </span>
         <span itemprop="streetAddress">{{ item.address.suburb.label }}</span>
       </span>

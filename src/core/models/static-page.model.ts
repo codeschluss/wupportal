@@ -2,7 +2,7 @@ import { LabelEntity } from '../../api/models/label-entity';
 import { CrudModel } from '../crud/crud.model';
 import { Translate } from '../crud/crud.translate';
 
-export class MarkupModel
+export class StaticPageModel
   extends CrudModel
   implements LabelEntity {
 

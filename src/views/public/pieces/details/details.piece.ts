@@ -17,7 +17,6 @@ export class DetailsPieceComponent
       case 'activities': return 'map-marker-alt';
       case 'blogposts': return 'comment-dots';
       case 'organisations': return 'at';
-      case 'infopages': return 'info-circle';
     }
   }
 

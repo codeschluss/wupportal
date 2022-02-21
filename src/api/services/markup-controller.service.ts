@@ -24,6 +24,8 @@ class MarkupControllerService extends __BaseService {
   static readonly markupControllerUpdatePath = '/markups/{markupId}';
   static readonly markupControllerDeletePath = '/markups/{markupId}';
   static readonly markupControllerReadTranslationsPath = '/markups/{markupId}/translations';
+  static readonly markupControllerCalculateVisitorsPath = '/markups/{markupId}/visitors';
+  static readonly markupControllerCalculateVisitsPath = '/markups/{markupId}/visits';
 
   constructor(
     config: __Configuration,
@@ -333,6 +335,82 @@ class MarkupControllerService extends __BaseService {
   markupControllerReadTranslations(markupId: string): __Observable<{}> {
     return this.markupControllerReadTranslationsResponse(markupId).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * calculateVisitors
+   * @param markupId markupId
+   * @return OK
+   */
+  markupControllerCalculateVisitorsResponse(markupId: string): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/visitors`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateVisitors
+   * @param markupId markupId
+   * @return OK
+   */
+  markupControllerCalculateVisitors(markupId: string): __Observable<number> {
+    return this.markupControllerCalculateVisitorsResponse(markupId).pipe(
+      __map(_r => _r.body as number)
+    );
+  }
+
+  /**
+   * calculateVisits
+   * @param markupId markupId
+   * @return OK
+   */
+  markupControllerCalculateVisitsResponse(markupId: string): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/visits`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateVisits
+   * @param markupId markupId
+   * @return OK
+   */
+  markupControllerCalculateVisits(markupId: string): __Observable<number> {
+    return this.markupControllerCalculateVisitsResponse(markupId).pipe(
+      __map(_r => _r.body as number)
     );
   }
 }

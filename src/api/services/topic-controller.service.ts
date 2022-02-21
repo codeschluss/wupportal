@@ -22,7 +22,7 @@ class TopicControllerService extends __BaseService {
   static readonly topicControllerReadOnePath = '/topics/{topicId}';
   static readonly topicControllerUpdatePath = '/topics/{topicId}';
   static readonly topicControllerDeletePath = '/topics/{topicId}';
-  static readonly topicControllerReadPagesPath = '/topics/{topicId}/pages';
+  static readonly topicControllerReadBlogsPath = '/topics/{topicId}/blogs';
   static readonly topicControllerReadTranslationsPath = '/topics/{topicId}/translations';
 
   constructor(
@@ -259,14 +259,14 @@ class TopicControllerService extends __BaseService {
   }
 
   /**
-   * readPages
+   * readBlogs
    * @param topicId topicId
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  topicControllerReadPagesResponse(topicId: string,
+  topicControllerReadBlogsResponse(topicId: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
@@ -279,7 +279,7 @@ class TopicControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}/pages`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}/blogs`,
       __body,
       {
         headers: __headers,
@@ -295,18 +295,18 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
-   * readPages
+   * readBlogs
    * @param topicId topicId
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  topicControllerReadPages(topicId: string,
+  topicControllerReadBlogs(topicId: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<{}> {
-    return this.topicControllerReadPagesResponse(topicId, sort, dir, embeddings).pipe(
+    return this.topicControllerReadBlogsResponse(topicId, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }

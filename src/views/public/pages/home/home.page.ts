@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ActivityModel, CrudJoiner, CrudResolver, MetatagService } from '../../../../core';
-import { MarkupModel } from '../../../../core/models/markup.model';
+import { ActivityModel, CrudJoiner, CrudResolver, MetatagService, StaticPageModel } from '../../../../core';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -20,8 +19,8 @@ export class HomePageComponent
   }
 
   public get content(): string {
-    return this.route.snapshot.data.markups?.find((markup) => {
-      return markup.tagId === 'homepage'
+    return this.route.snapshot.data.staticPages?.find((staticPage) => {
+      return staticPage.tagId === 'homepage'
     })?.content || 'homepage';
   }
 
@@ -39,11 +38,11 @@ export class HomePageComponent
       path: this.path,
       resolve: {
         activities: CrudResolver,
-        markups: CrudResolver
+        staticPages: CrudResolver
       },
       data: {
         resolve: {
-          markups: CrudJoiner.of(MarkupModel, {
+          staticPages: CrudJoiner.of(StaticPageModel, {
             required: true
           }),
           activities: CrudJoiner.of(ActivityModel, {

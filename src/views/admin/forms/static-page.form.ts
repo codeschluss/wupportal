@@ -3,14 +3,13 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CoreSettings, LanguageModel, SessionProvider, TokenProvider, TranslationProvider } from '../../../core';
-import { MarkupModel } from '../../../core/models/markup.model';
+import { CoreSettings, LanguageModel, SessionProvider, StaticPageModel, TokenProvider, TranslationProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { EditorFieldComponent } from '../fields/editor.field';
 import { SelectFieldComponent } from '../fields/select.field';
 
 @Component({
-  selector: 'markup-form',
+  selector: 'static-page-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -28,7 +27,7 @@ import { SelectFieldComponent } from '../fields/select.field';
         <i18n>compilation</i18n>
       </label>
       <nav>
-        <button mat-button
+        <button mat-stroked-button
           color="primary"
           [disabled]="!translation.value"
           (click)="translate()">
@@ -46,8 +45,8 @@ import { SelectFieldComponent } from '../fields/select.field';
   `)
 })
 
-export class MarkupFormComponent
-  extends BaseForm<MarkupModel>
+export class StaticPageFormComponent
+  extends BaseForm<StaticPageModel>
   implements AfterViewInit {
 
   declare public item: any;
@@ -63,12 +62,12 @@ export class MarkupFormComponent
     {
       name: 'content',
       input: EditorFieldComponent,
-      model: MarkupModel,
+      model: StaticPageModel,
       tests: [Validators.required]
     }
   ];
 
-  public model: Type<MarkupModel> = MarkupModel;
+  public model: Type<StaticPageModel> = StaticPageModel;
 
   public translation: FormControl = new FormControl();
 
@@ -98,7 +97,7 @@ export class MarkupFormComponent
   }
 
   public persist(): Observable<any> {
-    return this.translationProvider.update(Object.assign(new MarkupModel(), {
+    return this.translationProvider.update(new this.model({
       content: this.group.get('content').value,
       id: this.item.id,
       language: this.language,

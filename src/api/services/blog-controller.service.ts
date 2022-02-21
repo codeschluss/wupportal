@@ -9,8 +9,8 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { BlogEntity } from '../models/blog-entity';
 import { ResourceBlogEntity } from '../models/resource-blog-entity';
-import { StringPrimitive } from '../models/string-primitive';
 import { ImageEntity } from '../models/image-entity';
+import { StringPrimitive } from '../models/string-primitive';
 
 /**
  * Blog Controller
@@ -21,17 +21,21 @@ import { ImageEntity } from '../models/image-entity';
 class BlogControllerService extends __BaseService {
   static readonly blogControllerReadAllPath = '/blogs';
   static readonly blogControllerCreatePath = '/blogs';
+  static readonly blogControllerCalculateOverviewVisitorsPath = '/blogs/visitors';
+  static readonly blogControllerCalculateOverviewVisitsPath = '/blogs/visits';
   static readonly blogControllerReadOnePath = '/blogs/{blogId}';
   static readonly blogControllerUpdatePath = '/blogs/{blogId}';
   static readonly blogControllerDeletePath = '/blogs/{blogId}';
-  static readonly blogControllerReadActivityPath = '/blogs/{blogId}/activity';
-  static readonly blogControllerUpdateActivityPath = '/blogs/{blogId}/activity';
   static readonly blogControllerReadBloggerPath = '/blogs/{blogId}/blogger';
   static readonly blogControllerReadImagesPath = '/blogs/{blogId}/images';
   static readonly blogControllerAddImagePath = '/blogs/{blogId}/images';
   static readonly blogControllerDeleteImagesPath = '/blogs/{blogId}/images';
   static readonly blogControllerIncreaseLikePath = '/blogs/{blogId}/like';
+  static readonly blogControllerReadTopicPath = '/blogs/{blogId}/topic';
+  static readonly blogControllerUpdateTopicPath = '/blogs/{blogId}/topic';
   static readonly blogControllerReadTranslationsPath = '/blogs/{blogId}/translations';
+  static readonly blogControllerCalculateVisitorsPath = '/blogs/{blogId}/visitors';
+  static readonly blogControllerCalculateVisitsPath = '/blogs/{blogId}/visits';
 
   constructor(
     config: __Configuration,
@@ -144,6 +148,76 @@ class BlogControllerService extends __BaseService {
   blogControllerCreate(newBlog: BlogEntity): __Observable<{}> {
     return this.blogControllerCreateResponse(newBlog).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * calculateOverviewVisitors
+   * @return OK
+   */
+  blogControllerCalculateOverviewVisitorsResponse(): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/visitors`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateOverviewVisitors
+   * @return OK
+   */
+  blogControllerCalculateOverviewVisitors(): __Observable<number> {
+    return this.blogControllerCalculateOverviewVisitorsResponse().pipe(
+      __map(_r => _r.body as number)
+    );
+  }
+
+  /**
+   * calculateOverviewVisits
+   * @return OK
+   */
+  blogControllerCalculateOverviewVisitsResponse(): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/visits`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateOverviewVisits
+   * @return OK
+   */
+  blogControllerCalculateOverviewVisits(): __Observable<number> {
+    return this.blogControllerCalculateOverviewVisitsResponse().pipe(
+      __map(_r => _r.body as number)
     );
   }
 
@@ -262,87 +336,6 @@ class BlogControllerService extends __BaseService {
    */
   blogControllerDelete(blogId: string): __Observable<{}> {
     return this.blogControllerDeleteResponse(blogId).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
-   * readActivity
-   * @param blogId blogId
-   * @return OK
-   */
-  blogControllerReadActivityResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/activity`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * readActivity
-   * @param blogId blogId
-   * @return OK
-   */
-  blogControllerReadActivity(blogId: string): __Observable<{}> {
-    return this.blogControllerReadActivityResponse(blogId).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
-   * updateActivity
-   * @param blogId blogId
-   * @param activityId activityId
-   * @return OK
-   */
-  blogControllerUpdateActivityResponse(blogId: string,
-    activityId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    __body = activityId;
-    let req = new HttpRequest<any>(
-      'PUT',
-      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/activity`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * updateActivity
-   * @param blogId blogId
-   * @param activityId activityId
-   * @return OK
-   */
-  blogControllerUpdateActivity(blogId: string,
-    activityId: StringPrimitive): __Observable<{}> {
-    return this.blogControllerUpdateActivityResponse(blogId, activityId).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -553,6 +546,87 @@ class BlogControllerService extends __BaseService {
   }
 
   /**
+   * readTopic
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadTopicResponse(blogId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/topic`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * readTopic
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadTopic(blogId: string): __Observable<{}> {
+    return this.blogControllerReadTopicResponse(blogId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * updateTopic
+   * @param blogId blogId
+   * @param topicId topicId
+   * @return OK
+   */
+  blogControllerUpdateTopicResponse(blogId: string,
+    topicId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = topicId;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/topic`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * updateTopic
+   * @param blogId blogId
+   * @param topicId topicId
+   * @return OK
+   */
+  blogControllerUpdateTopic(blogId: string,
+    topicId: StringPrimitive): __Observable<{}> {
+    return this.blogControllerUpdateTopicResponse(blogId, topicId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
    * readTranslations
    * @param blogId blogId
    * @return OK
@@ -587,6 +661,82 @@ class BlogControllerService extends __BaseService {
   blogControllerReadTranslations(blogId: string): __Observable<{}> {
     return this.blogControllerReadTranslationsResponse(blogId).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * calculateVisitors
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerCalculateVisitorsResponse(blogId: string): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/visitors`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateVisitors
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerCalculateVisitors(blogId: string): __Observable<number> {
+    return this.blogControllerCalculateVisitorsResponse(blogId).pipe(
+      __map(_r => _r.body as number)
+    );
+  }
+
+  /**
+   * calculateVisits
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerCalculateVisitsResponse(blogId: string): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/visits`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateVisits
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerCalculateVisits(blogId: string): __Observable<number> {
+    return this.blogControllerCalculateVisitsResponse(blogId).pipe(
+      __map(_r => _r.body as number)
     );
   }
 }

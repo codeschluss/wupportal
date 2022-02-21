@@ -128,13 +128,11 @@ export class ImageFieldComponent
         const reader = new FileReader();
         reader.readAsBinaryString(file);
 
-        return fromEvent(reader, 'load').pipe(map((event) =>
-          Object.assign(new ImageModel(), {
-            caption: this.caption.value || file.name,
-            imageData: Base64.encode((event.target as any).result),
-            mimeType: file.type
-          })
-        ));
+        return fromEvent(reader, 'load').pipe(map((event) => new ImageModel({
+          caption: this.caption.value || file.name,
+          imageData: Base64.encode((event.target as any).result),
+          mimeType: file.type
+        })));
       })
     ).subscribe((item) => {
       this.caption.patchValue(this.caption.value || item.caption);

@@ -158,7 +158,7 @@ export class TranslationFormComponent<Model extends CrudModel>
   private empty(language: LanguageModel): Model {
     return (this.model as any).translatable
       .reduce((item, t) => Object.assign(item, { [t]: null }),
-        Object.assign(new this.model(), { language }));
+        new this.model({ language }));
   }
 
   private translation(language: LanguageModel): Model {

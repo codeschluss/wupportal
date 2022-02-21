@@ -1,5 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { map, mergeMap, startWith } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { BaseChart } from '../base/base.chart';
 
 @Component({
@@ -9,16 +8,4 @@ import { BaseChart } from '../base/base.chart';
   })
 })
 
-export class TargetGroupActivitiesChartComponent
-  extends BaseChart
-  implements AfterViewInit {
-
-  public ngAfterViewInit(): void {
-    this.toggle.change.pipe(
-      map((event) => event.checked),
-      startWith(false),
-      mergeMap((c) => this.analyticsProvider.activitiesPerTargetGroup(c))
-    ).subscribe((entries) => this.setData(entries));
-  }
-
-}
+export class TargetGroupActivitiesChartComponent extends BaseChart { }

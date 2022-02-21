@@ -10,4 +10,5 @@ export interface ResourceBlogEntity {
   likes?: number;
   modified?: string;
   title?: string;
+  topicId?: string;
 }

@@ -51,15 +51,13 @@ import { BlogpostFormComponent } from './forms/blogpost.form';
 import { CategoryFormComponent } from './forms/category.form';
 import { ConfigurationFormComponent } from './forms/configuration.form';
 import { ImageFormComponent } from './forms/image.form';
-import { InfopageFormComponent } from './forms/infopage.form';
-import { KeywordFormComponent } from './forms/keyword.form';
 import { LabelFormComponent } from './forms/label.form';
 import { LanguageFormComponent } from './forms/language.form';
 import { MailingFormComponent } from './forms/mailing.form';
-import { MarkupFormComponent } from './forms/markup.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
 import { PushingFormComponent } from './forms/pushing.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
+import { StaticPageFormComponent } from './forms/static-page.form';
 import { SubscriptionTypeFormComponent } from './forms/subscription-type.form';
 import { SuburbFormComponent } from './forms/suburb.form';
 import { TargetGroupFormComponent } from './forms/target-group.form';
@@ -85,8 +83,6 @@ import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
 import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
-import { InfopageStepperComponent } from './steppers/infopage.stepper';
-import { KeywordsStepperComponent } from './steppers/keyword.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
@@ -98,8 +94,6 @@ import { ActivityTableComponent } from './tables/activity.table';
 import { AddressTableComponent } from './tables/address.table';
 import { BlogpostTableComponent } from './tables/blogpost.table';
 import { CategoryTableComponent } from './tables/category.table';
-import { InfopageTableComponent } from './tables/infopage.table';
-import { KeywordTableComponent } from './tables/keyword.table';
 import { LanguageTableComponent } from './tables/language.table';
 import { MembershipTableComponent } from './tables/membership.table';
 import { OrganisationTableComponent } from './tables/organisation.table';
@@ -148,15 +142,13 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   CategoryFormComponent,
   ConfigurationFormComponent,
   ImageFormComponent,
-  InfopageFormComponent,
-  KeywordFormComponent,
   LabelFormComponent,
   LanguageFormComponent,
   MailingFormComponent,
-  MarkupFormComponent,
   OrganisationFormComponent,
   PushingFormComponent,
   ScheduleFormComponent,
+  StaticPageFormComponent,
   SubscriptionTypeFormComponent,
   SuburbFormComponent,
   TargetGroupFormComponent,
@@ -217,8 +209,6 @@ const steppers: Type<BaseStepper<CrudModel>>[] = [
   AddressStepperComponent,
   BlogpostStepperComponent,
   CategoryStepperComponent,
-  InfopageStepperComponent,
-  KeywordsStepperComponent,
   LanguageStepperComponent,
   OrganisationStepperComponent,
   SubscriptionTypeStepperComponent,
@@ -233,8 +223,6 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   AddressTableComponent,
   BlogpostTableComponent,
   CategoryTableComponent,
-  InfopageTableComponent,
-  KeywordTableComponent,
   LanguageTableComponent,
   MembershipTableComponent,
   OrganisationTableComponent,

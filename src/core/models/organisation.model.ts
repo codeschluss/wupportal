@@ -26,6 +26,7 @@ export class OrganisationModel
 
   public activities: ActivityModel[] & Observable<ActivityModel[]>;
   public address: AddressModel & Observable<AddressModel>;
+  public image: ImageModel & Observable<ImageModel>;
   public images: ImageModel[] & Observable<ImageModel[]>;
   public membership: MembershipModel & Observable<MembershipModel>;
   public memberships: MembershipModel[] & Observable<MembershipModel[]>;
@@ -33,6 +34,8 @@ export class OrganisationModel
   public videos: VideoModel[] & Observable<VideoModel[]>;
 
   // compatability
+  public get avatar() { return this.image; }
+  public set avatar(value) { this.image = value; }
   public get provider() { return this.membership; }
   public set provider(value) { this.membership = value; }
   public get providers() { return this.memberships; }

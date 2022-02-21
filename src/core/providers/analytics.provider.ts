@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AnalyticsEntry } from 'src/api/models/analytics-entry';
-import { AnalyticsControllerService as Service } from '../../api/services/analytics-controller.service';
+import { AnalyticsDto } from '../../api/models/analytics-dto';
+import { SearchAnalyticsDto } from '../../api/models/search-analytics-dto';
+import { AppStatisticsControllerService } from '../../api/services/app-statistics-controller.service';
+import { SearchConsoleControllerService } from '../../api/services/search-console-controller.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,32 +13,41 @@ import { AnalyticsControllerService as Service } from '../../api/services/analyt
 export class AnalyticsProvider {
 
   public constructor(
-    private service: Service
+    private appStatistics: AppStatisticsControllerService,
+    private searchConsole: SearchConsoleControllerService
   ) { }
 
-  public activitiesPerCategory(
-    current: boolean
+  public appInstalls(
+    start: string,
+    end: string
   ): Observable<AnalyticsEntry[]> {
-    return this.service
-      .analyticsControllerCalculateActivitiesPerCategory(current);
+    return this.appStatistics
+      .appStatisticsControllerAppStatisticsInstalls(start, end);
   }
 
-  public activitiesPerSuburb(
-    current: boolean
+  public appRatings(
+    start: string,
+    end: string
   ): Observable<AnalyticsEntry[]> {
-    return this.service
-      .analyticsControllerCalculateActivitiesPerSuburbs(current);
+    return this.appStatistics
+      .appStatisticsControllerAppStatisticsRatings(start, end);
   }
 
-  public activitiesPerTargetGroup(
-    current: boolean
-  ): Observable<AnalyticsEntry[]> {
-    return this.service
-      .analyticsControllerCalculateActivitiesPerTargetGroup(current);
+  public searchDetails(
+    start: string,
+    end: string,
+    dimension: 'COUNTRY' | 'DATE' | 'DEVICE' | 'PAGE' | 'QUERY'
+  ): Observable<AnalyticsDto[]> {
+    return this.searchConsole
+      .searchConsoleControllerSearchConsoleDetails(start, end, dimension);
   }
 
-  public subscriptions(): Observable<AnalyticsEntry[]> {
-    return this.service.analyticsControllerCalculateSubscriptions();
+  public searchOverview(
+    start: string,
+    end: string
+  ): Observable<SearchAnalyticsDto> {
+    return this.searchConsole
+      .searchConsoleControllerSearchConsoleOverview(start, end);
   }
 
 }

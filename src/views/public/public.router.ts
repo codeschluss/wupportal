@@ -3,11 +3,9 @@ import { Route, RouterModule } from '@angular/router';
 import { ConfigurationModel, CrudJoiner, CrudResolver } from '../../core';
 import { ActivityListingComponent } from './listings/activities/activity.listing';
 import { BlogpostListingComponent } from './listings/blogposts/blogpost.listing';
-import { InfopageListingComponent } from './listings/infopages/infopage.listing';
 import { OrganisationListingComponent } from './listings/organisations/organisation.listing';
 import { ActivityObjectComponent } from './objects/activity/activity.object';
 import { BlogpostObjectComponent } from './objects/blogpost/blogpost.object';
-import { InfopageObjectComponent } from './objects/infopage/infopage.object';
 import { OrganisationObjectComponent } from './objects/organisation/organisation.object';
 import { HomePageComponent } from './pages/home/home.page';
 import { ImprintPageComponent } from './pages/imprint/imprint.page';
@@ -22,14 +20,12 @@ import { PublicComponent } from './public.component';
 const listingRoutes: Route[] = [
   ActivityListingComponent.routing,
   BlogpostListingComponent.routing,
-  InfopageListingComponent.routing,
   OrganisationListingComponent.routing
 ];
 
 const objectRoutes: Route[] = [
   ActivityObjectComponent.routing,
   BlogpostObjectComponent.routing,
-  InfopageObjectComponent.routing,
   OrganisationObjectComponent.routing
 ];
 

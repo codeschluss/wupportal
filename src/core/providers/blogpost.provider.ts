@@ -3,11 +3,11 @@ import { EMPTY, Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { BlogControllerService as Service } from '../../api/services/blog-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
-import { ActivityModel } from '../models/activity.model';
 import { BloggerModel } from '../models/blogger.model';
 import { BlogpostModel as Model } from '../models/blogpost.model';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
+import { TopicModel } from '../models/topic.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +17,6 @@ export class BlogpostProvider
   extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
-    {
-      field: 'activity',
-      method: this.service.blogControllerReadActivityResponse,
-      model: ActivityModel
-    },
     {
       field: 'blogger',
       method: this.service.blogControllerReadBloggerResponse,
@@ -36,6 +31,11 @@ export class BlogpostProvider
       field: 'language',
       method: () => EMPTY,
       model: LanguageModel
+    },
+    {
+      field: 'topic',
+      method: this.service.blogControllerReadTopicResponse,
+      model: TopicModel
     },
     {
       field: 'translatables',
@@ -76,6 +76,22 @@ export class BlogpostProvider
   public readAll: (params?: Service.BlogControllerReadAllParams) =>
     Observable<Model[]>;
 
+  public analyticsVisitorsAll: () =>
+    Observable<any> = this.apply(this.service
+      .blogControllerCalculateOverviewVisitorsResponse)
+
+  public analyticsVisitorsOne: (id: string) =>
+    Observable<any> = this.apply(this.service
+      .blogControllerCalculateVisitorsResponse)
+
+  public analyticsVisitsAll: () =>
+    Observable<any> = this.apply(this.service
+      .blogControllerCalculateOverviewVisitsResponse)
+
+  public analyticsVisitsOne: (id: string) =>
+    Observable<any> = this.apply(this.service
+      .blogControllerCalculateVisitsResponse)
+
   public like: (id: string, subscriptionId?: String) =>
     Observable<any> = this.apply(this.service
       .blogControllerIncreaseLikeResponse);
@@ -84,9 +100,9 @@ export class BlogpostProvider
     Observable<any> = this.apply(this.service
       .blogControllerAddImageResponse);
 
-  public relinkActivity: (id: string, activityId: String) =>
+  public relinkTopic: (id: string, topicId: String) =>
     Observable<any> = this.apply(this.service
-      .blogControllerUpdateActivityResponse);
+      .blogControllerUpdateTopicResponse);
 
   public unlinkImages: (id: string, imageIds: string[]) =>
     Observable<any> = this.apply(this.service

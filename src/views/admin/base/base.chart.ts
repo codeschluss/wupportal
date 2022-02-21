@@ -2,7 +2,6 @@ import { Directive, HostBinding, ViewChild } from '@angular/core';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { Color } from '@swimlane/ngx-charts';
 import { AnalyticsEntry } from '../../../api/models/analytics-entry';
-import { AnalyticsProvider } from '../../../core';
 
 @Directive()
 
@@ -53,10 +52,6 @@ export abstract class BaseChart {
       </ngx-charts-bar-vertical>
     `;
   }
-
-  public constructor(
-    protected analyticsProvider: AnalyticsProvider
-  ) { }
 
   protected setData(entries: AnalyticsEntry[]) {
     if (entries.every((result) => result.customColor)) {

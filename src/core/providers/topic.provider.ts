@@ -2,7 +2,7 @@ import { Injectable, Type } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { TopicControllerService as Service } from '../../api/services/topic-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
-import { InfopageModel } from '../models/infopage.model';
+import { BlogpostModel } from '../models/blogpost.model';
 import { LanguageModel } from '../models/language.model';
 import { TopicModel as Model } from '../models/topic.model';
 
@@ -15,14 +15,14 @@ export class TopicProvider
 
   protected linked: CrudLink[] = [
     {
+      field: 'blogs',
+      method: this.service.topicControllerReadBlogsResponse,
+      model: BlogpostModel
+    },
+    {
       field: 'language',
       method: () => EMPTY,
       model: LanguageModel
-    },
-    {
-      field: 'pages',
-      method: this.service.topicControllerReadPagesResponse,
-      model: InfopageModel
     },
     {
       field: 'translatables',

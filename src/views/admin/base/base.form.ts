@@ -114,7 +114,7 @@ export abstract class BaseForm<Model extends CrudModel>
   }
 
   public persist(override: boolean = false): Observable<any> {
-    const item = Object.assign(new this.model(), this.item);
+    const item = new this.model(this.item);
     const provider = (this.model as any).provider;
 
     this.fields.forEach((field) => Object.assign(item, {
@@ -159,7 +159,6 @@ export abstract class BaseForm<Model extends CrudModel>
     add: (CrudModel & any)[];
     del: (CrudModel & any)[];
   } {
-
     const del = (this.item[field] || []);
     const mod = (this.group.get(field).value || []).filter((item) => item.id);
     const put = (this.group.get(field).value || []).filter((item) => !item.id);

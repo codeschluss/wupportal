@@ -8,12 +8,12 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { ActivityEntity } from '../models/activity-entity';
+import { AnalyticsEntry } from '../models/analytics-entry';
 import { ResourceActivityEntity } from '../models/resource-activity-entity';
 import { StringPrimitive } from '../models/string-primitive';
 import { ImageEntity } from '../models/image-entity';
 import { ResourcesObject } from '../models/resources-object';
 import { ScheduleEntity } from '../models/schedule-entity';
-import { TagEntity } from '../models/tag-entity';
 
 /**
  * Activity Controller
@@ -24,14 +24,19 @@ import { TagEntity } from '../models/tag-entity';
 class ActivityControllerService extends __BaseService {
   static readonly activityControllerReadAllPath = '/activities';
   static readonly activityControllerCreatePath = '/activities';
+  static readonly activityControllerCalculateActivitiesPerCategoryPath = '/activities/analytics/categories';
+  static readonly activityControllerCalculateActivitiesPerSuburbsPath = '/activities/analytics/suburbs';
+  static readonly activityControllerCalculateActivitiesPerTargetGroupPath = '/activities/analytics/targetgroups';
+  static readonly activityControllerCalculateOverviewVisitorsPath = '/activities/visitors';
+  static readonly activityControllerCalculateOverviewVisitsPath = '/activities/visits';
   static readonly activityControllerReadOnePath = '/activities/{activityId}';
   static readonly activityControllerUpdatePath = '/activities/{activityId}';
   static readonly activityControllerDeletePath = '/activities/{activityId}';
   static readonly activityControllerReadAddressPath = '/activities/{activityId}/address';
   static readonly activityControllerUpdateAddressPath = '/activities/{activityId}/address';
-  static readonly activityControllerReadBlogsPath = '/activities/{activityId}/blogs';
   static readonly activityControllerReadCategoryPath = '/activities/{activityId}/category';
   static readonly activityControllerUpdateCategoryPath = '/activities/{activityId}/category';
+  static readonly activityControllerGenerateAllIcalPath = '/activities/{activityId}/iCal';
   static readonly activityControllerReadImagesPath = '/activities/{activityId}/images';
   static readonly activityControllerAddImagePath = '/activities/{activityId}/images';
   static readonly activityControllerDeleteImagesPath = '/activities/{activityId}/images';
@@ -41,13 +46,13 @@ class ActivityControllerService extends __BaseService {
   static readonly activityControllerReadSchedulesPath = '/activities/{activityId}/schedules';
   static readonly activityControllerAddSchedulesPath = '/activities/{activityId}/schedules';
   static readonly activityControllerDeleteSchedulesPath = '/activities/{activityId}/schedules';
-  static readonly activityControllerReadTagsPath = '/activities/{activityId}/tags';
-  static readonly activityControllerAddTagsPath = '/activities/{activityId}/tags';
-  static readonly activityControllerDeleteTagsPath = '/activities/{activityId}/tags';
   static readonly activityControllerReadTargetGroupsPath = '/activities/{activityId}/targetgroups';
   static readonly activityControllerAddTargetGroupsPath = '/activities/{activityId}/targetgroups';
   static readonly activityControllerDeleteTargetGroupsPath = '/activities/{activityId}/targetgroups';
   static readonly activityControllerReadTranslationsPath = '/activities/{activityId}/translations';
+  static readonly activityControllerCalculateVisitorsPath = '/activities/{activityId}/visitors';
+  static readonly activityControllerCalculateVisitsPath = '/activities/{activityId}/visits';
+  static readonly activityControllerGenerateIcalPath = '/activities/{activityId}/{scheduleId}/iCal';
 
   constructor(
     config: __Configuration,
@@ -180,6 +185,190 @@ class ActivityControllerService extends __BaseService {
   activityControllerCreate(newActivity: ActivityEntity): __Observable<{}> {
     return this.activityControllerCreateResponse(newActivity).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * calculateActivitiesPerCategory
+   * @param value undefined
+   * @return OK
+   */
+  activityControllerCalculateActivitiesPerCategoryResponse(value?: boolean): __Observable<__StrictHttpResponse<Array<AnalyticsEntry>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (value != null) __params = __params.set('value', value.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/analytics/categories`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<AnalyticsEntry>>;
+      })
+    );
+  }
+  /**
+   * calculateActivitiesPerCategory
+   * @param value undefined
+   * @return OK
+   */
+  activityControllerCalculateActivitiesPerCategory(value?: boolean): __Observable<Array<AnalyticsEntry>> {
+    return this.activityControllerCalculateActivitiesPerCategoryResponse(value).pipe(
+      __map(_r => _r.body as Array<AnalyticsEntry>)
+    );
+  }
+
+  /**
+   * calculateActivitiesPerSuburbs
+   * @param value undefined
+   * @return OK
+   */
+  activityControllerCalculateActivitiesPerSuburbsResponse(value?: boolean): __Observable<__StrictHttpResponse<Array<AnalyticsEntry>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (value != null) __params = __params.set('value', value.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/analytics/suburbs`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<AnalyticsEntry>>;
+      })
+    );
+  }
+  /**
+   * calculateActivitiesPerSuburbs
+   * @param value undefined
+   * @return OK
+   */
+  activityControllerCalculateActivitiesPerSuburbs(value?: boolean): __Observable<Array<AnalyticsEntry>> {
+    return this.activityControllerCalculateActivitiesPerSuburbsResponse(value).pipe(
+      __map(_r => _r.body as Array<AnalyticsEntry>)
+    );
+  }
+
+  /**
+   * calculateActivitiesPerTargetGroup
+   * @param value undefined
+   * @return OK
+   */
+  activityControllerCalculateActivitiesPerTargetGroupResponse(value?: boolean): __Observable<__StrictHttpResponse<Array<AnalyticsEntry>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (value != null) __params = __params.set('value', value.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/analytics/targetgroups`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<AnalyticsEntry>>;
+      })
+    );
+  }
+  /**
+   * calculateActivitiesPerTargetGroup
+   * @param value undefined
+   * @return OK
+   */
+  activityControllerCalculateActivitiesPerTargetGroup(value?: boolean): __Observable<Array<AnalyticsEntry>> {
+    return this.activityControllerCalculateActivitiesPerTargetGroupResponse(value).pipe(
+      __map(_r => _r.body as Array<AnalyticsEntry>)
+    );
+  }
+
+  /**
+   * calculateOverviewVisitors
+   * @return OK
+   */
+  activityControllerCalculateOverviewVisitorsResponse(): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/visitors`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateOverviewVisitors
+   * @return OK
+   */
+  activityControllerCalculateOverviewVisitors(): __Observable<number> {
+    return this.activityControllerCalculateOverviewVisitorsResponse().pipe(
+      __map(_r => _r.body as number)
+    );
+  }
+
+  /**
+   * calculateOverviewVisits
+   * @return OK
+   */
+  activityControllerCalculateOverviewVisitsResponse(): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/visits`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateOverviewVisits
+   * @return OK
+   */
+  activityControllerCalculateOverviewVisits(): __Observable<number> {
+    return this.activityControllerCalculateOverviewVisitsResponse().pipe(
+      __map(_r => _r.body as number)
     );
   }
 
@@ -384,59 +573,6 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
-   * readBlogs
-   * @param activityId activityId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
-   * @return OK
-   */
-  activityControllerReadBlogsResponse(activityId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/blogs`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * readBlogs
-   * @param activityId activityId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
-   * @return OK
-   */
-  activityControllerReadBlogs(activityId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): __Observable<{}> {
-    return this.activityControllerReadBlogsResponse(activityId, sort, dir, embeddings).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
    * readCategory
    * @param activityId activityId
    * @return OK
@@ -514,6 +650,44 @@ class ActivityControllerService extends __BaseService {
     categoryId: StringPrimitive): __Observable<{}> {
     return this.activityControllerUpdateCategoryResponse(activityId, categoryId).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * generateAllIcal
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerGenerateAllIcalResponse(activityId: string): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/iCal`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * generateAllIcal
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerGenerateAllIcal(activityId: string): __Observable<string> {
+    return this.activityControllerGenerateAllIcalResponse(activityId).pipe(
+      __map(_r => _r.body as string)
     );
   }
 
@@ -905,145 +1079,6 @@ class ActivityControllerService extends __BaseService {
   }
 
   /**
-   * readTags
-   * @param activityId activityId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
-   * @return OK
-   */
-  activityControllerReadTagsResponse(activityId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    if (sort != null) __params = __params.set('sort', sort.toString());
-    if (dir != null) __params = __params.set('dir', dir.toString());
-    if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/tags`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * readTags
-   * @param activityId activityId
-   * @param sort undefined
-   * @param dir undefined
-   * @param embeddings undefined
-   * @return OK
-   */
-  activityControllerReadTags(activityId: string,
-    sort?: string,
-    dir?: string,
-    embeddings?: string): __Observable<{}> {
-    return this.activityControllerReadTagsResponse(activityId, sort, dir, embeddings).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
-   * addTags
-   * @param activityId activityId
-   * @param tags tags
-   * @return OK
-   */
-  activityControllerAddTagsResponse(activityId: string,
-    tags: Array<TagEntity>): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    __body = tags;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/tags`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * addTags
-   * @param activityId activityId
-   * @param tags tags
-   * @return OK
-   */
-  activityControllerAddTags(activityId: string,
-    tags: Array<TagEntity>): __Observable<{}> {
-    return this.activityControllerAddTagsResponse(activityId, tags).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
-   * deleteTags
-   * @param activityId activityId
-   * @param tagIds tagIds
-   * @return OK
-   */
-  activityControllerDeleteTagsResponse(activityId: string,
-    tagIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    (tagIds || []).forEach(val => {if (val != null) __params = __params.append('tagIds', val.toString())});
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/tags`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * deleteTags
-   * @param activityId activityId
-   * @param tagIds tagIds
-   * @return OK
-   */
-  activityControllerDeleteTags(activityId: string,
-    tagIds: Array<string>): __Observable<{}> {
-    return this.activityControllerDeleteTagsResponse(activityId, tagIds).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
    * readTargetGroups
    * @param activityId activityId
    * @param sort undefined
@@ -1217,6 +1252,125 @@ class ActivityControllerService extends __BaseService {
   activityControllerReadTranslations(activityId: string): __Observable<{}> {
     return this.activityControllerReadTranslationsResponse(activityId).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * calculateVisitors
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerCalculateVisitorsResponse(activityId: string): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/visitors`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateVisitors
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerCalculateVisitors(activityId: string): __Observable<number> {
+    return this.activityControllerCalculateVisitorsResponse(activityId).pipe(
+      __map(_r => _r.body as number)
+    );
+  }
+
+  /**
+   * calculateVisits
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerCalculateVisitsResponse(activityId: string): __Observable<__StrictHttpResponse<number>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/visits`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+      })
+    );
+  }
+  /**
+   * calculateVisits
+   * @param activityId activityId
+   * @return OK
+   */
+  activityControllerCalculateVisits(activityId: string): __Observable<number> {
+    return this.activityControllerCalculateVisitsResponse(activityId).pipe(
+      __map(_r => _r.body as number)
+    );
+  }
+
+  /**
+   * generateIcal
+   * @param activityId activityId
+   * @param scheduleId scheduleId
+   * @return OK
+   */
+  activityControllerGenerateIcalResponse(activityId: string,
+    scheduleId: string): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/${encodeURIComponent(String(scheduleId))}/iCal`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * generateIcal
+   * @param activityId activityId
+   * @param scheduleId scheduleId
+   * @return OK
+   */
+  activityControllerGenerateIcal(activityId: string,
+    scheduleId: string): __Observable<string> {
+    return this.activityControllerGenerateIcalResponse(activityId, scheduleId).pipe(
+      __map(_r => _r.body as string)
     );
   }
 }

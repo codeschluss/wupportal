@@ -48,20 +48,6 @@
         </ng-container>
       </mat-expansion-panel>
     </ng-container>
-    <ng-container *ngIf="items.infopages.length">
-      <mat-expansion-panel #infopages (opened)="expanded(infopages)">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <fa-icon icon="info-circle"></fa-icon>
-            <i18n>infopages</i18n>
-            <small>({{ items.infopages.length }})</small>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <ng-container *ngFor="let item of items.infopages">
-          <infopage-card [item]="item"></infopage-card>
-        </ng-container>
-      </mat-expansion-panel>
-    </ng-container>
     <ng-container *ngIf="items.categories.length">
       <mat-expansion-panel #categories (opened)="expanded(categories)">
         <mat-expansion-panel-header>

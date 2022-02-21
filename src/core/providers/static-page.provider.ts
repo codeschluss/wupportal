@@ -3,13 +3,13 @@ import { EMPTY, Observable } from 'rxjs';
 import { MarkupControllerService as Service } from '../../api/services/markup-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
 import { LanguageModel } from '../models/language.model';
-import { MarkupModel as Model } from '../models/markup.model';
+import { StaticPageModel as Model } from '../models/static-page.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class MarkupProvider
+export class StaticPageProvider
   extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
@@ -56,5 +56,21 @@ export class MarkupProvider
 
   public readAll: (params?: Service.MarkupControllerReadAllParams) =>
     Observable<Model[]>;
+
+  // public analyticsVisitorsAll: () =>
+  //   Observable<any> = this.apply(this.service
+  //     .markupControllerCalculateOverviewVisitorsResponse)
+
+  public analyticsVisitorsOne: (id: string) =>
+    Observable<any> = this.apply(this.service
+      .markupControllerCalculateVisitorsResponse)
+
+  // public analyticsVisitsAll: () =>
+  //   Observable<any> = this.apply(this.service
+  //     .markupControllerCalculateOverviewVisitsResponse)
+
+  public analyticsVisitsOne: (id: string) =>
+    Observable<any> = this.apply(this.service
+      .markupControllerCalculateVisitsResponse)
 
 }

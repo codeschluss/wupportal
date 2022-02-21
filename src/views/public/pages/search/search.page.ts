@@ -3,7 +3,7 @@ import { MatExpansionPanel } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { ActivityModel, BaseService, BlogpostModel, CategoryModel, CrudJoiner, CrudModel, CrudProvider, CrudResolver, InfopageModel, OrganisationModel, SuburbModel, TargetGroupModel } from '../../../../core';
+import { ActivityModel, BaseService, BlogpostModel, CategoryModel, CrudJoiner, CrudModel, CrudProvider, CrudResolver, OrganisationModel, SuburbModel, TargetGroupModel } from '../../../../core';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -20,7 +20,6 @@ export class SearchPageComponent
     blogposts: BlogpostModel[];
     categories: CategoryModel[];
     organisations: OrganisationModel[];
-    infopages: InfopageModel[];
     suburbs: SuburbModel[];
     targetGroups: TargetGroupModel[];
   } = {
@@ -28,7 +27,6 @@ export class SearchPageComponent
     blogposts: [],
     categories: [],
     organisations: [],
-    infopages: [],
     suburbs: [],
     targetGroups: []
   };
@@ -57,8 +55,6 @@ export class SearchPageComponent
           map((items) => (this.items.blogposts = items).length)),
         this.search(filter, CategoryModel).pipe(
           map((items) => (this.items.categories = items).length)),
-        this.search(filter, InfopageModel).pipe(
-          map((items) => (this.items.infopages = items).length)),
         this.search(filter, OrganisationModel).pipe(
           map((items) => (this.items.organisations = items).length)),
         this.search(filter, SuburbModel).pipe(

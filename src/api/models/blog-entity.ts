@@ -8,4 +8,5 @@ export interface BlogEntity {
   likes?: number;
   modified?: string;
   title?: string;
+  topicId?: string;
 }

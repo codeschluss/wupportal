@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivityModel, BlogpostModel, InfopageModel, OrganisationModel } from '../../../core';
+import { ActivityModel, BlogpostModel, OrganisationModel } from '../../../core';
 
 @Component({
   styles: [`
@@ -72,10 +72,6 @@ export class PusherPopupComponent {
 
       case this.data.item instanceof BlogpostModel:
         route = '/blogposts/';
-        break;
-
-      case this.data.item instanceof InfopageModel:
-        route = '/infopages/';
         break;
 
       case this.data.item instanceof OrganisationModel:

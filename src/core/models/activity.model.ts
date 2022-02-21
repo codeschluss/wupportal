@@ -3,10 +3,8 @@ import { ActivityEntity } from '../../api/models/activity-entity';
 import { CrudModel } from '../crud/crud.model';
 import { Translate } from '../crud/crud.translate';
 import { AddressModel } from './address.model';
-import { BlogpostModel } from './blogpost.model';
 import { CategoryModel } from './category.model';
 import { ImageModel } from './image.model';
-import { KeywordModel } from './keyword.model';
 import { MembershipModel } from './membership.model';
 import { OrganisationModel } from './organisation.model';
 import { ScheduleModel } from './schedule.model';
@@ -29,10 +27,8 @@ export class ActivityModel
   public organisationId: string;
 
   public address: AddressModel & Observable<AddressModel>;
-  public blogposts: BlogpostModel[] & Observable<BlogpostModel[]>;
   public category: CategoryModel & Observable<CategoryModel>;
   public images: ImageModel[] & Observable<ImageModel[]>;
-  public keywords: KeywordModel[] & Observable<KeywordModel[]>;
   public membership: MembershipModel & Observable<MembershipModel>;
   public organisation: OrganisationModel & Observable<OrganisationModel>;
   public schedules: ScheduleModel[] & Observable<ScheduleModel[]>;
@@ -50,9 +46,5 @@ export class ActivityModel
   // compatability
   public get provider() { return this.membership; }
   public set provider(value) { this.membership = value; }
-  public get tags() { return this.keywords; }
-  public set tags(value) { this.keywords = value; }
-  public get blogs() { return this.blogposts; }
-  public set blogs(value) { this.blogposts = value; }
 
 }

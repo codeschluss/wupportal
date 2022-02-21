@@ -32,6 +32,11 @@ export class OrganisationProvider
       model: AddressModel
     },
     {
+      field: 'avatar',
+      method: this.service.organisationControllerReadAvatarResponse,
+      model: ImageModel
+    },
+    {
       field: 'images',
       method: this.service.organisationControllerReadImagesResponse,
       model: ImageModel
@@ -100,6 +105,22 @@ export class OrganisationProvider
   public readAll: (params?: Service.OrganisationControllerReadAllParams) =>
     Observable<Model[]>;
 
+  public analyticsVisitorsAll: () =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerCalculateOverviewVisitorsResponse)
+
+  public analyticsVisitorsOne: (id: string) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerCalculateVisitorsResponse)
+
+  public analyticsVisitsAll: () =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerCalculateOverviewVisitsResponse)
+
+  public analyticsVisitsOne: (id: string) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerCalculateVisitsResponse)
+
   public grantMembership: (id: string, userId: string, grant: Boolean) =>
     Observable<any> = this.apply(this.service
       .organisationControllerApproveOrRejectUserResponse);
@@ -128,9 +149,17 @@ export class OrganisationProvider
     Observable<any> = this.apply(this.service
       .organisationControllerUpdateAddressResponse);
 
+  public relinkImage: (id: string, imageId: String) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerAddAvatarResponse);
+
   public unlinkActivity: (id: string, activityId: string) =>
     Observable<any> = this.apply(this.service
       .organisationControllerDeleteActivityResponse);
+
+  public unlinkImage: (id: string, activityId: string) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerDeleteAvatarResponse);
 
   public unlinkImages: (id: string, imageIds: string[]) =>
     Observable<any> = this.apply(this.service

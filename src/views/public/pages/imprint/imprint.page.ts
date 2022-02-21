@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver } from '../../../../core';
-import { MarkupModel } from '../../../../core/models/markup.model';
+import { CrudJoiner, CrudResolver, StaticPageModel } from '../../../../core';
 import { BasePage } from '../base.page';
 
 @Component({
@@ -13,8 +12,8 @@ export class ImprintPageComponent
   extends BasePage {
 
   public get content(): string {
-    return this.route.snapshot.data.markups?.find((markup) => {
-      return markup.tagId === this.path
+    return this.route.snapshot.data.staticPages?.find((staticPage) => {
+      return staticPage.tagId === this.path
     })?.content || this.path;
   }
 
@@ -24,11 +23,11 @@ export class ImprintPageComponent
     return {
       path: this.path,
       resolve: {
-        markups: CrudResolver
+        staticPages: CrudResolver
       },
       data: {
         resolve: {
-          markups: CrudJoiner.of(MarkupModel, {
+          staticPages: CrudJoiner.of(StaticPageModel, {
             required: true
           })
         }

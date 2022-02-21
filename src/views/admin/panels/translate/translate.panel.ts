@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { CrudJoiner, LabelModel, LanguageModel } from '../../../../core';
-import { MarkupModel } from '../../../../core/models/markup.model';
+import { CrudJoiner, LabelModel, LanguageModel, StaticPageModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
@@ -19,7 +18,7 @@ export class TranslatePanelComponent
     language: CrudJoiner.of(LanguageModel, {
       required: true
     }),
-    markup: CrudJoiner.of(MarkupModel, {
+    staticPage: CrudJoiner.of(StaticPageModel, {
       required: true
     }).with('translatables').yield('language')
   };
@@ -28,9 +27,9 @@ export class TranslatePanelComponent
     return this.route.snapshot.data.label || [];
   }
 
-  public markup(tagId: string): MarkupModel {
-    return this.route.snapshot.data.markup?.find((i) => i.tagId === tagId)
-      || Object.assign(new MarkupModel(), { content: tagId, tagId });
+  public staticPage(tagId: string): StaticPageModel {
+    return this.route.snapshot.data.staticPage?.find((i) => i.tagId === tagId)
+      || new StaticPageModel({ content: tagId, tagId });
   }
 
 }

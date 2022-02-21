@@ -11,7 +11,7 @@ export class BlogpostListingComponent
   extends BaseListing<BlogpostModel> {
 
   protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
-    .with('activity');
+    .with('topic');
 
   protected model: Type<BlogpostModel> = BlogpostModel;
 

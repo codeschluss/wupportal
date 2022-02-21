@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivityModel, BlogpostModel, BlogpostProvider, Box, TokenProvider, TranslationProvider } from '../../../core';
+import { BlogpostModel, BlogpostProvider, Box, TokenProvider, TopicModel, TranslationProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { EditorFieldComponent } from '../fields/editor.field';
 import { InputFieldComponent } from '../fields/input.field';
@@ -14,14 +14,14 @@ import { SelectFieldComponent } from '../fields/select.field';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
-        <ng-container *ngSwitchCase="'activity'">
-          <i18n>activity</i18n>
-        </ng-container>
         <ng-container *ngSwitchCase="'content'">
           <i18n>content</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'title'">
           <i18n>title</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'topic'">
+          <i18n>topic</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -38,10 +38,10 @@ export class BlogpostFormComponent
       tests: [Validators.required]
     },
     {
-      name: 'activity',
+      name: 'topic',
       input: SelectFieldComponent,
       label: 'name',
-      model: ActivityModel
+      model: TopicModel
     },
     {
       name: 'content',
@@ -61,12 +61,6 @@ export class BlogpostFormComponent
     super(route, tokenProvider, translationProvider);
   }
 
-  public persist(): Observable<any> {
-    this.item.activityId = (this.group.get('activity').value || { }).id;
-
-    return super.persist();
-  }
-
   protected cascade(item: BlogpostModel): Observable<any> {
     const links = [];
 
@@ -77,9 +71,9 @@ export class BlogpostFormComponent
       .unlinkImages(item.id, images.del.map((i) => i.id))); }
 
     if (this.item.id) {
-      const aId = this.item.activity && this.item.activity.id;
-      if (aId !== this.item.activityId) { links.push(this.blogpostProvider
-        .relinkActivity(item.id, Box(this.item.activityId))); }
+      const tId = this.item.topic && this.item.topic.id;
+      if (tId !== this.item.topicId) { links.push(this.blogpostProvider
+        .relinkTopic(item.id, Box(this.item.topicId))); }
     }
 
     return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));

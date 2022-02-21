@@ -6,7 +6,6 @@ export interface ResourceLanguageEntity {
   created?: string;
   id?: string;
   locale?: string;
-  machineTranslated?: string;
   modified?: string;
   name?: string;
 }

@@ -13,13 +13,11 @@ import { AddressProvider } from '../providers/address.provider';
 import { BlogpostProvider } from '../providers/blogpost.provider';
 import { CategoryProvider } from '../providers/category.provider';
 import { ConfigurationProvider } from '../providers/configuration.provider';
-import { InfopageProvider } from '../providers/infopage.provider';
-import { KeywordProvider } from '../providers/keyword.provider';
 import { LabelProvider } from '../providers/label.provider';
 import { LanguageProvider } from '../providers/language.provider';
-import { MarkupProvider } from '../providers/markup.provider';
 import { MembershipProvider } from '../providers/membership.provider';
 import { OrganisationProvider } from '../providers/organisation.provider';
+import { StaticPageProvider } from '../providers/static-page.provider';
 import { SubscriptionTypeProvider } from '../providers/subscription-type.provider';
 import { SubscriptionProvider } from '../providers/subscription.provider';
 import { SuburbProvider } from '../providers/suburb.provider';
@@ -43,14 +41,12 @@ const providers: TypeProvider[] = [
   BlogpostProvider,
   CategoryProvider,
   ConfigurationProvider,
-  InfopageProvider,
-  KeywordProvider,
   LabelProvider,
   LanguageProvider,
-  MarkupProvider,
   MembershipProvider,
   OrganisationProvider,
   SessionProvider,
+  StaticPageProvider,
   SubscriptionProvider,
   SubscriptionTypeProvider,
   SuburbProvider,

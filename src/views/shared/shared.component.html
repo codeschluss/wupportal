@@ -30,12 +30,6 @@
     <fa-icon icon="comment-dots"></fa-icon>
     <i18n>blogposts</i18n>
   </a>
-  <a mat-button
-    [class.active]="url.startsWith('/infopages')"
-    [routerLink]="['/', 'infopages']">
-    <fa-icon icon="info-circle"></fa-icon>
-    <i18n>infopages</i18n>
-  </a>
   <mat-form-field [class.active]="url.startsWith('/search')">
     <fa-icon matPrefix icon="search"></fa-icon>
     <input #toolbarInput matInput
@@ -262,12 +256,6 @@
         </mat-menu>
         <mat-menu #informationMenu="matMenu" xPosition="before">
           <button mat-menu-item
-            [class.active]="url === '/admin/information?tab=infopages'"
-            [queryParams]="{ tab: 'infopages' }"
-            [routerLink]="['/', 'admin', 'information']">
-            <i18n>infopages</i18n>
-          </button>
-          <button mat-menu-item
             [class.active]="url === '/admin/information?tab=blogposts'"
             [queryParams]="{ tab: 'blogposts' }"
             [routerLink]="['/', 'admin', 'information']">
@@ -320,12 +308,6 @@
             [queryParams]="{ tab: 'categories' }"
             [routerLink]="['/', 'admin', 'taxonomy']">
             <i18n>categories</i18n>
-          </button>
-          <button mat-menu-item
-            [class.active]="url === '/admin/taxonomy?tab=keywords'"
-            [queryParams]="{ tab: 'keywords' }"
-            [routerLink]="['/', 'admin', 'taxonomy']">
-            <i18n>keywords</i18n>
           </button>
           <button mat-menu-item
             [class.active]="url === '/admin/taxonomy?tab=targetGroups'"
@@ -423,12 +405,6 @@
         (click)="navigate('/', 'blogposts')">
         <fa-icon icon="comment-dots"></fa-icon>
         <i18n>blogposts</i18n>
-      </button>
-      <button mat-list-item
-        [class.active]="url.startsWith('/infopages')"
-        (click)="navigate('/', 'infopages')">
-        <fa-icon icon="info-circle"></fa-icon>
-        <i18n>infopages</i18n>
       </button>
     </mat-action-list>
     <ng-container *ngIf="platform === 'browser'">

@@ -12,10 +12,7 @@ export class BlogpostObjectComponent
 
   protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel, {
     required: true
-  }).with('activity').yield('address').yield('suburb')
-    .with('activity').yield('category')
-    .with('activity').yield('schedules')
-    .with('blogger')
+  }).with('blogger')
     .with('images');
 
   protected model: Type<BlogpostModel> = BlogpostModel;

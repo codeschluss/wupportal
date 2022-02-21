@@ -223,7 +223,7 @@ export class ScheduleFormComponent
     const start = from.clone();
     const until = moment(this.until.value, this.formats.date, 'en');
 
-    const values = [Object.assign(new this.model(), {
+    const values = [new this.model({
       endDate: goto.format(),
       startDate: from.format()
     })];
@@ -232,14 +232,14 @@ export class ScheduleFormComponent
       while (from.diff(until) < 0) {
         switch (this.recurrence.value) {
           case 'day':
-            values.push(Object.assign(new this.model(), {
+            values.push(new this.model({
               endDate: goto.add(1, 'day').format(),
               startDate: from.add(1, 'day').format()
             }));
             break;
 
           case 'month':
-            values.push(Object.assign(new this.model(), {
+            values.push(new this.model({
               endDate: goto.add(1, 'month').format(),
               startDate: from.add(1, 'month').format()
             }));
@@ -250,7 +250,7 @@ export class ScheduleFormComponent
               .map((chip) => from.clone().day(chip.value))
               .filter((day) => day.isAfter(start))
               .filter((day) => day.isBefore(until))
-              .forEach((day) => values.push(Object.assign(new this.model(), {
+              .forEach((day) => values.push(new this.model({
                 endDate: day.clone().add(ival).format(),
                 startDate: day.format()
               })));
@@ -260,7 +260,7 @@ export class ScheduleFormComponent
             break;
 
           case 'year':
-            values.push(Object.assign(new this.model(), {
+            values.push(new this.model({
               endDate: goto.add(1, 'year').format(),
               startDate: from.add(1, 'year').format()
             }));

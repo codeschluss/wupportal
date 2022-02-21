@@ -9,12 +9,10 @@
         </small>
       </a>
     </mat-card-title>
-    <ng-container ngProjectAs="mat-card-subtitle" *ngIf="item.activity">
+    <ng-container ngProjectAs="mat-card-subtitle" *ngIf="item.topic">
       <mat-card-subtitle>
-        <a [routerLink]="['/', 'activities', item.activity.id]">
-          <i18n>about</i18n>
-          <span itemprop="about">{{ item.activity.label }}</span>
-        </a>
+        <i18n>about</i18n>
+        <span itemprop="about">{{ item.topic.label }}</span>
       </mat-card-subtitle>
     </ng-container>
   </mat-card-header>

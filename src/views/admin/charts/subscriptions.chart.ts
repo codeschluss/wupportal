@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseChart } from '../base/base.chart';
 
 @Component({
@@ -8,13 +8,4 @@ import { BaseChart } from '../base/base.chart';
   })
 })
 
-export class SubscriptionsChartComponent
-  extends BaseChart
-  implements OnInit {
-
-  public ngOnInit(): void {
-    this.analyticsProvider.subscriptions()
-      .subscribe((entries) => this.setData(entries));
-  }
-
-}
+export class SubscriptionsChartComponent extends BaseChart { }

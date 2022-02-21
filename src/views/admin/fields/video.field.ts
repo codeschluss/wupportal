@@ -150,8 +150,8 @@ export class VideoFieldComponent
   }
 
   public create(): void {
-    this.value = this.value.concat(Object.assign(new VideoModel(), {
-      thumbnail: Object.assign(new ImageModel(), {
+    this.value = this.value.concat(new VideoModel({
+      thumbnail: new ImageModel({
         caption: this.caption.value || this.videoUrl.value
       }),
       thumbnailCaption: this.caption.value || this.videoUrl.value,

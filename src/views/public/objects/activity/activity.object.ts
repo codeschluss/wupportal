@@ -27,14 +27,12 @@ export class ActivityObjectComponent
   protected joiner: CrudJoiner = CrudJoiner.of(ActivityModel, {
     required: true
   }).with('address').yield('suburb')
-    .with('blogs')
     .with('category')
     .with('images')
     .with('organisation').yield('address').yield('suburb')
     .with('organisation').yield('images')
     .with('provider')
     .with('schedules')
-    .with('tags')
     .with('targetGroups');
 
   protected model: Type<ActivityModel> = ActivityModel;

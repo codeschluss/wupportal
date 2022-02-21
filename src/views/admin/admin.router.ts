@@ -17,8 +17,6 @@ import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
 import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
-import { InfopageStepperComponent } from './steppers/infopage.stepper';
-import { KeywordsStepperComponent } from './steppers/keyword.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
@@ -48,8 +46,6 @@ const routes: Route[] = [
           AddressStepperComponent.routing,
           BlogpostStepperComponent.routing,
           CategoryStepperComponent.routing,
-          InfopageStepperComponent.routing,
-          KeywordsStepperComponent.routing,
           LanguageStepperComponent.routing,
           OrganisationStepperComponent.routing,
           SubscriptionTypeStepperComponent.routing,

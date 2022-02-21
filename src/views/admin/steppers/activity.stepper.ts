@@ -73,7 +73,6 @@ export class ActivityStepperComponent
     .with('images')
     .with('organisation')
     .with('schedules')
-    .with('tags')
     .with('targetGroups')
     .with('translations').yield('language');
 

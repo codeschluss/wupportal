@@ -9,9 +9,9 @@
       <i18n>homepage</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <markup-form #homepageForm
-        [item]="markup('homepage')">
-      </markup-form>
+      <static-page-form #homepageForm
+        [item]="staticPage('homepage')">
+      </static-page-form>
       <mat-divider></mat-divider>
       <button mat-raised-button
         color="warn"
@@ -33,9 +33,9 @@
       <i18n>imprint</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <markup-form #imprintForm
-        [item]="markup('imprint')">
-      </markup-form>
+      <static-page-form #imprintForm
+        [item]="staticPage('imprint')">
+      </static-page-form>
       <mat-divider></mat-divider>
       <button mat-raised-button
         color="warn"
@@ -57,9 +57,9 @@
       <i18n>policies</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <markup-form #policiesForm
-        [item]="markup('policies')">
-      </markup-form>
+      <static-page-form #policiesForm
+        [item]="staticPage('policies')">
+      </static-page-form>
       <mat-divider></mat-divider>
       <button mat-raised-button
         color="warn"

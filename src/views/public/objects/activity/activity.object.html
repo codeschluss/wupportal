@@ -183,20 +183,6 @@
         </mat-expansion-panel-header>
         <organisation-card itemscope itemtype="https://schema.org/Organization" [item]="item.organisation"></organisation-card>
       </mat-expansion-panel>
-      <ng-container *ngIf="item.blogposts">
-        <mat-expansion-panel #blogposts (opened)="expanded(blogposts)">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <fa-icon icon="at"></fa-icon>
-              <i18n>blogposts</i18n>
-              <small>({{ item.blogposts.length }})</small>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-container *ngFor="let blogpost of item.blogposts" itemscope itemtype="https://schema.org/BlogPosting">
-            <blogpost-card [item]="blogpost"></blogpost-card>
-          </ng-container>
-        </mat-expansion-panel>
-      </ng-container>
     </aside>
   </section>
 </main>

@@ -9,6 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { BlogEntity } from '../models/blog-entity';
 import { ResourceBlogEntity } from '../models/resource-blog-entity';
+import { BooleanPrimitive } from '../models/boolean-primitive';
 import { ImageEntity } from '../models/image-entity';
 import { StringPrimitive } from '../models/string-primitive';
 
@@ -26,6 +27,7 @@ class BlogControllerService extends __BaseService {
   static readonly blogControllerReadOnePath = '/blogs/{blogId}';
   static readonly blogControllerUpdatePath = '/blogs/{blogId}';
   static readonly blogControllerDeletePath = '/blogs/{blogId}';
+  static readonly blogControllerGrantApprovalPath = '/blogs/{blogId}/approve';
   static readonly blogControllerReadBloggerPath = '/blogs/{blogId}/blogger';
   static readonly blogControllerReadImagesPath = '/blogs/{blogId}/images';
   static readonly blogControllerAddImagePath = '/blogs/{blogId}/images';
@@ -336,6 +338,49 @@ class BlogControllerService extends __BaseService {
    */
   blogControllerDelete(blogId: string): __Observable<{}> {
     return this.blogControllerDeleteResponse(blogId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * grantApproval
+   * @param blogId blogId
+   * @param isApproved isApproved
+   * @return OK
+   */
+  blogControllerGrantApprovalResponse(blogId: string,
+    isApproved: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = isApproved;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/approve`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * grantApproval
+   * @param blogId blogId
+   * @param isApproved isApproved
+   * @return OK
+   */
+  blogControllerGrantApproval(blogId: string,
+    isApproved: BooleanPrimitive): __Observable<{}> {
+    return this.blogControllerGrantApprovalResponse(blogId, isApproved).pipe(
       __map(_r => _r.body as {})
     );
   }

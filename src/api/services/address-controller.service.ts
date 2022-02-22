@@ -9,6 +9,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { AddressEntity } from '../models/address-entity';
 import { ResourceAddressEntity } from '../models/resource-address-entity';
+import { ResourcesObject } from '../models/resources-object';
 import { ResourceObject } from '../models/resource-object';
 import { StringPrimitive } from '../models/string-primitive';
 
@@ -25,6 +26,8 @@ class AddressControllerService extends __BaseService {
   static readonly addressControllerReadOnePath = '/addresses/{addressId}';
   static readonly addressControllerUpdatePath = '/addresses/{addressId}';
   static readonly addressControllerDeletePath = '/addresses/{addressId}';
+  static readonly addressControllerReadActivitiesPath = '/addresses/{addressId}/activities';
+  static readonly addressControllerReadOrganisationsPath = '/addresses/{addressId}/organisations';
   static readonly addressControllerReadSuburbPath = '/addresses/{addressId}/suburb';
   static readonly addressControllerUpdateSuburbPath = '/addresses/{addressId}/suburb';
 
@@ -296,6 +299,82 @@ class AddressControllerService extends __BaseService {
   addressControllerDelete(addressId: string): __Observable<{}> {
     return this.addressControllerDeleteResponse(addressId).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * readActivities
+   * @param addressId addressId
+   * @return OK
+   */
+  addressControllerReadActivitiesResponse(addressId: string): __Observable<__StrictHttpResponse<ResourcesObject>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/addresses/${encodeURIComponent(String(addressId))}/activities`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<ResourcesObject>;
+      })
+    );
+  }
+  /**
+   * readActivities
+   * @param addressId addressId
+   * @return OK
+   */
+  addressControllerReadActivities(addressId: string): __Observable<ResourcesObject> {
+    return this.addressControllerReadActivitiesResponse(addressId).pipe(
+      __map(_r => _r.body as ResourcesObject)
+    );
+  }
+
+  /**
+   * readOrganisations
+   * @param addressId addressId
+   * @return OK
+   */
+  addressControllerReadOrganisationsResponse(addressId: string): __Observable<__StrictHttpResponse<ResourcesObject>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/addresses/${encodeURIComponent(String(addressId))}/organisations`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<ResourcesObject>;
+      })
+    );
+  }
+  /**
+   * readOrganisations
+   * @param addressId addressId
+   * @return OK
+   */
+  addressControllerReadOrganisations(addressId: string): __Observable<ResourcesObject> {
+    return this.addressControllerReadOrganisationsResponse(addressId).pipe(
+      __map(_r => _r.body as ResourcesObject)
     );
   }
 

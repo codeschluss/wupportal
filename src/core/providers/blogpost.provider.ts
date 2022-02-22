@@ -1,5 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
+import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { BlogControllerService as Service } from '../../api/services/blog-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
@@ -8,6 +9,7 @@ import { BlogpostModel as Model } from '../models/blogpost.model';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
 import { TopicModel } from '../models/topic.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -107,5 +109,9 @@ export class BlogpostProvider
   public unlinkImages: (id: string, imageIds: string[]) =>
     Observable<any> = this.apply(this.service
       .blogControllerDeleteImagesResponse);
+
+  public grantApproval: (id: string, grant: Boolean) =>
+    Observable<any> = this.apply(this.service
+      .blogControllerGrantApprovalResponse);
 
 }

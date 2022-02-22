@@ -15,6 +15,7 @@ export class BlogpostModel
 
   public author: string;
   public likes: number;
+  public approved: boolean;
 
   public topicId: string;
 

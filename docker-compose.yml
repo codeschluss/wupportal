@@ -50,7 +50,7 @@ services:
     working_dir: /src
 
   server:
-    build: https://github.com/wooportal/server.git
+    build: https://github.com/wooportal/server.git#dev
     command: java -jar server.jar
     container_name: wooportal.server.dev
     extra_hosts: [$HOSTNAME:127.0.0.1]

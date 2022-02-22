@@ -10,6 +10,17 @@
     </ng-template>
     <ng-template matTabContent>
       <blogpost-table>
+        <ng-container matColumnDef="approved">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>blogapproved</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle
+              [checked]="item.approved"
+              (change)="grantBlogApproval(item, $event.checked)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n>actions</i18n>

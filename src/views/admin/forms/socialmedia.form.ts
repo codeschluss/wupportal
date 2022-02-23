@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SocialMediaModel } from 'src/core/models/socialmedia.model';
 import { BaseForm, FormField } from '../base/base.form';
-import { IconFieldComponent } from '../fields/icon.field';
+import { IconBrandFieldComponent } from '../fields/icon-brand.field';
 import { InputFieldComponent } from '../fields/input.field';
 
 @Component({
@@ -35,7 +35,7 @@ export class SocialMediaFormComponent
     },
     {
       name: 'icon',
-      input: IconFieldComponent,
+      input: IconBrandFieldComponent,
       tests: [Validators.required]
     },
     {

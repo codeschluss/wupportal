@@ -37,6 +37,7 @@ import { TargetGroupActivitiesChartComponent } from './charts/target-group-activ
 import { BooleanFieldComponent } from './fields/boolean.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
 import { EditorFieldComponent } from './fields/editor.field';
+import { IconBrandFieldComponent } from './fields/icon-brand.field';
 import { IconFieldComponent } from './fields/icon.field';
 import { ImageFieldComponent } from './fields/image.field';
 import { InputFieldComponent } from './fields/input.field';
@@ -129,6 +130,7 @@ const fields: Type<BaseFieldComponent>[] = [
   ChipListFieldComponent,
   EditorFieldComponent,
   IconFieldComponent,
+  IconBrandFieldComponent,
   InputFieldComponent,
   ImageFieldComponent,
   ScheduleFieldComponent,

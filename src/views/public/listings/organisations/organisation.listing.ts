@@ -10,7 +10,9 @@ import { BaseListing } from '../base.listing';
 export class OrganisationListingComponent
   extends BaseListing<OrganisationModel> {
 
-  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
+  protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel, {
+    approved: true
+  })
     .with('address').yield('suburb')
     .with('images');
 

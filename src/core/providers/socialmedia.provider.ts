@@ -8,7 +8,7 @@ import { SocialMediaModel as Model } from '../models/socialmedia.model';
   providedIn: 'root'
 })
 
-export class SocialMediaProviderComponent
+export class SocialMediaProvider
   extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [];

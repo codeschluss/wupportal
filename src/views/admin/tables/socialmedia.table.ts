@@ -32,7 +32,11 @@ export class SocialMediaTableComponent
     },
     {
       name: 'icon',
-      value: (item) => item.icon
+      value: (item) => `
+        <a target="_blank" href="https://fontawesome.com/icons/${item.icon}">
+          ${item.icon}
+        </a>
+      `
     },
     {
       name: 'url',

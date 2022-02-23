@@ -14,6 +14,9 @@
   <button mat-menu-item (click)="create('languages')">
     <i18n>createLanguage</i18n>
   </button>
+  <button mat-menu-item (click)="create('socialmedia')">
+    <i18n>createSocialMedia</i18n>
+  </button>
 </mat-menu>
 
 <mat-tab-group id="application" [selectedIndex]="index">
@@ -60,6 +63,33 @@
           </mat-cell>
         </ng-container>
       </language-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="socialmedia">
+    <ng-template matTabLabel>
+      <i18n>socialmedia</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <socialmedia-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </socialmedia-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

@@ -7,6 +7,7 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
+import { ImageEntity } from '../models/image-entity';
 import { UserEntity } from '../models/user-entity';
 import { StringPrimitive } from '../models/string-primitive';
 import { ResourceUserEntity } from '../models/resource-user-entity';
@@ -19,6 +20,9 @@ import { BooleanPrimitive } from '../models/boolean-primitive';
   providedIn: 'root',
 })
 class UserControllerService extends __BaseService {
+  static readonly userControllerReadAvatarPath = '/user/{userId}/avatar';
+  static readonly userControllerAddAvatarPath = '/user/{userId}/avatar';
+  static readonly userControllerDeleteAvatarPath = '/user/{userId}/avatar';
   static readonly userControllerReadAllPath = '/users';
   static readonly userControllerCreatePath = '/users';
   static readonly userControllerApplyAsBloggerPath = '/users/blogapply';
@@ -46,6 +50,130 @@ class UserControllerService extends __BaseService {
     http: HttpClient
   ) {
     super(config, http);
+  }
+
+  /**
+   * readAvatar
+   * @param userId userId
+   * @return OK
+   */
+  userControllerReadAvatarResponse(userId: string): __Observable<__StrictHttpResponse<ImageEntity>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/user/${encodeURIComponent(String(userId))}/avatar`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<ImageEntity>;
+      })
+    );
+  }
+  /**
+   * readAvatar
+   * @param userId userId
+   * @return OK
+   */
+  userControllerReadAvatar(userId: string): __Observable<ImageEntity> {
+    return this.userControllerReadAvatarResponse(userId).pipe(
+      __map(_r => _r.body as ImageEntity)
+    );
+  }
+
+  /**
+   * addAvatar
+   * @param userId userId
+   * @param avatar avatar
+   * @return OK
+   */
+  userControllerAddAvatarResponse(userId: string,
+    avatar: ImageEntity): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = avatar;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/user/${encodeURIComponent(String(userId))}/avatar`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * addAvatar
+   * @param userId userId
+   * @param avatar avatar
+   * @return OK
+   */
+  userControllerAddAvatar(userId: string,
+    avatar: ImageEntity): __Observable<{}> {
+    return this.userControllerAddAvatarResponse(userId, avatar).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * deleteAvatar
+   * @param userId userId
+   * @param avatarId avatarId
+   * @return OK
+   */
+  userControllerDeleteAvatarResponse(userId: string,
+    avatarId: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    if (avatarId != null) __params = __params.set('avatarId', avatarId.toString());
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/user/${encodeURIComponent(String(userId))}/avatar`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * deleteAvatar
+   * @param userId userId
+   * @param avatarId avatarId
+   * @return OK
+   */
+  userControllerDeleteAvatar(userId: string,
+    avatarId: string): __Observable<{}> {
+    return this.userControllerDeleteAvatarResponse(userId, avatarId).pipe(
+      __map(_r => _r.body as {})
+    );
   }
 
   /**

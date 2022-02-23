@@ -57,6 +57,7 @@ import { MailingFormComponent } from './forms/mailing.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
 import { PushingFormComponent } from './forms/pushing.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
+import { SocialMediaFormComponent } from './forms/socialmedia.form';
 import { StaticPageFormComponent } from './forms/static-page.form';
 import { SubscriptionTypeFormComponent } from './forms/subscription-type.form';
 import { SuburbFormComponent } from './forms/suburb.form';
@@ -85,6 +86,7 @@ import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
+import { SocialMediaStepperComponent } from './steppers/socialmedia.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
@@ -97,6 +99,7 @@ import { CategoryTableComponent } from './tables/category.table';
 import { LanguageTableComponent } from './tables/language.table';
 import { MembershipTableComponent } from './tables/membership.table';
 import { OrganisationTableComponent } from './tables/organisation.table';
+import { SocialMediaTableComponent } from './tables/socialmedia.table';
 import { SubscriptionTypeTableComponent } from './tables/subscription-type.table';
 import { SuburbTableComponent } from './tables/suburb.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
@@ -155,7 +158,8 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   TopicFormComponent,
   TranslationFormComponent,
   UserFormComponent,
-  VideoFormComponent
+  VideoFormComponent,
+  SocialMediaFormComponent
 ];
 
 const materials: Type<any>[] = [
@@ -215,7 +219,8 @@ const steppers: Type<BaseStepper<CrudModel>>[] = [
   SuburbStepperComponent,
   TargetGroupStepperComponent,
   TopicStepperComponent,
-  UserStepperComponent
+  UserStepperComponent,
+  SocialMediaStepperComponent
 ];
 
 const tables: Type<BaseTable<CrudModel>>[] = [
@@ -230,7 +235,8 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   SuburbTableComponent,
   TargetGroupTableComponent,
   TopicTableComponent,
-  UserTableComponent
+  UserTableComponent,
+  SocialMediaTableComponent
 ];
 
 @NgModule({

@@ -239,6 +239,12 @@
             [routerLink]="['/', 'admin', 'application']">
             <i18n>languages</i18n>
           </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/application?tab=socialmedia'"
+            [queryParams]="{ tab: 'socialmedia' }"
+            [routerLink]="['/', 'admin', 'application']">
+            <i18n>socialmedia</i18n>
+          </button>
         </mat-menu>
         <mat-menu #messagingMenu="matMenu" xPosition="before">
           <button mat-menu-item

@@ -52,6 +52,13 @@
     </ng-template>
   </mat-tab>
 
+  <mat-tab id="avatar">
+    <ng-template matTabLabel>
+      <i18n>avatar</i18n>
+    </ng-template>
+    <image-form></image-form>
+  </mat-tab>
+
   <mat-tab id="organisations" [disabled]="!organisations.length">
     <ng-template matTabLabel>
       <i18n>organisations</i18n>

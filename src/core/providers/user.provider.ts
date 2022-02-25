@@ -1,5 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
+import { ImageModel } from '..';
 import { BooleanPrimitive as Boolean } from '../../api/models/boolean-primitive';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { UserControllerService as Service } from '../../api/services/user-controller.service';
@@ -48,6 +49,11 @@ export class UserProvider
       field: 'providers',
       method: () => EMPTY,
       model: MembershipModel
+    },
+    {
+      field: 'avatar',
+      method: this.service.userControllerReadAvatarResponse,
+      model: ImageModel
     }
   ];
 

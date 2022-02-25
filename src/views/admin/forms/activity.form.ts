@@ -58,6 +58,9 @@ import { SelectFieldComponent } from '../fields/select.field';
         <ng-container *ngSwitchCase="'targetGroups'">
           <i18n>targetGroups</i18n>
         </ng-container>
+        <ng-container *ngSwitchCase="'admissionFee'">
+          <i18n>admissionFee</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)
@@ -116,6 +119,13 @@ export class ActivityFormComponent
       label: 'name',
       model: TargetGroupModel,
       multi: true
+    },
+    {
+      name: 'admissionFee',
+      input: InputFieldComponent,
+      tests: [Validators.pattern(/^\s*\d*\s*$/)],
+      label: 'admissionFee',
+      type: 'number'
     }
   ];
 

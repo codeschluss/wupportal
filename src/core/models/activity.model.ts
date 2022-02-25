@@ -17,6 +17,7 @@ export class ActivityModel
   @Translate() public description: string;
   @Translate() public name: string;
 
+  public admissionFee: number;
   public contactName: string;
   public likes: number;
   public mail: string;

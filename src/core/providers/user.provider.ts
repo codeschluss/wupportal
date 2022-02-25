@@ -84,6 +84,10 @@ export class UserProvider
   public readAll: (params?: Service.UserControllerReadAllParams) =>
     Observable<Model[]>;
 
+  public addAvatar: (id: string, avatar: ImageModel) =>
+    Observable<any> = this.apply(this.service
+      .userControllerAddAvatarResponse);
+
   public grantBlogger: (id: string, grant: Boolean) =>
     Observable<any> = this.apply(this.service
       .userControllerGrantBloggerRightResponse);

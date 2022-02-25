@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { ImageModel } from '..';
 import { UserEntity } from '../../api/models/user-entity';
 import { CrudModel } from '../crud/crud.model';
 import { ActivityModel } from './activity.model';
@@ -21,6 +22,7 @@ export class UserModel
   public username: string;
 
   public activities: ActivityModel[] & Observable<ActivityModel[]>;
+  public avatar: ImageModel & Observable<ImageModel>;
   public blogger: BloggerModel & Observable<BloggerModel>;
   public blogposts: BlogpostModel[] & Observable<BlogpostModel[]>;
   public membership: MembershipModel & Observable<MembershipModel>;

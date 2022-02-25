@@ -34,6 +34,7 @@ import { CategoryActivitiesChartComponent } from './charts/category-activities.c
 import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
 import { SuburbActivitiesChartComponent } from './charts/suburb-activities.chart';
 import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
+import { AvatarFieldComponent } from './fields/avatar.field';
 import { BooleanFieldComponent } from './fields/boolean.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
 import { EditorFieldComponent } from './fields/editor.field';
@@ -48,6 +49,7 @@ import { UrlFieldComponent } from './fields/url.field';
 import { VideoFieldComponent } from './fields/video.field';
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
+import { AvatarFormComponent } from './forms/avatar.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
 import { CategoryFormComponent } from './forms/category.form';
 import { ConfigurationFormComponent } from './forms/configuration.form';
@@ -125,6 +127,7 @@ const directives: Type<any>[] = [
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
+  AvatarFieldComponent,
   BaseFieldComponent,
   BooleanFieldComponent,
   ChipListFieldComponent,
@@ -143,6 +146,7 @@ const fields: Type<BaseFieldComponent>[] = [
 const forms: Type<BaseForm<CrudModel>>[] = [
   ActivityFormComponent,
   AddressFormComponent,
+  AvatarFormComponent,
   BlogpostFormComponent,
   CategoryFormComponent,
   ConfigurationFormComponent,

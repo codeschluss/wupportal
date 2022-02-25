@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { filter } from 'rxjs/operators';
-import { ActivityModel, BlogpostModel, CrudJoiner, OrganisationModel, UserModel } from '../../../../core';
+import { ActivityModel, BlogpostModel, CrudJoiner, ImageModel, OrganisationModel, UserModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 import { RequestPopupComponent } from '../../popups/request.popup';
 
@@ -12,6 +12,7 @@ import { RequestPopupComponent } from '../../popups/request.popup';
 export class AccountPanelComponent
   extends BasePanel {
 
+  public avatarGroup: FormGroup = new FormGroup({ });
   public userGroup: FormGroup = new FormGroup({ });
 
   protected path: string = 'account/:uuid';
@@ -26,10 +27,16 @@ export class AccountPanelComponent
       .with('blogs').yield('activity')
       .with('organisations').yield('address').yield('suburb')
       .with('organisations').yield('provider')
+      .with('avatar')
   };
 
   public get activities(): ActivityModel[] {
     return this.user.activities || [];
+  }
+
+
+  public get avatar(): ImageModel {
+    return this.user.avatar;
   }
 
   public get approved(): boolean {

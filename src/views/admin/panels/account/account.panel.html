@@ -52,11 +52,22 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="avatar">
+  <mat-tab id="avatar" [disabled]="!user">
     <ng-template matTabLabel>
       <i18n>avatar</i18n>
     </ng-template>
-    <image-form></image-form>
+    <ng-template matTabContent>
+      <avatar-form #avatarForm
+      [group]="avatarGroup"
+      [item]="avatar">
+      </avatar-form>
+      <mat-divider></mat-divider>
+      <button mat-raised-button
+        color="primary"
+        (click)="avatarForm.persist().subscribe()">
+        <i18n>persist</i18n>
+      </button>
+    </ng-template>
   </mat-tab>
 
   <mat-tab id="organisations" [disabled]="!organisations.length">

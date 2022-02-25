@@ -56,11 +56,6 @@ import { BaseFieldComponent } from '../base/base.field';
           <button mat-button color="warn" (click)="delete(item)">
             <i18n>delete</i18n>
           </button>
-          <button mat-button
-            [disabled]="caption.value || image"
-            (click)="edit(item)">
-            <i18n>edit</i18n>
-          </button>
         </mat-card-actions>
       </mat-card>
     </ng-container>
@@ -98,21 +93,16 @@ import { BaseFieldComponent } from '../base/base.field';
           <button mat-button [disabled]="!image" (click)="clear()">
             <i18n>reset</i18n>
           </button>
-          <button mat-button
-            color="primary"
-            [disabled]="!image"
-            (click)="create()">
-            <i18n>create</i18n>
-          </button>
         </mat-card-actions>
       </mat-card>
     </ng-container>
   `
 })
 
-export class ImageFieldComponent
+export class AvatarFieldComponent
   extends BaseFieldComponent
   implements AfterViewInit {
+
 
   public caption: FormControl = new FormControl();
 
@@ -145,13 +135,7 @@ export class ImageFieldComponent
     this.image = null;
   }
 
-  public create(): void {
-    this.value = this.value.concat(Object.assign(this.image, {
-      caption: this.caption.value || this.image.caption
-    }));
 
-    this.clear();
-  }
 
   public delete(item: ImageModel): void {
     this.value = this.value.filter((value) => value !== item);
@@ -178,5 +162,7 @@ export class ImageFieldComponent
     this.caption.patchValue(item.caption);
     this.delete(this.image = item);
   }
+
+
 
 }

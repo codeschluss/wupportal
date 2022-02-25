@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { ImageModel, TokenProvider, TranslationProvider, UserProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { AvatarFieldComponent } from '../fields/avatar.field';
@@ -40,18 +39,9 @@ export class AvatarFormComponent
       super(route, tokenProvider, translationProvider);
 
   }
-
-  public reset(): void {
-    this.group.reset({ images: this.item || [] });
-  }
-
+  
   protected ngPostInit(): void {
-    this.fields[0].value = Array.isArray(this.item) ? this.item : [];
+    this.fields[0].value = this.item;
   }
-
-  public persist(): Observable<any> {
-    return this.userProvider.addAvatar(this.item.id, this.group.get('avatar').value)
-  }
-
 
 }

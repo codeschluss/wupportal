@@ -44,22 +44,7 @@ import { BaseFieldComponent } from '../base/base.field';
     }
   `],
   template: `
-    <ng-container *ngFor="let item of value">
-      <mat-card>
-        <img mat-card-image
-          src="data:image/svg+xml,
-            %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
-          [style.backgroundImage]="item.source">
-        <mat-card-content>{{ item.caption }}</mat-card-content>
-        <mat-divider></mat-divider>
-        <mat-card-actions>
-          <button mat-button color="warn" (click)="delete(item)">
-            <i18n>delete</i18n>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </ng-container>
-    <ng-container *ngIf="!(value?.length >= 5)">
+    <ng-container>
       <mat-card>
         <mat-card-content>
           <ng-container *ngIf="image">
@@ -127,15 +112,16 @@ export class AvatarFieldComponent
     ).subscribe((item) => {
       this.caption.patchValue(this.caption.value || item.caption);
       this.image = item;
+      this.value = this.image;
     });
+    if (this.value) this.image = this.value;
   }
 
   public clear(): void {
     this.caption.patchValue(null);
     this.image = null;
+    this.value = null;
   }
-
-
 
   public delete(item: ImageModel): void {
     this.value = this.value.filter((value) => value !== item);

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ActivityModel, BlogpostModel, CrudJoiner, ImageModel, OrganisationModel, UserModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
@@ -73,6 +74,10 @@ export class AccountPanelComponent
     this.dialog.open(RequestPopupComponent, {
       data: this.user
     }).afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
+  }
+
+  public persistAvatar(): Observable<any> {
+    return this.userProvider.addAvatar(this.user.id, this.avatarGroup.get('avatar').value);
   }
 
 }

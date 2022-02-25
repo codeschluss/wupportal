@@ -123,7 +123,7 @@ export class ActivityFormComponent
     {
       name: 'admissionFee',
       input: InputFieldComponent,
-      tests: [Validators.pattern(/^\s*\d*\s*$/)],
+      tests: [Validators.pattern(/^([1-9]\d*|0)(\.\d+)?$/)],
       label: 'admissionFee',
       type: 'number'
     }

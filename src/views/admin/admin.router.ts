@@ -19,7 +19,7 @@ import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
-import { SocialMediaStepperComponent } from './steppers/socialmedia.stepper';
+import { SocialMediaStepperComponent } from './steppers/social-media.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
@@ -49,12 +49,12 @@ const routes: Route[] = [
           CategoryStepperComponent.routing,
           LanguageStepperComponent.routing,
           OrganisationStepperComponent.routing,
+          SocialMediaStepperComponent.routing,
           SubscriptionTypeStepperComponent.routing,
           SuburbStepperComponent.routing,
           TargetGroupStepperComponent.routing,
           TopicStepperComponent.routing,
-          UserStepperComponent.routing,
-          SocialMediaStepperComponent.routing
+          UserStepperComponent.routing
         ]
       }
     ]

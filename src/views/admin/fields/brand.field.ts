@@ -27,7 +27,7 @@ import { BaseFieldComponent } from '../base/base.field';
   `)
 })
 
-export class IconBrandFieldComponent
+export class BrandFieldComponent
   extends BaseFieldComponent {
 
   public get icons(): IconDefinition[] {

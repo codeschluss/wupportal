@@ -2,10 +2,10 @@ import { Component, Type } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ImageModel } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
-import { ImageFieldComponent } from '../fields/image.field';
+import { ImagesFieldComponent } from '../fields/images.field';
 
 @Component({
-  selector: 'image-form',
+  selector: 'images-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -17,13 +17,13 @@ import { ImageFieldComponent } from '../fields/image.field';
   `)
 })
 
-export class ImageFormComponent
+export class ImagesFormComponent
   extends BaseForm<ImageModel> {
 
   public fields: FormField[] = [
     {
       name: 'images',
-      input: ImageFieldComponent
+      input: ImagesFieldComponent
     }
   ];
 

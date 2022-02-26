@@ -14,7 +14,7 @@
   <button mat-menu-item (click)="create('languages')">
     <i18n>createLanguage</i18n>
   </button>
-  <button mat-menu-item (click)="create('socialmedia')">
+  <button mat-menu-item (click)="create('social-media')">
     <i18n>createSocialMedia</i18n>
   </button>
 </mat-menu>
@@ -66,12 +66,12 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="socialmedia">
+  <mat-tab id="social-media">
     <ng-template matTabLabel>
-      <i18n>socialmedia</i18n>
+      <i18n>socialMedia</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <socialmedia-table>
+      <social-media-table>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n>actions</i18n>
@@ -89,7 +89,7 @@
             </button>
           </mat-cell>
         </ng-container>
-      </socialmedia-table>
+      </social-media-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

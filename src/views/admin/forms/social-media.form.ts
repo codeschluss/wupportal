@@ -1,12 +1,13 @@
 import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { SocialMediaModel } from 'src/core/models/socialmedia.model';
+import { SocialMediaModel } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
-import { IconBrandFieldComponent } from '../fields/icon-brand.field';
+import { BrandFieldComponent } from '../fields/brand.field';
 import { InputFieldComponent } from '../fields/input.field';
+import { UrlFieldComponent } from '../fields/url.field';
 
 @Component({
-  selector: 'socialmedia-form',
+  selector: 'social-media-form',
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -35,12 +36,12 @@ export class SocialMediaFormComponent
     },
     {
       name: 'icon',
-      input: IconBrandFieldComponent,
+      input: BrandFieldComponent,
       tests: [Validators.required]
     },
     {
       name: 'url',
-      input: InputFieldComponent,
+      input: UrlFieldComponent,
       tests: [Validators.required]
     }
   ];

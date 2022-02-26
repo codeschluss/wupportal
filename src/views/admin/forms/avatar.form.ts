@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ImageModel, TokenProvider, TranslationProvider, UserProvider } from '../../../core';
+import { ImageModel } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { AvatarFieldComponent } from '../fields/avatar.field';
 
@@ -30,16 +29,6 @@ export class AvatarFormComponent
 
   public model: Type<ImageModel> = ImageModel;
 
-
-  constructor(
-    public route: ActivatedRoute,
-    public tokenProvider: TokenProvider,
-    public translationProvider: TranslationProvider,
-    public userProvider: UserProvider) {
-      super(route, tokenProvider, translationProvider);
-
-  }
-  
   protected ngPostInit(): void {
     this.fields[0].value = this.item?.id ? this.item : null;
   }

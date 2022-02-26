@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BlogpostModel, Box, CrudJoiner, UserModel } from '../../../../core';
+import { CrudJoiner } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
@@ -12,6 +12,5 @@ export class InformationPanelComponent
   protected path: string = 'information';
 
   protected resolve: Record<string, CrudJoiner> = { };
-
 
 }

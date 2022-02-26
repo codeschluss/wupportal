@@ -36,11 +36,12 @@ import { SuburbActivitiesChartComponent } from './charts/suburb-activities.chart
 import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
 import { AvatarFieldComponent } from './fields/avatar.field';
 import { BooleanFieldComponent } from './fields/boolean.field';
+import { BrandFieldComponent } from './fields/brand.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
 import { EditorFieldComponent } from './fields/editor.field';
-import { IconBrandFieldComponent } from './fields/icon-brand.field';
 import { IconFieldComponent } from './fields/icon.field';
 import { ImageFieldComponent } from './fields/image.field';
+import { ImagesFieldComponent } from './fields/images.field';
 import { InputFieldComponent } from './fields/input.field';
 import { ScheduleFieldComponent } from './fields/schedule.field';
 import { SelectFieldComponent } from './fields/select.field';
@@ -53,14 +54,14 @@ import { AvatarFormComponent } from './forms/avatar.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
 import { CategoryFormComponent } from './forms/category.form';
 import { ConfigurationFormComponent } from './forms/configuration.form';
-import { ImageFormComponent } from './forms/image.form';
+import { ImagesFormComponent } from './forms/images.form';
 import { LabelFormComponent } from './forms/label.form';
 import { LanguageFormComponent } from './forms/language.form';
 import { MailingFormComponent } from './forms/mailing.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
 import { PushingFormComponent } from './forms/pushing.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
-import { SocialMediaFormComponent } from './forms/socialmedia.form';
+import { SocialMediaFormComponent } from './forms/social-media.form';
 import { StaticPageFormComponent } from './forms/static-page.form';
 import { SubscriptionTypeFormComponent } from './forms/subscription-type.form';
 import { SuburbFormComponent } from './forms/suburb.form';
@@ -89,7 +90,7 @@ import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
-import { SocialMediaStepperComponent } from './steppers/socialmedia.stepper';
+import { SocialMediaStepperComponent } from './steppers/social-media.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
@@ -102,7 +103,7 @@ import { CategoryTableComponent } from './tables/category.table';
 import { LanguageTableComponent } from './tables/language.table';
 import { MembershipTableComponent } from './tables/membership.table';
 import { OrganisationTableComponent } from './tables/organisation.table';
-import { SocialMediaTableComponent } from './tables/socialmedia.table';
+import { SocialMediaTableComponent } from './tables/social-media.table';
 import { SubscriptionTypeTableComponent } from './tables/subscription-type.table';
 import { SuburbTableComponent } from './tables/suburb.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
@@ -130,12 +131,13 @@ const fields: Type<BaseFieldComponent>[] = [
   AvatarFieldComponent,
   BaseFieldComponent,
   BooleanFieldComponent,
+  BrandFieldComponent,
   ChipListFieldComponent,
   EditorFieldComponent,
   IconFieldComponent,
-  IconBrandFieldComponent,
-  InputFieldComponent,
   ImageFieldComponent,
+  ImagesFieldComponent,
+  InputFieldComponent,
   ScheduleFieldComponent,
   SelectFieldComponent,
   TextareaFieldComponent,
@@ -150,13 +152,14 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   BlogpostFormComponent,
   CategoryFormComponent,
   ConfigurationFormComponent,
-  ImageFormComponent,
+  ImagesFormComponent,
   LabelFormComponent,
   LanguageFormComponent,
   MailingFormComponent,
   OrganisationFormComponent,
   PushingFormComponent,
   ScheduleFormComponent,
+  SocialMediaFormComponent,
   StaticPageFormComponent,
   SubscriptionTypeFormComponent,
   SuburbFormComponent,
@@ -165,7 +168,6 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   TranslationFormComponent,
   UserFormComponent,
   VideoFormComponent,
-  SocialMediaFormComponent
 ];
 
 const materials: Type<any>[] = [
@@ -221,12 +223,12 @@ const steppers: Type<BaseStepper<CrudModel>>[] = [
   CategoryStepperComponent,
   LanguageStepperComponent,
   OrganisationStepperComponent,
+  SocialMediaStepperComponent,
   SubscriptionTypeStepperComponent,
   SuburbStepperComponent,
   TargetGroupStepperComponent,
   TopicStepperComponent,
-  UserStepperComponent,
-  SocialMediaStepperComponent
+  UserStepperComponent
 ];
 
 const tables: Type<BaseTable<CrudModel>>[] = [
@@ -237,12 +239,12 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   LanguageTableComponent,
   MembershipTableComponent,
   OrganisationTableComponent,
+  SocialMediaTableComponent,
   SubscriptionTypeTableComponent,
   SuburbTableComponent,
   TargetGroupTableComponent,
   TopicTableComponent,
-  UserTableComponent,
-  SocialMediaTableComponent
+  UserTableComponent
 ];
 
 @NgModule({

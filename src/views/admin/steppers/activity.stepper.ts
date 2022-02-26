@@ -3,7 +3,7 @@ import { ActivityModel, CrudJoiner } from '../../../core';
 import { BaseStepper, FormStep } from '../base/base.stepper';
 import { ActivityFormComponent } from '../forms/activity.form';
 import { AddressFormComponent } from '../forms/address.form';
-import { ImageFormComponent } from '../forms/image.form';
+import { ImagesFormComponent } from '../forms/images.form';
 import { ScheduleFormComponent } from '../forms/schedule.form';
 import { TranslationFormComponent } from '../forms/translation.form';
 
@@ -55,7 +55,7 @@ export class ActivityStepperComponent
     },
     {
       name: 'images',
-      form: ImageFormComponent
+      form: ImagesFormComponent
     },
     {
       name: 'schedules',

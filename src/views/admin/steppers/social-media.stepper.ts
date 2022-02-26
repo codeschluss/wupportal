@@ -1,11 +1,10 @@
 import { Component, Type } from '@angular/core';
-import { SocialMediaModel } from 'src/core/models/socialmedia.model';
-import { CrudJoiner } from '../../../core';
+import { CrudJoiner, SocialMediaModel } from '../../../core';
 import { BaseStepper, FormStep } from '../base/base.stepper';
-import { SocialMediaFormComponent } from '../forms/socialmedia.form';
+import { SocialMediaFormComponent } from '../forms/social-media.form';
 
 @Component({
-  selector: 'socialmedia-stepper',
+  selector: 'social-media-stepper',
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
@@ -26,7 +25,7 @@ import { SocialMediaFormComponent } from '../forms/socialmedia.form';
 export class SocialMediaStepperComponent
   extends BaseStepper<SocialMediaModel> {
 
-  public root: string = 'socialmedia';
+  public root: string = 'social-media';
 
   public steps: FormStep[] = [
     {

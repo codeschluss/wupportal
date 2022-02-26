@@ -1,10 +1,9 @@
 import { Component, Type } from '@angular/core';
-import { SocialMediaModel } from 'src/core/models/socialmedia.model';
-import { CrudJoiner } from '../../../core';
+import { CrudJoiner, SocialMediaModel } from '../../../core';
 import { BaseTable, TableColumn } from '../base/base.table';
 
 @Component({
-  selector: 'socialmedia-table',
+  selector: 'social-media-table',
   template: BaseTable.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">

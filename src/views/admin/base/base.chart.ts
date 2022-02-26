@@ -1,8 +1,8 @@
 import { Directive, HostBinding, ViewChild } from '@angular/core';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { Color } from '@swimlane/ngx-charts';
-import { AnalyticsProvider } from 'src/core/providers/analytics.provider';
 import { AnalyticsEntry } from '../../../api/models/analytics-entry';
+import { AnalyticsProvider } from '../../../core';
 
 @Directive()
 

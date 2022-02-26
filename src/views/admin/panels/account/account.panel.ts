@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ActivityModel, BlogpostModel, CrudJoiner, ImageModel, OrganisationModel, UserModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
@@ -13,7 +12,6 @@ import { RequestPopupComponent } from '../../popups/request.popup';
 export class AccountPanelComponent
   extends BasePanel {
 
-  public avatarGroup: FormGroup = new FormGroup({ });
   public userGroup: FormGroup = new FormGroup({ });
 
   protected path: string = 'account/:uuid';
@@ -24,17 +22,16 @@ export class AccountPanelComponent
     }).with('activities').yield('address').yield('suburb')
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
+      .with('avatar')
       .with('blogger')
       .with('blogs').yield('activity')
       .with('organisations').yield('address').yield('suburb')
       .with('organisations').yield('provider')
-      .with('avatar')
   };
 
   public get activities(): ActivityModel[] {
     return this.user.activities || [];
   }
-
 
   public get avatar(): ImageModel {
     return this.user.avatar;
@@ -74,10 +71,6 @@ export class AccountPanelComponent
     this.dialog.open(RequestPopupComponent, {
       data: this.user
     }).afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
-  }
-
-  public persistAvatar(): Observable<any> {
-    return this.userProvider.addAvatar(this.user.id, this.avatarGroup.get('avatar').value);
   }
 
 }

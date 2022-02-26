@@ -22,7 +22,6 @@ import { BooleanPrimitive } from '../models/boolean-primitive';
 class UserControllerService extends __BaseService {
   static readonly userControllerReadAvatarPath = '/user/{userId}/avatar';
   static readonly userControllerAddAvatarPath = '/user/{userId}/avatar';
-  static readonly userControllerDeleteAvatarPath = '/user/{userId}/avatar';
   static readonly userControllerReadAllPath = '/users';
   static readonly userControllerCreatePath = '/users';
   static readonly userControllerApplyAsBloggerPath = '/users/blogapply';
@@ -97,7 +96,7 @@ class UserControllerService extends __BaseService {
    * @return OK
    */
   userControllerAddAvatarResponse(userId: string,
-    avatar: ImageEntity): __Observable<__StrictHttpResponse<{}>> {
+    avatar?: ImageEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -127,51 +126,8 @@ class UserControllerService extends __BaseService {
    * @return OK
    */
   userControllerAddAvatar(userId: string,
-    avatar: ImageEntity): __Observable<{}> {
+    avatar?: ImageEntity): __Observable<{}> {
     return this.userControllerAddAvatarResponse(userId, avatar).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
-   * deleteAvatar
-   * @param userId userId
-   * @param avatarId avatarId
-   * @return OK
-   */
-  userControllerDeleteAvatarResponse(userId: string,
-    avatarId: string): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    if (avatarId != null) __params = __params.set('avatarId', avatarId.toString());
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/user/${encodeURIComponent(String(userId))}/avatar`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * deleteAvatar
-   * @param userId userId
-   * @param avatarId avatarId
-   * @return OK
-   */
-  userControllerDeleteAvatar(userId: string,
-    avatarId: string): __Observable<{}> {
-    return this.userControllerDeleteAvatarResponse(userId, avatarId).pipe(
       __map(_r => _r.body as {})
     );
   }

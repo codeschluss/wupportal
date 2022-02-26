@@ -13,11 +13,14 @@ export class PushedModel {
             content: { type: 'string' },
             label: { type: 'string' },
             read: { type: 'boolean' },
-            route: { type: 'string' }
+            route: { type: 'string' },
+            timestamp: { type: 'number' }
           },
           required: [
             'content',
-            'label'
+            'label',
+            'read',
+            'timestamp'
           ]
         }
       }

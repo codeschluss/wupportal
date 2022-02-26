@@ -2,6 +2,7 @@ import { Injectable, Type } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { MarkupControllerService as Service } from '../../api/services/markup-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
+import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
 import { StaticPageModel as Model } from '../models/static-page.model';
 
@@ -13,6 +14,11 @@ export class StaticPageProvider
   extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
+    {
+      field: 'image',
+      method: this.service.markupControllerReadImageResponse,
+      model: ImageModel
+    },
     {
       field: 'language',
       method: () => EMPTY,
@@ -57,20 +63,12 @@ export class StaticPageProvider
   public readAll: (params?: Service.MarkupControllerReadAllParams) =>
     Observable<Model[]>;
 
-  // public analyticsVisitorsAll: () =>
-  //   Observable<any> = this.apply(this.service
-  //     .markupControllerCalculateOverviewVisitorsResponse)
-
   public analyticsVisitorsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .markupControllerCalculateVisitorsResponse)
-
-  // public analyticsVisitsAll: () =>
-  //   Observable<any> = this.apply(this.service
-  //     .markupControllerCalculateOverviewVisitsResponse)
+      .markupControllerCalculateVisitorsResponse);
 
   public analyticsVisitsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .markupControllerCalculateVisitsResponse)
+      .markupControllerCalculateVisitsResponse);
 
 }

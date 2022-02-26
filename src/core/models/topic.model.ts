@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
-import { BlogpostModel } from '..';
 import { TopicEntity } from '../../api/models/topic-entity';
 import { CrudModel } from '../crud/crud.model';
 import { Translate } from '../crud/crud.translate';
+import { BlogpostModel } from './blogpost.model';
 
 export class TopicModel
   extends CrudModel

@@ -34,6 +34,7 @@ export class ActivityModel
   public organisation: OrganisationModel & Observable<OrganisationModel>;
   public schedules: ScheduleModel[] & Observable<ScheduleModel[]>;
   public targetGroups: TargetGroupModel[] & Observable<TargetGroupModel[]>;
+  public titleImage: ImageModel & Observable<ImageModel>;
 
   public get scheduled(): ScheduleModel | null {
     return Array.isArray(this.schedules) && this.schedules.length

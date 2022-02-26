@@ -80,19 +80,23 @@ export class BlogpostProvider
 
   public analyticsVisitorsAll: () =>
     Observable<any> = this.apply(this.service
-      .blogControllerCalculateOverviewVisitorsResponse)
+      .blogControllerCalculateOverviewVisitorsResponse);
 
   public analyticsVisitorsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .blogControllerCalculateVisitorsResponse)
+      .blogControllerCalculateVisitorsResponse);
 
   public analyticsVisitsAll: () =>
     Observable<any> = this.apply(this.service
-      .blogControllerCalculateOverviewVisitsResponse)
+      .blogControllerCalculateOverviewVisitsResponse);
 
   public analyticsVisitsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .blogControllerCalculateVisitsResponse)
+      .blogControllerCalculateVisitsResponse);
+
+  public grantApproval: (id: string, grant: Boolean) =>
+    Observable<any> = this.apply(this.service
+      .blogControllerGrantApprovalResponse);
 
   public like: (id: string, subscriptionId?: String) =>
     Observable<any> = this.apply(this.service
@@ -109,9 +113,5 @@ export class BlogpostProvider
   public unlinkImages: (id: string, imageIds: string[]) =>
     Observable<any> = this.apply(this.service
       .blogControllerDeleteImagesResponse);
-
-  public grantApproval: (id: string, grant: Boolean) =>
-    Observable<any> = this.apply(this.service
-      .blogControllerGrantApprovalResponse);
 
 }

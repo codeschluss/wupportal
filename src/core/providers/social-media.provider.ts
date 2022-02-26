@@ -2,7 +2,7 @@ import { Injectable, Type } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SocialMediaControllerService as Service } from '../../api/services/social-media-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
-import { SocialMediaModel as Model } from '../models/socialmedia.model';
+import { SocialMediaModel as Model } from '../models/social-media.model';
 
 @Injectable({
   providedIn: 'root'

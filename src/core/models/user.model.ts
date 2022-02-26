@@ -1,12 +1,13 @@
 import { Observable } from 'rxjs';
-import { ImageModel } from '..';
 import { UserEntity } from '../../api/models/user-entity';
 import { CrudModel } from '../crud/crud.model';
 import { ActivityModel } from './activity.model';
 import { BloggerModel } from './blogger.model';
 import { BlogpostModel } from './blogpost.model';
+import { ImageModel } from './image.model';
 import { MembershipModel } from './membership.model';
 import { OrganisationModel } from './organisation.model';
+
 
 export class UserModel
   extends CrudModel

@@ -17,7 +17,7 @@ import { LabelProvider } from '../providers/label.provider';
 import { LanguageProvider } from '../providers/language.provider';
 import { MembershipProvider } from '../providers/membership.provider';
 import { OrganisationProvider } from '../providers/organisation.provider';
-import { SocialMediaProvider } from '../providers/socialmedia.provider';
+import { SocialMediaProvider } from '../providers/social-media.provider';
 import { StaticPageProvider } from '../providers/static-page.provider';
 import { SubscriptionTypeProvider } from '../providers/subscription-type.provider';
 import { SubscriptionProvider } from '../providers/subscription.provider';

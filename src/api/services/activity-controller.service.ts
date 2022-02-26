@@ -88,6 +88,10 @@ class ActivityControllerService extends __BaseService {
    *
    * - `current`:
    *
+   * - `startDate`:
+   *
+   * - `endDate`:
+   *
    * @return OK
    */
   activityControllerReadAllResponse(params: ActivityControllerService.ActivityControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
@@ -104,6 +108,8 @@ class ActivityControllerService extends __BaseService {
     if (params.size != null) __params = __params.set('size', params.size.toString());
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     if (params.current != null) __params = __params.set('current', params.current.toString());
+    if (params.startDate != null) __params = __params.set('startDate', params.startDate.toString());
+    if (params.endDate != null) __params = __params.set('endDate', params.endDate.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/activities`,
@@ -144,6 +150,10 @@ class ActivityControllerService extends __BaseService {
    * - `filter`:
    *
    * - `current`:
+   *
+   * - `startDate`:
+   *
+   * - `endDate`:
    *
    * @return OK
    */
@@ -1518,6 +1528,8 @@ module ActivityControllerService {
     size?: number;
     filter?: string;
     current?: boolean;
+    startDate?: string;
+    endDate?: string;
   }
 }
 

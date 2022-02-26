@@ -2,7 +2,8 @@ import { Injectable, NgZone } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { LocalStorage, VALIDATION_ERROR } from '@ngx-pwa/local-storage';
 import { BehaviorSubject, catchError, filter, map, Observable, of, take, throwError } from 'rxjs';
-import { PlatformProvider, SessionProvider } from '..';
+import { PlatformProvider } from '../platform/platform.provider';
+import { SessionProvider } from '../session/session.provider';
 import { PushedModel } from './pushed.model';
 
 @Injectable({
@@ -29,8 +30,14 @@ export class PushedProvider {
     localStorage.getItem<PushedModel>('pushedNotifications', {
       schema: PushedModel.schema
     }).pipe(
-      catchError((e) => e.message === VALIDATION_ERROR ? of() : throwError(e)),
-      map((p) => p || new PushedModel())
+      map((pushedModel) => pushedModel || new PushedModel()),
+      catchError((error) => {
+        if (error.message === VALIDATION_ERROR) {
+          return of(new PushedModel());
+        }
+
+        return throwError(error);
+      })
     ).subscribe((pushed) => {
       this.pushed.next(pushed);
 
@@ -39,7 +46,12 @@ export class PushedProvider {
         localStorage.setItem('pushedNotifications', value).subscribe();
       });
 
-      if (['android', 'ios'].includes(this.platformProvider.name)) {
+      if (this.platformProvider.name === 'browser') {
+        swPush.messages.subscribe((event) => this.push(event));
+        this.platformProvider.navigator.serviceWorker.ready.then((sw) => {
+          sw.active.postMessage(null);
+        }).catch(console.error);
+      } else if (['android', 'ios'].includes(this.platformProvider.name)) {
         const fcm = cordova.plugins.firebase.messaging;
         const push = (event) => ngZone.run(() => this.push(event));
 
@@ -49,8 +61,6 @@ export class PushedProvider {
           fcm.onBackgroundMessage((event) => push(event), console.error);
           fcm.onMessage((event) => push(event), console.error);
         });
-      } else if ('browser' === this.platformProvider.name) {
-        swPush.messages.subscribe(console.log);
       }
     });
   }
@@ -77,10 +87,10 @@ export class PushedProvider {
 
   private push(event: any): void {
     const notification = {
-      content: undefined,
-      label: undefined,
+      content: null,
+      label: null,
       read: false,
-      route: undefined,
+      route: null,
       timestamp: Date.now()
     } as PushedModel['notifications'][number];
 
@@ -92,7 +102,9 @@ export class PushedProvider {
         break;
 
       case 'browser':
-        alert(JSON.stringify(event));
+        notification.content = event.notification.body;
+        notification.label = event.notification.title;
+        notification.route = event.notification.route;
         break;
 
       case 'ios':
@@ -100,6 +112,10 @@ export class PushedProvider {
         notification.label = event.aps.alert.title;
         notification.route = event.aps.route;
         break;
+    }
+
+    if (!notification.route) {
+      delete notification.route;
     }
 
     this.pushed.next(Object.assign(this.pushed.value, {

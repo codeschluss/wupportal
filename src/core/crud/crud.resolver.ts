@@ -27,7 +27,10 @@ export class CrudResolver
       ? forkJoin(input.map((i) => this.run(i, graph.nodes)))
       : this.run(input, graph.nodes);
 
-    return refined.pipe(map((output) => Object.defineProperties(output, meta)));
+    return refined.pipe(
+      map((output) => Object.defineProperties(output, meta)),
+      defaultIfEmpty(input)
+    );
   }
 
   public resolve(route: ActivatedRouteSnapshot & { resolved: object }):

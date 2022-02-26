@@ -13,9 +13,10 @@ export class BlogpostModel
   @Translate() public content: string;
   @Translate() public title: string;
 
+  public approved: boolean;
   public author: string;
   public likes: number;
-  public approved: boolean;
+  public mailAddress: string;
 
   public topicId: string;
 

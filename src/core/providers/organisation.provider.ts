@@ -107,19 +107,19 @@ export class OrganisationProvider
 
   public analyticsVisitorsAll: () =>
     Observable<any> = this.apply(this.service
-      .organisationControllerCalculateOverviewVisitorsResponse)
+      .organisationControllerCalculateOverviewVisitorsResponse);
 
   public analyticsVisitorsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .organisationControllerCalculateVisitorsResponse)
+      .organisationControllerCalculateVisitorsResponse);
 
   public analyticsVisitsAll: () =>
     Observable<any> = this.apply(this.service
-      .organisationControllerCalculateOverviewVisitsResponse)
+      .organisationControllerCalculateOverviewVisitsResponse);
 
   public analyticsVisitsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .organisationControllerCalculateVisitsResponse)
+      .organisationControllerCalculateVisitsResponse);
 
   public grantMembership: (id: string, userId: string, grant: Boolean) =>
     Observable<any> = this.apply(this.service

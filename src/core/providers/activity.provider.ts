@@ -62,6 +62,11 @@ export class ActivityProvider
       model: TargetGroupModel
     },
     {
+      field: 'titleImage',
+      method: this.service.activityControllerReadTitleImageResponse,
+      model: ImageModel
+    },
+    {
       field: 'translatables',
       method: () => EMPTY,
       model: Model
@@ -102,39 +107,39 @@ export class ActivityProvider
 
   public analyticsPerCategory: (current: boolean) =>
     Observable<any> = this.apply(this.service
-      .activityControllerCalculateActivitiesPerCategoryResponse)
+      .activityControllerCalculateActivitiesPerCategoryResponse);
 
   public analyticsPerSuburb: (current: boolean) =>
     Observable<any> = this.apply(this.service
-      .activityControllerCalculateActivitiesPerSuburbsResponse)
+      .activityControllerCalculateActivitiesPerSuburbsResponse);
 
   public analyticsPerTargetGroup: (current: boolean) =>
     Observable<any> = this.apply(this.service
-      .activityControllerCalculateActivitiesPerTargetGroupResponse)
+      .activityControllerCalculateActivitiesPerTargetGroupResponse);
 
   public analyticsVisitorsAll: () =>
     Observable<any> = this.apply(this.service
-      .activityControllerCalculateOverviewVisitorsResponse)
+      .activityControllerCalculateOverviewVisitorsResponse);
 
   public analyticsVisitorsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .activityControllerCalculateVisitorsResponse)
+      .activityControllerCalculateVisitorsResponse);
 
   public analyticsVisitsAll: () =>
     Observable<any> = this.apply(this.service
-      .activityControllerCalculateOverviewVisitsResponse)
+      .activityControllerCalculateOverviewVisitsResponse);
 
   public analyticsVisitsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .activityControllerCalculateVisitsResponse)
+      .activityControllerCalculateVisitsResponse);
 
   public icalAll: (id: string) =>
     Observable<any> = this.apply(this.service
-      .activityControllerGenerateIcalResponse)
+      .activityControllerGenerateIcalResponse);
 
   public icalOne: (id: string, scheduleId?: string) =>
     Observable<any> = this.apply(this.service
-      .activityControllerGenerateIcalResponse)
+      .activityControllerGenerateIcalResponse);
 
   public like: (id: string, subscriptionId?: String) =>
     Observable<any> = this.apply(this.service
@@ -143,6 +148,10 @@ export class ActivityProvider
   public linkTargetGroups: (id: string, targetGroupIds: string[]) =>
     Observable<any> = this.apply(this.service
       .activityControllerAddTargetGroupsResponse);
+
+  public linkTitleImage: (id: string, titleImage: ImageModel) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerAddTitleImageResponse);
 
   public pasteImages: (id: string, images: ImageModel[]) =>
     Observable<any> = this.apply(this.service
@@ -175,5 +184,9 @@ export class ActivityProvider
   public unlinkTargetGroups: (id: string, targetGroupIds: string[]) =>
     Observable<any> = this.apply(this.service
       .activityControllerDeleteTargetGroupsResponse);
+
+  public unlinkTitleImage: (id: string, titleImageId: string) =>
+    Observable<any> = this.apply(this.service
+      .activityControllerDeleteTitleImageResponse);
 
 }

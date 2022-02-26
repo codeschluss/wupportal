@@ -79,7 +79,7 @@ export class SubscriptionProvider
 
   public analyticsSubscribtionsAll: () =>
     Observable<any> = this.apply(this.service
-      .subscriptionControllerCalculateSubscriptionsResponse)
+      .subscriptionControllerCalculateSubscriptionsResponse);
 
   public linkActivity: (id: string, activityId: String) =>
     Observable<any> = this.apply(this.service

@@ -47,13 +47,13 @@ import { BaseFieldComponent } from '../base/base.field';
     <ng-container>
       <mat-card>
         <mat-card-content>
-          <ng-container *ngIf="image">
+          <ng-container *ngIf="value">
             <img mat-card-image
               src="data:image/svg+xml,
                 %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
-              [style.backgroundImage]="image.source">
+              [style.backgroundImage]="value.source">
           </ng-container>
-          <ng-container *ngIf="!image">
+          <ng-container *ngIf="!value">
             <label mat-card-image
               for="image"
               (dragenter)="drag($event, 1)"
@@ -75,7 +75,7 @@ import { BaseFieldComponent } from '../base/base.field';
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-button [disabled]="!image" (click)="clear()">
+          <button mat-button [disabled]="!value" (click)="clear()">
             <i18n>reset</i18n>
           </button>
         </mat-card-actions>
@@ -93,8 +93,6 @@ export class AvatarFieldComponent
 
   public file: FormControl = new FormControl();
 
-  public image: ImageModel;
-
   public ngAfterViewInit(): void {
     this.file.valueChanges.pipe(
       map((value) => value.item(0)),
@@ -111,20 +109,13 @@ export class AvatarFieldComponent
       })
     ).subscribe((item) => {
       this.caption.patchValue(this.caption.value || item.caption);
-      this.image = item;
-      this.value = this.image;
+      this.value = item;
     });
-    if (this.value) this.image = this.value;
   }
 
   public clear(): void {
     this.caption.patchValue(null);
-    this.image = null;
     this.value = null;
-  }
-
-  public delete(item: ImageModel): void {
-    this.value = this.value.filter((value) => value !== item);
   }
 
   public drag(event: Event & any, inout?: number): void {
@@ -142,11 +133,6 @@ export class AvatarFieldComponent
     event.target.style.backgroundColor = null;
 
     this.file.patchValue(event.dataTransfer.files);
-  }
-
-  public edit(item: ImageModel): void {
-    this.caption.patchValue(item.caption);
-    this.delete(this.image = item);
   }
 
 

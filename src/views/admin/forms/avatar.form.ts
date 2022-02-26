@@ -41,7 +41,7 @@ export class AvatarFormComponent
   }
   
   protected ngPostInit(): void {
-    this.fields[0].value = this.item;
+    this.fields[0].value = this.item?.id ? this.item : null;
   }
 
 }

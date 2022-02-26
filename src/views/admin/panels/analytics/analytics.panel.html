@@ -59,4 +59,40 @@
       </mat-card>
     </ng-template>
   </mat-tab>
+
+  <mat-tab id="appData">
+    <ng-template matTabLabel>
+      <i18n>appData</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <i18n>appInstalls</i18n>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field appearance="fill">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Start date">
+              <input matEndDate placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+          <appinstalls-statistic-chart></appinstalls-statistic-chart>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <i18n>appRatings</i18n>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        </mat-card-content>
+      </mat-card>
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>

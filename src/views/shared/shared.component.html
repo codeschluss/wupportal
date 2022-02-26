@@ -347,6 +347,12 @@
             [routerLink]="['/', 'admin', 'analytics']">
             <i18n>subscriptions</i18n>
           </button>
+          <button mat-menu-item
+            [class.active]="url === '/admin/analytics?tab=appData'"
+            [queryParams]="{ tab: 'appData' }"
+            [routerLink]="['/', 'admin', 'analytics']">
+            <i18n>appData</i18n>
+          </button>
         </mat-menu>
       </ng-container>
       <ng-container *ngIf="!claims?.userId">

@@ -6,6 +6,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,6 +31,7 @@ import { BaseForm } from './base/base.form';
 import { BasePanel } from './base/base.panel';
 import { BaseStepper } from './base/base.stepper';
 import { BaseTable } from './base/base.table';
+import { AppInstallsStatisticsChartComponent } from './charts/appinstalls-statistic.chart';
 import { CategoryActivitiesChartComponent } from './charts/category-activities.chart';
 import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
 import { SuburbActivitiesChartComponent } from './charts/suburb-activities.chart';
@@ -116,7 +118,8 @@ const charts: Type<BaseChart>[] = [
   CategoryActivitiesChartComponent,
   SubscriptionsChartComponent,
   SuburbActivitiesChartComponent,
-  TargetGroupActivitiesChartComponent
+  TargetGroupActivitiesChartComponent,
+  AppInstallsStatisticsChartComponent
 ];
 
 const components: Type<any>[] = [
@@ -180,6 +183,7 @@ const materials: Type<any>[] = [
   MatButtonModule,
   MatCardModule,
   MatChipsModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,

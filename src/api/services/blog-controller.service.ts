@@ -50,6 +50,8 @@ class BlogControllerService extends __BaseService {
    * readAll
    * @param params The `BlogControllerService.BlogControllerReadAllParams` containing the following parameters:
    *
+   * - `topics`:
+   *
    * - `sort`:
    *
    * - `dir`:
@@ -68,6 +70,7 @@ class BlogControllerService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    (params.topics || []).forEach(val => {if (val != null) __params = __params.append('topics', val.toString())});
     if (params.sort != null) __params = __params.set('sort', params.sort.toString());
     if (params.dir != null) __params = __params.set('dir', params.dir.toString());
     if (params.embeddings != null) __params = __params.set('embeddings', params.embeddings.toString());
@@ -94,6 +97,8 @@ class BlogControllerService extends __BaseService {
   /**
    * readAll
    * @param params The `BlogControllerService.BlogControllerReadAllParams` containing the following parameters:
+   *
+   * - `topics`:
    *
    * - `sort`:
    *
@@ -792,6 +797,7 @@ module BlogControllerService {
    * Parameters for blogControllerReadAll
    */
   export interface BlogControllerReadAllParams {
+    topics?: Array<string>;
     sort?: string;
     dir?: string;
     embeddings?: string;

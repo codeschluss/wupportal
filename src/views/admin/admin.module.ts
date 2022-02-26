@@ -115,11 +115,11 @@ import { FileValueAccessorDirective } from './tools/accesor';
 import { Paginate } from './tools/paginate';
 
 const charts: Type<BaseChart>[] = [
+  AppInstallsStatisticsChartComponent,
   CategoryActivitiesChartComponent,
   SubscriptionsChartComponent,
   SuburbActivitiesChartComponent,
-  TargetGroupActivitiesChartComponent,
-  AppInstallsStatisticsChartComponent
+  TargetGroupActivitiesChartComponent
 ];
 
 const components: Type<any>[] = [

@@ -13,8 +13,4 @@ export class AnalyticsPanelComponent
 
   protected resolve: Record<string, CrudJoiner> = { };
 
-  public startDate: string;
-  public endDate: string;
-
-
 }

@@ -27,7 +27,7 @@ import { TranslationFormComponent } from '../forms/translation.form';
 export class SubscriptionTypeStepperComponent
   extends BaseStepper<SubscriptionTypeModel> {
 
-  public root: string = 'subscriptiontypes';
+  public root: string = 'subscription-types';
 
   public steps: FormStep[] = [
     {

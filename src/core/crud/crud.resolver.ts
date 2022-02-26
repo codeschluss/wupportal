@@ -50,7 +50,7 @@ export class CrudResolver
 
     return request.pipe(
       catchError((error) => joiner.graph.params.required
-        ? from(this.router.navigate(['/', 'error', error.status || 400]))
+        ? from(this.router.navigate(['/', 'error', error.status || 404]))
         : throwError(error)
       ),
       mergeMap((response) => this.refine(response as CrudModel, joiner.graph)),

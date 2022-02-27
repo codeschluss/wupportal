@@ -4,8 +4,8 @@
       <a mat-button
         [color]="active(item) ? 'primary' : 'accent'"
         [routerLink]="['/', item.tagId]"
-        [title]="i18n(item)">
-        <i18n>{{ item.tagId }}</i18n>
+        [title]="item.label">
+        {{ item.label }}
       </a>
     </ng-container>
   </nav>

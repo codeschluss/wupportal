@@ -23,6 +23,16 @@ main
       @include responsive(lt-sm)
         @include flex(column)
 
+    & > .mat-card
+      margin: 0 auto
+      max-width: calc(#{$viewport-width} * .8)
+
+      & > .mat-card-image
+        background-position: center
+        background-size: cover
+        height: 25rem
+        max-height: 25vh
+
 .mat-menu-item
   &.active
     color: $color-accent

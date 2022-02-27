@@ -52,9 +52,8 @@ const routes: Route[] = [
           configuration: CrudJoiner.of(ConfigurationModel, {
             required: true
           }),
-          staticPages: CrudJoiner.of(StaticPageModel, {
-            required: true
-          })
+          staticPages: CrudJoiner.of(StaticPageModel)
+            .with('titleImage')
         }
       }
     }

@@ -2,10 +2,14 @@
   <section>
     <h1>{{ item.label }}</h1>
     <mat-card>
-      <img mat-card-image
-        [alt]="item.label"
-        [src]="'images/TEST.jpg'"
-        [title]="item.label">
+      <ng-container *ngIf="item.image?.source">
+        <img mat-card-image
+          src="data:image/svg+xml,
+            %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+          [alt]="item.label"
+          [style.backgroundImage]="item.image.source"
+          [title]="item.label">
+      </ng-container>
       <mat-card-content [innerHTML]="item.content">
       </mat-card-content>
     </mat-card>

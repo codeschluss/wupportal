@@ -16,7 +16,7 @@ export class StaticPageComponent
 
   protected get routing(): Route {
     return {
-      path: ':label'
+      path: ':tagId'
     };
   }
 
@@ -30,7 +30,7 @@ export class StaticPageComponent
   public ngOnInit(): void {
     this.staticPage = this.route?.params.pipe(map((params) => {
       const staticPage = this.route.snapshot.data.staticPages.find((item) => {
-        return item.label === params.label;
+        return item.tagId === params.tagId;
       });
 
       if (!staticPage) {

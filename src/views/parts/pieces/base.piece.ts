@@ -10,13 +10,13 @@ export abstract class BasePiece {
   public readonly base: string = 'piece';
 
   @Input()
-  public item: CrudModel & { likes: number };
+  public item: CrudModel & { likes?: number };
 
   public get namespace(): string {
     switch (this.item.constructor) {
-      case ActivityModel: return 'activities';
-      case BlogpostModel: return 'blogposts';
-      case OrganisationModel: return 'organisations';
+      case ActivityModel: return 'event';
+      case BlogpostModel: return 'story';
+      case OrganisationModel: return 'place';
     }
   }
 

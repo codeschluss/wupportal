@@ -35,7 +35,7 @@ export class MapComponent
   }
 
   public active(href: string): boolean {
-    return this.router.url.endsWith(href);
+    return this.router.url.startsWith(['', this.routing.path, href].join('/'));
   }
 
 }

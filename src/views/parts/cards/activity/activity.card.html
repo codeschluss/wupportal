@@ -3,7 +3,7 @@
   [matRippleDisabled]="true"
   [ngStyle]="colors(item.category.color)"
   itemscope itemtype="https://schema.org/Event">
-  <a [routerLink]="['/', 'activities', item.id]"></a>
+  <a [routerLink]="['/', 'event', item.id]"></a>
   <mat-card-content>
     <fa-icon [icon]="icon"></fa-icon>
     <small>

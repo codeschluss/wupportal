@@ -6,17 +6,17 @@
         <button mat-button
           [color]="active('events') ? 'primary' : 'accent'"
           [routerLink]="active('events') ? '/favorites' : '/favorites/events'">
-          <i18n>events</i18n>
+          <i18n>activities</i18n>
         </button>
         <button mat-button
           [color]="active('community') ? 'primary' : 'accent'"
           [routerLink]="active('community') ? '/favorites' : '/favorites/community'">
-          <i18n>community</i18n>
+          <i18n>blogposts</i18n>
         </button>
         <button mat-button
           [color]="active('places') ? 'primary' : 'accent'"
           [routerLink]="active('places') ? '/favorites' : '/favorites/places'">
-          <i18n>places</i18n>
+          <i18n>organisations</i18n>
         </button>
       </nav>
       <span [style.flexGrow]="1"></span>
@@ -27,159 +27,35 @@
         <sort-filter-component></sort-filter-component>
       </ng-container>
     </aside>
-    <!-- <ng-container *ngIf="subscription | async as item">
-      <ng-container *ngFor="let item of item.activities">
-        <activity-card [item]="item"></activity-card>
-      </ng-container>
-      <ng-container *ngFor="let item of item.bloggers">
-        <ng-container *ngFor="let item of item.blogposts">
-          <blogposts-card [item]="item"></blogposts-card>
+    <ng-container *ngIf="subscription | async as item">
+      <ng-container *ngIf="item.activities?.length">
+        <ng-container *ngFor="let item of item.activities">
+          <activity-card [item]="item"></activity-card>
         </ng-container>
       </ng-container>
-      <ng-container *ngFor="let item of item.topics">
-        <ng-container *ngFor="let item of item.blogposts">
-          <blogposts-card [item]="item"></blogposts-card>
+      <ng-container *ngIf="item.bloggers?.length">
+        <ng-container *ngFor="let item of item.bloggers">
+          <ng-container *ngIf="item.blogposts?.length">
+            <ng-container *ngFor="let item of item.blogposts">
+              <blogpost-card [item]="item"></blogpost-card>
+            </ng-container>
+          </ng-container>
         </ng-container>
       </ng-container>
-      <ng-container *ngFor="let item of item.organisations">
-        <organisation-card [item]="item"></organisation-card>
+      <ng-container *ngIf="item.topics?.length">
+        <ng-container *ngFor="let item of item.topics">
+          <ng-container *ngIf="item.blogposts?.length">
+            <ng-container *ngFor="let item of item.blogposts">
+              <blogpost-card [item]="item"></blogpost-card>
+            </ng-container>
+          </ng-container>
+        </ng-container>
       </ng-container>
-    </ng-container> -->
+      <ng-container *ngIf="item.organisations?.length">
+        <ng-container *ngFor="let item of item.organisations">
+          <organisation-card [item]="item"></organisation-card>
+        </ng-container>
+      </ng-container>
+    </ng-container>
   </section>
 </main>
-
-
-<!-- <main>
-  <section>
-    <mat-list>
-      <mat-list-item>
-        <strong>
-          <i18n>subscriptions</i18n>
-        </strong>
-      </mat-list-item>
-      <ng-container *ngIf="!types.length">
-        <mat-list-item>
-          <i18n>notFoundError</i18n>
-        </mat-list-item>
-      </ng-container>
-      <ng-container *ngIf="types.length">
-        <ng-container *ngFor="let item of types">
-          <mat-list-item>
-            <mat-slide-toggle
-              [checked]="selected(item)"
-              (change)="toggle($event.checked, item)">
-              <strong>{{ item.label }}</strong>
-              <article [innerHTML]="item.description"></article>
-            </mat-slide-toggle>
-          </mat-list-item>
-        </ng-container>
-      </ng-container>
-    </mat-list>
-  </section>
-  <section>
-    <nav>
-      <mat-list>
-        <mat-list-item>
-          <strong>
-            <i18n>followedActivities</i18n>
-          </strong>
-        </mat-list-item>
-        <ng-container *ngIf="!items.activities.length">
-          <mat-list-item>
-            <i18n>notFoundError</i18n>
-          </mat-list-item>
-        </ng-container>
-        <ng-container *ngIf="items.activities.length">
-          <ng-container *ngFor="let item of items.activities">
-            <mat-list-item>
-              {{ item.label }}
-              <button mat-icon-button
-                color="warn"
-                (click)="unsubscribe(item)">
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </mat-list-item>
-          </ng-container>
-        </ng-container>
-      </mat-list>
-    </nav>
-    <nav>
-      <mat-list>
-        <mat-list-item>
-          <strong>
-            <i18n>followedOrganisations</i18n>
-          </strong>
-        </mat-list-item>
-        <ng-container *ngIf="!items.organisations.length">
-          <mat-list-item>
-            <i18n>notFoundError</i18n>
-          </mat-list-item>
-        </ng-container>
-        <ng-container *ngIf="items.organisations.length">
-          <ng-container *ngFor="let item of items.organisations">
-            <mat-list-item>
-              {{ item.label }}
-              <button mat-icon-button
-                color="warn"
-                (click)="unsubscribe(item)">
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </mat-list-item>
-          </ng-container>
-        </ng-container>
-      </mat-list>
-    </nav>
-    <nav>
-      <mat-list>
-        <mat-list-item>
-          <strong>
-            <i18n>followedBloggers</i18n>
-          </strong>
-        </mat-list-item>
-        <ng-container *ngIf="!items.bloggers.length">
-          <mat-list-item>
-            <i18n>notFoundError</i18n>
-          </mat-list-item>
-        </ng-container>
-        <ng-container *ngIf="items.bloggers.length">
-          <ng-container *ngFor="let item of items.bloggers">
-            <mat-list-item>
-              {{ item.label }}
-              <button mat-icon-button
-                color="warn"
-                (click)="unsubscribe(item)">
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </mat-list-item>
-          </ng-container>
-        </ng-container>
-      </mat-list>
-    </nav>
-    <nav>
-      <mat-list>
-        <mat-list-item>
-          <strong>
-            <i18n>followedTopics</i18n>
-          </strong>
-        </mat-list-item>
-        <ng-container *ngIf="!items.topics.length">
-          <mat-list-item>
-            <i18n>notFoundError</i18n>
-          </mat-list-item>
-        </ng-container>
-        <ng-container *ngIf="items.topics.length">
-          <ng-container *ngFor="let item of items.topics">
-            <mat-list-item>
-              {{ item.label }}
-              <button mat-icon-button
-                color="warn"
-                (click)="unsubscribe(item)">
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </mat-list-item>
-          </ng-container>
-        </ng-container>
-      </mat-list>
-    </nav>
-  </section>
-</main> -->

@@ -1,17 +1,17 @@
 <main>
   <section>
-    <h1><i18n>map</i18n></h1>
+    <h1><i18n>mapview</i18n></h1>
     <aside>
       <nav>
         <button mat-button
           [color]="active('events') ? 'primary' : 'accent'"
           [routerLink]="active('events') ? '/map' : '/map/events'">
-          <i18n>events</i18n>
+          <i18n>activities</i18n>
         </button>
         <button mat-button
           [color]="active('places') ? 'primary' : 'accent'"
           [routerLink]="active('places') ? '/map' : '/map/places'">
-          <i18n>places</i18n>
+          <i18n>organisations</i18n>
         </button>
       </nav>
       <span [style.flexGrow]="1"></span>

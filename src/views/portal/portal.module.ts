@@ -3,7 +3,6 @@ import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
@@ -44,7 +43,6 @@ const materials: Type<any>[] = [
   MatDatepickerModule,
   MatFormFieldModule,
   MatMenuModule,
-  MatNativeDateModule,
   MatSelectModule,
   PartsModule,
   ReactiveFormsModule

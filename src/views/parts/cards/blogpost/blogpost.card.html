@@ -22,7 +22,12 @@
   <mat-divider></mat-divider>
   <mat-card-actions>
     <details-piece [item]="item"></details-piece>
-    <follow-piece [item]="item"></follow-piece>
+    <ng-container *ngIf="item.topic">
+      <follow-piece [item]="item.topic"></follow-piece>
+    </ng-container>
+    <ng-container *ngIf="item.blogger">
+      <follow-piece [item]="item.blogger"></follow-piece>
+    </ng-container>
     <share-piece [item]="item"></share-piece>
     <like-piece [item]="item"></like-piece>
   </mat-card-actions>

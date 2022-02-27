@@ -22,17 +22,17 @@ export class MenuGearComponent {
       icon: 'home'
     },
     {
-      label: 'events',
+      label: 'activities',
       href: '/events',
       icon: 'calendar-day'
     },
     {
-      label: 'map',
+      label: 'mapview',
       href: '/map',
       icon: 'location-dot'
     },
     {
-      label: 'community',
+      label: 'blogposts',
       href: '/community',
       icon: 'comments'
     },

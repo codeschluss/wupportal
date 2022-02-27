@@ -39,9 +39,9 @@ export class IndexComponent
           })
             .with('address').yield('suburb')
             .with('category')
-            // .with('titleImage')
             .with('provider').yield('organisation')
-            .with('schedules'),
+            .with('schedules')
+            .with('titleImage'),
           blogposts: CrudJoiner.of(BlogpostModel, {
             page: 0,
             size: 5
@@ -54,7 +54,7 @@ export class IndexComponent
             size: 5
           })
             .with('address').yield('suburb')
-            // .with('avatar')
+            .with('avatar')
             .with('images')
         }
       }

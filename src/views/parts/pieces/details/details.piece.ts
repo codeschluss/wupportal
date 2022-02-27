@@ -14,9 +14,9 @@ export class DetailsPieceComponent
 
   public get icon(): IconProp {
     switch (this.namespace) {
-      case 'activities': return 'map-marker-alt';
-      case 'blogposts': return 'comment-dots';
-      case 'organisations': return 'at';
+      case 'event': return 'map-marker-alt';
+      case 'story': return 'comment-dots';
+      case 'place': return 'at';
     }
   }
 

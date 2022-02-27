@@ -1,74 +1,61 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { EMPTY, Subscription } from 'rxjs';
-import { filter, map, mergeMap, startWith, take } from 'rxjs/operators';
-import { CoreSettings, LoadingProvider, RoutingProvider, TokenProvider } from '../../core';
-import { AccountPanelComponent } from './panels/account/account.panel';
-import { ReloginPopupComponent } from './popups/relogin.popup';
+import { Router } from '@angular/router';
+import { EMPTY, Observable, Subscription } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
+import { CoreSettings, JwtClaims, LoadingProvider, TokenProvider } from '../../core';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['admin.sass'],
-  template: `
-    <main id="admin" [class.disabled]="loadingProvider.value | async">
-      <router-outlet></router-outlet>
-    </main>
-  `
+  templateUrl: 'admin.component.html'
 })
 
 export class AdminComponent
   implements OnInit, OnDestroy {
 
+  public break: Observable<BreakpointState>;
+
+  public claims: Observable<JwtClaims>;
+
+  private logout: Subscription = EMPTY.subscribe();
+
   public constructor(
     public loadingProvider: LoadingProvider,
-    private dialog: MatDialog,
-    private route: ActivatedRoute,
+    private breakpoints: BreakpointObserver,
     private router: Router,
-    private routingProvider: RoutingProvider,
     private settings: CoreSettings,
     private tokenProvider: TokenProvider
   ) { }
 
-  private base: string[];
-
-  private homing: Subscription = EMPTY.subscribe();
-
-  private working: Subscription = EMPTY.subscribe();
-
   public ngOnInit(): void {
-    const claim = this.settings.jwtClaims.userId;
-    const userId = this.route.snapshot.data.tokens.access[claim];
-    this.base = this.routingProvider.to(AccountPanelComponent).concat(userId);
+    this.break = this.breakpoints.observe('(min-width: 960px)');
 
-    if (userId) {
-      this.home();
-      this.work();
-    } else {
-      this.router.navigate(['/']);
-    }
+    const claims = this.settings.jwtClaims;
+    this.claims = this.tokenProvider.value.pipe(map((tokens) => {
+      return Object.keys(claims).reduce((claim, key) => Object.assign(claim, {
+        [key]: tokens.access[claims[key]]
+      }), { } as JwtClaims);
+    }));
+
+    this.claims.pipe(take(1)).subscribe((claims) => {
+      if (claims.userId) {
+        this.logout = this.tokenProvider.value.pipe(
+          filter((tokens) => !tokens.refresh.raw),
+          take(1)
+        ).subscribe(() => this.router.navigate(['/']));
+      } else {
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   public ngOnDestroy(): void {
-    this.homing.unsubscribe();
-    this.working.unsubscribe();
+    this.logout.unsubscribe();
   }
 
-  private home(): void {
-    this.homing = this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      map(() => !this.route.firstChild.firstChild),
-      startWith(!this.route.firstChild.firstChild),
-      filter(Boolean)
-    ).subscribe(() => this.router.navigate(this.base));
-  }
-
-  private work(): void {
-    this.working = this.tokenProvider.value.pipe(
-      filter((tokens) => !tokens.refresh.raw), take(1),
-      mergeMap(() => this.dialog.open(ReloginPopupComponent).afterClosed()),
-      filter(Boolean)
-    ).subscribe(() => this.work());
+  public active(href: string): boolean {
+    return this.router.url.startsWith(href);
   }
 
 }

@@ -53,10 +53,10 @@ import { BaseFieldComponent } from '../base/base.field';
         <mat-card-content>{{ item.caption }}</mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-button color="warn" (click)="delete(item)">
+          <button mat-stroked-button color="warn" (click)="delete(item)">
             <i18n>delete</i18n>
           </button>
-          <button mat-button
+          <button mat-stroked-button
             [disabled]="caption.value || image"
             (click)="edit(item)">
             <i18n>edit</i18n>
@@ -95,10 +95,10 @@ import { BaseFieldComponent } from '../base/base.field';
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-button [disabled]="!image" (click)="clear()">
+          <button mat-stroked-button [disabled]="!image" (click)="clear()">
             <i18n>reset</i18n>
           </button>
-          <button mat-button
+          <button mat-stroked-button
             color="primary"
             [disabled]="!image"
             (click)="create()">

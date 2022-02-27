@@ -18,12 +18,12 @@ import { SelectFieldComponent } from '../fields/select.field';
         <i18n>compilation</i18n>
       </label>
       <nav>
-        <button mat-button
+        <button mat-stroked-button
           color="primary"
           (click)="fillUserData()">
           <i18n>fillUserData</i18n>
         </button>
-        <button mat-button
+        <button mat-stroked-button
           color="primary"
           [disabled]="!this.organisation"
           (click)="fillOrganisationData()">

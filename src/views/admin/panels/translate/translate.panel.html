@@ -13,13 +13,13 @@
         [item]="staticPage('homepage')">
       </static-page-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="warn"
         [disabled]="!homepageForm.dirty"
         (click)="homepageForm.reset()">
         <i18n>reset</i18n>
       </button>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!homepageForm.valid || !homepageForm.dirty"
         (click)="homepageForm.persist().subscribe()">
@@ -37,13 +37,13 @@
         [item]="staticPage('imprint')">
       </static-page-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="warn"
         [disabled]="!imprintForm.dirty"
         (click)="imprintForm.reset()">
         <i18n>reset</i18n>
       </button>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!imprintForm.valid || !imprintForm.dirty"
         (click)="imprintForm.persist().subscribe()">
@@ -61,13 +61,13 @@
         [item]="staticPage('policies')">
       </static-page-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="warn"
         [disabled]="!policiesForm.dirty"
         (click)="policiesForm.reset()">
         <i18n>reset</i18n>
       </button>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!policiesForm.valid || !policiesForm.dirty"
         (click)="policiesForm.persist().subscribe()">
@@ -85,13 +85,13 @@
         [item]="label">
       </label-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="warn"
         [disabled]="!labelForm.dirty"
         (click)="labelForm.reset()">
         <i18n>reset</i18n>
       </button>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!labelForm.valid || !labelForm.dirty"
         (click)="labelForm.persist().subscribe()">

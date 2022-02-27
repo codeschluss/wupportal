@@ -12,7 +12,7 @@
       <mailing-form #mailing>
       </mailing-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!mailing.valid"
         (click)="mailing.persist().subscribe()">
@@ -29,7 +29,7 @@
       <pushing-form #pushing>
       </pushing-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!pushing.valid"
         (click)="pushing.persist().subscribe()">

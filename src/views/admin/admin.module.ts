@@ -15,6 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -192,6 +193,7 @@ const materials: Type<any>[] = [
   MatMenuModule,
   MatPaginatorModule,
   MatSelectModule,
+  MatSidenavModule,
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,

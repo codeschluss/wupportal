@@ -15,7 +15,7 @@ import { SelectFieldComponent } from '../fields/select.field';
         <i18n>compilation</i18n>
       </label>
       <nav>
-        <button mat-button color="warn" (click)="clear()">
+        <button mat-stroked-button color="warn" (click)="clear()">
           <i18n>deleteAll</i18n>
         </button>
       </nav>

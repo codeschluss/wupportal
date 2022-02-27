@@ -2,7 +2,7 @@
   <h2 class="mat-headline">{{ name }}</h2>
   <span [style.flexGrow]="1"></span>
   <i18n>applicationPanel</i18n>
-  <button  mat-raised-button
+  <button mat-stroked-button
     color="primary"
     xPosition="before"
     [matMenuTriggerFor]="actions">
@@ -30,7 +30,7 @@
         [item]="configuration">
       </configuration-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!configurationForm.valid || !configurationForm.dirty"
         (click)="configurationForm.persist().subscribe()">

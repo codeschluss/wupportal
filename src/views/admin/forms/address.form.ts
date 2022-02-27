@@ -43,7 +43,7 @@ import { SelectFieldComponent } from '../fields/select.field';
           <i18n>compilation</i18n>
         </label>
         <nav>
-          <button mat-button
+          <button mat-stroked-button
             color="primary"
             [disabled]="locked"
             (click)="this.locate()">

@@ -31,10 +31,10 @@ import { TokenProvider } from '../../../core';
       </mat-form-field>
     </section>
     <section mat-dialog-actions>
-      <button mat-button [disabled]="!valid" (click)="login()">
+      <button mat-stroked-button [disabled]="!valid" (click)="login()">
         <i18n>login</i18n>
       </button>
-      <button mat-button (click)="logout()">
+      <button mat-stroked-button (click)="logout()">
         <i18n>logout</i18n>
       </button>
     </section>

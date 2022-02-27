@@ -27,10 +27,13 @@ import { ActivityModel, BlogpostModel, OrganisationModel } from '../../../core';
       </mat-form-field>
     </section>
     <section mat-dialog-actions>
-      <button mat-button mat-dialog-close>
+      <button mat-stroked-button mat-dialog-close>
         <i18n>close</i18n>
       </button>
-      <button mat-button color="primary" [disabled]="!valid" (click)="send()">
+      <button mat-stroked-button
+        color="primary"
+        [disabled]="!valid"
+        (click)="send()">
         <i18n>send</i18n>
       </button>
     </section>

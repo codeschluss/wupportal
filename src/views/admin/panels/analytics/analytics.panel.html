@@ -9,36 +9,12 @@
       <i18n>activities</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <i18n>suburbs</i18n>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <suburb-activities-chart></suburb-activities-chart>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <i18n>categories</i18n>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <category-activities-chart></category-activities-chart>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <i18n>targetGroups</i18n>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <target-group-activities-chart></target-group-activities-chart>
-        </mat-card-content>
-      </mat-card>
+      <h2><i18n>suburbs</i18n></h2>
+      <suburb-activities-chart></suburb-activities-chart>
+      <h2><i18n>categories</i18n></h2>
+      <category-activities-chart></category-activities-chart>
+      <h2><i18n>targetGroups</i18n></h2>
+      <target-group-activities-chart></target-group-activities-chart>
     </ng-template>
   </mat-tab>
 
@@ -47,16 +23,8 @@
       <i18n>subscriptions</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <i18n>subscriptions</i18n>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <subscriptions-chart></subscriptions-chart>
-        </mat-card-content>
-      </mat-card>
+      <h2><i18n>subscriptions</i18n></h2>
+      <subscriptions-chart></subscriptions-chart>
     </ng-template>
   </mat-tab>
 
@@ -65,34 +33,9 @@
       <i18n>appData</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <i18n>appInstalls</i18n>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-form-field appearance="fill">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [rangePicker]="picker">
-              <input matStartDate placeholder="Start date">
-              <input matEndDate placeholder="End date">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-          </mat-form-field>
-          <appinstalls-statistic-chart></appinstalls-statistic-chart>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <i18n>appRatings</i18n>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-        </mat-card-content>
-      </mat-card>
+      <h2><i18n>appInstalls</i18n></h2>
+      <appinstalls-statistic-chart></appinstalls-statistic-chart>
+      <h2><i18n>appRatings</i18n></h2>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

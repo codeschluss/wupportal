@@ -75,7 +75,7 @@ import { BaseFieldComponent } from '../base/base.field';
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-button [disabled]="!value" (click)="clear()">
+          <button mat-stroked-button [disabled]="!value" (click)="clear()">
             <i18n>reset</i18n>
           </button>
         </mat-card-actions>

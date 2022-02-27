@@ -76,6 +76,7 @@ export abstract class BaseStepper<Model extends CrudModel>
       </ng-container>
       <ng-container *ngIf="has('+1')">
         <button mat-stroked-button
+          color="primary"
           [replaceUrl]="true"
           [disabled]="!can(index + 1)"
           [routerLink]="[link('+1')]">

@@ -7,6 +7,7 @@ import { ActivityModel, ActivityProvider, Box, CategoryModel, CoreSettings, Orga
 import { BaseForm, FormField } from '../base/base.form';
 import { BaseTests } from '../base/base.tests';
 import { EditorFieldComponent } from '../fields/editor.field';
+import { ImageFieldComponent } from '../fields/image.field';
 import { InputFieldComponent } from '../fields/input.field';
 import { SelectFieldComponent } from '../fields/select.field';
 
@@ -34,6 +35,9 @@ import { SelectFieldComponent } from '../fields/select.field';
   `, `
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
+        <ng-container *ngSwitchCase="'admissionFee'">
+          <i18n>admissionFee</i18n>
+        </ng-container>
         <ng-container *ngSwitchCase="'category'">
           <i18n>category</i18n>
         </ng-container>
@@ -58,8 +62,8 @@ import { SelectFieldComponent } from '../fields/select.field';
         <ng-container *ngSwitchCase="'targetGroups'">
           <i18n>targetGroups</i18n>
         </ng-container>
-        <ng-container *ngSwitchCase="'admissionFee'">
-          <i18n>admissionFee</i18n>
+        <ng-container *ngSwitchCase="'titleImage'">
+          <i18n>titleImage</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -86,6 +90,13 @@ export class ActivityFormComponent
       name: 'description',
       input: EditorFieldComponent,
       tests: [Validators.required]
+    },
+    {
+      name: 'admissionFee',
+      input: InputFieldComponent,
+      tests: [Validators.pattern(/^([1-9]\d*|0)(\.\d+)?$/)],
+      label: 'admissionFee',
+      type: 'number'
     },
     {
       name: 'contactName',
@@ -121,11 +132,9 @@ export class ActivityFormComponent
       multi: true
     },
     {
-      name: 'admissionFee',
-      input: InputFieldComponent,
-      tests: [Validators.pattern(/^([1-9]\d*|0)(\.\d+)?$/)],
-      label: 'admissionFee',
-      type: 'number'
+      name: 'titleImage',
+      input: ImageFieldComponent,
+      tests: [Validators.required]
     }
   ];
 
@@ -184,6 +193,9 @@ export class ActivityFormComponent
 
   protected cascade(item: ActivityModel): Observable<any> {
     const links = [];
+
+    const image = this.group.get('titleImage').value;
+    links.push(this.activityProvider.pasteImage(item.id, image));
 
     const images = this.updated('images');
     if (images.add.length) { links.push(this.activityProvider

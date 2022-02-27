@@ -1,28 +1,24 @@
 import { Component, Type } from '@angular/core';
-import { BlogpostModel, CrudJoiner } from '../../../core';
+import { CrudJoiner, StaticPageModel } from '../../../core';
 import { BaseStepper, FormStep } from '../base/base.stepper';
-import { BlogpostFormComponent } from '../forms/blogpost.form';
-import { ImagesFormComponent } from '../forms/images.form';
+import { StaticPageFormComponent } from '../forms/static-page.form';
 import { TranslationFormComponent } from '../forms/translation.form';
 
 @Component({
-  selector: 'blogpost-stepper',
+  selector: 'staticpage-stepper',
   template: BaseStepper.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'create'">
-          <i18n>createBlogpost</i18n>
+          <i18n>createStaticPage</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'edit'">
-          <i18n>editBlogpost</i18n>
+          <i18n>editStaticPage</i18n>
         </ng-container>
         <ng-container *ngSwitchCase="'main'">
           <i18n>main</i18n>
         </ng-container>
 
-        <ng-container *ngSwitchCase="'images'">
-          <i18n>images</i18n>
-        </ng-container>
         <ng-container *ngSwitchCase="'translations'">
           <i18n>translations</i18n>
         </ng-container>
@@ -31,19 +27,15 @@ import { TranslationFormComponent } from '../forms/translation.form';
   `)
 })
 
-export class BlogpostStepperComponent
-  extends BaseStepper<BlogpostModel> {
+export class StaticPageStepperComponent
+  extends BaseStepper<StaticPageModel> {
 
-  public root: string = 'blogs';
+  public root: string = 'markups';
 
   public steps: FormStep[] = [
     {
       name: 'main',
-      form: BlogpostFormComponent
-    },
-    {
-      name: 'images',
-      form: ImagesFormComponent
+      form: StaticPageFormComponent
     },
     {
       name: 'translations',
@@ -51,12 +43,11 @@ export class BlogpostStepperComponent
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
-    .with('images')
+  protected joiner: CrudJoiner = CrudJoiner.of(StaticPageModel)
     .with('titleImage')
     .with('translations').yield('language');
 
-  protected model: Type<BlogpostModel> = BlogpostModel;
+  protected model: Type<StaticPageModel> = StaticPageModel;
 
   public get title(): string {
     const data = this.route.snapshot.routeConfig.children[0].data;
@@ -64,7 +55,7 @@ export class BlogpostStepperComponent
   }
 
   protected get path(): string {
-    return 'blogposts';
+    return 'static-pages';
   }
 
 }

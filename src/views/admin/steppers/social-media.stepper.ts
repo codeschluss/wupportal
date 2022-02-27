@@ -25,7 +25,7 @@ import { SocialMediaFormComponent } from '../forms/social-media.form';
 export class SocialMediaStepperComponent
   extends BaseStepper<SocialMediaModel> {
 
-  public root: string = 'social-media';
+  public root: string = 'socialmedia';
 
   public steps: FormStep[] = [
     {
@@ -37,5 +37,9 @@ export class SocialMediaStepperComponent
   protected joiner: CrudJoiner = CrudJoiner.of(SocialMediaModel);
 
   protected model: Type<SocialMediaModel> = SocialMediaModel;
+
+  protected get path(): string {
+    return 'social-media';
+  }
 
 }

@@ -20,6 +20,7 @@ import { CategoryStepperComponent } from './steppers/category.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
 import { SocialMediaStepperComponent } from './steppers/social-media.stepper';
+import { StaticPageStepperComponent } from './steppers/static-pages.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
@@ -50,6 +51,7 @@ const routes: Route[] = [
           LanguageStepperComponent.routing,
           OrganisationStepperComponent.routing,
           SocialMediaStepperComponent.routing,
+          StaticPageStepperComponent.routing,
           SubscriptionTypeStepperComponent.routing,
           SuburbStepperComponent.routing,
           TargetGroupStepperComponent.routing,

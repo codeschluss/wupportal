@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, forkJoin, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { PlatformProvider, TokenProvider, TranslationProvider, UserModel, UserProvider } from '../../../core';
+import { TokenProvider, TranslationProvider, UserModel, UserProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { ImageFieldComponent } from '../fields/image.field';
 import { InputFieldComponent } from '../fields/input.field';
@@ -61,10 +61,6 @@ export class UserFormComponent
       type: 'tel'
     },
     {
-      name: 'avatar',
-      input: ImageFieldComponent
-    },
-    {
       name: 'password',
       input: InputFieldComponent,
       tests: [
@@ -86,6 +82,10 @@ export class UserFormComponent
         Validators.pattern(/(?=(?:[^a-z]*[a-z]){1})/)
       ],
       type: 'password'
+    },
+    {
+      name: 'avatar',
+      input: ImageFieldComponent
     }
   ];
 
@@ -94,7 +94,6 @@ export class UserFormComponent
   private changes: Subscription = EMPTY.subscribe();
 
   public constructor(
-    private platformProvider: PlatformProvider,
     private userProvider: UserProvider,
     route: ActivatedRoute,
     tokenProvider: TokenProvider,
@@ -115,8 +114,6 @@ export class UserFormComponent
     return super.persist().pipe(tap((item) => {
       if (item.username !== this.item.username) {
         this.tokenProvider.remove();
-      } else if (this.item.avatar?.id !== this.group.get('avatar').value?.id) {
-        this.platformProvider.reload();
       } else {
         this.group.reset(Object.assign(item, {
           avatar: this.group.get('avatar').value
@@ -128,15 +125,8 @@ export class UserFormComponent
   protected cascade(item: UserModel): Observable<any> {
     const links = [];
 
-    if (this.group.get('avatar').dirty) {
-      const avatar = this.group.get('avatar').value;
-
-      if (avatar) {
-        links.push(this.userProvider.linkAvatar(item.id, avatar));
-      } else {
-        // links.push(this.userProvider.unlinkAvatar(item.id));
-      }
-    }
+    const image = this.group.get('avatar').value;
+    links.push(this.userProvider.pasteImage(item.id, image));
 
     return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));
   }

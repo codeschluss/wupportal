@@ -34,7 +34,8 @@ export class UserStepperComponent
     }
   ];
 
-  protected joiner: CrudJoiner = CrudJoiner.of(UserModel);
+  protected joiner: CrudJoiner = CrudJoiner.of(UserModel)
+    .with('avatar');
 
   protected model: Type<UserModel> = UserModel;
 

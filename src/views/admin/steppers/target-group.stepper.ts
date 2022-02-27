@@ -30,7 +30,7 @@ import { TranslationFormComponent } from '../forms/translation.form';
 export class TargetGroupStepperComponent
   extends BaseStepper<TargetGroupModel> {
 
-  public root: string = 'target-groups';
+  public root: string = 'targetgroups';
 
   public steps: FormStep[] = [
     {
@@ -47,5 +47,9 @@ export class TargetGroupStepperComponent
     .with('translations').yield('language');
 
   protected model: Type<TargetGroupModel> = TargetGroupModel;
+
+  protected get path(): string {
+    return 'target-groups';
+  }
 
 }

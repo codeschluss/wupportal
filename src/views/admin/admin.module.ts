@@ -37,7 +37,6 @@ import { CategoryActivitiesChartComponent } from './charts/category-activities.c
 import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
 import { SuburbActivitiesChartComponent } from './charts/suburb-activities.chart';
 import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
-import { AvatarFieldComponent } from './fields/avatar.field';
 import { BooleanFieldComponent } from './fields/boolean.field';
 import { BrandFieldComponent } from './fields/brand.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
@@ -53,7 +52,6 @@ import { UrlFieldComponent } from './fields/url.field';
 import { VideoFieldComponent } from './fields/video.field';
 import { ActivityFormComponent } from './forms/activity.form';
 import { AddressFormComponent } from './forms/address.form';
-import { AvatarFormComponent } from './forms/avatar.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
 import { CategoryFormComponent } from './forms/category.form';
 import { ConfigurationFormComponent } from './forms/configuration.form';
@@ -94,6 +92,7 @@ import { CategoryStepperComponent } from './steppers/category.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
 import { SocialMediaStepperComponent } from './steppers/social-media.stepper';
+import { StaticPageStepperComponent } from './steppers/static-pages.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
@@ -107,6 +106,7 @@ import { LanguageTableComponent } from './tables/language.table';
 import { MembershipTableComponent } from './tables/membership.table';
 import { OrganisationTableComponent } from './tables/organisation.table';
 import { SocialMediaTableComponent } from './tables/social-media.table';
+import { StaticPageTableComponent } from './tables/static-page.table';
 import { SubscriptionTypeTableComponent } from './tables/subscription-type.table';
 import { SuburbTableComponent } from './tables/suburb.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
@@ -132,7 +132,6 @@ const directives: Type<any>[] = [
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
-  AvatarFieldComponent,
   BaseFieldComponent,
   BooleanFieldComponent,
   BrandFieldComponent,
@@ -152,7 +151,6 @@ const fields: Type<BaseFieldComponent>[] = [
 const forms: Type<BaseForm<CrudModel>>[] = [
   ActivityFormComponent,
   AddressFormComponent,
-  AvatarFormComponent,
   BlogpostFormComponent,
   CategoryFormComponent,
   ConfigurationFormComponent,
@@ -230,6 +228,7 @@ const steppers: Type<BaseStepper<CrudModel>>[] = [
   LanguageStepperComponent,
   OrganisationStepperComponent,
   SocialMediaStepperComponent,
+  StaticPageStepperComponent,
   SubscriptionTypeStepperComponent,
   SuburbStepperComponent,
   TargetGroupStepperComponent,
@@ -246,6 +245,7 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   MembershipTableComponent,
   OrganisationTableComponent,
   SocialMediaTableComponent,
+  StaticPageTableComponent,
   SubscriptionTypeTableComponent,
   SuburbTableComponent,
   TargetGroupTableComponent,

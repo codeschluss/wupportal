@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CrudJoiner, LabelModel, LanguageModel, StaticPageModel } from '../../../../core';
+import { CrudJoiner, LabelModel, LanguageModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
@@ -17,19 +17,11 @@ export class TranslatePanelComponent
     }).with('translatables').yield('language'),
     language: CrudJoiner.of(LanguageModel, {
       required: true
-    }),
-    staticPage: CrudJoiner.of(StaticPageModel, {
-      required: true
-    }).with('translatables').yield('language')
+    })
   };
 
   public get label(): LabelModel[] {
     return this.route.snapshot.data.label || [];
-  }
-
-  public staticPage(tagId: string): StaticPageModel {
-    return this.route.snapshot.data.staticPage?.find((i) => i.tagId === tagId)
-      || new StaticPageModel({ content: tagId, tagId });
   }
 
 }

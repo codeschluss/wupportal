@@ -69,6 +69,7 @@ export class OrganisationStepperComponent
 
   protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
     .with('address').yield('suburb')
+    .with('avatar')
     .with('images')
     .with('translations').yield('language')
     .with('videos').yield('thumbnail');

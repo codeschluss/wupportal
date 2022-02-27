@@ -46,6 +46,8 @@ export class ActivityModel
   }
 
   // compatability
+  public get image() { return this.titleImage; }
+  public set image(value) { this.titleImage = value; }
   public get provider() { return this.membership; }
   public set provider(value) { this.membership = value; }
 

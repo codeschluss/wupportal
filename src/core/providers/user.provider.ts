@@ -96,6 +96,10 @@ export class UserProvider
     Observable<any> = this.apply(this.service
       .userControllerGrantTranslatorRightResponse);
 
+  public pasteImage: (id: string, image: ImageModel | null) =>
+    Observable<any> = this.apply(this.service
+      .userControllerAddAvatarResponse);
+
   public resetAllPasswords: () =>
     Observable<any> = this.apply(this.service
       .userControllerResetAllPasswordsResponse);
@@ -103,10 +107,6 @@ export class UserProvider
   public resetPassword: (username: String) =>
     Observable<any> = this.apply(this.service
       .userControllerResetPasswordResponse);
-
-  public linkAvatar: (id: string, avatar: ImageModel) =>
-    Observable<any> = this.apply(this.service
-      .userControllerAddAvatarResponse);
 
   public linkBlogger: () =>
     Observable<any> = this.apply(this.service

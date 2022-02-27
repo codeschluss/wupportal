@@ -33,6 +33,8 @@ class BlogControllerService extends __BaseService {
   static readonly blogControllerAddImagePath = '/blogs/{blogId}/images';
   static readonly blogControllerDeleteImagesPath = '/blogs/{blogId}/images';
   static readonly blogControllerIncreaseLikePath = '/blogs/{blogId}/like';
+  static readonly blogControllerReadTitleImagePath = '/blogs/{blogId}/titleimage';
+  static readonly blogControllerAddTitleImagePath = '/blogs/{blogId}/titleimage';
   static readonly blogControllerReadTopicPath = '/blogs/{blogId}/topic';
   static readonly blogControllerUpdateTopicPath = '/blogs/{blogId}/topic';
   static readonly blogControllerReadTranslationsPath = '/blogs/{blogId}/translations';
@@ -591,6 +593,87 @@ class BlogControllerService extends __BaseService {
   blogControllerIncreaseLike(blogId: string,
     subscriptionId?: StringPrimitive): __Observable<{}> {
     return this.blogControllerIncreaseLikeResponse(blogId, subscriptionId).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * readTitleImage
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadTitleImageResponse(blogId: string): __Observable<__StrictHttpResponse<ImageEntity>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/titleimage`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<ImageEntity>;
+      })
+    );
+  }
+  /**
+   * readTitleImage
+   * @param blogId blogId
+   * @return OK
+   */
+  blogControllerReadTitleImage(blogId: string): __Observable<ImageEntity> {
+    return this.blogControllerReadTitleImageResponse(blogId).pipe(
+      __map(_r => _r.body as ImageEntity)
+    );
+  }
+
+  /**
+   * addTitleImage
+   * @param blogId blogId
+   * @param titleImage titleImage
+   * @return OK
+   */
+  blogControllerAddTitleImageResponse(blogId: string,
+    titleImage: ImageEntity): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = titleImage;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/blogs/${encodeURIComponent(String(blogId))}/titleimage`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * addTitleImage
+   * @param blogId blogId
+   * @param titleImage titleImage
+   * @return OK
+   */
+  blogControllerAddTitleImage(blogId: string,
+    titleImage: ImageEntity): __Observable<{}> {
+    return this.blogControllerAddTitleImageResponse(blogId, titleImage).pipe(
       __map(_r => _r.body as {})
     );
   }

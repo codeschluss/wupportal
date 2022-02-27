@@ -33,6 +33,8 @@ export class UserModel
   // compatability
   public get blogs() { return this.blogposts; }
   public set blogs(value) { this.blogposts = value; }
+  public get image() { return this.avatar; }
+  public set image(value) { this.avatar = value; }
   public get provider() { return this.membership; }
   public set provider(value) { this.membership = value; }
   public get providers() { return this.memberships; }

@@ -49,13 +49,12 @@ class ActivityControllerService extends __BaseService {
   static readonly activityControllerReadTargetGroupsPath = '/activities/{activityId}/targetgroups';
   static readonly activityControllerAddTargetGroupsPath = '/activities/{activityId}/targetgroups';
   static readonly activityControllerDeleteTargetGroupsPath = '/activities/{activityId}/targetgroups';
-  static readonly activityControllerReadTitleImagePath = '/activities/{activityId}/titleImage';
-  static readonly activityControllerAddTitleImagePath = '/activities/{activityId}/titleImage';
+  static readonly activityControllerReadTitleImagePath = '/activities/{activityId}/titleimage';
+  static readonly activityControllerAddTitleImagePath = '/activities/{activityId}/titleimage';
   static readonly activityControllerReadTranslationsPath = '/activities/{activityId}/translations';
   static readonly activityControllerCalculateVisitorsPath = '/activities/{activityId}/visitors';
   static readonly activityControllerCalculateVisitsPath = '/activities/{activityId}/visits';
   static readonly activityControllerGenerateIcalPath = '/activities/{activityId}/{scheduleId}/iCal';
-  static readonly activityControllerDeleteTitleImagePath = '/activity/{activityId}/titleImage';
 
   constructor(
     config: __Configuration,
@@ -1242,7 +1241,7 @@ class ActivityControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/titleImage`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/titleimage`,
       __body,
       {
         headers: __headers,
@@ -1283,7 +1282,7 @@ class ActivityControllerService extends __BaseService {
     __body = titleImage;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/titleImage`,
+      this.rootUrl + `/activities/${encodeURIComponent(String(activityId))}/titleimage`,
       __body,
       {
         headers: __headers,
@@ -1465,49 +1464,6 @@ class ActivityControllerService extends __BaseService {
     scheduleId: string): __Observable<string> {
     return this.activityControllerGenerateIcalResponse(activityId, scheduleId).pipe(
       __map(_r => _r.body as string)
-    );
-  }
-
-  /**
-   * deleteTitleImage
-   * @param activityId activityId
-   * @param titleimageId titleimageId
-   * @return OK
-   */
-  activityControllerDeleteTitleImageResponse(activityId: string,
-    titleimageId: string): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    if (titleimageId != null) __params = __params.set('titleimageId', titleimageId.toString());
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/activity/${encodeURIComponent(String(activityId))}/titleImage`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * deleteTitleImage
-   * @param activityId activityId
-   * @param titleimageId titleimageId
-   * @return OK
-   */
-  activityControllerDeleteTitleImage(activityId: string,
-    titleimageId: string): __Observable<{}> {
-    return this.activityControllerDeleteTitleImageResponse(activityId, titleimageId).pipe(
-      __map(_r => _r.body as {})
     );
   }
 }

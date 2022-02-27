@@ -22,10 +22,15 @@ export class BlogpostModel
 
   public blogger: BloggerModel & Observable<BloggerModel>;
   public images: ImageModel[] & Observable<ImageModel[]>;
+  public titleImage: ImageModel & Observable<ImageModel>;
   public topic: TopicModel & Observable<TopicModel>;
 
   public get label(): string {
     return this.title;
   }
+
+  // compatability
+  public get image() { return this.titleImage; }
+  public set image(value) { this.titleImage = value; }
 
 }

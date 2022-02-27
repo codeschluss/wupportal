@@ -35,7 +35,6 @@ class OrganisationControllerService extends __BaseService {
   static readonly organisationControllerGrantApprovalPath = '/organisations/{organisationId}/approve';
   static readonly organisationControllerReadAvatarPath = '/organisations/{organisationId}/avatar';
   static readonly organisationControllerAddAvatarPath = '/organisations/{organisationId}/avatar';
-  static readonly organisationControllerDeleteAvatarPath = '/organisations/{organisationId}/avatar';
   static readonly organisationControllerReadImagesPath = '/organisations/{organisationId}/images';
   static readonly organisationControllerAddImagePath = '/organisations/{organisationId}/images';
   static readonly organisationControllerDeleteImagesPath = '/organisations/{organisationId}/images';
@@ -656,49 +655,6 @@ class OrganisationControllerService extends __BaseService {
   organisationControllerAddAvatar(organisationId: string,
     avatar: ImageEntity): __Observable<{}> {
     return this.organisationControllerAddAvatarResponse(organisationId, avatar).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
-   * deleteAvatar
-   * @param organisationId organisationId
-   * @param avatarId avatarId
-   * @return OK
-   */
-  organisationControllerDeleteAvatarResponse(organisationId: string,
-    avatarId: string): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    if (avatarId != null) __params = __params.set('avatarId', avatarId.toString());
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/avatar`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * deleteAvatar
-   * @param organisationId organisationId
-   * @param avatarId avatarId
-   * @return OK
-   */
-  organisationControllerDeleteAvatar(organisationId: string,
-    avatarId: string): __Observable<{}> {
-    return this.organisationControllerDeleteAvatarResponse(organisationId, avatarId).pipe(
       __map(_r => _r.body as {})
     );
   }

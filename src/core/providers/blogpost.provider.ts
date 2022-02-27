@@ -40,6 +40,11 @@ export class BlogpostProvider
       model: TopicModel
     },
     {
+      field: 'titleImage',
+      method: this.service.blogControllerReadTitleImageResponse,
+      model: ImageModel
+    },
+    {
       field: 'translatables',
       method: () => EMPTY,
       model: Model
@@ -101,6 +106,10 @@ export class BlogpostProvider
   public like: (id: string, subscriptionId?: String) =>
     Observable<any> = this.apply(this.service
       .blogControllerIncreaseLikeResponse);
+
+  public pasteImage: (id: string, image: ImageModel | null) =>
+    Observable<any> = this.apply(this.service
+      .blogControllerAddTitleImageResponse);
 
   public pasteImages: (id: string, images: ImageModel[]) =>
     Observable<any> = this.apply(this.service

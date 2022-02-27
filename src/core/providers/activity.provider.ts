@@ -149,7 +149,7 @@ export class ActivityProvider
     Observable<any> = this.apply(this.service
       .activityControllerAddTargetGroupsResponse);
 
-  public linkTitleImage: (id: string, titleImage: ImageModel) =>
+  public pasteImage: (id: string, image: ImageModel | null) =>
     Observable<any> = this.apply(this.service
       .activityControllerAddTitleImageResponse);
 
@@ -184,9 +184,5 @@ export class ActivityProvider
   public unlinkTargetGroups: (id: string, targetGroupIds: string[]) =>
     Observable<any> = this.apply(this.service
       .activityControllerDeleteTargetGroupsResponse);
-
-  public unlinkTitleImage: (id: string, titleImageId: string) =>
-    Observable<any> = this.apply(this.service
-      .activityControllerDeleteTitleImageResponse);
 
 }

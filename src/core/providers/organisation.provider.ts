@@ -137,6 +137,10 @@ export class OrganisationProvider
     Observable<any> = this.apply(this.service
       .organisationControllerIncreaseLikeResponse);
 
+  public pasteImage: (id: string, image: ImageModel | null) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerAddAvatarResponse);
+
   public pasteImages: (id: string, images: ImageModel[]) =>
     Observable<any> = this.apply(this.service
       .organisationControllerAddImageResponse);
@@ -149,17 +153,9 @@ export class OrganisationProvider
     Observable<any> = this.apply(this.service
       .organisationControllerUpdateAddressResponse);
 
-  public relinkImage: (id: string, imageId: String) =>
-    Observable<any> = this.apply(this.service
-      .organisationControllerAddAvatarResponse);
-
   public unlinkActivity: (id: string, activityId: string) =>
     Observable<any> = this.apply(this.service
       .organisationControllerDeleteActivityResponse);
-
-  public unlinkImage: (id: string, activityId: string) =>
-    Observable<any> = this.apply(this.service
-      .organisationControllerDeleteAvatarResponse);
 
   public unlinkImages: (id: string, imageIds: string[]) =>
     Observable<any> = this.apply(this.service

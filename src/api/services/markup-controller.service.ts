@@ -24,8 +24,8 @@ class MarkupControllerService extends __BaseService {
   static readonly markupControllerReadOnePath = '/markups/{markupId}';
   static readonly markupControllerUpdatePath = '/markups/{markupId}';
   static readonly markupControllerDeletePath = '/markups/{markupId}';
-  static readonly markupControllerReadImagePath = '/markups/{markupId}/image';
-  static readonly markupControllerAddAvatarPath = '/markups/{markupId}/image';
+  static readonly markupControllerReadTitleImagePath = '/markups/{markupId}/titleimage';
+  static readonly markupControllerAddTitleImagePath = '/markups/{markupId}/titleimage';
   static readonly markupControllerReadTranslationsPath = '/markups/{markupId}/translations';
   static readonly markupControllerCalculateVisitorsPath = '/markups/{markupId}/visitors';
   static readonly markupControllerCalculateVisitsPath = '/markups/{markupId}/visits';
@@ -304,18 +304,18 @@ class MarkupControllerService extends __BaseService {
   }
 
   /**
-   * readImage
+   * readTitleImage
    * @param markupId markupId
    * @return OK
    */
-  markupControllerReadImageResponse(markupId: string): __Observable<__StrictHttpResponse<ImageEntity>> {
+  markupControllerReadTitleImageResponse(markupId: string): __Observable<__StrictHttpResponse<ImageEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/image`,
+      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/titleimage`,
       __body,
       {
         headers: __headers,
@@ -331,23 +331,23 @@ class MarkupControllerService extends __BaseService {
     );
   }
   /**
-   * readImage
+   * readTitleImage
    * @param markupId markupId
    * @return OK
    */
-  markupControllerReadImage(markupId: string): __Observable<ImageEntity> {
-    return this.markupControllerReadImageResponse(markupId).pipe(
+  markupControllerReadTitleImage(markupId: string): __Observable<ImageEntity> {
+    return this.markupControllerReadTitleImageResponse(markupId).pipe(
       __map(_r => _r.body as ImageEntity)
     );
   }
 
   /**
-   * addAvatar
+   * addTitleImage
    * @param markupId markupId
    * @param avatar avatar
    * @return OK
    */
-  markupControllerAddAvatarResponse(markupId: string,
+  markupControllerAddTitleImageResponse(markupId: string,
     avatar?: ImageEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -356,7 +356,7 @@ class MarkupControllerService extends __BaseService {
     __body = avatar;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/image`,
+      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/titleimage`,
       __body,
       {
         headers: __headers,
@@ -372,14 +372,14 @@ class MarkupControllerService extends __BaseService {
     );
   }
   /**
-   * addAvatar
+   * addTitleImage
    * @param markupId markupId
    * @param avatar avatar
    * @return OK
    */
-  markupControllerAddAvatar(markupId: string,
+  markupControllerAddTitleImage(markupId: string,
     avatar?: ImageEntity): __Observable<{}> {
-    return this.markupControllerAddAvatarResponse(markupId, avatar).pipe(
+    return this.markupControllerAddTitleImageResponse(markupId, avatar).pipe(
       __map(_r => _r.body as {})
     );
   }

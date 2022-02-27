@@ -9,13 +9,18 @@ export class StaticPageModel
   implements MarkupEntity {
 
   @Translate() public content: string;
+  @Translate() public title: string;
 
   public tagId: string;
 
-  public image: ImageModel & Observable<ImageModel>;
+  public titleImage: ImageModel & Observable<ImageModel>;
 
   public get label(): string | undefined {
-    return this.tagId;
+    return this.title;
   }
+
+  // compatability
+  public get image() { return this.titleImage; }
+  public set image(value) { this.titleImage = value; }
 
 }

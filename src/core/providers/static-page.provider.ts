@@ -15,14 +15,14 @@ export class StaticPageProvider
 
   protected linked: CrudLink[] = [
     {
-      field: 'image',
-      method: this.service.markupControllerReadImageResponse,
-      model: ImageModel
-    },
-    {
       field: 'language',
       method: () => EMPTY,
       model: LanguageModel
+    },
+    {
+      field: 'titleImage',
+      method: this.service.markupControllerReadTitleImageResponse,
+      model: ImageModel
     },
     {
       field: 'translatables',
@@ -70,5 +70,9 @@ export class StaticPageProvider
   public analyticsVisitsOne: (id: string) =>
     Observable<any> = this.apply(this.service
       .markupControllerCalculateVisitsResponse);
+
+  public pasteImage: (id: string, image: ImageModel | null) =>
+    Observable<any> = this.apply(this.service
+      .markupControllerAddTitleImageResponse);
 
 }

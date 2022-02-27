@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, forkJoin, Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { TokenProvider, TranslationProvider, UserModel, UserProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { ImageFieldComponent } from '../fields/image.field';
@@ -111,15 +111,10 @@ export class UserFormComponent
   }
 
   public persist(): Observable<any> {
-    return super.persist().pipe(tap((item) => {
-      if (item.username !== this.item.username) {
-        this.tokenProvider.remove();
-      } else {
-        this.group.reset(Object.assign(item, {
-          avatar: this.group.get('avatar').value
-        }));
-      }
-    }));
+    return super.persist().pipe(
+      tap(() => this.item.avatar = this.group.get('avatar').value),
+      mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item)))
+    );
   }
 
   protected cascade(item: UserModel): Observable<any> {

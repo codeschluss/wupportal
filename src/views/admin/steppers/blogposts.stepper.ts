@@ -54,6 +54,7 @@ export class BlogpostStepperComponent
   protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
     .with('images')
     .with('titleImage')
+    .with('topic')
     .with('translations').yield('language');
 
   protected model: Type<BlogpostModel> = BlogpostModel;

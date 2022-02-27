@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { BlogpostModel, BlogpostProvider, Box, TokenProvider, TopicModel, TranslationProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { EditorFieldComponent } from '../fields/editor.field';
@@ -73,14 +73,16 @@ export class BlogpostFormComponent
   public persist(): Observable<any> {
     this.item.topicId = this.group.get('topic').value.id;
 
-    return super.persist();
+    return super.persist().pipe(
+      mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item)))
+    );
   }
 
   protected cascade(item: BlogpostModel): Observable<any> {
     const links = [];
 
-    // const image = this.group.get('titleImage').value;
-    // links.push(this.blogpostProvider.pasteImage(item.id, image));
+    const image = this.group.get('titleImage').value;
+    links.push(this.blogpostProvider.pasteImage(item.id, image));
 
     const images = this.updated('images');
     if (images.add.length) { links.push(this.blogpostProvider

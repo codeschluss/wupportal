@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { LabelResolver, LoadingGuarding, SessionResolver } from './core';
+import { LabelResolver, LoadingGuarding, PushedResolver, SessionResolver } from './core';
 import { ErrorNetsplitComponent } from './views/error/netsplit/error.netsplit';
-import { SharedComponent } from './views/shared/shared.component';
+import { GlobalComponent } from './views/global/global.component';
 
 const routes: Route[] = [
   {
     path: '',
     resolve: {
-      labels: LabelResolver
+      labels: LabelResolver,
+      pushed: PushedResolver,
+      session: SessionResolver
     },
     children: [
       {
@@ -28,8 +30,8 @@ const routes: Route[] = [
       },
       {
         path: '',
-        loadChildren: () => import('./views/public/public.module')
-          .then((imported) => imported.PublicModule)
+        loadChildren: () => import('./views/portal/portal.module')
+          .then((imported) => imported.PortalModule)
       }
     ]
   }
@@ -46,11 +48,8 @@ const routes: Route[] = [
     {
       path: '',
       children: routes,
-      component: SharedComponent,
-      canActivate: [LoadingGuarding],
-      resolve: {
-        session: SessionResolver
-      }
+      component: GlobalComponent,
+      canActivate: [LoadingGuarding]
     }
   ], {
     initialNavigation: 'enabled'

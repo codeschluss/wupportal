@@ -1,7 +1,7 @@
 @import '~@angular/material/theming';
 
 $animation-duration: .25s;
-$viewport-width: 100rem;
+$viewport-width: 80rem;
 
 $color-lightest: scale-color(white, $lightness: -0%);
 $color-lighter: scale-color(white, $lightness: -2%);
@@ -11,53 +11,53 @@ $color-darker: scale-color(white, $lightness: -54%);
 $color-darkest: scale-color(white, $lightness: -87%);
 
 $theme-palette-primary: (
-  50: #e3f2fd,
-  100: #bbdefb,
-  200: #90caf9,
-  300: #64b5f6,
-  400: #42a5f5,
-  500: #2196f3,
-  600: #1e88e5,
-  700: #1976d2,
-  800: #1565c0,
-  900: #0d47a1,
-  A100: #82b1ff,
-  A200: #448aff,
-  A400: #2979ff,
-  A700: #2962ff,
+  50: #e5f0f1,
+  100: #bfd9dc,
+  200: #95c0c4,
+  300: #6aa7ac,
+  400: #4a949b,
+  500: #2a8189,
+  600: #257981,
+  700: #1f6e76,
+  800: #19646c,
+  900: #0f5159,
+  A100: #90f2ff,
+  A200: #5decff,
+  A400: #2ae6ff,
+  A700: #10e2ff,
   contrast: (
     50: $color-darkest,
     100: $color-darkest,
     200: $color-darkest,
     300: $color-darkest,
-    400: $color-darkest,
+    400: $color-lightest,
     500: $color-lightest,
     600: $color-lightest,
     700: $color-lightest,
     800: $color-lightest,
     900: $color-lightest,
     A100: $color-darkest,
-    A200: $color-lightest,
-    A400: $color-lightest,
-    A700: $color-lightest
+    A200: $color-darkest,
+    A400: $color-darkest,
+    A700: $color-darkest,
   )
 );
 
 $theme-palette-accent: (
-  50: #e0f7fa,
-  100: #b2ebf2,
-  200: #80deea,
-  300: #4dd0e1,
-  400: #26c6da,
-  500: #00bcd4,
-  600: #00acc1,
-  700: #0097a7,
-  800: #00838f,
-  900: #006064,
-  A100: #84ffff,
-  A200: #18ffff,
-  A400: #00e5ff,
-  A700: #00b8d4,
+  50: #fbeae8,
+  100: #f6c9c7,
+  200: #f0a6a1,
+  300: #ea827b,
+  400: #e6675f,
+  500: #e14c43,
+  600: #dd453d,
+  700: #d93c34,
+  800: #d5332c,
+  900: #cd241e,
+  A100: #ffffff,
+  A200: #ffd2d0,
+  A400: #ffa09d,
+  A700: #ff8784,
   contrast: (
     50: $color-darkest,
     100: $color-darkest,
@@ -72,52 +72,19 @@ $theme-palette-accent: (
     A100: $color-darkest,
     A200: $color-darkest,
     A400: $color-darkest,
-    A700: $color-darkest
-  )
-);
-
-$theme-palette-warn: (
-  50: #ffebee,
-  100: #ffcdd2,
-  200: #ef9a9a,
-  300: #e57373,
-  400: #ef5350,
-  500: #f44336,
-  600: #e53935,
-  700: #d32f2f,
-  800: #c62828,
-  900: #b71c1c,
-  A100: #ff8a80,
-  A200: #ff5252,
-  A400: #ff1744,
-  A700: #d50000,
-  contrast: (
-    50: $color-darkest,
-    100: $color-darkest,
-    200: $color-darkest,
-    300: $color-darkest,
-    400: $color-darkest,
-    500: $color-lightest,
-    600: $color-lightest,
-    700: $color-lightest,
-    800: $color-lightest,
-    900: $color-lightest,
-    A100: $color-darkest,
-    A200: $color-lightest,
-    A400: $color-lightest,
-    A700: $color-lightest
+    A700: $color-darkest,
   )
 );
 
 $theme-palette: mat-light-theme(
   mat-palette($theme-palette-primary),
-  mat-palette($theme-palette-accent),
-  mat-palette($theme-palette-warn)
+  mat-palette($theme-palette-accent)
 );
 
 $color-primary: mat-color(map-get($theme-palette, primary));
 $color-accent: mat-color(map-get($theme-palette, accent));
 $color-warn: mat-color(map-get($theme-palette, warn));
+$color-bg: scale-color($color-primary, $lightness: +95%);
 
 @mixin deep {
   &::ng-deep { @content; }

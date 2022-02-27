@@ -1,0 +1,27 @@
+@import ../../../brand.scss
+
+.mat-toolbar
+  &:first-of-type
+    @include flex(row, space-around, center)
+    @include position(fixed, auto, 0, 0, 0)
+
+    @include responsive(gt-sm)
+      display: none
+
+    & > .mat-icon-button
+      font-size: 1.5rem
+      line-height: 3rem
+      height: 3rem
+      width: 3rem
+
+      &:first-of-type
+        display: none
+
+  &:last-of-type
+    background-color: transparent
+
+    @include responsive(lt-md)
+      display: none
+
+    & > .mat-button
+      font-weight: bold

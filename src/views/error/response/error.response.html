@@ -1,6 +1,19 @@
 <main>
   <fa-icon icon="exclamation-triangle"></fa-icon>
   <strong class="mat-title">
-    <i18n>locationError</i18n>: {{ code | async }}
+    <i18n>clientError</i18n>: {{ code | async }}
   </strong>
+  <small>
+    <ng-container [ngSwitch]="code | async">
+      <ng-container *ngSwitchCase="400">
+        <i18n>unhandledError</i18n>
+      </ng-container>
+      <ng-container *ngSwitchCase="404">
+        <i18n>notFoundError</i18n>
+      </ng-container>
+      <ng-container *ngSwitchCase="451">
+        <i18n>notificationsDisabledError</i18n>
+      </ng-container>
+    </ng-container>
+  </small>
 </main>

@@ -1,0 +1,13 @@
+<main *ngIf="staticPage | async as item">
+  <section>
+    <h1>{{ item.label }}</h1>
+    <mat-card>
+      <img mat-card-image
+        [alt]="item.label"
+        [src]="'images/TEST.jpg'"
+        [title]="item.label">
+      <mat-card-content [innerHTML]="item.content">
+      </mat-card-content>
+    </mat-card>
+  </section>
+</main>

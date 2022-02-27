@@ -1,0 +1,49 @@
+<main>
+  <section>
+    <h1>
+      <i18n>dailySuggestions</i18n>
+      <span [style.flexGrow]="1"></span>
+      <a mat-button
+        color="primary"
+        [routerLink]="['/', 'events']">
+        <i18n>more</i18n>&nbsp;
+        <fa-icon icon="angles-right"></fa-icon>
+      </a>
+    </h1>
+    <ng-container *ngFor="let item of activities">
+      <activity-card [item]="item"></activity-card>
+    </ng-container>
+  </section>
+
+  <section>
+    <h1>
+      <i18n>community</i18n>
+      <span [style.flexGrow]="1"></span>
+      <a mat-button
+        color="primary"
+        [routerLink]="['/', 'community']">
+        <i18n>more</i18n>&nbsp;
+        <fa-icon icon="angles-right"></fa-icon>
+      </a>
+    </h1>
+    <ng-container *ngFor="let item of blogposts">
+      <blogpost-card [item]="item"></blogpost-card>
+    </ng-container>
+  </section>
+
+  <section>
+    <h1>
+      <i18n>places</i18n>
+      <span [style.flexGrow]="1"></span>
+      <a mat-button
+        color="primary"
+        [routerLink]="['/', 'map']">
+        <i18n>more</i18n>&nbsp;
+        <fa-icon icon="angles-right"></fa-icon>
+      </a>
+    </h1>
+    <ng-container *ngFor="let item of organisations">
+      <organisation-card [item]="item"></organisation-card>
+    </ng-container>
+  </section>
+</main>

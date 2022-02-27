@@ -1,0 +1,30 @@
+<main>
+  <section>
+    <h1><i18n>dailySuggestions</i18n></h1>
+    <ng-container *ngFor="let item of activities">
+      <activity-card [item]="item"></activity-card>
+    </ng-container>
+  </section>
+
+  <ng-container *ngFor="let item of categories">
+    <section>
+      <ng-container *ngIf="item.activities.length">
+        <h2>
+          {{ item.label | lowercase }}
+          <span [style.flexGrow]="1"></span>
+          <a mat-button
+            color="primary"
+            [routerLink]="['/', 'events', item.id]">
+            <i18n>more</i18n>&nbsp;
+            <fa-icon icon="angles-right"></fa-icon>
+          </a>
+        </h2>
+        <listing-component>
+          <ng-container *ngFor="let item of item.activities">
+            <activity-card [item]="item"></activity-card>
+          </ng-container>
+        </listing-component>
+      </ng-container>
+    </section>
+  </ng-container>
+</main>

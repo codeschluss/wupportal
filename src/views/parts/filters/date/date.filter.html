@@ -1,0 +1,35 @@
+<nav>
+  <button mat-button
+    [color]="active(today) ? 'primary' : 'accent'"
+    [routerLink]=""
+    [queryParams]="active(today) ? null : today"
+    (click)="dateRange.reset()">
+    <i18n>today</i18n>
+  </button>
+  <button mat-button
+    [color]="active(tomorrow) ? 'primary' : 'accent'"
+    [routerLink]=""
+    [queryParams]="active(tomorrow) ? null : tomorrow">
+    <i18n>tomorrow</i18n>
+  </button>
+  <button mat-button
+    [color]="active(weekend) ? 'primary' : 'accent'"
+    [routerLink]=""
+    [queryParams]="active(weekend) ? null : weekend">
+    <i18n>weekend</i18n>
+  </button>
+  <button mat-button
+    [color]="active(custom) ? 'primary' : 'accent'"
+    (click)="picker.open()">
+    <i18n>custom</i18n>
+    <mat-date-range-picker #picker
+      xPosition="end">
+    </mat-date-range-picker>
+    <ng-container [formGroup]="dateRange">
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate formControlName="startDate">
+        <input matEndDate formControlName="endDate">
+      </mat-date-range-input>
+    </ng-container>
+  </button>
+</nav>

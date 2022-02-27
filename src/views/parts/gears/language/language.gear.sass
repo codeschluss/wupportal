@@ -1,0 +1,17 @@
+@import ../../../brand.scss
+
+.mat-menu-item
+  &.active
+    color: $color-primary
+    pointer-events: none
+
+    & > code
+      background-color: $color-primary
+
+  & > code
+    background-color: $color-accent
+    border-radius: .25rem
+    color: $color-lightest
+    font-weight: bold
+    margin: 0 .5rem 0 0
+    padding: .25rem

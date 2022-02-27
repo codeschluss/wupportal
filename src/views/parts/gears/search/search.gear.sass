@@ -1,0 +1,66 @@
+@import ../../../brand.scss
+
+.mat-form-field
+  @include deep
+    & > .mat-form-field-wrapper
+      margin: 0
+      padding: 0
+
+      & > .mat-form-field-flex
+        align-items: center
+        height: 2.5rem
+        margin: 0
+        overflow: hidden
+        padding: 0
+
+        & > .mat-form-field-infix
+          border: 0
+          padding: 0
+          transition: width $animation-duration
+
+          & > .mat-input-element
+            caret-color: $color-accent
+            color: $color-primary
+
+        & > .mat-form-field-outline
+          color: $color-accent
+          top: 0
+          transition: opacity $animation-duration
+          transition-delay: $animation-duration !important
+
+        & > .mat-form-field-prefix
+          top: 0
+
+        & > .mat-form-field-suffix
+          margin-right: 0
+          top: 0
+          transform: rotateZ(90deg)
+          transition: margin-right $animation-duration
+
+        .mat-icon-button
+          font-size: 14px
+          height: 2.5rem
+          width: 2.5rem
+
+.mat-form-field:focus-within
+  @include deep
+    & > .mat-form-field-wrapper
+      & > .mat-form-field-flex
+          .mat-icon-button
+            border-radius: 0
+
+.mat-form-field:not(:focus-within)
+  @include deep
+    & > .mat-form-field-wrapper
+      & > .mat-form-field-flex
+        & > .mat-form-field-infix
+          transition-delay: $animation-duration
+          width: 0
+
+        & > .mat-form-field-outline
+          opacity: 0
+          transition-delay: 0ms
+
+        & > .mat-form-field-suffix
+          transition-delay: $animation-duration
+          margin-right: -2.5rem

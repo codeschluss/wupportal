@@ -18,7 +18,7 @@ import { ClientUrlSerializer } from './tools/serializer';
 import { SettingsJson } from './tools/settings';
 import { ClientErrorHandler } from './views/error/error.handler';
 import { ErrorModule } from './views/error/error.module';
-import { SharedModule } from './views/shared/shared.module';
+import { GlobalModule } from './views/global/global.module';
 
 @NgModule({
   bootstrap: [
@@ -33,9 +33,9 @@ import { SharedModule } from './views/shared/shared.module';
     ClientRouter,
     CoreModule,
     ErrorModule,
+    GlobalModule,
     HttpClientModule,
     ServiceWorkerModule.register('/worker.js'),
-    SharedModule,
     TransferHttpCacheModule
   ],
   providers: [

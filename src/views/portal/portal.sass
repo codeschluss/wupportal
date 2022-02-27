@@ -1,0 +1,28 @@
+@import ../brand.scss
+
+main
+  margin: 5rem auto
+  max-width: calc(100% - 2rem)
+  width: $viewport-width
+
+  & > section
+    & > h1,
+    & > h2
+      @include flex(reverse, normal, center)
+      color: $color-primary
+
+      & > small
+        color: $color-accent
+        font-weight: normal
+        font-size: 1rem
+
+    & > aside
+      @include flex(row-reverse, normal, center)
+      padding-bottom: 2.5rem
+
+      @include responsive(lt-sm)
+        @include flex(column)
+
+.mat-menu-item
+  &.active
+    color: $color-accent

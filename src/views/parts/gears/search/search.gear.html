@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline">
+  <button mat-icon-button matPrefix color="accent">
+    <fa-icon icon="search"></fa-icon>
+  </button>
+  <input matInput
+    type="search"
+    [formControl]="formControl"
+    (keydown.enter)="search()">
+  <button mat-icon-button matSuffix
+    color="accent"
+    (click)="search()">
+    <fa-icon icon="turn-down"></fa-icon>
+  </button>
+</mat-form-field>

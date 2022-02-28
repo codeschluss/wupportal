@@ -5,13 +5,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LabelModule } from '../../core';
 import { PartsModule } from '../parts/module';
 import { CommunityComponent } from './community/community.component';
+import { CommunityFormComponent } from './community/community.form';
 import { CommunityListingComponent } from './community/community.listing';
 import { EventComponent } from './event/event.component';
 import { EventsComponent } from './events/events.component';
@@ -28,6 +31,7 @@ import { StoryComponent } from './story/story.component';
 
 const components: Type<any>[] = [
   CommunityComponent,
+  CommunityFormComponent,
   CommunityListingComponent,
   EventComponent,
   EventsComponent,
@@ -43,6 +47,7 @@ const components: Type<any>[] = [
 ];
 
 const materials: Type<any>[] = [
+  CKEditorModule,
   FontAwesomeModule,
   LabelModule,
   MatButtonModule,
@@ -50,6 +55,7 @@ const materials: Type<any>[] = [
   MatDatepickerModule,
   MatFormFieldModule,
   MatListModule,
+  MatInputModule,
   MatMenuModule,
   MatSelectModule,
   PartsModule,

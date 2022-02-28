@@ -45,7 +45,8 @@ export class BlogpostFormComponent
       name: 'topic',
       input: SelectFieldComponent,
       label: 'name',
-      model: TopicModel
+      model: TopicModel,
+      tests: [Validators.required]
     },
     {
       name: 'content',

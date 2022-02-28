@@ -12,7 +12,8 @@ export class FollowPieceComponent
   extends BasePiece {
 
   public get disabled(): boolean {
-    return this.sessionProvider.getSubscriptionId() === 'blocked';
+    const id = this.sessionProvider.getSubscriptionId();
+    return !id || id === 'blocked';
   }
 
   public get followed(): boolean {

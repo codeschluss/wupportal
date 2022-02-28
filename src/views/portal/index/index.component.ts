@@ -43,6 +43,7 @@ export class IndexComponent
             .with('schedules')
             .with('titleImage'),
           blogposts: CrudJoiner.of(BlogpostModel, {
+            approved: true,
             page: 0,
             size: 4
           })
@@ -51,9 +52,7 @@ export class IndexComponent
           organisations: CrudJoiner.of(OrganisationModel, {
             approved: true
           })
-            .with('address').yield('suburb')
             .with('avatar')
-            .with('images')
         }
       }
     };

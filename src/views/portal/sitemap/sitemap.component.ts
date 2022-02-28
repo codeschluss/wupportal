@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CategoryModel, CoreSettings, CrudJoiner, CrudResolver, JwtClaims, LabelResolver, RoutingComponent, StaticPageModel, TokenResolver, TopicModel } from '../../../core';
+import { CategoryModel, CoreSettings, CrudJoiner, CrudResolver, JwtClaims, RoutingComponent, StaticPageModel, TokenResolver, TopicModel } from '../../../core';
 
 @Component({
   styleUrls: ['sitemap.component.sass'],
@@ -75,15 +75,10 @@ export class SitemapComponent
   }
 
   public constructor(
-    private labelResolver: LabelResolver,
     private route: ActivatedRoute,
     private settings: CoreSettings
   ) {
     super();
-  }
-
-  public i18n(item: StaticPageModel): string {
-    return this.labelResolver.lookup(item.tagId);
   }
 
 }

@@ -6,10 +6,13 @@ main
   width: $viewport-width
 
   & > section
+    @include flex(wrap, center)
+
     & > h1,
     & > h2
       @include flex(row, normal, center)
       color: $color-primary
+      width: 100%
 
       & > small
         color: $color-accent
@@ -19,19 +22,122 @@ main
     & > aside
       @include flex(row-reverse, normal, center)
       padding-bottom: 2.5rem
+      width: 100%
 
       @include responsive(lt-sm)
         @include flex(column)
 
     & > .mat-card
       margin: 0 auto
-      max-width: calc(#{$viewport-width} * .8)
+      width: calc(#{$viewport-width} * .8)
+      max-width: calc(100% - 2rem)
+
+      & > .mat-card-header
+        @include flex(row, normal, center)
+        overflow: hidden
+
+        &:first-of-type .mat-card-title
+          color: $color-primary
+          font-weight: bold
+
+        & > fa-icon
+          @include flex(row, center, center)
+          color: $color-dark
+          font-size: 2.5rem
+          overflow: hidden
+
+        & > .mat-card-avatar
+          background-color: $color-light
+          background-position: center
+          background-size: cover
+          border: 1px solid $color-accent
+          color: $color-dark
+          height: 5rem
+          width: 5rem
+
+        & > .mat-list
+          padding: 0
+
+          & > .mat-list-item
+            color: $color-accent
+            font-size: .75rem
+            height: 1.5rem
+
+            fa-icon
+              @include flex(row, center, center)
+              font-size: inherit
 
       & > .mat-card-image
         background-position: center
         background-size: cover
         height: 25rem
         max-height: 25vh
+
+      & > .mat-card-content
+        &:first-of-type:not(:last-of-type)
+          @include flex(row, normal, center)
+
+        &:last-of-type
+          padding: 2.5rem 1rem 1rem 1rem
+
+          &:only-child
+            padding-top: 1rem
+
+        & > .mat-stroked-button
+          border-color: currentColor
+          border-radius: 2rem
+
+  @include deep
+    nav > figure
+      @include flex(row, center, center)
+      @include position(relative)
+      flex: 0 0 auto
+      margin: 0
+      scroll-snap-align: start
+
+      @include responsive(xs)
+        width: 100%
+
+        & + figure::before
+          @include position(absolute, auto, auto, auto, -.75rem)
+          background-color: $color-primary
+          border-radius: 50%
+          box-sizing: border-box
+          content: ''
+          height: 1.5rem
+          width: 1.5rem
+
+      @include responsive(gt-xs)
+        & + figure
+          & > img
+            margin-left: 0
+
+      & > img
+        background-color: $color-light
+        background-position: center
+        background-size: cover
+        border-radius: .25rem
+        color: $color-dark
+        height: 20rem
+        margin: 1rem
+        width: 20rem
+
+      & > a
+        @include position(absolute, 0, 0, 0, 0)
+        align-items: center
+        display: flex
+        justify-content: center
+        z-index: 1
+
+      fa-icon
+        &[icon=film]
+          position: absolute
+          color: $color-dark
+          font-size: 12.5rem
+
+        &[icon=play]
+          color: $color-primary
+          font-size: 4rem
 
 .mat-menu-item
   &.active

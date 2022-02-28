@@ -109,7 +109,8 @@ const pieces: Type<BasePiece>[] = [
     ...cards,
     ...components,
     ...filters,
-    ...gears
+    ...gears,
+    ...pieces
   ],
   imports: [
     ...materials,

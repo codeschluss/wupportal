@@ -78,8 +78,8 @@
       <a mat-button
         color="primary"
         [routerLink]="['/', item.tagId]"
-        [title]="i18n(item)">
-        <i18n>{{ item.tagId }}</i18n>
+        [title]="item.label">
+        {{ item.label | lowercase }}
       </a>
     </ng-container>
   </section>

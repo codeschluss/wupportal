@@ -1,0 +1,89 @@
+<main>
+  <section>
+    <mat-card>
+      <ng-container *ngIf="item.images?.length">
+        <img mat-card-image
+          src="data:image/svg+xml,
+            %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+          [alt]="item.images[0].label"
+          [style.backgroundImage]="item.images[0].source"
+          [title]="item.images[0].label">
+      </ng-container>
+      <mat-card-content>
+        <ng-container *ngIf="item.category">
+          <a mat-stroked-button
+            [style.color]="item.category.color"
+            [routerLink]="['/', 'events', item.category.id]">
+            {{ item.category.label | lowercase }}
+          </a>
+        </ng-container>
+        <span [style.flexGrow]="1"></span>
+        <like-piece [item]="item"></like-piece>
+        <ng-container *ngIf="item">
+          <follow-piece [item]="item"></follow-piece>
+        </ng-container>
+        <share-piece [item]="item"></share-piece>
+      </mat-card-content>
+      <mat-card-header>
+        <mat-card-title>
+          {{ item.label | lowercase }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-header>
+        <ng-container *ngIf="item.image?.source">
+          <img mat-card-avatar
+            src="data:image/svg+xml,
+              %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+            [alt]="item.image.label"
+            [style.backgroundImage]="item.image.source"
+            [title]="item.image.label">
+        </ng-container>
+        <ng-container *ngIf="!item.image?.source">
+          <fa-icon mat-card-avatar icon="image"></fa-icon>
+        </ng-container>
+        <mat-list>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="location-dot"></fa-icon>
+            <span mat-line>
+              {{ item.address?.street | lowercase }}
+              {{ item.address?.houseNumber | lowercase }},
+              {{ item.address?.postalCode | lowercase }}
+              {{ item.address?.place | lowercase }}
+            </span>
+          </mat-list-item>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="user"></fa-icon>
+            <span mat-line>
+              {{ item.contactName | lowercase }}
+            </span>
+          </mat-list-item>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="at"></fa-icon>
+            <span mat-line>{{ item.mail | lowercase }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-header>
+      <mat-card-content
+        [innerHTML]="item.description">
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <ng-container *ngIf="item.images?.length">
+    <section>
+      <h2><i18n>images</i18n></h2>
+      <listing-frame-component>
+        <ng-container *ngFor="let image of item.images">
+          <figure>
+            <img
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [alt]="image.label"
+              [style.backgroundImage]="image.source"
+              [title]="image.label">
+          </figure>
+        </ng-container>
+      </listing-frame-component>
+    </section>
+  </ng-container>
+</main>

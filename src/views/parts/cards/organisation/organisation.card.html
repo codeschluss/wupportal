@@ -5,15 +5,15 @@
         itemprop="logo"
         src="data:image/svg+xml,
           %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
-        [alt]="item.image.caption"
+        [alt]="item.image.label"
         [style.backgroundImage]="item.image.source"
-        [title]="item.image.caption">
+        [title]="item.image.label">
     </ng-container>
     <ng-container *ngIf="!item.image?.source">
       <fa-icon icon="image"></fa-icon>
     </ng-container>
     <figcaption itemprop="name">
-        {{ item.label }}
+        {{ item.label | lowercase }}
     </figcaption>
   </figure>
 </a>

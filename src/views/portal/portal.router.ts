@@ -3,14 +3,17 @@ import { Route, RouterModule } from '@angular/router';
 import { ConfigurationModel, CrudJoiner, CrudResolver, StaticPageModel } from '../../core';
 import { CommunityComponent } from './community/community.component';
 import { CommunityListingComponent } from './community/community.listing';
+import { EventComponent } from './event/event.component';
 import { EventsComponent } from './events/events.component';
 import { EventsListingComponent } from './events/events.listing';
 import { FavoritesListingComponent } from './favorites/favorites.listing';
 import { IndexComponent } from './index/index.component';
 import { MapComponent } from './map/map.component';
+import { PlaceComponent } from './place/place.component';
 import { PortalComponent } from './portal.component';
 import { SitemapComponent } from './sitemap/sitemap.component';
 import { StaticPageComponent } from './static-page/static-page.component';
+import { StoryComponent } from './story/story.component';
 
 const routes: Route[] = [
   {
@@ -18,15 +21,16 @@ const routes: Route[] = [
     children: [
       CommunityComponent.routing,
       CommunityListingComponent.routing,
+      EventComponent.routing,
       EventsComponent.routing,
       EventsListingComponent.routing,
       FavoritesListingComponent.routing,
       IndexComponent.routing,
       MapComponent.routing,
-      // RegisterComponent.routing,
-      // SearchComponent.routing,
+      PlaceComponent.routing,
       SitemapComponent.routing,
-      StaticPageComponent.routing
+      StaticPageComponent.routing,
+      StoryComponent.routing
     ]
   },
   {

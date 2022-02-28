@@ -65,12 +65,16 @@
                 <img mat-card-avatar
                   src="data:image/svg+xml,
                     %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
-                  [alt]="item.name"
+                  [alt]="item.avatar.label"
                   [style.backgroundImage]="item.avatar.source"
-                  [title]="item.name">
+                  [title]="item.avatar.label">
               </ng-container>
-              <mat-card-title>{{ item.name }}</mat-card-title>
-              <mat-card-subtitle>{{ item.username }}</mat-card-subtitle>
+              <mat-card-title>
+                {{ item.name | lowercase }}
+              </mat-card-title>
+              <mat-card-subtitle>
+                {{ item.username | lowercase }}
+              </mat-card-subtitle>
             </mat-card-header>
             <mat-card-actions>
               <a mat-stroked-button

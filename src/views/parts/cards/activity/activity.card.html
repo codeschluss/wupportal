@@ -4,9 +4,9 @@
       itemprop="logo"
       src="data:image/svg+xml,
         %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
-      [alt]="item.label"
+      [alt]="item.image.label"
       [style.backgroundImage]="item.image.source"
-      [title]="item.label">
+      [title]="item.image.label">
   </ng-container>
   <ng-container *ngIf="!item.image?.source">
     <fa-icon mat-card-image icon="image"></fa-icon>
@@ -14,7 +14,7 @@
   <mat-card-header>
     <mat-card-title>
       <a [routerLink]="['/', 'event', item.id]">
-        {{ item.label }}
+        {{ item.label | lowercase }}
       </a>
     </mat-card-title>
     <mat-card-subtitle
@@ -23,26 +23,26 @@
   </mat-card-header>
   <span [style.flexGrow]="1"></span>
   <mat-card-actions>
-    <button mat-button
+    <a mat-button disableRipple
       color="accent"
       itemprop="startDate"
       [routerLink]="['/', 'events', item.category?.id]">
       {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
-    </button>
-    <button mat-stroked-button
+    </a>
+    <a mat-stroked-button
       [style.color]="item.category.color"
       [routerLink]="['/', 'events', item.category.id]">
       <fa-icon [icon]="item.category.icon"></fa-icon>
-      {{ item.category.label }}
-    </button>
+      {{ item.category.label | lowercase }}
+    </a>
   </mat-card-actions>
   <mat-card-actions>
-    <button mat-button
+    <a mat-button disableRipple
       color="accent"
       [routerLink]="['/', 'place', item.organisation?.id]">
-      {{ item.provider.organisation.label }}
-    </button>
-    <button mat-button color="accent">
+      {{ item.provider.organisation.label | lowercase }}
+    </a>
+    <button mat-button disableRipple color="accent">
       {{ item.admissionFee || i18n('admissionFree') }}
     </button>
   </mat-card-actions>

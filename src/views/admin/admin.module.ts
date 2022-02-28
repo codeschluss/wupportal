@@ -6,6 +6,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -26,14 +27,16 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CrudModel, LabelModule } from '../../core';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
-import { BaseChart } from './base/base.chart';
 import { BaseFieldComponent } from './base/base.field';
 import { BaseForm } from './base/base.form';
 import { BasePanel } from './base/base.panel';
 import { BaseStepper } from './base/base.stepper';
 import { BaseTable } from './base/base.table';
 import { AppInstallsStatisticsChartComponent } from './charts/appinstalls-statistic.chart';
+import { AppRatingsStatisticsChartComponent } from './charts/appratings-statistic.chart';
 import { CategoryActivitiesChartComponent } from './charts/category-activities.chart';
+import { OverviewStatisticsChartComponent } from './charts/overview-statistic.chart';
+import { SearchStatisticsChartComponent } from './charts/search-statistic.chart';
 import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
 import { SuburbActivitiesChartComponent } from './charts/suburb-activities.chart';
 import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
@@ -115,12 +118,15 @@ import { UserTableComponent } from './tables/user.table';
 import { FileValueAccessorDirective } from './tools/accesor';
 import { Paginate } from './tools/paginate';
 
-const charts: Type<BaseChart>[] = [
+const charts: Type<any>[] = [
   AppInstallsStatisticsChartComponent,
+  AppRatingsStatisticsChartComponent,
   CategoryActivitiesChartComponent,
+  OverviewStatisticsChartComponent,
+  SearchStatisticsChartComponent,
   SubscriptionsChartComponent,
   SuburbActivitiesChartComponent,
-  TargetGroupActivitiesChartComponent
+  TargetGroupActivitiesChartComponent,
 ];
 
 const components: Type<any>[] = [
@@ -189,6 +195,7 @@ const materials: Type<any>[] = [
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatNativeDateModule,
   MatPaginatorModule,
   MatSelectModule,
   MatSidenavModule,

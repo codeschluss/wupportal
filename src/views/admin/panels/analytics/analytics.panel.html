@@ -28,14 +28,53 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab id="appData">
+  <mat-tab id="appStatistics">
     <ng-template matTabLabel>
-      <i18n>appData</i18n>
+      <i18n>appStatistics</i18n>
     </ng-template>
     <ng-template matTabContent>
+      <mat-form-field appearance="fill">
+        <i18n>enterDateRange</i18n>
+        <mat-date-range-input [rangePicker]="picker">
+          <input (dateChange)="start($event)" matStartDate>
+          <input (dateChange)="updateApp($event)" matEndDate>
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
       <h2><i18n>appInstalls</i18n></h2>
-      <appinstalls-statistic-chart></appinstalls-statistic-chart>
+      <appinstalls-statistic-chart #installs></appinstalls-statistic-chart>
       <h2><i18n>appRatings</i18n></h2>
+      <appratings-statistic-chart #ratings></appratings-statistic-chart>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="searchStatistics">
+    <ng-template matTabLabel>
+      <i18n>searchStatistics</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <div class="search">
+        <mat-form-field appearance="fill" class="search-field">
+          <i18n>enterDateRange</i18n>
+          <mat-date-range-input [rangePicker]="picker">
+            <input (dateChange)="start($event)" matStartDate>
+            <input (dateChange)="updateSearch($event)" matEndDate>
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <search-statistic-chart #search></search-statistic-chart>
+      </div>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template matTabLabel>
+      <i18n>overviewPageStatistics</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+        <overview-statistic-chart></overview-statistic-chart>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

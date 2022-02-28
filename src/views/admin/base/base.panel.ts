@@ -4,7 +4,7 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
-import { BlogpostModel, BlogpostProvider, Box, CoreSettings, CrudJoiner, CrudModel, CrudResolver, LabelComponent, MembershipModel, MessageProvider, MetatagService, OrganisationModel, OrganisationProvider, RoutingComponent, RoutingProvider, TokenProvider, TokenResolver, UserModel, UserProvider } from '../../../core';
+import { ActivityProvider, BlogpostModel, BlogpostProvider, Box, CoreSettings, CrudJoiner, CrudModel, CrudResolver, LabelComponent, MembershipModel, MessageProvider, MetatagService, OrganisationModel, OrganisationProvider, RoutingComponent, RoutingProvider, TokenProvider, TokenResolver, UserModel, UserProvider } from '../../../core';
 import { DeletePopupComponent } from '../popups/delete.popup';
 import { PusherPopupComponent } from '../popups/pusher.popup';
 
@@ -77,6 +77,7 @@ export abstract class BasePanel
   }
 
   public constructor(
+    protected activityServiceProvider: ActivityProvider,
     protected dialog: MatDialog,
     protected messageProvider: MessageProvider,
     protected organisationProvider: OrganisationProvider,

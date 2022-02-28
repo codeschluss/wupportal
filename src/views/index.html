@@ -6,7 +6,11 @@
     <meta http-equiv="Content-Security-Policy" content="
       connect-src * 'self' https://*.googleapis.com;
       default-src gap: 'self' 'unsafe-inline';
-      img-src data: 'self' https://*.tile.openstreetmap.org;
+      img-src data: 'self'
+        https://*.tile.openstreetmap.org
+        https://vimeo.com/api/v2/video/
+        https://i.vimeocdn.com/video/
+        https://img.youtube.com/vi/;
       style-src 'self' 'unsafe-inline';
     ">
 

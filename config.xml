@@ -20,6 +20,9 @@
 
   <access origin="*"/>
   <access origin="https://*.tile.openstreetmap.org"/>
+  <access origin="https://vimeo.com/api/v2/video/"/>
+  <access origin="https://i.vimeocdn.com/video/"/>
+  <access origin="https://img.youtube.com/vi/"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="mailto:*"/>

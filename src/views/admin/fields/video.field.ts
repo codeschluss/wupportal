@@ -181,7 +181,7 @@ export class VideoFieldComponent
     let match; switch (true) {
       case VideoFieldComponent.regex.vimeo.test(url):
         match = url.match(VideoFieldComponent.regex.vimeo);
-        return from(fetch(`http://vimeo.com/api/v2/video/${match.pop()}.json`, {
+        return from(fetch(`https://vimeo.com/api/v2/video/${match.pop()}.json`, {
           cache: 'no-cache',
           method: 'GET',
           mode: 'cors'
@@ -192,7 +192,7 @@ export class VideoFieldComponent
 
       case VideoFieldComponent.regex.youtube.test(url):
         match = url.match(VideoFieldComponent.regex.youtube);
-        return of(`http://img.youtube.com/vi/${match.pop()}/0.jpg`);
+        return of(`https://img.youtube.com/vi/${match.pop()}/0.jpg`);
 
       default:
         return of('');

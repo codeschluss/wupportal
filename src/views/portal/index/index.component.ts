@@ -37,21 +37,19 @@ export class IndexComponent
             page: 0,
             size: 4
           })
-            .with('address').yield('suburb')
+            .with('address')
             .with('category')
             .with('provider').yield('organisation')
             .with('schedules')
             .with('titleImage'),
           blogposts: CrudJoiner.of(BlogpostModel, {
             page: 0,
-            size: 5
+            size: 4
           })
             .with('blogger')
             .with('topic'),
           organisations: CrudJoiner.of(OrganisationModel, {
-            approved: true,
-            page: 0,
-            size: 5
+            approved: true
           })
             .with('address').yield('suburb')
             .with('avatar')

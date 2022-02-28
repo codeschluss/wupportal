@@ -1,13 +1,28 @@
 @import ../../../brand.scss
 
-mat-card
-  width: 22.5rem
+a
+  text-decoration: none
+  margin: .5rem
 
-  & > .mat-card-image
-    @include flex(row, center, center)
-    background-color: $color-light
-    background-position: center
-    background-size: cover
-    color: $color-dark
-    font-size: 4rem
-    height: 12.5rem
+  & > figure
+    @include flex(column, center, center)
+    display: inline-flex
+    margin: 0
+    width: 7.5rem
+
+    & > fa-icon,
+    & > img
+      @include flex(row, center, center)
+      background-color: $color-light
+      background-position: center
+      background-size: cover
+      border-radius: 50%
+      color: $color-dark
+      font-size: 1.5rem
+      height: 4rem
+      width: 4rem
+
+    & > figcaption
+      color: $color-accent
+      padding-top: .5rem
+      text-align: center

@@ -23,6 +23,8 @@ import { BlogpostCardComponent } from './cards/blogpost/blogpost.card';
 import { OrganisationCardComponent } from './cards/organisation/organisation.card';
 import { DateFilterComponent } from './filters/date/date.filter';
 import { SortFilterComponent } from './filters/sort/sort.filter';
+import { JumboFrameComponent } from './frames/jumbo/jumbo.frame';
+import { ListingFrameComponent } from './frames/listing/listing.frame';
 import { AccountGearComponent } from './gears/account/account.gear';
 import { LanguageGearComponent } from './gears/language/language.gear';
 import { MenuGearComponent } from './gears/menu/menu.gear';
@@ -32,7 +34,6 @@ import { SmackbarGearComponent } from './gears/smackbar/smackbar.gear';
 import { SocialMediaGearComponent } from './gears/social-media/social-media.gear';
 import { StaticPagesGearComponent } from './gears/static-pages/static-pages.gear';
 import { StoreLinkssGearComponent } from './gears/store-links/store-links.gear';
-import { ListingComponent } from './listing/listing.component';
 import { BasePiece } from './pieces/base.piece';
 import { DetailsPieceComponent } from './pieces/details/details.piece';
 import { FollowPieceComponent } from './pieces/follow/follow.piece';
@@ -47,7 +48,8 @@ const cards: Type<BaseCard<CrudModel>>[] = [
 ];
 
 const components: Type<any>[] = [
-  ListingComponent
+  JumboFrameComponent,
+  ListingFrameComponent
 ];
 
 const filters: Type<any>[] = [

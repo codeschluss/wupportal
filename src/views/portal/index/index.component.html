@@ -10,9 +10,11 @@
         <fa-icon icon="angles-right"></fa-icon>
       </a>
     </h1>
-    <ng-container *ngFor="let item of activities">
-      <activity-card [item]="item"></activity-card>
-    </ng-container>
+    <jumbo-frame-component>
+      <ng-container *ngFor="let item of activities">
+        <activity-card [item]="item"></activity-card>
+      </ng-container>
+    </jumbo-frame-component>
   </section>
 
   <section>
@@ -26,9 +28,11 @@
         <fa-icon icon="angles-right"></fa-icon>
       </a>
     </h1>
-    <ng-container *ngFor="let item of blogposts">
-      <blogpost-card [item]="item"></blogpost-card>
-    </ng-container>
+    <jumbo-frame-component>
+      <ng-container *ngFor="let item of blogposts">
+        <blogpost-card [item]="item"></blogpost-card>
+      </ng-container>
+    </jumbo-frame-component>
   </section>
 
   <section>
@@ -42,8 +46,10 @@
         <fa-icon icon="angles-right"></fa-icon>
       </a>
     </h1>
-    <ng-container *ngFor="let item of organisations">
-      <organisation-card [item]="item"></organisation-card>
-    </ng-container>
+    <listing-frame-component>
+      <ng-container *ngFor="let item of organisations">
+        <organisation-card [item]="item"></organisation-card>
+      </ng-container>
+    </listing-frame-component>
   </section>
 </main>

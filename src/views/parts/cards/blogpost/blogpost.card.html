@@ -1,34 +1,39 @@
 <mat-card itemscope itemtype="https://schema.org/BlogPosting">
+  <ng-container *ngIf="item.image?.source">
+    <img mat-card-image
+      itemprop="logo"
+      src="data:image/svg+xml,
+        %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+      [alt]="item.label"
+      [style.backgroundImage]="item.image.source"
+      [title]="item.label">
+  </ng-container>
+  <ng-container *ngIf="!item.image?.source">
+    <fa-icon mat-card-image icon="image"></fa-icon>
+  </ng-container>
   <mat-card-header>
     <mat-card-title>
-      <a [routerLink]="['/', 'blogposts', item.id]" itemprop="headline">
+      <a [routerLink]="['/', 'story', item.id]">
         {{ item.label }}
-        <small>
-          <i18n>by</i18n>
-          <span itemprop="author">{{ item.author }}</span>
-        </small>
       </a>
     </mat-card-title>
-    <ng-container ngProjectAs="mat-card-subtitle" *ngIf="item.topic">
-      <mat-card-subtitle>
-        <i18n>about</i18n>
-        <span itemprop="about">{{ item.topic.label }}</span>
-      </mat-card-subtitle>
-    </ng-container>
+    <mat-card-subtitle
+      itemprop="articleBody"
+      [innerHTML]="item.content">
+    </mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content itemprop="articleBody">
-    {{ preview }}
-  </mat-card-content>
-  <mat-divider></mat-divider>
+  <span [style.flexGrow]="1"></span>
   <mat-card-actions>
-    <details-piece [item]="item"></details-piece>
-    <ng-container *ngIf="item.topic">
-      <follow-piece [item]="item.topic"></follow-piece>
-    </ng-container>
-    <ng-container *ngIf="item.blogger">
-      <follow-piece [item]="item.blogger"></follow-piece>
-    </ng-container>
-    <share-piece [item]="item"></share-piece>
-    <like-piece [item]="item"></like-piece>
+    <button mat-button
+      color="accent"
+      itemprop="author">
+      {{ item.author }}
+    </button>
+    <button mat-button
+      color="accent"
+      itemprop="startDate"
+      [routerLink]="['/', 'events', item.topic?.id]">
+      {{ item.created | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
+    </button>
   </mat-card-actions>
 </mat-card>

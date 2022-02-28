@@ -29,32 +29,40 @@
     </aside>
     <ng-container *ngIf="subscription | async as item">
       <ng-container *ngIf="item.activities?.length">
-        <ng-container *ngFor="let item of item.activities">
-          <activity-card [item]="item"></activity-card>
-        </ng-container>
+        <listing-frame-component>
+          <ng-container *ngFor="let item of item.activities">
+            <activity-card [item]="item"></activity-card>
+          </ng-container>
+        </listing-frame-component>
       </ng-container>
       <ng-container *ngIf="item.bloggers?.length">
         <ng-container *ngFor="let item of item.bloggers">
           <ng-container *ngIf="item.blogposts?.length">
-            <ng-container *ngFor="let item of item.blogposts">
-              <blogpost-card [item]="item"></blogpost-card>
-            </ng-container>
+            <listing-frame-component>
+              <ng-container *ngFor="let item of item.blogposts">
+                <blogpost-card [item]="item"></blogpost-card>
+              </ng-container>
+            </listing-frame-component>
           </ng-container>
         </ng-container>
       </ng-container>
       <ng-container *ngIf="item.topics?.length">
         <ng-container *ngFor="let item of item.topics">
           <ng-container *ngIf="item.blogposts?.length">
-            <ng-container *ngFor="let item of item.blogposts">
-              <blogpost-card [item]="item"></blogpost-card>
-            </ng-container>
+            <listing-frame-component>
+              <ng-container *ngFor="let item of item.blogposts">
+                <blogpost-card [item]="item"></blogpost-card>
+              </ng-container>
+            </listing-frame-component>
           </ng-container>
         </ng-container>
       </ng-container>
       <ng-container *ngIf="item.organisations?.length">
-        <ng-container *ngFor="let item of item.organisations">
-          <organisation-card [item]="item"></organisation-card>
-        </ng-container>
+        <listing-frame-component>
+          <ng-container *ngFor="let item of item.organisations">
+            <organisation-card [item]="item"></organisation-card>
+          </ng-container>
+        </listing-frame-component>
       </ng-container>
     </ng-container>
   </section>

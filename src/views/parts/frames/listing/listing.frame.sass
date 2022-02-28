@@ -1,4 +1,4 @@
-@import ../../brand.scss
+@import ../../../brand.scss
 
 nav
   @include flex(row)
@@ -6,12 +6,6 @@ nav
 
   @include responsive(xs)
     scroll-snap-type: x mandatory
-
-  // &::after
-  //   background-color: $color-primary
-  //   content: ''
-  //   height: .25rem
-  //   width: 100%
 
   @include deep
     & > [base="card"]

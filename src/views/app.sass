@@ -5,37 +5,37 @@
 @include mat-core()
 @include angular-material-theme($theme-palette)
 
+*
+  -webkit-tap-highlight-color: transparent
+
+  &::selection
+    color: $color-lightest
+    background-color: $color-accent
+
 html
   background-color: $color-bg
   font-family: Roboto, sans-serif
 
-  *
-    -webkit-tap-highlight-color: transparent
+.mat-tab-group
+  & > .mat-tab-header .mat-tab-label:not(.mat-tab-disabled)
+    color: $color-accent
+    transition: color $animation-duration
 
-    &::selection
-      color: $color-lightest
-      background-color: $color-accent
-
-  .mat-tab-group
-    & > .mat-tab-header .mat-tab-label:not(.mat-tab-disabled)
-      color: $color-accent
-      transition: color $animation-duration
-
-      &.mat-tab-label-active
+    &.mat-tab-label-active
         color: $color-primary
 
-  global-component
-    @include flex(column)
-    min-height: 100vh
+global-component
+  @include flex(column)
+  min-height: 100vh
 
-    body.embedded &
-      border-radius: .25rem
-      overflow: hidden
+  body.embedded &
+    border-radius: .25rem
+    overflow: hidden
 
-      & > header,
-      & > footer
-        display: none
+    & > header-component,
+    & > footer-component
+      display: none
 
-    & > router-outlet + ng-component
-      @include position(relative)
-      flex: 1 0 auto
+  & > router-outlet + ng-component
+    @include position(relative)
+    flex: 1 0 auto

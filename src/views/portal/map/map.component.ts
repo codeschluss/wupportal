@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Route, Router } from '@angular/router';
-import { RoutingComponent } from '../../../core';
+import { filter } from 'rxjs';
+import { PlatformProvider, RoutingComponent } from '../../../core';
+import { MapsConnection } from '../../maps/maps.connection';
 
 @Component({
   styleUrls: ['map.component.sass'],
@@ -9,7 +12,14 @@ import { RoutingComponent } from '../../../core';
 
 export class MapComponent
   extends RoutingComponent
-  implements OnInit {
+  implements OnInit, AfterViewInit {
+
+  public source: SafeResourceUrl | string;
+
+  @ViewChild('frame', { read: ElementRef, static: true })
+  private frame: ElementRef<HTMLIFrameElement>;
+
+  private mapview: MapsConnection;
 
   protected get routing(): Route {
     return {
@@ -26,12 +36,32 @@ export class MapComponent
   }
 
   public constructor(
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer,
+    private platformProvider: PlatformProvider
   ) {
     super();
   }
 
   public ngOnInit(): void {
+    this.source = this.sanitizer.bypassSecurityTrustResourceUrl(
+      ['android', 'ios'].includes(this.platformProvider.name)
+        ? '#/mapview/?embed=true'
+        : '/mapview/?embed=true'
+    );
+  }
+
+  public ngAfterViewInit(): void {
+    if (this.platformProvider.name !== 'server') {
+      const main = this.platformProvider.document.defaultView;
+      const frame = this.frame.nativeElement.contentWindow;
+
+      this.mapview = new MapsConnection(main, frame);
+      this.mapview.focus.subscribe(console.log);
+      this.mapview.route.subscribe(console.log);
+      this.mapview.ready.pipe(filter(Boolean)).subscribe(console.log);
+      this.mapview.nextReady(true);
+    }
   }
 
   public active(href: string): boolean {

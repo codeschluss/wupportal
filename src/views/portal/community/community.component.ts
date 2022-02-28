@@ -33,7 +33,10 @@ export class CommunityComponent
             })
               .with('blogger')
               .with('topic'),
-            topics: CrudJoiner.of(TopicModel)
+            topics: CrudJoiner.of(TopicModel, {
+              page: 0,
+              size: 5
+            })
               .with('blogs')
           }
         }

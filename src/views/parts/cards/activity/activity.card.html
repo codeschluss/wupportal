@@ -1,26 +1,49 @@
-<mat-card matRipple
-  matRippleColor="currentColor"
-  [matRippleDisabled]="true"
-  [ngStyle]="colors(item.category.color)"
-  itemscope itemtype="https://schema.org/Event">
-  <a [routerLink]="['/', 'event', item.id]"></a>
-  <mat-card-content>
-    <fa-icon [icon]="icon"></fa-icon>
-    <small>
-      <span itemprop="startDate">{{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}</span>
-      <br>
-      <span itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="streetAddress">{{ item.address.street }} </span>
-        <span itemprop="postOfficeBoxNumber">{{ item.address.houseNumber }}</span>
-      </span>
-      <br>
-      <span itemprop="location" itemscope itemtype="https://schema.org/PostalAddress">
-        <span itemprop="addressLocality">{{ item.address.place }} </span>
-        <span itemprop="streetAddress">{{ item.address.suburb.label }}</span>
-      </span>
-    </small>
-  </mat-card-content>
+<mat-card itemscope itemtype="https://schema.org/Event">
+  <ng-container *ngIf="item.image?.source">
+    <img mat-card-image
+      itemprop="logo"
+      src="data:image/svg+xml,
+        %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+      [alt]="item.label"
+      [style.backgroundImage]="item.image.source"
+      [title]="item.label">
+  </ng-container>
+  <ng-container *ngIf="!item.image?.source">
+    <fa-icon mat-card-image icon="image"></fa-icon>
+  </ng-container>
   <mat-card-header>
-    <mat-card-title itemprop="name">{{ item.label }}</mat-card-title>
+    <mat-card-title>
+      <a [routerLink]="['/', 'event', item.id]">
+        {{ item.label }}
+      </a>
+    </mat-card-title>
+    <mat-card-subtitle
+      [innerHTML]="item.description">
+    </mat-card-subtitle>
   </mat-card-header>
+  <span [style.flexGrow]="1"></span>
+  <mat-card-actions>
+    <button mat-button
+      color="accent"
+      itemprop="startDate"
+      [routerLink]="['/', 'events', item.category?.id]">
+      {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
+    </button>
+    <button mat-stroked-button
+      [style.color]="item.category.color"
+      [routerLink]="['/', 'events', item.category.id]">
+      <fa-icon [icon]="item.category.icon"></fa-icon>
+      {{ item.category.label }}
+    </button>
+  </mat-card-actions>
+  <mat-card-actions>
+    <button mat-button
+      color="accent"
+      [routerLink]="['/', 'place', item.organisation?.id]">
+      {{ item.provider.organisation.label }}
+    </button>
+    <button mat-button color="accent">
+      {{ item.admissionFee || i18n('admissionFree') }}
+    </button>
+  </mat-card-actions>
 </mat-card>

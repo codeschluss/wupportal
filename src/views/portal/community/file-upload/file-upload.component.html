@@ -2,9 +2,11 @@
 	<input class="form-control" type="file"
 			(change)="onChange($event)">
 
-	<button (click)="onUpload()"
-		class="btn btn-success">
-		Upload
+	<button
+  mat-icon-button
+  (click)="onUpload()"
+	color="primary">
+		Picture Upload
 	</button>
 </div>
 

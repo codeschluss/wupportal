@@ -13,10 +13,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LabelModule } from '../../core';
+import { BaseFieldComponent } from '../admin/base/base.field';
+import { EditorFieldComponent } from '../admin/fields/editor.field';
 import { SharedComponent } from './shared.component';
 
 const components: Type<any>[] = [
-  SharedComponent
+  SharedComponent,
+  EditorFieldComponent,
+  BaseFieldComponent
 ];
 
 const materials: Type<any>[] = [

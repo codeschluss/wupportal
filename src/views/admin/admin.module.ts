@@ -43,7 +43,6 @@ import { TargetGroupActivitiesChartComponent } from './charts/target-group-activ
 import { BooleanFieldComponent } from './fields/boolean.field';
 import { BrandFieldComponent } from './fields/brand.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
-import { EditorFieldComponent } from './fields/editor.field';
 import { IconFieldComponent } from './fields/icon.field';
 import { ImageFieldComponent } from './fields/image.field';
 import { ImagesFieldComponent } from './fields/images.field';
@@ -138,11 +137,9 @@ const directives: Type<any>[] = [
 ];
 
 const fields: Type<BaseFieldComponent>[] = [
-  BaseFieldComponent,
   BooleanFieldComponent,
   BrandFieldComponent,
   ChipListFieldComponent,
-  EditorFieldComponent,
   IconFieldComponent,
   ImageFieldComponent,
   ImagesFieldComponent,

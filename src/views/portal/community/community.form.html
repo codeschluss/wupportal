@@ -1,19 +1,60 @@
 <main>
   <section>
     <h1><i18n>createBlogpost</i18n></h1>
-    <span><i18n>tellUs</i18n></span>
-    <span><i18n>tellUs</i18n></span>
+    <h2><i18n>tell us - what`s happening in dinslaken</i18n></h2>
+    <p><i18n>You got a cool story or some pictures to share? Bring it on</i18n></p>
   </section>
-  <form>
+  <form [formGroup]="communityForm" (ngSubmit)="onSendForm()">
     <mat-form-field appearance="outline">
       <mat-label><i18n>name</i18n></mat-label>
-      <input matInput>
+      <input
+      matInput
+      type="text"
+      id="name"
+      formControlName="name"
+      class="form-control">
     </mat-form-field>
+    <br>
     <mat-form-field appearance="outline">
       <mat-label>
         <i18n>email</i18n>
       </mat-label>
-      <input type="email" matInput>
+      <input
+      type="email"
+      matInput
+      id="email"
+      formControlName="email"
+      class="form-control">
     </mat-form-field>
+    <hr>
+    <br>
+    <file-upload></file-upload>
+    <mat-form-field appearance="outline">
+      <mat-label>
+        <i18n>titel</i18n>
+      </mat-label>
+      <input
+      type="text"
+      matInput
+      id="titel"
+      formControlName="titel"
+      class="form-control">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>
+        <i18n>about</i18n>
+      </mat-label>
+      <input
+      type="text"
+      matInput
+      id="about"
+      formControlName="about"
+      class="form-control">
+    </mat-form-field>
+    <ckeditor></ckeditor>
+    <button mat-icon-button
+        color="primary">
+        send
+      </button>
   </form>
 </main>

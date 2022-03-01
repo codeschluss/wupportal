@@ -16,6 +16,7 @@ import { PartsModule } from '../parts/module';
 import { CommunityComponent } from './community/community.component';
 import { CommunityFormComponent } from './community/community.form';
 import { CommunityListingComponent } from './community/community.listing';
+import { FileUploadComponent } from './community/file-upload/file-upload.component';
 import { EventComponent } from './event/event.component';
 import { EventsComponent } from './events/events.component';
 import { EventsListingComponent } from './events/events.listing';
@@ -37,6 +38,8 @@ const components: Type<any>[] = [
   EventsComponent,
   EventsListingComponent,
   FavoritesListingComponent,
+  FileUploadComponent,
+  MapComponent,
   IndexComponent,
   MapComponent,
   PlaceComponent,

@@ -1,11 +1,13 @@
 <main>
   <section>
     <h1><i18n>createBlogpost</i18n></h1>
-    <h2><i18n>tell us - what`s happening in dinslaken</i18n></h2>
+    <h2><i18n>tell us - what is happening in dinslaken</i18n></h2>
     <p><i18n>You got a cool story or some pictures to share? Bring it on</i18n></p>
   </section>
   <form [formGroup]="communityForm" (ngSubmit)="onSendForm()">
-    <mat-form-field appearance="outline">
+    <mat-form-field
+    appearance="outline"
+    class="upper-forms">
       <mat-label><i18n>name</i18n></mat-label>
       <input
       matInput
@@ -15,7 +17,9 @@
       class="form-control">
     </mat-form-field>
     <br>
-    <mat-form-field appearance="outline">
+    <mat-form-field
+    appearance="outline"
+    class="upper-forms">
       <mat-label>
         <i18n>email</i18n>
       </mat-label>
@@ -27,37 +31,38 @@
       class="form-control">
     </mat-form-field>
     <hr>
-    <br>
     <file-upload></file-upload>
-    <br>
-    <mat-form-field appearance="outline">
+    <mat-form-field
+    appearance="outline"
+    class="lower-forms">
       <mat-label>
-        <i18n>titel</i18n>
+        <i18n>title</i18n>
       </mat-label>
       <input
       type="text"
       matInput
-      id="titel"
-      formControlName="titel"
+      id="title"
+      formControlName="title"
       class="form-control">
     </mat-form-field>
     <br>
-    <mat-form-field appearance="outline">
+    <mat-form-field
+    appearance="outline"
+    class="lower-forms">
       <mat-label>
         <i18n>about</i18n>
       </mat-label>
-      <input
-      type="text"
-      matInput
-      id="about"
-      formControlName="about"
-      class="form-control">
+      <mat-select formControlName="about">
+        <mat-option *ngFor="let option of (topics | async)" value="option.id">{{option.name}}</mat-option>
+      </mat-select>
     </mat-form-field>
     <!-- <ckeditor></ckeditor> -->
     <br>
-    <button mat-icon-button
-        color="primary">
+    <button
+        mat-raised-button color="primary"
+        class="send-button"
+        [disabled]="!communityForm.valid">
         send
-      </button>
+    </button>
   </form>
 </main>

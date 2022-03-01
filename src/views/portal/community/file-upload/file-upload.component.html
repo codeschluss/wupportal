@@ -1,23 +1,20 @@
-<div class="text-center">
-	<input class="form-control" type="file"
-			(change)="onChange($event)">
-
-	<button
-  mat-icon-button
-  (click)="onUpload()"
-	color="primary">
-		Picture Upload
-	</button>
-</div>
-
-<!-- Shareable short link of uoloaded file -->
-<div class="container text-center jumbotron"
-	*ngIf="shortLink">
-	<h2> Visit Here</h2>
-	<a href="{{shortLink}}">{{shortLink}}</a>
+<main>
+  <div class="text-center">
+    <input
+    type="file"
+    (change)="onChange($event)">
+    <br>
+    <button
+    class="upload-button"
+    mat-raised-button color="accent"
+    (click)="onUpload()">
+    upload pictures
+    </button>
 </div>
 
 <!--Flag variable is used here-->
 <div class="container" *ngIf="loading">
-	<h3>Loading ...</h3>
+    <h3>Loading ...</h3>
 </div>
+</main>
+

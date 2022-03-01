@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BlogpostProvider, RoutingComponent, TopicModel, TopicProvider } from '../../../core';
@@ -13,7 +13,9 @@ export class CommunityFormComponent
   extends RoutingComponent {
 
   public topics: Observable<TopicModel[]>;
-  communityForm: FormGroup;
+  public communityForm: FormGroup;
+
+
 
   protected get routing(): Route {
     return {
@@ -31,11 +33,11 @@ export class CommunityFormComponent
 
   public ngOnInit(): void {
     this.topics = this.topicProvider.readAll();
-    this.communityForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'email': new FormControl(null, [Validators.required,Validators.email]),
-      'titel': new FormControl(null, Validators.required),
-      'about': new FormControl(null, Validators.required)
+    this.communityForm = this.fb.group({
+      name: ['',Validators.required],
+      email: ['',[Validators.required,Validators.email]],
+      title: ['',Validators.required],
+      about: ['', Validators.required]
     })
   }
 

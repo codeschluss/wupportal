@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ImageEntity } from 'src/api/models/image-entity';
 @Injectable({
 providedIn: 'root'
 })
@@ -19,6 +20,9 @@ upload(file):Observable<any> {
 
 	// Store form name as "file" with file data
 	formData.append("file", file, file.name);
+
+  var newFile = file as ImageEntity;
+  console.log(newFile);
 
 	// Make http post request over api
 	// with formData as req

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -58,6 +59,7 @@ const materials: Type<any>[] = [
   MatDatepickerModule,
   MatFormFieldModule,
   MatListModule,
+  MatIconModule,
   MatInputModule,
   MatMenuModule,
   MatSelectModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FileUploadService } from "./file-upload.service";
+import { BlogpostProvider } from "src/core";
 
 @Component({
   selector: 'file-upload',
@@ -15,28 +15,16 @@ export class FileUploadComponent implements OnInit {
   file: File = null; // Variable to store file
   base64textString: string;
   finalBase64Source: string;
-  // Inject service
-  constructor(private fileUploadService: FileUploadService) { }
+  finalBaseArray: string[] = [];
+
+
+  constructor(
+    private blogPostProvider: BlogpostProvider) {
+   }
 
   ngOnInit(): void {
   }
 
-  // On file Select
-  onChange(event) {
-      this.file = event.target.files[0];
-  }
-
-  // OnClick of button Upload
-  onUpload() {
-      this.loading = !this.loading;
-      this.fileUploadService.upload(this.file).subscribe(
-          (event: any) => {
-              if (typeof (event) === 'object') {
-                  this.loading = false; // Flag variable
-              }
-          }
-      );
-  }
 
   handleFileSelect(evt){
     var files = evt.target.files;
@@ -53,10 +41,15 @@ export class FileUploadComponent implements OnInit {
 
 _handleReaderLoaded(readerEvt) {
    var binaryString = readerEvt.target.result;
-          this.base64textString= btoa(binaryString);
-          console.log(btoa(binaryString));
+   this.base64textString= btoa(binaryString);
    this.finalBase64Source = 'data:image/png;base64,' + this.base64textString;
+   this.finalBaseArray.push(this.finalBase64Source);
+  //  this.imageModel.imageData = this.finalBase64Source;
+  //  this.imageBaseArray.push(this.imageModel);
+  }
 
+  onUploaded(){
 
+    //this.blogPostProvider.pasteImages(this.imageModel.id,this.imageBaseArray);
   }
 }

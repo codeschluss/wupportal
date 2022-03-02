@@ -7,14 +7,18 @@
     <button
     class="upload-button"
     mat-raised-button color="accent"
-    (click)="_handleReaderLoaded($event)">
+    (click)="onUploaded()">
     upload pictures
     </button>
 </div>
+<br>
+<span *ngIf="finalBaseArray != null" class="pictures">
+  <span *ngFor="let basecode of finalBaseArray; let i = index">
+    <img [src]="basecode" alt=""/>
+  </span>
+</span>
 
-<div>
-  <img [src]="finalBase64Source" alt=""/>
-</div>
+
 
 <!--Flag variable is used here-->
 <div class="container" *ngIf="loading">

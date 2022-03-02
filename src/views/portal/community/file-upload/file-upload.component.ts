@@ -13,7 +13,8 @@ export class FileUploadComponent implements OnInit {
   shortLink: string = "";
   loading: boolean = false; // Flag variable
   file: File = null; // Variable to store file
-
+  base64textString: string;
+  finalBase64Source: string;
   // Inject service
   constructor(private fileUploadService: FileUploadService) { }
 
@@ -37,23 +38,25 @@ export class FileUploadComponent implements OnInit {
       );
   }
 
-//   handleFileSelect(evt){
-//     var files = evt.target.files;
-//     var file = files[0];
+  handleFileSelect(evt){
+    var files = evt.target.files;
+    var file = files[0];
 
-//   if (files && file) {
-//       var reader = new FileReader();
+  if (files && file) {
+      var reader = new FileReader();
 
-//       reader.onload =this._handleReaderLoaded.bind(this);
+      reader.onload =this._handleReaderLoaded.bind(this);
 
-//       reader.readAsBinaryString(file);
-//   }
-// }
+      reader.readAsBinaryString(file);
+  }
+}
+
+_handleReaderLoaded(readerEvt) {
+   var binaryString = readerEvt.target.result;
+          this.base64textString= btoa(binaryString);
+          console.log(btoa(binaryString));
+   this.finalBase64Source = 'data:image/png;base64,' + this.base64textString;
 
 
-// _handleReaderLoaded(readerEvt) {
-//    var binaryString = readerEvt.target.result;
-//           this.base64textString= btoa(binaryString);
-//           console.log(btoa(binaryString));
-//   }
+  }
 }

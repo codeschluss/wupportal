@@ -2,14 +2,18 @@
   <div class="text-center">
     <input
     type="file"
-    (change)="onChange($event)">
+    (change)="handleFileSelect($event)">
     <br>
     <button
     class="upload-button"
     mat-raised-button color="accent"
-    (click)="onUpload()">
+    (click)="_handleReaderLoaded($event)">
     upload pictures
     </button>
+</div>
+
+<div>
+  <img [src]="finalBase64Source" alt=""/>
 </div>
 
 <!--Flag variable is used here-->

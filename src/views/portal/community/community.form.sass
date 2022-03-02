@@ -1,11 +1,21 @@
 @import ../../brand.scss
-@import ../portal.sass
 
 main
-  & > section
-    & > p
-      @include flex(row, left, center)
-      color: $color-accent
+  margin: 5rem auto
+  max-width: calc(100% - 2rem)
+  width: $viewport-width
+
+h1
+  @include flex(row, normal, center)
+  color: $color-primary
+
+h2
+  @include flex(row, normal, center)
+  color: $color-primary
+
+p
+  color: $color-accent
+
 
 .upper-forms
   width: 50%
@@ -19,6 +29,23 @@ main
   width: 100%
   font-size: 28px
   border-radius: 8px
+
+.formater
+  background: #fff
+  display: block
+  border-radius: 16px
+
+.datapolicies
+  color: $color-primary
+  margin: 0px 50px
+  font-size: 12px
+
+.checkbox
+  margin-left: 20px
+
+
+
+
 
 
 

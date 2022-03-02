@@ -14,8 +14,7 @@ export class CommunityFormComponent
 
   public topics: Observable<TopicModel[]>;
   public communityForm: FormGroup;
-
-
+  public checkedBox: boolean;
 
   protected get routing(): Route {
     return {
@@ -43,6 +42,10 @@ export class CommunityFormComponent
 
   onSendForm(){
     console.log(this.communityForm);
+  }
+
+  onChecked(value: boolean){
+    this.checkedBox = value;
   }
 
 }

@@ -28,6 +28,11 @@ const routes: Route[] = [
           .then((imported) => imported.MapsModule)
       },
       {
+        path: 'blog-submit',
+        loadChildren: () => import('./views/blog-submit/blog-submit.mockup')
+          .then((imported) => imported.BlogSubmitModule)
+      },
+      {
         path: '',
         loadChildren: () => import('./views/portal/portal.module')
           .then((imported) => imported.PortalModule)

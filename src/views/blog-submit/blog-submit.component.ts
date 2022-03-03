@@ -1,0 +1,132 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Route } from '@angular/router';
+import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
+import { Observable, Subject } from 'rxjs';
+import { BlogpostProvider, ImageModel, RoutingComponent, TopicModel, TopicProvider } from '../../core';
+
+
+@Component({
+  styleUrls: ['blog-submit.component.sass'],
+  templateUrl: 'blog-submit.component.html'
+})
+
+export class BlogSubmitComponent
+  extends RoutingComponent {
+
+  public topics: Observable<TopicModel[]>;
+  public communityForm: FormGroup;
+  public checkedBox = false;
+  images: ImageModel[] = [];
+
+  protected get routing(): Route {
+    return {
+      path: '**',
+      pathMatch: 'full'
+    };
+  }
+
+  public constructor(
+    private blogpostProvider: BlogpostProvider,
+    private topicProvider: TopicProvider,
+    private fb: FormBuilder,
+    public sanitizer: DomSanitizer
+  ) {
+    super();
+  }
+
+  public ngOnInit(): void {
+    this.topics = this.topicProvider.readAll();
+    this.communityForm = this.fb.group({
+      name: ['',Validators.required],
+      email: ['',[Validators.required,Validators.email]],
+      title: ['',Validators.required],
+      topic: ['', Validators.required],
+      content: [''],
+      checkBox: [false,Validators.requiredTrue]
+    })
+  }
+
+  onSendForm(){
+    console.log(this.communityForm);
+    this.blogpostProvider.create({
+      author: this.communityForm.get('name').value,
+      mailAddress: this.communityForm.get('email').value,
+      title: this.communityForm.get('title').value,
+      topicId: this.communityForm.get('topic').value,
+      content: this.communityForm.get('content').value,
+      images: this.images as Observable<ImageModel[]> & ImageModel[]
+    }).subscribe();
+  }
+
+  onChecked(value: boolean){
+    this.checkedBox = !value;
+  }
+
+  handleFileSelect(evt){
+    var files = evt.target.files;
+    var file = files[0];
+
+    if (files && file) {
+      var reader = new FileReader();
+      //reader.onload = (event) => this._handleReaderLoaded.bind(this);
+      reader.onload = (event) => this.images.push(new ImageModel({
+        imageData: btoa(event.target.result.toString()),
+        mimeType: 'image/png',
+        name: file.name
+      }));
+
+      reader.readAsBinaryString(file);
+    }
+  }
+
+  onDelete(index: number){
+    this.images.splice(index,1);
+  }
+  public editor: CKEditor5.EditorConstructor = InlineEditor;
+
+  public changes: Subject<any> = new Subject<any>();
+
+  public config: CKEditor5.Config = {
+    table: {
+      contentToolbar: [
+        'tableColumn',
+        'tableRow',
+        'mergeTableCells'
+      ]
+    },
+    toolbar: {
+      items: [
+        'heading',
+        // 'alignment',
+        // 'fontSize',
+        '|',
+        'bold',
+        'italic',
+        // 'underline',
+        // 'code',
+        '|',
+        // 'strikethrough',
+        // 'subscript',
+        // 'superscript',
+        // '|',
+        'bulletedList',
+        'numberedList',
+        'indent',
+        'outdent',
+        '|',
+        'link',
+        'blockQuote',
+        // 'codeBlock',
+        'insertTable',
+        // 'horizontalLine',
+        '|',
+        'undo',
+        'redo'
+      ]
+    }
+  };
+
+}

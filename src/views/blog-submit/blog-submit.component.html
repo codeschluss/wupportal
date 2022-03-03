@@ -1,4 +1,4 @@
-<!-- <main>
+<main>
   <span class="formater">
     <section>
       <h1><i18n>createBlogpost</i18n></h1>
@@ -80,7 +80,7 @@
             <i18n>topic</i18n>
           </mat-label>
         <mat-select formControlName="topic">
-          <mat-option *ngFor="let option of (topics | async)" value="option.id">{{option.name}}</mat-option>
+          <mat-option *ngFor="let option of (topics | async)" [value]="option.id">{{option.name}}</mat-option>
         </mat-select>
       </mat-form-field>
       <ckeditor formControlName="content"
@@ -113,4 +113,4 @@
       </button>
     </form>
   </span>
-</main> -->
+</main>

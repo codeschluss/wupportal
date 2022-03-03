@@ -16,7 +16,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LabelModule } from '../../core';
 import { PartsModule } from '../parts/module';
 import { CommunityComponent } from './community/community.component';
-import { CommunityFormComponent } from './community/community.form';
 import { CommunityListingComponent } from './community/community.listing';
 import { EventComponent } from './event/event.component';
 import { EventsComponent } from './events/events.component';
@@ -33,7 +32,7 @@ import { StoryComponent } from './story/story.component';
 
 const components: Type<any>[] = [
   CommunityComponent,
-  CommunityFormComponent,
+  // CommunityFormComponent,
   CommunityListingComponent,
   EventComponent,
   EventsComponent,

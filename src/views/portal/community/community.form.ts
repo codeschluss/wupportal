@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Route } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import { Observable, Subject, switchMap } from 'rxjs';
 import { BlogpostModel, BlogpostProvider, ImageModel, RoutingComponent, TopicModel, TopicProvider } from '../../../core';
+
 
 @Component({
   styleUrls: ['community.form.sass'],
@@ -82,5 +84,48 @@ export class CommunityFormComponent
   onDelete(index: number){
     this.images.splice(index,1);
   }
+
+  public changes: Subject<any> = new Subject<any>();
+
+  public config: CKEditor5.Config = {
+    table: {
+      contentToolbar: [
+        'tableColumn',
+        'tableRow',
+        'mergeTableCells'
+      ]
+    },
+    toolbar: {
+      items: [
+        'heading',
+        // 'alignment',
+        // 'fontSize',
+        '|',
+        'bold',
+        'italic',
+        // 'underline',
+        // 'code',
+        '|',
+        // 'strikethrough',
+        // 'subscript',
+        // 'superscript',
+        // '|',
+        'bulletedList',
+        'numberedList',
+        'indent',
+        'outdent',
+        '|',
+        'link',
+        'blockQuote',
+        // 'codeBlock',
+        'insertTable',
+        // 'horizontalLine',
+        '|',
+        'undo',
+        'redo'
+      ]
+    }
+  };
+  //public editor: CKEditor5.EditorConstructor = InlineEditor;
 
 }

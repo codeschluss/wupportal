@@ -1,85 +1,115 @@
 <main>
   <span class="formater">
-  <section>
-    <h1><i18n>createBlogpost</i18n></h1>
-    <h2><i18n>tell us - what is happening in dinslaken</i18n></h2>
-    <p><i18n>You got a cool story or some pictures to share? Bring it on</i18n></p>
-  </section>
-  <form [formGroup]="communityForm" (ngSubmit)="onSendForm()">
-    <mat-form-field
-    appearance="outline"
-    class="upper-forms">
-      <mat-label><i18n>name</i18n></mat-label>
-      <input
-      matInput
-      type="text"
-      id="name"
-      formControlName="name"
-      class="form-control">
-    </mat-form-field>
-    <br>
-    <mat-form-field
-    appearance="outline"
-    class="upper-forms">
-      <mat-label>
-        <i18n>email</i18n>
-      </mat-label>
-      <input
-      type="email"
-      matInput
-      id="email"
-      formControlName="email"
-      class="form-control">
-    </mat-form-field>
-    <hr>
-    <file-upload></file-upload>
-    <mat-form-field
-    appearance="outline"
-    class="lower-forms">
-      <mat-label>
-        <i18n>title</i18n>
-      </mat-label>
-      <input
-      type="text"
-      matInput
-      id="title"
-      formControlName="title"
-      class="form-control">
-    </mat-form-field>
-    <br>
-    <mat-form-field
-    appearance="outline"
-    class="lower-forms">
-      <mat-label>
-        <i18n>about</i18n>
-      </mat-label>
-      <mat-select formControlName="about">
-        <mat-option *ngFor="let option of (topics | async)" value="option.id">{{option.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <p>TEXT EDITOR</p>
-    <br>
-    <div>
-      <mat-checkbox
-      class="checkbox"
-      id="saveCheckbox"
-      [checked]="checkedBox"
-      (change)="onChecked(checkedBox)"
-      ></mat-checkbox>
-      <p class="datapolicies">Hiermit willige ich ein, dass meine in das Formular eingegebenen Daten
-        elektronisch gespeichert und zum Zweck der Kontaktaufnahme und Veröffentlichung
-        des Beitrags verarbeitet und genutzt werden dürfen. Meine Einwilligung kann ich jederzeit
-        und ohne Angabe von Gründen mit Wirkung für die Zukunft postalisch, per Telefax oder E-Mail widerrufen.
+    <section>
+      <h1><i18n>createBlogpost</i18n></h1>
+      <h2><i18n>tell us - what is happening in dinslaken</i18n></h2>
+      <p><i18n>You got a cool story or some pictures to share? Bring it on</i18n></p>
+    </section>
+    <form [formGroup]="communityForm" (ngSubmit)="onSendForm()">
+      <mat-form-field
+        appearance="outline"
+        class="upper-forms">
+          <mat-label>
+            <i18n>name</i18n>
+          </mat-label>
+        <input
+          matInput
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control">
+      </mat-form-field>
+      <br>
+      <mat-form-field
+        appearance="outline"
+        class="upper-forms">
+          <mat-label>
+          <i18n>email</i18n>
+          </mat-label>
+        <input
+          type="email"
+          matInput
+          id="email"
+          formControlName="email"
+          class="form-control">
+      </mat-form-field>
+      <hr>
+      <div class="file-upload-main">
+        <div class="text-center">
+          <input
+            type="file"
+            (change)="handleFileSelect($event)">
+        </div>
+        <div *ngIf="images != null" class="pictures">
+          <div *ngFor="let image of images; let i = index">
+            <img
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [alt]="image.caption"
+              [style.backgroundImage]="image.source"
+              [title]="image.caption">
+            <p class="delete-button">
+              <button
+                mat-icon-button
+                color="accent"
+                (click)="onDelete(i)">
+                  <fa-icon icon="trash"></fa-icon>
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+      <mat-form-field
+        appearance="outline"
+        class="lower-forms">
+          <mat-label>
+            <i18n>title</i18n>
+          </mat-label>
+        <input
+          type="text"
+          matInput
+          id="title"
+          formControlName="title"
+          class="form-control">
+      </mat-form-field>
+      <br>
+      <mat-form-field
+        appearance="outline"
+        class="lower-forms">
+          <mat-label>
+            <i18n>topic</i18n>
+          </mat-label>
+        <mat-select formControlName="topic">
+          <mat-option *ngFor="let option of (topics | async)" value="option.id">{{option.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p id="content" formControlName="content">
+        TEXT EDITOR
+      </p>
+      <br>
+      <div>
+        <mat-checkbox
+          class="checkbox"
+          id="checkBox"
+          formControlName="checkBox"
+          [checked]="checkedBox"
+          (change)="onChecked(checkedBox)"></mat-checkbox>
+        <p class="datapolicies">
+          Hiermit willige ich ein, dass meine in das Formular eingegebenen Daten
+          elektronisch gespeichert und zum Zweck der Kontaktaufnahme und Veröffentlichung
+          des Beitrags verarbeitet und genutzt werden dürfen. Meine Einwilligung kann ich jederzeit
+          und ohne Angabe von Gründen mit Wirkung für die Zukunft postalisch, per Telefax oder E-Mail widerrufen.
 
-        Für mehr Informationen zum Thema Datennutzung und Datenschutz schauen Sie bitte in unsere Datenschutzerklärung. </p>
-    </div>
-    <br>
-    <button
+          Für mehr Informationen zum Thema Datennutzung und Datenschutz schauen Sie bitte in unsere Datenschutzerklärung.
+        </p>
+      </div>
+      <br>
+      <button
         mat-raised-button color="primary"
         class="send-button"
-        [disabled]="!communityForm.valid && !checkedBox">
+        [disabled]="!communityForm.valid">
         send
-    </button>
-  </form>
+      </button>
+    </form>
   </span>
 </main>

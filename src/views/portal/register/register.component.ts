@@ -1,37 +1,29 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { merge, Observable } from 'rxjs';
+import { merge } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { CrudJoiner, CrudResolver, MetatagService, OrganisationModel, TokenProvider, UserModel, UserProvider } from '../../../../core';
-import { BasePage } from '../base.page';
+import { RoutingComponent, TokenProvider, UserModel, UserProvider } from '../../../core';
 
 @Component({
-  styleUrls: ['../base.page.sass', 'register.page.sass'],
-  templateUrl: 'register.page.html'
+  styleUrls: ['register.component.sass'],
+  templateUrl: 'register.component.html'
 })
 
 export class RegisterPageComponent
-  extends BasePage
+  extends RoutingComponent
   implements AfterViewInit {
 
-  public boxes: any = {
-    createOrganisation: false,
-    joinBloggers: false
-  };
 
   public email: FormControl = new FormControl(null, [
     Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
     Validators.required
   ]);
 
-  public fullname: FormControl = new FormControl(null, [
+  public name: FormControl = new FormControl(null, [
     Validators.required
   ]);
 
-  public joinOrganisations: FormControl = new FormControl(null, [
-    Validators.nullValidator
-  ]);
 
   public password: FormControl = new FormControl(null, [
     Validators.minLength(8),
@@ -53,43 +45,27 @@ export class RegisterPageComponent
     Validators.required
   ]);
 
-  protected path: string = 'register';
-
-  public get name(): Observable<string> {
-    return this.metatagService.name;
-  }
-
-  public get organisations(): OrganisationModel[] {
-    return this.route.snapshot.data.organisations;
-  }
 
   public get valid(): boolean {
     return true
       && this.email.valid
-      && this.fullname.valid
+      && this.name.valid
       && this.password.valid
       && this.passwordConfirm.valid
-      && this.phone.valid;
+  }
+
+  public get passwordValid(): boolean {
+    return true
+      && this.password.valid
+      && this.passwordConfirm.valid
   }
 
   protected get routing(): Route {
     return {
-      path: this.path,
-      resolve: {
-        organisations: CrudResolver
-      },
-      data: {
-        resolve: {
-          organisations: CrudJoiner.of(OrganisationModel, {
-            approved: true
-          })
-        }
-      }
-    };
-  }
+      path: 'register'
+  }}
 
   public constructor(
-    private metatagService: MetatagService,
     private route: ActivatedRoute,
     private router: Router,
     private tokenProvider: TokenProvider,
@@ -109,21 +85,15 @@ export class RegisterPageComponent
 
   public register(): void {
     const user = new UserModel();
-    user.applyBlogger = this.boxes.joinBloggers;
-    user.name = this.fullname.value;
-    user.organisationRegistrations = this.joinOrganisations.value;
+    user.name = this.name.value;
     user.password = this.password.value;
-    user.phone = this.phone.value;
     user.username = this.email.value;
 
     this.userProvider.create(user).pipe(
       mergeMap(() => this.tokenProvider.login(user.username, user.password)),
       map((tokens) => tokens.access.id)
-    ).subscribe((userId) => this.router.navigate(
-      this.boxes.createOrganisation
-        ? ['/', 'admin', 'edit', 'organisations', 'new']
-        : ['/', 'admin', 'account', userId]
-    ));
+    ).subscribe((id) => this.router.navigate(['/','admin','account',id]))
+
   }
 
   private validate(): void {

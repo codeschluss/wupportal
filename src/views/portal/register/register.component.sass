@@ -1,28 +1,62 @@
-@import ../../../brand.scss
+@import ../../brand.scss
 
 main
   @include flex(row, center, center)
   height: 100%
+  margin-bottom: 10rem
 
   & > mat-card
-    margin: 1rem
+    margin: 0 10rem
+    padding: 20px
     max-width: 30rem
+    border-radius: 16px
+    box-shadow: 0px 2px 16px rgba(0,0 ,0 ,0.16 )
+    color: $color-primary
+
 
     & > aside
       padding: .5rem 0
 
-      mat-checkbox
-        display: block
-        padding: .25rem 0
 
     & > mat-card-actions
       margin-bottom: -.5rem
       padding-bottom: 0
-
-    & > mat-card-header
-      @include deep
-        & > .mat-card-header-text
-          margin: 0
+      align-content: center
+      display: grid
+      border-radius: 8px
+      justify-content: initial
+      margin-left: 20px
+      margin-right: 20px
+      margin-bottom: 20px
 
     mat-form-field
       width: 100%
+
+.header
+  @include flex(row, left, left)
+  color: $color-primary
+  font-size: 32px
+  line-height: 38px
+  letter-spacing: 0.08em
+  font-style: normal
+  padding-left: 20%
+  padding-right: 40%
+  margin-top: 8rem
+  height: 100%
+  margin-bottom: 1rem
+
+.title
+  font-weight: 900
+
+p
+  color: $color-accent
+
+.registerButton
+  color: #fff
+  background-color: $color-accent
+  font-weight: 700
+  font-size: 18px
+
+
+
+

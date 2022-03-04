@@ -11,6 +11,7 @@ import { IndexComponent } from './index/index.component';
 import { MapComponent } from './map/map.component';
 import { PlaceComponent } from './place/place.component';
 import { PortalComponent } from './portal.component';
+import { RegisterPageComponent } from './register/register.component';
 import { SitemapComponent } from './sitemap/sitemap.component';
 import { StaticPageComponent } from './static-page/static-page.component';
 import { StoryComponent } from './story/story.component';
@@ -29,6 +30,9 @@ const routes: Route[] = [
       IndexComponent.routing,
       MapComponent.routing,
       PlaceComponent.routing,
+      // RegisterComponent.routing,
+      // SearchComponent.routing,
+      RegisterPageComponent.routing,
       SitemapComponent.routing,
       StaticPageComponent.routing,
       StoryComponent.routing

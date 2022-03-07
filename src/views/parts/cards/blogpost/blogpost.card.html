@@ -14,7 +14,7 @@
   <mat-card-header>
     <mat-card-title>
       <a [routerLink]="['/', 'story', item.id]">
-        {{ item.label | lowercase }}
+        {{ item.label }}
       </a>
     </mat-card-title>
     <mat-card-subtitle
@@ -27,7 +27,7 @@
     <button mat-button disableRipple
       color="accent"
       itemprop="author">
-      {{ item.author | lowercase }}
+      {{ item.author }}
     </button>
     <a mat-button
       color="accent"

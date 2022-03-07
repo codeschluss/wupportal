@@ -19,27 +19,16 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
       </label>
       <nav>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>startDate</i18n>&nbsp;
-          </strong>
           <input matInput type="date" [formControl]="fromDate">
         </mat-form-field>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>startTime</i18n>&nbsp;
-          </strong>
           <input matInput type="time" [formControl]="fromTime">
         </mat-form-field>
+        <strong><i18n>until</i18n></strong>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>endDate</i18n>&nbsp;
-          </strong>
           <input matInput type="date" [formControl]="gotoDate">
         </mat-form-field>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>endTime</i18n>&nbsp;
-          </strong>
           <input matInput type="time" [formControl]="gotoTime">
         </mat-form-field>
       </nav>
@@ -50,9 +39,6 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
       </label>
       <nav>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>recurrence</i18n>&nbsp;
-          </strong>
           <mat-select [formControl]="recurrence">
             <mat-option value="once">
               <i18n>once</i18n>
@@ -72,10 +58,8 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
           </mat-select>
         </mat-form-field>
         <ng-container *ngIf="recurrence.value !== 'once'">
+          <strong><i18n>until</i18n></strong>
           <mat-form-field>
-            <strong matPrefix>
-              <i18n>until</i18n>&nbsp;
-            </strong>
             <input matInput type="date" [formControl]="until">
           </mat-form-field>
         </ng-container>

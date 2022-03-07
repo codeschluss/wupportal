@@ -126,7 +126,7 @@ export class MetatagService {
       title: model.label
     });
 
-    if (model.address) {
+    if (model.address?.suburb?.id) {
       Object.assign(tags, {
         'geo.position': `${model.address.latitude}; ${model.address.longitude}`,
         'geo.placename': `${model.address.place} ${model.address.suburb.label}`

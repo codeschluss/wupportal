@@ -8,10 +8,10 @@ import { EventsComponent } from './events/events.component';
 import { EventsListingComponent } from './events/events.listing';
 import { FavoritesListingComponent } from './favorites/favorites.listing';
 import { IndexComponent } from './index/index.component';
-import { MapComponent } from './map/map.component';
 import { PlaceComponent } from './place/place.component';
 import { PortalComponent } from './portal.component';
 import { RegisterPageComponent } from './register/register.component';
+import { SearchComponent } from './search/search.component';
 import { SitemapComponent } from './sitemap/sitemap.component';
 import { StaticPageComponent } from './static-page/static-page.component';
 import { StoryComponent } from './story/story.component';
@@ -21,18 +21,15 @@ const routes: Route[] = [
     path: '',
     children: [
       CommunityComponent.routing,
-      // CommunityFormComponent.routing,
       CommunityListingComponent.routing,
       EventComponent.routing,
       EventsComponent.routing,
       EventsListingComponent.routing,
       FavoritesListingComponent.routing,
       IndexComponent.routing,
-      MapComponent.routing,
       PlaceComponent.routing,
-      // RegisterComponent.routing,
-      // SearchComponent.routing,
       RegisterPageComponent.routing,
+      SearchComponent.routing,
       SitemapComponent.routing,
       StaticPageComponent.routing,
       StoryComponent.routing

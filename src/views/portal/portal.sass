@@ -5,6 +5,9 @@ main
   max-width: calc(100% - 2rem)
   width: $viewport-width
 
+  @include responsive(lt-sm)
+    margin-bottom: 2.5rem
+
   & > section
     @include flex(wrap, center)
 
@@ -26,19 +29,36 @@ main
 
       @include responsive(lt-sm)
         @include flex(column)
+        padding-bottom: .5rem
 
     & > .mat-card
       margin: 0 auto
       width: calc(#{$viewport-width} * .8)
       max-width: calc(100% - 2rem)
 
+      & > aside
+        @include flex(row)
+
+        & > .mat-stroked-button
+          border-color: currentColor
+          border-radius: 2rem
+          margin: 0 1rem
+
       & > .mat-card-header
         @include flex(row, normal, center)
         overflow: hidden
 
-        &:first-of-type .mat-card-title
-          color: $color-primary
-          font-weight: bold
+        @include deep
+          & > .mat-card-header-text
+            margin: 0
+
+            & > .mat-card-title
+              color: $color-primary
+              font-weight: bold
+
+              a
+                color: inherit
+                text-decoration: none
 
         & > fa-icon
           @include flex(row, center, center)
@@ -63,6 +83,10 @@ main
             font-size: .75rem
             height: 1.5rem
 
+            a
+              color: inherit
+              text-decoration: none
+
             fa-icon
               @include flex(row, center, center)
               font-size: inherit
@@ -74,18 +98,19 @@ main
         max-height: 25vh
 
       & > .mat-card-content
-        &:first-of-type:not(:last-of-type)
-          @include flex(row, normal, center)
+        &:not(:only-child)
+          padding-top: 1rem
 
-        &:last-of-type
-          padding: 2.5rem 1rem 1rem 1rem
+        & > .mat-divider
+          border-color: $color-primary
+          margin-bottom: 1rem
 
-          &:only-child
-            padding-top: 1rem
+        & > .mat-form-field
+          display: block !important
 
-        & > .mat-stroked-button
-          border-color: currentColor
-          border-radius: 2rem
+      & > .mat-card-actions
+        & > .mat-stroked-button:only-child
+          width: 100%
 
   @include deep
     nav > figure
@@ -116,7 +141,9 @@ main
         background-color: $color-light
         background-position: center
         background-size: cover
+        border: 1px solid $color-primary
         border-radius: .25rem
+        box-sizing: border-box
         color: $color-dark
         height: 20rem
         margin: 1rem
@@ -142,3 +169,17 @@ main
 .mat-menu-item
   &.active
     color: $color-accent
+
+.mat-calendar
+  width: 15rem
+
+  & + .mat-stroked-button
+    margin: .25rem .5rem
+    width: calc(100% - 1rem)
+
+  @include deep
+    .mat-calendar-body-cell:not(.mat-calendar-body-disabled)
+      & > .mat-calendar-body-cell-content
+        background-color: $color-accent !important
+        color: $color-lightest !important
+        font-weight: bold

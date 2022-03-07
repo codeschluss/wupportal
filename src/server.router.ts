@@ -28,9 +28,9 @@ const routes: Route[] = [
           .then((imported) => imported.MapsModule)
       },
       {
-        path: 'blog-submit',
-        loadChildren: () => import('./views/blog-submit/blog-submit.mockup')
-          .then((imported) => imported.BlogSubmitModule)
+        path: 'ublog',
+        loadChildren: () => import('./views/ublog/ublog.mockup')
+          .then((imported) => imported.UblogModule)
       },
       {
         path: '',

@@ -9,8 +9,8 @@
           <i18n>activities</i18n>
         </button>
         <button mat-button
-          [color]="active('community') ? 'primary' : 'accent'"
-          [routerLink]="active('community') ? '/favorites' : '/favorites/community'">
+          [routerLink]="active('community')?'/favorites':'/favorites/community'"
+          [color]="active('community') ? 'primary' : 'accent'">
           <i18n>blogposts</i18n>
         </button>
         <button mat-button

@@ -15,7 +15,14 @@ export class CommunityComponent
     }
 
     public get topics(): TopicModel[] {
-      return this.route.snapshot.data.topics;
+      return this.route.snapshot.data.topics.map((topic) => {
+        topic.blogposts = topic.blogposts.map((blogpost) => {
+          blogpost.topic = topic;
+          return blogpost;
+        });
+
+        return topic;
+      });
     }
 
     protected get routing(): Route {
@@ -32,12 +39,13 @@ export class CommunityComponent
               size: 4
             })
               .with('blogger')
+              .with('titleImage')
               .with('topic'),
             topics: CrudJoiner.of(TopicModel, {
               page: 0,
               size: 5
             })
-              .with('blogs')
+              .with('blogs').yield('titleImage')
           }
         }
       };

@@ -26,11 +26,11 @@ export class MenuGearComponent {
       href: '/events',
       icon: 'calendar-day'
     },
-    // {
-    //   label: 'mapview',
-    //   href: '/map',
-    //   icon: 'location-dot'
-    // },
+    {
+      label: 'mapview',
+      href: '/mapview',
+      icon: 'location-dot'
+    },
     {
       label: 'blogposts',
       href: '/community',

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivityModel, BloggerModel, Box, OrganisationModel, SessionProvider, SubscriptionProvider, TopicModel } from '../../../../core';
+import { catchError, EMPTY } from 'rxjs';
+import { ActivityModel, BloggerModel, Box, OrganisationModel, PushedGuarding, SessionProvider, SubscriptionProvider, TopicModel } from '../../../../core';
 import { BasePiece } from '../base.piece';
 
 @Component({
@@ -12,8 +13,7 @@ export class FollowPieceComponent
   extends BasePiece {
 
   public get disabled(): boolean {
-    const id = this.sessionProvider.getSubscriptionId();
-    return !id || id === 'blocked';
+    return this.sessionProvider.getSubscriptionId() === 'blocked';
   }
 
   public get followed(): boolean {
@@ -21,6 +21,7 @@ export class FollowPieceComponent
   }
 
   public constructor(
+    private pushedGuarding: PushedGuarding,
     private sessionProvider: SessionProvider,
     private subscriptionProvider: SubscriptionProvider
   ) {
@@ -28,7 +29,15 @@ export class FollowPieceComponent
   }
 
   public toggle(): void {
-    this.followed ? this.unfollow() : this.follow();
+    if (!this.sessionProvider.getSubscriptionId()) {
+      this.pushedGuarding.requestActivation().pipe(
+        catchError(() => EMPTY)
+      ).subscribe(() => this.follow());
+    } else if (this.followed) {
+      this.unfollow();
+    } else {
+      this.follow();
+    }
   }
 
   private follow(): void {

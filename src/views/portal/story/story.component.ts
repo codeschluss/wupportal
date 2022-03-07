@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { BlogpostModel, CrudJoiner, CrudResolver, RoutingComponent } from '../../../core';
+import { BlogpostModel, CrudJoiner, CrudResolver, MetatagService, RoutingComponent } from '../../../core';
 
 @Component({
   styleUrls: ['story.component.sass'],
@@ -8,7 +8,8 @@ import { BlogpostModel, CrudJoiner, CrudResolver, RoutingComponent } from '../..
 })
 
 export class StoryComponent
-  extends RoutingComponent {
+  extends RoutingComponent
+  implements OnInit {
 
   public get item(): BlogpostModel {
     return this.route.snapshot.data.item
@@ -33,9 +34,14 @@ export class StoryComponent
   }
 
   public constructor(
+    private metatagService: MetatagService,
     private route: ActivatedRoute
   ) {
     super();
+  }
+
+  public ngOnInit(): void {
+    this.metatagService.setModel(this.item);
   }
 
 }

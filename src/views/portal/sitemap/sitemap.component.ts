@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CategoryModel, CoreSettings, CrudJoiner, CrudResolver, JwtClaims, RoutingComponent, StaticPageModel, TokenResolver, TopicModel } from '../../../core';
+import { CategoryModel, CoreSettings, CrudJoiner, CrudResolver, JwtClaims, RoutingComponent, SocialMediaModel, StaticPageModel, TokenResolver, TopicModel } from '../../../core';
 
 @Component({
   styleUrls: ['sitemap.component.sass'],
@@ -24,29 +24,8 @@ export class SitemapComponent
     }
   }
 
-  public get socialLinks(): any[] {
-    return [
-      {
-        label: 'Facebook',
-        href: 'https://www.facebook.com',
-        icon: 'facebook'
-      },
-      {
-        label: 'Instagram',
-        href: 'https://www.instagram.com',
-        icon: 'instagram'
-      },
-      {
-        label: 'Twitter',
-        href: 'https://www.twitter.com',
-        icon: 'twitter'
-      },
-      {
-        label: 'YouTube',
-        href: 'https://www.youtube.com',
-        icon: 'youtube'
-      }
-    ];
+  public get socialMedia(): SocialMediaModel[] {
+    return this.route.snapshot.data.socialMedia;
   }
 
   public get staticPages(): StaticPageModel[] {
@@ -62,12 +41,14 @@ export class SitemapComponent
       path: 'sitemap',
       resolve: {
         categories: CrudResolver,
+        socialMedia: CrudResolver,
         topics: CrudResolver,
         tokens: TokenResolver
       },
       data: {
         resolve: {
           categories: CrudJoiner.of(CategoryModel),
+          socialMedia: CrudJoiner.of(SocialMediaModel),
           topics: CrudJoiner.of(TopicModel)
         }
       }

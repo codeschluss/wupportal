@@ -43,7 +43,7 @@ export class EventsComponent
             page: 0,
             size: 4
           })
-            .with('address').yield('suburb')
+            .with('address')
             .with('category')
             .with('provider').yield('organisation')
             .with('schedules')
@@ -53,7 +53,7 @@ export class EventsComponent
             size: 5,
             sort: 'activities.likes'
           })
-            .with('activities').yield('address').yield('suburb')
+            .with('activities').yield('address')
             .with('activities').yield('provider').yield('organisation')
             .with('activities').yield('schedules')
             .with('activities').yield('titleImage')

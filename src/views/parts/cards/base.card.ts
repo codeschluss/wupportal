@@ -1,6 +1,6 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { CrudModel, LabelResolver } from '../../../core';
+import { CrudModel } from '../../../core';
 
 @Directive()
 
@@ -14,12 +14,7 @@ export abstract class BaseCard<Model extends CrudModel> {
   public item: Model;
 
   public constructor(
-    private LabelResolver: LabelResolver,
     public router: Router
   ) { }
-
-  public i18n(label: string): string {
-    return this.LabelResolver.lookup(label);
-  }
 
 }

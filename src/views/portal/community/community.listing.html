@@ -6,7 +6,7 @@
         [routerLink]="['/', 'community']">
         <fa-icon icon="angles-left"></fa-icon>
       </button>
-      {{ topic?.label | lowercase }}
+      {{ topic?.label }}
       <span [style.flexGrow]="1"></span>
       <small><i18n>topic</i18n></small>
       <button mat-icon-button
@@ -18,7 +18,7 @@
             <button mat-menu-item
               [class.active]="item === topic"
               [routerLink]="['/', 'community', item.id]">
-              {{ item.label | lowercase }}
+              {{ item.label }}
             </button>
           </ng-container>
         </mat-menu>

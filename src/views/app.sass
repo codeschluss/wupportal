@@ -37,5 +37,6 @@ global-component
       display: none
 
   & > router-outlet + ng-component
+    @include flex(column)
     @include position(relative)
     flex: 1 0 auto

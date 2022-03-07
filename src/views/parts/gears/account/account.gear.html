@@ -52,8 +52,8 @@
     </ng-container>
     <ng-container *ngSwitchDefault>
       <button mat-icon-button
-        [matMenuTriggerFor]="menu"
-        color="accent">
+        color="accent"
+        [matMenuTriggerFor]="menu">
         <fa-icon icon="user"></fa-icon>
         <mat-menu #menu="matMenu" xPosition="before">
           <mat-card>
@@ -70,10 +70,10 @@
                   [title]="item.avatar.label">
               </ng-container>
               <mat-card-title>
-                {{ item.name | lowercase }}
+                {{ item.name }}
               </mat-card-title>
               <mat-card-subtitle>
-                {{ item.username | lowercase }}
+                {{ item.username }}
               </mat-card-subtitle>
             </mat-card-header>
             <mat-card-actions>

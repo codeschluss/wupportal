@@ -15,8 +15,8 @@ export class CommunityListingComponent
   public blogposts: Observable<BlogpostModel[]>;
 
   public get topic(): TopicModel {
-    const topic = this.route.snapshot.data.topics.find((c) => {
-      return c.id === this.route.snapshot.params.topicId;
+    const topic = this.route.snapshot.data.topics.find((topic) => {
+      return topic.id === this.route.snapshot.params.topicId;
     });
 
     if (!topic) this.router.navigate(['/', 'error', 404]);
@@ -53,6 +53,7 @@ export class CommunityListingComponent
   public ngOnInit(): void {
     const joiner = CrudJoiner.of(BlogpostModel)
       .with('blogger')
+      .with('titleImage')
       .with('topic');
 
     this.blogposts = merge(

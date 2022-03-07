@@ -14,6 +14,8 @@ import { MinorPopupComponent } from './popups/minor/minor.popup';
 export class ClientErrorHandler
   implements ErrorHandler {
 
+  private static crash: boolean = false;
+
   private static self: ClientErrorHandler;
 
   public constructor(
@@ -39,12 +41,15 @@ export class ClientErrorHandler
       default:
         console.warn('ClientErrorHandler.handleError', item.raw);
         self.ngZone.run(() => {
-          self.snackBar.openFromComponent(MinorPopupComponent, { data: item });
+          self.snackBar.openFromComponent(MinorPopupComponent, {
+            data: item
+          });
         });
         break;
 
-      case item.fatal:
+      case item.fatal && !ClientErrorHandler.crash:
         console.error('ClientErrorHandler.handleError', item.raw);
+        ClientErrorHandler.crash = true;
         self.ngZone.run(() => forkJoin([
           self.errorProvider.throwError(item),
           self.dialog.open(FatalPopupComponent, {

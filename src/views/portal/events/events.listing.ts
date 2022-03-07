@@ -15,8 +15,8 @@ export class EventsListingComponent
   public activities: Observable<ActivityModel[]>;
 
   public get category(): CategoryModel {
-    const category = this.route.snapshot.data.categories.find((c) => {
-      return c.id === this.route.snapshot.params.categoryId;
+    const category = this.route.snapshot.data.categories.find((category) => {
+      return category.id === this.route.snapshot.params.categoryId;
     });
 
     if (!category) this.router.navigate(['/', 'error', 404]);
@@ -52,10 +52,9 @@ export class EventsListingComponent
 
   public ngOnInit(): void {
     const joiner = CrudJoiner.of(ActivityModel)
-      .with('address').yield('suburb')
+      .with('address')
       .with('category')
       .with('titleImage')
-      .with('images')
       .with('provider').yield('organisation')
       .with('schedules');
 

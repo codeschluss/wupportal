@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
-import { CrudJoiner, CrudResolver, OrganisationModel, RoutingComponent } from '../../../core';
+import { CrudJoiner, CrudResolver, MetatagService, OrganisationModel, RoutingComponent } from '../../../core';
 
 @Component({
   styleUrls: ['place.component.sass'],
@@ -8,16 +8,14 @@ import { CrudJoiner, CrudResolver, OrganisationModel, RoutingComponent } from '.
 })
 
 export class PlaceComponent
-  extends RoutingComponent {
+  extends RoutingComponent
+  implements OnInit {
 
   public get item(): OrganisationModel {
     return Object.assign(this.route.snapshot.data.item, {
       activities: this.route.snapshot.data.item.activities.map((i) => {
-        return Object.assign(i, {
-          provider: {
-            organisation: this.route.snapshot.data.item
-          }
-        });
+        i.organisation = this.route.snapshot.data.item;
+        return i;
       })
     });
   }
@@ -47,9 +45,14 @@ export class PlaceComponent
   }
 
   public constructor(
+    private metatagService: MetatagService,
     private route: ActivatedRoute
   ) {
     super();
+  }
+
+  public ngOnInit(): void {
+    this.metatagService.setModel(this.item);
   }
 
 }

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { BlogSubmitComponent } from './blog-submit.component';
+import { UblogComponent } from './ublog.component';
 
 const routes: Route[] = [
-  BlogSubmitComponent.routing
+  UblogComponent.routing
 ];
 
 @NgModule({
@@ -16,4 +16,4 @@ const routes: Route[] = [
   ])]
 })
 
-export class BlogSubmitRouter { }
+export class UblogRouter { }

@@ -1,6 +1,6 @@
 <main *ngIf="staticPage | async as item">
   <section>
-    <h1>{{ item.label | lowercase }}</h1>
+    <h1>{{ item.label }}</h1>
     <mat-card>
       <ng-container *ngIf="item.image?.source">
         <img mat-card-image

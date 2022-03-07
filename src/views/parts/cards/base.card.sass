@@ -3,6 +3,7 @@
 :host
   box-sizing: border-box
   display: block
+  max-width: 100%
   padding: 1rem
 
   & > .mat-card
@@ -36,6 +37,7 @@
 
         @include responsive(lt-sm)
           color: $color-lightest !important
+          text-shadow: 0 0 2px $color-darkest
 
       .mat-card-title
         color: $color-primary
@@ -62,6 +64,8 @@
 
       @include responsive(lt-sm)
         @include position(absolute, 1rem, 1rem, 1rem, 1rem)
+        background-color: $color-darker
+        color: $color-dark
         min-height: auto
         height: 100%
         width: 100%
@@ -86,3 +90,6 @@
           color: $color-lightest !important
           line-height: normal
           margin: 0
+          min-width: 0
+          padding: 0
+          text-shadow: 0 0 2px $color-darkest

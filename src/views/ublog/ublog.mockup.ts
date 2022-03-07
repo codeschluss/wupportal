@@ -1,7 +1,6 @@
-import { Component, NgModule, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Component, NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PlatformProvider } from '../../core';
 
 @Component({
   styles: [`
@@ -30,26 +29,12 @@ import { PlatformProvider } from '../../core';
   `],
   template: `
     <main>
-      <fa-icon icon="map-marked-alt"></fa-icon>
+      <fa-icon icon="comments"></fa-icon>
     </main>
   `
 })
 
-export class MapsComponent
-  implements OnInit {
-
-  public constructor(
-    private platformProvider: PlatformProvider,
-    private route: ActivatedRoute
-  ) { }
-
-  public ngOnInit(): void {
-    if (this.route.snapshot.queryParamMap.has('embed')) {
-      this.platformProvider.document.body.classList.add('embedded');
-    }
-  }
-
-}
+export class UblogComponent { }
 
 @NgModule({
   exports: [RouterModule],
@@ -57,21 +42,21 @@ export class MapsComponent
     {
       path: '**',
       pathMatch: 'full',
-      component: MapsComponent
+      component: UblogComponent
     }
   ])]
 })
 
-export class MapsRouter { }
+export class UblogRouter { }
 
 @NgModule({
   declarations: [
-    MapsComponent
+    UblogComponent
   ],
   imports: [
     FontAwesomeModule,
-    MapsRouter
+    UblogRouter
   ]
 })
 
-export class MapsModule { }
+export class UblogModule { }

@@ -9,15 +9,22 @@
           [style.backgroundImage]="item.images[0].source"
           [title]="item.images[0].label">
       </ng-container>
-      <mat-card-content>
+      <mat-card-header>
+        <mat-card-title>
+          {{ item.label }}
+        </mat-card-title>
+      </mat-card-header>
+      <aside>
         <span [style.flexGrow]="1"></span>
-        <like-piece [item]="item"></like-piece>
         <follow-piece [item]="item"></follow-piece>
         <share-piece [item]="item"></share-piece>
+      </aside>
+      <mat-card-content
+        [innerHTML]="item.description">
       </mat-card-content>
       <mat-card-header>
         <mat-card-title>
-          {{ item.label | lowercase }}
+          <i18n>details</i18n>
         </mat-card-title>
       </mat-card-header>
       <mat-card-header>
@@ -36,35 +43,44 @@
           <mat-list-item>
             <fa-icon mat-list-icon icon="location-dot"></fa-icon>
             <span mat-line>
-              {{ item.address?.street | lowercase }}
-              {{ item.address?.houseNumber | lowercase }},
-              {{ item.address?.postalCode | lowercase }}
-              {{ item.address?.place | lowercase }}
+              {{ item.address?.street }}
+              {{ item.address?.houseNumber }},
+              {{ item.address?.postalCode }}
+              {{ item.address?.place }}
             </span>
           </mat-list-item>
           <ng-container *ngIf="item.website">
             <mat-list-item>
               <fa-icon mat-list-icon icon="globe"></fa-icon>
-              <span mat-line>{{ item.website | lowercase }}</span>
+              <span mat-line>
+                <a target="_blank" [href]="item.website" [title]="item.label">
+                  {{ item.website }}
+                </a>
+              </span>
             </mat-list-item>
           </ng-container>
           <ng-container *ngIf="item.mail">
             <mat-list-item>
               <fa-icon mat-list-icon icon="at"></fa-icon>
-              <span mat-line>{{ item.mail | lowercase }}</span>
+              <span mat-line>
+                <a [href]="'mailto:' + item.mail" [title]="item.label">
+                  {{ item.mail }}
+                </a>
+              </span>
             </mat-list-item>
           </ng-container>
           <ng-container *ngIf="item.phone">
             <mat-list-item>
               <fa-icon mat-list-icon icon="phone"></fa-icon>
-              <span mat-line>{{ item.phone | lowercase }}</span>
+              <span mat-line>
+                <a [href]="'tel:' + item.phone" [title]="item.label">
+                  {{ item.phone }}
+                </a>
+              </span>
             </mat-list-item>
           </ng-container>
         </mat-list>
       </mat-card-header>
-      <mat-card-content
-        [innerHTML]="item.description">
-      </mat-card-content>
     </mat-card>
   </section>
 

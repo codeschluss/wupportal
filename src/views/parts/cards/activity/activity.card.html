@@ -14,7 +14,7 @@
   <mat-card-header>
     <mat-card-title>
       <a [routerLink]="['/', 'event', item.id]">
-        {{ item.label | lowercase }}
+        {{ item.label }}
       </a>
     </mat-card-title>
     <mat-card-subtitle
@@ -26,24 +26,39 @@
     <a mat-button disableRipple
       color="accent"
       itemprop="startDate"
-      [routerLink]="['/', 'events', item.category?.id]">
+      [routerLink]="['/', 'events', item.category.id]">
       {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
     </a>
     <a mat-stroked-button
       [style.color]="item.category.color"
       [routerLink]="['/', 'events', item.category.id]">
-      <fa-icon [icon]="item.category.icon"></fa-icon>
-      {{ item.category.label | lowercase }}
+      {{ item.category.label }}
     </a>
   </mat-card-actions>
   <mat-card-actions>
-    <a mat-button disableRipple
-      color="accent"
-      [routerLink]="['/', 'place', item.organisation?.id]">
-      {{ item.provider.organisation.label | lowercase }}
-    </a>
-    <button mat-button disableRipple color="accent">
-      {{ item.admissionFee || i18n('admissionFree') }}
-    </button>
+    <ng-container *ngIf="item.organisation?.id">
+      <a mat-button disableRipple
+        color="accent"
+        [routerLink]="['/', 'place', item.organisation.id]">
+        {{ item.organisation.label }}
+      </a>
+    </ng-container>
+    <ng-container *ngIf="item.provider?.organisation?.id">
+      <a mat-button disableRipple
+        color="accent"
+        [routerLink]="['/', 'place', item.provider.organisation.id]">
+        {{ item.provider.organisation.label }}
+      </a>
+    </ng-container>
+    <ng-container *ngIf="item.admissionFee">
+      <button mat-button disableRipple color="accent">
+        {{ item.admissionFee }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!item.admissionFee">
+      <button mat-button disableRipple color="accent">
+        <i18n>admissionFree</i18n>
+      </button>
+    </ng-container>
   </mat-card-actions>
 </mat-card>

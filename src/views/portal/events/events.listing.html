@@ -6,7 +6,7 @@
         [routerLink]="['/', 'events']">
         <fa-icon icon="angles-left"></fa-icon>
       </button>
-      {{ category?.label | lowercase }}
+      {{ category?.label }}
       <span [style.flexGrow]="1"></span>
       <small><i18n>category</i18n></small>
       <button mat-icon-button
@@ -18,7 +18,7 @@
             <button mat-menu-item
               [class.active]="item === category"
               [routerLink]="['/', 'events', item.id]">
-              {{ item.label | lowercase }}
+              {{ item.label }}
             </button>
           </ng-container>
         </mat-menu>

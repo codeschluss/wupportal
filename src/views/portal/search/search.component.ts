@@ -1,39 +1,19 @@
-import { Component, OnInit, QueryList, Type, ViewChildren } from '@angular/core';
-import { MatExpansionPanel } from '@angular/material/expansion';
+import { Component, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { ActivityModel, BaseService, BlogpostModel, CategoryModel, CrudJoiner, CrudModel, CrudProvider, CrudResolver, OrganisationModel, SuburbModel, TargetGroupModel } from '../../../../core';
+import { catchError, mergeMap, tap } from 'rxjs/operators';
+import { ActivityModel, BlogpostModel, CrudJoiner, CrudModel, CrudProvider, CrudResolver, OrganisationModel, RoutingComponent } from '../../../core';
 
 @Component({
-  styleUrls: ['../base.page.sass', 'search.page.sass'],
-  templateUrl: 'search.page.html'
+  styleUrls: ['search.component.sass'],
+  templateUrl: 'search.component.html'
 })
 
-export class SearchPageComponent
-  extends BasePage
+export class SearchComponent
+  extends RoutingComponent
   implements OnInit {
 
-  public items: {
-    activities: ActivityModel[];
-    blogposts: BlogpostModel[];
-    categories: CategoryModel[];
-    organisations: OrganisationModel[];
-    suburbs: SuburbModel[];
-    targetGroups: TargetGroupModel[];
-  } = {
-    activities: [],
-    blogposts: [],
-    categories: [],
-    organisations: [],
-    suburbs: [],
-    targetGroups: []
-  };
-
-  public results: number = -1;
-
-  @ViewChildren(MatExpansionPanel)
-  private expands: QueryList<MatExpansionPanel>;
+  public results: Observable<any>;
 
   protected get routing(): Route {
     return {
@@ -42,60 +22,44 @@ export class SearchPageComponent
   }
 
   public constructor(
-    public router: Router,
     private crudResolver: CrudResolver,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    this.route.paramMap.pipe(map((params) => params.get('filter'))).pipe(
-      mergeMap((filter) => forkJoin([
-        this.search(filter, ActivityModel).pipe(
-          map((items) => (this.items.activities = items).length)),
-        this.search(filter, BlogpostModel).pipe(
-          map((items) => (this.items.blogposts = items).length)),
-        this.search(filter, CategoryModel).pipe(
-          map((items) => (this.items.categories = items).length)),
-        this.search(filter, OrganisationModel).pipe(
-          map((items) => (this.items.organisations = items).length)),
-        this.search(filter, SuburbModel).pipe(
-          map((items) => (this.items.suburbs = items).length)),
-        this.search(filter, TargetGroupModel).pipe(
-          map((items) => (this.items.targetGroups = items).length))
-      ]))
-    ).subscribe((length) => this.results = length.reduce((num, i) => num + i));
-  }
-
-  public expanded(expand: MatExpansionPanel): void {
-    if (this.expands.length) {
-      this.expands.filter((e) => e !== expand).forEach((e) => e.close());
-    }
+    this.results = this.route.params.pipe(mergeMap(({ filter }) => forkJoin({
+      activities: this.search(filter, ActivityModel),
+      blogposts: this.search(filter, BlogpostModel),
+      organisations: this.search(filter, OrganisationModel)
+    })), tap(({ activities, blogposts, organisations }) => {
+      if (!activities.length && !blogposts.length && !organisations.length) {
+        this.router.navigate(['/', 'error', 404]);
+      }
+    }));
   }
 
   private search(filter: string, model: Type<CrudModel>): Observable<any> {
+    const provider = (model as any).provider as CrudProvider<any, any>;
     const joiner = CrudJoiner.of(model);
-    const provider = (model as any)
-      .provider as CrudProvider<BaseService, CrudModel>;
 
     switch (model) {
-      case ActivityModel:
-        joiner
-          .with('address').yield('suburb')
-          .with('category')
-          .with('schedules');
+      case ActivityModel: joiner
+        .with('address')
+        .with('category')
+        .with('provider').yield('organisation')
+        .with('schedules')
+        .with('titleImage');
         break;
 
-      case BlogpostModel:
-        joiner
-          .with('activity');
+      case BlogpostModel: joiner
+        .with('titleImage');
         break;
 
-      case OrganisationModel:
-        joiner
-          .with('address').yield('suburb')
-          .with('images');
+      case OrganisationModel: joiner
+        .with('avatar');
         break;
     }
 

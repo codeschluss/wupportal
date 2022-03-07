@@ -2,18 +2,20 @@ import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LabelModule } from 'src/core';
-import { BlogSubmitComponent } from './blog-submit.component';
-import { BlogSubmitRouter } from './blog-submit.router';
+import { UblogComponent } from './ublog.component';
+import { UblogRouter } from './ublog.router';
 
 const components: Type<any>[] = [
-  BlogSubmitComponent
+  UblogComponent
 ];
 
 const materials: Type<any>[] = [
@@ -21,11 +23,13 @@ const materials: Type<any>[] = [
   FontAwesomeModule,
   LabelModule,
   MatButtonModule,
+  MatCardModule,
   MatCheckboxModule,
+  MatDividerModule,
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
-  ReactiveFormsModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({
@@ -38,8 +42,8 @@ const materials: Type<any>[] = [
   imports: [
     ...materials,
     CommonModule,
-    BlogSubmitRouter
+    UblogRouter
   ]
 })
 
-export class BlogSubmitModule { }
+export class UblogModule { }

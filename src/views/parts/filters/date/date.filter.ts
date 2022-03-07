@@ -51,7 +51,6 @@ export class DateFilterComponent
 
     if (!day) {
       startDate = new Date(startDate.setDate(date - 2));
-      endDate = new Date(startDate);
     } else {
       startDate = new Date(startDate.setDate(date + (5 - day)));
       endDate = new Date(new Date().setDate(startDate.getDate() + 2));

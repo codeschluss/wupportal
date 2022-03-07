@@ -1,0 +1,71 @@
+<main>
+  <section>
+    <h1><i18n>ublog</i18n></h1>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <i18n>ublogSubtitle</i18n>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content [formGroup]="formGroup">
+        <fieldset>
+          <mat-form-field appearance="outline">
+            <mat-label><i18n>author</i18n> *</mat-label>
+            <input matInput formControlName="author">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label><i18n>email</i18n> *</mat-label>
+            <input matInput formControlName="mailAddress" type="email">
+          </mat-form-field>
+        </fieldset>
+        <mat-divider [inset]="true"></mat-divider>
+        <fieldset>
+          <mat-form-field appearance="outline">
+            <mat-label><i18n>title</i18n> *</mat-label>
+            <input matInput type="text" formControlName="title">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label><i18n>topic</i18n> *</mat-label>
+            <mat-select formControlName="topicId">
+              <ng-container *ngFor="let item of (topics | async)">
+                <mat-option [value]="item.id">
+                  {{ item.label }}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </fieldset>
+        <mat-form-field appearance="outline">
+          <mat-label><i18n>titleImage</i18n></mat-label>
+          <input matInput type="file" (change)="selectFile($event)">
+          <ng-container *ngIf="image.value?.source">
+            <img
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [alt]="image.value.caption"
+              [style.backgroundImage]="image.value.source"
+              [title]="image.value.caption">
+          </ng-container>
+        </mat-form-field>
+        <ckeditor
+          formControlName="content"
+          [config]="config"
+          [data]="'content *'"
+          [editor]="editor">
+        </ckeditor>
+        <mat-divider [inset]="true"></mat-divider>
+        <mat-checkbox formControlName="privacy">
+          <i18n>acceptPrivacyPolicies</i18n>
+        </mat-checkbox>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button
+          color="primary"
+          [disabled]="!valid"
+          (click)="submit()">
+          <i18n>createBlogpost</i18n>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</main>

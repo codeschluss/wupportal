@@ -2,8 +2,11 @@
 
 .mat-list-base:not(.mat-action-list)
   & > .mat-list-item:last-of-type
-    .mat-button-base + .mat-button-base
-      margin-left: 1rem
+    .mat-button-base
+      flex: 1 0 auto
+
+      & + .mat-button-base
+        margin-left: 1rem
 
   & > .mat-list-item:not(:last-of-type)
     height: 5rem

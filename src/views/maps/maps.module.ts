@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Type } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -19,6 +20,7 @@ const materials: Type<any>[] = [
   FontAwesomeModule,
   LabelModule,
   MatButtonModule,
+  MatButtonToggleModule,
   MatCardModule,
   MatRippleModule
 ];

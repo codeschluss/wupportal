@@ -1,8 +1,8 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { merge } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { RoutingComponent, TokenProvider, UserModel, UserProvider } from '../../../core';
 
 @Component({
@@ -14,7 +14,6 @@ export class RegisterPageComponent
   extends RoutingComponent
   implements AfterViewInit {
 
-
   public email: FormControl = new FormControl(null, [
     Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
     Validators.required
@@ -23,7 +22,6 @@ export class RegisterPageComponent
   public name: FormControl = new FormControl(null, [
     Validators.required
   ]);
-
 
   public password: FormControl = new FormControl(null, [
     Validators.minLength(8),
@@ -41,32 +39,27 @@ export class RegisterPageComponent
     Validators.required
   ]);
 
-  public phone: FormControl = new FormControl(null, [
-    Validators.required
-  ]);
-
-
   public get valid(): boolean {
     return true
       && this.email.valid
       && this.name.valid
       && this.password.valid
-      && this.passwordConfirm.valid
+      && this.passwordConfirm.valid;
   }
 
   public get passwordValid(): boolean {
     return true
       && this.password.valid
-      && this.passwordConfirm.valid
+      && this.passwordConfirm.valid;
   }
 
   protected get routing(): Route {
     return {
       path: 'register'
-  }}
+    };
+  }
 
   public constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private tokenProvider: TokenProvider,
     private userProvider: UserProvider
@@ -84,16 +77,19 @@ export class RegisterPageComponent
   }
 
   public register(): void {
-    const user = new UserModel();
-    user.name = this.name.value;
-    user.password = this.password.value;
-    user.username = this.email.value;
-
-    this.userProvider.create(user).pipe(
-      mergeMap(() => this.tokenProvider.login(user.username, user.password)),
-      map((tokens) => tokens.access.id)
-    ).subscribe((id) => this.router.navigate(['/','admin','account',id]))
-
+    this.userProvider.create(new UserModel({
+      name: this.name.value,
+      password: this.password.value,
+      username: this.email.value
+    })).pipe(mergeMap((user) => this.tokenProvider.login(
+      user.username,
+      this.password.value
+    ))).subscribe((tokens) => this.router.navigate([
+      '/',
+      'admin',
+      'account',
+      tokens.access.id
+    ]));
   }
 
   private validate(): void {

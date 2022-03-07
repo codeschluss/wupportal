@@ -2,24 +2,28 @@
 
 header
   @include position(fixed, 0, 0, auto, 0)
-  background-color: $color-lightest
   text-transform: lowercase
   z-index: 1
 
   & > .mat-toolbar
-    background-color: transparent
+    background-color: $color-lightest
     box-shadow: 0 0 .5rem $color-dark
     padding: 0 max(calc((100% - #{$viewport-width}) / 2), 1rem)
 
     & > .mat-button
+      border-radius: 0
+      height: 100%
       padding: .25rem
 
       @include responsive(lt-sm)
         img:last-of-type
           display: none
 
-      img + img
-        padding-left: .5rem
+      img
+        max-height: 100%
+
+        & + img
+          padding-left: .5rem
 
     & > menu-gear
       @include deep

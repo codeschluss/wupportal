@@ -50,20 +50,18 @@ export class FavoritesListingComponent
         const type = this.route.firstChild?.snapshot.params.type;
 
         if (!type || type === 'events') joiner
-          .with('activities').yield('address').yield('suburb')
+          .with('activities').yield('address')
           .with('activities').yield('category')
           .with('activities').yield('provider').yield('organisation')
           .with('activities').yield('schedules')
           .with('activities').yield('titleImage');
 
         if (!type || type === 'community') joiner
-          .with('bloggers').yield('blogs')
-          .with('topics').yield('blogs');
+          .with('bloggers').yield('blogs').yield('titleImage')
+          .with('topics').yield('blogs').yield('titleImage');
 
         if (!type || type === 'places') joiner
-          .with('organisations').yield('avatar')
-          .with('organisations').yield('address').yield('suburb')
-          .with('organisations').yield('images');
+          .with('organisations').yield('avatar');
 
         return this.subscriptionProvider.readOne(
           this.sessionProvider.getSubscriptionId()

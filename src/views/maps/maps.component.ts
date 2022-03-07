@@ -76,7 +76,9 @@ export class MapsComponent
       .with('schedules')
       .with('titleImage')
     .graph,
-    organisation: CrudJoiner.of(OrganisationModel)
+    organisation: CrudJoiner.of(OrganisationModel, {
+      approved: true
+    })
       .with('address')
       .with('avatar')
     .graph
@@ -197,7 +199,7 @@ export class MapsComponent
           map((change) => change.value),
           startWith('events'),
           distinctUntilChanged(),
-          mergeMap((type) => this.fetch(type)),
+          mergeMap((type) => this.fetch(type))
         ).subscribe((items) => this.items.next(items));
       }
     } else {

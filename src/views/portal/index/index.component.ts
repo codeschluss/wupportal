@@ -11,15 +11,15 @@ export class IndexComponent
   extends RoutingComponent {
 
   public get activities(): ActivityModel[] {
-    return this.route.snapshot.data.activities;
+    return this.route.snapshot.data.activities || [];
   }
 
   public get blogposts(): BlogpostModel[] {
-    return this.route.snapshot.data.blogposts;
+    return this.route.snapshot.data.blogposts || [];
   }
 
   public get organisations(): OrganisationModel[] {
-    return this.route.snapshot.data.organisations;
+    return this.route.snapshot.data.organisations || [];
   }
 
   protected get routing(): Route {

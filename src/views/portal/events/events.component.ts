@@ -11,22 +11,22 @@ export class EventsComponent
   extends RoutingComponent {
 
   public get activities(): ActivityModel[] {
-    return this.route.snapshot.data.activities;
+    return this.route.snapshot.data.activities || [];
   }
 
   public get categories(): CategoryModel[] {
-    return this.route.snapshot.data.categories.map((category) => {
+    return this.route.snapshot.data.categories?.map((category) => {
       category.activities = category.activities.map((activity) => {
         activity.category = category;
         return activity;
       });
 
       return category;
-    });
+    }) || [];
   }
 
   public get organisations(): OrganisationModel[] {
-    return this.route.snapshot.data.organisations;
+    return this.route.snapshot.data.organisations || [];
   }
 
   protected get routing(): Route {

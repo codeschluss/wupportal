@@ -55,7 +55,7 @@ export class EventComponent
     private metatagService: MetatagService,
     private platformProvider: PlatformProvider,
     private route: ActivatedRoute,
-    private sessionProvider: SessionProvider,
+    private sessionProvider: SessionProvider
   ) {
     super();
   }

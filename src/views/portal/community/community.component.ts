@@ -11,18 +11,18 @@ export class CommunityComponent
   extends RoutingComponent {
 
     public get blogposts(): BlogpostModel[] {
-      return this.route.snapshot.data.blogposts;
+      return this.route.snapshot.data.blogposts || [];
     }
 
     public get topics(): TopicModel[] {
-      return this.route.snapshot.data.topics.map((topic) => {
+      return this.route.snapshot.data.topics?.map((topic) => {
         topic.blogposts = topic.blogposts.map((blogpost) => {
           blogpost.topic = topic;
           return blogpost;
         });
 
         return topic;
-      });
+      }) || [];
     }
 
     protected get routing(): Route {

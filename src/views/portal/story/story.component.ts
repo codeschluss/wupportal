@@ -12,7 +12,7 @@ export class StoryComponent
   implements OnInit {
 
   public get item(): BlogpostModel {
-    return this.route.snapshot.data.item
+    return this.route.snapshot.data.item;
   }
 
   protected get routing(): Route {

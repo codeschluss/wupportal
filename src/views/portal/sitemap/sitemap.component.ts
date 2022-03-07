@@ -11,7 +11,7 @@ export class SitemapComponent
   extends RoutingComponent {
 
   public get categories(): CategoryModel[] {
-    return this.route.snapshot.data.categories;
+    return this.route.snapshot.data.categories || [];
   }
 
   public get claims(): JwtClaims {
@@ -25,15 +25,15 @@ export class SitemapComponent
   }
 
   public get socialMedia(): SocialMediaModel[] {
-    return this.route.snapshot.data.socialMedia;
+    return this.route.snapshot.data.socialMedia || [];
   }
 
   public get staticPages(): StaticPageModel[] {
-    return this.route.snapshot.data.staticPages;
+    return this.route.snapshot.data.staticPages || [];
   }
 
   public get topics(): TopicModel[] {
-    return this.route.snapshot.data.topics;
+    return this.route.snapshot.data.topics || [];
   }
 
   protected get routing(): Route {

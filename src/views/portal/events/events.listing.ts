@@ -15,8 +15,8 @@ export class EventsListingComponent
   public activities: Observable<ActivityModel[]>;
 
   public get category(): CategoryModel {
-    const category = this.route.snapshot.data.categories.find((category) => {
-      return category.id === this.route.snapshot.params.categoryId;
+    const category = this.route.snapshot.data.categories?.find((item) => {
+      return item.id === this.route.snapshot.params.categoryId;
     });
 
     if (!category) this.router.navigate(['/', 'error', 404]);
@@ -24,7 +24,7 @@ export class EventsListingComponent
   }
 
   public get categories(): CategoryModel[] {
-    return this.route.snapshot.data.categories;
+    return this.route.snapshot.data.categories || [];
   }
 
   protected get routing(): Route {

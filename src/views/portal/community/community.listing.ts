@@ -15,8 +15,8 @@ export class CommunityListingComponent
   public blogposts: Observable<BlogpostModel[]>;
 
   public get topic(): TopicModel {
-    const topic = this.route.snapshot.data.topics.find((topic) => {
-      return topic.id === this.route.snapshot.params.topicId;
+    const topic = this.route.snapshot.data.topics?.find((item) => {
+      return item.id === this.route.snapshot.params.topicId;
     });
 
     if (!topic) this.router.navigate(['/', 'error', 404]);
@@ -24,7 +24,7 @@ export class CommunityListingComponent
   }
 
   public get topics(): TopicModel[] {
-    return this.route.snapshot.data.topics;
+    return this.route.snapshot.data.topics || [];
   }
 
   protected get routing(): Route {

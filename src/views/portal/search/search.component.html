@@ -9,27 +9,12 @@
           </ng-container>
         </listing-frame-component>
       </ng-container>
-      <ng-container *ngIf="item.bloggers?.length">
-        <ng-container *ngFor="let item of item.bloggers">
-          <ng-container *ngIf="item.blogposts?.length">
-            <listing-frame-component>
-              <ng-container *ngFor="let item of item.blogposts">
-                <blogpost-card [item]="item"></blogpost-card>
-              </ng-container>
-            </listing-frame-component>
+      <ng-container *ngIf="item.blogposts?.length">
+        <listing-frame-component>
+          <ng-container *ngFor="let item of item.blogposts">
+            <blogpost-card [item]="item"></blogpost-card>
           </ng-container>
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="item.topics?.length">
-        <ng-container *ngFor="let item of item.topics">
-          <ng-container *ngIf="item.blogposts?.length">
-            <listing-frame-component>
-              <ng-container *ngFor="let item of item.blogposts">
-                <blogpost-card [item]="item"></blogpost-card>
-              </ng-container>
-            </listing-frame-component>
-          </ng-container>
-        </ng-container>
+        </listing-frame-component>
       </ng-container>
       <ng-container *ngIf="item.organisations?.length">
         <listing-frame-component>

@@ -33,11 +33,13 @@
         background-color: rgba($color-lightest, 50%)
         border-bottom: 1px solid $color-accent
         border-left: 1px solid $color-accent
+        height: 100%
         max-height: 100%
         overflow: auto
 
         @include responsive(lt-sm)
           @include flex(row)
+          height: auto
           scroll-snap-type: x mandatory
           width: 100%
 

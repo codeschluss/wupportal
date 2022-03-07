@@ -29,11 +29,11 @@
       itemprop="author">
       {{ item.author }}
     </button>
-    <a mat-button
+    <button mat-button disableRipple
       color="accent"
-      itemprop="startDate"
-      [routerLink]="['/', 'community', item.topic?.id]">
+      itemprop="startDate">
+      {{ item.author }}
       {{ item.created | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
-    </a>
+    </button>
   </mat-card-actions>
 </mat-card>

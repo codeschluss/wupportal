@@ -13,10 +13,10 @@ export class PlaceComponent
 
   public get item(): OrganisationModel {
     return Object.assign(this.route.snapshot.data.item, {
-      activities: this.route.snapshot.data.item.activities.map((i) => {
+      activities: this.route.snapshot.data.item.activities?.map((i) => {
         i.organisation = this.route.snapshot.data.item;
         return i;
-      })
+      }) || []
     });
   }
 

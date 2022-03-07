@@ -2,6 +2,7 @@
 
 .mat-toolbar
   padding: 0 calc((100% - #{$viewport-width}) / 2)
+  margin-top: -.25rem
 
   @include responsive(lt-md)
     @include flex(column)
@@ -14,3 +15,6 @@
   & > small,
   & > strong
     padding: 0 .5rem
+
+  & > strong
+    color: $color-primary

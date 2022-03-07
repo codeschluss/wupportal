@@ -8,12 +8,15 @@
     padding-left: 100%
     transform: translate(-100%)
 
-.mat-button-base
-  @include deep
-    & > .mat-badge-content
-      top: -.25rem !important
-      right: -.25rem !important
-      z-index: 1
+:host
+  overflow: visible !important
+
+  & > .mat-button-base
+    @include deep
+      & > .mat-badge-content
+        top: -.25rem !important
+        right: -.25rem !important
+        z-index: 1
 
 .mat-tab-group
   @include deep

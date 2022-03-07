@@ -70,15 +70,15 @@ export class PusherPopupComponent {
   public send(): void {
     let route; switch (true) {
       case this.data.item instanceof ActivityModel:
-        route = '/activities/';
+        route = '/event/';
         break;
 
       case this.data.item instanceof BlogpostModel:
-        route = '/blogposts/';
+        route = '/story/';
         break;
 
       case this.data.item instanceof OrganisationModel:
-        route = '/organisations/';
+        route = '/place/';
         break;
     }
 

@@ -58,7 +58,7 @@ export class PushedProvider {
         sessionProvider.value.pipe(filter(({ subscriptionId }) => {
           return subscriptionId && subscriptionId !== 'blocked';
         }), take(1)).subscribe(() => {
-          fcm.onBackgroundMessage((event) => push(event), console.error);
+          // fcm.onBackgroundMessage((event) => push(event), console.error);
           fcm.onMessage((event) => push(event), console.error);
         });
       }
@@ -98,7 +98,7 @@ export class PushedProvider {
       case 'android':
         notification.content = event.gcm.body;
         notification.label = event.gcm.title;
-        notification.route = event.gcm.route;
+        notification.route = event.route;
         break;
 
       case 'browser':

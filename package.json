@@ -96,7 +96,7 @@
     "cordova-plugin-androidx": "3.0.0",
     "cordova-plugin-device": "2.0.3",
     "cordova-plugin-firebase-analytics": "6.1.0",
-    "cordova-plugin-firebase-messaging": "6.1.1",
+    "cordova-plugin-firebase-messaging": "6.1.0",
     "cordova-plugin-geolocation": "4.1.0",
     "cordova-plugin-network-information": "3.0.0",
     "cordova-plugin-splashscreen": "6.0.0",

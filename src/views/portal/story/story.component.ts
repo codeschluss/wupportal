@@ -16,7 +16,7 @@ export class StoryComponent
   }
 
   protected get routing(): Route {
-    return {
+    var test = {
       path: 'story/:uuid',
       resolve: {
         item: CrudResolver
@@ -27,10 +27,13 @@ export class StoryComponent
             approved: true
           })
             .with('blogger')
+              .yield('avatar')
             .with('topic')
+            .with('titleImage')
         }
       }
     };
+    return test
   }
 
   public constructor(

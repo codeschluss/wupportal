@@ -35,7 +35,9 @@ export class IndexComponent
           activities: CrudJoiner.of(ActivityModel, {
             current: true,
             page: 0,
-            size: 4
+            size: 4,
+            dir: 'desc',
+            sort: 'created'
           })
             .with('address')
             .with('category')
@@ -45,10 +47,13 @@ export class IndexComponent
           blogposts: CrudJoiner.of(BlogpostModel, {
             approved: true,
             page: 0,
-            size: 4
+            size: 4,
+            dir: 'desc',
+            sort: 'created'
           })
             .with('blogger')
-            .with('topic'),
+            .with('topic')
+            .with('titleImage'),
           organisations: CrudJoiner.of(OrganisationModel, {
             approved: true
           })

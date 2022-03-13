@@ -36,15 +36,14 @@ export class CommunityComponent
           resolve: {
             blogposts: CrudJoiner.of(BlogpostModel, {
               page: 0,
-              size: 4
+              size: 4,
+              dir: 'desc',
+              sort: 'created'
             })
               .with('blogger')
               .with('titleImage')
               .with('topic'),
-            topics: CrudJoiner.of(TopicModel, {
-              page: 0,
-              size: 5
-            })
+            topics: CrudJoiner.of(TopicModel, {})
               .with('blogs').yield('titleImage')
           }
         }

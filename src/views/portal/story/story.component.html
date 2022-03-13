@@ -1,13 +1,13 @@
 <main>
   <section>
     <mat-card>
-      <ng-container *ngIf="item.images?.length">
+      <ng-container *ngIf="item?.titleImage">
         <img mat-card-image
           src="data:image/svg+xml,
             %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
-          [alt]="item.images[0].label"
-          [style.backgroundImage]="item.images[0].source"
-          [title]="item.images[0].label">
+          [alt]="item.titleImage.label"
+          [style.backgroundImage]="item?.titleImage.source"
+          [title]="item.titleImage.label">
       </ng-container>
       <mat-card-header>
         <mat-card-title>
@@ -38,15 +38,15 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-header>
-        <ng-container *ngIf="item.image?.source">
+        <ng-container *ngIf="item.blogger?.user?.avatar?.source">
           <img mat-card-avatar
             src="data:image/svg+xml,
               %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
             [alt]="item.image.label"
-            [style.backgroundImage]="item.image.source"
-            [title]="item.image.label">
+            [style.backgroundImage]="item.blogger?.user?.avatar?.source"
+            [title]="item.blogger?.user?.avatar?.caption">
         </ng-container>
-        <ng-container *ngIf="!item.image?.source">
+        <ng-container *ngIf="!item.blogger?.user?.avatar">
           <fa-icon mat-card-avatar icon="image"></fa-icon>
         </ng-container>
         <mat-list>

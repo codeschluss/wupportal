@@ -18,6 +18,7 @@ export interface JwtClaims {
   blogpostAuthor: string[];
   organisationAdmin: string[];
   organisationUser: string[];
+  fullname: string[];
   superUser: boolean;
   translator: boolean;
   userId: string;

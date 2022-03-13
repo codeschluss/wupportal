@@ -2,8 +2,8 @@ import { Component, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { BlogpostModel, BlogpostProvider, Box, TokenProvider, TopicModel, TranslationProvider } from '../../../core';
+import { map, mergeMap, take } from 'rxjs/operators';
+import { BlogpostModel, BlogpostProvider, Box, CoreSettings, TokenProvider, TopicModel, TranslationProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { EditorFieldComponent } from '../fields/editor.field';
 import { ImageFieldComponent } from '../fields/image.field';
@@ -15,6 +15,9 @@ import { SelectFieldComponent } from '../fields/select.field';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
+        <ng-container *ngSwitchCase="'author'">
+            <i18n>author</i18n>
+          </ng-container>
         <ng-container *ngSwitchCase="'content'">
           <i18n>content</i18n>
         </ng-container>
@@ -36,6 +39,11 @@ export class BlogpostFormComponent
   extends BaseForm<BlogpostModel> {
 
   public fields: FormField[] = [
+    {
+      name: 'author',
+      input: InputFieldComponent,
+      locked: false
+    },
     {
       name: 'title',
       input: InputFieldComponent,
@@ -62,8 +70,13 @@ export class BlogpostFormComponent
 
   public model: Type<BlogpostModel> = BlogpostModel;
 
+  public get superuser(): Observable<boolean> {
+    return this.tokenProvider.value.pipe(map((t) => t.access.superuser));
+  }
+
   public constructor(
     private blogpostProvider: BlogpostProvider,
+    private coreSettings: CoreSettings,
     route: ActivatedRoute,
     tokenProvider: TokenProvider,
     translationProvider: TranslationProvider
@@ -77,6 +90,17 @@ export class BlogpostFormComponent
     return super.persist().pipe(
       mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item)))
     );
+  }
+
+  protected ngPostInit(): void {
+    this.superuser
+      .pipe(take(1))
+      .subscribe(superuser => !superuser && Object.assign(this.fields.find((field) => field.name === 'author'), {
+        locked: true,
+        value: this.item?.author 
+          ? this.item.author
+          : this.route.snapshot.data.tokens.access[this.coreSettings?.jwtClaims.fullname]
+      }));
   }
 
   protected cascade(item: BlogpostModel): Observable<any> {

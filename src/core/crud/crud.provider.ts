@@ -105,8 +105,8 @@ export abstract class CrudProvider
 
   protected link(input: Model | Model[]): void {
     const linker = (item) => this.linked.forEach((link) => {
-      const data = (item._embedded || { })[link.field];
-      item[link.field] = data
+      const data = (item._embedded || { })[link?.field];
+      item[link?.field] = data
         ? of(new link.model(data))
         : this.walk(link, item);
     });

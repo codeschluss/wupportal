@@ -27,6 +27,7 @@ export class CoreSettings {
     activityProvider: string;
     blogger: string;
     blogpostAuthor: string;
+    fullname: string;
     organisationAdmin: string;
     organisationUser: string;
     superUser: string;

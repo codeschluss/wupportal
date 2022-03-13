@@ -25,7 +25,7 @@ export class AccountPanelComponent
       .with('activities').yield('provider').yield('organisation')
       .with('avatar')
       .with('blogger')
-      .with('blogs').yield('activity')
+      .with('blogs')
       .with('organisations').yield('address').yield('suburb')
       .with('organisations').yield('provider')
   };

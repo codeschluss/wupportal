@@ -5,6 +5,7 @@ import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
 import { StaticPageModel as Model } from '../models/static-page.model';
+import { VisitableModel } from '../models/visitable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,11 @@ export class StaticPageProvider
       field: 'translations',
       method: this.service.markupControllerReadTranslationsResponse,
       model: Model
+    },
+    {
+      field: 'visitors',
+      method: this.service.markupControllerCalculateVisitorsResponse,
+      model: VisitableModel
     }
   ];
 
@@ -62,14 +68,6 @@ export class StaticPageProvider
 
   public readAll: (params?: Service.MarkupControllerReadAllParams) =>
     Observable<Model[]>;
-
-  public analyticsVisitorsOne: (id: string) =>
-    Observable<any> = this.apply(this.service
-      .markupControllerCalculateVisitorsResponse);
-
-  public analyticsVisitsOne: (id: string) =>
-    Observable<any> = this.apply(this.service
-      .markupControllerCalculateVisitsResponse);
 
   public pasteImage: (id: string, image: ImageModel | null) =>
     Observable<any> = this.apply(this.service

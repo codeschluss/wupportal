@@ -12,6 +12,7 @@ import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel as Model } from '../models/organisation.model';
 import { UserModel } from '../models/user.model';
 import { VideoModel } from '../models/video.model';
+import { VisitableModel } from '../models/visitable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -75,6 +76,11 @@ export class OrganisationProvider
       field: 'videos',
       method: this.service.organisationControllerReadVideosResponse,
       model: VideoModel
+    },
+    {
+      field: 'visitors',
+      method: this.service.organisationControllerCalculateVisitorsResponse,
+      model: VisitableModel
     }
   ];
 
@@ -112,14 +118,6 @@ export class OrganisationProvider
   public analyticsVisitorsOne: (id: string) =>
     Observable<any> = this.apply(this.service
       .organisationControllerCalculateVisitorsResponse);
-
-  public analyticsVisitsAll: () =>
-    Observable<any> = this.apply(this.service
-      .organisationControllerCalculateOverviewVisitsResponse);
-
-  public analyticsVisitsOne: (id: string) =>
-    Observable<any> = this.apply(this.service
-      .organisationControllerCalculateVisitsResponse);
 
   public grantMembership: (id: string, userId: string, grant: Boolean) =>
     Observable<any> = this.apply(this.service

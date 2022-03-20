@@ -8,6 +8,7 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { OrganisationEntity } from '../models/organisation-entity';
+import { VisitableEntityObject } from '../models/visitable-entity-object';
 import { ResourceOrganisationEntity } from '../models/resource-organisation-entity';
 import { StringPrimitive } from '../models/string-primitive';
 import { BooleanPrimitive } from '../models/boolean-primitive';
@@ -24,31 +25,29 @@ class OrganisationControllerService extends __BaseService {
   static readonly organisationControllerReadAllPath = '/organisations';
   static readonly organisationControllerCreatePath = '/organisations';
   static readonly organisationControllerCalculateOverviewVisitorsPath = '/organisations/visitors';
-  static readonly organisationControllerCalculateOverviewVisitsPath = '/organisations/visits';
-  static readonly organisationControllerReadOnePath = '/organisations/{organisationId}';
-  static readonly organisationControllerUpdatePath = '/organisations/{organisationId}';
-  static readonly organisationControllerDeletePath = '/organisations/{organisationId}';
-  static readonly organisationControllerReadActivitiesPath = '/organisations/{organisationId}/activities';
-  static readonly organisationControllerDeleteActivityPath = '/organisations/{organisationId}/activities/{activityId}';
-  static readonly organisationControllerReadAddressPath = '/organisations/{organisationId}/address';
-  static readonly organisationControllerUpdateAddressPath = '/organisations/{organisationId}/address';
-  static readonly organisationControllerGrantApprovalPath = '/organisations/{organisationId}/approve';
-  static readonly organisationControllerReadAvatarPath = '/organisations/{organisationId}/avatar';
-  static readonly organisationControllerAddAvatarPath = '/organisations/{organisationId}/avatar';
-  static readonly organisationControllerReadImagesPath = '/organisations/{organisationId}/images';
-  static readonly organisationControllerAddImagePath = '/organisations/{organisationId}/images';
-  static readonly organisationControllerDeleteImagesPath = '/organisations/{organisationId}/images';
-  static readonly organisationControllerIncreaseLikePath = '/organisations/{organisationId}/like';
-  static readonly organisationControllerReadTranslationsPath = '/organisations/{organisationId}/translations';
-  static readonly organisationControllerReadUsersPath = '/organisations/{organisationId}/users';
-  static readonly organisationControllerDeleteUserPath = '/organisations/{organisationId}/users/{userId}';
-  static readonly organisationControllerGrantAdminRightPath = '/organisations/{organisationId}/users/{userId}/admin';
-  static readonly organisationControllerApproveOrRejectUserPath = '/organisations/{organisationId}/users/{userId}/approve';
-  static readonly organisationControllerReadVideosPath = '/organisations/{organisationId}/videos';
-  static readonly organisationControllerAddVideosPath = '/organisations/{organisationId}/videos';
-  static readonly organisationControllerDeleteVideosPath = '/organisations/{organisationId}/videos';
-  static readonly organisationControllerCalculateVisitorsPath = '/organisations/{organisationId}/visitors';
-  static readonly organisationControllerCalculateVisitsPath = '/organisations/{organisationId}/visits';
+  static readonly organisationControllerReadOnePath = '/organisations/{id}';
+  static readonly organisationControllerUpdatePath = '/organisations/{id}';
+  static readonly organisationControllerDeletePath = '/organisations/{id}';
+  static readonly organisationControllerReadActivitiesPath = '/organisations/{id}/activities';
+  static readonly organisationControllerDeleteActivityPath = '/organisations/{id}/activities/{activityId}';
+  static readonly organisationControllerReadAddressPath = '/organisations/{id}/address';
+  static readonly organisationControllerUpdateAddressPath = '/organisations/{id}/address';
+  static readonly organisationControllerGrantApprovalPath = '/organisations/{id}/approve';
+  static readonly organisationControllerReadAvatarPath = '/organisations/{id}/avatar';
+  static readonly organisationControllerAddAvatarPath = '/organisations/{id}/avatar';
+  static readonly organisationControllerReadImagesPath = '/organisations/{id}/images';
+  static readonly organisationControllerAddImagePath = '/organisations/{id}/images';
+  static readonly organisationControllerDeleteImagesPath = '/organisations/{id}/images';
+  static readonly organisationControllerIncreaseLikePath = '/organisations/{id}/like';
+  static readonly organisationControllerReadTranslationsPath = '/organisations/{id}/translations';
+  static readonly organisationControllerReadUsersPath = '/organisations/{id}/users';
+  static readonly organisationControllerDeleteUserPath = '/organisations/{id}/users/{userId}';
+  static readonly organisationControllerGrantAdminRightPath = '/organisations/{id}/users/{userId}/admin';
+  static readonly organisationControllerApproveOrRejectUserPath = '/organisations/{id}/users/{userId}/approve';
+  static readonly organisationControllerReadVideosPath = '/organisations/{id}/videos';
+  static readonly organisationControllerAddVideosPath = '/organisations/{id}/videos';
+  static readonly organisationControllerDeleteVideosPath = '/organisations/{id}/videos';
+  static readonly organisationControllerCalculateVisitorsPath = '/organisations/{id}/visitors';
 
   constructor(
     config: __Configuration,
@@ -173,7 +172,7 @@ class OrganisationControllerService extends __BaseService {
    * calculateOverviewVisitors
    * @return OK
    */
-  organisationControllerCalculateOverviewVisitorsResponse(): __Observable<__StrictHttpResponse<number>> {
+  organisationControllerCalculateOverviewVisitorsResponse(): __Observable<__StrictHttpResponse<Array<VisitableEntityObject>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -184,13 +183,13 @@ class OrganisationControllerService extends __BaseService {
       {
         headers: __headers,
         params: __params,
-        responseType: 'text'
+        responseType: 'json'
       });
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+        return _r as __StrictHttpResponse<Array<VisitableEntityObject>>;
       })
     );
   }
@@ -198,60 +197,25 @@ class OrganisationControllerService extends __BaseService {
    * calculateOverviewVisitors
    * @return OK
    */
-  organisationControllerCalculateOverviewVisitors(): __Observable<number> {
+  organisationControllerCalculateOverviewVisitors(): __Observable<Array<VisitableEntityObject>> {
     return this.organisationControllerCalculateOverviewVisitorsResponse().pipe(
-      __map(_r => _r.body as number)
-    );
-  }
-
-  /**
-   * calculateOverviewVisits
-   * @return OK
-   */
-  organisationControllerCalculateOverviewVisitsResponse(): __Observable<__StrictHttpResponse<number>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/organisations/visits`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'text'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
-      })
-    );
-  }
-  /**
-   * calculateOverviewVisits
-   * @return OK
-   */
-  organisationControllerCalculateOverviewVisits(): __Observable<number> {
-    return this.organisationControllerCalculateOverviewVisitsResponse().pipe(
-      __map(_r => _r.body as number)
+      __map(_r => _r.body as Array<VisitableEntityObject>)
     );
   }
 
   /**
    * readOne
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadOneResponse(organisationId: string): __Observable<__StrictHttpResponse<ResourceOrganisationEntity>> {
+  organisationControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceOrganisationEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -268,11 +232,11 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadOne(organisationId: string): __Observable<ResourceOrganisationEntity> {
-    return this.organisationControllerReadOneResponse(organisationId).pipe(
+  organisationControllerReadOne(id: string): __Observable<ResourceOrganisationEntity> {
+    return this.organisationControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceOrganisationEntity)
     );
   }
@@ -280,11 +244,11 @@ class OrganisationControllerService extends __BaseService {
   /**
    * update
    * @param newOrga newOrga
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
   organisationControllerUpdateResponse(newOrga: OrganisationEntity,
-    organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -292,7 +256,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -310,29 +274,29 @@ class OrganisationControllerService extends __BaseService {
   /**
    * update
    * @param newOrga newOrga
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
   organisationControllerUpdate(newOrga: OrganisationEntity,
-    organisationId: string): __Observable<{}> {
-    return this.organisationControllerUpdateResponse(newOrga, organisationId).pipe(
+    id: string): __Observable<{}> {
+    return this.organisationControllerUpdateResponse(newOrga, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerDeleteResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+  organisationControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -349,24 +313,24 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerDelete(organisationId: string): __Observable<{}> {
-    return this.organisationControllerDeleteResponse(organisationId).pipe(
+  organisationControllerDelete(id: string): __Observable<{}> {
+    return this.organisationControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readActivities
-   * @param organisationId organisationId
+   * @param id id
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  organisationControllerReadActivitiesResponse(organisationId: string,
+  organisationControllerReadActivitiesResponse(id: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
@@ -379,7 +343,7 @@ class OrganisationControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/activities`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/activities`,
       __body,
       {
         headers: __headers,
@@ -396,28 +360,28 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * readActivities
-   * @param organisationId organisationId
+   * @param id id
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  organisationControllerReadActivities(organisationId: string,
+  organisationControllerReadActivities(id: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<{}> {
-    return this.organisationControllerReadActivitiesResponse(organisationId, sort, dir, embeddings).pipe(
+    return this.organisationControllerReadActivitiesResponse(id, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * deleteActivity
-   * @param organisationId organisationId
+   * @param id id
    * @param activityId activityId
    * @return OK
    */
-  organisationControllerDeleteActivityResponse(organisationId: string,
+  organisationControllerDeleteActivityResponse(id: string,
     activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -426,7 +390,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/activities/${encodeURIComponent(String(activityId))}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/activities/${encodeURIComponent(String(activityId))}`,
       __body,
       {
         headers: __headers,
@@ -443,30 +407,30 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * deleteActivity
-   * @param organisationId organisationId
+   * @param id id
    * @param activityId activityId
    * @return OK
    */
-  organisationControllerDeleteActivity(organisationId: string,
+  organisationControllerDeleteActivity(id: string,
     activityId: string): __Observable<{}> {
-    return this.organisationControllerDeleteActivityResponse(organisationId, activityId).pipe(
+    return this.organisationControllerDeleteActivityResponse(id, activityId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readAddress
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadAddressResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+  organisationControllerReadAddressResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/address`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/address`,
       __body,
       {
         headers: __headers,
@@ -483,22 +447,22 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * readAddress
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadAddress(organisationId: string): __Observable<{}> {
-    return this.organisationControllerReadAddressResponse(organisationId).pipe(
+  organisationControllerReadAddress(id: string): __Observable<{}> {
+    return this.organisationControllerReadAddressResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * updateAddress
-   * @param organisationId organisationId
+   * @param id id
    * @param addressId addressId
    * @return OK
    */
-  organisationControllerUpdateAddressResponse(organisationId: string,
+  organisationControllerUpdateAddressResponse(id: string,
     addressId: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -507,7 +471,7 @@ class OrganisationControllerService extends __BaseService {
     __body = addressId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/address`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/address`,
       __body,
       {
         headers: __headers,
@@ -524,24 +488,24 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * updateAddress
-   * @param organisationId organisationId
+   * @param id id
    * @param addressId addressId
    * @return OK
    */
-  organisationControllerUpdateAddress(organisationId: string,
+  organisationControllerUpdateAddress(id: string,
     addressId: StringPrimitive): __Observable<{}> {
-    return this.organisationControllerUpdateAddressResponse(organisationId, addressId).pipe(
+    return this.organisationControllerUpdateAddressResponse(id, addressId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * grantApproval
-   * @param organisationId organisationId
+   * @param id id
    * @param isApproved isApproved
    * @return OK
    */
-  organisationControllerGrantApprovalResponse(organisationId: string,
+  organisationControllerGrantApprovalResponse(id: string,
     isApproved: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -550,7 +514,7 @@ class OrganisationControllerService extends __BaseService {
     __body = isApproved;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/approve`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/approve`,
       __body,
       {
         headers: __headers,
@@ -567,30 +531,30 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * grantApproval
-   * @param organisationId organisationId
+   * @param id id
    * @param isApproved isApproved
    * @return OK
    */
-  organisationControllerGrantApproval(organisationId: string,
+  organisationControllerGrantApproval(id: string,
     isApproved: BooleanPrimitive): __Observable<{}> {
-    return this.organisationControllerGrantApprovalResponse(organisationId, isApproved).pipe(
+    return this.organisationControllerGrantApprovalResponse(id, isApproved).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readAvatar
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadAvatarResponse(organisationId: string): __Observable<__StrictHttpResponse<ImageEntity>> {
+  organisationControllerReadAvatarResponse(id: string): __Observable<__StrictHttpResponse<ImageEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/avatar`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/avatar`,
       __body,
       {
         headers: __headers,
@@ -607,22 +571,22 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * readAvatar
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadAvatar(organisationId: string): __Observable<ImageEntity> {
-    return this.organisationControllerReadAvatarResponse(organisationId).pipe(
+  organisationControllerReadAvatar(id: string): __Observable<ImageEntity> {
+    return this.organisationControllerReadAvatarResponse(id).pipe(
       __map(_r => _r.body as ImageEntity)
     );
   }
 
   /**
    * addAvatar
-   * @param organisationId organisationId
+   * @param id id
    * @param avatar avatar
    * @return OK
    */
-  organisationControllerAddAvatarResponse(organisationId: string,
+  organisationControllerAddAvatarResponse(id: string,
     avatar: ImageEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -631,7 +595,7 @@ class OrganisationControllerService extends __BaseService {
     __body = avatar;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/avatar`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/avatar`,
       __body,
       {
         headers: __headers,
@@ -648,30 +612,30 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * addAvatar
-   * @param organisationId organisationId
+   * @param id id
    * @param avatar avatar
    * @return OK
    */
-  organisationControllerAddAvatar(organisationId: string,
+  organisationControllerAddAvatar(id: string,
     avatar: ImageEntity): __Observable<{}> {
-    return this.organisationControllerAddAvatarResponse(organisationId, avatar).pipe(
+    return this.organisationControllerAddAvatarResponse(id, avatar).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readImages
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadImagesResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+  organisationControllerReadImagesResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/images`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/images`,
       __body,
       {
         headers: __headers,
@@ -688,22 +652,22 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * readImages
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadImages(organisationId: string): __Observable<{}> {
-    return this.organisationControllerReadImagesResponse(organisationId).pipe(
+  organisationControllerReadImages(id: string): __Observable<{}> {
+    return this.organisationControllerReadImagesResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * addImage
-   * @param organisationId organisationId
+   * @param id id
    * @param images images
    * @return OK
    */
-  organisationControllerAddImageResponse(organisationId: string,
+  organisationControllerAddImageResponse(id: string,
     images: Array<ImageEntity>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -712,7 +676,7 @@ class OrganisationControllerService extends __BaseService {
     __body = images;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/images`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/images`,
       __body,
       {
         headers: __headers,
@@ -729,24 +693,24 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * addImage
-   * @param organisationId organisationId
+   * @param id id
    * @param images images
    * @return OK
    */
-  organisationControllerAddImage(organisationId: string,
+  organisationControllerAddImage(id: string,
     images: Array<ImageEntity>): __Observable<{}> {
-    return this.organisationControllerAddImageResponse(organisationId, images).pipe(
+    return this.organisationControllerAddImageResponse(id, images).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * deleteImages
-   * @param organisationId organisationId
+   * @param id id
    * @param imageIds imageIds
    * @return OK
    */
-  organisationControllerDeleteImagesResponse(organisationId: string,
+  organisationControllerDeleteImagesResponse(id: string,
     imageIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -755,7 +719,7 @@ class OrganisationControllerService extends __BaseService {
     (imageIds || []).forEach(val => {if (val != null) __params = __params.append('imageIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/images`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/images`,
       __body,
       {
         headers: __headers,
@@ -772,24 +736,24 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * deleteImages
-   * @param organisationId organisationId
+   * @param id id
    * @param imageIds imageIds
    * @return OK
    */
-  organisationControllerDeleteImages(organisationId: string,
+  organisationControllerDeleteImages(id: string,
     imageIds: Array<string>): __Observable<{}> {
-    return this.organisationControllerDeleteImagesResponse(organisationId, imageIds).pipe(
+    return this.organisationControllerDeleteImagesResponse(id, imageIds).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * increaseLike
-   * @param organisationId organisationId
+   * @param id id
    * @param subscriptionId subscriptionId
    * @return OK
    */
-  organisationControllerIncreaseLikeResponse(organisationId: string,
+  organisationControllerIncreaseLikeResponse(id: string,
     subscriptionId?: StringPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -798,7 +762,7 @@ class OrganisationControllerService extends __BaseService {
     __body = subscriptionId;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/like`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/like`,
       __body,
       {
         headers: __headers,
@@ -815,30 +779,30 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * increaseLike
-   * @param organisationId organisationId
+   * @param id id
    * @param subscriptionId subscriptionId
    * @return OK
    */
-  organisationControllerIncreaseLike(organisationId: string,
+  organisationControllerIncreaseLike(id: string,
     subscriptionId?: StringPrimitive): __Observable<{}> {
-    return this.organisationControllerIncreaseLikeResponse(organisationId, subscriptionId).pipe(
+    return this.organisationControllerIncreaseLikeResponse(id, subscriptionId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readTranslations
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadTranslationsResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+  organisationControllerReadTranslationsResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/translations`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/translations`,
       __body,
       {
         headers: __headers,
@@ -855,28 +819,28 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * readTranslations
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadTranslations(organisationId: string): __Observable<{}> {
-    return this.organisationControllerReadTranslationsResponse(organisationId).pipe(
+  organisationControllerReadTranslations(id: string): __Observable<{}> {
+    return this.organisationControllerReadTranslationsResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readUsers
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadUsersResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+  organisationControllerReadUsersResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/users`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/users`,
       __body,
       {
         headers: __headers,
@@ -893,22 +857,22 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * readUsers
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadUsers(organisationId: string): __Observable<{}> {
-    return this.organisationControllerReadUsersResponse(organisationId).pipe(
+  organisationControllerReadUsers(id: string): __Observable<{}> {
+    return this.organisationControllerReadUsersResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * deleteUser
-   * @param organisationId organisationId
+   * @param id id
    * @param userId userId
    * @return OK
    */
-  organisationControllerDeleteUserResponse(organisationId: string,
+  organisationControllerDeleteUserResponse(id: string,
     userId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -917,7 +881,7 @@ class OrganisationControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/users/${encodeURIComponent(String(userId))}`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/users/${encodeURIComponent(String(userId))}`,
       __body,
       {
         headers: __headers,
@@ -934,25 +898,25 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * deleteUser
-   * @param organisationId organisationId
+   * @param id id
    * @param userId userId
    * @return OK
    */
-  organisationControllerDeleteUser(organisationId: string,
+  organisationControllerDeleteUser(id: string,
     userId: string): __Observable<{}> {
-    return this.organisationControllerDeleteUserResponse(organisationId, userId).pipe(
+    return this.organisationControllerDeleteUserResponse(id, userId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * grantAdminRight
-   * @param organisationId organisationId
+   * @param id id
    * @param userId userId
    * @param isAdmin isAdmin
    * @return OK
    */
-  organisationControllerGrantAdminRightResponse(organisationId: string,
+  organisationControllerGrantAdminRightResponse(id: string,
     userId: string,
     isAdmin: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
@@ -963,7 +927,7 @@ class OrganisationControllerService extends __BaseService {
     __body = isAdmin;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/users/${encodeURIComponent(String(userId))}/admin`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/users/${encodeURIComponent(String(userId))}/admin`,
       __body,
       {
         headers: __headers,
@@ -980,27 +944,27 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * grantAdminRight
-   * @param organisationId organisationId
+   * @param id id
    * @param userId userId
    * @param isAdmin isAdmin
    * @return OK
    */
-  organisationControllerGrantAdminRight(organisationId: string,
+  organisationControllerGrantAdminRight(id: string,
     userId: string,
     isAdmin: BooleanPrimitive): __Observable<{}> {
-    return this.organisationControllerGrantAdminRightResponse(organisationId, userId, isAdmin).pipe(
+    return this.organisationControllerGrantAdminRightResponse(id, userId, isAdmin).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * approveOrRejectUser
-   * @param organisationId organisationId
+   * @param id id
    * @param userId userId
    * @param isApproved isApproved
    * @return OK
    */
-  organisationControllerApproveOrRejectUserResponse(organisationId: string,
+  organisationControllerApproveOrRejectUserResponse(id: string,
     userId: string,
     isApproved: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
@@ -1011,7 +975,7 @@ class OrganisationControllerService extends __BaseService {
     __body = isApproved;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/users/${encodeURIComponent(String(userId))}/approve`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/users/${encodeURIComponent(String(userId))}/approve`,
       __body,
       {
         headers: __headers,
@@ -1028,32 +992,32 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * approveOrRejectUser
-   * @param organisationId organisationId
+   * @param id id
    * @param userId userId
    * @param isApproved isApproved
    * @return OK
    */
-  organisationControllerApproveOrRejectUser(organisationId: string,
+  organisationControllerApproveOrRejectUser(id: string,
     userId: string,
     isApproved: BooleanPrimitive): __Observable<{}> {
-    return this.organisationControllerApproveOrRejectUserResponse(organisationId, userId, isApproved).pipe(
+    return this.organisationControllerApproveOrRejectUserResponse(id, userId, isApproved).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readVideos
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadVideosResponse(organisationId: string): __Observable<__StrictHttpResponse<{}>> {
+  organisationControllerReadVideosResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/videos`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/videos`,
       __body,
       {
         headers: __headers,
@@ -1070,22 +1034,22 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * readVideos
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerReadVideos(organisationId: string): __Observable<{}> {
-    return this.organisationControllerReadVideosResponse(organisationId).pipe(
+  organisationControllerReadVideos(id: string): __Observable<{}> {
+    return this.organisationControllerReadVideosResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * addVideos
-   * @param organisationId organisationId
+   * @param id id
    * @param videos videos
    * @return OK
    */
-  organisationControllerAddVideosResponse(organisationId: string,
+  organisationControllerAddVideosResponse(id: string,
     videos: Array<VideoEntity>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -1094,7 +1058,7 @@ class OrganisationControllerService extends __BaseService {
     __body = videos;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/videos`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/videos`,
       __body,
       {
         headers: __headers,
@@ -1111,24 +1075,24 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * addVideos
-   * @param organisationId organisationId
+   * @param id id
    * @param videos videos
    * @return OK
    */
-  organisationControllerAddVideos(organisationId: string,
+  organisationControllerAddVideos(id: string,
     videos: Array<VideoEntity>): __Observable<{}> {
-    return this.organisationControllerAddVideosResponse(organisationId, videos).pipe(
+    return this.organisationControllerAddVideosResponse(id, videos).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * deleteVideos
-   * @param organisationId organisationId
+   * @param id id
    * @param videoIds videoIds
    * @return OK
    */
-  organisationControllerDeleteVideosResponse(organisationId: string,
+  organisationControllerDeleteVideosResponse(id: string,
     videoIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -1137,7 +1101,7 @@ class OrganisationControllerService extends __BaseService {
     (videoIds || []).forEach(val => {if (val != null) __params = __params.append('videoIds', val.toString())});
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/videos`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/videos`,
       __body,
       {
         headers: __headers,
@@ -1154,90 +1118,52 @@ class OrganisationControllerService extends __BaseService {
   }
   /**
    * deleteVideos
-   * @param organisationId organisationId
+   * @param id id
    * @param videoIds videoIds
    * @return OK
    */
-  organisationControllerDeleteVideos(organisationId: string,
+  organisationControllerDeleteVideos(id: string,
     videoIds: Array<string>): __Observable<{}> {
-    return this.organisationControllerDeleteVideosResponse(organisationId, videoIds).pipe(
+    return this.organisationControllerDeleteVideosResponse(id, videoIds).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * calculateVisitors
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerCalculateVisitorsResponse(organisationId: string): __Observable<__StrictHttpResponse<number>> {
+  organisationControllerCalculateVisitorsResponse(id: string): __Observable<__StrictHttpResponse<Array<VisitableEntityObject>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/visitors`,
+      this.rootUrl + `/organisations/${encodeURIComponent(String(id))}/visitors`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'text'
+        responseType: 'json'
       });
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+        return _r as __StrictHttpResponse<Array<VisitableEntityObject>>;
       })
     );
   }
   /**
    * calculateVisitors
-   * @param organisationId organisationId
+   * @param id id
    * @return OK
    */
-  organisationControllerCalculateVisitors(organisationId: string): __Observable<number> {
-    return this.organisationControllerCalculateVisitorsResponse(organisationId).pipe(
-      __map(_r => _r.body as number)
-    );
-  }
-
-  /**
-   * calculateVisits
-   * @param organisationId organisationId
-   * @return OK
-   */
-  organisationControllerCalculateVisitsResponse(organisationId: string): __Observable<__StrictHttpResponse<number>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/organisations/${encodeURIComponent(String(organisationId))}/visits`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'text'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
-      })
-    );
-  }
-  /**
-   * calculateVisits
-   * @param organisationId organisationId
-   * @return OK
-   */
-  organisationControllerCalculateVisits(organisationId: string): __Observable<number> {
-    return this.organisationControllerCalculateVisitsResponse(organisationId).pipe(
-      __map(_r => _r.body as number)
+  organisationControllerCalculateVisitors(id: string): __Observable<Array<VisitableEntityObject>> {
+    return this.organisationControllerCalculateVisitorsResponse(id).pipe(
+      __map(_r => _r.body as Array<VisitableEntityObject>)
     );
   }
 }

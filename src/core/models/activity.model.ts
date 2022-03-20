@@ -9,6 +9,7 @@ import { MembershipModel } from './membership.model';
 import { OrganisationModel } from './organisation.model';
 import { ScheduleModel } from './schedule.model';
 import { TargetGroupModel } from './target-group.model';
+import { VisitableModel } from './visitable.model';
 
 export class ActivityModel
   extends CrudModel
@@ -35,6 +36,7 @@ export class ActivityModel
   public schedules: ScheduleModel[] & Observable<ScheduleModel[]>;
   public targetGroups: TargetGroupModel[] & Observable<TargetGroupModel[]>;
   public titleImage: ImageModel & Observable<ImageModel>;
+  public visitors: VisitableModel[] & Observable<VisitableModel[]>
 
   public get scheduled(): ScheduleModel | null {
     return Array.isArray(this.schedules) && this.schedules.length

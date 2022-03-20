@@ -5,6 +5,7 @@ import { Translate } from '../crud/crud.translate';
 import { BloggerModel } from './blogger.model';
 import { ImageModel } from './image.model';
 import { TopicModel } from './topic.model';
+import { VisitableModel } from './visitable.model';
 
 export class BlogpostModel
   extends CrudModel
@@ -24,6 +25,7 @@ export class BlogpostModel
   public images: ImageModel[] & Observable<ImageModel[]>;
   public titleImage: ImageModel & Observable<ImageModel>;
   public topic: TopicModel & Observable<TopicModel>;
+  public visitors: VisitableModel[] & Observable<VisitableModel[]>
 
   public get label(): string {
     return this.title;

@@ -8,6 +8,7 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { MarkupEntity } from '../models/markup-entity';
+import { VisitableEntityObject } from '../models/visitable-entity-object';
 import { ResourceMarkupEntity } from '../models/resource-markup-entity';
 import { ImageEntity } from '../models/image-entity';
 
@@ -21,14 +22,14 @@ class MarkupControllerService extends __BaseService {
   static readonly markupControllerReadAllPath = '/markups';
   static readonly markupControllerCreatePath = '/markups';
   static readonly markupControllerImportMarkupsPath = '/markups/import';
-  static readonly markupControllerReadOnePath = '/markups/{markupId}';
-  static readonly markupControllerUpdatePath = '/markups/{markupId}';
-  static readonly markupControllerDeletePath = '/markups/{markupId}';
-  static readonly markupControllerReadTitleImagePath = '/markups/{markupId}/titleimage';
-  static readonly markupControllerAddTitleImagePath = '/markups/{markupId}/titleimage';
-  static readonly markupControllerReadTranslationsPath = '/markups/{markupId}/translations';
-  static readonly markupControllerCalculateVisitorsPath = '/markups/{markupId}/visitors';
-  static readonly markupControllerCalculateVisitsPath = '/markups/{markupId}/visits';
+  static readonly markupControllerCalculateOverviewVisitorsPath = '/markups/visitors';
+  static readonly markupControllerReadOnePath = '/markups/{id}';
+  static readonly markupControllerUpdatePath = '/markups/{id}';
+  static readonly markupControllerDeletePath = '/markups/{id}';
+  static readonly markupControllerReadTitleImagePath = '/markups/{id}/titleimage';
+  static readonly markupControllerAddTitleImagePath = '/markups/{id}/titleimage';
+  static readonly markupControllerReadTranslationsPath = '/markups/{id}/translations';
+  static readonly markupControllerCalculateVisitorsPath = '/markups/{id}/visitors';
 
   constructor(
     config: __Configuration,
@@ -185,18 +186,56 @@ class MarkupControllerService extends __BaseService {
   }
 
   /**
-   * readOne
-   * @param markupId markupId
+   * calculateOverviewVisitors
+   * @param id id
    * @return OK
    */
-  markupControllerReadOneResponse(markupId: string): __Observable<__StrictHttpResponse<ResourceMarkupEntity>> {
+  markupControllerCalculateOverviewVisitorsResponse(id: string): __Observable<__StrictHttpResponse<Array<VisitableEntityObject>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}`,
+      this.rootUrl + `/markups/visitors`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<VisitableEntityObject>>;
+      })
+    );
+  }
+  /**
+   * calculateOverviewVisitors
+   * @param id id
+   * @return OK
+   */
+  markupControllerCalculateOverviewVisitors(id: string): __Observable<Array<VisitableEntityObject>> {
+    return this.markupControllerCalculateOverviewVisitorsResponse(id).pipe(
+      __map(_r => _r.body as Array<VisitableEntityObject>)
+    );
+  }
+
+  /**
+   * readOne
+   * @param id id
+   * @return OK
+   */
+  markupControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceMarkupEntity>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -213,11 +252,11 @@ class MarkupControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerReadOne(markupId: string): __Observable<ResourceMarkupEntity> {
-    return this.markupControllerReadOneResponse(markupId).pipe(
+  markupControllerReadOne(id: string): __Observable<ResourceMarkupEntity> {
+    return this.markupControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceMarkupEntity)
     );
   }
@@ -225,11 +264,11 @@ class MarkupControllerService extends __BaseService {
   /**
    * update
    * @param newmarkup newmarkup
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
   markupControllerUpdateResponse(newmarkup: MarkupEntity,
-    markupId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -237,7 +276,7 @@ class MarkupControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}`,
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -255,29 +294,29 @@ class MarkupControllerService extends __BaseService {
   /**
    * update
    * @param newmarkup newmarkup
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
   markupControllerUpdate(newmarkup: MarkupEntity,
-    markupId: string): __Observable<{}> {
-    return this.markupControllerUpdateResponse(newmarkup, markupId).pipe(
+    id: string): __Observable<{}> {
+    return this.markupControllerUpdateResponse(newmarkup, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerDeleteResponse(markupId: string): __Observable<__StrictHttpResponse<{}>> {
+  markupControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}`,
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -294,28 +333,28 @@ class MarkupControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerDelete(markupId: string): __Observable<{}> {
-    return this.markupControllerDeleteResponse(markupId).pipe(
+  markupControllerDelete(id: string): __Observable<{}> {
+    return this.markupControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readTitleImage
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerReadTitleImageResponse(markupId: string): __Observable<__StrictHttpResponse<ImageEntity>> {
+  markupControllerReadTitleImageResponse(id: string): __Observable<__StrictHttpResponse<ImageEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/titleimage`,
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/titleimage`,
       __body,
       {
         headers: __headers,
@@ -332,22 +371,22 @@ class MarkupControllerService extends __BaseService {
   }
   /**
    * readTitleImage
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerReadTitleImage(markupId: string): __Observable<ImageEntity> {
-    return this.markupControllerReadTitleImageResponse(markupId).pipe(
+  markupControllerReadTitleImage(id: string): __Observable<ImageEntity> {
+    return this.markupControllerReadTitleImageResponse(id).pipe(
       __map(_r => _r.body as ImageEntity)
     );
   }
 
   /**
    * addTitleImage
-   * @param markupId markupId
+   * @param id id
    * @param avatar avatar
    * @return OK
    */
-  markupControllerAddTitleImageResponse(markupId: string,
+  markupControllerAddTitleImageResponse(id: string,
     avatar?: ImageEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -356,7 +395,7 @@ class MarkupControllerService extends __BaseService {
     __body = avatar;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/titleimage`,
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/titleimage`,
       __body,
       {
         headers: __headers,
@@ -373,30 +412,30 @@ class MarkupControllerService extends __BaseService {
   }
   /**
    * addTitleImage
-   * @param markupId markupId
+   * @param id id
    * @param avatar avatar
    * @return OK
    */
-  markupControllerAddTitleImage(markupId: string,
+  markupControllerAddTitleImage(id: string,
     avatar?: ImageEntity): __Observable<{}> {
-    return this.markupControllerAddTitleImageResponse(markupId, avatar).pipe(
+    return this.markupControllerAddTitleImageResponse(id, avatar).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readTranslations
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerReadTranslationsResponse(markupId: string): __Observable<__StrictHttpResponse<{}>> {
+  markupControllerReadTranslationsResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/translations`,
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/translations`,
       __body,
       {
         headers: __headers,
@@ -413,88 +452,50 @@ class MarkupControllerService extends __BaseService {
   }
   /**
    * readTranslations
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerReadTranslations(markupId: string): __Observable<{}> {
-    return this.markupControllerReadTranslationsResponse(markupId).pipe(
+  markupControllerReadTranslations(id: string): __Observable<{}> {
+    return this.markupControllerReadTranslationsResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * calculateVisitors
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerCalculateVisitorsResponse(markupId: string): __Observable<__StrictHttpResponse<number>> {
+  markupControllerCalculateVisitorsResponse(id: string): __Observable<__StrictHttpResponse<Array<VisitableEntityObject>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/visitors`,
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/visitors`,
       __body,
       {
         headers: __headers,
         params: __params,
-        responseType: 'text'
+        responseType: 'json'
       });
 
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
+        return _r as __StrictHttpResponse<Array<VisitableEntityObject>>;
       })
     );
   }
   /**
    * calculateVisitors
-   * @param markupId markupId
+   * @param id id
    * @return OK
    */
-  markupControllerCalculateVisitors(markupId: string): __Observable<number> {
-    return this.markupControllerCalculateVisitorsResponse(markupId).pipe(
-      __map(_r => _r.body as number)
-    );
-  }
-
-  /**
-   * calculateVisits
-   * @param markupId markupId
-   * @return OK
-   */
-  markupControllerCalculateVisitsResponse(markupId: string): __Observable<__StrictHttpResponse<number>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/markups/${encodeURIComponent(String(markupId))}/visits`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'text'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return (_r as HttpResponse<any>).clone({ body: parseFloat((_r as HttpResponse<any>).body as string) }) as __StrictHttpResponse<number>
-      })
-    );
-  }
-  /**
-   * calculateVisits
-   * @param markupId markupId
-   * @return OK
-   */
-  markupControllerCalculateVisits(markupId: string): __Observable<number> {
-    return this.markupControllerCalculateVisitsResponse(markupId).pipe(
-      __map(_r => _r.body as number)
+  markupControllerCalculateVisitors(id: string): __Observable<Array<VisitableEntityObject>> {
+    return this.markupControllerCalculateVisitorsResponse(id).pipe(
+      __map(_r => _r.body as Array<VisitableEntityObject>)
     );
   }
 }

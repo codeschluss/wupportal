@@ -45,4 +45,28 @@ export class OrganisationPanelComponent
       .filter((membership) => !membership.approved);
   }
 
+  public activityVisits(item: ActivityModel): number {
+    return item?.visitors?.length 
+      ? item.visitors.map(v => v.visits).reduce((prev, curr) => prev + curr, 0) 
+      : 0;
+  }
+
+  public activityVisitors(item: ActivityModel): number {
+    return item?.visitors?.length
+      ? item.visitors.length
+      : 0;
+  }
+
+  public orgaVisits(item: OrganisationModel): number {
+    return item?.visitors?.length
+      ? item.visitors.map(v => v.visits).reduce((prev, curr) => prev + curr, 0)
+      : 0;
+  }
+
+  public orgaVisitors(item: OrganisationModel): number {
+    return item?.visitors?.length
+      ? item.visitors.length
+      : 0;
+  }
+
 }

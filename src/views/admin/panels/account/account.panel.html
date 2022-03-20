@@ -63,15 +63,15 @@
             <i18n>visits</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            {{(orgaVisits(item.id) | async)}}
+            {{orgaVisits(item)}}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="visitors">
           <mat-header-cell *matHeaderCellDef>
-            <i18n>visits</i18n>
+            <i18n>visitors</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            {{(orgaVisitors(item.id) | async)}}
+            {{orgaVisitors(item)}}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="approved">
@@ -133,15 +133,15 @@
             <i18n>visits</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            {{(activityVisits(item.id) | async)}}
+            {{activityVisits(item)}}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="visitors">
           <mat-header-cell *matHeaderCellDef>
-            <i18n>visits</i18n>
+            <i18n>visitors</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            {{(activityVisitors(item.id) | async)}}
+            {{activityVisitors(item)}}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">
@@ -176,15 +176,15 @@
             <i18n>visits</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            {{(blogVisits(item.id) | async)}}
+            {{blogVisits(item)}}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="visitors">
           <mat-header-cell *matHeaderCellDef>
-            <i18n>visits</i18n>
+            <i18n>visitors</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
-            {{(blogVisitors(item.id) | async)}}
+            {{blogVisitors(item)}}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">

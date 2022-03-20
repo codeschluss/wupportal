@@ -9,6 +9,7 @@ import { BlogpostModel as Model } from '../models/blogpost.model';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
 import { TopicModel } from '../models/topic.model';
+import { VisitableModel } from '../models/visitable.model';
 
 
 @Injectable({
@@ -53,6 +54,11 @@ export class BlogpostProvider
       field: 'translations',
       method: this.service.blogControllerReadTranslationsResponse,
       model: Model
+    },
+    {
+      field: 'visitors',
+      method: this.service.blogControllerCalculateVisitorsResponse,
+      model: VisitableModel
     }
   ];
 
@@ -86,18 +92,6 @@ export class BlogpostProvider
   public analyticsVisitorsAll: () =>
     Observable<any> = this.apply(this.service
       .blogControllerCalculateOverviewVisitorsResponse);
-
-  public analyticsVisitorsOne: (id: string) =>
-    Observable<any> = this.apply(this.service
-      .blogControllerCalculateVisitorsResponse);
-
-  public analyticsVisitsAll: () =>
-    Observable<any> = this.apply(this.service
-      .blogControllerCalculateOverviewVisitsResponse);
-
-  public analyticsVisitsOne: (id: string) =>
-    Observable<any> = this.apply(this.service
-      .blogControllerCalculateVisitsResponse);
 
   public grantApproval: (id: string, grant: Boolean) =>
     Observable<any> = this.apply(this.service

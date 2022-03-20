@@ -8,6 +8,7 @@ import { ImageModel } from './image.model';
 import { MembershipModel } from './membership.model';
 import { UserModel } from './user.model';
 import { VideoModel } from './video.model';
+import { VisitableModel } from './visitable.model';
 
 export class OrganisationModel
   extends CrudModel
@@ -32,6 +33,7 @@ export class OrganisationModel
   public memberships: MembershipModel[] & Observable<MembershipModel[]>;
   public users: UserModel[] & Observable<UserModel[]>;
   public videos: VideoModel[] & Observable<VideoModel[]>;
+  public visitors: VisitableModel[] & Observable<VisitableModel[]>
 
   // compatability
   public get image() { return this.avatar; }

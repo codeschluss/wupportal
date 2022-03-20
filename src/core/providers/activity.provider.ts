@@ -12,6 +12,7 @@ import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel } from '../models/organisation.model';
 import { ScheduleModel } from '../models/schedule.model';
 import { TargetGroupModel } from '../models/target-group.model';
+import { VisitableModel } from '../models/visitable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -75,6 +76,11 @@ export class ActivityProvider
       field: 'translations',
       method: this.service.activityControllerReadTranslationsResponse,
       model: Model
+    },
+    {
+      field: 'visitors',
+      method: this.service.activityControllerCalculateVisitorsResponse,
+      model: VisitableModel
     }
   ];
 
@@ -119,19 +125,7 @@ export class ActivityProvider
 
   public analyticsVisitorsAll: () =>
     Observable<any> = this.apply(this.service
-      .activityControllerCalculateOverviewVisitorsResponse);
-
-  public analyticsVisitorsOne: (id: string) =>
-    Observable<any> = this.apply(this.service
-      .activityControllerCalculateVisitorsResponse);
-
-  public analyticsVisitsAll: () =>
-    Observable<any> = this.apply(this.service
       .activityControllerCalculateOverviewVisitsResponse);
-
-  public analyticsVisitsOne: (id: string) =>
-    Observable<any> = this.apply(this.service
-      .activityControllerCalculateVisitsResponse);
 
   public icalAll: (id: string) =>
     Observable<any> = this.apply(this.service

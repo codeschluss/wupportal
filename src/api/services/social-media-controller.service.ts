@@ -19,9 +19,9 @@ import { ResourceSocialMediaEntity } from '../models/resource-social-media-entit
 class SocialMediaControllerService extends __BaseService {
   static readonly socialMediaControllerReadAllPath = '/socialmedia';
   static readonly socialMediaControllerCreatePath = '/socialmedia';
-  static readonly socialMediaControllerReadOnePath = '/socialmedia/{socialmediaId}';
-  static readonly socialMediaControllerUpdatePath = '/socialmedia/{socialmediaId}';
-  static readonly socialMediaControllerDeletePath = '/socialmedia/{socialmediaId}';
+  static readonly socialMediaControllerReadOnePath = '/socialmedia/{id}';
+  static readonly socialMediaControllerUpdatePath = '/socialmedia/{id}';
+  static readonly socialMediaControllerDeletePath = '/socialmedia/{id}';
 
   constructor(
     config: __Configuration,
@@ -139,17 +139,17 @@ class SocialMediaControllerService extends __BaseService {
 
   /**
    * readOne
-   * @param socialmediaId socialmediaId
+   * @param id id
    * @return OK
    */
-  socialMediaControllerReadOneResponse(socialmediaId: string): __Observable<__StrictHttpResponse<ResourceSocialMediaEntity>> {
+  socialMediaControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceSocialMediaEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/socialmedia/${encodeURIComponent(String(socialmediaId))}`,
+      this.rootUrl + `/socialmedia/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -166,11 +166,11 @@ class SocialMediaControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param socialmediaId socialmediaId
+   * @param id id
    * @return OK
    */
-  socialMediaControllerReadOne(socialmediaId: string): __Observable<ResourceSocialMediaEntity> {
-    return this.socialMediaControllerReadOneResponse(socialmediaId).pipe(
+  socialMediaControllerReadOne(id: string): __Observable<ResourceSocialMediaEntity> {
+    return this.socialMediaControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceSocialMediaEntity)
     );
   }
@@ -178,11 +178,11 @@ class SocialMediaControllerService extends __BaseService {
   /**
    * update
    * @param newSocialMedia newSocialMedia
-   * @param socialmediaId socialmediaId
+   * @param id id
    * @return OK
    */
   socialMediaControllerUpdateResponse(newSocialMedia: SocialMediaEntity,
-    socialmediaId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -190,7 +190,7 @@ class SocialMediaControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/socialmedia/${encodeURIComponent(String(socialmediaId))}`,
+      this.rootUrl + `/socialmedia/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -208,29 +208,29 @@ class SocialMediaControllerService extends __BaseService {
   /**
    * update
    * @param newSocialMedia newSocialMedia
-   * @param socialmediaId socialmediaId
+   * @param id id
    * @return OK
    */
   socialMediaControllerUpdate(newSocialMedia: SocialMediaEntity,
-    socialmediaId: string): __Observable<{}> {
-    return this.socialMediaControllerUpdateResponse(newSocialMedia, socialmediaId).pipe(
+    id: string): __Observable<{}> {
+    return this.socialMediaControllerUpdateResponse(newSocialMedia, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param socialmediaId socialmediaId
+   * @param id id
    * @return OK
    */
-  socialMediaControllerDeleteResponse(socialmediaId: string): __Observable<__StrictHttpResponse<{}>> {
+  socialMediaControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/socialmedia/${encodeURIComponent(String(socialmediaId))}`,
+      this.rootUrl + `/socialmedia/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -247,11 +247,11 @@ class SocialMediaControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param socialmediaId socialmediaId
+   * @param id id
    * @return OK
    */
-  socialMediaControllerDelete(socialmediaId: string): __Observable<{}> {
-    return this.socialMediaControllerDeleteResponse(socialmediaId).pipe(
+  socialMediaControllerDelete(id: string): __Observable<{}> {
+    return this.socialMediaControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }

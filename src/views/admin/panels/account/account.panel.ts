@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { ActivityModel, BlogpostModel, CrudJoiner, ImageModel, OrganisationModel, UserModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 import { RequestPopupComponent } from '../../popups/request.popup';
@@ -23,11 +22,13 @@ export class AccountPanelComponent
     }).with('activities').yield('address').yield('suburb')
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
+      .with('activities').yield('visitors')
       .with('avatar')
       .with('blogger')
-      .with('blogs')
+      .with('blogs').yield('visitors')
       .with('organisations').yield('address').yield('suburb')
       .with('organisations').yield('provider')
+      .with('organisations').yield('visitors')
   };
 
   public get activities(): ActivityModel[] {
@@ -74,34 +75,40 @@ export class AccountPanelComponent
     }).afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
   }
 
-  public activityVisits(id: string): Observable<number> {
-    return this.activityServiceProvider.analyticsVisitsOne(id)
-      .pipe(map(response => response.body as number));
+  public activityVisits(item: ActivityModel): number {
+    return item?.visitors?.length 
+      ? item.visitors.map(v => v.visits).reduce((prev, curr) => prev + curr, 0) 
+      : 0;
   }
 
-  public activityVisitors(id: string): Observable<number> {
-    return this.activityServiceProvider.analyticsVisitorsOne(id)
-      .pipe(map(response => response.body as number));
+  public activityVisitors(item: ActivityModel): number {
+    return item?.visitors?.length
+      ? item.visitors.length
+      : 0;
   }
 
-  public blogVisits(id: string): Observable<number> {
-    return this.blogpostProvider.analyticsVisitsOne(id)
-      .pipe(map(response => response.body as number));
+  public blogVisits(item: BlogpostModel): number {
+    return item?.visitors?.length 
+      ? item.visitors.map(v => v.visits).reduce((prev, curr) => prev + curr, 0) 
+      : 0;
   }
 
-  public blogVisitors(id: string): Observable<number> {
-    return this.blogpostProvider.analyticsVisitorsOne(id)
-      .pipe(map(response => response.body as number));
+  public blogVisitors(item: BlogpostModel): number {
+    return item?.visitors?.length
+      ? item.visitors.length
+      : 0;
   }
 
-  public orgaVisits(id: string): Observable<number> {
-    return this.organisationProvider.analyticsVisitsOne(id)
-      .pipe(map(response => response.body as number));
+  public orgaVisits(item: OrganisationModel): number {
+    return item?.visitors?.length
+      ? item.visitors.map(v => v.visits).reduce((prev, curr) => prev + curr, 0)
+      : 0;
   }
 
-  public orgaVisitors(id: string): Observable<number> {
-    return this.organisationProvider.analyticsVisitorsOne(id)
-      .pipe(map(response => response.body as number));
+  public orgaVisitors(item: OrganisationModel): number {
+    return item?.visitors?.length
+      ? item.visitors.length
+      : 0;
   }
 
 }

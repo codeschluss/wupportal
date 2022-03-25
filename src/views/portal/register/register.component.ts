@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { merge } from 'rxjs';
@@ -14,6 +14,8 @@ export class RegisterPageComponent
   extends RoutingComponent
   implements AfterViewInit {
 
+  @Output() checkedChanged = false;
+
   public email: FormControl = new FormControl(null, [
     Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
     Validators.required
@@ -22,6 +24,8 @@ export class RegisterPageComponent
   public name: FormControl = new FormControl(null, [
     Validators.required
   ]);
+
+  //public becomeBlogger: FormControl = new FormControl(this.checked);
 
   public password: FormControl = new FormControl(null, [
     Validators.minLength(8),
@@ -76,11 +80,15 @@ export class RegisterPageComponent
     ).subscribe(() => this.validate());
   }
 
+  onCheckBoxChange(){
+    this.checkedChanged = !this.checkedChanged;
+  }
+
   public register(): void {
     this.userProvider.create(new UserModel({
       name: this.name.value,
       password: this.password.value,
-      username: this.email.value
+      username: this.email.value,
     })).pipe(mergeMap((user) => this.tokenProvider.login(
       user.username,
       this.password.value
@@ -90,6 +98,27 @@ export class RegisterPageComponent
       'account',
       tokens.access.id
     ]));
+    console.log(this.checkedChanged);
+    if(this.checkedChanged){
+      setTimeout(() => this.joinBloggers(),5000)
+      console.log('joined bloggers reached');
+    } else {
+      console.log('never joined bloggers');
+    }
+  }
+
+  public joinBloggers(): void {
+    this.userProvider.linkBlogger().subscribe(() => this.reload());
+  }
+
+  protected reload(): void {
+    this.tokenProvider.refresh().subscribe(() => {
+      this.router.resetConfig(this.router.config);
+      this.router.navigate([], {
+        queryParamsHandling: 'preserve',
+        skipLocationChange: true
+      });
+    });
   }
 
   private validate(): void {

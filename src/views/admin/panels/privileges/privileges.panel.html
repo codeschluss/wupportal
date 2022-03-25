@@ -91,6 +91,11 @@
           <mat-cell *matCellDef="let item">
             <button mat-icon-button
               color="primary"
+              (click)="editItem(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button
+              color="primary"
               (click)="grantOrganisation(item, true)">
               <fa-icon icon="check"></fa-icon>
             </button>
@@ -120,6 +125,11 @@
             <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="editItem(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
             <button mat-icon-button
               color="primary"
               (click)="grantMembership(item, true)">

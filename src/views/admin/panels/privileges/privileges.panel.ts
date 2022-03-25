@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CrudJoiner, MembershipModel, OrganisationModel, UserModel } from '../../../../core';
+import { CrudJoiner, CrudModel, MembershipModel, OrganisationModel, UserModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
@@ -39,6 +39,15 @@ export class PrivilegesPanelComponent
 
   public resetAllPasswords(): void {
     this.userProvider.resetAllPasswords().subscribe();
+  }
+
+  public editItem(item: CrudModel): void {
+    console.log(item);
+    //error stepper is undefined
+    //also not working item: OrgaStepper/OrgaModel
+    //204 network error "no content"
+    const stepper = (item.constructor as any).stepper.constructor;
+    this.router.navigate(this.routingProvider.to(stepper).concat(item.id));
   }
 
 }

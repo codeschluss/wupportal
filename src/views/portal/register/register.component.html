@@ -26,6 +26,14 @@
             type="password"
             [formControl]="passwordConfirm">
         </mat-form-field>
+        <div class="becomeBlogger">
+          <mat-label><i18n>become a blogger?</i18n>
+          <mat-checkbox
+            class="checkbox"
+            (change)="onCheckBoxChange()">
+          </mat-checkbox>
+        </mat-label>
+      </div>
       </mat-card-content>
       <mat-card-actions>
         <button mat-stroked-button

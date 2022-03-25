@@ -7,6 +7,7 @@ import { TokenInterceptor } from '../auth/token.interceptor';
 import { TokenProvider } from '../auth/token.provider';
 import { LabelInterceptor } from '../labels/label.interceptor';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
+import { IpAddressInterceptor } from '../platform/ip-address.interceptor';
 import { PlatformInterceptor } from '../platform/platform.interceptor';
 import { ActivityProvider } from '../providers/activity.provider';
 import { AddressProvider } from '../providers/address.provider';
@@ -30,6 +31,7 @@ import { SessionProvider } from '../session/session.provider';
 import { CoreSettings } from './settings';
 
 const interceptors: ClassProvider[] = [
+  { provide: HTTP_INTERCEPTORS, useClass: IpAddressInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LabelInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: PlatformInterceptor, multi: true },

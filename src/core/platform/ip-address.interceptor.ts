@@ -26,8 +26,8 @@ export class IpAddressInterceptor
     Observable<HttpEvent<any>> {
     return this.localStorage.getItem('ip').pipe(
       map(ip => ip
-            ? request.clone({headers: request.headers.set('x-real-ip', String(ip))}) 
-            : request),
+        ? request.clone({headers: request.headers.set('x-real-ip', String(ip))}) 
+        : request),
       catchError(() => of(request)),
       switchMap(request => next.handle(request))
     );

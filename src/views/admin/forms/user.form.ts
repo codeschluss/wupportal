@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, Type } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, forkJoin, Observable, Subscription } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { TokenProvider, TranslationProvider, UserModel, UserProvider } from '../../../core';
@@ -94,10 +94,11 @@ export class UserFormComponent
   private changes: Subscription = EMPTY.subscribe();
 
   public constructor(
-    private userProvider: UserProvider,
     route: ActivatedRoute,
+    private router: Router,
     tokenProvider: TokenProvider,
-    translationProvider: TranslationProvider
+    translationProvider: TranslationProvider,
+    private userProvider: UserProvider,
   ) {
     super(route, tokenProvider, translationProvider);
   }
@@ -113,7 +114,8 @@ export class UserFormComponent
   public persist(): Observable<any> {
     return super.persist().pipe(
       tap(() => this.item.avatar = this.group.get('avatar').value),
-      mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item)))
+      mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item))),
+      tap(() => this.router.navigate(['/', 'admin']))
     );
   }
 

@@ -34,7 +34,12 @@
             </mat-list-item>
             <div class="passwordReset">
               Forgot password?
-              <a (click)="onResetPassword()">Click here!</a>
+              <a
+                (click)="onResetPassword()"
+                class="pointer"
+                [routerLink]="['forgotpassword']"
+                >Click here!
+              </a>
             </div>
             <mat-list-item>
               <button mat-stroked-button

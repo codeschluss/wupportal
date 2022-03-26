@@ -21,6 +21,7 @@ import { EventComponent } from './event/event.component';
 import { EventsComponent } from './events/events.component';
 import { EventsListingComponent } from './events/events.listing';
 import { FavoritesListingComponent } from './favorites/favorites.listing';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { IndexComponent } from './index/index.component';
 import { PlaceComponent } from './place/place.component';
 import { PortalComponent } from './portal.component';
@@ -38,6 +39,7 @@ const components: Type<any>[] = [
   EventsComponent,
   EventsListingComponent,
   FavoritesListingComponent,
+  ForgotPasswordComponent,
   IndexComponent,
   PlaceComponent,
   PortalComponent,

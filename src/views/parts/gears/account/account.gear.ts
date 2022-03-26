@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, map, mergeMap, Observable, of } from 'rxjs';
-import { StringPrimitive } from 'src/api/models/string-primitive';
 import { CrudJoiner, CrudResolver, TokenProvider, UserModel, UserProvider } from '../../../../core';
 
 @Component({
@@ -78,14 +77,7 @@ export class AccountGearComponent
   }
 
   public onResetPassword() : void {
-    let userName: StringPrimitive = this.formGroup.get('username').value;
-    console.log(userName);
-    if(userName === null || ''){
-      console.log('invalid or empty username');
-      return;
-    }
-
-    this.userProvider.resetPassword(userName).subscribe();
+    this.router.navigate(['/','forgotPassword'])
   }
 
 }

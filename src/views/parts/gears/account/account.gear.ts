@@ -77,8 +77,9 @@ export class AccountGearComponent
     this.tokenProvider.remove();
   }
 
-  public onResetPassword(){
+  public onResetPassword() : void {
     let userName: StringPrimitive = this.formGroup.get('username').value;
+    console.log(userName);
     if(userName === null || ''){
       console.log('invalid or empty username');
       return;

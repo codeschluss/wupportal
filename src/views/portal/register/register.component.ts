@@ -101,9 +101,6 @@ export class RegisterPageComponent
     console.log(this.checkedChanged);
     if(this.checkedChanged){
       setTimeout(() => this.joinBloggers(),5000)
-      console.log('joined bloggers reached');
-    } else {
-      console.log('never joined bloggers');
     }
   }
 

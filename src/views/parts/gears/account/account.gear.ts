@@ -76,8 +76,4 @@ export class AccountGearComponent
     this.tokenProvider.remove();
   }
 
-  public onResetPassword() : void {
-    this.router.navigate(['/','forgotPassword'])
-  }
-
 }

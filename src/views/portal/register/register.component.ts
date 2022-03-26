@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Output } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { merge } from 'rxjs';
@@ -14,7 +14,7 @@ export class RegisterPageComponent
   extends RoutingComponent
   implements AfterViewInit {
 
-  @Output() checkedChanged = false;
+  public becomeBlogger = false;
 
   public email: FormControl = new FormControl(null, [
     Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
@@ -24,8 +24,6 @@ export class RegisterPageComponent
   public name: FormControl = new FormControl(null, [
     Validators.required
   ]);
-
-  //public becomeBlogger: FormControl = new FormControl(this.checked);
 
   public password: FormControl = new FormControl(null, [
     Validators.minLength(8),
@@ -81,7 +79,7 @@ export class RegisterPageComponent
   }
 
   onCheckBoxChange(){
-    this.checkedChanged = !this.checkedChanged;
+    this.becomeBlogger = !this.becomeBlogger;
   }
 
   public register(): void {
@@ -89,33 +87,18 @@ export class RegisterPageComponent
       name: this.name.value,
       password: this.password.value,
       username: this.email.value,
-    })).pipe(mergeMap((user) => this.tokenProvider.login(
-      user.username,
-      this.password.value
-    ))).subscribe((tokens) => this.router.navigate([
+      applyBlogger: this.becomeBlogger
+    })).pipe(
+      mergeMap((user) => this.tokenProvider.login(
+        user.username,
+        this.password.value
+      )),
+    ).subscribe((tokens) => this.router.navigate([
       '/',
       'admin',
       'account',
       tokens.access.id
     ]));
-    console.log(this.checkedChanged);
-    if(this.checkedChanged){
-      setTimeout(() => this.joinBloggers(),5000)
-    }
-  }
-
-  public joinBloggers(): void {
-    this.userProvider.linkBlogger().subscribe(() => this.reload());
-  }
-
-  protected reload(): void {
-    this.tokenProvider.refresh().subscribe(() => {
-      this.router.resetConfig(this.router.config);
-      this.router.navigate([], {
-        queryParamsHandling: 'preserve',
-        skipLocationChange: true
-      });
-    });
   }
 
   private validate(): void {

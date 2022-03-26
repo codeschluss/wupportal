@@ -26,14 +26,9 @@
             type="password"
             [formControl]="passwordConfirm">
         </mat-form-field>
-        <div class="becomeBlogger">
-          <mat-label><i18n>become a blogger?</i18n>
-          <mat-checkbox
-            class="checkbox"
-            (change)="onCheckBoxChange()">
-          </mat-checkbox>
-        </mat-label>
-      </div>
+        <mat-slide-toggle [(ngModel)]="becomeBlogger">
+          <i18n>becomeBlogger</i18n>
+        </mat-slide-toggle>
       </mat-card-content>
       <mat-card-actions>
         <button mat-stroked-button

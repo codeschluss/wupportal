@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Route } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { RoutingComponent, UserProvider } from '../../../core';
 
 @Component({
@@ -26,6 +26,7 @@ export class ForgotPasswordComponent
   }
 
   public constructor(
+    private router: Router,
     private userProvider: UserProvider
   ) {
     super();
@@ -34,7 +35,7 @@ export class ForgotPasswordComponent
   public onResetPassword(): void {
     this.userProvider.resetPassword({
       value: this.formGroup.get('email').value
-    }).subscribe();
+    }).subscribe(() => this.router.navigate(['/']));
   }
 
 

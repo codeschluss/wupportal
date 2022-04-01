@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
-import { StringPrimitive } from 'src/api/models/string-primitive';
+import { Route } from '@angular/router';
 import { RoutingComponent, UserProvider } from '../../../core';
 
 @Component({
@@ -20,11 +19,6 @@ export class ForgotPasswordComponent
     ]),
   });
 
-  public get valid(): boolean {
-    return true
-      && this.formGroup.valid
-  }
-
   protected get routing(): Route {
     return {
       path: 'forgotpassword'
@@ -32,21 +26,15 @@ export class ForgotPasswordComponent
   }
 
   public constructor(
-    private router: Router,
     private userProvider: UserProvider
   ) {
     super();
   }
 
   public onResetPassword(): void {
-    let userName: StringPrimitive = this.formGroup.get('email').value;
-    console.log(userName);
-    if(userName === null || ''){
-      console.log('invalid or empty username');
-      return;
-    }
-
-    this.userProvider.resetPassword(userName).subscribe();
+    this.userProvider.resetPassword({
+      value: this.formGroup.get('email').value
+    }).subscribe();
   }
 
 

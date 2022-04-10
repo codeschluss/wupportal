@@ -141,9 +141,9 @@ export class TranslationFormComponent<Model extends CrudModel>
 
   protected ngPostInit(): void {
     this.form = this.route.parent.routeConfig.children[0].data.form;
-    this.model = this.form.item.constructor as any;
+    this.model = this.form?.item.constructor as any;
 
-    this.form.fields
+    this.form?.fields
       .filter((field) => (this.model as any).translatable.includes(field.name))
       .forEach((field) => this.fields.push(field));
 
@@ -151,7 +151,7 @@ export class TranslationFormComponent<Model extends CrudModel>
       lang.locale === this.settings.defaults.language);
     const selected = this.route.snapshot.data.language.find((lang) =>
       lang.locale === this.sessionProvider.getLanguage());
-
+    
     this.language = this.fields[0].value = selected || fallback;
   }
 

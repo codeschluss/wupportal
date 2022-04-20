@@ -21,7 +21,7 @@ export class EventComponent
   }
 
   public get startAt(): Date {
-    return this.item.scheduled.start || new Date();
+    return this.item.scheduled?.start || new Date();
   }
 
   public get item(): ActivityModel {
@@ -72,7 +72,7 @@ export class EventComponent
   }
 
   private match(date: Date): ScheduleModel {
-    return this.item.schedules.find((schedule) => {
+    return this.item.schedules?.find((schedule) => {
       return !(schedule.start.setHours(0, 0, 0, 0).valueOf() - date.valueOf());
     });
   }

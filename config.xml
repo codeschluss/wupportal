@@ -2,9 +2,9 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
   xmlns:cdv="http://cordova.apache.org/ns/1.0"
   id="de.codeschluss.wooportal.client"
-  android-versionCode="0340"
-  ios-CFBundleVersion="0.3.4.0"
-  version="0.3.4">
+  android-versionCode="0350"
+  ios-CFBundleVersion="0.3.5.0"
+  version="0.3.5">
 
   <author
     email="info@codeschluss.de"

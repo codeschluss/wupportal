@@ -31,7 +31,8 @@
       <aside>
         <button mat-button disableRipple
           color="accent"
-          [matMenuTriggerFor]="menu">
+          [matMenuTriggerFor]="menu"
+          *ngIf="item.scheduled?.startDate">
           {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
           <mat-menu #menu="matMenu" xPosition="after">
             <mat-calendar

@@ -2,7 +2,7 @@
   <h2 class="mat-headline">{{ name }}</h2>
   <span [style.flexGrow]="1"></span>
   <i18n>applicationPanel</i18n>
-  <button  mat-raised-button
+  <button mat-stroked-button
     color="primary"
     xPosition="before"
     [matMenuTriggerFor]="actions">
@@ -13,6 +13,9 @@
 <mat-menu #actions="matMenu">
   <button mat-menu-item (click)="create('languages')">
     <i18n>createLanguage</i18n>
+  </button>
+  <button mat-menu-item (click)="create('social-media')">
+    <i18n>createSocialMedia</i18n>
   </button>
 </mat-menu>
 
@@ -27,7 +30,7 @@
         [item]="configuration">
       </configuration-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!configurationForm.valid || !configurationForm.dirty"
         (click)="configurationForm.persist().subscribe()">
@@ -60,6 +63,33 @@
           </mat-cell>
         </ng-container>
       </language-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="social-media">
+    <ng-template matTabLabel>
+      <i18n>socialMedia</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <social-media-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </social-media-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

@@ -1,0 +1,37 @@
+<main>
+  <section>
+    <h1>
+      <button mat-icon-button
+        color="primary"
+        [routerLink]="['/', 'community']">
+        <fa-icon icon="angles-left"></fa-icon>
+      </button>
+      {{ topic?.label }}
+      <span [style.flexGrow]="1"></span>
+      <small><i18n>topic</i18n></small>
+      <button mat-icon-button
+        color="accent"
+        [matMenuTriggerFor]="topMenu">
+        <fa-icon icon="angles-down"></fa-icon>
+        <mat-menu #topMenu="matMenu" xPosition="before">
+          <ng-container *ngFor="let item of topics">
+            <button mat-menu-item
+              [class.active]="item === topic"
+              [routerLink]="['/', 'community', item.id]">
+              {{ item.label }}
+            </button>
+          </ng-container>
+        </mat-menu>
+      </button>
+    </h1>
+    <aside>
+      <span [style.flexGrow]="1"></span>
+      <sort-filter-component></sort-filter-component>
+    </aside>
+    <ng-container *ngIf="blogposts | async as items">
+      <ng-container *ngFor="let item of items">
+        <blogpost-card [item]="item"></blogpost-card>
+      </ng-container>
+    </ng-container>
+  </section>
+</main>

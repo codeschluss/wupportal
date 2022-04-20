@@ -1,0 +1,55 @@
+@import ../../../brand.scss
+
+@keyframes scroll
+  from
+    padding-left: 100%
+    transform: translate(0%)
+  to
+    padding-left: 100%
+    transform: translate(-100%)
+
+:host
+  overflow: visible !important
+
+  & > .mat-button-base
+    @include deep
+      & > .mat-badge-content
+        top: -.25rem !important
+        right: -.25rem !important
+        z-index: 1
+
+.mat-tab-group
+  @include deep
+    & > .mat-tab-header .mat-tab-label
+      height: auto
+      min-width: auto
+      padding: .5rem
+
+    .mat-list-base > .mat-list-item
+      &:hover .mat-line[style^="animation"]
+        animation: linear infinite scroll
+        transform: translate(-100%)
+        transition: transform linear
+        width: fit-content
+
+      .mat-line
+        transition: none
+
+        & > slot *
+          display: contents
+
+      &:not(.active)
+        fa-icon
+          color: $color-accent
+          opacity: .5
+
+      &.active
+        fa-icon
+          color: $color-primary
+
+        .mat-line:first-of-type
+          font-weight: bold
+
+      .mat-list-text
+        margin-left: 1rem !important
+        padding-left: 0 !important

@@ -60,14 +60,14 @@ export abstract class BaseStepper<Model extends CrudModel>
       ${template}
       <router-outlet></router-outlet>
       <mat-divider></mat-divider>
-      <button mat-raised-button color="warn" (click)="quit()">
+      <button mat-stroked-button color="warn" (click)="quit()">
         <i18n>close</i18n>
       </button>
-      <button mat-raised-button color="warn" (click)="reset()">
+      <button mat-stroked-button color="warn" (click)="reset()">
         <i18n>reset</i18n>
       </button>
       <ng-container *ngIf="has('-1')">
-        <button mat-raised-button
+        <button mat-stroked-button
           [disabled]="!can(index - 1)"
           [replaceUrl]="true"
           [routerLink]="[link('-1')]">
@@ -75,7 +75,8 @@ export abstract class BaseStepper<Model extends CrudModel>
         </button>
       </ng-container>
       <ng-container *ngIf="has('+1')">
-        <button mat-raised-button
+        <button mat-stroked-button
+          color="primary"
           [replaceUrl]="true"
           [disabled]="!can(index + 1)"
           [routerLink]="[link('+1')]">
@@ -83,7 +84,7 @@ export abstract class BaseStepper<Model extends CrudModel>
         </button>
       </ng-container>
       <ng-container *ngIf="!has('+1')">
-        <button mat-raised-button
+        <button mat-stroked-button
           color="primary"
           [disabled]="!valid || !dirty"
           (click)="persist()">

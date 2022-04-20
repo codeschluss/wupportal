@@ -1,0 +1,19 @@
+<a [routerLink]="['/', 'place', item.id]">
+  <figure itemscope itemtype="https://schema.org/Organization">
+    <ng-container *ngIf="item.image?.source">
+      <img
+        itemprop="logo"
+        src="data:image/svg+xml,
+          %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+        [alt]="item.image.label"
+        [style.backgroundImage]="item.image.source"
+        [title]="item.image.label">
+    </ng-container>
+    <ng-container *ngIf="!item.image?.source">
+      <fa-icon icon="image"></fa-icon>
+    </ng-container>
+    <figcaption itemprop="name">
+        {{ item.label }}
+    </figcaption>
+  </figure>
+</a>

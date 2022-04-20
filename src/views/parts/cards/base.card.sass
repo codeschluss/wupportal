@@ -1,0 +1,95 @@
+@import ../../brand.scss
+
+:host
+  box-sizing: border-box
+  display: block
+  max-width: 100%
+  padding: 1rem
+
+  & > .mat-card
+    @include position(relative)
+    max-width: calc(100% - 2rem)
+    overflow: hidden
+    width: 22.5rem
+
+    @include responsive(lt-sm)
+      @include flex(column)
+      height: 10rem
+
+    &.row
+      padding-left: 33%
+
+      & > .mat-card-image
+        @include position(absolute, 0, auto, 0, 1rem)
+        min-height: auto !important
+        height: 100%
+        width: 33%
+
+    & > .mat-card-header
+      @include position(relative)
+      display: block
+
+      .mat-card-title,
+      .mat-card-subtitle
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+
+        @include responsive(lt-sm)
+          color: $color-lightest !important
+          text-shadow: 0 0 2px $color-darkest
+
+      .mat-card-title
+        color: $color-primary
+        font-weight: bold
+
+        & > a
+          color: inherit
+          text-decoration: none
+
+      .mat-card-subtitle
+        @include deep
+          *
+            display: contents
+
+    & > .mat-card-image
+      @include flex(row, center, center)
+      background-color: $color-light
+      background-position: center
+      background-size: cover
+      color: $color-dark
+      flex: 1 1 100%
+      font-size: 4rem
+      min-height: 12.5rem
+
+      @include responsive(lt-sm)
+        @include position(absolute, 1rem, 1rem, 1rem, 1rem)
+        background-color: $color-darker
+        color: $color-dark
+        min-height: auto
+        height: 100%
+        width: 100%
+
+    & > .mat-card-actions
+      @include flex(row, space-between)
+      @include position(relative)
+      margin: 0
+      padding: 0
+
+      & > .mat-stroked-button
+        border-color: currentColor
+        border-radius: 2rem
+        margin: 0 1.5rem
+
+      @include responsive(lt-sm)
+        & + .mat-card-actions
+          border-top: 1px solid $color-lightest
+
+        & > .mat-button-base
+          border: none
+          color: $color-lightest !important
+          line-height: normal
+          margin: 0
+          min-width: 0
+          padding: 0
+          text-shadow: 0 0 2px $color-darkest

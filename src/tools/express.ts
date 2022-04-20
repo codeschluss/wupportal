@@ -1,6 +1,6 @@
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
-import * as robots from 'express-robots-txt';
+import robots from 'express-robots-txt';
 import 'zone.js/dist/zone-node';
 import { ServerModule } from '../server';
 import { SettingsJson } from './settings';

@@ -1,0 +1,28 @@
+<header>
+  <mat-toolbar>
+    <a mat-button
+      [routerLink]="['/']"
+      [title]="i18n('homepage')">
+      <img
+        src="images/icon.png"
+        [alt]="i18n('logo')"
+        [title]="i18n('logo')">
+      <img
+        src="images/text.png"
+        [alt]="i18n('textLogo')"
+        [title]="i18n('textLogo')">
+    </a>
+    <span [style.flexGrow]="1"></span>
+    <menu-gear></menu-gear>
+    <span [style.flexGrow]="1"></span>
+    <search-gear></search-gear>
+    <notification-gear></notification-gear>
+    <language-gear></language-gear>
+    <account-gear></account-gear>
+  </mat-toolbar>
+  <mat-progress-bar
+    mode="indeterminate"
+    [style.opacity]="loading | async">
+  </mat-progress-bar>
+  <smackbar-gear></smackbar-gear>
+</header>

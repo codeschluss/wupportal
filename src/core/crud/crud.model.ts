@@ -20,4 +20,8 @@ export abstract class CrudModel
     return this.name;
   }
 
+  public constructor(...parts: (Partial<CrudModel> & Record<string, any>)[]) {
+    Object.assign(this, ...parts);
+  }
+
 }

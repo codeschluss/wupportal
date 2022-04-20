@@ -5,294 +5,38 @@
 @include mat-core()
 @include angular-material-theme($theme-palette)
 
-//
-// GLOBAL
-//
 *
   -webkit-tap-highlight-color: transparent
 
-//
-// TOOLBARS
-//
-mat-toolbar[desktop]
-  flex: 0 0 auto
-  padding: 0 calc((100% - #{$viewport-width}) / 2)
+  &::selection
+    color: $color-lightest
+    background-color: $color-accent
 
-  @include responsive(lt-md)
-    display: none !important
+html
+  background-color: $color-bg
+  font-family: Roboto, sans-serif
 
-  *
-    text-transform: uppercase
+.mat-tab-group
+  & > .mat-tab-header .mat-tab-label:not(.mat-tab-disabled)
+    color: $color-accent
+    transition: color $animation-duration
 
-  & > .mat-button-base
-    @include flex(row, normal, center)
-    height: 100%
+    &.mat-tab-label-active
+        color: $color-primary
 
-    &[disabled]
-      pointer-events: none
-
-    &.active
-      color: $color-primary
-
-    h1
-      display: inline-block
-
-    small
-      font-size: .875rem
-      padding: 0 1rem
-
-    fa-icon
-      padding-right: .5rem
-
-      @include responsive(lt-lg)
-        display: none
-
-mat-toolbar[mobile]
-  flex: 0 0 auto
-
-  @include responsive(gt-sm)
-    display: none !important
-
-  & > mat-progress-spinner
-    height: 1rem !important
-    margin-right: .5rem
-    transition: opacity $animation-duration
-    width: 1rem !important
-
-    & > svg
-      height: inherit !important
-      width: inherit !important
-
-      & > circle
-        stroke: currentColor
-
-//
-// OVERLAYS
-//
-.cdk-overlay-container
-  .mat-menu-item
-    &.active
-      color: $color-primary
-
-      & > pre
-        background-color: $color-primary
-
-    & > pre
-      background-color: $color-dark
-      border-radius: .25rem
-      color: $color-lightest
-      display: inline
-      font-weight: bold
-      margin: 0 .5rem 0 0
-      padding: .25rem
-
-    & > fa-icon
-      display: inline-block
-      font-size: 1rem
-      margin-right: .5rem
-      text-align: center
-      vertical-align: middle
-      width: 1.5rem
-
-  .mat-select-panel
-    @include responsive(xs)
-      min-width: 100% !important
-
-.mat-button-base
-  .mat-badge-content
-    right: -.5rem !important
-    top: -.25rem !important
-
-//
-// MAIN
-//
-shared-component
+global-component
   @include flex(column)
-  @include position(fixed, 0, 0, 0, 0)
+  min-height: 100vh
 
   body.embedded &
     border-radius: .25rem
     overflow: hidden
 
-    & > header
+    & > header-component,
+    & > footer-component
       display: none
 
-    main
-      padding: 0
-
-    mat-toolbar
-      display: none
-
-  & > header
-    @include flex(row, space-around, flex-end)
-    flex: 0 0 auto
-    height: 10rem
-    margin: 0 auto
-    max-width: $viewport-width
-    overflow: hidden
-    transition: height $animation-duration
-    width: 100%
-
-    @include responsive(lt-md)
-      display: none
-
-    & > figure
-      text-align: center
-
-      & > img
-        height: auto
-        max-height: 5rem
-        max-width: 15rem
-        width: auto
-
-      & > figcaption
-        white-space: nowrap
-
-        & > a
-          border-bottom: 1px dotted $color-darkest
-          color: $color-darkest
-          font-weight: bold
-          text-decoration: none
-
-    & > img
-      max-height: 10rem
-
-  //
-  // MAIN:TOOLBAR:DESKTOP:HEADER
-  //
-  & > mat-toolbar:first-of-type
-    @include flex(row, space-between, center)
-
-    *
-      font-size: 1rem
-      font-weight: bold
-
-    & > mat-form-field
-      width: 10rem
-      padding: 0 1rem
-      margin-bottom: -.54rem
-      transition: width $animation-duration
-
-      &.active
-        color: $color-primary
-
-      &.mat-form-field-should-float
-        width: 15rem
-
-      fa-icon[icon=search]
-        @include responsive(lt-lg)
-          display: none
-
-      .mat-form-field-prefix
-        padding-right: .5rem
-
-  //
-  // MAIN:DRAWER
-  //
-  & > mat-drawer-container
+  & > router-outlet + ng-component
+    @include flex(column)
+    @include position(relative)
     flex: 1 0 auto
-
-    //
-    // MAIN:DRAWER:MENU
-    //
-    & > mat-drawer
-      & > .mat-drawer-inner-container
-        @include flex(column)
-        font-weight: bold
-
-        & > header
-          text-align: center
-
-          & > img
-            max-height: 10rem
-
-        & > mat-action-list
-          fa-icon
-            text-align: center
-            width: 2.5rem
-
-          & > .mat-button
-            display: block
-            text-align: inherit
-
-            & > .mat-button-wrapper
-              text-align: inherit
-
-              img
-                padding: 0.5rem
-                width: 66%
-
-          & > .mat-list-item
-            text-decoration: none
-
-            &:focus
-              background: inherit !important
-
-            &.active
-              color: $color-primary
-
-            &.mat-list-item-disabled
-              background-color: inherit
-              opacity: .26
-              pointer-events: none
-
-            *
-              font-weight: bold
-              text-transform: uppercase
-
-            mat-form-field
-              &.active
-                color: $color-primary
-
-              .mat-form-field-label
-                color: inherit !important
-
-              .mat-form-field-underline
-                background-color: currentColor
-
-                .mat-form-field-ripple
-                  background-color: currentColor
-
-              .mat-input-element
-                caret-color: currentColor
-
-    //
-    // MAIN:DRAWER:CONTENT
-    //
-    & > mat-drawer-content
-      @include flex(column, normal, normal)
-      @include position(absolute, 0, 0, 0, 0)
-      display: flex !important
-      position: absolute !important
-
-      & > mat-progress-bar
-        position: fixed !important
-        z-index: 1
-
-        @include responsive(lt-md)
-          display: none !important
-
-      & > ng-component
-        @include position(relative)
-        flex: 1 0 auto
-
-        main
-          box-sizing: border-box
-          margin: 0 auto
-          max-width: $viewport-width
-          padding: 1rem 0
-
-          @include responsive(lt-md)
-            padding-bottom: 0
-
-          article:not([class])
-            @extend .mat-body
-
-      //
-      // MAIN:TOOLBAR:DESKTOP:FOOTER
-      //
-      & > mat-toolbar
-        margin-bottom: 1rem !important
-
-        *
-          font-size: .85rem

@@ -2,9 +2,9 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
   xmlns:cdv="http://cordova.apache.org/ns/1.0"
   id="de.codeschluss.wupportal"
-  android-versionCode="0210"
-  ios-CFBundleVersion="0.2.1.0"
-  version="0.2.1">
+  android-versionCode="0350"
+  ios-CFBundleVersion="0.3.5.0"
+  version="0.3.5">
 
   <author
     email="info@codeschluss.de"
@@ -20,15 +20,20 @@
 
   <access origin="https://www.wupportal.org"/>
   <access origin="https://*.tile.openstreetmap.org"/>
+  <access origin="https://vimeo.com/api/v2/video/"/>
+  <access origin="https://i.vimeocdn.com/video/"/>
+  <access origin="https://img.youtube.com/vi/"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="tel:*"/>
+  <content src="index.html"/>
 
   <preference name="Orientation" value="portrait"/>
   <preference name="AutoHideSplashScreen" value="false"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="SplashMaintainAspectRatio" value="true"/>
+  <preference name="AndroidInsecureFileModeEnabled" value="true"/>
 
   <platform name="browser">
     <preference name="AutoHideSplashScreen" value="true"/>
@@ -52,6 +57,14 @@
         android:name="com.google.firebase.messaging.default_notification_icon"
         android:resource="@drawable/notification"/>
     </config-file>
+
+    <edit-config mode="merge"
+      file="app/src/main/AndroidManifest.xml"
+      target="/manifest/application">
+      <application
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:usesCleartextTraffic="true"/>
+    </edit-config>
 
     <resource-file
       src="res/android/google-services.json"

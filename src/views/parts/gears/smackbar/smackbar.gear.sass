@@ -1,0 +1,20 @@
+@import ../../../brand.scss
+
+.mat-toolbar
+  padding: 0 calc((100% - #{$viewport-width}) / 2)
+  margin-top: -.25rem
+
+  @include responsive(lt-md)
+    @include flex(column)
+    border-bottom-left-radius: .5rem
+    border-bottom-right-radius: .5rem
+    height: auto
+    margin: 0 auto
+    width: calc(100% - 1rem)
+
+  & > small,
+  & > strong
+    padding: 0 .5rem
+
+  & > strong
+    color: $color-primary

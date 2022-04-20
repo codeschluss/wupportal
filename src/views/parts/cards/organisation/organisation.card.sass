@@ -1,0 +1,29 @@
+@import ../../../brand.scss
+
+a
+  text-decoration: none
+  margin: .5rem
+
+  & > figure
+    @include flex(column, center, center)
+    display: inline-flex
+    width: 7.5rem
+
+    & > fa-icon,
+    & > img
+      @include flex(row, center, center)
+      background-color: $color-light
+      background-position: center
+      background-size: cover
+      border: 1px solid $color-accent
+      border-radius: 50%
+      color: $color-dark
+      font-size: 1.5rem
+      height: 4rem
+      width: 4rem
+
+    & > figcaption
+      color: $color-accent
+      font-weight: bold
+      padding-top: .5rem
+      text-align: center

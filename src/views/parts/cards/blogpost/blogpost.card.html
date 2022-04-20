@@ -1,0 +1,38 @@
+<mat-card itemscope itemtype="https://schema.org/BlogPosting">
+  <ng-container *ngIf="item.image?.source">
+    <img mat-card-image
+      itemprop="logo"
+      src="data:image/svg+xml,
+        %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+      [alt]="item.image.label"
+      [style.backgroundImage]="item.image.source"
+      [title]="item.image.label">
+  </ng-container>
+  <ng-container *ngIf="!item.image?.source">
+    <fa-icon mat-card-image icon="image"></fa-icon>
+  </ng-container>
+  <mat-card-header>
+    <mat-card-title>
+      <a [routerLink]="['/', 'story', item.id]">
+        {{ item.label }}
+      </a>
+    </mat-card-title>
+    <mat-card-subtitle
+      itemprop="articleBody"
+      [innerHTML]="item.content">
+    </mat-card-subtitle>
+  </mat-card-header>
+  <span [style.flexGrow]="1"></span>
+  <mat-card-actions>
+    <button mat-button disableRipple
+      color="accent"
+      itemprop="author">
+      {{ item.author }}
+    </button>
+    <button mat-button disableRipple
+      color="accent"
+      itemprop="startDate">
+      {{ item.created | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,5 +1,6 @@
 import { Directive, HostBinding, ViewChild } from '@angular/core';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { Color } from '@swimlane/ngx-charts';
 import { AnalyticsEntry } from '../../../api/models/analytics-entry';
 import { AnalyticsProvider } from '../../../core';
 
@@ -22,7 +23,7 @@ export abstract class BaseChart {
       '#00838F',
       '#1976D2'
     ]
-  };
+  } as Color;
 
   public data: AnalyticsEntry[] = [];
 

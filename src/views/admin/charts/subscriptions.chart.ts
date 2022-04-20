@@ -7,7 +7,6 @@ import { BaseChart } from '../base/base.chart';
     current: false
   })
 })
-
 export class SubscriptionsChartComponent
   extends BaseChart
   implements OnInit {

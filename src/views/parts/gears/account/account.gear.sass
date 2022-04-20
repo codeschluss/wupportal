@@ -1,0 +1,51 @@
+@import ../../../brand.scss
+
+.mat-list-base:not(.mat-action-list)
+  & > .mat-list-item:last-of-type
+    .mat-button-base
+      flex: 1 0 auto
+
+      & + .mat-button-base
+        margin-left: 1rem
+
+  & > .mat-list-item:not(:last-of-type)
+    height: 5rem
+
+.mat-card
+  display: contents
+
+  & > .mat-card-header
+    @include flex(row-reverse)
+    padding: 0 .5rem
+
+    & > fa-icon
+      @include flex(row, center, flex-end)
+      color: $color-dark
+      font-size: 2.5rem
+      overflow: hidden
+
+    & > .mat-card-avatar
+      background-position: center
+      background-size: cover
+      border: 1px solid $color-accent
+
+  & > .mat-card-actions
+    @include flex(row)
+    margin: 0 .5rem
+    padding-bottom: .25rem
+
+    & > .mat-button-base
+      flex: 1 0 auto
+      margin: 0
+
+      & + .mat-button-base
+        margin-left: .5rem
+
+.passwordReset
+  padding-left: 0.75rem
+  margin-bottom: 1rem
+  font-size: 12px
+
+  & > a
+    color: $color-accent
+    margin: 8px

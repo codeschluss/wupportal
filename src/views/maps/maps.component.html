@@ -63,8 +63,11 @@
     </ng-container>
     <ng-container *ngIf="!embedded && (focus | async).length">
       <nav>
-        <ng-container *ngFor="let item of focus | async">
+        <ng-container *ngFor="let item of activities | async">
           <activity-card [item]="item"></activity-card>
+        </ng-container>
+        <ng-container *ngFor="let item of organisations | async">
+          <organisation-card [item]="item"></organisation-card>
         </ng-container>
       </nav>
     </ng-container>
@@ -73,6 +76,19 @@
     icon="circle"
     matRippleColor="currentColor">
   </fa-icon>
+  <ng-container *ngIf="!uuid">
+    <mat-button-toggle-group
+      appearance="legacy"
+      value="events"
+      [style.transform]="dialer.matches('[style]') ? 'translatex(0)' : null">
+      <mat-button-toggle value="events">
+        <i18n>activities</i18n>
+      </mat-button-toggle>
+      <mat-button-toggle value="places">
+        <i18n>organisations</i18n>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </ng-container>
   <nav #dialer>
     <button color mat-fab (click)="dialer.classList.toggle('open')">
       <fa-icon icon="plus"></fa-icon>

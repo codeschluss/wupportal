@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { TopicEntity } from '../../api/models/topic-entity';
 import { CrudModel } from '../crud/crud.model';
 import { Translate } from '../crud/crud.translate';
-import { InfopageModel } from './infopage.model';
+import { BlogpostModel } from './blogpost.model';
 
 export class TopicModel
   extends CrudModel
@@ -10,10 +10,10 @@ export class TopicModel
 
   @Translate() public name: string;
 
-  public infopages: InfopageModel[] & Observable<InfopageModel[]>;
+  public blogposts: BlogpostModel[] & Observable<BlogpostModel[]>;
 
   // compatability
-  public get pages() { return this.infopages; }
-  public set pages(value) { this.infopages = value; }
+  public get blogs() { return this.blogposts; }
+  public set blogs(value) { this.blogposts = value; }
 
 }

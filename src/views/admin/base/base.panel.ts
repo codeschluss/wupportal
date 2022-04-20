@@ -4,7 +4,7 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
-import { Box, CoreSettings, CrudJoiner, CrudModel, CrudResolver, LabelComponent, MembershipModel, MessageProvider, MetatagService, OrganisationModel, OrganisationProvider, RoutingComponent, RoutingProvider, TokenProvider, TokenResolver, UserModel, UserProvider } from '../../../core';
+import { ActivityProvider, BlogpostModel, BlogpostProvider, Box, CoreSettings, CrudJoiner, CrudModel, CrudResolver, LabelComponent, MembershipModel, MessageProvider, MetatagService, OrganisationModel, OrganisationProvider, RoutingComponent, RoutingProvider, TokenProvider, TokenResolver, UserModel, UserProvider } from '../../../core';
 import { DeletePopupComponent } from '../popups/delete.popup';
 import { PusherPopupComponent } from '../popups/pusher.popup';
 
@@ -77,9 +77,11 @@ export abstract class BasePanel
   }
 
   public constructor(
+    protected activityServiceProvider: ActivityProvider,
     protected dialog: MatDialog,
     protected messageProvider: MessageProvider,
     protected organisationProvider: OrganisationProvider,
+    protected blogpostProvider: BlogpostProvider,
     protected route: ActivatedRoute,
     protected router: Router,
     protected routingProvider: RoutingProvider,
@@ -132,6 +134,13 @@ export abstract class BasePanel
 
   public grantBlogger(item: UserModel, grant: boolean): void {
     this.userProvider.grantBlogger(
+      item.id,
+      Box(grant)
+    ).subscribe(() => this.reload());
+  }
+
+  public grantBlogApproval(item: BlogpostModel, grant: boolean): void {
+    this.blogpostProvider.grantApproval(
       item.id,
       Box(grant)
     ).subscribe(() => this.reload());

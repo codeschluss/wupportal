@@ -1,0 +1,17 @@
+<main *ngIf="staticPage | async as item">
+  <section>
+    <h1>{{ item.label }}</h1>
+    <mat-card>
+      <ng-container *ngIf="item.image?.source">
+        <img mat-card-image
+          src="data:image/svg+xml,
+            %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+          [alt]="item.image.label"
+          [style.backgroundImage]="item.image.source"
+          [title]="item.image.label">
+      </ng-container>
+      <mat-card-content [innerHTML]="item.content">
+      </mat-card-content>
+    </mat-card>
+  </section>
+</main>

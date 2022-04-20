@@ -19,10 +19,10 @@ import { ResourceTargetGroupEntity } from '../models/resource-target-group-entit
 class TargetGroupControllerService extends __BaseService {
   static readonly targetGroupControllerReadAllPath = '/targetgroups';
   static readonly targetGroupControllerCreatePath = '/targetgroups';
-  static readonly targetGroupControllerReadOnePath = '/targetgroups/{targetGroupId}';
-  static readonly targetGroupControllerUpdatePath = '/targetgroups/{targetGroupId}';
-  static readonly targetGroupControllerDeletePath = '/targetgroups/{targetGroupId}';
-  static readonly targetGroupControllerReadTranslationsPath = '/targetgroups/{targetGroupId}/translations';
+  static readonly targetGroupControllerReadOnePath = '/targetgroups/{id}';
+  static readonly targetGroupControllerUpdatePath = '/targetgroups/{id}';
+  static readonly targetGroupControllerDeletePath = '/targetgroups/{id}';
+  static readonly targetGroupControllerReadTranslationsPath = '/targetgroups/{id}/translations';
 
   constructor(
     config: __Configuration,
@@ -140,17 +140,17 @@ class TargetGroupControllerService extends __BaseService {
 
   /**
    * readOne
-   * @param targetGroupId targetGroupId
+   * @param id id
    * @return OK
    */
-  targetGroupControllerReadOneResponse(targetGroupId: string): __Observable<__StrictHttpResponse<ResourceTargetGroupEntity>> {
+  targetGroupControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceTargetGroupEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/targetgroups/${encodeURIComponent(String(targetGroupId))}`,
+      this.rootUrl + `/targetgroups/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -167,11 +167,11 @@ class TargetGroupControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param targetGroupId targetGroupId
+   * @param id id
    * @return OK
    */
-  targetGroupControllerReadOne(targetGroupId: string): __Observable<ResourceTargetGroupEntity> {
-    return this.targetGroupControllerReadOneResponse(targetGroupId).pipe(
+  targetGroupControllerReadOne(id: string): __Observable<ResourceTargetGroupEntity> {
+    return this.targetGroupControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceTargetGroupEntity)
     );
   }
@@ -179,11 +179,11 @@ class TargetGroupControllerService extends __BaseService {
   /**
    * update
    * @param newTargetGroup newTargetGroup
-   * @param targetGroupId targetGroupId
+   * @param id id
    * @return OK
    */
   targetGroupControllerUpdateResponse(newTargetGroup: TargetGroupEntity,
-    targetGroupId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -191,7 +191,7 @@ class TargetGroupControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/targetgroups/${encodeURIComponent(String(targetGroupId))}`,
+      this.rootUrl + `/targetgroups/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -209,29 +209,29 @@ class TargetGroupControllerService extends __BaseService {
   /**
    * update
    * @param newTargetGroup newTargetGroup
-   * @param targetGroupId targetGroupId
+   * @param id id
    * @return OK
    */
   targetGroupControllerUpdate(newTargetGroup: TargetGroupEntity,
-    targetGroupId: string): __Observable<{}> {
-    return this.targetGroupControllerUpdateResponse(newTargetGroup, targetGroupId).pipe(
+    id: string): __Observable<{}> {
+    return this.targetGroupControllerUpdateResponse(newTargetGroup, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param targetGroupId targetGroupId
+   * @param id id
    * @return OK
    */
-  targetGroupControllerDeleteResponse(targetGroupId: string): __Observable<__StrictHttpResponse<{}>> {
+  targetGroupControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/targetgroups/${encodeURIComponent(String(targetGroupId))}`,
+      this.rootUrl + `/targetgroups/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -248,28 +248,28 @@ class TargetGroupControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param targetGroupId targetGroupId
+   * @param id id
    * @return OK
    */
-  targetGroupControllerDelete(targetGroupId: string): __Observable<{}> {
-    return this.targetGroupControllerDeleteResponse(targetGroupId).pipe(
+  targetGroupControllerDelete(id: string): __Observable<{}> {
+    return this.targetGroupControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readTranslations
-   * @param targetGroupId targetGroupId
+   * @param id id
    * @return OK
    */
-  targetGroupControllerReadTranslationsResponse(targetGroupId: string): __Observable<__StrictHttpResponse<{}>> {
+  targetGroupControllerReadTranslationsResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/targetgroups/${encodeURIComponent(String(targetGroupId))}/translations`,
+      this.rootUrl + `/targetgroups/${encodeURIComponent(String(id))}/translations`,
       __body,
       {
         headers: __headers,
@@ -286,11 +286,11 @@ class TargetGroupControllerService extends __BaseService {
   }
   /**
    * readTranslations
-   * @param targetGroupId targetGroupId
+   * @param id id
    * @return OK
    */
-  targetGroupControllerReadTranslations(targetGroupId: string): __Observable<{}> {
-    return this.targetGroupControllerReadTranslationsResponse(targetGroupId).pipe(
+  targetGroupControllerReadTranslations(id: string): __Observable<{}> {
+    return this.targetGroupControllerReadTranslationsResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }

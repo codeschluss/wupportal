@@ -17,10 +17,10 @@ import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
 import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
-import { InfopageStepperComponent } from './steppers/infopage.stepper';
-import { KeywordsStepperComponent } from './steppers/keyword.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
+import { SocialMediaStepperComponent } from './steppers/social-media.stepper';
+import { StaticPageStepperComponent } from './steppers/static-pages.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
@@ -48,10 +48,10 @@ const routes: Route[] = [
           AddressStepperComponent.routing,
           BlogpostStepperComponent.routing,
           CategoryStepperComponent.routing,
-          InfopageStepperComponent.routing,
-          KeywordsStepperComponent.routing,
           LanguageStepperComponent.routing,
           OrganisationStepperComponent.routing,
+          SocialMediaStepperComponent.routing,
+          StaticPageStepperComponent.routing,
           SubscriptionTypeStepperComponent.routing,
           SuburbStepperComponent.routing,
           TargetGroupStepperComponent.routing,

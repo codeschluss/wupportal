@@ -32,7 +32,7 @@ import { BaseFieldComponent } from '../base/base.field';
       [editor]="editor"
       [id]="field.name"
       [ngModelOptions]="{ standalone: true }"
-      (change)="changes.next()"
+      (change)="changes.next(undefined)"
       [(ngModel)]="content">
     </ckeditor>
   `)
@@ -55,18 +55,18 @@ export class EditorFieldComponent
     toolbar: {
       items: [
         'heading',
-        'alignment',
-        'fontSize',
+        // 'alignment',
+        // 'fontSize',
         '|',
         'bold',
         'italic',
-        'underline',
-        'code',
+        // 'underline',
+        // 'code',
         '|',
-        'strikethrough',
-        'subscript',
-        'superscript',
-        '|',
+        // 'strikethrough',
+        // 'subscript',
+        // 'superscript',
+        // '|',
         'bulletedList',
         'numberedList',
         'indent',
@@ -74,9 +74,9 @@ export class EditorFieldComponent
         '|',
         'link',
         'blockQuote',
-        'codeBlock',
+        // 'codeBlock',
         'insertTable',
-        'horizontalLine',
+        // 'horizontalLine',
         '|',
         'undo',
         'redo'

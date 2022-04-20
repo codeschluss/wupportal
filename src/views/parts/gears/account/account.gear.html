@@ -1,0 +1,101 @@
+<ng-container *ngFor="let item of [account | async]">
+  <ng-container [ngSwitch]="item">
+    <ng-container *ngSwitchCase="null">
+      <button mat-icon-button
+        color="accent"
+        [matMenuTriggerFor]="menu"
+        (menuOpened)="username.focus()">
+        <fa-icon icon="user"></fa-icon>
+        <mat-menu
+          #menu="matMenu"
+          xPosition="before"
+          (closed)="formGroup.reset()">
+          <mat-list
+            [formGroup]="formGroup"
+            (click)="$event.stopPropagation()"
+            (keydown)="$event.stopPropagation()">
+            <mat-list-item>
+              <mat-form-field appearance="outline">
+                <mat-label><i18n>email</i18n></mat-label>
+                <input #username matInput
+                  formControlName="username"
+                  type="email"
+                  (keydown.enter)="login()">
+              </mat-form-field>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-form-field appearance="outline">
+                <mat-label><i18n>password</i18n></mat-label>
+                <input matInput
+                  formControlName="password"
+                  type="password"
+                  (keydown.enter)="login()">
+              </mat-form-field>
+            </mat-list-item>
+            <div class="passwordReset">
+              <a [routerLink]="['/', 'forgotpassword']">
+                <i18n>forgotpassword?</i18n>
+              </a>
+            </div>
+            <mat-list-item>
+              <button mat-stroked-button
+                color="primary"
+                [disabled]="formGroup.invalid"
+                (click)="login()">
+                <i18n>login</i18n>
+              </button>
+              <button mat-stroked-button
+                color="accent"
+                tabindex="-1"
+                [routerLink]="['/', 'register']">
+                <i18n>register</i18n>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </mat-menu>
+      </button>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <button mat-icon-button
+        color="accent"
+        [matMenuTriggerFor]="menu">
+        <fa-icon icon="user"></fa-icon>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <mat-card>
+            <mat-card-header>
+              <ng-container *ngIf="!item.avatar">
+                <fa-icon mat-card-avatar icon="user"></fa-icon>
+              </ng-container>
+              <ng-container *ngIf="item.avatar">
+                <img mat-card-avatar
+                  src="data:image/svg+xml,
+                    %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                  [alt]="item.avatar.label"
+                  [style.backgroundImage]="item.avatar.source"
+                  [title]="item.avatar.label">
+              </ng-container>
+              <mat-card-title>
+                {{ item.name }}
+              </mat-card-title>
+              <mat-card-subtitle>
+                {{ item.username }}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+              <a mat-stroked-button
+                color="accent"
+                [routerLink]="['/', 'admin', 'account', item.id]">
+                <i18n>accountPanel</i18n>
+              </a>
+              <button mat-stroked-button
+                color="accent"
+                (click)="logout()">
+                <i18n>logout</i18n>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-menu>
+      </button>
+    </ng-container>
+  </ng-container>
+</ng-container>

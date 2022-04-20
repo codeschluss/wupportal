@@ -1,14 +1,16 @@
 import { EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ActivityModel } from '../../core';
+import { ActivityModel, OrganisationModel } from '../../core';
+
+export type MapModel = ActivityModel | OrganisationModel;
 
 export class MapsConnection {
 
   public route: EventEmitter<string>;
 
-  public focus: EventEmitter<ActivityModel[]>;
+  public focus: EventEmitter<MapModel[]>;
 
-  public items: EventEmitter<ActivityModel[]>;
+  public items: EventEmitter<MapModel[]>;
 
   public ready: BehaviorSubject<boolean>;
 
@@ -17,18 +19,18 @@ export class MapsConnection {
     private target: Window
   ) {
     this.route = new EventEmitter<string>();
-    this.focus = new EventEmitter<ActivityModel[]>();
-    this.items = new EventEmitter<ActivityModel[]>();
+    this.focus = new EventEmitter<MapModel[]>();
+    this.items = new EventEmitter<MapModel[]>();
     this.ready = new BehaviorSubject<boolean>(false);
 
     this.source.onmessage = this.incoming.bind(this);
   }
 
-  public nextFocus(focus: ActivityModel[]): void {
+  public nextFocus(focus: MapModel[]): void {
     this.outgoing({ focus });
   }
 
-  public nextItems(items: ActivityModel[]): void {
+  public nextItems(items: MapModel[]): void {
     this.outgoing({ items });
   }
 

@@ -45,4 +45,8 @@ export class SubscriptionTypeStepperComponent
 
   protected model: Type<SubscriptionTypeModel> = SubscriptionTypeModel;
 
+  protected get path(): string {
+    return 'subscription-types';
+  }
+
 }

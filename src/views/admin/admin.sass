@@ -2,18 +2,40 @@
 
 main#admin
   filter: grayscale(0)
+  margin: 5rem auto
   max-width: calc(100% - 2rem)
   transition: filter $animation-duration
-  width: 100rem
+  width: 120rem
 
   &.disabled
     filter: grayscale(1)
     pointer-events: none
 
+  & > mat-card
+    padding-right: 0
+
+    mat-sidenav-container
+      background-color: transparent
+
+      & > mat-sidenav
+        background-color: $color-lightest
+
+        mat-action-list > button
+          border-right: 2px solid transparent
+          color: $color-accent
+          transition: border-right-color $animation-duration
+
+          &.active
+            border-right-color: $color-primary
+            color: $color-primary
+
   header
     @include flex(column, normal, center)
+    border-bottom: 1px solid $color-light
     color: $color-darker
-    margin: 1rem 0
+    min-height: 2.5rem
+    margin: 0
+    padding: 1rem
 
     @include responsive(gt-sm)
       @include flex(row, normal, center)
@@ -25,9 +47,6 @@ main#admin
       color: $color-darkest
       margin: 0
 
-  .mat-raised-button
-    margin: .25rem
-
   [base=form]
     & > form
       & > section
@@ -37,12 +56,6 @@ main#admin
 
         @include responsive(lt-md)
           @include flex(column, normal, normal)
-
-        &:nth-of-type(even)
-          background-color: rgba(0, 0, 0, .005)
-
-        &:nth-of-type(odd)
-          background-color: rgba(0, 0, 0, .02)
 
         & > label
           flex: 0 0 auto
@@ -91,36 +104,45 @@ main#admin
     & > mat-tab-group
       mat-tab-body
         & > .mat-tab-body-content
+          & > mat-divider
+            position: static
+
           & > .mat-button-base
-            margin: .5rem .5rem .5rem 0
+            margin: 1rem
+
+            & + .mat-button-base
+              margin-left: 0
 
       &#analytics
         mat-tab-body
           & > .mat-tab-body-content
             @include flex(wrap, center)
 
-            & > mat-card
+            & > h2
+              color: $color-primary
               margin: 1rem
-              max-width: calc(100% - 4rem)
-              width: calc(100rem / 2 - 4rem)
+              width: 100%
 
-              & > mat-card-content
-                @include position(relative)
-                height: 350px
-
-                & > [base=chart]
-                  @include position(absolute, 0, 0, 0, 0)
-
-                  svg
-                    float: none
+            & > [base=chart]
+              height: 20rem
+              margin: 0 auto
+              max-height: 50vh
+              overflow: hidden
+              width: calc(100% - 2rem)
 
   [base=stepper]
     & > .mat-button-base
-      margin: .5rem .5rem .5rem 0
+      margin: 1rem
+
+      & + .mat-button-base
+        margin-left: 0
 
   [base=table]
     & > mat-form-field
       width: 100%
+
+      .mat-input-element
+        color: $color-accent
 
       & > .mat-form-field-wrapper
         margin-bottom: -1.25rem
@@ -147,12 +169,6 @@ main#admin
 
       & > mat-row
         min-width: calc(#{$viewport-width} / 1.5)
-
-        &:nth-of-type(even)
-          background-color: rgba(0, 0, 0, .005)
-
-        &:nth-of-type(odd)
-          background-color: rgba(0, 0, 0, .02)
 
         & > mat-cell
           &:last-of-type

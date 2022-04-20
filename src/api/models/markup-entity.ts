@@ -6,4 +6,5 @@ export interface MarkupEntity {
   id?: string;
   modified?: string;
   tagId?: string;
+  title?: string;
 }

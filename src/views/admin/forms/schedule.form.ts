@@ -19,27 +19,16 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
       </label>
       <nav>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>startDate</i18n>&nbsp;
-          </strong>
           <input matInput type="date" [formControl]="fromDate">
         </mat-form-field>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>startTime</i18n>&nbsp;
-          </strong>
           <input matInput type="time" [formControl]="fromTime">
         </mat-form-field>
+        <strong><i18n>until</i18n></strong>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>endDate</i18n>&nbsp;
-          </strong>
           <input matInput type="date" [formControl]="gotoDate">
         </mat-form-field>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>endTime</i18n>&nbsp;
-          </strong>
           <input matInput type="time" [formControl]="gotoTime">
         </mat-form-field>
       </nav>
@@ -50,9 +39,6 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
       </label>
       <nav>
         <mat-form-field>
-          <strong matPrefix>
-            <i18n>recurrence</i18n>&nbsp;
-          </strong>
           <mat-select [formControl]="recurrence">
             <mat-option value="once">
               <i18n>once</i18n>
@@ -72,10 +58,8 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
           </mat-select>
         </mat-form-field>
         <ng-container *ngIf="recurrence.value !== 'once'">
+          <strong><i18n>until</i18n></strong>
           <mat-form-field>
-            <strong matPrefix>
-              <i18n>until</i18n>&nbsp;
-            </strong>
             <input matInput type="date" [formControl]="until">
           </mat-form-field>
         </ng-container>
@@ -132,10 +116,10 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
         <i18n>compilation</i18n>
       </label>
       <nav>
-        <button mat-button color="warn" (click)="clear()">
+        <button mat-stroked-button color="warn" (click)="clear()">
           <i18n>deleteAll</i18n>
         </button>
-        <button mat-button
+        <button mat-stroked-button
           color="primary"
           [disabled]="!scheduled"
           (click)="create()">
@@ -143,7 +127,7 @@ import { ScheduleFieldComponent } from '../fields/schedule.field';
         </button>
       </nav>
     </section>
-
+  `, `
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'schedules'">
@@ -223,7 +207,7 @@ export class ScheduleFormComponent
     const start = from.clone();
     const until = moment(this.until.value, this.formats.date, 'en');
 
-    const values = [Object.assign(new this.model(), {
+    const values = [new this.model({
       endDate: goto.format(),
       startDate: from.format()
     })];
@@ -232,14 +216,14 @@ export class ScheduleFormComponent
       while (from.diff(until) < 0) {
         switch (this.recurrence.value) {
           case 'day':
-            values.push(Object.assign(new this.model(), {
+            values.push(new this.model({
               endDate: goto.add(1, 'day').format(),
               startDate: from.add(1, 'day').format()
             }));
             break;
 
           case 'month':
-            values.push(Object.assign(new this.model(), {
+            values.push(new this.model({
               endDate: goto.add(1, 'month').format(),
               startDate: from.add(1, 'month').format()
             }));
@@ -250,7 +234,7 @@ export class ScheduleFormComponent
               .map((chip) => from.clone().day(chip.value))
               .filter((day) => day.isAfter(start))
               .filter((day) => day.isBefore(until))
-              .forEach((day) => values.push(Object.assign(new this.model(), {
+              .forEach((day) => values.push(new this.model({
                 endDate: day.clone().add(ival).format(),
                 startDate: day.format()
               })));
@@ -260,7 +244,7 @@ export class ScheduleFormComponent
             break;
 
           case 'year':
-            values.push(Object.assign(new this.model(), {
+            values.push(new this.model({
               endDate: goto.add(1, 'year').format(),
               startDate: from.add(1, 'year').format()
             }));

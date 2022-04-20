@@ -19,10 +19,10 @@ import { ResourceCategoryEntity } from '../models/resource-category-entity';
 class CategoryControllerService extends __BaseService {
   static readonly categoryControllerReadAllPath = '/categories';
   static readonly categoryControllerCreatePath = '/categories';
-  static readonly categoryControllerReadOnePath = '/categories/{categoryId}';
-  static readonly categoryControllerUpdatePath = '/categories/{categoryId}';
-  static readonly categoryControllerDeletePath = '/categories/{categoryId}';
-  static readonly categoryControllerReadTranslationsPath = '/categories/{categoryId}/translations';
+  static readonly categoryControllerReadOnePath = '/categories/{id}';
+  static readonly categoryControllerUpdatePath = '/categories/{id}';
+  static readonly categoryControllerDeletePath = '/categories/{id}';
+  static readonly categoryControllerReadTranslationsPath = '/categories/{id}/translations';
 
   constructor(
     config: __Configuration,
@@ -140,17 +140,17 @@ class CategoryControllerService extends __BaseService {
 
   /**
    * readOne
-   * @param categoryId categoryId
+   * @param id id
    * @return OK
    */
-  categoryControllerReadOneResponse(categoryId: string): __Observable<__StrictHttpResponse<ResourceCategoryEntity>> {
+  categoryControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceCategoryEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/categories/${encodeURIComponent(String(categoryId))}`,
+      this.rootUrl + `/categories/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -167,11 +167,11 @@ class CategoryControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param categoryId categoryId
+   * @param id id
    * @return OK
    */
-  categoryControllerReadOne(categoryId: string): __Observable<ResourceCategoryEntity> {
-    return this.categoryControllerReadOneResponse(categoryId).pipe(
+  categoryControllerReadOne(id: string): __Observable<ResourceCategoryEntity> {
+    return this.categoryControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceCategoryEntity)
     );
   }
@@ -179,11 +179,11 @@ class CategoryControllerService extends __BaseService {
   /**
    * update
    * @param newCategory newCategory
-   * @param categoryId categoryId
+   * @param id id
    * @return OK
    */
   categoryControllerUpdateResponse(newCategory: CategoryEntity,
-    categoryId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -191,7 +191,7 @@ class CategoryControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/categories/${encodeURIComponent(String(categoryId))}`,
+      this.rootUrl + `/categories/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -209,29 +209,29 @@ class CategoryControllerService extends __BaseService {
   /**
    * update
    * @param newCategory newCategory
-   * @param categoryId categoryId
+   * @param id id
    * @return OK
    */
   categoryControllerUpdate(newCategory: CategoryEntity,
-    categoryId: string): __Observable<{}> {
-    return this.categoryControllerUpdateResponse(newCategory, categoryId).pipe(
+    id: string): __Observable<{}> {
+    return this.categoryControllerUpdateResponse(newCategory, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param categoryId categoryId
+   * @param id id
    * @return OK
    */
-  categoryControllerDeleteResponse(categoryId: string): __Observable<__StrictHttpResponse<{}>> {
+  categoryControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/categories/${encodeURIComponent(String(categoryId))}`,
+      this.rootUrl + `/categories/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -248,28 +248,28 @@ class CategoryControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param categoryId categoryId
+   * @param id id
    * @return OK
    */
-  categoryControllerDelete(categoryId: string): __Observable<{}> {
-    return this.categoryControllerDeleteResponse(categoryId).pipe(
+  categoryControllerDelete(id: string): __Observable<{}> {
+    return this.categoryControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readTranslations
-   * @param categoryId categoryId
+   * @param id id
    * @return OK
    */
-  categoryControllerReadTranslationsResponse(categoryId: string): __Observable<__StrictHttpResponse<{}>> {
+  categoryControllerReadTranslationsResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/categories/${encodeURIComponent(String(categoryId))}/translations`,
+      this.rootUrl + `/categories/${encodeURIComponent(String(id))}/translations`,
       __body,
       {
         headers: __headers,
@@ -286,11 +286,11 @@ class CategoryControllerService extends __BaseService {
   }
   /**
    * readTranslations
-   * @param categoryId categoryId
+   * @param id id
    * @return OK
    */
-  categoryControllerReadTranslations(categoryId: string): __Observable<{}> {
-    return this.categoryControllerReadTranslationsResponse(categoryId).pipe(
+  categoryControllerReadTranslations(id: string): __Observable<{}> {
+    return this.categoryControllerReadTranslationsResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }

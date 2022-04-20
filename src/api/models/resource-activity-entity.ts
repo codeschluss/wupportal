@@ -4,6 +4,7 @@ export interface ResourceActivityEntity {
   _embedded?: {};
   _links?: Array<Link>;
   addressId?: string;
+  admissionFee?: number;
   categoryId?: string;
   contactName?: string;
   created?: string;

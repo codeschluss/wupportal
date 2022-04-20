@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { map, mergeMap, startWith } from 'rxjs/operators';
+import { map, mergeMap, startWith } from 'rxjs';
 import { BaseChart } from '../base/base.chart';
 
 @Component({
@@ -9,7 +9,7 @@ import { BaseChart } from '../base/base.chart';
   })
 })
 
-export class CategoryActivitiesChartComponent
+export class CategoryActivitiesChartComponent 
   extends BaseChart
   implements AfterViewInit {
 
@@ -20,5 +20,4 @@ export class CategoryActivitiesChartComponent
       mergeMap((c) => this.analyticsProvider.activitiesPerCategory(c))
     ).subscribe((entries) => this.setData(entries));
   }
-
-}
+ }

@@ -9,7 +9,7 @@ export PATH=$PATH:$PWD/node_modules/.bin
 
 mkdir -p www
 npm install --also=development
-cordova platform add ios
+cordova platform add ios@6.2.0
 cordova prepare ios
 
 case $NODE_ENV in
@@ -32,6 +32,6 @@ case $NODE_ENV in
 
   production)
     ng run @wooportal/client:browser:$NODE_ENV
-    cordova build ios --release
+    cordova build ios --device --release
     ;;
 esac

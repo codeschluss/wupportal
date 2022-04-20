@@ -44,7 +44,7 @@ import { InputFieldComponent } from '../fields/input.field';
 export class ConfigurationFormComponent
   extends BaseForm<ConfigurationModel> {
 
-  public item: any;
+  declare public item: any;
 
   public fields: FormField[] = [
     {
@@ -129,7 +129,7 @@ export class ConfigurationFormComponent
 
   private config(key: string): ConfigurationModel {
     return this.item.find((configuration) => configuration.item === key)
-      || Object.assign(new ConfigurationModel(), { item: key });
+      || new this.model({ item: key });
   }
 
 }

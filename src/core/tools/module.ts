@@ -7,19 +7,19 @@ import { TokenInterceptor } from '../auth/token.interceptor';
 import { TokenProvider } from '../auth/token.provider';
 import { LabelInterceptor } from '../labels/label.interceptor';
 import { LoadingInterceptor } from '../loading/loading.interceptor';
+import { IpAddressInterceptor } from '../platform/ip-address.interceptor';
 import { PlatformInterceptor } from '../platform/platform.interceptor';
 import { ActivityProvider } from '../providers/activity.provider';
 import { AddressProvider } from '../providers/address.provider';
 import { BlogpostProvider } from '../providers/blogpost.provider';
 import { CategoryProvider } from '../providers/category.provider';
 import { ConfigurationProvider } from '../providers/configuration.provider';
-import { InfopageProvider } from '../providers/infopage.provider';
-import { KeywordProvider } from '../providers/keyword.provider';
 import { LabelProvider } from '../providers/label.provider';
 import { LanguageProvider } from '../providers/language.provider';
-import { MarkupProvider } from '../providers/markup.provider';
 import { MembershipProvider } from '../providers/membership.provider';
 import { OrganisationProvider } from '../providers/organisation.provider';
+import { SocialMediaProvider } from '../providers/social-media.provider';
+import { StaticPageProvider } from '../providers/static-page.provider';
 import { SubscriptionTypeProvider } from '../providers/subscription-type.provider';
 import { SubscriptionProvider } from '../providers/subscription.provider';
 import { SuburbProvider } from '../providers/suburb.provider';
@@ -31,6 +31,7 @@ import { SessionProvider } from '../session/session.provider';
 import { CoreSettings } from './settings';
 
 const interceptors: ClassProvider[] = [
+  { provide: HTTP_INTERCEPTORS, useClass: IpAddressInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LabelInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: PlatformInterceptor, multi: true },
@@ -43,14 +44,13 @@ const providers: TypeProvider[] = [
   BlogpostProvider,
   CategoryProvider,
   ConfigurationProvider,
-  InfopageProvider,
-  KeywordProvider,
   LabelProvider,
   LanguageProvider,
-  MarkupProvider,
   MembershipProvider,
   OrganisationProvider,
   SessionProvider,
+  SocialMediaProvider,
+  StaticPageProvider,
   SubscriptionProvider,
   SubscriptionTypeProvider,
   SuburbProvider,

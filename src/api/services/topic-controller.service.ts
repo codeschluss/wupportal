@@ -19,11 +19,11 @@ import { ResourceTopicEntity } from '../models/resource-topic-entity';
 class TopicControllerService extends __BaseService {
   static readonly topicControllerReadAllPath = '/topics';
   static readonly topicControllerCreatePath = '/topics';
-  static readonly topicControllerReadOnePath = '/topics/{topicId}';
-  static readonly topicControllerUpdatePath = '/topics/{topicId}';
-  static readonly topicControllerDeletePath = '/topics/{topicId}';
-  static readonly topicControllerReadPagesPath = '/topics/{topicId}/pages';
-  static readonly topicControllerReadTranslationsPath = '/topics/{topicId}/translations';
+  static readonly topicControllerReadOnePath = '/topics/{id}';
+  static readonly topicControllerUpdatePath = '/topics/{id}';
+  static readonly topicControllerDeletePath = '/topics/{id}';
+  static readonly topicControllerReadBlogsPath = '/topics/{id}/blogs';
+  static readonly topicControllerReadTranslationsPath = '/topics/{id}/translations';
 
   constructor(
     config: __Configuration,
@@ -141,17 +141,17 @@ class TopicControllerService extends __BaseService {
 
   /**
    * readOne
-   * @param topicId topicId
+   * @param id id
    * @return OK
    */
-  topicControllerReadOneResponse(topicId: string): __Observable<__StrictHttpResponse<ResourceTopicEntity>> {
+  topicControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceTopicEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -168,11 +168,11 @@ class TopicControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param topicId topicId
+   * @param id id
    * @return OK
    */
-  topicControllerReadOne(topicId: string): __Observable<ResourceTopicEntity> {
-    return this.topicControllerReadOneResponse(topicId).pipe(
+  topicControllerReadOne(id: string): __Observable<ResourceTopicEntity> {
+    return this.topicControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceTopicEntity)
     );
   }
@@ -180,11 +180,11 @@ class TopicControllerService extends __BaseService {
   /**
    * update
    * @param newTopic newTopic
-   * @param topicId topicId
+   * @param id id
    * @return OK
    */
   topicControllerUpdateResponse(newTopic: TopicEntity,
-    topicId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -192,7 +192,7 @@ class TopicControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -210,29 +210,29 @@ class TopicControllerService extends __BaseService {
   /**
    * update
    * @param newTopic newTopic
-   * @param topicId topicId
+   * @param id id
    * @return OK
    */
   topicControllerUpdate(newTopic: TopicEntity,
-    topicId: string): __Observable<{}> {
-    return this.topicControllerUpdateResponse(newTopic, topicId).pipe(
+    id: string): __Observable<{}> {
+    return this.topicControllerUpdateResponse(newTopic, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param topicId topicId
+   * @param id id
    * @return OK
    */
-  topicControllerDeleteResponse(topicId: string): __Observable<__StrictHttpResponse<{}>> {
+  topicControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -249,24 +249,24 @@ class TopicControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param topicId topicId
+   * @param id id
    * @return OK
    */
-  topicControllerDelete(topicId: string): __Observable<{}> {
-    return this.topicControllerDeleteResponse(topicId).pipe(
+  topicControllerDelete(id: string): __Observable<{}> {
+    return this.topicControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
-   * readPages
-   * @param topicId topicId
+   * readBlogs
+   * @param id id
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  topicControllerReadPagesResponse(topicId: string,
+  topicControllerReadBlogsResponse(id: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
@@ -279,7 +279,7 @@ class TopicControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}/pages`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(id))}/blogs`,
       __body,
       {
         headers: __headers,
@@ -295,35 +295,35 @@ class TopicControllerService extends __BaseService {
     );
   }
   /**
-   * readPages
-   * @param topicId topicId
+   * readBlogs
+   * @param id id
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  topicControllerReadPages(topicId: string,
+  topicControllerReadBlogs(id: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<{}> {
-    return this.topicControllerReadPagesResponse(topicId, sort, dir, embeddings).pipe(
+    return this.topicControllerReadBlogsResponse(id, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readTranslations
-   * @param topicId topicId
+   * @param id id
    * @return OK
    */
-  topicControllerReadTranslationsResponse(topicId: string): __Observable<__StrictHttpResponse<{}>> {
+  topicControllerReadTranslationsResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/topics/${encodeURIComponent(String(topicId))}/translations`,
+      this.rootUrl + `/topics/${encodeURIComponent(String(id))}/translations`,
       __body,
       {
         headers: __headers,
@@ -340,11 +340,11 @@ class TopicControllerService extends __BaseService {
   }
   /**
    * readTranslations
-   * @param topicId topicId
+   * @param id id
    * @return OK
    */
-  topicControllerReadTranslations(topicId: string): __Observable<{}> {
-    return this.topicControllerReadTranslationsResponse(topicId).pipe(
+  topicControllerReadTranslations(id: string): __Observable<{}> {
+    return this.topicControllerReadTranslationsResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }

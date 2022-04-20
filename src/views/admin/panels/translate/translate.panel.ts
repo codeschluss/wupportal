@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CrudJoiner, LabelModel, LanguageModel } from '../../../../core';
-import { MarkupModel } from '../../../../core/models/markup.model';
 import { BasePanel } from '../../base/base.panel';
 
 @Component({
@@ -18,19 +17,11 @@ export class TranslatePanelComponent
     }).with('translatables').yield('language'),
     language: CrudJoiner.of(LanguageModel, {
       required: true
-    }),
-    markup: CrudJoiner.of(MarkupModel, {
-      required: true
-    }).with('translatables').yield('language')
+    })
   };
 
   public get label(): LabelModel[] {
     return this.route.snapshot.data.label || [];
-  }
-
-  public markup(tagId: string): MarkupModel {
-    return this.route.snapshot.data.markup?.find((i) => i.tagId === tagId)
-      || Object.assign(new MarkupModel(), { content: tagId, tagId });
   }
 
 }

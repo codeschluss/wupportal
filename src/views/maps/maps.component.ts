@@ -1,7 +1,8 @@
 import { HttpRequest } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatRipple } from '@angular/material/core';
-import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent, UrlSegment } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Route, Router, RouterEvent } from '@angular/router';
 import * as ColorConvert from 'color-convert';
 import { LayerVectorComponent, MapComponent, ViewComponent } from 'ngx-openlayers';
 import { Feature, MapBrowserPointerEvent } from 'ol';
@@ -9,10 +10,10 @@ import { GeometryFunction, Point } from 'ol/geom';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Icon, Style, StyleFunction, Text } from 'ol/style';
 import { BehaviorSubject, EMPTY, Observable, of, Subscription } from 'rxjs';
-import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, filter, map, mergeMap, startWith, take, tap } from 'rxjs/operators';
 import * as smoothPolyline from 'smooth-polyline';
-import { ActivityModel, ActivityProvider, ConfigurationModel, CrudJoiner, CrudResolver, LoadingProvider, LocationProvider, PlatformProvider, PositionProvider, RoutingComponent } from '../../core';
-import { MapsConnection } from './maps.connection';
+import { ActivityModel, ActivityProvider, ConfigurationModel, CrudGraph, CrudJoiner, CrudResolver, LoadingProvider, LocationProvider, OrganisationModel, OrganisationProvider, PlatformProvider, PositionProvider, RoutingComponent } from '../../core';
+import { MapModel, MapsConnection } from './maps.connection';
 
 @Component({
   styleUrls: ['maps.component.sass'],
@@ -27,9 +28,13 @@ export class MapsComponent
 
   public enabled: boolean = true;
 
-  public focus: BehaviorSubject<ActivityModel[]>;
+  public activities: Observable<ActivityModel[]>;
 
-  public items: BehaviorSubject<ActivityModel[]>;
+  public organisations: Observable<OrganisationModel[]>;
+
+  public focus: BehaviorSubject<MapModel[]>;
+
+  public items: BehaviorSubject<MapModel[]>;
 
   public location: Subscription = EMPTY.subscribe();
 
@@ -63,10 +68,21 @@ export class MapsComponent
 
   private connection: MapsConnection;
 
-  private joiner: CrudJoiner = CrudJoiner.of(ActivityModel)
-    .with('address').yield('suburb')
-    .with('category')
-    .with('schedules');
+  private graph: Record<string, CrudGraph> = {
+    activity: CrudJoiner.of(ActivityModel)
+      .with('address')
+      .with('category')
+      .with('provider').yield('organisation')
+      .with('schedules')
+      .with('titleImage')
+    .graph,
+    organisation: CrudJoiner.of(OrganisationModel, {
+      approved: true
+    })
+      .with('address')
+      .with('avatar')
+    .graph
+  };
 
   @ViewChild('center', { read: ElementRef, static: true })
   private center: ElementRef<HTMLElement>;
@@ -79,6 +95,9 @@ export class MapsComponent
 
   @ViewChild(MatRipple, { static: true })
   private ripple: MatRipple;
+
+  @ViewChild(MatButtonToggleGroup, { static: false })
+  private type: MatButtonToggleGroup;
 
   @ViewChild(LayerVectorComponent, { static: true })
   private vector: LayerVectorComponent;
@@ -98,7 +117,7 @@ export class MapsComponent
   }
 
   public get uuid(): string | undefined {
-    return (this.route.snapshot.url[0] || { } as any).path;
+    return this.route.snapshot.url[1]?.path;
   }
 
   public constructor(
@@ -107,6 +126,7 @@ export class MapsComponent
     private element: ElementRef<HTMLElement>,
     private loadingProvider: LoadingProvider,
     private locationProvider: LocationProvider,
+    private organisationProvider: OrganisationProvider,
     private platformProvider: PlatformProvider,
     private positionProvider: PositionProvider,
     private route: ActivatedRoute,
@@ -116,9 +136,17 @@ export class MapsComponent
   }
 
   public ngOnInit(): void {
-    this.focus = new BehaviorSubject<ActivityModel[]>([]);
-    this.items = new BehaviorSubject<ActivityModel[]>([]);
+    this.focus = new BehaviorSubject<MapModel[]>([]);
+    this.items = new BehaviorSubject<MapModel[]>([]);
     this.loadingProvider.enqueue(this.block);
+
+    this.activities = this.focus.pipe(filter((items) => {
+      return items.every((item) => item instanceof ActivityModel);
+    })) as Observable<ActivityModel[]>;
+
+    this.organisations = this.focus.pipe(filter((items) => {
+      return items.every((item) => item instanceof OrganisationModel);
+    })) as Observable<OrganisationModel[]>;
 
     this.mapconf = {
       geomFn: this.geometry.bind(this),
@@ -162,9 +190,18 @@ export class MapsComponent
     }
 
     if (window === window.parent) {
-      this.route.url.pipe(
-        mergeMap((url) => this.fetch(url[0]))
-      ).subscribe((items) => this.items.next(items));
+      if (this.uuid) {
+        this.route.url.pipe(
+          mergeMap((url) => this.fetch(url[0].path))
+        ).subscribe((items) => this.items.next(items));
+      } else {
+        this.type.change.pipe(
+          map((change) => change.value),
+          startWith('events'),
+          distinctUntilChanged(),
+          mergeMap((type) => this.fetch(type))
+        ).subscribe((items) => this.items.next(items));
+      }
     } else {
       this.connection = new MapsConnection(window, window.parent);
       this.connection.focus.subscribe((focus) => this.focus.next(focus));
@@ -267,20 +304,31 @@ export class MapsComponent
       .find((config) => config.item === item).value;
   }
 
-  private fetch(url?: UrlSegment): Observable<ActivityModel[]> {
-    if (url && url.path) {
-      return this.activityProvider.readOne(url.path).pipe(
-        mergeMap((item) => this.crudResolver.refine(item, this.joiner.graph)),
-        map((item: ActivityModel) => [item])
-      );
-    } else {
-      return this.activityProvider.readAll({
-        current: true,
-        embeddings: CrudJoiner.to(this.joiner.graph)
-      }).pipe(
-        mergeMap((items) => this.crudResolver.refine(items, this.joiner.graph)),
-        catchError(() => of([]))
+  private fetch(target: string): Observable<MapModel[]> {
+    switch (target) {
+      case 'event': return this.activityProvider.readOne(this.uuid).pipe(
+        mergeMap((i) => this.crudResolver.refine(i, this.graph.activity)),
+        map((i: ActivityModel) => [i]), catchError(() => of([]))
       ) as Observable<ActivityModel[]>;
+
+      case 'events': return this.activityProvider.readAll({
+        current: true,
+        embeddings: CrudJoiner.to(this.graph.activity)
+      }).pipe(mergeMap((i) => {
+        return this.crudResolver.refine(i, this.graph.activity);
+      }), catchError(() => of([]))) as Observable<ActivityModel[]>;
+
+      case 'place': return this.organisationProvider.readOne(this.uuid).pipe(
+        mergeMap((i) => this.crudResolver.refine(i, this.graph.activity)),
+        map((i: OrganisationModel) => [i]), catchError(() => of([]))
+      ) as Observable<OrganisationModel[]>;
+
+      case 'places': return this.organisationProvider.readAll({
+        approved: true,
+        embeddings: CrudJoiner.to(this.graph.organisation)
+      }).pipe(mergeMap((i) => {
+        return this.crudResolver.refine(i, this.graph.organisation);
+      }), catchError(() => of([]))) as Observable<OrganisationModel[]>;
     }
   }
 
@@ -330,13 +378,19 @@ export class MapsComponent
 
   private styling(feature: Feature): Style {
     const focus = this.focus.value.map((i) => i.id);
-    const items = feature.get('features').map((feat) =>
-      this.items.value.find((item) => item.id === feat.getId()));
+    const items = feature.get('features').map((feat) => {
+      return this.items.value.find((item) => item.id === feat.getId());
+    }) as MapModel[];
 
-    const rgb = items.map((item) => {
-      return ColorConvert.keyword.rgb(item.category.color)
-        || ColorConvert.hex.rgb(item.category.color);
+    const rgb = items.filter((item) => {
+      return item instanceof ActivityModel;
+    }).map((item: ActivityModel) => {
+      return ColorConvert.hex.rgb(item.category.color);
     });
+
+    if (!rgb.length) {
+      rgb.push(...new Array(items.length).fill([255, 255, 255]));
+    }
 
     const multi = rgb.length > 1;
     const focused = items.some((i) => focus.includes(i.id));

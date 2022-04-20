@@ -1,0 +1,41 @@
+@import ../brand.scss
+@import ../portal/portal.sass
+
+main
+  & > section
+    & > .mat-card
+      & > .mat-card-content
+        & > fieldset
+          border: none
+          padding: 0
+          margin: 0
+
+          & > .mat-form-field
+            display: block
+            width: 25rem
+
+        & > ckeditor
+          border: 2px solid $color-light
+          border-radius: .25rem
+          display: block
+          margin-bottom: 1rem
+          transition: border-color $animation-duration
+
+          @include deep
+            & > .ck-content
+              border: none
+
+          &:focus-within
+            border-color: $color-primary
+
+          &:hover:not(:focus-within)
+            border-color: $color-darker
+
+          &.ng-invalid.ng-touched
+            border-color: $color-warn
+
+        & > .mat-form-field
+          width: 25rem
+
+          input[type="file"]
+            opacity: 0

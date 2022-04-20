@@ -27,7 +27,7 @@ import { InputFieldComponent } from '../fields/input.field';
 export class MailingFormComponent
   extends BaseForm<CrudModel> {
 
-  public item: any;
+  declare public item: any;
 
   public fields: FormField[] = [
     {

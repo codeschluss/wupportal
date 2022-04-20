@@ -17,6 +17,7 @@
     "activityProvider": "createdActivities",
     "blogger": "blogger",
     "blogpostAuthor": "createdBlogs",
+    "fullname": "fullname",
     "organisationAdmin": "adminOrgas",
     "organisationUser": "approvedOrgas",
     "superUser": "superuser",

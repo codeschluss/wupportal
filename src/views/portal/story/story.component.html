@@ -1,0 +1,99 @@
+<main>
+  <section>
+    <mat-card>
+      <ng-container *ngIf="item?.titleImage">
+        <img mat-card-image
+          src="data:image/svg+xml,
+            %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+          [alt]="item.titleImage.label"
+          [style.backgroundImage]="item?.titleImage.source"
+          [title]="item.titleImage.label">
+      </ng-container>
+      <mat-card-header>
+        <mat-card-title>
+          {{ item.label }}
+        </mat-card-title>
+      </mat-card-header>
+      <aside>
+        <ng-container *ngIf="item.topic">
+          <a mat-stroked-button
+            color="accent"
+            [routerLink]="['/', 'community', item.topic.id]">
+            {{ item.topic.label }}
+          </a>
+        </ng-container>
+        <span [style.flexGrow]="1"></span>
+        <ng-container *ngIf="item.topic">
+          <follow-piece [item]="item.topic"></follow-piece>
+        </ng-container>
+        <share-piece [item]="item"></share-piece>
+      </aside>
+      <mat-card-content
+        [innerHTML]="item.content">
+      </mat-card-content>
+      <mat-card-header>
+        <mat-card-title>
+          <i18n>by</i18n>
+          {{ item.author }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-header>
+        <ng-container *ngIf="item.blogger?.user?.avatar?.source">
+          <img mat-card-avatar
+            src="data:image/svg+xml,
+              %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+            [alt]="item.image.label"
+            [style.backgroundImage]="item.blogger?.user?.avatar?.source"
+            [title]="item.blogger?.user?.avatar?.caption">
+        </ng-container>
+        <ng-container *ngIf="!item.blogger?.user?.avatar">
+          <fa-icon mat-card-avatar icon="image"></fa-icon>
+        </ng-container>
+        <mat-list>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="user"></fa-icon>
+            <span mat-line>
+              {{ item.author }}
+            </span>
+          </mat-list-item>
+          <ng-container *ngIf="item.mailAddress">
+            <mat-list-item>
+              <fa-icon mat-list-icon icon="at"></fa-icon>
+              <span mat-line>
+                <a
+                  [href]="'mailto:' + item.mailAddress"
+                  [title]="'email ' + item.author">
+                  {{ item.mailAddress }}
+                </a>
+              </span>
+            </mat-list-item>
+          </ng-container>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="clock"></fa-icon>
+            <span mat-line>
+              {{ item.created | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
+            </span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-header>
+    </mat-card>
+  </section>
+
+  <ng-container *ngIf="item.images?.length">
+    <section>
+      <h2><i18n>images</i18n></h2>
+      <listing-frame-component>
+        <ng-container *ngFor="let image of item.images">
+          <figure>
+            <img
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [alt]="image.label"
+              [style.backgroundImage]="image.source"
+              [title]="image.label">
+          </figure>
+        </ng-container>
+      </listing-frame-component>
+    </section>
+  </ng-container>
+</main>

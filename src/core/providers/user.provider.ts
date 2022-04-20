@@ -7,6 +7,7 @@ import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
 import { ActivityModel } from '../models/activity.model';
 import { BloggerModel } from '../models/blogger.model';
 import { BlogpostModel } from '../models/blogpost.model';
+import { ImageModel } from '../models/image.model';
 import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel } from '../models/organisation.model';
 import { UserModel as Model } from '../models/user.model';
@@ -23,6 +24,11 @@ export class UserProvider
       field: 'activities',
       method: this.service.userControllerReadActivitiesResponse,
       model: ActivityModel
+    },
+    {
+      field: 'avatar',
+      method: this.service.userControllerReadAvatarResponse,
+      model: ImageModel
     },
     {
       field: 'blogger',
@@ -89,6 +95,10 @@ export class UserProvider
   public grantTranslator: (id: string, grant: Boolean) =>
     Observable<any> = this.apply(this.service
       .userControllerGrantTranslatorRightResponse);
+
+  public pasteImage: (id: string, image: ImageModel | null) =>
+    Observable<any> = this.apply(this.service
+      .userControllerAddAvatarResponse);
 
   public resetAllPasswords: () =>
     Observable<any> = this.apply(this.service

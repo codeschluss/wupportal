@@ -1,0 +1,132 @@
+<main>
+  <ng-container *ngIf="claims as item">
+    <section>
+      <h1><i18n>administration</i18n></h1>
+      <ng-container *ngIf="item.userId">
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'details' }"
+          [routerLink]="['/', 'admin', 'account', item.userId]">
+          <i18n>account</i18n>
+        </a>
+      </ng-container>
+      <ng-container *ngIf="item.superUser || item.translator">
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'homepage' }"
+          [routerLink]="['/', 'admin', 'translate']">
+          <i18n>translate</i18n>
+        </a>
+      </ng-container>
+      <ng-container *ngIf="item.superUser || item.organisationAdmin[0]">
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'organisations' }"
+          [routerLink]="['/', 'admin', 'organisation']">
+          <i18n>organisation</i18n>
+        </a>
+      </ng-container>
+      <ng-container *ngIf="item.superUser">
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'configuration' }"
+          [routerLink]="['/', 'admin', 'application']">
+          <i18n>application</i18n>
+        </a>
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'mailing' }"
+          [routerLink]="['/', 'admin', 'messaging']">
+          <i18n>messaging</i18n>
+        </a>
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'blogposts' }"
+          [routerLink]="['/', 'admin', 'information']">
+          <i18n>information</i18n>
+        </a>
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'suburbs' }"
+          [routerLink]="['/', 'admin', 'positioning']">
+          <i18n>positioning</i18n>
+        </a>
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'users' }"
+          [routerLink]="['/', 'admin', 'privileges']">
+          <i18n>privileges</i18n>
+        </a>
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'categories' }"
+          [routerLink]="['/', 'admin', 'taxonomy']">
+          <i18n>taxonomy</i18n>
+        </a>
+        <a mat-button
+          color="primary"
+          [queryParams]="{ tab: 'activities' }"
+          [routerLink]="['/', 'admin', 'analytics']">
+          <i18n>analytics</i18n>
+        </a>
+      </ng-container>
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="staticPages?.length">
+    <section>
+      <h1><i18n>staticPages</i18n></h1>
+      <ng-container *ngFor="let item of staticPages">
+        <a mat-button
+          color="primary"
+          [routerLink]="['/', item.tagId]"
+          [title]="item.label">
+          {{ item.label }}
+        </a>
+      </ng-container>
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="socialMedia?.length">
+    <section>
+      <h1><i18n>socialMedia</i18n></h1>
+      <ng-container *ngFor="let item of socialMedia">
+        <a mat-button
+          color="primary"
+          target="_blank"
+          [href]="item.url"
+          [title]="item.label">
+          {{ item.label }}
+        </a>
+      </ng-container>
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="categories?.length">
+    <section>
+      <h1><i18n>categories</i18n></h1>
+      <ng-container *ngFor="let item of categories">
+        <a mat-button
+          color="primary"
+          [routerLink]="['/', 'events', item.id]"
+          [title]="item.label">
+          {{ item.label }}
+        </a>
+      </ng-container>
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="topics?.length">
+    <section>
+      <h1><i18n>topics</i18n></h1>
+      <ng-container *ngFor="let item of topics">
+        <a mat-button
+          color="primary"
+          [routerLink]="['/', 'community', item.id]"
+          [title]="item.label">
+          {{ item.label }}
+        </a>
+      </ng-container>
+    </section>
+  </ng-container>
+</main>

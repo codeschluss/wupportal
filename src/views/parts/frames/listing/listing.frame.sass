@@ -1,0 +1,34 @@
+@import ../../../brand.scss
+
+:host
+  display: block
+  width: 100%
+
+  & > nav
+    @include flex(row)
+    overflow-x: auto
+
+    @include responsive(xs)
+      scroll-snap-type: x mandatory
+
+    @include deep
+      & > [base="card"]
+        @include flex(row, center, center)
+        @include position(relative)
+        scroll-snap-align: start
+
+        @include responsive(gt-xs)
+          & + [base="card"]
+            padding-left: 0
+
+        @include responsive(xs)
+          width: 100%
+
+          & + [base="card"]::before
+            @include position(absolute, auto, auto, auto, -.75rem)
+            background-color: $color-primary
+            border-radius: 50%
+            box-sizing: border-box
+            content: ''
+            height: 1.5rem
+            width: 1.5rem

@@ -1,16 +1,17 @@
 /* tslint:disable */
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService as __BaseService } from '../base-service';
-import { ApiConfiguration as __Configuration } from '../api-configuration';
-import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
 import { Observable as __Observable } from 'rxjs';
-import { map as __map, filter as __filter } from 'rxjs/operators';
-
-import { UserEntity } from '../models/user-entity';
-import { StringPrimitive } from '../models/string-primitive';
-import { ResourceUserEntity } from '../models/resource-user-entity';
+import { filter as __filter, map as __map } from 'rxjs/operators';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { BaseService as __BaseService } from '../base-service';
 import { BooleanPrimitive } from '../models/boolean-primitive';
+import { ImageEntity } from '../models/image-entity';
+import { ResourceUserEntity } from '../models/resource-user-entity';
+import { StringPrimitive } from '../models/string-primitive';
+import { UserEntity } from '../models/user-entity';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+
 
 /**
  * User Controller
@@ -19,33 +20,116 @@ import { BooleanPrimitive } from '../models/boolean-primitive';
   providedIn: 'root',
 })
 class UserControllerService extends __BaseService {
+  static readonly userControllerReadAvatarPath = '/user/{id}/avatar';
+  static readonly userControllerAddAvatarPath = '/user/{id}/avatar';
   static readonly userControllerReadAllPath = '/users';
   static readonly userControllerCreatePath = '/users';
   static readonly userControllerApplyAsBloggerPath = '/users/blogapply';
   static readonly userControllerReadAllBloggersPath = '/users/bloggers';
   static readonly userControllerResetAllPasswordsPath = '/users/resetallpasswords';
   static readonly userControllerResetPasswordPath = '/users/resetpassword';
-  static readonly userControllerReadOnePath = '/users/{userId}';
-  static readonly userControllerUpdatePath = '/users/{userId}';
-  static readonly userControllerDeletePath = '/users/{userId}';
-  static readonly userControllerReadActivitiesPath = '/users/{userId}/activities';
-  static readonly userControllerDeleteActivityPath = '/users/{userId}/activities/{activityId}';
-  static readonly userControllerReadBloggerPath = '/users/{userId}/blogger';
-  static readonly userControllerDeleteBloggerPath = '/users/{userId}/blogger';
-  static readonly userControllerReadBlogsPath = '/users/{userId}/blogs';
-  static readonly userControllerDeleteBlogPath = '/users/{userId}/blogs/{blogId}';
-  static readonly userControllerGrantBloggerRightPath = '/users/{userId}/grantblogger';
-  static readonly userControllerReadOrganisationsPath = '/users/{userId}/organisations';
-  static readonly userControllerAddOrganisationPath = '/users/{userId}/organisations';
-  static readonly userControllerDeleteOrganisationPath = '/users/{userId}/organisations/{orgaId}';
-  static readonly userControllerGrantSuperuserRightPath = '/users/{userId}/superuser';
-  static readonly userControllerGrantTranslatorRightPath = '/users/{userId}/translator';
+  static readonly userControllerReadOnePath = '/users/{id}';
+  static readonly userControllerUpdatePath = '/users/{id}';
+  static readonly userControllerDeletePath = '/users/{id}';
+  static readonly userControllerReadActivitiesPath = '/users/{id}/activities';
+  static readonly userControllerDeleteActivityPath = '/users/{id}/activities/{activityId}';
+  static readonly userControllerReadBloggerPath = '/users/{id}/blogger';
+  static readonly userControllerDeleteBloggerPath = '/users/{id}/blogger';
+  static readonly userControllerReadBlogsPath = '/users/{id}/blogs';
+  static readonly userControllerDeleteBlogPath = '/users/{id}/blogs/{blogId}';
+  static readonly userControllerGrantBloggerRightPath = '/users/{id}/grantblogger';
+  static readonly userControllerReadOrganisationsPath = '/users/{id}/organisations';
+  static readonly userControllerAddOrganisationPath = '/users/{id}/organisations';
+  static readonly userControllerDeleteOrganisationPath = '/users/{id}/organisations/{orgaId}';
+  static readonly userControllerGrantSuperuserRightPath = '/users/{id}/superuser';
+  static readonly userControllerGrantTranslatorRightPath = '/users/{id}/translator';
 
   constructor(
     config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
+  }
+
+  /**
+   * readAvatar
+   * @param id id
+   * @return OK
+   */
+  userControllerReadAvatarResponse(id: string): __Observable<__StrictHttpResponse<ImageEntity>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/user/${encodeURIComponent(String(id))}/avatar`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<ImageEntity>;
+      })
+    );
+  }
+  /**
+   * readAvatar
+   * @param id id
+   * @return OK
+   */
+  userControllerReadAvatar(id: string): __Observable<ImageEntity> {
+    return this.userControllerReadAvatarResponse(id).pipe(
+      __map(_r => _r.body as ImageEntity)
+    );
+  }
+
+  /**
+   * addAvatar
+   * @param id id
+   * @param avatar avatar
+   * @return OK
+   */
+  userControllerAddAvatarResponse(id: string,
+    avatar?: ImageEntity): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = avatar;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/user/${encodeURIComponent(String(id))}/avatar`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * addAvatar
+   * @param id id
+   * @param avatar avatar
+   * @return OK
+   */
+  userControllerAddAvatar(id: string,
+    avatar?: ImageEntity): __Observable<{}> {
+    return this.userControllerAddAvatarResponse(id, avatar).pipe(
+      __map(_r => _r.body as {})
+    );
   }
 
   /**
@@ -334,17 +418,17 @@ class UserControllerService extends __BaseService {
 
   /**
    * readOne
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerReadOneResponse(userId: string): __Observable<__StrictHttpResponse<ResourceUserEntity>> {
+  userControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceUserEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -361,11 +445,11 @@ class UserControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerReadOne(userId: string): __Observable<ResourceUserEntity> {
-    return this.userControllerReadOneResponse(userId).pipe(
+  userControllerReadOne(id: string): __Observable<ResourceUserEntity> {
+    return this.userControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceUserEntity)
     );
   }
@@ -373,11 +457,11 @@ class UserControllerService extends __BaseService {
   /**
    * update
    * @param newUser newUser
-   * @param userId userId
+   * @param id id
    * @return OK
    */
   userControllerUpdateResponse(newUser: UserEntity,
-    userId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -385,7 +469,7 @@ class UserControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -403,29 +487,29 @@ class UserControllerService extends __BaseService {
   /**
    * update
    * @param newUser newUser
-   * @param userId userId
+   * @param id id
    * @return OK
    */
   userControllerUpdate(newUser: UserEntity,
-    userId: string): __Observable<{}> {
-    return this.userControllerUpdateResponse(newUser, userId).pipe(
+    id: string): __Observable<{}> {
+    return this.userControllerUpdateResponse(newUser, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerDeleteResponse(userId: string): __Observable<__StrictHttpResponse<{}>> {
+  userControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -442,24 +526,24 @@ class UserControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerDelete(userId: string): __Observable<{}> {
-    return this.userControllerDeleteResponse(userId).pipe(
+  userControllerDelete(id: string): __Observable<{}> {
+    return this.userControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readActivities
-   * @param userId userId
+   * @param id id
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  userControllerReadActivitiesResponse(userId: string,
+  userControllerReadActivitiesResponse(id: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
@@ -472,7 +556,7 @@ class UserControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/activities`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/activities`,
       __body,
       {
         headers: __headers,
@@ -489,28 +573,28 @@ class UserControllerService extends __BaseService {
   }
   /**
    * readActivities
-   * @param userId userId
+   * @param id id
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  userControllerReadActivities(userId: string,
+  userControllerReadActivities(id: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<{}> {
-    return this.userControllerReadActivitiesResponse(userId, sort, dir, embeddings).pipe(
+    return this.userControllerReadActivitiesResponse(id, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * deleteActivity
-   * @param userId userId
+   * @param id id
    * @param activityId activityId
    * @return OK
    */
-  userControllerDeleteActivityResponse(userId: string,
+  userControllerDeleteActivityResponse(id: string,
     activityId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -519,7 +603,7 @@ class UserControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/activities/${encodeURIComponent(String(activityId))}`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/activities/${encodeURIComponent(String(activityId))}`,
       __body,
       {
         headers: __headers,
@@ -536,30 +620,30 @@ class UserControllerService extends __BaseService {
   }
   /**
    * deleteActivity
-   * @param userId userId
+   * @param id id
    * @param activityId activityId
    * @return OK
    */
-  userControllerDeleteActivity(userId: string,
+  userControllerDeleteActivity(id: string,
     activityId: string): __Observable<{}> {
-    return this.userControllerDeleteActivityResponse(userId, activityId).pipe(
+    return this.userControllerDeleteActivityResponse(id, activityId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readBlogger
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerReadBloggerResponse(userId: string): __Observable<__StrictHttpResponse<{}>> {
+  userControllerReadBloggerResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/blogger`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/blogger`,
       __body,
       {
         headers: __headers,
@@ -576,28 +660,28 @@ class UserControllerService extends __BaseService {
   }
   /**
    * readBlogger
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerReadBlogger(userId: string): __Observable<{}> {
-    return this.userControllerReadBloggerResponse(userId).pipe(
+  userControllerReadBlogger(id: string): __Observable<{}> {
+    return this.userControllerReadBloggerResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * deleteBlogger
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerDeleteBloggerResponse(userId: string): __Observable<__StrictHttpResponse<{}>> {
+  userControllerDeleteBloggerResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/blogger`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/blogger`,
       __body,
       {
         headers: __headers,
@@ -614,24 +698,24 @@ class UserControllerService extends __BaseService {
   }
   /**
    * deleteBlogger
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerDeleteBlogger(userId: string): __Observable<{}> {
-    return this.userControllerDeleteBloggerResponse(userId).pipe(
+  userControllerDeleteBlogger(id: string): __Observable<{}> {
+    return this.userControllerDeleteBloggerResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readBlogs
-   * @param userId userId
+   * @param id id
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  userControllerReadBlogsResponse(userId: string,
+  userControllerReadBlogsResponse(id: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<__StrictHttpResponse<{}>> {
@@ -644,7 +728,7 @@ class UserControllerService extends __BaseService {
     if (embeddings != null) __params = __params.set('embeddings', embeddings.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/blogs`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/blogs`,
       __body,
       {
         headers: __headers,
@@ -661,28 +745,28 @@ class UserControllerService extends __BaseService {
   }
   /**
    * readBlogs
-   * @param userId userId
+   * @param id id
    * @param sort undefined
    * @param dir undefined
    * @param embeddings undefined
    * @return OK
    */
-  userControllerReadBlogs(userId: string,
+  userControllerReadBlogs(id: string,
     sort?: string,
     dir?: string,
     embeddings?: string): __Observable<{}> {
-    return this.userControllerReadBlogsResponse(userId, sort, dir, embeddings).pipe(
+    return this.userControllerReadBlogsResponse(id, sort, dir, embeddings).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * deleteBlog
-   * @param userId userId
+   * @param id id
    * @param blogId blogId
    * @return OK
    */
-  userControllerDeleteBlogResponse(userId: string,
+  userControllerDeleteBlogResponse(id: string,
     blogId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -691,7 +775,7 @@ class UserControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/blogs/${encodeURIComponent(String(blogId))}`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/blogs/${encodeURIComponent(String(blogId))}`,
       __body,
       {
         headers: __headers,
@@ -708,24 +792,24 @@ class UserControllerService extends __BaseService {
   }
   /**
    * deleteBlog
-   * @param userId userId
+   * @param id id
    * @param blogId blogId
    * @return OK
    */
-  userControllerDeleteBlog(userId: string,
+  userControllerDeleteBlog(id: string,
     blogId: string): __Observable<{}> {
-    return this.userControllerDeleteBlogResponse(userId, blogId).pipe(
+    return this.userControllerDeleteBlogResponse(id, blogId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * grantBloggerRight
-   * @param userId userId
+   * @param id id
    * @param isBlogger isBlogger
    * @return OK
    */
-  userControllerGrantBloggerRightResponse(userId: string,
+  userControllerGrantBloggerRightResponse(id: string,
     isBlogger: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -734,7 +818,7 @@ class UserControllerService extends __BaseService {
     __body = isBlogger;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/grantblogger`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/grantblogger`,
       __body,
       {
         headers: __headers,
@@ -751,30 +835,30 @@ class UserControllerService extends __BaseService {
   }
   /**
    * grantBloggerRight
-   * @param userId userId
+   * @param id id
    * @param isBlogger isBlogger
    * @return OK
    */
-  userControllerGrantBloggerRight(userId: string,
+  userControllerGrantBloggerRight(id: string,
     isBlogger: BooleanPrimitive): __Observable<{}> {
-    return this.userControllerGrantBloggerRightResponse(userId, isBlogger).pipe(
+    return this.userControllerGrantBloggerRightResponse(id, isBlogger).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readOrganisations
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerReadOrganisationsResponse(userId: string): __Observable<__StrictHttpResponse<{}>> {
+  userControllerReadOrganisationsResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/organisations`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/organisations`,
       __body,
       {
         headers: __headers,
@@ -791,22 +875,22 @@ class UserControllerService extends __BaseService {
   }
   /**
    * readOrganisations
-   * @param userId userId
+   * @param id id
    * @return OK
    */
-  userControllerReadOrganisations(userId: string): __Observable<{}> {
-    return this.userControllerReadOrganisationsResponse(userId).pipe(
+  userControllerReadOrganisations(id: string): __Observable<{}> {
+    return this.userControllerReadOrganisationsResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * addOrganisation
-   * @param userId userId
+   * @param id id
    * @param organisationParam organisationParam
    * @return OK
    */
-  userControllerAddOrganisationResponse(userId: string,
+  userControllerAddOrganisationResponse(id: string,
     organisationParam: Array<string>): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -815,7 +899,7 @@ class UserControllerService extends __BaseService {
     __body = organisationParam;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/organisations`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/organisations`,
       __body,
       {
         headers: __headers,
@@ -832,24 +916,24 @@ class UserControllerService extends __BaseService {
   }
   /**
    * addOrganisation
-   * @param userId userId
+   * @param id id
    * @param organisationParam organisationParam
    * @return OK
    */
-  userControllerAddOrganisation(userId: string,
+  userControllerAddOrganisation(id: string,
     organisationParam: Array<string>): __Observable<{}> {
-    return this.userControllerAddOrganisationResponse(userId, organisationParam).pipe(
+    return this.userControllerAddOrganisationResponse(id, organisationParam).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * deleteOrganisation
-   * @param userId userId
+   * @param id id
    * @param orgaId orgaId
    * @return OK
    */
-  userControllerDeleteOrganisationResponse(userId: string,
+  userControllerDeleteOrganisationResponse(id: string,
     orgaId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -858,7 +942,7 @@ class UserControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/organisations/${encodeURIComponent(String(orgaId))}`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/organisations/${encodeURIComponent(String(orgaId))}`,
       __body,
       {
         headers: __headers,
@@ -875,24 +959,24 @@ class UserControllerService extends __BaseService {
   }
   /**
    * deleteOrganisation
-   * @param userId userId
+   * @param id id
    * @param orgaId orgaId
    * @return OK
    */
-  userControllerDeleteOrganisation(userId: string,
+  userControllerDeleteOrganisation(id: string,
     orgaId: string): __Observable<{}> {
-    return this.userControllerDeleteOrganisationResponse(userId, orgaId).pipe(
+    return this.userControllerDeleteOrganisationResponse(id, orgaId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * grantSuperuserRight
-   * @param userId userId
+   * @param id id
    * @param isSuperuser isSuperuser
    * @return OK
    */
-  userControllerGrantSuperuserRightResponse(userId: string,
+  userControllerGrantSuperuserRightResponse(id: string,
     isSuperuser: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -901,7 +985,7 @@ class UserControllerService extends __BaseService {
     __body = isSuperuser;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/superuser`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/superuser`,
       __body,
       {
         headers: __headers,
@@ -918,24 +1002,24 @@ class UserControllerService extends __BaseService {
   }
   /**
    * grantSuperuserRight
-   * @param userId userId
+   * @param id id
    * @param isSuperuser isSuperuser
    * @return OK
    */
-  userControllerGrantSuperuserRight(userId: string,
+  userControllerGrantSuperuserRight(id: string,
     isSuperuser: BooleanPrimitive): __Observable<{}> {
-    return this.userControllerGrantSuperuserRightResponse(userId, isSuperuser).pipe(
+    return this.userControllerGrantSuperuserRightResponse(id, isSuperuser).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * grantTranslatorRight
-   * @param userId userId
+   * @param id id
    * @param isTranslator isTranslator
    * @return OK
    */
-  userControllerGrantTranslatorRightResponse(userId: string,
+  userControllerGrantTranslatorRightResponse(id: string,
     isTranslator: BooleanPrimitive): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
@@ -944,7 +1028,7 @@ class UserControllerService extends __BaseService {
     __body = isTranslator;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/users/${encodeURIComponent(String(userId))}/translator`,
+      this.rootUrl + `/users/${encodeURIComponent(String(id))}/translator`,
       __body,
       {
         headers: __headers,
@@ -961,13 +1045,13 @@ class UserControllerService extends __BaseService {
   }
   /**
    * grantTranslatorRight
-   * @param userId userId
+   * @param id id
    * @param isTranslator isTranslator
    * @return OK
    */
-  userControllerGrantTranslatorRight(userId: string,
+  userControllerGrantTranslatorRight(id: string,
     isTranslator: BooleanPrimitive): __Observable<{}> {
-    return this.userControllerGrantTranslatorRightResponse(userId, isTranslator).pipe(
+    return this.userControllerGrantTranslatorRightResponse(id, isTranslator).pipe(
       __map(_r => _r.body as {})
     );
   }
@@ -1000,4 +1084,5 @@ module UserControllerService {
   }
 }
 
-export { UserControllerService }
+export { UserControllerService };
+

@@ -1,123 +1,166 @@
 @import ../brand.scss
 
-main
-  @include position(absolute, 0, 0, 0, 0)
-  background-color: $color-light
-  height: 100%
-  max-width: 100% !important
-  padding: 0
-  user-select: none
+:host
+  @include position(relative)
+  flex: 1 0 auto
+  margin: 4rem auto 0
+  max-width: min(#{$viewport-width}, calc(100% - 2rem))
+  width: 100%
 
-  & > aol-map
-    @include position(relative)
-    background-color: $color-light
-    display: block
+  @include responsive(lt-md)
+    margin: 4rem auto 1.75rem
+    max-width: 100%
+
+    @include responsive(lt-sm)
+      margin: 3.5rem auto 1.25rem
+
+  main
+    @include position(absolute, 0, 0, 0, 0)
     height: 100%
-    width: 100%
+    overflow: hidden
+    padding: 0
+    user-select: none
 
-    & > nav
-      @include flex(column, flex-start, center)
-      @include position(absolute, 0, auto, 0, 0)
-      direction: rtl
-      overflow: auto
+    & > aol-map
+      @include position(relative)
+      display: block
+      height: 100%
+      width: 100%
 
-      @include responsive(lt-md)
-        @include flex(row, flex-start, center)
-        bottom: auto
-        direction: ltr
-        overflow-x: auto
-        overflow-y: hidden
-        right: 0
+      & > nav
+        @include flex(column, normal, flex-end)
+        @include position(absolute, 0, 0, auto, auto)
+        background-color: rgba($color-lightest, 50%)
+        border-bottom: 1px solid $color-accent
+        border-left: 1px solid $color-accent
+        height: 100%
+        max-height: 100%
+        overflow: auto
 
-        @include responsive(xs)
+        @include responsive(lt-sm)
+          @include flex(row)
+          height: auto
           scroll-snap-type: x mandatory
-
-      & > activity-card
-        @include flex(row, center, center)
-        @include position(relative)
-        direction: ltr
-        scroll-snap-align: start
-
-        @include responsive(gt-sm)
-          & + activity-card
-            padding-top: 0
-
-        @include responsive(sm)
-          & + activity-card
-            padding-left: 0
-
-        @include responsive(xs)
           width: 100%
 
-          & + activity-card::before
-            @include position(absolute, auto, auto, auto, -.75rem)
-            background-color: $color-primary
-            border-radius: 50%
-            box-sizing: border-box
-            content: ''
-            height: 1.5rem
-            width: 1.5rem
+        & > activity-card
+          @include flex(row, center, center)
+          @include position(relative)
+          scroll-snap-align: start
+          max-width: 100%
+          width: 35rem
 
-  & > fa-icon[matRipple]
-    @include flex(row, center, center)
-    @include position(absolute, calc(50% - 2.5rem), calc(50% - 2.5rem))
-    border-radius: 50%
-    color: $color-primary
-    font-size: 1rem
-    height: 5rem
-    opacity: 0
-    pointer-events: none
-    transition: opacity $animation-duration
-    width: 5rem
+          @include responsive(gt-xs)
+            @include flex(column)
 
-    @include deep
-      .mat-ripple-element
-        opacity: .24
+            @include deep
+              & > .mat-card
+                @include flex(column)
+                flex: 1 0 auto
+                padding-left: 33%
+                width: auto
 
-    &.show
-      opacity: .87
+                & > .mat-card-image
+                  @include position(absolute, 1rem, auto, 1rem, 1rem)
+                  min-height: auto !important
+                  height: 100%
+                  width: 33%
 
-  & > nav
-    @include flex(column-reverse)
-    @include position(absolute, auto, 1rem, 1rem)
-    transform: scale(0)
-    transition: transform $animation-duration
+            & + activity-card
+              padding-top: 0
 
-    &.open
-      & > .mat-fab
-        &:first-child
-          fa-icon
-            transform: rotate(135deg)
+          @include responsive(xs)
+            & + activity-card::before
+              @include position(absolute, auto, auto, auto, -.75rem)
+              background-color: $color-primary
+              border-radius: 50%
+              box-sizing: border-box
+              content: ''
+              height: 1.5rem
+              width: 1.5rem
 
-        & + .mat-fab
-          margin: 0 0 .5rem 0
-          opacity: 1
-          pointer-events: auto
+        & > organisation-card
+          @include responsive(gt-xs)
+            zoom: 1.25
 
-    & > .mat-fab
-      transition: all $animation-duration
+          & + organisation-card
+            padding-left: 0
 
-      &:first-child
-        z-index: 1
+    & > fa-icon[matRipple]
+      @include flex(row, center, center)
+      @include position(absolute, calc(50% - 2.5rem), calc(50% - 2.5rem))
+      border-radius: 50%
+      color: $color-primary
+      font-size: 1rem
+      height: 5rem
+      opacity: 0
+      pointer-events: none
+      transition: opacity $animation-duration
+      width: 5rem
 
-      &[disabled=true]
-        i18n
+      @include deep
+        .mat-ripple-element
           opacity: .24
 
-      & + .mat-fab
-        margin: 0 0 -3.5rem 0
-        opacity: 0
-        pointer-events: none
+      &.show
+        opacity: .87
 
-      i18n
-        @include position(absolute, auto, 5rem)
-        background-color: $color-darkest
-        border-radius: .25rem
-        color: $color-lightest
-        padding: 0 .25rem
-        pointer-events: none
+    & > .mat-button-toggle-group
+      @include position(absolute, auto, auto, 1rem, 1rem)
+      background-color: $color-lightest
+      border-radius: .5rem
+      transform: translatex(calc(-100% - 2rem))
+      transition: transform $animation-duration
 
-      fa-icon
-        display: block
-        font-size: 1.25rem
+      & > .mat-button-toggle
+        &.mat-button-toggle-checked
+          color: $color-primary
+
+        @include deep
+          & > .mat-button-toggle-button
+            height: 3.5rem
+
+    & > nav
+      @include flex(column-reverse)
+      @include position(absolute, auto, 1rem, 1rem, auto)
+      transform: scale(0)
+      transition: transform $animation-duration
+
+      &.open
+        & > .mat-fab
+          &:first-child
+            fa-icon
+              transform: rotate(135deg)
+
+          & + .mat-fab
+            margin: 0 0 .5rem 0
+            opacity: 1
+            pointer-events: auto
+
+      & > .mat-fab
         transition: all $animation-duration
+
+        &:first-child
+          z-index: 1
+
+        &[disabled=true]
+          i18n
+            opacity: .24
+
+        & + .mat-fab
+          margin: 0 0 -3.5rem 0
+          opacity: 0
+          pointer-events: none
+
+        i18n
+          @include position(absolute, auto, 5rem)
+          background-color: $color-darkest
+          border-radius: .25rem
+          color: $color-lightest
+          padding: 0 .25rem
+          pointer-events: none
+
+        fa-icon
+          display: block
+          font-size: 1.25rem
+          transition: all $animation-duration

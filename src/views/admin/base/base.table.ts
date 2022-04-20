@@ -47,7 +47,7 @@ export abstract class BaseTable<Model extends CrudModel>
   private sorter: MatSort;
 
   @ViewChild(MatTable, { static: true })
-  private table: MatTable<Model>;
+  private table: MatTable<CrudModel>;
 
   @ContentChildren(MatColumnDef)
   private views: QueryList<MatColumnDef>;
@@ -56,7 +56,6 @@ export abstract class BaseTable<Model extends CrudModel>
     return template + `
       <mat-form-field>
         <input matInput type="search">
-        <span matPrefix>{{ '🔍' }}&nbsp;</span>
       </mat-form-field>
       <mat-table matSort [dataSource]="source.asObservable()">
         <mat-header-row *matHeaderRowDef="collate"></mat-header-row>

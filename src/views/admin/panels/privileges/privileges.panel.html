@@ -1,7 +1,7 @@
 <header class="mat-title">
   <span [style.flexGrow]="1"></span>
   <i18n>privilegesPanel</i18n>
-  <button mat-raised-button
+  <button mat-stroked-button
     color="primary"
     xPosition="before"
     [matMenuTriggerFor]="actions">
@@ -91,6 +91,11 @@
           <mat-cell *matCellDef="let item">
             <button mat-icon-button
               color="primary"
+              (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button
+              color="primary"
               (click)="grantOrganisation(item, true)">
               <fa-icon icon="check"></fa-icon>
             </button>
@@ -120,6 +125,11 @@
             <i18n>actions</i18n>
           </mat-header-cell>
           <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
             <button mat-icon-button
               color="primary"
               (click)="grantMembership(item, true)">

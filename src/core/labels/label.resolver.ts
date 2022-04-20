@@ -14,6 +14,8 @@ import { LabelProvider } from '../providers/label.provider';
 export class LabelResolver
   implements Resolve<LabelModel[]> {
 
+  private created: Set<string> = new Set<string>();
+
   private labels: LabelModel[] = [];
 
   private token: AccessTokenModel;
@@ -26,12 +28,11 @@ export class LabelResolver
   }
 
   public create(tagId: string, content: string = tagId): void {
-    this.labelProvider.create(Object.assign(new LabelModel(), {
-      content,
-      tagId
-    })).pipe(catchError(() => of(Object.assign(new LabelModel(), {
-      tagId, content
-    })))).subscribe((result) => {
+    const label = new LabelModel({ content, tagId });
+
+    this.labelProvider.create(label).pipe(
+      catchError(() => of(label))
+    ).subscribe((result) => {
       this.labels.push(result);
     });
   }
@@ -41,7 +42,10 @@ export class LabelResolver
 
     if (label) {
       tagId = label.content;
-    } else if (this.token?.superuser || this.token?.translator) {
+    } else if (!this.created.has(tagId) && (
+      this.token?.superuser || this.token?.translator
+    )) {
+      this.created.add(tagId);
       this.create(tagId);
     }
 

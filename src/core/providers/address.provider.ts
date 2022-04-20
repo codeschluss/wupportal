@@ -3,7 +3,9 @@ import { Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../api/models/string-primitive';
 import { AddressControllerService as Service } from '../../api/services/address-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
+import { ActivityModel } from '../models/activity.model';
 import { AddressModel as Model } from '../models/address.model';
+import { OrganisationModel } from '../models/organisation.model';
 import { SuburbModel } from '../models/suburb.model';
 
 @Injectable({
@@ -14,6 +16,16 @@ export class AddressProvider
   extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
+    {
+      field: 'activities',
+      method: this.service.addressControllerReadActivitiesResponse,
+      model: ActivityModel
+    },
+    {
+      field: 'organisations',
+      method: this.service.addressControllerReadOrganisationsResponse,
+      model: OrganisationModel
+    },
     {
       field: 'suburb',
       method: this.service.addressControllerReadSuburbResponse,

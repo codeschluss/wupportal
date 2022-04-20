@@ -1,0 +1,15 @@
+<ng-container *ngFor="let items of [stores | async]">
+  <aside>
+    <ng-container *ngFor="let item of items">
+      <a mat-button
+        target="_blank"
+        [href]="item.href"
+        [title]="item.label">
+        <img
+          [alt]="item.label"
+          [src]="item.image"
+          [title]="item.label">
+      </a>
+    </ng-container>
+  </aside>
+</ng-container>

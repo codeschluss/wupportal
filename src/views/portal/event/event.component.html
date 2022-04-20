@@ -1,0 +1,134 @@
+<main>
+  <section>
+    <mat-card>
+      <ng-container *ngIf="item.image?.source">
+        <img mat-card-image
+          src="data:image/svg+xml,
+            %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+          [alt]="item.image.label"
+          [style.backgroundImage]="item.image.source"
+          [title]="item.image.label">
+      </ng-container>
+      <mat-card-header>
+        <mat-card-title>
+          {{ item.label }}
+        </mat-card-title>
+      </mat-card-header>
+      <aside>
+        <ng-container *ngIf="item.category">
+          <a mat-stroked-button
+            [style.color]="item.category.color"
+            [routerLink]="['/', 'events', item.category.id]">
+            {{ item.category.label }}
+          </a>
+        </ng-container>
+        <span [style.flexGrow]="1"></span>
+        <ng-container *ngIf="item">
+          <follow-piece [item]="item"></follow-piece>
+        </ng-container>
+        <share-piece [item]="item"></share-piece>
+      </aside>
+      <aside>
+        <button mat-button disableRipple
+          color="accent"
+          [matMenuTriggerFor]="menu"
+          *ngIf="item.scheduled?.startDate">
+          {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
+          <mat-menu #menu="matMenu" xPosition="after">
+            <mat-calendar
+              [dateFilter]="dateFilter"
+              [startAt]="startAt"
+              (selectedChange)="select($event)"
+              (click)="$event.stopPropagation()">
+            </mat-calendar>
+            <a mat-stroked-button color="accent" [href]="root + '/iCal'">
+              <i18n>exportSchedules</i18n>
+            </a>
+          </mat-menu>
+        </button>
+        <span [style.flexGrow]="1"></span>
+        <ng-container *ngIf="item.admissionFee">
+          <button mat-button disableRipple color="accent">
+            {{ item.admissionFee }}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="!item.admissionFee">
+          <button mat-button disableRipple color="accent">
+            <i18n>admissionFree</i18n>
+          </button>
+        </ng-container>
+      </aside>
+      <mat-card-content
+        [innerHTML]="item.description">
+      </mat-card-content>
+      <mat-card-header>
+        <mat-card-title>
+          <i18n>by</i18n>
+          <a
+            [routerLink]="['/', 'place', item.organisation.id]"
+            [title]="item.organisation.label">
+            {{ item.organisation.label }}
+          </a>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-header>
+        <ng-container *ngIf="item.organisation.image?.source">
+          <img mat-card-avatar
+            src="data:image/svg+xml,
+              %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+            [alt]="item.organisation.image.label"
+            [style.backgroundImage]="item.organisation.image.source"
+            [title]="item.organisation.image.label">
+        </ng-container>
+        <ng-container *ngIf="!item.organisation.image?.source">
+          <fa-icon mat-card-avatar icon="image"></fa-icon>
+        </ng-container>
+        <mat-list>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="location-dot"></fa-icon>
+            <span mat-line>
+              {{ item.address?.street }}
+              {{ item.address?.houseNumber }},
+              {{ item.address?.postalCode }}
+              {{ item.address?.place }}
+            </span>
+          </mat-list-item>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="user"></fa-icon>
+            <span mat-line>
+              {{ item.contactName }}
+            </span>
+          </mat-list-item>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="at"></fa-icon>
+            <span mat-line>
+              <a
+                [href]="'mailto:' + item.mail"
+                [title]="'email ' + item.label">
+                {{ item.mail }}
+              </a>
+            </span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-header>
+    </mat-card>
+  </section>
+
+  <ng-container *ngIf="item.images?.length">
+    <section>
+      <h2><i18n>images</i18n></h2>
+      <listing-frame-component>
+        <ng-container *ngFor="let image of item.images">
+          <figure>
+            <img
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [alt]="image.label"
+              [style.backgroundImage]="image.source"
+              [title]="image.label">
+          </figure>
+        </ng-container>
+      </listing-frame-component>
+    </section>
+  </ng-container>
+</main>

@@ -1,0 +1,15 @@
+<button mat-icon-button
+  color="accent"
+  [matMenuTriggerFor]="menu">
+  <fa-icon icon="language"></fa-icon>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <ng-container *ngFor="let item of languages | async">
+      <button mat-menu-item
+        [class.active]="item.locale === this.language"
+        (click)="this.language = item.locale">
+        <code>{{ item.locale }}</code>
+        {{ item.label }}
+      </button>
+    </ng-container>
+  </mat-menu>
+</button>

@@ -1,0 +1,42 @@
+@import ../../brand.scss
+
+footer
+  @include flex(row, space-between)
+  border-top: .125rem solid $color-primary
+  margin: 0 max(calc((100% - #{$viewport-width}) / 2), 1rem)
+  padding: 1rem 0
+  padding-bottom: 2rem
+
+  @include deep
+    & > menu-gear
+      @include flex(column)
+
+      & > .mat-toolbar:last-of-type
+        @include flex(column)
+        height: auto
+        padding: 0
+
+        @include responsive(lt-md)
+          display: none
+
+    & > static-pages-gear
+      & > nav
+        @include flex(column)
+
+      @include responsive(lt-md)
+        display: none
+
+    & > aside
+      @include flex(column)
+
+      @include responsive(lt-md)
+        display: none
+
+  @include deep
+    .mat-button
+      color: $color-primary
+      line-height: 1.5rem
+      text-align: left
+
+      & > .mat-button-focus-overlay
+        background-color: $color-primary

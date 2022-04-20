@@ -43,7 +43,7 @@ import { SelectFieldComponent } from '../fields/select.field';
           <i18n>compilation</i18n>
         </label>
         <nav>
-          <button mat-button
+          <button mat-stroked-button
             color="primary"
             [disabled]="locked"
             (click)="this.locate()">
@@ -121,7 +121,7 @@ export class AddressFormComponent
   }
 
   public locate(): void {
-    this.addressProvider.lookup(this.group.value).pipe(
+    this.addressProvider.lookup(this.group.getRawValue()).pipe(
       map((response) => this.addressProvider.system.cast(response))
     ).subscribe((item) => this.group.patchValue(item));
   }

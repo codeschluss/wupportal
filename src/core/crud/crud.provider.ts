@@ -91,7 +91,7 @@ export abstract class CrudProvider
   }
 
   protected cast<T>(response: StrictHttpResponse<any>, t?: Type<Model>): T {
-    const caster = (item) => Object.assign(new (t || this.model)(), item);
+    const caster = (item) => new (t || this.model)(item);
     const data = (response.body._embedded || { }).data || response.body;
 
     const casted = Array.isArray(data)
@@ -100,14 +100,14 @@ export abstract class CrudProvider
 
     return Object.defineProperties(casted, {
       page: { value: response.body.page }
-    });
+    }) as unknown as T;
   }
 
   protected link(input: Model | Model[]): void {
     const linker = (item) => this.linked.forEach((link) => {
-      const data = (item._embedded || { })[link.field];
-      item[link.field] = data
-        ? of(Object.assign(new link.model(), data))
+      const data = (item._embedded || { })[link?.field];
+      item[link?.field] = data
+        ? of(new link.model(data))
         : this.walk(link, item);
     });
 

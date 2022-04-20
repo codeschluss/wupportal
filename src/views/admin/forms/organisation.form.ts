@@ -7,6 +7,7 @@ import { Box, OrganisationModel, OrganisationProvider, TokenProvider, Translatio
 import { BaseForm, FormField } from '../base/base.form';
 import { BaseTests } from '../base/base.tests';
 import { EditorFieldComponent } from '../fields/editor.field';
+import { ImageFieldComponent } from '../fields/image.field';
 import { InputFieldComponent } from '../fields/input.field';
 import { UrlFieldComponent } from '../fields/url.field';
 
@@ -15,6 +16,9 @@ import { UrlFieldComponent } from '../fields/url.field';
   template: BaseForm.template(`
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
+        <ng-container *ngSwitchCase="'avatar'">
+          <i18n>avatar</i18n>
+        </ng-container>
         <ng-container *ngSwitchCase="'description'">
           <i18n>description</i18n>
         </ng-container>
@@ -69,6 +73,11 @@ export class OrganisationFormComponent
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ],
       type: 'email'
+    },
+    {
+      name: 'avatar',
+      input: ImageFieldComponent,
+      tests: [Validators.required]
     }
   ];
 
@@ -93,6 +102,9 @@ export class OrganisationFormComponent
 
   protected cascade(item: OrganisationModel): Observable<any> {
     const links = [];
+
+    const image = this.group.get('avatar').value;
+    links.push(this.organisationProvider.pasteImage(item.id, image));
 
     const images = this.updated('images');
     if (images.add.length) { links.push(this.organisationProvider

@@ -8,6 +8,7 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { SubscriptionEntity } from '../models/subscription-entity';
+import { AnalyticsEntry } from '../models/analytics-entry';
 import { ResourceSubscriptionEntity } from '../models/resource-subscription-entity';
 import { StringPrimitive } from '../models/string-primitive';
 
@@ -20,6 +21,7 @@ import { StringPrimitive } from '../models/string-primitive';
 class SubscriptionControllerService extends __BaseService {
   static readonly subscriptionControllerReadAllPath = '/subscriptions';
   static readonly subscriptionControllerCreatePath = '/subscriptions';
+  static readonly subscriptionControllerCalculateSubscriptionsPath = '/subscriptions/analytics';
   static readonly subscriptionControllerReadOnePath = '/subscriptions/{subscriptionId}';
   static readonly subscriptionControllerUpdatePath = '/subscriptions/{subscriptionId}';
   static readonly subscriptionControllerDeletePath = '/subscriptions/{subscriptionId}';
@@ -150,6 +152,41 @@ class SubscriptionControllerService extends __BaseService {
   subscriptionControllerCreate(newSubscription: SubscriptionEntity): __Observable<{}> {
     return this.subscriptionControllerCreateResponse(newSubscription).pipe(
       __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * calculateSubscriptions
+   * @return OK
+   */
+  subscriptionControllerCalculateSubscriptionsResponse(): __Observable<__StrictHttpResponse<Array<AnalyticsEntry>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/subscriptions/analytics`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<AnalyticsEntry>>;
+      })
+    );
+  }
+  /**
+   * calculateSubscriptions
+   * @return OK
+   */
+  subscriptionControllerCalculateSubscriptions(): __Observable<Array<AnalyticsEntry>> {
+    return this.subscriptionControllerCalculateSubscriptionsResponse().pipe(
+      __map(_r => _r.body as Array<AnalyticsEntry>)
     );
   }
 

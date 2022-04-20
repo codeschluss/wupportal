@@ -1,0 +1,37 @@
+<main>
+  <section>
+    <h1>
+      <button mat-icon-button
+        color="primary"
+        [routerLink]="['/', 'events']">
+        <fa-icon icon="angles-left"></fa-icon>
+      </button>
+      {{ category?.label }}
+      <span [style.flexGrow]="1"></span>
+      <small><i18n>category</i18n></small>
+      <button mat-icon-button
+        color="accent"
+        [matMenuTriggerFor]="catMenu">
+        <fa-icon icon="angles-down"></fa-icon>
+        <mat-menu #catMenu="matMenu" xPosition="before">
+          <ng-container *ngFor="let item of categories">
+            <button mat-menu-item
+              [class.active]="item === category"
+              [routerLink]="['/', 'events', item.id]">
+              {{ item.label }}
+            </button>
+          </ng-container>
+        </mat-menu>
+      </button>
+    </h1>
+    <aside>
+      <span [style.flexGrow]="1"></span>
+      <date-filter-component></date-filter-component>
+    </aside>
+    <ng-container *ngIf="activities | async as items">
+      <ng-container *ngFor="let item of items">
+        <activity-card [item]="item"></activity-card>
+      </ng-container>
+    </ng-container>
+  </section>
+</main>

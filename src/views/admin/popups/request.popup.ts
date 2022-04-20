@@ -29,10 +29,10 @@ import { OrganisationModel, OrganisationProvider, TokenProvider, UserProvider } 
       </mat-selection-list>
     </section>
     <section mat-dialog-actions>
-      <button mat-button mat-dialog-close>
+      <button mat-stroked-button mat-dialog-close>
         <i18n>close</i18n>
       </button>
-      <button mat-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!ids.length"
         (click)="request()">

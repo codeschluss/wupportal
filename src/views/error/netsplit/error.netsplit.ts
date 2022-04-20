@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { MetatagService, PlatformProvider } from '../../../core';
+import { PlatformProvider } from '../../../core';
 
 @Component({
   styleUrls: ['error.netsplit.sass'],
@@ -10,7 +10,6 @@ export class ErrorNetsplitComponent
   implements AfterViewInit {
 
   public constructor(
-    public metatagService: MetatagService,
     public platformProvider: PlatformProvider
   ) { }
 

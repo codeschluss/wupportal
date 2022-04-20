@@ -12,6 +12,7 @@ import { MembershipModel } from '../models/membership.model';
 import { OrganisationModel as Model } from '../models/organisation.model';
 import { UserModel } from '../models/user.model';
 import { VideoModel } from '../models/video.model';
+import { VisitableModel } from '../models/visitable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,11 @@ export class OrganisationProvider
       field: 'address',
       method: this.service.organisationControllerReadAddressResponse,
       model: AddressModel
+    },
+    {
+      field: 'avatar',
+      method: this.service.organisationControllerReadAvatarResponse,
+      model: ImageModel
     },
     {
       field: 'images',
@@ -70,6 +76,11 @@ export class OrganisationProvider
       field: 'videos',
       method: this.service.organisationControllerReadVideosResponse,
       model: VideoModel
+    },
+    {
+      field: 'visitors',
+      method: this.service.organisationControllerCalculateVisitorsResponse,
+      model: VisitableModel
     }
   ];
 
@@ -100,6 +111,14 @@ export class OrganisationProvider
   public readAll: (params?: Service.OrganisationControllerReadAllParams) =>
     Observable<Model[]>;
 
+  public analyticsVisitorsAll: () =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerCalculateOverviewVisitorsResponse);
+
+  public analyticsVisitorsOne: (id: string) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerCalculateVisitorsResponse);
+
   public grantMembership: (id: string, userId: string, grant: Boolean) =>
     Observable<any> = this.apply(this.service
       .organisationControllerApproveOrRejectUserResponse);
@@ -115,6 +134,10 @@ export class OrganisationProvider
   public like: (id: string, subscriptionId?: String) =>
     Observable<any> = this.apply(this.service
       .organisationControllerIncreaseLikeResponse);
+
+  public pasteImage: (id: string, image: ImageModel | null) =>
+    Observable<any> = this.apply(this.service
+      .organisationControllerAddAvatarResponse);
 
   public pasteImages: (id: string, images: ImageModel[]) =>
     Observable<any> = this.apply(this.service

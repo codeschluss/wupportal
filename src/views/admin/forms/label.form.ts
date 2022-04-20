@@ -29,7 +29,7 @@ export class LabelFormComponent
   extends BaseForm<LabelModel>
   implements AfterViewInit {
 
-  public item: any;
+  declare public item: any;
 
   public fields: FormField[] = [
     {
@@ -65,7 +65,7 @@ export class LabelFormComponent
   public persist(): Observable<any> {
     return forkJoin(Object.keys(this.group.controls).filter((key) => {
       return key !== 'language' && this.group.get(key).dirty;
-    }).map((key) => Object.assign(new LabelModel(), {
+    }).map((key) => new this.model({
       content: this.group.get(key).value,
       id: this.item.find((i) => i.tagId === key.substr(1)).id,
       language: this.language,

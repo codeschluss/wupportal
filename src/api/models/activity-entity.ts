@@ -2,6 +2,7 @@
 export interface ActivityEntity {
   _embedded?: {};
   addressId?: string;
+  admissionFee?: number;
   categoryId?: string;
   contactName?: string;
   created?: string;

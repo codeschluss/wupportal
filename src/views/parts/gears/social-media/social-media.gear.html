@@ -1,0 +1,23 @@
+<ng-container *ngIf="socialMedia | async as items">
+  <aside>
+    <ng-container *ngFor="let item of items">
+      <a mat-icon-button
+        color="primary"
+        target="_blank"
+        [href]="item.url"
+        [title]="item.label">
+        <fa-icon
+          size="2x"
+          [icon]="['fab', item.icon]">
+        </fa-icon>
+      </a>
+    </ng-container>
+    <a mat-icon-button
+      color="primary"
+      target="_blank"
+      title="RSS Feed"
+      [href]="rssFeed">
+      <fa-icon icon="rss" size="2x"></fa-icon>
+    </a>
+  </aside>
+</ng-container>

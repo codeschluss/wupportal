@@ -48,4 +48,8 @@ export class TargetGroupStepperComponent
 
   protected model: Type<TargetGroupModel> = TargetGroupModel;
 
+  protected get path(): string {
+    return 'target-groups';
+  }
+
 }

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivityModel, BlogpostModel, InfopageModel, OrganisationModel } from '../../../core';
+import { ActivityModel, BlogpostModel, OrganisationModel } from '../../../core';
 
 @Component({
   styles: [`
@@ -27,10 +27,13 @@ import { ActivityModel, BlogpostModel, InfopageModel, OrganisationModel } from '
       </mat-form-field>
     </section>
     <section mat-dialog-actions>
-      <button mat-button mat-dialog-close>
+      <button mat-stroked-button mat-dialog-close>
         <i18n>close</i18n>
       </button>
-      <button mat-button color="primary" [disabled]="!valid" (click)="send()">
+      <button mat-stroked-button
+        color="primary"
+        [disabled]="!valid"
+        (click)="send()">
         <i18n>send</i18n>
       </button>
     </section>
@@ -67,19 +70,15 @@ export class PusherPopupComponent {
   public send(): void {
     let route; switch (true) {
       case this.data.item instanceof ActivityModel:
-        route = '/activities/';
+        route = '/event/';
         break;
 
       case this.data.item instanceof BlogpostModel:
-        route = '/blogposts/';
-        break;
-
-      case this.data.item instanceof InfopageModel:
-        route = '/infopages/';
+        route = '/story/';
         break;
 
       case this.data.item instanceof OrganisationModel:
-        route = '/organisations/';
+        route = '/place/';
         break;
     }
 

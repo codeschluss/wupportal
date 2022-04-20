@@ -14,6 +14,8 @@ import { MinorPopupComponent } from './popups/minor/minor.popup';
 export class ClientErrorHandler
   implements ErrorHandler {
 
+  private static crash: boolean = false;
+
   private static self: ClientErrorHandler;
 
   public constructor(
@@ -30,32 +32,38 @@ export class ClientErrorHandler
   }
 
   public handleError(error: any): void {
-    const item = ErrorModel.from(error);
-    const self = ClientErrorHandler.self;
-    item.path = self.location.path(true) || '/';
-    item.userAgent = self.platformProvider.userAgent;
+    // tslint:disable-next-line: no-conditional-assignment
+    if (!ClientErrorHandler.crash) {
+      const item = ErrorModel.from(error);
+      const self = ClientErrorHandler.self;
+      item.path = self.location.path(true) || '/';
+      item.userAgent = self.platformProvider.userAgent;
 
-    switch (true) {
-      default:
-        console.warn('ClientErrorHandler.handleError', item.raw);
-        self.ngZone.run(() => {
-          self.snackBar.openFromComponent(MinorPopupComponent, { data: item });
-        });
-        break;
+      switch (true) {
+        default:
+          console.warn('ClientErrorHandler.handleError', item.raw);
+          self.ngZone.run(() => {
+            self.snackBar.openFromComponent(MinorPopupComponent, {
+              data: item
+            });
+          });
+          break;
 
-      case item.fatal:
-        console.error('ClientErrorHandler.handleError', item.raw);
-        self.ngZone.run(() => forkJoin([
-          self.errorProvider.throwError(item),
-          self.dialog.open(FatalPopupComponent, {
-            data: item,
-            disableClose: true
-          }).afterClosed()
-        ]).subscribe(() => self.platformProvider.reload()));
-        break;
+        case item.fatal:
+          console.error('ClientErrorHandler.handleError', item.raw);
+          ClientErrorHandler.crash = true;
+          self.ngZone.run(() => forkJoin([
+            self.errorProvider.throwError(item),
+            self.dialog.open(FatalPopupComponent, {
+              data: item,
+              disableClose: true
+            }).afterClosed()
+          ]).subscribe(() => self.platformProvider.reload()));
+          break;
 
-      case item.ignore:
-        break;
+        case item.ignore:
+          break;
+      }
     }
   }
 

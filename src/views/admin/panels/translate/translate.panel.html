@@ -4,78 +4,6 @@
 </header>
 
 <mat-tab-group id="translate" [selectedIndex]="index">
-  <mat-tab id="homepage">
-    <ng-template matTabLabel>
-      <i18n>homepage</i18n>
-    </ng-template>
-    <ng-template matTabContent>
-      <markup-form #homepageForm
-        [item]="markup('homepage')">
-      </markup-form>
-      <mat-divider></mat-divider>
-      <button mat-raised-button
-        color="warn"
-        [disabled]="!homepageForm.dirty"
-        (click)="homepageForm.reset()">
-        <i18n>reset</i18n>
-      </button>
-      <button mat-raised-button
-        color="primary"
-        [disabled]="!homepageForm.valid || !homepageForm.dirty"
-        (click)="homepageForm.persist().subscribe()">
-        <i18n>persist</i18n>
-      </button>
-    </ng-template>
-  </mat-tab>
-
-  <mat-tab id="imprint">
-    <ng-template matTabLabel>
-      <i18n>imprint</i18n>
-    </ng-template>
-    <ng-template matTabContent>
-      <markup-form #imprintForm
-        [item]="markup('imprint')">
-      </markup-form>
-      <mat-divider></mat-divider>
-      <button mat-raised-button
-        color="warn"
-        [disabled]="!imprintForm.dirty"
-        (click)="imprintForm.reset()">
-        <i18n>reset</i18n>
-      </button>
-      <button mat-raised-button
-        color="primary"
-        [disabled]="!imprintForm.valid || !imprintForm.dirty"
-        (click)="imprintForm.persist().subscribe()">
-        <i18n>persist</i18n>
-      </button>
-    </ng-template>
-  </mat-tab>
-
-  <mat-tab id="policies">
-    <ng-template matTabLabel>
-      <i18n>policies</i18n>
-    </ng-template>
-    <ng-template matTabContent>
-      <markup-form #policiesForm
-        [item]="markup('policies')">
-      </markup-form>
-      <mat-divider></mat-divider>
-      <button mat-raised-button
-        color="warn"
-        [disabled]="!policiesForm.dirty"
-        (click)="policiesForm.reset()">
-        <i18n>reset</i18n>
-      </button>
-      <button mat-raised-button
-        color="primary"
-        [disabled]="!policiesForm.valid || !policiesForm.dirty"
-        (click)="policiesForm.persist().subscribe()">
-        <i18n>persist</i18n>
-      </button>
-    </ng-template>
-  </mat-tab>
-
   <mat-tab id="labels">
     <ng-template matTabLabel>
       <i18n>labels</i18n>
@@ -85,13 +13,13 @@
         [item]="label">
       </label-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="warn"
         [disabled]="!labelForm.dirty"
         (click)="labelForm.reset()">
         <i18n>reset</i18n>
       </button>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!labelForm.valid || !labelForm.dirty"
         (click)="labelForm.persist().subscribe()">

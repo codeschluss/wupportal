@@ -2,7 +2,7 @@
   <h2 class="mat-headline">{{ name }}</h2>
   <span [style.flexGrow]="1"></span>
   <i18n>accountPanel</i18n>
-  <button mat-raised-button
+  <button mat-stroked-button
     color="primary"
     xPosition="before"
     [matMenuTriggerFor]="actions">
@@ -43,7 +43,7 @@
         [item]="user">
       </user-form>
       <mat-divider></mat-divider>
-      <button mat-raised-button
+      <button mat-stroked-button
         color="primary"
         [disabled]="!userForm.valid || !userForm.dirty"
         (click)="userForm.persist().subscribe()">
@@ -58,6 +58,22 @@
     </ng-template>
     <ng-template matTabContent>
       <organisation-table [items]="organisations">
+        <ng-container matColumnDef="visits">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visits</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{orgaVisits(item)}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="visitors">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visitors</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{orgaVisitors(item)}}
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="approved">
           <mat-header-cell *matHeaderCellDef>
             <i18n>approved</i18n>
@@ -112,6 +128,22 @@
     </ng-template>
     <ng-template matTabContent>
       <activity-table [items]="activities">
+        <ng-container matColumnDef="visits">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visits</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{activityVisits(item)}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="visitors">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visitors</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{activityVisitors(item)}}
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n>actions</i18n>
@@ -139,6 +171,22 @@
     </ng-template>
     <ng-template matTabContent>
       <blogpost-table [items]="blogposts">
+        <ng-container matColumnDef="visits">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visits</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{blogVisits(item)}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="visitors">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visitors</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{blogVisitors(item)}}
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n>actions</i18n>

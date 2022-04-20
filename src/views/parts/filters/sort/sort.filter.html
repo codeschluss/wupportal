@@ -1,0 +1,14 @@
+<nav>
+  <button mat-button
+    [color]="sort === 'created' ? 'primary' : 'accent'"
+    [routerLink]=""
+    [queryParams]="sort === 'created' ? null : { sort: 'created' }">
+    <i18n>newest</i18n>
+  </button>
+  <button mat-button
+    [color]="sort === 'likes' ? 'primary' : 'accent'"
+    [routerLink]=""
+    [queryParams]="sort === 'likes' ? null : { sort: 'likes' }">
+    <i18n>mostLiked</i18n>
+  </button>
+</nav>

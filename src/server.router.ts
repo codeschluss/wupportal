@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { LabelResolver, SessionResolver } from './core';
-import { SharedComponent } from './views/shared/shared.component';
+import { LabelResolver, PushedResolver, SessionResolver } from './core';
+import { GlobalComponent } from './views/global/global.component';
 
 const routes: Route[] = [
   {
     path: '',
+    resolve: {
+      labels: LabelResolver,
+      pushed: PushedResolver,
+      session: SessionResolver
+    },
     children: [
       {
         path: 'error',
@@ -23,9 +28,14 @@ const routes: Route[] = [
           .then((imported) => imported.MapsModule)
       },
       {
+        path: 'ublog',
+        loadChildren: () => import('./views/ublog/ublog.mockup')
+          .then((imported) => imported.UblogModule)
+      },
+      {
         path: '',
-        loadChildren: () => import('./views/public/public.module')
-          .then((imported) => imported.PublicModule)
+        loadChildren: () => import('./views/portal/portal.module')
+          .then((imported) => imported.PortalModule)
       }
     ]
   }
@@ -37,11 +47,7 @@ const routes: Route[] = [
     {
       path: '',
       children: routes,
-      component: SharedComponent,
-      resolve: {
-        labels: LabelResolver,
-        session: SessionResolver
-      }
+      component: GlobalComponent
     }
   ], {
     initialNavigation: 'enabled'

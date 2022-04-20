@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { filter } from 'rxjs/operators';
-import { ActivityModel, BlogpostModel, CrudJoiner, OrganisationModel, UserModel } from '../../../../core';
+import { ActivityModel, BlogpostModel, CrudJoiner, ImageModel, OrganisationModel, UserModel } from '../../../../core';
 import { BasePanel } from '../../base/base.panel';
 import { RequestPopupComponent } from '../../popups/request.popup';
 
@@ -22,14 +22,21 @@ export class AccountPanelComponent
     }).with('activities').yield('address').yield('suburb')
       .with('activities').yield('category')
       .with('activities').yield('provider').yield('organisation')
+      .with('activities').yield('visitors')
+      .with('avatar')
       .with('blogger')
-      .with('blogs').yield('activity')
+      .with('blogs').yield('visitors')
       .with('organisations').yield('address').yield('suburb')
       .with('organisations').yield('provider')
+      .with('organisations').yield('visitors')
   };
 
   public get activities(): ActivityModel[] {
     return this.user.activities || [];
+  }
+
+  public get avatar(): ImageModel {
+    return this.user.avatar;
   }
 
   public get approved(): boolean {
@@ -66,6 +73,42 @@ export class AccountPanelComponent
     this.dialog.open(RequestPopupComponent, {
       data: this.user
     }).afterClosed().pipe(filter(Boolean)).subscribe(() => this.reload());
+  }
+
+  public activityVisits(item: ActivityModel): number {
+    return item?.visitors?.length 
+      ? item.visitors.map(v => v.visits).reduce((prev, curr) => prev + curr, 0) 
+      : 0;
+  }
+
+  public activityVisitors(item: ActivityModel): number {
+    return item?.visitors?.length
+      ? item.visitors.length
+      : 0;
+  }
+
+  public blogVisits(item: BlogpostModel): number {
+    return item?.visitors?.length 
+      ? item.visitors.map(v => v.visits).reduce((prev, curr) => prev + curr, 0) 
+      : 0;
+  }
+
+  public blogVisitors(item: BlogpostModel): number {
+    return item?.visitors?.length
+      ? item.visitors.length
+      : 0;
+  }
+
+  public orgaVisits(item: OrganisationModel): number {
+    return item?.visitors?.length
+      ? item.visitors.map(v => v.visits).reduce((prev, curr) => prev + curr, 0)
+      : 0;
+  }
+
+  public orgaVisitors(item: OrganisationModel): number {
+    return item?.visitors?.length
+      ? item.visitors.length
+      : 0;
   }
 
 }

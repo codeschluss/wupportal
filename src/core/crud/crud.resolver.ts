@@ -27,7 +27,10 @@ export class CrudResolver
       ? forkJoin(input.map((i) => this.run(i, graph.nodes)))
       : this.run(input, graph.nodes);
 
-    return refined.pipe(map((output) => Object.defineProperties(output, meta)));
+    return refined.pipe(
+      map((output) => Object.defineProperties(output, meta)),
+      defaultIfEmpty(input)
+    );
   }
 
   public resolve(route: ActivatedRouteSnapshot & { resolved: object }):
@@ -47,7 +50,7 @@ export class CrudResolver
 
     return request.pipe(
       catchError((error) => joiner.graph.params.required
-        ? from(this.router.navigate(['/', 'error', error.status || 400]))
+        ? from(this.router.navigate(['/', 'error', error.status || 404]))
         : throwError(error)
       ),
       mergeMap((response) => this.refine(response as CrudModel, joiner.graph)),
@@ -69,8 +72,8 @@ export class CrudResolver
             const embedded = item._embedded[link.field];
             return of(Object.assign(item, {
               [link.field]: Array.isArray(embedded)
-                ? embedded.map((e) => Object.assign(new link.model(), e))
-                : Object.assign(new link.model(), embedded)
+                ? embedded.map((e) => new link.model(e))
+                : new link.model(embedded)
             }));
           } else {
             return provider.call(
@@ -83,7 +86,7 @@ export class CrudResolver
               map((response) => provider.cast(response, link.model)),
               catchError((e) => this.ignore(e) ? of(undefined) : throwError(e)),
               map((model) => Object.assign(item, { [link.field]: model })),
-              defaultIfEmpty()
+              defaultIfEmpty(undefined)
             );
           }
         })).pipe(mergeMap((item) => {

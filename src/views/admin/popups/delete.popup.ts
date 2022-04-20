@@ -19,10 +19,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
       </mat-list>
     </section>
     <section mat-dialog-actions>
-      <button mat-button mat-dialog-close>
+      <button mat-stroked-button mat-dialog-close>
         <i18n>close</i18n>
       </button>
-      <button mat-button color="warn" [mat-dialog-close]="true">
+      <button mat-stroked-button color="warn" [mat-dialog-close]="true">
         <i18n>delete</i18n>
       </button>
     </section>

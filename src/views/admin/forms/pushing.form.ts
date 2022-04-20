@@ -27,7 +27,7 @@ import { TextareaFieldComponent } from '../fields/textarea.field';
 export class PushingFormComponent
   extends BaseForm<CrudModel> {
 
-  public item: any;
+  declare public item: any;
 
   public fields: FormField[] = [
     {

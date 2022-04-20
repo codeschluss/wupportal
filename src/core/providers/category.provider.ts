@@ -2,6 +2,7 @@ import { Injectable, Type } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { CategoryControllerService as Service } from '../../api/services/category-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
+import { ActivityModel } from '../models/activity.model';
 import { CategoryModel as Model } from '../models/category.model';
 import { LanguageModel } from '../models/language.model';
 
@@ -13,6 +14,11 @@ export class CategoryProvider
   extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
+    {
+      field: 'activities',
+      method: () => EMPTY,
+      model: ActivityModel
+    },
     {
       field: 'language',
       method: () => EMPTY,

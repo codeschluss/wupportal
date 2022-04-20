@@ -1,0 +1,34 @@
+<main>
+  <ng-container *ngIf="blogposts.length">
+    <section>
+      <h1><i18n>newBlogposts</i18n></h1>
+      <jumbo-frame-component>
+        <ng-container *ngFor="let item of blogposts">
+          <blogpost-card [item]="item"></blogpost-card>
+        </ng-container>
+      </jumbo-frame-component>
+    </section>
+  </ng-container>
+
+  <ng-container *ngFor="let item of topics">
+    <ng-container *ngIf="item.blogposts.length">
+      <section>
+        <h2>
+          {{ item.label }}
+          <span [style.flexGrow]="1"></span>
+          <a mat-button
+            color="primary"
+            [routerLink]="['/', 'community', item.id]">
+            <i18n>more</i18n>&nbsp;
+            <fa-icon icon="angles-right"></fa-icon>
+          </a>
+        </h2>
+        <listing-frame-component>
+          <ng-container *ngFor="let item of item.blogposts">
+            <blogpost-card [item]="item"></blogpost-card>
+          </ng-container>
+        </listing-frame-component>
+      </section>
+    </ng-container>
+  </ng-container>
+</main>

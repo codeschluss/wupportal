@@ -10,6 +10,22 @@
     </ng-template>
     <ng-template matTabContent>
       <organisation-table [items]="organisations">
+        <ng-container matColumnDef="visits">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visits</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{orgaVisits(item)}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="visitors">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visitors</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{orgaVisitors(item)}}
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n>actions</i18n>
@@ -43,6 +59,22 @@
     </ng-template>
     <ng-template matTabContent>
       <activity-table [items]="activities">
+        <ng-container matColumnDef="visits">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visits</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{activityVisits(item)}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="visitors">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>visitors</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            {{activityVisitors(item)}}
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n>actions</i18n>

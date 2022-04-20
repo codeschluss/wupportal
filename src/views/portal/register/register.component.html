@@ -1,0 +1,43 @@
+<main>
+  <section>
+    <h1><i18n>register</i18n></h1>
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label><i18n>name</i18n> *</mat-label>
+          <input matInput
+            [formControl]="name">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label><i18n>email</i18n> *</mat-label>
+          <input matInput
+            type="email"
+            [formControl]="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label><i18n>password</i18n> *</mat-label>
+          <input matInput
+            type="password"
+            [formControl]="password">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label><i18n>passwordConfirm</i18n> *</mat-label>
+          <input matInput
+            type="password"
+            [formControl]="passwordConfirm">
+        </mat-form-field>
+        <mat-slide-toggle [(ngModel)]="becomeBlogger">
+          <i18n>becomeBlogger</i18n>
+        </mat-slide-toggle>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button
+          color="primary"
+          [disabled]="!valid"
+          (click)="register()">
+          <i18n>register</i18n>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</main>

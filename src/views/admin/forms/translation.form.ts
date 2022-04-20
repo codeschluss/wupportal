@@ -15,12 +15,12 @@ import { SelectFieldComponent } from '../fields/select.field';
         <i18n>compilation</i18n>
       </label>
       <nav>
-        <button mat-button color="warn" (click)="clear()">
+        <button mat-stroked-button color="warn" (click)="clear()">
           <i18n>deleteAll</i18n>
         </button>
       </nav>
     </section>
-
+  `, `
     <ng-template #label let-case="case">
       <ng-container [ngSwitch]="case.name">
         <ng-container *ngSwitchCase="'language'">
@@ -141,9 +141,9 @@ export class TranslationFormComponent<Model extends CrudModel>
 
   protected ngPostInit(): void {
     this.form = this.route.parent.routeConfig.children[0].data.form;
-    this.model = this.form.item.constructor as any;
+    this.model = this.form?.item.constructor as any;
 
-    this.form.fields
+    this.form?.fields
       .filter((field) => (this.model as any).translatable.includes(field.name))
       .forEach((field) => this.fields.push(field));
 
@@ -151,14 +151,14 @@ export class TranslationFormComponent<Model extends CrudModel>
       lang.locale === this.settings.defaults.language);
     const selected = this.route.snapshot.data.language.find((lang) =>
       lang.locale === this.sessionProvider.getLanguage());
-
+    
     this.language = this.fields[0].value = selected || fallback;
   }
 
   private empty(language: LanguageModel): Model {
     return (this.model as any).translatable
       .reduce((item, t) => Object.assign(item, { [t]: null }),
-        Object.assign(new this.model(), { language }));
+        new this.model({ language }));
   }
 
   private translation(language: LanguageModel): Model {

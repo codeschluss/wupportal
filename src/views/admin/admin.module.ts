@@ -6,6 +6,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -24,21 +27,26 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CrudModel, LabelModule } from '../../core';
 import { AdminComponent } from './admin.component';
 import { AdminRouter } from './admin.router';
-import { BaseChart } from './base/base.chart';
 import { BaseFieldComponent } from './base/base.field';
 import { BaseForm } from './base/base.form';
 import { BasePanel } from './base/base.panel';
 import { BaseStepper } from './base/base.stepper';
 import { BaseTable } from './base/base.table';
+import { AppInstallsStatisticsChartComponent } from './charts/appinstalls-statistic.chart';
+import { AppRatingsStatisticsChartComponent } from './charts/appratings-statistic.chart';
 import { CategoryActivitiesChartComponent } from './charts/category-activities.chart';
+import { OverviewStatisticsChartComponent } from './charts/overview-statistic.chart';
+import { SearchStatisticsChartComponent } from './charts/search-statistic.chart';
 import { SubscriptionsChartComponent } from './charts/subscriptions.chart';
 import { SuburbActivitiesChartComponent } from './charts/suburb-activities.chart';
 import { TargetGroupActivitiesChartComponent } from './charts/target-group-activities.chart';
 import { BooleanFieldComponent } from './fields/boolean.field';
+import { BrandFieldComponent } from './fields/brand.field';
 import { ChipListFieldComponent } from './fields/chip-list.field';
 import { EditorFieldComponent } from './fields/editor.field';
 import { IconFieldComponent } from './fields/icon.field';
 import { ImageFieldComponent } from './fields/image.field';
+import { ImagesFieldComponent } from './fields/images.field';
 import { InputFieldComponent } from './fields/input.field';
 import { ScheduleFieldComponent } from './fields/schedule.field';
 import { SelectFieldComponent } from './fields/select.field';
@@ -50,16 +58,15 @@ import { AddressFormComponent } from './forms/address.form';
 import { BlogpostFormComponent } from './forms/blogpost.form';
 import { CategoryFormComponent } from './forms/category.form';
 import { ConfigurationFormComponent } from './forms/configuration.form';
-import { ImageFormComponent } from './forms/image.form';
-import { InfopageFormComponent } from './forms/infopage.form';
-import { KeywordFormComponent } from './forms/keyword.form';
+import { ImagesFormComponent } from './forms/images.form';
 import { LabelFormComponent } from './forms/label.form';
 import { LanguageFormComponent } from './forms/language.form';
 import { MailingFormComponent } from './forms/mailing.form';
-import { MarkupFormComponent } from './forms/markup.form';
 import { OrganisationFormComponent } from './forms/organisation.form';
 import { PushingFormComponent } from './forms/pushing.form';
 import { ScheduleFormComponent } from './forms/schedule.form';
+import { SocialMediaFormComponent } from './forms/social-media.form';
+import { StaticPageFormComponent } from './forms/static-page.form';
 import { SubscriptionTypeFormComponent } from './forms/subscription-type.form';
 import { SuburbFormComponent } from './forms/suburb.form';
 import { TargetGroupFormComponent } from './forms/target-group.form';
@@ -85,10 +92,10 @@ import { ActivityStepperComponent } from './steppers/activity.stepper';
 import { AddressStepperComponent } from './steppers/address.stepper';
 import { BlogpostStepperComponent } from './steppers/blogposts.stepper';
 import { CategoryStepperComponent } from './steppers/category.stepper';
-import { InfopageStepperComponent } from './steppers/infopage.stepper';
-import { KeywordsStepperComponent } from './steppers/keyword.stepper';
 import { LanguageStepperComponent } from './steppers/language.stepper';
 import { OrganisationStepperComponent } from './steppers/organisation.stepper';
+import { SocialMediaStepperComponent } from './steppers/social-media.stepper';
+import { StaticPageStepperComponent } from './steppers/static-pages.stepper';
 import { SubscriptionTypeStepperComponent } from './steppers/subscription-type.stepper';
 import { SuburbStepperComponent } from './steppers/suburb.stepper';
 import { TargetGroupStepperComponent } from './steppers/target-group.stepper';
@@ -98,11 +105,11 @@ import { ActivityTableComponent } from './tables/activity.table';
 import { AddressTableComponent } from './tables/address.table';
 import { BlogpostTableComponent } from './tables/blogpost.table';
 import { CategoryTableComponent } from './tables/category.table';
-import { InfopageTableComponent } from './tables/infopage.table';
-import { KeywordTableComponent } from './tables/keyword.table';
 import { LanguageTableComponent } from './tables/language.table';
 import { MembershipTableComponent } from './tables/membership.table';
 import { OrganisationTableComponent } from './tables/organisation.table';
+import { SocialMediaTableComponent } from './tables/social-media.table';
+import { StaticPageTableComponent } from './tables/static-page.table';
 import { SubscriptionTypeTableComponent } from './tables/subscription-type.table';
 import { SuburbTableComponent } from './tables/suburb.table';
 import { TargetGroupTableComponent } from './tables/target-group.table';
@@ -111,11 +118,15 @@ import { UserTableComponent } from './tables/user.table';
 import { FileValueAccessorDirective } from './tools/accesor';
 import { Paginate } from './tools/paginate';
 
-const charts: Type<BaseChart>[] = [
+const charts: Type<any>[] = [
+  AppInstallsStatisticsChartComponent,
+  AppRatingsStatisticsChartComponent,
   CategoryActivitiesChartComponent,
+  OverviewStatisticsChartComponent,
+  SearchStatisticsChartComponent,
   SubscriptionsChartComponent,
   SuburbActivitiesChartComponent,
-  TargetGroupActivitiesChartComponent
+  TargetGroupActivitiesChartComponent,
 ];
 
 const components: Type<any>[] = [
@@ -129,11 +140,13 @@ const directives: Type<any>[] = [
 const fields: Type<BaseFieldComponent>[] = [
   BaseFieldComponent,
   BooleanFieldComponent,
+  BrandFieldComponent,
   ChipListFieldComponent,
   EditorFieldComponent,
   IconFieldComponent,
-  InputFieldComponent,
   ImageFieldComponent,
+  ImagesFieldComponent,
+  InputFieldComponent,
   ScheduleFieldComponent,
   SelectFieldComponent,
   TextareaFieldComponent,
@@ -147,23 +160,22 @@ const forms: Type<BaseForm<CrudModel>>[] = [
   BlogpostFormComponent,
   CategoryFormComponent,
   ConfigurationFormComponent,
-  ImageFormComponent,
-  InfopageFormComponent,
-  KeywordFormComponent,
+  ImagesFormComponent,
   LabelFormComponent,
   LanguageFormComponent,
   MailingFormComponent,
-  MarkupFormComponent,
   OrganisationFormComponent,
   PushingFormComponent,
   ScheduleFormComponent,
+  SocialMediaFormComponent,
+  StaticPageFormComponent,
   SubscriptionTypeFormComponent,
   SuburbFormComponent,
   TargetGroupFormComponent,
   TopicFormComponent,
   TranslationFormComponent,
   UserFormComponent,
-  VideoFormComponent
+  VideoFormComponent,
 ];
 
 const materials: Type<any>[] = [
@@ -176,14 +188,17 @@ const materials: Type<any>[] = [
   MatButtonModule,
   MatCardModule,
   MatChipsModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatNativeDateModule,
   MatPaginatorModule,
   MatSelectModule,
+  MatSidenavModule,
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
@@ -217,10 +232,10 @@ const steppers: Type<BaseStepper<CrudModel>>[] = [
   AddressStepperComponent,
   BlogpostStepperComponent,
   CategoryStepperComponent,
-  InfopageStepperComponent,
-  KeywordsStepperComponent,
   LanguageStepperComponent,
   OrganisationStepperComponent,
+  SocialMediaStepperComponent,
+  StaticPageStepperComponent,
   SubscriptionTypeStepperComponent,
   SuburbStepperComponent,
   TargetGroupStepperComponent,
@@ -233,11 +248,11 @@ const tables: Type<BaseTable<CrudModel>>[] = [
   AddressTableComponent,
   BlogpostTableComponent,
   CategoryTableComponent,
-  InfopageTableComponent,
-  KeywordTableComponent,
   LanguageTableComponent,
   MembershipTableComponent,
   OrganisationTableComponent,
+  SocialMediaTableComponent,
+  StaticPageTableComponent,
   SubscriptionTypeTableComponent,
   SuburbTableComponent,
   TargetGroupTableComponent,

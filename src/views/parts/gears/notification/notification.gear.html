@@ -1,0 +1,81 @@
+<ng-container [ngSwitch]="subscriptionId | async">
+  <ng-container *ngSwitchCase="''">
+    <button mat-icon-button color="accent" (click)="subscribe()">
+      <fa-icon icon="bell"></fa-icon>
+    </button>
+  </ng-container>
+  <ng-container *ngSwitchCase="'blocked'">
+    <button mat-icon-button disabled color="accent">
+      <fa-icon icon="bell-slash"></fa-icon>
+    </button>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <button mat-icon-button
+      #trigger="matMenuTrigger"
+      color="accent"
+      [matMenuTriggerFor]="menu"
+      [matBadge]="matBadge | async">
+      <fa-icon icon="bell"></fa-icon>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <mat-tab-group mat-stretch-tabs (click)="$event.stopPropagation()">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i18n>notifications</i18n>
+            </ng-template>
+            <ng-container *ngIf="notifications | async as items">
+              <mat-action-list>
+                <ng-container *ngIf="!items.length">
+                  <button mat-list-item [style.pointer-events]="'none'">
+                    <fa-icon mat-list-icon icon="bell-slash"></fa-icon>
+                    <div mat-line>
+                      <i18n>notFoundError</i18n>
+                    </div>
+                  </button>
+                </ng-container>
+                <ng-container *ngFor="let item of items">
+                  <button mat-list-item
+                    [class.active]="!item.read"
+                    [title]="item.label"
+                    (click)="read(item); trigger.closeMenu()">
+                    <fa-icon mat-list-icon
+                      [icon]="item.read ? 'bell-slash' : 'bell'">
+                    </fa-icon>
+                    <div mat-line #head [style]="styles(head)">
+                      {{ item.label }}
+                    </div>
+                    <div mat-line #body [style]="styles(body)">
+                      <slot [innerHTML]="item.content"></slot>
+                    </div>
+                  </button>
+                </ng-container>
+              </mat-action-list>
+            </ng-container>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i18n>subscriptions</i18n>
+            </ng-template>
+            <ng-container *ngIf="subscriptionTypes | async as items">
+              <mat-action-list>
+                <ng-container *ngFor="let item of items">
+                  <mat-list-item
+                    (click)="slide.toggle(); toggle(slide.checked, item.id)">
+                    <mat-slide-toggle #slide mat-list-icon
+                      [checked]="(subscribedTypes | async)?.includes(item.id)">
+                    </mat-slide-toggle>
+                    <div mat-line #head [style]="styles(head)">
+                      {{ item.label }}
+                    </div>
+                    <div mat-line #body [style]="styles(body)">
+                      <slot [innerHTML]="item.description"></slot>
+                    </div>
+                  </mat-list-item>
+                </ng-container>
+              </mat-action-list>
+            </ng-container>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-menu>
+    </button>
+  </ng-container>
+</ng-container>

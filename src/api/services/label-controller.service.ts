@@ -20,10 +20,10 @@ class LabelControllerService extends __BaseService {
   static readonly labelControllerReadAllPath = '/labels';
   static readonly labelControllerCreatePath = '/labels';
   static readonly labelControllerImportLabelsPath = '/labels/import';
-  static readonly labelControllerReadOnePath = '/labels/{labelId}';
-  static readonly labelControllerUpdatePath = '/labels/{labelId}';
-  static readonly labelControllerDeletePath = '/labels/{labelId}';
-  static readonly labelControllerReadTranslationsPath = '/labels/{labelId}/translations';
+  static readonly labelControllerReadOnePath = '/labels/{id}';
+  static readonly labelControllerUpdatePath = '/labels/{id}';
+  static readonly labelControllerDeletePath = '/labels/{id}';
+  static readonly labelControllerReadTranslationsPath = '/labels/{id}/translations';
 
   constructor(
     config: __Configuration,
@@ -181,17 +181,17 @@ class LabelControllerService extends __BaseService {
 
   /**
    * readOne
-   * @param labelId labelId
+   * @param id id
    * @return OK
    */
-  labelControllerReadOneResponse(labelId: string): __Observable<__StrictHttpResponse<ResourceLabelEntity>> {
+  labelControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceLabelEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/labels/${encodeURIComponent(String(labelId))}`,
+      this.rootUrl + `/labels/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -208,11 +208,11 @@ class LabelControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param labelId labelId
+   * @param id id
    * @return OK
    */
-  labelControllerReadOne(labelId: string): __Observable<ResourceLabelEntity> {
-    return this.labelControllerReadOneResponse(labelId).pipe(
+  labelControllerReadOne(id: string): __Observable<ResourceLabelEntity> {
+    return this.labelControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceLabelEntity)
     );
   }
@@ -220,11 +220,11 @@ class LabelControllerService extends __BaseService {
   /**
    * update
    * @param newlabel newlabel
-   * @param labelId labelId
+   * @param id id
    * @return OK
    */
   labelControllerUpdateResponse(newlabel: LabelEntity,
-    labelId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -232,7 +232,7 @@ class LabelControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/labels/${encodeURIComponent(String(labelId))}`,
+      this.rootUrl + `/labels/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -250,29 +250,29 @@ class LabelControllerService extends __BaseService {
   /**
    * update
    * @param newlabel newlabel
-   * @param labelId labelId
+   * @param id id
    * @return OK
    */
   labelControllerUpdate(newlabel: LabelEntity,
-    labelId: string): __Observable<{}> {
-    return this.labelControllerUpdateResponse(newlabel, labelId).pipe(
+    id: string): __Observable<{}> {
+    return this.labelControllerUpdateResponse(newlabel, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param labelId labelId
+   * @param id id
    * @return OK
    */
-  labelControllerDeleteResponse(labelId: string): __Observable<__StrictHttpResponse<{}>> {
+  labelControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/labels/${encodeURIComponent(String(labelId))}`,
+      this.rootUrl + `/labels/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -289,28 +289,28 @@ class LabelControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param labelId labelId
+   * @param id id
    * @return OK
    */
-  labelControllerDelete(labelId: string): __Observable<{}> {
-    return this.labelControllerDeleteResponse(labelId).pipe(
+  labelControllerDelete(id: string): __Observable<{}> {
+    return this.labelControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readTranslations
-   * @param labelId labelId
+   * @param id id
    * @return OK
    */
-  labelControllerReadTranslationsResponse(labelId: string): __Observable<__StrictHttpResponse<{}>> {
+  labelControllerReadTranslationsResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/labels/${encodeURIComponent(String(labelId))}/translations`,
+      this.rootUrl + `/labels/${encodeURIComponent(String(id))}/translations`,
       __body,
       {
         headers: __headers,
@@ -327,11 +327,11 @@ class LabelControllerService extends __BaseService {
   }
   /**
    * readTranslations
-   * @param labelId labelId
+   * @param id id
    * @return OK
    */
-  labelControllerReadTranslations(labelId: string): __Observable<{}> {
-    return this.labelControllerReadTranslationsResponse(labelId).pipe(
+  labelControllerReadTranslations(id: string): __Observable<{}> {
+    return this.labelControllerReadTranslationsResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }

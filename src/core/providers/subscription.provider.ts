@@ -77,6 +77,10 @@ export class SubscriptionProvider
   public readAll: (params?: Service.SubscriptionControllerReadAllParams) =>
     Observable<Model[]>;
 
+  public analyticsSubscribtionsAll: () =>
+    Observable<any> = this.apply(this.service
+      .subscriptionControllerCalculateSubscriptionsResponse);
+
   public linkActivity: (id: string, activityId: String) =>
     Observable<any> = this.apply(this.service
       .subscriptionControllerAddActivitySubscriptionResponse);

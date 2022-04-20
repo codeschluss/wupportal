@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { BlogpostModel, CrudJoiner } from '../../../core';
 import { BaseStepper, FormStep } from '../base/base.stepper';
 import { BlogpostFormComponent } from '../forms/blogpost.form';
-import { ImageFormComponent } from '../forms/image.form';
+import { ImagesFormComponent } from '../forms/images.form';
 import { TranslationFormComponent } from '../forms/translation.form';
 
 @Component({
@@ -43,7 +43,7 @@ export class BlogpostStepperComponent
     },
     {
       name: 'images',
-      form: ImageFormComponent
+      form: ImagesFormComponent
     },
     {
       name: 'translations',
@@ -52,8 +52,9 @@ export class BlogpostStepperComponent
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(BlogpostModel)
-    .with('activity')
     .with('images')
+    .with('titleImage')
+    .with('topic')
     .with('translations').yield('language');
 
   protected model: Type<BlogpostModel> = BlogpostModel;

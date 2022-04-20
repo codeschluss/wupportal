@@ -1,0 +1,64 @@
+<mat-card itemscope itemtype="https://schema.org/Event">
+  <ng-container *ngIf="item.image?.source">
+    <img mat-card-image
+      itemprop="logo"
+      src="data:image/svg+xml,
+        %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+      [alt]="item.image.label"
+      [style.backgroundImage]="item.image.source"
+      [title]="item.image.label">
+  </ng-container>
+  <ng-container *ngIf="!item.image?.source">
+    <fa-icon mat-card-image icon="image"></fa-icon>
+  </ng-container>
+  <mat-card-header>
+    <mat-card-title>
+      <a [routerLink]="['/', 'event', item.id]">
+        {{ item.label }}
+      </a>
+    </mat-card-title>
+    <mat-card-subtitle
+      [innerHTML]="item.description">
+    </mat-card-subtitle>
+  </mat-card-header>
+  <span [style.flexGrow]="1"></span>
+  <mat-card-actions>
+    <a mat-button disableRipple
+      color="accent"
+      itemprop="startDate"
+      [routerLink]="['/', 'events', item.category.id]">
+      {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
+    </a>
+    <a mat-stroked-button
+      [style.color]="item.category.color"
+      [routerLink]="['/', 'events', item.category.id]">
+      {{ item.category.label }}
+    </a>
+  </mat-card-actions>
+  <mat-card-actions>
+    <ng-container *ngIf="item.organisation?.id">
+      <a mat-button disableRipple
+        color="accent"
+        [routerLink]="['/', 'place', item.organisation.id]">
+        {{ item.organisation.label }}
+      </a>
+    </ng-container>
+    <ng-container *ngIf="item.provider?.organisation?.id">
+      <a mat-button disableRipple
+        color="accent"
+        [routerLink]="['/', 'place', item.provider.organisation.id]">
+        {{ item.provider.organisation.label }}
+      </a>
+    </ng-container>
+    <ng-container *ngIf="item.admissionFee">
+      <button mat-button disableRipple color="accent">
+        {{ item.admissionFee }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!item.admissionFee">
+      <button mat-button disableRipple color="accent">
+        <i18n>admissionFree</i18n>
+      </button>
+    </ng-container>
+  </mat-card-actions>
+</mat-card>

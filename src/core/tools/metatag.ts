@@ -10,8 +10,7 @@ type EnrichedModel = CrudModel
   & { address?: any }
   & { content?: any }
   & { description?: string }
-  & { images?: any[] }
-  & { keywords?: any[] };
+  & { images?: any[] };
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +38,6 @@ export class MetatagService {
     'description',
     'geo.position',
     'geo.placename',
-    'keywords',
     'language'
   ];
 
@@ -78,7 +76,6 @@ export class MetatagService {
       'geo.position': MetatagService.defaultTags.spot.join('; '),
       'geo.placename': MetatagService.defaultTags.city,
       image: this.settings.app.baseUrl + '/images/icon.png',
-      keywords: '',
       language: lang,
       locale: `${region.toLocaleLowerCase()}_${lang.toUpperCase()}`,
       site_name: this.base.value,
@@ -129,7 +126,7 @@ export class MetatagService {
       title: model.label
     });
 
-    if (model.address) {
+    if (model.address?.suburb?.id) {
       Object.assign(tags, {
         'geo.position': `${model.address.latitude}; ${model.address.longitude}`,
         'geo.placename': `${model.address.place} ${model.address.suburb.label}`
@@ -140,12 +137,6 @@ export class MetatagService {
       Object.assign(tags, {
         image:
           `data:${model.images[0].mimeType};base64,${model.images[0].imageData}`
-      });
-    }
-
-    if (model.keywords && model.keywords.length) {
-      Object.assign(tags, {
-        keywords: model.keywords.map((k) => k.label).join(', ')
       });
     }
 

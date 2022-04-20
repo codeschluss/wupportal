@@ -1,0 +1,12 @@
+<ng-container *ngIf="staticPages | async as items">
+  <nav>
+    <ng-container *ngFor="let item of items">
+      <a mat-button
+        [color]="active(item) ? 'primary' : 'accent'"
+        [routerLink]="['/', item.tagId]"
+        [title]="item.label">
+        {{ item.label }}
+      </a>
+    </ng-container>
+  </nav>
+</ng-container>

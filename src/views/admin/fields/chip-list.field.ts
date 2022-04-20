@@ -70,7 +70,7 @@ export class ChipListFieldComponent
 
     if (label && !this.find(label)) {
       this.value = this.value.concat(this.find(label, this.field.options) ||
-        Object.assign(new this.field.model(), { [this.field.label]: label }));
+        new this.field.model({ [this.field.label]: label }));
     }
   }
 

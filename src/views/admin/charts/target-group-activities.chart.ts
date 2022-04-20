@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { map, mergeMap, startWith } from 'rxjs/operators';
+import { map, mergeMap, startWith } from 'rxjs';
 import { BaseChart } from '../base/base.chart';
 
 @Component({

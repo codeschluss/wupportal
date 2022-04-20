@@ -1,0 +1,28 @@
+<main>
+  <section>
+    <h1><i18n>searchResults</i18n></h1>
+    <ng-container *ngIf="results | async as item">
+      <ng-container *ngIf="item.activities?.length">
+        <listing-frame-component>
+          <ng-container *ngFor="let item of item.activities">
+            <activity-card [item]="item"></activity-card>
+          </ng-container>
+        </listing-frame-component>
+      </ng-container>
+      <ng-container *ngIf="item.blogposts?.length">
+        <listing-frame-component>
+          <ng-container *ngFor="let item of item.blogposts">
+            <blogpost-card [item]="item"></blogpost-card>
+          </ng-container>
+        </listing-frame-component>
+      </ng-container>
+      <ng-container *ngIf="item.organisations?.length">
+        <listing-frame-component>
+          <ng-container *ngFor="let item of item.organisations">
+            <organisation-card [item]="item"></organisation-card>
+          </ng-container>
+        </listing-frame-component>
+      </ng-container>
+    </ng-container>
+  </section>
+</main>

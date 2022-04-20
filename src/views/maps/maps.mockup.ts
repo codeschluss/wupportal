@@ -14,7 +14,6 @@ import { PlatformProvider } from '../../core';
     }
     main {
       align-items: center;
-      background-color: #e0e0e0;
       bottom: 0;
       color: rgba(0, 0, 0, .87);
       display: flex;

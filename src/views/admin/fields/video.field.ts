@@ -55,10 +55,12 @@ import { BaseFieldComponent } from '../base/base.field';
         <mat-card-content>{{ item.label }}</mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-button color="warn" (click)="delete(item)">
+          <button mat-stroked-button color="warn" (click)="delete(item)">
             <i18n>delete</i18n>
           </button>
-          <button mat-button [disabled]="imageUrl.value" (click)="edit(item)">
+          <button mat-stroked-button
+            [disabled]="imageUrl.value"
+            (click)="edit(item)">
             <i18n>edit</i18n>
           </button>
         </mat-card-actions>
@@ -92,12 +94,12 @@ import { BaseFieldComponent } from '../base/base.field';
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-button
+          <button mat-stroked-button
             [disabled]="!imageUrl.value"
             (click)="clear()">
             <i18n>reset</i18n>
           </button>
-          <button mat-button
+          <button mat-stroked-button
             color="primary"
             [disabled]="!videoUrl.valid"
             (click)="create()">
@@ -150,8 +152,8 @@ export class VideoFieldComponent
   }
 
   public create(): void {
-    this.value = this.value.concat(Object.assign(new VideoModel(), {
-      thumbnail: Object.assign(new ImageModel(), {
+    this.value = this.value.concat(new VideoModel({
+      thumbnail: new ImageModel({
         caption: this.caption.value || this.videoUrl.value
       }),
       thumbnailCaption: this.caption.value || this.videoUrl.value,
@@ -179,7 +181,7 @@ export class VideoFieldComponent
     let match; switch (true) {
       case VideoFieldComponent.regex.vimeo.test(url):
         match = url.match(VideoFieldComponent.regex.vimeo);
-        return from(fetch(`http://vimeo.com/api/v2/video/${match.pop()}.json`, {
+        return from(fetch(`https://vimeo.com/api/v2/video/${match.pop()}.json`, {
           cache: 'no-cache',
           method: 'GET',
           mode: 'cors'
@@ -190,7 +192,7 @@ export class VideoFieldComponent
 
       case VideoFieldComponent.regex.youtube.test(url):
         match = url.match(VideoFieldComponent.regex.youtube);
-        return of(`http://img.youtube.com/vi/${match.pop()}/0.jpg`);
+        return of(`https://img.youtube.com/vi/${match.pop()}/0.jpg`);
 
       default:
         return of('');

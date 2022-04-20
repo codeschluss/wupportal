@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <ng-container *ngFor="let item of items">
+    <a mat-icon-button
+      [color]="active(item) ? 'accent' : null"
+      [routerLink]="item.href"
+      [title]="i18n(item)">
+      <fa-icon [icon]="item.icon"></fa-icon>
+    </a>
+  </ng-container>
+</mat-toolbar>
+<mat-toolbar>
+  <ng-container *ngFor="let item of items">
+    <a mat-button
+      [color]="active(item) ? 'primary' : 'accent'"
+      [routerLink]="item.href"
+      [title]="i18n(item)">
+      <i18n>{{ item.label }}</i18n>
+    </a>
+  </ng-container>
+</mat-toolbar>

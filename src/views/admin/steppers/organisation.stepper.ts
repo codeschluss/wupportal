@@ -2,7 +2,7 @@ import { Component, Type } from '@angular/core';
 import { CrudJoiner, OrganisationModel } from '../../../core';
 import { BaseStepper, FormStep } from '../base/base.stepper';
 import { AddressFormComponent } from '../forms/address.form';
-import { ImageFormComponent } from '../forms/image.form';
+import { ImagesFormComponent } from '../forms/images.form';
 import { OrganisationFormComponent } from '../forms/organisation.form';
 import { TranslationFormComponent } from '../forms/translation.form';
 import { VideoFormComponent } from '../forms/video.form';
@@ -55,7 +55,7 @@ export class OrganisationStepperComponent
     },
     {
       name: 'images',
-      form: ImageFormComponent
+      form: ImagesFormComponent
     },
     {
       name: 'videos',
@@ -69,6 +69,7 @@ export class OrganisationStepperComponent
 
   protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
     .with('address').yield('suburb')
+    .with('avatar')
     .with('images')
     .with('translations').yield('language')
     .with('videos').yield('thumbnail');

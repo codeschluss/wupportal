@@ -3,16 +3,8 @@
 :host
   @include position(fixed, 0, 0, 0, 0)
 
-  & > mat-toolbar
-    background-color: $color-primary
-    color: $color-lightest
-
-    @include responsive(gt-sm)
-      display: none
-
   & > main
     @include flex(column, center, center)
-    background-color: $color-light
     height: 100%
 
     & > button

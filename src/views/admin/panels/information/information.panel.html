@@ -1,7 +1,7 @@
 <header class="mat-title">
   <span [style.flexGrow]="1"></span>
   <i18n>informationPanel</i18n>
-  <button mat-raised-button
+  <button mat-stroked-button
     color="primary"
     xPosition="before"
     [matMenuTriggerFor]="actions">
@@ -10,18 +10,56 @@
 </header>
 
 <mat-menu #actions="matMenu">
-  <button mat-menu-item (click)="create('infopages')">
-    <i18n>createInfopage</i18n>
+  <button mat-menu-item (click)="create('static-pages')">
+    <i18n>createStaticPage</i18n>
   </button>
 </mat-menu>
 
 <mat-tab-group id="information" [selectedIndex]="index">
-  <mat-tab id="infopages">
+  <mat-tab id="pages">
     <ng-template matTabLabel>
-      <i18n>infopages</i18n>
+      <i18n>staticPages</i18n>
     </ng-template>
     <ng-template matTabContent>
-      <infopage-table>
+      <static-page-table>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>actions</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button
+              color="primary"
+              (click)="edit(item)">
+              <fa-icon icon="pen"></fa-icon>
+            </button>
+            <button mat-icon-button
+              color="warn"
+              (click)="delete(item)">
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+      </static-page-table>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab id="blogposts">
+    <ng-template matTabLabel>
+      <i18n>blogposts</i18n>
+    </ng-template>
+    <ng-template matTabContent>
+      <blogpost-table>
+        <ng-container matColumnDef="approved">
+          <mat-header-cell *matHeaderCellDef>
+            <i18n>approved</i18n>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <mat-slide-toggle
+              [checked]="item.approved"
+              (change)="grantBlogApproval(item, $event.checked)">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
             <i18n>actions</i18n>
@@ -45,7 +83,7 @@
             </button>
           </mat-cell>
         </ng-container>
-      </infopage-table>
+      </blogpost-table>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

@@ -1,0 +1,55 @@
+@import ../../brand.scss
+
+header
+  @include position(fixed, 0, 0, auto, 0)
+  text-transform: lowercase
+  z-index: 1
+
+  & > .mat-toolbar
+    background-color: $color-lightest
+    box-shadow: 0 0 .5rem $color-dark
+    padding: 0 max(calc((100% - #{$viewport-width}) / 2), 1rem)
+
+    & > .mat-button
+      border-radius: 0
+      height: 100%
+      padding: .25rem
+
+      @include responsive(lt-lg)
+        img:last-of-type
+          display: none
+
+      img
+        max-height: 100%
+
+        & + img
+          padding-left: .5rem
+
+    & > menu-gear
+      @include deep
+        & > .mat-toolbar
+          & > .mat-button
+            font-size: 1rem
+
+            &:first-of-type,
+            &:last-of-type
+              display: none
+
+      @include responsive(lt-md)
+        display: none
+
+    & > search-gear ~ *
+      overflow: hidden
+      transition: width $animation-duration
+      transition-delay: $animation-duration
+      width: 2.5rem
+
+    & > search-gear:focus-within ~ *
+      transition-delay: 0ms
+      width: 0
+
+  & > .mat-progress-bar
+    @include deep
+      .mat-progress-bar-background,
+      .mat-progress-bar-buffer
+        display: none

@@ -1,5 +1,3 @@
-import { inspect } from 'util';
-
 export class ErrorModel {
 
   public device: string;
@@ -18,8 +16,25 @@ export class ErrorModel {
       message: (error.error || { }).message || error.message,
       raw: error,
       status: error.status || NaN,
-      trace: error.stack || inspect(error)
+      trace: error.stack || this.inspect(error)
     });
+  }
+
+  private static inspect(data: any): string {
+    const circular = new WeakSet();
+    const replacer = (_: string, value: any) => {
+      if (typeof value === 'object' && value !== null) {
+        if (circular.has(value)) {
+          return '[Circular]';
+        }
+
+        circular.add(value);
+      }
+
+      return value;
+    };
+
+    return JSON.stringify(data, replacer, 2);
   }
 
   public get fatal(): boolean {
@@ -28,7 +43,6 @@ export class ErrorModel {
       case 404: // HttpStatus.NOT_FOUND
       case 409: // HttpStatus.CONFLICT
       case 413: // HttpStatus.PAYLOAD_TOO_LARGE
-      case 503: // HttpStatus.SERVICE_UNAVAILABLE
         return false;
 
       default:

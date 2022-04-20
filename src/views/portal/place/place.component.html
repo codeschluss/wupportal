@@ -1,0 +1,149 @@
+<main>
+  <section>
+    <mat-card>
+      <ng-container *ngIf="item.images?.length">
+        <img mat-card-image
+          src="data:image/svg+xml,
+            %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+          [alt]="item.images[0].label"
+          [style.backgroundImage]="item.images[0].source"
+          [title]="item.images[0].label">
+      </ng-container>
+      <mat-card-header>
+        <mat-card-title>
+          {{ item.label }}
+        </mat-card-title>
+      </mat-card-header>
+      <aside>
+        <span [style.flexGrow]="1"></span>
+        <follow-piece [item]="item"></follow-piece>
+        <share-piece [item]="item"></share-piece>
+      </aside>
+      <mat-card-content
+        [innerHTML]="item.description">
+      </mat-card-content>
+      <mat-card-header>
+        <mat-card-title>
+          <i18n>details</i18n>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-header>
+        <ng-container *ngIf="item.image?.source">
+          <img mat-card-avatar
+            src="data:image/svg+xml,
+              %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+            [alt]="item.image.label"
+            [style.backgroundImage]="item.image.source"
+            [title]="item.image.label">
+        </ng-container>
+        <ng-container *ngIf="!item.image?.source">
+          <fa-icon mat-card-avatar icon="image"></fa-icon>
+        </ng-container>
+        <mat-list>
+          <mat-list-item>
+            <fa-icon mat-list-icon icon="location-dot"></fa-icon>
+            <span mat-line>
+              {{ item.address?.street }}
+              {{ item.address?.houseNumber }},
+              {{ item.address?.postalCode }}
+              {{ item.address?.place }}
+            </span>
+          </mat-list-item>
+          <ng-container *ngIf="item.website">
+            <mat-list-item>
+              <fa-icon mat-list-icon icon="globe"></fa-icon>
+              <span mat-line>
+                <a target="_blank" [href]="item.website" [title]="item.label">
+                  {{ item.website }}
+                </a>
+              </span>
+            </mat-list-item>
+          </ng-container>
+          <ng-container *ngIf="item.mail">
+            <mat-list-item>
+              <fa-icon mat-list-icon icon="at"></fa-icon>
+              <span mat-line>
+                <a [href]="'mailto:' + item.mail" [title]="item.label">
+                  {{ item.mail }}
+                </a>
+              </span>
+            </mat-list-item>
+          </ng-container>
+          <ng-container *ngIf="item.phone">
+            <mat-list-item>
+              <fa-icon mat-list-icon icon="phone"></fa-icon>
+              <span mat-line>
+                <a [href]="'tel:' + item.phone" [title]="item.label">
+                  {{ item.phone }}
+                </a>
+              </span>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </mat-card-header>
+    </mat-card>
+  </section>
+
+  <ng-container *ngIf="item.activities?.length">
+    <section>
+      <h2><i18n>activities</i18n></h2>
+      <listing-frame-component>
+        <ng-container *ngFor="let item of item.activities">
+          <activity-card [item]="item"></activity-card>
+        </ng-container>
+      </listing-frame-component>
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="item.images?.length">
+    <section>
+      <h2><i18n>images</i18n></h2>
+      <listing-frame-component>
+        <ng-container *ngFor="let image of item.images">
+          <figure>
+            <img
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [alt]="image.label"
+              [style.backgroundImage]="image.source"
+              [title]="image.label">
+          </figure>
+        </ng-container>
+      </listing-frame-component>
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="item.videos?.length">
+    <section>
+      <h2><i18n>videos</i18n></h2>
+      <listing-frame-component>
+        <ng-container *ngFor="let video of item.videos">
+          <figure>
+            <ng-container *ngIf="video.thumbnail">
+              <img
+                src="data:image/svg+xml,
+                  %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                [alt]="video.thumbnail.label"
+                [style.backgroundImage]="video.thumbnail.source"
+                [title]="video.thumbnail.label">
+              <a target="_blank" [href]="video.url">
+                <fa-icon icon="play"></fa-icon>
+              </a>
+            </ng-container>
+            <ng-container *ngIf="!video.thumbnail">
+              <img
+                src="data:image/svg+xml,
+                  %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                [alt]="video.url"
+                [title]="video.url">
+              <fa-icon icon="film"></fa-icon>
+              <a target="_blank" [href]="video.url">
+                <fa-icon icon="play"></fa-icon>
+              </a>
+            </ng-container>
+          </figure>
+        </ng-container>
+      </listing-frame-component>
+    </section>
+  </ng-container>
+</main>

@@ -1,0 +1,8 @@
+<ng-container *ngIf="notification | async as item">
+  <mat-toolbar color="accent"
+    [routerLink]="item.route"
+    (click)="read(item)">
+    <strong>{{ item.label }}</strong>
+    <small>{{ item.content }}</small>
+  </mat-toolbar>
+</ng-container>

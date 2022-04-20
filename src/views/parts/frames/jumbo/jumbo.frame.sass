@@ -1,0 +1,65 @@
+@import ../../../brand.scss
+
+
+:host
+  display: block
+  width: 100%
+
+  & > nav
+    @include responsive(gt-md)
+      height: 40rem
+
+      @include deep
+        & > [base="card"]
+          @include flex(column)
+          width: 50%
+
+          & > .mat-card
+            @include flex(column)
+            flex: 1 0 auto
+            width: auto
+
+          &:first-child
+            float: left
+            height: 100%
+
+          &:not(:first-child)
+            height: calc(100% / 3)
+            float: right
+
+            & > .mat-card
+              padding-left: 33%
+
+              & > .mat-card-image
+                @include position(absolute, 1rem, auto, 1rem, 1rem)
+                min-height: auto !important
+                height: 100%
+                width: 33%
+
+    @include responsive(lt-lg)
+      @include responsive(gt-sm)
+        @include deep
+          & > [base="card"]
+            @include flex(column)
+            float: left
+            width: 50%
+
+            & > .mat-card
+              @include flex(column)
+              flex: 1 0 auto
+              padding-left: 33%
+              width: auto
+
+              & > .mat-card-image
+                @include position(absolute, 1rem, auto, 1rem, 1rem)
+                min-height: auto !important
+                height: 100%
+                width: 33%
+
+    @include responsive(lt-md)
+      @include flex(column, normal, center)
+
+    &::after
+      clear: both
+      content: ''
+      display: block

@@ -19,9 +19,9 @@ import { ResourceSuburbEntity } from '../models/resource-suburb-entity';
 class SuburbControllerService extends __BaseService {
   static readonly suburbControllerReadAllPath = '/suburbs';
   static readonly suburbControllerCreatePath = '/suburbs';
-  static readonly suburbControllerReadOnePath = '/suburbs/{surburbId}';
-  static readonly suburbControllerUpdatePath = '/suburbs/{surburbId}';
-  static readonly suburbControllerDeletePath = '/suburbs/{surburbId}';
+  static readonly suburbControllerReadOnePath = '/suburbs/{id}';
+  static readonly suburbControllerUpdatePath = '/suburbs/{id}';
+  static readonly suburbControllerDeletePath = '/suburbs/{id}';
 
   constructor(
     config: __Configuration,
@@ -139,17 +139,17 @@ class SuburbControllerService extends __BaseService {
 
   /**
    * readOne
-   * @param surburbId surburbId
+   * @param id id
    * @return OK
    */
-  suburbControllerReadOneResponse(surburbId: string): __Observable<__StrictHttpResponse<ResourceSuburbEntity>> {
+  suburbControllerReadOneResponse(id: string): __Observable<__StrictHttpResponse<ResourceSuburbEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/suburbs/${encodeURIComponent(String(surburbId))}`,
+      this.rootUrl + `/suburbs/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -166,11 +166,11 @@ class SuburbControllerService extends __BaseService {
   }
   /**
    * readOne
-   * @param surburbId surburbId
+   * @param id id
    * @return OK
    */
-  suburbControllerReadOne(surburbId: string): __Observable<ResourceSuburbEntity> {
-    return this.suburbControllerReadOneResponse(surburbId).pipe(
+  suburbControllerReadOne(id: string): __Observable<ResourceSuburbEntity> {
+    return this.suburbControllerReadOneResponse(id).pipe(
       __map(_r => _r.body as ResourceSuburbEntity)
     );
   }
@@ -178,11 +178,11 @@ class SuburbControllerService extends __BaseService {
   /**
    * update
    * @param newSuburb newSuburb
-   * @param surburbId surburbId
+   * @param id id
    * @return OK
    */
   suburbControllerUpdateResponse(newSuburb: SuburbEntity,
-    surburbId: string): __Observable<__StrictHttpResponse<{}>> {
+    id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -190,7 +190,7 @@ class SuburbControllerService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/suburbs/${encodeURIComponent(String(surburbId))}`,
+      this.rootUrl + `/suburbs/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -208,29 +208,29 @@ class SuburbControllerService extends __BaseService {
   /**
    * update
    * @param newSuburb newSuburb
-   * @param surburbId surburbId
+   * @param id id
    * @return OK
    */
   suburbControllerUpdate(newSuburb: SuburbEntity,
-    surburbId: string): __Observable<{}> {
-    return this.suburbControllerUpdateResponse(newSuburb, surburbId).pipe(
+    id: string): __Observable<{}> {
+    return this.suburbControllerUpdateResponse(newSuburb, id).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param surburbId surburbId
+   * @param id id
    * @return OK
    */
-  suburbControllerDeleteResponse(surburbId: string): __Observable<__StrictHttpResponse<{}>> {
+  suburbControllerDeleteResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/suburbs/${encodeURIComponent(String(surburbId))}`,
+      this.rootUrl + `/suburbs/${encodeURIComponent(String(id))}`,
       __body,
       {
         headers: __headers,
@@ -247,11 +247,11 @@ class SuburbControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param surburbId surburbId
+   * @param id id
    * @return OK
    */
-  suburbControllerDelete(surburbId: string): __Observable<{}> {
-    return this.suburbControllerDeleteResponse(surburbId).pipe(
+  suburbControllerDelete(id: string): __Observable<{}> {
+    return this.suburbControllerDeleteResponse(id).pipe(
       __map(_r => _r.body as {})
     );
   }

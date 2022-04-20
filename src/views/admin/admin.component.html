@@ -1,0 +1,77 @@
+<ng-container *ngFor="let item of [claims | async]">
+  <ng-container *ngIf="item.userId">
+    <main id="admin" [class.disabled]="loadingProvider.value | async">
+      <mat-card>
+        <mat-sidenav-container
+          [hasBackdrop]="false"
+          [style.minHeight]="menu.scrollHeight + 'px'">
+          <mat-sidenav mode="side" [opened]="(break | async)?.matches">
+            <nav #menu>
+              <mat-action-list>
+                <button mat-list-item
+                  [class.active]="active('/admin/account')"
+                  [routerLink]="['/', 'admin', 'account', item.userId]">
+                  <i18n>account</i18n>
+                </button>
+                <ng-container *ngIf="item.superUser||item.organisationAdmin[0]">
+                  <button mat-list-item
+                    [class.active]="active('/admin/organisation')"
+                    [routerLink]="['/', 'admin', 'organisation']">
+                    <i18n>organisation</i18n>
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="item.superUser">
+                  <button mat-list-item
+                    [class.active]="active('/admin/application')"
+                    [routerLink]="['/', 'admin', 'application']">
+                    <i18n>application</i18n>
+                  </button>
+                  <button mat-list-item
+                    [class.active]="active('/admin/messaging')"
+                    [routerLink]="['/', 'admin', 'messaging']">
+                    <i18n>messaging</i18n>
+                  </button>
+                  <button mat-list-item
+                    [class.active]="active('/admin/information')"
+                    [routerLink]="['/', 'admin', 'information']">
+                    <i18n>information</i18n>
+                  </button>
+                  <button mat-list-item
+                    [class.active]="active('/admin/positioning')"
+                    [routerLink]="['/', 'admin', 'positioning']">
+                    <i18n>positioning</i18n>
+                  </button>
+                  <button mat-list-item
+                    [class.active]="active('/admin/privileges')"
+                    [routerLink]="['/', 'admin', 'privileges']">
+                    <i18n>privileges</i18n>
+                  </button>
+                  <button mat-list-item
+                    [class.active]="active('/admin/taxonomy')"
+                    [routerLink]="['/', 'admin', 'taxonomy']">
+                    <i18n>taxonomy</i18n>
+                  </button>
+                  <button mat-list-item
+                    [class.active]="active('/admin/analytics')"
+                    [routerLink]="['/', 'admin', 'analytics']">
+                    <i18n>analytics</i18n>
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="item.superUser || item.translator">
+                  <button mat-list-item
+                    [class.active]="active('/admin/translate')"
+                    [routerLink]="['/', 'admin', 'translate']">
+                    <i18n>translate</i18n>
+                  </button>
+                </ng-container>
+              </mat-action-list>
+            </nav>
+          </mat-sidenav>
+          <mat-sidenav-content>
+            <router-outlet></router-outlet>
+          </mat-sidenav-content>
+        </mat-sidenav-container>
+      </mat-card>
+    </main>
+  </ng-container>
+</ng-container>

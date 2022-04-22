@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ActivityModel, CategoryModel, CrudJoiner, CrudResolver, OrganisationModel, RoutingComponent } from '../../../core';
 
 @Component({

@@ -73,6 +73,18 @@ export class StaticPageFormComponent
     const image = this.group.get('titleImage').value;
     links.push(this.staticPageProvider.pasteImage(item.id, image));
 
+    const images = this.updated('images');
+    if (images.add.length) { links.push(this.staticPageProvider
+      .pasteImages(item.id, images.add)); }
+    if (images.del.length) { links.push(this.staticPageProvider
+      .unlinkImages(item.id, images.del.map((i) => i.id))); }
+
+    const videos = this.updated('videos');
+    if (videos.add.length) { links.push(this.staticPageProvider
+      .pasteVideos(item.id, videos.add)); }
+    if (videos.del.length) { links.push(this.staticPageProvider
+      .unlinkVideos(item.id, videos.del.map((i) => i.id))); }
+
     return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));
   }
 

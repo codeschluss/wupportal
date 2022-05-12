@@ -1,8 +1,10 @@
 import { Component, Type } from '@angular/core';
 import { CrudJoiner, StaticPageModel } from '../../../core';
 import { BaseStepper, FormStep } from '../base/base.stepper';
+import { ImagesFormComponent } from '../forms/images.form';
 import { StaticPageFormComponent } from '../forms/static-page.form';
 import { TranslationFormComponent } from '../forms/translation.form';
+import { VideoFormComponent } from '../forms/video.form';
 
 @Component({
   selector: 'staticpage-stepper',
@@ -19,6 +21,12 @@ import { TranslationFormComponent } from '../forms/translation.form';
           <i18n>main</i18n>
         </ng-container>
 
+        <ng-container *ngSwitchCase="'images'">
+          <i18n>images</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'videos'">
+          <i18n>videos</i18n>
+        </ng-container>
         <ng-container *ngSwitchCase="'translations'">
           <i18n>translations</i18n>
         </ng-container>
@@ -38,6 +46,14 @@ export class StaticPageStepperComponent
       form: StaticPageFormComponent
     },
     {
+      name: 'images',
+      form: ImagesFormComponent
+    },
+    {
+      name: 'videos',
+      form: VideoFormComponent
+    },
+    {
       name: 'translations',
       form: TranslationFormComponent
     }
@@ -45,7 +61,9 @@ export class StaticPageStepperComponent
 
   protected joiner: CrudJoiner = CrudJoiner.of(StaticPageModel)
     .with('titleImage')
-    .with('translations').yield('language');
+    .with('images')
+    .with('translations').yield('language')
+    .with('videos').yield('thumbnail');
 
   protected model: Type<StaticPageModel> = StaticPageModel;
 

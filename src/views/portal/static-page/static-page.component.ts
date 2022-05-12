@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { RoutingComponent, StaticPageModel } from '../../../core';
+import { OrganisationModel, RoutingComponent, StaticPageModel } from '../../../core';
 
 @Component({
   styleUrls: ['static-page.component.sass'],

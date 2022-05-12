@@ -5,6 +5,7 @@ import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
 import { StaticPageModel as Model } from '../models/static-page.model';
+import { VideoModel } from '../models/video.model';
 import { VisitableModel } from '../models/visitable.model';
 
 @Injectable({
@@ -15,6 +16,11 @@ export class StaticPageProvider
   extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
+    {
+      field: 'images',
+      method: this.service.markupControllerReadImagesResponse,
+      model: ImageModel
+    },
     {
       field: 'language',
       method: () => EMPTY,
@@ -34,6 +40,11 @@ export class StaticPageProvider
       field: 'translations',
       method: this.service.markupControllerReadTranslationsResponse,
       model: Model
+    },
+    {
+      field: 'videos',
+      method: this.service.markupControllerReadVideosResponse,
+      model: VideoModel
     },
     {
       field: 'visitors',
@@ -72,5 +83,21 @@ export class StaticPageProvider
   public pasteImage: (id: string, image: ImageModel | null) =>
     Observable<any> = this.apply(this.service
       .markupControllerAddTitleImageResponse);
+
+  public pasteImages: (id: string, images: ImageModel[]) =>
+    Observable<any> = this.apply(this.service
+      .markupControllerAddImageResponse);
+
+  public pasteVideos: (id: string, videos: VideoModel[]) =>
+    Observable<any> = this.apply(this.service
+      .markupControllerAddVideosResponse);
+
+  public unlinkImages: (id: string, imageIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .markupControllerDeleteImagesResponse);
+
+  public unlinkVideos: (id: string, videoIds: string[]) =>
+    Observable<any> = this.apply(this.service
+      .markupControllerDeleteVideosResponse);
 
 }

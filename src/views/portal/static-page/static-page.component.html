@@ -14,4 +14,56 @@
       </mat-card-content>
     </mat-card>
   </section>
+
+  <ng-container *ngIf="item.images?.length">
+    <section>
+      <h2><i18n>images</i18n></h2>
+      <listing-frame-component>
+        <ng-container *ngFor="let image of item.images">
+          <figure>
+            <img
+              src="data:image/svg+xml,
+                %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+              [alt]="image.label"
+              [style.backgroundImage]="image.source"
+              [title]="image.label">
+          </figure>
+        </ng-container>
+      </listing-frame-component>
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="item.videos?.length">
+    <section>
+      <h2><i18n>videos</i18n></h2>
+      <listing-frame-component>
+        <ng-container *ngFor="let video of item.videos">
+          <figure>
+            <ng-container *ngIf="video.thumbnail">
+              <img
+                src="data:image/svg+xml,
+                  %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                [alt]="video.thumbnail.label"
+                [style.backgroundImage]="video.thumbnail.source"
+                [title]="video.thumbnail.label">
+              <a target="_blank" [href]="video.url">
+                <fa-icon icon="play"></fa-icon>
+              </a>
+            </ng-container>
+            <ng-container *ngIf="!video.thumbnail">
+              <img
+                src="data:image/svg+xml,
+                  %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
+                [alt]="video.url"
+                [title]="video.url">
+              <fa-icon icon="film"></fa-icon>
+              <a target="_blank" [href]="video.url">
+                <fa-icon icon="play"></fa-icon>
+              </a>
+            </ng-container>
+          </figure>
+        </ng-container>
+      </listing-frame-component>
+    </section>
+  </ng-container>
 </main>

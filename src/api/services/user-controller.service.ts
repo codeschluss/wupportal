@@ -1,17 +1,17 @@
 /* tslint:disable */
-import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable as __Observable } from 'rxjs';
-import { filter as __filter, map as __map } from 'rxjs/operators';
-import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { BaseService as __BaseService } from '../base-service';
-import { BooleanPrimitive } from '../models/boolean-primitive';
-import { ImageEntity } from '../models/image-entity';
-import { ResourceUserEntity } from '../models/resource-user-entity';
-import { StringPrimitive } from '../models/string-primitive';
-import { UserEntity } from '../models/user-entity';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
 import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
+import { map as __map, filter as __filter } from 'rxjs/operators';
 
+import { ImageEntity } from '../models/image-entity';
+import { UserEntity } from '../models/user-entity';
+import { StringPrimitive } from '../models/string-primitive';
+import { ResourceUserEntity } from '../models/resource-user-entity';
+import { BooleanPrimitive } from '../models/boolean-primitive';
 
 /**
  * User Controller
@@ -1084,5 +1084,4 @@ module UserControllerService {
   }
 }
 
-export { UserControllerService };
-
+export { UserControllerService }

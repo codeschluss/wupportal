@@ -62,6 +62,8 @@ const routes: Route[] = [
           }),
           staticPages: CrudJoiner.of(StaticPageModel)
             .with('titleImage')
+            .with('videos')
+            .with('images')
         }
       }
     }

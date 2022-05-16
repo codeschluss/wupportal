@@ -57,9 +57,4 @@ export class CommunityComponent
     ) {
       super();
     }
-
-    onClickLink(){
-      this.router.navigate(['/ublog']);
-    }
-
 }

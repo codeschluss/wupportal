@@ -170,7 +170,17 @@ export abstract class BaseStepper<Model extends CrudModel>
   public can(index: number): boolean {
     const route = this.route.snapshot.routeConfig.children[this.index];
     const valid = route && route.data.form && route.data.form.valid;
-    return index <= this.index || (--index === this.index && valid);
+    const result = index <= this.index || (--index === this.index && valid);
+    console.log("-----------------");
+    console.log("index", index);
+    console.log("this.index", this.index);
+    console.log("routeConfig", this.route.snapshot.routeConfig);
+    console.log("children", this.route.snapshot.routeConfig.children[this.index]);
+    console.log("route", route);
+    console.log("form valid", route && route.data.form && route.data.form.valid);
+    console.log("result", result);
+
+    return result;
   }
 
   public has(index: number | string): boolean {

@@ -47,8 +47,4 @@ export class StoryComponent
   public ngOnInit(): void {
     this.metatagService.setModel(this.item);
   }
-
-  onClickLink(){
-    this.router.navigate(['/ublog']);
-  }
 }

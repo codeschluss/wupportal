@@ -36,9 +36,11 @@ import { StaticPagesGearComponent } from './gears/static-pages/static-pages.gear
 import { StoreLinkssGearComponent } from './gears/store-links/store-links.gear';
 import { BasePiece } from './pieces/base.piece';
 import { DetailsPieceComponent } from './pieces/details/details.piece';
+import { FeedbackPieceComponent } from './pieces/feedback/feedback.piece';
 import { FollowPieceComponent } from './pieces/follow/follow.piece';
 import { LikePieceComponent } from './pieces/like/like.piece';
 import { SharePieceComponent } from './pieces/share/share.piece';
+import { StoryPieceComponent } from './pieces/story/story.piece';
 import { TimePieceComponent } from './pieces/time/time.piece';
 
 const cards: Type<BaseCard<CrudModel>>[] = [
@@ -91,9 +93,11 @@ const materials: Type<any>[] = [
 
 const pieces: Type<BasePiece>[] = [
   DetailsPieceComponent,
+  FeedbackPieceComponent,
   FollowPieceComponent,
   LikePieceComponent,
   SharePieceComponent,
+  StoryPieceComponent,
   TimePieceComponent
 ];
 

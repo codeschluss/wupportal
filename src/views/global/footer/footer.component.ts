@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'footer-component',
@@ -6,4 +7,14 @@ import { Component } from '@angular/core';
   templateUrl: 'footer.component.html'
 })
 
-export class FooterComponent { }
+export class FooterComponent {
+
+  public platform?: string;
+
+  public constructor(
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    this.document.addEventListener(
+      "deviceready", () => this.platform = window.device.platform, false);
+  }
+}

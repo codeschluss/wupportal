@@ -3,7 +3,7 @@
   <static-pages-gear></static-pages-gear>
 
   <aside>
-    <stores-gear></stores-gear>
+    <stores-gear *ngIf="platform === 'browser'"></stores-gear>
     <span [style.flexGrow]="1"></span>
     <social-media-gear></social-media-gear>
   </aside>

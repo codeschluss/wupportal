@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { BlogpostModel, CrudJoiner, CrudResolver, RoutingComponent, TopicModel } from '../../../core';
 
 @Component({
@@ -51,9 +51,10 @@ export class CommunityComponent
     }
 
     public constructor(
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private router: Router
+
     ) {
       super();
     }
-
 }

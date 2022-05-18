@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { BlogpostModel, CrudJoiner, CrudResolver, MetatagService, RoutingComponent } from '../../../core';
 
 @Component({
@@ -38,7 +38,8 @@ export class StoryComponent
 
   public constructor(
     private metatagService: MetatagService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     super();
   }
@@ -46,5 +47,4 @@ export class StoryComponent
   public ngOnInit(): void {
     this.metatagService.setModel(this.item);
   }
-
 }

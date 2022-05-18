@@ -29,7 +29,8 @@
       [routerLink]="['/', 'events', item.category.id]">
       {{ item.scheduled?.startDate | date: 'dd.MM.yyyy, HH:mm' : 'utc' }}
     </a>
-    <a mat-stroked-button
+    <a class="category-wrapper"
+      mat-stroked-button
       [style.color]="item.category.color"
       [routerLink]="['/', 'events', item.category.id]">
       {{ item.category.label }}
@@ -37,14 +38,16 @@
   </mat-card-actions>
   <mat-card-actions>
     <ng-container *ngIf="item.organisation?.id">
-      <a mat-button disableRipple
+      <a class="lower-wrapper"
+        mat-button disableRipple
         color="accent"
         [routerLink]="['/', 'place', item.organisation.id]">
         {{ item.organisation.label }}
       </a>
     </ng-container>
     <ng-container *ngIf="item.provider?.organisation?.id">
-      <a mat-button disableRipple
+      <a class="lower-wrapper"
+        mat-button disableRipple
         color="accent"
         [routerLink]="['/', 'place', item.provider.organisation.id]">
         {{ item.provider.organisation.label }}

@@ -11,6 +11,7 @@ import { MarkupEntity } from '../models/markup-entity';
 import { VisitableEntityObject } from '../models/visitable-entity-object';
 import { ResourceMarkupEntity } from '../models/resource-markup-entity';
 import { ImageEntity } from '../models/image-entity';
+import { VideoEntity } from '../models/video-entity';
 
 /**
  * Markup Controller
@@ -26,9 +27,15 @@ class MarkupControllerService extends __BaseService {
   static readonly markupControllerReadOnePath = '/markups/{id}';
   static readonly markupControllerUpdatePath = '/markups/{id}';
   static readonly markupControllerDeletePath = '/markups/{id}';
+  static readonly markupControllerReadImagesPath = '/markups/{id}/images';
+  static readonly markupControllerAddImagePath = '/markups/{id}/images';
+  static readonly markupControllerDeleteImagesPath = '/markups/{id}/images';
   static readonly markupControllerReadTitleImagePath = '/markups/{id}/titleimage';
   static readonly markupControllerAddTitleImagePath = '/markups/{id}/titleimage';
   static readonly markupControllerReadTranslationsPath = '/markups/{id}/translations';
+  static readonly markupControllerReadVideosPath = '/markups/{id}/videos';
+  static readonly markupControllerAddVideosPath = '/markups/{id}/videos';
+  static readonly markupControllerDeleteVideosPath = '/markups/{id}/videos';
   static readonly markupControllerCalculateVisitorsPath = '/markups/{id}/visitors';
 
   constructor(
@@ -343,6 +350,130 @@ class MarkupControllerService extends __BaseService {
   }
 
   /**
+   * readImages
+   * @param id id
+   * @return OK
+   */
+  markupControllerReadImagesResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * readImages
+   * @param id id
+   * @return OK
+   */
+  markupControllerReadImages(id: string): __Observable<{}> {
+    return this.markupControllerReadImagesResponse(id).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * addImage
+   * @param id id
+   * @param images images
+   * @return OK
+   */
+  markupControllerAddImageResponse(id: string,
+    images: Array<ImageEntity>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = images;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * addImage
+   * @param id id
+   * @param images images
+   * @return OK
+   */
+  markupControllerAddImage(id: string,
+    images: Array<ImageEntity>): __Observable<{}> {
+    return this.markupControllerAddImageResponse(id, images).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * deleteImages
+   * @param id id
+   * @param imageIds imageIds
+   * @return OK
+   */
+  markupControllerDeleteImagesResponse(id: string,
+    imageIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    (imageIds || []).forEach(val => {if (val != null) __params = __params.append('imageIds', val.toString())});
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/images`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * deleteImages
+   * @param id id
+   * @param imageIds imageIds
+   * @return OK
+   */
+  markupControllerDeleteImages(id: string,
+    imageIds: Array<string>): __Observable<{}> {
+    return this.markupControllerDeleteImagesResponse(id, imageIds).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
    * readTitleImage
    * @param id id
    * @return OK
@@ -457,6 +588,130 @@ class MarkupControllerService extends __BaseService {
    */
   markupControllerReadTranslations(id: string): __Observable<{}> {
     return this.markupControllerReadTranslationsResponse(id).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * readVideos
+   * @param id id
+   * @return OK
+   */
+  markupControllerReadVideosResponse(id: string): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/videos`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * readVideos
+   * @param id id
+   * @return OK
+   */
+  markupControllerReadVideos(id: string): __Observable<{}> {
+    return this.markupControllerReadVideosResponse(id).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * addVideos
+   * @param id id
+   * @param videos videos
+   * @return OK
+   */
+  markupControllerAddVideosResponse(id: string,
+    videos: Array<VideoEntity>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = videos;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/videos`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * addVideos
+   * @param id id
+   * @param videos videos
+   * @return OK
+   */
+  markupControllerAddVideos(id: string,
+    videos: Array<VideoEntity>): __Observable<{}> {
+    return this.markupControllerAddVideosResponse(id, videos).pipe(
+      __map(_r => _r.body as {})
+    );
+  }
+
+  /**
+   * deleteVideos
+   * @param id id
+   * @param videoIds videoIds
+   * @return OK
+   */
+  markupControllerDeleteVideosResponse(id: string,
+    videoIds: Array<string>): __Observable<__StrictHttpResponse<{}>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    (videoIds || []).forEach(val => {if (val != null) __params = __params.append('videoIds', val.toString())});
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/markups/${encodeURIComponent(String(id))}/videos`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<{}>;
+      })
+    );
+  }
+  /**
+   * deleteVideos
+   * @param id id
+   * @param videoIds videoIds
+   * @return OK
+   */
+  markupControllerDeleteVideos(id: string,
+    videoIds: Array<string>): __Observable<{}> {
+    return this.markupControllerDeleteVideosResponse(id, videoIds).pipe(
       __map(_r => _r.body as {})
     );
   }

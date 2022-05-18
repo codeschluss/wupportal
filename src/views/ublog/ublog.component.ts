@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Route } from '@angular/router';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { Observable } from 'rxjs';
 import { BlogpostProvider, ImageModel, LabelResolver, RoutingComponent, TopicModel, TopicProvider } from '../../core';
+import { FeedbackPieceComponent } from '../parts/pieces/feedback/feedback.piece';
 
 @Component({
   styleUrls: ['ublog.component.sass'],
@@ -80,7 +82,8 @@ export class UblogComponent
     private blogpostProvider: BlogpostProvider,
     private labelResolver: LabelResolver,
     private topicProvider: TopicProvider,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private snackBar: MatSnackBar
   ) {
     super();
   }
@@ -106,14 +109,12 @@ export class UblogComponent
       ]),
       title: new FormControl(null, [
         Validators.required,
-        Validators.minLength(8)
+        Validators.minLength(5)
       ]),
       titleImage: new FormControl(null, [
         Validators.nullValidator
       ]),
-      topicId: new FormControl(null, [
-        Validators.required
-      ])
+      topicId: new FormControl(null)
     });
   }
 
@@ -134,7 +135,17 @@ export class UblogComponent
   }
 
   public submit(): void {
-    this.blogpostProvider.create(this.formGroup.value).subscribe();
+    this.blogpostProvider.create(this.formGroup.value)
+    .subscribe({
+      next: () => {
+        this.formGroup.reset();
+        this.snackBar.openFromComponent(FeedbackPieceComponent, {
+        data: {
+          message: 'blogSuccessfullySubmitted'
+        }
+      });
+      }
+    });
   }
 
 }

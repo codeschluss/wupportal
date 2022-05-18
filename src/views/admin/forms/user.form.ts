@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, forkJoin, Observable, Subscription } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
-import { TokenProvider, TranslationProvider, UserModel, UserProvider } from '../../../core';
+import { TokenProvider, TranslationProvider, UserModel } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { InputFieldComponent } from '../fields/input.field';
 
@@ -89,8 +89,7 @@ export class UserFormComponent
     route: ActivatedRoute,
     private router: Router,
     tokenProvider: TokenProvider,
-    translationProvider: TranslationProvider,
-    private userProvider: UserProvider,
+    translationProvider: TranslationProvider
   ) {
     super(route, tokenProvider, translationProvider);
   }
@@ -112,9 +111,6 @@ export class UserFormComponent
 
   protected cascade(item: UserModel): Observable<any> {
     const links = [];
-
-    // const image = this.group.get('avatar').value;
-    // links.push(this.userProvider.pasteImage(item.id, image));
 
     return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));
   }

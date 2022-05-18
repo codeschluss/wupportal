@@ -2,9 +2,9 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
   xmlns:cdv="http://cordova.apache.org/ns/1.0"
   id="de.codeschluss.wupportal"
-  android-versionCode="0370"
-  ios-CFBundleVersion="0.3.7.0"
-  version="0.3.7">
+  android-versionCode="0380"
+  ios-CFBundleVersion="0.3.8.0"
+  version="0.3.8">
 
   <author
     email="info@codeschluss.de"
@@ -135,6 +135,11 @@
     <edit-config mode="merge" file="*-Info.plist"
       target="NSLocationAlwaysUsageDescription">
       <string>Position, Route etc.</string>
+    </edit-config>
+
+    <edit-config mode="merge" file="*-Info.plist"
+      target="NSCameraUsageDescription">
+      <string>Account profiles, organisations, blogs, etc.</string>
     </edit-config>
 
     <edit-config mode="merge" file="*-Info.plist"

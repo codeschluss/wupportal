@@ -1,4 +1,4 @@
-<mat-card itemscope itemtype="https://schema.org/Event">
+<mat-card itemscope itemtype="https://schema.org/Event" [routerLink]="['/', 'event', item.id]">
   <ng-container *ngIf="item.image?.source">
     <img mat-card-image
       itemprop="logo"

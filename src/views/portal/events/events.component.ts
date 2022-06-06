@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Route } from '@angular/router';
 import { ActivityModel, CategoryModel, CrudJoiner, CrudResolver, OrganisationModel, RoutingComponent } from '../../../core';
 
 @Component({
@@ -49,9 +49,6 @@ export class EventsComponent
             .with('schedules')
             .with('titleImage'),
           categories: CrudJoiner.of(CategoryModel, {
-            page: 0,
-            size: 5,
-            sort: 'activities.likes'
           })
             .with('activities').yield('address')
             .with('activities').yield('provider').yield('organisation')

@@ -51,8 +51,7 @@ export class StaticPageFormComponent
     },
     {
       name: 'titleImage',
-      input: ImageFieldComponent,
-      tests: [Validators.required]
+      input: ImageFieldComponent
     }
   ];
 

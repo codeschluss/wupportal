@@ -27,17 +27,11 @@ export class RegisterPageComponent
 
   public password: FormControl = new FormControl(null, [
     Validators.minLength(8),
-    Validators.pattern(/(?=(?:[^0-9]*[0-9]){1})/),
-    Validators.pattern(/(?=(?:[^A-Z]*[A-Z]){1})/),
-    Validators.pattern(/(?=(?:[^a-z]*[a-z]){1})/),
     Validators.required
   ]);
 
   public passwordConfirm: FormControl = new FormControl(null, [
     Validators.minLength(8),
-    Validators.pattern(/(?=(?:[^0-9]*[0-9]){1})/),
-    Validators.pattern(/(?=(?:[^A-Z]*[A-Z]){1})/),
-    Validators.pattern(/(?=(?:[^a-z]*[a-z]){1})/),
     Validators.required
   ]);
 

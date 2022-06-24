@@ -1,7 +1,7 @@
 <main>
   <ng-container *ngIf="activities.length">
     <section>
-      <h1><i18n>newActivities</i18n></h1>
+      <h1><i18n>upComingEvents</i18n></h1>
       <jumbo-frame-component>
         <ng-container *ngFor="let item of activities">
           <activity-card [item]="item"></activity-card>
@@ -10,7 +10,7 @@
     </section>
   </ng-container>
 
-  <ng-container *ngFor="let item of categories">
+  <ng-container *ngFor="let item of (categories | async)">
     <ng-container *ngIf="item.activities.length">
       <section>
         <h2>

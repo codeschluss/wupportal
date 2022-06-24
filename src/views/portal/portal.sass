@@ -40,6 +40,10 @@ main
       & > aside
         @include flex(row)
 
+        @include responsive(lt-sm)
+          @include flex(column)
+          padding-bottom: .5rem
+
         & > .mat-stroked-button
           border-color: currentColor
           border-radius: 2rem

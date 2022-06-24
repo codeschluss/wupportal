@@ -76,8 +76,7 @@ export class OrganisationFormComponent
     },
     {
       name: 'avatar',
-      input: ImageFieldComponent,
-      tests: [Validators.required]
+      input: ImageFieldComponent
     }
   ];
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { NavigationService } from 'src/core/routing/navigation.service';
 import { LabelResolver, LoadingProvider } from '../../../core';
 
 @Component({
@@ -15,7 +16,8 @@ export class HeaderComponent
 
   public constructor(
     private labelResolver: LabelResolver,
-    private loadingProvider: LoadingProvider
+    private loadingProvider: LoadingProvider,
+    public navigationService: NavigationService
   ) { }
 
   public ngOnInit(): void {

@@ -1,5 +1,9 @@
 <header>
   <mat-toolbar>
+    <button mat-icon-button
+      (click)="navigationService.back()">
+      <fa-icon icon="chevron-left"></fa-icon>
+    </button>
     <a mat-button
       [routerLink]="['/']"
       [title]="i18n('homepage')">

@@ -10,6 +10,11 @@ header
     box-shadow: 0 0 .5rem $color-dark
     padding: 0 max(calc((100% - #{$viewport-width}) / 2), 1rem)
 
+    button
+      @include responsive(gt-sm)
+        display: none
+      
+
     & > .mat-button
       border-radius: 0
       height: 100%

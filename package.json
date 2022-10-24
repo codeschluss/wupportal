@@ -2,7 +2,7 @@
   "name": "@wooportal/client",
   "description": "client for wooportal - conventional event mapping",
   "homepage": "https://wooportal.app",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": {
     "name": "codeschluss",
     "email": "info@codeschluss.de",

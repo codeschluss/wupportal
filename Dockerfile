@@ -7,6 +7,7 @@ ARG SDK_FILE=commandlinetools-linux-7583922_latest.zip
 COPY / /src
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV NODE_ENV=$PROFILE
+ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN \
 #
 # packages

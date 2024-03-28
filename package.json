@@ -76,7 +76,7 @@
     "@ngx-pwa/local-storage": "12.1.0",
     "@types/estree": "1.0.0",
     "color-convert": "2.0.1",
-    "express": "4.17.3",
+    "express": "4.19.2",
     "express-robots-txt": "1.0.0",
     "rxjs": "7.5.4",
     "tslib": "2.3.1",
